@@ -261,13 +261,13 @@ def _interact(func_name):
 	def __init__(self, default=0):
 	    import gtk
 	    gtk.ToggleButton.__init__(self)
-	    self.label = gtk.GtkLabel("No")
+	    self.label = gtk.Label("No")
 	    self.add(self.label)
 	    self.label.show()
 	    self.connect("toggled", self.changed)
 	    self.set_active(default)
 	def changed(self, tog):
-	    if tog.active:
+	    if tog.get_active():
 		self.label.set_text("Yes")
 	    else:
 		self.label.set_text("No")
@@ -325,7 +325,7 @@ def _interact(func_name):
     label = gtk.Label(blurb)
     label.set_line_wrap(TRUE)
     label.set_justify(gtk.JUSTIFY_LEFT)
-    label.set_usize(100, -1)
+    label.set_size_request(100, -1)
     vbox.pack_start(label, expand=gtk.FALSE)
     label.show()
 
@@ -354,7 +354,7 @@ def _interact(func_name):
     dialog.show()
     response = dialog.run()
     ret = None
-    if response = gtk.RESPONSE_OK:
+    if response == gtk.RESPONSE_OK:
 	# OK was clicked
 	ret = map(lambda wid: wid.get_value(), edit_wids)
 	_set_defaults(func_name, ret)
@@ -465,5 +465,6 @@ _python_image = [
 
 def _get_logo(colormap):
     import gtk
-    pix, mask = gtk.create_pixmap_from_xpm_d(colormap, None, _python_image)
-    return gtk.GtkPixmap(pix, mask)
+    pix, mask = gtk.gdk.pixmap_colormap_create_from_xpm_d(None, colormap,
+							  None, _python_image)
+    return gtk.Pixmap(pix, mask)

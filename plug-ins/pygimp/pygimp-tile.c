@@ -101,7 +101,12 @@ tile_getattr(PyGimpTile *self, char *attr)
     if (rv)
 	return rv;
     PyErr_Clear();
-    return Py_FindMethod(tile_methods, (PyObject *)self, attr);
+    {
+	PyObject *name = PyString_FromString(attr);
+	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static PyObject *
@@ -572,7 +577,13 @@ pr_getattr(PyGimpPixelRgn *self, char *attr)
     if (rv)
 	return rv;
     PyErr_Clear();
-    return Py_FindMethod(pr_methods, (PyObject *)self, attr);
+
+    {
+	PyObject *name = PyString_FromString(attr);
+	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static PyObject *

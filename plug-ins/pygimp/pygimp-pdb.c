@@ -686,12 +686,12 @@ pygimp_pdb_function_new(char *name)
 	return NULL;
 
     self->name = g_strdup(name);
-    self->proc_name = PyString_FromString(name);
-    self->proc_blurb = PyString_FromString(b);
-    self->proc_help = PyString_FromString(h);
-    self->proc_author = PyString_FromString(a);
-    self->proc_copyright = PyString_FromString(c);
-    self->proc_date = PyString_FromString(d);
+    self->proc_name = PyString_FromString(name?name:"");
+    self->proc_blurb = PyString_FromString(b?b:"");
+    self->proc_help = PyString_FromString(h?h:"");
+    self->proc_author = PyString_FromString(a?a:"");
+    self->proc_copyright = PyString_FromString(c?c:"");
+    self->proc_date = PyString_FromString(d?d:"");
     self->proc_type = PyInt_FromLong(pt);
     self->nparams = np;
     self->nreturn_vals = nr;

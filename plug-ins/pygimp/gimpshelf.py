@@ -43,10 +43,10 @@ def _drawable_id(obj):
     return gimp._id2drawable, (obj.ID,)
 def _display_id(obj):
     return gimp._id2display, int(obj)
-copy_reg.pickle(gimp.ImageType, _image_id, gimp._id2image)
-copy_reg.pickle(gimp.LayerType, _drawable_id, gimp._id2drawable)
-copy_reg.pickle(gimp.ChannelType, _drawable_id, gimp._id2drawable)
-copy_reg.pickle(gimp.DisplayType, _display_id, gimp._id2display)
+copy_reg.pickle(gimp.Image, _image_id, gimp._id2image)
+copy_reg.pickle(gimp.Layer, _drawable_id, gimp._id2drawable)
+copy_reg.pickle(gimp.Channel, _drawable_id, gimp._id2drawable)
+copy_reg.pickle(gimp.Display, _display_id, gimp._id2display)
 del copy_reg, _image_id, _drawable_id, _display_id
 
 class Gimpshelf:

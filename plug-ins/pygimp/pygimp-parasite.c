@@ -84,7 +84,13 @@ para_getattr(PyGimpParasite *self, char *attr)
     if (!strcmp(attr, "data"))
 	return PyString_FromStringAndSize(gimp_parasite_data(self->para),
 					  gimp_parasite_data_size(self->para));
-    return Py_FindMethod(para_methods, (PyObject *)self, attr);
+
+    {
+	PyObject *name = PyString_FromString(attr);
+	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static PyObject *

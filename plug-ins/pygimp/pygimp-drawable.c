@@ -483,7 +483,12 @@ lay_getattr(PyGimpLayer *self, char *attr)
 	return PyInt_FromLong((long) gimp_layer_get_visible(self->ID));
     if (!strcmp(attr, "width"))
 	return PyInt_FromLong((long) gimp_drawable_width(self->ID));
-    return Py_FindMethod(lay_methods, (PyObject *)self, attr);
+    {
+	PyObject *name = PyString_FromString(attr);
+	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static int
@@ -572,7 +577,12 @@ lay_setattr(PyGimpLayer *self, char *attr, PyObject *v)
 	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
 	return -1;
     }
-    return -1;
+    {
+	PyObject *name = PyString_FromString(attr);
+	int ret = PyObject_GenericSetAttr((PyObject *)self, name, v);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static PyObject *
@@ -794,7 +804,13 @@ chn_getattr(PyGimpChannel *self, char *attr)
 	return PyInt_FromLong(gimp_channel_get_visible(self->ID));
     if (!strcmp(attr, "width"))
 	return PyInt_FromLong(gimp_drawable_width(self->ID));
-    return Py_FindMethod(chn_methods, (PyObject *)self, attr);
+
+    {
+	PyObject *name = PyString_FromString(attr);
+	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static int
@@ -871,7 +887,12 @@ chn_setattr(PyGimpChannel *self, char *attr, PyObject *v)
 	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
 	return -1;
     }
-    return -1;
+    {
+	PyObject *name = PyString_FromString(attr);
+	int ret = PyObject_GenericSetAttr((PyObject *)self, name, v);
+	Py_DECREF(name);
+	return ret;
+    }
 }
 
 static PyObject *

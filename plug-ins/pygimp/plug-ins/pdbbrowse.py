@@ -25,283 +25,281 @@ import string
 pars = filter(lambda x: x[:4] == 'PDB_', dir(gimpenums))
 partypes = [''] * len(pars)
 for i in pars:
-	partypes[gimpenums.__dict__[i]] = i[4:]
+    partypes[gimpenums.__dict__[i]] = i[4:]
 del pars, i
 
-class BrowseWin(gtk.GtkWindow):
-	def __init__(self, ok_button=None):
-		gtk.GtkWindow.__init__(self)
-		self.set_title("PDB Browser")
+class BrowseWin(gtk.Window):
+    def __init__(self, ok_button=None):
+	gtk.Window.__init__(self)
+	self.set_title("PDB Browser")
 
-		vbox = gtk.GtkVBox(FALSE, 5)
-		vbox.set_border_width(2)
-		self.add(vbox)
-		vbox.show()
+	vbox = gtk.VBox(FALSE, 5)
+	vbox.set_border_width(2)
+	self.add(vbox)
+	vbox.show()
 
-		paned = gtk.GtkHPaned()
-		vbox.pack_start(paned)
-		paned.show()
+	paned = gtk.HPaned()
+	vbox.pack_start(paned)
+	paned.show()
 
-		listsw = gtk.GtkScrolledWindow()
-		listsw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-		paned.add1(listsw)
-		listsw.show()
+	listsw = gtk.ScrolledWindow()
+	listsw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+	paned.add1(listsw)
+	listsw.show()
 
-		self.list = gtk.GtkCList(1)
-		self.list.set_column_auto_resize(0, TRUE)
-		self.list.set_selection_mode(gtk.SELECTION_BROWSE)
-		listsw.add(self.list)
-		self.list.show()
-		self.update_list()
-		self.list.connect("select_row", self.display)
+	self.list = gtk.CList(1)
+	self.list.set_column_auto_resize(0, TRUE)
+	self.list.set_selection_mode(gtk.SELECTION_BROWSE)
+	listsw.add(self.list)
+	self.list.show()
+	self.update_list()
+	self.list.connect("select_row", self.display)
 
-		self.infosw = gtk.GtkScrolledWindow()
-		self.infosw.set_policy(gtk.POLICY_AUTOMATIC,
-				       gtk.POLICY_AUTOMATIC)
-		paned.add2(self.infosw)
-		self.infosw.show()
+	self.infosw = gtk.ScrolledWindow()
+	self.infosw.set_policy(gtk.POLICY_AUTOMATIC,
+			       gtk.POLICY_AUTOMATIC)
+	paned.add2(self.infosw)
+	self.infosw.show()
 
-		self.info = None
+	self.info = None
 
-		paned.set_position(150)
-		self.cmd = None
-		self.display(self.list, 0, -1, None)
+	paned.set_position(150)
+	self.cmd = None
+	self.display(self.list, 0, -1, None)
 
-		hbox = gtk.GtkHBox(FALSE, 5)
-		vbox.pack_start(hbox, expand=FALSE)
-		hbox.show()
+	hbox = gtk.HBox(FALSE, 5)
+	vbox.pack_start(hbox, expand=FALSE)
+	hbox.show()
 
-		entry = gtk.GtkEntry()
-		hbox.pack_start(entry, expand=FALSE)
-		entry.show()
+	entry = gtk.Entry()
+	hbox.pack_start(entry, expand=FALSE)
+	entry.show()
 
-		button = gtk.GtkButton("Search by Name")
-		button.connect("clicked", self.search_name, entry)
-		hbox.pack_start(button, expand=FALSE)
-		button.show()
+	button = gtk.Button("Search by Name")
+	button.connect("clicked", self.search_name, entry)
+	hbox.pack_start(button, expand=FALSE)
+	button.show()
 		
-		button = gtk.GtkButton("Search by Blurb")
-		button.connect("clicked", self.search_blurb, entry)
-		hbox.pack_start(button, expand=FALSE)
-		button.show()
+	button = gtk.Button("Search by Blurb")
+	button.connect("clicked", self.search_blurb, entry)
+	hbox.pack_start(button, expand=FALSE)
+	button.show()
 
-		button = gtk.GtkButton("Close")
-		button.connect("clicked", self.destroy)
-		hbox.pack_end(button, expand=FALSE)
-		button.show()
+	button = gtk.Button("Close")
+	button.connect("clicked", lambda btn, win: win.destroy(), self)
+	hbox.pack_end(button, expand=FALSE)
+	button.show()
 
-		if ok_button:
-			button = gtk.GtkButton("OK")
-			button.connect("clicked", ok_button, self)
-			hbox.pack_end(button, expand=FALSE)
-			button.show()
+	if ok_button:
+	    button = gtk.Button("OK")
+	    button.connect("clicked", ok_button, self)
+	    hbox.pack_end(button, expand=FALSE)
+	    button.show()
 
-		self.set_default_size(500, 300)
+	self.set_default_size(500, 300)
 
-	def search_name(self, button, entry):
-		self.update_list(name=entry.get_text())
-	def search_blurb(self, button, entry):
-		self.update_list(blurb=entry.get_text())
+    def search_name(self, button, entry):
+	self.update_list(name=entry.get_text())
+    def search_blurb(self, button, entry):
+	self.update_list(blurb=entry.get_text())
 
-	def update_list(self, name='.*', blurb='.*'):
-		self.pdblist = pdb.query(name,blurb,'.*','.*','.*','.*','.*')
-		self.pdblist.sort()
-		self.list.clear()
-		for item in self.pdblist:
-			self.list.append([item])
+    def update_list(self, name='.*', blurb='.*'):
+	self.pdblist = pdb.query(name,blurb,'.*','.*','.*','.*','.*')
+	self.pdblist.sort()
+	self.list.clear()
+	for item in self.pdblist:
+	    self.list.append([item])
 	
-	def display(self, clist, row, column, event):
-		proc = pdb[clist.get_text(row, 0)]
-		self.info = gtk.GtkTable(1, 5, FALSE);
-		row = 0
-		label = gtk.GtkLabel("Name:")
-		label.set_alignment(1.0, 0.5)
-		self.info.attach(label, 0,1, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
-		label.show()
+    def display(self, clist, row, column, event):
+	proc = pdb[clist.get_text(row, 0)]
+	self.info = gtk.Table(1, 5, FALSE);
+	row = 0
+	label = gtk.Label("Name:")
+	label.set_alignment(1.0, 0.5)
+	self.info.attach(label, 0,1, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
 
-		label = gtk.GtkEntry()
-		label.set_text(proc.proc_name)
-		label.set_editable(FALSE)
-		self.info.attach(label, 1,4, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
-		label.show()
-		row = row + 1
+	label = gtk.Entry()
+	label.set_text(proc.proc_name)
+	label.set_editable(FALSE)
+	self.info.attach(label, 1,4, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
+	row = row + 1
 
-		label = gtk.GtkLabel("Blurb:")
-		label.set_alignment(1.0, 0.5)
-		self.info.attach(label, 0,1, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
-		label.show()
+	label = gtk.Label("Blurb:")
+	label.set_alignment(1.0, 0.5)
+	self.info.attach(label, 0,1, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
 
-		label = gtk.GtkLabel(proc.proc_blurb)
+	label = gtk.Label(proc.proc_blurb)
+	label.set_alignment(0.0, 0.5)
+	self.info.attach(label, 1,4, row,row+1,
+			 yoptions=gtk.FILL)
+	label.show()
+	row = row + 1
+
+	label = gtk.Label("Copyright:")
+	label.set_alignment(1.0, 0.5)
+	self.info.attach(label, 0,1, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
+
+	label = gtk.Label(proc.proc_date+", "+proc.proc_copyright)
+	label.set_alignment(0.0, 0.5)
+	self.info.attach(label, 1,4, row,row+1,
+			 yoptions=gtk.FILL)
+	label.show()
+	row = row + 1
+
+	label = gtk.Label("Author:")
+	label.set_alignment(1.0, 0.5)
+	self.info.attach(label, 0,1, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
+
+	label = gtk.Label(proc.proc_author)
+	label.set_alignment(0.0, 0.5)
+	self.info.attach(label, 1,4, row,row+1,
+			 yoptions=gtk.FILL)
+	label.show()
+	row = row + 1
+
+	hsep = gtk.HSeparator()
+	self.info.attach(hsep, 0,4, row,row+1,
+			 yoptions=gtk.FILL)
+	hsep.show()
+	row = row + 1
+
+	if len(proc.params) > 0:
+	    label = gtk.Label("In:")
+	    label.set_alignment(1.0, 0.5)
+	    self.info.attach(label, 0,1, row,row+len(proc.params),
+			     xoptions=gtk.FILL, yoptions=gtk.FILL)
+	    label.show()
+	    for tp, name, desc in proc.params:
+		label = gtk.Label(name)
 		label.set_alignment(0.0, 0.5)
-		self.info.attach(label, 1,4, row,row+1,
+		self.info.attach(label, 1,2, row,row+1,
+				 xoptions=gtk.FILL,
 				 yoptions=gtk.FILL)
 		label.show()
-		row = row + 1
 
-		label = gtk.GtkLabel("Copyright:")
-		label.set_alignment(1.0, 0.5)
-		self.info.attach(label, 0,1, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
-		label.show()
-
-		label = gtk.GtkLabel(proc.proc_date+", "+proc.proc_copyright)
+		label = gtk.Label(partypes[tp])
 		label.set_alignment(0.0, 0.5)
-		self.info.attach(label, 1,4, row,row+1,
+		self.info.attach(label, 2,3, row,row+1,
+				 xoptions=gtk.FILL,
 				 yoptions=gtk.FILL)
 		label.show()
-		row = row + 1
 
-		label = gtk.GtkLabel("Author:")
-		label.set_alignment(1.0, 0.5)
-		self.info.attach(label, 0,1, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
-		label.show()
-
-		label = gtk.GtkLabel(proc.proc_author)
+		label = gtk.Label(desc)
 		label.set_alignment(0.0, 0.5)
-		self.info.attach(label, 1,4, row,row+1,
+		self.info.attach(label, 3,4, row,row+1,
 				 yoptions=gtk.FILL)
 		label.show()
 		row = row + 1
-
-		hsep = gtk.GtkHSeparator()
-		self.info.attach(hsep, 0,4, row,row+1,
-				 yoptions=gtk.FILL)
-		hsep.show()
-		row = row + 1
-
-		if len(proc.params) > 0:
-			label = gtk.GtkLabel("In:")
-			label.set_alignment(1.0, 0.5)
-			self.info.attach(label, 0,1, row,row+len(proc.params),
-					 xoptions=gtk.FILL, yoptions=gtk.FILL)
-			label.show()
-			for tp, name, desc in proc.params:
-				label = gtk.GtkLabel(name)
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 1,2, row,row+1,
-						 xoptions=gtk.FILL,
-						 yoptions=gtk.FILL)
-				label.show()
-
-				label = gtk.GtkLabel(partypes[tp])
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 2,3, row,row+1,
-						 xoptions=gtk.FILL,
-						 yoptions=gtk.FILL)
-				label.show()
-
-				label = gtk.GtkLabel(desc)
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 3,4, row,row+1,
-						 yoptions=gtk.FILL)
-				label.show()
-				row = row + 1
-			hsep = gtk.GtkHSeparator()
-			self.info.attach(hsep, 0,4, row,row+1,
-					 yoptions=gtk.FILL)
-			hsep.show()
-			row = row + 1
+	    hsep = gtk.HSeparator()
+	    self.info.attach(hsep, 0,4, row,row+1,
+			     yoptions=gtk.FILL)
+	    hsep.show()
+	    row = row + 1
 			
-		if len(proc.return_vals) > 0:
-			label = gtk.GtkLabel("Out:")
-			label.set_alignment(1.0, 0.5)
-			self.info.attach(label, 0,1,
-					 row,row+len(proc.return_vals),
-					 xoptions=gtk.FILL, yoptions=gtk.FILL)
-			label.show()
-			for tp, name, desc in proc.return_vals:
-				label = gtk.GtkLabel(name)
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 1,2, row,row+1,
-						 xoptions=gtk.FILL,
-						 yoptions=gtk.FILL)
-				label.show()
-
-				label = gtk.GtkLabel(partypes[tp])
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 2,3, row,row+1,
-						 xoptions=gtk.FILL,
-						 yoptions=gtk.FILL)
-				label.show()
-
-				label = gtk.GtkLabel(desc)
-				label.set_alignment(0.0, 0.5)
-				self.info.attach(label, 3,4, row,row+1,
-						 yoptions=gtk.FILL)
-				label.show()
-				row = row + 1
-			hsep = gtk.GtkHSeparator()
-			self.info.attach(hsep, 0,4, row,row+1,
-					 yoptions=gtk.FILL)
-			hsep.show()
-			row = row + 1
-		
-		label = gtk.GtkLabel("Help:")
-		label.set_alignment(1.0, 0.5)
-		self.info.attach(label, 0,1, row,row+1,
-				 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	if len(proc.return_vals) > 0:
+	    label = gtk.Label("Out:")
+	    label.set_alignment(1.0, 0.5)
+	    self.info.attach(label, 0,1,
+			     row,row+len(proc.return_vals),
+			     xoptions=gtk.FILL, yoptions=gtk.FILL)
+	    label.show()
+	    for tp, name, desc in proc.return_vals:
+		label = gtk.Label(name)
+		label.set_alignment(0.0, 0.5)
+		self.info.attach(label, 1,2, row,row+1,
+				 xoptions=gtk.FILL,
+				 yoptions=gtk.FILL)
 		label.show()
 
-		label = gtk.GtkLabel(proc.proc_help)
+		label = gtk.Label(partypes[tp])
 		label.set_alignment(0.0, 0.5)
-		label.set_justify(gtk.JUSTIFY_LEFT)
-		label.set_line_wrap(TRUE)
-		label.set_usize(300, -1)
-		self.info.attach(label, 1,4, row,row+1,
+		self.info.attach(label, 2,3, row,row+1,
+				 xoptions=gtk.FILL,
+				 yoptions=gtk.FILL)
+		label.show()
+
+		label = gtk.Label(desc)
+		label.set_alignment(0.0, 0.5)
+		self.info.attach(label, 3,4, row,row+1,
 				 yoptions=gtk.FILL)
 		label.show()
 		row = row + 1
+	    hsep = gtk.HSeparator()
+	    self.info.attach(hsep, 0,4, row,row+1,
+			     yoptions=gtk.FILL)
+	    hsep.show()
+	    row = row + 1
+		
+	label = gtk.Label("Help:")
+	label.set_alignment(1.0, 0.5)
+	self.info.attach(label, 0,1, row,row+1,
+			 xoptions=gtk.FILL, yoptions=gtk.FILL)
+	label.show()
 
-		self.info.set_col_spacings(5)
-		self.info.set_row_spacings(3)
-		self.info.set_border_width(3)
+	label = gtk.Label(proc.proc_help)
+	label.set_alignment(0.0, 0.5)
+	label.set_justify(gtk.JUSTIFY_LEFT)
+	label.set_line_wrap(TRUE)
+	label.set_size_request(300, -1)
+	self.info.attach(label, 1,4, row,row+1,
+			 yoptions=gtk.FILL)
+	label.show()
+	row = row + 1
 
-		children = self.infosw.children()
-		if children:
-			self.infosw.remove(children[0])
+	self.info.set_col_spacings(5)
+	self.info.set_row_spacings(3)
+	self.info.set_border_width(3)
 
-		self.infosw.add_with_viewport(self.info)
-		self.info.show()
+	if self.infosw.child:
+	    self.infosw.remove(self.infosw.child)
 
-		# now setup the self.cmd
-		self.cmd = ''
-		if len(proc.return_vals) > 0:
-			self.cmd = string.join(
-				map(lambda x: x[1], proc.return_vals), ', ') +\
-				' = '
-		if '-' in proc.proc_name:
-			self.cmd = self.cmd + "pdb['" + proc.proc_name + "']"
-		else:
-			self.cmd = self.cmd + "pdb." + proc.proc_name
-		if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
-			params = proc.params[1:]
-		else:
-			params = proc.params
-		self.cmd = self.cmd + "(" + string.join(
-			map(lambda x: x[1], params), ', ') + ")"
+	self.infosw.add_with_viewport(self.info)
+	self.info.show()
+
+	# now setup the self.cmd
+	self.cmd = ''
+	if len(proc.return_vals) > 0:
+	    self.cmd = string.join(
+		map(lambda x: x[1], proc.return_vals), ', ') + ' = '
+	if '-' in proc.proc_name:
+	    self.cmd = self.cmd + "pdb['" + proc.proc_name + "']"
+	else:
+	    self.cmd = self.cmd + "pdb." + proc.proc_name
+	if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
+	    params = proc.params[1:]
+	else:
+	    params = proc.params
+	self.cmd = self.cmd + "(" + string.join(
+	    map(lambda x: x[1], params), ', ') + ")"
 		
 if __name__ == '__main__':
-	def extension_pdb_browse():
-		gtk.rc_parse(gimp.gtkrc())
-		win = BrowseWin()
-		win.connect("destroy", gtk.mainquit)
-		win.show()
-		gtk.mainloop()
-	register(
-		"python_fu_pdb_browse",
-		"Browse the Procedural Database",
-		"Pick a PDB proc, and read the information",
-		"James Henstridge",
-		"James Henstridge",
-		"1997-1999",
-		"<Toolbox>/Xtns/Python-Fu/PDB Browser",
-		"*",
-		[],
-		[],
-		extension_pdb_browse)
-	main()
+    def extension_pdb_browse():
+	gtk.rc_parse(gimp.gtkrc())
+	win = BrowseWin()
+	win.connect("destroy", gtk.mainquit)
+	win.show()
+	gtk.mainloop()
+    register(
+	"python_fu_pdb_browse",
+	"Browse the Procedural Database",
+	"Pick a PDB proc, and read the information",
+	"James Henstridge",
+	"James Henstridge",
+	"1997-1999",
+	"<Toolbox>/Xtns/Python-Fu/PDB Browser",
+	"*",
+	[],
+	[],
+	extension_pdb_browse)
+    main()
 
