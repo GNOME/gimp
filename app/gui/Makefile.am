@@ -18,8 +18,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	color-notebook.h		\
 	color-select.c			\
 	color-select.h			\
-	colormap-dialog.c		\
-	colormap-dialog.h		\
 	commands.c			\
 	commands.h			\
 	convert-dialog.c		\

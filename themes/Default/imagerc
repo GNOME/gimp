@@ -106,20 +106,73 @@ style "gimp-icons"
       { "images/stock-button-selection-intersect.png", *, *, * }
     }
 
+  # Misc menu icons
+  #
+  stock["gimp-convert-rgb"] =
+    {
+      { "images/stock-menu-convert-rgb.png", *, *, "gtk-menu" },
+      { "images/stock-menu-convert-rgb.png", *, *, * }
+    }
+  stock["gimp-convert-grayscale"] =
+    {
+      { "images/stock-menu-convert-grayscale.png", *, *, "gtk-menu" },
+      { "images/stock-menu-convert-grayscale.png", *, *, * }
+    }
+  stock["gimp-convert-indexed"] =
+    {
+      { "images/stock-menu-convert-indexed.png", *, *, "gtk-menu" },
+      { "images/stock-menu-convert-indexed.png", *, *, * }
+    }
+  stock["gimp-merge-down"] =
+    {
+      { "images/stock-menu-merge-down.png", *, *, "gtk-menu" },
+      { "images/stock-menu-merge-down.png", *, *, * }
+    }
+  stock["gimp-reshow-filter"] =
+    {
+      { "images/stock-menu-reshow-filter.png", *, *, "gtk-menu" },
+      { "images/stock-menu-reshow-filter.png", *, *, * }
+    }
+  stock["gimp-rotate-90"] =
+    {
+      { "images/stock-menu-rotate-90.png", *, *, "gtk-menu" },
+      { "images/stock-menu-rotate-90.png", *, *, * }
+    }
+  stock["gimp-rotate-180"] =
+    {
+      { "images/stock-menu-rotate-180.png", *, *, "gtk-menu" },
+      { "images/stock-menu-rotate-180.png", *, *, * }
+    }
+  stock["gimp-rotate-270"] =
+    {
+      { "images/stock-menu-rotate-270.png", *, *, "gtk-menu" },
+      { "images/stock-menu-rotate-270.png", *, *, * }
+    }
+  stock["gimp-resize"] =
+    {
+      { "images/stock-menu-resize.png", *, *, "gtk-menu" },
+      { "images/stock-menu-resize.png", *, *, * }
+    }
+  stock["gimp-scale"] =
+    {
+      { "images/stock-menu-scale.png", *, *, "gtk-menu" },
+      { "images/stock-menu-scale.png", *, *, * }
+    }
+
   # Image window icons
   #
   stock["gimp-navigation"] =
-     {
+    {
       { "images/stock-menu-navigation.png", *, *, "gtk-menu" },
       { "images/stock-menu-navigation.png", *, *, * }
     }
   stock["gimp-qmask-off"] =
-     {
+    {
       { "images/stock-menu-qmask-off.png", *, *, "gtk-menu" },
       { "images/stock-menu-qmask-off.png", *, *, * }
     }
   stock["gimp-qmask-on"] =
-     {
+    {
       { "images/stock-menu-qmask-on.png", *, *, "gtk-menu" },
       { "images/stock-menu-qmask-on.png", *, *, * }
     }
@@ -127,22 +180,22 @@ style "gimp-icons"
   # X & Y linked or not
   #
   stock["gimp-hchain"] =
-     {
+    {
       { "images/stock-button-hchain.png", *, *, "gtk-button" },
       { "images/stock-button-hchain.png", *, *, * }
     }
   stock["gimp-hchain-broken"] =
-     {
+    {
       { "images/stock-button-hchain-broken.png", *, *, "gtk-button" },
       { "images/stock-button-hchain-broken.png", *, *, * }
     }
   stock["gimp-vchain"] =
-     {
+    {
       { "images/stock-button-vchain.png", *, *, "gtk-button" },
       { "images/stock-button-vchain.png", *, *, * }
     }
   stock["gimp-vchain-broken"] =
-     {
+    {
       { "images/stock-button-vchain-broken.png", *, *, "gtk-button" },
       { "images/stock-button-vchain-broken.png", *, *, * }
     }

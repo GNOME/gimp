@@ -35,6 +35,8 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gimpchannellistitem.h		\
 	gimpchannellistview.c		\
 	gimpchannellistview.h		\
+	gimpcolormapeditor.c		\
+	gimpcolormapeditor.h		\
 	gimpcolorpanel.c		\
 	gimpcolorpanel.h		\
 	gimpcomponentlistitem.c		\

@@ -1,5 +1,35 @@
 2002-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/Makefile.am
+	* app/gui/colormap-dialog.[ch]: removed...
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcolormapeditor.[ch]: ...and added here.
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-menu-convert-grayscale.png
+	* themes/Default/images/stock-menu-convert-indexed.png
+	* themes/Default/images/stock-menu-convert-rgb.png
+	* themes/Default/images/stock-menu-merge-down.png
+	* themes/Default/images/stock-menu-reshow-filter.png
+	* themes/Default/images/stock-menu-rotate-180.png
+	* themes/Default/images/stock-menu-rotate-270.png
+	* themes/Default/images/stock-menu-rotate-90.png
+	* themes/Default/images/stock-menu-scale.png: new icons from Jimmac.
+
+	* themes/Default/images/stock-menu-resize.png: my own doing. Someone
+	needs to look at it :)
+
+	* themes/Default/imagerc
+	* libgimpwidgets/gimpstock.[ch]: added them.
+
+	* app/gui/menus.c: use them.
+
+2002-03-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-filter-dialog.c: treeviewized
 	and undeprecated.
 

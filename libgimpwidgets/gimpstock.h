@@ -28,23 +28,21 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_STOCK_ANCHOR        "gimp-anchor"
-#define GIMP_STOCK_DUPLICATE     "gimp-duplicate"
-#define GIMP_STOCK_EDIT          "gimp-edit"
-#define GIMP_STOCK_LINKED        "gimp-linked"
-#define GIMP_STOCK_PASTE_AS_NEW  "gimp-paste-as-new"
-#define GIMP_STOCK_PASTE_INTO    "gimp-paste-into"
-#define GIMP_STOCK_RESET         "gimp-reset"
-#define GIMP_STOCK_VISIBLE       "gimp-visible"
+/*  only in button size:  */
 
-#define GIMP_STOCK_NAVIGATION    "gimp-navigation"
-#define GIMP_STOCK_QMASK_OFF     "gimp-qmask-off"
-#define GIMP_STOCK_QMASK_ON      "gimp-qmask-on"
+#define GIMP_STOCK_ANCHOR              "gimp-anchor"
+#define GIMP_STOCK_DUPLICATE           "gimp-duplicate"
+#define GIMP_STOCK_EDIT                "gimp-edit"
+#define GIMP_STOCK_LINKED              "gimp-linked"
+#define GIMP_STOCK_PASTE_AS_NEW        "gimp-paste-as-new"
+#define GIMP_STOCK_PASTE_INTO          "gimp-paste-into"
+#define GIMP_STOCK_RESET               "gimp-reset"
+#define GIMP_STOCK_VISIBLE             "gimp-visible"
 
-#define GIMP_STOCK_HCHAIN        "gimp-hchain"
-#define GIMP_STOCK_HCHAIN_BROKEN "gimp-hchain-broken"
-#define GIMP_STOCK_VCHAIN        "gimp-vchain"
-#define GIMP_STOCK_VCHAIN_BROKEN "gimp-vchain-broken"
+#define GIMP_STOCK_HCHAIN              "gimp-hchain"
+#define GIMP_STOCK_HCHAIN_BROKEN       "gimp-hchain-broken"
+#define GIMP_STOCK_VCHAIN              "gimp-vchain"
+#define GIMP_STOCK_VCHAIN_BROKEN       "gimp-vchain-broken"
 
 #define GIMP_STOCK_SELECTION_REPLACE   "gimp-selection-replace"
 #define GIMP_STOCK_SELECTION_ADD       "gimp-selection-add"
@@ -54,6 +52,27 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_TO_PATH   "gimp-selection-to-path"
 
 #define GIMP_STOCK_PATH_STROKE         "gimp-path-stroke"
+
+
+/*  only in menu size:  */
+
+#define GIMP_STOCK_CONVERT_RGB         "gimp-convert-rgb"
+#define GIMP_STOCK_CONVERT_GRAYSCALE   "gimp-convert-grayscale"
+#define GIMP_STOCK_CONVERT_INDEXED     "gimp-convert-indexed"
+#define GIMP_STOCK_MERGE_DOWN          "gimp-merge-down"
+#define GIMP_STOCK_RESHOW_FILTER       "gimp-reshow-filter"
+#define GIMP_STOCK_ROTATE_90           "gimp-rotate-90"
+#define GIMP_STOCK_ROTATE_180          "gimp-rotate-180"
+#define GIMP_STOCK_ROTATE_270          "gimp-rotate-270"
+#define GIMP_STOCK_RESIZE              "gimp-resize"
+#define GIMP_STOCK_SCALE               "gimp-scale"
+
+#define GIMP_STOCK_NAVIGATION          "gimp-navigation"
+#define GIMP_STOCK_QMASK_OFF           "gimp-qmask-off"
+#define GIMP_STOCK_QMASK_ON            "gimp-qmask-on"
+
+
+/*  only in button size:  */
 
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
@@ -94,7 +113,11 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_THRESHOLD           "gimp-tool-threshold"
 #define GIMP_STOCK_TOOL_ZOOM                "gimp-tool-zoom"
 
+
+/*  only in dialog size:  */
+
 #define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"
+
 
 void   gimp_stock_init (void);
 

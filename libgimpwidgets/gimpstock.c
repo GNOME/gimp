@@ -94,10 +94,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESET,        N_("_Reset"),            0, 0, "gimp-libgimp" },
   { GIMP_STOCK_VISIBLE,      N_("Visible"),           0, 0, "gimp-libgimp" },
 
-  { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, "gimp-libgimp" },
-  { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, "gimp-libgimp" },
-
   { GIMP_STOCK_HCHAIN,                   NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, "gimp-libgimp" },
@@ -111,6 +107,21 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_TO_PATH,        NULL,        0, 0, "gimp-libgimp" },
 
   { GIMP_STOCK_PATH_STROKE,              NULL,        0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_CONVERT_INDEXED,          NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_MERGE_DOWN,               NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_RESHOW_FILTER,            NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_ROTATE_90,                NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_ROTATE_180,               NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_ROTATE_270,               NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_RESIZE,                   NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_SCALE,                    NULL,        0, 0, "gimp-libgimp" },
+
+  { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, "gimp-libgimp" },
+  { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, "gimp-libgimp" },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, "gimp-libgimp" },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       NULL,        0, 0, "gimp-libgimp" },
@@ -231,9 +242,20 @@ static struct
 }
 gimp_stock_menu_pixbufs[] =
 {
-  { GIMP_STOCK_NAVIGATION, stock_menu_navigation },
-  { GIMP_STOCK_QMASK_OFF,  stock_menu_qmask_off  },
-  { GIMP_STOCK_QMASK_ON,   stock_menu_qmask_on   }
+  { GIMP_STOCK_CONVERT_RGB,       stock_menu_convert_rgb       },
+  { GIMP_STOCK_CONVERT_GRAYSCALE, stock_menu_convert_grayscale },
+  { GIMP_STOCK_CONVERT_INDEXED,   stock_menu_convert_indexed   },
+  { GIMP_STOCK_MERGE_DOWN,        stock_menu_merge_down        },
+  { GIMP_STOCK_RESHOW_FILTER,     stock_menu_reshow_filter     },
+  { GIMP_STOCK_ROTATE_90,         stock_menu_rotate_90         },
+  { GIMP_STOCK_ROTATE_180,        stock_menu_rotate_180        },
+  { GIMP_STOCK_ROTATE_270,        stock_menu_rotate_270        },
+  { GIMP_STOCK_RESIZE,            stock_menu_resize            },
+  { GIMP_STOCK_SCALE,             stock_menu_scale             },
+
+  { GIMP_STOCK_NAVIGATION,        stock_menu_navigation        },
+  { GIMP_STOCK_QMASK_OFF,         stock_menu_qmask_off         },
+  { GIMP_STOCK_QMASK_ON,          stock_menu_qmask_on          }
 };
 
 

@@ -40,6 +40,7 @@
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
+#include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
 #include "widgets/gimpdataeditor.h"
@@ -68,7 +69,6 @@
 #include "brushes-commands.h"
 #include "buffers-commands.h"
 #include "channels-commands.h"
-#include "colormap-dialog.h"
 #include "device-status-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
@@ -94,7 +94,7 @@
 
 /*  local function prototypes  */
 
-static void dialogs_indexed_palette_selected      (GimpColormapDialog *dialog,
+static void dialogs_indexed_palette_selected      (GimpColormapEditor *editor,
                                                    GimpDockable       *dockable);
 
 static GtkWidget * dialogs_brush_tab_func         (GimpDockable       *dockable,
@@ -141,7 +141,7 @@ static void dialogs_path_view_image_changed       (GimpContext        *context,
                                                    GtkWidget          *view);
 static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 						   GimpImage          *gimage,
-						   GimpColormapDialog *ipal);
+						   GimpColormapEditor *editor);
 
 
 /**********************/
@@ -777,7 +777,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   gimage = gimp_context_get_image (context);
 
-  view = gimp_colormap_dialog_new (gimage);
+  view = gimp_colormap_editor_new (gimage);
 
   dockable = dialogs_dockable_new (view,
 				   "Indexed Palette", "Colormap",
@@ -903,12 +903,12 @@ dialogs_edit_palette_func (GimpData *data)
 /*  private functions  */
 
 static void
-dialogs_indexed_palette_selected (GimpColormapDialog *dialog,
+dialogs_indexed_palette_selected (GimpColormapEditor *editor,
 				  GimpDockable       *dockable)
 {
   GimpContext *context;
 
-  context = (GimpContext *) g_object_get_data (G_OBJECT (dialog),
+  context = (GimpContext *) g_object_get_data (G_OBJECT (editor),
 					       "gimp-dialogs-context");
 
   if (context)
@@ -917,8 +917,8 @@ dialogs_indexed_palette_selected (GimpColormapDialog *dialog,
       GimpRGB      color;
       gint         index;
 
-      gimage = gimp_colormap_dialog_get_image (dialog);
-      index  = gimp_colormap_dialog_col_index (dialog);
+      gimage = gimp_colormap_editor_get_image (editor);
+      index  = gimp_colormap_editor_col_index (editor);
 
       gimp_rgba_set_uchar (&color,
 			   gimage->cmap[index * 3],
@@ -1212,9 +1212,9 @@ static void
 dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 					  GimpContext  *context)
 {
-  GimpColormapDialog *view;
+  GimpColormapEditor *view;
 
-  view = (GimpColormapDialog *) g_object_get_data (G_OBJECT (dockable),
+  view = (GimpColormapEditor *) g_object_get_data (G_OBJECT (dockable),
 						   "gimp-dialogs-view");
 
   if (view)
@@ -1283,7 +1283,7 @@ dialogs_path_view_image_changed (GimpContext *context,
 static void
 dialogs_indexed_palette_image_changed (GimpContext        *context,
 				       GimpImage          *gimage,
-				       GimpColormapDialog *ipal)
+				       GimpColormapEditor *editor)
 {
-  gimp_colormap_dialog_set_image (ipal, gimage);
+  gimp_colormap_editor_set_image (editor, gimage);
 }

@@ -56,6 +56,7 @@ typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
 typedef struct _GimpMenuItem            GimpMenuItem;
 
 typedef struct _GimpEditor              GimpEditor;
+typedef struct _GimpColormapEditor      GimpColormapEditor;
 typedef struct _GimpDataEditor          GimpDataEditor;
 typedef struct _GimpBrushEditor         GimpBrushEditor;
 typedef struct _GimpGradientEditor      GimpGradientEditor;

@@ -66,6 +66,17 @@ STOCK_BUTTON_IMAGES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 STOCK_MENU_IMAGES = @STRIP_BEGIN@ \
+	stock-menu-convert-grayscale.png	\
+	stock-menu-convert-indexed.png		\
+	stock-menu-convert-rgb.png		\
+	stock-menu-merge-down.png		\
+	stock-menu-reshow-filter.png		\
+	stock-menu-rotate-180.png		\
+	stock-menu-rotate-270.png		\
+	stock-menu-rotate-90.png		\
+	stock-menu-resize.png			\
+	stock-menu-scale.png			\
+	\
 	stock-menu-navigation.png		\
 	stock-menu-qmask-off.png		\
 	stock-menu-qmask-on.png			\

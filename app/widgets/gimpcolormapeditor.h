@@ -16,27 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLORMAP_DIALOG_H__
-#define __COLORMAP_DIALOG_H__
+#ifndef __GIMP_COLORMAP_EDITOR_H__
+#define __GIMP_COLORMAP_EDITOR_H__
 
 
-#include <gtk/gtkvbox.h>
+#include "gimpeditor.h"
+
+#include "gui/gui-types.h" /* temp hack */
 
 
-#define GIMP_TYPE_COLORMAP_DIALOG            (gimp_colormap_dialog_get_type ())
-#define GIMP_COLORMAP_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialog))
-#define GIMP_COLORMAP_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
-#define GIMP_IS_COLORMAP_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLORMAP_DIALOG))
-#define GIMP_IS_COLORMAP_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLORMAP_DIALOG))
-#define GIMP_COLORMAP_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
+#define GIMP_TYPE_COLORMAP_EDITOR            (gimp_colormap_editor_get_type ())
+#define GIMP_COLORMAP_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditor))
+#define GIMP_COLORMAP_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditorClass))
+#define GIMP_IS_COLORMAP_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLORMAP_EDITOR))
+#define GIMP_IS_COLORMAP_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLORMAP_EDITOR))
+#define GIMP_COLORMAP_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLORMAP_EDITOR, GimpColormapEditorClass))
 
 
-typedef struct _GimpColormapDialog      GimpColormapDialog;
-typedef struct _GimpColormapDialogClass GimpColormapDialogClass;
+typedef struct _GimpColormapEditorClass GimpColormapEditorClass;
 
-struct _GimpColormapDialog
+struct _GimpColormapEditor
 {
-  GtkVBox        parent_instance;
+  GimpEditor     parent_instance;
 
   GimpImage     *image;
   gint           col_index;
@@ -55,24 +56,24 @@ struct _GimpColormapDialog
   ColorNotebook *color_notebook;
 };
 
-struct _GimpColormapDialogClass
+struct _GimpColormapEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GimpEditorClass  parent_class;
 
-  void (* selected) (GimpColormapDialog *gcd);
+  void (* selected) (GimpColormapEditor *gcd);
 };
 
 
-GType       gimp_colormap_dialog_get_type  (void) G_GNUC_CONST;
+GType       gimp_colormap_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_colormap_dialog_new       (GimpImage          *gimage);
+GtkWidget * gimp_colormap_editor_new       (GimpImage          *gimage);
 
-void        gimp_colormap_dialog_selected  (GimpColormapDialog *gcd);
+void        gimp_colormap_editor_selected  (GimpColormapEditor *editor);
 
-void        gimp_colormap_dialog_set_image (GimpColormapDialog *gcd,
+void        gimp_colormap_editor_set_image (GimpColormapEditor *editor,
 					    GimpImage          *gimage);
-GimpImage * gimp_colormap_dialog_get_image (GimpColormapDialog *gcd);
-gint        gimp_colormap_dialog_col_index (GimpColormapDialog *gcd);
+GimpImage * gimp_colormap_editor_get_image (GimpColormapEditor *editor);
+gint        gimp_colormap_editor_col_index (GimpColormapEditor *editor);
 
 
-#endif /* __COLORMAP_DIALOG_H__ */
+#endif /* __GIMP_COLORMAP_EDITOR_H__ */
