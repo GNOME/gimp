@@ -19,7 +19,7 @@
 
 /*
    *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if you prefer)
-   *          version about .645 I would say... give or take a few decimal points
+   *          version about .80 I would say... give or take a few decimal points
    *
    *
    *   by Adrian Likins <aklikins@eos.ncsu.edu>
@@ -84,6 +84,7 @@
    *       .71 - 9/17/97 - (RB) included Base64 encoding functions from mpack
    *                       instead of using external program.
    *                     - General cleanup of the MIME handling code.
+   *       .80 - 6/23/98 - Added a text box so you can compose real messages.
    *
    * As always: The utility of this plugin is left as an exercise for the reader
    *
@@ -132,6 +133,7 @@ static void receipt_callback (GtkWidget * widget, gpointer data);
 static void subject_callback (GtkWidget * widget, gpointer data);
 static void comment_callback (GtkWidget * widget, gpointer data);
 static void filename_callback (GtkWidget * widget, gpointer data);
+static void mesg_body_callback (GtkWidget * widget, gpointer data);
 static int valid_file (char *filename);
 static void create_headers (FILE * mailpipe);
 static char *find_extension (char *filename);
@@ -167,6 +169,7 @@ static m_info mail_info = {
 			  if you prefer that as the default */
 };
 
+static gchar * mesg_body;
 static int run_flag = 0;
 
 MAIN ()
@@ -383,13 +386,20 @@ save_image (char *filename,
 static gint
 save_dialog ()
 {
+
+  /* argh, guess this all needs to be struct that i can pass to the ok_callback
+     so i can get the text from it then.  Seems a bit ugly, but maybe its better.
+     I dunno.  */
   GtkWidget *dlg;
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *table;
+  GtkWidget *table2;
   GtkWidget *label;
   GtkWidget *button1;
   GtkWidget *button2;
+  GtkWidget *text;
+  GtkWidget *vscrollbar;
   GSList *group;
 
   gint argc;
@@ -429,7 +439,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /* table */
-  table = gtk_table_new (5, 3, FALSE);
+  table = gtk_table_new (6, 3, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
@@ -507,6 +517,7 @@ save_dialog ()
 		      (GtkSignalFunc) comment_callback, &mail_info.comment);
   gtk_widget_show (entry);
 
+
   /* filename label  */
   label = gtk_label_new ("Filename:");
   gtk_table_attach (GTK_TABLE (table), label, 
@@ -530,10 +541,41 @@ save_dialog ()
 		      (GtkSignalFunc) filename_callback, &mail_info.filename);
   gtk_widget_show (entry);
 
+  /* comment  */
+    table2 = gtk_table_new (2, 2, FALSE);
+   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 2);
+   gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
+   /*   gtk_box_pack_start (GTK_BOX (box2), table2, TRUE, TRUE, 0);
+	gtk_widget_show (table2); */
+   gtk_table_attach (GTK_TABLE (table), table2, 
+		    0, 3, 4, 5,
+		    GTK_EXPAND | GTK_FILL,
+		    GTK_EXPAND | GTK_FILL,
+		     0, 0);
+
+  text = gtk_text_new (NULL, NULL);
+  gtk_text_set_editable (GTK_TEXT (text), TRUE);
+  gtk_table_attach (GTK_TABLE (table2), text, 
+		    0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL,
+		    GTK_EXPAND | GTK_FILL,
+		    0, 0);
+  gtk_widget_set_usize (text, 200, 100);
+  gtk_widget_show (text);
+  gtk_signal_connect (GTK_OBJECT (text), "changed",
+		      (GtkSignalFunc) mesg_body_callback, mesg_body);
+  gtk_widget_show (table2);
+
+  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
+  gtk_table_attach (GTK_TABLE (table2), vscrollbar, 1, 2, 0, 1,
+		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (vscrollbar);
+  
+
   /* Encapsulation label */
   label = gtk_label_new ("Encapsulation:");
   gtk_table_attach( GTK_TABLE (table), label ,
-		    0, 1, 4, 5,
+		    0, 1, 5, 6,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -556,14 +598,14 @@ save_dialog ()
 		      (gpointer) "mime" );
 
   gtk_table_attach( GTK_TABLE (table), button1,
-		    1, 2, 4, 5,
+		    1, 2, 5, 6,
 		    GTK_EXPAND | GTK_FILL, 
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0 );
   gtk_widget_show( button1 );
 
   gtk_table_attach( GTK_TABLE (table), button2,
-		    2, 3, 4, 5,
+		    2, 3, 5, 6,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0 );
@@ -685,6 +727,7 @@ static void
 ok_callback (GtkWidget * widget, gpointer data)
 {
   run_flag = 1;
+  
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -728,6 +771,12 @@ filename_callback (GtkWidget * widget, gpointer data)
   strncpy (mail_info.filename, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
 }
 
+static void 
+mesg_body_callback (GtkWidget * widget, gpointer data)
+{
+  mesg_body = gtk_editable_get_chars(GTK_EDITABLE(widget), 0, gtk_text_get_length(GTK_TEXT(widget)));
+} 
+
 static void
 create_headers (FILE * mailpipe)
 {
@@ -751,6 +800,8 @@ create_headers (FILE * mailpipe)
       fprintf (mailpipe, "Content-type: text/plain; charset=US-ASCII\n\n");
   }
   fprintf (mailpipe, mail_info.comment);
+  fprintf (mailpipe, "\n\n");
+  fprintf (mailpipe, mesg_body); 
   fprintf (mailpipe, "\n\n");
   if(mail_info.encapsulation == ENCAPSULATION_MIME ) {
       char *content;

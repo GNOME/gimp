@@ -1,3 +1,9 @@
+Tue Jul 28 17:07:41 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/mail/mail.c: added a text entry to GUMP,
+	so you can now compose real messages. Newsreader
+	and 3D flight simulator to follow tomorow.
+
 Tue Jul 28 15:42:39 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/drawable_cmds.c (drawable_fill_invoker): 
