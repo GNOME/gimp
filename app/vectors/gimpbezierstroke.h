@@ -33,13 +33,14 @@
 #define GIMP_BEZIER_STROKE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BEZIER_STROKE, GimpBezierStrokeClass))
 
 
+typedef struct _GimpBezierStrokeClass GimpBezierStrokeClass;
+
 struct _GimpBezierStroke
 {
   GimpStroke  parent_instance;
 
   /* Stuff missing? */
 };
-
 
 struct _GimpBezierStrokeClass
 {
