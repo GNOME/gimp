@@ -56,9 +56,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define  SPIN_BUTTON_WIDTH   75
-#define  COLOR_BUTTON_WIDTH  55
-#define  PREVIEW_SIZE        128
+#define SPIN_BUTTON_WIDTH    8
+#define COLOR_BUTTON_WIDTH  55
+#define PREVIEW_SIZE       128
+
 
 /* Declare local functions. */
 static void   query  (void);
@@ -756,30 +757,34 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (width), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, (gdouble)(drawable->width));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 1, 0.0, drawable->height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (width), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 0, 0.0, 
-					 (gdouble)(drawable->width));
+					 drawable->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0, 
-					 (gdouble)(drawable->height));
+					 drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0, 
-					 (gdouble)(MAX (drawable->width, drawable->height)));
+					 MAX (drawable->width, drawable->height));
   gtk_table_set_col_spacing (GTK_TABLE (width), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (width), 3, 12);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 0, (gdouble)grid_cfg.hwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 1, (gdouble)grid_cfg.vwidth);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 2, (gdouble)grid_cfg.iwidth);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 0, grid_cfg.hwidth);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 1, grid_cfg.vwidth);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 2, grid_cfg.iwidth);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"), 0, 3, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width: "), 1, 0, 0.0); 
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Horizontal"),
+                                0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Vertical"),
+                                0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"),
+                                0, 3, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width: "),
+                                1, 0, 0.0); 
 
   /*  put a chain_button under the size_entries  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
@@ -819,26 +824,28 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (space), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, (gdouble)(drawable->width));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 1, 0.0, drawable->height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0, 
-					 (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0,
+					 drawable->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0, 
-					 (gdouble)(drawable->height));
+					 drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0, 
-					 (gdouble)(MAX (drawable->width, drawable->height)));
+					 MAX (drawable->width, drawable->height));
   gtk_table_set_col_spacing (GTK_TABLE (space), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (space), 3, 12);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 0, (gdouble)grid_cfg.hspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 1, (gdouble)grid_cfg.vspace);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 2, (gdouble)grid_cfg.ispace);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 0, grid_cfg.hspace);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 1, grid_cfg.vspace);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 2, grid_cfg.ispace);
+
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing: "), 1, 0, 0.0); 
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing: "),
+                                1, 0, 0.0); 
 
   /*  put a chain_button under the spacing_entries  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
@@ -882,27 +889,28 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (offset), 2, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, (gdouble)(drawable->width));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 0, 0.0, drawable->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 1, 0.0, drawable->height);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (offset), 2, 0.0, drawable->width);
 
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0, 
-					 (gdouble)(drawable->width));
+					 drawable->width);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0, 
-					 (gdouble)(drawable->height));
+					 drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0, 
-					 (gdouble)(MAX (drawable->width, drawable->height)));
+					 MAX (drawable->width, drawable->height));
   gtk_table_set_col_spacing (GTK_TABLE (offset), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (offset), 3, 12);
 
   /*  initialize the values  */
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, (gdouble)grid_cfg.hoffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 1, (gdouble)grid_cfg.voffset);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 2, (gdouble)grid_cfg.ioffset);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, grid_cfg.hoffset);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 1, grid_cfg.voffset);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 2, grid_cfg.ioffset);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset: "), 1, 0, 0.0); 
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset: "),
+                                1, 0, 0.0); 
 
   /*  this is a weird hack: we put a table into the offset table  */
   table = gtk_table_new (3, 3, FALSE);

@@ -578,7 +578,7 @@ static GimpItemFactoryEntry image_entries[] =
 
   { { N_("/View/Info Window..."), "<control><shift>I",
       view_info_window_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_HELP },
+      "<StockItem>", GIMP_STOCK_INFO },
     NULL,
     "view/dialogs/info_window.html", NULL },
   { { N_("/View/Navigation Window..."), "<control><shift>N",

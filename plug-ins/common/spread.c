@@ -35,10 +35,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Some useful macros */
-#define SCALE_WIDTH 200
-#define TILE_CACHE_SIZE 16
-#define ENTRY_WIDTH 50
+#define SCALE_WIDTH     200
+#define TILE_CACHE_SIZE  16
+
 
 typedef struct
 {
@@ -400,7 +399,7 @@ spread_dialog (gint32        image_ID,
   unit = gimp_image_get_unit (image_ID);
 
   /* sizeentries */
-  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
+  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
 			       spvals.spread_amount_x == spvals.spread_amount_y,

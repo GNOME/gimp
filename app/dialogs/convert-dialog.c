@@ -74,11 +74,11 @@ static gboolean     UserHasWebPal    = FALSE;
 static GimpPalette *theCustomPalette = NULL;
 
 /* Defaults */
-static GimpConvertDitherType   sdither_type  = GIMP_FS_DITHER;
-static gboolean                salpha_dither = FALSE;
-static gboolean                sremove_dups  = TRUE;
-static gint                    snum_colors   = 256;
-static GimpConvertPaletteType  spalette_type = GIMP_MAKE_PALETTE;
+static GimpConvertDitherType   saved_dither_type  = GIMP_FS_DITHER;
+static gboolean                saved_alpha_dither = FALSE;
+static gboolean                saved_remove_dups  = TRUE;
+static gint                    saved_num_colors   = 256;
+static GimpConvertPaletteType  saved_palette_type = GIMP_MAKE_PALETTE;
 
 
 void
@@ -120,11 +120,11 @@ convert_to_indexed (GimpImage *gimage)
   dialog->gimage = gimage;
 
   dialog->custom_palette_button = build_palette_button (gimage->gimp);
-  dialog->dither_type           = sdither_type;
-  dialog->alpha_dither          = salpha_dither;
-  dialog->remove_dups           = sremove_dups;
-  dialog->num_colors            = snum_colors;
-  dialog->palette_type          = spalette_type;
+  dialog->dither_type           = saved_dither_type;
+  dialog->alpha_dither          = saved_alpha_dither;
+  dialog->remove_dups           = saved_remove_dups;
+  dialog->num_colors            = saved_num_colors;
+  dialog->palette_type          = saved_palette_type;
 
   dialog->shell =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
@@ -180,7 +180,7 @@ convert_to_indexed (GimpImage *gimage)
     }      
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_colors,
-				     2, 256, 1, 5, 0, 1, 0);
+				     2, 256, 1, 8, 0, 1, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -188,7 +188,7 @@ convert_to_indexed (GimpImage *gimage)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_colors);
 
-  label = gtk_label_new (_("Number of Colors:"));
+  label = gtk_label_new (_("Max. Number of Colors:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -461,11 +461,11 @@ indexed_ok_callback (GtkWidget *widget,
   gimp_image_flush (dialog->gimage);
 
   /* Save defaults for next time */
-  sdither_type  = dialog->dither_type;
-  salpha_dither = dialog->alpha_dither;
-  sremove_dups  = dialog->remove_dups;
-  snum_colors   = dialog->num_colors;
-  spalette_type = dialog->palette_type;
+  saved_dither_type  = dialog->dither_type;
+  saved_alpha_dither = dialog->alpha_dither;
+  saved_remove_dups  = dialog->remove_dups;
+  saved_num_colors   = dialog->num_colors;
+  saved_palette_type = dialog->palette_type;
 
   if (dialog->palette_select)
     gtk_widget_destroy (dialog->palette_select->shell);  
@@ -501,7 +501,7 @@ indexed_palette_select_destroy_callback (GtkWidget *widget,
     dialog->palette_select = NULL;
 }
 
-static gint
+static void
 indexed_palette_select_palette (GimpContext *context,
 				GimpPalette *palette,
 				gpointer     data)
@@ -510,18 +510,13 @@ indexed_palette_select_palette (GimpContext *context,
 
   dialog = (IndexedDialog *) data;
 
-  if (palette)
+  if (palette && palette->n_colors <= 256)
     {
-      if (palette->n_colors <= 256)
-	{
-	  theCustomPalette = palette;
+      theCustomPalette = palette;
 
-	  gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
-			      GIMP_OBJECT (theCustomPalette)->name);
-	}
+      gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
+                          GIMP_OBJECT (theCustomPalette)->name);
     }
-
-  return FALSE;
 }
 
 static void

@@ -370,7 +370,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the hue scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Hue:"), SLIDER_WIDTH, 75,
+                               _("_Hue:"), SLIDER_WIDTH, -1,
                                0.0, -180.0, 180.0, 1.0, 15.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
@@ -384,7 +384,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the lightness scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("_Lightness:"), SLIDER_WIDTH, 75,
+                               _("_Lightness:"), SLIDER_WIDTH, -1,
                                0.0, -100.0, 100.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);
@@ -398,7 +398,7 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the saturation scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                               _("_Saturation:"), SLIDER_WIDTH, 75,
+                               _("_Saturation:"), SLIDER_WIDTH, -1,
                                0.0, -100.0, 100.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
                                NULL, NULL);

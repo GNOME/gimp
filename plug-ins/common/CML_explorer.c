@@ -489,7 +489,7 @@ run (gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
 
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
@@ -1358,7 +1358,7 @@ CML_explorer_dialog (void)
 				 optionmenu, 2, FALSE);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				  _("Zoom Scale:"), SCALE_WIDTH, 0,
+				  _("Zoom Scale:"), SCALE_WIDTH, 3,
 				  VALS.scale, 1, 10, 1, 2, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1366,7 +1366,7 @@ CML_explorer_dialog (void)
 				   adj, &VALS.scale);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				  _("Start Offset:"), SCALE_WIDTH, 0,
+				  _("Start Offset:"), SCALE_WIDTH, 3,
 				  VALS.start_offset, 0, 100, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -1733,7 +1733,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Mod. Rate:"), SCALE_WIDTH, 0,
+			      _("Mod. Rate:"), SCALE_WIDTH, 5,
 			      param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1742,7 +1742,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Env. Sensitivity:"), SCALE_WIDTH, 0,
+			      _("Env. Sensitivity:"), SCALE_WIDTH, 5,
 			      param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1751,7 +1751,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Diffusion Dist.:"), SCALE_WIDTH, 0,
+			      _("Diffusion Dist.:"), SCALE_WIDTH, 5,
 			      param->diffusion_dist, 2, 10, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1760,7 +1760,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("# of Subranges:"), SCALE_WIDTH, 0,
+			      _("# of Subranges:"), SCALE_WIDTH, 5,
 			      param->range_num, 1, 10, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1769,7 +1769,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("P(ower Factor):"), SCALE_WIDTH, 0,
+			      _("P(ower Factor):"), SCALE_WIDTH, 5,
 			      param->power, 0.0, 10.0, 0.1, 1.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1778,7 +1778,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Parameter k:"), SCALE_WIDTH, 0,
+			      _("Parameter k:"), SCALE_WIDTH, 5,
 			      param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1787,7 +1787,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range Low:"), SCALE_WIDTH, 0,
+			      _("Range Low:"), SCALE_WIDTH, 5,
 			      param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1796,7 +1796,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   index++;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-			      _("Range High:"), SCALE_WIDTH, 0,
+			      _("Range High:"), SCALE_WIDTH, 5,
 			      param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);

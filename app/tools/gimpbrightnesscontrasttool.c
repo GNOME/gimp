@@ -239,8 +239,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the brightness scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                               _("_Brightness:"),
-                               SLIDER_WIDTH, 75,
+                               _("_Brightness:"), SLIDER_WIDTH, -1,
                                bc_tool->brightness,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,
@@ -255,8 +254,7 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Create the contrast scale widget  */
   data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                               _("Con_trast:"),
-                               SLIDER_WIDTH, 75,
+                               _("Con_trast:"), SLIDER_WIDTH, -1,
                                bc_tool->contrast,
                                -127.0, 127.0, 1.0, 10.0, 0,
                                TRUE, 0.0, 0.0,

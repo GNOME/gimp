@@ -68,9 +68,9 @@
 #define PLUG_IN_NAME	 "plug_in_despeckle"
 #define PLUG_IN_VERSION	 "1.3.2 - 17 May 1998"
 #define PREVIEW_SIZE	 128
-#define SCALE_WIDTH	 80
-#define ENTRY_WIDTH	 40
-#define MAX_RADIUS	 20
+#define SCALE_WIDTH	 100
+#define ENTRY_WIDTH	   3
+#define MAX_RADIUS	  20
 
 #define FILTER_ADAPTIVE	 0x01
 #define FILTER_RECURSIVE 0x02
@@ -750,7 +750,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Radius:"), 100, 0,
+			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -763,7 +763,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Black Level:"), 100, 0,
+			      _("_Black Level:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      black_level, -1, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -776,7 +776,7 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_White Level:"), 100, 0,
+			      _("_White Level:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      white_level, 0, 256, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

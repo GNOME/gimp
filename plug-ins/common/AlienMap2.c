@@ -833,7 +833,7 @@ static unsigned char header_data[] = { 71,99,218,218,99,11,71,218,71,71,
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH   45
+#define ENTRY_WIDTH    6
 
 /***** Color model *****/
 
@@ -1410,7 +1410,7 @@ alienmap2_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("R/H-_Frequency:"), SCALE_WIDTH, 0,
+			      _("R/H-_Frequency:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.redfrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the red/hue channel"),
@@ -1420,7 +1420,7 @@ alienmap2_dialog (void)
                     &wvals.redfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("R/H-_Phaseshift:"), SCALE_WIDTH, 0,
+			      _("R/H-_Phaseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.redangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the red/hue channel"),
@@ -1430,7 +1430,7 @@ alienmap2_dialog (void)
                     &wvals.redangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("G/S-Fr_equency:"), SCALE_WIDTH, 0,
+			      _("G/S-Fr_equency:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.greenfrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the green/saturation "
@@ -1440,7 +1440,7 @@ alienmap2_dialog (void)
                     &wvals.greenfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("G/S-Ph_aseshift:"), SCALE_WIDTH, 0,
+			      _("G/S-Ph_aseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.redangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the green/saturation channel"),
@@ -1450,7 +1450,7 @@ alienmap2_dialog (void)
                     &wvals.greenangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("B/L-Freq_uency:"), SCALE_WIDTH, 0,
+			      _("B/L-Freq_uency:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.bluefrequency, 0, 5.0, 0.1, 1, 2,
 			      TRUE, 0, 0,
 			      _("Change frequency of the blue/luminance "
@@ -1460,7 +1460,7 @@ alienmap2_dialog (void)
                     &wvals.bluefrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("B/L-Pha_seshift:"), SCALE_WIDTH, 0,
+			      _("B/L-Pha_seshift:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      wvals.blueangle, 0, 360.0, 1, 15, 2,
 			      TRUE, 0, 0,
 			      _("Change angle of the blue/luminance channel"),

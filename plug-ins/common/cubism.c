@@ -354,7 +354,7 @@ cubism_dialog (void)
 				(cvals.bg_color == BG));
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("_Tile Size:"), SCALE_WIDTH, 0,
+				     _("_Tile Size:"), SCALE_WIDTH, 5,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -364,7 +364,7 @@ cubism_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("T_ile Saturation:"), SCALE_WIDTH, 0,
+			  _("T_ile Saturation:"), SCALE_WIDTH, 5,
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
 			  NULL, NULL);

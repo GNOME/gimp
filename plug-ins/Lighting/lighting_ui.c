@@ -464,39 +464,32 @@ create_options_page (void)
 
   /* Antialiasing options */
 
-  frame = gtk_frame_new (_("Antialiasing Options"));
+  frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("E_nable Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.antialiasing);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_widget_show (toggle);
+
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.antialiasing);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-			   _("Enable/disable jagged edges removal "
-			     "(antialiasing)"), NULL);
 
   table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   gtk_widget_set_sensitive (table, mapvals.antialiasing);
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Depth:"), 0, 0,
+			      _("_Depth:"), 0, 6,
 			      mapvals.max_depth, 1.0, 5.0, 0.5, 1.0,
 			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
@@ -506,7 +499,7 @@ create_options_page (void)
                     &mapvals.max_depth);
   
  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("T_hreshold:"), 0, 0,
+			      _("T_hreshold:"), 0, 6,
 			      mapvals.pixel_treshold, 0.01, 1000.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      _("Stop when pixel differences are smaller than "
@@ -893,7 +886,6 @@ static GtkWidget *
 create_bump_page (void)
 {
   GtkWidget *page;
-  GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
@@ -904,32 +896,30 @@ create_bump_page (void)
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
-  frame = gtk_frame_new (_("Bumpmap Settings"));
+
+  frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("E_nable Bump Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.bump_mapped);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_widget_show (toggle);
+
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.bump_mapped);
-  gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable bump-mapping (image depth)"),
 			   NULL);
 
   table = gtk_table_new (6, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   gtk_widget_set_sensitive (table, mapvals.bump_mapped);
@@ -1010,38 +1000,35 @@ create_environment_page (void)
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *optionmenu;
   GtkWidget *menu;
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
-  frame = gtk_frame_new (_("Environment Settings"));
+
+  frame = gtk_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("E_nable Environment Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.env_mapped);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
+  gtk_widget_show (toggle);
+
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.env_mapped);
-  gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
 			   _("Enable/disable environment-mapping (reflection)"),
 			   NULL);
 
   table = gtk_table_new (3, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   gtk_widget_set_sensitive (table, mapvals.env_mapped);

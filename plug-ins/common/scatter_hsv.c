@@ -72,6 +72,7 @@ static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
 #define PREVIEW_WIDTH       128
 #define PREVIEW_HEIGHT      128
 #define SCALE_WIDTH         100
+#define ENTRY_WIDTH           3
 
 static gint preview_width  = PREVIEW_WIDTH;
 static gint preview_height = PREVIEW_HEIGHT;
@@ -443,7 +444,7 @@ scatter_hsv_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Holdness:"), SCALE_WIDTH, 0,
+			      _("_Holdness:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      VALS.holdness, 1, 8, 1, 2, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -452,7 +453,7 @@ scatter_hsv_dialog (void)
                     &VALS.holdness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("H_ue:"), SCALE_WIDTH, 0,
+			      _("H_ue:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      VALS.hue_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -461,7 +462,7 @@ scatter_hsv_dialog (void)
                     &VALS.hue_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Saturation:"), SCALE_WIDTH, 0,
+			      _("_Saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      VALS.saturation_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -470,7 +471,7 @@ scatter_hsv_dialog (void)
                     &VALS.saturation_distance);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("_Value:"), SCALE_WIDTH, 0,
+			      _("_Value:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      VALS.value_distance, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

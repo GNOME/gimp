@@ -38,7 +38,7 @@
 
 /* Some useful macros */
 
-#define SPIN_BUTTON_WIDTH 75
+#define SPIN_BUTTON_WIDTH 8
 #define TILE_CACHE_SIZE  16
 #define HORIZONTAL        0
 #define VERTICAL          1
@@ -414,9 +414,9 @@ shift_dialog (gint32 image_ID)
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  size_entry = gimp_size_entry_new(1, unit, "%a", TRUE, FALSE, FALSE, 
-				   SPIN_BUTTON_WIDTH, 
-				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 
+                                    SPIN_BUTTON_WIDTH, 
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);

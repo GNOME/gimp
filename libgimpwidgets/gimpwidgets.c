@@ -630,7 +630,6 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
 				    climb_rate, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
 
   return spinbutton;
 }
@@ -756,7 +755,12 @@ gimp_scale_entry_new (GtkTable    *table,
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
     
   if (spinbutton_width > 0)
-    gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
+    {
+      if (spinbutton_width < 17)
+        gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), spinbutton_width);
+      else
+        gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
+    }
 
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
   if (scale_width > 0)
@@ -1017,6 +1021,15 @@ gimp_coordinates_new (GimpUnit         unit,
   GtkWidget *chainbutton;
 
   spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 1, 1, 2);
+
+  if (spinbutton_width > 0)
+    {
+      if (spinbutton_width < 17)
+        gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), spinbutton_width);
+      else
+        gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
+    }
+
   sizeentry = gimp_size_entry_new (1, unit, unit_format,
 				   menu_show_pixels,
 				   menu_show_percent,
@@ -1162,6 +1175,7 @@ gimp_memsize_entry_new (GtkAdjustment *adjustment)
                                      (gulong) adjustment->lower >> shift,
                                      (gulong) adjustment->upper >> shift,
                                      1, 8, 0, 1, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

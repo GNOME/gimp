@@ -690,7 +690,7 @@ mosaic_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("T_ile Size:"), SCALE_WIDTH, 0,
+				     _("T_ile Size:"), SCALE_WIDTH, 5,
 				     mvals.tile_size, 5.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -699,7 +699,7 @@ mosaic_dialog (void)
                     &mvals.tile_size);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Tile _Height:"), SCALE_WIDTH, 0,
+				     _("Tile _Height:"), SCALE_WIDTH, 5,
 				     mvals.tile_height, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -708,7 +708,7 @@ mosaic_dialog (void)
                     &mvals.tile_height);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				     _("Til_e Spacing:"), SCALE_WIDTH, 0,
+				     _("Til_e Spacing:"), SCALE_WIDTH, 5,
 				     mvals.tile_spacing, 1.0, 50.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -717,7 +717,7 @@ mosaic_dialog (void)
                     &mvals.tile_spacing);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-				     _("Tile _Neatness:"), SCALE_WIDTH, 0,
+				     _("Tile _Neatness:"), SCALE_WIDTH, 5,
 				     mvals.tile_neatness,
 				     0.0, 1.0, 0.10, 0.1, 2,
 				     TRUE, 0, 0,
@@ -727,7 +727,7 @@ mosaic_dialog (void)
                     &mvals.tile_neatness);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				     _("Light _Direction:"), SCALE_WIDTH, 0,
+				     _("Light _Direction:"), SCALE_WIDTH, 5,
 				     mvals.light_dir, 0.0, 360.0, 1.0, 15.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -736,7 +736,7 @@ mosaic_dialog (void)
                     &mvals.light_dir);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-				     _("Color _Variation:"), SCALE_WIDTH, 0,
+				     _("Color _Variation:"), SCALE_WIDTH, 5,
 				     mvals.color_variation,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,

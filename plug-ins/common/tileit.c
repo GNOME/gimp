@@ -60,7 +60,6 @@
 
 #define PREVIEW_SIZE 128 
 #define SCALE_WIDTH   80
-#define ENTRY_WIDTH   50
 
 #define MAX_SEGS       6
 
@@ -541,7 +540,6 @@ tileit_dialog (void)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", label);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
-  gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
@@ -566,7 +564,6 @@ tileit_dialog (void)
   g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", label);
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
-  gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -613,7 +610,7 @@ tileit_dialog (void)
   gtk_widget_show (table2);
 
   op_data = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-				  _("O_pacity:"), SCALE_WIDTH, ENTRY_WIDTH,
+				  _("O_pacity:"), SCALE_WIDTH, -1,
 				  opacity, 0, 100, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -638,7 +635,7 @@ tileit_dialog (void)
   gtk_widget_set_sensitive (table2, has_alpha);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    "1 / (2 ** _n)", SCALE_WIDTH, ENTRY_WIDTH,
+				    "1 / (2 ** _n)", SCALE_WIDTH, -1,
 				    itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);

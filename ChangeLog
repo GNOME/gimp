@@ -1,3 +1,103 @@
+2002-09-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/convert-dialog.c: changed "Number of Colors" to
+	"Max Number of Colors" to clarify what this parameter does.
+	(fixes #92194).
+
+	* app/gui/menus.c: use GIMP_STOCK_INFO for "View/Info Window".
+
+	Specify spibutton sizes in chars, not pixels (eek) all over
+	the place. Also removed explicit sizes where the GtkSpinButton
+	default size does not disturbe tabular widget layouts.
+
+	* libgimpwidgets/gimpwidgets.c: removed the hardcoded width of 75
+	pixels in gimp_spin_button_new(). Changed gimp_scale_entry_new()
+	and gimp_coordinates_new() to interpret their "spinbutton_width"
+	parameters as chars if < 16, and as pixels otherwise. This gives
+	reasonable results and doesn't cause unchanged plug-ins to
+	suddenly have spinbuttons of dozens of chars width :)
+
+	* libgimpwidgets/gimpsizeentry.c: added the same heuristic here.
+
+	* libgimpwidgets/gimpquerybox.c
+	* app/gui/color-notebook.c
+	* app/gui/convert-dialog.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimppaletteeditor.c: changed accordingly.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/emboss.c
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/fractaltrace.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/max_rgb.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/waves.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/rcm/rcm_dialog.c: changed accordingly, which involves
+	removals of gtk_widget_set_size_request(spinbutton), removal of
+	lots of explicit spinbutton sizes in gimp_scale_entry_new(), and
+	adding of new ones because GtkSpinButton's auto-size trashed
+	tabular layouts.
+
+	Lots of cleanup & indentation while browsing the plug-ins'
+	code. Changed spacings, moved toggle buttons into frame titles,
+	use stock items, stuff...
+
 2002-09-06  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/semiflatten.c: minor code cleanup (matching

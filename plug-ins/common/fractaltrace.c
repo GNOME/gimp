@@ -796,7 +796,7 @@ dialog_show (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("X_1:"), 0, 0,
+			      _("X_1:"), 0, 6,
 			      parameters.x1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -805,7 +805,7 @@ dialog_show (void)
                     &parameters.x1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("X_2:"), 0, 0,
+			      _("X_2:"), 0, 6,
 			      parameters.x2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -814,7 +814,7 @@ dialog_show (void)
                     &parameters.x2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Y_1:"), 0, 0,
+			      _("Y_1:"), 0, 6,
 			      parameters.y1, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -823,7 +823,7 @@ dialog_show (void)
                     &parameters.y1);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Y_2:"), 0, 0,
+			      _("Y_2:"), 0, 6,
 			      parameters.y2, -50, 50, 0.1, 0.5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -832,7 +832,7 @@ dialog_show (void)
                     &parameters.y2);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("_Depth:"), 0, 0,
+			      _("_Depth:"), 0, 6,
 			      parameters.depth, 1, 50, 1, 5, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -79,7 +79,7 @@ static char rcsid[] = "$Id$";
 
 #define TILE_CACHE_SIZE  16
 #define SCALE_WIDTH     125
-#define ENTRY_WIDTH      50
+#define ENTRY_WIDTH       6
 
 typedef struct
 {

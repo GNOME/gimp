@@ -101,7 +101,7 @@ static char rcsid[] = "$Id$";
 #define GM_PREVIEW_HEIGHT 16
 
 #define SCALE_WIDTH 100
-#define ENTRY_WIDTH  40
+#define ENTRY_WIDTH   8
 
 #ifndef OPAQUE
 #define OPAQUE	   255
@@ -2494,8 +2494,10 @@ dlg_run (void)
 {
   GtkWidget *shell;
   GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *abox;
+  GtkWidget *button;
   GtkWidget *notebook;
 
   gimp_ui_init ("gflare", TRUE);
@@ -2558,9 +2560,13 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame); 
 
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
   gtk_widget_show (abox);
 
   frame = gtk_frame_new (NULL); 
@@ -2578,6 +2584,15 @@ dlg_run (void)
 		      GTK_SIGNAL_FUNC (dlg_preview_handle_event),
 		      NULL);
   dlg_preview_calc_window ();
+
+  button = gtk_check_button_new_with_mnemonic (_("A_uto Update Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview);
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (dlg_update_preview_callback),
+		      &dlg->update_preview);
 
   /*
    *	Notebook
@@ -2920,9 +2935,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   GtkWidget *chain;
   GtkWidget *table;
   GtkWidget *button;
-  GtkWidget *vbox;
   GtkWidget *asup_table;
-  GtkWidget *scale;
   GtkObject *adj;
   gdouble    xres, yres;
   gint       row;
@@ -2977,7 +2990,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Radius:"), SCALE_WIDTH, 0,
+			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.radius, 0.0, drawable->width / 2,
 			      1.0, 10.0, 1,
 			      FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
@@ -2990,7 +3003,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Ro_tation:"), SCALE_WIDTH, 0,
+			      _("Ro_tation:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3002,7 +3015,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Hue Rotation:"), SCALE_WIDTH, 0,
+			      _("_Hue Rotation:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3014,7 +3027,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector _Angle:"), SCALE_WIDTH, 0,
+			      _("Vector _Angle:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -3026,7 +3039,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Vector _Length:"), SCALE_WIDTH, 0,
+			      _("Vector _Length:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      pvals.vlength, 1, 1000, 1.0, 10.0, 1,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -3047,21 +3060,18 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
   button = gtk_check_button_new_with_mnemonic (_("A_daptive Supersampling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				pvals.use_asupsample);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  asup_table = gtk_table_new (2, 2, FALSE);
+  asup_table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (asup_table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (asup_table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (asup_table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), asup_table, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), asup_table);
+  gtk_widget_show (asup_table);
 
   gtk_widget_set_sensitive (asup_table, pvals.use_asupsample);
   gtk_object_set_data (GTK_OBJECT (button), "set_sensitive", asup_table);
@@ -3069,39 +3079,25 @@ dlg_make_page_settings (GFlareDialog *dlg,
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 		      &pvals.use_asupsample);
 
-  adj = gtk_adjustment_new (pvals.asupsample_max_depth,
-			    1.0, 10.0, 1.0, 1.0, 1.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 0,
+                              _("_Max Depth:"), -1, 4,
+                              pvals.asupsample_max_depth,
+                              1.0, 10.0, 1.0, 1.0, 0,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &pvals.asupsample_max_depth);
-  gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 0,
-			     _("_Max Depth:"), 1.0, 1.0,
-			     scale, 1, FALSE);
 
-  adj = gtk_adjustment_new (pvals.asupsample_threshold,
-			    0.0, 4.0, 0.01, 0.01, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 1,
+                              _("_Threshold"), -1, 4,
+                              pvals.asupsample_threshold,
+                              0.0, 4.0, 0.01, 0.01, 2,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
 		      &pvals.asupsample_threshold);
-  gimp_table_attach_aligned (GTK_TABLE (asup_table), 0, 1,
-			     _("_Threshold:"), 1.0, 1.0,
-			     scale, 1, FALSE);
-
-  gtk_widget_show (asup_table);
-
-  button = gtk_check_button_new_with_mnemonic (_("A_uto Update Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), dlg->update_preview);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (dlg_update_preview_callback),
-		      &dlg->update_preview);
-  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*
    *	Create Page
@@ -3160,15 +3156,15 @@ dlg_make_page_selector (GFlareDialog *dlg,
   gint       i;
   static struct
   {
-    gchar         *label;
-    GtkSignalFunc  callback;
+    const gchar *label;
+    GCallback    callback;
   }
   buttons[] =
   {
-    { N_("_New"),    (GtkSignalFunc) &dlg_selector_new_callback },
-    { N_("_Edit"),   (GtkSignalFunc) &dlg_selector_edit_callback },
-    { N_("Co_py"),   (GtkSignalFunc) &dlg_selector_copy_callback },
-    { N_("_Delete"), (GtkSignalFunc) &dlg_selector_delete_callback }
+    { GTK_STOCK_NEW,    G_CALLBACK (dlg_selector_new_callback)    },
+    { GIMP_STOCK_EDIT,  G_CALLBACK (dlg_selector_edit_callback)   },
+    { GTK_STOCK_COPY,   G_CALLBACK (dlg_selector_copy_callback)   },
+    { GTK_STOCK_DELETE, G_CALLBACK (dlg_selector_delete_callback) }
   };
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
@@ -3201,17 +3197,19 @@ dlg_make_page_selector (GFlareDialog *dlg,
    */
 
   hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   for (i = 0; i < G_N_ELEMENTS (buttons); i++)
     {
-      button = gtk_button_new_with_mnemonic (gettext (buttons[i].label));
+      button = gtk_button_new_from_stock (buttons[i].label);
+      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+      gtk_widget_show (button);
+
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  buttons[i].callback,
 			  button);
-      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
     }
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   gtk_widget_show (vbox);
 

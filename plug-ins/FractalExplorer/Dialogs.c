@@ -443,7 +443,7 @@ explorer_dialog (void)
 
   elements->xmin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("XMIN:"), SCALE_WIDTH, 100,
+			  _("XMIN:"), SCALE_WIDTH, 10,
 			  wvals.xmin, -3, 3, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the first (minimal) x-coordinate "
@@ -454,7 +454,7 @@ explorer_dialog (void)
 
   elements->xmax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("XMAX:"), SCALE_WIDTH, 100,
+			  _("XMAX:"), SCALE_WIDTH, 10,
 			  wvals.xmax, -3, 3, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the second (maximal) x-coordinate "
@@ -465,7 +465,7 @@ explorer_dialog (void)
 
   elements->ymin =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			  _("YMIN:"), SCALE_WIDTH, 100,
+			  _("YMIN:"), SCALE_WIDTH, 10,
 			  wvals.ymin, -3, 3, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the first (minimal) y-coordinate "
@@ -476,7 +476,7 @@ explorer_dialog (void)
 
   elements->ymax =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			  _("YMAX:"), SCALE_WIDTH, 100,
+			  _("YMAX:"), SCALE_WIDTH, 10,
 			  wvals.ymax, -3, 3, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the second (maximal) y-coordinate "
@@ -487,7 +487,7 @@ explorer_dialog (void)
 
   elements->iter =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			  _("ITER:"), SCALE_WIDTH, 100,
+			  _("ITER:"), SCALE_WIDTH, 10,
 			  wvals.iter, 0, 1000, 1, 10, 5,
 			  TRUE, 0, 0,
 			  _("Change the iteration value. The higher it "
@@ -499,7 +499,7 @@ explorer_dialog (void)
 
   elements->cx =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			  _("CX:"), SCALE_WIDTH, 100,
+			  _("CX:"), SCALE_WIDTH, 10,
 			  wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the CX value (changes aspect of "
@@ -511,7 +511,7 @@ explorer_dialog (void)
 
   elements->cy =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-			  _("CY:"), SCALE_WIDTH, 100,
+			  _("CY:"), SCALE_WIDTH, 10,
 			  wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
 			  TRUE, 0, 0,
 			  _("Change the CY value (changes aspect of "
@@ -525,7 +525,7 @@ explorer_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), hbbox, 0, 3, 7, 8);
   gtk_widget_show (hbbox);
 
-  button = gtk_button_new_with_label (_("Load"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (create_load_file_selection),

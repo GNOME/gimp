@@ -1454,7 +1454,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   /*  size slider  */
   options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("Size:"), -1, 50,
+					  _("Size:"), -1, 5,
 					  options->size,
 					  0.0, 20.0, 1.0, 2.0, 1,
 					  TRUE, 0.0, 0.0,
@@ -1466,7 +1466,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   /* angle adjust slider */
   options->tilt_angle_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-						_("Angle:"), -1, 50,
+						_("Angle:"), -1, 5,
 						options->tilt_angle,
 						-90.0, 90.0, 1, 10.0, 1,
 						TRUE, 0.0, 0.0,
@@ -1490,7 +1490,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   /* size sens slider */
   options->sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-						 _("Size:"), -1, 50,
+						 _("Size:"), -1, -1,
 						 options->sensitivity,
 						 0.0, 1.0, 0.01, 0.1, 1,
 						 TRUE, 0.0, 0.0,
@@ -1502,7 +1502,7 @@ ink_options_new (GimpToolInfo *tool_info)
   
   /* tilt sens slider */
   options->tilt_sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-						      _("Tilt:"), -1, 50,
+						      _("Tilt:"), -1, -1,
 						      options->tilt_sensitivity,
 						      0.0, 1.0, 0.01, 0.1, 1,
 						      TRUE, 0.0, 0.0,
@@ -1514,7 +1514,7 @@ ink_options_new (GimpToolInfo *tool_info)
 
   /* velocity sens slider */
   options->vel_sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-						     _("Speed:"), -1, 50,
+						     _("Speed:"), -1, -1,
 						     options->vel_sensitivity,
 						     0.0, 1.0, 0.01, 0.1, 1,
 						     TRUE, 0.0, 0.0,

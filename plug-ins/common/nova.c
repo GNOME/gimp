@@ -527,7 +527,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("_Radius:"), SCALE_WIDTH, 0,
+			      _("_Radius:"), SCALE_WIDTH, 8,
 			      pvals.radius, 1, 100, 1, 10, 0,
 			      FALSE, 1, GIMP_MAX_IMAGE_SIZE,
 			      NULL, NULL);
@@ -539,7 +539,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("_Spokes:"), SCALE_WIDTH, 0,
+			      _("_Spokes:"), SCALE_WIDTH, 8,
 			      pvals.nspoke, 1, 1024, 1, 16, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -551,7 +551,7 @@ nova_dialog (GimpDrawable *drawable)
                             drawable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("R_andom Hue:"), SCALE_WIDTH, 0,
+			      _("R_andom Hue:"), SCALE_WIDTH, 8,
 			      pvals.randomhue, 0, 360, 1, 15, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -577,7 +577,7 @@ blend_options_new (GimpToolInfo *tool_info)
 
   /*  max depth scale  */
   options->max_depth_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					       _("Max Depth:"), -1, 50,
+					       _("Max Depth:"), -1, 4,
 					       options->max_depth,
 					       1.0, 10.0, 1.0, 1.0, 0,
 					       TRUE, 0.0, 0.0,
@@ -589,7 +589,7 @@ blend_options_new (GimpToolInfo *tool_info)
 
   /*  threshold scale  */
   options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					       _("Threshold:"), -1, 50,
+					       _("Threshold:"), -1, 4,
 					       options->threshold,
 					       0.0, 4.0, 0.01, 0.1, 2,
 					       TRUE, 0.0, 0.0,

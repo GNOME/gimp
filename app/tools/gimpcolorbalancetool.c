@@ -261,7 +261,6 @@ create_levels_scale (const gchar   *left,
   gtk_widget_show (label);
 
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, col, col + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);

@@ -1012,7 +1012,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Deform Radius:"), SCALE_WIDTH, 0,
+				     _("_Deform Radius:"), SCALE_WIDTH, 4,
 				     iwarp_vals.deform_area_radius,
 				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
 				     TRUE, 0, 0,
@@ -1022,7 +1022,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.deform_area_radius);
  
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("D_eform Amount:"), SCALE_WIDTH, 0,
+				     _("D_eform Amount:"), SCALE_WIDTH, 4,
 				     iwarp_vals.deform_amount,
 				     0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
@@ -1122,7 +1122,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Ma_x Depth:"), SCALE_WIDTH, 0,
+				     _("Ma_x Depth:"), SCALE_WIDTH, 5,
 				     iwarp_vals.max_supersample_depth,
 				     1.0, 5.0, 1.1, 1.0, 0,
 				     TRUE, 0, 0,
@@ -1132,7 +1132,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                     &iwarp_vals.max_supersample_depth);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Thresho_ld:"), SCALE_WIDTH, 0,
+				     _("Thresho_ld:"), SCALE_WIDTH, 5,
 				     iwarp_vals.supersample_threshold,
 				     1.0, 10.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,

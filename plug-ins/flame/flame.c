@@ -1022,7 +1022,7 @@ dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Brightness:"), SCALE_WIDTH, 0,
+			      _("_Brightness:"), SCALE_WIDTH, 5,
 			      config.cp.brightness,
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1036,7 +1036,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Co_ntrast:"), SCALE_WIDTH, 0,
+			      _("Co_ntrast:"), SCALE_WIDTH, 5,
 			      config.cp.contrast,
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1050,7 +1050,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Gamma:"), SCALE_WIDTH, 0,
+			      _("_Gamma:"), SCALE_WIDTH, 5,
 			      config.cp.gamma,
 			      1, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1064,7 +1064,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Sample _Density:"), SCALE_WIDTH, 0,
+			      _("Sample _Density:"), SCALE_WIDTH, 5,
 			      config.cp.sample_density,
 			      0.1, 20, 1, 5, 2,
 			      TRUE, 0, 0,
@@ -1075,9 +1075,9 @@ dialog (void)
                     &config.cp.sample_density);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Spa_tial Oversample:"), SCALE_WIDTH, 0,
+			      _("Spa_tial Oversample:"), SCALE_WIDTH, 5,
 			      config.cp.spatial_oversample,
-			      0, 1, 0.01, 0.1, 0,
+			      0, 1, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
 
@@ -1086,7 +1086,7 @@ dialog (void)
                     &config.cp.spatial_oversample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("Spatial _Filter Radius:"), SCALE_WIDTH, 0,
+			      _("Spatial _Filter Radius:"), SCALE_WIDTH, 5,
 			      config.cp.spatial_filter_radius,
 			      0, 4, 0.2, 1, 2,
 			      TRUE, 0, 0,

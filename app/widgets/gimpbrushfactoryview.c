@@ -111,7 +111,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 
   view->spacing_adjustment =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                          _("Spacing:"), -1, 50,
+                                          _("Spacing:"), -1, -1,
                                           0.0, 1.0, 1000.0, 1.0, 10.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
@@ -140,8 +140,7 @@ gimp_brush_factory_view_destroy (GtkObject *object)
       view->spacing_changed_handler_id = 0;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

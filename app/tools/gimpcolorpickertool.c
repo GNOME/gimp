@@ -757,7 +757,7 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
 
   options->average_radius_w =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Radius:"), -1, 50,
+			  _("Radius:"), -1, -1,
 			  options->average_radius,
 			  1.0, 15.0, 1.0, 3.0, 0,
 			  TRUE, 0.0, 0.0,

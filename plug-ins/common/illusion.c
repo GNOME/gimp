@@ -587,14 +587,13 @@ dialog (GimpDrawable *mangle)
   /* Initialize Tooltips */
   gimp_help_init ();
   
-  main_vbox = gtk_vbox_new (FALSE, 3);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   frame = gtk_frame_new (_("Preview"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -614,8 +613,7 @@ dialog (GimpDrawable *mangle)
   gtk_widget_show (preview);
   
   frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0 );
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 2, FALSE);

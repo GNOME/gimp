@@ -251,7 +251,6 @@ static void check_config           (gint width, gint height);
 #define MAX_BLEND_AMOUNT 1.0
 
 #define SCALE_WIDTH 200
-#define ENTRY_WIDTH 40
 
 #define DRAW_POINT(buffer, index)		\
 do {						\
@@ -2585,7 +2584,7 @@ dialog_box (void)
 
   /* number of blending lines */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Bevel Width:"), SCALE_WIDTH, 0,
+			      _("_Bevel Width:"), SCALE_WIDTH, 4,
 			      config.blend_lines,
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,
@@ -2599,7 +2598,7 @@ dialog_box (void)
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("H_ighlight:"), SCALE_WIDTH, 0,
+			      _("H_ighlight:"), SCALE_WIDTH, 4,
 			      config.blend_amount,
 			      MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
 			      TRUE, 0, 0,

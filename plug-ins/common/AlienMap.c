@@ -837,7 +837,6 @@ static unsigned char header_data[] = { 71,99,218,218,99,11,71,218,71,71,
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
-#define ENTRY_WIDTH   45
 
 #define SINUS   0
 #define COSINUS 1

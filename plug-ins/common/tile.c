@@ -419,7 +419,7 @@ tile_dialog (gint32 image_ID,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 75,
+  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 8,
 				    GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
 				    tvals.constrain, TRUE,

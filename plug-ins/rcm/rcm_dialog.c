@@ -463,7 +463,6 @@ rcm_create_gray (void)
   adj = (GtkAdjustment *) gtk_adjustment_new (st->hue, 0.0, 2.0, 0.0001, 0.001, 0.0);
   st->hue_entry = entry = gtk_spin_button_new (adj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON(entry), TRUE);
-  gtk_widget_set_size_request (entry, 75, -1);
   gtk_table_attach (GTK_TABLE (legend_table), entry, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_widget_show (entry);
@@ -490,7 +489,6 @@ rcm_create_gray (void)
   adj = (GtkAdjustment *) gtk_adjustment_new (st->satur, 0.0, 1.0, 0.0001, 0.001, 0.0);
   st->satur_entry = entry = gtk_spin_button_new (adj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry), TRUE);
-  gtk_widget_set_size_request (entry, 75, -1);
   gtk_table_attach (GTK_TABLE (legend_table), entry, 1, 2, 1, 2, 
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 2);
   gtk_widget_show (entry);
@@ -556,7 +554,6 @@ rcm_create_gray (void)
   adj = (GtkAdjustment *) gtk_adjustment_new (st->gray_sat, 0.0, 1.0, 0.0001, 0.001, 0.0);
 
   st->gray_sat_entry = entry = gtk_spin_button_new (adj, 0.01, 4);
-  gtk_widget_set_size_request (entry, 75, -1);
   gtk_table_attach (GTK_TABLE (table), entry, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_widget_show (entry);

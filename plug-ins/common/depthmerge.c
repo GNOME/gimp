@@ -767,7 +767,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (numericParameterTable);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 0,
-			      _("Overlap:"), 0, 0,
+			      _("Overlap:"), 0, 6,
 			      dm->params.overlap, 0, 2, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -777,7 +777,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 1,
-			      _("Offset:"), 0, 0,
+			      _("Offset:"), 0, 6,
 			      dm->params.offset, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -787,7 +787,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 2,
-			      _("Scale 1:"), 0, 0,
+			      _("Scale 1:"), 0, 6,
 			      dm->params.scale1, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -797,7 +797,7 @@ DepthMerge_dialog (DepthMerge *dm)
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
   adj = gimp_scale_entry_new (GTK_TABLE (numericParameterTable), 0, 3,
-			      _("Scale 2:"), 0, 0,
+			      _("Scale 2:"), 0, 6,
 			      dm->params.scale2, -1, 1, 0.001, 0.01, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);

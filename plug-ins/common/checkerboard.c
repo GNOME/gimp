@@ -29,7 +29,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define SPIN_BUTTON_WIDTH 75
+#define SPIN_BUTTON_WIDTH 8
 
 /* Variables set in dialog box */
 typedef struct data
@@ -402,8 +402,8 @@ do_checkerboard_dialog (gint32        image_ID,
                     G_CALLBACK (gimp_toggle_button_update),
                     &cvals.mode);
 
-  size_entry = gimp_size_entry_new(1, unit, "%a", TRUE, TRUE, FALSE, 
-				  SPIN_BUTTON_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 
+                                    SPIN_BUTTON_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   /*  set the unit back to pixels, since most times we will want pixels */
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);

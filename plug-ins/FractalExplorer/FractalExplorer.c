@@ -93,13 +93,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static void explorer            (GimpDrawable    *drawable);
+static void explorer            (GimpDrawable *drawable);
 static void explorer_render_row (const guchar *src_row,
 				 guchar       *dest_row,
 				 gint          row,
@@ -112,12 +112,12 @@ static void explorer_render_row (const guchar *src_row,
 
 /* Functions for dialog widgets */
 
-static gint        list_button_press (GtkWidget *widget,
+static gint        list_button_press (GtkWidget      *widget,
 				      GdkEventButton *event,
-				      gpointer   data);
-static gint        new_button_press  (GtkWidget *widget,
+				      gpointer        data);
+static gint        new_button_press  (GtkWidget      *widget,
 				      GdkEventButton *bevent,
-				      gpointer   data);
+				      gpointer        data);
 
 static void        delete_dialog_callback               (GtkWidget *widget,
 							 gboolean   value,
@@ -145,9 +145,9 @@ static void        list_button_update          (fractalexplorerOBJ  *feOBJ);
 static fractalexplorerOBJ *fractalexplorer_new (void);
 static void        build_list_items (GtkWidget *list);
 
-static void        fractalexplorer_free              (fractalexplorerOBJ *feOBJ);
-static void        fractalexplorer_free_everything   (fractalexplorerOBJ *feOBJ);
-static void        fractalexplorer_list_free_all             (void);
+static void        fractalexplorer_free               (fractalexplorerOBJ *feOBJ);
+static void        fractalexplorer_free_everything    (fractalexplorerOBJ *feOBJ);
+static void        fractalexplorer_list_free_all      (void);
 static fractalexplorerOBJ * fractalexplorer_load      (const gchar *filename,
                                                        const gchar *name);
 
@@ -224,20 +224,20 @@ query (void)
  *********************************************************************/
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  gint32        image_ID;
-  GimpRunMode  run_mode;
-  gdouble       xhsiz;
-  gdouble       yhsiz;
-  gint          pwidth;
-  gint          pheight;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  gint32             image_ID;
+  GimpRunMode        run_mode;
+  gdouble            xhsiz;
+  gdouble            yhsiz;
+  gint               pwidth;
+  gint               pheight;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -307,25 +307,25 @@ run (gchar   *name,
 	}
       else
 	{
-	  wvals.fractaltype = param[3].data.d_int8;
-	  wvals.xmin = param[4].data.d_float;
-	  wvals.xmax = param[5].data.d_float;
-	  wvals.ymin = param[6].data.d_float;
-	  wvals.ymax = param[7].data.d_float;
-	  wvals.iter = param[8].data.d_float;
-	  wvals.cx = param[9].data.d_float;
-	  wvals.cy = param[10].data.d_float;
-	  wvals.colormode = param[11].data.d_int8;
-	  wvals.redstretch = param[12].data.d_float;
+	  wvals.fractaltype  = param[3].data.d_int8;
+	  wvals.xmin         = param[4].data.d_float;
+	  wvals.xmax         = param[5].data.d_float;
+	  wvals.ymin         = param[6].data.d_float;
+	  wvals.ymax         = param[7].data.d_float;
+	  wvals.iter         = param[8].data.d_float;
+	  wvals.cx           = param[9].data.d_float;
+	  wvals.cy           = param[10].data.d_float;
+	  wvals.colormode    = param[11].data.d_int8;
+	  wvals.redstretch   = param[12].data.d_float;
 	  wvals.greenstretch = param[13].data.d_float;
-	  wvals.bluestretch = param[14].data.d_float;
-	  wvals.redmode = param[15].data.d_int8;
-	  wvals.greenmode = param[16].data.d_int8;
-	  wvals.bluemode = param[17].data.d_int8;
-	  wvals.redinvert = param[18].data.d_int8;
-	  wvals.greeninvert = param[19].data.d_int8;
-	  wvals.blueinvert = param[20].data.d_int8;
-	  wvals.ncolors = CLAMP (param[21].data.d_int32, 2, MAXNCOLORS);
+	  wvals.bluestretch  = param[14].data.d_float;
+	  wvals.redmode      = param[15].data.d_int8;
+	  wvals.greenmode    = param[16].data.d_int8;
+	  wvals.bluemode     = param[17].data.d_int8;
+	  wvals.redinvert    = param[18].data.d_int8;
+	  wvals.greeninvert  = param[19].data.d_int8;
+	  wvals.blueinvert   = param[20].data.d_int8;
+	  wvals.ncolors      = CLAMP (param[21].data.d_int32, 2, MAXNCOLORS);
 	}
       make_color_map();
       break;

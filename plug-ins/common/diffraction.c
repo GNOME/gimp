@@ -716,7 +716,7 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Brightness:"), SCALE_WIDTH, 0,
+			      _("_Brightness:"), SCALE_WIDTH, 7,
 			      dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -725,7 +725,7 @@ diffraction_dialog (void)
                     &dvals.brightness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Sc_attering:"), SCALE_WIDTH, 0,
+			      _("Sc_attering:"), SCALE_WIDTH, 7,
 			      dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -734,7 +734,7 @@ diffraction_dialog (void)
                     &dvals.scattering);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Po_latization:"), SCALE_WIDTH, 0,
+			      _("Po_latization:"), SCALE_WIDTH, 7,
 			      dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);

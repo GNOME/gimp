@@ -285,7 +285,6 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   t_tool->low_threshold_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (t_tool->low_threshold_data, 1.0, 0);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -299,7 +298,6 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   t_tool->high_threshold_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (t_tool->high_threshold_data, 1.0, 0);
-  gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

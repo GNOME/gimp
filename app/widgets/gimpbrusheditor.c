@@ -146,7 +146,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   editor->radius_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, 0,
-                                          _("Radius:"), -1, 50,
+                                          _("Radius:"), -1, 5,
                                           0.0, 1.0, 100.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
@@ -159,7 +159,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   editor->hardness_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, 1,
-                                          _("Hardness:"), -1, 50,
+                                          _("Hardness:"), -1, 5,
                                           0.0, 0.0, 1.0, 0.01, 0.1, 2,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
@@ -172,7 +172,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   editor->aspect_ratio_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, 2,
-                                          _("Aspect Ratio:"), -1, 50,
+                                          _("Aspect Ratio:"), -1, 5,
                                           0.0, 1.0, 20.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
@@ -185,7 +185,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   editor->angle_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, 3,
-                                          _("Angle:"), -1, 50,
+                                          _("Angle:"), -1, 5,
                                           0.0, 0.0, 180.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));

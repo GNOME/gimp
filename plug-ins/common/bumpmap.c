@@ -1037,7 +1037,7 @@ bumpmap_dialog (void)
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Azimuth:"), SCALE_WIDTH, 0,
+			      _("_Azimuth:"), SCALE_WIDTH, 6,
 			      bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1046,7 +1046,7 @@ bumpmap_dialog (void)
                     &bmvals.azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Elevation:"), SCALE_WIDTH, 0,
+			      _("_Elevation:"), SCALE_WIDTH, 6,
 			      bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1055,7 +1055,7 @@ bumpmap_dialog (void)
                     &bmvals.elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row,
-			      _("_Depth:"), SCALE_WIDTH, 0,
+			      _("_Depth:"), SCALE_WIDTH, 6,
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1066,7 +1066,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_x = adj = 
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("_X Offset:"), SCALE_WIDTH, 0,
+			  _("_X Offset:"), SCALE_WIDTH, 6,
 			  bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
@@ -1076,7 +1076,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_y = adj = 
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
-			  _("_Y Offset:"), SCALE_WIDTH, 0,
+			  _("_Y Offset:"), SCALE_WIDTH, 6,
 			  bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
 			  TRUE, 0, 0,
 			  NULL, NULL);
@@ -1086,7 +1086,7 @@ bumpmap_dialog (void)
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("_Waterlevel:"), SCALE_WIDTH, 0,
+			      _("_Waterlevel:"), SCALE_WIDTH, 6,
 			      bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1095,7 +1095,7 @@ bumpmap_dialog (void)
                     &bmvals.waterlevel);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("A_mbient:"), SCALE_WIDTH, 0,
+			      _("A_mbient:"), SCALE_WIDTH, 6,
 			      bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

@@ -452,7 +452,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->low_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->low_input_data, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -466,7 +465,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->gamma_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->gamma_data, 0.5, 2);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
@@ -481,7 +479,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->high_input_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->high_input_data, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -548,7 +545,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->low_output_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->low_output_data, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -562,7 +558,6 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->high_output_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (l_tool->high_output_data, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

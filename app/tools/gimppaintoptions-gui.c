@@ -123,7 +123,7 @@ paint_options_init (GimpPaintOptions *options,
   /*  the opacity scale  */
   options->opacity_w =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Opacity:"), -1, 50,
+			  _("Opacity:"), -1, -1,
 			  gimp_context_get_opacity (tool_info->context) * 100,
 			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0.0, 0.0,
@@ -465,15 +465,12 @@ gradient_options_init (GimpGradientOptions *gradient,
       g_object_set_data (G_OBJECT (gradient->use_fade_w),
                            "set_sensitive", table);
 
-     /*  the fade-out sizeentry  */
-      gradient->fade_out_w =
-        gtk_adjustment_new (gradient->fade_out,
-                            1e-5, 32767.0, 1.0, 50.0, 0.0);
-
-      spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (gradient->fade_out_w),
-                                        1.0, 0.0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_size_request (spinbutton, 50, -1);
+      /*  the fade-out sizeentry  */
+      spinbutton = gimp_spin_button_new (&gradient->fade_out_w,
+                                         gradient->fade_out,
+                                         1e-5, 32767.0, 1.0, 50.0, 0.0,
+                                         1.0, 0.0);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                  _("Length:"), 1.0, 0.5,
@@ -527,14 +524,11 @@ gradient_options_init (GimpGradientOptions *gradient,
                          paint_options->incremental_w);
 
       /*  the gradient length scale  */
-      gradient->gradient_length_w =
-        gtk_adjustment_new (gradient->gradient_length,
-                            1e-5, 32767.0, 1.0, 50.0, 0.0);
-      spinbutton =
-        gtk_spin_button_new (GTK_ADJUSTMENT (gradient->gradient_length_w),
-                             1.0, 0.0);
-      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_widget_set_size_request (spinbutton, 50, -1);
+      spinbutton = gimp_spin_button_new (&gradient->gradient_length_w,
+                                         gradient->gradient_length,
+                                         1e-5, 32767.0, 1.0, 50.0, 0.0,
+                                         1.0, 0.0);
+      gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                  _("Length:"), 1.0, 0.5,
@@ -593,7 +587,7 @@ gradient_options_reset (GimpGradientOptions *gradient)
                 ((gradient->fade_unit_d == GIMP_UNIT_PERCENT) ? 2 :
                  (MIN (6, MAX (3, gimp_unit_get_digits (gradient->fade_unit_d))))));
       spinbutton = g_object_get_data (G_OBJECT (gradient->fade_unit_w),
-                                        "set_digits");
+                                      "set_digits");
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
     }
 
@@ -609,7 +603,7 @@ gradient_options_reset (GimpGradientOptions *gradient)
                 ((gradient->gradient_unit_d == GIMP_UNIT_PERCENT) ? 2 :
                  (MIN (6, MAX (3, gimp_unit_get_digits (gradient->gradient_unit_d))))));
       spinbutton = g_object_get_data (G_OBJECT (gradient->gradient_unit_w),
-                                        "set_digits");
+                                      "set_digits");
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
 
       gradient->gradient_type = gradient->gradient_type_d;

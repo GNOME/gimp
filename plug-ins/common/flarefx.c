@@ -803,8 +803,8 @@ flare_center_create (GimpDrawable *drawable)
                           1, 10, 10, 0, 0);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_widget_show (spinbutton);
 
   g_object_set_data (G_OBJECT (center->xadj), "center", center);
 
@@ -824,8 +824,8 @@ flare_center_create (GimpDrawable *drawable)
                           1, 10, 10, 0, 0);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 3, 4, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  gtk_widget_show (spinbutton);
 
   g_object_set_data (G_OBJECT (center->yadj), "center", center);
 

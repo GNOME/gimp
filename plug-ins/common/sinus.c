@@ -1758,7 +1758,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER(frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_X Scale:"), 140, 0,
+			      _("_X Scale:"), 140, 8,
 			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1767,7 +1767,7 @@ sinus_dialog (void)
                     &svals.scalex);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Y Scale:"), 140, 0,
+			      _("_Y Scale:"), 140, 8,
 			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1776,7 +1776,7 @@ sinus_dialog (void)
                     &svals.scaley);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Co_mplexity:"), 140, 0,
+			      _("Co_mplexity:"), 140, 8,
 			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1807,7 +1807,6 @@ sinus_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, svals.seed,
 				     -10000000000.0, 1000000000.0, 1.0, 10.0,
 				     0.0, 0.0, 0);
-  gtk_widget_set_size_request (spinbutton, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);

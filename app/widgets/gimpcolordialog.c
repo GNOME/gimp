@@ -588,7 +588,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
       cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
                                                   gettext (toggle_titles[i]), 
-                                                  80, 55,
+                                                  80, -1,
                                                   slider_initial_vals[i],
                                                   0.0, slider_max_vals[i],
                                                   1.0, slider_incs[i],

@@ -412,7 +412,7 @@ bucket_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (table);
 
   options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					       _("Threshold:"), -1, 50,
+					       _("Threshold:"), -1, -1,
 					       gimprc.default_threshold,
 					       0.0, 255.0, 1.0, 16.0, 1,
 					       TRUE, 0.0, 0.0,

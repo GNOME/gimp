@@ -34,13 +34,10 @@
 #include "gimpiscissorstool.h"
 #include "gimprectselecttool.h"
 #include "gimpbycolorselecttool.h"
-/*#include "gimptool.h"*/
 #include "selection_options.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
-
-
 
 
 void
@@ -208,7 +205,7 @@ selection_options_init (SelectionOptions *options,
     gtk_widget_show (table);
   
     options->feather_radius_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                                      _("Radius:"), -1, 50,
+                                                      _("Radius:"), -1, -1,
                                                       options->feather_radius,
                                                       0.0, 100.0, 1.0, 10.0, 1,
                                                       TRUE, 0.0, 0.0,
@@ -313,7 +310,7 @@ selection_options_init (SelectionOptions *options,
 
       options->threshold_w = 
 	gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Threshold:"), -1, 50,
+			      _("Threshold:"), -1, -1,
 			      gimprc.default_threshold,
 			      0.0, 255.0, 1.0, 16.0, 1,
 			      TRUE, 0.0, 0.0,
@@ -400,7 +397,7 @@ selection_options_init (SelectionOptions *options,
                          table);
 
       options->fixed_width_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                                     _("Width:"), -1, 50,
+                                                     _("Width:"), -1, 5,
                                                      options->fixed_width,
                                                      1.0, 100.0, 1.0, 50.0, 1,
                                                      FALSE, 1e-5, 32767.0,
@@ -413,7 +410,7 @@ selection_options_init (SelectionOptions *options,
                         &options->fixed_width);
 
       options->fixed_height_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                                      _("Height:"), -1, 50,
+                                                      _("Height:"), -1, 5,
                                                       options->fixed_height,
                                                       1.0, 100.0, 1.0, 50.0, 1,
                                                       FALSE, 1e-5, 32767.0,

@@ -256,7 +256,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 
   spinbutton = gimp_spin_button_new ((GtkObject **) &editor->columns_data,
                                      0, 0, 64, 1, 4, 4, 1, 0);
-  gtk_widget_set_size_request (spinbutton, 50, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

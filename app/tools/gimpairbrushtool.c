@@ -147,7 +147,7 @@ airbrush_options_new (GimpToolInfo *tool_info)
   gtk_widget_show (table);
 
   options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-					  _("Rate:"), -1, 50,
+					  _("Rate:"), -1, -1,
 					  options->rate,
 					  0.0, 150.0, 1.0, 1.0, 1,
 					  TRUE, 0.0, 0.0,
@@ -159,7 +159,7 @@ airbrush_options_new (GimpToolInfo *tool_info)
 
   /*  the pressure scale  */
   options->pressure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-					      _("Pressure:"), -1, 50,
+					      _("Pressure:"), -1, -1,
 					      options->pressure,
 					      0.0, 100.0, 1.0, 1.0, 1,
 					      TRUE, 0.0, 0.0,

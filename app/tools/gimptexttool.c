@@ -612,7 +612,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
                              options->font_selection, 2, FALSE);
 
   options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                          _("Size:"), -1, 50,
+                                          _("Size:"), -1, 5,
                                           options->size,
                                           1.0, 256.0, 1.0, 50.0, 1,
                                           FALSE, 1e-5, 32767.0,
@@ -625,7 +625,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
                     &options->size);
 
   options->border_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                                            _("Border:"), -1, 50,
+                                            _("Border:"), -1, 5,
                                             options->border,
                                             0.0, 100.0, 1.0, 50.0, 1,
                                             FALSE, 0.0, 32767.0,

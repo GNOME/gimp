@@ -1365,7 +1365,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[0] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image Height:"), 1.0, 0.5,
+			  _("Image Height:"), 0, 0,
 			  filmvals.picture_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1379,7 +1379,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[1] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Image Spacing:"), 1.0, 0.5,
+			  _("Image Spacing:"), 0, 0,
 			  filmvals.picture_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1400,7 +1400,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[2] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Offset:"), 1.0, 0.5,
+			  _("Hole Offset:"), 0, 0,
 			  filmvals.hole_offset,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1414,7 +1414,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[3] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Width:"), 1.0, 0.5,
+			  _("Hole Width:"), 0, 0,
 			  filmvals.hole_width,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1428,7 +1428,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[4] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Height:"), 1.0, 0.5,
+			  _("Hole Height:"), 0, 0,
 			  filmvals.hole_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1442,7 +1442,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[5] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Hole Spacing:"), 1.0, 0.5,
+			  _("Hole Spacing:"), 0, 0,
 			  filmvals.hole_space,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
@@ -1463,7 +1463,7 @@ film_dialog (gint32 image_ID)
 
   filmint.advanced_adj[6] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			  _("Number Height:"), 1.0, 0.5,
+			  _("Number Height:"), 0, 0,
 			  filmvals.number_height,
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,

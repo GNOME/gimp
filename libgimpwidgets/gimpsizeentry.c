@@ -318,8 +318,17 @@ gimp_size_entry_new (gint                       number_of_fields,
 			     (unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
 			     (unit == GIMP_UNIT_PERCENT) ? 2 :
 			     GIMP_SIZE_ENTRY_DIGITS (unit));
-      gtk_widget_set_size_request (gsef->value_spinbutton,
-				   spinbutton_width, -1);
+
+      if (spinbutton_width > 0)
+        {
+          if (spinbutton_width < 17)
+            gtk_entry_set_width_chars (GTK_ENTRY (gsef->value_spinbutton),
+                                       spinbutton_width);
+          else
+            gtk_widget_set_size_request (gsef->value_spinbutton,
+                                         spinbutton_width, -1);
+        }
+
       gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
 				 i+1, i+2,
 				 gse->show_refval+1, gse->show_refval+2);

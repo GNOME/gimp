@@ -465,7 +465,7 @@ gauss_rle2_dialog (gint32        image_ID,
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75,
+  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
 			       b2vals.horizontal == b2vals.vertical,

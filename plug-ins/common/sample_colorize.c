@@ -72,7 +72,6 @@
 #define PREVIEW_BPP 3
 #define PREVIEW_SIZE_X  256
 #define PREVIEW_SIZE_Y  256
-#define TEXT_WIDTH       45
 #define DA_WIDTH         256
 #define DA_HEIGHT        25
 #define GRADIENT_HEIGHT  15
@@ -1626,7 +1625,6 @@ p_smp_dialog (void)
   g_di.adj_lvl_in_min = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_min, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, TEXT_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1640,7 +1638,6 @@ p_smp_dialog (void)
   g_di.adj_lvl_in_gamma = GTK_ADJUSTMENT (data);
   
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
-  gtk_widget_set_size_request (spinbutton, TEXT_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1654,7 +1651,6 @@ p_smp_dialog (void)
   g_di.adj_lvl_in_max = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_max, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, TEXT_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1679,7 +1675,6 @@ p_smp_dialog (void)
   g_di.adj_lvl_out_min = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_min, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, TEXT_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1693,7 +1688,6 @@ p_smp_dialog (void)
   g_di.adj_lvl_out_max = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_max, 0.5, 0);
-  gtk_widget_set_size_request (spinbutton, TEXT_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

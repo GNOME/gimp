@@ -928,7 +928,7 @@ create_main_dialog (void)
   row = 0;
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Filter Length:"), 0, 0,
+				     _("_Filter Length:"), 0, 6,
 				     licvals.filtlen, 0, 64, 1.0, 8.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -937,7 +937,7 @@ create_main_dialog (void)
                     &licvals.filtlen);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Noise Magnitude:"), 0, 0,
+				     _("_Noise Magnitude:"), 0, 6,
 				     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -946,7 +946,7 @@ create_main_dialog (void)
                     &licvals.noisemag);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("In_tegration Steps:"), 0, 0,
+				     _("In_tegration Steps:"), 0, 6,
 				     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -955,7 +955,7 @@ create_main_dialog (void)
                     &licvals.intsteps);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("_Minimum Value:"), 0, 0,
+				     _("_Minimum Value:"), 0, 6,
 				     licvals.minv, -100, 0, 1, 10, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -964,7 +964,7 @@ create_main_dialog (void)
                     &licvals.minv);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-				     _("M_aximum Value:"), 0, 0,
+				     _("M_aximum Value:"), 0, 6,
 				     licvals.maxv, 0, 100, 1, 10, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);

@@ -422,7 +422,7 @@ gimp_query_size_box (const gchar           *title,
   if (! query_box)
     return NULL;
 
-  sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 100,
+  sizeentry = gimp_size_entry_new (1, unit, "%p", TRUE, FALSE, FALSE, 12,
 				   GIMP_SIZE_ENTRY_UPDATE_SIZE);
   if (dot_for_dot)
     gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);

@@ -1383,7 +1383,7 @@ bender_new_dialog (GimpDrawable *drawable)
 		      TRUE, TRUE, 0);
 
   /*  The option menu for selecting outlines  */
-  outline_hbox = gtk_hbox_new (FALSE, 2+4);
+  outline_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), outline_hbox, FALSE, FALSE, 0);
 
   /*  The Load button  */
@@ -1405,14 +1405,14 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  Rotate label & spinbutton  */
-  label = gtk_label_new (_("Rotate: "));
+  label = gtk_label_new (_("Rotate:"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   data = gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 90);
   cd->rotate_data = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);
-  gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (outline_hbox), spinbutton, FALSE, FALSE, 2);
   gtk_widget_show (spinbutton);
@@ -1421,27 +1421,27 @@ bender_new_dialog (GimpDrawable *drawable)
                       G_CALLBACK (bender_rotate_adj_callback),
                       cd);
 
-  label = gtk_label_new (_("Curve for Border: "));
+  label = gtk_label_new (_("Curve for Border:"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   menu = p_buildmenu (outline_items);
   cd->outline_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (outline_hbox), cd->outline_menu, FALSE, FALSE, 2);
 
-  gtk_widget_show (label);
   gtk_widget_show (cd->outline_menu);
   gtk_widget_show (outline_hbox);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (cd->outline_menu), menu);
 
   /*  The option menu for selecting the drawing method  */
-  label = gtk_label_new (_("Curve Type: "));
+  label = gtk_label_new (_("Curve Type:"));
   gtk_box_pack_start (GTK_BOX (outline_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   menu = p_buildmenu (curve_type_items);
   option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (outline_hbox), option_menu, FALSE, FALSE, 2);
 
-  gtk_widget_show (label);
   gtk_widget_show (option_menu);
   gtk_widget_show (outline_hbox);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);

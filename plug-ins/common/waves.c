@@ -399,7 +399,7 @@ pluginCoreIA (piArgs *argp,
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Amplitude:"), 140, 0,
+			      _("_Amplitude:"), 140, 6,
 			      argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -408,7 +408,7 @@ pluginCoreIA (piArgs *argp,
                     &argp->amplitude);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Phase:"), 140, 0,
+			      _("_Phase:"), 140, 6,
 			      argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -417,7 +417,7 @@ pluginCoreIA (piArgs *argp,
                     &argp->phase);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Wavelength:"), 140, 0,
+			      _("_Wavelength:"), 140, 6,
 			      argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);

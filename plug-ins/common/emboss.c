@@ -552,7 +552,7 @@ pluginCoreIA (piArgs *argp)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Azimuth:"), 100, 0,
+			      _("_Azimuth:"), 100, 6,
 			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -561,7 +561,7 @@ pluginCoreIA (piArgs *argp)
                     &argp->azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("E_levation:"), 100, 0,
+			      _("E_levation:"), 100, 6,
 			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -570,7 +570,7 @@ pluginCoreIA (piArgs *argp)
                     &argp->elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Depth:"), 100, 0,
+			      _("_Depth:"), 100, 6,
 			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
