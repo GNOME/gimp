@@ -67,7 +67,6 @@ GimpFillType
 GimpImageBaseType
 GimpImageType
 GimpOffsetType
-GimpGradientPaintMode
 GimpGradientType
 GimpHueRange
 GimpLayerModeEffects
