@@ -445,7 +445,10 @@ text_create_dialog (TextTool *text_tool)
   text_tool->font_list = gtk_list_new ();
   gtk_container_add (GTK_CONTAINER (list_box), text_tool->font_list);
   gtk_list_set_selection_mode (GTK_LIST (text_tool->font_list), GTK_SELECTION_BROWSE);
-
+  gtk_container_set_focus_vadjustment (GTK_CONTAINER (text_tool->font_list),
+				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (list_box)));
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (list_box)->vscrollbar, GTK_CAN_FOCUS);
+  
   for (i = 0; i < nfonts; i++)
     {
       list_item = gtk_list_item_new_with_label (font_info[i]->family);
