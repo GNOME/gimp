@@ -1,3 +1,10 @@
+Wed Oct 27 13:05:09 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/gap/gap_range_ops.h: applied a patch from Wolfgang Hofer
+	that adapts the GAP to the new gimp_convert_indexed interface
+
 Tue Oct 26 18:58:44 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/xcf.c: add "(GIMP)" to the menu entry for XCF, in an attempt
@@ -11,7 +18,8 @@ Wed Oct 27 02:03:47 MEST 1999  Sven Neumann <sven@gimp.org>
 	* app/info_window.c
 	* app/ops_buttons.c: cosmetic changes
 
-	* pixmaps/*.xpm: cropped most of the icons to their minimum size
+	* pixmaps/*.xpm: cropped most of the icons to their minimum size,
+	changed the dropper icon to be the same as the toolbox icon
 
 1999-10-26  Michael Natterer  <mitch@gimp.org>
 

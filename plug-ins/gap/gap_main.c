@@ -38,9 +38,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.8a; 1999/08/31";
+static char *gap_main_version =  "1.1.10a; 1999/10/23";
 
 /* revision history:
+ * gimp    1.1.10a; 1999/10/22  hof: extended dither options for gap_range_convert
  * gimp    1.1.8a;  1999/08/31  hof: updated main version
  * version 0.99.00; 1999/03/17  hof: updated main version
  * version 0.98.02; 1999/01/27  hof: updated main version
@@ -229,12 +230,32 @@ query ()
     {PARAM_INT32, "flatten", "0 .. dont flatten image before save"},
     {PARAM_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
     {PARAM_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
-    {PARAM_INT32, "dest_dither", "0=no, 1=floyd-steinberg (used only for dest_type INDEXED)"},
+    {PARAM_INT32, "dest_dither", "0=no, 1=floyd-steinberg  2=fs/low-bleed, 3=fixed (used only for dest_type INDEXED)"},
     {PARAM_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
     {PARAM_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
   };
   static int nargs_rconv = sizeof(args_rconv) / sizeof(args_rconv[0]);
 
+
+  static GParamDef args_rconv2[] =
+  {
+    {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
+    {PARAM_IMAGE, "image", "Input image (one of the Anim Frames)"},
+    {PARAM_DRAWABLE, "drawable", "Input drawable (unused)"},
+    {PARAM_INT32, "range_from", "frame nr to start"},
+    {PARAM_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
+    {PARAM_INT32, "flatten", "0 .. dont flatten image before save"},
+    {PARAM_INT32, "dest_type", "0=RGB, 1=GRAY, 2=INDEXED"},
+    {PARAM_INT32, "dest_colors", "1 upto 256 (used only for dest_type INDEXED)"},
+    {PARAM_INT32, "dest_dither", "0=no, 1=floyd-steinberg 2=fs/low-bleed, 3=fixed(used only for dest_type INDEXED)"},
+    {PARAM_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
+    {PARAM_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
+    {PARAM_INT32,  "palette_type", "0 == MAKE_PALETTE, 2 == WEB_PALETTE, 3 == MONO_PALETTE (bw) 4 == CUSTOM_PALETTE (used only for dest_type INDEXED)"},
+    {PARAM_INT32,  "alpha_dither", "dither transparency to fake partial opacity (used only for dest_type INDEXED)"},
+    {PARAM_INT32,  "remove_unused", "remove unused or double colors from final palette (used only for dest_type INDEXED)"},
+    {PARAM_STRING, "palette", "name of the cutom palette to use (used only for dest_type INDEXED and palette_type == CUSTOM_PALETTE) "},
+  };
+  static int nargs_rconv2 = sizeof(args_rconv2) / sizeof(args_rconv2[0]);
 
   /* resize and crop share the same parameters */
   static GParamDef args_resize[] =
@@ -465,6 +486,18 @@ query ()
 
   gimp_install_procedure("plug_in_gap_range_convert",
 			 _("This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension"),
+			 "WARNING this procedure is obsolete, please use plug_in_gap_range_convert2",
+			 "Wolfgang Hofer (hof@hotbot.com)",
+			 "Wolfgang Hofer",
+			 gap_main_version,
+			 NULL,                      /* do not appear in menus */
+			 "RGB*, INDEXED*, GRAY*",
+			 PROC_PLUG_IN,
+			 nargs_rconv, nreturn_vals,
+			 args_rconv, return_vals);
+
+  gimp_install_procedure("plug_in_gap_range_convert2",
+			 _("This plugin converts the given range of frame-images to other fileformats (on disk) depending on extension"),
 			 "",
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
@@ -472,8 +505,8 @@ query ()
 			 _("<Image>/AnimFrames/Frames Convert"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
-			 nargs_rconv, nreturn_vals,
-			 args_rconv, return_vals);
+			 nargs_rconv2, nreturn_vals,
+			 args_rconv2, return_vals);
 
   gimp_install_procedure("plug_in_gap_anim_resize",
 			 _("This plugin resizes all anim_frames (images on disk) to the given new_width/new_height"),
@@ -481,7 +514,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_main_version,
-             _("<Image>/AnimFrames/Frames Resize"),
+			 _("<Image>/AnimFrames/Frames Resize"),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_resize, nreturn_vals,
@@ -598,6 +631,7 @@ run (char    *name,
   char        l_sel_str[MAX_LAYERNAME];
   char        l_layername[MAX_LAYERNAME];
   char       *l_basename_ptr;
+  char       *l_palette_ptr;
   static GParam values[2];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
@@ -607,6 +641,9 @@ run (char    *name,
   GImageType dest_type;
   gint32     dest_colors;
   gint32     dest_dither;
+  gint32     palette_type;
+  gint32     alpha_dither;
+  gint32     remove_unused;
   gint32     mode;
   long       new_width;
   long       new_height;
@@ -952,12 +989,17 @@ run (char    *name,
 
       }
   }
-  else if (strcmp (name, "plug_in_gap_range_convert") == 0)
+  else if ((strcmp (name, "plug_in_gap_range_convert") == 0) 
+       ||  (strcmp (name, "plug_in_gap_range_convert2") == 0))
   {
       l_basename_ptr = NULL;
+      l_palette_ptr = NULL;
+      palette_type = GIMP_MAKE_PALETTE;
+      alpha_dither = 0;
+      remove_unused = 1;
       if (run_mode == RUN_NONINTERACTIVE)
       {
-        if ((n_params != 10) && (n_params != 11))
+        if ((n_params != 10) && (n_params != 11) && (n_params != 15))
         {
           status = STATUS_CALLING_ERROR;
         }
@@ -965,16 +1007,22 @@ run (char    *name,
         {
           strncpy(l_extension, param[9].data.d_string, sizeof(l_extension) -1);
           l_extension[sizeof(l_extension) -1] = '\0';
-          if (n_params == 11)
+          if (n_params >= 11)
           {
             l_basename_ptr = param[10].data.d_string;
+          }
+          if (n_params >= 15)
+          {
+             l_palette_ptr = param[14].data.d_string;
+	     palette_type = param[11].data.d_int32;
+	     alpha_dither = param[12].data.d_int32;
+	     remove_unused = param[13].data.d_int32;
           }
         }
       }
 
       if (status == STATUS_SUCCESS)
       {
-
         image_id    = param[1].data.d_image;
         range_from  = param[3].data.d_int32;  /* frame nr to start */	
         range_to    = param[4].data.d_int32;  /* frame nr to stop  */	
@@ -985,7 +1033,11 @@ run (char    *name,
 
         l_rc = gap_range_conv(run_mode, image_id, range_from, range_to, nr,
                               dest_type, dest_colors, dest_dither,
-                              l_basename_ptr, l_extension);
+                              l_basename_ptr, l_extension,
+			      palette_type,
+			      alpha_dither,
+			      remove_unused,
+			      l_palette_ptr);
 
       }
   }

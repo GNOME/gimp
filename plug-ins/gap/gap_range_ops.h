@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * 1.1.10a; 1999/10/22   hof: extended dither options in gap_range_conv
  * 0.97.00; 1998/10/19   hof: extended gap_range_to_multilayer layer seletion
  * 0.96.03; 1998/08/31   hof: gap_range_to_multilayer: all params available
  *                            in non-interactive runmode
@@ -78,7 +79,12 @@ int gap_range_conv(GRunModeType run_mode,
                              gint32     dest_colors,
                              gint32     dest_dither,
                              char   *basename,
-                             char   *extension);
+                             char   *extension,
+			     gint32  palette_type,
+			     gint32  alpha_dither,
+			     gint32  remove_unused,
+                             char   *palette
+			     );
 
 int gap_anim_sizechange(GRunModeType run_mode,
                              t_gap_asiz asiz_mode,

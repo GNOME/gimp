@@ -32,6 +32,9 @@
  */
 
 /* revision history
+ * 1.1.10a  1999/10/22   hof: bugfix: have to use the changed PDB-Interface
+ *                            for gimp_convert_indexed
+ *                            (with extended dither options and extra dialog window)
  * 1.1.9a   1999/09/21   hof: bugfix RUN_NONINTERACTIVE did not work in
  *                            plug_in_gap_range_convert
  *                            plug_in_gap_range_layer_del
@@ -271,6 +274,126 @@ p_range_dialog(t_anim_info *ainfo_ptr,
 }	/* end p_range_dialog */
 
 /* ============================================================================
+ * p_convert_indexed_dialog
+ *
+ * extra dialog with dither options (when converting to indexed image type)
+ *   return  0 .. OK 
+ *          -1 .. in case of Error or cancel
+ * ============================================================================
+ */
+static long
+p_convert_indexed_dialog(gint32 *dest_colors, gint32 *dest_dither,
+		      gint32 *palette_type, gint32 *alpha_dither, gint32 *remove_unused, 
+                      char *palette,   gint len_palette)
+{
+#define ARGC_INDEXED 6  
+  static t_arr_arg  argv[ARGC_INDEXED];
+  static char *radio_paltype[4]  = { N_("Generate optimal palette")
+                                   , N_("WEB palette")
+				   , N_("Use custom palette")
+				   , N_("Use black/white (1-bit) palette")
+				   };
+  static char *radio_dither[4]  = { N_("Floyd-Steinberg colour dithering (normal)")
+                                  , N_("Floyd-Steinberg colour dithering (reduced colour bleeding)")
+				  , N_("Positioned colour dithering")
+                                  , N_("No colour dithering")
+				  };
+  static int gettextize_loop = 0;
+
+  for (;gettextize_loop < 4; gettextize_loop++)
+    radio_paltype[gettextize_loop] = gettext(radio_paltype[gettextize_loop]);
+  
+  for (;gettextize_loop < 4; gettextize_loop++)
+    radio_dither[gettextize_loop] = gettext(radio_dither[gettextize_loop]);
+
+  p_init_arr_arg(&argv[0], WGT_RADIO);
+  argv[0].label_txt = _("Palette Type");
+  argv[0].help_txt  = NULL;
+  argv[0].radio_argc  = 4;
+  argv[0].radio_argv = radio_paltype;
+  argv[0].radio_ret  = 0;
+
+  p_init_arr_arg(&argv[1], WGT_TEXT);
+  argv[1].label_txt = _("Custom Palette");
+  argv[1].help_txt  = _("name of a cutom palette\n(is ignored if Palette Type is not custom)");
+  argv[1].text_buf_len = len_palette;
+  argv[1].text_buf_ret = palette;
+
+  p_init_arr_arg(&argv[2], WGT_TOGGLE);
+  argv[2].label_txt = _("Remove unused");
+  argv[2].help_txt  = _("Remove unused or double colors\n(is ignored if Palette Type is not custom)");
+  argv[2].int_ret   = 1;
+
+  p_init_arr_arg(&argv[3], WGT_INT_PAIR);
+  argv[3].constraint = TRUE;
+  argv[3].label_txt = _("Number ofColors");
+  argv[3].help_txt  = _("Number of resulting Colors		 \n(ignored if Palette Type is not Generate optimal palette)");
+  argv[3].int_min   = 2;
+  argv[3].int_max   = 256;
+  argv[3].int_ret   = 255;
+
+
+  p_init_arr_arg(&argv[4], WGT_RADIO);
+  argv[4].label_txt = _("Dither Options");
+  argv[4].help_txt  = NULL;
+  argv[4].radio_argc  = 4;
+  argv[4].radio_argv = radio_dither;
+  argv[4].radio_ret  = 0;
+  
+  p_init_arr_arg(&argv[5], WGT_TOGGLE);
+  argv[5].label_txt = _("Enable transparency");
+  argv[5].help_txt  = _("Enable dithering of transparency");
+  argv[5].int_ret   = 0;
+
+  if(TRUE == p_array_dialog( _("Convert Frames to Indexed"),
+                                 _("Palette and Dither Settings :"), 
+                                  ARGC_INDEXED, argv))
+  {
+      switch(argv[0].radio_ret)
+      {
+        case 3: 
+           *palette_type = GIMP_MONO_PALETTE;
+           break;
+        case 2: 
+           *palette_type = GIMP_CUSTOM_PALETTE;
+           break;
+        case 1: 
+           *palette_type = GIMP_WEB_PALETTE;
+           break;
+        default:
+           *palette_type = GIMP_MAKE_PALETTE;
+           break;
+      }
+      *remove_unused = (gint32)(argv[2].int_ret);;
+      *dest_colors = (gint32)(argv[3].int_ret);
+      switch(argv[4].radio_ret)
+      {
+        case 3: 
+           *dest_dither = GIMP_NO_DITHER;
+           break;
+        case 2: 
+           *dest_dither = GIMP_FIXED_DITHER;
+           break;
+        case 1: 
+           *dest_dither = GIMP_FSLOWBLEED_DITHER;
+           break;
+        default:
+           *dest_dither = GIMP_FS_DITHER;
+           break;
+      }
+
+      *alpha_dither = (gint32)(argv[5].int_ret);
+      
+      return 0;
+  }
+  else
+  {
+     return -1;
+  }
+}
+
+
+/* ============================================================================
  * p_convert_dialog
  *
  *   return  0 .. OK 
@@ -282,9 +405,11 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
                       long *range_from, long *range_to, long *flatten,
                       GImageType *dest_type, gint32 *dest_colors, gint32 *dest_dither,
                       char *basename, gint len_base,
-                      char *extension, gint len_ext)
+                      char *extension, gint len_ext,
+		      gint32 *palette_type, gint32 *alpha_dither, gint32 *remove_unused, 
+                      char *palette,   gint len_palette)
 {
-  static t_arr_arg  argv[9];
+  static t_arr_arg  argv[7];
   static char *radio_args[4]  = { N_("KEEP_TYPE"), N_("Conv to RGB"), N_("Conv to GRAY"), N_("Conv to INDEXED") };
   static int gettextize_loop = 0;
 
@@ -335,24 +460,11 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
   argv[6].help_txt  = _("Flatten all resulting frames               \n(most fileformats need flattened frames)");
   argv[6].int_ret   = 1;
 
-  p_init_arr_arg(&argv[7], WGT_INT_PAIR);
-  argv[7].constraint = TRUE;
-  argv[7].label_txt = _("Colors  :");
-  argv[7].help_txt  = _("Number of resulting Colors               \n(ignored if not converted to indexed)");
-  argv[7].int_min   = 2;
-  argv[7].int_max   = 256;
-  argv[7].int_ret   = 255;
-
-  p_init_arr_arg(&argv[8], WGT_TOGGLE);
-  argv[8].label_txt = _("Dither  :");
-  argv[8].help_txt  = _("Enable Floyd-Steinberg dithering      \n(ignored if not converted to indexed)");
-  argv[8].int_ret   = 1;
-
   if(0 != p_chk_framerange(ainfo_ptr))   return -1;
 
   if(TRUE == p_array_dialog( _("Convert Frames to other Formats"),
                                  _("Convert Settings :"), 
-                                  9, argv))
+                                  7, argv))
   {
       *range_from  = (long)(argv[0].int_ret);
       *range_to    = (long)(argv[1].int_ret);
@@ -372,9 +484,29 @@ p_convert_dialog(t_anim_info *ainfo_ptr,
            break;
       }
       *flatten     = (long)(argv[6].int_ret);
-      *dest_colors = (gint32)(argv[7].int_ret);
-      *dest_dither = (long)(argv[8].int_ret);
 
+      *dest_colors = 255;
+      *dest_dither = 0;
+      *palette_type = 2; /* WEB palette */
+      *alpha_dither = 0;
+      *remove_unused = 0;
+      
+       if(*dest_type == INDEXED)
+       {
+          /* Open a 2.nd dialog for the Dither Options */
+          if(0 != p_convert_indexed_dialog(dest_colors,
+	                                   dest_dither,
+					   palette_type,
+					   alpha_dither,
+					   remove_unused,
+					   palette,
+					   len_palette
+	    ))
+	  {
+             return -1;
+	  }
+       }
+      
        if(0 != p_chk_framechange(ainfo_ptr))
        {
            return -1;
@@ -847,7 +979,8 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
  * ============================================================================
  */
 static int
-p_type_convert(gint32 image_id, GImageType dest_type, gint32 dest_colors, gint32 dest_dither)
+p_type_convert(gint32 image_id, GImageType dest_type, gint32 dest_colors, gint32 dest_dither,
+	       gint32 palette_type, gint32  alpha_dither, gint32  remove_unused,  char *palette)
 {
   GParam     *l_params;
   gint        l_retvals;
@@ -859,12 +992,17 @@ p_type_convert(gint32 image_id, GImageType dest_type, gint32 dest_colors, gint32
   switch(dest_type)
   {
     case INDEXED:
-      if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert to INDEXED ncolors=%d'\n", (int)dest_colors);
+      if(gap_debug) fprintf(stderr, "DEBUG: p_type_convert to INDEXED ncolors=%d, palette_type=%d palette_name=%s'\n",
+                                   (int)dest_colors, (int)palette_type, palette);
       l_params = gimp_run_procedure ("gimp_convert_indexed",
 			           &l_retvals,
 			           PARAM_IMAGE,    image_id,
 			           PARAM_INT32,    dest_dither,      /* value 1== floyd-steinberg */
+			           PARAM_INT32,    palette_type,     /* value 0: MAKE_PALETTE, 2: WEB_PALETTE 4:CUSTOM_PALETTE */
 			           PARAM_INT32,    dest_colors,
+			           PARAM_INT32,    alpha_dither,
+			           PARAM_INT32,    remove_unused,
+			           PARAM_STRING,   palette,         /* name of custom palette */			           
 			           PARAM_END);
       break;
     case GRAY:
@@ -914,7 +1052,8 @@ p_frames_convert(t_anim_info *ainfo_ptr,
                  long range_from, long range_to,
                  char *save_proc_name, char *new_basename, char *new_extension,
                  int flatten,
-                 GImageType dest_type, gint32 dest_colors, gint32 dest_dither)
+                 GImageType dest_type, gint32 dest_colors, gint32 dest_dither,
+		 gint32  palette_type, gint32  alpha_dither, gint32  remove_unused,  char   *palette)
 {
   GRunModeType l_run_mode;
   gint32  l_tmp_image_id;
@@ -1011,7 +1150,8 @@ p_frames_convert(t_anim_info *ainfo_ptr,
        if(dest_type != gimp_image_base_type(l_tmp_image_id))
        {
           /* have to convert to desired type (RGB, INDEXED, GRAYSCALE) */
-          p_type_convert(l_tmp_image_id, dest_type, dest_colors, dest_dither);
+          p_type_convert(l_tmp_image_id, dest_type, dest_colors, dest_dither,
+	                 palette_type, alpha_dither, remove_unused, palette);
        }
     
     
@@ -1260,7 +1400,7 @@ int    gap_range_flatten(GRunModeType run_mode, gint32 image_id,
          l_rc = p_save_named_frame(ainfo_ptr->image_id, ainfo_ptr->old_filename);
          if(l_rc >= 0)
          {
-           l_rc = p_frames_convert(ainfo_ptr, l_from, l_to, NULL, NULL, NULL, 1, 0,0,0); 
+           l_rc = p_frames_convert(ainfo_ptr, l_from, l_to, NULL, NULL, NULL, 1, 0,0,0, 0,0,0, ""); 
            p_load_named_frame(ainfo_ptr->image_id, ainfo_ptr->old_filename);
          }
       }
@@ -1465,13 +1605,20 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
                       gint32     dest_colors,
                       gint32     dest_dither,
                       char      *basename,
-                      char      *extension)
+                      char      *extension,
+                      gint32     palette_type,
+                      gint32     alpha_dither,
+                      gint32     remove_unused,
+		      char   *palette)
 {
   gint32  l_rc;
   long   l_from, l_to;
   long   l_flatten;
   gint32     l_dest_colors;
   gint32     l_dest_dither;
+  gint32     l_palette_type;
+  gint32     l_alpha_dither;
+  gint32     l_remove_unused;
   GImageType l_dest_type;
   
   t_anim_info *ainfo_ptr;
@@ -1480,6 +1627,7 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
   char *l_basename_ptr;
   long  l_number;
   char  l_extension[32];
+  char  l_palette[256];
 
   strcpy(l_save_proc_name, "gimp_file_save");
   strcpy(l_extension, ".tif");
@@ -1500,10 +1648,13 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
          /* p_convert_dialog : select destination type
           * to find out extension
           */
+	 strcpy(l_palette, "Default");
          l_rc = p_convert_dialog (ainfo_ptr, &l_from, &l_to, &l_flatten,
                                   &l_dest_type, &l_dest_colors, &l_dest_dither,
                                   &l_basename[0], sizeof(l_basename),
-                                  &l_extension[0], sizeof(l_extension));
+                                  &l_extension[0], sizeof(l_extension),
+				  &l_palette_type, &l_alpha_dither, &l_remove_unused,
+				  &l_palette[0], sizeof(l_palette));
 
       }
       else
@@ -1515,10 +1666,18 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
          l_dest_type   = dest_type;
          l_dest_colors = dest_colors;
          l_dest_dither = dest_dither;
+         l_palette_type   = palette_type;
+         l_alpha_dither   = alpha_dither;
+         l_remove_unused  = remove_unused;
          if(basename != NULL)
          {
             strncpy(l_basename, basename, sizeof(l_basename) -1);
             l_basename[sizeof(l_basename) -1] = '\0';
+         }
+         if(palette != NULL)
+         {
+            strncpy(l_palette, palette, sizeof(l_palette) -1);
+            l_palette[sizeof(l_palette) -1] = '\0';
          }
          strncpy(l_extension, extension, sizeof(l_extension) -1);
          l_extension[sizeof(l_extension) -1] = '\0';
@@ -1539,7 +1698,11 @@ gint32 gap_range_conv(GRunModeType run_mode, gint32 image_id,
                                     l_flatten,
                                     l_dest_type,
                                     l_dest_colors,
-                                    l_dest_dither);
+                                    l_dest_dither,
+				    l_palette_type,
+				    l_alpha_dither,
+				    l_remove_unused,
+				    l_palette);
             g_free(l_basename_ptr);
          }
       }
