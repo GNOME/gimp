@@ -4,7 +4,7 @@ Tue May 16 20:26:13 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 	plug-ins/gdyntext/gdyntext.c,
 	plug-ins/script-fu/scripts/camo.scm: Typo fixes.
 	On request of Martin Weber <martweb@gmx.net>:
-	* plug-ins/bmp/bmpwrite.c: Cosmetical fixed (german->english,
+	* plug-ins/bmp/bmpread.c: Cosmetical fixed (german->english,
 	added ';').
 
 2000-05-16  Michael Natterer  <mitch@gimp.org>
