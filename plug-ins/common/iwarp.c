@@ -44,11 +44,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -97,93 +92,90 @@ typedef struct
  */
 static void      query  (void);
 static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void      iwarp                   (void);
 static void      iwarp_frame             (void);
 
 static gboolean  iwarp_dialog            (void);
 static void      iwarp_animate_dialog    (GtkWidget *dlg,
-					  GtkWidget *notebook);
+                                          GtkWidget *notebook);
 
 static void      iwarp_settings_dialog   (GtkWidget *dlg,
-					  GtkWidget *notebook);
+                                          GtkWidget *notebook);
 
 static void      iwarp_response          (GtkWidget *widget,
                                           gint       response_id,
-					  gpointer   data);
+                                          gpointer   data);
 
 static gint      iwarp_motion_callback   (GtkWidget *widget,
-					  GdkEvent  *event);
+                                          GdkEvent  *event);
 
 static void      iwarp_update_preview    (gint       x0,
-					  gint       y0,
-					  gint       x1,
-					  gint       y1);
+                                          gint       y0,
+                                          gint       x1,
+                                          gint       y1);
 
 static void      iwarp_get_pixel         (gint       x,
-					  gint       y,
-					  guchar    *pixel);
+                                          gint       y,
+                                          guchar    *pixel);
 
 static void      iwarp_get_deform_vector (gdouble    x,
-					  gdouble    y,
-					  gdouble   *xv,
-					  gdouble   *yv);
+                                          gdouble    y,
+                                          gdouble   *xv,
+                                          gdouble   *yv);
 
 static void      iwarp_get_point         (gdouble    x,
-					  gdouble    y,
-					  guchar    *color);
+                                          gdouble    y,
+                                          guchar    *color);
 
 static gint      iwarp_supersample_test  (GimpVector2 *v0,
-					  GimpVector2 *v1,
-					  GimpVector2 *v2,
-					  GimpVector2 *v3);
+                                          GimpVector2 *v1,
+                                          GimpVector2 *v2,
+                                          GimpVector2 *v3);
 
 static void      iwarp_getsample         (GimpVector2  v0,
-					  GimpVector2  v1,
-					  GimpVector2  v2,
-					  GimpVector2  v3,
-					  gdouble      x,
-					  gdouble      y,
-					  gint        *sample,
-					  gint        *cc,
-					  gint         depth,
-					  gdouble      scale);
+                                          GimpVector2  v1,
+                                          GimpVector2  v2,
+                                          GimpVector2  v3,
+                                          gdouble      x,
+                                          gdouble      y,
+                                          gint        *sample,
+                                          gint        *cc,
+                                          gint         depth,
+                                          gdouble      scale);
 
 static void      iwarp_supersample       (gint       sxl,
-					  gint       syl,
-					  gint       sxr,
-					  gint       syr,
-					  guchar    *dest_data,
-					  gint       stride,
-					  gint      *progress,
-					  gint       max_progress);
-
-static guchar    iwarp_transparent_color (gint       x,
-					  gint       y);
+                                          gint       syl,
+                                          gint       sxr,
+                                          gint       syr,
+                                          guchar    *dest_data,
+                                          gint       stride,
+                                          gint      *progress,
+                                          gint       max_progress);
 
 static void      iwarp_cpy_images        (void);
 
 static void      iwarp_preview_get_pixel (gint       x,
-					  gint       y,
-					  guchar   **color);
+                                          gint       y,
+                                          guchar   **color);
 
 static void      iwarp_preview_get_point (gdouble    x,
-					  gdouble    y,
-					  guchar    *color);
+                                          gdouble    y,
+                                          guchar    *color);
 
 static void      iwarp_deform            (gint       x,
-					  gint       y,
-					  gdouble    vx,
-					  gdouble    vy);
+                                          gint       y,
+                                          gdouble    vx,
+                                          gdouble    vy);
 
 static void      iwarp_move              (gint       x,
-					  gint       y,
-					  gint       xx,
-					  gint       yy);
+                                          gint       y,
+                                          gint       xx,
+                                          gint       yy);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -252,16 +244,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_iwarp",
-			  "Interactive warping of the specified drawable",
-			  "Interactive warping of the specified drawable",
-			  "Norbert Schmitz",
-			  "Norbert Schmitz",
-			  "1997",
-			  N_("_IWarp..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Interactive warping of the specified drawable",
+                          "Interactive warping of the specified drawable",
+                          "Norbert Schmitz",
+                          "Norbert Schmitz",
+                          "1997",
+                          N_("_IWarp..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_iwarp",
                              N_("<Image>/Filters/Distorts"));
@@ -291,28 +283,28 @@ run (const gchar      *name,
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       switch (run_mode)
-	{
+        {
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data ("plug_in_iwarp", &iwarp_vals);
           gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
-				  gimp_tile_width ());
+                                  gimp_tile_width ());
           if (iwarp_dialog())
-	    iwarp();
+            iwarp();
           gimp_set_data ("plug_in_iwarp", &iwarp_vals, sizeof (iwarp_vals_t));
- 	  gimp_displays_flush ();
-	  break;
+          gimp_displays_flush ();
+          break;
 
         case GIMP_RUN_NONINTERACTIVE:
-	  status = GIMP_PDB_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-	  status = GIMP_PDB_CALLING_ERROR;
+          status = GIMP_PDB_CALLING_ERROR;
         break;
 
         default:
-	  break;
-	}
+          break;
+        }
     }
   else
     {
@@ -335,8 +327,8 @@ run (const gchar      *name,
 
 static void
 iwarp_get_pixel (gint    x,
-		 gint    y,
-		 guchar *pixel)
+                 gint    y,
+                 guchar *pixel)
 {
  static gint  old_col = -1;
  static gint  old_row = -1;
@@ -354,11 +346,11 @@ iwarp_get_pixel (gint    x,
          if (tile)
            gimp_tile_unref (tile, FALSE);
 
-	 tile = gimp_drawable_get_tile (drawable, FALSE, row, col);
-	 gimp_tile_ref (tile);
+         tile = gimp_drawable_get_tile (drawable, FALSE, row, col);
+         gimp_tile_ref (tile);
 
-	 old_col = col;
-	 old_row = row;
+         old_col = col;
+         old_row = row;
        }
 
      data = tile->data + (tile->ewidth * (y % tile_height) +
@@ -375,9 +367,9 @@ iwarp_get_pixel (gint    x,
 
 static void
 iwarp_get_deform_vector (gdouble  x,
-			 gdouble  y,
-			 gdouble *xv,
-			 gdouble *yv)
+                         gdouble  y,
+                         gdouble *xv,
+                         gdouble *yv)
 {
   gint    i, xi, yi;
   gdouble dx, dy, my0, my1, mx0, mx1;
@@ -390,21 +382,21 @@ iwarp_get_deform_vector (gdouble  x,
       dy = y-yi;
       i = (yi * preview_width + xi);
       mx0 =
-	deform_vectors[i].x +
-	(deform_vectors[i+1].x -
-	 deform_vectors[i].x) * dx;
+        deform_vectors[i].x +
+        (deform_vectors[i+1].x -
+         deform_vectors[i].x) * dx;
       mx1 =
-	deform_vectors[i+preview_width].x +
-	(deform_vectors[i+preview_width+1].x -
-	 deform_vectors[i+preview_width].x) * dx;
+        deform_vectors[i+preview_width].x +
+        (deform_vectors[i+preview_width+1].x -
+         deform_vectors[i+preview_width].x) * dx;
       my0 =
-	deform_vectors[i].y +
-	dx * (deform_vectors[i+1].y -
-	      deform_vectors[i].y);
+        deform_vectors[i].y +
+        dx * (deform_vectors[i+1].y -
+              deform_vectors[i].y);
       my1 =
-	deform_vectors[i+preview_width].y +
-	dx * (deform_vectors[i+preview_width+1].y -
-	      deform_vectors[i+preview_width].y);
+        deform_vectors[i+preview_width].y +
+        dx * (deform_vectors[i+preview_width+1].y -
+              deform_vectors[i+preview_width].y);
       *xv = mx0 + dy * (mx1 - mx0);
       *yv = my0 + dy * (my1 - my0);
     }
@@ -416,8 +408,8 @@ iwarp_get_deform_vector (gdouble  x,
 
 static void
 iwarp_get_point (gdouble  x,
-		 gdouble  y,
-		 guchar  *color)
+                 gdouble  y,
+                 guchar  *color)
 {
   gdouble dx, dy, m0, m1;
   guchar  p0[4], p1[4], p2[4], p3[4];
@@ -466,9 +458,9 @@ iwarp_get_point (gdouble  x,
 
 static gboolean
 iwarp_supersample_test (GimpVector2 *v0,
-			GimpVector2 *v1,
-			GimpVector2 *v2,
-			GimpVector2 *v3)
+                        GimpVector2 *v1,
+                        GimpVector2 *v2,
+                        GimpVector2 *v3)
 {
   gdouble dx, dy;
 
@@ -497,15 +489,15 @@ iwarp_supersample_test (GimpVector2 *v0,
 
 static void
 iwarp_getsample (GimpVector2  v0,
-		 GimpVector2  v1,
-		 GimpVector2  v2,
-		 GimpVector2  v3,
-		 gdouble      x,
-		 gdouble      y,
-		 gint        *sample,
-		 gint        *cc,
-		 gint         depth,
-		 gdouble      scale)
+                 GimpVector2  v1,
+                 GimpVector2  v2,
+                 GimpVector2  v3,
+                 gdouble      x,
+                 gdouble      y,
+                 gint        *sample,
+                 gint        *cc,
+                 gint         depth,
+                 gdouble      scale)
 {
   gint        i;
   gdouble     xv, yv;
@@ -516,21 +508,21 @@ iwarp_getsample (GimpVector2  v0,
       (!iwarp_supersample_test (&v0, &v1, &v2, &v3)))
     {
       iwarp_get_deform_vector (img2pre * (x - xl),
-			       img2pre * (y - yl),
-			       &xv, &yv);
+                               img2pre * (y - yl),
+                               &xv, &yv);
       xv *= animate_deform_value;
       yv *= animate_deform_value;
       iwarp_get_point (pre2img * xv + x, pre2img * yv + y, c);
       for (i = 0;  i < image_bpp; i++)
-	sample[i] += c[i];
+        sample[i] += c[i];
       (*cc)++;
     }
  else
    {
      scale *= 0.5;
      iwarp_get_deform_vector (img2pre * (x - xl),
-			      img2pre * (y - yl),
-			      &xv, &yv);
+                              img2pre * (y - yl),
+                              &xv, &yv);
      xv *= animate_deform_value;
      yv *= animate_deform_value;
      iwarp_get_point (pre2img * xv + x, pre2img * yv + y, c);
@@ -541,65 +533,65 @@ iwarp_getsample (GimpVector2  v0,
      vm.y = yv;
 
      iwarp_get_deform_vector (img2pre * (x - xl),
-			      img2pre * (y - yl - scale),
-			      &xv, &yv);
+                              img2pre * (y - yl - scale),
+                              &xv, &yv);
      xv *= animate_deform_value;
      yv *= animate_deform_value;
      v01.x = xv;
      v01.y = yv;
 
      iwarp_get_deform_vector (img2pre * (x - xl + scale),
-			      img2pre * (y - yl),
-			      &xv, &yv);
+                              img2pre * (y - yl),
+                              &xv, &yv);
      xv *= animate_deform_value;
      yv *= animate_deform_value;
      v13.x = xv;
      v13.y = yv;
 
      iwarp_get_deform_vector (img2pre * (x - xl),
-			      img2pre * (y - yl + scale),
-			      &xv, &yv);
+                              img2pre * (y - yl + scale),
+                              &xv, &yv);
      xv *= animate_deform_value;
      yv *= animate_deform_value;
      v23.x = xv;
      v23.y = yv;
 
      iwarp_get_deform_vector (img2pre * (x - xl - scale),
-			      img2pre * (y - yl),
-			      &xv, &yv);
+                              img2pre * (y - yl),
+                              &xv, &yv);
      xv *= animate_deform_value;
      yv *= animate_deform_value;
      v02.x = xv;
      v02.y = yv;
 
      iwarp_getsample (v0, v01, vm, v02,
-		      x-scale, y-scale,
-		      sample, cc, depth + 1,
-		      scale);
+                      x-scale, y-scale,
+                      sample, cc, depth + 1,
+                      scale);
      iwarp_getsample (v01, v1, v13, vm,
-		      x + scale, y - scale,
-		      sample, cc, depth + 1,
-		      scale);
+                      x + scale, y - scale,
+                      sample, cc, depth + 1,
+                      scale);
      iwarp_getsample (v02, vm, v23, v2,
-		      x - scale, y + scale,
-		      sample, cc, depth + 1,
-		      scale);
+                      x - scale, y + scale,
+                      sample, cc, depth + 1,
+                      scale);
      iwarp_getsample (vm, v13, v3, v23,
-		      x + scale, y + scale,
-		      sample, cc, depth + 1,
-		      scale);
+                      x + scale, y + scale,
+                      sample, cc, depth + 1,
+                      scale);
    }
 }
 
 static void
 iwarp_supersample (gint    sxl,
-		   gint    syl,
-		   gint    sxr,
-		   gint    syr,
-		   guchar *dest_data,
-		   gint    stride,
-		   gint   *progress,
-		   gint    max_progress)
+                   gint    syl,
+                   gint    sxr,
+                   gint    syr,
+                   guchar *dest_data,
+                   gint    stride,
+                   gint   *progress,
+                   gint    max_progress)
 {
   gint         i, wx, wy, col, row, cc;
   GimpVector2 *srow, *srow_old, *vh;
@@ -615,8 +607,8 @@ iwarp_supersample (gint    sxl,
   for (i = sxl; i < (sxr + 1); i++)
     {
       iwarp_get_deform_vector (img2pre * (-0.5 + i - xl),
-			       img2pre * (-0.5 + syl - yl),
-			       &xv, &yv);
+                               img2pre * (-0.5 + syl - yl),
+                               &xv, &yv);
       xv *= animate_deform_value;
       yv *= animate_deform_value;
       srow_old[i-sxl].x = xv;
@@ -626,34 +618,34 @@ iwarp_supersample (gint    sxl,
   for (col = syl; col < syr; col++)
     {
       iwarp_get_deform_vector (img2pre * (-0.5 + sxl - xl),
-			       img2pre * (0.5 + col - yl),
-			       &xv, &yv);
+                               img2pre * (0.5 + col - yl),
+                               &xv, &yv);
       xv *= animate_deform_value;
       yv *= animate_deform_value;
       srow[0].x = xv;
       srow[0].y = yv;
       for (row = sxl; row <sxr; row++)
-	{
-	  iwarp_get_deform_vector (img2pre * (0.5 + row - xl),
-				   img2pre * (0.5 + col - yl),
-				   &xv, &yv);
-	  xv *= animate_deform_value;
-	  yv *= animate_deform_value;
-	  srow[row-sxl+1].x = xv;
-	  srow[row-sxl+1].y = yv;
-	  cc = 0;
-	  color[0] = color[1] = color[2] = color[3] = 0;
-	  iwarp_getsample (srow_old[row-sxl], srow_old[row-sxl+1],
-			   srow[row-sxl], srow[row-sxl+1],
-			   row, col, color, &cc, 0, 1.0);
+        {
+          iwarp_get_deform_vector (img2pre * (0.5 + row - xl),
+                                   img2pre * (0.5 + col - yl),
+                                   &xv, &yv);
+          xv *= animate_deform_value;
+          yv *= animate_deform_value;
+          srow[row-sxl+1].x = xv;
+          srow[row-sxl+1].y = yv;
+          cc = 0;
+          color[0] = color[1] = color[2] = color[3] = 0;
+          iwarp_getsample (srow_old[row-sxl], srow_old[row-sxl+1],
+                           srow[row-sxl], srow[row-sxl+1],
+                           row, col, color, &cc, 0, 1.0);
 
-	  dest = dest_data + (col - syl) * stride + (row - sxl) * image_bpp;
+          dest = dest_data + (col - syl) * stride + (row - sxl) * image_bpp;
 
-	  for (i = 0; i < image_bpp; i++)
-	    *dest++ = color[i] / cc;
+          for (i = 0; i < image_bpp; i++)
+            *dest++ = color[i] / cc;
 
-	  (*progress)++;
-	}
+          (*progress)++;
+        }
 
       gimp_progress_update ((gdouble) (*progress) / max_progress);
       vh = srow_old;
@@ -682,7 +674,7 @@ iwarp_frame (void)
   max_progress = (yh-yl)*(xh-xl);
 
   gimp_pixel_rgn_init (&dest_rgn, destdrawable,
-		       xl, yl, xh-xl, yh-yl, TRUE, TRUE);
+                       xl, yl, xh-xl, yh-yl, TRUE, TRUE);
 
   /* If the source drawable doesn't have an alpha channel but the
      destination drawable has (happens with animations), we need
@@ -700,53 +692,53 @@ iwarp_frame (void)
     {
       dest_row = dest_rgn.data;
       if (!iwarp_vals.do_supersample)
-	{
-	  for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++)
-	    {
-	      dest = dest_row;
-	      for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
-		{
-		  progress++;
-		  iwarp_get_deform_vector (img2pre * (col -xl),
-					   img2pre * (row -yl),
-					   &xv, &yv);
-		  xv *= animate_deform_value;
-		  yv *= animate_deform_value;
-		  if (fabs(xv) > 0.0 || fabs(yv) > 0.0)
-		    {
-		      iwarp_get_point (pre2img * xv + col,
-				       pre2img * yv + row,
-				       color);
+        {
+          for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++)
+            {
+              dest = dest_row;
+              for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
+                {
+                  progress++;
+                  iwarp_get_deform_vector (img2pre * (col -xl),
+                                           img2pre * (row -yl),
+                                           &xv, &yv);
+                  xv *= animate_deform_value;
+                  yv *= animate_deform_value;
+                  if (fabs(xv) > 0.0 || fabs(yv) > 0.0)
+                    {
+                      iwarp_get_point (pre2img * xv + col,
+                                       pre2img * yv + row,
+                                       color);
 
                       for (i = 0; i < image_bpp; i++)
-			*dest++ = color[i];
-		    }
-		  else
-		    {
-		      iwarp_get_pixel (col, row, color);
+                        *dest++ = color[i];
+                    }
+                  else
+                    {
+                      iwarp_get_pixel (col, row, color);
 
-		      for (i = 0; i < image_bpp; i++)
-			*dest++ = color[i];
-		    }
+                      for (i = 0; i < image_bpp; i++)
+                        *dest++ = color[i];
+                    }
 
                   if (padding)
                     *dest++ = 255;
-		}
+                }
 
-	      dest_row += dest_rgn.rowstride;
-	      gimp_progress_update ((gdouble) (progress) / max_progress);
-	    }
-	}
+              dest_row += dest_rgn.rowstride;
+              gimp_progress_update ((gdouble) (progress) / max_progress);
+            }
+        }
       else
-	{
-	  supersample_threshold_2 =
-	    iwarp_vals.supersample_threshold * iwarp_vals.supersample_threshold;
-	  iwarp_supersample (dest_rgn.x, dest_rgn.y,
-			     dest_rgn.x + dest_rgn.w, dest_rgn.y + dest_rgn.h,
-			     dest_rgn.data,
-			     dest_rgn.rowstride,
-			     &progress, max_progress);
-	}
+        {
+          supersample_threshold_2 =
+            iwarp_vals.supersample_threshold * iwarp_vals.supersample_threshold;
+          iwarp_supersample (dest_rgn.x, dest_rgn.y,
+                             dest_rgn.x + dest_rgn.w, dest_rgn.y + dest_rgn.h,
+                             dest_rgn.data,
+                             dest_rgn.rowstride,
+                             &progress, max_progress);
+        }
     }
 
   gimp_drawable_flush (destdrawable);
@@ -772,59 +764,59 @@ iwarp (void)
     {
       animlayers = g_new (gint32, animate_num_frames);
       if (do_animate_reverse)
-	{
-	  animate_deform_value = 1.0;
-	  delta = -1.0 / (animate_num_frames - 1);
+        {
+          animate_deform_value = 1.0;
+          delta = -1.0 / (animate_num_frames - 1);
 
           gimp_image_undo_group_start (imageID);
-	}
+        }
       else
-	{
-	  animate_deform_value = 0.0;
-	  delta = 1.0 / (animate_num_frames - 1);
-	}
+        {
+          animate_deform_value = 0.0;
+          delta = 1.0 / (animate_num_frames - 1);
+        }
       layerID = gimp_image_get_active_layer (imageID);
       frame_number = 0;
       for (i = 0; i < animate_num_frames; i++)
-	{
-	  st = g_strdup_printf (_("Frame %d"), i);
-	  animlayers[i] = gimp_layer_copy (layerID);
-	  gimp_layer_add_alpha (animlayers[i]);
-	  gimp_drawable_set_name (animlayers[i], st);
-	  g_free (st);
-	  destdrawable = gimp_drawable_get (animlayers[i]);
+        {
+          st = g_strdup_printf (_("Frame %d"), i);
+          animlayers[i] = gimp_layer_copy (layerID);
+          gimp_layer_add_alpha (animlayers[i]);
+          gimp_drawable_set_name (animlayers[i], st);
+          g_free (st);
+          destdrawable = gimp_drawable_get (animlayers[i]);
 
-	  st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
-	  gimp_progress_init (st);
-	  g_free (st);
+          st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
+          gimp_progress_init (st);
+          g_free (st);
 
-	  if (animate_deform_value > 0.0)
-	    iwarp_frame ();
+          if (animate_deform_value > 0.0)
+            iwarp_frame ();
 
-	  gimp_image_add_layer (imageID, animlayers[i], 0);
-	  animate_deform_value = animate_deform_value + delta;
-	  frame_number++;
-	}
+          gimp_image_add_layer (imageID, animlayers[i], 0);
+          animate_deform_value = animate_deform_value + delta;
+          frame_number++;
+        }
       if (do_animate_ping_pong)
-	{
-	  st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
-	  gimp_progress_init (_("Ping pong"));
-	  g_free (st);
+        {
+          st = g_strdup_printf (_("Warping Frame No. %d..."), frame_number);
+          gimp_progress_init (_("Ping pong"));
+          g_free (st);
 
-	  for (i = 0; i < animate_num_frames; i++)
-	    {
-	      gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
-	      layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]);
+          for (i = 0; i < animate_num_frames; i++)
+            {
+              gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
+              layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]);
 
               gimp_image_undo_group_end (imageID);
 
-	      gimp_layer_add_alpha (layerID);
-	      st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
-	      gimp_drawable_set_name (layerID, st);
-	      g_free (st);
-	      gimp_image_add_layer (imageID, layerID, 0);
-	    }
-	}
+              gimp_layer_add_alpha (layerID);
+              st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
+              gimp_drawable_set_name (layerID, st);
+              g_free (st);
+              gimp_image_add_layer (imageID, layerID, 0);
+            }
+        }
       g_free (animlayers);
     }
   else
@@ -840,54 +832,10 @@ iwarp (void)
     }
 }
 
-static guchar
-iwarp_transparent_color (gint x,
-			 gint y)
-{
-  if ((y % (GIMP_CHECK_SIZE * 4)) > (GIMP_CHECK_SIZE * 2))
-    {
-      if ((x % (GIMP_CHECK_SIZE * 4)) > (GIMP_CHECK_SIZE * 2))
-	return GIMP_CHECK_DARK * 255;
-      else
-	return GIMP_CHECK_LIGHT * 255;
-    }
-  else
-    {
-      if ((x % (GIMP_CHECK_SIZE * 4)) < (GIMP_CHECK_SIZE * 2))
-	return GIMP_CHECK_DARK * 255;
-      else
-	return GIMP_CHECK_LIGHT * 255;
-    }
-}
-
 static void
 iwarp_cpy_images (void)
 {
-  gint     i, j, k, p;
-  gdouble  alpha;
-  guchar  *srccolor, *dstcolor;
-
-  if (image_bpp == 1 || image_bpp == 3)
-    {
-      memcpy (dstimage, srcimage, preview_width * preview_height * preview_bpp);
-    }
-  else
-    {
-      for (i = 0; i< preview_width; i++)
-	for (j = 0; j< preview_height; j++)
-	  {
-	    p = (j * preview_width + i);
-	    srccolor = srcimage + p * image_bpp;
-	    alpha = (gdouble) srccolor[image_bpp-1] / 255;
-	    dstcolor = dstimage + p * preview_bpp;
-	    for (k = 0; k < preview_bpp; k++)
-	      {
-		*dstcolor++ = (guchar)
-		  (alpha *srccolor[k]+(1.0-alpha) *
-		   iwarp_transparent_color (i,j));
-	      }
-	  }
-    }
+  memcpy (dstimage, srcimage, preview_width * preview_height * preview_bpp);
 }
 
 static void
@@ -910,10 +858,7 @@ iwarp_init (void)
   else
     preserve_trans = FALSE;
 
-  if (image_bpp < 3)
-    preview_bpp = 1;
-  else
-    preview_bpp = 3;
+  preview_bpp = image_bpp;
 
   dx = (gdouble) sel_width / MAX_PREVIEW_WIDTH;
   dy = (gdouble) sel_height / MAX_PREVIEW_HEIGHT;
@@ -938,26 +883,26 @@ iwarp_init (void)
   dstimage = g_new (guchar, preview_width * preview_height * preview_bpp);
   deform_vectors = g_new0 (GimpVector2, preview_width * preview_height);
   deform_area_vectors = g_new (GimpVector2,
-			       (MAX_DEFORM_AREA_RADIUS * 2 + 1) *
-			       (MAX_DEFORM_AREA_RADIUS * 2 + 1));
+                               (MAX_DEFORM_AREA_RADIUS * 2 + 1) *
+                               (MAX_DEFORM_AREA_RADIUS * 2 + 1));
   linebuffer = g_new (guchar, sel_width * image_bpp);
 
   gimp_pixel_rgn_init (&srcrgn, drawable,
-		       xl, yl, sel_width, sel_height, FALSE, FALSE);
+                       xl, yl, sel_width, sel_height, FALSE, FALSE);
 
   for (y = 0; y < preview_height; y++)
     {
       gimp_pixel_rgn_get_row (&srcrgn, linebuffer,
-			      xl, (gint) (pre2img * y) + yl, sel_width);
+                              xl, (gint) (pre2img * y) + yl, sel_width);
       for (x = 0; x < preview_width; x++)
-	{
-	  pts = srcimage + (y * preview_width + x) * image_bpp;
-	  xi = (gint) (pre2img * x);
-	  for (i = 0; i < image_bpp; i++)
-	    {
-	      *pts++ = linebuffer[xi*image_bpp+i];
-	    }
-	}
+        {
+          pts = srcimage + (y * preview_width + x) * image_bpp;
+          xi = (gint) (pre2img * x);
+          for (i = 0; i < image_bpp; i++)
+            {
+              *pts++ = linebuffer[xi*image_bpp+i];
+            }
+        }
     }
 
   iwarp_cpy_images ();
@@ -965,8 +910,8 @@ iwarp_init (void)
   for (i = 0; i < MAX_DEFORM_AREA_RADIUS; i++)
     {
       filter[i] =
-	pow ((cos (sqrt((gdouble) i / MAX_DEFORM_AREA_RADIUS) * G_PI) + 1) *
-	     0.5, 0.7); /*0.7*/
+        pow ((cos (sqrt((gdouble) i / MAX_DEFORM_AREA_RADIUS) * G_PI) + 1) *
+             0.5, 0.7); /*0.7*/
     }
 
   g_free (linebuffer);
@@ -974,7 +919,7 @@ iwarp_init (void)
 
 static void
 iwarp_animate_dialog (GtkWidget *dlg,
-		      GtkWidget *notebook)
+                      GtkWidget *notebook)
 {
   GtkWidget *vbox;
   GtkWidget *frame;
@@ -1008,18 +953,18 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, do_animate);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Number of _Frames:"), SCALE_WIDTH, 0,
-				     animate_num_frames,
-				     2, MAX_NUM_FRAMES, 1, 10, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("Number of _Frames:"), SCALE_WIDTH, 0,
+                                     animate_num_frames,
+                                     2, MAX_NUM_FRAMES, 1, 10, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &animate_num_frames);
 
   button = gtk_check_button_new_with_mnemonic (_("R_everse"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -1028,7 +973,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
 
   button = gtk_check_button_new_with_mnemonic (_("_Ping Pong"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -1038,13 +983,13 @@ iwarp_animate_dialog (GtkWidget *dlg,
   gtk_widget_show (vbox);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-			    vbox,
-			    gtk_label_new_with_mnemonic (_("_Animate")));
+                            vbox,
+                            gtk_label_new_with_mnemonic (_("_Animate")));
 }
 
 static void
 iwarp_settings_dialog (GtkWidget *dlg,
-		       GtkWidget *notebook)
+                       GtkWidget *notebook)
 {
   GtkWidget *vbox;
   GtkWidget *vbox2;
@@ -1069,18 +1014,18 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (hbox);
 
   vbox2 = gimp_int_radio_group_new (FALSE, NULL,
-				    G_CALLBACK (gimp_radio_button_update),
-				    &iwarp_vals.deform_mode,
-				    iwarp_vals.deform_mode,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &iwarp_vals.deform_mode,
+                                    iwarp_vals.deform_mode,
 
-				    _("_Move"),      MOVE,      NULL,
-				    _("_Grow"),      GROW,      NULL,
-				    _("S_wirl CCW"), SWIRL_CCW, NULL,
-				    _("Remo_ve"),    REMOVE,    &widget[0],
-				    _("S_hrink"),    SHRINK,    &widget[1],
-				    _("Sw_irl CW"),  SWIRL_CW,  &widget[2],
+                                    _("_Move"),      MOVE,      NULL,
+                                    _("_Grow"),      GROW,      NULL,
+                                    _("S_wirl CCW"), SWIRL_CCW, NULL,
+                                    _("Remo_ve"),    REMOVE,    &widget[0],
+                                    _("S_hrink"),    SHRINK,    &widget[1],
+                                    _("Sw_irl CW"),  SWIRL_CW,  &widget[2],
 
-				    NULL);
+                                    NULL);
 
   gtk_container_add (GTK_CONTAINER (hbox), vbox2);
   gtk_widget_show (vbox2);
@@ -1107,28 +1052,28 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Deform radius:"), SCALE_WIDTH, 4,
-				     iwarp_vals.deform_area_radius,
-				     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Deform radius:"), SCALE_WIDTH, 4,
+                                     iwarp_vals.deform_area_radius,
+                                     5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.deform_area_radius);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("D_eform amount:"), SCALE_WIDTH, 4,
-				     iwarp_vals.deform_amount,
-				     0.0, 1.0, 0.01, 0.1, 2,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("D_eform amount:"), SCALE_WIDTH, 4,
+                                     iwarp_vals.deform_amount,
+                                     0.0, 1.0, 0.01, 0.1, 2,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.deform_amount);
 
   button = gtk_check_button_new_with_mnemonic (_("_Bilinear"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				iwarp_vals.do_bilinear);
+                                iwarp_vals.do_bilinear);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1142,7 +1087,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
 
   button = gtk_check_button_new_with_mnemonic (_("Adaptive s_upersample"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				iwarp_vals.do_supersample);
+                                iwarp_vals.do_supersample);
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
@@ -1160,21 +1105,21 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_set_sensitive (table, iwarp_vals.do_supersample);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("Ma_x depth:"), SCALE_WIDTH, 5,
-				     iwarp_vals.max_supersample_depth,
-				     1.0, 5.0, 1.1, 1.0, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("Ma_x depth:"), SCALE_WIDTH, 5,
+                                     iwarp_vals.max_supersample_depth,
+                                     1.0, 5.0, 1.1, 1.0, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.max_supersample_depth);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("Thresho_ld:"), SCALE_WIDTH, 5,
-				     iwarp_vals.supersample_threshold,
-				     1.0, 10.0, 0.01, 0.1, 2,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("Thresho_ld:"), SCALE_WIDTH, 5,
+                                     iwarp_vals.supersample_threshold,
+                                     1.0, 10.0, 0.01, 0.1, 2,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.supersample_threshold);
@@ -1182,8 +1127,8 @@ iwarp_settings_dialog (GtkWidget *dlg,
   gtk_widget_show (vbox);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-			    vbox,
-			    gtk_label_new_with_mnemonic (_("_Settings")));
+                            vbox,
+                            gtk_label_new_with_mnemonic (_("_Settings")));
 }
 
 static gboolean
@@ -1201,11 +1146,11 @@ iwarp_dialog (void)
 
   dlg = gimp_dialog_new (_("IWarp"), "iwarp",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-iwarp",
+                         gimp_standard_help_func, "plug-in-iwarp",
 
-			 GIMP_STOCK_RESET, RESPONSE_RESET,
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GIMP_STOCK_RESET, RESPONSE_RESET,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
 
@@ -1219,7 +1164,7 @@ iwarp_dialog (void)
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
   abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
@@ -1231,21 +1176,16 @@ iwarp_dialog (void)
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
-  if (preview_bpp == 3)
-    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  else
-    preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
-  iwarp_update_preview (0, 0, preview_width, preview_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   gtk_widget_set_events (preview,
-			 GDK_BUTTON_PRESS_MASK |
-			 GDK_BUTTON_RELEASE_MASK |
-			 GDK_BUTTON1_MOTION_MASK |
-			 GDK_POINTER_MOTION_HINT_MASK);
+                         GDK_BUTTON_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK |
+                         GDK_BUTTON1_MOTION_MASK |
+                         GDK_POINTER_MOTION_HINT_MASK);
   g_signal_connect (preview, "event",
                     G_CALLBACK (iwarp_motion_callback),
                     NULL);
@@ -1260,6 +1200,8 @@ iwarp_dialog (void)
 
   gtk_widget_show (dlg);
 
+  iwarp_update_preview (0, 0, preview_width, preview_height);
+
   gtk_main ();
   gdk_flush ();
 
@@ -1268,29 +1210,27 @@ iwarp_dialog (void)
 
 static void
 iwarp_update_preview (gint x0,
-		      gint y0,
-		      gint x1,
-		      gint y1)
+                      gint y0,
+                      gint x1,
+                      gint y1)
 {
-  gint i;
-
   x0 = MAX (x0, 0);
   y0 = MAX (y0, 0);
   x1 = MIN (x1, preview_width);
   y1 = MIN (y1, preview_height);
 
-  for (i = y0; i < y1; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (preview),
-			  dstimage + (i * preview_width + x0) * preview_bpp,
-			  x0, i,x1-x0);
-
-  gtk_widget_queue_draw_area (preview, x0, y0, x1 - x0, y1 - y0);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          x0, y0,
+                          x1 - x0, y1 - x0,
+                          gimp_drawable_type(drawable->drawable_id),
+                          dstimage + (y0 * preview_width + x0) * preview_bpp,
+                          preview_width * preview_bpp);
 }
 
 static void
 iwarp_preview_get_pixel (gint     x,
-			 gint     y,
-			 guchar **color)
+                         gint     y,
+                         guchar **color)
 {
   static guchar black[4] = { 0, 0, 0, 0 };
 
@@ -1305,8 +1245,8 @@ iwarp_preview_get_pixel (gint     x,
 
 static void
 iwarp_preview_get_point (gdouble  x,
-			 gdouble  y,
-			 guchar  *color)
+                         gdouble  y,
+                         guchar  *color)
 {
   gint     xi, yi, j;
   gdouble  dx, dy, m0, m1;
@@ -1326,29 +1266,29 @@ iwarp_preview_get_point (gdouble  x,
       iwarp_preview_get_pixel (xi + 1, yi + 1, &p3);
 
       for (j = 0; j < image_bpp; j++)
-	{
-	  m0 = p0[j] + dx * (p1[j] - p0[j]);
-	  m1 = p2[j] + dx * (p3[j] - p2[j]);
-	  color[j] = (guchar) (m0 + dy * (m1 - m0));
-	}
+        {
+          m0 = p0[j] + dx * (p1[j] - p0[j]);
+          m1 = p2[j] + dx * (p3[j] - p2[j]);
+          color[j] = (guchar) (m0 + dy * (m1 - m0));
+        }
     }
   else
     {
       iwarp_preview_get_pixel (xi, yi, &p0);
       for (j = 0; j < image_bpp; j++)
-	color[j] = p0[j];
+        color[j] = p0[j];
     }
 }
 
 static void
 iwarp_deform (gint    x,
-	      int     y,
-	      gdouble vx,
-	      gdouble vy)
+              int     y,
+              gdouble vx,
+              gdouble vy)
 {
   gint    xi, yi, ptr, fptr, x0, x1, y0, y1, radius2, length2;
-  gdouble deform_value, xn, yn, nvx=0, nvy=0, emh, em, edge_width, xv, yv, alpha;
-  guchar  color[4];
+  gdouble deform_value, xn, yn, nvx=0, nvy=0, emh, em, edge_width, xv, yv;
+  guchar  color[4], alpha = 255;
 
   x0 = (x < iwarp_vals.deform_area_radius) ?
     -x : -iwarp_vals.deform_area_radius;
@@ -1367,175 +1307,157 @@ iwarp_deform (gint    x,
   for (yi = y0; yi <= y1; yi++)
     for (xi = x0; xi <= x1; xi++)
       {
-	length2 = (xi * xi + yi * yi) * MAX_DEFORM_AREA_RADIUS / radius2;
-	if (length2 < MAX_DEFORM_AREA_RADIUS)
-	  {
-	    ptr = (y + yi) * preview_width + x + xi;
-	    fptr =
-	      (yi + iwarp_vals.deform_area_radius) *
-	      (iwarp_vals.deform_area_radius * 2 + 1) +
-	      xi +
-	      iwarp_vals.deform_area_radius;
+        length2 = (xi * xi + yi * yi) * MAX_DEFORM_AREA_RADIUS / radius2;
+        if (length2 < MAX_DEFORM_AREA_RADIUS)
+          {
+            ptr = (y + yi) * preview_width + x + xi;
+            fptr =
+              (yi + iwarp_vals.deform_area_radius) *
+              (iwarp_vals.deform_area_radius * 2 + 1) +
+              xi +
+              iwarp_vals.deform_area_radius;
 
-	    switch (iwarp_vals.deform_mode)
-	      {
-	      case GROW:
-		deform_value = filter[length2] *  0.1* iwarp_vals.deform_amount;
-		nvx = -deform_value * xi;
-		nvy = -deform_value * yi;
-		break;
+            switch (iwarp_vals.deform_mode)
+              {
+              case GROW:
+                deform_value = filter[length2] *  0.1* iwarp_vals.deform_amount;
+                nvx = -deform_value * xi;
+                nvy = -deform_value * yi;
+                break;
 
-	      case SHRINK:
-		deform_value = filter[length2] * 0.1* iwarp_vals.deform_amount;
-		nvx = deform_value * xi;
-		nvy = deform_value * yi;
-		break;
+              case SHRINK:
+                deform_value = filter[length2] * 0.1* iwarp_vals.deform_amount;
+                nvx = deform_value * xi;
+                nvy = deform_value * yi;
+                break;
 
-	      case SWIRL_CW:
-		deform_value = filter[length2] * iwarp_vals.deform_amount * 0.5;
-		nvx =  deform_value * yi;
-		nvy = -deform_value * xi;
-		break;
+              case SWIRL_CW:
+                deform_value = filter[length2] * iwarp_vals.deform_amount * 0.5;
+                nvx =  deform_value * yi;
+                nvy = -deform_value * xi;
+                break;
 
-	      case SWIRL_CCW:
-		deform_value = filter[length2] *iwarp_vals.deform_amount * 0.5;
-		nvx = -deform_value * yi;
-		nvy =  deform_value  * xi;
-		break;
+              case SWIRL_CCW:
+                deform_value = filter[length2] *iwarp_vals.deform_amount * 0.5;
+                nvx = -deform_value * yi;
+                nvy =  deform_value  * xi;
+                break;
 
-	      case MOVE:
-		deform_value = filter[length2] * iwarp_vals.deform_amount;
-		nvx = deform_value * vx;
-		nvy = deform_value * vy;
-		break;
+              case MOVE:
+                deform_value = filter[length2] * iwarp_vals.deform_amount;
+                nvx = deform_value * vx;
+                nvy = deform_value * vy;
+                break;
 
-	      default:
-		break;
-	      }
+              default:
+                break;
+              }
 
-	    if (iwarp_vals.deform_mode == REMOVE)
-	      {
-		deform_value =
-		  1.0 - 0.5 * iwarp_vals.deform_amount * filter[length2];
-		deform_area_vectors[fptr].x =
-		  deform_value * deform_vectors[ptr].x ;
-		deform_area_vectors[fptr].y =
-		  deform_value * deform_vectors[ptr].y ;
-	      }
-	    else
-	      {
-		edge_width = 0.2 *  iwarp_vals.deform_area_radius;
-		emh = em = 1.0;
-		if (x+xi < edge_width)
-		  em = (gdouble) (x + xi) / edge_width;
-		if (y + yi < edge_width)
-		  emh = (gdouble) (y + yi) / edge_width;
-		if (emh <em)
-		  em = emh;
-		if (preview_width - x - xi - 1 < edge_width)
-		  emh = (gdouble) (preview_width - x - xi - 1) / edge_width;
-		if (emh < em)
-		  em = emh;
-		if (preview_height-y-yi-1 < edge_width)
-		  emh = (gdouble) (preview_height - y - yi - 1) / edge_width;
-		if (emh <em)
-		  em = emh;
+            if (iwarp_vals.deform_mode == REMOVE)
+              {
+                deform_value =
+                  1.0 - 0.5 * iwarp_vals.deform_amount * filter[length2];
+                deform_area_vectors[fptr].x =
+                  deform_value * deform_vectors[ptr].x ;
+                deform_area_vectors[fptr].y =
+                  deform_value * deform_vectors[ptr].y ;
+              }
+            else
+              {
+                edge_width = 0.2 *  iwarp_vals.deform_area_radius;
+                emh = em = 1.0;
+                if (x+xi < edge_width)
+                  em = (gdouble) (x + xi) / edge_width;
+                if (y + yi < edge_width)
+                  emh = (gdouble) (y + yi) / edge_width;
+                if (emh <em)
+                  em = emh;
+                if (preview_width - x - xi - 1 < edge_width)
+                  emh = (gdouble) (preview_width - x - xi - 1) / edge_width;
+                if (emh < em)
+                  em = emh;
+                if (preview_height-y-yi-1 < edge_width)
+                  emh = (gdouble) (preview_height - y - yi - 1) / edge_width;
+                if (emh <em)
+                  em = emh;
 
-		nvx = nvx * em;
-		nvy = nvy * em;
+                nvx = nvx * em;
+                nvy = nvy * em;
 
-		iwarp_get_deform_vector (nvx + x+ xi, nvy + y + yi, &xv, &yv);
-		xv = nvx +xv;
-		if (xv +x+xi <0.0)
-		  xv = -x - xi;
-		else if (xv + x +xi > (preview_width-1))
-		  xv = preview_width - x -xi-1;
-		yv = nvy +yv;
-		if (yv + y + yi < 0.0)
-		  yv = -y - yi;
-		else if (yv + y + yi > (preview_height-1))
-		  yv = preview_height - y -yi - 1;
-		deform_area_vectors[fptr].x = xv;
-		deform_area_vectors[fptr].y = yv;
-	      }
+                iwarp_get_deform_vector (nvx + x+ xi, nvy + y + yi, &xv, &yv);
+                xv = nvx +xv;
+                if (xv +x+xi <0.0)
+                  xv = -x - xi;
+                else if (xv + x +xi > (preview_width-1))
+                  xv = preview_width - x -xi-1;
+                yv = nvy +yv;
+                if (yv + y + yi < 0.0)
+                  yv = -y - yi;
+                else if (yv + y + yi > (preview_height-1))
+                  yv = preview_height - y -yi - 1;
+                deform_area_vectors[fptr].x = xv;
+                deform_area_vectors[fptr].y = yv;
+              }
 
-	    xn = deform_area_vectors[fptr].x + x + xi;
-	    yn = deform_area_vectors[fptr].y + y + yi;
+            xn = deform_area_vectors[fptr].x + x + xi;
+            yn = deform_area_vectors[fptr].y + y + yi;
 
-	    /* gcc - shut up! */
-	    alpha = 1;
+            /* Yeah, it is ugly but since color is a pointer into image-data
+             * I must not change color[image_bpp - 1]  ...
+             */
+            if (preserve_trans && (image_bpp == 4 || image_bpp == 2))
+              {
+                iwarp_preview_get_point (x + xi, y + yi, color);
+                alpha = color[image_bpp - 1];
+              }
 
-	    /* Yeah, it is ugly but since color is a pointer into image-data
-	     * I must not change color[image_bpp - 1]  ...
-	     */
-	    if (preserve_trans && (image_bpp == 4 || image_bpp == 2))
-	      {
-		iwarp_preview_get_point (x + xi, y + yi, color);
-		alpha = (gdouble) color[image_bpp - 1] / 255;
-	      }
+            iwarp_preview_get_point (xn, yn, color);
 
-	    iwarp_preview_get_point (xn, yn, color);
+            if (!preserve_trans && (image_bpp == 4 || image_bpp == 2))
+              {
+                alpha = color[image_bpp - 1];
+              }
 
-	    if (!preserve_trans && (image_bpp == 4 || image_bpp == 2))
-	      {
-		alpha = (gdouble) color[image_bpp - 1] / 255;
-	      }
+            switch (preview_bpp)
+            {
+              case 4:
+                dstimage[ptr*4 + 0] = color[0];
+                dstimage[ptr*4 + 1] = color[1];
+                dstimage[ptr*4 + 2] = color[2];
+                dstimage[ptr*4 + 3] = alpha;
+                break;
 
-	    if (preview_bpp == 3)
-	      {
-		if (image_bpp == 4)
-		  {
-		    dstimage[ptr*3] =
-		      (guchar) (alpha * color[0] +
-				(1.0 - alpha) *
-				iwarp_transparent_color (x + xi, y + yi));
-		    dstimage[ptr*3+1] =
-		      (guchar) (alpha * color[1] +
-				(1.0 - alpha) *
-				iwarp_transparent_color (x + xi, y + yi));
-		    dstimage[ptr*3+2] =
-		      (guchar) (alpha * color[2] +
-				(1.0 - alpha) *
-				iwarp_transparent_color (x + xi, y + yi));
-		  }
-		else
-		  {
-		    dstimage[ptr*3] = color[0];
-		    dstimage[ptr*3+1] = color[1];
-		    dstimage[ptr*3+2] = color[2];
-		  }
-	      }
-	    else
-	      {
-		if (image_bpp == 2)
-		  {
-		    dstimage[ptr] =
-		      (guchar) (alpha * color[0] +
-				(1.0 - alpha) *
-				iwarp_transparent_color (x + xi, y + yi)) ;
-		  }
-		else
-		  {
-		    dstimage[ptr] = color[0];
-		  }
-	      }
-	  }
+              case 3:
+                dstimage[ptr*3 + 0] = color[0];
+                dstimage[ptr*3 + 1] = color[1];
+                dstimage[ptr*3 + 2] = color[2];
+                break;
+
+              case 2:
+                dstimage[ptr*2 + 0] = color[0];
+                dstimage[ptr*2 + 1] = alpha;
+                break;
+
+              case 1:
+                dstimage[ptr] = color[0];
+            }
+          }
       }
 
   for (yi = y0; yi <= y1; yi++)
     for (xi = x0; xi <= x1; xi++)
       {
-	length2 = (xi*xi+yi*yi) * MAX_DEFORM_AREA_RADIUS / radius2;
-	if (length2 <MAX_DEFORM_AREA_RADIUS)
-	  {
-	    ptr = (yi +y) * preview_width + xi +x;
-	    fptr =
-	      (yi+iwarp_vals.deform_area_radius) *
-	      (iwarp_vals.deform_area_radius*2+1) +
-	      xi +
-	      iwarp_vals.deform_area_radius;
-	    deform_vectors[ptr] = deform_area_vectors[fptr];
-	  }
+        length2 = (xi*xi+yi*yi) * MAX_DEFORM_AREA_RADIUS / radius2;
+        if (length2 <MAX_DEFORM_AREA_RADIUS)
+          {
+            ptr = (yi +y) * preview_width + xi +x;
+            fptr =
+              (yi+iwarp_vals.deform_area_radius) *
+              (iwarp_vals.deform_area_radius*2+1) +
+              xi +
+              iwarp_vals.deform_area_radius;
+            deform_vectors[ptr] = deform_area_vectors[fptr];
+          }
       }
 
   iwarp_update_preview (x + x0, y + y0, x + x1 + 1, y + y1 + 1);
@@ -1543,9 +1465,9 @@ iwarp_deform (gint    x,
 
 static void
 iwarp_move (gint x,
-	    gint y,
-	    gint xx,
-	    gint yy)
+            gint y,
+            gint xx,
+            gint yy)
 {
   gdouble l, dx, dy, xf, yf;
   gint    num, i, x0, y0;
@@ -1597,7 +1519,7 @@ iwarp_response (GtkWidget *widget,
 
 static gint
 iwarp_motion_callback (GtkWidget *widget,
-		       GdkEvent  *event)
+                       GdkEvent  *event)
 {
   GdkEventButton *mb;
   gint x, y;
@@ -1612,28 +1534,28 @@ iwarp_motion_callback (GtkWidget *widget,
 
     case GDK_BUTTON_RELEASE:
       if (mb->state & GDK_BUTTON1_MASK)
-	{
-	  x = mb->x;
-	  y = mb->y;
-	  if (iwarp_vals.deform_mode == MOVE)
-	    iwarp_move (x, y, lastx, lasty);
-	  else
-	    iwarp_deform (x, y, 0.0, 0.0);
-	}
+        {
+          x = mb->x;
+          y = mb->y;
+          if (iwarp_vals.deform_mode == MOVE)
+            iwarp_move (x, y, lastx, lasty);
+          else
+            iwarp_deform (x, y, 0.0, 0.0);
+        }
       break;
 
    case GDK_MOTION_NOTIFY:
      if (mb->state & GDK_BUTTON1_MASK)
        {
-	 x = mb->x;
-	 y = mb->y;
-	 if (iwarp_vals.deform_mode == MOVE)
-	   iwarp_move (x, y, lastx, lasty);
-	 else
-	   iwarp_deform (x, y, 0.0, 0.0);
-	 lastx = x;
-	 lasty = y;
-	 gtk_widget_get_pointer (widget, NULL, NULL);
+         x = mb->x;
+         y = mb->y;
+         if (iwarp_vals.deform_mode == MOVE)
+           iwarp_move (x, y, lastx, lasty);
+         else
+           iwarp_deform (x, y, 0.0, 0.0);
+         lastx = x;
+         lasty = y;
+         gtk_widget_get_pointer (widget, NULL, NULL);
        }
      break;
 
