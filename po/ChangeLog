@@ -1,3 +1,10 @@
+1999-09-23  Vincent Renardias <vincent@ldsol.com>
+
+	* Updated fr.po:
+	  < 1300 translated messages, 70 fuzzy translations, 49 untranslated messages.
+	  > 1330 translated messages, 6 fuzzy translations, 24 untranslated messages.
+	* s/appendice/extension/ (More appropriate in this context).
+
 Thu Sep 23 13:38:41 MEST 1999  Sven Neumann <sven@gimp.org>
 
         * de.po: updated translation from Daniel Egger

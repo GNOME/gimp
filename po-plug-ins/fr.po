@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-09-09 13:55-0700\n"
+"Project-Id-Version: gimp 1.1.9\n"
+"POT-Creation-Date: 1999-09-23 18:17+0200\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -254,9 +254,9 @@ msgstr ""
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Explorateur de Coupled-Map Lattice"
 
-#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2448
+#: plug-ins/common/CML_explorer.c:1342 plug-ins/common/ps.c:2503
 msgid "Preview"
-msgstr "Prévisualisation"
+msgstr "Aperçu"
 
 #: plug-ins/common/CML_explorer.c:1383
 msgid "New seed"
@@ -458,8 +458,8 @@ msgstr "Graphe des réglages actuels"
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1468
 #: plug-ins/common/mail.c:485 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
-#: plug-ins/common/ps.c:2290 plug-ins/common/rotate.c:605
+#: plug-ins/common/png.c:843 plug-ins/common/ps.c:2078
+#: plug-ins/common/ps.c:2345 plug-ins/common/rotate.c:605
 #: plug-ins/common/threshold_alpha.c:467 plug-ins/common/threshold_alpha.c:500
 #: plug-ins/common/xbm.c:959 plug-ins/common/xpm.c:763
 #: plug-ins/print/print.c:1104 plug-ins/sel2path/sel2path.c:350
@@ -536,8 +536,8 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1477
 #: plug-ins/common/mail.c:496 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
-#: plug-ins/common/ps.c:2300 plug-ins/common/rotate.c:615
+#: plug-ins/common/png.c:852 plug-ins/common/ps.c:2088
+#: plug-ins/common/ps.c:2355 plug-ins/common/rotate.c:615
 #: plug-ins/common/threshold_alpha.c:476 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
@@ -621,7 +621,7 @@ msgstr "Créer une nouvelle image"
 
 #: plug-ins/Lighting/lighting_ui.c:582
 msgid "High preview quality"
-msgstr "Prévisualisation de haute qualité"
+msgstr "Aperçu de haute qualité"
 
 #: plug-ins/Lighting/lighting_ui.c:584
 msgid "Enable tooltips"
@@ -872,7 +872,7 @@ msgstr "Fermer le filtre sans rien faire"
 
 #: plug-ins/Lighting/lighting_ui.c:1093
 msgid "  Preview!  "
-msgstr "  Prévisualisation!  "
+msgstr "  Aperçu!  "
 
 #: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Recompute preview image"
@@ -893,7 +893,7 @@ msgstr "Appliquer un effet de lentille"
 #: plug-ins/common/apply_lens.c:133
 msgid "This plug-in uses Snell's law to draw an ellipsoid lens over the image"
 msgstr ""
-"Cet appendice simule une lentille ellipsoïdale sur l'image, par la loi de "
+"Cette extension simule une lentille ellipsoïdale sur l'image, par la loi de "
 "Snell-Descartes"
 
 #: plug-ins/common/apply_lens.c:137
@@ -916,7 +916,7 @@ msgstr "Effet de lentille optique"
 #: plug-ins/common/apply_lens.c:435 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:347
 #: plug-ins/common/jpeg.c:1512 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:847 plug-ins/common/threshold_alpha.c:352
+#: plug-ins/common/png.c:863 plug-ins/common/threshold_alpha.c:352
 #: plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Réglage des paramètres"
@@ -943,17 +943,15 @@ msgstr "Indice de réfraction de la lentille: "
 
 #: plug-ins/common/autocrop.c:62
 msgid "Automagically crops a picture."
-msgstr ""
+msgstr "Découpe une image automatiquement."
 
 #: plug-ins/common/autocrop.c:67
-#, fuzzy
 msgid "<Image>/Image/Transforms/Autocrop"
-msgstr "<Image>/Image/Couleurs/Auto-extension TSV"
+msgstr "<Image>/Image/Transformations/Autodécoupage"
 
 #: plug-ins/common/autocrop.c:105
-#, fuzzy
 msgid "Cropping..."
-msgstr "Composition..."
+msgstr "Découpage..."
 
 #: plug-ins/common/autostretch_hsv.c:82 plug-ins/common/c_astretch.c:78
 msgid ""
@@ -972,7 +970,7 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
-"Ce simple appendice étend automatiquement le contraste. Pour tout canal de "
+"Ce simple extension étend automatiquement le contraste. Pour tout canal de "
 "l'image, il calcule les valeurs minimale et maximale et les utilise pour "
 "étendre les histogrammes vers un contraste maximum. Pour certaines images, "
 "il peut faire ce que vous voulez ; pour d'autres, il peut être absolument "
@@ -997,7 +995,7 @@ msgid ""
 "control the percentage of the pixels that are blurred and the number of "
 "times blurring is applied.  Indexed images are not supported."
 msgstr ""
-"Cet appendice rend floue l'image spécifiée, avec un noyau de convolution "
+"Cette extension rend floue l'image spécifiée, avec un noyau de convolution "
 "3x3. Vous contrôlez le pourcentage des pixels affectés et le nombre de fois "
 "où le flou est appliqué. Les images indexées ne sont pas gérées."
 
@@ -1011,7 +1009,7 @@ msgstr "Accepter les réglages et appliquer le filtre"
 
 #: plug-ins/common/blur.c:622
 msgid "Close plug-in without making any changes"
-msgstr "Fermer l'appendice sans effectuer de changement"
+msgstr "Fermer l'extension sans effectuer de changement"
 
 #.
 #. *  Randomization seed initialization controls
@@ -1086,8 +1084,8 @@ msgid "Saves files in Windows BMP file format"
 msgstr "Enregistre le fichier au format Windows BMP"
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:345
-#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
+#: plug-ins/common/jpeg.c:670 plug-ins/common/png.c:354
+#: plug-ins/common/png.c:356 plug-ins/common/xbm.c:523
 #: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
@@ -1129,7 +1127,7 @@ msgstr "%s: mauvaise palette de couleurs\n"
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:455
+#: plug-ins/common/jpeg.c:812 plug-ins/common/png.c:466
 #: plug-ins/common/xbm.c:612
 msgid "Background"
 msgstr "Fond"
@@ -1145,8 +1143,8 @@ msgid "can't open %s\n"
 msgstr "impossible d'ouvrir %s\n"
 
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:1090
-#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
-#: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
+#: plug-ins/common/png.c:606 plug-ins/common/png.c:608
+#: plug-ins/common/ps.c:716 plug-ins/common/xbm.c:777
 #: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
@@ -1292,33 +1290,29 @@ msgstr ""
 "extension plausible\n"
 
 #: plug-ins/common/c_astretch.c:79
-#, fuzzy
 msgid ""
 "This simple plug-in does an automatic contrast stretch.  For each channel in "
 "the image, it finds the minimum and maximum values... it uses those values "
 "to stretch the individual histograms to the full contrast range.  For some "
 "images it may do just what you want; for others it may be total crap :)"
 msgstr ""
-"Ce simple appendice étend automatiquement le contraste. Pour tout canal de "
+"Cette simple extension étend automatiquement le contraste. Pour tout canal de "
 "l'image, il calcule les valeurs minimale et maximale et les utilise pour "
 "étendre les histogrammes vers un contraste maximum. Pour certaines images, "
 "il peut faire ce que vous voulez ; pour d'autres, il peut être absolument "
-"nul. :-)\n"
-"Cette version fonctionne en espace HSV et préserve la teinte."
+"nul. :-)"
 
 #: plug-ins/common/c_astretch.c:83
-#, fuzzy
 msgid "<Image>/Image/Colors/Auto-Stretch Contrast"
-msgstr "<Image>/Image/Couleurs/Auto-extension TSV"
+msgstr "<Image>/Image/Couleurs/Auto-Extension du contraste"
 
 #: plug-ins/common/c_astretch.c:115
-#, fuzzy
 msgid "Auto-Stretching Contrast..."
-msgstr "Auto-extension TSV"
+msgstr "Auto-Extension du contraste"
 
 #: plug-ins/common/c_astretch.c:156
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "c_astretch: cmap était NUL!  Abandon...\n"
 
 #: plug-ins/common/checkerboard.c:97
 msgid "Adds a checkerboard pattern to an image"
@@ -1383,16 +1377,14 @@ msgid "Colorify Custom Color"
 msgstr "Coloriser, couleur personnalisée"
 
 #: plug-ins/common/color_enhance.c:84
-#, fuzzy
 msgid ""
 "Automatically stretch the saturation of the specified drawable to cover all "
 "possible ranges."
 msgstr ""
-"Étend automatiquement le contraste de l'image spécifiée afin de couvrir tous "
+"Étend automatiquement la saturation de l'image spécifiée afin de couvrir tous "
 "les intervalles possibles."
 
 #: plug-ins/common/color_enhance.c:85
-#, fuzzy
 msgid ""
 "This simple plug-in does an automatic saturation stretch.  For each channel "
 "in the image, it finds the minimum and maximum values... it uses those "
@@ -1401,26 +1393,25 @@ msgid ""
 "This version differs from Contrast Autostretch in that it works in HSV "
 "space, and preserves hue."
 msgstr ""
-"Ce simple appendice étend automatiquement le contraste. Pour tout canal de "
-"l'image, il calcule les valeurs minimale et maximale et les utilise pour "
+"Cette simple extension étend automatiquement la saturation. Pour tout canal de "
+"l'image, elle calcule les valeurs minimale et maximale et les utilise pour "
 "étendre les histogrammes vers un contraste maximum. Pour certaines images, "
 "il peut faire ce que vous voulez ; pour d'autres, il peut être absolument "
 "nul. :-)\n"
-"Cette version fonctionne en espace HSV et préserve la teinte."
+"Cette version différe de l'Auto-extension de contraste dans le sens qu'elle "
+"fonctionne avec des images HSV et préserve les teintes."
 
 #: plug-ins/common/color_enhance.c:89
-#, fuzzy
 msgid "<Image>/Image/Colors/Color Enhance"
-msgstr "<Image>/Fichier/Couleurs/Coloriser"
+msgstr "<Image>/Images/Couleurs/Extension de couleurs"
 
 #: plug-ins/common/color_enhance.c:121
-#, fuzzy
 msgid "Color Enhance..."
-msgstr "Colorisation..."
+msgstr "Extension de couleurs..."
 
 #: plug-ins/common/color_enhance.c:163
 msgid "Color_Enhance: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "Color_Enhance: cmap est NUL!  Abandon...\n"
 
 #: plug-ins/common/compose.c:125 plug-ins/common/decompose.c:129
 msgid "RGB"
@@ -1830,7 +1821,7 @@ msgid ""
 "closer (has a lower depth map value) at each point."
 msgstr ""
 "Prenant en entrée deux images (comprenant couleur et transparence) et deux "
-"images en tons de gris figurant les profondeurs, cet appendice combine les "
+"images en tons de gris figurant les profondeurs, cet extension combine les "
 "images en prenant en chaque point la plus proche (profondeur la plus faible)."
 
 #: plug-ins/common/depthmerge.c:202
@@ -1886,7 +1877,7 @@ msgstr ""
 
 #: plug-ins/common/destripe.c:152
 msgid "This plug-in tries to remove vertical stripes from an image."
-msgstr "Cet appendice tente d'enlever les rayures verticales d'une image."
+msgstr "Cette extension tente d'enlever les rayures verticales d'une image."
 
 #: plug-ins/common/destripe.c:155
 msgid "<Image>/Filters/Enhance/Destripe"
@@ -1980,7 +1971,7 @@ msgstr "Enregistrer en GIF"
 msgid "GIF Options"
 msgstr "Options GIF"
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:872
 msgid "Interlace"
 msgstr "Entrelacement"
 
@@ -2069,9 +2060,8 @@ msgid "GIF: EOF / read error on image data\n"
 msgstr "GIF: EOF / erreur de lecture sur les données de l'image\n"
 
 #: plug-ins/common/gifload.c:364
-#, fuzzy
 msgid "GIF: EOF / read error on extension function code\n"
-msgstr "GIF : OF / erreur de lecture d'un code de fonction étendue\n"
+msgstr "GIF : EOF / erreur de lecture d'un code de fonction étendue\n"
 
 #. Not a valid start character
 #: plug-ins/common/gifload.c:374
@@ -2149,7 +2139,7 @@ msgid ""
 "  (adam@foxbox.org)\n"
 msgstr ""
 "GIF: Hum... pourriez-vous s'il vous plaît envoyer ce GIF à\n"
-"l'auteur de l'appendice GIF ? (adam@foxbox.org)\n"
+"l'auteur de l'extension GIF ? (adam@foxbox.org)\n"
 
 #: plug-ins/common/gifload.c:896
 msgid "GIF: Something got corrupted.\n"
@@ -2170,7 +2160,7 @@ msgid ""
 "     Please mail the plugin author.  (adam@gimp.org)\n"
 msgstr ""
 "GIF: Aïe ! Je ne peux gérer les images RVB non alpha.\n"
-"Veuillez prendre contact avec l'auteur de l'appendice\n"
+"Veuillez prendre contact avec l'auteur de l'extension\n"
 "(adam@gimp.org).\n"
 
 #: plug-ins/common/gifload.c:1022
@@ -2184,48 +2174,41 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/guillotine.c:77
-#, fuzzy
 msgid "This function takes an image and blah blah.  Hooray!"
-msgstr ""
-"Cette fonction crée une nouvelle image à partir de plusieurs images en tons "
-"de gris."
+msgstr "Cette fonction prends une nouvelle image et blablabla. Youpi!"
 
 #: plug-ins/common/guillotine.c:81
-#, fuzzy
 msgid "<Image>/Image/Transforms/Guillotine"
-msgstr "<Image>/Image/Canaux/Composition"
+msgstr "<Image>/Image/Transformations/Guillotine"
 
 #: plug-ins/common/guillotine.c:114
 msgid "Guillotine..."
-msgstr ""
+msgstr "Guillotine..."
 
 #: plug-ins/common/guillotine.c:161
 msgid "Aie!  Aie!  Aie!\n"
-msgstr ""
+msgstr "Aïe!  Aïe!  Aïe!\n"
 
 #: plug-ins/common/guillotine.c:171
 #, c-format
 msgid "Yay... found %d horizontal guides and %d vertical guides.\n"
-msgstr ""
+msgstr "Trouvé %d guides horizontaux et %d  guides verticaux.\n"
 
 #: plug-ins/common/guillotine.c:176
 msgid "Poopy, no guides.\n"
-msgstr ""
+msgstr "Argh! aucun guide.\n"
 
 #: plug-ins/common/jpeg.c:307 plug-ins/common/jpeg.c:308
-#, fuzzy
 msgid "loads files in the JPEG file format"
-msgstr "Charge les fichiers enregistrés au format PNG"
+msgstr "Charge les fichiers enregistrés au format JPEG"
 
 #: plug-ins/common/jpeg.c:319
-#, fuzzy
 msgid "saves files in the JPEG file format"
-msgstr "enregistre le fichier au format XWD"
+msgstr "enregistre les fichiers au format JPEG"
 
 #: plug-ins/common/jpeg.c:320
-#, fuzzy
 msgid "saves files in the lossy, widely supported JPEG format"
-msgstr "enregistre le fichier au format XWD"
+msgstr "enregistre le fichier au format JPEG"
 
 #: plug-ins/common/jpeg.c:663
 #, c-format
@@ -2242,9 +2225,8 @@ msgstr ""
 "avec %d canaux de couleur."
 
 #: plug-ins/common/jpeg.c:807
-#, fuzzy
 msgid "JPEG preview"
-msgstr "Prévisualisation"
+msgstr "Aperçu JPEG"
 
 #: plug-ins/common/jpeg.c:851
 #, c-format
@@ -2258,11 +2240,11 @@ msgstr ""
 #: plug-ins/common/jpeg.c:1014
 #, c-format
 msgid "Size: %lu bytes (%02.01f kB)"
-msgstr ""
+msgstr "Taille : %lu octets (%02.01f Ko)"
 
 #: plug-ins/common/jpeg.c:1382 plug-ins/common/jpeg.c:1501
 msgid "Size: unknown"
-msgstr ""
+msgstr "Taille : inconnue"
 
 #: plug-ins/common/jpeg.c:1461
 msgid "Save as Jpeg"
@@ -2270,13 +2252,12 @@ msgstr "Enregistrer en JPEG"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1486
-#, fuzzy
 msgid "Image Preview"
-msgstr "Prévisualisation"
+msgstr "Aperçu de l'image"
 
 #: plug-ins/common/jpeg.c:1494
 msgid "Preview (in image window)"
-msgstr ""
+msgstr "Aperçu (dans une fenêtre image)"
 
 #: plug-ins/common/jpeg.c:1520
 msgid "Quality"
@@ -2308,37 +2289,35 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1615
 msgid "2x2,1x1,1x1"
-msgstr ""
+msgstr "2x2,1x1,1x1"
 
 #: plug-ins/common/jpeg.c:1616
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: plug-ins/common/jpeg.c:1617
 msgid "1x1,1x1,1x1"
-msgstr ""
+msgstr "1x1,1x1,1x1"
 
 #: plug-ins/common/jpeg.c:1621
-#, fuzzy
 msgid "Subsampling"
-msgstr "Échelle:"
+msgstr "Sous-échantillonage"
 
 #: plug-ins/common/jpeg.c:1632
-#, fuzzy
 msgid "Integer"
-msgstr "Entrelacement"
+msgstr "Entier"
 
 #: plug-ins/common/jpeg.c:1633
 msgid "Fast integer"
-msgstr ""
+msgstr "Entier rapide"
 
 #: plug-ins/common/jpeg.c:1634
 msgid "Floating-point"
-msgstr ""
+msgstr "Virgule flottante"
 
 #: plug-ins/common/jpeg.c:1638
 msgid "DCT method (speed/quality tradeoff)"
-msgstr ""
+msgstr "Méthode DCT (compromis vitesse/qualité)"
 
 #: plug-ins/common/jpeg.c:1651
 msgid "Image Comments"
@@ -2404,18 +2383,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/normalize.c:83
-#, fuzzy
 msgid "<Image>/Image/Colors/Normalize"
-msgstr "<Image>/Image/Couleurs/Auto-extension TSV"
+msgstr "<Image>/Image/Couleurs/Normaliser"
 
 #: plug-ins/common/normalize.c:115
-#, fuzzy
 msgid "Normalizing..."
-msgstr "Colorisation..."
+msgstr "Normalisation..."
 
 #: plug-ins/common/normalize.c:155
 msgid "normalize: cmap was NULL!  Quitting...\n"
-msgstr ""
+msgstr "normalize: cmap est NUL!  Abandon...\n"
 
 #: plug-ins/common/oilify.c:122
 msgid "Modify the specified drawable to resemble an oil painting"
@@ -2456,13 +2433,17 @@ msgstr "Charge les fichiers enregistrés au format PNG"
 
 #: plug-ins/common/png.c:150
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
-msgstr "Cet appendice charge les fichiers Portable Network Graphics (PNG)."
+msgstr "Cette extension charge les fichiers Portable Network Graphics (PNG)."
 
-#: plug-ins/common/png.c:818
+#: plug-ins/common/png.c:676
+msgid "Can't save image with alpha\n"
+msgstr "Impossible d'enregistrer l'image avec alpha\n"
+
+#: plug-ins/common/png.c:834
 msgid "PNG Options"
 msgstr "Options PNG"
 
-#: plug-ins/common/png.c:863
+#: plug-ins/common/png.c:879
 msgid "Compression level"
 msgstr "Niveau de compression"
 
@@ -2666,7 +2647,7 @@ msgstr "EPSON Stylus Color 3000"
 
 #: plug-ins/print/print.c:332
 msgid "This plug-in prints images from The GIMP."
-msgstr "Cet appendice imprime des images depuis Gimp."
+msgstr "Cette extension imprime des images depuis Gimp."
 
 #: plug-ins/print/print.c:333
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
@@ -2724,7 +2705,7 @@ msgstr "Orientation:"
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
+#: plug-ins/common/ps.c:2054 plug-ins/print/print.c:813
 msgid "Resolution:"
 msgstr "Résolution:"
 
@@ -2819,182 +2800,182 @@ msgstr "Fichier PPD?"
 msgid "File"
 msgstr "Fichier"
 
-#: plug-ins/common/ps.c:320 plug-ins/common/ps.c:321
+#: plug-ins/common/ps.c:321 plug-ins/common/ps.c:322
 msgid "load file of PostScript/PDF file format"
 msgstr "charge un fichier enregistré au format PostScript/PDF"
 
-#: plug-ins/common/ps.c:344
+#: plug-ins/common/ps.c:345
 msgid "save file in PostScript file format"
 msgstr "enregistre le fichier au format PostScript"
 
-#: plug-ins/common/ps.c:345
+#: plug-ins/common/ps.c:346
 msgid ""
 "PostScript saving handles all image types except those with alpha channels."
 msgstr ""
 "La sauvegarde en PostScript gère tous les types d'images sauf ceux avec "
 "canaux alpha."
 
-#: plug-ins/common/ps.c:550
+#: plug-ins/common/ps.c:588
 msgid "PS: can't open file for reading"
 msgstr "PS: impossible d'ouvrir le fichier en lecture"
 
-#: plug-ins/common/ps.c:557
+#: plug-ins/common/ps.c:595
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "Chargement et interprétation de %s:"
 
-#: plug-ins/common/ps.c:565
+#: plug-ins/common/ps.c:603
 msgid "PS: can't interprete file"
 msgstr "PS: impossible d'interpréter le fichier"
 
-#: plug-ins/common/ps.c:647
+#: plug-ins/common/ps.c:690
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript ne peux pas gérer les images avec canaux alpha"
 
-#: plug-ins/common/ps.c:658
+#: plug-ins/common/ps.c:701
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: impossible d'opérer sur un type d'image inconnu"
 
-#: plug-ins/common/ps.c:667
+#: plug-ins/common/ps.c:710
 msgid "PS: can't open file for writing"
 msgstr "PS: impossible d'ouvrir le fichier en écriture"
 
-#: plug-ins/common/ps.c:1713 plug-ins/common/ps.c:1810
-#: plug-ins/common/ps.c:1903 plug-ins/common/ps.c:1972
+#: plug-ins/common/ps.c:1768 plug-ins/common/ps.c:1865
+#: plug-ins/common/ps.c:1958 plug-ins/common/ps.c:2027
 msgid "write error occured"
 msgstr "une erreur d'écriture est survenue"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2054 plug-ins/common/ps.c:2319
 msgid "Width:"
 msgstr "Largeur:"
 
-#: plug-ins/common/ps.c:1999 plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2054 plug-ins/common/ps.c:2319
 msgid "Height:"
 msgstr "Hauteur:"
 
-#: plug-ins/common/ps.c:1999
+#: plug-ins/common/ps.c:2054
 msgid "Pages:"
 msgstr "Pages:"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "b/w"
 msgstr "n/b"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "gray"
 msgstr "gris"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "colour"
 msgstr "couleur"
 
-#: plug-ins/common/ps.c:2001
+#: plug-ins/common/ps.c:2056
 msgid "automatic"
 msgstr "automatique"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "none"
 msgstr "aucun"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "weak"
 msgstr "faible"
 
-#: plug-ins/common/ps.c:2003
+#: plug-ins/common/ps.c:2058
 msgid "strong"
 msgstr "fort"
 
-#: plug-ins/common/ps.c:2016
+#: plug-ins/common/ps.c:2071
 msgid "Load PostScript"
 msgstr "Charger PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2049
+#: plug-ins/common/ps.c:2104
 msgid "Rendering"
 msgstr "Calcul en cours..."
 
-#: plug-ins/common/ps.c:2089
+#: plug-ins/common/ps.c:2144
 msgid "try BoundingBox"
 msgstr "essayer la BoundingBox"
 
 #. Colouring
-#: plug-ins/common/ps.c:2102
+#: plug-ins/common/ps.c:2157
 msgid "Colouring"
 msgstr "Coloration"
 
-#: plug-ins/common/ps.c:2138
+#: plug-ins/common/ps.c:2193
 msgid "Graphic antialiasing"
 msgstr "Lissage Graphique"
 
-#: plug-ins/common/ps.c:2139
+#: plug-ins/common/ps.c:2194
 msgid "Text antialiasing"
 msgstr "Lissage du texte"
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2319
 msgid "X-offset:"
 msgstr "Décalage-X:"
 
-#: plug-ins/common/ps.c:2264
+#: plug-ins/common/ps.c:2319
 msgid "Y-offset:"
 msgstr "Décalage-Y:"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "0"
 msgstr "0"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "90"
 msgstr "90"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "180"
 msgstr "180"
 
-#: plug-ins/common/ps.c:2266
+#: plug-ins/common/ps.c:2321
 msgid "270"
 msgstr "270"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2323
 msgid "Inch"
 msgstr "Pouce"
 
-#: plug-ins/common/ps.c:2268
+#: plug-ins/common/ps.c:2323
 msgid "Millimeter"
 msgstr "Millimètre"
 
-#: plug-ins/common/ps.c:2283
+#: plug-ins/common/ps.c:2338
 msgid "Save PostScript"
 msgstr "Enregistrer PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2324
+#: plug-ins/common/ps.c:2379
 msgid "Image Size"
 msgstr "Taille de l'image"
 
-#: plug-ins/common/ps.c:2363
+#: plug-ins/common/ps.c:2418
 msgid "keep aspect ratio"
 msgstr "conserver le rapport hauteur/largeur"
 
 #. Unit
-#: plug-ins/common/ps.c:2373
+#: plug-ins/common/ps.c:2428
 msgid "Unit"
 msgstr "Unité"
 
 #. Rotation
-#: plug-ins/common/ps.c:2404
+#: plug-ins/common/ps.c:2459
 msgid "Rotation"
 msgstr "Rotation"
 
 #. Format
-#: plug-ins/common/ps.c:2431
+#: plug-ins/common/ps.c:2486
 msgid "Output"
 msgstr "Sortie"
 
-#: plug-ins/common/ps.c:2439
+#: plug-ins/common/ps.c:2494
 msgid "Encapsulated PostScript"
 msgstr "PostScript Encapsulé"
 
-#: plug-ins/common/ps.c:2465
+#: plug-ins/common/ps.c:2520
 msgid "Preview size"
 msgstr "Taille de la prévisualisation"
 
@@ -3010,86 +2991,79 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/rotate.c:157
-#, fuzzy
 msgid "<Image>/Image/Transforms/Rotate"
-msgstr "<Image>/Image/Canaux/Composition"
+msgstr "<Image>/Image/Transformations/Rotation"
 
 #: plug-ins/common/rotate.c:506
 msgid "You can not rotate the whole image if there's a selection."
-msgstr ""
+msgstr "Vous ne pouvez pas faire tourner toute l'image s'il y a une sélection."
 
 #: plug-ins/common/rotate.c:512
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr ""
+msgstr "Vous ne pouvez pas faire tourner toute l'image s'il y a une sélection flottante."
 
 #: plug-ins/common/rotate.c:518
-#, fuzzy
 msgid "Rotating..."
-msgstr "Rotation"
+msgstr "Rotation..."
 
 #: plug-ins/common/rotate.c:599
-#, fuzzy
 msgid "Rotate"
 msgstr "Rotation"
 
 #. parameter settings
 #: plug-ins/common/rotate.c:625
 msgid "Rotate clockwise by"
-msgstr ""
+msgstr "Tourner dans le sens des aiguilles d'une montre par"
 
 #. label: degrees
 #: plug-ins/common/rotate.c:698
-#, fuzzy
 msgid "degrees"
-msgstr "vert"
+msgstr "degrés"
 
 #. check button
 #: plug-ins/common/rotate.c:712
-#, fuzzy
 msgid "Rotate the whole image"
-msgstr "Créer une nouvelle image"
+msgstr "Faire tourner toute l'image"
 
 #: plug-ins/common/rotators.c:50
-#, fuzzy
 msgid "<Image>/Image/Transforms/Image"
-msgstr "<Image>/Image/Canaux/Composition"
+msgstr "<Image>/Image/Transformations/Image"
 
 #: plug-ins/common/rotators.c:51
-#, fuzzy
 msgid "<Image>/Image/Transforms/Layer"
-msgstr "<Image>/Image/Canaux/Composition"
+msgstr "<Image>/Image/Transformations/Calque"
 
 #: plug-ins/common/rotators.c:70
 msgid "Rotates the given layer 90 degrees clockwise."
-msgstr ""
+msgstr "Tourne le calque sélectionné de 90 degrés dans le sens des aiguilles d'une montre."
 
 #: plug-ins/common/rotators.c:75
 msgid "<Image>/Image/Transforms/Layer/Rotate 90"
-msgstr ""
+msgstr "<Image>/Image/Transformations/Calque/Rotation 90"
 
 #: plug-ins/common/rotators.c:82
 msgid "Rotates the given layer 90 degrees anticlockwise."
-msgstr ""
+msgstr "Tourne le calque sélectionné de 90 degrés dans le sens inverse des aiguilles d'une montre."
 
 #: plug-ins/common/rotators.c:87
 msgid "<Image>/Image/Transforms/Layer/Rotate 270"
-msgstr ""
+msgstr "<Image>/Image/Transformations/Calque/Rotation 270"
 
 #: plug-ins/common/rotators.c:94
 msgid "Rotates the given image 90 degrees clockwise."
-msgstr ""
+msgstr "Tourne l'image sélectionnée de 90 degrés dans le sens des aiguilles d'une montre."
 
 #: plug-ins/common/rotators.c:99
 msgid "<Image>/Image/Transforms/Image/Rotate 90"
-msgstr ""
+msgstr "<Image>/Image/Transformations/Image/Rotation 90"
 
 #: plug-ins/common/rotators.c:106
 msgid "Rotates the current image 90 degrees anticlockwise."
-msgstr ""
+msgstr "Tourne l'image de 90 degrés dans le sens inverse des aiguilles d'une montre."
 
 #: plug-ins/common/rotators.c:111
 msgid "<Image>/Image/Transforms/Image/Rotate 270"
-msgstr ""
+msgstr "<Image>/Image/Transformations/Image/Rotation 270"
 
 #: plug-ins/sel2path/sel2path.c:125 plug-ins/sel2path/sel2path.c:126
 msgid "Converts a selection to a path (with advanced user menu)"
@@ -3100,48 +3074,45 @@ msgid "Converts a selection to a path"
 msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:158
-#, fuzzy
 msgid "<Image>/Select/To Path"
-msgstr "<Image>/Fichier/Imprimer"
+msgstr "<Image>/Sélection/Vers chemin"
 
 #: plug-ins/sel2path/sel2path.c:203
 msgid "No selection to convert"
-msgstr ""
+msgstr "Pas de sélection à convertir"
 
 #: plug-ins/sel2path/sel2path.c:367
-#, fuzzy
 msgid "Default Values"
-msgstr "Défauts"
+msgstr "Valeurs par défaut"
 
 #: plug-ins/sel2path/sel2path.c:556
 #, c-format
 msgid "print_spline: strange degree (%d)"
-msgstr ""
+msgstr "print_spline: angle étrange (%d)"
 
 #: plug-ins/sel2path/sel2path.c:564
 msgid "selection_to_path"
-msgstr ""
+msgstr "selection_to_path"
 
 #: plug-ins/sel2path/sel2path.c:590
 msgid "gimp_image_get_selection failed"
-msgstr ""
+msgstr "échec de gimp_image_get_selection"
 
 #: plug-ins/sel2path/sel2path.c:598
 msgid "Internal error. Selection bpp > 1"
-msgstr ""
+msgstr "Erreur interne. bpp de la sélection > 1"
 
 #: plug-ins/common/threshold_alpha.c:196
 msgid "<Image>/Image/Alpha/Threshold Alpha"
-msgstr ""
+msgstr "<Image>/Image/Alpha/Seuil Alpha"
 
 #: plug-ins/common/threshold_alpha.c:300
 msgid "threshold_alpha (0.13):coloring transparency..."
-msgstr ""
+msgstr "threshold_alpha (0.13) : coloration de la transparence..."
 
 #: plug-ins/common/threshold_alpha.c:354
-#, fuzzy
 msgid "Threshold"
-msgstr "Seuil:"
+msgstr "Seuil"
 
 #: plug-ins/common/xbm.c:163
 msgid "Load a file in X10 or X11 bitmap (XBM) file format"
@@ -3333,20 +3304,14 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/zealouscrop.c:69
-#, fuzzy
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr "<Image>/Image/Canaux/Composition"
+msgstr "<Image>/Image/Transformations/Découpage zélé"
 
 #: plug-ins/common/zealouscrop.c:105
 msgid "ZealousCropping(tm)..."
-msgstr ""
+msgstr "DécoupageZélé(tm)..."
 
 #: plug-ins/common/zealouscrop.c:209
 msgid "ZealousCrop(tm): Nothing to be done.\n"
-msgstr ""
+msgstr "DécoupageZélé(tm) : Rien à faire.\n"
 
-#~ msgid "Made with GIMP"
-#~ msgstr "Fait avec GIMP"
-
-#~ msgid "loads files of the jpeg file format"
-#~ msgstr "charge un fichier enregistré au format JPEG"
