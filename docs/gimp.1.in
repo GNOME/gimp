@@ -91,7 +91,6 @@ Enable debugging signal handlers.
 .B \-c, \-\-console\-messages
 Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
-.B \-\-dump\-gimprc
 .TP 8
 .B \-\-stack\-trace\-mode \fI{never|query|always}\fP
 If a stack-trace should be generated in case of fatal signals.
@@ -102,10 +101,10 @@ If the PDB should provide aliases for deprecated functions.
 .B \-b, \-\-batch \fI<commands>\fP
 Execute the set of \fI<commands>\fP non-interactively. The set
 of \fI<commands>\fP is typically in the form of a script that
-can be executed by one of the GIMP scripting extensions.
+can be executed by one of the GIMP scripting extensions. When
+\fI<commands>\fP is \fB-\fP the commands are read from standard
+input.
 .TP 8
-
-Output a gimprc file with default settings.
 
 .SH ENVIRONMENT
 .PP
