@@ -1,3 +1,25 @@
+2002-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am (SUBDIRS): moved pdb directory to the end.
+	
+	* app/paint/Makefile.am: removed the ugly hack. Seems to work w/o it.
+
+	* themes/Default/Makefile.am: don't build inline pixbuf headers here.
+
+	* themes/Default/images/Makefile.am: build them here with a hack
+	that extracts the icon names out of the filenames. Cleaner Makefile
+	and correct dependencies.
+
+	* themes/Default/imagerc
+	* themes/Default/images/stock-button-reset.png: added a reset button
+	(which looks just like refresh at the moment).
+	
+	* themes/Default/images/tools/Makefile.am: removed.
+
+	* libgimpwidgets/gimpstock.c
+	* libgimpwidgets/gimpwidgets.c: include the pixbuf headers from their
+	new places.
+
 2002-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/brush-select.[ch]: renamed parameters to be consistent

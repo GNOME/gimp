@@ -9,12 +9,12 @@ SUBDIRS = \
 	paint		\
 	xcf		\
 	file		\
-	pdb		\
 	plug-in		\
 	display		\
 	tools		\
 	widgets		\
-	gui
+	gui		\
+	pdb
 
 scriptdata =
 

@@ -31,9 +31,6 @@ libapppaint_a_SOURCES = @STRIP_BEGIN@ \
 	gimpsmudge.h			\
 @STRIP_END@
 
-## This is a truly ugly hack
-libapppaint_a_LIBADD = ../core/gimppaintinfo.o
-
 AM_CPPFLAGS = @STRIP_BEGIN@ \
 	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
 	@GIMP_THREAD_FLAGS@ 		\

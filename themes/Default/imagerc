@@ -59,8 +59,8 @@ style "gimp-icons"
     }
   stock["gimp-reset"] =
     {
-      { "images/stock-button-refresh.png", *, *, "gtk-button" },
-      { "images/stock-button-refresh.png", *, *, *            }
+      { "images/stock-button-reset.png", *, *, "gtk-button" },
+      { "images/stock-button-reset.png", *, *, *            }
     }
   stock["gimp-stroke"] =
     {

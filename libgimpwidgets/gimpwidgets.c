@@ -38,7 +38,7 @@
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 
-#include "themes/Default/gimp-wilber-pixbufs.h"
+#include "themes/Default/images/gimp-wilber-pixbufs.h"
 
 #include "libgimp/libgimp-intl.h"
 

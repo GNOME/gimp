@@ -27,7 +27,7 @@
 
 #include "gimpstock.h"
 
-#include "themes/Default/gimp-stock-pixbufs.h"
+#include "themes/Default/images/gimp-stock-pixbufs.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -165,7 +165,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_LINKED,                   stock_button_linked                   },
   { GIMP_STOCK_PASTE_AS_NEW,             stock_button_paste_as_new             },
   { GIMP_STOCK_PASTE_INTO,               stock_button_paste_into               },
-  { GIMP_STOCK_RESET,                    stock_button_refresh                  },
+  { GIMP_STOCK_RESET,                    stock_button_reset                    },
   { GIMP_STOCK_VISIBLE,                  stock_button_eye                      },
 
   { GIMP_STOCK_HCHAIN,                   stock_button_hchain                   },

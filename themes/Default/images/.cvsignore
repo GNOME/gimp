@@ -2,3 +2,6 @@ Makefile
 Makefile.in
 .xvpics
 .thumbnails
+stock-icons.list
+gimp-stock-pixbufs.h
+gimp-wilber-pixbufs.h
