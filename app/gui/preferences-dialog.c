@@ -1351,6 +1351,15 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
+  /*  Snapping Distance  */
+  vbox2 = prefs_frame_new (_("Guide and Grid Snapping"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
+                         _("_Snap Distance:"),
+                         GTK_TABLE (table), 0);
+
   /*  Contiguous Regions  */
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
                            GTK_CONTAINER (vbox), FALSE);

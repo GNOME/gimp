@@ -26,6 +26,9 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimplayer.h"
@@ -49,9 +52,6 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
-
-
-#define SNAP_WIDTH 8.0
 
 
 /*  local function prototypes  */
@@ -294,10 +294,14 @@ gimp_move_tool_button_press (GimpTool        *tool,
     }
   else
     {
+      gint snap_distance;
+
+      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
+
       if (gimp_display_shell_get_show_guides (shell) &&
 	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
-                                          FUNSCALEX (shell, SNAP_WIDTH),
-                                          FUNSCALEY (shell, SNAP_WIDTH))))
+                                          FUNSCALEX (shell, snap_distance),
+                                          FUNSCALEY (shell, snap_distance))))
 	{
 	  move->guide             = guide;
           move->moving_guide      = TRUE;
@@ -569,9 +573,12 @@ gimp_move_tool_oper_update (GimpTool        *tool,
       gimp_display_shell_get_show_guides (shell)      &&
       shell->proximity)
     {
+      gint snap_distance;
+
+      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
       guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
-                                     FUNSCALEX (shell, SNAP_WIDTH),
-                                     FUNSCALEY (shell, SNAP_WIDTH));
+                                     FUNSCALEX (shell, snap_distance),
+                                     FUNSCALEY (shell, snap_distance));
     }
 
   if (move->guide && move->guide != guide)
@@ -643,11 +650,14 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
     {
       GimpGuide *guide;
       GimpLayer *layer;
+      gint snap_distance;
+
+      snap_distance = GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
-                                          FUNSCALEX (shell, SNAP_WIDTH),
-                                          FUNSCALEY (shell, SNAP_WIDTH))))
+                                          FUNSCALEX (shell, snap_distance),
+                                          FUNSCALEY (shell, snap_distance))))
         {
           cursor      = GDK_HAND2;
           tool_cursor = GIMP_HAND_TOOL_CURSOR;

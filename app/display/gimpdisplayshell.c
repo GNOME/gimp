@@ -34,6 +34,7 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
 #include "config/gimpdisplayconfig.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
@@ -92,9 +93,6 @@ enum
   RECONNECT,
   LAST_SIGNAL
 };
-
-
-#define SNAP_WIDTH 8.0
 
 
 /*  local function prototypes  */
@@ -1037,6 +1035,9 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
     {
       gboolean snapped;
       gint     tx, ty;
+      gint     snap_distance;
+
+      snap_distance = GIMP_GUI_CONFIG (shell->gdisp->gimage->gimp->config)->snap_distance;
 
       if (snap_width > 0 && snap_height > 0)
         {
@@ -1049,8 +1050,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                snap_height,
                                                &tx,
                                                &ty,
-                                               FUNSCALEX (shell, SNAP_WIDTH),
-                                               FUNSCALEY (shell, SNAP_WIDTH),
+                                               FUNSCALEX (shell, snap_distance),
+                                               FUNSCALEY (shell, snap_distance),
                                                snap_to_guides,
                                                snap_to_grid);
         }
@@ -1061,8 +1062,8 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            coords->y + snap_offset_y,
                                            &tx,
                                            &ty,
-                                           FUNSCALEX (shell, SNAP_WIDTH),
-                                           FUNSCALEY (shell, SNAP_WIDTH),
+                                           FUNSCALEX (shell, snap_distance),
+                                           FUNSCALEY (shell, snap_distance),
                                            snap_to_guides,
                                            snap_to_grid);
         }

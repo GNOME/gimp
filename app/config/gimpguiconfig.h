@@ -42,6 +42,7 @@ struct _GimpGuiConfig
 
   GimpCheckSize        transparency_size;
   GimpCheckType        transparency_type;
+  gint                 snap_distance;
   gint                 default_threshold;
   gboolean             info_window_per_display;
   gboolean             trust_dirty_flag;

@@ -1,5 +1,15 @@
 2004-02-18  Simon Budig  <simon@gimp.org>
 
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: Added new GUI option: snapping distance
+
+	* app/gui/preferences-dialog.c: add a preferences widget
+
+	* app/tools/gimpmovetool.c
+	* app/display/gimpdisplayshell.c: use it for snapping.
+
+2004-02-18  Simon Budig  <simon@gimp.org>
+
 	* app/display/gimpdisplayshell.c
 	* app/tools/gimpmovetool.c: Adjusted snapping distance
 	to 8 pixels, probably should be a preferences option.

@@ -66,6 +66,10 @@ N_("When enabled, this will ensure that each pixel of an image gets " \
 "Specify a default palette.  The palette is searched for in the " \
 "specified palette path."
 
+#define DEFAULT_SNAP_DISTANCE_BLURB \
+N_("This is the distance in pixels where Guide and Grid snapping " \
+   "activates.")
+
 #define DEFAULT_THRESHOLD_BLURB \
 N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
    "seed-fill algorithm.  The seed fill starts at the intially selected " \
