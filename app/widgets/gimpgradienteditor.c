@@ -678,7 +678,7 @@ grad_create_gradient_editor_init(gint need_show)
 	scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
 	g_editor->clist = gtk_clist_new(2);
-	gtk_clist_set_border(GTK_CLIST(g_editor->clist), GTK_SHADOW_IN);
+	gtk_clist_set_shadow_type(GTK_CLIST(g_editor->clist), GTK_SHADOW_IN);
 
 	gtk_clist_set_row_height(GTK_CLIST(g_editor->clist), 18);
 

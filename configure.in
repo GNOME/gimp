@@ -369,19 +369,24 @@ if test "$have_glib_inline" = "no"; then
   AC_C_INLINE
 fi  
 
-dnl Threads
-AC_ARG_WITH(threads, [  --with-threads=[posix]  support threading ])
-THREAD_LIBS=
-if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
-  AC_CHECK_LIB(pthread, pthread_attr_init,
-    AC_DEFINE(USE_PTHREADS)
-    CFLAGS="$CFLAGS -D_REENTRANT"
-    THREAD_LIBS="-lpthread")
-fi
-
 CPPFLAGS="$gimp_save_CPPFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 LIBS="$gimp_save_LIBS"
+
+dnl Threads
+AC_ARG_WITH(threads, [  --with-threads=[posix]  support threading ])
+GIMP_THREAD_LIBS=
+if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
+  AC_CHECK_LIB(pthread, pthread_attr_init, 
+    [AC_DEFINE(USE_PTHREADS)
+    GIMP_THREAD_LIBS="-lpthread"
+    GIMP_THREAD_FLAGS="-D_REENTRANT"],
+    # AIX has libpthreads, cause they're special. Special friends (TM)
+    AC_CHECK_LIB(pthreads, pthread_attr_init,
+      [AC_DEFINE(USE_PTHREADS)
+      GIMP_THREAD_LIBS="-lpthreads"
+      GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+fi
 
 gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
@@ -582,7 +587,8 @@ AC_SUBST(LPSTAT_DEF)
 AC_SUBST(LPR_DEF)
 AC_SUBST(LPC_DEF)
 AC_SUBST(MAILER)
-AC_SUBST(THREAD_LIBS)
+AC_SUBST(GIMP_THREAD_FLAGS)
+AC_SUBST(GIMP_THREAD_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMPDOCS)
 

@@ -330,8 +330,9 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\" \
-	-DLOCALEDIR=\""$(localedir)"\"
+	-DGIMPDIR=\""$(gimpdir)"\"	\
+	-DLOCALEDIR=\""$(localedir)"\"	\
+	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -343,7 +344,7 @@ LDADD = \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
-	$(THREAD_LIBS)				\
+	$(GIMP_THREAD_LIBS)			\
 	$(INTLLIBS)
 
 DEPS = \

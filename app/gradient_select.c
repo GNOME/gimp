@@ -474,7 +474,7 @@ gsel_new_selection(gchar * title,
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
   gsp->clist = gtk_clist_new(2);
-  gtk_clist_set_border(GTK_CLIST(gsp->clist), GTK_SHADOW_IN);
+  gtk_clist_set_shadow_type(GTK_CLIST(gsp->clist), GTK_SHADOW_IN);
   
   gtk_clist_set_row_height(GTK_CLIST(gsp->clist), 18);
   

@@ -78,7 +78,8 @@ libgimpui_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
 
 CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"
+	-DGIMPDIR=\""$(gimpdir)"\"	\
+	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
 	-I$(top_srcdir)		\

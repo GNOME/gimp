@@ -4822,7 +4822,7 @@ gimp_image_get_layer_by_tattoo_invoker (Argument *args)
   GImage *gimage;
   Tattoo tattoo;
   Argument *return_args;
-  Layer *layer;
+  Layer *layer = NULL;
 
   /*  the gimage  */
   if (success)
@@ -4911,7 +4911,7 @@ gimp_image_get_channel_by_tattoo_invoker (Argument *args)
   GImage *gimage;
   Tattoo tattoo;
   Argument *return_args;
-  Channel *channel;
+  Channel *channel = NULL;
 
   /*  the gimage  */
   if (success)

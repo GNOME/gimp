@@ -1,3 +1,15 @@
+Tue Dec  1 15:12:29 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/gradient.c
+	* app/gradient_select.c:
+	s/gtk_clist_set_border/gtk_clist_set_shadow_type/
+
+	* configure.in
+	* libgimp/Makefile.am
+	* app/Makefile.am: use GIMP_THREAD_FOO substitution
+
+	* app/gimage_cmds.c: initialize some vars to quell warnings
+
 Fri Nov 27 22:44:01 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c: scrolled window fix
