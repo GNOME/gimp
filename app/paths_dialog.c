@@ -64,7 +64,7 @@
 #include "pixmaps/penstroke.xpm"
 #include "pixmaps/toselection.xpm"
 #include "pixmaps/path.xbm"
-#include "pixmaps/locked.xpm"
+#include "pixmaps/locked.xbm"
 
 #ifndef HAVE_RINT
 #define rint(x) floor (x + 0.5)
@@ -89,7 +89,8 @@ typedef struct {
   /* pixmaps for the no preview bitmap */
   GdkPixmap * pixmap_normal;
   GdkPixmap * pixmap_selected;
-  GdkPixmap * pixmap_locked;
+  GdkPixmap * pixmap_locked_normal;
+  GdkPixmap * pixmap_locked_selected;
 
   /*  state information  */
   gint        selsigid;
@@ -123,23 +124,25 @@ typedef struct {
 
 static gchar * unique_name(GimpImage *,gchar *);
 
-static gint path_widget_preview_events (GtkWidget *, GdkEvent *);
-static void paths_dialog_realized      (GtkWidget *widget);
-static void paths_select_row           (GtkWidget *widget,gint row,gint column,GdkEventButton *event,gpointer data);
-static void paths_unselect_row         (GtkWidget *widget,gint row,gint column,GdkEventButton *event,gpointer data);
-static gint paths_list_events          (GtkWidget *widget,GdkEvent  *event);
-static void paths_dialog_map_callback  (GtkWidget *w,gpointer client_data);
-static void paths_dialog_unmap_callback(GtkWidget *w,gpointer client_data);
-static void paths_dialog_destroy_cb (GimpImage *image);
-static void paths_update_paths(gpointer data,gint row);
-static GSList *  pathpoints_copy(GSList *list);
-static void pathpoints_free(GSList *list);
-static void paths_update_preview(BezierSelect *bezier_sel);
+/*  static gint path_widget_preview_events   (GtkWidget *, GdkEvent *);  */
+static void paths_dialog_realized        (GtkWidget *widget);
+static void paths_select_row             (GtkWidget *widget, gint row, gint column, 
+					  GdkEventButton *event, gpointer data);
+static void paths_unselect_row           (GtkWidget *widget, gint row, gint column,
+					  GdkEventButton *event, gpointer data);
+static gint paths_list_events            (GtkWidget *widget,GdkEvent  *event);
+static void paths_dialog_map_callback    (GtkWidget *w,gpointer client_data);
+static void paths_dialog_unmap_callback  (GtkWidget *w,gpointer client_data);
+static void paths_dialog_destroy_cb      (GimpImage *image);
+static void paths_update_paths           (gpointer data,gint row);
+static GSList *  pathpoints_copy         (GSList *list);
+static void      pathpoints_free         (GSList *list);
+static void paths_update_preview         (BezierSelect *bezier_sel);
 static void paths_dialog_preview_extents (void);
-static void paths_dialog_new_point_callback (GtkWidget *, gpointer);
-static void paths_dialog_add_point_callback (GtkWidget *, gpointer);
+static void paths_dialog_new_point_callback    (GtkWidget *, gpointer);
+static void paths_dialog_add_point_callback    (GtkWidget *, gpointer);
 static void paths_dialog_delete_point_callback (GtkWidget *, gpointer);
-static void paths_dialog_edit_point_callback (GtkWidget *, gpointer);
+static void paths_dialog_edit_point_callback   (GtkWidget *, gpointer);
 static void path_close(PATHP);
 
 #define NEW_PATH_BUTTON    1
@@ -282,7 +285,7 @@ GtkWidget * paths_dialog_create()
 /*       gtk_clist_set_column_title(GTK_CLIST(paths_list), 1, _("Path"));    */
 /*       gtk_clist_column_titles_show(GTK_CLIST(paths_list));   */
       /*      gtk_clist_columns_autosize(GTK_CLIST(paths_list));  */
-      gtk_clist_set_column_width (GTK_CLIST(paths_list),0,30);
+      gtk_clist_set_column_width (GTK_CLIST(paths_list),0,locked_width);
 
       gtk_container_add (GTK_CONTAINER (scrolled_win), paths_list);
       gtk_clist_set_selection_mode (GTK_CLIST (paths_list), GTK_SELECTION_BROWSE);
@@ -396,7 +399,7 @@ path_dialog_new(GimpImage *gimage,gint name_seed, gpointer udata)
   GString *s = g_string_new (NULL);
   gchar   *suniq;
 
-  g_string_sprintf (s, "path %d",name_seed);
+  g_string_sprintf (s, "Path %d",name_seed);
   suniq = unique_name(gimage,s->str);
   if(suniq)
     {
@@ -716,7 +719,6 @@ void paths_add_path(PATHP bzp,gint insrow)
   PATHWIDGETP pwidget;
   gint row;
   gchar *row_data[2];
-  GdkBitmap *mask;
 
   pwidget = g_new0(PATHWIDGET,1);
 
@@ -758,13 +760,18 @@ void paths_add_path(PATHP bzp,gint insrow)
        pwidget->paths_pixmap = paths_dialog->pixmap_normal;
     }
 
-  if(!paths_dialog->pixmap_locked)
+  if(!paths_dialog->pixmap_locked_normal)
     {
-      paths_dialog->pixmap_locked = 
-	gdk_pixmap_create_from_xpm_d (paths_dialog->vbox->window,
-				      &mask,
-				      &paths_dialog->vbox->style->fg[GTK_STATE_NORMAL],
-				      locked_xpm);
+      paths_dialog->pixmap_locked_normal = 
+	gdk_pixmap_create_from_data (paths_dialog->vbox->window,
+				     locked_bits, locked_width, locked_height, -1,
+				     &paths_dialog->vbox->style->fg[GTK_STATE_NORMAL],
+				     &paths_dialog->vbox->style->white);
+      paths_dialog->pixmap_locked_selected = 
+	gdk_pixmap_create_from_data (paths_dialog->vbox->window,
+				     locked_bits, locked_width, locked_height, -1,
+				     &paths_dialog->vbox->style->fg[GTK_STATE_SELECTED],
+				     &paths_dialog->vbox->style->bg[GTK_STATE_SELECTED]);
     }
 
   gtk_clist_set_row_height(GTK_CLIST(paths_dialog->paths_list),
@@ -839,6 +846,7 @@ paths_dialog_preview_extents ()
     }
 }
 
+/*
 static gint
 path_widget_preview_events (GtkWidget *widget,
 			     GdkEvent  *event)
@@ -848,7 +856,6 @@ path_widget_preview_events (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      /*  Control-button press disables the application of the mask  */
       bevent = (GdkEventButton *) event;
       break;
 
@@ -856,14 +863,14 @@ path_widget_preview_events (GtkWidget *widget,
       if (preview_size)
 	{
 
-/* 	  layer_widget_preview_redraw (layer_widget, preview_type); */
+	  layer_widget_preview_redraw (layer_widget, preview_type);
 	  
-/* 	  gdk_draw_pixmap (widget->window, */
-/* 			   widget->style->black_gc, */
-/* 			   *pixmap, */
-/* 			   0, 0, 2, 2, */
-/* 			   layersD->image_width, */
-/* 			   layersD->image_height); */
+	  gdk_draw_pixmap (widget->window,
+			   widget->style->black_gc,
+			   *pixmap,
+			   0, 0, 2, 2,
+			   layersD->image_width,
+			   layersD->image_height);
 	}
 
       break;
@@ -874,6 +881,7 @@ path_widget_preview_events (GtkWidget *widget,
 
   return FALSE;
 }
+*/
 
 static void
 paths_select_row(GtkWidget *widget, 
@@ -909,11 +917,18 @@ paths_select_row(GtkWidget *widget,
       if(bzp->locked == 0)
 	{
 	  bzp->locked = 1;
-	  gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
-			       row,
-			       0,
-			       paths_dialog->pixmap_locked,
-			       NULL);
+	  if (paths_dialog->selected_row_num == row)
+	    gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+				 row,
+				 0,
+				 paths_dialog->pixmap_locked_selected,
+				 NULL);
+	  else
+	    gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+				 row,
+				 0,
+				 paths_dialog->pixmap_locked_normal,
+				 NULL);
       	}
       else
 	{
@@ -950,6 +965,13 @@ paths_select_row(GtkWidget *widget,
   paths_dialog->current_path_list->last_selected_row = row;
   paths_dialog->been_selected = TRUE;
 
+  if(bzp->locked)
+    gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+			 row,
+			 0,
+			 paths_dialog->pixmap_locked_selected,
+			 NULL);
+
   bsel = path_to_beziersel(bzp);
   gdisp = gdisplays_check_valid(paths_dialog->current_path_list->gdisp,
 				paths_dialog->gimage);
@@ -964,18 +986,32 @@ paths_select_row(GtkWidget *widget,
 }
 
 static void
-paths_unselect_row(GtkWidget *widget, 
-		 gint row,
-		 gint column,
-		 GdkEventButton *event,
-		 gpointer data)
+paths_unselect_row (GtkWidget      *widget, 
+		    gint            row,
+		    gint            column,
+		    GdkEventButton *event,
+		    gpointer        data)
 {
   PATHWIDGETP pwidget;
+  PATHP bzp;
 
   pwidget = (PATHWIDGETP)gtk_clist_get_row_data(GTK_CLIST(widget),row);
 
   if(!pwidget)
     return;
+
+  bzp = (PATHP)g_slist_nth_data(paths_dialog->current_path_list->bz_paths,row);
+
+  g_return_if_fail(bzp != NULL);
+
+  if (column && bzp->locked)
+    {
+      gtk_clist_set_pixmap (GTK_CLIST(paths_dialog->paths_list),
+			    row,
+			    0,
+			    paths_dialog->pixmap_locked_normal,
+			    NULL);
+    }
 }
 
 void
@@ -1111,12 +1147,21 @@ paths_update_paths(gpointer data,gint row)
   paths_update_preview(bezier_sel);
   beziersel_free(bezier_sel);
  
-  if(bzp->locked)
-    gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
-			 row,
-			 0,
-			 paths_dialog->pixmap_locked,
-			 NULL);
+  if (bzp->locked)
+    {
+      if (paths_dialog->selected_row_num == row)
+	gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+			     row,
+			     0,
+			     paths_dialog->pixmap_locked_selected,
+			     NULL);
+      else
+	gtk_clist_set_pixmap(GTK_CLIST(paths_dialog->paths_list),
+			     row,
+			     0,
+			     paths_dialog->pixmap_locked_normal,
+			     NULL);
+    }
 }
 
 static void

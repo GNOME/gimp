@@ -1,3 +1,12 @@
+Wed Jul  7 20:33:24 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* Makefile.am
+	* pixmaps/locked.xpm: removed
+	* pixmaps/locked.xbm: new file
+	* app/paths_dialog.c: Use a bitmap in the style of the eye instead of
+	the lock pixmap. This could be done more elegantly, but the 
+	paths_dialog is a mess, sorry.
+
 1999-07-07  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
         * app/gdisplay.c (gdisplay_set_menu_sensitivity): don't make menus
