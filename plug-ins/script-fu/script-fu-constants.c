@@ -28,6 +28,8 @@ init_generated_constants (void)
   setvar (cintern ("ALPHA-MASK"), flocons (2), NIL);
   setvar (cintern ("SELECTION-MASK"), flocons (3), NIL);
   setvar (cintern ("INV-SELECTION-MASK"), flocons (4), NIL);
+  setvar (cintern ("COPY-MASK"), flocons (5), NIL);
+  setvar (cintern ("INV-COPY-MASK"), flocons (6), NIL);
 
   setvar (cintern ("HARD"), flocons (0), NIL);
   setvar (cintern ("SOFT"), flocons (1), NIL);

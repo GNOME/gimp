@@ -313,7 +313,7 @@ layer_create_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   mask_type = args[1].value.pdb_int;
-  if (mask_type < ADD_WHITE_MASK || mask_type > ADD_INV_SELECTION_MASK)
+  if (mask_type < ADD_WHITE_MASK || mask_type > ADD_INV_COPY_MASK)
     success = FALSE;
 
   if (success)
@@ -337,7 +337,7 @@ static ProcArg layer_create_mask_inargs[] =
   {
     GIMP_PDB_INT32,
     "mask_type",
-    "The type of mask: { WHITE_MASK (0), BLACK_MASK (1), ALPHA_MASK (2), SELECTION_MASK (3), INV_SELECTION_MASK (4) }"
+    "The type of mask: { WHITE_MASK (0), BLACK_MASK (1), ALPHA_MASK (2), SELECTION_MASK (3), INV_SELECTION_MASK (4), COPY_MASK (5), INV_COPY_MASK (6) }"
   }
 };
 

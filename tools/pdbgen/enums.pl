@@ -165,17 +165,22 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'core/core-types.h',
 	  symbols => [ qw(ADD_WHITE_MASK ADD_BLACK_MASK ADD_ALPHA_MASK
-			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK) ],
+			  ADD_SELECTION_MASK ADD_INV_SELECTION_MASK
+			  ADD_COPY_MASK ADD_INV_COPY_MASK) ],
 	  mapping => { ADD_WHITE_MASK => '0',
 		       ADD_BLACK_MASK => '1',
 		       ADD_ALPHA_MASK => '2',
 		       ADD_SELECTION_MASK => '3',
-		       ADD_INV_SELECTION_MASK => '4' },
+		       ADD_INV_SELECTION_MASK => '4',
+		       ADD_COPY_MASK => '5',
+		       ADD_INV_COPY_MASK => '6' },
 	  nicks   => { ADD_WHITE_MASK => 'WHITE_MASK',
 		       ADD_BLACK_MASK => 'BLACK_MASK',
 		       ADD_ALPHA_MASK => 'ALPHA_MASK',
 		       ADD_SELECTION_MASK => 'SELECTION_MASK',
-		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK' }
+		       ADD_INV_SELECTION_MASK => 'INV_SELECTION_MASK',
+		       ADD_COPY_MASK => 'COPY_MASK',
+		       ADD_INV_COPY_MASK => 'INV_COPY_MASK' }
 	},
     MaskApplyMode =>
 	{ contig => 1,

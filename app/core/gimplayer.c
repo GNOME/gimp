@@ -606,83 +606,135 @@ GimpLayerMask *
 gimp_layer_create_mask (const GimpLayer *layer,
 			AddMaskType      add_mask_type)
 {
-  PixelRegion    maskPR;
-  PixelRegion    layerPR;
+  PixelRegion    srcPR;
+  PixelRegion    destPR;
   GimpLayerMask *mask;
   GimpImage     *gimage;
-  GimpDrawable  *selection;
   gchar         *mask_name;
   GimpRGB        black = { 0.0, 0.0, 0.0, 1.0 };
-  guchar         white_mask = OPAQUE_OPACITY;
-  guchar         black_mask = TRANSPARENT_OPACITY;
 
-  gimage = GIMP_DRAWABLE (layer)->gimage;
-
-  selection = GIMP_DRAWABLE(gimage->selection_mask);
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
 
   mask_name = g_strdup_printf (_("%s mask"),
 			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
-  /*  Create the layer mask  */
   mask = gimp_layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
 			      GIMP_DRAWABLE (layer)->width,
 			      GIMP_DRAWABLE (layer)->height,
 			      mask_name, &black);
+
+  g_free (mask_name);
+
   GIMP_DRAWABLE (mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
   GIMP_DRAWABLE (mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles, 
+  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles, 
 		     0, 0, 
-		     GIMP_DRAWABLE (mask)->width, GIMP_DRAWABLE (mask)->height, 
+		     GIMP_DRAWABLE (mask)->width,
+                     GIMP_DRAWABLE (mask)->height, 
 		     TRUE);
 
   switch (add_mask_type)
     {
     case ADD_WHITE_MASK:
-      color_region (&maskPR, &white_mask);
+      {
+        guchar white_mask = OPAQUE_OPACITY;
+
+        color_region (&destPR, &white_mask);
+      }
       break;
 
     case ADD_BLACK_MASK:
-      color_region (&maskPR, &black_mask);
+      {
+        guchar black_mask = TRANSPARENT_OPACITY;
+
+        color_region (&destPR, &black_mask);
+      }
       break;
 
     case ADD_ALPHA_MASK:
-      /*  Extract the layer's alpha channel  */
       if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	{
-	  pixel_region_init (&layerPR, GIMP_DRAWABLE (layer)->tiles, 
+	  pixel_region_init (&srcPR, GIMP_DRAWABLE (layer)->tiles, 
 			     0, 0, 
 			     GIMP_DRAWABLE (layer)->width, 
 			     GIMP_DRAWABLE (layer)->height, 
 			     FALSE);
-	  extract_alpha_region (&layerPR, NULL, &maskPR);
+	  extract_alpha_region (&srcPR, NULL, &destPR);
 	}
       break;
 
-     case ADD_SELECTION_MASK:
-       pixel_region_init (&layerPR, GIMP_DRAWABLE (selection)->tiles, 
-			  GIMP_DRAWABLE (layer)->offset_x,
-			  GIMP_DRAWABLE (layer)->offset_y, 
-			  GIMP_DRAWABLE (layer)->width, 
-			  GIMP_DRAWABLE (layer)->height, 
-			  FALSE);
-       copy_region (&layerPR, &maskPR);
-       break;
+    case ADD_SELECTION_MASK:
+    case ADD_INV_SELECTION_MASK:
+      {
+        GimpDrawable *selection;
 
-     case ADD_INV_SELECTION_MASK:
-       pixel_region_init (&layerPR, GIMP_DRAWABLE (selection)->tiles, 
-			  GIMP_DRAWABLE (layer)->offset_x,
-			  GIMP_DRAWABLE (layer)->offset_y, 
-			  GIMP_DRAWABLE (layer)->width, 
-			  GIMP_DRAWABLE (layer)->height, 
-			  FALSE);
-       copy_region (&layerPR, &maskPR);
+        selection = GIMP_DRAWABLE (gimage->selection_mask);
 
-       gimp_drawable_invert (GIMP_DRAWABLE (mask));
-       break;
+        pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles, 
+                           GIMP_DRAWABLE (layer)->offset_x,
+                           GIMP_DRAWABLE (layer)->offset_y, 
+                           GIMP_DRAWABLE (layer)->width, 
+                           GIMP_DRAWABLE (layer)->height, 
+                           FALSE);
+        copy_region (&srcPR, &destPR);
+      }
+      break;
+
+    case ADD_COPY_MASK:
+    case ADD_INV_COPY_MASK:
+      {
+        TileManager   *copy_tiles;
+        GimpImageType  layer_type;
+        GimpImageType  copy_type;
+        guchar         black_uchar[] = { 0, 0, 0, 0 };
+
+        layer_type = GIMP_DRAWABLE (layer)->type;
+
+        copy_type = (GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type) ?
+                     GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE);
+
+        copy_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
+                                       GIMP_DRAWABLE (layer)->height,
+                                       GIMP_IMAGE_TYPE_BYTES (copy_type));
+
+        gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
+                                         copy_tiles,
+                                         GIMP_IMAGE_TYPE_BASE_TYPE (layer_type));
+
+        pixel_region_init (&srcPR, copy_tiles,
+                           0, 0,
+                           GIMP_DRAWABLE (layer)->width, 
+                           GIMP_DRAWABLE (layer)->height, 
+                           FALSE);
+
+        if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+          {
+            flatten_region (&srcPR, &destPR, black_uchar);
+          }
+        else
+          {
+            copy_region (&srcPR, &destPR);
+          }
+
+        tile_manager_destroy (copy_tiles);
+      }
     }
 
-  g_free (mask_name);
+  switch (add_mask_type)
+    {
+    case ADD_WHITE_MASK:
+    case ADD_BLACK_MASK:
+    case ADD_ALPHA_MASK:
+    case ADD_SELECTION_MASK:
+    case ADD_COPY_MASK:
+      break;
+
+    case ADD_INV_SELECTION_MASK:
+    case ADD_INV_COPY_MASK:
+      gimp_drawable_invert (GIMP_DRAWABLE (mask));
+      break;
+    }
 
   return mask;
 }
@@ -723,7 +775,6 @@ gimp_layer_apply_mask (GimpLayer     *layer,
       lmu = g_new (LayerMaskUndo, 1);
       lmu->layer      = layer;
       lmu->mask       = layer->mask;
-      lmu->mode       = mode;
     }
 
   /*  check if applying the mask changes the projection  */

@@ -40,7 +40,9 @@ typedef enum  /*< chop=ADD_ >*/
   ADD_BLACK_MASK,
   ADD_ALPHA_MASK,
   ADD_SELECTION_MASK,
-  ADD_INV_SELECTION_MASK
+  ADD_INV_SELECTION_MASK,
+  ADD_COPY_MASK,
+  ADD_INV_COPY_MASK
 } AddMaskType;
 
 typedef enum

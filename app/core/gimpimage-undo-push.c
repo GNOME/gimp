@@ -1718,7 +1718,7 @@ undo_pop_layer_mask (GimpImage *gimage,
   if ((state == UNDO && type == LAYER_MASK_ADD_UNDO) ||
       (state == REDO && type == LAYER_MASK_REMOVE_UNDO))
     {
-      gimp_layer_apply_mask (lmu->layer, lmu->mode, FALSE);
+      gimp_layer_apply_mask (lmu->layer, DISCARD, FALSE);
     }
   /*  restore layer  */
   else

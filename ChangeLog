@@ -1,5 +1,32 @@
 2002-02-20  Michael Natterer  <mitch@gimp.org>
 
+	Implemented #7100 (initialize layer mask with a copy of the image)
+
+	* app/core/core-types.h: added ADD_COPY_MASK and ADD_INV_COPY_MASK
+	enum values.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): implement
+	the new layer mask add modes.
+
+	* app/gui/layers-commands.c (layers_add_mask_query): added radio
+	buttons for the new modes.
+
+	* app/paint-funcs/paint-funcs.c (flatten_region): this function
+	was never needed so nobody noticed that it never worked. Fixed now.
+
+	* app/undo.c
+	* app/core/gimplayermask.h
+	* app/core/gimpimage.c: the "mode" field of LayerMaskUndo is
+	obsolete since some earlier 1.3 layer mask change. Removed it.
+	(Makes mask undos work again)
+
+2002-02-20  Michael Natterer  <mitch@gimp.org>
+
 	Implemented #10125 ("quick" colour picker does not honour
 	"sample merged")
 

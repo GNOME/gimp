@@ -2209,16 +2209,22 @@ flatten_region (PixelRegion *src,
 {
   gint    h;
   guchar *s, *d;
+  void   *pr;
 
-  s = src->data;
-  d = dest->data;
-  h = src->h;
-
-  while (h --)
+  for (pr = pixel_regions_register (2, src, dest);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      flatten_pixels (s, d, bg, src->w, src->bytes);
-      s += src->rowstride;
-      d += dest->rowstride;
+      s = src->data;
+      d = dest->data;
+      h = src->h;
+
+      while (h --)
+        {
+          flatten_pixels (s, d, bg, src->w, src->bytes);
+          s += src->rowstride;
+          d += dest->rowstride;
+        }
     }
 }
 

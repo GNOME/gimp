@@ -922,40 +922,54 @@ layers_add_mask_query (GimpLayer *layer)
     {
       options->add_mask_type = ADD_SELECTION_MASK;
 
-      frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-				     G_CALLBACK (gimp_radio_button_update),
-				     &options->add_mask_type,
-				     GINT_TO_POINTER (options->add_mask_type),
+      frame =
+        gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
+                               G_CALLBACK (gimp_radio_button_update),
+                               &options->add_mask_type,
+                               GINT_TO_POINTER (options->add_mask_type),
 
-				     _("Selection"),
-				     GINT_TO_POINTER (ADD_SELECTION_MASK), NULL,
-				     _("Inverse Selection"),
-				     GINT_TO_POINTER (ADD_INV_SELECTION_MASK), NULL,
-				     _("White (Full Opacity)"),
-				     GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
-				     _("Black (Full Transparency)"),
-				     GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
-				     _("Layer's Alpha Channel"),
-				     GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+                               _("Selection"),
+                               GINT_TO_POINTER (ADD_SELECTION_MASK), NULL,
+                               _("Inverse Selection"),
+                               GINT_TO_POINTER (ADD_INV_SELECTION_MASK), NULL,
 
-				     NULL);
+                               _("Grayscale Copy of Layer"),
+                               GINT_TO_POINTER (ADD_COPY_MASK), NULL,
+                               _("Inverse Grayscale Copy of Layer"),
+                               GINT_TO_POINTER (ADD_INV_COPY_MASK), NULL,
+
+                               _("White (Full Opacity)"),
+                               GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
+                               _("Black (Full Transparency)"),
+                               GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
+                               _("Layer's Alpha Channel"),
+                               GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+
+                               NULL);
     }
   else
     {
-      frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
-				     G_CALLBACK (gimp_radio_button_update),
-				     &options->add_mask_type,
-				     GINT_TO_POINTER (options->add_mask_type),
+      frame =
+        gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
+                               G_CALLBACK (gimp_radio_button_update),
+                               &options->add_mask_type,
+                               GINT_TO_POINTER (options->add_mask_type),
 
-				     _("White (Full Opacity)"),
-				     GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
-				     _("Black (Full Transparency)"),
-				     GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
-				     _("Layer's Alpha Channel"),
-				     GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+                               _("Grayscale Copy of Layer"),
+                               GINT_TO_POINTER (ADD_COPY_MASK), NULL,
+                               _("Inverse Grayscale Copy of Layer"),
+                               GINT_TO_POINTER (ADD_INV_COPY_MASK), NULL,
 
-				     NULL);
+                               _("White (Full Opacity)"),
+                               GINT_TO_POINTER (ADD_WHITE_MASK), NULL,
+                               _("Black (Full Transparency)"),
+                               GINT_TO_POINTER (ADD_BLACK_MASK), NULL,
+                               _("Layer's Alpha Channel"),
+                               GINT_TO_POINTER (ADD_ALPHA_MASK), NULL,
+
+                               NULL);
     }
+
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);

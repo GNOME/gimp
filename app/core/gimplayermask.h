@@ -60,7 +60,6 @@ struct _LayerMaskUndo
 {
   GimpLayer     *layer;    /*  the layer             */
   GimpLayerMask *mask;     /*  the layer mask        */
-  gint           mode;     /*  the application mode  */
 };
 
 
