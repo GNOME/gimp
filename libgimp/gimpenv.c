@@ -125,27 +125,23 @@ gimp_directory (void)
   else
     {
 #ifdef __EMX__       
-	gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
-	return gimp_dir;  
+      gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
+      return gimp_dir;  
 #endif      
-	if (NULL != home_dir)
-	{
-	  gimp_dir = g_strconcat (home_dir,
-				  home_dir_sep,
-				  GIMPDIR,
-				  NULL);
-	}
+      if (NULL != home_dir)
+        {
+          gimp_dir = g_strconcat (home_dir,
+                                  home_dir_sep,
+                                  GIMPDIR,
+                                  NULL);
+        }
       else
-	{
+        {
 	  gchar *user_name = g_strdup (g_get_user_name ());
-	  gchar *p;
-
-#ifndef G_OS_WIN32
-	  g_message ("warning: no home directory.");
-#endif
 
 #ifdef G_OS_WIN32
-	  p = user_name;
+	  gchar *p = user_name;
+
 	  while (*p)
 	    {
 	      /* Replace funny characters in the user name with an
@@ -158,6 +154,10 @@ gimp_directory (void)
 		*p = '_';
 	      p++;
 	    }
+#endif
+
+#ifndef G_OS_WIN32
+	  g_message ("warning: no home directory.");
 #endif
 
 	  gimp_dir = g_strconcat (gimp_data_directory (),
