@@ -1,5 +1,10 @@
 2002-06-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/helpbrowser.c: implemented anchor handling.
+	Load remote URLs by calling the webbrowser plug-in.
+
+2002-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/paint-funcs/Makefile.am: fixed my fix for automake-1.6 (#84514).
 

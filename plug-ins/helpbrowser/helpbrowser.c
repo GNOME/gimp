@@ -66,8 +66,6 @@ enum
 };
 
 
-/*  structures  */
-
 typedef struct
 {
   const gchar *title;
@@ -75,9 +73,9 @@ typedef struct
   gint         count;
 } HistoryItem;
 
-/*  constant strings  */
 
-static gchar *doc_not_found_format_string =
+/* please make sure the translation is a valid and complete HTML snippet */ 
+static const gchar *doc_not_found_format_string =
 N_("<html><head><title>Document not found</title></head>"
    "<body bgcolor=\"#ffffff\">"
    "<center>"
@@ -87,25 +85,24 @@ N_("<html><head><title>Document not found</title></head>"
    "<tt>%s</tt>"
    "</center>"
    "<p>"
-   "<small>This either means that the help for this topic has not been written "
-   "yet or that something is wrong with your installation. "
+   "<small>This either means that the help for this topic has not been "
+   "written yet or that something is wrong with your installation. "
    "Please check carefully before you report this as a bug.</small>" 
    "</body>"
    "</html>");
 
-static gchar *eek_png_tag = "<h1>Eeek!</h1>";
+static const gchar *eek_png_tag = "<h1>Eeek!</h1>";
 
+static gchar       *gimp_help_root = NULL;
 
-static gchar     *gimp_help_root = NULL;
+static GList       *history = NULL;
+static Queue       *queue;
+static gchar       *current_ref;
 
-static GList     *history = NULL;
-static Queue     *queue;
-static gchar     *current_ref;
-
-static GtkWidget *html;
-static GtkWidget *back_button;
-static GtkWidget *forward_button;
-static GtkWidget *combo;
+static GtkWidget   *html;
+static GtkWidget   *back_button;
+static GtkWidget   *forward_button;
+static GtkWidget   *combo;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -134,7 +131,7 @@ static gboolean temp_proc_installed = FALSE;
 
 /*  forward declaration  */
 
-static gboolean load_page   (const gchar  *ref,
+static void     load_page   (const gchar  *ref,
                              gboolean      add_to_queue);
 static void     request_url (HtmlDocument *doc,
                              const gchar  *url,
@@ -144,7 +141,26 @@ static gboolean io_handler  (GIOChannel   *io,
                              GIOCondition  condition, 
                              gpointer      data);
 
-/*  functions  */
+
+/* Taken from glib/gconvert.c:
+ * Test of haystack has the needle prefix, comparing case
+ * insensitive. haystack may be UTF-8, but needle must
+ * contain only ascii.
+ */
+static gboolean
+has_case_prefix (const gchar *haystack, const gchar *needle)
+{
+  const gchar *h = haystack;
+  const gchar *n = needle;
+
+  while (*n && *h && g_ascii_tolower (*n) == g_ascii_tolower (*h))
+    {
+      n++;
+      h++;
+    }
+  
+  return (*n == '\0');
+}
 
 static void
 close_callback (GtkWidget *widget,
@@ -171,11 +187,11 @@ button_callback (GtkWidget *widget,
   switch (GPOINTER_TO_INT (data))
     {
     case BUTTON_HOME:
-      load_page ("contents.html", FALSE);
+      load_page ("contents.html", TRUE);
       break;
 
     case BUTTON_INDEX:
-      load_page ("index.html", FALSE);
+      load_page ("index.html", TRUE);
       break;
 
     case BUTTON_BACK:
@@ -332,33 +348,68 @@ title_changed (HtmlDocument *doc,
   g_free (title);
 }
 
-static gboolean
+static void
+load_remote_page (const gchar *ref)
+{
+  GimpParam *return_vals;
+  gint       nreturn_vals;
+
+  /*  try to call netscape through the web_browser interface */
+  return_vals = gimp_run_procedure ("extension_web_browser",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
+                                    GIMP_PDB_STRING, ref,
+                                    GIMP_PDB_INT32,  FALSE,
+                                    GIMP_PDB_END);
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+}
+
+static void
 load_page (const gchar *ref,	  
 	   gboolean     add_to_queue)
 {
-  HtmlDocument *doc;
+  HtmlDocument *doc = HTML_VIEW (html)->document;
+  gchar        *abs;
   gchar        *new_ref;
+  gchar        *anchor;
 
-  g_return_val_if_fail (ref != NULL, FALSE);
+  g_return_if_fail (ref != NULL);
 
-  doc = HTML_VIEW (html)->document;
+  abs = uri_to_abs (ref, current_ref);
 
-  new_ref = uri_to_abs (ref, current_ref);
+  g_return_if_fail (abs != NULL);
 
-  if (!new_ref)
-    return FALSE;
-
-  g_print ("load_page %s\n", new_ref);
-
-  if (strcmp (current_ref, new_ref))
+  anchor = strchr (ref, '#');
+  if (anchor && anchor[0] && anchor[1])
     {
+      new_ref = g_strconcat (abs, anchor, NULL);
+      anchor += 1;
+    }
+  else
+    {
+      new_ref = g_strdup (abs);
+      anchor = NULL;
+    }
+
+  if (strcmp (current_ref, abs))
+    {
+      if (!has_case_prefix (abs, "file:/"))
+        {
+          load_remote_page (ref);
+          return;
+        }
+
       html_document_clear (doc);
       html_document_open_stream (doc, "text/html");
       gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
                                 0);
-
-      request_url (doc, new_ref, doc->current_stream, NULL);
+      
+      request_url (doc, abs, doc->current_stream, NULL);
     }
+
+  if (anchor)
+    html_view_jump_to_anchor (HTML_VIEW (html), anchor);
 
   g_free (current_ref);
   current_ref = new_ref;
@@ -367,8 +418,6 @@ load_page (const gchar *ref,
     queue_add (queue, new_ref);
   
   update_toolbar ();
-
-  return TRUE;
 }
 
 static void
@@ -377,33 +426,6 @@ link_clicked (HtmlDocument *doc,
               gpointer      data)
 {
   load_page (url, TRUE);
-
-#if 0
-  GimpParam *return_vals;
-  gint       nreturn_vals;
-
-  switch (url_type)
-    {
-    case URL_JUMP:
-      jump_to_anchor (ref);
-      break;
-
-    case URL_FILE_LOCAL:
-      load_page (ref, TRUE);
-      break;
-
-    default:
-      /*  try to call netscape through the web_browser interface */
-      return_vals = gimp_run_procedure ("extension_web_browser",
-					&nreturn_vals,
-					GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
-					GIMP_PDB_STRING, ref,
-					GIMP_PDB_INT32,  FALSE,
-					GIMP_PDB_END);
-       gimp_destroy_params (return_vals, nreturn_vals);
-      break;
-    }
-#endif
 }
 
 static void
@@ -441,8 +463,6 @@ request_url (HtmlDocument *doc,
         {
           GIOChannel *io = g_io_channel_unix_new (fd);
 
-          g_print ("loading %s\n", filename);
-
           g_io_channel_set_close_on_unref (io, TRUE);
           g_io_channel_set_encoding (io, NULL, NULL);
 
@@ -451,10 +471,6 @@ request_url (HtmlDocument *doc,
         }
 
       g_free (filename);
-    }
-  else
-    {
-      g_print ("no filename for %s\n", filename);
     }
 
   g_free (abs);
@@ -532,7 +548,7 @@ drag_data_get (GtkWidget        *widget,
                           strlen (current_ref));
 }
 
-static gboolean
+static void
 open_browser_dialog (const gchar *help_path,
 		     const gchar *locale,
 		     const gchar *help_file)
@@ -633,7 +649,7 @@ open_browser_dialog (const gchar *help_path,
 
   /*  the title combo  */
   combo = gtk_combo_new ();
-  gtk_widget_set_size_request (GTK_WIDGET (combo), 300, -1);
+  gtk_widget_set_size_request (GTK_WIDGET (combo), 360, -1);
   gtk_combo_set_use_arrows (GTK_COMBO (combo), TRUE);
   g_object_set (G_OBJECT (GTK_COMBO (combo)->entry), "editable", FALSE, NULL); 
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
@@ -678,7 +694,7 @@ open_browser_dialog (const gchar *help_path,
 
   current_ref = g_strconcat ("file://", help_path, "/", locale, "/", NULL);
 
-  return load_page (help_file, TRUE);
+  load_page (help_file, TRUE);
 }
 
 static gboolean
@@ -795,19 +811,17 @@ install_temp_proc (void)
   temp_proc_installed = TRUE;
 }
 
-static gboolean
+static void
 open_url (const gchar *help_path,
 	  const gchar *locale,
 	  const gchar *help_file)
 {
-  if (! open_browser_dialog (help_path, locale, help_file))
-    return FALSE;
+  open_browser_dialog (help_path, locale, help_file);
 
   install_temp_proc ();
   gtk_main ();
-
-  return TRUE;
 }
+
 
 MAIN ()
 
@@ -846,7 +860,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   const gchar *env_root_dir = NULL;
   gchar       *help_path    = NULL;
@@ -904,7 +918,6 @@ run (gchar      *name,
 		{
 		  g_free (help_path);
 		  help_path = g_strdup (param[1].data.d_string);
-		  g_strdelimit (help_path, "/", G_DIR_SEPARATOR);
 		}
 	      if (param[2].data.d_string && strlen (param[2].data.d_string))
 		{
@@ -915,7 +928,6 @@ run (gchar      *name,
 		{
 		  g_free (help_file);
 		  help_file = g_strdup (param[3].data.d_string);
-		  g_strdelimit (help_file, "/", G_DIR_SEPARATOR);
 		}
 	    }
           break;
@@ -927,17 +939,14 @@ run (gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-       	  if (!open_url (help_path, locale, help_file))
-            values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	  else
-	    values[0].data.d_status = GIMP_PDB_SUCCESS;
+       	  open_url (help_path, locale, help_file);
 
 	  g_free (help_path);
 	  g_free (locale);
 	  g_free (help_file);
         }
-      else
-        values[0].data.d_status = status;
+
+      values[0].data.d_status = status;
     }
   else
     values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
