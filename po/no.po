@@ -5,29 +5,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.24\n"
-"POT-Creation-Date: 2000-08-19 09:13-0700\n"
-"PO-Revision-Date: 2000-08-16 00:38+02:00\n"
+"POT-Creation-Date: 2000-08-30 21:26+0200\n"
+"PO-Revision-Date: 2000-08-30 21:32+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "Om GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Versjon %s brakt til deg av"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Vennligst se http://www.gimp.org/ for mer informasjon"
 
@@ -118,13 +118,13 @@ msgstr "Avslutt"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -327,7 +327,7 @@ msgstr "Penseleditor"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Lukk"
 
@@ -1379,20 +1379,20 @@ msgstr ""
 "Åpne feilet.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s eksisterer, overskriv?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "Filen eksisterer!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Nei"
 
@@ -1606,7 +1606,11 @@ msgstr "uten navn"
 msgid "Layer type %d not supported."
 msgstr "Lagtype %d ikke støttet."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:190
+msgid "Could not find GIMP Help Browser"
+msgstr "Kunne ikke finne hjelpleser for GIMP"
+
+#: app/gimphelp.c:192
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1616,39 +1620,35 @@ msgstr ""
 "Den ble sannsynligvis ikke kompilert fordi\n"
 "du ikke har GtkXmHTML installert."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "fest parasitt til bildet"
+#: app/gimphelp.c:195
+msgid "Use Netscape instead"
+msgstr "Bruk Netscape istedet"
 
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "løsriv parasitt fra bildet"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
 msgstr "Laget kan ikke heves mer"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
 msgstr "Laget kan ikke senkes mer"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "Laget er allerede øverst"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
 msgstr "Kan ikke heve lag uten alpha"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "Laget er allerede nederst"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "BG har ikke alpha, laget ble plassert over"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1656,11 +1656,11 @@ msgstr ""
 "Ikke nok synlige lag til å gjøre sammenslåing.\n"
 "Det må være minst to."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ikke nok synlige lag til å slå sammen nedover."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1668,7 +1668,7 @@ msgstr ""
 "Kunne ikke legge til lagmaske siden\n"
 "laget allerede har en."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1676,7 +1676,7 @@ msgstr ""
 "Kunne ikke legge til lagmaske til et\n"
 "lag i et indeksert vilde."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1684,21 +1684,21 @@ msgstr ""
 "Kan ikke legge til lagmaske til et lag\n"
 "uten en alpha-kanal."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikke legge til lagmaske med forskjellig dimesjon fra det spesifiserte "
 "laget."
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
 msgstr "Kanalen kan ikke heves mer"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan ikke senkes mer"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Uten navn"
@@ -2598,7 +2598,7 @@ msgstr "Tekstprosedyrer"
 msgid "Tool procedures"
 msgstr "Verktøyprosedyrer"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "Angre"
 
@@ -2860,103 +2860,106 @@ msgstr "Zoom inn"
 msgid "Zoom out"
 msgstr "Zoom ut"
 
-#: app/main.c:296
+#: app/main.c:285
+msgid ""
+"\n"
+"Invalid option.\n"
+msgstr "\nUgyldig flagg.\n"
+
+#: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMP versjon"
 
-#: app/main.c:300
-#, c-format
-msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Bruk: %s [flagg ...] [filer ...]\n"
-
-#: app/main.c:301
-msgid "Valid options are:\n"
-msgstr "Gyldige flagg er:\n"
-
-#: app/main.c:302
-msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help                Skriv ut denne hjelpen.\n"
-
-#: app/main.c:303
-msgid "  -v --version             Output version info.\n"
-msgstr "  -v --version             Skriv ut versjonsinformasjon.\n"
-
-#: app/main.c:304
-msgid "  -b --batch <commands>    Run in batch mode.\n"
-msgstr "  -b --batch <kommandoer>    Kjør i batch-modus.\n"
-
 #: app/main.c:305
-msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Bruk en alternativ gimprc fil.\n"
+#, c-format
+msgid ""
+"\n"
+"Usage: %s [option ... ] [file ... ]\n"
+"\n"
+msgstr "\nBruk: %s [flagg ... ] [fil ... ]\n\n"
 
 #: app/main.c:306
-msgid "  -n --no-interface        Run without a user interface.\n"
-msgstr "  -n --no-interface        Kjør uten brukergrensesnitt.\n"
+msgid "Options:\n"
+msgstr "Alternativer:\n"
 
 #: app/main.c:307
-msgid "  -r --restore-session     Try to restore saved session.\n"
-msgstr "  -r --restore-session     Prøv å gjenopprette en lagret sesjon.\n"
+msgid "  -b, --batch <commands>   Run in batch mode.\n"
+msgstr "  -b, --batch <kommandoer>   Kjør i batch-modus.\n"
 
 #: app/main.c:308
 msgid ""
-"  --no-data                Do not load patterns, gradients, palettes, "
-"brushes.\n"
-msgstr ""
-"  --no-data                Ikke last mønstre, gradienter, paletter,\n"
-"pensler.\n"
+"  -c, --console-messages   Display warnings to console instead of a dialog "
+"box.\n"
+msgstr "  -c, --console-messages   Vis advarsler på konsollet i stedet for i en dialogboks.\n"
 
 #: app/main.c:309
+msgid ""
+"  -d, --no-data            Do not load brushes, gradients, palettes, "
+"patterns.\n"
+msgstr "  -d, --no-                Ikke last pensler, gradienter, paletter, mønstre.\n"
+
+#: app/main.c:310
+msgid "  -i, --no-interface       Run without a user interface.\n"
+msgstr "  -i, --no-interface      Kjør uten brukergrensesnitt.\n"
+
+#: app/main.c:311
+msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
+msgstr "  -g, --gimprc <gimprc>    Bruk en alternativ gimprc fil.\n"
+
+#: app/main.c:312
+msgid "  -h, --help               Output this help.\n"
+msgstr "  -h, --help               Skriv ut denne hjelpen.\n"
+
+#: app/main.c:313
+msgid "  -r, --restore-session    Try to restore saved session.\n"
+msgstr "  -r, --restore-session    Prøv å gjenopprette en lagret sesjon.\n"
+
+#: app/main.c:314
+msgid "  -s, --no-splash          Do not show the startup window.\n"
+msgstr "  -s, --no-splash          Ikke vis oppstartsvinduet.\n"
+
+#: app/main.c:315
+msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
+msgstr "  -S, --no-splash-image    Ikke vis bilde i oppstartsvinduet.\n"
+
+#: app/main.c:316
+msgid "  -v, --version            Output version information.\n"
+msgstr "  -v, --version            Skriv ut versjonsinformasjon.\n"
+
+#: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Vis meldinger under oppstart.\n"
 
-#: app/main.c:310
-msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash              Ikke vis oppstartsvinduet.\n"
-
-#: app/main.c:311
-msgid "  --no-splash-image        Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Ikke vis bilde i oppstartsvinduet.\n"
-
-#: app/main.c:312
+#: app/main.c:318
 msgid ""
-"  --no-shm                 Do not use shared memory between GIMP and its "
+"  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm            Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
+msgstr "  --no-shm             Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
 
-#: app/main.c:313
+#: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Ikke bruk X-utvidelsen for delt minne.\n"
 
-#: app/main.c:314
+#: app/main.c:320
 msgid ""
-"  --console-messages       Display warnings to console instead of a dialog "
-"box.\n"
-msgstr ""
-"  --console-messages       Vis advarsler på konsollet i stedet for i en "
-"dialogboks.\n"
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr "  --debug-handlers         Slå på feilsøkings-signalhåndterere for ikke-fatale signaler.\n"
 
-#: app/main.c:315
-msgid ""
-"  --debug-handlers         Enable debugging signal handlers for non-fatal "
-"signals.\n"
-msgstr ""
-"  --debug-handlers         Slå på debugging signalhåndterere for ikke-fatale "
-"signaler.\n"
-
-#: app/main.c:317
-msgid "                           Debugging mode for fatal signals.\n"
-msgstr "                           Feilsøkingsmodus for fatale signaler.\n"
-
-#: app/main.c:318
+#: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <skjerm>       Bruk oppgitt X-skjerm.\n"
 
-#: app/main.c:319
+#: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Bruk en alternativ system gimprc fil.\n"
 
-#: app/main.c:336
+#: app/main.c:324
+msgid ""
+"                           Debugging mode for fatal signals.\n"
+"\n"
+msgstr "                           Feilsøkingsmodus for fatale signaler.\n\n"
+
+#: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsollvinduet vil lukkes om ti sekunder)\n"
 
@@ -5761,7 +5764,7 @@ msgstr "endre størrelse på bilde"
 msgid "misc"
 msgstr "forskjellig"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "Angrelogg: %s"
@@ -5770,7 +5773,7 @@ msgstr "Angrelogg: %s"
 msgid "[ base image ]"
 msgstr "[ basisbilde ]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Gjenopprett"
 
