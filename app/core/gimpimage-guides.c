@@ -30,9 +30,6 @@
 #include "gimp-intl.h"
 
 
-#define GUIDE_EPSILON 5
-
-
 /*  public functions  */
 
 GimpGuide *
@@ -177,7 +174,9 @@ gimp_image_move_guide (GimpImage *gimage,
 GimpGuide *
 gimp_image_find_guide (GimpImage *gimage,
                        gdouble    x,
-                       gdouble    y)
+                       gdouble    y,
+                       gdouble    epsilon_x,
+                       gdouble    epsilon_y)
 {
   GList     *list;
   GimpGuide *guide;
@@ -186,6 +185,7 @@ gimp_image_find_guide (GimpImage *gimage,
   gdouble    mindist = G_MAXDOUBLE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
   if (x < 0 || x >= gimage->width ||
       y < 0 || y >= gimage->height)
@@ -204,21 +204,27 @@ gimp_image_find_guide (GimpImage *gimage,
         {
         case GIMP_ORIENTATION_HORIZONTAL:
           dist = ABS (guide->position - y);
+          if (dist < MIN (epsilon_y, mindist))
+            {
+              mindist = dist;
+              ret = guide;
+            }
           break;
 
+        /* mindist always is in vertical resolution to make it comparable */
         case GIMP_ORIENTATION_VERTICAL:
           dist = ABS (guide->position - x);
+          if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
+            {
+              mindist = dist * epsilon_y / epsilon_x;
+              ret = guide;
+            }
           break;
 
         default:
           continue;
         }
 
-      if (dist < MIN (GUIDE_EPSILON, mindist))
-        {
-          mindist = dist;
-          ret = guide;
-        }
     }
 
   return ret;

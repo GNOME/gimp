@@ -51,6 +51,9 @@
 #include "gimp-intl.h"
 
 
+#define SNAP_WIDTH 5.0
+
+
 /*  local function prototypes  */
 
 static void   gimp_move_tool_class_init     (GimpMoveToolClass *klass);
@@ -292,7 +295,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
   else
     {
       if (gimp_display_shell_get_show_guides (shell) &&
-	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
+	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
+                                          FUNSCALEX (shell, SNAP_WIDTH),
+                                          FUNSCALEY (shell, SNAP_WIDTH))))
 	{
 	  move->guide             = guide;
           move->moving_guide      = TRUE;
@@ -564,7 +569,9 @@ gimp_move_tool_oper_update (GimpTool        *tool,
       gimp_display_shell_get_show_guides (shell)      &&
       shell->proximity)
     {
-      guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y);
+      guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
+                                     FUNSCALEX (shell, SNAP_WIDTH),
+                                     FUNSCALEY (shell, SNAP_WIDTH));
     }
 
   if (move->guide && move->guide != guide)
@@ -638,7 +645,9 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
       GimpLayer *layer;
 
       if (gimp_display_shell_get_show_guides (shell) &&
-          (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
+          (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y,
+                                          FUNSCALEX (shell, SNAP_WIDTH),
+                                          FUNSCALEY (shell, SNAP_WIDTH))))
         {
           cursor      = GDK_HAND2;
           tool_cursor = GIMP_HAND_TOOL_CURSOR;

@@ -1,5 +1,12 @@
 2004-02-13  Simon Budig  <simon@gimp.org>
 
+	* app/core/gimpimage-guides.[ch]: make a similar fix as in my
+	last commit for snapping the guides.
+	
+	* app/tools/gimpmovetool.c: use the fixed version.
+
+2004-02-13  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpimage-snap.[ch]: make the snapping width a
 	parameter of the snapping functions.
 

@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,9 @@ void        gimp_image_move_guide     (GimpImage *gimage,
 
 GimpGuide * gimp_image_find_guide     (GimpImage *gimage,
                                        gdouble    x,
-                                       gdouble    y);
+                                       gdouble    y,
+                                       gdouble    epsilon_x,
+                                       gdouble    epsilon_y);
 
 
 #endif /* __GIMP_IMAGE_GUIDES_H__ */
