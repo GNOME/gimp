@@ -17,7 +17,8 @@ libgimpmodule/gimpmodule.c
 libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c
-libgimpwidgets/gimpfileselection.c
+libgimpwidgets/gimpcolorselection.c
+libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimpmemsizeentry.c
 libgimpwidgets/gimppickbutton.c
 libgimpwidgets/gimpquerybox.c
