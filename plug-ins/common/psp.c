@@ -536,7 +536,7 @@ read_block_header (FILE    *f,
       *total_len = GUINT32_FROM_LE (len);
     }
 
-  return id;
+  return GUINT16_FROM_LE (id);
 }
 
 static gint
