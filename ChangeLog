@@ -1,3 +1,7 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpbase.def: added new symbols.
+
 2004-07-29  Michael Natterer  <mitch@gimp.org>
 
 	Added support for motion event history as provided by some input
