@@ -1,19 +1,16 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
 
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"

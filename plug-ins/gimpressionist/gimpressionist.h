@@ -1,10 +1,3 @@
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <gtk/gtk.h>
-
-#include <libgimp/gimpui.h>
 
 #define PLUG_IN_NAME "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v0.99.6, August 1999"

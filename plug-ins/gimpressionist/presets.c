@@ -1,6 +1,5 @@
 #include "config.h"
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +10,7 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
 
@@ -68,7 +68,7 @@ static void chop(char *buffer)
 
 static unsigned int hexval(char c)
 {
-  c = tolower(c);
+  c = g_ascii_tolower (c);
   if((c >= 'a') && (c <= 'f')) return c - 'a' + 10;
   if((c >= '0') && (c <= '9')) return c - '0';
   return 0;

@@ -27,7 +27,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/stdplugins-intl.h>
+#include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "imap_main.h"
@@ -36,6 +36,9 @@
 #include "imap_rectangle.h"
 #include "imap_stock.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
+
 
 static gboolean rectangle_is_valid(Object_t *obj);
 static Object_t *rectangle_clone(Object_t *obj);

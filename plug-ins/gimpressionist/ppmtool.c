@@ -1,19 +1,21 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#else
-#define HAVE_DIRENT_H
-#define HAVE_UNISTD_H
-#endif
+
 #include <stdio.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <errno.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "ppmtool.h"
 #include "gimpressionist.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 int readline(FILE *f, char *buffer, int len)

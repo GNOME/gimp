@@ -2,15 +2,15 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpressionist.h"
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include "gimpressionist.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
-#define COLORBUTTONWIDTH 30
+#define COLORBUTTONWIDTH  30
 #define COLORBUTTONHEIGHT 20
 
 GtkObject *generaldarkedgeadjust = NULL;

@@ -1,6 +1,13 @@
+#include "config.h"
+
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
 

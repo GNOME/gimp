@@ -1,13 +1,17 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+
 #include "ppmtool.h"
 #include "gimpressionist.h"
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "config.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 static void query(void);
