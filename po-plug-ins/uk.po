@@ -1830,7 +1830,7 @@ msgstr "Випадковий, незалежний в╕д каналу"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
-msgstr ""
+msgstr "Випадковий сп╕льний"
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
@@ -1838,7 +1838,7 @@ msgstr "Випадков╕ з бази"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Випадков╕ з бази (сп╕льн╕)"
 
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
@@ -1997,35 +1997,35 @@ msgstr "Тип функц╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1696
 msgid "Composition:"
-msgstr ""
+msgstr "Складання:"
 
 #: plug-ins/common/CML_explorer.c:1738
 msgid "Misc Arrange:"
-msgstr ""
+msgstr "Р╕зне впорядкування:"
 
 #: plug-ins/common/CML_explorer.c:1742
 msgid "Use Cyclic Range"
-msgstr ""
+msgstr "Цикл╕чний д╕апазон"
 
 #: plug-ins/common/CML_explorer.c:1752
 msgid "Mod. Rate:"
-msgstr ""
+msgstr "Швидк╕сть зм╕н:"
 
 #: plug-ins/common/CML_explorer.c:1761
 msgid "Env. Sensitivity:"
-msgstr ""
+msgstr "Чутлив╕ть середовища:"
 
 #: plug-ins/common/CML_explorer.c:1770
 msgid "Diffusion Dist.:"
-msgstr ""
+msgstr "Дистанц╕я дифуз╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1779
 msgid "# of Subranges:"
-msgstr ""
+msgstr "К╕льк╕сть п╕дд╕апазон╕в:"
 
 #: plug-ins/common/CML_explorer.c:1788
 msgid "P(ower Factor):"
-msgstr ""
+msgstr "Показник степен╕:"
 
 #: plug-ins/common/CML_explorer.c:1797
 msgid "Parameter k:"
@@ -2045,7 +2045,7 @@ msgstr "Накреслити краф╕к установок"
 
 #: plug-ins/common/CML_explorer.c:1880
 msgid "Ch. Sensitivity:"
-msgstr ""
+msgstr "Чутлив╕ть каналу:"
 
 #: plug-ins/common/CML_explorer.c:1890
 msgid "Mutation Rate:"
@@ -2053,7 +2053,7 @@ msgstr "Показник мутац╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1900
 msgid "Mutation Dist.:"
-msgstr ""
+msgstr "Дистанц╕я мутац╕й:"
 
 #: plug-ins/common/CML_explorer.c:1929
 msgid "Graph of the current settings"
