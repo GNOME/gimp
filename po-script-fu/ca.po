@@ -1,13 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
+# gimp-script-fu-ca translation to Catalan.
 # Copyright (C) 2000 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000
+# Softcatala <linux@softcatala.org>, 2000-2001
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.28\n"
 "POT-Creation-Date: 2001-05-21 21:12+0200\n"
-"PO-Revision-Date: 2000-10-21 21:14+0200\n"
-"Last-Translator: Quico Llach <tradgnome@softcatala.org>\n"
+"PO-Revision-Date: 2001-05-21 22:31+0200\n"
+"Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -15,12 +15,11 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-console.c:156
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr ""
+msgstr "L'Script-Fu en mode de consola només permet invocació interactiva"
 
 #: plug-ins/script-fu/script-fu-console.c:186
-#, fuzzy
 msgid "Script-Fu Console"
-msgstr "/Script-Fu"
+msgstr "Consola de l'Script-Fu"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
@@ -31,88 +30,77 @@ msgstr "Tanca"
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:207
 msgid "SIOD Output"
-msgstr ""
+msgstr "Sortida SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:290
-#, fuzzy
 msgid "Current Command"
-msgstr "Amplada actual:"
+msgstr "Ordre actual"
 
 #: plug-ins/script-fu/script-fu-console.c:309
-#, fuzzy
 msgid "Browse..."
-msgstr "Més..."
+msgstr "Navega..."
 
 #: plug-ins/script-fu/script-fu-console.c:586
-#, fuzzy
 msgid "Unable to open SIOD output pipe"
-msgstr "No es pot obrir el fitxer %s"
+msgstr "No es pot obrir el conducte de sortida SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:590
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
+msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:635
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
+msgstr "El mode d'avaluació de l'Script-Fu només permet invocació no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #: plug-ins/script-fu/script-fu-scripts.c:1212
-#, fuzzy
 msgid "/Script-Fu/"
-msgstr "/Script-Fu"
+msgstr "/Script-Fu/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1211
 #: plug-ins/script-fu/script-fu-scripts.c:1214
-#, fuzzy, c-format
 msgid "Script-Fu: %s"
-msgstr "/Script-Fu"
+msgstr "Script-Fu: %s"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1237
 msgid "Script Arguments"
-msgstr ""
+msgstr "Arguments de la seqüència"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1260
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1307
-#, fuzzy
 msgid "Script-Fu Color Selection"
-msgstr "Selecció de color"
+msgstr "Selecció de color de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1384
-#, fuzzy
 msgid "Script-Fu File Selection"
-msgstr "Selecció el·líptica"
+msgstr "Selecció de fitxer de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1419
-#, fuzzy
 msgid "Script-fu Pattern Selection"
-msgstr "Selecció de model"
+msgstr "Selecció de patró de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1426
-#, fuzzy
 msgid "Script-Fu Gradient Selection"
-msgstr "Selecció de degradat"
+msgstr "Selecció de gradació de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1434
-#, fuzzy
 msgid "Script-Fu Brush Selection"
-msgstr "Selecció del pinzell"
+msgstr "Selecció de pinzell de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1481
 msgid "Reset to Defaults"
-msgstr ""
+msgstr "Recupera els valors per defecte"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
-#, fuzzy
 msgid "About"
-msgstr "Automàtic"
+msgstr "Quant a..."
 
 #: plug-ins/script-fu/script-fu-scripts.c:1521
 #: plug-ins/script-fu/script-fu-server.c:554
@@ -126,13 +114,15 @@ msgstr "Cancel·la"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1697
 msgid "NOT SET"
-msgstr ""
+msgstr "NO DEFINIT"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1727
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
+"Almenys un dels tipus de lletra que heu triat no és vàlid.\n"
+"Si us plau, reviseu els paràmetres.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2020
 msgid "Author:"
@@ -147,14 +137,12 @@ msgid "Date:"
 msgstr "Data:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2040
-#, fuzzy
 msgid "Image Types:"
-msgstr "Tipus d'imatge"
+msgstr "Tipus d'imatge:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2203
-#, fuzzy
 msgid "Script-Fu Font Selection"
-msgstr "Selecció d'encongiment"
+msgstr "Selecció de tipus de lletra de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2271
 #, c-format
@@ -163,35 +151,37 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
+"Error de l'Script-Fu durant l'execució\n"
+" %s\n"
+"%s"
 
 #: plug-ins/script-fu/script-fu-server.c:549
-#, fuzzy
 msgid "Script-Fu Server Options"
-msgstr "Opció de les corbes"
+msgstr "Opcions del servidor de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-server.c:576
 msgid "Server Port:"
-msgstr ""
+msgstr "Port del servidor:"
 
 #: plug-ins/script-fu/script-fu-server.c:582
 msgid "Server Logfile:"
-msgstr ""
+msgstr "Fitxer de registre del servidor:"
 
 #: plug-ins/script-fu/script-fu.c:166
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr ""
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Consola..."
 
 #: plug-ins/script-fu/script-fu.c:179
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr ""
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Servidor..."
 
 #: plug-ins/script-fu/script-fu.c:1114 plug-ins/script-fu/script-fu.c:1115
 msgid "Re-read all available scripts"
-msgstr ""
+msgstr "Torna a llegir totes les seqüències disponibles"
 
 #: plug-ins/script-fu/script-fu.c:1119
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr ""
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Refresca"
 
 #~ msgid "About the GIMP"
 #~ msgstr "Quant al GIMP"
@@ -870,18 +860,6 @@ msgstr ""
 #~ msgid "Pasted Layer"
 #~ msgstr "Capa enganxada"
 
-#, fuzzy
-#~ msgid ""
-#~ "Move the selected entry up in the index\n"
-#~ "<Shift> To top"
-#~ msgstr "Mou les entrades seleccionades més amunt en l'índex"
-
-#, fuzzy
-#~ msgid ""
-#~ "Move the selected entry down in the index\n"
-#~ "<Shift> To bottom"
-#~ msgstr "Mou les entrades seleccionades més avall en l'índex"
-
 #~ msgid "Remove the selected entry from the index"
 #~ msgstr "Elimina de l'índex les entrades seleccionades"
 
@@ -1021,42 +999,14 @@ msgstr ""
 #~ "No es pot revertir.\n"
 #~ "No hi ha cap nom de fitxer associat a aquesta imatge"
 
-#, fuzzy
-#~ msgid "Revert Image?"
-#~ msgstr "Desar la imatge"
-
 #~ msgid "Yes"
 #~ msgstr "Sí"
 
 #~ msgid "No"
 #~ msgstr "No"
 
-#, fuzzy
-#~ msgid ""
-#~ "%s failed.\n"
-#~ "%s: Unknown file type."
-#~ msgstr "No es pot omplir el tipus d'imatge desconegut."
-
-#, fuzzy
-#~ msgid ""
-#~ "%s failed.\n"
-#~ "%s is not a regular file."
-#~ msgstr "%s es un fitxer irregular (%s)"
-
 #~ msgid "Open"
 #~ msgstr "Obre"
-
-#, fuzzy
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s: Unknown file type."
-#~ msgstr "No es pot omplir el tipus d'imatge desconegut."
-
-#, fuzzy
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s is not a regular file."
-#~ msgstr "%s es un fitxer irregular (%s)"
 
 #~ msgid "(This thumbnail may be out of date)"
 #~ msgstr "(És possible que aquesta miniatura sigui obsoleta)"
@@ -1203,24 +1153,8 @@ msgstr ""
 #~ msgid "No selection to stroke!"
 #~ msgstr "No hi ha res seleccionat per traçar!"
 
-#, fuzzy
-#~ msgid "Unknown brush format version #%d in \"%s\"."
-#~ msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Error in GIMP brush file \"%s\"."
-#~ msgstr "Error en el fitxer model del GIMP... avortant"
-
 #~ msgid "Unnamed"
 #~ msgstr "Sense nom"
-
-#, fuzzy
-#~ msgid "GIMP brush file appears to be truncated: \"%s\"."
-#~ msgstr "El fitxer de pinzell GIMP sembla truncat."
-
-#, fuzzy
-#~ msgid "GIMP brush file appears to be corrupted: \"%s\"."
-#~ msgstr "El fitxer de pinzell GIMP sembla truncat."
 
 #~ msgid ""
 #~ "Warning: Failed to load brush\n"
@@ -1228,28 +1162,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Advertència: No s'ha pogut carregar el pinzell\n"
 #~ "\"%s\""
-
-#, fuzzy
-#~ msgid ""
-#~ "Warning: Failed to load brush pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "Advertència: No s'ha pogut carregar el pinzell\n"
-#~ "\"%s\""
-
-#, fuzzy
-#~ msgid ""
-#~ "Brush pipes should have at least one brush:\n"
-#~ "\"%s\""
-#~ msgstr "A la paleta del pinzell n'hi hauria de haver almenys un."
-
-#, fuzzy
-#~ msgid ""
-#~ "Failed to load one of the brushes in the brush pipe\n"
-#~ "\"%s\""
-#~ msgstr ""
-#~ "No s'han pogut carregar els\n"
-#~ "pinzells a la paleta de pinzells."
 
 #~ msgid "Can't fill unknown image type."
 #~ msgstr "No es pot omplir el tipus d'imatge desconegut."
@@ -1739,10 +1651,6 @@ msgstr ""
 #~ msgid "Hue / Lightness / Saturation Adjustments"
 #~ msgstr "Color / Lluminositat / Ajustaments de la saturació"
 
-#, fuzzy
-#~ msgid "Hue:"
-#~ msgstr "Color"
-
 #~ msgid "Lightness:"
 #~ msgstr "Lluminositat:"
 
@@ -2065,10 +1973,6 @@ msgstr ""
 #~ msgid "Keep Trans."
 #~ msgstr "Deixa trans."
 
-#, fuzzy
-#~ msgid "Keep Transparency"
-#~ msgstr "Transparència"
-
 #~ msgid "Empty Layer Copy"
 #~ msgstr "Buida la còpia de la capa"
 
@@ -2179,12 +2083,6 @@ msgstr ""
 #~ msgid "Zoom out"
 #~ msgstr "Redueix el zoom"
 
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Invalid option.\n"
-#~ msgstr "Les opcions vàlides són:\n"
-
 #~ msgid "GIMP version"
 #~ msgstr "Versió del GIMP"
 
@@ -2196,10 +2094,6 @@ msgstr ""
 #~ "\n"
 #~ "Utilització: %s [opció...] [fitxers...]\n"
 #~ "\n"
-
-#, fuzzy
-#~ msgid "Options:\n"
-#~ msgstr "Operacions"
 
 #~ msgid "  -b, --batch <commands>   Run in batch mode.\n"
 #~ msgstr "  -b, --batch <instruccions> Execució en processament per lots.\n"
@@ -2366,10 +2260,6 @@ msgstr ""
 
 #~ msgid "/File/Save As..."
 #~ msgstr "/Fitxer/Anomena i desa..."
-
-#, fuzzy
-#~ msgid "/File/Revert..."
-#~ msgstr "/Fitxer/Reverteix"
 
 #~ msgid "/File/Close"
 #~ msgstr "/Fitxer/Tanca"
@@ -3111,18 +3001,6 @@ msgstr ""
 #~ msgid "No Patterns available"
 #~ msgstr "No hi ha patrons disponibles"
 
-#, fuzzy
-#~ msgid "Unknown pattern format version #%d in \"%s\"."
-#~ msgstr "Versió de format de pinzell desconeguda #%d in \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Error in GIMP pattern file \"%s\"."
-#~ msgstr "Error en el fitxer model del GIMP... avortant"
-
-#, fuzzy
-#~ msgid "GIMP pattern file appears to be truncated: \"%s\"."
-#~ msgstr "Sembla que el fitxer model del GIMP és truncat"
-
 #~ msgid "Perspective Transform Information"
 #~ msgstr "Informació de la transformació de la perspectiva"
 
@@ -3406,10 +3284,6 @@ msgstr ""
 
 #~ msgid "Disable Cursor Updating"
 #~ msgstr "Desactivar l'actualització del cursor"
-
-#, fuzzy
-#~ msgid "Tool Icon"
-#~ msgstr "Opcions d'eina"
 
 #~ msgid "Tool Options"
 #~ msgstr "Opcions d'eina"
@@ -3770,17 +3644,6 @@ msgstr ""
 
 #~ msgid "Next Tip"
 #~ msgstr "Consell següent"
-
-#, fuzzy
-#~ msgid ""
-#~ "Your GIMP tips file appears to be missing!\n"
-#~ "There should be a file called gimp_tips.txt in\n"
-#~ "the tips subdirectory of the GIMP data directory.\n"
-#~ "Please check your installation."
-#~ msgstr ""
-#~ "Sembla que s'ha perdut el fitxer on hi ha els consells del vostre GIMP!\n"
-#~ "Haurieu de tenir un fitxer anomenat gimp_tips.txt en el directori\n"
-#~ "de dades GIMP. Si us plau, comproveu la instal·lació."
 
 #~ msgid "This tool has no options."
 #~ msgstr "Aquesta eina no té opcions."
@@ -4740,19 +4603,6 @@ msgstr ""
 #~ "La instal·lació ha fallat. Poseu-vos en contacte amb l'administrador del "
 #~ "sistema."
 
-#, fuzzy
-#~ msgid ""
-#~ "GIMP uses a limited amount of memory to store image data, the so-called\n"
-#~ "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
-#~ "the amount of memory used by other running processes."
-#~ msgstr ""
-#~ "El GIMP utilitza una quantitat limitada de memòria per emmagatzemar les "
-#~ "dades\n"
-#~ "de la imatge, és la tant anomenada \"Tile Cache\". Haurieu d'ajustar\n"
-#~ "aquesta mida per ajustar-la amb la memòria. Tingueu en compte la "
-#~ "quantitat \n"
-#~ "de memòria emprada pels altres processos d'execució."
-
 #~ msgid ""
 #~ "All image and undo data which doesn't fit into the Tile Cache will be\n"
 #~ "written to a swap file. This file should be located on a local "
@@ -4771,18 +4621,6 @@ msgstr ""
 
 #~ msgid "Swap Directory:"
 #~ msgstr "Directori d'intercanvi:"
-
-#, fuzzy
-#~ msgid ""
-#~ "GIMP can obtain this information from the windowing system.\n"
-#~ "However, usually this does not give useful values."
-#~ msgstr ""
-#~ "El GIMP pot obtenir aquesta informació del teu servidor X.\n"
-#~ "Tantmateix, la majoria de servidors X no retornen valors útils."
-
-#, fuzzy
-#~ msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-#~ msgstr "Aconsegueix la resolució del servidor X (actualment, %d x %d ppp)"
 
 #~ msgid "Alternatively, you can set the monitor resolution manually."
 #~ msgstr "Altrament, podeu configurar la resolució del monitor manualment."
@@ -4819,18 +4657,6 @@ msgstr ""
 
 #~ msgid "Gamma:"
 #~ msgstr "Gamma:"
-
-#, fuzzy
-#~ msgid "High Contrast color display filter"
-#~ msgstr "Filtre de visualització de color gamma"
-
-#, fuzzy
-#~ msgid "High Contrast"
-#~ msgstr "Contrast"
-
-#, fuzzy
-#~ msgid "Contrast Cycles:"
-#~ msgstr "Contrast"
 
 #~ msgid "GTK color selector as a pluggable color selector"
 #~ msgstr "Selector de color GTK com a selector de color addicional"
@@ -4870,14 +4696,6 @@ msgstr ""
 
 #~ msgid "Failed to load pixmap brush."
 #~ msgstr "No s'ha pogut carregar el pinzell del mapa de píxels."
-
-#, fuzzy
-#~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-#~ msgstr "Versió desconeguda del GIMP #%d a \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Error loading pattern \"%s\""
-#~ msgstr "Error en obrir el fitxer: %s\n"
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Aquest fitxer no es pot pujar."
@@ -5712,3 +5530,4 @@ msgstr ""
 
 #~ msgid "The export conversion won't modify your original image."
 #~ msgstr "La conversió d'exportació no modificarà la vostra imatge original."
+
