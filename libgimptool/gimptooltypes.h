@@ -39,8 +39,6 @@ typedef struct _GimpTransformTool   GimpTransformTool;
 
 /*  functions  */
 
-typedef GimpToolOptions * (* GimpToolOptionsNewFunc) (GimpToolInfo  *tool_info);
-
 typedef void (* GimpToolOptionsResetFunc) (GimpToolOptions          *tool_options);
 
 typedef void (* GimpToolRegisterCallback) (GType                     tool_type,

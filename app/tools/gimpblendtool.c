@@ -443,13 +443,9 @@ static GimpToolOptions *
 blend_options_new (GimpToolInfo *tool_info)
 {
   BlendOptions *options;
-  GimpContext  *user_context;
-  GimpGradient *gradient;
   GtkWidget    *vbox;
   GtkWidget    *table;
   GtkWidget    *frame;
-  GtkWidget    *button;
-  GtkWidget    *preview;
 
   /*  the new blend tool options structure  */
   options = g_new0 (BlendOptions, 1);
@@ -481,7 +477,7 @@ blend_options_new (GimpToolInfo *tool_info)
   gimp_dnd_viewable_dest_set (vbox,
                               GIMP_TYPE_GRADIENT,
                               blend_options_drop_gradient,
-			      options);
+			      tool_info);
   gimp_dnd_viewable_dest_set (vbox,
                               GIMP_TYPE_TOOL_INFO,
                               blend_options_drop_tool,
@@ -506,27 +502,32 @@ blend_options_new (GimpToolInfo *tool_info)
                     &options->offset);
 
   /*  the gradient preview  */
-  user_context = gimp_get_user_context (tool_info->gimp);
-  gradient     = gimp_context_get_gradient (user_context);
+  {
+    GimpGradient *gradient;
+    GtkWidget    *button;
+    GtkWidget    *preview;
 
-  button = gtk_button_new ();
-  preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
-                                   96, 16, 0,
-                                   FALSE, FALSE, TRUE);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-  gtk_widget_show (preview);
+    gradient = gimp_context_get_gradient (tool_info->context);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Gradient:"), 1.0, 0.5,
-			     button, 2, TRUE);
+    button = gtk_button_new ();
+    preview = gimp_preview_new_full (GIMP_VIEWABLE (gradient),
+                                     96, 16, 0,
+                                     FALSE, FALSE, TRUE);
+    gtk_container_add (GTK_CONTAINER (button), preview);
+    gtk_widget_show (preview);
 
-  g_signal_connect_object (G_OBJECT (user_context), "gradient_changed",
-                           G_CALLBACK (gimp_preview_set_viewable),
-                           G_OBJECT (preview),
-                           G_CONNECT_SWAPPED);
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (blend_options_gradient_clicked),
-                    NULL);
+    gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                               _("Gradient:"), 1.0, 0.5,
+                               button, 2, TRUE);
+
+    g_signal_connect_object (G_OBJECT (tool_info->context), "gradient_changed",
+                             G_CALLBACK (gimp_preview_set_viewable),
+                             G_OBJECT (preview),
+                             G_CONNECT_SWAPPED);
+    g_signal_connect (G_OBJECT (button), "clicked",
+                      G_CALLBACK (blend_options_gradient_clicked),
+                      NULL);
+  }
 
   /*  the gradient type menu  */
   options->gradient_type_w =
@@ -677,14 +678,11 @@ blend_options_drop_gradient (GtkWidget    *widget,
 			     GimpViewable *viewable,
 			     gpointer      data)
 {
-  GimpToolOptions *tool_options;
-  GimpContext     *context;
+  GimpToolInfo *tool_info;
 
-  tool_options = (GimpToolOptions *) data;
+  tool_info = GIMP_TOOL_INFO (data);
 
-  context = gimp_get_user_context (tool_options->tool_info->gimp);
-
-  gimp_context_set_gradient (context, GIMP_GRADIENT (viewable));
+  gimp_context_set_gradient (tool_info->context, GIMP_GRADIENT (viewable));
 }
 
 static void

@@ -299,7 +299,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       core->use_pressure = TRUE;
     }
 
-  if (! gimp_paint_core_start (core, drawable, &curr_coords))
+  if (! gimp_paint_core_start (core, drawable, paint_options, &curr_coords))
     return;
 
   if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))

@@ -31,7 +31,10 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimppreview.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
 
@@ -74,6 +77,8 @@ static void   paint_options_paint_mode_update         (GtkWidget        *widget,
 static void   paint_options_paint_mode_changed        (GimpContext      *context,
 						       GimpLayerModeEffects  paint_mode,
 						       gpointer          data);
+static void   paint_options_brush_clicked             (GtkWidget        *widget, 
+                                                       gpointer          data);
 static void   paint_options_gradient_toggle_callback  (GtkWidget        *widget,
                                                        GimpPaintOptions *options);
 
@@ -109,7 +114,7 @@ paint_options_init (GimpPaintOptions *options,
   vbox = options->tool_options.main_vbox;
 
   /*  the main table  */
-  table = gtk_table_new (2, 3, FALSE);
+  table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -153,6 +158,37 @@ paint_options_init (GimpPaintOptions *options,
     {
       gtk_widget_set_sensitive (options->paint_mode_w, FALSE);
       gtk_widget_set_sensitive (mode_label, FALSE);
+    }
+
+  /*  the brush preview  */
+  if (tool_info->tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
+      tool_info->tool_type != GIMP_TYPE_BLEND_TOOL       &&
+      tool_info->tool_type != GIMP_TYPE_INK_TOOL)
+    {
+      GimpBrush *brush;
+      GtkWidget *button;
+      GtkWidget *preview;
+
+      brush = gimp_context_get_brush (options->context);
+
+      button = gtk_button_new ();
+      preview = gimp_preview_new_full (GIMP_VIEWABLE (brush),
+                                       24, 24, 0,
+                                       FALSE, TRUE, TRUE);
+      gtk_container_add (GTK_CONTAINER (button), preview);
+      gtk_widget_show (preview);
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                 _("Brush:"), 1.0, 0.5,
+                                 button, 2, TRUE);
+
+      g_signal_connect_object (G_OBJECT (options->context), "brush_changed",
+                               G_CALLBACK (gimp_preview_set_viewable),
+                               G_OBJECT (preview),
+                               G_CONNECT_SWAPPED);
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (paint_options_brush_clicked),
+                        NULL);
     }
 
   /*  a separator after the common paint options  */
@@ -645,6 +681,19 @@ paint_options_paint_mode_changed (GimpContext          *context,
 {
   gimp_option_menu_set_history (GTK_OPTION_MENU (data),
                                 GINT_TO_POINTER (paint_mode));
+}
+
+static void
+paint_options_brush_clicked (GtkWidget *widget, 
+                             gpointer   data)
+{
+  GtkWidget *toplevel;
+
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  if (GIMP_IS_DOCK (toplevel))
+    gimp_dialog_factory_dialog_raise (GIMP_DOCK (toplevel)->dialog_factory,
+                                      "gimp-brush-grid", -1); 
 }
 
 static void

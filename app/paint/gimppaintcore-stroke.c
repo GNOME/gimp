@@ -44,7 +44,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
   g_return_val_if_fail (strokes != NULL, FALSE);
   g_return_val_if_fail (n_strokes > 0, FALSE);
 
-  if (gimp_paint_core_start (core, drawable, &strokes[0]))
+  if (gimp_paint_core_start (core, drawable, paint_options, &strokes[0]))
     {
       gint i;
 
@@ -108,7 +108,7 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
   if (! coords)
     return FALSE;
 
-  if (! gimp_paint_core_start (core, drawable, &coords[0]))
+  if (! gimp_paint_core_start (core, drawable, paint_options, &coords[0]))
     {
       g_free (coords);
       return FALSE;

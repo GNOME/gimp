@@ -154,7 +154,7 @@ gimp_tool_info_finalize (GObject *object)
 
   if (tool_info->stock_id)
     {
-      g_object_unref (G_OBJECT (tool_info->stock_id));
+      g_free (tool_info->stock_id);
       tool_info->stock_id = NULL;
     }
   if (tool_info->stock_pixbuf)
@@ -273,11 +273,7 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->paint_info = paint_info;
 
   if (tool_context)
-    {
-      tool_info->context = gimp_context_new (gimp,
-                                             identifier,
-                                             context);
-    }
+    tool_info->context = gimp_context_new (gimp, identifier, context);
 
   tool_info->gimp            = gimp;
   tool_info->tool_type       = tool_type;
@@ -308,16 +304,12 @@ gimp_tool_info_set_standard (Gimp         *gimp,
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
   if (gimp->standard_tool_info)
-    {
-      g_object_unref (G_OBJECT (gimp->standard_tool_info));
-    }
+    g_object_unref (G_OBJECT (gimp->standard_tool_info));
 
   gimp->standard_tool_info = tool_info;
 
   if (gimp->standard_tool_info)
-    {
-      g_object_ref (G_OBJECT (gimp->standard_tool_info));
-    }
+    g_object_ref (G_OBJECT (gimp->standard_tool_info));
 }
 
 GimpToolInfo *

@@ -184,8 +184,6 @@ gui_themes_init (Gimp *gimp)
   gdk_rgb_set_install (gimprc.install_cmap);
 
   gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
-
-  render_setup (gimprc.transparency_type, gimprc.transparency_size);
 }
 
 const gchar *
@@ -230,11 +228,7 @@ gui_init (Gimp *gimp)
 
   color_display_init ();
 
-  /* temporatily moved to gui_themes_init() until the previews have their
-   * own render buffers
-   *
-   * render_setup (gimprc.transparency_type, gimprc.transparency_size);
-   */
+  render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
   dialogs_init (gimp);
 

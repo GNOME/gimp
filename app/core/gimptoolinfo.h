@@ -52,8 +52,11 @@ struct _GimpToolInfo
   gchar            *help_domain;
   gchar            *help_data;
 
-  const gchar      *stock_id;
+  gchar            *stock_id;
   GdkPixbuf        *stock_pixbuf;
+
+  /*  temp_hack, will be a GType once tool_options are GimpContext derived  */
+  GimpToolOptionsNewFunc  options_new_func;
 
   GimpContext      *context;
   GimpToolOptions  *tool_options;

@@ -157,6 +157,7 @@ app_init (gint    gimp_argc,
   if (! no_interface)
     {
       gui_init (the_gimp);
+      tool_manager_restore (the_gimp);
     }
 
   /*  Initialize the plug-in structures

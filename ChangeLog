@@ -1,3 +1,45 @@
+2002-06-17  Michael Natterer  <mitch@gimp.org>
+
+	Separated tool_options creation from tool registration so we
+	don't implicitly create widgets before gui_init():
+
+	* libgimptool/gimptooltypes.h: removed GimpToolOptionsNewFunc
+	typedef here...
+
+	* app/core/core-types.h: ...and added it here.
+
+	* libgimpproxy/gimpproxytypes.h: regenerated.
+
+	* app/core/gimptoolinfo.[ch]: added a GimpToolOptionsNewFunc
+	pointer to remember the constructor. Fixed the finalize() method
+	(bug was never noticed because we leaked all tool infos)
+
+	* app/tools/tool_manager.[ch]: moved tool_options creation to the
+	new function tool_manager_restore(). Unref the tool infos after
+	adding them to their container. Added "brush" and "gradient" to
+	the context properties which are defined for tool contexts.
+
+	* app/app_procs.c: call tool_manager_restore() after gui_init().
+
+	* app/gui/gui.c: removed the hack introduced recently and call
+	render_setup() in gui_init() again, not in gui_themes_init().
+
+	Use the correct contexts now that they are properly initialized
+	at the time of tool_options creation:
+
+	* app/tools/gimpblendtool.c: use tool_info->context, not
+	gimp_get_user_context() to get/set the tool's gradient.
+
+	* app/paint/gimppaintcore.[ch] (gimp_paint_core_start): added a
+	GimpPaintOptions paramater and get the brush to use from
+	paint_options->context (instead of gimp_get_current_context()).
+
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
+	* app/tools/paint_options.c: added a brush preview to the paint
+	options.
+
 2002-06-16  Michael Natterer  <mitch@gimp.org>
 
 	Fix for #85201:

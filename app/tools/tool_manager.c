@@ -59,8 +59,10 @@
 #include "libgimp/gimpintl.h"
 
 
-#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
-                           GIMP_CONTEXT_PAINT_MODE_MASK
+#define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK    | \
+                           GIMP_CONTEXT_PAINT_MODE_MASK | \
+                           GIMP_CONTEXT_BRUSH_MASK      | \
+                           GIMP_CONTEXT_GRADIENT_MASK
 
 
 typedef struct _GimpToolManager GimpToolManager;
@@ -146,6 +148,34 @@ tool_manager_init (Gimp *gimp)
     }
 
   gimp_container_thaw (gimp->tool_info_list);
+}
+
+void
+tool_manager_restore (Gimp *gimp)
+{
+  GimpToolManager *tool_manager;
+  GimpToolInfo    *tool_info;
+  GList           *list;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  tool_manager = tool_manager_get (gimp);
+
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      tool_info = GIMP_TOOL_INFO (list->data);
+
+      if (tool_info->options_new_func)
+        {
+          tool_info->tool_options = tool_info->options_new_func (tool_info);
+        }
+      else
+        {
+          tool_info->tool_options = tool_options_new (tool_info);
+        }
+    }
 }
 
 void
@@ -542,16 +572,10 @@ tool_manager_register_tool (GType                   tool_type,
 
   g_object_unref (G_OBJECT (pixbuf));
 
-  if (options_new_func)
-    {
-      tool_info->tool_options = options_new_func (tool_info);
-    }
-  else
-    {
-      tool_info->tool_options = tool_options_new (tool_info);
-    }
+  tool_info->options_new_func = options_new_func;
 
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
+  g_object_unref (G_OBJECT (tool_info));
 }
 
 GimpToolInfo *

@@ -37,8 +37,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrushpipe.h"
+#include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
@@ -48,6 +47,7 @@
 
 #include "gimppaintcore.h"
 #include "gimppaintcore-kernels.h"
+#include "gimppaintoptions.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
@@ -340,22 +340,21 @@ gimp_paint_core_paint (GimpPaintCore      *core,
 }
 
 gboolean
-gimp_paint_core_start (GimpPaintCore *core,
-		       GimpDrawable  *drawable,
-                       GimpCoords    *coords)
+gimp_paint_core_start (GimpPaintCore    *core,
+		       GimpDrawable     *drawable,
+                       GimpPaintOptions *paint_options,
+                       GimpCoords       *coords)
 {
-  GimpContext *context;
-  GimpImage   *gimage;
+  GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (paint_options != NULL, FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  context = gimp_get_current_context (gimage->gimp);
 
   core->cur_coords = *coords;
 
@@ -364,7 +363,7 @@ gimp_paint_core_start (GimpPaintCore *core,
    */
 
   if (core->grr_brush &&
-      core->grr_brush != gimp_context_get_brush (context))
+      core->grr_brush != gimp_context_get_brush (paint_options->context))
     {
       g_signal_handlers_disconnect_by_func (G_OBJECT (core->grr_brush),
                                             gimp_paint_core_invalidate_cache,
@@ -372,7 +371,7 @@ gimp_paint_core_start (GimpPaintCore *core,
       g_object_unref (G_OBJECT (core->grr_brush));
     }
 
-  core->grr_brush = gimp_context_get_brush (context);
+  core->grr_brush = gimp_context_get_brush (paint_options->context);
 
   if (! core->grr_brush)
     {
