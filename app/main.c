@@ -68,7 +68,7 @@ static char **gimp_argv;
  *      commands.
  */
 
-void
+int
 main (int argc, char **argv)
 {
   int show_version;
@@ -201,7 +201,10 @@ main (int argc, char **argv)
   install_verify (init);
 
   /* Main application loop */
-  gtk_main ();
+  if (!app_exit_finish_done ())
+    gtk_main ();
+  
+  return 0;
 }
 
 static void

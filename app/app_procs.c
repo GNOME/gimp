@@ -62,6 +62,8 @@ static void make_initialization_status_window(void);
 static void destroy_initialization_status_window(void);
 
 
+static gint is_app_exit_finish_done = FALSE;
+
 static ProcArg quit_args[] =
 {
   { PDB_INT32,
@@ -283,12 +285,18 @@ app_init ()
 
 }
 
+gint
+app_exit_finish_done (void)
+{
+  return is_app_exit_finish_done;
+}
+
 void
 app_exit_finish ()
 {
-  static gint once = 0;
-  if (once) return;
-  once = 1;
+  if (app_exit_finish_done ())
+    return;
+  is_app_exit_finish_done = TRUE;
 
   lc_dialog_free ();
   gdisplays_delete ();
@@ -328,8 +336,10 @@ app_exit (int kill_it)
   /*  If it's the user's perogative, and there are dirty images  */
   if (kill_it == 0 && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
-  else
+  else if (no_interface == FALSE)
     toolbox_free ();
+  else
+    app_exit_finish ();
 }
 
 /********************************************************
