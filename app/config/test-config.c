@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Test suite for GimpConfig.
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ main (int   argc,
   const gchar *filename = "foorc";
   gchar       *header;
   gint         i;
+  GError      *error = NULL;
 
   for (i = 1; i < argc; i++)
     {
@@ -64,44 +65,79 @@ main (int   argc,
 
   g_type_init ();
 
-  g_print ("Testing GimpConfig ...\n\n");
+  g_print ("\nTesting GimpConfig ...\n\n");
 
+  g_print (" Creating a new GimpRc object ...");
   gimprc = gimp_rc_new ();
+  g_print (" done.\n\n");
+  
+  g_print (" Adding the unknown token (foobar \"hadjaha\") ..."); 
+  gimp_config_add_unknown_token (G_OBJECT (gimprc), "foobar", "hadjaha");
+  g_print (" done.\n\n");
 
-  g_print (" Serializing %s to '%s' ... ", 
+  g_print (" Serializing %s to '%s' ...", 
            g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
-  gimp_config_serialize (G_OBJECT (gimprc), filename);
-  g_print ("done.\n\n");
+
+  if (! gimp_config_serialize (G_OBJECT (gimprc), filename, &error))
+    {
+      g_print ("%s\n", error->message);
+      return -1;
+    }
+  g_print (" done.\n\n");
 
   g_signal_connect (G_OBJECT (gimprc), "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
-  g_print (" Deserializing from '%s' ...\n", filename);
-  gimp_config_deserialize (G_OBJECT (gimprc), filename);
-
+  g_print (" Deserializing from '%s' ...\n\n", filename);
+  if (! gimp_config_deserialize (G_OBJECT (gimprc), filename, &error))
+    {
+      g_print ("%s\n", error->message);
+      return -1;
+    }
   header = "\n  Unknown string tokens:\n";
   gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
                                      output_unknown_token, &header);
+  g_print ("\n done.\n");
 
-  g_print ("\n\nChanging a property ... ");
+  g_print ("\n Changing a property ...");
   g_object_set (G_OBJECT (gimprc), "use-help", FALSE, NULL);
 
-  g_print ("\nTesting gimp_rc_duplicate() ... ");
-  gimprc2 = gimp_rc_duplicate (gimprc);
-  g_print ("done.\n");
+  g_print ("\n Testing gimp_config_duplicate() ...");
+  gimprc2 = GIMP_RC (gimp_config_duplicate (G_OBJECT (gimprc)));
+  g_print (" done.\n");
 
-  g_print ("\nTesting gimp_rc_write_changes() ... \n\n");
+  g_signal_connect (G_OBJECT (gimprc2), "notify",
+                    G_CALLBACK (notify_callback),
+                    NULL);
 
+  g_print ("\n Changing a property in the duplicate ...");
   g_object_set (G_OBJECT (gimprc2), "show-tips", FALSE, NULL);
-  gimp_rc_write_changes (gimprc2, gimprc, NULL);
 
-  g_print ("\n");
+  g_print ("\n Testing gimp_rc_write_changes() ... \n\n");
+  
+  if (! gimp_rc_write_changes (gimprc2, gimprc, NULL))
+    return -1;
+
+  g_print ("\n done.\n");
+
+  g_object_unref (G_OBJECT (gimprc2));
+
+  g_print ("\n Deserializing from gimpconfig.c (should fail) ...");
+  if (! gimp_config_deserialize (G_OBJECT (gimprc), "gimpconfig.c", &error))
+    {
+      g_print (" OK, failed. The error was:\n %s\n", error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      g_print ("This test should have failed :-(");
+      return -1;
+    }
 
   g_object_unref (G_OBJECT (gimprc));
-  g_object_unref (G_OBJECT (gimprc2));
   
-  g_print ("Done.\n\n");
+  g_print ("\nFinished test of GimpConfig.\n\n");
 
   return 0;
 }

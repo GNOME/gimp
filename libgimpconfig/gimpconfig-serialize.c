@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Object properties serialization routines
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,20 @@
 #include "gimpconfig-types.h"
 
 
+static gboolean gimp_values_equal        (const GValue *a,
+                                          const GValue *b);
+static void     serialize_unknown_token  (const gchar  *key,
+                                          const gchar  *value,
+                                          gpointer      data);
+
+
+/**
+ * gimp_config_serialize_properties:
+ * @object: a #GObject. 
+ * @fd: a file descriptor to write to.
+ * 
+ * This function writes all object properties to the file descriptor @fd.
+ **/
 void
 gimp_config_serialize_properties (GObject *object,
                                   gint     fd)
@@ -91,6 +105,92 @@ gimp_config_serialize_properties (GObject *object,
   g_string_free (str, TRUE);
 }
 
+
+/**
+ * gimp_config_serialize_properties:
+ * @new: a #GObject. 
+ * @old: a #GObject of the same type as @new. 
+ * @fd: a file descriptor to write to.
+ * 
+ * This function compares the objects @new and @old and writes all properties
+ * of @new that have different values than @old to the file descriptor @fd.
+ **/
+void
+gimp_config_serialize_changed_properties (GObject *new,
+                                          GObject *old,
+                                          gint    fd)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+  GString       *str;
+
+  g_return_if_fail (G_IS_OBJECT (new));
+  g_return_if_fail (G_IS_OBJECT (old));
+  g_return_if_fail (G_TYPE_FROM_INSTANCE (new) == G_TYPE_FROM_INSTANCE (old));
+
+  klass = G_OBJECT_GET_CLASS (new);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return;
+
+  str = g_string_new (NULL);
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec  *prop_spec;
+      GValue       new_value = { 0, };
+      GValue       old_value = { 0, };
+
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READWRITE))
+        continue;
+
+      g_value_init (&new_value, prop_spec->value_type);
+      g_value_init (&old_value, prop_spec->value_type);
+      g_object_get_property (new, prop_spec->name, &new_value);
+      g_object_get_property (old, prop_spec->name, &old_value);
+
+      if (!gimp_values_equal (&new_value, &old_value))
+        {
+          g_string_assign (str, "(");
+          g_string_append (str, prop_spec->name);
+      
+          if (gimp_config_serialize_value (&new_value, str))
+            {
+              g_string_append (str, ")\n");
+              write (fd, str->str, str->len);
+            }
+          else if (prop_spec->value_type != G_TYPE_STRING)
+            {
+              g_warning ("couldn't serialize property %s::%s of type %s",
+                         g_type_name (G_TYPE_FROM_INSTANCE (new)),
+                         prop_spec->name, 
+                         g_type_name (prop_spec->value_type));
+            }
+        }
+
+      g_value_unset (&new_value);
+      g_value_unset (&old_value);
+    }
+
+  g_free (property_specs);
+  g_string_free (str, TRUE);
+}
+
+/**
+ * gimp_config_serialize_value:
+ * @value: a #GValue.
+ * @str: a #Gstring.
+ * 
+ * This utility function appends a string representation of #GValue to @str.
+ * 
+ * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ **/
 gboolean
 gimp_config_serialize_value (const GValue *value,
                              GString      *str)
@@ -158,12 +258,14 @@ gimp_config_serialize_value (const GValue *value,
   return FALSE;
 }
 
-
-static void  serialize_unknown_token  (const gchar  *key,
-                                       const gchar  *value,
-                                       gpointer      data);
-
-
+/**
+ * gimp_config_serialize_unknown_tokens:
+ * @object: a #GObject.
+ * @fd: a file descriptor to write to.
+ * 
+ * Writes all unknown tokens attached to #object to the file descriptor @fd.
+ * See gimp_config_add_unknown_token().
+ **/
 void
 gimp_config_serialize_unknown_tokens (GObject *object,
                                       gint     fd)
@@ -189,4 +291,38 @@ serialize_unknown_token (const gchar *key,
   g_string_append_printf ((GString *) data, "(%s \"%s\")\n", key, escaped);
 
   g_free (escaped);
+}
+
+static gboolean
+gimp_values_equal (const GValue *a,
+                   const GValue *b)
+{
+  g_return_val_if_fail (G_VALUE_TYPE (a) == G_VALUE_TYPE (b), FALSE);
+
+  if (g_value_fits_pointer (a))
+    {
+      if (a->data[0].v_pointer == b->data[0].v_pointer)
+        return TRUE;
+
+      if (G_VALUE_HOLDS_STRING (a))
+        {
+          const gchar *a_str = g_value_get_string (a);
+          const gchar *b_str = g_value_get_string (b);
+
+          if (a_str && b_str)
+            return (strcmp (a_str, b_str) == 0);
+          else
+            return FALSE;
+        }
+      else
+        {
+          g_warning ("%s: Can not compare values of type %s.", 
+                     G_STRLOC, G_VALUE_TYPE_NAME (a));
+          return FALSE;
+        }
+    }
+  else
+    {
+      return (a->data[0].v_uint64 == b->data[0].v_uint64); 
+    }
 }

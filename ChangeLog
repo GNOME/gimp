@@ -1,3 +1,11 @@
+2002-03-23  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig.[ch]
+	* app/config/gimprc.[ch]
+	* app/config/test-config.c: added better error reporting using GError.
+
 2002-03-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

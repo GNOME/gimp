@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Object properties deserialization routines
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,10 +71,26 @@ static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
 
 
+/**
+ * gimp_config_deserialize_properties:
+ * @object: a #GObject.
+ * @scanner: a #GScanner.
+ * @store_unknown_tokens: %TRUE if you want to store unknown tokens.
+ * 
+ * This function uses the @scanner to configure the properties of @object.
+ *
+ * The store_unknown_tokens parameter is a special feature for #GimpRc.
+ * If it set to %TRUE, unknown tokens (e.g. tokens that don't refer to
+ * a property of @object) with string values are attached to @object as
+ * unknown tokens. GimpConfig has a couple of functions to handle the
+ * attached key/value pairs.
+ * 
+ * Return value: 
+ **/
 gboolean
-gimp_config_deserialize_properties (GObject  *object,
-                                    GScanner *scanner,
-                                    gboolean  store_unknown_tokens)
+gimp_config_deserialize_properties (GObject   *object,
+                                    GScanner  *scanner,
+                                    gboolean   store_unknown_tokens)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -148,16 +164,15 @@ gimp_config_deserialize_properties (GObject  *object,
     }
   while (token != G_TOKEN_EOF);
 
-  if (token != G_TOKEN_LEFT_PAREN && token != G_TOKEN_NONE)
+  if (next != G_TOKEN_EOF && next != token && token != G_TOKEN_NONE)
     {
       g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL, NULL, TRUE);
     }
 
   g_scanner_set_scope (scanner, old_scope_id);
 
-  return (token == G_TOKEN_EOF);
+  return (next == G_TOKEN_EOF || next == token);
 }
 
 static GTokenType
@@ -224,6 +239,7 @@ gimp_config_deserialize_property (GObject    *object,
     {
       g_object_set_property (object, prop_spec->name, &value);
     }
+#if CONFIG_DEBUG
   else
     {
       g_warning ("couldn't deserialize property %s::%s of type %s",
@@ -231,6 +247,7 @@ gimp_config_deserialize_property (GObject    *object,
                  prop_spec->name, 
                  g_type_name (prop_spec->value_type));
     }
+#endif
 
   g_value_unset (&value);
   
@@ -296,7 +313,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
       else
         {
           /* don't translate 'yes' and 'no' */
-          g_scanner_warn 
+          g_scanner_error 
             (scanner, 
              _("expected 'yes' or 'no' for boolean token %s, got '%s'"), 
              prop_spec->name, scanner->value.v_identifier);
@@ -353,9 +370,9 @@ gimp_config_deserialize_enum (GValue     *value,
       
   if (!enum_value)
     {
-      g_scanner_warn (scanner, 
-                      _("invalid value '%s' for token %s"), 
-                      scanner->value.v_identifier, prop_spec->name);
+      g_scanner_error (scanner, 
+                       _("invalid value '%s' for token %s"), 
+                       scanner->value.v_identifier, prop_spec->name);
       return G_TOKEN_NONE;
     }
 
@@ -449,9 +466,9 @@ scanner_string_utf8_valid (GScanner    *scanner,
   if (g_utf8_validate (scanner->value.v_string, -1, NULL))
     return TRUE;
 
-  g_scanner_warn (scanner, 
-                  _("value for token %s is not a valid UTF-8 string"), 
-                  token_name);
+  g_scanner_error (scanner, 
+                   _("value for token %s is not a valid UTF-8 string"), 
+                   token_name);
 
   return FALSE;
 }

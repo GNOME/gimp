@@ -48,8 +48,6 @@ struct _GimpRcClass
 
 GType     gimp_rc_get_type       (void) G_GNUC_CONST;
 GimpRc  * gimp_rc_new            (void);
-GimpRc  * gimp_rc_duplicate      (GimpRc *rc);
-
 gboolean  gimp_rc_write_changes  (GimpRc      *new_rc,
                                   GimpRc      *old_rc,
                                   const gchar *filename);

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,9 @@ static void      gimp_config_iface_serialize    (GObject  *object,
                                                  gint      fd);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner);
+static void      gimp_config_scanner_message    (GScanner *scanner,
+                                                 gchar    *message,
+                                                 gboolean  is_error);
 
 
 GType
@@ -102,15 +105,30 @@ gimp_config_iface_deserialize (GObject  *object,
   return gimp_config_deserialize_properties (object, scanner, FALSE);
 }
 
+/**
+ * gimp_config_serialize:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * @filename: the name of the file to write the configuration to.
+ * @error:
+ * 
+ * Serializes the object properties of @object to the file specified
+ * by @filename. If a file with that name already exists, it is 
+ * overwritten. Basically this function opens @filename for you and
+ * calls the serialize function of the @object's #GimpConfigInterface.
+ *
+ * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ **/
 gboolean
 gimp_config_serialize (GObject      *object,
-                       const gchar  *filename)
+                       const gchar  *filename,
+                       GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
 
@@ -118,15 +136,18 @@ gimp_config_serialize (GObject      *object,
 
   fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 
 #ifndef G_OS_WIN32
-             S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+             S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 #else
-             _S_IREAD | _S_IWRITE);
+             _S_IREAD | _S_IWRITE
 #endif
+             );
 
   if (fd == -1)
     {
-      g_message (_("Failed to open file '%s': %s"),
-                 filename, g_strerror (errno));
+      g_set_error (error, 
+                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
+                   _("Failed to open file: '%s': %s"),
+                   filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -137,9 +158,23 @@ gimp_config_serialize (GObject      *object,
   return TRUE;
 }
 
+/**
+ * gimp_config_deserialize:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * @filename: the name of the file to read configuration from.
+ * @error: 
+ * 
+ * Opens the file specified by @filename, reads configuration data
+ * from it and configures @object accordingly. Basically this function
+ * creates a properly configured #GScanner for you and calls the
+ * deserialize function of the @object's #GimpConfigInterface.
+ * 
+ * Return value: %TRUE if deserialization succeeded, %FALSE otherwise. 
+ **/
 gboolean
 gimp_config_deserialize (GObject      *object,
-                         const gchar  *filename)
+                         const gchar  *filename,
+                         GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
   gint                 fd;
@@ -148,6 +183,7 @@ gimp_config_deserialize (GObject      *object,
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
   
   gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
 
@@ -157,12 +193,19 @@ gimp_config_deserialize (GObject      *object,
 
   if (fd == -1)
     {
-      g_message (_("Failed to open file '%s': %s"),
-                 filename, g_strerror (errno));
+      g_set_error (error,
+                   GIMP_CONFIG_ERROR, 
+                   (errno == ENOENT ?
+                    GIMP_CONFIG_ERROR_FILE_ENOENT : GIMP_CONFIG_ERROR_FILE),
+                   _("Failed to open file: '%s': %s"),
+                   filename, g_strerror (errno));
       return FALSE;
     }
 
   scanner = g_scanner_new (NULL);
+
+  scanner->user_data = error;
+  scanner->msg_handler = gimp_config_scanner_message;
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
@@ -178,6 +221,31 @@ gimp_config_deserialize (GObject      *object,
   return success;
 }
 
+GQuark
+gimp_config_error_quark (void)
+{
+  static GQuark q = 0;
+  if (q == 0)
+    q = g_quark_from_static_string ("gimp-config-error-quark");
+
+  return q;
+}
+
+static void
+gimp_config_scanner_message (GScanner *scanner,
+                             gchar    *message,
+                             gboolean  is_error)
+{
+  GError **error = scanner->user_data;
+
+  /* we don't expect warnings */
+  g_return_if_fail (is_error);
+
+  g_set_error (error,
+               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+               _("Error while parsing '%s' in line %d:\n %s"), 
+               scanner->input_name, scanner->line, message);
+}
 
 /* 
  * Code to store and lookup unknown tokens (string key/value pairs).
@@ -194,6 +262,20 @@ typedef struct
 static void  gimp_config_destroy_unknown_tokens (GSList   *unknown_tokens);
 
 
+/**
+ * gimp_config_add_unknown_token:
+ * @object: a #GObject.
+ * @key: a nul-terminated string to identify the value.
+ * @value: a nul-terminated string representing the value.
+ * 
+ * This function allows to add arbitrary key/value pairs to a GObject.
+ * It's purpose is to attach additional data to a #GimpConfig object
+ * that is stored along with the object properties when serializing
+ * the object to a configuration file.
+ *
+ * If you want to remove a key/value pair from the object, call this
+ * function with a %NULL @value. 
+ **/
 void
 gimp_config_add_unknown_token (GObject     *object,
                                const gchar *key,
@@ -206,7 +288,6 @@ gimp_config_add_unknown_token (GObject     *object,
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (key != NULL);
-  g_return_if_fail (value != NULL);
 
   unknown_tokens = (GSList *) g_object_get_data (object, 
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
@@ -219,9 +300,20 @@ gimp_config_add_unknown_token (GObject     *object,
 
       if (strcmp (token->key, key) == 0)
         {
-          /* FIXME: should we emit a warning here ?? */
           g_free (token->value);
-          token->value = g_strdup (value);
+          if (value)
+            {
+              token->value = g_strdup (value);
+            }
+          else
+            {
+              g_free (token->key);
+
+              unknown_tokens = g_slist_remove (unknown_tokens, token);
+              g_object_set_data_full (object, GIMP_CONFIG_UNKNOWN_TOKENS,
+                                      unknown_tokens, 
+                     (GDestroyNotify) gimp_config_destroy_unknown_tokens);
+            }
           return;
         }
     }
@@ -244,6 +336,15 @@ gimp_config_add_unknown_token (GObject     *object,
     }
 }
 
+/**
+ * gimp_config_lookup_unknown_token:
+ * @object: a #GObject.
+ * @key: a nul-terminated string to identify the value.
+ * 
+ * This function retrieves data that was previously attached using
+ * gimp_config_add_unknown_token(). You should not free or modify
+ * the returned string.
+ **/
 const gchar *
 gimp_config_lookup_unknown_token (GObject     *object,
                                   const gchar *key)
@@ -269,6 +370,15 @@ gimp_config_lookup_unknown_token (GObject     *object,
   return NULL;
 }
 
+/**
+ * gimp_config_foreach_unknown_token:
+ * @object: a #GObject.
+ * @func: a function to call for each key/value pair.
+ * @user_data: data to pass to @func.
+ * 
+ * Calls @func for each key/value stored with the @object using
+ * gimp_config_add_unknown_token().
+ **/
 void
 gimp_config_foreach_unknown_token (GObject               *object,
                                    GimpConfigForeachFunc  func,
@@ -309,3 +419,59 @@ gimp_config_destroy_unknown_tokens (GSList *unknown_tokens)
   
   g_slist_free (unknown_tokens);
 }
+
+
+/* 
+ * Generic code useful when working with config objects.
+ */
+
+/**
+ * gimp_config_duplicate:
+ * @object: a #GObject object to duplicate.
+ * 
+ * Creates a copy of the passed object by copying all object properties.
+ * This only works for objects that are completely defined by their
+ * properties.
+ * 
+ * Return value: the duplicated #GObject.
+ **/
+GObject *
+gimp_config_duplicate (GObject *object)
+{
+  GObject       *dup;
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+
+  dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
+
+  klass = G_OBJECT_GET_CLASS (object);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return dup;
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec  *prop_spec;
+      GValue       value = { 0, };
+
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READWRITE))
+        continue;
+
+      g_value_init (&value, prop_spec->value_type);
+      
+      g_object_get_property (object,  prop_spec->name, &value);
+      g_object_set_property (dup, prop_spec->name, &value);
+    }
+
+  return dup;
+}
+
+

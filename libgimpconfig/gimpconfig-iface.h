@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,10 +32,10 @@ struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  void     (* serialize)   (GObject  *object,
-                            gint      fd);
-  gboolean (* deserialize) (GObject  *object,
-                            GScanner *scanner);
+  void     (* serialize)   (GObject   *object,
+                            gint       fd);
+  gboolean (* deserialize) (GObject   *object,
+                            GScanner  *scanner);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
@@ -45,19 +45,35 @@ typedef void  (* GimpConfigForeachFunc) (const gchar *key,
 
 GType         gimp_config_interface_get_type    (void) G_GNUC_CONST;
 
-gboolean      gimp_config_serialize             (GObject     *object,
-                                                 const gchar *filename);
-gboolean      gimp_config_deserialize           (GObject     *object,
-                                                 const gchar *filename);
+gboolean      gimp_config_serialize             (GObject      *object,
+                                                 const gchar  *filename,
+                                                 GError      **error);
+gboolean      gimp_config_deserialize           (GObject      *object,
+                                                 const gchar  *filename,
+                                                 GError      **error);
 
-void          gimp_config_add_unknown_token     (GObject     *object,
-                                                 const gchar *key,
-                                                 const gchar *value);
-const gchar * gimp_config_lookup_unknown_token  (GObject     *object,
-                                                 const gchar *key);
-void          gimp_config_foreach_unknown_token (GObject     *object,
+GObject     * gimp_config_duplicate             (GObject      *object);
+
+void          gimp_config_add_unknown_token     (GObject      *object,
+                                                 const gchar  *key,
+                                                 const gchar  *value);
+const gchar * gimp_config_lookup_unknown_token  (GObject      *object,
+                                                 const gchar  *key);
+void          gimp_config_foreach_unknown_token (GObject      *object,
                                                  GimpConfigForeachFunc  func,
-                                                 gpointer     user_data);
+                                                 gpointer      user_data);
+
+
+#define GIMP_CONFIG_ERROR (gimp_config_error_quark ())
+
+GQuark        gimp_config_error_quark (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CONFIG_ERROR_FILE_ENOENT,  /* config file does not exist      */
+  GIMP_CONFIG_ERROR_FILE,         /* config file could not be opened */
+  GIMP_CONFIG_ERROR_PARSE         /* config file could not be parsed */
+} GimpConfigError;
 
 
 #endif  /* __GIMP_CONFIG_H__ */

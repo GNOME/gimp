@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Object properties serialization routines
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,14 @@
 #define __GIMP_CONFIG_SERIALIZE_H__
 
 
-void     gimp_config_serialize_properties     (GObject      *object,
-                                               gint          fd);
-void     gimp_config_serialize_unknown_tokens (GObject      *object,
-                                               gint          fd);
-gboolean gimp_config_serialize_value          (const GValue *value,
-                                               GString      *str);
-
+void     gimp_config_serialize_properties         (GObject      *object,
+                                                   gint          fd);
+void     gimp_config_serialize_changed_properties (GObject      *new,
+                                                   GObject      *old,
+                                                   gint          fd);
+void     gimp_config_serialize_unknown_tokens     (GObject      *object,
+                                                   gint          fd);
+gboolean gimp_config_serialize_value              (const GValue *value,
+                                                   GString      *str);
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */
