@@ -13,10 +13,43 @@ static void tile_destroy (Tile *tile);
 
 int tile_count = 0;
 
+TileRowHint
+tile_get_rowhint (Tile *tile, int yoff)
+{
+#ifdef HINTS_SANITY
+  if (yoff < tile_eheight(tile) && yoff>=0)
+    {
+      return tile->rowhint[yoff];
+    }
+  else
+    g_error("GET_ROWHINT OUT OF RANGE");
+/*    return TILEROWHINT_OUTOFRANGE; */
+#else
+  return tile->rowhint[yoff];  
+#endif
+}
+
+void
+tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint)
+{
+#ifdef HINTS_SANITY
+  if (yoff < tile_eheight(tile) && yoff>=0)
+    {
+      tile->rowhint[yoff] = rowhint;
+    }
+  else
+    g_error("SET_ROWHINT OUT OF RANGE");
+#else
+  tile->rowhint[yoff] = rowhint;
+#endif
+}
+
 void
 tile_init (Tile *tile,
 	   int   bpp)
 {
+  int y;
+
   tile->ref_count = 0;
   tile->write_count = 0;
   tile->share_count = 0;
@@ -31,6 +64,12 @@ tile_init (Tile *tile,
   tile->tlink = NULL;
   tile->next = tile->prev = NULL;
   tile->listhead = NULL;
+
+  for (y=0; y<TILE_HEIGHT; y++)
+    {
+      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+    }
+
 #ifdef USE_PTHREADS
   {
     pthread_mutex_init(&tile->mutex, NULL);
@@ -101,7 +140,16 @@ tile_release (Tile *tile, int dirty)
   /* Decrement write ref count if dirtying
    */
   if (dirty)
-    tile->write_count -= 1;
+    {
+      int y;
+
+      tile->write_count -= 1;
+      
+      for (y = 0; y < tile->eheight; y++)
+	{
+	  tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+	}
+    }
 
   if (tile->ref_count == 0)
     {

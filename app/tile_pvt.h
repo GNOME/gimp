@@ -10,6 +10,7 @@
 #include <glib.h>
 
 #include "config.h"
+#include "tile.h"
 
 typedef struct _TileLink TileLink;
 
@@ -38,6 +39,9 @@ struct _Tile
 			 hold this tile */
   guint dirty : 1;    /* is the tile dirty? has it been modified? */
   guint valid : 1;    /* is the tile valid? */
+
+  /* An array of hints for rendering purposes */
+  TileRowHint rowhint[TILE_HEIGHT];
 
   guchar *data;       /* the data for the tile. this may be NULL in which
 		       *  case the tile data is on disk.

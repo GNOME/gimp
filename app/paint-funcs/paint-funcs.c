@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
@@ -36,8 +37,6 @@
 #include "tile.h"			/* ick. */
 
 #include "libgimp/gimpintl.h"
-
-#include <stdio.h>
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
@@ -130,6 +129,189 @@ static void apply_layer_mode_replace (unsigned char *, unsigned char *,
 				      unsigned char *, unsigned char *,
 				      int, int, int,
 				      int, int, int, int *);
+
+
+void
+update_tile_rowhints (Tile* tile, int ymin, int ymax)
+{
+  int bpp, ewidth, eheight;
+  int x,y;
+  guchar* ptr;
+  guchar alpha;
+  TileRowHint thishint;
+
+#ifdef HINTS_SANITY
+  g_assert(tile!=NULL);
+#endif
+
+  bpp = tile_bpp (tile);
+  ewidth = tile_ewidth (tile);
+  eheight = tile_eheight (tile);
+
+  if (bpp == 1 || bpp == 3)
+    {
+      for (y=ymin; y<=ymax; y++)
+	tile_set_rowhint (tile, y, TILEROWHINT_OPAQUE);
+
+      return;
+    }
+
+  if (bpp == 4)
+    {
+#ifdef HINTS_SANITY
+      g_assert(tile!=NULL);
+#endif
+
+      ptr = tile_data_pointer (tile, 0, ymin);
+
+#ifdef HINTS_SANITY
+      g_assert(ptr!=NULL);
+#endif
+
+      for (y = ymin; y <= ymax; y++)
+	{
+	  thishint = tile_get_rowhint (tile, y);
+
+#ifdef HINTS_SANITY
+	  if (thishint==TILEROWHINT_BROKEN)
+	    g_error("BROKEN y=%d",y);
+	  if (thishint==TILEROWHINT_OUTOFRANGE)
+	    g_error("OOR y=%d",y);
+	  if (thishint==TILEROWHINT_UNDEFINED)
+	    g_error("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
+		    y,bpp,ewidth,eheight);
+#endif
+
+#ifdef HINTS_SANITY
+	  if (thishint == TILEROWHINT_TRANSPARENT ||
+	      thishint == TILEROWHINT_MIXED ||
+	      thishint == TILEROWHINT_OPAQUE)
+	    {
+	      goto next_row4;
+	    }
+
+	  if (thishint != TILEROWHINT_UNKNOWN)
+	    {
+	      g_error("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
+		      y,bpp,ewidth,eheight);
+	    }
+#endif
+
+	  if (thishint == TILEROWHINT_UNKNOWN)
+	    {
+	      alpha = ptr[3];
+
+	      /* row is all-opaque or all-transparent? */
+	      if (alpha == 0 || alpha == 255)
+		{
+		  if (ewidth > 1)
+		    {
+		      for (x = 1; x < ewidth; x++)
+			{
+			  if (ptr[x*4 + 3] != alpha)
+			    {
+			      tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
+			      goto next_row4;
+			    }
+			}
+		    }
+		  tile_set_rowhint (tile, y,
+				    (alpha == 0) ?
+				    TILEROWHINT_TRANSPARENT :
+				    TILEROWHINT_OPAQUE);
+		}
+	      else
+		{
+		  tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
+		}
+	    }
+
+	next_row4:
+	  ptr += 4 * ewidth;
+	}
+      
+      return;
+    }
+
+  if (bpp == 2)
+    {
+#ifdef HINTS_SANITY
+      g_assert(tile!=NULL);
+#endif
+
+      ptr = tile_data_pointer (tile, 0, ymin);
+
+#ifdef HINTS_SANITY
+      g_assert(ptr!=NULL);
+#endif
+
+      for (y = ymin; y <= ymax; y++)
+	{
+	  thishint = tile_get_rowhint (tile, y);
+
+#ifdef HINTS_SANITY
+	  if (thishint==TILEROWHINT_BROKEN)
+	    g_error("BROKEN y=%d",y);
+	  if (thishint==TILEROWHINT_OUTOFRANGE)
+	    g_error("OOR y=%d",y);
+	  if (thishint==TILEROWHINT_UNDEFINED)
+	    g_error("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
+		    y,bpp,ewidth,eheight);
+#endif
+
+#ifdef HINTS_SANITY
+	  if (thishint == TILEROWHINT_TRANSPARENT ||
+	      thishint == TILEROWHINT_MIXED ||
+	      thishint == TILEROWHINT_OPAQUE)
+	    {
+	      goto next_row2;
+	    }
+
+	  if (thishint != TILEROWHINT_UNKNOWN)
+	    {
+	      g_error("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
+		      y,bpp,ewidth,eheight);
+	    }
+#endif
+
+	  if (thishint == TILEROWHINT_UNKNOWN)
+	    {
+	      alpha = ptr[1];
+
+	      /* row is all-opaque or all-transparent? */
+	      if (alpha == 0 || alpha == 255)
+		{
+		  if (ewidth > 1)
+		    {
+		      for (x = 1; x < ewidth; x++)
+			{
+			  if (ptr[x*2 + 1] != alpha)
+			    {
+			      tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
+			      goto next_row2;
+			    }
+			}
+		    }
+		  tile_set_rowhint (tile, y,
+				    (alpha == 0) ?
+				    TILEROWHINT_TRANSPARENT :
+				    TILEROWHINT_OPAQUE);
+		}
+	      else
+		{
+		  tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
+		}
+	    }
+
+	next_row2:
+	  ptr += 2 * ewidth;
+	}
+      
+      return;
+    }
+
+  g_warning ("update_tile_rowhints: Don't know about tiles with bpp==%d", bpp);
+}
 
 
 static unsigned char *
@@ -3358,10 +3540,6 @@ gaussian_blur_region (PixelRegion *srcR,
   int alpha;
   int initial_p, initial_m;
 
-  total = 0;
-  start = 0;
-  end = 0;
-
   if (radius_x == 0.0 && radius_y == 0.0) return;    /* zero blur is a no-op */
 
   /*  allocate the result buffer  */
@@ -3376,6 +3554,8 @@ gaussian_blur_region (PixelRegion *srcR,
   alpha = bytes - 1;
 
   buf = g_malloc (sizeof (int) * MAXIMUM (width, height) * 2);
+
+  total = sum[length] - sum[-length];
 
   if (radius_y != 0.0)
     {
@@ -4949,6 +5129,8 @@ combine_sub_region(struct combine_regions_struct *st,
   unsigned char * s, * s1, * s2;
   unsigned char * d, * m;
   unsigned char buf[512];
+  gboolean opacity_quickskip_possible;
+  TileRowHint hint;
 
   opacity = st->opacity;
   mode = st->mode;
@@ -4963,149 +5145,204 @@ combine_sub_region(struct combine_regions_struct *st,
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
+  /* cheap and easy when the row of src2 is completely opaque */
+  opacity_quickskip_possible = ((!m) && (opacity==255));
+
+  /*  if (src2->tiles)
+      s2 = tile_data_pointer(src2->curtile,
+      src2->offx,
+      src2->offy);*/
+
   if (src1->w > 128)
     g_error("combine_sub_region::src1->w = %d\n", src1->w);
-  for (h = 0; h < src1->h; h++)
-  {
-    s = buf;
 
-    /*  apply the paint mode based on the combination type & mode  */
-    switch (type)
+  if (src2->tiles)
     {
-     case COMBINE_INTEN_A_INDEXED_A:
-     case COMBINE_INTEN_A_CHANNEL_MASK:
-     case COMBINE_INTEN_A_CHANNEL_SELECTION:
-       combine = type;
-       break;
-
-     case COMBINE_INDEXED_INDEXED:
-     case COMBINE_INDEXED_INDEXED_A:
-     case COMBINE_INDEXED_A_INDEXED_A:
-       /*  Now, apply the paint mode--for indexed images  */
-       combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
-       break;
-
-     case COMBINE_INTEN_INTEN_A:
-     case COMBINE_INTEN_A_INTEN:
-     case COMBINE_INTEN_INTEN:
-     case COMBINE_INTEN_A_INTEN_A:
-       /*  Now, apply the paint mode  */
-       combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
-				   src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
-       break;
-
-     default:
-       g_warning ("combine_sub_region: unhandled combine-type.");
-       break;
+#ifdef HINTS_SANITY
+      if (src1->h != src2->h)
+	g_error("HEIGHTS SUCK!!");
+      if (src1->offy != dest->offy)
+	g_error("SRC1 OFFSET != DEST OFFSET");
+#endif
+      update_tile_rowhints (src2->curtile,
+			    src2->offy, src2->offy + (src1->h - 1));
     }
+  /* else it's probably a brush-composite */
 
-    /*  based on the type of the initial image...  */
-    switch (combine)
+  for (h = 0; h < src1->h; h++)
     {
-     case COMBINE_INDEXED_INDEXED:
-       combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity,
-					   affect, src1->w, src1->bytes);
-       break;
+      hint = TILEROWHINT_UNDEFINED;
 
-     case COMBINE_INDEXED_INDEXED_A:
-       combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity,
-					     affect, src1->w, src1->bytes);
-       break;
+      if (src2->tiles &&
+	  ((hint = tile_get_rowhint (src2->curtile, (src2->offy + h))) ==
+	   TILEROWHINT_TRANSPARENT))
+	{
+	  goto next_row;
+	}
+    
+      s = buf;
 
-     case COMBINE_INDEXED_A_INDEXED_A:
-       combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
-					       affect, src1->w, src1->bytes);
-       break;
+      /*  apply the paint mode based on the combination type & mode  */
+      switch (type)
+	{
+	case COMBINE_INTEN_A_INDEXED_A:
+	case COMBINE_INTEN_A_CHANNEL_MASK:
+	case COMBINE_INTEN_A_CHANNEL_SELECTION:
+	  combine = type;
+	  break;
 
-     case COMBINE_INTEN_A_INDEXED_A:
-       /*  assume the data passed to this procedure is the
-	*  indexed layer's colormap
-	*/
-       combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity,
-					     src1->w, dest->bytes);
-       break;
+	case COMBINE_INDEXED_INDEXED:
+	case COMBINE_INDEXED_INDEXED_A:
+	case COMBINE_INDEXED_A_INDEXED_A:
+	  /*  Now, apply the paint mode--for indexed images  */
+	  combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
+	  break;
 
-     case COMBINE_INTEN_A_CHANNEL_MASK:
-       /*  assume the data passed to this procedure is the
-	*  indexed layer's colormap
-	*/
-       combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity,
+	case COMBINE_INTEN_INTEN_A:
+	case COMBINE_INTEN_A_INTEN:
+	case COMBINE_INTEN_INTEN:
+	case COMBINE_INTEN_A_INTEN_A:
+	  /*  Now, apply the paint mode  */
+	  combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
+				      src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
+	  break;
+
+	default:
+	  g_warning ("combine_sub_region: unhandled combine-type.");
+	  break;
+	}
+
+
+      /*  based on the type of the initial image...  */
+      switch (combine)
+	{
+	case COMBINE_INDEXED_INDEXED:
+	  combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity,
+					      affect, src1->w,
+					      src1->bytes);
+	  break;
+	    
+	case COMBINE_INDEXED_INDEXED_A:
+	  combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity,
+						affect, src1->w,
+						src1->bytes);
+	  break;
+	    
+	case COMBINE_INDEXED_A_INDEXED_A:
+	  combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
+						  affect, src1->w,
+						  src1->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_A_INDEXED_A:
+	  /*  assume the data passed to this procedure is the
+	   *  indexed layer's colormap
+	   */
+	  combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity,
 						src1->w, dest->bytes);
-       break;
-
-     case COMBINE_INTEN_A_CHANNEL_SELECTION:
-       combine_inten_a_and_channel_selection_pixels (s1, s2, d, data, opacity,
-						     src1->w, src1->bytes);
-       break;
-
-     case COMBINE_INTEN_INTEN:
-       combine_inten_and_inten_pixels (s1, s, d, m, opacity,
-				       affect, src1->w, src1->bytes);
-       break;
-
-     case COMBINE_INTEN_INTEN_A:
-       combine_inten_and_inten_a_pixels (s1, s, d, m, opacity,
-					 affect, src1->w, src1->bytes);
-       break;
-
-     case COMBINE_INTEN_A_INTEN:
-       combine_inten_a_and_inten_pixels (s1, s, d, m, opacity,
-					 affect, mode_affect, src1->w, src1->bytes);
-       break;
-
-     case COMBINE_INTEN_A_INTEN_A:
-       combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity,
-					   affect, mode_affect, src1->w, src1->bytes);
-       break;
-
-     case BEHIND_INTEN:
-       behind_inten_pixels (s1, s, d, m, opacity,
-			    affect, src1->w, src1->bytes,
-			    src2->bytes, has_alpha1, has_alpha2);
-       break;
-
-     case BEHIND_INDEXED:
-       behind_indexed_pixels (s1, s, d, m, opacity,
-			      affect, src1->w, src1->bytes,
-			      src2->bytes, has_alpha1, has_alpha2);
-       break;
-
-     case REPLACE_INTEN:
-       replace_inten_pixels (s1, s, d, m, opacity,
-			     affect, src1->w, src1->bytes,
-			     src2->bytes, has_alpha1, has_alpha2);
-       break;
-
-     case REPLACE_INDEXED:
-       replace_indexed_pixels (s1, s, d, m, opacity,
+	  break;
+	    
+	case COMBINE_INTEN_A_CHANNEL_MASK:
+	  /*  assume the data passed to this procedure is the
+	   *  indexed layer's colormap
+	   */
+	  combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity,
+						   src1->w, dest->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_A_CHANNEL_SELECTION:
+	  combine_inten_a_and_channel_selection_pixels (s1, s2, d, data,
+							opacity,
+							src1->w,
+							src1->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_INTEN:
+	  if ((hint == TILEROWHINT_OPAQUE) &&
+	      opacity_quickskip_possible)
+	    {
+	      memcpy (d, s, dest->w * dest->bytes);
+	    }
+	  else
+	    combine_inten_and_inten_pixels (s1, s, d, m, opacity,
+					    affect, src1->w, src1->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_INTEN_A:
+	  combine_inten_and_inten_a_pixels (s1, s, d, m, opacity,
+					    affect, src1->w, src1->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_A_INTEN:
+	  combine_inten_a_and_inten_pixels (s1, s, d, m, opacity,
+					    affect, mode_affect, src1->w,
+					    src1->bytes);
+	  break;
+	    
+	case COMBINE_INTEN_A_INTEN_A:
+	  if ((hint == TILEROWHINT_OPAQUE) &&
+	      opacity_quickskip_possible)
+	    {
+	      memcpy (d, s, dest->w * dest->bytes);
+	    }
+	  else
+	    combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity,
+						affect, mode_affect,
+						src1->w, src1->bytes);
+	  break;
+	    
+	case BEHIND_INTEN:
+	  behind_inten_pixels (s1, s, d, m, opacity,
 			       affect, src1->w, src1->bytes,
 			       src2->bytes, has_alpha1, has_alpha2);
-       break;
-
-     case ERASE_INTEN:
-       erase_inten_pixels (s1, s, d, m, opacity,
-			   affect, src1->w, src1->bytes);
-       break;
-
-     case ERASE_INDEXED:
-       erase_indexed_pixels (s1, s, d, m, opacity,
-			     affect, src1->w, src1->bytes);
-       break;
-
-     case NO_COMBINATION:
-       break;
-
-     default:
-       break;
+	  break;
+	    
+	case BEHIND_INDEXED:
+	  behind_indexed_pixels (s1, s, d, m, opacity,
+				 affect, src1->w, src1->bytes,
+				 src2->bytes, has_alpha1, has_alpha2);
+	  break;
+	    
+	case REPLACE_INTEN:
+	  replace_inten_pixels (s1, s, d, m, opacity,
+				affect, src1->w, src1->bytes,
+				src2->bytes, has_alpha1, has_alpha2);
+	  break;
+	    
+	case REPLACE_INDEXED:
+	  replace_indexed_pixels (s1, s, d, m, opacity,
+				  affect, src1->w, src1->bytes,
+				  src2->bytes, has_alpha1, has_alpha2);
+	  break;
+	    
+	case ERASE_INTEN:
+	  erase_inten_pixels (s1, s, d, m, opacity,
+			      affect, src1->w, src1->bytes);
+	  break;
+	    
+	case ERASE_INDEXED:
+	  erase_indexed_pixels (s1, s, d, m, opacity,
+				affect, src1->w, src1->bytes);
+	  break;
+	    
+	case NO_COMBINATION:
+	  g_warning("NO_COMBINATION");
+	  break;
+	    
+	default:
+	  g_warning("UNKNOWN COMBINATION");
+	  break;
+	}
+    
+    next_row:
+      s1 += src1->rowstride;
+      s2 += src2->rowstride;
+      d += dest->rowstride;
+      if (mask)
+	m += mask->rowstride;
     }
-
-    s1 += src1->rowstride;
-    s2 += src2->rowstride;
-    d += dest->rowstride;
-    if (mask)
-      m += mask->rowstride;
-  }
 }
+
 
 void
 combine_regions (PixelRegion   *src1,

@@ -9,7 +9,8 @@
 #define TILE_DEBUG
 */
 
-
+/* sanity checking on new tile hinting code */
+/* #define HINTS_SANITY */
 
 #include <sys/types.h>
 #include <glib.h>
@@ -17,6 +18,17 @@
 #include "config.h"
 
 typedef struct _Tile Tile;
+
+typedef enum
+{
+  TILEROWHINT_BROKEN = 0,
+  TILEROWHINT_OPAQUE,
+  TILEROWHINT_TRANSPARENT,
+  TILEROWHINT_MIXED,
+  TILEROWHINT_OUTOFRANGE,
+  TILEROWHINT_UNDEFINED,
+  TILEROWHINT_UNKNOWN
+} TileRowHint;
 
 
 /* Initializes the fields of a tile to "good" values.
@@ -52,6 +64,10 @@ int tile_bpp (Tile *tile);
 int tile_is_valid (Tile *tile);
 
 void tile_mark_valid (Tile *tile);
+
+/* DOCUMENT ME -- adm */
+TileRowHint tile_get_rowhint (Tile *tile, int yoff);
+void tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint);
 
 void *tile_data_pointer (Tile *tile, int xoff, int yoff);
 

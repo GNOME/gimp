@@ -173,18 +173,25 @@ tile_manager_get (TileManager *tm,
 	      newtile->ewidth  = (*tile_ptr)->ewidth;
 	      newtile->eheight = (*tile_ptr)->eheight;
 	      newtile->valid   = (*tile_ptr)->valid;
+	      newtile->data    = g_new (guchar, tile_size (newtile));
+
+	      i = newtile->eheight;
+	      while (i--)
+		{
+		  newtile->rowhint[i] = (*tile_ptr)->rowhint[i];
+		}
+
 	      if ((*tile_ptr)->data != NULL) 
 		{
-		  newtile->data    = g_new (guchar, tile_size (newtile));
 		  memcpy (newtile->data, (*tile_ptr)->data, tile_size (newtile));
 		}
 	      else
 		{
 		  tile_lock (*tile_ptr);
-		  newtile->data    = g_new (guchar, tile_size (newtile));
 		  memcpy (newtile->data, (*tile_ptr)->data, tile_size (newtile));
 		  tile_release (*tile_ptr, FALSE);
 		}
+
 	      tile_detach (*tile_ptr, tm, tile_num);
 	      TILE_MUTEX_LOCK (newtile);
 	      tile_attach (newtile, tm, tile_num);

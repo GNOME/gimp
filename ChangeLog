@@ -1,3 +1,33 @@
+Sun May  9 16:23:47 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/tile.c
+	* app/tile.h
+	* app/tile_manager.c
+	* app/tile_pvt.h
+	* app/paint_funcs.c:
+
+	Added Tile Row Hinting to the GIMP tile structure.  Tiles
+	now have cheap per-row hints indicating whether each row is
+	all-transparent, all-opaque, a mixture, or other properties.
+
+	These hints are automatically invalidated when the tile is checked
+	in as dirty, and are re-evaluated on demand.
+
+	Currently only the layer compositing routines take advantage
+	of these hints, though there is opportunity to use them to
+	advantage in numerous other places.
+
+	The whole layer compositing process is typically 2x-4x faster
+	now, especially on subsequent renders of data which has already
+	had its hints calculated.
+
+	See tile.h for the explicit TileRowHint query/set interface.
+	The procedure to re-evaluate tile hints currently resides in
+	paint_funcs.c but may be exposed to other parts of the core
+	if necessary.
+
+	This is experimental.  Please report mis-rendering problems.
+
 Sat May  8 22:38:03 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* gimp1_1_splash.ppm: new splash_screen ...
