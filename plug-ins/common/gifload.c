@@ -525,13 +525,15 @@ DoExtension (FILE *fd,
       while (GetDataBlock (fd, (unsigned char *) buf) > 0)
 	{
 #ifdef FACEHUGGERS
-	  if (comment_parasite != NULL)
-	    {
-	      gimp_parasite_free (comment_parasite);
-	    }
-	    
-	  comment_parasite = gimp_parasite_new ("gimp-comment",GIMP_PARASITE_PERSISTENT,
-					    strlen(buf)+1, (void*)buf);
+          if (!g_utf8_validate (buf, -1, NULL))
+            continue;
+
+	  if (comment_parasite)
+            gimp_parasite_free (comment_parasite);
+	  
+	  comment_parasite = gimp_parasite_new ("gimp-comment",
+                                                GIMP_PARASITE_PERSISTENT,
+                                                strlen(buf) + 1, buf);
 #else
 	  if (showComment)
 	    g_print ("GIF: gif comment: %s\n", buf);

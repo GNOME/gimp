@@ -38,7 +38,7 @@
  * jpeg parameters (quaility, smoothing, compression and progressive)
  * are attached to the image as a parasite.  This allows the
  * parameters to remain consistent between saves.  I was not able to
- * figure out how to determine the quaility, smoothing or compression
+ * figure out how to determine the quality, smoothing or compression
  * values of an image as it is being loaded, but the code is there to
  * support it if anyone knows how.  Progressive mode is a method of
  * saving the image such that as a browser (or other app supporting
@@ -696,9 +696,9 @@ my_error_exit (j_common_ptr cinfo)
 }
 
 static gint32
-load_image (gchar           *filename, 
+load_image (gchar       *filename, 
 	    GimpRunMode  runmode, 
-	    gboolean         preview)
+	    gboolean     preview)
 {
   GimpPixelRgn     pixel_rgn;
   GimpDrawable    *drawable;
@@ -775,18 +775,20 @@ load_image (gchar           *filename,
   if (!preview) 
     {
       /* if we had any comments then make a parasite for them */
-      if (local_image_comments && local_image_comments->len) 
+      if (local_image_comments && local_image_comments->len)
 	{
-	  gchar *string = local_image_comments->str;
+	  gchar *comment = local_image_comments->str;
+
 	  g_string_free (local_image_comments, FALSE);
+
 	  local_image_comments = NULL;
-	  comment_parasite = gimp_parasite_new ("gimp-comment",
-						GIMP_PARASITE_PERSISTENT,
-						strlen (string) + 1, string);
-	} 
-      else 
-	{
-	  comment_parasite = NULL;
+
+          if (g_utf8_validate (comment, -1, NULL))
+            comment_parasite = gimp_parasite_new ("gimp-comment",
+                                                  GIMP_PARASITE_PERSISTENT,
+                                                  strlen (comment) + 1,
+                                                  comment);
+          g_free (comment);
 	}
       
       /* Do not attach the "jpeg-save-options" parasite to the image
@@ -1054,6 +1056,8 @@ load_image (gchar           *filename,
 	{
 	  gimp_image_parasite_attach (image_ID, comment_parasite);
 	  gimp_parasite_free (comment_parasite);
+
+          comment_parasite = NULL;
 	}
     }
 
