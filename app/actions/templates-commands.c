@@ -141,8 +141,8 @@ templates_new_template_dialog (Gimp         *gimp,
                     G_CALLBACK (templates_new_template_response),
                     dialog);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
@@ -214,8 +214,8 @@ templates_edit_template_dialog (Gimp         *gimp,
                     G_CALLBACK (templates_edit_template_response),
                     dialog);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);

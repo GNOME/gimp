@@ -422,7 +422,7 @@ image_layers_merge_query (GimpImage   *gimage,
 
                               NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);
   gtk_widget_show (frame);

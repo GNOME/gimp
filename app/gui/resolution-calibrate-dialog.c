@@ -94,7 +94,6 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 			    NULL);
 
   SET_STYLE (dialog, dialog_style);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
   screen = gtk_widget_get_screen (dialog);
 
@@ -105,7 +104,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   ruler_height = ruler_height - 300 - (ruler_height % 100);
 
   table = gtk_table_new (4, 4, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 8);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), table);
   gtk_widget_show (table);
 

@@ -170,8 +170,8 @@ gimp_message_box (const gchar *stock_id,
                     G_CALLBACK (gimp_message_box_response),
                     msg_box);
 
-  hbox = gtk_hbox_new (FALSE, 10);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
@@ -180,7 +180,7 @@ gimp_message_box (const gchar *stock_id,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 

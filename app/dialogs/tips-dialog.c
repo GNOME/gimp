@@ -142,8 +142,8 @@ tips_dialog_create (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 

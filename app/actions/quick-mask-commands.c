@@ -163,8 +163,8 @@ qmask_channel_query (GimpDisplayShell *shell)
 		     (GWeakNotify) g_free, options);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
                      hbox);
   gtk_widget_show (hbox);

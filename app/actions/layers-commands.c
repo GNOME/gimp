@@ -757,8 +757,8 @@ layers_new_layer_query (GimpImage *gimage,
 		     options);
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
@@ -971,8 +971,8 @@ layers_edit_layer_query (GimpLayer *layer,
 		     options);
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
@@ -1069,9 +1069,9 @@ layers_add_mask_query (GimpLayer *layer,
                        GtkWidget *parent)
 {
   AddMaskOptions *options;
+  GtkWidget      *vbox;
   GtkWidget      *frame;
   GtkWidget      *button;
-  GtkWidget      *sep;
   GimpImage      *gimage;
 
   /*  The new options structure  */
@@ -1104,6 +1104,12 @@ layers_add_mask_query (GimpLayer *layer,
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free, options);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
+  gtk_widget_show (vbox);
+
   frame =
     gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
                                gtk_label_new (_("Initialize Layer Mask to:")),
@@ -1114,14 +1120,8 @@ layers_add_mask_query (GimpLayer *layer,
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                    options->add_mask_type);
 
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
 
   button = gtk_check_button_new_with_mnemonic (_("In_vert Mask"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), options->invert);
@@ -1129,7 +1129,7 @@ layers_add_mask_query (GimpLayer *layer,
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->invert);
 
-  gtk_box_pack_end (GTK_BOX (GTK_BIN (frame)->child), button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   gtk_widget_show (options->query_box);

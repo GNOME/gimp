@@ -135,8 +135,8 @@ module_browser_new (Gimp *gimp)
                     G_CALLBACK (browser_response),
                     browser);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
   gtk_widget_show (vbox);
 

@@ -603,9 +603,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
                     gimprc);
 
   g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
-
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
-
   eek_box = gtk_hbox_new (FALSE, 8);
 
   g_object_ref (GTK_DIALOG (dialog)->action_area);

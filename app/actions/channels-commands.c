@@ -367,8 +367,8 @@ channels_new_channel_query (GimpImage   *gimage,
                     options);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 
@@ -530,8 +530,8 @@ channels_edit_channel_query (GimpChannel *channel,
                     options);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 

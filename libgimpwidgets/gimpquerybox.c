@@ -155,8 +155,8 @@ create_query_box (const gchar   *title,
     {
       GtkWidget *image;
 
-      hbox = gtk_hbox_new (FALSE, 10);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
+      hbox = gtk_hbox_new (FALSE, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
                          hbox);
       gtk_widget_show (hbox);
@@ -167,7 +167,7 @@ create_query_box (const gchar   *title,
       gtk_widget_show (image);
     }
 
-  query_box->vbox = gtk_vbox_new (FALSE, 6);
+  query_box->vbox = gtk_vbox_new (FALSE, 12);
 
   g_object_set_data (G_OBJECT (query_box->qbox), "gimp-query-box-vbox",
                      query_box->vbox);
@@ -178,7 +178,7 @@ create_query_box (const gchar   *title,
     }
   else
     {
-      gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 10);
+      gtk_container_set_border_width (GTK_CONTAINER (query_box->vbox), 12);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox),
                          query_box->vbox);
     }

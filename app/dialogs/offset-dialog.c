@@ -125,7 +125,7 @@ offset_dialog_new (GimpDrawable *drawable,
                     off_d);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (off_d->dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
