@@ -20,14 +20,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"POT-Creation-Date: 2004-05-12 22:17+0200\n"
-"PO-Revision-Date: 2004-05-17 09:56+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-05-17 10:00+0200\n"
+"PO-Revision-Date: 2004-05-17 10:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -47,7 +47,10 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr "Impossibile aprire un file di scambio di prova. Per evitare di perdere dati controllare la locazione ed i permessi della cartella di scambio nelle preferenze (attualmente è \"%s\")."
+msgstr ""
+"Impossibile aprire un file di scambio di prova. Per evitare di perdere dati "
+"controllare la locazione ed i permessi della cartella di scambio nelle "
+"preferenze (attualmente è \"%s\")."
 
 #: app/app_procs.c:283 app/core/gimppalette-import.c:391
 #, c-format
@@ -753,7 +756,7 @@ msgstr "_Modifica"
 msgid "Buffer"
 msgstr "Buffer"
 
-#: app/actions/edit-actions.c:67 app/actions/edit-actions.c:236
+#: app/actions/edit-actions.c:67 app/actions/edit-actions.c:235
 msgid "_Undo"
 msgstr "Ann_ulla"
 
@@ -762,7 +765,7 @@ msgstr "Ann_ulla"
 msgid "Undo"
 msgstr "Annulla"
 
-#: app/actions/edit-actions.c:73 app/actions/edit-actions.c:237
+#: app/actions/edit-actions.c:73 app/actions/edit-actions.c:236
 msgid "_Redo"
 msgstr "_Ripeti"
 
@@ -826,12 +829,12 @@ msgstr "Riempi con colore di _sfondo"
 msgid "Fill with P_attern"
 msgstr "Riempi con il _motivo"
 
-#: app/actions/edit-actions.c:227
+#: app/actions/edit-actions.c:220
 #, c-format
 msgid "_Undo %s"
 msgstr "Ann_ulla %s"
 
-#: app/actions/edit-actions.c:232
+#: app/actions/edit-actions.c:225
 #, c-format
 msgid "_Redo %s"
 msgstr "_Ripeti %s"
@@ -1453,7 +1456,9 @@ msgstr "Ridimensionamento..."
 
 #: app/actions/image-commands.c:470
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr "Errore di ridimensionamento: sia la larghezza che l'altezza devono essere maggiori di zero."
+msgstr ""
+"Errore di ridimensionamento: sia la larghezza che l'altezza devono essere "
+"maggiori di zero."
 
 #: app/actions/image-commands.c:507
 #, c-format
@@ -1471,7 +1476,8 @@ msgstr ""
 "Segliere OK per creare comunque l'immagine.\n"
 "Segliere Cancella se non intendete creare un'immagine così ampia.\n"
 "\n"
-"Per evitare questa finestra di dialogo, aumentate la \"Massima dimensione immagine\" (attualmente %s) nelle finestra preferenze."
+"Per evitare questa finestra di dialogo, aumentate la \"Massima dimensione "
+"immagine\" (attualmente %s) nelle finestra preferenze."
 
 #: app/actions/image-commands.c:519
 msgid "Image exceeds maximum image size"
@@ -1545,7 +1551,7 @@ msgstr "_Livello"
 msgid "Stac_k"
 msgstr "_Pila"
 
-#: app/actions/layers-actions.c:50 app/actions/plug-in-actions.c:62
+#: app/actions/layers-actions.c:50 app/actions/plug-in-actions.c:64
 msgid "_Colors"
 msgstr "_Colori"
 
@@ -1704,6 +1710,7 @@ msgid "Layer _Name:"
 msgstr "_Nome livello:"
 
 #. The size labels
+#. the image size labels
 #: app/actions/layers-commands.c:776 app/tools/gimpcroptool.c:1036
 #: app/tools/gimpselectionoptions.c:566 app/widgets/gimptemplateeditor.c:226
 msgid "Width:"
@@ -1901,100 +1908,100 @@ msgstr "Aggio_rna motivi"
 msgid "Refresh patterns"
 msgstr "Aggiorna motivi"
 
-#: app/actions/plug-in-actions.c:60
+#: app/actions/plug-in-actions.c:62
 msgid "Filte_rs"
 msgstr "Filt_ri"
 
-#: app/actions/plug-in-actions.c:61
+#: app/actions/plug-in-actions.c:63
 msgid "_Blur"
 msgstr "Sf_umata"
 
-#: app/actions/plug-in-actions.c:63
+#: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
 msgstr "Ma_ppa"
 
-#: app/actions/plug-in-actions.c:64
+#: app/actions/plug-in-actions.c:66
 msgid "_Noise"
 msgstr "_Rumore"
 
-#: app/actions/plug-in-actions.c:65
+#: app/actions/plug-in-actions.c:67
 msgid "Edge-De_tect"
 msgstr "Rilievo _bordi"
 
-#: app/actions/plug-in-actions.c:66
+#: app/actions/plug-in-actions.c:68
 msgid "En_hance"
 msgstr "_Incremento"
 
-#: app/actions/plug-in-actions.c:67
+#: app/actions/plug-in-actions.c:69
 msgid "_Generic"
 msgstr "_Generico"
 
-#: app/actions/plug-in-actions.c:68
+#: app/actions/plug-in-actions.c:70
 msgid "Gla_ss Effects"
 msgstr "Effetti _vetro"
 
-#: app/actions/plug-in-actions.c:69
+#: app/actions/plug-in-actions.c:71
 msgid "_Light Effects"
 msgstr "Effetti _luce"
 
-#: app/actions/plug-in-actions.c:70
+#: app/actions/plug-in-actions.c:72
 msgid "_Distorts"
 msgstr "_Distorsioni"
 
-#: app/actions/plug-in-actions.c:71
+#: app/actions/plug-in-actions.c:73
 msgid "_Artistic"
 msgstr "_Artistici"
 
-#: app/actions/plug-in-actions.c:72
+#: app/actions/plug-in-actions.c:74
 msgid "_Map"
 msgstr "_Mappa"
 
-#: app/actions/plug-in-actions.c:73
+#: app/actions/plug-in-actions.c:75
 msgid "_Render"
 msgstr "_Render"
 
-#: app/actions/plug-in-actions.c:74
+#: app/actions/plug-in-actions.c:76
 msgid "_Clouds"
 msgstr "N_uvole"
 
-#: app/actions/plug-in-actions.c:75
+#: app/actions/plug-in-actions.c:77
 msgid "_Nature"
 msgstr "_Natura"
 
-#: app/actions/plug-in-actions.c:76 app/gui/preferences-dialog.c:1389
+#: app/actions/plug-in-actions.c:78 app/gui/preferences-dialog.c:1389
 msgid "_Pattern"
 msgstr "_Motivo"
 
-#: app/actions/plug-in-actions.c:77
+#: app/actions/plug-in-actions.c:79
 msgid "_Web"
 msgstr "_Web"
 
-#: app/actions/plug-in-actions.c:78
+#: app/actions/plug-in-actions.c:80
 msgid "An_imation"
 msgstr "An_imazione"
 
-#: app/actions/plug-in-actions.c:79
+#: app/actions/plug-in-actions.c:81
 msgid "C_ombine"
 msgstr "C_ombina"
 
-#: app/actions/plug-in-actions.c:80
+#: app/actions/plug-in-actions.c:82
 msgid "To_ys"
 msgstr "_Giocattoli"
 
-#: app/actions/plug-in-actions.c:86 app/actions/plug-in-actions.c:241
+#: app/actions/plug-in-actions.c:88 app/actions/plug-in-actions.c:243
 msgid "Repeat Last"
 msgstr "Ripeti ultimo"
 
-#: app/actions/plug-in-actions.c:91 app/actions/plug-in-actions.c:243
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:245
 msgid "Re-Show Last"
 msgstr "Ri-mostra ultimo"
 
-#: app/actions/plug-in-actions.c:217
+#: app/actions/plug-in-actions.c:219
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ripeti \"%s\""
 
-#: app/actions/plug-in-actions.c:218
+#: app/actions/plug-in-actions.c:220
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "/Ri-mostra \"%s\""
@@ -2283,8 +2290,8 @@ msgid "Enter a name for the saved options"
 msgstr "Inserisci un nome per le opzioni salvate"
 
 #: app/actions/tool-options-commands.c:76
-#: app/actions/tool-options-commands.c:206
-#: app/actions/tool-options-commands.c:226
+#: app/actions/tool-options-commands.c:239
+#: app/actions/tool-options-commands.c:259
 msgid "Saved Options"
 msgstr "Opzioni salvate"
 
@@ -2295,6 +2302,15 @@ msgstr "Rinomina le opzioni salvate"
 #: app/actions/tool-options-commands.c:148
 msgid "Enter a new name for the saved options"
 msgstr "Crea un nuovo nome per le opzioni salvate"
+
+#: app/actions/tool-options-commands.c:213
+msgid "Reset Tool Options"
+msgstr "Reimposta le opzioni strumenti"
+
+#: app/actions/tool-options-commands.c:218
+msgid "Do you really want to reset all tool options to default values?"
+msgstr ""
+"Sicuri di voler reimpostare tutte le opzioni strumenti ai valori predefiniti?"
 
 #: app/actions/tools-actions.c:46
 msgid "Tools Menu"
@@ -2441,6 +2457,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/actions/vectors-commands.c:512 app/actions/vectors-commands.c:630
 msgid "Path name:"
 msgstr "Nome tracciato:"
@@ -2686,13 +2703,18 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Impossibile aprire il file di scambio. Gimp ha terminato la memoria disponibile e non può usare il file di scambio. Alcune parti dell'immagine potrebbero essere rovinate. Provate a salvare il vostro lavoro usando un nome differente, quindi riavviate Gimp e controllate la locazione del file di scambio nelle preferenze."
+msgstr ""
+"Impossibile aprire il file di scambio. Gimp ha terminato la memoria "
+"disponibile e non può usare il file di scambio. Alcune parti dell'immagine "
+"potrebbero essere rovinate. Provate a salvare il vostro lavoro usando un "
+"nome differente, quindi riavviate Gimp e controllate la locazione del file "
+"di scambio nelle preferenze."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
 #: app/core/gimp-units.c:169 app/gui/session.c:145
-#: app/plug-in/plug-in-rc.c:167
+#: app/plug-in/plug-in-rc.c:172
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
@@ -2732,7 +2754,7 @@ msgstr "Impossibile espandere $(%s)"
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
 #: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:434
-#: app/xcf/xcf.c:279
+#: app/xcf/xcf.c:281
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire '%s' in lettura: %s"
@@ -2741,7 +2763,7 @@ msgstr "Impossibile aprire '%s' in lettura: %s"
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:546 app/vectors/gimpvectors-export.c:83
-#: app/xcf/xcf.c:337
+#: app/xcf/xcf.c:339
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire '%s' in scrittura: %s"
@@ -2819,7 +2841,9 @@ msgid ""
 "When enabled, an image will become the active image when its image window "
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
-msgstr "Se abilitata, un'immagine diventa attiva se la sua finestra riceve il focus. Utile per i gestori di finestre che usano il \"focus con clic\"."
+msgstr ""
+"Se abilitata, un'immagine diventa attiva se la sua finestra riceve il focus. "
+"Utile per i gestori di finestre che usano il \"focus con clic\"."
 
 #: app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
@@ -2853,7 +2877,9 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "Se abilitata, assicura che ogni punto di un'immagine sia mappato su di un punto sullo schermo."
+msgstr ""
+"Se abilitata, assicura che ogni punto di un'immagine sia mappato su di un "
+"punto sullo schermo."
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -2886,15 +2912,18 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr "Se abilitata, il pennello selezionato verrà usato per tutti gli strumenti."
+msgstr ""
+"Se abilitata, il pennello selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
+msgstr ""
+"Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr "Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
+msgstr ""
+"Se abilitata, il gradiente selezionato verrà usato per tutti gli strumenti."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -2911,13 +2940,17 @@ msgstr "Imposta il testo che appare nei titoli della finestra immagine"
 
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr "Se abilitata, GIMP userà una finestra informazioni diversa per ogni finestra immagine."
+msgstr ""
+"Se abilitata, GIMP userà una finestra informazioni diversa per ogni finestra "
+"immagine."
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "Se abilitata, garantirà che la piena immagine sia visibile dopo che il file è stato aperto, altrimenti sarà visualizzato con scala 1:1."
+msgstr ""
+"Se abilitata, garantirà che la piena immagine sia visibile dopo che il file "
+"è stato aperto, altrimenti sarà visualizzato con scala 1:1."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -2984,14 +3017,22 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "Se abilitata, il server X verrà interrogato per la posizione corrente del mouse ad ogni evento di moto invece che affidarsi ai suggerimenti di posizione. Ciò significa che il disegno con pennelli grandi sarà più accurato ma più lento. Per assurdo, su alcuni server X è possibile che il disegno venga accelerato."
+msgstr ""
+"Se abilitata, il server X verrà interrogato per la posizione corrente del "
+"mouse ad ogni evento di moto invece che affidarsi ai suggerimenti di "
+"posizione. Ciò significa che il disegno con pennelli grandi sarà più "
+"accurato ma più lento. Per assurdo, su alcuni server X è possibile che il "
+"disegno venga accelerato."
 
 #: app/config/gimprc-blurbs.h:234
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr "Imposta se GIMP debba creare delle anteprime di livelli e canali. Le anteprime nelle finestre dei livelli e canali sono utili ma possono rallentare se si lavora con immagini molto grandi."
+msgstr ""
+"Imposta se GIMP debba creare delle anteprime di livelli e canali. Le "
+"anteprime nelle finestre dei livelli e canali sono utili ma possono "
+"rallentare se si lavora con immagini molto grandi."
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
@@ -3001,13 +3042,17 @@ msgstr "Imposta l'ampiezza dell'anteprima per livelli e canali."
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se l'ampiezza fisica dell'immagine cambia."
+msgstr ""
+"Se abilitata, la finestra immagine verrà automaticamente ridimensionata se "
+"l'ampiezza fisica dell'immagine cambia."
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se si fa zoom su di un'immagine."
+msgstr ""
+"Se abilitata, la finestra immagine verrà automaticamente ridimensionata se "
+"si fa zoom su di un'immagine."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3030,55 +3075,74 @@ msgstr ""
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr "Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del profilo del pennello corrente."
+msgstr ""
+"Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del "
+"profilo del pennello corrente."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
-msgstr "Se abilitata, la barra dei menu è visibile. Questo può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr ""
+"Se abilitata, la barra dei menu è visibile. Questo può essere modificato "
+"anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:271
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
-msgstr "Se abilitata, i righelli sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra i righelli\""
+msgstr ""
+"Se abilitata, i righelli sono visibili. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra i righelli\""
 
 #: app/config/gimprc-blurbs.h:275
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
-msgstr "Se abilitata, le barre di scorrimento sono visibili. Questo comportamento può essere modificato con il comando \"Visualizza->Mostra le barre di scorrimento\"."
+msgstr ""
+"Se abilitata, le barre di scorrimento sono visibili. Questo comportamento "
+"può essere modificato con il comando \"Visualizza->Mostra le barre di "
+"scorrimento\"."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
-msgstr "Se abilitata, la barra di stato è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
+msgstr ""
+"Se abilitata, la barra di stato è visibile. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra barra di stato\"."
 
 #: app/config/gimprc-blurbs.h:283
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
-msgstr "Se abilitata, la selezione è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra selezione\"."
+msgstr ""
+"Se abilitata, la selezione è visibile. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra selezione\"."
 
 #: app/config/gimprc-blurbs.h:287
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr "Se abilitata, il bordo dei livelli è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr ""
+"Se abilitata, il bordo dei livelli è visibile. Questo comportamento può "
+"essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
 
 #: app/config/gimprc-blurbs.h:291
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr "Se abilitata, le guide sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra le guide\"."
+msgstr ""
+"Se abilitata, le guide sono visibili. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra le guide\"."
 
 #: app/config/gimprc-blurbs.h:295
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr "Se abilitata, la griglia è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Mostra la griglia\"."
+msgstr ""
+"Se abilitata, la griglia è visibile. Questo comportamento può essere "
+"modificato anche con il comando \"Visualizza->Mostra la griglia\"."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
@@ -3123,7 +3187,9 @@ msgstr "Se abilitata, i menu possono essere staccati."
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
-msgstr "Se abilitata, è possibile cambiare i tasti scorciatoia per le voci di menu premendo una combinazione di tasti mentre la voce del menu è selezionata."
+msgstr ""
+"Se abilitata, è possibile cambiare i tasti scorciatoia per le voci di menu "
+"premendo una combinazione di tasti mentre la voce del menu è selezionata."
 
 #: app/config/gimprc-blurbs.h:326
 msgid "Save changed keyboard shortcuts when the GIMP exits."
@@ -4472,49 +4538,49 @@ msgstr "Il tracciato è già in fondo."
 msgid "Lower Path to Bottom"
 msgstr "Abbassa tracciato in fondo"
 
-#: app/core/gimpimagefile.c:457
+#: app/core/gimpimagefile.c:464
 msgid "Remote image"
 msgstr "Immagine remota"
 
-#: app/core/gimpimagefile.c:462 app/gui/preferences-dialog.c:1244
+#: app/core/gimpimagefile.c:469 app/gui/preferences-dialog.c:1244
 msgid "Folder"
 msgstr "Cartella"
 
-#: app/core/gimpimagefile.c:467
+#: app/core/gimpimagefile.c:474
 msgid "Special File"
 msgstr "File speciale"
 
-#: app/core/gimpimagefile.c:494
+#: app/core/gimpimagefile.c:501
 msgid "No preview available"
 msgstr "Anteprima non disponibile"
 
-#: app/core/gimpimagefile.c:498
+#: app/core/gimpimagefile.c:505
 msgid "Loading preview ..."
 msgstr "Caricamento anteprima ..."
 
-#: app/core/gimpimagefile.c:502
+#: app/core/gimpimagefile.c:509
 msgid "Preview is out of date"
 msgstr "L'anteprima non è aggiornata"
 
-#: app/core/gimpimagefile.c:506
+#: app/core/gimpimagefile.c:513
 msgid "Cannot create preview"
 msgstr "Impossibile creare l'anteprima"
 
-#: app/core/gimpimagefile.c:513 app/gui/info-window.c:495
+#: app/core/gimpimagefile.c:520 app/gui/info-window.c:495
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixel"
 
-#: app/core/gimpimagefile.c:528
+#: app/core/gimpimagefile.c:535
 msgid "1 Layer"
 msgstr "Livello 1"
 
-#: app/core/gimpimagefile.c:530
+#: app/core/gimpimagefile.c:537
 #, c-format
 msgid "%d Layers"
 msgstr "%d livelli"
 
-#: app/core/gimpimagefile.c:571
+#: app/core/gimpimagefile.c:578
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
@@ -4580,7 +4646,8 @@ msgstr ""
 
 #: app/core/gimplayer.c:978
 msgid "Cannot add layer mask to a layer with no alpha channel."
-msgstr "Impossibile aggiungere una maschera livello ad un livello senza canale alfa."
+msgstr ""
+"Impossibile aggiungere una maschera livello ad un livello senza canale alfa."
 
 #: app/core/gimplayer.c:988
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -4652,7 +4719,6 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -4873,21 +4939,21 @@ msgstr "/Come in _preferenze"
 msgid "Toggle QuickMask"
 msgstr "Abilita/disabilita quickmask"
 
-#: app/display/gimpdisplayshell.c:1388
+#: app/display/gimpdisplayshell.c:1387
 #, c-format
 msgid "Close %s?"
 msgstr "Chiudere %s?"
 
-#: app/display/gimpdisplayshell.c:1398
+#: app/display/gimpdisplayshell.c:1397
 msgid "_Discard changes"
 msgstr "_Annulla i cambiamenti"
 
-#: app/display/gimpdisplayshell.c:1438
+#: app/display/gimpdisplayshell.c:1437
 #, c-format
 msgid "Changes were made to '%s'."
 msgstr "Sono stati effettuati cambiamenti su '%s'."
 
-#: app/display/gimpdisplayshell.c:1452
+#: app/display/gimpdisplayshell.c:1451
 msgid "Unsaved changes will be lost."
 msgstr "I cambiamenti non salvati saranno persi."
 
@@ -4993,23 +5059,23 @@ msgstr "Attendere..."
 msgid "Cancel"
 msgstr "Cancella"
 
-#: app/file/file-open.c:93 app/file/file-save.c:123
+#: app/file/file-open.c:95 app/file/file-save.c:123
 msgid "Unknown file type"
 msgstr "Tipo di file sconosciuto"
 
-#: app/file/file-open.c:108 app/file/file-save.c:137
+#: app/file/file-open.c:110 app/file/file-save.c:137
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
-#: app/file/file-open.c:169
+#: app/file/file-open.c:174
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Il plug-in è ritornato con successo ma non ha restituito un'immagine"
 
-#: app/file/file-open.c:177
+#: app/file/file-open.c:182
 msgid "Plug-In could not open image"
 msgstr "Il plug-in non può aprire l'immagine"
 
-#: app/file/file-save.c:215
+#: app/file/file-save.c:216
 msgid "Plug-In could not save image"
 msgstr "Il plug-in non può salvare l'immagine"
 
@@ -5120,8 +5186,10 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Si sta tentando di convertire un'immagine con un canale alfa a colori indicizzati.\n"
-"Non usare una palette con più di 255 colori si desidera creare un file GIF trasparente o con animazione da questo formato."
+"Si sta tentando di convertire un'immagine con un canale alfa a colori "
+"indicizzati.\n"
+"Non usare una palette con più di 255 colori si desidera creare un file GIF "
+"trasparente o con animazione da questo formato."
 
 #: app/gui/convert-dialog.c:475
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -5265,7 +5333,8 @@ msgstr ""
 "Segliere OK per creare questa immagine comunque.\n"
 "Segliere Cancella se non intendete creare un immagine così ampia.\n"
 "\n"
-"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione immagine\" (attualmente %s) nelle finestra preferenze."
+"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione "
+"immagine\" (attualmente %s) nelle finestra preferenze."
 
 #: app/gui/file-new-dialog.c:274
 msgid "Confirm Image Size"
@@ -6316,6 +6385,7 @@ msgid "Current Height:"
 msgstr "Altezza corrente:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:317 app/gui/resize-dialog.c:572
 msgid "New Width:"
 msgstr "Nuova larghezza:"
@@ -6355,6 +6425,7 @@ msgid "Y Resolution:"
 msgstr "Risoluzione Y:"
 
 #: app/gui/resize-dialog.c:659 app/widgets/gimptemplateeditor.c:351
+#, c-format
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
@@ -6411,7 +6482,7 @@ msgstr "Disegno con uno strumento"
 msgid "Paint Tool:"
 msgstr "Strumento di disegno:"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:254
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Scrittura di '%s'\n"
@@ -7141,8 +7212,8 @@ msgstr "Versione di GIMP"
 msgid "Temporary Procedure"
 msgstr "Procedure temporanee"
 
-#: app/pdb/selection_tools_cmds.c:329 app/tools/gimpfreeselecttool.c:97
-#: app/tools/tools-enums.c:53
+#: app/pdb/selection_tools_cmds.c:329 app/tools/tools-enums.c:53
+#: app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
 msgstr "Selezione libera"
 
@@ -7162,7 +7233,7 @@ msgstr ""
 "di GIMP. Dovreste salvare le immagini e riavviare il programma per\n"
 "maggior sicurezza."
 
-#: app/plug-in/plug-in-rc.c:160
+#: app/plug-in/plug-in-rc.c:165
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Salto di '%s': versione protocollo GIMP errata."
@@ -7178,26 +7249,26 @@ msgstr "Configurazione risorse"
 msgid "Querying new Plug-ins"
 msgstr "Interrogazione nuovi plug-in"
 
-#: app/plug-in/plug-ins.c:168
+#: app/plug-in/plug-ins.c:166
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Interrogazione plug-in: '%s'\n"
 
 #. initialize the plug-ins
-#: app/plug-in/plug-ins.c:178
+#: app/plug-in/plug-ins.c:176
 msgid "Initializing Plug-ins"
 msgstr "Inizializzazione plug-in"
 
-#: app/plug-in/plug-ins.c:194
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Inizializzazione plug-in: '%s'\n"
 
-#: app/plug-in/plug-ins.c:352
+#: app/plug-in/plug-ins.c:338
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
-#: app/plug-in/plug-ins.c:361
+#: app/plug-in/plug-ins.c:345
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Avvio estensioni: '%s'\n"
@@ -7351,7 +7422,7 @@ msgstr "Progetta"
 msgid "Edit"
 msgstr "Modifica"
 
-#: app/tools/gimpmovetool.c:109 app/tools/tools-enums.c:95
+#: app/tools/tools-enums.c:95 app/tools/gimpmovetool.c:109
 msgid "Move"
 msgstr "Muovi"
 
@@ -8527,7 +8598,7 @@ msgid "Supersampling"
 msgstr "Supercampionamento"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptr
+#: app/tools/gimptransformoptions.c:358
 msgid "Clip Result"
 msgstr "Aggancia risultato"
 
@@ -8936,11 +9007,11 @@ msgstr "Nero:"
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/widgets/gimpcolormapeditor.c:226 app/widgets/gimppaletteeditor.c:305
+#: app/widgets/gimpcolormapeditor.c:236 app/widgets/gimppaletteeditor.c:305
 msgid "Edit Color"
 msgstr "Modifica colore"
 
-#: app/widgets/gimpcolormapeditor.c:232
+#: app/widgets/gimpcolormapeditor.c:242
 #, c-format
 msgid ""
 "Add Color from FG\n"
@@ -8949,19 +9020,19 @@ msgstr ""
 "Aggiungi colore dal PP\n"
 "%s  dallo SF"
 
-#: app/widgets/gimpcolormapeditor.c:383
+#: app/widgets/gimpcolormapeditor.c:396
 msgid "Color Index:"
 msgstr "Indice dei colori:"
 
-#: app/widgets/gimpcolormapeditor.c:394
+#: app/widgets/gimpcolormapeditor.c:407
 msgid "He_x Triplet:"
 msgstr "Esadecimale:"
 
-#: app/widgets/gimpcolormapeditor.c:911
+#: app/widgets/gimpcolormapeditor.c:924
 msgid "Edit Indexed Color"
 msgstr "Modifica colore indicizzato"
 
-#: app/widgets/gimpcolormapeditor.c:913
+#: app/widgets/gimpcolormapeditor.c:926
 msgid "Edit Indexed Image Palette Color"
 msgstr "Modifica palette dei colori indicizzata"
 
@@ -9276,7 +9347,9 @@ msgstr "Auto"
 #: app/widgets/gimpimagedock.c:214
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr "Se abilitata, la finestra segue automaticamente l'immagine su cui si sta lavorando."
+msgstr ""
+"Se abilitata, la finestra segue automaticamente l'immagine su cui si sta "
+"lavorando."
 
 #: app/widgets/gimpitemtreeview.c:361
 #, c-format
@@ -9505,19 +9578,19 @@ msgstr ""
 "colori. Le frecce scambiano i colori. Doppio clic per la finestra di "
 "selezione colore."
 
-#: app/widgets/gimptooloptionseditor.c:144
+#: app/widgets/gimptooloptionseditor.c:186
 msgid "Save options to..."
 msgstr "Salva le opzioni in..."
 
-#: app/widgets/gimptooloptionseditor.c:152
+#: app/widgets/gimptooloptionseditor.c:194
 msgid "Restore options from..."
 msgstr "Recupera le opzioni da..."
 
-#: app/widgets/gimptooloptionseditor.c:160
+#: app/widgets/gimptooloptionseditor.c:202
 msgid "Delete saved options..."
 msgstr "Elimina le opzioni salvate..."
 
-#: app/widgets/gimptooloptionseditor.c:166
+#: app/widgets/gimptooloptionseditor.c:208
 #, c-format
 msgid ""
 "Reset to default values\n"
@@ -9526,19 +9599,10 @@ msgstr ""
 "Ripristina ai valori predefiniti\n"
 "%s  Reimposta tutte le opzioni strumenti"
 
-#: app/widgets/gimptooloptionseditor.c:266
+#: app/widgets/gimptooloptionseditor.c:284
 #, c-format
 msgid "%s Options"
 msgstr "%s opzioni"
-
-#: app/widgets/gimptooloptionseditor.c:420
-msgid "Reset Tool Options"
-msgstr "Reimposta le opzioni strumenti"
-
-#: app/widgets/gimptooloptionseditor.c:425
-msgid "Do you really want to reset all tool options to default values?"
-msgstr ""
-"Sicuri di voler reimpostare tutte le opzioni strumenti ai valori predefiniti?"
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -9789,7 +9853,7 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Stringa UTF-8 non valida nel file XCF"
 
 #: app/xcf/xcf-save.c:157 app/xcf/xcf-save.c:167 app/xcf/xcf-save.c:177
-#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:331
+#: app/xcf/xcf-save.c:187 app/xcf/xcf-save.c:211 app/xcf/xcf.c:333
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Errore durante il salvataggio del file XCF: %s"
@@ -9804,7 +9868,11 @@ msgstr "Errore durante la scrittura del file XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Impossibile posizionarsi sul file XCF: %s"
 
-#: app/xcf/xcf.c:270
+#: app/xcf/xcf.c:84 app/xcf/xcf.c:134
+msgid "GIMP XCF image"
+msgstr "Immagine GIMP XCF"
+
+#: app/xcf/xcf.c:272
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "ERRORE XCF: riscontrata versione file XCF %d non supportata"
