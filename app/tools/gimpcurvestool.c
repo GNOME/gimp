@@ -341,6 +341,7 @@ gimp_curves_tool_button_release (GimpTool        *tool,
     {
       curves_add_point (c_tool, c_tool->channel);
       curves_calculate_curve (c_tool->curves, c_tool->channel);
+      curves_update (c_tool, GRAPH | XRANGE);
     }
   else if (state & GDK_CONTROL_MASK)
     {
@@ -351,6 +352,7 @@ gimp_curves_tool_button_release (GimpTool        *tool,
           curves_add_point (c_tool, i);
           curves_calculate_curve (c_tool->curves, c_tool->channel);
         }
+      curves_update (c_tool, GRAPH | XRANGE);
     }
 
   /*  chain up to halt the tool */

@@ -2,7 +2,8 @@
 
 	* app/tools/gimpcurvestool.c: Kill some nonsensical code that
 	tried to set control points in a free form curve based on the
-	image coordinates (huh?). Untabbified.
+	image coordinates (huh?). Update the Graph after adding a point.
+	Untabbified.
 
 2004-12-17  Sven Neumann  <sven@gimp.org>
 
