@@ -1,3 +1,19 @@
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-utils.[ch]: removed file_utils_filename_to_utf8() ...
+
+	* libgimpbase/gimputils.[ch]: ... and added it here as
+	gimp_filename_to_utf8(). Added some docs that promise less than
+	the current implementation holds so that we can change the
+	implementation later.
+
+	* app/*/*.c: use gimp_filename_to_utf8() where
+	file_utils_filenames_to_utf8() has been used before.
+
+	* libgimpbase/gimpbase.def: changed accordingly.
+
+	* configure.in: reset GIMP_INTERFACE_AGE.
+
 2004-01-19  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/compose.c (compose)

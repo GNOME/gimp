@@ -92,7 +92,7 @@ gimp_scanner_new_file (const gchar  *filename,
 
       g_set_error (error, GIMP_CONFIG_ERROR, code,
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
 
       return NULL;
     }
@@ -100,7 +100,7 @@ gimp_scanner_new_file (const gchar  *filename,
   /* gimp_scanner_new() takes a "name" for the scanner, not a filename. Thus
    * do convert to UTF-8.
    */
-  scanner = gimp_scanner_new (file_utils_filename_to_utf8 (filename), fd, error);
+  scanner = gimp_scanner_new (gimp_filename_to_utf8 (filename), fd, error);
 
   g_scanner_input_file (scanner, fd);
 

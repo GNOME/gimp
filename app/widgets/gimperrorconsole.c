@@ -398,7 +398,7 @@ gimp_error_console_save_response (GtkWidget        *dialog,
                                            console->save_selection))
         {
           g_message (_("Error writing file '%s':\n%s"),
-                     file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
           return;
         }
     }

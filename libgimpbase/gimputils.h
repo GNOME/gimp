@@ -21,16 +21,17 @@
 #define __GIMP_UTILS_H__
 
 
-gchar * gimp_utf8_strtrim      (const gchar *str,
-                                gint         max_chars);
-gchar * gimp_any_to_utf8       (const gchar *str,
-                                gssize       len,
-                                const gchar *warning_format,
-                                ...) G_GNUC_PRINTF (3, 4);
+gchar       * gimp_utf8_strtrim      (const gchar *str,
+                                      gint         max_chars);
+gchar       * gimp_any_to_utf8       (const gchar *str,
+                                      gssize       len,
+                                      const gchar *warning_format,
+                                      ...) G_GNUC_PRINTF (3, 4);
+const gchar * gimp_filename_to_utf8  (const gchar *filename);
 
-gchar * gimp_memsize_to_string (guint64      memsize);
+gchar       * gimp_memsize_to_string (guint64      memsize);
 
-gchar * gimp_strip_uline       (const gchar *str);
+gchar       * gimp_strip_uline       (const gchar *str);
 
 
 #endif  /* __GIMP_UTILS_H__ */

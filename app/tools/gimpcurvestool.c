@@ -1319,7 +1319,7 @@ file_dialog_response (GtkWidget      *dialog,
           g_message (c_tool->is_save ?
                      _("Could not open '%s' for writing: %s") :
                      _("Could not open '%s' for reading: %s"),
-                     file_utils_filename_to_utf8 (filename),
+                     gimp_filename_to_utf8 (filename),
 		     g_strerror (errno));
           return;
         }
@@ -1331,7 +1331,7 @@ file_dialog_response (GtkWidget      *dialog,
       else if (! curves_read_from_file (c_tool, file))
         {
           g_message ("Error in reading file '%s'.",
-		     file_utils_filename_to_utf8 (filename));
+		     gimp_filename_to_utf8 (filename));
         }
 
       fclose (file);

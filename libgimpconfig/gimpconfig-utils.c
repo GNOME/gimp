@@ -472,7 +472,7 @@ gimp_config_file_copy (const gchar  *source,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (source), g_strerror (errno));
+                   gimp_filename_to_utf8 (source), g_strerror (errno));
       return FALSE;
     }
 
@@ -481,7 +481,7 @@ gimp_config_file_copy (const gchar  *source,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   file_utils_filename_to_utf8 (dest), g_strerror (errno));
+                   gimp_filename_to_utf8 (dest), g_strerror (errno));
       fclose (sfile);
       return FALSE;
     }
@@ -492,7 +492,7 @@ gimp_config_file_copy (const gchar  *source,
 	{
 	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Error while writing '%s': %s"),
-                       file_utils_filename_to_utf8 (dest), g_strerror (errno));
+                       gimp_filename_to_utf8 (dest), g_strerror (errno));
 	  fclose (sfile);
 	  fclose (dfile);
 	  return FALSE;
@@ -503,7 +503,7 @@ gimp_config_file_copy (const gchar  *source,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Error while reading '%s': %s"),
-                   file_utils_filename_to_utf8 (source), g_strerror (errno));
+                   gimp_filename_to_utf8 (source), g_strerror (errno));
       fclose (sfile);
       fclose (dfile);
       return FALSE;
@@ -515,7 +515,7 @@ gimp_config_file_copy (const gchar  *source,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Error while writing '%s': %s"),
-                   file_utils_filename_to_utf8 (dest), g_strerror (errno));
+                   gimp_filename_to_utf8 (dest), g_strerror (errno));
       return FALSE;
     }
 
@@ -542,7 +542,7 @@ gimp_config_file_backup_on_error (const gchar  *filename,
     g_message (_("There was an error parsing your '%s' file. "
                  "Default values will be used. A backup of your "
                  "configuration has been created at '%s'."),
-               name, file_utils_filename_to_utf8 (backup));
+               name, gimp_filename_to_utf8 (backup));
 
   g_free (backup);
 

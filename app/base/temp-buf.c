@@ -717,7 +717,7 @@ temp_buf_swap (TempBuf *buf)
   if (g_file_test (filename, G_FILE_TEST_IS_DIR))
     {
       g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)",
-		 file_utils_filename_to_utf8 (filename));
+		 gimp_filename_to_utf8 (filename));
       g_free (filename);
       return;
     }
@@ -738,7 +738,7 @@ temp_buf_swap (TempBuf *buf)
           unlink (filename);
           perror ("Write error on temp buf");
           g_message ("Cannot write \"%s\"",
-		     file_utils_filename_to_utf8 (filename));
+		     gimp_filename_to_utf8 (filename));
           g_free (filename);
           return;
         }
@@ -748,7 +748,7 @@ temp_buf_swap (TempBuf *buf)
       unlink (filename);
       perror ("Error in temp buf caching");
       g_message ("Cannot write \"%s\"",
-		 file_utils_filename_to_utf8 (filename));
+		 gimp_filename_to_utf8 (filename));
       g_free (filename);
       return;
     }

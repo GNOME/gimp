@@ -6,6 +6,7 @@ EXPORTS
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
 	gimp_directory
+	gimp_filename_to_utf8
 	gimp_gtkrc
 	gimp_locale_directory
 	gimp_memsize_to_string

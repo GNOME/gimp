@@ -249,9 +249,7 @@ file_utils_uri_to_utf8_filename (const gchar *uri)
 
       if (filename)
         {
-          gchar *utf8;
-
-          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+          gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
 
           g_free (filename);
 
@@ -590,31 +588,4 @@ file_check_magic_list (GSList *magics_list,
     }
 
   return 0;
-}
-
-gchar * 
-file_utils_filename_to_utf8 (const gchar *filename)
-{
-  /* Simpleminded implementation, but at least allocates just one copy
-   * of each translation. Could check if already UTF-8, and if so
-   * return filename as is. Could perhaps (re)use a suitably large
-   * cyclic buffer, but then would have to verify that all calls
-   * really need the return value just for a "short" time.
-   */
-
-  static GHashTable *ht = NULL;
-  gchar *filename_utf8;
-
-  if (ht == NULL)
-    ht = g_hash_table_new (g_str_hash, g_str_equal);
-
-  filename_utf8 = g_hash_table_lookup (ht, filename);
-
-  if (filename_utf8 == NULL)
-    {
-      filename_utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
-      g_hash_table_insert (ht, g_strdup (filename), filename_utf8);
-    }
-
-  return filename_utf8;
 }

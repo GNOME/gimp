@@ -129,7 +129,7 @@ gimp_brush_generated_save (GimpData  *data,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   file_utils_filename_to_utf8 (data->filename),
+                   gimp_filename_to_utf8 (data->filename),
 		   g_strerror (errno));
       return FALSE;
     }
@@ -378,7 +378,7 @@ gimp_brush_generated_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -390,7 +390,7 @@ gimp_brush_generated_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Not a GIMP brush file."),
-                   file_utils_filename_to_utf8 (filename));
+                   gimp_filename_to_utf8 (filename));
       return NULL;
     }
 
@@ -401,7 +401,7 @@ gimp_brush_generated_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Unknown GIMP brush version."),
-                   file_utils_filename_to_utf8 (filename));
+                   gimp_filename_to_utf8 (filename));
       return NULL;
     }
 

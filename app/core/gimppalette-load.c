@@ -379,7 +379,7 @@ gimp_palette_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -396,12 +396,12 @@ gimp_palette_load (const gchar  *filename,
                      _("Fatal parse error in palette file '%s': "
                        "Missing magic header.\n"
                        "Does this file need converting from DOS?"),
-                     file_utils_filename_to_utf8 (filename));
+                     gimp_filename_to_utf8 (filename));
       else
 	g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                      _("Fatal parse error in palette file '%s': "
                        "Missing magic header."),
-                     file_utils_filename_to_utf8 (filename));
+                     gimp_filename_to_utf8 (filename));
 
       fclose (fp);
 
@@ -417,7 +417,7 @@ gimp_palette_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
                      "Read error in line %d."),
-                   file_utils_filename_to_utf8 (filename), linenum);
+                   gimp_filename_to_utf8 (filename), linenum);
       fclose (fp);
       g_object_unref (palette);
       return NULL;
@@ -431,7 +431,7 @@ gimp_palette_load (const gchar  *filename,
 
       utf8 = gimp_any_to_utf8 (&str[strlen ("Name: ")], -1,
                                _("Invalid UTF-8 string in palette file '%s'"),
-                               file_utils_filename_to_utf8 (filename));
+                               gimp_filename_to_utf8 (filename));
       g_strstrip (utf8);
 
       gimp_object_set_name (GIMP_OBJECT (palette), utf8);
@@ -442,7 +442,7 @@ gimp_palette_load (const gchar  *filename,
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 	  fclose (fp);
 	  g_object_unref (palette);
 	  return NULL;
@@ -461,7 +461,7 @@ gimp_palette_load (const gchar  *filename,
 	      g_message (_("Reading palette file '%s': "
 			   "Invalid number of columns in line %d. "
                            "Using default value."),
-			 file_utils_filename_to_utf8 (filename), linenum);
+			 gimp_filename_to_utf8 (filename), linenum);
 	      columns = 0;
 	    }
 
@@ -472,7 +472,7 @@ gimp_palette_load (const gchar  *filename,
 	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in palette file '%s': "
                              "Read error in line %d."),
-                           file_utils_filename_to_utf8 (filename), linenum);
+                           gimp_filename_to_utf8 (filename), linenum);
 	      fclose (fp);
 	      g_object_unref (palette);
 	      return NULL;
@@ -506,7 +506,7 @@ gimp_palette_load (const gchar  *filename,
 	    /* maybe we should just abort? */
 	    g_message (_("Reading palette file '%s': "
 			 "Missing RED component in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
@@ -514,7 +514,7 @@ gimp_palette_load (const gchar  *filename,
 	  else
 	    g_message (_("Reading palette '%s': "
 			 "Missing GREEN component in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
@@ -522,7 +522,7 @@ gimp_palette_load (const gchar  *filename,
 	  else
 	    g_message (_("Reading palette file '%s': "
 			 "Missing BLUE component in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 
 	  /* optional name */
 	  tok = strtok (NULL, "\n");
@@ -532,7 +532,7 @@ gimp_palette_load (const gchar  *filename,
 	      b < 0 || b > 255)
 	    g_message (_("Reading palette file '%s': "
 			 "RGB value out of range in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 
 	  gimp_rgba_set_uchar (&color,
 			       (guchar) r,
@@ -551,7 +551,7 @@ gimp_palette_load (const gchar  *filename,
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
-                       file_utils_filename_to_utf8 (filename), linenum);
+                       gimp_filename_to_utf8 (filename), linenum);
 	  fclose (fp);
 	  g_object_unref (palette);
 	  return NULL;
@@ -590,7 +590,7 @@ gimp_palette_save (GimpData  *data,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   file_utils_filename_to_utf8 (data->filename),
+                   gimp_filename_to_utf8 (data->filename),
 		   g_strerror (errno));
       return FALSE;
     }

@@ -344,7 +344,7 @@ gimp_pattern_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -354,7 +354,7 @@ gimp_pattern_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
                      "Could not read %d bytes: %s"),
-                   file_utils_filename_to_utf8 (filename),
+                   gimp_filename_to_utf8 (filename),
 		   (gint) sizeof (header), g_strerror (errno));
       goto error;
     }
@@ -374,7 +374,7 @@ gimp_pattern_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
                      "Unknown pattern format version %d."),
-                   file_utils_filename_to_utf8 (filename), header.version);
+                   gimp_filename_to_utf8 (filename), header.version);
       goto error;
     }
 
@@ -385,7 +385,7 @@ gimp_pattern_load (const gchar  *filename,
                    _("Fatal parse error in pattern file '%s: "
                      "Unsupported pattern depth %d.\n"
                      "GIMP Patterns must be GRAY or RGB."),
-                   file_utils_filename_to_utf8 (filename), header.bytes);
+                   gimp_filename_to_utf8 (filename), header.bytes);
       goto error;
     }
 
@@ -401,14 +401,14 @@ gimp_pattern_load (const gchar  *filename,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in pattern file '%s': "
                          "Could not read %d bytes: %s"),
-                       file_utils_filename_to_utf8 (filename), bn_size,
+                       gimp_filename_to_utf8 (filename), bn_size,
 		       g_strerror (errno));
 	  goto error;
         }
 
       utf8 = gimp_any_to_utf8 (name, -1,
                                _("Invalid UTF-8 string in pattern file '%s'."),
-                               file_utils_filename_to_utf8 (filename));
+                               gimp_filename_to_utf8 (filename));
       g_free (name);
       name = utf8;
     }
@@ -427,7 +427,7 @@ gimp_pattern_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
                      "Could not read %d bytes: %s"),
-                   file_utils_filename_to_utf8 (filename),
+                   gimp_filename_to_utf8 (filename),
 		   header.width * header.height * header.bytes,
                    g_strerror (errno));
       goto error;

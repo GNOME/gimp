@@ -353,8 +353,8 @@ plug_in_open (PlugIn *plug_in)
   if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
     {
       g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\npipe() failed: %s",
-                 file_utils_filename_to_utf8 (plug_in->name),
-		 file_utils_filename_to_utf8 (plug_in->prog),
+                 gimp_filename_to_utf8 (plug_in->name),
+		 gimp_filename_to_utf8 (plug_in->prog),
                  g_strerror (errno));
       return FALSE;
     }
@@ -452,8 +452,8 @@ plug_in_open (PlugIn *plug_in)
                        &error))
     {
       g_message ("Unable to run Plug-In \"%s\"\n(%s)\n\n%s",
-                 file_utils_filename_to_utf8 (plug_in->name),
-		 file_utils_filename_to_utf8 (plug_in->prog),
+                 gimp_filename_to_utf8 (plug_in->name),
+		 gimp_filename_to_utf8 (plug_in->prog),
                  error->message);
       g_error_free (error);
       goto cleanup;
@@ -554,7 +554,7 @@ plug_in_close (PlugIn   *plug_in,
       if (STILL_ACTIVE == dwExitCode)
 	{
 	  g_warning ("Terminating %s ...",
-		     file_utils_filename_to_utf8 (plug_in->prog));
+		     gimp_filename_to_utf8 (plug_in->prog));
 	  TerminateProcess ((HANDLE) plug_in->pid, 0);
 	}
     }
@@ -690,8 +690,8 @@ plug_in_recv_message (GIOChannel   *channel,
 		 "The dying Plug-In may have messed up GIMP's internal state. "
 		 "You may want to save your images and restart GIMP "
 		 "to be on the safe side."),
-	       file_utils_filename_to_utf8 (plug_in->name),
-	       file_utils_filename_to_utf8 (plug_in->prog));
+	       gimp_filename_to_utf8 (plug_in->name),
+	       gimp_filename_to_utf8 (plug_in->prog));
 
   if (! plug_in->open)
     plug_in_unref (plug_in);
@@ -770,14 +770,14 @@ plug_in_flush (GIOChannel *channel,
 	      if (error)
 		{
 		  g_warning ("%s: plug_in_flush(): error: %s",
-			     file_utils_filename_to_utf8 (g_get_prgname ()),
+			     gimp_filename_to_utf8 (g_get_prgname ()),
 			     error->message);
 		  g_error_free (error);
 		}
 	      else
 		{
 		  g_warning ("%s: plug_in_flush(): error",
-			     file_utils_filename_to_utf8 (g_get_prgname ()));
+			     gimp_filename_to_utf8 (g_get_prgname ()));
 		}
 
 	      return FALSE;

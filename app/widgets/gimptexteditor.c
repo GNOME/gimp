@@ -372,7 +372,7 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -401,7 +401,7 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
 
   if (remaining)
     g_message (_("Invalid UTF-8 data in file '%s'."),
-	       file_utils_filename_to_utf8 (filename));
+	       gimp_filename_to_utf8 (filename));
 
   return TRUE;
 }

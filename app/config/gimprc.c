@@ -341,7 +341,7 @@ gimp_rc_load (GimpRc *rc)
 
   if (rc->verbose)
     g_print (_("Parsing '%s'\n"),
-	     file_utils_filename_to_utf8 (rc->system_gimprc));
+	     gimp_filename_to_utf8 (rc->system_gimprc));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
 				      rc->system_gimprc, NULL, &error))
@@ -354,7 +354,7 @@ gimp_rc_load (GimpRc *rc)
 
   if (rc->verbose)
     g_print (_("Parsing '%s'\n"),
-	     file_utils_filename_to_utf8 (rc->user_gimprc));
+	     gimp_filename_to_utf8 (rc->user_gimprc));
 
   if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
 				      rc->user_gimprc, NULL, &error))
@@ -579,7 +579,7 @@ gimp_rc_save (GimpRc *rc)
 
   if (rc->verbose)
     g_print (_("Saving '%s'\n"),
-	     file_utils_filename_to_utf8 (rc->user_gimprc));
+	     gimp_filename_to_utf8 (rc->user_gimprc));
 
   if (! gimp_config_serialize_to_file (GIMP_CONFIG (rc),
 				       rc->user_gimprc,

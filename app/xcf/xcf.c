@@ -271,7 +271,7 @@ xcf_load_invoker (Gimp     *gimp,
     }
   else
     g_message (_("Could not open '%s' for reading: %s"),
-	       file_utils_filename_to_utf8 (filename), g_strerror (errno));
+	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
   return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info,
 					   success);
@@ -328,7 +328,7 @@ xcf_save_invoker (Gimp     *gimp,
     }
   else
     g_message (_("Could not open '%s' for writing: %s"),
-	       file_utils_filename_to_utf8 (filename), g_strerror (errno));
+	       gimp_filename_to_utf8 (filename), g_strerror (errno));
 
   return_args = procedural_db_return_args (&xcf_plug_in_save_proc.db_info,
 					   success);

@@ -106,7 +106,7 @@ gimp_config_path_expand_only (const gchar  *path,
 #ifndef G_OS_WIN32
       if (*p == '~')
 	{
-	  length += strlen (file_utils_filename_to_utf8 (g_get_home_dir ()));
+	  length += strlen (gimp_filename_to_utf8 (g_get_home_dir ()));
 	  p += 1;
 	}
       else
@@ -161,7 +161,7 @@ gimp_config_path_expand_only (const gchar  *path,
             substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
 
           substs[2*n_substs]     = token;
-          substs[2*n_substs + 1] = file_utils_filename_to_utf8 (s);
+          substs[2*n_substs + 1] = gimp_filename_to_utf8 (s);
           n_substs++;
 
           length += strlen (s);
@@ -188,8 +188,8 @@ gimp_config_path_expand_only (const gchar  *path,
       if (*p == '~')
 	{
 	  *n = '\0';
-	  strcat (n, file_utils_filename_to_utf8 (g_get_home_dir ()));
-	  n += strlen (file_utils_filename_to_utf8 (g_get_home_dir ()));
+	  strcat (n, gimp_filename_to_utf8 (g_get_home_dir ()));
+	  n += strlen (gimp_filename_to_utf8 (g_get_home_dir ()));
 	  p += 1;
 	}
       else

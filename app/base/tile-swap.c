@@ -185,7 +185,7 @@ tile_swap_exit1 (gpointer key,
       if (def_swap_file->swap_file_end != 0)
 	{
 	  g_warning ("swap file not empty: \"%s\"\n",
-		     file_utils_filename_to_utf8 (swap_file->filename));
+		     gimp_filename_to_utf8 (swap_file->filename));
 	  tile_swap_print_gaps (def_swap_file);
 	}
 

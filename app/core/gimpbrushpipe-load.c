@@ -352,7 +352,7 @@ gimp_brush_pipe_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -374,7 +374,7 @@ gimp_brush_pipe_load (const gchar  *filename,
       else
         {
           g_message (_("Invalid UTF-8 string in brush file '%s'."),
-                     file_utils_filename_to_utf8 (filename));
+                     gimp_filename_to_utf8 (filename));
           gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
         }
     }
@@ -385,7 +385,7 @@ gimp_brush_pipe_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   file_utils_filename_to_utf8 (filename));
+                   gimp_filename_to_utf8 (filename));
       close (fd);
       return NULL;
     }
@@ -405,7 +405,7 @@ gimp_brush_pipe_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   file_utils_filename_to_utf8 (filename));
+                   gimp_filename_to_utf8 (filename));
       close (fd);
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
@@ -495,7 +495,7 @@ gimp_brush_pipe_load (const gchar  *filename,
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "File is corrupt."),
-                       file_utils_filename_to_utf8 (filename));
+                       gimp_filename_to_utf8 (filename));
 	  close (fd);
 	  g_object_unref (pipe);
 	  return NULL;

@@ -171,6 +171,52 @@ gimp_any_to_utf8 (const gchar  *str,
 }
 
 /**
+ * gimp_filename_to_utf8:
+ * @filename: The filename to be converted to UTF-8.
+ *
+ * Convert a filename in the filesystem's encoding to UTF-8
+ * temporarily.  The return value is a pointer to a string that is
+ * guaranteed to be valid only during the current iteration of the
+ * main loop or until the next call to gimp_filename_to_utf8().
+ *
+ * The only purpose of this function is to provide an easy way to pass
+ * a filename in the filesystem encoding to a function that expects an
+ * UTF-8 encoded filename.
+ *
+ * Return value: A temporarily valid UTF-8 representation of @filename.
+ *               This string must not be changed or freed.
+ **/
+const gchar *
+gimp_filename_to_utf8 (const gchar *filename)
+{
+  /* Simpleminded implementation, but at least allocates just one copy
+   * of each translation. Could check if already UTF-8, and if so
+   * return filename as is. Could perhaps (re)use a suitably large
+   * cyclic buffer, but then would have to verify that all calls
+   * really need the return value just for a "short" time.
+   */
+
+  static GHashTable *ht = NULL;
+  gchar             *filename_utf8;
+
+  if (! filename)
+    return NULL;
+
+  if (! ht)
+    ht = g_hash_table_new (g_str_hash, g_str_equal);
+
+  filename_utf8 = g_hash_table_lookup (ht, filename);
+
+  if (! filename_utf8)
+    {
+      filename_utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+      g_hash_table_insert (ht, g_strdup (filename), filename_utf8);
+    }
+
+  return filename_utf8;
+}
+
+/**
  * gimp_memsize_to_string:
  * @memsize: A memory size in bytes.
  *

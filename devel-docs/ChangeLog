@@ -1,3 +1,7 @@
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt: added gimp_filename_to_utf8.
+
 2004-01-13  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

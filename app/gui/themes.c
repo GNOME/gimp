@@ -231,14 +231,14 @@ themes_apply_theme (Gimp        *gimp,
 
   if (gimp->be_verbose)
     g_print (_("Writing '%s'\n"),
-	     file_utils_filename_to_utf8 (themerc));
+	     gimp_filename_to_utf8 (themerc));
 
   file = fopen (themerc, "w");
 
   if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 file_utils_filename_to_utf8 (themerc), g_strerror (errno));
+                 gimp_filename_to_utf8 (themerc), g_strerror (errno));
       goto cleanup;
     }
 
@@ -284,8 +284,8 @@ themes_directories_foreach (const GimpDatafileData *file_data,
 
   if (gimp->be_verbose)
     g_print (_("Adding theme '%s' (%s)\n"),
-             file_utils_filename_to_utf8 (file_data->basename),
-	     file_utils_filename_to_utf8 (file_data->filename));
+             gimp_filename_to_utf8 (file_data->basename),
+	     gimp_filename_to_utf8 (file_data->filename));
 
   g_hash_table_insert (themes_hash,
 		       g_strdup (file_data->basename),

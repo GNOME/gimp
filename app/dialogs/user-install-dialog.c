@@ -848,7 +848,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
     str = g_strdup_printf (_("For a proper GIMP installation, a folder named "
                              "'<b>%s</b>' needs to be created."),
-                           file_utils_filename_to_utf8 (gimp_directory ()));
+                           gimp_filename_to_utf8 (gimp_directory ()));
     add_label (GTK_BOX (vbox), str);
     g_free (str);
 
@@ -882,7 +882,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
     gtk_tree_store_append (tree, &iter, NULL);
     gtk_tree_store_set (tree, &iter,
-                        DIRENT_COLUMN, file_utils_filename_to_utf8 (gimp_directory ()),
+                        DIRENT_COLUMN, gimp_filename_to_utf8 (gimp_directory ()),
                         PIXBUF_COLUMN, folder_pixbuf,
                         DESC_COLUMN, 0,
                         -1);
@@ -1056,7 +1056,7 @@ user_install_run (void)
   gtk_widget_show (log_view);
 
   g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'..."),
-              file_utils_filename_to_utf8 (gimp_directory ()));
+              gimp_filename_to_utf8 (gimp_directory ()));
   gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
   while (gtk_events_pending ())
@@ -1070,7 +1070,7 @@ user_install_run (void)
       g_set_error (&error,
                    G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
-                   file_utils_filename_to_utf8 (gimp_directory ()), g_strerror (errno));
+                   gimp_filename_to_utf8 (gimp_directory ()), g_strerror (errno));
       goto break_out_of_loop;
     }
 
@@ -1089,7 +1089,7 @@ user_install_run (void)
         case TREE_ITEM_MKDIR:
           g_snprintf (log_line, sizeof (log_line),
                       _("Creating folder '%s'..."),
-		      file_utils_filename_to_utf8 (dest));
+		      gimp_filename_to_utf8 (dest));
           gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
           while (gtk_events_pending ())
@@ -1115,8 +1115,8 @@ user_install_run (void)
           g_assert (! tree_items[i].directory);
           g_snprintf (log_line, sizeof (log_line),
                       _("Copying file '%s' from '%s'..."),
-		      file_utils_filename_to_utf8 (dest),
-		      file_utils_filename_to_utf8 (source));
+		      gimp_filename_to_utf8 (dest),
+		      gimp_filename_to_utf8 (source));
           gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
           while (gtk_events_pending ())
