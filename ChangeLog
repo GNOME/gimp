@@ -1,3 +1,27 @@
+1998-08-19  Raph Levien  <raph@gimp.org>
+
+	This is the GdkRgb integration.
+
+	* app/gximage.c (gximage_put): Uses gdk_draw_rgb_image rather
+	than gdk_draw_image.
+
+	* app/image_render.c: gutted most of this, as it is now subsumed
+	by GdkRgb. In the process, gamma != 1.0 doesn't work anymore.
+	Also, speedups are almost certainly possible in a bunch of cases.
+
+	* app/info_window.c (get_shades): compiles and runs, but is
+	not functional.
+
+	* app/colormaps.c: gutted
+
+	* app/color_select.c: changed dither to max
+
+	A few things remain: the dithering is _not_ correctly aligned for
+	scrolling - looks like I'll need to add some more API to GdkRgb
+	for that. The gradient editor needs to be set to maximum
+	dithering. I'd like to draw the foreground and background colors
+	dithered so they don't quantize so much in 8bpp modes.
+
 Wed Aug 19 21:00:00 PDT 1998 Ray Lehtiniemi <rayl@netrover.com>
 
 	* app/airbrush.c gdisplay.c gimage.h gimpimage.c gimpimage.h

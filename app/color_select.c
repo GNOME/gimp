@@ -206,6 +206,7 @@ color_select_new (int                  r,
   gtk_widget_show (xy_frame);
 
   csp->xy_color = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (csp->xy_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (csp->xy_color), XY_DEF_WIDTH, XY_DEF_HEIGHT);
   gtk_widget_set_events (csp->xy_color, COLOR_AREA_MASK);
   gtk_signal_connect_after (GTK_OBJECT (csp->xy_color), "expose_event",
@@ -223,6 +224,7 @@ color_select_new (int                  r,
   gtk_widget_show (z_frame);
 
   csp->z_color = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (csp->z_color), GDK_RGB_DITHER_MAX);
   gtk_preview_size (GTK_PREVIEW (csp->z_color), Z_DEF_WIDTH, Z_DEF_HEIGHT);
   gtk_widget_set_events (csp->z_color, COLOR_AREA_MASK);
   gtk_signal_connect_after (GTK_OBJECT (csp->z_color), "expose_event",

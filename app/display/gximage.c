@@ -31,7 +31,7 @@ struct _GXImage
   GdkVisual *visual;		/*  visual appropriate to our depth         */
   GdkGC *gc;			/*  graphics context                        */
 
-  GdkImage *image;		/*  private data  */
+  guchar *data;
 };
 
 
@@ -52,7 +52,7 @@ create_gximage (GdkVisual *visual, int width, int height)
   gximage->visual = visual;
   gximage->gc = NULL;
 
-  gximage->image = gdk_image_new (GDK_IMAGE_FASTEST, visual, width, height);
+  gximage->data = g_malloc (width * height * 3);
 
   return gximage;
 }
@@ -60,7 +60,7 @@ create_gximage (GdkVisual *visual, int width, int height)
 static void
 delete_gximage (GXImage *gximage)
 {
-  gdk_image_destroy (gximage->image);
+  g_free (gximage->data);
   if (gximage->gc)
     gdk_gc_destroy (gximage->gc);
   g_free (gximage);
@@ -86,25 +86,25 @@ gximage_free ()
 guchar*
 gximage_get_data ()
 {
-  return gximage->image->mem;
+  return gximage->data;
 }
 
 int
 gximage_get_bpp ()
 {
-  return gximage->image->bpp;
+  return 3;
 }
 
 int
 gximage_get_bpl ()
 {
-  return gximage->image->bpl;
+  return 3 * GXIMAGE_WIDTH;
 }
 
 int
 gximage_get_byte_order ()
 {
-  return gximage->image->byte_order;
+  return GDK_MSB_FIRST;
 }
 
 void
@@ -117,8 +117,13 @@ gximage_put (GdkWindow *win, int x, int y, int w, int h)
       gdk_gc_set_exposures (gximage->gc, TRUE);
     }
 
-  gdk_draw_image (win, gximage->gc, gximage->image, 0, 0, x, y, w, h);
-
-  /*  sync the draw image to make sure it has been displayed before continuing  */
-  gdk_flush ();
+  gdk_draw_rgb_image (win,
+		      gximage->gc,
+		      x,
+		      y,
+		      w,
+		      h,
+		      GDK_RGB_DITHER_MAX, /* todo: make configurable */
+		      gximage->data,
+		      GXIMAGE_WIDTH * 3);
 }
