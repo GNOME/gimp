@@ -1,3 +1,22 @@
+2004-01-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/edit-commands.[ch]: converted tabs to spaces.
+
+	(cut,copy_named_buffer_callback): unref the buffer after adding it
+	to gimp->named_buffers. Seems we leaked all named buffers...
+
+	Removed code duplication I have just introduced:
+
+	* app/gui/edit-commands.[ch] removed
+	edit_paste_into_cmd_callback(). Instead, pass the "paste_into"
+	boolean as "guint action" to gimp_edit_paste_cmd_callback().
+
+	* app/gui/image-menu.c: changed accordingly.
+
+	* app/widgets/gimpbufferview.c: added utility function
+	gimp_buffer_view_paste() and call it from the paste and paste_into
+	callbacks.
+
 2004-01-15  Manish Singh  <yosh@gimp.org>
 
 	* app/text/gimpfontlist.c: Minor cleanup, add note about using

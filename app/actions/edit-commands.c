@@ -74,18 +74,18 @@
 /*  local function prototypes  */
 
 static void   cut_named_buffer_callback  (GtkWidget   *widget,
-					  const gchar *name,
-					  gpointer     data);
+                                          const gchar *name,
+                                          gpointer     data);
 static void   copy_named_buffer_callback (GtkWidget   *widget,
-					  const gchar *name,
-					  gpointer     data);
+                                          const gchar *name,
+                                          gpointer     data);
 
 
 /*  public functions  */
 
 void
 edit_undo_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -96,7 +96,7 @@ edit_undo_cmd_callback (GtkWidget *widget,
 
 void
 edit_redo_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -107,13 +107,13 @@ edit_redo_cmd_callback (GtkWidget *widget,
 
 void
 edit_cut_cmd_callback (GtkWidget *widget,
-		       gpointer   data)
+                       gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
   if (gimp_edit_cut (gdisp->gimage,
-		     gimp_image_active_drawable (gdisp->gimage)))
+                     gimp_image_active_drawable (gdisp->gimage)))
     {
       gimp_image_flush (gdisp->gimage);
     }
@@ -121,7 +121,7 @@ edit_cut_cmd_callback (GtkWidget *widget,
 
 void
 edit_copy_cmd_callback (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -134,10 +134,14 @@ edit_copy_cmd_callback (GtkWidget *widget,
 
 void
 edit_paste_cmd_callback (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data,
+                         guint      action)
 {
   GimpDisplay *gdisp;
+  gboolean     paste_into;
   return_if_no_display (gdisp, data);
+
+  paste_into = (gboolean) action;
 
   if (gdisp->gimage->gimp->global_buffer)
     {
@@ -149,35 +153,9 @@ edit_paste_cmd_callback (GtkWidget *widget,
       gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
       if (gimp_edit_paste (gdisp->gimage,
-			   gimp_image_active_drawable (gdisp->gimage),
-			   gdisp->gimage->gimp->global_buffer,
-			   FALSE, x, y, width, height))
-	{
-          gimp_image_flush (gdisp->gimage);
-	}
-    }
-}
-
-void
-edit_paste_into_cmd_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
-
-  if (gdisp->gimage->gimp->global_buffer)
-    {
-      GimpDisplayShell *shell;
-      gint              x, y, width, height;
-
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      if (gimp_edit_paste (gdisp->gimage,
-			   gimp_image_active_drawable (gdisp->gimage),
-			   gdisp->gimage->gimp->global_buffer,
-			   TRUE, x, y, width, height))
+                           gimp_image_active_drawable (gdisp->gimage),
+                           gdisp->gimage->gimp->global_buffer,
+                           paste_into, x, y, width, height))
 	{
           gimp_image_flush (gdisp->gimage);
 	}
@@ -186,7 +164,7 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 
 void
 edit_paste_as_new_cmd_callback (GtkWidget *widget,
-				gpointer   data)
+                                gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
@@ -194,14 +172,14 @@ edit_paste_as_new_cmd_callback (GtkWidget *widget,
   if (gdisp->gimage->gimp->global_buffer)
     {
       gimp_edit_paste_as_new (gdisp->gimage->gimp,
-			      gdisp->gimage,
-			      gdisp->gimage->gimp->global_buffer);
+                              gdisp->gimage,
+                              gdisp->gimage->gimp->global_buffer);
     }
 }
 
 void
 edit_named_cut_cmd_callback (GtkWidget *widget,
-			     gpointer   data)
+                             gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -209,18 +187,18 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Cut Named"),
                                 gdisp->shell,
-				gimp_standard_help_func,
-				GIMP_HELP_BUFFER_CUT,
-				_("Enter a name for this buffer"),
-				NULL,
-				G_OBJECT (gdisp->gimage), "disconnect",
-				cut_named_buffer_callback, gdisp->gimage);
+                                gimp_standard_help_func,
+                                GIMP_HELP_BUFFER_CUT,
+                                _("Enter a name for this buffer"),
+                                NULL,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                cut_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
 void
 edit_named_copy_cmd_callback (GtkWidget *widget,
-			      gpointer   data)
+                              gpointer   data)
 {
   GimpDisplay *gdisp;
   GtkWidget   *qbox;
@@ -228,18 +206,18 @@ edit_named_copy_cmd_callback (GtkWidget *widget,
 
   qbox = gimp_query_string_box (_("Copy Named"),
                                 gdisp->shell,
-				gimp_standard_help_func,
-				GIMP_HELP_BUFFER_COPY,
-				_("Enter a name for this buffer"),
-				NULL,
-				G_OBJECT (gdisp->gimage), "disconnect",
-				copy_named_buffer_callback, gdisp->gimage);
+                                gimp_standard_help_func,
+                                GIMP_HELP_BUFFER_COPY,
+                                _("Enter a name for this buffer"),
+                                NULL,
+                                G_OBJECT (gdisp->gimage), "disconnect",
+                                copy_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
 
 void
 edit_named_paste_cmd_callback (GtkWidget *widget,
-			       gpointer   data)
+                               gpointer   data)
 {
   gimp_dialog_factory_dialog_raise (global_dock_factory,
                                     gtk_widget_get_screen (widget),
@@ -248,7 +226,7 @@ edit_named_paste_cmd_callback (GtkWidget *widget,
 
 void
 edit_clear_cmd_callback (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -259,8 +237,8 @@ edit_clear_cmd_callback (GtkWidget *widget,
 
 void
 edit_fill_cmd_callback (GtkWidget *widget,
-			gpointer   data,
-			guint      action)
+                        gpointer   data,
+                        guint      action)
 {
   GimpImage    *gimage;
   GimpFillType  fill_type;
@@ -274,7 +252,7 @@ edit_fill_cmd_callback (GtkWidget *widget,
 
 void
 edit_stroke_cmd_callback (GtkWidget *widget,
-			  gpointer   data)
+                          gpointer   data)
 {
   GimpImage *gimage;
   return_if_no_image (gimage, data);
@@ -313,16 +291,13 @@ edit_stroke_selection (GimpItem  *item,
 
 static void
 cut_named_buffer_callback (GtkWidget   *widget,
-			   const gchar *name,
-			   gpointer     data)
+                           const gchar *name,
+                           gpointer     data)
 {
+  GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *cut_buffer;
-  GimpImage        *gimage;
 
-  gimage = (GimpImage *) data;
-
-  cut_buffer = gimp_edit_cut (gimage,
-                              gimp_image_active_drawable (gimage));
+  cut_buffer = gimp_edit_cut (gimage, gimp_image_active_drawable (gimage));
 
   if (cut_buffer)
     {
@@ -335,6 +310,7 @@ cut_named_buffer_callback (GtkWidget   *widget,
 
       gimp_container_add (gimage->gimp->named_buffers,
                           GIMP_OBJECT (new_buffer));
+      g_object_unref (new_buffer);
     }
 
   gimp_image_flush (gimage);
@@ -345,13 +321,10 @@ copy_named_buffer_callback (GtkWidget   *widget,
 			    const gchar *name,
 			    gpointer     data)
 {
+  GimpImage        *gimage = GIMP_IMAGE (data);
   const GimpBuffer *copy_buffer;
-  GimpImage        *gimage;
 
-  gimage = (GimpImage *) data;
-
-  copy_buffer = gimp_edit_copy (gimage,
-                                gimp_image_active_drawable (gimage));
+  copy_buffer = gimp_edit_copy (gimage, gimp_image_active_drawable (gimage));
 
   if (copy_buffer)
     {
@@ -364,5 +337,6 @@ copy_named_buffer_callback (GtkWidget   *widget,
 
       gimp_container_add (gimage->gimp->named_buffers,
                           GIMP_OBJECT (new_buffer));
+      g_object_unref (new_buffer);
     }
 }

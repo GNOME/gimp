@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpbufferview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,8 @@
 static void   gimp_buffer_view_class_init (GimpBufferViewClass *klass);
 static void   gimp_buffer_view_init       (GimpBufferView      *view);
 
+static void   gimp_buffer_view_paste                (GimpBufferView *view,
+                                                     gboolean        paste_into);
 static void   gimp_buffer_view_paste_clicked        (GtkWidget      *widget,
 						     GimpBufferView *view);
 static void   gimp_buffer_view_paste_into_clicked   (GtkWidget      *widget,
@@ -201,8 +203,8 @@ gimp_buffer_view_new (GimpViewType     view_type,
 }
 
 static void
-gimp_buffer_view_paste_clicked (GtkWidget      *widget,
-				GimpBufferView *view)
+gimp_buffer_view_paste (GimpBufferView *view,
+                        gboolean        paste_into)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
   GimpBuffer          *buffer;
@@ -236,7 +238,7 @@ gimp_buffer_view_paste_clicked (GtkWidget      *widget,
       if (gimage)
         {
 	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
-			   buffer, FALSE, x, y, width, height);
+			   buffer, paste_into, x, y, width, height);
 
 	  gimp_image_flush (gimage);
 	}
@@ -244,46 +246,17 @@ gimp_buffer_view_paste_clicked (GtkWidget      *widget,
 }
 
 static void
+gimp_buffer_view_paste_clicked (GtkWidget      *widget,
+				GimpBufferView *view)
+{
+  gimp_buffer_view_paste (view, FALSE);
+}
+
+static void
 gimp_buffer_view_paste_into_clicked (GtkWidget      *widget,
 				     GimpBufferView *view)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpBuffer          *buffer;
-
-  buffer = gimp_context_get_buffer (editor->view->context);
-
-  if (buffer && gimp_container_have (editor->view->container,
-				     GIMP_OBJECT (buffer)))
-    {
-      GimpDisplay *gdisp  = gimp_context_get_display (editor->view->context);
-      GimpImage   *gimage = NULL;
-      gint         x      = -1;
-      gint         y      = -1;
-      gint         width  = -1;
-      gint         height = -1;;
-
-      if (gdisp)
-	{
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-          gimp_display_shell_untransform_viewport (shell,
-                                                   &x, &y, &width, &height);
-
-          gimage = gdisp->gimage;
-        }
-      else
-        {
-          gimage = gimp_context_get_image (editor->view->context);
-        }
-
-      if (gimage)
-        {
-	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
-			   buffer, TRUE, x, y, width, height);
-
-	  gimp_image_flush (gimage);
-	}
-    }
+  gimp_buffer_view_paste (view, TRUE);
 }
 
 static void
@@ -317,8 +290,7 @@ gimp_buffer_view_delete_clicked (GtkWidget      *widget,
   if (buffer && gimp_container_have (editor->view->container,
 				     GIMP_OBJECT (buffer)))
     {
-      gimp_container_remove (editor->view->container,
-			     GIMP_OBJECT (buffer));
+      gimp_container_remove (editor->view->container, GIMP_OBJECT (buffer));
     }
 }
 
@@ -326,17 +298,14 @@ static void
 gimp_buffer_view_select_item (GimpContainerEditor *editor,
 			      GimpViewable        *viewable)
 {
-  GimpBufferView *view;
-
-  gboolean  paste_sensitive        = FALSE;
-  gboolean  paste_into_sensitive   = FALSE;
-  gboolean  paste_as_new_sensitive = FALSE;
-  gboolean  delete_sensitive       = FALSE;
+  GimpBufferView *view                   = GIMP_BUFFER_VIEW (editor);
+  gboolean        paste_sensitive        = FALSE;
+  gboolean        paste_into_sensitive   = FALSE;
+  gboolean        paste_as_new_sensitive = FALSE;
+  gboolean        delete_sensitive       = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
-
-  view = GIMP_BUFFER_VIEW (editor);
 
   if (viewable && gimp_container_have (editor->view->container,
                                        GIMP_OBJECT (viewable)))
