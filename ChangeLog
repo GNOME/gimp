@@ -1,3 +1,9 @@
+2004-03-04  Simon Budig  <simon@gimp.org>
+
+	* app/gui/preferences-dialog.c: remove the widgets for
+	global-font and global-palette, since these are no options
+	for multiple tools and have no visible effect for the user.
+
 2004-03-04  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: follow the changes done for other modules such as

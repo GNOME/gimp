@@ -1387,15 +1387,19 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "global-pattern",
                           _("_Pattern"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (object, "global-palette",
-                          _("Pa_lette"),
-                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "global-gradient",
                           _("_Gradient"),
+                          GTK_BOX (vbox2));
+
+  /* Disabled, because they are not yet useful */
+#if 0
+  prefs_check_button_add (object, "global-palette",
+                          _("Pa_lette"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "global-font",
                           _("_Font"),
                           GTK_BOX (vbox2));
+#endif
 
 
   /*******************************/
