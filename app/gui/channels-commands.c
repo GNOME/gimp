@@ -249,8 +249,6 @@ channels_new_channel_query (GimpImage   *gimage,
   GtkWidget         *hbox;
   GtkWidget         *vbox;
   GtkWidget         *table;
-  GtkWidget         *label;
-  GtkWidget         *opacity_scale;
   GtkObject         *opacity_scale_data;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -325,38 +323,27 @@ channels_new_channel_query (GimpImage   *gimage,
 
   /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  /*  The name entry hbox, label and entry  */
-  label = gtk_label_new (_("Channel name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
+  /*  The name entry  */
   options->name_entry = gtk_entry_new ();
   gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      (channel_name ? channel_name : _("New Channel")));
-  gtk_widget_show (options->name_entry);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Channel Name:"), 1.0, 0.5,
+			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */
-  label = gtk_label_new (_("Fill Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  opacity_scale_data =
-    gtk_adjustment_new (channel_color.a * 100.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
-  gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_widget_show (opacity_scale);
+  opacity_scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+					     _("Fill Opacity:"), -1, 50,
+					     channel_color.a * 100.0,
+					     0.0, 100.0, 1.0, 10.0, 1,
+					     TRUE, 0.0, 0.0,
+					     NULL, NULL);
 
   g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
 		    G_CALLBACK (channels_opacity_update),
@@ -438,8 +425,6 @@ channels_edit_channel_query (GimpChannel *channel)
   GtkWidget          *hbox;
   GtkWidget          *vbox;
   GtkWidget          *table;
-  GtkWidget          *label;
-  GtkWidget          *opacity_scale;
   GtkObject          *opacity_scale_data;
 
   options = g_new0 (EditChannelOptions, 1);
@@ -491,38 +476,27 @@ channels_edit_channel_query (GimpChannel *channel)
 
   /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name entry  */
-  label = gtk_label_new (_("Channel name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
   options->name_entry = gtk_entry_new ();
   gtk_widget_set_size_request (options->name_entry, 150, -1);
-  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry,
-			     1, 2, 0, 1);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      gimp_object_get_name (GIMP_OBJECT (channel)));
-  gtk_widget_show (options->name_entry);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Channel Name:"), 1.0, 0.5,
+			     options->name_entry, 2, FALSE);
 
   /*  The opacity scale  */
-  label = gtk_label_new (_("Fill Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  opacity_scale_data =
-    gtk_adjustment_new (channel_color.a * 100.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
-  gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_widget_show (opacity_scale);
+  opacity_scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+					     _("Fill Opacity:"), -1, 50,
+					     channel_color.a * 100.0,
+					     0.0, 100.0, 1.0, 10.0, 1,
+					     TRUE, 0.0, 0.0,
+					     NULL, NULL);
 
   g_signal_connect (G_OBJECT (opacity_scale_data), "value_changed",
 		    G_CALLBACK (channels_opacity_update),

@@ -1,3 +1,7 @@
+2002-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: merged doc fix.
+
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am

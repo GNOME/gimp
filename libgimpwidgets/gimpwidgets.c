@@ -1432,7 +1432,7 @@ gimp_unit_menu_update (GtkWidget *widget,
  * gimp_table_attach_aligned:
  * @table:      The #GtkTable the widgets will be attached to.
  * @column:     The column to start with.
- * @row:        The row to attach the eidgets.
+ * @row:        The row to attach the widgets.
  * @label_text: The text for the #GtkLabel which will be attached left of the
  *              widget.
  * @xalign:     The horizontal alignment of the #GtkLabel.
@@ -1443,8 +1443,10 @@ gimp_unit_menu_update (GtkWidget *widget,
  *
  * Note that the @label_text can be #NULL and that the widget will be attached
  * starting at (@column + 1) in this case, too.
+ *
+ * Returns: The created #GtkLabel.
  **/
-void
+GtkWidget *
 gimp_table_attach_aligned (GtkTable    *table,
 			   gint         column,
 			   gint         row,
@@ -1455,10 +1457,10 @@ gimp_table_attach_aligned (GtkTable    *table,
 			   gint         colspan,
 			   gboolean     left_align)
 {
+  GtkWidget *label = NULL;
+
   if (label_text)
     {
-      GtkWidget *label;
-
       label = gtk_label_new (label_text);
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
@@ -1486,4 +1488,6 @@ gimp_table_attach_aligned (GtkTable    *table,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_widget_show (widget);
+
+  return label;
 }

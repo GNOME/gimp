@@ -126,27 +126,20 @@ static void
 gimp_layer_list_view_init (GimpLayerListView *view)
 {
   GimpDrawableListView *drawable_view;
-  GtkWidget            *hbox;
   GtkWidget            *abox;
-  GtkWidget            *label;
-  GtkWidget            *slider;
+  GtkWidget            *hbox;
 
   drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
 
-  view->options_box = gtk_vbox_new (FALSE, 2);
+  view->options_box = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (view->options_box), 2);
   gtk_box_pack_start (GTK_BOX (view), view->options_box, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (view), view->options_box, 0);
   gtk_widget_show (view->options_box);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (view->options_box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  hbox = gtk_hbox_new (FALSE, 2);
 
   /*  Paint mode menu  */
-
-  label = gtk_label_new (_("Mode:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   view->paint_mode_menu =
     gimp_paint_mode_menu_new (G_CALLBACK (gimp_layer_list_view_paint_mode_menu_callback),
@@ -177,29 +170,22 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gimp_help_set_help_data (view->preserve_trans_toggle,
 			   _("Keep Transparency"), "#keep_trans_button");
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (view->options_box), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 0,
+			     _("Mode:"), 1.0, 0.5,
+			     hbox, 2, TRUE);
 
   /*  Opacity scale  */
 
-  label = gtk_label_new (_("Opacity:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   view->opacity_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (view->options_box), 0, 1,
+					  _("Opacity:"), -1, 50,
+					  100.0, 0.0, 100.0, 1.0, 10.0, 1,
+					  TRUE, 0.0, 0.0,
+					  NULL, "#opacity_sacle"));
 
   g_signal_connect (G_OBJECT (view->opacity_adjustment), "value_changed",
 		    G_CALLBACK (gimp_layer_list_view_opacity_scale_changed),
 		    view);
-
-  slider = gtk_hscale_new (view->opacity_adjustment);
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_RIGHT);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
-  gtk_widget_show (slider);
-
-  gimp_help_set_help_data (slider, NULL, "#opacity_scale");
 
   /*  Anchor button  */
 
@@ -241,7 +227,10 @@ gimp_layer_list_view_style_set (GtkWidget *widget,
                         "button_spacing",  &button_spacing,
 			NULL);
 
-  gtk_box_set_spacing (GTK_BOX (layer_view->options_box), content_spacing);
+  gtk_table_set_col_spacings (GTK_TABLE (layer_view->options_box),
+			      button_spacing);
+  gtk_table_set_row_spacings (GTK_TABLE (layer_view->options_box),
+			      content_spacing);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);

@@ -685,10 +685,8 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   GimpColorPickerToolOptions *options;
 
   GtkWidget *vbox;
-  GtkWidget *abox;
+  GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *scale;
 
   options = g_new0 (GimpColorPickerToolOptions, 1);
 
@@ -710,57 +708,50 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->sample_merged_w);
+
   g_signal_connect (G_OBJECT (options->sample_merged_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_merged);
-  gtk_widget_show (options->sample_merged_w);
 
   /*  the sample average options  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   options->sample_average_w =
     gtk_check_button_new_with_label (_("Sample Average"));
-  gtk_table_attach (GTK_TABLE (table), options->sample_average_w, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
 				options->sample_average_d);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), options->sample_average_w);
+  gtk_widget_show (options->sample_average_w);
+
   g_signal_connect (G_OBJECT (options->sample_average_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->sample_average);
-  gtk_widget_show (options->sample_average_w);
 
-  label = gtk_label_new (_("Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  the feather radius scale  */
-  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
-  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (abox);
+  gtk_widget_set_sensitive (table, options->sample_average_d);
+  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
+		     table);
 
   options->average_radius_w =
-    gtk_adjustment_new (options->average_radius_d, 1.0, 15.0, 2.0, 2.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->average_radius_w));
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_container_add (GTK_CONTAINER (abox), scale);
-  gtk_widget_set_sensitive (scale, options->sample_average_d);
-  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
-		       scale);
-  gtk_widget_set_sensitive (label, options->sample_average_d);
-  g_object_set_data (G_OBJECT (scale), "set_sensitive",
-		       label);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  _("Radius:"), -1, 50,
+			  options->average_radius_d,
+			  1.0, 15.0, 1.0, 3.0, 0,
+			  TRUE, 0.0, 0.0,
+			  NULL, NULL);
+
   g_signal_connect (G_OBJECT (options->average_radius_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->average_radius);
-  gtk_widget_show (scale);
-  gtk_widget_show (table);
 
   /*  the update active color toggle button  */
   options->update_active_w =
@@ -768,10 +759,11 @@ gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
 				options->update_active_d);
   gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->update_active_w);
+
   g_signal_connect (G_OBJECT (options->update_active_w), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->update_active);
-  gtk_widget_show (options->update_active_w);
 
   return (GimpToolOptions *) options;
 }

@@ -504,5 +504,6 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @widget: 
 @colspan: 
 @left_align: 
+@Returns: 
 
 

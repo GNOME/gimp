@@ -181,9 +181,7 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
 {
   GimpDodgeBurnOptions *options;
   GtkWidget            *vbox;
-  GtkWidget            *hbox;
-  GtkWidget            *label;
-  GtkWidget            *scale;
+  GtkWidget            *table;
   GtkWidget            *frame;
 
   options = gimp_dodgeburn_options_new ();
@@ -194,29 +192,6 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  /*  the exposure scale  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Exposure:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  options->exposure_w =
-    gtk_adjustment_new (options->exposure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->exposure_w));
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-
-  g_signal_connect (G_OBJECT (options->exposure_w), "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->exposure);
-
-  gtk_widget_show (scale);
-  gtk_widget_show (hbox);
 
   /* the type (dodge or burn) */
   frame = gimp_radio_group_new2 (TRUE, _("Type (<Ctrl>)"),
@@ -259,6 +234,23 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  /*  the exposure scale  */
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  options->exposure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+					      _("Exposure:"), -1, 50,
+					      options->exposure_d,
+					      0.0, 100.0, 1.0, 10.0, 1,
+					      TRUE, 0.0, 0.0,
+					      NULL, NULL);
+
+  g_signal_connect (G_OBJECT (options->exposure_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->exposure);
 
   return (GimpToolOptions *) options;
 }

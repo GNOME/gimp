@@ -1,3 +1,25 @@
+2002-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.[ch]: return the crated label from
+	gimp_table_attach_aligned(), doc fixes.
+
+	* app/gui/channels-commands.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimplayerlistview.c: use gimp_scale_entries instead
+	of just hscales in lots of places, so the values are keyboard
+	input-able.
+
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: reorder AC_OUTPUT to make intltool happy, check

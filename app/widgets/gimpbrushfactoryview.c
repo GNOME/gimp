@@ -105,20 +105,18 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 {
   GtkWidget *table;
 
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_widget_show (table);
 
   view->spacing_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
+    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			  _("Spacing:"), -1, 50,
+			  0.0, 1.0, 1000.0, 1.0, 10.0, 1,
+			  TRUE, 0.0, 0.0,
+			  NULL, NULL);
 
-  view->spacing_scale = gtk_hscale_new (view->spacing_adjustment);
-  gtk_scale_set_value_pos (GTK_SCALE (view->spacing_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (view->spacing_scale),
-			       GTK_UPDATE_DELAYED);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Spacing:"), 1.0, 1.0,
-			     view->spacing_scale, 1, FALSE);
+  view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
   g_signal_connect (G_OBJECT (view->spacing_adjustment), "value_changed",
 		    G_CALLBACK (gimp_brush_factory_view_spacing_update),

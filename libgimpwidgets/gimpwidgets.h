@@ -252,15 +252,15 @@ void gimp_unit_menu_update               (GtkWidget       *widget,
  *  Helper Functions
  */
 
-void gimp_table_attach_aligned     (GtkTable           *table,
-				    gint                column,
-				    gint                row,
-				    const gchar        *label_text,
-				    gfloat              xalign,
-				    gfloat              yalign,
-				    GtkWidget          *widget,
-				    gint                colspan,
-				    gboolean            left_align);
+GtkWidget * gimp_table_attach_aligned    (GtkTable        *table,
+					  gint             column,
+					  gint             row,
+					  const gchar     *label_text,
+					  gfloat           xalign,
+					  gfloat           yalign,
+					  GtkWidget       *widget,
+					  gint             colspan,
+					  gboolean         left_align);
 
 
 G_END_DECLS

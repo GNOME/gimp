@@ -128,7 +128,6 @@ airbrush_options_new (GimpToolInfo *tool_info)
   GimpAirbrushOptions *options;
   GtkWidget           *vbox;
   GtkWidget           *table;
-  GtkWidget           *scale;
 
   options = gimp_airbrush_options_new ();
 
@@ -140,37 +139,33 @@ airbrush_options_new (GimpToolInfo *tool_info)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the rate scale  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  options->rate_w =
-    gtk_adjustment_new (options->rate_d, 0.0, 150.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  options->rate_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+					  _("Rate:"), -1, 50,
+					  options->rate_d,
+					  0.0, 150.0, 1.0, 1.0, 1,
+					  TRUE, 0.0, 0.0,
+					  NULL, NULL);
+
   g_signal_connect (G_OBJECT (options->rate_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->rate);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Rate:"), 1.0, 1.0,
-			     scale, 1, FALSE);
 
   /*  the pressure scale  */
-  options->pressure_w =
-    gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  options->pressure_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+					      _("Pressure:"), -1, 50,
+					      options->pressure_d,
+					      0.0, 100.0, 1.0, 1.0, 1,
+					      TRUE, 0.0, 0.0,
+					      NULL, NULL);
+
   g_signal_connect (G_OBJECT (options->pressure_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->pressure);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Pressure:"), 1.0, 1.0,
-			     scale, 1, FALSE);
-
-  gtk_widget_show (table);
 
   return (GimpToolOptions *) options;
 }

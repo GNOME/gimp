@@ -46,8 +46,6 @@ selection_options_init (SelectionOptions *options,
                         GimpToolInfo     *tool_info)
 {
   GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *scale;
 
   /*  initialize the tool options structure  */
   tool_options_init ((GimpToolOptions *) options, tool_info);
@@ -184,7 +182,7 @@ selection_options_init (SelectionOptions *options,
   /*  the feather frame  */
   {
     GtkWidget *frame;
-    GtkWidget *hbox;
+    GtkWidget *table;
 
     frame = gtk_frame_new (NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -201,32 +199,27 @@ selection_options_init (SelectionOptions *options,
                       &options->feather);
 
     /*  the feather radius scale  */
-    hbox = gtk_hbox_new (FALSE, 2);
-    gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-    gtk_container_add (GTK_CONTAINER (frame), hbox);
-    gtk_widget_show (hbox);
+    table = gtk_table_new (1, 3, FALSE);
+    gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+    gtk_container_add (GTK_CONTAINER (frame), table);
+    gtk_widget_show (table);
   
-    label = gtk_label_new (_("Radius:"));
-    gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-    gtk_widget_show (label);
-
     options->feather_radius_w =
-      gtk_adjustment_new (options->feather_radius_d, 0.0, 100.0, 1.0, 1.0, 1.0);
-
-    scale = gtk_hscale_new (GTK_ADJUSTMENT (options->feather_radius_w));
-    gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-    gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-    gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-    gtk_widget_show (scale);
+      gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			    _("Radius:"), -1, 50,
+			    options->feather_radius_d,
+			    0.0, 100.0, 1.0, 10.0, 1,
+			    TRUE, 0.0, 0.0,
+			    NULL, NULL);
 
     g_signal_connect (G_OBJECT (options->feather_radius_w), "value_changed",
                       G_CALLBACK (gimp_double_adjustment_update),
                       &options->feather_radius);
 
     /*  grey out label & scale if feather is off  */
-    gtk_widget_set_sensitive (hbox, options->feather_d);
-    g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", hbox);
+    gtk_widget_set_sensitive (table, options->feather_d);
+    g_object_set_data (G_OBJECT (options->feather_w), "set_sensitive", table);
   }
 
 #if 0
@@ -267,7 +260,7 @@ selection_options_init (SelectionOptions *options,
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
-      GtkWidget *hbox;
+      GtkWidget *table;
 
       frame = gtk_frame_new (_("Finding Similar Colors"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -312,24 +305,18 @@ selection_options_init (SelectionOptions *options,
                         &options->sample_merged);
 
       /*  the threshold scale  */
-      hbox = gtk_hbox_new (FALSE, 1);
-      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-  
-      label = gtk_label_new (_("Threshold:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 1);
-      gtk_widget_show (label);
+      table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+      gtk_widget_show (table);
 
       options->threshold_w = 
-	gtk_adjustment_new (gimprc.default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
-      scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
-      gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
-
-      gimp_help_set_help_data (scale, _("Maximum color difference"), NULL);
+	gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Threshold:"), -1, 50,
+			      gimprc.default_threshold,
+			      0.0, 255.0, 1.0, 16.0, 1,
+			      TRUE, 0.0, 0.0,
+			      _("Maximum color difference"), NULL);
 
       g_signal_connect (G_OBJECT (options->threshold_w), "value_changed",
                         G_CALLBACK (gimp_double_adjustment_update),

@@ -1413,7 +1413,6 @@ ink_options_new (GimpToolInfo *tool_info)
   GtkWidget  *hbox2;
   GtkWidget  *radio_button;
   GtkWidget  *pixmap_widget;
-  GtkWidget  *slider;
   GtkWidget  *frame;
   GtkWidget  *darea;
   GdkPixmap  *pixmap;
@@ -1447,35 +1446,31 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   /*  size slider  */
-  options->size_w =
-    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 2.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Size:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+					  _("Size:"), -1, 50,
+					  options->size_d,
+					  0.0, 20.0, 1.0, 2.0, 1,
+					  TRUE, 0.0, 0.0,
+					  NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->size_w), "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->size);
 
   /* angle adjust slider */
-  options->tilt_angle_w =
-    gtk_adjustment_new (options->tilt_angle_d, -90.0, 90.0, 1, 10.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_angle_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Angle:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  options->tilt_angle_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+						_("Angle:"), -1, 50,
+						options->tilt_angle_d,
+						-90.0, 90.0, 1, 10.0, 1,
+						TRUE, 0.0, 0.0,
+						NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->tilt_angle_w), "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
@@ -1487,49 +1482,43 @@ ink_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   /* size sens slider */
-  options->sensitivity_w =
-    gtk_adjustment_new (options->sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Size:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  options->sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+						 _("Size:"), -1, 50,
+						 options->sensitivity_d,
+						 0.0, 1.0, 0.01, 0.1, 1,
+						 TRUE, 0.0, 0.0,
+						 NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->sensitivity_w), "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->sensitivity);
   
   /* tilt sens slider */
-  options->tilt_sensitivity_w =
-    gtk_adjustment_new (options->tilt_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Tilt:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  options->tilt_sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+						      _("Tilt:"), -1, 50,
+						      options->tilt_sensitivity_d,
+						      0.0, 1.0, 0.01, 0.1, 1,
+						      TRUE, 0.0, 0.0,
+						      NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->tilt_sensitivity_w), "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &options->tilt_sensitivity);
 
   /* velocity sens slider */
-  options->vel_sensitivity_w =
-    gtk_adjustment_new (options->vel_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->vel_sensitivity_w));
-  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Speed:"), 1.0, 1.0,
-			     slider, 1, FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  options->vel_sensitivity_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+						     _("Speed:"), -1, 50,
+						     options->vel_sensitivity_d,
+						     0.0, 1.0, 0.01, 0.1, 1,
+						     TRUE, 0.0, 0.0,
+						     NULL, NULL);
 
   g_signal_connect (G_OBJECT (options->vel_sensitivity_w), "value_changed",
 		    G_CALLBACK (gimp_double_adjustment_update),
