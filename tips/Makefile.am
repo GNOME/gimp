@@ -4,6 +4,7 @@ tipsdatadir = $(gimpdatadir)/tips
 
 tipsdata_DATA = \
 	gimp_tips.txt		 \
+	gimp_tips.cs.txt	 \
 	gimp_tips.de.txt	 \
 	gimp_tips.ja.txt	 \
 	gimp_tips.it.txt	 \

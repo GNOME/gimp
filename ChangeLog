@@ -1,3 +1,7 @@
+Tue Jan 11 19:31:30 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* tips/Makefile.am: Czech added.
+
 2000-01-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimphelp.h
