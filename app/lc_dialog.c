@@ -46,7 +46,7 @@ static void  lc_dialog_add_callback        (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_remove_callback     (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
 					    gpointer);
-static void  lc_dialog_help_func           (gpointer);
+static void  lc_dialog_help_func           (gchar *);
 
 static void  lc_dialog_image_menu_preview_update_callback (GtkWidget *,
 							   gpointer);
@@ -98,7 +98,8 @@ lc_dialog_create (GimpImage* gimage)
   lc_dialog = g_new (LCDialog, 1);
   lc_dialog->shell =
     gimp_dialog_new (_("Layers & Channels"), "layers_and_channels",
-		     lc_dialog_help_func, NULL,
+		     lc_dialog_help_func,
+		     "dialogs/layers_and_channels.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 		     NULL);
@@ -134,6 +135,7 @@ lc_dialog_create (GimpImage* gimage)
 				 lc_dialog_image_menu_callback);
   gtk_box_pack_start (GTK_BOX (util_box), lc_dialog->image_option_menu,
 		      TRUE, TRUE, 0);
+  gimp_help_set_help_data (lc_dialog->image_option_menu, NULL, "#image_menu");
   gtk_widget_show (lc_dialog->image_option_menu);
 
   gtk_option_menu_set_menu (GTK_OPTION_MENU (lc_dialog->image_option_menu),
@@ -148,6 +150,7 @@ lc_dialog_create (GimpImage* gimage)
   gtk_signal_connect (GTK_OBJECT (auto_button), "clicked",
 		      (GtkSignalFunc) lc_dialog_auto_callback,
 		      auto_button);
+  gimp_help_set_help_data (auto_button, NULL, "#auto_button");
   gtk_widget_show (auto_button);
   /*  State will be set when the sub-dialogs exists (see below)  */
 
@@ -707,7 +710,7 @@ lc_dialog_change_image (GimpContext *context,
 }
 
 static void
-lc_dialog_help_func (gpointer data)
+lc_dialog_help_func (gchar *help_data)
 {
   gchar *help_page;
   gint page_num;

@@ -29,15 +29,40 @@
 #include "libgimp/gimpintl.h"
 
 #define USE_TIPS_QUERY
+#define DEBUG_HELP
+
+static GtkTooltips * tool_tips;
+
+void
+gimp_help_init (void)
+{
+  tool_tips = gtk_tooltips_new ();
+}
+
+void
+gimp_help_free (void)
+{
+  gtk_object_destroy (GTK_OBJECT (tool_tips));
+  gtk_object_unref   (GTK_OBJECT (tool_tips));
+}
+
+void
+gimp_help_enable_tooltips (void)
+{
+  gtk_tooltips_enable (tool_tips);
+}
+
+void
+gimp_help_disable_tooltips (void)
+{
+  gtk_tooltips_disable (tool_tips);
+}
 
 /*  The standard help function  */
 void
-gimp_standard_help_func (gpointer help_data)
+gimp_standard_help_func (gchar *help_data)
 {
-  gchar *help_page;
-
-  help_page = (gchar *) help_data;
-  gimp_help (help_page);
+  gimp_help (help_data);
 }
 
 static void
@@ -45,11 +70,11 @@ gimp_help_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   GimpHelpFunc help_function;
-  gpointer     help_data;
+  gchar *help_data;
 
   help_function = (GimpHelpFunc) data;
-  help_data     = gtk_object_get_data (GTK_OBJECT (widget),
-				       "gimp_help_data");
+  help_data     = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
+						 "gimp_help_data");
 
   if (help_function && use_help)
     (* help_function) (help_data);
@@ -65,9 +90,80 @@ gimp_help_callback (GtkWidget *widget,
 #ifdef USE_TIPS_QUERY
 
 static gint
-gimp_help_tips_query_idle_show_help (gpointer help_data)
+gimp_help_tips_query_idle_show_help (gpointer data)
 {
-  gimp_help ((gchar *) help_data);
+  GtkWidget *event_widget;
+  GtkWidget *toplevel_widget;
+  GtkWidget *widget;
+
+  GtkTooltipsData *tooltips_data;
+
+  gchar *help_data = NULL;
+
+  event_widget = GTK_WIDGET (data);
+  toplevel_widget = gtk_widget_get_toplevel (event_widget);
+
+  /*  search for help_data in this widget's parent containers  */
+  for (widget = event_widget; widget; widget = widget->parent)
+    {
+      if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
+	  tooltips_data->tip_private)
+	{
+	  help_data = tooltips_data->tip_private;
+	}
+      else
+	{
+	  help_data = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
+						     "gimp_help_data");
+	}
+
+      if (help_data || widget == toplevel_widget)
+	break;
+    }
+
+  if (! help_data)
+    return FALSE;
+
+  if (help_data[0] == '#')
+    {
+      gchar *help_index;
+
+      if (widget == toplevel_widget)
+	return FALSE;
+
+      help_index = help_data;
+      help_data  = NULL;
+
+      for (widget = widget->parent; widget; widget = widget->parent)
+	{
+	  if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
+	      tooltips_data->tip_private)
+	    {
+	      help_data = tooltips_data->tip_private;
+	    }
+	  else
+	    {
+	      help_data = (gchar *) gtk_object_get_data (GTK_OBJECT (widget),
+							 "gimp_help_data");
+	    }
+
+	  if (help_data)
+	    break;
+	}
+
+      if (help_data)
+	{
+	  gchar *help_text;
+
+	  help_text = g_strconcat (help_data, help_index, NULL);
+	  gimp_help (help_text);
+	  g_free (help_text);
+	}
+    }
+  else
+    {
+      gimp_help (help_data);
+    }
 
   return FALSE;
 }
@@ -80,9 +176,9 @@ gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
 				      GdkEventButton *event,
 				      gpointer        func_data)
 {
-  if (widget && tip_private && use_help)
+  if (use_help && widget)
     gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_show_help,
-		  (gpointer) tip_private);
+		  (gpointer) widget);
 
   return TRUE;
 }
@@ -100,7 +196,7 @@ static void
 gimp_help_tips_query_start (GtkWidget *widget,
 			    gpointer   tips_query)
 {
-  if (! GTK_TIPS_QUERY (tips_query)->in_query)
+  if (use_help && ! GTK_TIPS_QUERY (tips_query)->in_query)
     gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_start, tips_query);
 }
 
@@ -109,7 +205,7 @@ gimp_help_tips_query_start (GtkWidget *widget,
 void
 gimp_help_connect_help_accel (GtkWidget    *widget,
 			      GimpHelpFunc  help_func,
-			      gpointer      help_data)
+			      gchar        *help_data)
 {
   GtkAccelGroup *accel_group;
 
@@ -127,6 +223,10 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
     {
 #ifdef USE_TIPS_QUERY
       tips_query = gtk_tips_query_new ();
+
+      gtk_widget_set (tips_query,
+		      "GtkTipsQuery::emit_always", TRUE,
+		      NULL);
 
       gtk_signal_connect (GTK_OBJECT (tips_query), "widget_selected",
 			  GTK_SIGNAL_FUNC (gimp_help_tips_query_widget_selected),
@@ -159,11 +259,7 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 					  NULL);
     }
 
-  if (help_data)
-    {
-      gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data",
-			   help_data);
-    }
+  gimp_help_set_help_data (widget, NULL, help_data);
 
   gtk_signal_connect (GTK_OBJECT (widget), "help",
 		      GTK_SIGNAL_FUNC (gimp_help_callback),
@@ -173,6 +269,8 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   gtk_signal_connect (GTK_OBJECT (widget), "tips_query",
 		      GTK_SIGNAL_FUNC (gimp_help_tips_query_start),
 		      (gpointer) tips_query);
+
+  gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
 #endif
 
   /*  a new accelerator group for this widget  */
@@ -196,11 +294,29 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
 }
 
+void
+gimp_help_set_help_data (GtkWidget *widget,
+			 gchar     *tooltip,
+			 gchar     *help_data)
+{
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (tooltip)
+    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
+  else if (help_data)
+    gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
+}
+
 /*  the main help function  */
 void
-gimp_help (gchar *help_page)
+gimp_help (gchar *help_data)
 {
   ProcRecord *proc_rec;
+
+#ifdef DEBUG_HELP
+  g_print ("Help Page: %s\n", help_data);
+#endif
 
   /*  Check if a help browser is already running  */
   proc_rec = procedural_db_lookup ("extension_gimp_help_browser_temp");
@@ -223,7 +339,7 @@ gimp_help (gchar *help_page)
       args[0].arg_type = PDB_INT32;
       args[0].value.pdb_int = RUN_INTERACTIVE;
       args[1].arg_type = PDB_STRING;
-      args[1].value.pdb_pointer = help_page;
+      args[1].value.pdb_pointer = help_data;
 
       plug_in_run (proc_rec, args, 2, FALSE, TRUE, 0);
 
@@ -237,7 +353,7 @@ gimp_help (gchar *help_page)
       return_vals =
         procedural_db_run_proc ("extension_gimp_help_browser_temp",
                                 &nreturn_vals,
-                                PDB_STRING, help_page,
+                                PDB_STRING, help_data,
                                 PDB_END);
 
       procedural_db_destroy_args (return_vals, nreturn_vals);

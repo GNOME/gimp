@@ -115,6 +115,7 @@ struct _PaletteDialog
   gboolean        color_notebook_active;
   PaletteEntries *entries;
   PaletteEntry   *color;
+  PaletteEntry   *dnd_color;
   GdkGC          *gc;
   guint           entry_sig_id;
   gfloat          zoom_factor;  /* range from 0.1 to 4.0 */
@@ -942,7 +943,7 @@ palette_set_active_color (gint r,
       switch (state) 
  	{ 
  	case COLOR_NEW: 
- 	  top_level_edit_palette->color =
+	  top_level_edit_palette->color =
 	    palette_entries_add_entry (top_level_edit_palette->entries,
 				       _("Untitled"), r, g, b); 
 	  palette_update_all (top_level_edit_palette->entries);
@@ -1163,8 +1164,9 @@ palette_dialog_delete_entry_callback (GtkWidget *widget,
 	}
 
       if (palette->entries->n_colors == 0)
-	palette->color = palette_entries_add_entry (palette->entries,
-						    _("Black"), 0, 0, 0);
+	palette->color =
+	  palette_entries_add_entry (palette->entries,
+				     _("Black"), 0, 0, 0);
 
       palette_update_all (palette->entries);
     }
@@ -1238,9 +1240,15 @@ palette_dialog_color_area_events (GtkWidget     *widget,
       row = (bevent->y - 1) / entry_height;
       pos = row * palette->columns + col;
       
+      tmp_link = g_slist_nth (palette->entries->colors, pos);
+
+      if (tmp_link)
+	palette->dnd_color = tmp_link->data;
+      else
+	palette->dnd_color = NULL;
+
       if ((bevent->button == 1 || bevent->button == 3) && palette->entries)
 	{
-	  tmp_link = g_slist_nth (palette->entries->colors, pos);
 	  if (tmp_link)
 	    {
 	      if (palette->color)
@@ -1279,7 +1287,8 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 	      gtk_entry_set_text (GTK_ENTRY (palette->color_name),
 				  palette->color->name);
 	      gtk_widget_set_sensitive (palette->color_name, TRUE);
-	     /*  palette_update_current_entry (palette); */
+	      /* palette_update_current_entry (palette); */
+
 	      if (bevent->button == 3)
 		{
 		  /* Popup the edit menu */
@@ -1924,11 +1933,15 @@ palette_dialog_drag_color (GtkWidget *widget,
 
   palette = (PaletteDialog *) data;
 
-  if (palette && palette->entries && palette->color)
+  if (palette && palette->entries && palette->dnd_color)
     {
-      *r = (guchar) palette->color->color[0];
-      *g = (guchar) palette->color->color[1];
-      *b = (guchar) palette->color->color[2];
+      *r = (guchar) palette->dnd_color->color[0];
+      *g = (guchar) palette->dnd_color->color[1];
+      *b = (guchar) palette->dnd_color->color[2];
+    }
+  else
+    {
+      *r = *g = *b = 0;
     }
 }
 
@@ -1974,17 +1987,17 @@ palette_dialog_new (gint vert)
   GtkStyle  *style;
 
   palette = g_new (PaletteDialog, 1);
-
-  palette->entries = default_palette_entries;
-  palette->color = NULL;
-  palette->color_notebook = NULL;
+  palette->entries               = default_palette_entries;
+  palette->color                 = NULL;
+  palette->dnd_color             = NULL;
+  palette->color_notebook        = NULL;
   palette->color_notebook_active = FALSE;
-  palette->zoom_factor = 1.0;
-  palette->xzoom_factor = 1.0;
-  palette->last_width = 0;
-  palette->columns = COLUMNS;
-  palette->columns_valid = TRUE;
-  palette->freeze_update = FALSE;
+  palette->zoom_factor           = 1.0;
+  palette->xzoom_factor          = 1.0;
+  palette->last_width            = 0;
+  palette->columns               = COLUMNS;
+  palette->columns_valid         = TRUE;
+  palette->freeze_update         = FALSE;
 
   if (!vert)
     {
@@ -2066,7 +2079,7 @@ palette_dialog_new (gint vert)
 
   /*  dnd stuff  */
   gtk_drag_source_set (palette_region,
-                       GDK_BUTTON1_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_palette_target_table, n_color_palette_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (palette_region, palette_dialog_drag_color, palette);

@@ -20,9 +20,6 @@
 
 typedef struct _OpsButton OpsButton;
 
-typedef void (*OpsButtonCallback) (GtkWidget *widget,
-				   gpointer   user_data);
-
 typedef enum
 {
   OPS_BUTTON_MODIFIER_NONE,
@@ -41,19 +38,18 @@ typedef enum
 
 struct _OpsButton 
 {
-  gchar              **xpm_data;       /*  xpm data for the button  */
-  OpsButtonCallback    callback;       /*  callback function        */
-  OpsButtonCallback   *ext_callbacks;  /*  callback functions when modifiers are pressed  */
-  gchar               *tooltip;
-  gchar               *private_tip;
-  GtkWidget           *widget;         /*  the button widget        */
-  gint                 modifier;
+  gchar         **xpm_data;       /*  xpm data for the button  */
+  GtkSignalFunc   callback;       /*  callback function        */
+  GtkSignalFunc  *ext_callbacks;  /*  callback functions when modifiers are pressed  */
+  gchar          *tooltip;
+  gchar          *private_tip;
+  GtkWidget      *widget;         /*  the button widget        */
+  gint            modifier;
 };
 
 /* Function declarations */
 
 GtkWidget * ops_button_box_new (GtkWidget     *parent,
-				GtkTooltips   *tool_tips,
 				OpsButton     *ops_button,
 				OpsButtonType  ops_type);
 

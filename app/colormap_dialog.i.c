@@ -243,7 +243,7 @@ ipal_create (GimpSet* context)
 
   /*  dnd stuff  */
   gtk_drag_source_set (GTK_WIDGET(ipal->palette),
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_palette_target_table, n_color_palette_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (GTK_WIDGET (ipal->palette),

@@ -48,6 +48,8 @@ struct _PatternSelect
   /*  Context to store the current pattern  */
   GimpContext *context;
 
+  GPattern    *dnd_pattern;
+
   /*  Some variables to keep the GUI consistent  */
   gint  cell_width;
   gint  cell_height;

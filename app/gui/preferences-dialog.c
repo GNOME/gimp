@@ -25,7 +25,6 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"
-#include "interface.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
 #include "session.h"
@@ -279,9 +278,9 @@ file_prefs_ok_callback (GtkWidget *widget,
   prefs_dlg = NULL;
 
   if (show_tool_tips)
-    gtk_tooltips_enable (tool_tips);
+    gimp_help_enable_tooltips ();
   else
-    gtk_tooltips_disable (tool_tips);
+    gimp_help_disable_tooltips ();
 
   /* This needs modification to notify the user of which simply cannot be
    * changed on the fly.  Currently it ignores these options if only OK is

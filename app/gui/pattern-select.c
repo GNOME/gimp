@@ -51,6 +51,8 @@
 static void     pattern_change_callbacks        (PatternSelect *psp,
 						 gboolean       closing);
 
+static GPattern * pattern_select_drag_pattern   (GtkWidget     *widget,
+						 gpointer       data);
 static void     pattern_select_drop_pattern     (GtkWidget     *widget,
 						 GPattern      *pattern,
 						 gpointer       data);
@@ -148,6 +150,7 @@ pattern_select_new (gchar *title,
   psp = g_new (PatternSelect, 1);
   psp->preview             = NULL;
   psp->callback_name       = NULL;
+  psp->dnd_pattern         = NULL;
   psp->pattern_popup       = NULL;
   psp->popup_timeout_tag   = 0;
   psp->old_col             = 0;
@@ -266,6 +269,12 @@ pattern_select_new (gchar *title,
 		      psp);
 
   /*  dnd stuff  */
+  gtk_drag_source_set (psp->preview,
+		       GDK_BUTTON2_MASK,
+		       preview_target_table, preview_n_targets,
+		       GDK_ACTION_COPY);
+  gimp_dnd_pattern_source_set (psp->preview, pattern_select_drag_pattern, psp);
+
   gtk_drag_dest_set (psp->preview,
                      GTK_DEST_DEFAULT_ALL,
                      preview_target_table, preview_n_targets,
@@ -406,6 +415,17 @@ patterns_check_dialogs (void)
 /*
  *  Local functions
  */
+
+static GPattern *
+pattern_select_drag_pattern (GtkWidget *widget,
+			     gpointer   data)
+{
+  PatternSelect *psp;
+
+  psp = (PatternSelect *) data;
+
+  return psp->dnd_pattern;
+}
 
 static void
 pattern_select_drop_pattern (GtkWidget *widget,
@@ -883,15 +903,21 @@ pattern_select_events (GtkWidget     *widget,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
+      col = bevent->x / psp->cell_width;
+      row = (bevent->y + psp->scroll_offset) / psp->cell_height;
+      index = row * psp->NUM_PATTERN_COLUMNS + col;
+
+      pattern = pattern_list_get_pattern_by_index (pattern_list, index);
+
+      if (pattern)
+	psp->dnd_pattern = pattern;
+      else
+	psp->dnd_pattern = gimp_context_get_pattern (psp->context);
+
       if (bevent->button == 1)
 	{
-	  col = bevent->x / psp->cell_width;
-	  row = (bevent->y + psp->scroll_offset) / psp->cell_height;
-	  index = row * psp->NUM_PATTERN_COLUMNS + col;
-
 	  /*  Get the pattern and display the popup pattern preview  */
-	  if ((pattern = pattern_list_get_pattern_by_index (pattern_list,
-							    index)))
+	  if (pattern)
 	    {
 	      gdk_pointer_grab (psp->preview->window, FALSE,
 				(GDK_POINTER_MOTION_HINT_MASK |

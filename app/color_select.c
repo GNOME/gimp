@@ -338,7 +338,7 @@ color_select_widget_new (ColorSelect *csp,
 
   /*  dnd stuff  */
   gtk_drag_source_set (csp->new_color,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_select_target_table, n_color_select_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (csp->new_color, color_select_drag_new_color, csp);
@@ -365,7 +365,7 @@ color_select_widget_new (ColorSelect *csp,
 
   /*  dnd stuff  */
   gtk_drag_source_set (csp->orig_color,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_select_target_table, n_color_select_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (csp->orig_color, color_select_drag_old_color, csp);

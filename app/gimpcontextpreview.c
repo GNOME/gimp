@@ -30,7 +30,6 @@
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gradient_header.h"
-#include "interface.h"  /* for tool_tips */
 #include "patterns.h"
 #include "temp_buf.h"
 
@@ -185,7 +184,6 @@ gimp_context_preview_init (GimpContextPreview *gcp)
   gcp->popup_height  = 0;
   gcp->show_popup    = FALSE;
   gcp->show_tooltips = FALSE;
-  gcp->drag_source   = FALSE;
 
   GTK_PREVIEW (gcp)->type   = GTK_PREVIEW_COLOR;
   GTK_PREVIEW (gcp)->bpp    = 3;
@@ -225,7 +223,6 @@ gimp_context_preview_new (GimpContextPreviewType  type,
 			  gint                    height,
 			  gboolean                show_popup,
 			  gboolean                show_tooltips,
-			  gboolean                drag_source,
 			  GtkSignalFunc           drop_data_callback,
 			  gpointer                drop_data_data)
 {
@@ -239,9 +236,8 @@ gimp_context_preview_new (GimpContextPreviewType  type,
   gcp->type          = type;
   gcp->width         = width;
   gcp->height        = height;
-  gcp->show_popup    = !drag_source && show_popup;
+  gcp->show_popup    = show_popup;
   gcp->show_tooltips = show_tooltips;
-  gcp->drag_source   = drag_source;
 
   gtk_preview_size (GTK_PREVIEW (gcp), width, height);
 
@@ -284,12 +280,18 @@ gimp_context_preview_update (GimpContextPreview *gcp,
   g_return_if_fail (GIMP_IS_CONTEXT_PREVIEW (gcp));
   g_return_if_fail (gimp_context_preview_data_matches_type (gcp, data));
 
-  if (!gcp->data && gcp->drag_source)  /* first call  */
+  if (!gcp->data)
     {
-      gtk_drag_source_set (GTK_WIDGET (gcp),
-			   GDK_BUTTON1_MASK,
-			   context_preview_target_table[gcp->type], n_targets,
-			   GDK_ACTION_COPY);
+      if (gcp->show_popup)
+	gtk_drag_source_set (GTK_WIDGET (gcp),
+			     GDK_BUTTON2_MASK,
+			     context_preview_target_table[gcp->type], n_targets,
+			     GDK_ACTION_COPY);
+      else
+	gtk_drag_source_set (GTK_WIDGET (gcp),
+			     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+			     context_preview_target_table[gcp->type], n_targets,
+			     GDK_ACTION_COPY);
 
       switch (gcp->type)
 	{
@@ -370,7 +372,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 	default:
 	  break;
 	}
-      gtk_tooltips_set_tip (tool_tips, GTK_WIDGET (gcp), name, NULL);
+      gimp_help_set_help_data (GTK_WIDGET (gcp), name, NULL);
     }
 }
 
@@ -528,7 +530,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 }
   
 static void
-gimp_context_preview_popup_close ()
+gimp_context_preview_popup_close (void)
 {
   if (gcp_pipe_timer > 0)
     gtk_timeout_remove (gcp_pipe_timer);
@@ -742,7 +744,7 @@ brush_rename_callback (GimpBrush          *brush,
 		       GimpContextPreview *gcp)
 {
   if (gcp->show_tooltips)
-    gtk_tooltips_set_tip (tool_tips, GTK_WIDGET (gcp), brush->name, NULL);
+    gimp_help_set_help_data (GTK_WIDGET (gcp), brush->name, NULL);
 
   return TRUE;
 }

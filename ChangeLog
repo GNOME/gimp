@@ -1,3 +1,43 @@
+1999-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/brush_select.[ch]
+	* app/gradient.c
+	* app/gradient_select.[ch]
+	* app/interface.[ch]
+	* app/palette.c
+	* app/pattern_select.[ch]: allow dragging a brush/pattern/... from
+	the selections with mouse2 without changing the active element in
+	the dialog.
+
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/color_panel.c
+	* app/color_select.c
+	* app/colormap_dialog.i.c
+	* app/devices.c
+	* app/gimpcontextpreview.[ch]
+	* app/gimphelp.[ch]
+	* app/gimpui.[ch]
+	* app/indicator_area.c
+	* app/interface.[ch]
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/ops_buttons.[ch]
+	* app/paths_dialog.c
+	* app/preferences_dialog.c
+	* app/tools.[ch]: wrapped gtk_tooltips_set_tip() with
+	gimp_help_set_help_data() and moved it to gimphelp.[ch].
+
+	This should (hopefully) be the final state of the help system. The
+	New function allows a "private tip" to be set without a visible
+	tooltip. This way the tooltips inspector (shift+F1) can search for
+	help data in the parent containers of the clicked widget. E.g. the
+	ops buttons in the layers dialog have private tips like
+	"#new_layer" which gets composed with the help data of the layers
+	dialog notebook page resulting in a complete help path.
+
+	Allow mouse2 for all dnd operations. Mouse1 still works like before.
+
 Tue Nov  2 17:36:21 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* pixmaps/question.xpm: fake one from alt's screenshot since he

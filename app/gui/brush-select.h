@@ -62,6 +62,8 @@ struct _BrushSelect
   GimpContext *context;
   gint         spacing_value;
 
+  GimpBrush   *dnd_brush;
+
   /*  Some variables to keep the GUI consistent  */
   gint      cell_width;
   gint      cell_height;

@@ -19,6 +19,7 @@
 
 #include <gtk/gtk.h>
 
+#include "gimphelp.h"
 #include "ops_buttons.h"
 
 #include "libgimp/gimpintl.h"
@@ -29,7 +30,6 @@ static void ops_button_extended_callback (GtkWidget*, gpointer);
 
 GtkWidget *
 ops_button_box_new (GtkWidget     *parent,
-		    GtkTooltips   *tool_tips,
 		    OpsButton     *ops_button,
 		    OpsButtonType  ops_type)   
 {
@@ -89,10 +89,9 @@ ops_button_box_new (GtkWidget     *parent,
 			      ops_button);
 	}
 
-      if (tool_tips != NULL)
-	gtk_tooltips_set_tip (tool_tips, button,
-			      gettext (ops_button->tooltip),
-			      ops_button->private_tip);
+      gimp_help_set_help_data (button,
+			       gettext (ops_button->tooltip),
+			       ops_button->private_tip);
 
       gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0); 
 

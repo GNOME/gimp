@@ -61,7 +61,6 @@ struct _GimpContextPreview
   gint                     popup_height;       /*  popup preview_height                */
   gboolean                 show_popup;         /*  popup a larger preview on press     */
   gboolean                 show_tooltips;      /*  install tooltips showing the name   */
-  gboolean                 drag_source;        /*  make the preview a drag_source      */
 };
 
 struct _GimpContextPreviewClass
@@ -77,7 +76,6 @@ GtkWidget*  gimp_context_preview_new      (GimpContextPreviewType type,
 					   gint           height,
 					   gboolean       show_popup,
 					   gboolean       show_tooltips,
-					   gboolean       drag_source,
 					   GtkSignalFunc  drop_data_callback,
 					   gpointer       drop_data_data);
 

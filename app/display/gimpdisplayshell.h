@@ -21,29 +21,25 @@
 #include "toolsF.h"
 #include "gdisplayF.h"
 
-/*  externed variables  */
-extern GtkWidget   * tool_widgets[];
-extern GtkTooltips * tool_tips;
-
 /*  function declarations  */
-GtkWidget *  create_pixmap_widget   (GdkWindow    *parent,
-				     gchar       **data,
-				     gint          width,
-				     gint          height);
+GtkWidget * create_pixmap_widget   (GdkWindow    *parent,
+				    gchar       **data,
+				    gint          width,
+				    gint          height);
 
-GdkPixmap *  create_tool_pixmap     (GtkWidget    *parent,
-				     ToolType      type);
+GdkPixmap * create_tool_pixmap     (GtkWidget    *parent,
+				    ToolType      type);
 
-void         create_toolbox         (void);
-void	     toolbox_free           (void);
+void        create_toolbox         (void);
+void	    toolbox_free           (void);
 
-void         toolbox_raise_callback (GtkWidget    *widget,
-				     gpointer      client_data);
+void        toolbox_raise_callback (GtkWidget    *widget,
+				    gpointer      data);
 
-void         create_display_shell   (GDisplay     *gdisp,
-				     gint          width,
-				     gint          height,
-				     gchar        *title,
-				     gint          type);
+void        create_display_shell   (GDisplay     *gdisp,
+				    gint          width,
+				    gint          height,
+				    gchar        *title,
+				    gint          type);
 
 #endif /* __INTERFACE_H__ */

@@ -402,7 +402,7 @@ color_area_create (gint       width,
 
   /*  dnd stuff  */
   gtk_drag_source_set (color_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_area_target_table, n_color_area_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (color_area, color_area_drag_color, NULL);

@@ -21,19 +21,29 @@
 #ifndef __GIMP_HELP_H__
 #define __GIMP_HELP_H__
 
-#include <glib.h>
+typedef void (* GimpHelpFunc) (gchar *);
 
-typedef void  (* GimpHelpFunc) (gpointer);
+
+void  gimp_help_init               (void);
+void  gimp_help_free               (void);
+
+void  gimp_help_enable_tooltips    (void);
+void  gimp_help_disable_tooltips   (void);
 
 /*  the standard help function  */
-void  gimp_standard_help_func      (gpointer          help_data);
+void  gimp_standard_help_func      (gchar        *help_data);
 
 /*  connect the "F1" accelerator of a window  */
 void  gimp_help_connect_help_accel (GtkWidget    *widget,
 				    GimpHelpFunc  help_func,
-				    gpointer      help_data);
+				    gchar        *help_data);
+
+/*  set help data for non-window widgets  */
+void  gimp_help_set_help_data      (GtkWidget    *widget,
+				    gchar        *tool_tip,
+				    gchar        *help_data);
 
 /*  the main help function  */
-void  gimp_help                    (gchar            *help_page);
+void  gimp_help                    (gchar        *help_data);
 
 #endif /* __GIMP_HELP_H__ */

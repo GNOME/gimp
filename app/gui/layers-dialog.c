@@ -15,9 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <string.h>
-#include "gdk/gdkkeysyms.h"
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "buildmenu.h"
 #include "colormaps.h"
@@ -31,7 +30,6 @@
 #include "gimprc.h"
 #include "gimpui.h"
 #include "image_render.h"
-#include "interface.h"
 #include "layers_dialog.h"
 #include "layers_dialogP.h"
 #include "lc_dialogP.h"
@@ -247,12 +245,12 @@ static MenuItem option_items[] =
 };
 
 /*  the ops buttons  */
-static OpsButtonCallback raise_layers_ext_callbacks[] = 
+static GtkSignalFunc raise_layers_ext_callbacks[] = 
 {
   layers_dialog_raise_layer_to_top_callback, NULL, NULL, NULL
 };
 
-static OpsButtonCallback lower_layers_ext_callbacks[] = 
+static GtkSignalFunc lower_layers_ext_callbacks[] = 
 {
   layers_dialog_lower_layer_to_bottom_callback, NULL, NULL, NULL
 };
@@ -347,8 +345,13 @@ layers_dialog_create (void)
     }
 
   /*  The main vbox  */
-  layersD->vbox = vbox = gtk_vbox_new (FALSE, 1);
+  layersD->vbox = gtk_event_box_new ();
+
+  gimp_help_set_help_data (layersD->vbox, NULL, "dialogs/layers/layers.html");
+
+  vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (layersD->vbox), vbox);
 
   /*  The layers commands pulldown menu  */
   menus_get_layers_menu (&layersD->ops_menu, &layersD->accel_group);
@@ -359,15 +362,16 @@ layers_dialog_create (void)
 
   label = gtk_label_new (_("Mode:"));
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
+  gtk_widget_show (label);
 
   menu = build_menu (option_items, NULL);
   layersD->mode_option_menu = gtk_option_menu_new ();
   gtk_box_pack_start (GTK_BOX (util_box), layersD->mode_option_menu,
 		      FALSE, FALSE, 2);
-
-  gtk_widget_show (label);
-  gtk_widget_show (layersD->mode_option_menu);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (layersD->mode_option_menu), menu);
+  gtk_widget_show (layersD->mode_option_menu);
+
+  gimp_help_set_help_data (layersD->mode_option_menu, NULL, "#paint_mode_menu");
 
   layersD->preserve_trans =
     gtk_check_button_new_with_label (_("Keep Trans."));
@@ -377,6 +381,9 @@ layers_dialog_create (void)
 		      (GtkSignalFunc) preserve_trans_update,
 		      layersD);
   gtk_widget_show (layersD->preserve_trans);
+
+  gimp_help_set_help_data (layersD->preserve_trans, NULL, "#keep_trans_button");
+
   gtk_widget_show (util_box);
 
   /*  Opacity scale  */
@@ -397,6 +404,8 @@ layers_dialog_create (void)
 		      (GtkSignalFunc) opacity_scale_update,
 		      layersD);
   gtk_widget_show (slider);
+
+  gimp_help_set_help_data (slider, NULL, "#opacity_scale");
 
   gtk_widget_show (util_box);
 
@@ -424,7 +433,7 @@ layers_dialog_create (void)
   gtk_widget_show (layersD->scrolled_win);
 
   /*  The ops buttons  */
-  button_box = ops_button_box_new (lc_dialog->shell, tool_tips,
+  button_box = ops_button_box_new (lc_dialog->shell,
 				   layers_ops_buttons, OPS_BUTTON_NORMAL);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
@@ -465,6 +474,7 @@ layers_dialog_create (void)
 		      NULL);
 
   gtk_widget_show (vbox);
+  gtk_widget_show (layersD->vbox);
 
   return layersD->vbox;
 }
@@ -2028,7 +2038,7 @@ layer_widget_create (GImage *gimage,
 
   /*  dnd source  */
   gtk_drag_source_set (layer_widget->mask_preview,
-		       GDK_BUTTON1_MASK,
+		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        layer_mask_target_table, n_layer_mask_targets, 
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
@@ -2078,7 +2088,7 @@ layer_widget_create (GImage *gimage,
 
   /*  dnd source  */
   gtk_drag_source_set (list_item,
-		       GDK_BUTTON1_MASK,
+		       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        layer_target_table, n_layer_targets, 
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
 

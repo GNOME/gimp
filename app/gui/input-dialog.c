@@ -21,19 +21,19 @@
 #include <stdio.h>
 
 #include "appenv.h"
+#include "devices.h"
+#include "dialog_handler.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
-#include "devices.h"
-#include "interface.h"
 #include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "gradient.h"
 #include "gradient_header.h"
+#include "interface.h"
 #include "session.h"
 #include "tools.h"
-#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
@@ -798,7 +798,7 @@ device_status_create (void)
 	    gtk_pixmap_new (create_tool_pixmap (deviceD->table, RECT_SELECT),
 			    NULL);
 	  gtk_drag_source_set (deviceD->eventboxes[i],
-			       GDK_BUTTON1_MASK,
+			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 			       tool_target_table, n_tool_targets,
 			       GDK_ACTION_COPY);
 	  gimp_dnd_tool_source_set (deviceD->eventboxes[i],
@@ -826,7 +826,7 @@ device_status_create (void)
 	  gtk_preview_size (GTK_PREVIEW (deviceD->colors[i]),
 			    CELL_SIZE, CELL_SIZE);
 	  gtk_drag_source_set (deviceD->colors[i],
-			       GDK_BUTTON1_MASK,
+			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 			       color_area_target_table, n_color_area_targets,
 			       GDK_ACTION_COPY);
 	  gimp_dnd_color_source_set (deviceD->colors[i],
@@ -849,7 +849,7 @@ device_status_create (void)
 	  deviceD->brushes[i] =
 	    gimp_context_preview_new (GCP_BRUSH, 
 				      CELL_SIZE, CELL_SIZE,
-				      FALSE, TRUE, TRUE,
+				      FALSE, TRUE,
 				      GTK_SIGNAL_FUNC (device_status_drop_brush),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->brushes[i],
@@ -861,7 +861,7 @@ device_status_create (void)
 	  deviceD->patterns[i] =
 	    gimp_context_preview_new (GCP_PATTERN,
 				      CELL_SIZE, CELL_SIZE, 
-				      FALSE, TRUE, TRUE,
+				      FALSE, TRUE,
 				      GTK_SIGNAL_FUNC (device_status_drop_pattern),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->patterns[i],
@@ -873,7 +873,7 @@ device_status_create (void)
 	  deviceD->gradients[i] =
 	    gimp_context_preview_new (GCP_GRADIENT,
 				      CELL_SIZE * 2, CELL_SIZE, 
-				      FALSE, TRUE, TRUE,
+				      FALSE, TRUE,
 				      GTK_SIGNAL_FUNC (device_status_drop_gradient),
 				      GUINT_TO_POINTER (device_info->device));
 	  gtk_table_attach (GTK_TABLE(deviceD->table), deviceD->gradients[i],
@@ -1009,9 +1009,9 @@ device_status_update (guint32 deviceid)
       gtk_widget_show (deviceD->tools[i]);
       gtk_widget_show (deviceD->eventboxes[i]);
 
-      gtk_tooltips_set_tip (tool_tips,deviceD->eventboxes[i],
-			    tool_info[(int) gimp_context_get_tool (device_info->context)].tool_desc,
-			    NULL);
+      gimp_help_set_help_data (deviceD->eventboxes[i],
+			       tool_info[(gint) gimp_context_get_tool (device_info->context)].tool_desc,
+			       tool_info[(gint) gimp_context_get_tool (device_info->context)].private_tip);
 
       for (j = 0; j < CELL_SIZE * 3; j += 3)
 	{
@@ -1033,7 +1033,7 @@ device_status_update (guint32 deviceid)
 	       buffer[j+1],
 	       buffer[j+2]);
 
-      gtk_tooltips_set_tip (tool_tips, deviceD->colors[i], ttbuf, NULL);
+      gimp_help_set_help_data (deviceD->colors[i], ttbuf, NULL);
 
       if (gimp_context_get_brush (device_info->context))
 	{

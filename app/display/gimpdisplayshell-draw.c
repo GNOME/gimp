@@ -90,6 +90,8 @@ static gboolean toolbox_drag_drop          (GtkWidget *,
 					    gint,
 					    gint,
 					    guint);
+static ToolType toolbox_drag_tool          (GtkWidget *,
+					    gpointer);
 static void     toolbox_drop_tool          (GtkWidget *,
 					    ToolType,
 					    gpointer);
@@ -111,11 +113,8 @@ static int pixmap_colors[8][3] =
 #define ROWS      8
 #define MARGIN    2
 
-/*  global variables  */
-GtkTooltips * tool_tips;
-
 /*  local variables  */
-static GdkColor    colors[12];
+static GdkColor    colors[11];
 static GtkWidget * toolbox_shell = NULL;
 
 static GtkTargetEntry toolbox_target_table[] =
@@ -130,6 +129,13 @@ static GtkTargetEntry toolbox_target_table[] =
 };
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
+
+static GtkTargetEntry tool_target_table[] =
+{
+  GIMP_TARGET_TOOL
+};
+static guint tool_n_targets = (sizeof (tool_target_table) /
+			       sizeof (tool_target_table[0]));
 
 static GtkTargetEntry display_target_table[] =
 {
@@ -237,12 +243,6 @@ allocate_colors (GtkWidget *parent)
 
   colors[10] = parent->style->bg[GTK_STATE_PRELIGHT];
   gdk_color_alloc (colormap, &colors[10]);
-
-  /* postit yellow (khaki) as background for tooltips */
-  colors[11].red = 61669;
-  colors[11].green = 59113;
-  colors[11].blue = 35979;
-  gdk_color_alloc (colormap, &colors[11]);
 }
 
 static void
@@ -262,6 +262,8 @@ create_indicator_area (GtkWidget *parent)
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
+
+  gimp_help_set_help_data (alignment, NULL, "#indicator_area");
 
   ind_area = indicator_area_create ();
   gtk_container_add (GTK_CONTAINER (alignment), ind_area);
@@ -295,13 +297,15 @@ create_color_area (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
 
+  gimp_help_set_help_data (alignment, NULL, "#color_area");
+
   col_area = color_area_create (54, 42, default_pixmap, swap_pixmap);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
-  gtk_tooltips_set_tip (tool_tips, col_area,
-			_("Foreground & background colors.  The black "
-			  "and white squares reset colors.  The arrows swap colors. Double "
-			  "click to select a color from a colorrequester."),
-			NULL);
+  gimp_help_set_help_data
+    (col_area,
+     _("Foreground & background colors.  The black "
+       "and white squares reset colors.  The arrows swap colors. Double "
+       "click to select a color from a colorrequester."), NULL);
   gtk_widget_show (col_area);
   gtk_widget_show (alignment);
   gtk_widget_show (frame);
@@ -381,9 +385,17 @@ create_tools (GtkWidget *parent)
 			      GTK_SIGNAL_FUNC (tools_button_press),
 			      (gpointer) tool_info[j].tool_id);
 
-	  gtk_tooltips_set_tip (tool_tips, button,
-				gettext(tool_info[j].tool_desc),
-				tool_info[j].private_tip);
+	  /*  dnd stuff  */
+	  gtk_drag_source_set (tool_info[j].tool_widget,
+			       GDK_BUTTON2_MASK,
+			       tool_target_table, tool_n_targets,
+			       GDK_ACTION_COPY);
+	  gimp_dnd_tool_source_set (tool_info[j].tool_widget,
+				    toolbox_drag_tool, (gpointer) j);
+
+	  gimp_help_set_help_data (button,
+				   gettext(tool_info[j].tool_desc),
+				   tool_info[j].private_tip);
 
 	  gtk_widget_show (pixmap);
 	  gtk_widget_show (alignment);
@@ -563,12 +575,9 @@ create_toolbox (void)
   allocate_colors (main_vbox);
 
   /*  tooltips  */
-  tool_tips = gtk_tooltips_new ();
-  gtk_tooltips_set_colors (tool_tips,
-			   &colors[11],
-			   &main_vbox->style->fg[GTK_STATE_NORMAL]);
+  gimp_help_init ();
   if (!show_tool_tips)
-    gtk_tooltips_disable (tool_tips);
+    gimp_help_disable_tooltips ();
 
   /*  Build the menu bar with menus  */
   menus_get_toolbox_menubar (&menubar, &table);
@@ -592,7 +601,7 @@ create_toolbox (void)
   create_tools (wbox);
   create_color_area (wbox);
   if (show_indicators && (!no_data) )
-      create_indicator_area (wbox);
+    create_indicator_area (wbox);
   gtk_widget_show (window);
   toolbox_set_drag_dest (window);
 
@@ -612,8 +621,7 @@ toolbox_free (void)
       if (!tool_info[i].icon_data)
 	gtk_object_sink (GTK_OBJECT (tool_info[i].tool_widget));
     }
-  gtk_object_destroy (GTK_OBJECT (tool_tips));
-  gtk_object_unref   (GTK_OBJECT (tool_tips));
+  gimp_help_free ();
 }
 
 void
@@ -645,20 +653,20 @@ create_display_shell (GDisplay* gdisp,
 
   GSList *group = NULL;
 
-  int n_width, n_height;
-  int s_width, s_height;
-  int scalesrc, scaledest;
-  int contextid;
+  gint n_width, n_height;
+  gint s_width, s_height;
+  gint scalesrc, scaledest;
+  gint contextid;
 
   {
     /*  adjust the initial scale -- so that window fits on screen */
-    s_width = gdk_screen_width ();
+    s_width  = gdk_screen_width ();
     s_height = gdk_screen_height ();
 
     scalesrc = gdisp->scale & 0x00ff;
     scaledest = gdisp->scale >> 8;
 
-    n_width = (width * scaledest) / scalesrc;
+    n_width  = (width * scaledest) / scalesrc;
     n_height = (height * scaledest) / scalesrc;
 
     /*  Limit to the size of the screen...  */
@@ -688,7 +696,12 @@ create_display_shell (GDisplay* gdisp,
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
-  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK);
+  gtk_widget_set_events (gdisp->shell,
+			 GDK_POINTER_MOTION_MASK |
+			 GDK_POINTER_MOTION_HINT_MASK |
+			 GDK_BUTTON_PRESS_MASK |
+			 GDK_KEY_PRESS_MASK |
+			 GDK_KEY_RELEASE_MASK);
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (gdisplay_delete),
 		      gdisp);
@@ -734,11 +747,17 @@ create_display_shell (GDisplay* gdisp,
 
   table_lower = gtk_table_new (1,4,FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table_lower), 0, 1);
- /*  gtk_table_set_row_spacing (GTK_TABLE (table_lower), 0, 1); */
+  /* gtk_table_set_row_spacing (GTK_TABLE (table_lower), 0, 1); */
 
-  /* hbox for statusbar area */
+  /*  hbox for statusbar area  */
+  evbox = gtk_event_box_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), evbox, FALSE, TRUE, 0);
+  gtk_widget_show (evbox);
+
+  gimp_help_set_help_data (evbox, NULL, "#status_area");
+
   gdisp->statusarea = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), gdisp->statusarea, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (evbox), gdisp->statusarea);
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
@@ -748,6 +767,8 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
 		      GTK_SIGNAL_FUNC (gdisplay_origin_button_press),
 		      gdisp);
+
+  gimp_help_set_help_data (gdisp->origin, NULL, "#origin_button");
 
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
   gtk_container_set_border_width (GTK_CONTAINER (gdisp->origin), 0);
@@ -763,6 +784,8 @@ create_display_shell (GDisplay* gdisp,
 		      GTK_SIGNAL_FUNC (gdisplay_hruler_button_press),
 		      gdisp);
 
+  gimp_help_set_help_data (gdisp->hrule, NULL, "#ruler");
+
   gdisp->vrule = gtk_vruler_new ();
   gtk_widget_set_events (GTK_WIDGET (gdisp->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
@@ -773,15 +796,19 @@ create_display_shell (GDisplay* gdisp,
 		      GTK_SIGNAL_FUNC (gdisplay_vruler_button_press),
 		      gdisp);
 
+  gimp_help_set_help_data (gdisp->vrule, NULL, "#ruler");
+
   /* The nav window button */
-  evbox = gtk_event_box_new();
-  gtk_widget_show(evbox);
-  navhbox = gtk_hbox_new (FALSE,0);
-  gtk_container_add(GTK_CONTAINER(evbox),navhbox);
+  evbox = gtk_event_box_new ();
+  gtk_widget_show (evbox);
+  navhbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (evbox), navhbox);
   GTK_WIDGET_UNSET_FLAGS (evbox, GTK_CAN_FOCUS);
   gtk_signal_connect (GTK_OBJECT (evbox), "button_press_event",
 		      GTK_SIGNAL_FUNC (nav_popup_click_handler),
 		      gdisp);
+
+  gimp_help_set_help_data (evbox, NULL, "#nav_window_button");
 
   gdisp->hsb = gtk_hscrollbar_new (gdisp->hsbdata);
   GTK_WIDGET_UNSET_FLAGS (gdisp->hsb, GTK_CAN_FOCUS);
@@ -799,6 +826,8 @@ create_display_shell (GDisplay* gdisp,
 		      GTK_SIGNAL_FUNC (qmask_click_handler),
 		      gdisp);
 
+  gimp_help_set_help_data (gdisp->qmaskoff, NULL, "#qmask_off_button");
+
   gdisp->qmaskon = gtk_radio_button_new (group);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (gdisp->qmaskon));
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (gdisp->qmaskon), FALSE);
@@ -808,6 +837,8 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->qmaskon), "button_press_event",
 		      GTK_SIGNAL_FUNC (qmask_click_handler),
 		      gdisp);
+
+  gimp_help_set_help_data (gdisp->qmaskon, NULL, "#qmask_on_button");
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gdisp->qmaskoff), TRUE);
   gtk_widget_set_usize (GTK_WIDGET (gdisp->qmaskon), 15, 15);
@@ -918,19 +949,22 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_usize (gdisp->statusbar, 1, -1);
   gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
 				 GTK_RESIZE_QUEUE);
-  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->statusbar, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->statusbar,
+		      TRUE, TRUE, 0);
   contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
 					    "title");
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
 		      contextid,
 		      title);
 
-  gdisp->progressbar = gtk_progress_bar_new();
+  gdisp->progressbar = gtk_progress_bar_new ();
   gtk_widget_set_usize (gdisp->progressbar, 80, -1);
-  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->progressbar, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->progressbar,
+		      FALSE, TRUE, 0);
 
   gdisp->cancelbutton = gtk_button_new_with_label(_("Cancel"));
-  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->cancelbutton, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->cancelbutton,
+		      FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
 
   /*  the popup menu  */
@@ -1175,6 +1209,13 @@ toolbox_drag_drop (GtkWidget      *widget,
   gtk_drag_finish (context, return_val, FALSE, time);
 
   return return_val;
+}
+
+static ToolType
+toolbox_drag_tool (GtkWidget *widget,
+		   gpointer   data)
+{
+  return (ToolType) data;
 }
 
 static void

@@ -40,7 +40,6 @@
 #include "gimpset.h"
 #include "gimpui.h"
 #include "image_render.h"
-#include "interface.h"
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
@@ -74,9 +73,10 @@ typedef struct _PathsDialog PathsDialog;
 
 struct _PathsDialog
 {
-  GtkWidget *paths_list;
   GtkWidget *vbox;
-  GtkWidget *ops_menu;
+  GtkWidget *paths_list;
+
+  GtkWidget     *ops_menu;
   GtkAccelGroup *accel_group;
 
   gdouble ratio;
@@ -155,7 +155,7 @@ static void     paths_dialog_null_callback             (GtkWidget *, gpointer);
 static void     path_close                   (PATHP);
 
 /*  the ops buttons  */
-static OpsButtonCallback to_path_ext_callbacks[] = 
+static GtkSignalFunc to_path_ext_callbacks[] = 
 { 
   paths_dialog_advanced_to_path_callback,          /* SHIFT */
   paths_dialog_null_callback,                      /* CTRL  */
@@ -195,16 +195,20 @@ static OpsButton paths_ops_buttons[] =
 static OpsButton point_ops_buttons[] =
 {
   { pennorm_xpm, paths_dialog_new_point_callback, NULL,
-    N_("New Point"), NULL,
+    N_("New Point"),
+    "#new_point_button",
     NULL, 0 },
   { penadd_xpm, paths_dialog_add_point_callback, NULL,
-    N_("Add Point"), NULL,
+    N_("Add Point"),
+    "#add_point_button",
     NULL, 0 },
   { pendel_xpm, paths_dialog_delete_point_callback, NULL,
-    N_("Delete Point"), NULL,
+    N_("Delete Point"),
+    "#delete_point_button",
     NULL, 0 },
   { penedit_xpm, paths_dialog_edit_point_callback, NULL,
-    N_("Edit Point"), NULL,
+    N_("Edit Point"),
+    "#edit_point_button",
     NULL, 0 },
   { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
 };
@@ -299,11 +303,17 @@ paths_dialog_create (void)
   paths_dialog = g_new0 (PathsDialog, 1);
 
   /*  The paths box  */
-  paths_dialog->vbox = vbox = gtk_vbox_new (FALSE, 1);
+  paths_dialog->vbox = gtk_event_box_new ();
+
+  gimp_help_set_help_data (paths_dialog->vbox, NULL,
+			   "dialogs/paths/paths.html");
+
+  vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-      
+  gtk_container_add (GTK_CONTAINER (paths_dialog->vbox), vbox);
+
   /* The point operations */
-  button_box = ops_button_box_new (lc_dialog->shell, tool_tips, 
+  button_box = ops_button_box_new (lc_dialog->shell,
 				   point_ops_buttons, OPS_BUTTON_RADIO);
   /* gtk_container_set_border_width (GTK_CONTAINER (button_box), 2); */
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, TRUE, 2);
@@ -314,7 +324,7 @@ paths_dialog_create (void)
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
   gtk_widget_set_usize (scrolled_win, LIST_WIDTH, LIST_HEIGHT);
-  gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 2);
 
   paths_dialog->paths_list = paths_list = gtk_clist_new (2);
   gtk_signal_connect (GTK_OBJECT (vbox), "destroy",
@@ -334,28 +344,30 @@ paths_dialog_create (void)
 		      paths_dialog);
   gtk_container_set_focus_vadjustment (GTK_CONTAINER (paths_list), 
 				       gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win))); 
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar, GTK_CAN_FOCUS); 
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
+			  GTK_CAN_FOCUS); 
 
   paths_dialog->selsigid =
-    gtk_signal_connect (GTK_OBJECT(paths_list), "select_row",
+    gtk_signal_connect (GTK_OBJECT (paths_list), "select_row",
 			GTK_SIGNAL_FUNC (paths_select_row),
 			NULL);
 
-  gtk_signal_connect (GTK_OBJECT(paths_list), "unselect_row",
+  gtk_signal_connect (GTK_OBJECT (paths_list), "unselect_row",
 		      GTK_SIGNAL_FUNC (paths_unselect_row),
 		      NULL);
       
   gtk_widget_show (scrolled_win);
   gtk_widget_show (paths_list);
 
-  gtk_signal_connect (GTK_OBJECT(vbox),"realize",
+  gtk_signal_connect (GTK_OBJECT (vbox),"realize",
 		      GTK_SIGNAL_FUNC (paths_dialog_realized),
 		      NULL);
 
   gtk_widget_show (vbox);
+  gtk_widget_show (paths_dialog->vbox);
 
   /*  The ops buttons  */
-  button_box = ops_button_box_new (lc_dialog->shell, tool_tips, 
+  button_box = ops_button_box_new (lc_dialog->shell,
 				   paths_ops_buttons, OPS_BUTTON_NORMAL);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
@@ -2339,15 +2351,6 @@ file_cancel_callback (GtkWidget *widget,
 }
 
 static void
-path_load_save_help_func (gpointer data)
-{
-  if (load_store)
-    gimp_help ("paths/dialogs/import_path.html");
-  else
-    gimp_help ("paths/dialogs/export_path.html");
-}
-
-static void
 make_file_dlg (gpointer data) 
 {
   file_dlg = gtk_file_selection_new (_("Load/Store Bezier Curves"));
@@ -2366,7 +2369,7 @@ make_file_dlg (gpointer data)
 		      NULL);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (file_dlg, path_load_save_help_func, NULL);
+  gimp_help_connect_help_accel (file_dlg, gimp_standard_help_func, NULL);
 }
 
 void 
@@ -2383,6 +2386,8 @@ paths_dialog_import_path_callback (GtkWidget *widget,
       if (GTK_WIDGET_VISIBLE (file_dlg))
 	return;
     }
+
+  gimp_help_set_help_data (file_dlg, NULL, "paths/dialogs/import_path.html");
 
   gtk_window_set_title (GTK_WINDOW (file_dlg), _("Load Path"));
   load_store = 1;
@@ -2403,6 +2408,8 @@ paths_dialog_export_path_callback (GtkWidget *widget,
       if (GTK_WIDGET_VISIBLE (file_dlg))
 	return;
     }
+
+  gimp_help_set_help_data (file_dlg, NULL, "paths/dialogs/export_path.html");
 
   gtk_window_set_title (GTK_WINDOW (file_dlg), _("Store Path"));
   load_store = 0;

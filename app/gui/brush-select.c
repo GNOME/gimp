@@ -68,6 +68,8 @@
 static void     brush_change_callbacks             (BrushSelect      *bsp,
 						    gboolean          closing);
 
+static GimpBrush * brush_select_drag_brush         (GtkWidget        *widget,
+						    gpointer          data);
 static void     brush_select_drop_brush            (GtkWidget        *widget,
 						    GimpBrush        *brush,
 						    gpointer          data);
@@ -252,6 +254,7 @@ brush_select_new (gchar   *title,
 
   bsp = g_new (BrushSelect, 1);
   bsp->callback_name          = NULL;
+  bsp->dnd_brush              = NULL;
   bsp->brush_popup            = NULL;
   bsp->popup_timeout_tag      = 0;
   bsp->popup_anim_timeout_tag = 0;
@@ -371,6 +374,12 @@ brush_select_new (gchar   *title,
 		      bsp);
 
   /*  dnd stuff  */
+  gtk_drag_source_set (bsp->preview,
+		       GDK_BUTTON2_MASK,
+		       preview_target_table, preview_n_targets,
+		       GDK_ACTION_COPY);
+  gimp_dnd_brush_source_set (bsp->preview, brush_select_drag_brush, bsp);
+
   gtk_drag_dest_set (bsp->preview,
                      GTK_DEST_DEFAULT_ALL,
                      preview_target_table, preview_n_targets,
@@ -735,6 +744,17 @@ brushes_check_dialogs (void)
 /*
  *  Local functions
  */
+
+static GimpBrush *
+brush_select_drag_brush (GtkWidget *widget,
+			 gpointer   data)
+{
+  BrushSelect *bsp;
+
+  bsp = (BrushSelect *) data;
+
+  return bsp->dnd_brush;
+}
 
 static void
 brush_select_drop_brush (GtkWidget *widget,
@@ -1502,14 +1522,21 @@ brush_select_events (GtkWidget   *widget,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
 
+      col = bevent->x / bsp->cell_width;
+      row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
+      index = row * bsp->NUM_BRUSH_COLUMNS + col;
+
+      brush = gimp_brush_list_get_brush_by_index (brush_list, index);
+
+      if (brush)
+	bsp->dnd_brush = brush;
+      else
+	bsp->dnd_brush = gimp_context_get_brush (bsp->context);
+
       if (bevent->button == 1)
 	{
-	  col = bevent->x / bsp->cell_width;
-	  row = (bevent->y + bsp->scroll_offset) / bsp->cell_height;
-	  index = row * bsp->NUM_BRUSH_COLUMNS + col;
-
 	  /*  Get the brush and display the popup brush preview  */
-	  if ((brush = gimp_brush_list_get_brush_by_index (brush_list, index)))
+	  if (brush)
 	    {
 	      gdk_pointer_grab (bsp->preview->window, FALSE,
 				(GDK_POINTER_MOTION_HINT_MASK |

@@ -968,7 +968,7 @@ tools_new_tool (ToolType tool_type)
 }
 
 void
-tools_help_func (gpointer help_data)
+tools_help_func (gchar *help_data)
 {
   gimp_help (tool_info[(gint) active_tool->type].private_tip);
 }
@@ -1005,7 +1005,8 @@ tool_options_dialog_new (void)
   /*  The shell and main vbox  */
   options_shell =
     gimp_dialog_new (_("Tool Options"), "tool_options",
-		     tools_help_func, NULL,
+		     tools_help_func,
+		     "dialogs/tool_options.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, TRUE,
 

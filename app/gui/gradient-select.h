@@ -37,6 +37,8 @@ struct _GradientSelect
   gchar       *callback_name;
   gint         sample_size;
 
+  gradient_t  *dnd_gradient;
+
   GdkColor     black;
   GdkGC       *gc;
 };

@@ -24,7 +24,6 @@
 #include "gimpdnd.h"
 #include "gradient_select.h"
 #include "indicator_area.h"
-#include "interface.h"       /*  for tool_tips  */
 #include "pattern_select.h"
 
 #include "libgimp/gimpintl.h"
@@ -117,7 +116,7 @@ gradient_preview_drop_gradient (GtkWidget  *widget,
 }
 
 GtkWidget *
-indicator_area_create ()
+indicator_area_create (void)
 {
   GimpContext *context;
   GtkWidget *indicator_table;
@@ -131,12 +130,12 @@ indicator_area_create ()
   brush_preview =
     gimp_context_preview_new (GCP_BRUSH, 
 			      CELL_SIZE, CELL_SIZE, 
-			      TRUE, FALSE, FALSE,
+			      TRUE, FALSE,
 			      (GimpDndDropBrushFunc) brush_preview_drop_brush,
 			      NULL);
-  gtk_tooltips_set_tip (tool_tips, brush_preview, 
-			_("The active brush.\n"
-			  "Click to open the Brushes Dialog."), NULL);
+  gimp_help_set_help_data (brush_preview, 
+			   _("The active brush.\n"
+			     "Click to open the Brushes Dialog."), NULL);
   gtk_signal_connect (GTK_OBJECT (brush_preview), "clicked",
 		      GTK_SIGNAL_FUNC (brush_preview_clicked),
 		      NULL);
@@ -149,12 +148,12 @@ indicator_area_create ()
   pattern_preview =
     gimp_context_preview_new (GCP_PATTERN, 
 			      CELL_SIZE, CELL_SIZE, 
-			      TRUE, FALSE, FALSE,
+			      TRUE, FALSE,
 			      (GimpDndDropPatternFunc) pattern_preview_drop_pattern,
 			      NULL);
-  gtk_tooltips_set_tip (tool_tips, pattern_preview, 
-			_("The active pattern.\n"
-			  "Click to open the Patterns Dialog."), NULL);
+  gimp_help_set_help_data (pattern_preview, 
+			   _("The active pattern.\n"
+			     "Click to open the Patterns Dialog."), NULL);
   gtk_signal_connect (GTK_OBJECT (pattern_preview), "clicked",
 		      GTK_SIGNAL_FUNC (pattern_preview_clicked),
 		      NULL);
@@ -168,13 +167,12 @@ indicator_area_create ()
     gimp_context_preview_new (GCP_GRADIENT, 
 			      GRAD_CELL_WIDTH,
 			      GRAD_CELL_HEIGHT, 
-			      TRUE, FALSE, FALSE,
+			      TRUE, FALSE,
 			      (GimpDndDropGradientFunc) gradient_preview_drop_gradient,
 			      NULL);
-  gtk_tooltips_set_tip (tool_tips, gradient_preview, 
-			_("The active gradient.\n"
-			  "Click to open the Gradients Dialog."), 
-			NULL);
+  gimp_help_set_help_data (gradient_preview, 
+			   _("The active gradient.\n"
+			     "Click to open the Gradients Dialog."), NULL);
   gtk_signal_connect (GTK_OBJECT (gradient_preview), "clicked",
 		      GTK_SIGNAL_FUNC (gradient_preview_clicked),
 		      NULL);

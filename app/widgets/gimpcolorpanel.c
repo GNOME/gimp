@@ -102,7 +102,7 @@ color_panel_new (guchar *initial,
 
   /*  dnd stuff  */
   gtk_drag_source_set (private->drawing_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                        color_panel_target_table, n_color_panel_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (private->drawing_area,

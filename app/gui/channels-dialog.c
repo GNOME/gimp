@@ -28,7 +28,6 @@
 #include "gimpdnd.h"
 #include "gimprc.h"
 #include "gimpui.h"
-#include "interface.h"
 #include "layers_dialogP.h"
 #include "lc_dialogP.h"
 #include "menus.h"
@@ -174,7 +173,7 @@ static GdkPixmap *channel_pixmap[] = { NULL, NULL, NULL };
 static gint suspend_gimage_notify = 0;
 
 /*  the ops buttons  */
-static OpsButtonCallback to_selection_ext_callbacks[] = 
+static GtkSignalFunc to_selection_ext_callbacks[] = 
 { 
   channels_dialog_add_channel_to_sel_callback,          /* SHIFT */
   channels_dialog_sub_channel_from_sel_callback,        /* CTRL  */
@@ -268,8 +267,14 @@ channels_dialog_create (void)
     }
 
   /*  The main vbox  */
-  channelsD->vbox = vbox = gtk_vbox_new (FALSE, 1);
+  channelsD->vbox = gtk_event_box_new ();
+
+  gimp_help_set_help_data (channelsD->vbox, NULL,
+			   "dialogs/channels/channels.html");
+
+  vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (channelsD->vbox), vbox);
 
   /*  The channels commands pulldown menu  */
   menus_get_channels_menu (&channelsD->ops_menu, &channelsD->accel_group);
@@ -298,8 +303,8 @@ channels_dialog_create (void)
   gtk_widget_show (channelsD->scrolled_win);
 
   /*  The ops buttons  */
-  button_box = ops_button_box_new (lc_dialog->shell, tool_tips,
-				   channels_ops_buttons, OPS_BUTTON_NORMAL);
+  button_box = ops_button_box_new (lc_dialog->shell, channels_ops_buttons,
+				   OPS_BUTTON_NORMAL);
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
 
@@ -348,6 +353,7 @@ channels_dialog_create (void)
 		      NULL);
 
   gtk_widget_show (vbox);
+  gtk_widget_show (channelsD->vbox);
 
   return channelsD->vbox;
 }
@@ -1432,7 +1438,7 @@ channel_widget_create (GImage      *gimage,
 
       /*  dnd source  */
       gtk_drag_source_set (list_item,
-			   GDK_BUTTON1_MASK,
+			   GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 			   channel_target_table, n_channel_targets, 
 			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
@@ -1447,7 +1453,7 @@ channel_widget_create (GImage      *gimage,
     {
       /*  dnd source  */
       gtk_drag_source_set (list_item,
-			   GDK_BUTTON1_MASK,
+			   GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 			   component_target_table, n_component_targets, 
 			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
 
