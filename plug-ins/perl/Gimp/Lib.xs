@@ -224,8 +224,6 @@ static SV *new_gdrawable (gint32 id)
 
 static GDrawable *old_gdrawable (SV *sv)
 {
-  MAGIC *mg;
-
   if (!(sv_derived_from (sv, PKG_GDRAWABLE)))
     croak ("argument is not of type " PKG_GDRAWABLE);
 
@@ -259,8 +257,7 @@ static GTile *old_tile (SV *sv)
 /* magic stuff.  literally.  */
 static int gpixelrgn_free (SV *obj, MAGIC *mg)
 {
-  GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(obj);
-
+/*  GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(obj); */
 /* automatically done on detach */
 /*  if (pr->dirty)
      gimp_drawable_flush (pr->drawable);*/
@@ -273,7 +270,6 @@ MGVTBL vtbl_gpixelrgn = {0, 0, 0, 0, gpixelrgn_free};
 static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, int dirty, int shadow)
 {
   static HV *stash;
-  MAGIC *mg;
   SV *sv = newSVn (sizeof (GPixelRgn));
   GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(sv);
 
@@ -1747,19 +1743,14 @@ gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
 	RETVAL
 
 void
-gimp_pixel_rgn_resize(sv, x, y, width, height)
-	SV *	sv
+gimp_pixel_rgn_resize(pr, x, y, width, height)
+	GPixelRgn *	pr
 	int	x
 	int	y
 	int	width
 	int	height
 	CODE:
-	{
-		GPixelRgn *pr = old_pixelrgn (sv);
-		HV *hv = (HV*)SvRV(sv);
-		
-		gimp_pixel_rgn_resize (pr, x, y, width, height);
-	}
+	gimp_pixel_rgn_resize (pr, x, y, width, height);
 
 pdl *
 gimp_pixel_rgn_get_pixel(pr, x, y)
@@ -2102,7 +2093,7 @@ gimp_tile_set_data(tile,data)
 	GTile *	tile
 	SV *	data
 	CODE:
-        croak ("gimp_tile_set_data is not yet implemented\n");
+        croak ("gimp_tile_set_data is not yet implemented\n"); (void *)data;
 	gimp_tile_ref_zero (tile);
 	gimp_tile_unref (tile, 1);
 

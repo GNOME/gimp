@@ -9,7 +9,7 @@ use Gtk;
 
 Gtk->init;
 
-$VERSION=0.4;
+$VERSION=0.9;
 
 #Gimp::set_trace(TRACE_ALL);
 
@@ -63,37 +63,47 @@ sub unformat_flags {
 }
 
 sub format_plain {
-   shift;
+   my $x=shift;
+   $x=~s/\r/\\r/g;
+   $x=~s/\n/\\n/g;
+   $x=~s/\t/\\t/g;
+   $x=~s/([\x00-\x1f])/sprintf "\\x%02x",ord($1)/eg;
+   $x=~s/\\n/\n/g;
+   $x;
 }
 
 sub unformat_plain {
-   shift;
+   my $x=shift;
+   $x=~s/\\r/\r/g;
+   $x=~s/\\t/\t/g;
+   $x=~s/\\x([0-9a-fA-F][0-9a-fA-F])/chr(hex($1))/eg;
+   $x;
 }
 
 sub format_hex {
-   join (" ", map { sprintf "%02x",ord($_) } split //);
+   join (" ", map { sprintf "%02x",ord($_) } split //,shift);
 }
 
 sub unformat_hex {
    my $x = shift;
    $x =~ y/0-9a-fA-F//cd;
-   print "X: $x\n";
-   $x=unpack("H*",$x);
-   print "Y: $x\n";
-   $x;#d#
+   $x=pack("H*",$x);
+   $x;
 }
 
 sub format_gserialize {
-   format_hex;
+   format_hex(@_);
 }
 
 sub unformat_gserialize {
-   unformat_hex;
+   unformat_hex(@_);
 }
 
 sub escape($) {
    my $x=shift;
-   is_binary($x) ? format_hex($x) : format_plain($x);
+   is_gserialize($x) ? format_gserialize($x)
+                     : is_binary($x) ? format_hex($x)
+                                     : format_plain($x);
 }
 
 sub refresh_names {
@@ -148,7 +158,7 @@ sub create_main {
 
    $window = $w;
 
-   $w->set_title("Parasite Editor - version $VERSION alpha");
+   $w->set_title("Parasite Editor - version $VERSION");
    $w->signal_connect("destroy",sub {main_quit Gtk});
 
    $b = new Gtk::Button "Close";
@@ -294,8 +304,16 @@ Gtk::Dialog->register_subtype(ParasiteEditor);
 
 sub GTK_CLASS_INIT { };
 
+sub unformat {
+   my $self=shift;
+   $self->{data_} = $self->{unformat}->($self->{-data}->get_chars(0,-1)) if $self->{unformat};
+   $self->{name_} = $self->{-name}->get_text;
+   $self->{flags_} = ::unformat_flags($self->{-flags}->get_text);
+}
+
 sub format {
    my $self=shift;
+   $self->{format}->($self->{data_});
 }
 
 sub refresh {
@@ -313,8 +331,8 @@ sub undirty {
 sub GTK_OBJECT_INIT {
    my $self = shift;
    @{$self}{qw(find_func attach_func detach_func current parasite)}=@$init;
-   @{$self}{qw(name  flags  data )}=@{$self->{find_func}->(@{$self}{'current','parasite'})};
-   @{$self}{qw(name_ flags_ data_)}=@{$self->{find_func}->(@{$self}{'current','parasite'})};
+   @{$self}{qw(name  flags  data)}=
+   @{$self}{qw(name_ flags_ data_)}=@{$self->{find_func}->(@{$self}{qw(current parasite)})};
 
    my $table = new Gtk::Table (2,3,0);
    $table->attach(new Gtk::Label("Name")	,0,1,0,1,{},{},0,0);
@@ -326,26 +344,47 @@ sub GTK_OBJECT_INIT {
    $self->{-flags} = new Gtk::Entry;
    $self->{-data} = new Gtk::Text;
 
-   my $format = new Gtk::HBox 0,5;
-   local *newformat = sub {
-   };
+   $self->{format} = \&::format_plain;
+   $self->refresh;
 
-   newformat("Text",\&::format_text,\&::unformat_text);
-   newformat("Hex",\&::format_text,\&::unformat_text);
-   newformat("GSerialize",\&::format_text,\&::unformat_text);
+   my $format = new Gtk::HBox 0,5;
+   my $radio;
+   local *newformat = sub {
+      my ($label,$in,$out,$enable)=@_;
+      my $r = new Gtk::RadioButton $label,$radio ? $radio : ();
+      $format->add($r);
+      $r->signal_connect(clicked => sub {
+         $self->unformat;
+         $self->{format}=$in;
+         $self->{unformat}=$out;
+         $self->refresh;
+      });
+      $r->signal_emit_by_name("clicked") if $enable;
+      $radio = $r;
+   };
 
    $table->attach($self->{-name}	,1,2,0,1,{},{},0,0);
    $table->attach($self->{-flags}	,1,2,1,2,{},{},0,0);
    $table->attach($format		,1,2,2,3,{},{},0,0);
-   $table->attach($self->{-data}	,1,2,3,4,{},{},0,0);
+   $table->attach($self->{-data}	,1,2,3,4,['fill'],{},0,0);
+
+   $detect = ::is_gserialize($self->{data_}) ? 3
+           : ::is_binary($self->{data_})     ? 2
+           :                                   1;
+
+   newformat("Text",\&::format_plain,\&::unformat_plain,$detect==1);
+   newformat("Hex",\&::format_hex,\&::unformat_hex,$detect==2);
+   newformat("GSerialize",\&::format_gserialize,\&::unformat_gserialize,$detect==3);
 
    $self->vbox->add($table);
 
    $self->refresh;
 
+   $self->{-data}->set_editable(1);
+
    my $b = new Gtk::Button "OK";
    $b->signal_connect(clicked => sub {
-      $self->undirty;
+      $self->unformat;
       $self->{detach_func}->(@{$self}{'current','parasite'});
       $self->{attach_func}->($self->{'current'},[@{$self}{'name_','flags_','data_'}]);
       main::refresh_names;

@@ -10,7 +10,7 @@ Revision history for Gimp-Perl extension.
         - fixed pager bug in gimpdoc.
         - cleaned filehandle handling in Gimp/Net.pm.
         - streamlined config code again.
-        - updated examples/parasite-editor.
+        - updated examples/parasite-editor and examples/mirrorsplit.
 
 1.091 Sun May 23 13:21:34 CEST 1999
 	- include a fake typemap.pdl.

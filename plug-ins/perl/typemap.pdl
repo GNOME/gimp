@@ -1,16 +1,14 @@
+# fake typemap used when pdl support isn't available
+# xsubpp requires valid types even in ifdef'd out code
+
 TYPEMAP
-pdl*	T_PDL
-pdl *	T_PDL
-Logical	T_IV
-float	T_NV
+pdl *	T_ERROR
 
 INPUT
-
-T_PDL
-	$var = PDL->SvPDLV($arg)
+T_ERROR
+	error no_pdl_support
 
 
 OUTPUT
-
-T_PDL
-	PDL->SetSV_PDL($arg,$var);
+T_ERROR
+	error no_pdl_support

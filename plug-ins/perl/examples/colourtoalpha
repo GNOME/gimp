@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use Gimp::Feature 'pdl';
-use Gimp 1.084;
+use Gimp 1.091;
 use Gimp::Fu;
 use Gimp::Util;
 use PDL::LiteF;
@@ -16,7 +16,7 @@ register "colour_to_alpha",
          "<Image>/Filters/Colors/Colour To Alpha",
          "RGB*",	
          [
-           [PF_COLOR,		"colour",	, "The colour to replace"],
+           [PF_COLOR,		"colour",	"The colour to replace"],
          ],
          sub {					# es folgt das eigentliche Skript...
    my($image,$drawable,$colour)=@_;

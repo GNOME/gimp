@@ -34,7 +34,7 @@ for (@ARGV) {
 
 @matches = sort @matches;
 
-$filter = "| tbl | nroff -man | ( eval '$ENV{PAGER}' || less || pg || more )";
+$filter = "| tbl | nroff -man | ( '$ENV{PAGER}' 2>/dev/null || less || pg || more )";
 $filter = ">&STDOUT" if $opt_r;
 
 open PAGER,$filter or die "unable to open pipe to the pager ($filter)\n";

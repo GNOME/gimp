@@ -1,0 +1,70 @@
+#!/usr/bin/perl -w
+
+use Gimp::Feature 'pdl';
+use Gimp 1.092;
+use Gimp::Fu;
+use Gimp::Util;
+use PDL;
+
+register "pixelmap",
+         "Maps Pixel values and coordinates through general Perl exprtessions",
+         "=pod(*)",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "19990528",
+         "<Image>/Filters/Map/Pixelmap",
+         "*",	
+         [
+           [PF_STRING,		"expression"	, "The perl expression to use",	'$p=outer($x,$y)->slice("*$bpp")']
+         ],
+         sub {					# es folgt das eigentliche Skript...
+   my($image,$drawable,$expr)=@_;
+
+   Gimp->progress_init ("Mapping pixels...");
+   
+   my $init="";
+
+   $expr =~ /\$p/   and $init.='$p = $src->data;';
+   $expr =~ /\$x/   and $init.='$x = sequence(byte,$src->w); $x+=$src->x;';
+   $expr =~ /\$y/   and $init.='$y = sequence(byte,$src->h); $y+=$src->y;';
+   $expr =~ /\$bpp/ and $init.='$bpp = $src->bpp;';
+
+   $expr = "sub{$init\n#line 1\n$expr;\n$p}";
+
+   my @bounds = $drawable->mask;
+   {
+      # $src and $dst must either be scoped or explicitly undef'ed
+      # before merge_shadow.
+      my $src = new PixelRgn ($drawable->get,@bounds,0,0);
+      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+      my($p,$x,$y,$bpp);
+
+      $expr = eval $expr; die "$@" if $@;
+
+      $iter = Gimp->pixel_rgns_register ($src, $dst);
+
+      do {
+         $dst->data(&$expr);
+
+         Gimp->progress_update (($src->y-$bounds[1])/$bounds[2]);
+      } while (Gimp->pixel_rgns_process ($iter));
+   }
+   Gimp->progress_update (1);
+
+   $drawable->merge_shadow (1);
+   $drawable->update ($drawable->mask);
+
+   ();		# wir haben kein neues Bild erzeugt
+};
+
+exit main;
+
+
+
+
+
+
+
+
+
+

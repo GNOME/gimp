@@ -43,6 +43,7 @@ Gimp/Feature.pm
 Gimp/Pod.pm
 Gimp/Module.pm
 Gimp/Compat.pm
+Gimp/Config.pm.in
 embed/Makefile.PL
 embed/perlmod.c
 Module/Makefile.PL
@@ -98,4 +99,5 @@ examples/mirrorsplit
 examples/oneliners
 examples/randomart1
 examples/colourtoalpha
+examples/pixelmap
 

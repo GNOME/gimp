@@ -502,6 +502,7 @@ sub interact($$$$@) {
      $button = new Gtk::Button "Cancel";
      signal_connect $button "clicked", sub {hide $w; main_quit Gtk};
      $w->action_area->pack_start($button,1,1,0);
+     can_default $button 1;
      
      $res=0;
      

@@ -11,7 +11,7 @@ $|=1;
       sethspin.pl animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
-      oneliners randomart1
+      oneliners randomart1 pixelmap
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -35,6 +35,7 @@ if ($ARGV[0] ne "--writemakefile") {
    $ENV{IN_GIMP}=0;
    exit system("./etc/configure",@ARGV)>>8;
 } else {
+   shift;
    local $do_config_msg = 1;
    do './config.pl'; die $@ if $@;
 }
@@ -177,62 +178,6 @@ install-plugins ::
 ";
 }
 
-print "writing Gimp/Config.pm...";
-
-open C,">Gimp/Config.pm" or die "Gimp/Config.pm: $!\n";
-print C <<'EOF';
-package Gimp::Config;
-
-=cut
-
-=head1 NAME
-
-  Gimp::Config - config options found during configure time.
-
-=head1 DESCRIPTION
-
-The Gimp::Config module creates a tied hash %Gimp::Config which contains
-all the definitions the configure script and perl deduced from the system
-configuration at configure time. You can access these values just like you
-access any other values, i.e.  C<$Gimp::Config{KEY}>. Some important keys are:
-
-  IN_GIMP	=> true when gimp-perl was part of the Gimp distribution.
-  GIMP		=> the path of the gimp executable
-  prefix	=> the installation prefix
-  libdir	=> the gimp systemwide libdir
-  bindir	=> paths where gimp binaries are installed
-  gimpplugindir	=> the gimp plug-in directory (without the /plug-ins-suffix)
-
-=head1 SEE ALSO
-
-L<Gimp>.
-
-=cut
-
-sub TIEHASH {
-   my $pkg = shift;
-   my $self;
-
-   bless \$self, $pkg;
-}
-
-sub FETCH {
-   $cfg{$_[1]};
-}
-
-tie %Gimp::Config, 'Gimp::Config';
-
-%cfg = (
-EOF
-for $k (keys(%cfg)) {
-   $v = $cfg{$k};
-   print C "   $k	=> \"",quotemeta(expand($v)),"\",\n";
-}
-print C ");\n\n1;\n";
-close C;
-
-print "ok\n";
-
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
 @DIRS= qw/Gimp Net/;
 
@@ -251,6 +196,24 @@ if ($build_module) {
    print "no\n";
    $dont_embed = "true";
 }
+
+print "writing Gimp/Config.pm... ";
+{
+   sub conf_eval {
+      my $v = expand($cfg{$_[0]});
+      $v =~ s/([\\\]])/\\$1/g;
+      $v;
+   }
+   local $/,*FH;
+   open FH,"<Gimp/Config.pm.in" or die "Gimp/Config.pm.in: $!\n";
+   my $cfg = <FH>;
+   $cfg =~ s/#CFG#/join "",
+                        map sprintf("   %-20s => q[%s],\n",$_,conf_eval $_),
+                            keys %cfg/e;
+   open FH,">Gimp/Config.pm" or die "Gimp/Config.pm: $!\n";
+   print(FH $cfg)>0 or die "Gimp/Config.pm: $!\n";
+}
+print "ok\n";
 
 WriteMakefile(
     'dist'	=> {
@@ -285,7 +248,7 @@ WriteMakefile(
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> ['scm2perl','scm2scm','gimpdoc'],
     'macro'	=> \%cfg,
-    'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h Gimp/Config.pm" },
+    'realclean'	=> { FILES => "config.status config.cache config.pl config.log config.h Gimp/Config.pm" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
 );
 
@@ -297,6 +260,7 @@ Hopefully, Gimp is now correctly configured. you can now enter "make",
 
 EOF
 
+__END__
 # write an empty makefile (the last chance to stop)
 # and warn the user.
 sub not_halt {
@@ -308,8 +272,9 @@ all install check:
 clean mostlyclean objclean:
 
 distclean maintainer-clean realclean clobber: clean
-	rm -f Makefile config.cache config.pl config.log config.h config.status stamp-h Makefile.old
-        rm -rf test-dir inst-temp Gimp/Config.pm
+	\$(RM_F) Makefile config.cache config.pl config.log
+        \$(RM_F) config.h config.status stamp-h Makefile.old Gimp/Config.pm
+        \$(RM_RF) test-dir inst-temp
 EOF
    close MAKEFILE;
    exit;

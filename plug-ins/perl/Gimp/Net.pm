@@ -138,15 +138,14 @@ sub start_server {
    my $opt = shift;
    $opt = $Gimp::spawn_opts unless $opt;
    print "trying to start gimp with options \"$opt\"\n" if $Gimp::verbose;
-   $server_fh=local *FH;
-   my $gimp_fh=local *FH;
+   $server_fh=local *SERVER_FH;
+   my $gimp_fh=local *CLIENT_FH;
    socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,AF_UNIX
       or socketpair $server_fh,$gimp_fh,PF_UNIX,SOCK_STREAM,PF_UNSPEC
       or croak "unable to create socketpair for gimp communications: $!";
    $gimp_pid = fork;
    if ($gimp_pid > 0) {
-      Gimp::ignore_functions(@Gimp::gimp_gui_functions);
-      close $gimp_fh;
+      Gimp::ignore_functions(@Gimp::gimp_gui_functions) unless $opt=~s/(^|:)gui//;
       return $server_fh;
    } elsif ($gimp_pid == 0) {
       close $server_fh;
@@ -250,7 +249,7 @@ sub gimp_init {
 sub gimp_end {
    $initialized = 0;
 
-   close $server_fh if $server_fh;
+   #close $server_fh if $server_fh;
    undef $server_fh;
    kill 'KILL',$gimp_pid if $gimp_pid;
    undef $gimp_pid;

@@ -16,8 +16,6 @@ $^W=0;
    libdir		=> q[@libdir@],
    bindir		=> q[@bindir@],
 
-   IN_GIMP		=> q[@IN_GIMP@],
-
    _PERL		=> q[@PERL@],
    GIMP			=> q[@GIMP@],
 
@@ -32,6 +30,14 @@ $^W=0;
    gimpplugindir	=> q[@gimpplugindir@],
 
    _EXTENSIVE_TESTS	=> q[@EXTENSIVE_TESTS@],
+
+   IN_GIMP		=> q[@IN_GIMP@],
+   top_builddir		=> q[@top_builddir@],
+
+   pdl_inc		=> '',
+   pdl_typemaps		=> '',
+   INC1			=> '',
+   DEFINE1		=> '',
 );
 
 sub expand {
@@ -50,33 +56,24 @@ while (($k,$v)=each(%cfg)) {
    $$k=$v;
 }
 
-$GIMP = $bindir."/gimp" if $IN_GIMP;
+$GIMPTOOL       = expand($GIMPTOOL);
 
-$GIMP     = expand($GIMP);
-$GIMPTOOL = expand($GIMPTOOL);
+if ($IN_GIMP) {
+   $GIMP = $bindir."/gimp" if $IN_GIMP;
+   $GIMP_PREFIX=expand($prefix);
+} else {
+   chomp ($GIMP_PREFIX = `$GIMPTOOL --prefix`);
+   $gimpplugindir = `$GIMPTOOL -n --install-admin-bin /bin/sh`;
+   $gimpplugindir =~ s{^.*\s(.*?)(?:/+bin/sh)\r?\n?$}{$1} &&
+   $gimpplugindir =~ s{/plug-ins$}{} or die "\nFATAL: unable to deduce plugindir from gimptool script\n\n";
+   $GIMP = expand($GIMP);
+}
+
 
 $GIMP_INC	=~ s%\$topdir%$topdir%g;
 $GIMP_INC_NOUI	=~ s%\$topdir%$topdir%g;
 $GIMP_LIBS	=~ s%\$topdir%$topdir%g;
 $GIMP_LIBS_NOUI	=~ s%\$topdir%$topdir%g;
-
-if ($IN_GIMP) {
-   $GIMP_PREFIX=expand($prefix);
-} else {
-   $GIMP_PREFIX = `$GIMPTOOL --prefix`;
-   chomp $GIMP_PREFIX;
-}
-
-$cfg{GIMP_PREFIX}=$GIMP_PREFIX;
-$cfg{GIMP_PATH}  =$GIMP;
-
-if (!$IN_GIMP) {
-   $cfg{gimpplugindir} = `$GIMPTOOL -n --install-admin-bin /bin/sh`;
-   $cfg{gimpplugindir} =~ s{^.*\s(.*?)(?:/+bin/sh)\r?\n?$}{$1} &&
-   $cfg{gimpplugindir} =~ s{/plug-ins$}{} or die "\nFATAL: unable to deduce plugindir from gimptool script\n\n";
-}
-
-$cfg{_DEFS} = $DEFS;
 
 # $...1 variables should be put in front of the corresponding MakeMaker values.
 $INC1    = "-I$topdir";
@@ -123,13 +120,23 @@ if ($PDL) {
    $do_config_msg && print "checking for PDL include path... ",&PDL::Core::Dev::PDL_INCLUDE,"\n";
    $do_config_msg && print "checking for PDL typemap... ",&PDL::Core::Dev::PDL_TYPEMAP,"\n";
 
-   $cfg{pdl_inc}      = $pdl_inc = &PDL::Core::Dev::PDL_INCLUDE;
-   $cfg{pdl_typemaps} = "@{[@pdl_typemaps = &PDL::Core::Dev::PDL_TYPEMAP]}";
+   $pdl_inc      = $pdl_inc = &PDL::Core::Dev::PDL_INCLUDE;
+   $pdl_typemaps = "@{[@pdl_typemaps = &PDL::Core::Dev::PDL_TYPEMAP]}";
    $DEFINE1	.= " -DHAVE_PDL=1";
 } else {
    @pdl_typemaps = "$topdir/typemap.pdl";
 }
 
-$cfg{INC1}    = $INC1;
-$cfg{DEFINE1} = $DEFINE1;
+for(keys %cfg) {
+   ($k=$_)=~s/^_//;
+   $cfg{$_}=$$k;
+}
+
+sub MY::makefile {
+   package MY;
+   my $t = shift->SUPER::makefile(@_);
+   $t =~ s/^	false$/	true/m;
+   $t;
+}
+
 
