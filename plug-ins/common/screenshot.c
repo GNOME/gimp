@@ -265,7 +265,7 @@ select_window (const GdkScreen *screen)
 
   if (status != GrabSuccess)
     {
-      g_message (_("Screen Shot: Error grabbing the pointer"));
+      g_message (_("Error grabbing the pointer"));
       return 0;
     }
 
@@ -431,7 +431,7 @@ shoot (void)
 
   if (!window)
     {
-      g_message (_("Screen Shot: Specified window not found"));
+      g_message (_("Specified window not found"));
       return;
     }
 
@@ -463,7 +463,7 @@ shoot (void)
 
   if (!screenshot)
     {
-      g_message (_("Screen Shot: Error obtaining screenshot"));
+      g_message (_("Error obtaining screenshot"));
       return;
     }
 
@@ -512,6 +512,7 @@ shoot_dialog (void)
 
 			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
+
 			    GTK_STOCK_OK, shoot_ok_callback,
 			    NULL, NULL, NULL, TRUE, FALSE,
 
@@ -537,7 +538,7 @@ shoot_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("_Single Window"));
+					       _("a _Single Window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), ! shootvals.root);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -552,7 +553,7 @@ shoot_dialog (void)
 
   /*  root window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("_Whole Screen"));
+					       _("the _Whole Screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.root);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
