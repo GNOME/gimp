@@ -18,9 +18,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <stdio.h>
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "gimplutP.h"
 #include "gimplut.h"
-#include <stdio.h>
+
 
 GimpLut *
 gimp_lut_new ()

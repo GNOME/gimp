@@ -26,7 +26,7 @@
 
 #include "apptypes.h"
 #include "pixel_region.h"
-#include "gimpimageF.h"
+
 
 /*  Called initially to setup accelerated rendering features  */
 void  paint_funcs_setup     (void);

@@ -21,15 +21,21 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
 
-#include "blob.h"
-#include <glib.h>
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
+#include "blob.h"
+
 #include "libgimp/gimpmath.h"
+
 
 static Blob *
 blob_new (int y, int height)

@@ -15,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __BUCKET_FILL_H__
 #define  __BUCKET_FILL_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 #include "tools.h"
+
 
 typedef enum
 {
@@ -50,5 +50,6 @@ void        bucket_fill_region (BucketFillMode  fill_mode,
 
 Tool *      tools_new_bucket_fill   (void);
 void        tools_free_bucket_fill  (Tool *tool);
+
 
 #endif  /*  __BUCKET_FILL_H__  */

@@ -17,11 +17,14 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <gtk/gtk.h>
+
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include "apptypes.h"
 
 #include "app_procs.h"
 #include "parasitelist.h"

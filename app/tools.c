@@ -18,6 +18,10 @@
 
 #include "config.h"
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "airbrush.h"
 #include "bezier_select.h"

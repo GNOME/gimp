@@ -19,10 +19,8 @@
 #ifndef __GIMP_BRUSH_LIST_H__
 #define __GIMP_BRUSH_LIST_H__
 
-#include <glib.h>
 
 #include "gimpbrush.h"
-#include "gimpbrushlistF.h"
 
 
 #define GIMP_TYPE_BRUSH_LIST    (gimp_brush_list_get_type ())

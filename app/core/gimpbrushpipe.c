@@ -24,6 +24,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <gtk/gtk.h>
+
 #include "apptypes.h"
 #include "appenv.h"
 #include "brush_header.h"

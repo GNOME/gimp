@@ -140,6 +140,10 @@ typedef struct _GimpChannelClass   GimpChannelClass;
 
 typedef GimpChannel Channel;		/* convenience */
 
+typedef struct _GDisplay           GDisplay;
+
+typedef struct _GimpDrawable       GimpDrawable;
+
 typedef struct _GimpLayer          GimpLayer;
 typedef struct _GimpLayerClass     GimpLayerClass;
 typedef struct _GimpLayerMask      GimpLayerMask;
@@ -148,10 +152,23 @@ typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
 typedef GimpLayer Layer;		/* convenience */
 typedef GimpLayerMask LayerMask;	/* convenience */
 
+typedef struct _GimpImage          GimpImage;
+
+typedef struct _GimpSet            GimpSet;
+typedef struct _GimpList           GimpList;
+
+typedef struct _Guide              Guide;
+typedef        guint32             Tattoo;
+
 typedef struct _paint_core	   PaintCore;
 
 typedef struct _GimpBrush	   GimpBrush;
-typedef struct _GimpBrushClass	   GimpBrushClass;
+typedef struct _GimpBrushList      GimpBrushList;
+
+typedef struct _GimpObject         GimpObject;
+
+typedef struct _GimpHistogram      GimpHistogram;
+typedef struct _GimpLut            GimpLut;
 
 typedef struct _layer_undo         LayerUndo;
 
@@ -162,5 +179,8 @@ typedef struct _fs_to_layer_undo   FStoLayerUndo;
 typedef struct _PlugIn             PlugIn;
 typedef struct _PlugInDef          PlugInDef;
 typedef struct _PlugInProcDef      PlugInProcDef;
+
+typedef struct _ParasiteList       ParasiteList;
+
 
 #endif /* __APPTYPES_H__ */

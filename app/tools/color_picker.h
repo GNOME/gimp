@@ -15,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __COLOR_PICKER_H__
 #define  __COLOR_PICKER_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 #include "tools.h"
+
 
 gboolean   pick_color              (GimpImage    *gimage,
 				    GimpDrawable *drawable,
@@ -35,5 +35,6 @@ Tool     * tools_new_color_picker  (void);
 void       tools_free_color_picker (Tool *tool);
 
 extern gint col_value[5];
+
 
 #endif  /*  __COLOR_PICKER_H__  */

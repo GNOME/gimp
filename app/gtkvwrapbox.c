@@ -123,6 +123,7 @@ get_child_requisition (GtkWrapBox     *wbox,
     gtk_widget_get_child_requisition (child, child_requisition);
 }
 
+#ifdef UNUSED_CODE
 static void
 _gtk_vwrap_box_size_request (GtkWidget      *widget,
 			     GtkRequisition *requisition)
@@ -169,6 +170,7 @@ _gtk_vwrap_box_size_request (GtkWidget      *widget,
   requisition->height += GTK_CONTAINER (wbox)->border_width * 2;
   /*<h2v-on>*/
 }
+#endif
 
 static gfloat
 get_layout_size (GtkVWrapBox *this,

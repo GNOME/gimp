@@ -28,8 +28,6 @@
 #ifndef __PATH_BEZIER_H__
 #define __PATH_BEZIER_H__
 
-#include <gdk/gdk.h>
-#include <glib.h>
 
 #include "path_toolP.h"
 

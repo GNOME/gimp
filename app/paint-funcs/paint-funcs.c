@@ -22,6 +22,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gimprc.h"
 #include "paint_funcs.h"

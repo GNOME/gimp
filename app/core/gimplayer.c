@@ -23,6 +23,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
+
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"

@@ -15,13 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __HUE_SATURATION_H__
 #define __HUE_SATURATION_H__
 
-#include <gtk/gtk.h>
-#include "gimpdrawableF.h"
 #include "image_map.h"
 #include "tools.h"
+
 
 typedef enum
 {

@@ -18,8 +18,6 @@
 #ifndef  __BLEND_H__
 #define  __BLEND_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 #include "gimpprogress.h"
 #include "tools.h"
 

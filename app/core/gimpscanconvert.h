@@ -19,12 +19,11 @@
 #ifndef SCAN_CONVERT_H
 #define SCAN_CONVERT_H
 
-#include <glib.h>
-#include "channel.h"
 
-typedef struct {
-    gdouble	x;
-    gdouble	y;
+typedef struct 
+{
+  gdouble	x;
+  gdouble	y;
 } ScanConvertPoint;
 
 

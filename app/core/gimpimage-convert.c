@@ -89,6 +89,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "brightness_contrast.h"
 #include "color_balance.h"

@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -29,6 +30,11 @@
 #endif
 #include <sys/stat.h>
 #include <sys/types.h>
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "color_area.h"
 #include "color_notebook.h"

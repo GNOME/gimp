@@ -21,6 +21,10 @@
 #include <stdio.h>
 #include <glib.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gimplut.h"
 #include "gimphistogram.h"

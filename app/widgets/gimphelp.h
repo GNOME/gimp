@@ -22,8 +22,7 @@
 #ifndef __GIMP_HELP_H__
 #define __GIMP_HELP_H__
 
-
-#include <gtk/gtk.h>
+#include "gtk/gtk.h"
 
 #include "libgimp/gimphelpui.h"
 

@@ -66,7 +66,6 @@ enum_headers = \
 	../../app/gimpimage.h		\
 	../../app/hue_saturation.h	\
 	../../app/layer.h		\
-	../../app/layerF.h		\
 	../../app/lut_funcs.h		\
 	../../app/paint_core.h		\
 	../../app/paint_funcs.h		\

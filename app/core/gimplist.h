@@ -20,10 +20,6 @@
 #define __GIMP_LIST_H__
 
 
-#include <glib.h>
-#include "gimplistF.h"
-
-
 /* GimpList - a typed list of objects with signals for adding and
  * removing of stuff. If it is weak, destroyed objects get removed
  * automatically. If it is not, it refs them so they won't be freed

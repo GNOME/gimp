@@ -29,6 +29,8 @@
 
 #include "libgimp/gimpvector.h"
 
+typedef struct _GimpBrushClass	   GimpBrushClass;
+
 struct _GimpBrush
 {
   GimpObject   gobject;

@@ -15,14 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __THRESHOLD_H__
 #define __THRESHOLD_H__
 
-#include <gtk/gtk.h>
-#include "gimpdrawableF.h"
 #include "image_map.h"
 #include "histogramwidget.h"
 #include "tools.h"
+
 
 typedef struct _ThresholdDialog ThresholdDialog;
 
@@ -54,5 +54,6 @@ void   threshold_initialize (GDisplay    *gdisp);
 void   threshold_2          (void        *data,
 			     PixelRegion *srcPR,
 			     PixelRegion *destPR);
+
 
 #endif  /*  __THRESHOLD_H__  */

@@ -22,11 +22,10 @@
 #ifndef __GIMP_CONTEXT_PREVIEW_H__
 #define __GIMP_CONTEXT_PREVIEW_H_
 
-#include <gtk/gtk.h>
-
 #include "gimpbrush.h"
 #include "gradient.h"
 #include "patterns.h"
+
 
 #ifdef __cplusplus
 extern "C" {

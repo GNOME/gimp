@@ -15,12 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __APPENV_H__
 #define __APPENV_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpsetF.h"
 
 typedef enum
 {
@@ -46,4 +44,7 @@ extern MessageHandlerType message_handler;
 gchar * quote_spaces (gchar *string);
 #endif
 
+
 #endif /*  __APPENV_H__  */
+
+

@@ -1,12 +1,30 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #ifndef _g_gimp_colormap_dialog_funcs
 #define _g_gimp_colormap_dialog_funcs
-#include <gtk/gtkdialog.h>
+
 #include <colormap_dialog.t.h>
 #include <gimpset.h>
 #include <gimpimage.h>
-#include <glib.h>
+
 GimpColormapDialog* gimp_colormap_dialog_create (
-	GimpSet* context);
+        GimpSet* context);
 GimpImage* gimp_colormap_dialog_image (
 	const GimpColormapDialog* colormap_dialog);
 gint gimp_colormap_dialog_col_index (
@@ -17,4 +35,5 @@ void gimp_colormap_dialog_connect_selected (
 	GimpColormapDialogHandler_selected handler,
 	gpointer user_data,
 	GimpColormapDialog* colormap_dialog);
+
 #endif /* _g_gimp_colormap_dialog_funcs */

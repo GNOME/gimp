@@ -15,10 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __PATHP_H__
 #define  __PATHP_H__
-
-#include "gimpimageF.h"   /* Tattoo   */
 
 struct _PathPoint
 {
@@ -51,6 +50,7 @@ gboolean      path_delete_path     (GimpImage *gimage,
 
 GSList*       pathpoints_copy      (GSList *list);
 void          pathpoints_free      (GSList *list);
+
 
 #endif  /*  __PATHP_H__  */
 

@@ -12,12 +12,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+
 #ifndef __DOCINDEX_H__
 #define __DOCINDEX_H__
 
-#include <stdio.h>
-
-#include <gtk/gtk.h>
 
 void    document_index_create     (void);
 void    document_index_free       (void);
@@ -26,5 +24,6 @@ void    document_index_add        (gchar *label);
 
 FILE  * document_index_parse_init (void);
 gchar * document_index_parse_line (FILE  *fp);
+
 
 #endif /* __DOCINDEX_H__ */

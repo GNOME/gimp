@@ -15,17 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __FILEOPS_H__
 #define __FILEOPS_H__
-
-#include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
 
 #include "plug_in.h"
-#include "gimpimageF.h"
 
 
 void file_ops_pre_init               (void);

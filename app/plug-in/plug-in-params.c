@@ -77,6 +77,8 @@
 #include <sys/shm.h>
 #endif
 
+#include "apptypes.h"
+
 #include "app_procs.h"
 #include "appenv.h"
 #include "brush_select.h"  /* Need for closing dialogs */

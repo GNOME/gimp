@@ -23,7 +23,7 @@
 #include <sys/param.h>
 #endif
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include <ctype.h>
 #include <errno.h>
@@ -59,6 +59,8 @@
 #define geteuid() 0
 #define getegid() 0
 #endif
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "cursorutil.h"

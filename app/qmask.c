@@ -18,12 +18,14 @@
 
 #include "config.h"
 
-#include <glib.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "libgimp/gimpintl.h"
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h" 
 #include "channel.h"
 #include "color_panel.h"
@@ -36,6 +38,8 @@
 #include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 
 struct _EditQmaskOptions

@@ -15,11 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __FREE_SELECT_H__
 #define __FREE_SELECT_H__
 
-#include "gimpimageF.h"
 #include "scan_convert.h"
+
 
 /*  free select action functions  */
 
@@ -41,5 +42,6 @@ void   free_select_draw           (Tool             *tool);
 
 Tool * tools_new_free_select      (void);
 void   tools_free_free_select     (Tool             *tool);
+
 
 #endif  /*  __FREE_SELECT_H__  */

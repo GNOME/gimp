@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <gmodule.h>
+#include <gtk/gtk.h>
 
 #include <stdio.h>
 #include <stdlib.h>

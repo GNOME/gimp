@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __COMMANDS_H__
 #define __COMMANDS_H__
 
-#include "gtk/gtk.h"
 
 void file_new_cmd_callback     (GtkWidget *, gpointer, guint);
 void file_open_cmd_callback    (GtkWidget *, gpointer);

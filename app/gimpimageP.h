@@ -15,8 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMPIMAGEP_H__
 #define __GIMPIMAGEP_H__
+
+
+#include <gtk/gtk.h>  /*  eeeek  */
 
 #include "gimpobjectP.h"
 #include "gimpimage.h"
@@ -25,7 +29,6 @@
 #include "temp_buf.h"
 #include "channel.h"
 #include "layer.h"
-#include "parasitelistF.h"
 #include "path.h"
 #include "undo_types.h"
 
@@ -34,7 +37,7 @@
 
 struct _GimpImage
 {
-  GimpObject gobject;
+  GimpObject     gobject;
 
   gchar         *filename;	      /*  original filename            */
   gboolean       has_filename;        /*  has a valid filename         */
@@ -46,7 +49,7 @@ struct _GimpImage
   GimpUnit           unit;            /*  image unit                   */
   GimpImageBaseType  base_type;       /*  base gimp_image type         */
 
-  guchar *cmap;                       /*  colormap--for indexed        */
+  guchar  *cmap;                      /*  colormap--for indexed        */
   gint     num_cols;                  /*  number of cols--for indexed  */
 
   gint      dirty;                    /*  dirty flag -- # of ops       */

@@ -19,12 +19,6 @@
 #define __PARASITE_LIST_H__
 
 
-#include <glib.h>
-#include <stdio.h>
-
-#include "parasitelistF.h"
-#include "gimpobject.h"
-
 #include "libgimp/gimpparasite.h"
 
 

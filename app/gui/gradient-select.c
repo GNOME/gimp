@@ -31,7 +31,14 @@
  * so every thing has to go into the strcuture and we have to have a list 
  * the structures so we can find which one we are taking about.
  */
+
+#include "config.h"
+
 #include <string.h>
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "dialog_handler.h"

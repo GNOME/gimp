@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CHANNEL_OPS_H__
 #define __CHANNEL_OPS_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 
 typedef enum
 {
@@ -39,6 +38,7 @@ void        offset    (GimpImage         *gimage,
 		       gint               offset_y);
 
 GimpImage * duplicate (GimpImage         *gimage);
+
 
 #endif  /*  __CHANNEL_OPS_H__  */
 

@@ -8,21 +8,17 @@ noinst_LIBRARIES = libgimpim.a
 libgimpim_a_SOURCES = \
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimpdrawableF.h		\
 	gimpdrawableP.h		\
 	gimpimage.c		\
 	gimpimage.h		\
-	gimpimageF.h		\
 	gimpimageP.h		\
 	gimpobject.c		\
 	gimpobject.h		\
-	gimpobjectF.h		\
 	gimpobjectP.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	gimpset.c		\
 	gimpset.h		\
-	gimpsetF.h		\
 	gimpsetP.h		\
 	gimpsignal.c		\
 	gimpsignal.h
@@ -184,7 +180,6 @@ gimp_SOURCES = \
 	gimpbrushgenerated.h	\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
-	gimpbrushlistF.h	\
 	gimpbrushlistP.h	\
 	gimpbrushpipe.c		\
 	gimpbrushpipe.h		\
@@ -200,14 +195,11 @@ gimp_SOURCES = \
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\
-	gimphistogramF.h	\
 	gimplist.c		\
 	gimplist.h		\
-	gimplistF.h		\
 	gimplistP.h		\
 	gimplut.c		\
 	gimplut.h		\
-	gimplutF.h		\
 	gimplutP.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
@@ -270,7 +262,6 @@ gimp_SOURCES = \
 	iscissors.h		\
 	layer.c			\
 	layer.h			\
-	layerF.h		\
 	layer_pvt.h		\
 	layer_cmds.c		\
 	layer_select.c		\
@@ -321,7 +312,6 @@ gimp_SOURCES = \
 	parasite_cmds.c		\
 	parasitelist.c		\
 	parasitelist.h		\
-	parasitelistF.h		\
 	parasitelistP.h		\
 	path.c			\
 	path.h			\

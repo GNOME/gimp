@@ -21,7 +21,10 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "cursorutil.h"

@@ -10,6 +10,4 @@ typedef enum
   SelectionResume
 } SelectionControl;
 
-typedef struct _GDisplay GDisplay;
-
 #endif

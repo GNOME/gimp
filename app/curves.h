@@ -15,16 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CURVES_H__
 #define __CURVES_H__
 
-#include <gtk/gtk.h>
 #include "image_map.h"
 #include "lut_funcs.h"
 #include "tools.h"
 
 #define SMOOTH 0
 #define GFREE  1
+
 
 typedef struct _CurvesDialog CurvesDialog;
 

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "file_new_dialog.h"
 #include "gimprc.h"
 #include "gimpui.h"

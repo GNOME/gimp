@@ -20,6 +20,10 @@
 
 #include <string.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "context_manager.h"

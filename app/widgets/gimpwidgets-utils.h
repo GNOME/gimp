@@ -18,10 +18,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_UI_H__
 #define __GIMP_UI_H__
-
-#include <gtk/gtk.h>
 
 #include "gimphelp.h"
 
@@ -33,6 +32,7 @@
 #include "libgimp/gimpquerybox.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpwidgets.h"
+
 
 /*  a simple message box  */
 

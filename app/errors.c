@@ -28,6 +28,8 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "errorconsole.h"

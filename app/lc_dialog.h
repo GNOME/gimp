@@ -20,7 +20,7 @@
 #define  __LC_DIALOG_H__
 
 
-#include "gimpimageF.h"
+#include "apptypes.h"
 
 
 void   lc_dialog_create            (GimpImage *gimage);

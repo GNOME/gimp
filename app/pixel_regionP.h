@@ -19,8 +19,8 @@
 #ifndef __PIXEL_REGION_P_H__
 #define __PIXEL_REGION_P_H__
 
-#include <glib.h>
 #include "pixel_region.h"
+
 
 typedef struct _PixelRegionHolder PixelRegionHolder;
 

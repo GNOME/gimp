@@ -21,7 +21,6 @@
 
 #include "apptypes.h"
 #include "procedural_db.h"
-#include "gimpimageF.h"
 #include "boundary.h"
 #include "drawable.h"
 #include "channel.h"

@@ -31,6 +31,10 @@
 #endif
 #include <time.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "module_db.h"
 #include "gimpsignal.h"

@@ -22,8 +22,9 @@
 #ifndef __DATAFILES_H__
 #define __DATAFILES_H__
 
+
 #include <time.h>
-#include <glib.h>
+
 
 /***** Types *****/
 
@@ -50,5 +51,6 @@ void datafiles_read_directories (gchar                  *path_str,
 time_t datafile_atime (void);
 time_t datafile_mtime (void);
 time_t datafile_ctime (void);
+
 
 #endif  /*  __DATAFILES_H__ */

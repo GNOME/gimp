@@ -16,12 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * Some of this code is based on the layers_dialog box code.
  */
+
 #include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
+
 #include <glib.h>
 
+#include "apptypes.h"
 #include "bezier_selectP.h"
 #include "gimpimage.h"
 #include "path.h"

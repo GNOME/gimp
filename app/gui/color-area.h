@@ -18,9 +18,9 @@
 #ifndef __COLOR_AREA_H__
 #define __COLOR_AREA_H__
 
-#include <gtk/gtk.h>
 
 #include "gdisplayF.h"
+
 
 #define FOREGROUND 0
 #define BACKGROUND 1

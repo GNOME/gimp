@@ -23,6 +23,10 @@
 #include <string.h>
 #include <errno.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"

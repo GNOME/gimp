@@ -15,15 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TEXT_TOOL_H__
 #define __TEXT_TOOL_H__
 
 #include "tools.h"
-#include "layerF.h"
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 
-typedef enum {
+
+typedef enum 
+{
   PIXELS,
   POINTS
 } SizeType;
@@ -49,5 +49,6 @@ GimpLayer * text_render      (GimpImage    *gimage,
 			      gchar        *text,
 			      gint          border,
 			      gint          antialias);
+
 
 #endif /* __TEXT_TOOL_H__ */

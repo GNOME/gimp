@@ -17,6 +17,10 @@
  */
 #include "config.h"
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "drawable.h"
 #include "gimage_mask.h"

@@ -16,6 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "color_area.h"
 #include "color_notebook.h"
@@ -23,11 +33,7 @@
 #include "gdisplay_color.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
-#include "config.h"
 
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
 
 typedef enum
 {

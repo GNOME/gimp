@@ -15,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef  __PATTERN_SELECT_H__
 #define  __PATTERN_SELECT_H__
 
-#include <gtk/gtk.h>
-
 #include "patterns.h"
+
 
 typedef struct _PatternSelect PatternSelect;
 

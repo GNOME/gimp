@@ -41,6 +41,8 @@
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
 
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"

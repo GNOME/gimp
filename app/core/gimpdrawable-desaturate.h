@@ -15,14 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __DESATURATE_H__
 #define __DESATURATE_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 
 /*  desaturate functions  */
 void  image_desaturate (GimpImage    *gimage);
 void  desaturate       (GimpDrawable *drawable);
+
 
 #endif  /*  __DESATURATE_H__  */

@@ -22,6 +22,10 @@
 
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"

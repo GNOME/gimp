@@ -15,14 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __INVERT_H__
 #define __INVERT_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
-
 /*  invert functions  */
-void  image_invert (GimpImage *);
-void  invert (GimpDrawable *);
+void  image_invert (GimpImage    *);
+void  invert       (GimpDrawable *);
+
 
 #endif  /*  __INVERT_H__  */

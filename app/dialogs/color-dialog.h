@@ -19,7 +19,6 @@
 #ifndef __COLOR_NOTEBOOK_H__
 #define __COLOR_NOTEBOOK_H__
 
-#include <gtk/gtk.h>
 
 typedef enum
 {

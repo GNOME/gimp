@@ -20,7 +20,7 @@
 
 #include <glib.h>
 
-#include "gimpimageF.h"
+#include "apptypes.h"
 
 /*  Procedural database types  */
 typedef enum

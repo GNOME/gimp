@@ -20,9 +20,6 @@
 #define __GIMP_SET_H__
 
 
-#include <glib.h>
-#include "gimpsetF.h"
-
 /* GimpSet - a (usually) typed set of objects with signals for adding
  * and removing of stuff. If it is weak, destroyed objects get removed
  * automatically. If it is not, it refs them so they won't be freed

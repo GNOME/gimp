@@ -18,6 +18,10 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "dialog_handler.h"
 #include "gimage.h"

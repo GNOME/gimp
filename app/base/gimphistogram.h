@@ -23,7 +23,7 @@
 
 #include "pixel_region.h"
 #include "gimpdrawable.h"
-#include "gimphistogramF.h"
+
 
 #define HISTOGRAM_VALUE  0
 #define HISTOGRAM_RED    1

@@ -15,12 +15,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gdisplay.h"
-#include "libgimp/gimpintl.h"
 #include "gimpprogress.h"
 #include "gimpui.h"
+
+#include "libgimp/gimpintl.h"
+
 
 struct gimp_progress_pvt {
   GDisplay      *gdisp;             /* gdisp in use, or NULL*/

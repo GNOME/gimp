@@ -27,6 +27,10 @@
 #include <unistd.h>
 #endif
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "paint_core.h"

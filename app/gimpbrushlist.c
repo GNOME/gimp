@@ -32,6 +32,10 @@
 #endif
 #include <math.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"

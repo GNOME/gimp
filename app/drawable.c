@@ -15,12 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
 #include "drawable.h"
 #include "drawable_pvt.h"
 #include "gimpcontext.h"
-#include "gimpimageF.h"
 #include "gdisplay.h"
 #include "undo.h"
+
 
 gint
 drawable_ID (GimpDrawable *drawable)

@@ -19,6 +19,10 @@
 
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "dialog_handler.h"
 #include "gimprc.h"

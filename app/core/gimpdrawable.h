@@ -21,10 +21,8 @@
 
 #include "apptypes.h"
 #include "gimpobject.h"
-#include "gimpdrawableF.h"
 #include "tile_manager.h"
 #include "temp_buf.h"
-#include "gimpimageF.h"
 
 #include "libgimp/gimpparasite.h"
 

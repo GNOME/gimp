@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CHANNEL_H__
 #define __CHANNEL_H__
 
@@ -23,7 +24,7 @@
 #include "boundary.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#include "gimpimageF.h"
+
 
 /* OPERATIONS */
 

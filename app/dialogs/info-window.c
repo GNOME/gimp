@@ -18,7 +18,12 @@
 
 #include "config.h"
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
+#include "apptypes.h"
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"

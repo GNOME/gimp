@@ -21,6 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "channel.h"
 #include "drawable.h"

@@ -18,7 +18,7 @@
 #ifndef __RECT_SELECT_H__
 #define __RECT_SELECT_H__
 
-#include "gimpimageF.h"
+#include "apptypes.h"
 #include "tools.h"
 
 /*  rect select action functions  */

@@ -15,11 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __TOOLS_H__
 #define __TOOLS_H__
 
-#include "layerF.h"
-#include "gdisplayF.h"
 #include "gimpcontext.h"
 #include "tool_options.h"
 #include "channel.h"
@@ -27,7 +26,6 @@
 
 #include "toolsF.h"
 
-#include <gtk/gtk.h>
 
 /*  The possible states for tools  */
 typedef enum

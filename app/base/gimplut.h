@@ -21,8 +21,8 @@
 #ifndef __GIMP_LUT_H__
 #define __GIMP_LUT_H__
 
-#include "gimplutF.h"
 #include "pixel_region.h"
+
 
 /* TODO: the GimpLutFunc should really be passed the ColorModel of the region,
    not just the number of channels */

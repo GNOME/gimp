@@ -19,8 +19,6 @@
 #ifndef __LUT_FUNCS_H__
 #define __LUT_FUNCS_H__
 
-#include "gimplutF.h"
-#include "gimphistogramF.h"
 
 typedef enum
 {

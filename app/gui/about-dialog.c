@@ -26,6 +26,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "apptypes.h"
+
 #include "about_dialog.h"
 #include "appenv.h"
 #include "authors.h"

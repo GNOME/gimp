@@ -21,6 +21,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
+
+#include "apptypes.h"
+
 #include "appenv.h"
 #include "by_color_select.h"
 #include "channel.h"

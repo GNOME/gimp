@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -35,7 +36,7 @@
 #define  WAIT_ANY -1
 #endif   /*  WAIT_ANY  */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
@@ -43,6 +44,8 @@
 #ifndef  G_OS_WIN32
 #include "libgimp/gimpsignal.h"
 #endif
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "app_procs.h"

@@ -34,7 +34,10 @@
 
 #include <stdlib.h>
 
+#include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "draw_core.h"

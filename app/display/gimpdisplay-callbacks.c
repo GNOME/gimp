@@ -19,7 +19,10 @@
 
 #include <stdlib.h>
 
+#include <glib.h>
 #include <gdk/gdkkeysyms.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "bucket_fill.h"

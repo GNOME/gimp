@@ -15,13 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __CONVERT_H__
 #define __CONVERT_H__
 
-#include "apptypes.h"
 #include "procedural_db.h"
-#include "gimpimageF.h"
 #include "palette_entries.h"
+
 
 /* adam's extra palette stuff */
 typedef enum
@@ -60,5 +60,6 @@ void convert_image        (GimpImage *,
 			   ConvertPaletteType);
 
 extern PaletteEntries *theCustomPalette;
+
 
 #endif  /*  __CONVERT_H__  */

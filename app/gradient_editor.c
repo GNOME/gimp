@@ -47,6 +47,7 @@
  *
  * - Add a Gradient brush mode (color changes as you move it).
  */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -55,6 +56,10 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "cursorutil.h"

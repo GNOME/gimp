@@ -28,9 +28,14 @@
  * POV-Ray team.  Any bugs are my responsibility, not theirs.
  */
 
+#include "config.h"
 
 #include <math.h>
 #include <stdlib.h>
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "asupsample.h"

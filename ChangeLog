@@ -1,3 +1,22 @@
+2000-12-16  Sven Neumann  <sven@gimp.org>
+
+	Last-minute cleanup:
+	
+	* app/gimpdrawableF.h
+	* app/gimphistogramF.h
+	* app/gimpimageF.h
+	* app/gimplistF.h
+	* app/gimplutF.h
+	* app/gimpobjectF.h
+	* app/gimpsetF.h
+	* app/layerF.h
+	* app/parasitelistF.h: removed these files
+
+	* app/Makefile.am
+	* tools/pdbgen/Makefile.am: changed accordingly
+
+	* app/[almost every file]: include cleanup
+	
 2000-12-16  Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/common/colortoalpha.c: Change to accecpt RGB input 

@@ -15,16 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __EQUALIZE_H__
 #define __EQUALIZE_H__
 
-#include "gimpimageF.h"
-#include "gimpdrawableF.h"
 
 /*  equalize functions  */
 void  image_equalize (GimpImage    *gimage);
 void  equalize       (GimpImage    *gimage,
 		      GimpDrawable *drawable,
 		      gboolean      mask_only);
+
 
 #endif  /*  __INVERT_H__  */

@@ -22,6 +22,7 @@
 
 #include <gmodule.h>
 
+#include "apptypes.h"
 #include "cursorutil.h"
 #include "dialog_handler.h"
 

@@ -22,16 +22,12 @@
 #define __GIMP_CONTEXT_H__
 
 
-#include <glib.h>
-
 #include "apptypes.h"
 #include "gdisplay.h"
-#include "gimpimageF.h"
 #include "gradient.h"
 #include "patterns.h"
 #include "toolsF.h"
 
-#include "gimpobjectP.h"
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
 #define GIMP_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))

@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
 #include "color_area.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"

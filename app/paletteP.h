@@ -15,12 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __PALETTE_P_H__
 #define __PALETTE_P_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpimageF.h"
 #include "palette_entries.h"
 
 void   palette_clist_init           (GtkWidget      *clist,
@@ -36,5 +34,6 @@ void   palette_select_palette_init  (void);
 void   palette_create_edit          (PaletteEntries *entries);
 
 void   palette_import_image_renamed (GimpImage      *gimage);
+
 
 #endif /* __PALETTE_P_H__ */

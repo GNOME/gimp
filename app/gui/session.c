@@ -47,6 +47,8 @@
 
 #include <gtk/gtk.h>
 
+#include "apptypes.h"
+
 #include "app_procs.h"
 #include "appenv.h"
 #include "commands.h"

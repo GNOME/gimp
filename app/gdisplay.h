@@ -18,7 +18,6 @@
 #ifndef __GDISPLAY_H__
 #define __GDISPLAY_H__
 
-#include <gtk/gtk.h>
 
 #include "cursorutil.h"
 #include "gimage.h"

@@ -15,10 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __FILE_OPS_P_H__
 #define __FILE_OPS_P_H__
 
-#include <glib.h>
 
 /* functions that need only be accessed from file_ops_cmds.c */
 
