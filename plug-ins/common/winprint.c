@@ -360,8 +360,7 @@ run (gchar   *name,
 	  
 	  /* Start print job. */
 	  docInfo.cbSize = sizeof (DOCINFO);
-	  docInfo.lpszDocName =
-	    gimp_image_get_filename (param[1].data.d_image);
+	  docInfo.lpszDocName = gimp_image_get_name (param[1].data.d_image);
 	  docInfo.lpszOutput = NULL;
 	  docInfo.lpszDatatype = NULL;
 	  docInfo.fwType = 0;

@@ -649,7 +649,7 @@ preview_pressed (GtkWidget      *widget,
 
 static void
 build_dialog (GimpImageBaseType  basetype,
-	      char       *imagename)
+	      gchar             *imagename)
 {
   gchar* windowname;
   CursorOffset* icon_pos;
@@ -924,9 +924,9 @@ do_playback (void)
 
   init_preview_misc();
 
-  build_dialog(gimp_image_base_type(image_id),
-               gimp_image_get_filename(image_id));
-
+  build_dialog (gimp_image_base_type (image_id),
+                gimp_image_get_name (image_id));
+  
   /* Make sure that whole preview is dirtied with pure-alpha */
   total_alpha_preview(preview_data);
 

@@ -1011,25 +1011,18 @@ create_new_image (gchar          *filename,
 static gchar *
 compose_image_name (gint32 image_ID)
 {
-  static gchar buffer[256];
-  gchar *filename, *basename;
-
-  filename = gimp_image_get_filename (image_ID);
-  if (filename == NULL)
-    return "";
+  gchar *image_name;
+  gchar *name;
 
   /* Compose a name of the basename and the image-ID */
-  basename = strrchr (filename, '/');
-  if (basename == NULL)
-    basename = filename;
-  else
-    basename++;
 
-  g_snprintf (buffer, sizeof (buffer), "%s-%ld", basename, (long)image_ID);
+  name = gimp_image_get_name (image_ID);
 
-  g_free (filename);
+  image_name = g_strdup_printf ("%s-%d", name, image_ID);
 
-  return buffer;
+  g_free (name);
+
+  return image_name;
 }
 
 
@@ -1040,7 +1033,6 @@ add_list_item_callback (GtkWidget *widget,
   GList     *tmp_list;
   GtkWidget *label;
   GtkWidget *list_item;
-  gint32     image_ID;
 
   tmp_list = GTK_LIST (list)->selection;
 
@@ -1048,16 +1040,24 @@ add_list_item_callback (GtkWidget *widget,
     {
       if ((label = (GtkWidget *) tmp_list->data) != NULL)
 	{
-	  image_ID = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (label),
-                                                         "image"));
-	  list_item =
-	    gtk_list_item_new_with_label (compose_image_name (image_ID));
+	  gint32  image_ID; 
+          gchar  *name;
 
+          image_ID = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (label),
+                                                         "image"));
+          name = compose_image_name (image_ID);
+
+	  list_item = gtk_list_item_new_with_label (name);
 	  g_object_set_data (G_OBJECT (list_item), "image",
                              GINT_TO_POINTER (image_ID));
-	  gtk_container_add (GTK_CONTAINER (filmint.image_list_film), list_item);
+
+          g_free (name);
+
+	  gtk_container_add (GTK_CONTAINER (filmint.image_list_film),
+                             list_item);
 	  gtk_widget_show (list_item);
 	}
+
       tmp_list = tmp_list->next;
     }
 }
@@ -1126,8 +1126,11 @@ add_image_list (gint       add_box_flag,
 
   for (i = 0; i < n; i++)
     {
-      list_item =
-	gtk_list_item_new_with_label (compose_image_name (image_id[i]));
+      gchar *name = compose_image_name (image_id[i]);
+
+      list_item = gtk_list_item_new_with_label (name);
+
+      g_free (name);
 
       g_object_set_data (G_OBJECT (list_item), "image",
                          GINT_TO_POINTER (image_id[i]));

@@ -159,8 +159,7 @@ do_settings_dialog(void)
    if (!dialog)
       dialog = make_settings_dialog();
 
-   gtk_label_set_text(GTK_LABEL(dialog->filename), 
-		      (filename) ? filename : _("<Untitled>"));
+   gtk_label_set_text(GTK_LABEL(dialog->filename), filename);
    browse_widget_set_filename(dialog->imagename, info->image_name);
    gtk_entry_set_text(GTK_ENTRY(dialog->title), info->title);
    gtk_entry_set_text(GTK_ENTRY(dialog->author), info->author);

@@ -83,7 +83,7 @@ int		runme = FALSE;		/* True if print should proceed */
 stp_printer_t current_printer = 0;	/* Current printer index */
 gint32          image_ID;	        /* image ID */
 
-gchar *image_filename;
+gchar *image_name;
 gint   image_width;
 gint   image_height;
 
@@ -273,10 +273,7 @@ run (gchar      *name,		/* I - Name of print program. */
   image_ID = param[1].data.d_int32;
   drawable_ID = param[2].data.d_int32;
 
-  image_filename = gimp_image_get_filename (image_ID);
-
-  if (strchr (image_filename, '/'))
-    image_filename = strrchr(image_filename, '/') + 1;
+  image_name = gimp_image_get_name (image_ID);
 
   /*  eventually export the image */
   switch (run_mode)

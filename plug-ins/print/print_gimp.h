@@ -61,7 +61,7 @@ extern gint             plist_count;	   /* Number of system printers */
 extern gint             plist_current;     /* Current system printer */
 extern gp_plist_t      *plist;		   /* System printers */
 extern gint32           image_ID;
-extern gchar           *image_filename;
+extern gchar           *image_name;
 extern gint             image_width;
 extern gint             image_height;
 extern stp_printer_t    current_printer;

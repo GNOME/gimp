@@ -706,7 +706,7 @@ gimp_scale_entry_new (GtkTable    *table,
   GtkObject *adjustment;
   GtkObject *return_adj;
 
-  label = gtk_label_new (text);
+  label = gtk_label_new_with_mnemonic (text);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label,
                     column, column + 1, row, row + 1,
@@ -751,6 +751,8 @@ gimp_scale_entry_new (GtkTable    *table,
 
       return_adj = adjustment;
     }
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
     
   if (spinbutton_width > 0)
     gtk_widget_set_size_request (spinbutton, spinbutton_width, -1);
@@ -1502,7 +1504,7 @@ gimp_table_attach_aligned (GtkTable    *table,
 
   if (label_text)
     {
-      label = gtk_label_new (label_text);
+      label = gtk_label_new_with_mnemonic (label_text);
       gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
       gtk_table_attach (table, label,
@@ -1510,6 +1512,7 @@ gimp_table_attach_aligned (GtkTable    *table,
 			row, row + 1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), widget);
     }
 
   if (left_align)

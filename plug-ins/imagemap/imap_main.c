@@ -170,7 +170,7 @@ run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
    
    /*  Get the specified drawable  */
    drawable = gimp_drawable_get(param[2].data.d_drawable);
-   _image_name = gimp_image_get_filename(param[1].data.d_image);
+   _image_name = gimp_image_get_name(param[1].data.d_image);
    _image_width = gimp_image_width(param[1].data.d_image);
    _image_height = gimp_image_height(param[1].data.d_image);
 

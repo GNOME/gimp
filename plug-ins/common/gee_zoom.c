@@ -183,8 +183,7 @@ run (gchar      *name,
 
 
 static void
-build_dialog (GimpImageBaseType  basetype,
-	      gchar             *imagename)
+build_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *button;
@@ -321,9 +320,8 @@ do_fun (void)
   /* cache hint */
   gimp_tile_cache_ntiles (1);
 
-  init_preview_misc();
-  build_dialog(gimp_image_base_type(image_id),
-               gimp_image_get_filename(image_id));
+  init_preview_misc ();
+  build_dialog ();
 
   init_lut();
   

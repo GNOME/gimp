@@ -635,9 +635,6 @@ t_anim_info *p_alloc_ainfo(gint32 image_id, GimpRunMode run_mode)
    l_ainfo_ptr->old_filename = gimp_image_get_filename(image_id);
    if(l_ainfo_ptr->old_filename == NULL)
    {
-     /* note: gimp versions > 1.2  have default filenames for new created images
-      * and we'll probably never step into this place anymore
-      */
      l_ainfo_ptr->old_filename = g_strdup("frame_0001.xcf");    /* assign a defaultname */
      gimp_image_set_filename (image_id, l_ainfo_ptr->old_filename);
    }

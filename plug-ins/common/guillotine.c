@@ -172,6 +172,8 @@ guillotine (gint32 image_ID)
       gint   x, y;
 
       filename = gimp_image_get_filename (image_ID);
+      if (!filename)
+        filename = g_strdup (_("Untitled"));
 
       /* Do the actual dup'ing and cropping... this isn't a too naive a
 	 way to do this since we got copy-on-write tiles, either. */

@@ -315,7 +315,7 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Width */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Tile Width:"), 150, 0,
+			      _("Tile _Width:"), 150, 0,
 			      gtvals.xblock, 10, 50, 2, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -329,7 +329,7 @@ glass_dialog (GimpDrawable *drawable)
 
   /* Horizontal scale - Height */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Tile Height:"), 150, 0,
+			      _("Tile _Height:"), 150, 0,
 			      gtvals.yblock, 10, 50, 2, 10, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

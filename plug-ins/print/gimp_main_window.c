@@ -332,7 +332,7 @@ create_top_level_structure(void)
    */
 
   plug_in_name = g_strdup_printf (_("%s -- Print v%s"),
-                                  image_filename, PLUG_IN_VERSION);
+                                  image_name, PLUG_IN_VERSION);
 
   print_dialog =
     gimp_dialog_new (plug_in_name, "print",

@@ -374,26 +374,37 @@ decompose (gint32  image_ID,
   for (j = 0; j < num_images; j++)
     {
       /* Build a filename like <imagename>-<channel>.<extension> */
-      char *fname = g_strdup (gimp_image_get_filename (image_ID));
-      char *extension = fname + strlen (fname) - 1;
+      gchar *fname;
+      gchar *extension;
 
-      while (extension >= fname)
-      {
-        if (*extension == '.') break;
-        extension--;
-      }
-      if (extension >= fname)
-      {
-        *(extension++) = '\0';
-        filename = g_strdup_printf ("%s-%s.%s", fname,
-		     gettext (extract[extract_idx].channel_name[j]),
-		     extension);
-      }
+      fname = gimp_image_get_filename (image_ID);
+
+      if (fname)
+        {
+          extension = fname + strlen (fname) - 1;
+
+          while (extension >= fname)
+            {
+              if (*extension == '.') break;
+              extension--;
+            }
+          if (extension >= fname)
+            {
+              *(extension++) = '\0';
+              filename = g_strdup_printf ("%s-%s.%s", fname,
+                                          gettext (extract[extract_idx].channel_name[j]),
+                                          extension);
+            }
+          else
+            {
+              filename = g_strdup_printf ("%s-%s", fname,
+                                          gettext (extract[extract_idx].channel_name[j]));
+            }
+        }
       else
-      {
-        filename = g_strdup_printf ("%s-%s", fname,
-		     gettext (extract[extract_idx].channel_name[j]));
-      }
+        {
+          filename = g_strdup (gettext (extract[extract_idx].channel_name[j]));
+        }
 
       image_ID_dst[j] = create_new_image (filename, width, height, GIMP_GRAY,
 					  layer_ID_dst+j, drawable_dst+j,
