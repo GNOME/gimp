@@ -543,7 +543,7 @@ crop_cursor_update (Tool           *tool,
   GDisplay *gdisp;
   Crop     *crop;
 
-  GdkCursorType ctype      = GIMP_CROSSHAIR_SMALL_CURSOR;
+  GdkCursorType ctype      = GIMP_MOUSE_CURSOR;
   CursorModifier cmodifier = CURSOR_MODIFIER_NONE;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -557,13 +557,11 @@ crop_cursor_update (Tool           *tool,
   else if (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
 	   mevent->y == CLAMP (mevent->y, crop->y1, crop->y1 + crop->srh))
     {
-      ctype     = GIMP_MOUSE_CURSOR;
       cmodifier = CURSOR_MODIFIER_RESIZE;
     }
   else if (mevent->x == CLAMP (mevent->x, crop->x2 - crop->srw, crop->x2) &&
 	   mevent->y == CLAMP (mevent->y, crop->y2 - crop->srh, crop->y2))
     {
-      ctype     = GIMP_MOUSE_CURSOR;
       cmodifier = CURSOR_MODIFIER_RESIZE;
     }
   else if  (mevent->x == CLAMP (mevent->x, crop->x1, crop->x1 + crop->srw) &&
@@ -576,10 +574,10 @@ crop_cursor_update (Tool           *tool,
     {
       cmodifier = CURSOR_MODIFIER_MOVE;
     }
-  else if (mevent->x > crop->x1 && mevent->x < crop->x2 &&
-	   mevent->y > crop->y1 && mevent->y < crop->y2)
+  else if (! (mevent->x > crop->x1 && mevent->x < crop->x2 &&
+	      mevent->y > crop->y1 && mevent->y < crop->y2))
     {
-      ctype = GIMP_MOUSE_CURSOR;
+      ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
 
   gdisplay_install_tool_cursor (gdisp, ctype,
