@@ -1,3 +1,11 @@
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.[ch]
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/siod-wrapper.[ch]
+	* plug-ins/script-fu/siod/slib.c: merged fix for bug #139200
+	(script-fu console freezes on long output from SIOD interpreter).
+
 2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/mng.c (respin_cmap): Properly check the return

@@ -27,17 +27,20 @@
 #include "siod/siod.h"
 
 #include "script-fu-constants.h"
+#include "script-fu-console.h"
 #include "script-fu-enums.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
 #include "siod-wrapper.h"
 
+static int    siod_console_mode;
 
 /* global variables declared by the scheme interpreter */
 extern FILE * siod_output;
 extern int    siod_verbose_level;
 extern gchar  siod_err_msg[];
+extern void * siod_output_routine;
 extern LISP   repl_return_val;
 
 
@@ -60,6 +63,12 @@ void
 siod_set_output_file (FILE *file)
 {
   siod_output = file;
+}
+
+void
+siod_set_console_mode (int flag)
+{
+  siod_console_mode = flag;
 }
 
 int
@@ -102,6 +111,34 @@ siod_get_success_msg (void)
     return "Success";
 }
 
+void
+siod_output_string (FILE *fp, char *string, ...)
+{
+  gint buff_len;
+  gchar *buff;
+  va_list args;
+
+  /* Ensure plenty of room in case string contains %-style format codes */
+  buff_len = strlen (string) * 2;
+  buff = g_malloc (buff_len);
+  if (buff == NULL)
+     return;	/* Should "No memory" be output here? */
+
+  va_start (args, string);
+  g_vsnprintf (buff, buff_len, string, args);
+  va_end (args);
+
+  if (siod_console_mode && fp == stdout)
+     script_fu_output_to_console (buff);
+  else
+  {
+     fprintf (fp, buff);
+     fflush (fp);
+  }
+
+  g_free (buff);
+}
+
 
 static void  init_constants   (void);
 static void  init_procedures  (void);
@@ -123,6 +160,7 @@ siod_init (gboolean local_register_scripts)
   };
 
   register_scripts = local_register_scripts;
+  siod_output_routine = siod_output_string;
 
   /* init the interpreter */
   process_cla (G_N_ELEMENTS (siod_argv), siod_argv, 1);

@@ -31,5 +31,7 @@ void   script_fu_eval_run    (const gchar      *name,
 			      gint             *nreturn_vals,
 			      GimpParam       **return_vals);
 
+void   script_fu_output_to_console (gchar *text);
+
 
 #endif /*  __SCRIPT_FU_CONSOLE__  */
