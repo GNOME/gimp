@@ -1,3 +1,11 @@
+2001-12-29  Simon Budig  <simon@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* data/images/Makefile.am
+	* data/images/gimp_splash.gif: new blinking splash.
+	
+	* app/gui/splash.c (splash_create): load splash from gimp_splash.gif.
+
 2001-12-29  Michael Natterer  <mitch@gimp.org>
 
 	* NEWS: mention GTK_DISABLE_DEPRECATED.
