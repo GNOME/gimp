@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP VERSION\n"
+"Project-Id-Version: GIMP 1.1.1\n"
 "POT-Creation-Date: 1999-07-10 03:35+0200\n"
-"PO-Revision-Date: 1999-06-19 01:41+0200\n"
+"PO-Revision-Date: 1999-07-11 19:55+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
