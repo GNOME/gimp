@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2000-04-13 02:18+0200\n"
-"PO-Revision-Date: 2000-04-01 19:31+02:00\n"
-"Last-Translator: Birger Langkjer <birger.langkjer@image.dk>\n"
+"POT-Creation-Date: 2000-04-19 01:10+0200\n"
+"PO-Revision-Date: 2000-04-18 19:31+02:00\n"
+"Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
@@ -46,7 +46,7 @@ msgstr "Tryk:"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:531
+#: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:568
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -120,14 +120,14 @@ msgstr "Afslut"
 #: app/channels_dialog.c:2504 app/channels_dialog.c:2667
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:370 app/gimpprogress.c:112
+#: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:316 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1769 app/gradient.c:4841
-#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1022
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/interface.c:1035
 #: app/layers_dialog.c:3438 app/layers_dialog.c:3620 app/layers_dialog.c:3712
 #: app/layers_dialog.c:3964 app/levels.c:341 app/palette.c:1826
 #: app/posterize.c:201 app/preferences_dialog.c:1434 app/qmask.c:281
 #: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
-#: app/user_install.c:533 app/user_install.c:1173 modules/cdisplay_gamma.c:358
+#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -237,7 +237,7 @@ msgstr "Gentag:"
 
 #: app/blend.c:367
 msgid "Adaptive Supersampling"
-msgstr ""
+msgstr "Tilpassende supersampling"
 
 #: app/blend.c:395
 msgid "Max Depth:"
@@ -284,7 +284,7 @@ msgstr "Lysstyrke-kontrast virker ikke på indekserede tegneobjekter."
 #: app/layers_dialog.c:3962 app/levels.c:337 app/module_db.c:281
 #: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
-#: app/user_install.c:1171 modules/cdisplay_gamma.c:351
+#: app/user_install.c:1188 modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "Ok"
 
@@ -318,12 +318,12 @@ msgid "Brush Editor"
 msgstr "Penselredigering"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:690
+#: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:690
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
-#: app/errorconsole.c:281 app/gdisplay_ops.c:370 app/gradient.c:801
+#: app/errorconsole.c:281 app/gdisplay_ops.c:316 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:301 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:157 app/tools.c:1088
@@ -344,59 +344,59 @@ msgstr "Hårdhed:"
 msgid "Aspect Ratio:"
 msgstr "Aspektrate:"
 
-#: app/brush_edit.c:312 app/measure.c:297 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/ink.c:321 app/measure.c:317 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. The shell
-#: app/brush_select.c:269
+#: app/brush_select.c:272
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: app/brush_select.c:276 app/gradient.c:799 app/module_db.c:321
+#: app/brush_select.c:279 app/gradient.c:799 app/module_db.c:321
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Opdatér"
 
-#: app/brush_select.c:404
+#: app/brush_select.c:407
 msgid "No Brushes available"
 msgstr "Ingen disponible pensler"
 
-#: app/brush_select.c:445 app/layers_dialog.c:412 app/tool_options.c:504
+#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:504
 msgid "Opacity:"
 msgstr "Ugennemsigtighed:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:364 app/tool_options.c:528
+#: app/brush_select.c:456 app/layers_dialog.c:364 app/tool_options.c:528
 msgid "Mode:"
 msgstr "Tilstand:"
 
-#: app/brush_select.c:464 app/palette.c:1176 app/palette.c:2239
+#: app/brush_select.c:467 app/palette.c:1176 app/palette.c:2239
 #: modules/colorsel_water.c:629
 msgid "New"
 msgstr "Ny"
 
-#: app/brush_select.c:470 app/colormap_dialog.i.c:136
+#: app/brush_select.c:473 app/colormap_dialog.i.c:136
 #: app/gradient_select.c:151 app/palette.c:1183 app/palette.c:2086
 #: app/palette_select.c:64
 msgid "Edit"
 msgstr "Redigér"
 
-#: app/brush_select.c:476 app/global_edit.c:770 app/gradient.c:1769
+#: app/brush_select.c:479 app/global_edit.c:770 app/gradient.c:1769
 #: app/palette.c:1193 app/palette.c:1826 app/palette.c:2250
 msgid "Delete"
 msgstr "Slet"
 
-#: app/brush_select.c:507
+#: app/brush_select.c:510
 msgid "Spacing:"
 msgstr "Mellemrum:"
 
 #. this should never happen
-#: app/brush_select.c:1791
+#: app/brush_select.c:1850
 msgid "Sorry, this brush can't be edited."
 msgstr "Desværre, denne pensel kan ikke redigeres."
 
 #. this should never happen
-#: app/brush_select.c:1820
+#: app/brush_select.c:1879
 msgid "Sorry, this brush can't be deleted."
 msgstr "Desværre, denne pensel kan ikke slettes."
 
@@ -488,7 +488,7 @@ msgstr "Forskydning X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
 #: app/resize.c:344 app/resize.c:429 app/resize.c:587 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1374
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1391
 msgid "Y:"
 msgstr "Y:"
 
@@ -700,7 +700,7 @@ msgstr "Alfa:"
 #: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:437
 #: app/colormap_dialog.i.c:275
 msgid "Hex Triplet:"
-msgstr ""
+msgstr "Hex triplet:"
 
 #: app/color_picker.c:263 app/colormap_dialog.i.c:264
 msgid "Index:"
@@ -708,7 +708,7 @@ msgstr "Indeks:"
 
 #: app/color_picker.c:268
 msgid "Hex Triplet"
-msgstr ""
+msgstr "Hex triplet"
 
 #: app/color_picker.c:272 app/histogram_tool.c:260
 msgid "Intensity:"
@@ -843,16 +843,16 @@ msgid "[ Warning ]"
 msgstr "[ Advarsel ]"
 
 #: app/convert.c:765
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with alpha/layers from RGB/GRAY to "
 "INDEXED.\n"
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
-"Du prøver at konverterer et billede med alfa/lag fra RGB/GRÅ til INDEXED.\n"
-"You should not generate a palette of more than 255 colors if you intend to "
-"create a transparent or animated GIF file from this image."
+"Du forsøger at konvertere et billede med alpha/lag fra RGB/GRÅ til "
+"INDEKSERET.\n"
+"Du bør ikke generere en palette med mere end 255 farver hvis du ønsker at "
+"lave en gennemsiktig eller animeret GIF-fil af dette billede."
 
 #: app/convert.c:965
 msgid "Select Custom Palette"
@@ -998,7 +998,7 @@ msgstr "kunne ikke åbne fil %s"
 
 #: app/desaturate.c:36
 msgid "Desaturate operates only on RGB color drawables."
-msgstr ""
+msgstr "Desaturering opererer kun på tegnede objekter i RGB-farve."
 
 #: app/devices.c:747
 msgid "Device Status"
@@ -1076,16 +1076,16 @@ msgstr "GTK startede uden problemer"
 
 #: app/dodgeburn.c:141
 msgid "Exposure:"
-msgstr ""
+msgstr "Eksponering:"
 
 #. the type (dodge or burn)
-#: app/dodgeburn.c:161 app/ink.c:421
+#: app/dodgeburn.c:161 app/ink.c:385
 msgid "Type"
 msgstr "Type"
 
 #: app/dodgeburn.c:165
 msgid "Dodge"
-msgstr ""
+msgstr "Bleg"
 
 #: app/dodgeburn.c:167
 msgid "Burn"
@@ -1105,7 +1105,7 @@ msgstr "Flyt: "
 
 #: app/equalize.c:37
 msgid "Equalize does not operate on indexed drawables."
-msgstr ""
+msgstr "Udjævning opererer ikke på indekserede tegnede objekter."
 
 #. the hard toggle
 #: app/eraser.c:109
@@ -1161,6 +1161,16 @@ msgid ""
 "setting (currently %s) in the\n"
 "preferences dialog."
 msgstr ""
+"Du prøver at oprette et billede som har\n"
+"en oprindelig størrelse på %s.\n"
+"\n"
+"Vælg OK for at oprette dette billlede alligevel.\n"
+"Vælg Afbryd hvis du ikke mente at\n"
+"oprette så stort et billede.\n"
+"\n"
+"For at forhindre at denne dialog kommer op,\n"
+"kan du øge \"Maksimum billedstørrelse\"\n"
+"i dialogen brugervalg."
 
 #: app/file_new_dialog.c:202
 msgid "Confirm Image Size"
@@ -1176,7 +1186,7 @@ msgid "New Image"
 msgstr "Nyt billede"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1505
-#: app/preferences_dialog.c:1542 app/user_install.c:1361
+#: app/preferences_dialog.c:1542 app/user_install.c:1378
 msgid "Pixels"
 msgstr "Pixler"
 
@@ -1297,7 +1307,7 @@ msgstr "Nej"
 
 #: app/flip_tool.c:79
 msgid "Flip Tool"
-msgstr ""
+msgstr "Værktøj for vending"
 
 #: app/flip_tool.c:92 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:2284
@@ -1314,6 +1324,8 @@ msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
 msgstr ""
+"Kan ikke forankre dette lag fordi\n"
+"det ikke er et flydende udvalg."
 
 #: app/floating_sel.c:181
 msgid ""
@@ -1321,6 +1333,9 @@ msgid ""
 "selection because it belongs to a\n"
 "layer mask or channel."
 msgstr ""
+"Kan ikke oprette nyt lag fra det flydende\n"
+"udvalg fordi det tilhører en lagmaske\n"
+"eller kanal."
 
 #: app/gdisplay.c:217
 msgid "RGB-empty"
@@ -1362,7 +1377,7 @@ msgstr "Mulige filtre"
 msgid "Active Filters"
 msgstr "Aktive filtre"
 
-#: app/gdisplay_ops.c:362
+#: app/gdisplay_ops.c:308
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1376,6 +1391,8 @@ msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
+"Billedopløsningen er udenfor grænserne,\n"
+"bruger standard opløsning istedet."
 
 #: app/gimage_mask.c:211
 msgid ""
@@ -1411,7 +1428,7 @@ msgstr ""
 
 #: app/gimage_mask.c:568
 msgid "No selection to stroke!"
-msgstr ""
+msgstr "Ingen udvalg til stygning!"
 
 #: app/gimpbrush.c:272
 msgid "Error in GIMP brush file...aborting."
@@ -1500,6 +1517,9 @@ msgid ""
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
+"Kunne ikke finde GIMP Hjælpelæser proceduren.\n"
+"Den blev sandsynligvis ikke kompileret fordi\n"
+"du ikke har GtkXmHTML installeret."
 
 #: app/gimpimage.c:1176
 msgid "attach parasite to image"
@@ -1531,39 +1551,48 @@ msgstr "Lag er allerede nederst"
 
 #: app/gimpimage.c:2448
 msgid "BG has no alpha, layer was placed above"
-msgstr ""
+msgstr "BG har ikke alpha, laget blev pladsert ovenover"
 
 #: app/gimpimage.c:2519
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
+"Ikke nok synlige lag til at slå dem sammen.\n"
+"Det skal være mindst to."
 
 #: app/gimpimage.c:2603
 msgid "There are not enough visible layers for a merge down."
-msgstr ""
+msgstr "Ikke nok synlige lag til at slå sammen nedover."
 
 #: app/gimpimage.c:3005
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
+"Kunne ikke tilføje lagmaske da\n"
+"laget allerede har en."
 
 #: app/gimpimage.c:3009
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
+"Kunne ikke tilføje lagmaske til et\n"
+"lag i et indekseret billede."
 
 #: app/gimpimage.c:3013
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
+"Kan ikke tilføje lagmaske til et lag\n"
+"uden en alpha-kanal."
 
 #: app/gimpimage.c:3020
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
+"Kan ikke tilføje lagmaske med forskellig dimension fra det angivne lag."
 
 #: app/gimpimage.c:3127
 msgid "Channel cannot be raised any further"
@@ -1603,7 +1632,7 @@ msgstr "  ved linie %d kolonne %d\n"
 #: app/gimprc.c:469
 #, c-format
 msgid "  unexpected token: %s\n"
-msgstr ""
+msgstr "  uventet tegn: %s\n"
 
 #: app/gimprc.c:1473
 msgid "error parsing pluginrc"
@@ -1657,7 +1686,7 @@ msgstr "GIMP meddelelse"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:59 app/measure.c:484 app/measure.c:488 app/paint_core.c:511
+#: app/gimpunit.c:59 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
 msgid "pixels"
 msgstr "pixler"
 
@@ -1753,11 +1782,11 @@ msgstr "Almindelig RGB"
 
 #: app/gradient.c:543
 msgid "HSV (counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (glød mod klokken)"
 
 #: app/gradient.c:544
 msgid "HSV (clockwise hue)"
-msgstr ""
+msgstr "HSV (glød med klokken)"
 
 #: app/gradient.c:793
 msgid "Gradient Editor"
@@ -1875,26 +1904,28 @@ msgstr "Baggrundsfarve til RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2609
 msgid "Drag: move    Shift+drag: move & compress"
-msgstr ""
+msgstr "Træk: flyt    Skift+træk: flyt og komprimér"
 
 #: app/gradient.c:2611 app/gradient.c:2614
 msgid "Click: select    Shift+click: extend selection"
-msgstr "Klik: markér    Shift+klik: udvid markering"
+msgstr "Klik: markér    Skift+klik: udvid markering"
 
 #: app/gradient.c:2619
 msgid "Click: select    Shift+click: extend selection    Drag: move"
-msgstr "Klik: markér    Shift+klik: udvid markering      Træk: flyt"
+msgstr "Klik: markér    Skift+klik: udvid markering      Træk: flyt"
 
 #: app/gradient.c:2631
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
+"Klik: markér  Skift+klik: udvid udvalg    Træk: flyt    Skift+træk: flyt og "
+"komprimer"
 
 #: app/gradient.c:2873 app/gradient.c:2882
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr ""
+msgstr "Position for håndtag: %0.6f"
 
 #: app/gradient.c:2900
 #, c-format
@@ -1903,7 +1934,7 @@ msgstr "Afstand: %0.6f"
 
 #: app/gradient.c:3387 app/gradient.c:4450
 msgid "Left endpoint's color"
-msgstr ""
+msgstr "Farve på venstre endepunkt"
 
 #: app/gradient.c:3398 app/gradient.c:3440
 msgid "Load from"
@@ -1911,11 +1942,11 @@ msgstr "Indlæs fra"
 
 #: app/gradient.c:3402
 msgid "Left neighbor's right endpoint"
-msgstr ""
+msgstr "Venstre nabos højre endepunkt"
 
 #: app/gradient.c:3403
 msgid "Right endpoint"
-msgstr ""
+msgstr "Højre endepunkt"
 
 #: app/gradient.c:3413 app/gradient.c:3455
 msgid "Save to"
@@ -1923,15 +1954,15 @@ msgstr "Gem til"
 
 #: app/gradient.c:3429 app/gradient.c:4528
 msgid "Right endpoint's color"
-msgstr ""
+msgstr "Farve på højre endepunkt"
 
 #: app/gradient.c:3444
 msgid "Right neighbor's left endpoint"
-msgstr ""
+msgstr "Højre nabos venstre endepunkt"
 
 #: app/gradient.c:3445
 msgid "Left endpoint"
-msgstr ""
+msgstr "Venstre endepunkt"
 
 #: app/gradient.c:3556
 msgid "Selection operations"
@@ -1939,19 +1970,19 @@ msgstr "Markeringsoperationer"
 
 #: app/gradient.c:3728
 msgid "Blending function for segment"
-msgstr ""
+msgstr "Blandingsfunktion for segmentet"
 
 #: app/gradient.c:3730
 msgid "Coloring type for segment"
-msgstr ""
+msgstr "Farvetype for segmentet"
 
 #: app/gradient.c:3732
 msgid "Split segment at midpoint"
-msgstr ""
+msgstr "Opdel segmentet ved midtpunktet"
 
 #: app/gradient.c:3734 app/gradient.c:4831
 msgid "Split segment uniformly"
-msgstr ""
+msgstr "Opdel segmentet jævnt"
 
 #: app/gradient.c:3736
 msgid "Delete segment"
@@ -1959,35 +1990,35 @@ msgstr "Slet segment"
 
 #: app/gradient.c:3738
 msgid "Re-center segment's midpoint"
-msgstr ""
+msgstr "Recentrér segmentets midtpunkt"
 
 #: app/gradient.c:3740
 msgid "Re-distribute handles in segment"
-msgstr ""
+msgstr "Redistribuér håndtag i segmentet"
 
 #: app/gradient.c:3742
 msgid "Flip segment"
-msgstr ""
+msgstr "Vend segment"
 
 #: app/gradient.c:3744 app/gradient.c:5392
 msgid "Replicate segment"
-msgstr ""
+msgstr "Replikér segment"
 
 #: app/gradient.c:3749
 msgid "Blending function for selection"
-msgstr ""
+msgstr "Blandingsfunktion for udvalg"
 
 #: app/gradient.c:3751
 msgid "Coloring type for selection"
-msgstr ""
+msgstr "Farvetype for udvalget"
 
 #: app/gradient.c:3753
 msgid "Split segments at midpoints"
-msgstr ""
+msgstr "Opdel segmenterne ved midtpunktet"
 
 #: app/gradient.c:3755 app/gradient.c:4832
 msgid "Split segments uniformly"
-msgstr ""
+msgstr "Opdel segmenter jævnt"
 
 #: app/gradient.c:3757
 msgid "Delete selection"
@@ -1995,19 +2026,19 @@ msgstr "Slet det markerede"
 
 #: app/gradient.c:3759
 msgid "Re-center midpoints in selection"
-msgstr ""
+msgstr "Recentrer midtpunkter i udvalget"
 
 #: app/gradient.c:3761
 msgid "Re-distribute handles in selection"
-msgstr ""
+msgstr "Redistribuér håndtag i udvalget"
 
 #: app/gradient.c:3763
 msgid "Flip selection"
-msgstr ""
+msgstr "Vend udvalg"
 
 #: app/gradient.c:3765 app/gradient.c:5393
 msgid "Replicate selection"
-msgstr ""
+msgstr "Replikér udvalg"
 
 #: app/gradient.c:4049
 msgid "FG color"
@@ -2029,40 +2060,40 @@ msgstr "Opdel"
 #. Instructions
 #: app/gradient.c:4853
 msgid "Please select the number of uniform parts"
-msgstr ""
+msgstr "Vennligst vælg antal uniforme dele"
 
 #: app/gradient.c:4859
 msgid "in which you want to split the selected segment"
-msgstr ""
+msgstr "som du vil opdele det valgte segmentet i"
 
 #: app/gradient.c:4860
 msgid "in which you want to split the segments in the selection"
-msgstr ""
+msgstr "som du vil opdele segmenterne i udvalget i"
 
 #: app/gradient.c:5220
 msgid "Blend endpoints' colors"
-msgstr ""
+msgstr "Bland endepunkternes farver"
 
 #: app/gradient.c:5232
 msgid "Blend endpoints' opacity"
-msgstr ""
+msgstr "Bland endepunkternes uigennemsigtighet"
 
 #: app/gradient.c:5400
 msgid "Replicate"
-msgstr ""
+msgstr "Replikér"
 
 #. Instructions
 #: app/gradient.c:5413
 msgid "Please select the number of times"
-msgstr ""
+msgstr "Venligst vælg antal gange"
 
 #: app/gradient.c:5418
 msgid "you want to replicate the selected segment"
-msgstr ""
+msgstr "du ønsker at replikere det valgte segment"
 
 #: app/gradient.c:5419
 msgid "you want to replicate the selection"
-msgstr ""
+msgstr "du ønsker at replikere udvalget"
 
 #. The shell
 #: app/gradient_select.c:144
@@ -2145,7 +2176,7 @@ msgstr "M"
 
 #: app/hue_saturation.c:445
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr ""
+msgstr "Justeringer for Glød / Lys / Mætning"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:383 app/paint_funcs.c:94
@@ -2156,7 +2187,7 @@ msgstr "Glød"
 #. Create the lightness scale widget
 #: app/hue_saturation.c:491
 msgid "Lightness"
-msgstr ""
+msgstr "Lys"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:384 app/paint_funcs.c:95
@@ -2330,37 +2361,30 @@ msgstr "Indekseret farve"
 msgid "colors"
 msgstr "farver"
 
-#. size slider
-#: app/ink.c:296
+#. adjust sliders
+#: app/ink.c:291
+msgid "Adjustment"
+msgstr "Justér:"
+
+#: app/ink.c:308 app/ink.c:346
 msgid "Size:"
 msgstr "Størrelse:"
 
-#. sens slider
-#: app/ink.c:314 app/ink.c:338 app/ink.c:368
-msgid "Sensitivity:"
+#. sens sliders
+#: app/ink.c:329
+msgid "Sensitivity"
 msgstr "Følsomhed:"
 
-#. tilt sens slider
-#: app/ink.c:332
-msgid "Tilt"
+#: app/ink.c:359
+msgid "Tilt:"
 msgstr "Drej"
 
-#. velocity sens slider
-#: app/ink.c:362
-msgid "Speed"
+#: app/ink.c:372
+msgid "Speed:"
 msgstr "Hastighed"
 
-#. angle adjust slider
-#: app/ink.c:392
-msgid "Angle"
-msgstr "Vinkel"
-
-#: app/ink.c:398
-msgid "Adjust:"
-msgstr "Justér:"
-
 #. Brush shape widget
-#: app/ink.c:485
+#: app/ink.c:454
 msgid "Shape"
 msgstr "Form"
 
@@ -2369,6 +2393,9 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
+"Forgrunds- og baggrundsfarver.  De sorte og hvide firkanter nulstiller "
+"farver.  Pilene bytter farver. Dobbeltklik for at vælge en farve fra "
+"farvehenteren."
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2413,7 +2440,7 @@ msgstr "Flydende markeringer"
 
 #: app/internal_procs.c:98
 msgid "GDisplay procedures"
-msgstr ""
+msgstr "Procedurer for GDisplay"
 
 #: app/internal_procs.c:101 app/palette.c:3182
 msgid "Image"
@@ -2593,7 +2620,7 @@ msgstr "Behold gennemsigtighed"
 
 #: app/layers_dialog.c:1885
 msgid "Empty Layer Copy"
-msgstr ""
+msgstr "Kopiering af lag uden indhold"
 
 #: app/layers_dialog.c:2146 app/layers_dialog.c:3280 app/layers_dialog.c:3647
 msgid "Floating Selection"
@@ -2838,19 +2865,19 @@ msgstr "  --system-gimprc <gimprc> Brug en alternativ system gimprc fil.\n"
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsolvindue vil lukke om ti sekunder)\n"
 
-#: app/measure.c:121 app/measure.c:294
+#: app/measure.c:121 app/measure.c:314
 msgid "Measure Tool"
-msgstr ""
+msgstr "Måleværktøj"
 
 #: app/measure.c:130
 msgid "Use Info Window"
 msgstr "Brug infovindue"
 
-#: app/measure.c:296
+#: app/measure.c:316
 msgid "Distance:"
 msgstr "Afstand:"
 
-#: app/measure.c:484 app/measure.c:489 app/measure.c:497 app/measure.c:525
+#: app/measure.c:504 app/measure.c:509 app/measure.c:517 app/measure.c:545
 msgid "degrees"
 msgstr "grader"
 
@@ -3663,39 +3690,32 @@ msgid "Unload"
 msgstr "Frigiv"
 
 #: app/module_db.c:853
-#, fuzzy
 msgid "Purpose:"
-msgstr "Mening: "
+msgstr "Mening:"
 
 #: app/module_db.c:854
-#, fuzzy
 msgid "Author:"
-msgstr "Udvikler: "
+msgstr "Forfatter:"
 
 #: app/module_db.c:855
-#, fuzzy
 msgid "Version:"
-msgstr "Version: "
+msgstr "Version:"
 
 #: app/module_db.c:856
-#, fuzzy
 msgid "Copyright:"
-msgstr "Ophavsret: "
+msgstr "Kopibeskyttelse:"
 
 #: app/module_db.c:857
-#, fuzzy
 msgid "Date:"
-msgstr "Dato: "
+msgstr "Dato:"
 
 #: app/module_db.c:858
-#, fuzzy
 msgid "Location:"
-msgstr "Placering: "
+msgstr "Pladsering:"
 
 #: app/module_db.c:859
-#, fuzzy
 msgid "State:"
-msgstr "Tilstand: "
+msgstr "Tilstand:"
 
 #: app/module_db.c:878
 msgid "Autoload during startup"
@@ -3989,12 +4009,12 @@ msgstr "Kunne ikke læse sti fra %s"
 #: app/paths_dialog.c:1939
 #, c-format
 msgid "No points specified in path file %s"
-msgstr ""
+msgstr "Ingen punkter angivet i stifil %s"
 
 #: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr ""
+msgstr "Klarede ikke at læse stipunkter fra %s"
 
 #: app/paths_dialog.c:2023 app/xcf.c:437
 #, c-format
@@ -4144,6 +4164,13 @@ msgid ""
 "and the critical parts of your changes will not\n"
 "be applied."
 msgstr ""
+"Mindst en af ændringene du har gjort vil først blive sat i\n"
+"kraft efter du har startet GIMP på ny.\n"
+"\n"
+"Du kan vælge 'Gem' nu for at gøre ændringerne permanente,\n"
+"efter dette kan du starte GIMP på ny; eller trykke 'Luk'\n"
+"for at for at fortsætte uden at aktivere de kritiske dele\n"
+"af ændringerne."
 
 #: app/preferences_dialog.c:465
 msgid "You will need to restart GIMP for these changes to take effect."
@@ -4349,7 +4376,7 @@ msgstr "Udseende"
 
 #: app/preferences_dialog.c:1904
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Brug \"Punkt for punkt\" som standard"
 
 #: app/preferences_dialog.c:1913
 msgid "Resize Window on Zoom"
@@ -4435,7 +4462,7 @@ msgstr "Konservativ hukommelsesbrug"
 msgid "Levels of Undo:"
 msgstr "Angreniveauer:"
 
-#: app/preferences_dialog.c:2102 app/user_install.c:1087
+#: app/preferences_dialog.c:2102 app/user_install.c:1104
 msgid "Tile Cache Size:"
 msgstr "Flisebufferstørrelse:"
 
@@ -4453,7 +4480,7 @@ msgstr "Nærmeste nabo (hurtig)"
 
 #: app/preferences_dialog.c:2139
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "Kubisk (Træg)"
 
 #: app/preferences_dialog.c:2144
 msgid "Interpolation Type:"
@@ -4552,7 +4579,7 @@ msgstr "Vælg temp-mappe"
 msgid "Swap Dir:"
 msgstr "Swap-mappe:"
 
-#: app/preferences_dialog.c:2361 app/user_install.c:1107
+#: app/preferences_dialog.c:2361 app/user_install.c:1124
 msgid "Select Swap Dir"
 msgstr "Vælg swap-mappe"
 
@@ -4754,6 +4781,9 @@ msgid ""
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
+"Den valgte billedstørrelse vil krympe\n"
+"nogen lag helt bort.\n"
+"Vil du gøre dette?"
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
@@ -4785,15 +4815,15 @@ msgstr "Skalerer..."
 
 #: app/shear_tool.c:71
 msgid "Shear Information"
-msgstr ""
+msgstr "Forskydning - Information"
 
 #: app/shear_tool.c:76
 msgid "Shear Magnitude X:"
-msgstr ""
+msgstr "Forskydnings-størrelsesorden X:"
 
 #: app/shear_tool.c:344
 msgid "Shearing..."
-msgstr ""
+msgstr "Forskydning..."
 
 #. Create the shell
 #: app/text_tool.c:151 app/text_tool.c:393
@@ -4874,6 +4904,9 @@ msgid ""
 "There should be a file called gimp_tips.txt in the\n"
 "GIMP data directory.  Please check your installation."
 msgstr ""
+"Din GIMP tipsfil ser ud til at mangle!\n"
+"Det skal være en fil med navn gimp_tips.txt i\n"
+"GIMP's datakatalog. Venligst tjek installationen."
 
 #: app/tool_options.c:121
 msgid "This tool has no options."
@@ -4941,7 +4974,7 @@ msgstr "Viskelæder"
 
 #: app/tool_options.c:457 app/tools.c:466
 msgid "Airbrush"
-msgstr ""
+msgstr "Luftpensel"
 
 #: app/tool_options.c:459
 msgid "Clone Tool"
@@ -4957,7 +4990,7 @@ msgstr "Blækværktøj"
 
 #: app/tool_options.c:465 app/tools.c:538 app/tools.c:544
 msgid "Dodge or Burn"
-msgstr ""
+msgstr "Bleg eller brænd"
 
 #: app/tool_options.c:467
 msgid "Smudge Tool"
@@ -4976,8 +5009,8 @@ msgid "Opacity"
 msgstr "Uigennemsigtighed"
 
 #: app/tool_options.c:730
-msgid "Pressure"
-msgstr "Tryk"
+msgid "Hardness"
+msgstr "Hårdhed:"
 
 #: app/tool_options.c:750
 msgid "Rate"
@@ -4989,35 +5022,35 @@ msgstr "Firk. markering"
 
 #: app/tools.c:89
 msgid "/Tools/Select Tools/Rect Select"
-msgstr ""
+msgstr "/Værktøj/Udvalgsværktøj/Rektangeludvalg"
 
 #: app/tools.c:94
 msgid "Select rectangular regions"
-msgstr ""
+msgstr "Vælg rektangulære områder"
 
 #: app/tools.c:106
 msgid "Ellipse Select"
-msgstr ""
+msgstr "Ellipseudvalg"
 
 #: app/tools.c:107
 msgid "/Tools/Select Tools/Ellipse Select"
-msgstr ""
+msgstr "/Værktøj/Udvalgsværktøj/Elipseudvalg"
 
 #: app/tools.c:112
 msgid "Select elliptical regions"
-msgstr ""
+msgstr "Vælg elliptiske områder"
 
 #: app/tools.c:124
 msgid "Free Select"
-msgstr ""
+msgstr "Frit udvalg"
 
 #: app/tools.c:125
 msgid "/Tools/Select Tools/Free Select"
-msgstr ""
+msgstr "/Værktøj/Udvalgsværktøj/Frit udvalg"
 
 #: app/tools.c:130
 msgid "Select hand-drawn regions"
-msgstr ""
+msgstr "Vælg områder efter frihånd"
 
 #: app/tools.c:142
 msgid "Fuzzy Select"
@@ -5025,11 +5058,11 @@ msgstr "Udvisket markering"
 
 #: app/tools.c:143
 msgid "/Tools/Select Tools/Fuzzy Select"
-msgstr ""
+msgstr "/Værktøj/Udvalgsværktøj/Fuzzy udvalg"
 
 #: app/tools.c:148
 msgid "Select contiguous regions"
-msgstr ""
+msgstr "Vælg sammenhængende områder"
 
 #: app/tools.c:160
 msgid "Bezier Select"
@@ -5037,19 +5070,19 @@ msgstr "Bezier-markering"
 
 #: app/tools.c:161
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr ""
+msgstr "/Værktøj/Udvalgsværktøj/Bezierudvalg"
 
 #: app/tools.c:166
 msgid "Select regions using Bezier curves"
-msgstr ""
+msgstr "Vælg områder ved brug af Bezier kurver"
 
 #: app/tools.c:179
 msgid "/Tools/Select Tools/Intelligent Scissors"
-msgstr ""
+msgstr "/Værktøj/Utvalgsværktøj/Intelligent saks"
 
 #: app/tools.c:184
 msgid "Select shapes from image"
-msgstr ""
+msgstr "Vælg former fra billedet"
 
 #: app/tools.c:196
 msgid "Move"
@@ -5095,7 +5128,7 @@ msgstr "/Værktøj/Transformation/Transformér"
 
 #: app/tools.c:256 app/tools.c:274 app/tools.c:292 app/tools.c:310
 msgid "Rotation, scaling, shearing, perspective."
-msgstr ""
+msgstr "Rotering, skalering, forskydning, perspektiv."
 
 #: app/tools.c:322
 msgid "Flip"
@@ -5191,7 +5224,7 @@ msgstr "/Værktøj/Maleværktøj/Klon"
 
 #: app/tools.c:490
 msgid "Paint using patterns or image regions"
-msgstr ""
+msgstr "Tegn ved brug af mønstre eller billedområder"
 
 #: app/tools.c:502
 msgid "Convolve"
@@ -5219,7 +5252,7 @@ msgstr "Tegn med blæk"
 
 #: app/tools.c:539
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr ""
+msgstr "/Værktøj/Tegneværktøj/BlegBrænd"
 
 #: app/tools.c:556 app/tools.c:562
 msgid "Smudge"
@@ -5327,7 +5360,7 @@ msgstr "Skalér"
 
 #: app/transform_core.c:254
 msgid "Shear"
-msgstr ""
+msgstr "Forskyd"
 
 #: app/transform_core.c:363
 msgid ""
@@ -5351,7 +5384,7 @@ msgstr "Rotation"
 
 #: app/transform_tool.c:217
 msgid "Shearing"
-msgstr ""
+msgstr "Forskydnning"
 
 #: app/transform_tool.c:219
 msgid "Perspective"
@@ -5392,7 +5425,7 @@ msgstr "Vis sti"
 #. the clip resulting image toggle button
 #: app/transform_tool.c:315
 msgid "Clip Result"
-msgstr ""
+msgstr "Klip resultat ud"
 
 #: app/undo.c:2833
 #, c-format
@@ -5408,9 +5441,8 @@ msgid "image"
 msgstr "billede"
 
 #: app/undo.c:2866
-#, fuzzy
 msgid "image mod"
-msgstr "Billedemaske"
+msgstr "ændring i billede"
 
 #: app/undo.c:2867
 msgid "mask"
@@ -5438,9 +5470,8 @@ msgid "delete layer"
 msgstr "slet lag"
 
 #: app/undo.c:2873
-#, fuzzy
 msgid "layer mod"
-msgstr "Ukendt lagmode"
+msgstr "ændring på lag"
 
 #: app/undo.c:2874
 msgid "add layer mask"
@@ -5457,9 +5488,8 @@ msgid "rename layer"
 msgstr "omdøb lag"
 
 #: app/undo.c:2877
-#, fuzzy
 msgid "layer reposition"
-msgstr "Alternativer for fletning af lag"
+msgstr "repositioner lag"
 
 #. ok
 #: app/undo.c:2878
@@ -5471,9 +5501,8 @@ msgid "delete channel"
 msgstr "slet kanal"
 
 #: app/undo.c:2880
-#, fuzzy
 msgid "channel mod"
-msgstr "Kanalnavn:"
+msgstr "ændr kanal"
 
 #: app/undo.c:2881
 msgid "FS to layer"
@@ -5486,11 +5515,11 @@ msgstr "gbillede"
 
 #: app/undo.c:2883
 msgid "FS rigor"
-msgstr ""
+msgstr "FS stram ind"
 
 #: app/undo.c:2884
 msgid "FS relax"
-msgstr ""
+msgstr "FS løsne"
 
 #: app/undo.c:2885
 msgid "guide"
@@ -5513,9 +5542,8 @@ msgid "cut"
 msgstr "klip"
 
 #: app/undo.c:2890
-#, fuzzy
 msgid "transform core"
-msgstr "Transformation"
+msgstr "transformer kerne"
 
 #: app/undo.c:2891
 msgid "paint core"
@@ -5544,18 +5572,16 @@ msgid "FS anchor"
 msgstr "FS anker"
 
 #: app/undo.c:2897
-#, fuzzy
 msgid "gimage mod"
-msgstr "Billedemaske"
+msgstr "gimage mod"
 
 #: app/undo.c:2898
 msgid "crop"
 msgstr "beskær"
 
 #: app/undo.c:2899
-#, fuzzy
 msgid "layer scale"
-msgstr "gråtone"
+msgstr "skalér lag"
 
 #: app/undo.c:2900
 msgid "layer resize"
@@ -5611,13 +5637,16 @@ msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
 msgstr ""
+"Brugerinstallation blev oversprunget fordi '--nointerface' flaget blev "
+"brugt\n"
 
 #: app/user_install.c:102
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
+"For at udføre brugerinstallation, kør GIMP uden '--nointerface' flaget\n"
 
-#: app/user_install.c:150
+#: app/user_install.c:151
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -5625,14 +5654,21 @@ msgid ""
 "patterns, plug-ins and modules can also configured\n"
 "here."
 msgstr ""
+"Gimprc bruges til at gemme personlige preferencer\n"
+"som indvirker på GIMP's standard opførsel.\n"
+"Stier til søgning efter pensler, paletter, gradienter, \n"
+"mønstre, indstik og moduler kan også konfigureres\n"
+"her."
 
-#: app/user_install.c:158
+#: app/user_install.c:159
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
+"GIMP bruger en gtkrc fil så du kan konfigurere\n"
+"den til at have et andet udseende end andre GTP applikationer."
 
-#: app/user_install.c:163
+#: app/user_install.c:164
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -5641,8 +5677,14 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
+"Indstik og udvidelser er eksterne programmer som køres\n"
+"af GIMP, og giver ekstra funktionalitet. Disse programmer\n"
+"søges der efter ved opstart, og information om deres\n"
+"funktionalitet og ændringstider mellemlagres i denne\n"
+"fil. Denne fil er beregnet til at være læsbar kun for GIMP,\n"
+"og bør ikke redigeres."
 
-#: app/user_install.c:172
+#: app/user_install.c:173
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -5651,15 +5693,24 @@ msgid ""
 "keys from within The GIMP.  Deleting this file will\n"
 "restore the default shortcuts."
 msgstr ""
+"Tastaturgenveje kan omdefineres dynamisk i GIMP.\n"
+"menurc er et dump af din konfiguration som gør dig i stand\n"
+"til at \"huske\" denne til næste session. Du kan redigere denne\n"
+"fil hvis du ønsker, men det er meget lettere at definere\n"
+"tasterne fra GIMP. Sletning af denne fil vil genoprette\n"
+"standard tastaturgenveje."
 
-#: app/user_install.c:181
+#: app/user_install.c:182
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
+"sessionrc bruges til at gemme information om åbne dialogvinduer\n"
+"ved sidste afslutning af GIMP. Du kan konfigurere GIMP til at\n"
+"genåbne disse dialoger i gemt position."
 
-#: app/user_install.c:187
+#: app/user_install.c:188
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5667,8 +5718,13 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
+"Unitrc bruges til at gemme din brugerenhedsdatabase.\n"
+"Du kan definere ekstra enheder og bruge dem akkurat\n"
+"som du bruger de indbyggede enheder tommer, millimeter,\n"
+"punkter og picaer. Denne fil overskrives hver gang\n"
+"du afslutter GIMP."
 
-#: app/user_install.c:195
+#: app/user_install.c:196
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -5676,16 +5732,23 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede pensler. Med standard gimprc tjekkes\n"
+"dette underkatalog, sammen med systemkataloget,\n"
+"for GIMP pensler når der skal søges efter disse."
 
-#: app/user_install.c:203
+#: app/user_install.c:204
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
 "gimprc file checks this subdirectory when searching\n"
 "for generated brushes."
 msgstr ""
+"Dette er et underkatalog som bruges til at gemme pensler\n"
+"som er lavet med penseleditoren. Standard gimprc tjekker\n"
+"dette underkatalog når der skal søges efter disse."
 
-#: app/user_install.c:210
+#: app/user_install.c:211
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -5693,8 +5756,12 @@ msgid ""
 "wide GIMP gradients installation when searching\n"
 "for gradients."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede gradienter. Med standard gimprc\n"
+"tjekkes dette underkatalog sammen med system-\n"
+"kataloget for gradienter når der søges efter disse."
 
-#: app/user_install.c:218
+#: app/user_install.c:219
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -5705,8 +5772,15 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede paletter. Med standard gimprc tjekkes\n"
+"kun dette katalog (ikke systemkataloget) når der\n"
+"søges efter paletter. Under installationen kopieres\n"
+"palettene herhen fra systemkataloget. Dette gøres for at\n"
+"ændringer som gøres i palettene skal gælde i kommende\n"
+"sessioner."
 
-#: app/user_install.c:229
+#: app/user_install.c:230
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -5714,8 +5788,12 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede mønstre. Med standard gimprc tjekkes\n"
+"dette underkatalog sammen med systemkataloget\n"
+"for mønstre når der søges efter disse."
 
-#: app/user_install.c:237
+#: app/user_install.c:238
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -5723,8 +5801,13 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugeroprettede, midlertidige, eller andre ustøttede\n"
+"indstik. Med standard gimprc tjekkes dette underkatalog\n"
+"sammen med systemkataloget for indstik når der søges\n"
+"efter disse."
 
-#: app/user_install.c:245
+#: app/user_install.c:246
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -5732,16 +5815,25 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
+"Dette underkatalog kan bruges til at gemme brugeroprettede,\n"
+"midlertidige, eller ustøttede DLL-moduler. Med standard\n"
+"gimprc tjekkes dette underkatalog sammen med system-\n"
+"kataloget for moduler når der søges efter moduler under\n"
+"opstart."
 
-#: app/user_install.c:253
+#: app/user_install.c:254
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
 "checks this subdirectory in addition to the systemwide\n"
 "GIMP scripts subdirectory when searching for scripts"
 msgstr ""
+"Dette underkatalog bruges af GIMP til at gemme \n"
+"brugeroprettede og installerede skript. Med standard gimprc\n"
+"tjekkes dette underkatalog sammen med systemkataloget\n"
+"for skript når der søges efter disse."
 
-#: app/user_install.c:260
+#: app/user_install.c:261
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -5749,20 +5841,29 @@ msgid ""
 "of the form: gimp<#>.<#>.  These files are useless across\n"
 "GIMP sessions and can be destroyed with impunity."
 msgstr ""
+"Dette underkatalog bruges af GIMP til at mellemlagre\n"
+"fortrydelsesinformation for at reducere lagerforbruget. Hvis GIMP\n"
+"dræbes, kan filer blive liggende i dette katalog; de har\n"
+"formen: gimp<#>.<#>. Disse filer er ubrugelige mellem\n"
+"sessioner og kan slettes uden bekymring."
 
-#: app/user_install.c:268
+#: app/user_install.c:269
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
 msgstr ""
+"Dette underkatalog bruges til at gemme parameterfiler for\n"
+"kurveværktøjet."
 
-#: app/user_install.c:273
+#: app/user_install.c:274
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
 msgstr ""
+"Dette underkatalog bruges til at gemme parameterfiler for\n"
+"niveauværktøjet."
 
-#: app/user_install.c:278
+#: app/user_install.c:279
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -5770,8 +5871,13 @@ msgid ""
 "in addition to the systemwide GIMP FractalExplorer\n"
 "installation when searching for fractals."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede fraktaler som skal bruges med FractalExplorer\n"
+"indstikket. Med standard gimprc tjekkes dette underkatalog\n"
+"sammen med systemkataloget for FractalExplorer når der søges\n"
+"efter disse."
 
-#: app/user_install.c:286
+#: app/user_install.c:287
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -5779,8 +5885,13 @@ msgid ""
 "addition to the systemwide GIMP GFig installation\n"
 "when searching for gfig figures."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede figurer for brug med gfig indstikket.\n"
+"Med standard gimprc tjekkes dette underkatalog\n"
+"sammen med systemkataloget for gfig figurer når der\n"
+"søges efter disse."
 
-#: app/user_install.c:294
+#: app/user_install.c:295
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -5788,8 +5899,13 @@ msgid ""
 "addition to the systemwide GIMP GFlares installation\n"
 "when searching for gflares."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede gflares for brug med gflare indstikket.\n"
+"Med standard gimprc tjekkes dette underkatalog\n"
+"sammen med systemkataloget for gflares når der søges\n"
+"efter disse."
 
-#: app/user_install.c:302
+#: app/user_install.c:303
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -5797,21 +5913,32 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
+"Dette er et underkatalog som kan bruges til at gemme\n"
+"brugerdefinerede gflares for brug med gflare indstikket.\n"
+"Med standard gimprc tjekkes dette underkatalog\n"
+"sammen med systemkataloget for gflares når der søges\n"
+"efter disse."
 
-#: app/user_install.c:526
+#: app/user_install.c:360
+msgid ""
+"Please wait while your personal\n"
+"GIMP directory is being created..."
+msgstr ""
+
+#: app/user_install.c:541
 msgid "GIMP User Installation"
 msgstr "GIMP brugerinstallation"
 
-#: app/user_install.c:531
+#: app/user_install.c:546
 msgid "Continue"
 msgstr "Fortsæt"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/user_install.c:572
+#: app/user_install.c:587
 msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 
-#: app/user_install.c:669
+#: app/user_install.c:684
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -5819,11 +5946,11 @@ msgstr ""
 "Velkommen til\n"
 "GIMP's brugerinstallationsprogram"
 
-#: app/user_install.c:671
+#: app/user_install.c:686
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Klik på \"Fortsæt\" for at starte GIMP's brugerinstallation."
 
-#: app/user_install.c:674
+#: app/user_install.c:690
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2000\n"
@@ -5833,184 +5960,223 @@ msgstr ""
 "Ophavsret (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis og GIMP udviklingsholdet."
 
-#: app/user_install.c:683
+#: app/user_install.c:699
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
+"Dette program er frit programmel; du kan redistribuere det og/eller\n"
+"ændre det under betingelsene givet i GNU General Public License som er\n"
+"udgivet af Free Software Foundation; enten version 2 af licensen, eller\n"
+"(hvis du vælger det) enhver senere version."
 
-#: app/user_install.c:688
+#: app/user_install.c:704
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details."
 
-#: app/user_install.c:693
+#: app/user_install.c:709
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 msgstr ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
 
-#: app/user_install.c:719
+#: app/user_install.c:735
 msgid "Personal GIMP Directory"
 msgstr "Personlig GIMP mappe"
 
-#: app/user_install.c:720
+#: app/user_install.c:736
 msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr "Klik på \"Fortsæt\" for at oprette din personlige GIMP mappe."
 
-#: app/user_install.c:737
+#: app/user_install.c:754
 #, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
 msgstr ""
+"I en ordentlig GIMP installation skal et underkatalog kaldet\n"
+"%s være oprettet."
 
-#: app/user_install.c:743
+#: app/user_install.c:760
 msgid ""
 "This subdirectory will contain a number of important files.\n"
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Dette underkatalog vil indeholde et antal vigtige filer.\n"
+"Klik på en af filerne eller underkatalogerne i træet\n"
+"for at få mere information om det valgte objekt."
 
-#: app/user_install.c:827
+#: app/user_install.c:844
 msgid "User Installation Log"
 msgstr "Brugerinstallationslog"
 
-#: app/user_install.c:833
+#: app/user_install.c:850
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "GIMP ydelsesjustering"
 
-#: app/user_install.c:834
+#: app/user_install.c:851
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Klik på \"Fortsæt\" for at acceptere ovenstående indstillinger."
 
-#: app/user_install.c:837
+#: app/user_install.c:854
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
+"For optimal ydelse i GIMP er det nødvendigt med justering af nogen "
+"indstillinger."
 
-#: app/user_install.c:846
+#: app/user_install.c:863
 msgid "Monitor Resolution"
 msgstr "Skærmopløsning"
 
-#: app/user_install.c:847
+#: app/user_install.c:864
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "klik på \"Fortsæt\" for at starte GIMP."
 
-#: app/user_install.c:850
+#: app/user_install.c:867
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
+"For at vise billeder i sin naturlige størrelse skal GIMP vide opløsningen "
+"for din skærm."
 
-#: app/user_install.c:859
+#: app/user_install.c:876
 msgid "Aborting Installation..."
 msgstr "Afbryder installation..."
 
-#: app/user_install.c:929
+#: app/user_install.c:946
 msgid "does not exist.  Cannot install."
 msgstr "eksisterer ikke. Kan ikke installere."
 
-#: app/user_install.c:941
+#: app/user_install.c:958
 msgid "has invalid permissions.  Cannot install."
 msgstr "har ugyldige rettigheder.  Kan ikke installere."
 
-#: app/user_install.c:979
+#: app/user_install.c:996
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
+"Lagde du mærke til nogen fejlbeskeder i konsolvinduet? \n"
+"Hvis ikke var installationen vellykket! \n"
+"Ellers, afslut og prøv at finde den mulige grund..."
 
-#: app/user_install.c:1035
+#: app/user_install.c:1052
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
+"Lagde du mærke til nogen fejlbeskeder i linjerne ovenover? \n"
+"Hvis ikke var installationen vellykket! \n"
+"Ellers, afslut og prøv at finde den mulige grund..."
 
-#: app/user_install.c:1047
+#: app/user_install.c:1064
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Klik \"Fortsæt\" for at fuldføre GIMP installationen."
 
-#: app/user_install.c:1052
+#: app/user_install.c:1069
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installation mislykkedes.  Kontakt din systemadministrator."
 
-#: app/user_install.c:1073
+#: app/user_install.c:1090
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"GIMP bruger en begrænset mængde lager for at gemme billeddata, den såkalte\n"
+"\"Tile cachen\". Du bør justere størrelsen på denne så den passer i lagret.\n"
+"Tag den mængde lager i betragtning som bruges af andre processer."
 
-#: app/user_install.c:1098
+#: app/user_install.c:1115
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"Alle billede- og fortrydelsesdata som ikke passer i \"Tile cachen\" vil "
+"blive skrevet\n"
+"til en swap-fil. Denne fil bør pladseres på et lokalt filsystem med\n"
+"tilstrækkelig plads (flere hundrede Mb). På et UNIX system vil du \n"
+"måske bruge systemets temp katalog. (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/user_install.c:1112
+#: app/user_install.c:1129
 msgid "Swap Directory:"
 msgstr "Swap-mappe:"
 
-#: app/user_install.c:1165
+#: app/user_install.c:1182
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibrér skærmopløsning"
 
-#: app/user_install.c:1273
+#: app/user_install.c:1290
 msgid "Measure the rulers and enter their lengths below."
 msgstr "Mål linealerne og indtast deres længder herunder."
 
-#: app/user_install.c:1288
+#: app/user_install.c:1305
 msgid "Horizontal:"
 msgstr "Vandret:"
 
-#: app/user_install.c:1293
+#: app/user_install.c:1310
 msgid "Vertical:"
 msgstr "Lodret:"
 
-#: app/user_install.c:1334
+#: app/user_install.c:1351
 msgid ""
 "GIMP can obtain this information from your X-server.\n"
 "However, most X-servers do not return useful values."
 msgstr ""
+"GIMP kan hente denne information fra din X-tjener.\n"
+"Desværre returnerer de fleste X-tjenere ikke nyttige værdier."
 
-#: app/user_install.c:1341
+#: app/user_install.c:1358
 #, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
 msgstr "Hent opløsning fra X-tjener (Den er nu %d x %d dpi)"
 
-#: app/user_install.c:1355
+#: app/user_install.c:1372
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du vælge skærmopløsningen manuelt."
 
-#: app/user_install.c:1368
+#: app/user_install.c:1385
 msgid "Monitor Resolution X:"
 msgstr "Skærmopløsning X:"
 
-#: app/user_install.c:1404
+#: app/user_install.c:1421
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
 msgstr ""
+"Du kan også trykke på \"Kalibrér\" knappen for at åbne et vindue\n"
+"som lader dig bestemme din skærmopløsning interaktivt."
 
-#: app/user_install.c:1411
+#: app/user_install.c:1428
 msgid "Calibrate"
 msgstr "Kalibrér"
 
 #: app/xcf.c:383
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr ""
+msgstr "XCF-fejl: uunderstøttet XCF filversion %d mødt"
 
 #: app/xcf.c:1814
 msgid ""
@@ -6018,6 +6184,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"XCF-advarsel: version 0 af XCF filformatet\n"
+"gemte ikke indekserede farvekort rigtig.\n"
+"Erstatter gråtonekort."
 
 #: modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -6033,11 +6202,11 @@ msgstr "Gamma:"
 
 #: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
-msgstr ""
+msgstr "GTK farvevælger som en indsættelig farvevælger"
 
 #: modules/colorsel_triangle.c:78
 msgid "Painter-style color selector as a pluggable color selector"
-msgstr ""
+msgstr "Farvevælger med tegnet stil som indsættelig farvevælger"
 
 #: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
@@ -6045,7 +6214,7 @@ msgstr "Triangel"
 
 #: modules/colorsel_water.c:76
 msgid "Watercolor style color selector as a pluggable module"
-msgstr ""
+msgstr "Farvevælger i vandfarvestil som indsætteligt modul"
 
 #: modules/colorsel_water.c:97 modules/colorsel_water.c:100
 msgid "Watercolor"
@@ -6054,6 +6223,12 @@ msgstr "Vandfarve"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farvehistorie"
+
+#~ msgid "Angle"
+#~ msgstr "Vinkel"
+
+#~ msgid "Pressure"
+#~ msgstr "Tryk"
 
 #~ msgid "/Edit/Fill"
 #~ msgstr "/Redigér/Fyld"
