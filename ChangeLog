@@ -1,3 +1,11 @@
+2004-06-16  Manish Singh  <yosh@gimp.org>
+
+	* modules/controller_linux_input.c: put BTN_{WHEEL,GEAR_DOWN,GEAR_UP}
+	usage in #ifdefs, since pre-2.6 kernels do not have them.
+
+	* modules/controller_linux_input.c (linux_input_read_event): n_bytes
+	should be a gsize.
+
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-actions.c

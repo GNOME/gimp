@@ -67,9 +67,15 @@ static const LinuxInputEvent key_events[] =
   { BTN_EXTRA,     "button-extra",     N_("Button Extra")     },
   { BTN_FORWARD,   "button-forward",   N_("Button Forward")   },
   { BTN_BACK,      "button-back",      N_("Button Forward")   },
+#ifdef BTN_WHEEL
   { BTN_WHEEL,     "button-wheel",     N_("Button Wheel")     },
+#endif
+#ifdef BTN_GEAR_DOWN
   { BTN_GEAR_DOWN, "button-gear-down", N_("Button Gear Down") },
+#endif
+#ifdef BTN_GEAR_UP
   { BTN_GEAR_UP,   "button-gear-up",   N_("Button Gear Up")   }
+#endif
 };
 
 static const LinuxInputEvent rel_events[] =
@@ -378,7 +384,7 @@ linux_input_read_event (GIOChannel   *io,
                         gpointer      data)
 {
   struct input_event  ev;
-  gint                n_bytes;
+  gsize               n_bytes;
   gint                i;
 
   if (g_io_channel_read_chars (io,
