@@ -1,3 +1,7 @@
+2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/*.c: Add <string.h> where it is called for
+
 2000-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/brush_edit.[ch]
