@@ -22,6 +22,10 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.1.1.1.2.1  1998/03/20 22:30:46  film
+ *   sgi can save 16bit too.
+ *   -calvin (cwilliamson@berlin.snafu.de)
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -84,6 +88,8 @@ typedef struct
   unsigned short	xsize,		/* Width in pixels */
 			ysize,		/* Height in pixels */
 			zsize;		/* Number of channels */
+  long			minpixel;	/* darkest */
+  long			maxpixel;	/* brightest */
   long			firstrow,	/* File offset for first row */
 			nextrow,	/* File offset for next row */
 			**table,	/* Offset table for compression */
@@ -101,7 +107,7 @@ typedef struct
 extern int	sgiClose(sgi_t *sgip);
 extern int	sgiGetRow(sgi_t *sgip, short *row, int y, int z);
 extern sgi_t	*sgiOpen(char *filename, int mode, int comp, int bpp,
-		         int xsize, int ysize, int zsize);
+		         int xsize, int ysize, int zsize, int minpixel, int maxpixel);
 extern int	sgiPutRow(sgi_t *sgip, short *row, int y, int z);
 
 #  ifdef __cplusplus

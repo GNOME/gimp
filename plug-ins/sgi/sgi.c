@@ -24,8 +24,8 @@
  *   main()                      - Main entry - just call gimp_main()...
  *   query()                     - Respond to a plug-in query...
  *   run()                       - Run the plug-in...
- *   load_image()                - Load a PNG image into a new image window.
- *   save_image()                - Save the specified image to a PNG file.
+ *   load_image()                - Load a sgi image into a new image window.
+ *   save_image()                - Save the specified image to a sgi file.
  *   save_close_callback()       - Close the save dialog window.
  *   save_ok_callback()          - Destroy the save dialog and save the image.
  *   save_compression_callback() - Update the image compression level.
@@ -34,6 +34,10 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.1.1.1.2.1  1998/03/20 22:30:44  film
+ *   sgi can save 16bit too.
+ *   -calvin (cwilliamson@berlin.snafu.de)
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -167,7 +171,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Michael Sweet <mike@easysw.com>",
       PLUG_IN_VERSION,
-      "<Save>/SGI", "RGB*,GRAY*", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
+      "<Save>/SGI", "RGB*,GRAY*,U16_RGB*,U16_GRAY*", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
   gimp_register_magic_load_handler("file_sgi_load", "rgb,bw,sgi", "", "0,short,474");
   gimp_register_save_handler("file_sgi_save", "rgb,bw,sgi", "");
@@ -282,7 +286,7 @@ run(char   *name,		/* I - Name of filter program. */
 
 
 /*
- * 'load_image()' - Load a PNG image into a new image window.
+ * 'load_image()' - Load a sgi image into a new image window.
  */
 
 static gint32
@@ -296,6 +300,8 @@ load_image(char *filename)	/* I - File to load */
 		tile_height,	/* Height of tile in GIMP */
 		count;		/* Count of rows to put in image */
   sgi_t		*sgip;		/* File pointer */
+  glong	        minpixel;	/* min pixel */
+  glong	        maxpixel;	/* max pixel */
   gint32	image,		/* Image */
 		layer;		/* Layer */
   GDrawable	*drawable;	/* Drawable for layer */
@@ -303,15 +309,16 @@ load_image(char *filename)	/* I - File to load */
   guchar	**pixels,	/* Pixel rows */
 		*pixel,		/* Pixel data */
 		*pptr;		/* Current pixel */
+  guint16	*pptr_u16;	/* Current pixel for bpc ==2 */
   short		**rows;		/* SGI image data */
   char		progress[255];	/* Title for progress display... */
-
-
+ 
  /*
   * Open the file for reading...
   */
-
-  sgip = sgiOpen(filename, SGI_READ, 0, 0, 0, 0, 0);
+  
+  /* getchar(); */
+  sgip = sgiOpen(filename, SGI_READ, 0, 0, 0, 0, 0, 0, 0);
   if (sgip == NULL)
   {
     g_print("can't open image file\n");
@@ -328,27 +335,28 @@ load_image(char *filename)	/* I - File to load */
  /*
   * Get the image dimensions and create the image...
   */
-
+ 
+  
   switch (sgip->zsize)
   {
     case 1 :	/* Grayscale */
-        image_type = GRAY;
-        layer_type = GRAY_IMAGE;
+        image_type = (sgip->bpp == 1) ? GRAY: U16_GRAY;
+        layer_type = (sgip->bpp == 1) ? GRAY_IMAGE: U16_GRAY_IMAGE;
         break;
 
     case 2 :	/* Grayscale + alpha */
-        image_type = GRAY;
-        layer_type = GRAYA_IMAGE;
+        image_type = (sgip->bpp == 1) ? GRAY: U16_GRAY;
+        layer_type = (sgip->bpp == 1) ? GRAYA_IMAGE: U16_GRAYA_IMAGE;
         break;
 
     case 3 :	/* RGB */
-        image_type = RGB;
-        layer_type = RGB_IMAGE;
+        image_type = (sgip->bpp == 1) ? RGB: U16_RGB;
+        layer_type = (sgip->bpp == 1) ? RGB_IMAGE: U16_RGB_IMAGE;
         break;
 
     case 4 :	/* RGBA */
-        image_type = RGB;
-        layer_type = RGBA_IMAGE;
+        image_type = (sgip->bpp == 1) ? RGB: U16_RGB;
+        layer_type = (sgip->bpp == 1) ? RGBA_IMAGE: U16_RGBA_IMAGE;
         break;
   };
 
@@ -383,11 +391,11 @@ load_image(char *filename)	/* I - File to load */
   */
 
   tile_height = gimp_tile_height();
-  pixel       = g_new(guchar, tile_height * sgip->xsize * sgip->zsize);
+  pixel       = g_new(guchar, tile_height * sgip->xsize * sgip->zsize *sgip->bpp);
   pixels      = g_new(guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
-    pixels[i] = pixel + sgip->xsize * sgip->zsize * i;
+    pixels[i] = pixel + sgip->xsize * sgip->zsize * sgip->bpp * i;
 
   rows    = g_new(short *, sgip->zsize);
   rows[0] = g_new(short, sgip->xsize * sgip->zsize);
@@ -398,7 +406,8 @@ load_image(char *filename)	/* I - File to load */
  /*
   * Load the image...
   */
-
+  minpixel = sgip->minpixel;
+  maxpixel = sgip->maxpixel;
   for (y = 0, count = 0;
        y < sgip->ysize;
        y ++, count ++)
@@ -426,15 +435,18 @@ load_image(char *filename)	/* I - File to load */
 	for (i = 0; i < sgip->zsize; i ++, pptr ++)
 	  *pptr = rows[i][x];
     }
-    else
+    else if (sgip->bpp == 2)
     {
      /*
       * 16-bit (signed) pixels...
       */
 
-      for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-	for (i = 0; i < sgip->zsize; i ++, pptr ++)
-	  *pptr = (unsigned)(rows[i][x] + 32768) >> 8;
+      for (x = 0, pptr_u16 = (guint16*)pixels[count]; x < sgip->xsize; x ++)
+	for (i = 0; i < sgip->zsize; i ++, pptr_u16 ++)
+	  /**pptr = (unsigned)(rows[i][x] + 32768) >> 8;*/
+        {
+          *pptr_u16 = (65535 * ((gint32)rows[i][x] - minpixel)) / (maxpixel - minpixel);
+        }
     };
   };
 
@@ -482,48 +494,91 @@ save_image(char   *filename,	/* I - File to save to */
 		layer_type,	/* Type of drawable/layer */
 		tile_height,	/* Height of tile in GIMP */
 		count,		/* Count of rows to put in image */
-		zsize;		/* Number of channels in file */
+		zsize,		/* Number of channels in file */
+		bpc,            /* Number of bytes per channel */
+		minpixel,       /* min pixel value */
+		maxpixel;       /* max pixel value */
   sgi_t		*sgip;		/* File pointer */
   GDrawable	*drawable;	/* Drawable for layer */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
   guchar	**pixels,	/* Pixel rows */
 		*pixel,		/* Pixel data */
 		*pptr;		/* Current pixel */
+  guint16	*pptr_u16;      /* Current pixel */
   short		**rows;		/* SGI image data */
   char		progress[255];	/* Title for progress display... */
-
-
+ 
  /*
   * Get the drawable for the current image...
   */
 
   drawable = gimp_drawable_get(drawable_ID);
+  layer_type = gimp_drawable_type (drawable_ID);
+  switch (layer_type)
+  {
+    case GRAY_IMAGE:
+     zsize = 1; 
+     bpc = 1;
+     minpixel = 0;
+     maxpixel = 255;
+     break;
+    case GRAYA_IMAGE:
+     zsize = 2; 
+     bpc = 1;
+     minpixel = 0;
+     maxpixel = 255;
+     break;
+    case RGB_IMAGE:
+     zsize = 3; 
+     bpc = 1;
+     minpixel = 0;
+     maxpixel = 255;
+     break;
+    case RGBA_IMAGE:
+     zsize = 4; 
+     bpc = 1;
+     minpixel = 0;
+     maxpixel = 255;
+     break;
+    case U16_GRAY_IMAGE:
+     zsize = 1; 
+     bpc = 2;
+     minpixel = 0;
+     maxpixel = 65535;
+     break;
+    case U16_GRAYA_IMAGE:
+     zsize = 2; 
+     bpc = 2;
+     minpixel = 0;
+     maxpixel = 65535;
+     break;
+    case U16_RGB_IMAGE:
+     zsize = 3; 
+     bpc = 2;
+     minpixel = 0;
+     maxpixel = 65535;
+     break;
+    case U16_RGBA_IMAGE:
+     zsize = 4; 
+     bpc = 2;
+     minpixel = 0;
+     maxpixel = 65535;
+     break;
+    default:
+     g_print("can't create image file\n");
+     gimp_quit();
+     break;
+  } 
 
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
                       drawable->height, FALSE, FALSE);
-
-  switch (gimp_drawable_type(drawable_ID))
-  {
-    case GRAY_IMAGE :
-        zsize = 1;
-        break;
-    case GRAYA_IMAGE :
-        zsize = 2;
-        break;
-    case RGB_IMAGE :
-        zsize = 3;
-        break;
-    case RGBA_IMAGE :
-        zsize = 4;
-        break;
-  };
-
+ 
  /*
   * Open the file for writing...
   */
 
-  sgip = sgiOpen(filename, SGI_WRITE, compression, 1, drawable->width,
-                 drawable->height, zsize);
+  sgip = sgiOpen(filename, SGI_WRITE, compression, bpc, drawable->width,
+                 drawable->height, zsize, minpixel, maxpixel);
   if (sgip == NULL)
   {
     g_print("can't create image file\n");
@@ -542,7 +597,7 @@ save_image(char   *filename,	/* I - File to save to */
   */
 
   tile_height = gimp_tile_height();
-  pixel       = g_new(guchar, tile_height * drawable->width * zsize);
+  pixel       = g_new(guchar, tile_height * drawable->width * zsize * bpc);
   pixels      = g_new(guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
@@ -574,16 +629,35 @@ save_image(char   *filename,	/* I - File to save to */
    /*
     * Convert to shorts and write each color plane separately...
     */
-
-    for (i = 0, pptr = pixels[0]; i < count; i ++)
+    if (bpc == 1)
     {
-      for (x = 0; x < drawable->width; x ++)
-        for (j = 0; j < zsize; j ++, pptr ++)
-          rows[j][x] = *pptr;
+      for (i = 0, pptr = pixels[0]; i < count; i ++)
+      {
+	for (x = 0; x < drawable->width; x ++)
+	  for (j = 0; j < zsize; j ++, pptr ++)
+	    rows[j][x] = *pptr;
 
-      for (j = 0; j < zsize; j ++)
-        sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
-    };
+	for (j = 0; j < zsize; j ++)
+	  sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
+      };
+    }
+    else if(bpc == 2)
+    {
+      
+      for (i = 0, pptr_u16 = (guint16 *)pixels[0]; i < count; i ++)
+      {
+	for (x = 0; x < drawable->width; x ++)
+	  for (j = 0; j < zsize; j ++, pptr_u16 ++)
+          {
+            rows[j][x] = (*pptr_u16 * (maxpixel - minpixel))/65535 + minpixel;
+          }
+
+	for (j = 0; j < zsize; j ++)
+	  sgiPutRow(sgip, rows[j], drawable->height - 1 - y - i, j);
+      };
+    }
+
+
 
     gimp_progress_update((double)y / (double)drawable->height);
   };

@@ -37,6 +37,10 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.1.1.1.2.1  1998/03/20 22:30:45  film
+ *   sgi can save 16bit too.
+ *   -calvin (cwilliamson@berlin.snafu.de)
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -212,7 +216,9 @@ sgiOpen(char *filename,	/* I - File to open */
         int  bpp,	/* I - Bytes per pixel */
         int  xsize,	/* I - Width of image in pixels */
         int  ysize,	/* I - Height of image in pixels */
-        int  zsize)	/* I - Number of channels */
+        int  zsize,	/* I - Number of channels */
+        int  minpixel,
+        int  maxpixel)
 {
   int	i, j;		/* Looping var */
   char	name[80];	/* Name of file in image header */
@@ -254,8 +260,8 @@ sgiOpen(char *filename,	/* I - File to open */
         sgip->xsize = getshort(sgip->file);
         sgip->ysize = getshort(sgip->file);
         sgip->zsize = getshort(sgip->file);
-        getlong(sgip->file);		/* Minimum pixel */
-        getlong(sgip->file);		/* Maximum pixel */
+        sgip->minpixel = getlong(sgip->file);		/* Minimum pixel */
+        sgip->maxpixel = getlong(sgip->file);		/* Maximum pixel */
 
         if (sgip->comp)
         {
@@ -310,8 +316,8 @@ sgiOpen(char *filename,	/* I - File to open */
         }
         else
         {
-          putlong(-32768, sgip->file);	/* Minimum pixel */
-          putlong(32767, sgip->file);	/* Maximum pixel */
+          putlong(minpixel, sgip->file);	/* Minimum pixel */
+          putlong(maxpixel, sgip->file);	/* Maximum pixel */
         };
         putlong(0, sgip->file);		/* Reserved */
 
