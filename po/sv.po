@@ -1,6 +1,6 @@
 # Swedish translation of the GIMP.
 # Copyright (C) 1999, 2000, 2001 Free Software Foundation, Inc.
-# Tomas Ögren <stric@ing.umu.se>, 1999-2000.
+# Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001.
 #
 # $Id$
@@ -8,85 +8,60 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2001-06-14 18:19+0200\n"
-"PO-Revision-Date: 2001-06-14 18:20+0200\n"
+"POT-Creation-Date: 2001-07-07 15:07+0200\n"
+"PO-Revision-Date: 2001-07-07 15:19+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:133 app/app_procs.c:141 app/gimprc.c:564
+#: app/app_procs.c:106 app/app_procs.c:114 app/gimprc.c:557
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "tolkar \"%s\"\n"
 
-#. initialize the xcf file format routines
-#. initialize  the global parasite table
-#: app/app_procs.c:198
-msgid "Looking for data files"
-msgstr "Letar efter datafiler"
+#. Initialize the procedural database
+#. *    We need to do this first because any of the init
+#. *    procedures might install or query it as needed.
+#.
+#: app/app_procs.c:151
+msgid "Procedural Database"
+msgstr "Procedurell databas"
 
-#: app/app_procs.c:198
-msgid "Parasites"
-msgstr "Parasiter"
-
-#. initialize the list of gimp brushes
-#: app/app_procs.c:202 app/gui/preferences-dialog.c:2573
-#: app/pdb/internal_procs.c:70
-msgid "Brushes"
-msgstr "Penslar"
-
-#. initialize the list of gimp patterns
-#: app/app_procs.c:206 app/gui/preferences-dialog.c:2577
-#: app/pdb/internal_procs.c:136
-msgid "Patterns"
-msgstr "Mönster"
-
-#. initialize the list of gimp palettes
-#: app/app_procs.c:210 app/gui/preferences-dialog.c:2581
-msgid "Palettes"
-msgstr "Paletter"
-
-#. initialize the list of gimp gradients
-#: app/app_procs.c:214 app/gui/preferences-dialog.c:2585
-#: app/pdb/internal_procs.c:100
-msgid "Gradients"
-msgstr "Färgskalor"
-
-#: app/devices.c:749
+#: app/devices.c:751
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
-#: app/devices.c:755 app/gui/preferences-dialog.c:389
-#: app/gui/preferences-dialog.c:1499 app/tools/gimpcurvestool.c:821
-#: app/tools/gimplevelstool.c:705
+#: app/devices.c:757 app/gui/preferences-dialog.c:393
+#: app/gui/preferences-dialog.c:1505 app/tools/gimpcurvestool.c:822
+#: app/tools/gimplevelstool.c:706
 msgid "Save"
 msgstr "Spara"
 
-#: app/devices.c:757 app/docindex.c:786 app/errorconsole.c:292
+#: app/devices.c:759 app/docindex.c:786 app/errorconsole.c:291
 #: app/gdisplay_ops.c:308 app/gui/colormap-dialog.c:248
-#: app/gui/info-window.c:268 app/gui/palette-import-dialog.c:641
-#: app/gui/preferences-dialog.c:391 app/gui/tips-dialog.c:156
-#: app/gui/tool-options-dialog.c:106 app/nav_window.c:1407
-#: app/tools/gimpbycolorselecttool.c:843 app/tools/gimpcolorpickertool.c:453
-#: app/tools/gimpcroptool.c:1077 app/tools/gimphistogramtool.c:362
-#: app/tools/gimpmeasuretool.c:398 app/undo_history.c:776
+#: app/gui/info-window.c:334 app/gui/palette-import-dialog.c:641
+#: app/gui/preferences-dialog.c:395 app/gui/tips-dialog.c:156
+#: app/gui/tool-options-dialog.c:108 app/tools/gimpbycolorselecttool.c:844
+#: app/tools/gimpcolorpickertool.c:454 app/tools/gimpcroptool.c:1077
+#: app/tools/gimphistogramtool.c:363 app/tools/gimpmeasuretool.c:399
+#: app/undo_history.c:776
 msgid "Close"
 msgstr "Stäng"
 
-#: app/devices.c:1058
+#: app/devices.c:1060
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Förgrund: %d, %d, %d"
 
-#: app/devices.c:1072
+#: app/devices.c:1074
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Bakgrund: %d, %d, %d"
 
-#: app/disp_callbacks.c:856 app/global_edit.c:323 app/global_edit.c:329
-#: app/global_edit.c:403
+#: app/core/gimpedit.c:184 app/core/gimpedit.c:190 app/core/gimpedit.c:266
+#: app/disp_callbacks.c:863
 msgid "Pasted Layer"
 msgstr "Inklistrat lager"
 
@@ -124,36 +99,36 @@ msgstr "Ta bort den valda posten från listan"
 msgid "Document Index"
 msgstr "Dokumentindex"
 
-#: app/errorconsole.c:178
+#: app/errorconsole.c:177
 #, c-format
 msgid "Error opening file %s: %s"
 msgstr "Kunde inte öppna fil %s: %s"
 
-#: app/errorconsole.c:195
+#: app/errorconsole.c:194
 msgid "Can't save, nothing selected!"
 msgstr "Kan inte spara, inget markerat!"
 
-#: app/errorconsole.c:199
+#: app/errorconsole.c:198
 msgid "Save error log to file..."
 msgstr "Spara fellogg till fil..."
 
-#: app/errorconsole.c:284
+#: app/errorconsole.c:283
 msgid "GIMP Error Console"
 msgstr "GIMP felkonsoll"
 
-#: app/errorconsole.c:290
+#: app/errorconsole.c:289
 msgid "Clear"
-msgstr "Rensa"
+msgstr "Töm"
 
-#: app/errorconsole.c:311
+#: app/errorconsole.c:310
 msgid "Write all errors to file..."
 msgstr "Skriv alla fel till fil..."
 
-#: app/errorconsole.c:318
+#: app/errorconsole.c:317
 msgid "Write selection to file..."
 msgstr "Spara markering till fil..."
 
-#: app/file-open.c:103
+#: app/file-open.c:102
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -162,7 +137,7 @@ msgstr ""
 "%s misslyckades.\n"
 "%s: Okänd filtyp."
 
-#: app/file-open.c:120
+#: app/file-open.c:119
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -171,7 +146,7 @@ msgstr ""
 "%s misslyckades.\n"
 "%s är inte en vanlig fil."
 
-#: app/file-open.c:141
+#: app/file-open.c:140
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -207,7 +182,7 @@ msgstr ""
 "Spara misslyckades.\n"
 "%s: Åtkomst nekad."
 
-#: app/file-save.c:244 app/gui/file-save-dialog.c:165
+#: app/file-save.c:244 app/gui/file-save-dialog.c:166
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -216,7 +191,7 @@ msgstr ""
 "Sparning misslyckades.\n"
 "%s"
 
-#: app/floating_sel.c:122
+#: app/floating_sel.c:121
 msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
@@ -224,7 +199,7 @@ msgstr ""
 "Kan inte ankra det här lagret, för\n"
 "det är inte en flytande markering."
 
-#: app/floating_sel.c:195
+#: app/floating_sel.c:194
 msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
@@ -234,32 +209,33 @@ msgstr ""
 "markeringen då den tillhör en lagermask\n"
 "eller kanal."
 
-#: app/gdisplay.c:270
+#: app/gdisplay.c:312
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/gdisplay.c:270 app/gui/preferences-dialog.c:1672 app/image_new.c:74
+#: app/core/gimpimage-new.c:53 app/gdisplay.c:312
+#: app/gui/preferences-dialog.c:1680
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gdisplay.c:273
+#: app/gdisplay.c:315
 msgid "grayscale-empty"
 msgstr "gråskala-tom"
 
-#: app/gdisplay.c:273
+#: app/gdisplay.c:315
 msgid "grayscale"
 msgstr "gråskala"
 
-#: app/gdisplay.c:276
+#: app/gdisplay.c:318
 msgid "indexed-empty"
 msgstr "indexerad-tom"
 
-#: app/gdisplay.c:276
+#: app/gdisplay.c:318
 msgid "indexed"
 msgstr "indexerad"
 
 #: app/gdisplay_color_ui.c:146 app/gui/colormap-dialog.c:465
-#: app/tools/gimpbycolorselecttool.c:907
+#: app/tools/gimpbycolorselecttool.c:908
 msgid "Add"
 msgstr "Lägg till"
 
@@ -283,41 +259,40 @@ msgstr "Inställningar"
 msgid "Color Display Filters"
 msgstr "Färgvisningsfilter"
 
-#: app/gdisplay_color_ui.c:159 app/gui/channels-commands.c:353
-#: app/gui/channels-commands.c:509 app/gui/color-notebook.c:281
-#: app/gui/commands.c:1123 app/gui/convert-dialog.c:154
-#: app/gui/file-new-dialog.c:216 app/gui/file-new-dialog.c:362
-#: app/gui/layers-commands.c:587 app/gui/layers-commands.c:771
-#: app/gui/layers-commands.c:874 app/gui/layers-commands.c:1167
-#: app/gui/offset-dialog.c:90 app/gui/preferences-dialog.c:1497
-#: app/gui/resize-dialog.c:203 app/gui/resolution-calibrate-dialog.c:113
-#: app/module_db.c:315 app/qmask.c:296
-#: app/tools/gimpbrightnesscontrasttool.c:301
-#: app/tools/gimpcolorbalancetool.c:358 app/tools/gimpcurvestool.c:672
-#: app/tools/gimphuesaturationtool.c:460 app/tools/gimplevelstool.c:434
-#: app/tools/gimpposterizetool.c:281 app/tools/gimpthresholdtool.c:367
+#: app/gdisplay_color_ui.c:159 app/gui/channels-commands.c:357
+#: app/gui/channels-commands.c:513 app/gui/color-notebook.c:281
+#: app/gui/convert-dialog.c:154 app/gui/file-new-dialog.c:222
+#: app/gui/file-new-dialog.c:345 app/gui/image-commands.c:334
+#: app/gui/layers-commands.c:591 app/gui/layers-commands.c:775
+#: app/gui/layers-commands.c:878 app/gui/layers-commands.c:1171
+#: app/gui/offset-dialog.c:90 app/gui/preferences-dialog.c:1503
+#: app/gui/resize-dialog.c:202 app/gui/resolution-calibrate-dialog.c:113
+#: app/module_db.c:316 app/qmask.c:299
+#: app/tools/gimpbrightnesscontrasttool.c:302
+#: app/tools/gimpcolorbalancetool.c:361 app/tools/gimpcurvestool.c:673
+#: app/tools/gimphuesaturationtool.c:461 app/tools/gimplevelstool.c:435
+#: app/tools/gimpposterizetool.c:282 app/tools/gimpthresholdtool.c:368
 #: app/widgets/gimpwidgets-utils.c:131
 msgid "OK"
 msgstr "OK"
 
 #. the cancel button
-#: app/gdisplay_color_ui.c:161 app/gdisplay_ops.c:308 app/gimphelp.c:197
-#: app/gimpprogress.c:124 app/global_edit.c:778
-#: app/gui/channels-commands.c:355 app/gui/channels-commands.c:511
-#: app/gui/color-notebook.c:284 app/gui/commands.c:1123
-#: app/gui/convert-dialog.c:156 app/gui/file-new-dialog.c:216
-#: app/gui/file-new-dialog.c:366 app/gui/gradient-editor.c:3876
-#: app/gui/gradient-editor.c:4436 app/gui/gui.c:220
-#: app/gui/layers-commands.c:589 app/gui/layers-commands.c:773
-#: app/gui/layers-commands.c:876 app/gui/layers-commands.c:1169
-#: app/gui/offset-dialog.c:92 app/gui/preferences-dialog.c:1501
-#: app/gui/resize-dialog.c:209 app/gui/resolution-calibrate-dialog.c:115
-#: app/interface.c:495 app/qmask.c:298
-#: app/tools/gimpbrightnesscontrasttool.c:305
-#: app/tools/gimpcolorbalancetool.c:362 app/tools/gimpcurvestool.c:676
-#: app/tools/gimphuesaturationtool.c:464 app/tools/gimplevelstool.c:438
-#: app/tools/gimpposterizetool.c:285 app/tools/gimpthresholdtool.c:371
-#: app/user_install.c:557 app/widgets/gimpdatafactoryview.c:548
+#: app/gdisplay_color_ui.c:161 app/gdisplay_ops.c:308 app/gimphelp.c:200
+#: app/gimpprogress.c:124 app/gui/channels-commands.c:359
+#: app/gui/channels-commands.c:515 app/gui/color-notebook.c:284
+#: app/gui/convert-dialog.c:156 app/gui/file-new-dialog.c:222
+#: app/gui/file-new-dialog.c:349 app/gui/gradient-editor.c:3877
+#: app/gui/gradient-editor.c:4437 app/gui/gui.c:254
+#: app/gui/image-commands.c:334 app/gui/layers-commands.c:593
+#: app/gui/layers-commands.c:777 app/gui/layers-commands.c:880
+#: app/gui/layers-commands.c:1173 app/gui/offset-dialog.c:92
+#: app/gui/preferences-dialog.c:1507 app/gui/resize-dialog.c:208
+#: app/gui/resolution-calibrate-dialog.c:115 app/interface.c:499
+#: app/qmask.c:301 app/tools/gimpbrightnesscontrasttool.c:306
+#: app/tools/gimpcolorbalancetool.c:365 app/tools/gimpcurvestool.c:677
+#: app/tools/gimphuesaturationtool.c:465 app/tools/gimplevelstool.c:439
+#: app/tools/gimpposterizetool.c:286 app/tools/gimpthresholdtool.c:372
+#: app/user_install.c:557 app/widgets/gimpdatafactoryview.c:409
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -338,11 +313,11 @@ msgstr ""
 "%s har ändrats.\n"
 "Stäng ändå?"
 
-#: app/gimphelp.c:191
+#: app/gimphelp.c:194
 msgid "Could not find GIMP Help Browser"
 msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
-#: app/gimphelp.c:193
+#: app/gimphelp.c:196
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -352,7 +327,7 @@ msgstr ""
 "Den var förmodligen inte kompilerad eftersom\n"
 "du inte har GtkXmHTML installerat."
 
-#: app/gimphelp.c:196
+#: app/gimphelp.c:199
 msgid "Use Netscape instead"
 msgstr "Använd Netscape istället"
 
@@ -364,41 +339,41 @@ msgstr "Förlopp"
 msgid "Please wait..."
 msgstr "Var god vänta..."
 
-#: app/gimprc.c:581
+#: app/gimprc.c:574
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "kunde inte tolka: \"%s\"\n"
 
-#: app/gimprc.c:582
+#: app/gimprc.c:575
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  på rad %d kolumn %d\n"
 
-#: app/gimprc.c:583
+#: app/gimprc.c:576
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  oväntad token: %s\n"
 
-#: app/gimprc.c:1559
+#: app/gimprc.c:1555
 msgid "error parsing pluginrc"
 msgstr "fel vid tolkning av pluginrc"
 
-#: app/gimprc.c:3189
+#: app/gimprc.c:3205
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kan inte öppna %s: %s"
 
-#: app/gimprc.c:3208
+#: app/gimprc.c:3224
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kan inte döpa om %s till %s.old: %s"
 
-#: app/gimprc.c:3214
+#: app/gimprc.c:3230
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Kan inte öppna %s igen\n"
 
-#: app/gimprc.c:3226
+#: app/gimprc.c:3242
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kan inte skriva till %s: %s"
@@ -408,8 +383,8 @@ msgstr "Kan inte skriva till %s: %s"
 msgid "pixel"
 msgstr "bildpunkt"
 
-#: app/gimpunit.c:59 app/tools/gimpmeasuretool.c:581
-#: app/tools/gimpmeasuretool.c:585 app/tools/gimppainttool.c:691
+#: app/gimpunit.c:59 app/tools/gimpmeasuretool.c:582
+#: app/tools/gimpmeasuretool.c:586 app/tools/gimppainttool.c:693
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -450,97 +425,6 @@ msgstr "picas"
 #: app/gimpunit.c:74
 msgid "percent"
 msgstr "procent:"
-
-#: app/global_edit.c:753
-msgid "Paste"
-msgstr "Klistra in"
-
-#: app/global_edit.c:754
-msgid "Paste Into"
-msgstr "Klistra in i"
-
-#: app/global_edit.c:755
-msgid "Paste as New"
-msgstr "Klistra in som ny"
-
-#: app/global_edit.c:770
-msgid "Paste Named Buffer"
-msgstr "Klistra in namngiven buffer"
-
-#: app/global_edit.c:776 app/gui/palette-editor.c:576
-#: app/widgets/gimpdatafactoryview.c:199 app/widgets/gimpdatafactoryview.c:548
-#: app/widgets/gimpdrawablelistview.c:317
-msgid "Delete"
-msgstr "Ta bort"
-
-#: app/global_edit.c:792
-msgid "Select a buffer to paste:"
-msgstr "Markera en buffer att klistra in:"
-
-#: app/global_edit.c:881
-msgid "Cut Named"
-msgstr "Klipp ut namngiven"
-
-#: app/global_edit.c:884 app/global_edit.c:917
-msgid "Enter a name for this buffer"
-msgstr "Ange namn för denna buffert"
-
-#: app/global_edit.c:914
-msgid "Copy Named"
-msgstr "Kopiera namngiven"
-
-#: app/gui/info-window.c:79 app/gui/info-window.c:543
-#: app/gui/preferences-dialog.c:1673 app/image_new.c:79
-msgid "Grayscale"
-msgstr "Gråskala"
-
-#: app/gui/layers-commands.c:690 app/image_new.c:85
-msgid "Foreground"
-msgstr "Förgrund"
-
-#: app/gui/layers-commands.c:691 app/gui/offset-dialog.c:175
-#: app/image_new.c:90 app/image_new.c:304
-msgid "Background"
-msgstr "Bakgrund"
-
-#: app/gui/layers-commands.c:692 app/image_new.c:95
-msgid "White"
-msgstr "Vit"
-
-#: app/gui/layers-commands.c:693 app/gui/offset-dialog.c:177
-#: app/image_new.c:100
-msgid "Transparent"
-msgstr "Transparent"
-
-#: app/image_new.c:350
-#, c-format
-msgid "%d Bytes"
-msgstr "%d byte"
-
-#: app/image_new.c:352
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f kB"
-
-#: app/image_new.c:354
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f kB"
-
-#: app/image_new.c:356
-#, c-format
-msgid "%d KB"
-msgstr "%d kB"
-
-#: app/image_new.c:358
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
-
-#: app/image_new.c:360
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
 
 #: app/main.c:293
 #, c-format
@@ -661,148 +545,147 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Detta konsollfönster kommer att stängas om tio sekunder)\n"
 
-#: app/module_db.c:64
+#: app/module_db.c:65
 msgid "Module error"
 msgstr "Modul"
 
-#: app/module_db.c:65
+#: app/module_db.c:66
 msgid "Loaded OK"
 msgstr "Lästes in OK"
 
-#: app/module_db.c:66
+#: app/module_db.c:67
 msgid "Load failed"
 msgstr "Inläsning misslyckades"
 
-#: app/module_db.c:67
+#: app/module_db.c:68
 msgid "Unload requested"
 msgstr "Begärde glömning"
 
-#: app/module_db.c:68
+#: app/module_db.c:69
 msgid "Unloaded OK"
 msgstr "Glömdes OK"
 
-#: app/module_db.c:309
+#: app/module_db.c:310
 msgid "Module DB"
 msgstr "Moduldatabas"
 
-#: app/module_db.c:355 app/widgets/gimpdatafactoryview.c:216
+#: app/module_db.c:356 app/widgets/gimpdatafactoryview.c:155
 msgid "Refresh"
 msgstr "Uppdatera"
 
-#: app/module_db.c:622
+#: app/module_db.c:623
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "läser in modul: \"%s\"\n"
 
-#: app/module_db.c:629
+#: app/module_db.c:630
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "hoppar över modul: \"%s\"\n"
 
-#: app/module_db.c:655
+#: app/module_db.c:656
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "fel vid inläsning av modul: %s: %s"
 
-#: app/module_db.c:842
+#: app/module_db.c:843
 msgid "<No modules>"
 msgstr "<Inga moduler>"
 
-#: app/module_db.c:855 app/module_db.c:864
+#: app/module_db.c:856 app/module_db.c:865
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:855
+#: app/module_db.c:856
 msgid "only in memory"
 msgstr "endast i minnet"
 
-#: app/module_db.c:864
+#: app/module_db.c:865
 msgid "nowhere (click 'refresh')"
 msgstr "ingenstans (tryck på \"uppdatera\")"
 
-#: app/module_db.c:894 app/tools/gimpcurvestool.c:813
-#: app/tools/gimplevelstool.c:695
+#: app/module_db.c:895 app/tools/gimpcurvestool.c:814
+#: app/tools/gimplevelstool.c:696
 msgid "Load"
 msgstr "Läs in"
 
-#: app/module_db.c:899 app/module_db.c:904
+#: app/module_db.c:900 app/module_db.c:905
 msgid "Unload"
 msgstr "Glöm"
 
-#: app/module_db.c:920
+#: app/module_db.c:921
 msgid "Purpose:"
 msgstr "Syfte:"
 
-#: app/module_db.c:921
+#: app/module_db.c:922
 msgid "Author:"
 msgstr "Författare:"
 
-#: app/module_db.c:922
+#: app/module_db.c:923
 msgid "Version:"
 msgstr "Version:"
 
-#: app/module_db.c:923
+#: app/module_db.c:924
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:924
+#: app/module_db.c:925
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/module_db.c:925
+#: app/module_db.c:926
 msgid "Location:"
 msgstr "Placering:"
 
-#: app/module_db.c:926
+#: app/module_db.c:927
 msgid "State:"
 msgstr "Tillstånd:"
 
-#: app/module_db.c:945
+#: app/module_db.c:946
 msgid "Autoload during startup"
 msgstr "Läs in automatiskt vid start"
 
-#. create the info dialog
-#: app/nav_window.c:1291
+#: app/nav_window.c:324
+msgid "Navigation: No Image"
+msgstr "Navigation: Ingen bild"
+
+#: app/nav_window.c:602
 #, c-format
 msgid "Navigation: %s-%d.%d"
 msgstr "Navigation: %s-%d.%d"
 
-#: app/nav_window.c:1596
-msgid "Navigation: No Image"
-msgstr "Navigation: Ingen bild"
-
-#: app/plug_in.c:341
+#: app/plug_in.c:343
 msgid "Resource configuration"
 msgstr "Resurskonfiguration"
 
-#: app/plug_in.c:348
+#: app/plug_in.c:350
 msgid "Plug-ins"
 msgstr "Insticksmoduler"
 
-#: app/plug_in.c:361
+#: app/plug_in.c:363
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "kontrollerar insticksmodul: \"%s\"\n"
 
-#: app/plug_in.c:399
+#: app/plug_in.c:401
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "skriver \"%s\"\n"
 
-#: app/plug_in.c:414
+#: app/plug_in.c:416
 msgid "Starting extensions: "
 msgstr "Startar tillägg: "
 
-#: app/plug_in.c:416
+#: app/plug_in.c:418
 msgid "Extensions"
 msgstr "Tillägg"
 
-#: app/plug_in.c:860
+#: app/plug_in.c:862
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kunde inte hitta insticksmodul: \"%s\""
 
-#: app/plug_in.c:1487
+#: app/plug_in.c:1489
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -819,204 +702,204 @@ msgstr ""
 "Du bör nog spara dina bilder och starta om GIMP för att vara på den\n"
 "säkra sidan."
 
-#: app/qmask.c:283
+#: app/qmask.c:286
 msgid "Edit Qmask Color"
 msgstr "Redigera snabbmaskfärg"
 
-#: app/qmask.c:290
+#: app/qmask.c:293
 msgid "Edit Qmask Attributes"
 msgstr "Redigera snabbmaskattribut"
 
 #. The opacity scale
-#: app/qmask.c:318
+#: app/qmask.c:321
 msgid "Mask Opacity:"
 msgstr "Maskopacitet:"
 
-#: app/undo.c:2868
+#: app/undo.c:2870
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
 
-#: app/undo.c:2899
+#: app/undo.c:2901
 msgid "<<invalid>>"
 msgstr "<<ogiltig>>"
 
-#: app/undo.c:2900
+#: app/undo.c:2902
 msgid "image"
 msgstr "bild"
 
-#: app/undo.c:2901
+#: app/undo.c:2903
 msgid "image mod"
 msgstr "bildmod"
 
-#: app/undo.c:2902
+#: app/undo.c:2904
 msgid "mask"
 msgstr "mask"
 
-#: app/undo.c:2903
+#: app/undo.c:2905
 msgid "layer move"
 msgstr "lagerflytt"
 
 #. ok
-#: app/undo.c:2904
+#: app/undo.c:2906
 msgid "transform"
 msgstr "transform"
 
-#: app/undo.c:2905
+#: app/undo.c:2907
 msgid "paint"
 msgstr "måla"
 
-#: app/undo.c:2906
+#: app/undo.c:2908
 msgid "new layer"
 msgstr "nytt lager"
 
-#: app/undo.c:2907
+#: app/undo.c:2909
 msgid "delete layer"
 msgstr "ta bort lager"
 
-#: app/undo.c:2908
+#: app/undo.c:2910
 msgid "layer mod"
 msgstr "lagermod"
 
-#: app/undo.c:2909
+#: app/undo.c:2911
 msgid "add layer mask"
 msgstr "lägg till lagermask"
 
 #. ok
-#: app/undo.c:2910
+#: app/undo.c:2912
 msgid "delete layer mask"
 msgstr "ta bort lagermask"
 
 #. ok
-#: app/undo.c:2911
+#: app/undo.c:2913
 msgid "rename layer"
 msgstr "byt namn på lager"
 
-#: app/undo.c:2912
+#: app/undo.c:2914
 msgid "layer reposition"
 msgstr "lagerposition ändrad"
 
 #. ok
-#: app/undo.c:2913
+#: app/undo.c:2915
 msgid "new channel"
 msgstr "ny kanal"
 
-#: app/undo.c:2914
+#: app/undo.c:2916
 msgid "delete channel"
 msgstr "ta bort kanal"
 
-#: app/undo.c:2915
+#: app/undo.c:2917
 msgid "channel mod"
 msgstr "kanalmod"
 
-#: app/undo.c:2916
+#: app/undo.c:2918
 msgid "FS to layer"
 msgstr "FM till lager"
 
 #. ok
-#: app/undo.c:2917
+#: app/undo.c:2919
 msgid "gimage"
 msgstr "gimage"
 
-#: app/undo.c:2918
+#: app/undo.c:2920
 msgid "FS rigor"
 msgstr "FM rigor"
 
-#: app/undo.c:2919
+#: app/undo.c:2921
 msgid "FS relax"
 msgstr "FM relax"
 
-#: app/undo.c:2920
+#: app/undo.c:2922
 msgid "guide"
 msgstr "guide"
 
-#: app/undo.c:2921
+#: app/undo.c:2923
 msgid "text"
 msgstr "text"
 
-#: app/undo.c:2922
+#: app/undo.c:2924
 msgid "float selection"
 msgstr "flytande markering"
 
-#: app/undo.c:2923
+#: app/undo.c:2925
 msgid "paste"
 msgstr "klistra in"
 
-#: app/undo.c:2924
+#: app/undo.c:2926
 msgid "cut"
 msgstr "klipp ut"
 
-#: app/undo.c:2925
+#: app/undo.c:2927
 msgid "transform core"
 msgstr "transformera"
 
-#: app/undo.c:2926
+#: app/undo.c:2928
 msgid "paint core"
 msgstr "måla"
 
-#: app/undo.c:2927
+#: app/undo.c:2929
 msgid "floating layer"
 msgstr "flytande lager"
 
 #. unused!
-#: app/undo.c:2928
+#: app/undo.c:2930
 msgid "linked layer"
 msgstr "länkat lager"
 
-#: app/undo.c:2929
+#: app/undo.c:2931
 msgid "apply layer mask"
 msgstr "applicera lagermask"
 
 #. ok
-#: app/undo.c:2930
+#: app/undo.c:2932
 msgid "layer merge"
 msgstr "sammanslagning av lager"
 
-#: app/undo.c:2931
+#: app/undo.c:2933
 msgid "FS anchor"
 msgstr "FM-ankra"
 
-#: app/undo.c:2932
+#: app/undo.c:2934
 msgid "gimage mod"
 msgstr "gimage mod"
 
-#: app/undo.c:2933
+#: app/undo.c:2935
 msgid "crop"
 msgstr "beskär"
 
-#: app/undo.c:2934
+#: app/undo.c:2936
 msgid "layer scale"
 msgstr "skala lager"
 
-#: app/undo.c:2935
+#: app/undo.c:2937
 msgid "layer resize"
 msgstr "ändra storlek på lager"
 
-#: app/undo.c:2936
+#: app/undo.c:2938
 msgid "quickmask"
 msgstr "snabbmask"
 
-#: app/undo.c:2937
+#: app/undo.c:2939
 msgid "attach parasite"
 msgstr "koppla parasit"
 
-#: app/undo.c:2938
+#: app/undo.c:2940
 msgid "remove parasite"
 msgstr "ta bort parasit"
 
-#: app/undo.c:2939
+#: app/undo.c:2941
 msgid "resolution change"
 msgstr "ändrad upplösning"
 
-#: app/undo.c:2940
+#: app/undo.c:2942
 msgid "image scale"
 msgstr "skala om bild"
 
-#: app/undo.c:2941
+#: app/undo.c:2943
 msgid "image resize"
 msgstr "ändra storlek på bild"
 
-#: app/undo.c:2942
+#: app/undo.c:2944
 msgid "misc"
 msgstr "div"
 
@@ -1029,7 +912,7 @@ msgstr "Ångringshistorik: %s"
 msgid "[ base image ]"
 msgstr "[ grundbild ]"
 
-#: app/pdb/internal_procs.c:154 app/undo_history.c:864
+#: app/pdb/internal_procs.c:157 app/undo_history.c:864
 msgid "Undo"
 msgstr "Ångra"
 
@@ -1519,7 +1402,7 @@ msgstr ""
 "\"block-cache\". Du bör justera det så det får plats i minnet. Tänk\n"
 "på mängden minne som används av andra körande program."
 
-#: app/gui/preferences-dialog.c:2251 app/user_install.c:1116
+#: app/gui/preferences-dialog.c:2259 app/user_install.c:1116
 msgid "Tile Cache Size:"
 msgstr "Bildblockscachestorlek:"
 
@@ -1535,7 +1418,7 @@ msgstr ""
 "tillräckligt mycket ledigt utrymme (flera 100 MB). På ett UNIX-system så\n"
 "kan du vilja sätta systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/gui/preferences-dialog.c:2537 app/user_install.c:1136
+#: app/gui/preferences-dialog.c:2545 app/user_install.c:1136
 msgid "Select Swap Dir"
 msgstr "Välj swapkatalog"
 
@@ -1560,8 +1443,8 @@ msgstr "Hämta upplösning från fönstersystem (För tillfället %d × %d dpi)"
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du sätta upplösningen manuellt"
 
-#: app/gui/file-new-dialog.c:462 app/gui/preferences-dialog.c:1572
-#: app/gui/preferences-dialog.c:1611 app/user_install.c:1204
+#: app/gui/file-new-dialog.c:445 app/gui/preferences-dialog.c:1579
+#: app/gui/preferences-dialog.c:1618 app/user_install.c:1204
 msgid "Pixels"
 msgstr "Bildpunkter"
 
@@ -1569,11 +1452,12 @@ msgstr "Bildpunkter"
 msgid "Monitor Resolution X:"
 msgstr "Bildskärmsupplösning X:"
 
-#: app/gui/file-new-dialog.c:539 app/gui/offset-dialog.c:114
-#: app/gui/resize-dialog.c:355 app/gui/resize-dialog.c:447
-#: app/gui/resize-dialog.c:581 app/tools/gimpcroptool.c:1086
-#: app/tools/gimprotatetool.c:258 app/tools/gimpscaletool.c:214
-#: app/tools/gimpsheartool.c:231 app/user_install.c:1217
+#: app/gui/file-new-dialog.c:524 app/gui/info-window.c:197
+#: app/gui/offset-dialog.c:114 app/gui/resize-dialog.c:354
+#: app/gui/resize-dialog.c:446 app/gui/resize-dialog.c:580
+#: app/tools/gimpcroptool.c:1086 app/tools/gimprotatetool.c:260
+#: app/tools/gimpscaletool.c:216 app/tools/gimpsheartool.c:232
+#: app/user_install.c:1217
 msgid "Y:"
 msgstr "Y:"
 
@@ -1585,51 +1469,31 @@ msgstr ""
 "Du kan även trycka på \"Kalibrera\" nedan för att öppna ett\n"
 "fönster som låter dig kalibrera bildskärmsupplösningen interaktivt."
 
-#: app/gui/preferences-dialog.c:2469 app/user_install.c:1255
+#: app/gui/preferences-dialog.c:2477 app/user_install.c:1255
 msgid "Calibrate"
 msgstr "Kalibrera"
 
-#: app/xcf.c:390
-#, c-format
-msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF-fel: XCF-filversion %d som inte stöds påträffad"
-
-#: app/gui/paths-dialog.c:1978 app/xcf.c:444
-#, c-format
-msgid "open failed on %s: %s\n"
-msgstr "öppnande av %s misslyckades: %s\n"
-
-#: app/xcf.c:1859
-msgid ""
-"XCF warning: version 0 of XCF file format\n"
-"did not save indexed colormaps correctly.\n"
-"Substituting grayscale map."
-msgstr ""
-"XCF-varning: version 0 av XCF-filformatet\n"
-"sparade inte indexerade färgkartor rätt.\n"
-"Byter ut gråskalekartan."
-
-#: app/core/gimpbrush.c:416
+#: app/core/gimpbrush.c:450
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Okänt penselformat version #%d i \"%s\"."
 
-#: app/core/gimpbrush.c:436
+#: app/core/gimpbrush.c:470
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Fel i GIMP-penselfilen \"%s\"."
 
-#: app/core/gimpbrush.c:443 app/core/gimppattern.c:313
+#: app/core/gimpbrush.c:477 app/core/gimppattern.c:313
 #: app/gui/palette-import-dialog.c:570
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: app/core/gimpbrush.c:456 app/core/gimpbrush.c:475
+#: app/core/gimpbrush.c:490 app/core/gimpbrush.c:509
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP-penselfilen verkar vara trunkerad: \"%s\"."
 
-#: app/core/gimpbrushpipe.c:295
+#: app/core/gimpbrushpipe.c:294
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1638,7 +1502,7 @@ msgstr ""
 "Penselrör bör ha minst en pensel:\n"
 "\"%s\""
 
-#: app/core/gimpbrushpipe.c:386
+#: app/core/gimpbrushpipe.c:385
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -1648,13 +1512,13 @@ msgstr ""
 "\"%s\""
 
 #: app/core/gimpchannel.c:198 app/core/gimpchannel.c:200
-#: app/core/gimplayer.c:299 app/core/gimplayer.c:302
-#: app/widgets/gimpdatafactoryview.c:396 app/widgets/gimpdatafactoryview.c:399
+#: app/core/gimplayer.c:295 app/core/gimplayer.c:298
+#: app/widgets/gimpdatafactoryview.c:298 app/widgets/gimpdatafactoryview.c:301
 msgid "copy"
 msgstr "kopia"
 
-#: app/core/gimpchannel.c:206 app/core/gimplayer.c:308
-#: app/core/gimplayermask.c:195 app/widgets/gimpdatafactoryview.c:408
+#: app/core/gimpchannel.c:206 app/core/gimplayer.c:304
+#: app/core/gimplayermask.c:195 app/widgets/gimpdatafactoryview.c:310
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
@@ -1663,7 +1527,7 @@ msgstr "%s-kopia"
 msgid "Selection Mask"
 msgstr "Markeringsmask"
 
-#: app/core/gimpdatafactory.c:300
+#: app/core/gimpdatafactory.c:302
 #, c-format
 msgid ""
 "Warning: Failed to load data from\n"
@@ -1693,36 +1557,36 @@ msgstr "koppla parasit till objekt"
 msgid "detach parasite from drawable"
 msgstr "koppla ifrån parasit från objekt"
 
-#: app/core/gimpimage.c:2818
+#: app/core/gimpimage.c:2821
 #, c-format
 msgid "%s(): layer cannot be raised any further"
 msgstr "%s(): lagret kan inte höjas mer"
 
-#: app/core/gimpimage.c:2846
+#: app/core/gimpimage.c:2849
 #, c-format
 msgid "%s(): layer cannot be lowered any further"
 msgstr "%s(): lagret kan inte sänkas mer"
 
-#: app/core/gimpimage.c:2871
+#: app/core/gimpimage.c:2874
 #, c-format
 msgid "%s(): layer is already on top"
 msgstr "%s(): lagret är redan överst"
 
-#: app/core/gimpimage.c:2878
+#: app/core/gimpimage.c:2881
 #, c-format
 msgid "%s(): can't raise Layer without alpha"
 msgstr "%s(): kan inte höja lager utan alfakanal"
 
-#: app/core/gimpimage.c:2905
+#: app/core/gimpimage.c:2908
 #, c-format
 msgid "%s(): layer is already on bottom"
 msgstr "%s(): lagret är redan nederst"
 
-#: app/core/gimpimage.c:2956
+#: app/core/gimpimage.c:2959
 msgid "BG has no alpha, layer was placed above"
 msgstr "Bakgrundsfärgen har ingen alfakanal, lagret placerades ovanför"
 
-#: app/core/gimpimage.c:3029
+#: app/core/gimpimage.c:3032
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1730,25 +1594,25 @@ msgstr ""
 "Det finns inte tillräckligt många synliga lager för att sammanfoga.\n"
 "Det måste vara minst två."
 
-#: app/core/gimpimage.c:3117
+#: app/core/gimpimage.c:3120
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Det finns inte tillräckligt många synliga lager för att sammanfoga neråt."
 
-#: app/core/gimpimage.c:3599
+#: app/core/gimpimage.c:3602
 msgid "Channel cannot be raised any further"
 msgstr "Kanalen kan inte höjas högre"
 
-#: app/core/gimpimage.c:3622
+#: app/core/gimpimage.c:3625
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan inte sänkas längre"
 
-#: app/core/gimpimage.c:3848 app/core/gimppalette-import.c:206
-#: app/core/gimppalette.c:496 app/widgets/gimpdatafactoryview.c:355
+#: app/core/gimpimage.c:3851 app/core/gimppalette-import.c:206
+#: app/core/gimppalette.c:494 app/widgets/gimpdatafactoryview.c:257
 msgid "Untitled"
 msgstr "Namnlös"
 
-#: app/core/gimpimage-mask.c:229
+#: app/core/gimpimage-mask.c:228
 msgid ""
 "Unable to cut/copy because the selected\n"
 "region is empty."
@@ -1756,15 +1620,15 @@ msgstr ""
 "Kunde inte kopiera/klippa ut eftersom den markerade\n"
 "regionen är tom."
 
-#: app/core/gimpimage-mask.c:369
+#: app/core/gimpimage-mask.c:373
 msgid "Float Selection: No selection to float."
 msgstr "Flytande markering: Ingen markering att flyta."
 
-#: app/core/gimpimage-mask.c:383 app/gui/layers-commands.c:804
+#: app/core/gimpimage-mask.c:387 app/gui/layers-commands.c:808
 msgid "Floating Selection"
 msgstr "Flytande markering"
 
-#: app/core/gimpimage-mask.c:521
+#: app/core/gimpimage-mask.c:525
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1772,7 +1636,7 @@ msgstr ""
 "Det aktiva lagret har ingen alfakanal\n"
 "att konvertera till markering."
 
-#: app/core/gimpimage-mask.c:540
+#: app/core/gimpimage-mask.c:544
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1780,19 +1644,72 @@ msgstr ""
 "Det aktiva lagret har ingen mask\n"
 "att konvertera till markering."
 
-#: app/core/gimpimage-mask.c:593
+#: app/core/gimpimage-mask.c:597
 msgid "No selection to stroke!"
 msgstr "Ingen markering att stryka!"
 
-#: app/core/gimpimage-mask.c:649 app/tools/gimpbezierselecttool.c:3796
+#: app/core/gimpimage-mask.c:649 app/tools/gimpbezierselecttool.c:3799
 msgid "Paintbrush operation failed."
 msgstr "Målarpenseloperation misslyckades."
 
-#: app/core/gimplayer.c:265
+#: app/core/gimpimage-new.c:60 app/gui/info-window.c:80
+#: app/gui/info-window.c:641 app/gui/preferences-dialog.c:1681
+msgid "Grayscale"
+msgstr "Gråskala"
+
+#: app/core/gimpimage-new.c:69 app/gui/layers-commands.c:694
+msgid "Foreground"
+msgstr "Förgrund"
+
+#: app/core/gimpimage-new.c:75 app/core/gimpimage-new.c:265
+#: app/gui/layers-commands.c:695 app/gui/offset-dialog.c:175
+msgid "Background"
+msgstr "Bakgrund"
+
+#: app/core/gimpimage-new.c:81 app/gui/layers-commands.c:696
+msgid "White"
+msgstr "Vit"
+
+#: app/core/gimpimage-new.c:87 app/gui/layers-commands.c:697
+#: app/gui/offset-dialog.c:177
+msgid "Transparent"
+msgstr "Transparent"
+
+#: app/core/gimpimage-new.c:206
+#, c-format
+msgid "%d Bytes"
+msgstr "%d byte"
+
+#: app/core/gimpimage-new.c:208
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f kB"
+
+#: app/core/gimpimage-new.c:210
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f kB"
+
+#: app/core/gimpimage-new.c:212
+#, c-format
+msgid "%d KB"
+msgstr "%d kB"
+
+#: app/core/gimpimage-new.c:214
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: app/core/gimpimage-new.c:216
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: app/core/gimplayer.c:261
 msgid "Zero width or height layers not allowed."
 msgstr "Lager med noll i bredd eller höjd är inte tillåtna."
 
-#: app/core/gimplayer.c:492
+#: app/core/gimplayer.c:488
 msgid ""
 "Cannot add layer mask to layer\n"
 "which is not part of an image."
@@ -1800,7 +1717,7 @@ msgstr ""
 "Kan inte lägga till lagermask till\n"
 "ett lager som inte tillhör en bild."
 
-#: app/core/gimplayer.c:499
+#: app/core/gimplayer.c:495
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1808,7 +1725,7 @@ msgstr ""
 "Kan inte lägga till lagermask eftersom\n"
 "lagret redan har en."
 
-#: app/core/gimplayer.c:506
+#: app/core/gimplayer.c:502
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1816,7 +1733,7 @@ msgstr ""
 "Kan inte lägga till en lagermask till\n"
 "ett lager i en indexerad bild."
 
-#: app/core/gimplayer.c:513
+#: app/core/gimplayer.c:509
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1824,7 +1741,7 @@ msgstr ""
 "Kan inte lägga till lagermask till ett\n"
 "lager utan alfakanal."
 
-#: app/core/gimplayer.c:523
+#: app/core/gimplayer.c:519
 msgid ""
 "Cannot add layer mask of different\n"
 "dimensions than specified layer."
@@ -1833,12 +1750,12 @@ msgstr ""
 "andra dimensioner än det specifierade\n"
 "lagret."
 
-#: app/core/gimplayer.c:572
+#: app/core/gimplayer.c:568
 #, c-format
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: app/core/gimppalette.c:276
+#: app/core/gimppalette.c:274
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -1851,7 +1768,7 @@ msgstr ""
 "saknade huvud\n"
 "Behöver denna fil konverteras från DOS?"
 
-#: app/core/gimppalette.c:281
+#: app/core/gimppalette.c:279
 #, c-format
 msgid ""
 "Loading palette %s:\n"
@@ -1860,8 +1777,8 @@ msgstr ""
 "Läser in paletten %s:\n"
 "Trasig palett: saknade huvud"
 
-#: app/core/gimppalette.c:295 app/core/gimppalette.c:312
-#: app/core/gimppalette.c:341 app/core/gimppalette.c:408
+#: app/core/gimppalette.c:293 app/core/gimppalette.c:310
+#: app/core/gimppalette.c:339 app/core/gimppalette.c:406
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1870,7 +1787,7 @@ msgstr ""
 "Läser in paletten %s (rad %d):\n"
 "Läsfel"
 
-#: app/core/gimppalette.c:330
+#: app/core/gimppalette.c:328
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1880,7 +1797,7 @@ msgstr ""
 "Ogiltigt nummer eller kolumner"
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:368
+#: app/core/gimppalette.c:366
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1889,7 +1806,7 @@ msgstr ""
 "Läser in paletten %s (rad %d):\n"
 "Saknar RÖD komponent"
 
-#: app/core/gimppalette.c:375
+#: app/core/gimppalette.c:373
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1898,7 +1815,7 @@ msgstr ""
 "Läser in paletten %s (rad %d):\n"
 "Saknar GRÖN komponent"
 
-#: app/core/gimppalette.c:382
+#: app/core/gimppalette.c:380
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1907,7 +1824,7 @@ msgstr ""
 "Läser in paletten %s (rad %d):\n"
 "Saknar BLÅ komponent"
 
-#: app/core/gimppalette.c:391
+#: app/core/gimppalette.c:389
 #, c-format
 msgid ""
 "Loading palette %s (line %d):\n"
@@ -1916,12 +1833,12 @@ msgstr ""
 "Läser in paletten %s (rad %d):\n"
 "RGB-värdet utanför giltigt område"
 
-#: app/core/gimppalette.c:446
+#: app/core/gimppalette.c:444
 #, c-format
 msgid "Can't save palette \"%s\"\n"
 msgstr "Kan inte spara paletten \"%s\"\n"
 
-#: app/core/gimppalette.c:544
+#: app/core/gimppalette.c:542
 msgid "Black"
 msgstr "Svart"
 
@@ -1963,7 +1880,7 @@ msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #. the feather radius scale
-#: app/gui/brush-editor.c:169 app/tools/gimpcolorpickertool.c:325
+#: app/gui/brush-editor.c:169 app/tools/gimpcolorpickertool.c:326
 #: app/tools/selection_options.c:102
 msgid "Radius:"
 msgstr "Radie:"
@@ -1976,63 +1893,59 @@ msgstr "Hårdhet:"
 msgid "Aspect Ratio:"
 msgstr "Aspektratio:"
 
-#: app/gui/brush-editor.c:209 app/tools/gimpinktool.c:435
-#: app/tools/gimpmeasuretool.c:394 app/tools/gimprotatetool.c:240
+#: app/gui/brush-editor.c:209 app/tools/gimpinktool.c:437
+#: app/tools/gimpmeasuretool.c:395 app/tools/gimprotatetool.c:242
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. The shell
-#: app/gui/brush-select.c:137
+#: app/gui/brush-select.c:138
 msgid "Brush Selection"
 msgstr "Penselmarkering"
 
 #. Opacity scale
-#: app/gui/brush-select.c:230 app/tools/paint_options.c:174
-#: app/widgets/gimplayerlistview.c:187
+#: app/gui/brush-select.c:232 app/tools/paint_options.c:176
+#: app/widgets/gimplayerlistview.c:186
 msgid "Opacity:"
 msgstr "Opacitet:"
 
 #. Paint mode menu
-#: app/gui/brush-select.c:238 app/tools/paint_options.c:196
-#: app/widgets/gimplayerlistview.c:153
+#: app/gui/brush-select.c:240 app/tools/paint_options.c:198
+#: app/widgets/gimplayerlistview.c:152
 msgid "Mode:"
 msgstr "Läge:"
 
-#: app/gui/brush-select.c:260
-msgid "Spacing:"
-msgstr "Mellanrum:"
-
-#: app/gui/channels-commands.c:340
+#: app/gui/channels-commands.c:344
 msgid "New Channel Color"
 msgstr "Ny kanalfärg"
 
-#: app/gui/channels-commands.c:347
+#: app/gui/channels-commands.c:351
 msgid "New Channel Options"
 msgstr "Inställningar för nya kanaler"
 
 #. The name entry hbox, label and entry
-#: app/gui/channels-commands.c:381 app/gui/channels-commands.c:541
+#: app/gui/channels-commands.c:385 app/gui/channels-commands.c:545
 msgid "Channel name:"
 msgstr "Kanalnamn:"
 
-#: app/gui/channels-commands.c:392
+#: app/gui/channels-commands.c:396
 msgid "New Channel"
 msgstr "Ny kanal"
 
 #. The opacity scale
-#: app/gui/channels-commands.c:396 app/gui/channels-commands.c:556
+#: app/gui/channels-commands.c:400 app/gui/channels-commands.c:560
 msgid "Fill Opacity:"
 msgstr "Fyllnadsopacitet:"
 
-#: app/gui/channels-commands.c:496
+#: app/gui/channels-commands.c:500
 msgid "Edit Channel Color"
 msgstr "Redigera kanalfärg"
 
-#: app/gui/channels-commands.c:503
+#: app/gui/channels-commands.c:507
 msgid "Edit Channel Attributes"
 msgstr "Redigera kanalattribut"
 
-#: app/gui/color-area.c:333
+#: app/gui/color-area.c:340
 msgid "Color Selection"
 msgstr "Färgval"
 
@@ -2048,15 +1961,15 @@ msgstr "M"
 msgid "V"
 msgstr "V"
 
-#: app/gui/color-notebook.c:217 app/tools/gimphuesaturationtool.c:442
+#: app/gui/color-notebook.c:217 app/tools/gimphuesaturationtool.c:443
 msgid "R"
 msgstr "R"
 
-#: app/gui/color-notebook.c:218 app/tools/gimphuesaturationtool.c:444
+#: app/gui/color-notebook.c:218 app/tools/gimphuesaturationtool.c:445
 msgid "G"
 msgstr "G"
 
-#: app/gui/color-notebook.c:219 app/tools/gimphuesaturationtool.c:446
+#: app/gui/color-notebook.c:219 app/tools/gimphuesaturationtool.c:447
 msgid "B"
 msgstr "B"
 
@@ -2072,31 +1985,31 @@ msgstr "Nyans"
 msgid "Saturation"
 msgstr "Mättnad"
 
-#: app/gui/color-notebook.c:226 app/tools/gimpcurvestool.c:696
-#: app/tools/gimphistogramtool.c:389 app/tools/gimplevelstool.c:466
+#: app/gui/color-notebook.c:226 app/tools/gimpcurvestool.c:697
+#: app/tools/gimphistogramtool.c:390 app/tools/gimplevelstool.c:467
 msgid "Value"
 msgstr "Värde"
 
-#: app/gui/color-notebook.c:227 app/tools/gimpcolorbalancetool.c:430
-#: app/tools/gimpcurvestool.c:697 app/tools/gimphistogramtool.c:390
-#: app/tools/gimplevelstool.c:467 app/widgets/gimpcomponentlistitem.c:360
+#: app/gui/color-notebook.c:227 app/tools/gimpcolorbalancetool.c:433
+#: app/tools/gimpcurvestool.c:698 app/tools/gimphistogramtool.c:391
+#: app/tools/gimplevelstool.c:468 app/widgets/gimpcomponentlistitem.c:360
 msgid "Red"
 msgstr "Röd"
 
-#: app/gui/color-notebook.c:228 app/tools/gimpcolorbalancetool.c:455
-#: app/tools/gimpcurvestool.c:698 app/tools/gimphistogramtool.c:391
-#: app/tools/gimplevelstool.c:468 app/widgets/gimpcomponentlistitem.c:361
+#: app/gui/color-notebook.c:228 app/tools/gimpcolorbalancetool.c:458
+#: app/tools/gimpcurvestool.c:699 app/tools/gimphistogramtool.c:392
+#: app/tools/gimplevelstool.c:469 app/widgets/gimpcomponentlistitem.c:361
 msgid "Green"
 msgstr "Grön"
 
-#: app/gui/color-notebook.c:229 app/tools/gimpcolorbalancetool.c:480
-#: app/tools/gimpcurvestool.c:699 app/tools/gimphistogramtool.c:392
-#: app/tools/gimplevelstool.c:469 app/widgets/gimpcomponentlistitem.c:362
+#: app/gui/color-notebook.c:229 app/tools/gimpcolorbalancetool.c:483
+#: app/tools/gimpcurvestool.c:700 app/tools/gimphistogramtool.c:393
+#: app/tools/gimplevelstool.c:470 app/widgets/gimpcomponentlistitem.c:362
 msgid "Blue"
 msgstr "Blå"
 
-#: app/gui/color-notebook.c:230 app/tools/gimpcurvestool.c:700
-#: app/tools/gimplevelstool.c:470 app/widgets/gimpcomponentlistitem.c:365
+#: app/gui/color-notebook.c:230 app/tools/gimpcurvestool.c:701
+#: app/tools/gimplevelstool.c:471 app/widgets/gimpcomponentlistitem.c:365
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -2117,7 +2030,7 @@ msgid "Add the current color to the color history"
 msgstr "Lägg till aktuell färg till färghistoriken"
 
 #: app/gui/color-notebook.c:587 app/gui/colormap-dialog.c:358
-#: app/tools/gimpcolorpickertool.c:403 app/tools/gimpcolorpickertool.c:418
+#: app/tools/gimpcolorpickertool.c:404 app/tools/gimpcolorpickertool.c:419
 msgid "Hex Triplet:"
 msgstr "Hex-triplett:"
 
@@ -2130,13 +2043,13 @@ msgstr "Indexerad färgpalett"
 msgid "Image:"
 msgstr "Bild:"
 
-#: app/gui/colormap-dialog.c:347 app/tools/gimpcolorpickertool.c:407
+#: app/gui/colormap-dialog.c:347 app/tools/gimpcolorpickertool.c:408
 msgid "Index:"
 msgstr "Index:"
 
-#: app/gui/colormap-dialog.c:474 app/gui/palette-editor.c:566
-#: app/widgets/gimpdatafactoryview.c:182
-#: app/widgets/gimpdrawablelistview.c:300
+#: app/gui/colormap-dialog.c:474 app/gui/palette-editor.c:567
+#: app/widgets/gimpdatafactoryview.c:143
+#: app/widgets/gimpdrawablelistview.c:299
 msgid "Edit"
 msgstr "Redigera"
 
@@ -2147,82 +2060,6 @@ msgstr "Redigera indexerad färg"
 #: app/gui/colormap-dialog.c:1152
 msgid "none"
 msgstr "ingen"
-
-#: app/gui/commands.c:361
-msgid "Feather Selection"
-msgstr "Fjädermarkering"
-
-#: app/gui/commands.c:364
-msgid "Feather Selection by:"
-msgstr "Fjädermarkering:"
-
-#: app/gui/commands.c:397
-msgid "Shrink Selection"
-msgstr "Minska markering"
-
-#: app/gui/commands.c:400
-msgid "Shrink Selection by:"
-msgstr "Minska markering med:"
-
-#: app/gui/commands.c:409
-msgid "Shrink from image border"
-msgstr "Krymp från bildkanten"
-
-#: app/gui/commands.c:431
-msgid "Grow Selection"
-msgstr "Öka markering"
-
-#: app/gui/commands.c:434
-msgid "Grow Selection by:"
-msgstr "Öka markering med:"
-
-#: app/gui/commands.c:454
-msgid "Border Selection"
-msgstr "Kantmarkering"
-
-#: app/gui/commands.c:457
-msgid "Border Selection by:"
-msgstr "Kantmarkering med:"
-
-#: app/gui/commands.c:788
-msgid "Desaturate operates only on RGB color drawables."
-msgstr "Avfärga fungerar endast på RGB-bilder."
-
-#: app/gui/commands.c:811
-msgid "Invert does not operate on indexed drawables."
-msgstr "Kan inte använda invert på indexerade bilder."
-
-#: app/gui/commands.c:822
-msgid "Invert operation failed."
-msgstr "Inverteringsoperation misslyckades."
-
-#: app/gui/commands.c:841
-msgid "Equalize does not operate on indexed drawables."
-msgstr "Jämna ut fungerar inte på indexerade bilder."
-
-#: app/gui/commands.c:1083
-msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
-"Fel vid ändring av storlek: Både bredd och höjd måste vara större än 0."
-
-#: app/gui/commands.c:1116
-msgid "Layer Too Small"
-msgstr "Lager för litet"
-
-#: app/gui/commands.c:1120
-msgid ""
-"The chosen image size will shrink\n"
-"some layers completely away.\n"
-"Is this what you want?"
-msgstr ""
-"Den valda bildstorleken kommer att\n"
-"krympa bort några lager helt.\n"
-"Är detta vad du vill?"
-
-#: app/gui/commands.c:1212
-msgid "Scale Error: Both width and height must be greater than zero."
-msgstr ""
-"Fel vid omskalning av bild: Både bredd och höjd måste vara större än 0."
 
 #: app/gui/convert-dialog.c:148
 msgid "Indexed Color Conversion"
@@ -2305,11 +2142,28 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Välj egen palett"
 
-#: app/gui/dialogs-constructors.c:641
+#: app/gui/dialogs-constructors.c:681
 msgid "Sorry, this brush can't be edited."
 msgstr "Tyvärr, den här penseln kan inte redigeras."
 
-#: app/gui/file-new-dialog.c:199
+#: app/gui/edit-commands.c:191
+msgid "Cut Named"
+msgstr "Klipp ut namngiven"
+
+#: app/gui/edit-commands.c:194 app/gui/edit-commands.c:213
+msgid "Enter a name for this buffer"
+msgstr "Ange namn för denna buffert"
+
+#: app/gui/edit-commands.c:210
+msgid "Copy Named"
+msgstr "Kopiera namngiven"
+
+#: app/gui/file-commands.c:94
+#, c-format
+msgid "Error opening file: %s\n"
+msgstr "Kunde inte öppna fil: %s\n"
+
+#: app/gui/file-new-dialog.c:205
 #, no-c-format
 msgid ""
 "You are trying to create an image which\n"
@@ -2336,68 +2190,68 @@ msgstr ""
 "inställningen (för tillfället %d) i\n"
 "inställningsdialogen."
 
-#: app/gui/file-new-dialog.c:211
+#: app/gui/file-new-dialog.c:217
 msgid "Confirm Image Size"
 msgstr "Bekräfta bildstorlek"
 
-#: app/gui/file-new-dialog.c:298
+#: app/gui/file-new-dialog.c:304
 #, c-format
 msgid "Image Size: %s"
 msgstr "Bildstorlek: %s"
 
-#: app/gui/file-new-dialog.c:356
+#: app/gui/file-new-dialog.c:339
 msgid "New Image"
 msgstr "Ny bild"
 
-#: app/gui/file-new-dialog.c:364 app/gui/resize-dialog.c:206
-#: app/gui/tool-options-dialog.c:103
-#: app/tools/gimpbrightnesscontrasttool.c:303
-#: app/tools/gimpbycolorselecttool.c:841 app/tools/gimpcolorbalancetool.c:360
-#: app/tools/gimpcurvestool.c:674 app/tools/gimphuesaturationtool.c:462
-#: app/tools/gimplevelstool.c:436 app/tools/gimpposterizetool.c:283
-#: app/tools/gimpthresholdtool.c:369 app/tools/gimptransformtool.c:472
+#: app/gui/file-new-dialog.c:347 app/gui/resize-dialog.c:205
+#: app/gui/tool-options-dialog.c:105
+#: app/tools/gimpbrightnesscontrasttool.c:304
+#: app/tools/gimpbycolorselecttool.c:842 app/tools/gimpcolorbalancetool.c:363
+#: app/tools/gimpcurvestool.c:675 app/tools/gimphuesaturationtool.c:463
+#: app/tools/gimplevelstool.c:437 app/tools/gimpposterizetool.c:284
+#: app/tools/gimpthresholdtool.c:370 app/tools/gimptransformtool.c:473
 msgid "Reset"
 msgstr "Återställ"
 
 #. the pixel size labels
-#: app/gui/file-new-dialog.c:398 app/gui/file-new-dialog.c:416
+#: app/gui/file-new-dialog.c:381 app/gui/file-new-dialog.c:399
 #: app/tools/gimpcroptool.c:1099 app/tools/selection_options.c:259
 msgid "Width:"
 msgstr "Bredd:"
 
-#: app/gui/file-new-dialog.c:404 app/gui/file-new-dialog.c:422
-#: app/gui/layers-commands.c:631 app/gui/resize-dialog.c:265
-#: app/gui/resize-dialog.c:290 app/gui/resize-dialog.c:518
-#: app/tools/gimpcroptool.c:1102 app/tools/gimpscaletool.c:193
-#: app/tools/gimpscaletool.c:200 app/tools/selection_options.c:275
+#: app/gui/file-new-dialog.c:387 app/gui/file-new-dialog.c:405
+#: app/gui/layers-commands.c:635 app/gui/resize-dialog.c:264
+#: app/gui/resize-dialog.c:289 app/gui/resize-dialog.c:517
+#: app/tools/gimpcroptool.c:1102 app/tools/gimpscaletool.c:195
+#: app/tools/gimpscaletool.c:202 app/tools/selection_options.c:275
 msgid "Height:"
 msgstr "Höjd:"
 
 #. the resolution labels
-#: app/gui/file-new-dialog.c:533 app/gui/resize-dialog.c:575
+#: app/gui/file-new-dialog.c:518 app/gui/resize-dialog.c:574
 msgid "Resolution X:"
 msgstr "Upplösning X:"
 
-#: app/gui/file-new-dialog.c:554 app/gui/resize-dialog.c:597
+#: app/gui/file-new-dialog.c:540 app/gui/resize-dialog.c:596
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
 #. frame for Image Type
-#: app/gui/file-new-dialog.c:599
+#: app/gui/file-new-dialog.c:586
 msgid "Image Type"
 msgstr "Bildtyp"
 
 #. frame for Fill Type
-#: app/gui/file-new-dialog.c:637 app/gui/offset-dialog.c:171
-#: app/tools/gimpbucketfilltool.c:288
+#: app/gui/file-new-dialog.c:624 app/gui/offset-dialog.c:171
+#: app/tools/gimpbucketfilltool.c:290
 msgid "Fill Type"
 msgstr "Fyllnadstyp"
 
-#: app/gui/file-open-dialog.c:156 app/gui/file-open-dialog.c:271
+#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:279
 msgid "Load Image"
 msgstr "Läs in bild"
 
-#: app/gui/file-open-dialog.c:182
+#: app/gui/file-open-dialog.c:186
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -2405,7 +2259,7 @@ msgstr ""
 "Kan inte återgå till gammal fil.\n"
 "Inget filnamn är associerat med den här bilden."
 
-#: app/gui/file-open-dialog.c:193
+#: app/gui/file-open-dialog.c:197
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -2420,28 +2274,28 @@ msgstr ""
 "(Du kommer att förlora alla dina\n"
 "ändringar, inklusive din ångrainformation)"
 
-#: app/gui/file-open-dialog.c:200
+#: app/gui/file-open-dialog.c:204
 msgid "Revert Image?"
 msgstr "Återgå till gammal bild?"
 
-#: app/gui/file-open-dialog.c:205 app/gui/file-save-dialog.c:491
+#: app/gui/file-open-dialog.c:209 app/gui/file-save-dialog.c:492
 msgid "Yes"
 msgstr "Ja"
 
-#: app/gui/file-open-dialog.c:205 app/gui/file-save-dialog.c:491
+#: app/gui/file-open-dialog.c:209 app/gui/file-save-dialog.c:492
 msgid "No"
 msgstr "Nej"
 
-#: app/gui/file-open-dialog.c:236
+#: app/gui/file-open-dialog.c:251
 msgid "Open"
 msgstr "Öppna"
 
 #. format-chooser frame
-#: app/gui/file-open-dialog.c:320
+#: app/gui/file-open-dialog.c:328
 msgid "Determine File Type"
 msgstr "Bestäm filtyp"
 
-#: app/gui/file-open-dialog.c:393
+#: app/gui/file-open-dialog.c:401
 msgid ""
 "Generate\n"
 "Preview"
@@ -2450,47 +2304,47 @@ msgstr ""
 "Förhandsvisning"
 
 #. The preview frame
-#: app/gui/file-open-dialog.c:411 app/gui/palette-import-dialog.c:759
-#: app/tools/gimpbrightnesscontrasttool.c:387
-#: app/tools/gimpcolorbalancetool.c:528 app/tools/gimpcurvestool.c:796
-#: app/tools/gimphuesaturationtool.c:652 app/tools/gimplevelstool.c:667
-#: app/tools/gimpposterizetool.c:322 app/tools/gimpthresholdtool.c:444
+#: app/gui/file-open-dialog.c:419 app/gui/palette-import-dialog.c:759
+#: app/tools/gimpbrightnesscontrasttool.c:388
+#: app/tools/gimpcolorbalancetool.c:531 app/tools/gimpcurvestool.c:797
+#: app/tools/gimphuesaturationtool.c:653 app/tools/gimplevelstool.c:668
+#: app/tools/gimpposterizetool.c:323 app/tools/gimpthresholdtool.c:445
 msgid "Preview"
 msgstr "Förhandsvisning"
 
-#: app/gui/file-open-dialog.c:412
+#: app/gui/file-open-dialog.c:420
 msgid "No Selection."
 msgstr "Ingen markering."
 
-#: app/gui/file-open-dialog.c:594
+#: app/gui/file-open-dialog.c:602
 msgid "(This thumbnail may be out of date)"
 msgstr "(denna tumnagel är kanske gammal)"
 
-#: app/gui/file-open-dialog.c:595
+#: app/gui/file-open-dialog.c:603
 msgid "(No Information)"
 msgstr "(ingen information)"
 
-#: app/gui/file-open-dialog.c:605
+#: app/gui/file-open-dialog.c:613
 msgid "(Thumbnail saving is disabled)"
 msgstr "(tumnagelssparning är avslaget)"
 
-#: app/gui/file-open-dialog.c:609
+#: app/gui/file-open-dialog.c:617
 msgid "(Could not write thumbnail file)"
 msgstr "(kunde inte skriva tumnagelsfil)"
 
-#: app/gui/file-open-dialog.c:613
+#: app/gui/file-open-dialog.c:621
 msgid "(Thumbnail file not written)"
 msgstr "(tumnagelsfil är inte sparad)"
 
-#: app/gui/file-open-dialog.c:631
+#: app/gui/file-open-dialog.c:639
 msgid "No preview available"
 msgstr "ingen förhandsvisning tillgänglig"
 
-#: app/gui/file-open-dialog.c:741
+#: app/gui/file-open-dialog.c:750
 msgid "(could not make preview)"
 msgstr "(kunde inte skapa förhandsvisning)"
 
-#: app/gui/file-open-dialog.c:820 app/gui/file-open-dialog.c:863
+#: app/gui/file-open-dialog.c:831 app/gui/file-open-dialog.c:875
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -2499,11 +2353,11 @@ msgstr ""
 "Öppning misslyckades.\n"
 "%s"
 
-#: app/gui/file-open-dialog.c:928
+#: app/gui/file-open-dialog.c:941
 msgid "Revert"
 msgstr "Återgå"
 
-#: app/gui/file-open-dialog.c:944
+#: app/gui/file-open-dialog.c:957
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -2512,59 +2366,59 @@ msgstr ""
 "Återgång till tidigare bild misslyckades.\n"
 "%s"
 
-#: app/gui/file-save-dialog.c:201 app/gui/file-save-dialog.c:305
+#: app/gui/file-save-dialog.c:202 app/gui/file-save-dialog.c:306
 msgid "Save Image"
 msgstr "Spara bild"
 
-#: app/gui/file-save-dialog.c:260
+#: app/gui/file-save-dialog.c:261
 msgid "Save a Copy of the Image"
 msgstr "Spara en kopia av bilden"
 
-#: app/gui/file-save-dialog.c:340
+#: app/gui/file-save-dialog.c:341
 msgid "Save Options"
 msgstr "Sparainställningar"
 
-#: app/gui/file-save-dialog.c:349
+#: app/gui/file-save-dialog.c:350
 msgid "Determine File Type:"
 msgstr "Bestäm filtyp:"
 
-#: app/gui/file-save-dialog.c:484
+#: app/gui/file-save-dialog.c:485
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existerar, skriv över?"
 
-#: app/gui/file-save-dialog.c:486
+#: app/gui/file-save-dialog.c:487
 msgid "File Exists!"
 msgstr "Filen existerar!"
 
-#: app/gui/gradient-editor.c:550
+#: app/gui/gradient-editor.c:551
 msgid "Gradient Editor"
 msgstr "Färgskaleredigerare"
 
 #. Save as POV-Ray button
-#: app/gui/gradient-editor.c:713 app/gui/gradient-editor.c:1011
+#: app/gui/gradient-editor.c:714 app/gui/gradient-editor.c:1012
 msgid "Save as POV-Ray"
 msgstr "Spara som POV-Ray"
 
 #. Zoom all button
-#: app/gui/gradient-editor.c:748
+#: app/gui/gradient-editor.c:749
 msgid "Zoom all"
 msgstr "Visa hela"
 
-#: app/gui/gradient-editor.c:762
+#: app/gui/gradient-editor.c:763
 msgid "Instant update"
 msgstr "Direktuppdatering"
 
-#: app/gui/gradient-editor.c:803
+#: app/gui/gradient-editor.c:804
 msgid "Default"
 msgstr "Standard"
 
-#: app/gui/gradient-editor.c:1140
+#: app/gui/gradient-editor.c:1141
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zoom faktor: %d:1    Visar [%0.6f, %0.6f]"
 
-#: app/gui/gradient-editor.c:1381
+#: app/gui/gradient-editor.c:1382
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -2573,29 +2427,29 @@ msgstr ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacitet: %0.3f"
 
-#: app/gui/gradient-editor.c:1413
+#: app/gui/gradient-editor.c:1414
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Förgrundsfärg satt till RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gui/gradient-editor.c:1439
+#: app/gui/gradient-editor.c:1440
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Bakgrundsfärg satt till RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gui/gradient-editor.c:1724
+#: app/gui/gradient-editor.c:1725
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Dra: flytta    Shift+dra: flytta & komprimera"
 
-#: app/gui/gradient-editor.c:1727 app/gui/gradient-editor.c:1732
+#: app/gui/gradient-editor.c:1728 app/gui/gradient-editor.c:1733
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klicka: markera    Shift+klicka: utöka markering"
 
-#: app/gui/gradient-editor.c:1739
+#: app/gui/gradient-editor.c:1740
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Klicka: markera    Shift+klicka: utöka markering    Dra: flytta"
 
-#: app/gui/gradient-editor.c:1752
+#: app/gui/gradient-editor.c:1753
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -2603,230 +2457,230 @@ msgstr ""
 "Klicka: markera    Shift+klicka: utöka markering    Dra: flytta    "
 "Shift+dra: flytta & komprimera"
 
-#: app/gui/gradient-editor.c:2001 app/gui/gradient-editor.c:2010
+#: app/gui/gradient-editor.c:2002 app/gui/gradient-editor.c:2011
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Handtagsposition: %06f"
 
-#: app/gui/gradient-editor.c:2029
+#: app/gui/gradient-editor.c:2030
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distans: %0.6f"
 
-#: app/gui/gradient-editor.c:2532
+#: app/gui/gradient-editor.c:2533
 msgid "Left endpoint's color"
 msgstr "Vänstra ändpunktens färg"
 
-#: app/gui/gradient-editor.c:2543 app/gui/gradient-editor.c:2588
+#: app/gui/gradient-editor.c:2544 app/gui/gradient-editor.c:2589
 msgid "Load from"
 msgstr "Läs in från"
 
-#: app/gui/gradient-editor.c:2548
+#: app/gui/gradient-editor.c:2549
 msgid "Left neighbor's right endpoint"
 msgstr "Vänstra grannens högra ändpunkt"
 
-#: app/gui/gradient-editor.c:2549
+#: app/gui/gradient-editor.c:2550
 msgid "Right endpoint"
 msgstr "Höger ändpunkt"
 
-#: app/gui/gradient-editor.c:2559 app/gui/gradient-editor.c:2604
+#: app/gui/gradient-editor.c:2560 app/gui/gradient-editor.c:2605
 msgid "Save to"
 msgstr "Spara till"
 
-#: app/gui/gradient-editor.c:2577
+#: app/gui/gradient-editor.c:2578
 msgid "Right endpoint's color"
 msgstr "Högra ändpunktens färg"
 
-#: app/gui/gradient-editor.c:2593
+#: app/gui/gradient-editor.c:2594
 msgid "Right neighbor's left endpoint"
 msgstr "Högra grannens vänstra ändpunkt"
 
-#: app/gui/gradient-editor.c:2594
+#: app/gui/gradient-editor.c:2595
 msgid "Left endpoint"
 msgstr "Vänster ändpunkt"
 
-#: app/gui/gradient-editor.c:2708
+#: app/gui/gradient-editor.c:2709
 msgid "Selection operations"
 msgstr "Markeringsoperationer"
 
-#: app/gui/gradient-editor.c:2857
+#: app/gui/gradient-editor.c:2858
 msgid "Blending function for segment"
 msgstr "Färgtoningsfunktion för segment"
 
-#: app/gui/gradient-editor.c:2859
+#: app/gui/gradient-editor.c:2860
 msgid "Coloring type for segment"
 msgstr "Färgningstyp för segment"
 
-#: app/gui/gradient-editor.c:2861
+#: app/gui/gradient-editor.c:2862
 msgid "Split segment at midpoint"
 msgstr "Dela segment vid mittenpunkt"
 
-#: app/gui/gradient-editor.c:2863 app/gui/gradient-editor.c:3866
+#: app/gui/gradient-editor.c:2864 app/gui/gradient-editor.c:3867
 msgid "Split segment uniformly"
 msgstr "Dela segment uniformt"
 
-#: app/gui/gradient-editor.c:2865
+#: app/gui/gradient-editor.c:2866
 msgid "Delete segment"
 msgstr "Ta bort segment"
 
-#: app/gui/gradient-editor.c:2867
+#: app/gui/gradient-editor.c:2868
 msgid "Re-center segment's midpoint"
 msgstr "Centrera segmentets mittenpunkt"
 
-#: app/gui/gradient-editor.c:2869
+#: app/gui/gradient-editor.c:2870
 msgid "Re-distribute handles in segment"
 msgstr "Återfördela handtagen i segmentet"
 
-#: app/gui/gradient-editor.c:2871
+#: app/gui/gradient-editor.c:2872
 msgid "Flip segment"
 msgstr "Vänd på segmentet"
 
-#: app/gui/gradient-editor.c:2873 app/gui/gradient-editor.c:4426
+#: app/gui/gradient-editor.c:2874 app/gui/gradient-editor.c:4427
 msgid "Replicate segment"
 msgstr "Replikera segmentet"
 
-#: app/gui/gradient-editor.c:2878
+#: app/gui/gradient-editor.c:2879
 msgid "Blending function for selection"
 msgstr "Färgtoningsfunktion för markering"
 
-#: app/gui/gradient-editor.c:2880
+#: app/gui/gradient-editor.c:2881
 msgid "Coloring type for selection"
 msgstr "Färgningstyp för markering"
 
-#: app/gui/gradient-editor.c:2882
+#: app/gui/gradient-editor.c:2883
 msgid "Split segments at midpoints"
 msgstr "Dela segment vid mittenpunkter"
 
-#: app/gui/gradient-editor.c:2884 app/gui/gradient-editor.c:3867
+#: app/gui/gradient-editor.c:2885 app/gui/gradient-editor.c:3868
 msgid "Split segments uniformly"
 msgstr "Dela segmenten uniformt"
 
-#: app/gui/gradient-editor.c:2886
+#: app/gui/gradient-editor.c:2887
 msgid "Delete selection"
 msgstr "Ta bort markering"
 
-#: app/gui/gradient-editor.c:2888
+#: app/gui/gradient-editor.c:2889
 msgid "Re-center midpoints in selection"
 msgstr "Centrera mittenpunkter i markering"
 
-#: app/gui/gradient-editor.c:2890
+#: app/gui/gradient-editor.c:2891
 msgid "Re-distribute handles in selection"
 msgstr "Återfördela handtagen i markering"
 
-#: app/gui/gradient-editor.c:2892
+#: app/gui/gradient-editor.c:2893
 msgid "Flip selection"
 msgstr "Vänd markering"
 
-#: app/gui/gradient-editor.c:2894 app/gui/gradient-editor.c:4427
+#: app/gui/gradient-editor.c:2895 app/gui/gradient-editor.c:4428
 msgid "Replicate selection"
 msgstr "Replikera markering"
 
-#: app/gui/gradient-editor.c:3188
+#: app/gui/gradient-editor.c:3189
 msgid "FG color"
 msgstr "Förgrundsfärg"
 
-#: app/gui/gradient-editor.c:3236
+#: app/gui/gradient-editor.c:3237
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gui/gradient-editor.c:3474
+#: app/gui/gradient-editor.c:3475
 msgid "Left Endpoint Color"
 msgstr "Vänstra ändpunktens färg"
 
-#: app/gui/gradient-editor.c:3495
+#: app/gui/gradient-editor.c:3496
 msgid "Right Endpoint Color"
 msgstr "Högra ändpunktens färg"
 
-#: app/gui/gradient-editor.c:3611 app/gui/preferences-dialog.c:2287
-#: app/tools/gimpblendtool.c:729
+#: app/gui/gradient-editor.c:3612 app/gui/preferences-dialog.c:2295
+#: app/tools/gimpblendtool.c:732
 msgid "Linear"
 msgstr "Linjär"
 
-#: app/gui/gradient-editor.c:3612
+#: app/gui/gradient-editor.c:3613
 msgid "Curved"
 msgstr "Kurvig"
 
-#: app/gui/gradient-editor.c:3613
+#: app/gui/gradient-editor.c:3614
 msgid "Sinusoidal"
 msgstr "Sinusformad"
 
-#: app/gui/gradient-editor.c:3614
+#: app/gui/gradient-editor.c:3615
 msgid "Spherical (increasing)"
 msgstr "Sfärisk (ökande)"
 
-#: app/gui/gradient-editor.c:3615
+#: app/gui/gradient-editor.c:3616
 msgid "Spherical (decreasing)"
 msgstr "Sfärisk (minskande)"
 
-#: app/gui/gradient-editor.c:3627 app/gui/gradient-editor.c:3712
+#: app/gui/gradient-editor.c:3628 app/gui/gradient-editor.c:3713
 msgid "(Varies)"
 msgstr "(Varierar)"
 
-#: app/gui/gradient-editor.c:3698
+#: app/gui/gradient-editor.c:3699
 msgid "Plain RGB"
 msgstr "Ren RGB"
 
-#: app/gui/gradient-editor.c:3699
+#: app/gui/gradient-editor.c:3700
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (moturs nyans)"
 
-#: app/gui/gradient-editor.c:3700
+#: app/gui/gradient-editor.c:3701
 msgid "HSV (clockwise hue)"
 msgstr "HSV (medurs nyans)"
 
-#: app/gui/gradient-editor.c:3874
+#: app/gui/gradient-editor.c:3875
 msgid "Split"
 msgstr "Dela"
 
 #. Instructions
-#: app/gui/gradient-editor.c:3888
+#: app/gui/gradient-editor.c:3889
 msgid "Please select the number of uniform parts"
 msgstr "Välj antalet uniforma delar"
 
-#: app/gui/gradient-editor.c:3895
+#: app/gui/gradient-editor.c:3896
 msgid "in which you want to split the selected segment"
 msgstr "som du vill dela det markerade segmentet"
 
-#: app/gui/gradient-editor.c:3896
+#: app/gui/gradient-editor.c:3897
 msgid "in which you want to split the segments in the selection"
 msgstr "som du vill dela segmenten i markeringen"
 
-#: app/gui/gradient-editor.c:4261
+#: app/gui/gradient-editor.c:4262
 msgid "Blend endpoints' colors"
 msgstr "Tona ändpunkternas färg"
 
-#: app/gui/gradient-editor.c:4273
+#: app/gui/gradient-editor.c:4274
 msgid "Blend endpoints' opacity"
 msgstr "Tona ändpunkternas opacitet"
 
-#: app/gui/gradient-editor.c:4434
+#: app/gui/gradient-editor.c:4435
 msgid "Replicate"
 msgstr "Replikera"
 
 #. Instructions
-#: app/gui/gradient-editor.c:4447
+#: app/gui/gradient-editor.c:4448
 msgid "Please select the number of times"
 msgstr "Välj antalet gånger"
 
-#: app/gui/gradient-editor.c:4453
+#: app/gui/gradient-editor.c:4454
 msgid "you want to replicate the selected segment"
 msgstr "du vill replikera det markerade segmentet"
 
-#: app/gui/gradient-editor.c:4454
+#: app/gui/gradient-editor.c:4455
 msgid "you want to replicate the selection"
 msgstr "du vill replikera markeringen"
 
 #. The shell
-#: app/gui/gradient-select.c:104
+#: app/gui/gradient-select.c:105
 msgid "Gradient Selection"
 msgstr "Färgskalemarkering"
 
-#: app/gui/gui.c:215
+#: app/gui/gui.c:249
 msgid "Really Quit?"
 msgstr "Verkligen avsluta?"
 
-#: app/gui/gui.c:219
+#: app/gui/gui.c:253
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -2836,9 +2690,49 @@ msgstr ""
 "\n"
 "Avsluta GIMP?"
 
-#: app/gui/gui.c:220
+#: app/gui/gui.c:254
 msgid "Quit"
 msgstr "Avsluta"
+
+#: app/gui/image-commands.c:107
+msgid "Desaturate operates only on RGB color drawables."
+msgstr "Avfärga fungerar endast på RGB-bilder."
+
+#: app/gui/image-commands.c:131
+msgid "Invert does not operate on indexed drawables."
+msgstr "Kan inte använda invert på indexerade bilder."
+
+#: app/gui/image-commands.c:143
+msgid "Invert operation failed."
+msgstr "Inverteringsoperation misslyckades."
+
+#: app/gui/image-commands.c:163
+msgid "Equalize does not operate on indexed drawables."
+msgstr "Jämna ut fungerar inte på indexerade bilder."
+
+#: app/gui/image-commands.c:294
+msgid "Resize Error: Both width and height must be greater than zero."
+msgstr ""
+"Fel vid ändring av storlek: Både bredd och höjd måste vara större än 0."
+
+#: app/gui/image-commands.c:327
+msgid "Layer Too Small"
+msgstr "Lager för litet"
+
+#: app/gui/image-commands.c:331
+msgid ""
+"The chosen image size will shrink\n"
+"some layers completely away.\n"
+"Is this what you want?"
+msgstr ""
+"Den valda bildstorleken kommer att\n"
+"krympa bort några lager helt.\n"
+"Är detta vad du vill?"
+
+#: app/gui/image-commands.c:424
+msgid "Scale Error: Both width and height must be greater than zero."
+msgstr ""
+"Fel vid omskalning av bild: Både bredd och höjd måste vara större än 0."
 
 #: app/gui/indicator-area.c:143
 msgid ""
@@ -2864,115 +2758,116 @@ msgstr ""
 "Den aktiva färgskalan.\n"
 "Klicka för att öppna färgskalefönstret."
 
-#: app/gui/info-dialog.c:198 app/gui/preferences-dialog.c:1834
-#: app/gui/preferences-dialog.c:1953
+#: app/gui/info-dialog.c:201 app/gui/preferences-dialog.c:1844
+#: app/gui/preferences-dialog.c:1963
 msgid "General"
 msgstr "Generellt"
 
-#: app/gui/info-window.c:78
+#: app/gui/info-window.c:79
 msgid "Static Gray"
 msgstr "Statisk Grå"
 
-#: app/gui/info-window.c:80
+#: app/gui/info-window.c:81
 msgid "Static Color"
 msgstr "Statisk Färg"
 
-#: app/gui/info-window.c:81
+#: app/gui/info-window.c:82
 msgid "Pseudo Color"
 msgstr "PseudoFärg"
 
-#: app/gui/info-window.c:82
+#: app/gui/info-window.c:83
 msgid "True Color"
 msgstr "Sann Färg"
 
-#: app/gui/info-window.c:83
+#: app/gui/info-window.c:84
 msgid "Direct Color"
 msgstr "Direkt Färg"
 
-#: app/gui/info-window.c:173
-msgid "R:"
-msgstr "R:"
+#: app/gui/info-window.c:191 app/gui/resize-dialog.c:444
+msgid "X:"
+msgstr "X:"
 
-#: app/gui/info-window.c:179
-msgid "G:"
-msgstr "G:"
-
-#: app/gui/info-window.c:185
-msgid "B:"
-msgstr "B:"
-
-#: app/gui/info-window.c:191
-msgid "A:"
-msgstr "A:"
-
-#: app/gui/info-window.c:197 app/gui/info-window.c:203
-#: app/gui/info-window.c:209 app/gui/info-window.c:215
-#: app/gui/info-window.c:432 app/gui/info-window.c:433
-#: app/gui/info-window.c:434 app/gui/info-window.c:435
-#: app/gui/info-window.c:457 app/tools/gimpcolorpickertool.c:791
-#: app/tools/gimpcolorpickertool.c:792 app/tools/gimpcolorpickertool.c:793
-#: app/tools/gimpcolorpickertool.c:794 app/tools/gimpcolorpickertool.c:795
-#: app/tools/gimpcolorpickertool.c:796 app/tools/gimpcolorpickertool.c:797
-#: app/tools/gimpcolorpickertool.c:813 app/tools/gimpcolorpickertool.c:820
-#: app/tools/gimpcolorpickertool.c:841 app/tools/gimpcolorpickertool.c:859
+#: app/gui/info-window.c:205 app/gui/info-window.c:278
+#: app/gui/info-window.c:497 app/gui/info-window.c:539
+#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:792
+#: app/tools/gimpcolorpickertool.c:793 app/tools/gimpcolorpickertool.c:794
+#: app/tools/gimpcolorpickertool.c:795 app/tools/gimpcolorpickertool.c:796
+#: app/tools/gimpcolorpickertool.c:797 app/tools/gimpcolorpickertool.c:798
+#: app/tools/gimpcolorpickertool.c:814 app/tools/gimpcolorpickertool.c:821
+#: app/tools/gimpcolorpickertool.c:842 app/tools/gimpcolorpickertool.c:860
 msgid "N/A"
 msgstr "E/T"
 
-#: app/gui/info-window.c:223
+#: app/gui/info-window.c:251
+msgid "R:"
+msgstr "R:"
+
+#: app/gui/info-window.c:257
+msgid "G:"
+msgstr "G:"
+
+#: app/gui/info-window.c:263
+msgid "B:"
+msgstr "B:"
+
+#: app/gui/info-window.c:269
+msgid "A:"
+msgstr "A:"
+
+#: app/gui/info-window.c:291
 msgid "Extended"
 msgstr "Utökad"
 
 #. add the information fields
-#: app/gui/info-window.c:287
+#: app/gui/info-window.c:344
 msgid "Dimensions (w x h):"
 msgstr "Dimensioner (b × h):"
 
-#: app/gui/info-window.c:291
+#: app/gui/info-window.c:348
 msgid "Resolution:"
 msgstr "Upplösning:"
 
-#: app/gui/info-window.c:293
+#: app/gui/info-window.c:350
 msgid "Scale Ratio:"
 msgstr "Skalningsratio:"
 
-#: app/gui/info-window.c:295
+#: app/gui/info-window.c:352
 msgid "Display Type:"
 msgstr "Displaytyp:"
 
-#: app/gui/info-window.c:297
+#: app/gui/info-window.c:354
 msgid "Visual Class:"
 msgstr "Visuell klass:"
 
-#: app/gui/info-window.c:299
+#: app/gui/info-window.c:356
 msgid "Visual Depth:"
 msgstr "Visuellt djup:"
 
-#. create the info dialog
-#: app/gui/info-window.c:327
+#: app/gui/info-window.c:383
 #, c-format
 msgid "Info: %s-%d.%d"
 msgstr "Info: %s-%d.%d"
 
-#: app/gui/info-window.c:517
+#: app/gui/info-window.c:615
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d bildpunkter"
 
 #. image resolution
-#: app/gui/info-window.c:529
+#: app/gui/info-window.c:627
 #, c-format
 msgid "%g x %g dpi"
 msgstr "%g × %g dpi"
 
-#: app/gui/info-window.c:541
+#: app/gui/info-window.c:639
 msgid "RGB Color"
 msgstr "RGB-färg"
 
-#: app/gui/info-window.c:546
+#: app/gui/info-window.c:644
 msgid "Indexed Color"
 msgstr "Indexerad palett"
 
-#: app/gui/info-window.c:546
+#: app/gui/info-window.c:644
 msgid "colors"
 msgstr "färger"
 
@@ -2980,65 +2875,65 @@ msgstr "färger"
 msgid "Layer Select"
 msgstr "Lagerval"
 
-#: app/gui/layers-commands.c:581
+#: app/gui/layers-commands.c:585
 msgid "New Layer Options"
 msgstr "Inställningar för nytt lager"
 
 #. The name label and entry
-#: app/gui/layers-commands.c:610
+#: app/gui/layers-commands.c:614
 msgid "Layer Name:"
 msgstr "Lagernamn:"
 
-#: app/gui/layers-commands.c:621
+#: app/gui/layers-commands.c:625
 msgid "New Layer"
 msgstr "Nytt lager"
 
 #. The size labels
-#: app/gui/layers-commands.c:625
+#: app/gui/layers-commands.c:629
 msgid "Layer Width:"
 msgstr "Lagerbredd:"
 
-#: app/gui/layers-commands.c:686
+#: app/gui/layers-commands.c:690
 msgid "Layer Fill Type"
 msgstr "Lagrets fyllnadstyp"
 
-#: app/gui/layers-commands.c:765
+#: app/gui/layers-commands.c:769
 msgid "Edit Layer Attributes"
 msgstr "Modifiera lagerattribut"
 
-#: app/gui/layers-commands.c:796
+#: app/gui/layers-commands.c:800
 msgid "Layer name:"
 msgstr "Lagernamn:"
 
-#: app/gui/layers-commands.c:868
+#: app/gui/layers-commands.c:872
 msgid "Add Mask Options"
 msgstr "Inställningar för lägg till mask"
 
-#: app/gui/layers-commands.c:894 app/gui/layers-commands.c:913
+#: app/gui/layers-commands.c:898 app/gui/layers-commands.c:917
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisera lagermask till:"
 
-#: app/gui/layers-commands.c:899 app/tools/gimpbycolorselecttool.c:939
+#: app/gui/layers-commands.c:903 app/tools/gimpbycolorselecttool.c:940
 msgid "Selection"
 msgstr "Markering"
 
-#: app/gui/layers-commands.c:901
+#: app/gui/layers-commands.c:905
 msgid "Inverse Selection"
 msgstr "Omvänd markering"
 
-#: app/gui/layers-commands.c:903 app/gui/layers-commands.c:918
+#: app/gui/layers-commands.c:907 app/gui/layers-commands.c:922
 msgid "White (Full Opacity)"
 msgstr "Vit (Full opacitet)"
 
-#: app/gui/layers-commands.c:905 app/gui/layers-commands.c:920
+#: app/gui/layers-commands.c:909 app/gui/layers-commands.c:924
 msgid "Black (Full Transparency)"
 msgstr "Svart (Full transparenthet)"
 
-#: app/gui/layers-commands.c:907 app/gui/layers-commands.c:922
+#: app/gui/layers-commands.c:911 app/gui/layers-commands.c:926
 msgid "Layer's Alpha Channel"
 msgstr "Lagrets alfakanal"
 
-#: app/gui/layers-commands.c:985 app/gui/layers-commands.c:1074
+#: app/gui/layers-commands.c:989 app/gui/layers-commands.c:1078
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3046,861 +2941,876 @@ msgstr ""
 "Inte giltig bredd eller höjd.\n"
 "Båda måste vara positiva."
 
-#: app/gui/layers-commands.c:1161
+#: app/gui/layers-commands.c:1165
 msgid "Layer Merge Options"
 msgstr "Inställningar för lagersammanfogning"
 
-#: app/gui/layers-commands.c:1186
+#: app/gui/layers-commands.c:1190
 msgid "Final, Merged Layer should be:"
 msgstr "Det slutgiltiga, sammanfogade lagret ska vara:"
 
-#: app/gui/layers-commands.c:1187
+#: app/gui/layers-commands.c:1191
 msgid "Final, Anchored Layer should be:"
 msgstr "Det slutgiltiga, ankrade lagret ska vara:"
 
-#: app/gui/layers-commands.c:1192
+#: app/gui/layers-commands.c:1196
 msgid "Expanded as necessary"
 msgstr "Expanderad om så behövs"
 
-#: app/gui/layers-commands.c:1194
+#: app/gui/layers-commands.c:1198
 msgid "Clipped to image"
 msgstr "Klippt efter bilden"
 
-#: app/gui/layers-commands.c:1196
+#: app/gui/layers-commands.c:1200
 msgid "Clipped to bottom layer"
 msgstr "Klippt efter understa lagret"
 
 #. <Toolbox>/File
-#: app/gui/menus.c:114
+#: app/gui/menus.c:131
 msgid "/_File"
 msgstr "/_Arkiv"
 
 #. <Image>/File
-#: app/gui/menus.c:116 app/gui/menus.c:269
+#: app/gui/menus.c:133 app/gui/menus.c:350
 msgid "/File/New..."
 msgstr "/Arkiv/Ny..."
 
-#: app/gui/menus.c:118 app/gui/menus.c:271
+#: app/gui/menus.c:136 app/gui/menus.c:354
 msgid "/File/Open..."
 msgstr "/Arkiv/Öppna..."
 
-#: app/gui/menus.c:125
+#: app/gui/menus.c:144
 msgid "/File/Acquire"
 msgstr "/Arkiv/Inhämta"
 
-#: app/gui/menus.c:130
+#: app/gui/menus.c:148
 msgid "/File/Preferences..."
 msgstr "/Arkiv/Inställningar..."
 
-#: app/gui/menus.c:137
+#: app/gui/menus.c:157
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Arkiv/Fönster/Lager, kanaler & slingor..."
 
-#: app/gui/menus.c:139
+#: app/gui/menus.c:161
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Arkiv/Fönster/Verktygsinställningar..."
 
-#: app/gui/menus.c:144
+#: app/gui/menus.c:168
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Arkiv/Fönster/Penslar..."
 
-#: app/gui/menus.c:146
+#: app/gui/menus.c:172
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Arkiv/Fönster/Mönster..."
 
-#: app/gui/menus.c:148
+#: app/gui/menus.c:176
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Arkiv/Fönster/Färgskalor..."
 
-#: app/gui/menus.c:150
+#: app/gui/menus.c:180
 msgid "/File/Dialogs/Palette..."
 msgstr "/Arkiv/Fönster/Palett..."
 
-#: app/gui/menus.c:152
+#: app/gui/menus.c:184
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Arkiv/Fönster/Indexerad palett..."
 
-#: app/gui/menus.c:157
+#: app/gui/menus.c:191
 msgid "/File/Dialogs/Input Devices..."
 msgstr "/Arkiv/Fönster/Inmatningsenheter..."
 
-#: app/gui/menus.c:159
+#: app/gui/menus.c:195
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Arkiv/Fönster/Enhetsstatus..."
 
-#: app/gui/menus.c:164
+#: app/gui/menus.c:202
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Arkiv/Fönster/Dokumentindex..."
 
-#: app/gui/menus.c:166
+#: app/gui/menus.c:206
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Arkiv/Fönster/Felmeddelanden..."
 
-#: app/gui/menus.c:169
+#: app/gui/menus.c:211
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Arkiv/Fönster/Visningsfilter..."
 
-#: app/gui/menus.c:173
+#: app/gui/menus.c:217
 msgid "/File/Test Dialogs/List Dock..."
 msgstr "/Arkiv/Testfönster/Listdocka..."
 
-#: app/gui/menus.c:175
+#: app/gui/menus.c:221
 msgid "/File/Test Dialogs/Grid Dock..."
 msgstr "/Arkiv/Testfönster/Rutnätsdocka..."
 
-#: app/gui/menus.c:225 app/gui/menus.c:286
+#: app/gui/menus.c:292 app/gui/menus.c:381
 msgid "/File/Quit"
 msgstr "/Arkiv/Avsluta"
 
 #. <Toolbox>/Xtns
-#: app/gui/menus.c:230
+#: app/gui/menus.c:299
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/gui/menus.c:232
+#: app/gui/menus.c:301
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/Modulbläddrare..."
 
 #. <Toolbox>/Help
-#: app/gui/menus.c:240
+#: app/gui/menus.c:310
 msgid "/_Help"
 msgstr "/_Hjälp"
 
-#: app/gui/menus.c:242
+#: app/gui/menus.c:312
 msgid "/Help/Help..."
 msgstr "/Hjälp/Hjälp..."
 
-#: app/gui/menus.c:244
+#: app/gui/menus.c:316
 msgid "/Help/Context Help..."
 msgstr "/Hjälp/Sammanhangshjälp..."
 
-#: app/gui/menus.c:246
+#: app/gui/menus.c:320
 msgid "/Help/Tip of the Day..."
 msgstr "/Hjälp/Dagens tips..."
 
-#: app/gui/menus.c:248
+#: app/gui/menus.c:324
 msgid "/Help/About..."
 msgstr "/Hjälp/Om..."
 
-#: app/gui/menus.c:251
+#: app/gui/menus.c:329
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Hjälp/Dumpa poster (debug)"
 
-#: app/gui/menus.c:273
+#: app/gui/menus.c:358
 msgid "/File/Save"
 msgstr "/Arkiv/Spara"
 
-#: app/gui/menus.c:275
+#: app/gui/menus.c:362
 msgid "/File/Save as..."
 msgstr "/Arkiv/Spara som..."
 
-#: app/gui/menus.c:277
+#: app/gui/menus.c:366
 msgid "/File/Save a Copy as..."
 msgstr "/Arkiv/Spara en kopia som..."
 
-#: app/gui/menus.c:279
+#: app/gui/menus.c:370
 msgid "/File/Revert..."
 msgstr "/Arkiv/Återgå..."
 
-#: app/gui/menus.c:284
+#: app/gui/menus.c:377
 msgid "/File/Close"
 msgstr "/Arkiv/Stäng"
 
 #. <Image>/Edit
-#: app/gui/menus.c:294
+#: app/gui/menus.c:390
 msgid "/Edit/Undo"
 msgstr "/Redigera/Ångra"
 
-#: app/gui/menus.c:296
+#: app/gui/menus.c:394
 msgid "/Edit/Redo"
 msgstr "/Redigera/Gör om"
 
-#: app/gui/menus.c:301
+#: app/gui/menus.c:401
 msgid "/Edit/Cut"
 msgstr "/Redigera/Klipp ut"
 
-#: app/gui/menus.c:303
+#: app/gui/menus.c:405
 msgid "/Edit/Copy"
 msgstr "/Redigera/Kopiera"
 
-#: app/gui/menus.c:305
+#: app/gui/menus.c:409
 msgid "/Edit/Paste"
 msgstr "/Redigera/Klistra in"
 
-#: app/gui/menus.c:307
+#: app/gui/menus.c:413
 msgid "/Edit/Paste Into"
 msgstr "/Redigera/Klistra in i"
 
-#: app/gui/menus.c:309
+#: app/gui/menus.c:417
 msgid "/Edit/Paste as New"
 msgstr "/Redigera/Klistra in som ny"
 
 #. <Image>/Edit/Buffer
-#: app/gui/menus.c:314
+#: app/gui/menus.c:424
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Redigera/Buffert/Klipp ut namngiven..."
 
-#: app/gui/menus.c:316
+#: app/gui/menus.c:428
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Redigera/Buffert/Kopiera namngiven..."
 
-#: app/gui/menus.c:318
+#: app/gui/menus.c:432
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Redigera/Buffert/Klistra in namngiven..."
 
-#: app/gui/menus.c:323
+#: app/gui/menus.c:439
 msgid "/Edit/Clear"
-msgstr "/Redigera/Rensa"
+msgstr "/Redigera/Töm"
 
-#: app/gui/menus.c:325
+#: app/gui/menus.c:443
 msgid "/Edit/Fill with FG Color"
 msgstr "/Redigera/Fyll med förgrundsfärg"
 
-#: app/gui/menus.c:327
+#: app/gui/menus.c:447
 msgid "/Edit/Fill with BG Color"
 msgstr "/Redigera/Fyll med bakgrundsfärg"
 
-#: app/gui/menus.c:329
+#: app/gui/menus.c:451
 msgid "/Edit/Stroke"
 msgstr "/Redigera/Stryk"
 
 #. <Image>/Select
-#: app/gui/menus.c:337
+#: app/gui/menus.c:460
 msgid "/Select/Invert"
 msgstr "/Markera/Invertera"
 
-#: app/gui/menus.c:339
+#: app/gui/menus.c:464
 msgid "/Select/All"
 msgstr "/Markera/Allt"
 
-#: app/gui/menus.c:341
+#: app/gui/menus.c:468
 msgid "/Select/None"
 msgstr "/Markera/Inget"
 
-#: app/gui/menus.c:343
+#: app/gui/menus.c:472
 msgid "/Select/Float"
 msgstr "/Markera/Flytande"
 
-#: app/gui/menus.c:348
+#: app/gui/menus.c:479
 msgid "/Select/Feather..."
 msgstr "/Markera/Fjäder..."
 
-#: app/gui/menus.c:350
+#: app/gui/menus.c:483
 msgid "/Select/Sharpen"
 msgstr "/Markera/Skärpa"
 
-#: app/gui/menus.c:352
+#: app/gui/menus.c:487
 msgid "/Select/Shrink..."
 msgstr "/Markera/Minska..."
 
-#: app/gui/menus.c:354
+#: app/gui/menus.c:491
 msgid "/Select/Grow..."
 msgstr "/Markera/Öka..."
 
-#: app/gui/menus.c:356
+#: app/gui/menus.c:495
 msgid "/Select/Border..."
 msgstr "/Markera/Kant..."
 
-#: app/gui/menus.c:361
+#: app/gui/menus.c:502
 msgid "/Select/Save to Channel"
 msgstr "/Markera/Spara till kanal"
 
 #. <Image>/View
-#: app/gui/menus.c:366
+#: app/gui/menus.c:509
 msgid "/View/Zoom In"
 msgstr "/Visa/Zooma in"
 
-#: app/gui/menus.c:368
+#: app/gui/menus.c:512
 msgid "/View/Zoom Out"
 msgstr "/Visa/Zooma ut"
 
 #. <Image>/View/Zoom
-#: app/gui/menus.c:373
+#: app/gui/menus.c:518
 msgid "/View/Zoom/16:1"
 msgstr "/Visa/Zooma/16:1"
 
-#: app/gui/menus.c:375
+#: app/gui/menus.c:521
 msgid "/View/Zoom/8:1"
 msgstr "/Visa/Zooma/8:1"
 
-#: app/gui/menus.c:377
+#: app/gui/menus.c:524
 msgid "/View/Zoom/4:1"
 msgstr "/Visa/Zooma/4:1"
 
-#: app/gui/menus.c:379
+#: app/gui/menus.c:527
 msgid "/View/Zoom/2:1"
 msgstr "/Visa/Zooma/2:1"
 
-#: app/gui/menus.c:381
+#: app/gui/menus.c:530
 msgid "/View/Zoom/1:1"
 msgstr "/Visa/Zooma/1:1"
 
-#: app/gui/menus.c:383
+#: app/gui/menus.c:533
 msgid "/View/Zoom/1:2"
 msgstr "/Visa/Zooma/1:2"
 
-#: app/gui/menus.c:385
+#: app/gui/menus.c:536
 msgid "/View/Zoom/1:4"
 msgstr "/Visa/Zooma/1:4"
 
-#: app/gui/menus.c:387
+#: app/gui/menus.c:539
 msgid "/View/Zoom/1:8"
 msgstr "/Visa/Zooma/1:8"
 
-#: app/gui/menus.c:389
+#: app/gui/menus.c:542
 msgid "/View/Zoom/1:16"
 msgstr "/Visa/Zooma/1:16"
 
-#: app/gui/menus.c:392
+#: app/gui/menus.c:546
 msgid "/View/Dot for Dot"
 msgstr "/Visa/Punkt för punkt"
 
-#: app/gui/menus.c:397
+#: app/gui/menus.c:553
 msgid "/View/Info Window..."
 msgstr "/Visa/Informationsfönster..."
 
-#: app/gui/menus.c:399
+#: app/gui/menus.c:557
 msgid "/View/Nav. Window..."
 msgstr "/Visa/Fönsternavigering..."
 
-#: app/gui/menus.c:404
+#: app/gui/menus.c:564
 msgid "/View/Toggle Selection"
 msgstr "/Visa/Visa markering"
 
-#: app/gui/menus.c:406
+#: app/gui/menus.c:568
 msgid "/View/Toggle Rulers"
 msgstr "/Visa/Visa linjaler"
 
-#: app/gui/menus.c:408
+#: app/gui/menus.c:572
 msgid "/View/Toggle Statusbar"
 msgstr "/Visa/Visa statusrad"
 
-#: app/gui/menus.c:410
+#: app/gui/menus.c:576
 msgid "/View/Toggle Guides"
 msgstr "/Visa/Visa hjälplinjer"
 
-#: app/gui/menus.c:412
+#: app/gui/menus.c:580
 msgid "/View/Snap to Guides"
 msgstr "/Visa/Snäpp mot hjälplinjer"
 
-#: app/gui/menus.c:417
+#: app/gui/menus.c:587
 msgid "/View/New View"
 msgstr "/Visa/Ny vy"
 
-#: app/gui/menus.c:419
+#: app/gui/menus.c:591
 msgid "/View/Shrink Wrap"
 msgstr "/Visa/Visa optimalt fönster"
 
 #. <Image>/Image/Mode
-#: app/gui/menus.c:424
+#: app/gui/menus.c:598
 msgid "/Image/Mode/RGB"
 msgstr "/Bild/Format/RGB"
 
-#: app/gui/menus.c:426
+#: app/gui/menus.c:602
 msgid "/Image/Mode/Grayscale"
 msgstr "/Bild/Format/Gråskala"
 
-#: app/gui/menus.c:428
+#: app/gui/menus.c:606
 msgid "/Image/Mode/Indexed..."
 msgstr "/Bild/Format/Indexerad..."
 
 #. <Image>/Image/Colors
-#: app/gui/menus.c:436
+#: app/gui/menus.c:615
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bild/Färger/Avfärga"
 
-#: app/gui/menus.c:438
+#: app/gui/menus.c:619
 msgid "/Image/Colors/Invert"
 msgstr "/Bild/Färger/Invertera"
 
 #. <Image>/Image/Colors/Auto
-#: app/gui/menus.c:446
+#: app/gui/menus.c:628
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Bild/Färger/Auto/Jämna ut"
 
 #. <Image>/Image/Alpha
-#: app/gui/menus.c:454
+#: app/gui/menus.c:637
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bild/Alfa/Lägg till alfakanal"
 
 #. <Image>/Image/Transforms
-#: app/gui/menus.c:459
+#: app/gui/menus.c:644
 msgid "/Image/Transforms/Offset..."
 msgstr "/Bild/Transformeringar/Offset..."
 
-#: app/gui/menus.c:461
+#: app/gui/menus.c:649
 msgid "/Image/Transforms/Rotate"
 msgstr "/Bild/Transformeringar/Rotera"
 
-#: app/gui/menus.c:468
+#: app/gui/menus.c:655
 msgid "/Image/Canvas Size..."
 msgstr "/Bild/Kanvasstorlek..."
 
-#: app/gui/menus.c:470
+#: app/gui/menus.c:659
 msgid "/Image/Scale Image..."
 msgstr "/Bild/Skala bild..."
 
-#: app/gui/menus.c:472
+#: app/gui/menus.c:663
 msgid "/Image/Duplicate"
 msgstr "/Bild/Duplicera"
 
 #. <Image>/Layers
-#: app/gui/menus.c:480
+#: app/gui/menus.c:672
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Lager/Lager, kanaler & slingor..."
 
-#: app/gui/menus.c:484
+#: app/gui/menus.c:679
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Lager/Lagerstorlek som bilden"
 
 #. <Image>/Layers/Stack
-#: app/gui/menus.c:489
+#: app/gui/menus.c:686
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Lager/Stack/Föregående lager"
 
-#: app/gui/menus.c:491
+#: app/gui/menus.c:690
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Lager/Stack/Nästa lager"
 
-#: app/gui/menus.c:493
+#: app/gui/menus.c:694
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Lager/Stack/Höj lager"
 
-#: app/gui/menus.c:495
+#: app/gui/menus.c:698
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Lager/Stack/Sänk lager"
 
-#: app/gui/menus.c:497
+#: app/gui/menus.c:702
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Lager/Stack/Lager till toppen"
 
-#: app/gui/menus.c:499
+#: app/gui/menus.c:706
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Lager/Stack/Lager till botten"
 
 #. <Image>/Layers/Rotate
-#: app/gui/menus.c:506
+#: app/gui/menus.c:715
 msgid "/Layers/Rotate"
 msgstr "/Lager/Rotera"
 
-#: app/gui/menus.c:511
+#: app/gui/menus.c:719
 msgid "/Layers/Anchor Layer"
 msgstr "/Lager/Ankra lager"
 
-#: app/gui/menus.c:513
+#: app/gui/menus.c:723
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Lager/Sammanfoga synliga lager..."
 
-#: app/gui/menus.c:515
+#: app/gui/menus.c:727
 msgid "/Layers/Flatten Image"
 msgstr "/Lager/Platta till bilden"
 
-#: app/gui/menus.c:520
+#: app/gui/menus.c:734
 msgid "/Layers/Mask to Selection"
 msgstr "/Lager/Mask till markering"
 
-#: app/gui/menus.c:525
+#: app/gui/menus.c:741
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Lager/Lägg till alfakanal"
 
-#: app/gui/menus.c:527
+#: app/gui/menus.c:745
 msgid "/Layers/Alpha to Selection"
 msgstr "/Lager/Alfakanal till markering"
 
 #. <Image>/Tools
-#: app/gui/menus.c:535
+#: app/gui/menus.c:754
 msgid "/Tools/Toolbox"
 msgstr "/Verktyg/Verktygslåda"
 
-#: app/gui/menus.c:537
+#: app/gui/menus.c:758
 msgid "/Tools/Default Colors"
 msgstr "/Verktyg/Standardfärger"
 
-#: app/gui/menus.c:539
+#: app/gui/menus.c:762
 msgid "/Tools/Swap Colors"
 msgstr "/Verktyg/Byt färgplats"
 
-#: app/gui/menus.c:541
+#: app/gui/menus.c:766
 msgid "/Tools/Swap Contexts"
 msgstr "/Verktyg/Byt sammanhang"
 
 #. <Image>/Dialogs
-#: app/gui/menus.c:548
+#: app/gui/menus.c:775
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fönster/Lager, kanaler & slingor..."
 
-#: app/gui/menus.c:550
+#: app/gui/menus.c:779
 msgid "/Dialogs/Tool Options..."
 msgstr "/Fönster/Verktygsinställningar..."
 
-#: app/gui/menus.c:556
+#: app/gui/menus.c:786
 msgid "/Dialogs/Brushes..."
 msgstr "/Fönster/Penslar..."
 
-#: app/gui/menus.c:558
+#: app/gui/menus.c:790
 msgid "/Dialogs/Patterns..."
 msgstr "/Fönster/Mönster..."
 
-#: app/gui/menus.c:560
+#: app/gui/menus.c:794
 msgid "/Dialogs/Gradients..."
 msgstr "/Fönster/Färgskalor..."
 
-#: app/gui/menus.c:562
+#: app/gui/menus.c:798
 msgid "/Dialogs/Palette..."
 msgstr "/Fönster/Palett..."
 
-#: app/gui/menus.c:564
+#: app/gui/menus.c:802
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Fönster/Indexerad palett..."
 
-#: app/gui/menus.c:569
+#: app/gui/menus.c:809
 msgid "/Dialogs/Input Devices..."
 msgstr "/Fönster/Inmatningsenheter..."
 
-#: app/gui/menus.c:571
+#: app/gui/menus.c:813
 msgid "/Dialogs/Device Status..."
 msgstr "/Fönster/Enhetsstatus..."
 
-#: app/gui/menus.c:576
+#: app/gui/menus.c:820
 msgid "/Dialogs/Document Index..."
 msgstr "/Fönster/Dokumentindex..."
 
-#: app/gui/menus.c:578
+#: app/gui/menus.c:824
 msgid "/Dialogs/Error Console..."
 msgstr "/Fönster/Felmeddelanden..."
 
-#: app/gui/menus.c:581
+#: app/gui/menus.c:829
 msgid "/Dialogs/Display Filters..."
 msgstr "/Fönster/Visningsfilter..."
 
-#: app/gui/menus.c:584
+#: app/gui/menus.c:834
 msgid "/Dialogs/Undo History..."
 msgstr "/Fönster/Ångringshistorik..."
 
 #. <Image>/Filters
-#: app/gui/menus.c:592
+#: app/gui/menus.c:843
 msgid "/Filters/Repeat Last"
 msgstr "/Filter/Upprepa senaste"
 
-#: app/gui/menus.c:594
+#: app/gui/menus.c:847
 msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Visa senaste"
 
-#: app/gui/menus.c:599
+#: app/gui/menus.c:854
 msgid "/Filters/Blur"
 msgstr "/Filter/Suddigare"
 
-#: app/gui/menus.c:601
+#: app/gui/menus.c:855
 msgid "/Filters/Colors"
 msgstr "/Filter/Färger"
 
-#: app/gui/menus.c:603
+#: app/gui/menus.c:856
 msgid "/Filters/Noise"
 msgstr "/Filter/Brus"
 
-#: app/gui/menus.c:605
+#: app/gui/menus.c:857
 msgid "/Filters/Edge-Detect"
 msgstr "/Filter/Leta kanter"
 
-#: app/gui/menus.c:607
+#: app/gui/menus.c:858
 msgid "/Filters/Enhance"
 msgstr "/Filter/Förbättra"
 
-#: app/gui/menus.c:609
+#: app/gui/menus.c:859
 msgid "/Filters/Generic"
 msgstr "/Filter/Allmänna"
 
-#: app/gui/menus.c:614
+#: app/gui/menus.c:863
 msgid "/Filters/Glass Effects"
 msgstr "/Filter/Glaseffekter"
 
-#: app/gui/menus.c:616
+#: app/gui/menus.c:864
 msgid "/Filters/Light Effects"
 msgstr "/Filter/Ljuseffekter"
 
-#: app/gui/menus.c:618
+#: app/gui/menus.c:865
 msgid "/Filters/Distorts"
 msgstr "/Filter/Störningar"
 
-#: app/gui/menus.c:620
+#: app/gui/menus.c:866
 msgid "/Filters/Artistic"
 msgstr "/Filter/Artistiskt"
 
-#: app/gui/menus.c:622
+#: app/gui/menus.c:867
 msgid "/Filters/Map"
 msgstr "/Filter/Mappa"
 
-#: app/gui/menus.c:624
+#: app/gui/menus.c:868
 msgid "/Filters/Render"
 msgstr "/Filter/Rendera"
 
-#: app/gui/menus.c:626
+#: app/gui/menus.c:869
+msgid "/Filters/Text"
+msgstr "/Filter/Text"
+
+#: app/gui/menus.c:870
 msgid "/Filters/Web"
 msgstr "/Filter/Webb"
 
-#: app/gui/menus.c:631
+#: app/gui/menus.c:874
 msgid "/Filters/Animation"
 msgstr "/Filter/Animation"
 
-#: app/gui/menus.c:633
+#: app/gui/menus.c:875
 msgid "/Filters/Combine"
 msgstr "/Filter/Kombinera"
 
-#: app/gui/menus.c:638
+#: app/gui/menus.c:879
 msgid "/Filters/Toys"
 msgstr "/Filter/Leksaker"
 
-#: app/gui/menus.c:650
+#: app/gui/menus.c:890
 msgid "/Automatic"
 msgstr "/Automatiskt"
 
-#: app/gui/menus.c:665
+#: app/gui/menus.c:906
 msgid "/By Extension"
 msgstr "/Via ändelse"
 
-#: app/gui/menus.c:680
+#: app/gui/menus.c:922
 msgid "/New Layer..."
 msgstr "/Nytt lager..."
 
 #. <Layers>/Stack
-#: app/gui/menus.c:686
+#: app/gui/menus.c:929
 msgid "/Stack/Raise Layer"
 msgstr "/Stack/Höj lager"
 
-#: app/gui/menus.c:689
+#: app/gui/menus.c:933
 msgid "/Stack/Lower Layer"
 msgstr "/Stack/Sänk lager"
 
-#: app/gui/menus.c:692
+#: app/gui/menus.c:937
 msgid "/Stack/Layer to Top"
 msgstr "/Stack/Lager till toppen"
 
-#: app/gui/menus.c:695
+#: app/gui/menus.c:941
 msgid "/Stack/Layer to Bottom"
 msgstr "/Stack/Lager till botten"
 
-#: app/gui/menus.c:699
+#: app/gui/menus.c:946
 msgid "/Duplicate Layer"
 msgstr "/Duplicera lager"
 
-#: app/gui/menus.c:702
+#: app/gui/menus.c:950
 msgid "/Anchor Layer"
 msgstr "/Ankra lager"
 
-#: app/gui/menus.c:705
+#: app/gui/menus.c:954
 msgid "/Delete Layer"
 msgstr "/Ta bort lager"
 
-#: app/gui/menus.c:711
+#: app/gui/menus.c:961
 msgid "/Layer Boundary Size..."
 msgstr "/Storlek på lager..."
 
-#: app/gui/menus.c:714
+#: app/gui/menus.c:965
 msgid "/Layer to Imagesize"
 msgstr "/Lagerstorlek som bilden"
 
-#: app/gui/menus.c:717
+#: app/gui/menus.c:969
 msgid "/Scale Layer..."
 msgstr "/Skala om lager..."
 
-#: app/gui/menus.c:723
+#: app/gui/menus.c:976
 msgid "/Merge Visible Layers..."
 msgstr "/Sammanfoga synliga lager..."
 
-#: app/gui/menus.c:726
+#: app/gui/menus.c:980
 msgid "/Merge Down"
 msgstr "/Sammanfoga nedåt"
 
-#: app/gui/menus.c:729
+#: app/gui/menus.c:984
 msgid "/Flatten Image"
 msgstr "/Platta till bilden"
 
-#: app/gui/menus.c:735
+#: app/gui/menus.c:991
 msgid "/Add Layer Mask..."
 msgstr "/Lägg till lagermask..."
 
-#: app/gui/menus.c:738
+#: app/gui/menus.c:995
 msgid "/Apply Layer Mask"
 msgstr "/Applicera lagermask"
 
-#: app/gui/menus.c:741
+#: app/gui/menus.c:999
 msgid "/Delete Layer Mask"
 msgstr "/Ta bort lagermask"
 
-#: app/gui/menus.c:744
+#: app/gui/menus.c:1003
 msgid "/Mask to Selection"
 msgstr "/Mask till markering"
 
-#: app/gui/menus.c:750
+#: app/gui/menus.c:1010
 msgid "/Add Alpha Channel"
 msgstr "/Lägg till alfakanal"
 
-#: app/gui/menus.c:753
+#: app/gui/menus.c:1014
 msgid "/Alpha to Selection"
 msgstr "/Alfakanal till markering"
 
-#: app/gui/menus.c:759
+#: app/gui/menus.c:1021
 msgid "/Edit Layer Attributes..."
 msgstr "/Redigera lagerattribut..."
 
-#: app/gui/menus.c:772
+#: app/gui/menus.c:1035
 msgid "/New Channel..."
 msgstr "/Ny kanal..."
 
-#: app/gui/menus.c:775
+#: app/gui/menus.c:1039
 msgid "/Raise Channel"
 msgstr "/Höj kanal"
 
-#: app/gui/menus.c:778
+#: app/gui/menus.c:1043
 msgid "/Lower Channel"
 msgstr "/Sänk kanal"
 
-#: app/gui/menus.c:781
+#: app/gui/menus.c:1047
 msgid "/Duplicate Channel"
 msgstr "/Duplicera kanal"
 
-#: app/gui/menus.c:787
+#: app/gui/menus.c:1054
 msgid "/Channel to Selection"
 msgstr "/Kanal till markering"
 
-#: app/gui/menus.c:790
+#: app/gui/menus.c:1058
 msgid "/Add to Selection"
 msgstr "/Lägg till markering"
 
-#: app/gui/menus.c:793
+#: app/gui/menus.c:1062
 msgid "/Subtract from Selection"
 msgstr "/Ta bort från markering"
 
-#: app/gui/menus.c:796
+#: app/gui/menus.c:1066
 msgid "/Intersect with Selection"
 msgstr "/Snitt med markering"
 
-#: app/gui/menus.c:802
+#: app/gui/menus.c:1073
 msgid "/Delete Channel"
 msgstr "/Ta bort kanal"
 
-#: app/gui/menus.c:808
+#: app/gui/menus.c:1080
 msgid "/Edit Channel Attributes..."
 msgstr "/Redigera kanalattribut..."
 
-#: app/gui/menus.c:821
+#: app/gui/menus.c:1094
 msgid "/New Path"
 msgstr "/Ny slinga"
 
-#: app/gui/menus.c:823
+#: app/gui/menus.c:1098
 msgid "/Duplicate Path"
 msgstr "/Duplicera slinga"
 
-#: app/gui/menus.c:825
+#: app/gui/menus.c:1102
 msgid "/Path to Selection"
 msgstr "/Slinga till markering"
 
-#: app/gui/menus.c:827
+#: app/gui/menus.c:1106
 msgid "/Selection to Path"
 msgstr "/Markering till slinga"
 
-#: app/gui/menus.c:829
+#: app/gui/menus.c:1110
 msgid "/Stroke Path"
 msgstr "/Stryk slinga"
 
-#: app/gui/menus.c:831
+#: app/gui/menus.c:1114
 msgid "/Delete Path"
 msgstr "/Ta bort slinga"
 
-#: app/gui/menus.c:836
+#: app/gui/menus.c:1121
 msgid "/Copy Path"
 msgstr "/Kopiera slinga"
 
-#: app/gui/menus.c:838
+#: app/gui/menus.c:1125
 msgid "/Paste Path"
 msgstr "/Klistra in slinga"
 
-#: app/gui/menus.c:840
+#: app/gui/menus.c:1129
 msgid "/Import Path..."
 msgstr "/Importera slinga..."
 
-#: app/gui/menus.c:842
+#: app/gui/menus.c:1133
 msgid "/Export Path..."
 msgstr "/Exportera slinga..."
 
-#: app/gui/menus.c:847
+#: app/gui/menus.c:1140
 msgid "/Edit Path Attributes..."
 msgstr "/Redigera sökvägsattribut"
 
-#: app/gui/menus.c:859
+#: app/gui/menus.c:1154
 msgid "/Select Tab"
 msgstr "/Välj flik"
 
-#: app/gui/menus.c:861
-msgid "/Remove Tab"
-msgstr "/Ta bort flik"
-
-#: app/gui/menus.c:864
+#: app/gui/menus.c:1158
 msgid "/Add Tab/Layer List..."
 msgstr "/Lägg till flik/Lagerlista..."
 
-#: app/gui/menus.c:867
+#: app/gui/menus.c:1162
 msgid "/Add Tab/Channel List..."
 msgstr "/Lägg till flik/Kanallista..."
 
-#: app/gui/menus.c:870
+#: app/gui/menus.c:1166
 msgid "/Add Tab/Path List..."
 msgstr "/Lägg till flik/Slinglista..."
 
-#: app/gui/menus.c:877
+#: app/gui/menus.c:1173
 msgid "/Add Tab/Brush List..."
 msgstr "/Lägg till flik/Pensellista..."
 
-#: app/gui/menus.c:880
+#: app/gui/menus.c:1177
 msgid "/Add Tab/Brush Grid..."
 msgstr "/Lägg till flik/Penselrutnät..."
 
-#: app/gui/menus.c:887
+#: app/gui/menus.c:1184
 msgid "/Add Tab/Pattern List..."
 msgstr "/Lägg till flik/Mönsterlista..."
 
-#: app/gui/menus.c:890
+#: app/gui/menus.c:1188
 msgid "/Add Tab/Pattern Grid..."
 msgstr "/Lägg till flik/Mönsterrutnät..."
 
-#: app/gui/menus.c:897
+#: app/gui/menus.c:1195
 msgid "/Add Tab/Gradient List..."
 msgstr "/Lägg till flik/Färgskalelista..."
 
-#: app/gui/menus.c:900
+#: app/gui/menus.c:1199
 msgid "/Add Tab/Gradient Grid..."
 msgstr "/Lägg till flik/Färgskalerutnät..."
 
-#: app/gui/menus.c:907
+#: app/gui/menus.c:1206
 msgid "/Add Tab/Palette List..."
 msgstr "/Lägg till flik/Palettlista..."
 
-#: app/gui/menus.c:910
+#: app/gui/menus.c:1210
 msgid "/Add Tab/Palette Grid..."
 msgstr "/Lägg till flik/Palettrutnät..."
 
-#: app/gui/menus.c:917
+#: app/gui/menus.c:1217
 msgid "/Add Tab/Tool List..."
 msgstr "/Lägg till flik/Verktygslista..."
 
-#: app/gui/menus.c:920
+#: app/gui/menus.c:1221
 msgid "/Add Tab/Tool Grid..."
 msgstr "/Lägg till flik/Verktygsrutnät..."
 
-#: app/gui/menus.c:927
+#: app/gui/menus.c:1228
 msgid "/Add Tab/Image List..."
 msgstr "/Lägg till flik/Bildlista..."
 
-#: app/gui/menus.c:930
+#: app/gui/menus.c:1232
 msgid "/Add Tab/Image Grid..."
 msgstr "/Lägg till flik/Bildrutnät..."
 
-#: app/gui/menus.c:1482
-#, c-format
-msgid "Error opening file: %s\n"
-msgstr "Kunde inte öppna fil: %s\n"
+#: app/gui/menus.c:1239
+msgid "/Add Tab/Buffer List..."
+msgstr "/Lägg till flik/Buffertlista..."
 
-#: app/gui/offset-dialog.c:84 app/gui/resize-dialog.c:417
+#: app/gui/menus.c:1243
+msgid "/Add Tab/Buffer Grid..."
+msgstr "/Lägg till flik/Buffertrutnät..."
+
+#: app/gui/menus.c:1248
+msgid "/Remove Tab"
+msgstr "/Ta bort flik"
+
+#: app/gui/menus.c:1255
+msgid "/Show Image Menu"
+msgstr "/Visa bildmeny"
+
+#: app/gui/menus.c:1259
+msgid "/Auto Follow Active Image"
+msgstr "/Följ aktiv bild automatiskt"
+
+#: app/gui/offset-dialog.c:84 app/gui/resize-dialog.c:416
 msgid "Offset"
 msgstr "Offset"
 
@@ -3919,54 +3829,60 @@ msgstr "Slå-runt"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Offset med (x/2),(y/2)"
 
-#: app/gui/palette-editor.c:341
+#: app/gui/palette-editor.c:342
 msgid "Color Palette Edit"
 msgstr "Färgpalettredigerare"
 
-#: app/gui/palette-editor.c:355
+#: app/gui/palette-editor.c:356
 msgid "Color Palette"
 msgstr "Färgpalett"
 
-#: app/gui/palette-editor.c:448 app/gui/palette-editor.c:1198
+#: app/gui/palette-editor.c:449 app/gui/palette-editor.c:1201
 msgid "Undefined"
 msgstr "Odefinerad"
 
-#: app/gui/palette-editor.c:482 app/pdb/internal_procs.c:124
+#: app/gui/palette-editor.c:483 app/pdb/internal_procs.c:127
 msgid "Palette"
 msgstr "Palett"
 
-#: app/gui/palette-editor.c:484 app/gui/palette-import-dialog.c:776
+#: app/gui/palette-editor.c:485 app/gui/palette-import-dialog.c:776
 msgid "Select"
 msgstr "Välj"
 
-#: app/gui/palette-editor.c:510
+#: app/gui/palette-editor.c:511
 msgid "Palette Ops"
 msgstr "Palettoperationer"
 
 #. The "Import" frame
-#: app/gui/palette-editor.c:519 app/gui/palette-import-dialog.c:639
+#: app/gui/palette-editor.c:520 app/gui/palette-import-dialog.c:639
 #: app/gui/palette-import-dialog.c:653
 msgid "Import"
 msgstr "Importera"
 
-#: app/gui/palette-editor.c:530
+#: app/gui/palette-editor.c:531
 msgid "Merge"
 msgstr "Sammanfoga"
 
-#: app/gui/palette-editor.c:559 app/widgets/gimpdatafactoryview.c:148
-#: app/widgets/gimpdrawablelistview.c:224
+#: app/gui/palette-editor.c:560 app/widgets/gimpdatafactoryview.c:131
+#: app/widgets/gimpdrawablelistview.c:223
 msgid "New"
 msgstr "Ny"
 
-#: app/gui/palette-editor.c:624
+#: app/gui/palette-editor.c:577 app/widgets/gimpdatafactoryview.c:149
+#: app/widgets/gimpdatafactoryview.c:409
+#: app/widgets/gimpdrawablelistview.c:316
+msgid "Delete"
+msgstr "Ta bort"
+
+#: app/gui/palette-editor.c:625
 msgid "Edit Palette Color"
 msgstr "Redigera palettfärg"
 
-#: app/gui/palette-editor.c:1287
+#: app/gui/palette-editor.c:1290
 msgid "Merge Palette"
 msgstr "Sammanfoga palett"
 
-#: app/gui/palette-editor.c:1290
+#: app/gui/palette-editor.c:1293
 msgid "Enter a name for merged palette"
 msgstr "Ange namn för sammanfogad palett"
 
@@ -3988,11 +3904,11 @@ msgstr "new_import"
 msgid "Source:"
 msgstr "Källa:"
 
-#: app/gui/palette-import-dialog.c:697 app/tools/paint_options.c:608
+#: app/gui/palette-import-dialog.c:697 app/tools/paint_options.c:610
 msgid "Gradient"
 msgstr "Färgskala"
 
-#: app/gui/palette-import-dialog.c:705 app/pdb/internal_procs.c:112
+#: app/gui/palette-import-dialog.c:705 app/pdb/internal_procs.c:115
 msgid "Image"
 msgstr "Bild"
 
@@ -4011,152 +3927,157 @@ msgid "Interval:"
 msgstr "Intervall:"
 
 #. The shell and main vbox
-#: app/gui/palette-select.c:84
+#: app/gui/palette-select.c:85
 msgid "Palette Selection"
 msgstr "Färgkarteval"
 
-#: app/gui/paths-dialog.c:155
+#: app/gui/paths-dialog.c:156
 msgid "New Path"
 msgstr "Ny slinga"
 
-#: app/gui/paths-dialog.c:159
+#: app/gui/paths-dialog.c:160
 msgid "Duplicate Path"
 msgstr "Duplicera slinga"
 
-#: app/gui/paths-dialog.c:163
+#: app/gui/paths-dialog.c:164
 msgid "Path to Selection"
 msgstr "Slinga till markering"
 
-#: app/gui/paths-dialog.c:167
+#: app/gui/paths-dialog.c:168
 msgid "Selection to Path"
 msgstr "Markering till slinga"
 
-#: app/gui/paths-dialog.c:171
+#: app/gui/paths-dialog.c:172
 msgid "Stroke Path"
 msgstr "Stryk slinga"
 
-#: app/gui/paths-dialog.c:175
+#: app/gui/paths-dialog.c:176
 msgid "Delete Path"
 msgstr "Ta bort slinga"
 
-#: app/gui/paths-dialog.c:184
+#: app/gui/paths-dialog.c:185
 msgid "New Point"
 msgstr "Ny punkt"
 
-#: app/gui/paths-dialog.c:188
+#: app/gui/paths-dialog.c:189
 msgid "Add Point"
 msgstr "Lägg till punkt"
 
-#: app/gui/paths-dialog.c:192
+#: app/gui/paths-dialog.c:193
 msgid "Delete Point"
 msgstr "Ta bort punkt"
 
-#: app/gui/paths-dialog.c:196
+#: app/gui/paths-dialog.c:197
 msgid "Edit Point"
 msgstr "Ändra punkt"
 
-#: app/gui/paths-dialog.c:416
+#: app/gui/paths-dialog.c:417
 #, c-format
 msgid "Path %d"
 msgstr "Slinga %d"
 
-#: app/gui/paths-dialog.c:969
+#: app/gui/paths-dialog.c:970
 msgid "Edit Path Attributes"
 msgstr "Modifiera sökvägsattribut"
 
-#: app/gui/paths-dialog.c:972
+#: app/gui/paths-dialog.c:973
 msgid "Enter a new name for the path"
 msgstr "Ange nytt namn för slingan"
 
-#: app/gui/paths-dialog.c:1857 app/tools/gimpcurvestool.c:1776
-#: app/tools/gimpcurvestool.c:1794 app/tools/gimplevelstool.c:1564
-#: app/tools/gimplevelstool.c:1582
+#: app/gui/paths-dialog.c:1862 app/tools/gimpcurvestool.c:1777
+#: app/tools/gimpcurvestool.c:1795 app/tools/gimplevelstool.c:1565
+#: app/tools/gimplevelstool.c:1583
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Kunde inte öppna filen %s"
 
-#: app/gui/paths-dialog.c:1872
+#: app/gui/paths-dialog.c:1877
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Misslyckades med att läsa från %s"
 
-#: app/gui/paths-dialog.c:1887
+#: app/gui/paths-dialog.c:1892
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Misslyckades med att läsa slinga från %s"
 
-#: app/gui/paths-dialog.c:1894
+#: app/gui/paths-dialog.c:1899
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "Inga punkter specifierade i slingfilen %s"
 
-#: app/gui/paths-dialog.c:1905
+#: app/gui/paths-dialog.c:1910
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Misslyckades med att läsa slingpunkter från %s"
 
-#: app/gui/paths-dialog.c:2000
+#: app/gui/paths-dialog.c:1983 app/xcf/xcf.c:310
+#, c-format
+msgid "open failed on %s: %s\n"
+msgstr "öppnande av %s misslyckades: %s\n"
+
+#: app/gui/paths-dialog.c:2005
 msgid "Load/Store Bezier Curves"
 msgstr "Läs in/Spara Bezierkurvor"
 
-#: app/gui/paths-dialog.c:2040
+#: app/gui/paths-dialog.c:2045
 msgid "Load Path"
 msgstr "Läs in slinga"
 
-#: app/gui/paths-dialog.c:2062
+#: app/gui/paths-dialog.c:2067
 msgid "Store Path"
 msgstr "Stryk slinga"
 
 #. The shell
-#: app/gui/pattern-select.c:113
+#: app/gui/pattern-select.c:114
 msgid "Pattern Selection"
 msgstr "Mönsterval"
 
-#: app/gui/preferences-dialog.c:272
+#: app/gui/preferences-dialog.c:276
 msgid "Error: Levels of undo must be zero or greater."
 msgstr "Fel: Antalet ångrasteg måste vara 0 eller högre."
 
-#: app/gui/preferences-dialog.c:278
+#: app/gui/preferences-dialog.c:282
 msgid "Error: Marching speed must be 50 or greater."
 msgstr "Fel: Vandrande myrornas hastighet måste vara 50 eller högre."
 
-#: app/gui/preferences-dialog.c:284
+#: app/gui/preferences-dialog.c:288
 msgid "Error: Default width must be one or greater."
 msgstr "Fel: Standardbredden måste vara 1 eller högre."
 
-#: app/gui/preferences-dialog.c:290
+#: app/gui/preferences-dialog.c:294
 msgid "Error: Default height must be one or greater."
 msgstr "Fel: Standardhöjden måste vara 1 eller högre."
 
-#: app/gui/preferences-dialog.c:297
+#: app/gui/preferences-dialog.c:301
 msgid "Error: Default unit must be within unit range."
 msgstr "Fel: Standardmåttet måste vara inom måttområdet."
 
-#: app/gui/preferences-dialog.c:304
+#: app/gui/preferences-dialog.c:308
 msgid "Error: Default resolution must not be zero."
 msgstr "Fel: Standardbildskärmsupplösningen får inte vara 0."
 
-#: app/gui/preferences-dialog.c:312
+#: app/gui/preferences-dialog.c:316
 msgid "Error: Default resolution unit must be within unit range."
 msgstr "Fel: Standardmåttenheten måste vara inom måttområdet."
 
-#: app/gui/preferences-dialog.c:319
+#: app/gui/preferences-dialog.c:323
 msgid "Error: Monitor resolution must not be zero."
 msgstr "Fel: Bildskärmsupplösningen får inte vara 0."
 
-#: app/gui/preferences-dialog.c:326
+#: app/gui/preferences-dialog.c:330
 msgid "Error: Image title format must not be NULL."
 msgstr "Fel: Bildtitelformatet får inte vara NULL."
 
-#: app/gui/preferences-dialog.c:333
+#: app/gui/preferences-dialog.c:337
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Fel: Antalet processorer måste vara mellan 1 och 30."
 
-#: app/gui/preferences-dialog.c:383
+#: app/gui/preferences-dialog.c:387
 msgid "Save Preferences ?"
 msgstr "Spara inställningar?"
 
-#: app/gui/preferences-dialog.c:404
+#: app/gui/preferences-dialog.c:408
 msgid ""
 "At least one of the changes you made will only\n"
 "take effect after you restart the GIMP.\n"
@@ -4173,566 +4094,578 @@ msgstr ""
 "permanenta så du kan starta om GIMP eller trycka på \"Stäng\"\n"
 "för att strunta i att använda de förändringarna."
 
-#: app/gui/preferences-dialog.c:496
+#: app/gui/preferences-dialog.c:500
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Du måste starta om GIMP för att förändringarna ska ta effekt."
 
-#: app/gui/preferences-dialog.c:1059
+#: app/gui/preferences-dialog.c:1063
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren är begränsad till %d tecken."
 
-#: app/gui/preferences-dialog.c:1491
+#: app/gui/preferences-dialog.c:1497
 msgid "Preferences"
 msgstr "Inställningar"
 
 #. The categories tree
-#: app/gui/preferences-dialog.c:1513
+#: app/gui/preferences-dialog.c:1519
 msgid "Categories"
 msgstr "Kategorier"
 
-#: app/gui/preferences-dialog.c:1541 app/gui/preferences-dialog.c:1543
+#: app/gui/preferences-dialog.c:1547 app/gui/preferences-dialog.c:1549
 msgid "New File"
 msgstr "Ny fil"
 
-#: app/gui/preferences-dialog.c:1554
+#: app/gui/preferences-dialog.c:1560
 msgid "Default Image Size and Unit"
 msgstr "Standardbildstorlek och -mått"
 
-#: app/gui/preferences-dialog.c:1568
+#: app/gui/preferences-dialog.c:1575
 msgid "Width"
 msgstr "Bredd"
 
-#: app/gui/preferences-dialog.c:1570
+#: app/gui/preferences-dialog.c:1577
 msgid "Height"
 msgstr "Höjd"
 
-#: app/gui/preferences-dialog.c:1602
+#: app/gui/preferences-dialog.c:1609
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standardbildstorlek och -måttenhet"
 
-#: app/gui/preferences-dialog.c:1625 app/gui/preferences-dialog.c:2437
-#: app/tools/gimpfliptool.c:403
+#: app/gui/preferences-dialog.c:1633 app/gui/preferences-dialog.c:2445
+#: app/tools/gimpfliptool.c:404
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: app/gui/preferences-dialog.c:1627 app/gui/preferences-dialog.c:2439
-#: app/tools/gimpfliptool.c:405
+#: app/gui/preferences-dialog.c:1635 app/gui/preferences-dialog.c:2447
+#: app/tools/gimpfliptool.c:406
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: app/gui/preferences-dialog.c:1629 app/gui/preferences-dialog.c:2441
+#: app/gui/preferences-dialog.c:1637 app/gui/preferences-dialog.c:2449
 msgid "dpi"
 msgstr "dpi"
 
-#: app/gui/preferences-dialog.c:1677
+#: app/gui/preferences-dialog.c:1685
 msgid "Default Image Type:"
 msgstr "Standardbildtyp:"
 
-#: app/gui/preferences-dialog.c:1689
+#: app/gui/preferences-dialog.c:1697
 msgid "Maximum Image Size:"
 msgstr "Maximal bildstorlek:"
 
-#: app/gui/preferences-dialog.c:1694 app/gui/preferences-dialog.c:1696
+#: app/gui/preferences-dialog.c:1702 app/gui/preferences-dialog.c:1704
 msgid "Default Comment"
 msgstr "Standardkommentar"
 
-#: app/gui/preferences-dialog.c:1704
+#: app/gui/preferences-dialog.c:1712
 msgid "Comment Used for New Images"
 msgstr "Kommentar som används för nya bilder"
 
-#: app/gui/preferences-dialog.c:1724 app/gui/preferences-dialog.c:1726
+#: app/gui/preferences-dialog.c:1733 app/gui/preferences-dialog.c:1735
 msgid "Display"
 msgstr "Visning"
 
-#: app/gui/preferences-dialog.c:1734
+#: app/gui/preferences-dialog.c:1743
 msgid "Transparency"
 msgstr "Transparens"
 
-#: app/gui/preferences-dialog.c:1753
+#: app/gui/preferences-dialog.c:1763
 msgid "Light Checks"
 msgstr "Ljusa rutor"
 
-#: app/gui/preferences-dialog.c:1754
+#: app/gui/preferences-dialog.c:1764
 msgid "Mid-Tone Checks"
 msgstr "Mellanmörka rutor"
 
-#: app/gui/preferences-dialog.c:1755
+#: app/gui/preferences-dialog.c:1765
 msgid "Dark Checks"
 msgstr "Mörka rutor"
 
-#: app/gui/preferences-dialog.c:1756
+#: app/gui/preferences-dialog.c:1766
 msgid "White Only"
 msgstr "Endast vit"
 
-#: app/gui/preferences-dialog.c:1757
+#: app/gui/preferences-dialog.c:1767
 msgid "Gray Only"
 msgstr "Endast grå"
 
-#: app/gui/preferences-dialog.c:1758
+#: app/gui/preferences-dialog.c:1768
 msgid "Black Only"
 msgstr "Endast svart"
 
-#: app/gui/preferences-dialog.c:1762
+#: app/gui/preferences-dialog.c:1772
 msgid "Transparency Type:"
 msgstr "Transparenstyp:"
 
-#: app/gui/preferences-dialog.c:1770 app/gui/preferences-dialog.c:1863
-#: app/gui/preferences-dialog.c:1878
+#: app/gui/preferences-dialog.c:1780 app/gui/preferences-dialog.c:1873
+#: app/gui/preferences-dialog.c:1888
 msgid "Small"
 msgstr "Liten"
 
-#: app/gui/preferences-dialog.c:1771 app/gui/preferences-dialog.c:1864
-#: app/gui/preferences-dialog.c:1879
+#: app/gui/preferences-dialog.c:1781 app/gui/preferences-dialog.c:1874
+#: app/gui/preferences-dialog.c:1889
 msgid "Medium"
 msgstr "Mellan"
 
-#: app/gui/preferences-dialog.c:1772 app/gui/preferences-dialog.c:1865
-#: app/gui/preferences-dialog.c:1880
+#: app/gui/preferences-dialog.c:1782 app/gui/preferences-dialog.c:1875
+#: app/gui/preferences-dialog.c:1890
 msgid "Large"
 msgstr "Stor"
 
-#: app/gui/preferences-dialog.c:1776
+#: app/gui/preferences-dialog.c:1786
 msgid "Check Size:"
 msgstr "Rutstorlek:"
 
-#: app/gui/preferences-dialog.c:1779
+#: app/gui/preferences-dialog.c:1789
 msgid "8-Bit Displays"
 msgstr "8-bitars skärmar"
 
-#: app/gui/preferences-dialog.c:1800
+#: app/gui/preferences-dialog.c:1810
 msgid "Minimum Number of Colors:"
 msgstr "Minsta antal färger:"
 
-#: app/gui/preferences-dialog.c:1803
+#: app/gui/preferences-dialog.c:1813
 msgid "Install Colormap"
 msgstr "Använd egen färgkarta"
 
-#: app/gui/preferences-dialog.c:1812
+#: app/gui/preferences-dialog.c:1822
 msgid "Colormap Cycling"
 msgstr "Rotera färgkarta"
 
-#: app/gui/preferences-dialog.c:1824 app/gui/preferences-dialog.c:1826
-#: app/pdb/internal_procs.c:118
+#: app/gui/preferences-dialog.c:1834 app/gui/preferences-dialog.c:1836
+#: app/pdb/internal_procs.c:121
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: app/gui/preferences-dialog.c:1861 app/tools/gimpblendtool.c:751
-#: app/tools/gimpbycolorselecttool.c:964
+#: app/gui/preferences-dialog.c:1871 app/tools/gimpblendtool.c:754
+#: app/tools/gimpbycolorselecttool.c:965
 msgid "None"
 msgstr "Ingen"
 
-#: app/gui/preferences-dialog.c:1862
+#: app/gui/preferences-dialog.c:1872
 msgid "Tiny"
 msgstr "Jätteliten"
 
-#: app/gui/preferences-dialog.c:1866
+#: app/gui/preferences-dialog.c:1876
 msgid "Huge"
 msgstr "Jättestor"
 
-#: app/gui/preferences-dialog.c:1870
+#: app/gui/preferences-dialog.c:1880
 msgid "Preview Size:"
 msgstr "Förhandsvisningsstorlek:"
 
-#: app/gui/preferences-dialog.c:1884
+#: app/gui/preferences-dialog.c:1894
 msgid "Nav Preview Size:"
 msgstr "Förhandsvisningsstorlek för navigering:"
 
-#: app/gui/preferences-dialog.c:1894
+#: app/gui/preferences-dialog.c:1904
 msgid "Recent Documents List Size:"
 msgstr "Antal senast-använda dokument:"
 
 #. Indicators
-#: app/gui/preferences-dialog.c:1898
+#: app/gui/preferences-dialog.c:1908
 msgid "Toolbox"
 msgstr "Verktygslåda"
 
-#: app/gui/preferences-dialog.c:1901
+#: app/gui/preferences-dialog.c:1911
 msgid "Display Brush, Pattern and Gradient Indicators"
 msgstr "Visa pensel-, mönster- och färgskaleindikatorer"
 
-#: app/gui/preferences-dialog.c:1910
+#: app/gui/preferences-dialog.c:1920
 msgid "Dialog Behaviour"
 msgstr "Fönsteruppförande"
 
-#: app/gui/preferences-dialog.c:1912
+#: app/gui/preferences-dialog.c:1922
 msgid "Navigation Window per Display"
 msgstr "Navigationsfönster per display"
 
-#: app/gui/preferences-dialog.c:1921
+#: app/gui/preferences-dialog.c:1931
 msgid "Info Window Follows Mouse"
 msgstr "Informationsfönstret följer musen"
 
-#: app/gui/preferences-dialog.c:1930
+#: app/gui/preferences-dialog.c:1940
 msgid "Menus"
 msgstr "Menyer"
 
-#: app/gui/preferences-dialog.c:1932
+#: app/gui/preferences-dialog.c:1942
 msgid "Disable Tearoff Menus"
 msgstr "Använd inte löstagbara menyer"
 
-#: app/gui/preferences-dialog.c:1943 app/gui/preferences-dialog.c:1945
+#: app/gui/preferences-dialog.c:1953 app/gui/preferences-dialog.c:1955
 msgid "Help System"
 msgstr "Hjälpsystem"
 
-#: app/gui/preferences-dialog.c:1955
+#: app/gui/preferences-dialog.c:1965
 msgid "Show Tool Tips"
 msgstr "Visa hjälpbubblor"
 
-#: app/gui/preferences-dialog.c:1965
+#: app/gui/preferences-dialog.c:1975
 msgid "Context Sensitive Help with \"F1\""
 msgstr "Sammanhangskänslig hjälp med \"F1\""
 
-#: app/gui/preferences-dialog.c:1974
+#: app/gui/preferences-dialog.c:1984
 msgid "Help Browser"
 msgstr "Hjälpläsare"
 
-#: app/gui/preferences-dialog.c:1986
+#: app/gui/preferences-dialog.c:1997
 msgid "Internal"
 msgstr "Intern"
 
-#: app/gui/preferences-dialog.c:1987
+#: app/gui/preferences-dialog.c:1998
 msgid "Netscape"
 msgstr "Netscape"
 
-#: app/gui/preferences-dialog.c:1991
+#: app/gui/preferences-dialog.c:2002
 msgid "Help Browser to Use:"
 msgstr "Hjälpläsare att använda:"
 
-#: app/gui/preferences-dialog.c:1996 app/gui/preferences-dialog.c:1998
+#: app/gui/preferences-dialog.c:2007 app/gui/preferences-dialog.c:2009
 msgid "Image Windows"
 msgstr "Bildfönster"
 
-#: app/gui/preferences-dialog.c:2006
+#: app/gui/preferences-dialog.c:2017
 msgid "Appearance"
 msgstr "Utseende"
 
-#: app/gui/preferences-dialog.c:2008
+#: app/gui/preferences-dialog.c:2019
 msgid "Use \"Dot for Dot\" by default"
 msgstr "Använd \"punkt till punkt\" som standard"
 
-#: app/gui/preferences-dialog.c:2017
+#: app/gui/preferences-dialog.c:2028
 msgid "Resize Window on Zoom"
 msgstr "Ändra storlek på fönstret vid zoom"
 
-#: app/gui/preferences-dialog.c:2026
+#: app/gui/preferences-dialog.c:2037
 msgid "Show Rulers"
 msgstr "Visa linjaler"
 
-#: app/gui/preferences-dialog.c:2035
+#: app/gui/preferences-dialog.c:2046
 msgid "Show Statusbar"
 msgstr "Visa statusrad"
 
-#: app/gui/preferences-dialog.c:2059
+#: app/gui/preferences-dialog.c:2069
 msgid "Marching Ants Speed:"
 msgstr "Vandrande myrors hastighet:"
 
 #. Set the currently used string as "Custom"
-#: app/gui/preferences-dialog.c:2067
+#: app/gui/preferences-dialog.c:2077
 msgid "Custom"
 msgstr "Egen"
 
 #. set some commonly used format strings
-#: app/gui/preferences-dialog.c:2073
+#: app/gui/preferences-dialog.c:2083
 msgid "Standard"
 msgstr "Standard"
 
-#: app/gui/preferences-dialog.c:2078
+#: app/gui/preferences-dialog.c:2088
 msgid "Show zoom percentage"
 msgstr "Visa zoomprocent"
 
-#: app/gui/preferences-dialog.c:2083
+#: app/gui/preferences-dialog.c:2093
 msgid "Show zoom ratio"
 msgstr "Visa zoomratio"
 
-#: app/gui/preferences-dialog.c:2088
+#: app/gui/preferences-dialog.c:2098
 msgid "Show reversed zoom ratio"
 msgstr "Visa omvänd zoomratio"
 
-#: app/gui/preferences-dialog.c:2099
+#: app/gui/preferences-dialog.c:2109
 msgid "Image Title Format:"
 msgstr "Bildtitelformat:"
 
 #. End of the title format string
-#: app/gui/preferences-dialog.c:2103
+#: app/gui/preferences-dialog.c:2113
 msgid "Pointer Movement Feedback"
 msgstr "Markörförflyttning"
 
-#: app/gui/preferences-dialog.c:2106
+#: app/gui/preferences-dialog.c:2116
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Följ pekaren perfekt men långsammare"
 
-#: app/gui/preferences-dialog.c:2115
+#: app/gui/preferences-dialog.c:2125
 msgid "Disable Cursor Updating"
 msgstr "Slå av marköruppdatering"
 
-#: app/gui/preferences-dialog.c:2135
+#: app/gui/preferences-dialog.c:2145
 msgid "Tool Icon"
 msgstr "Verktygsikon"
 
-#: app/gui/preferences-dialog.c:2137
+#: app/gui/preferences-dialog.c:2147
 msgid "Tool Icon with Crosshair"
 msgstr "Verktygsikon med korshår"
 
-#: app/gui/preferences-dialog.c:2139
+#: app/gui/preferences-dialog.c:2149
 msgid "Crosshair only"
 msgstr "Endast korshår"
 
-#: app/gui/preferences-dialog.c:2144
+#: app/gui/preferences-dialog.c:2154
 msgid "Cursor Mode:"
 msgstr "Markörläge:"
 
-#: app/gui/preferences-dialog.c:2150 app/gui/preferences-dialog.c:2152
-#: app/gui/tool-options-dialog.c:97
+#: app/gui/preferences-dialog.c:2160 app/gui/preferences-dialog.c:2162
+#: app/gui/tool-options-dialog.c:99
 msgid "Tool Options"
 msgstr "Verktygsinställningar"
 
-#: app/gui/preferences-dialog.c:2160
+#: app/gui/preferences-dialog.c:2170
 msgid "Paint Options"
 msgstr "Penselinställningar"
 
-#: app/gui/preferences-dialog.c:2163
+#: app/gui/preferences-dialog.c:2173
 msgid "Use Global Paint Options"
 msgstr "Använd globala målarinställningar"
 
-#: app/gui/preferences-dialog.c:2172
+#: app/gui/preferences-dialog.c:2182
 msgid "Finding Contiguous Regions"
 msgstr "Hitta kontinuerliga ytor"
 
-#: app/gui/preferences-dialog.c:2190
+#: app/gui/preferences-dialog.c:2199
 msgid "Default Threshold:"
 msgstr "Standardtröskelvärde:"
 
-#: app/gui/preferences-dialog.c:2199 app/gui/preferences-dialog.c:2201
+#: app/gui/preferences-dialog.c:2208 app/gui/preferences-dialog.c:2210
 msgid "Environment"
 msgstr "Miljö"
 
-#: app/gui/preferences-dialog.c:2209
+#: app/gui/preferences-dialog.c:2218
 msgid "Resource Consumption"
 msgstr "Resursanvändning"
 
-#: app/gui/preferences-dialog.c:2211
+#: app/gui/preferences-dialog.c:2220
 msgid "Conservative Memory Usage"
 msgstr "Konservativ minnesanvändning"
 
-#: app/gui/preferences-dialog.c:2239
+#: app/gui/preferences-dialog.c:2247
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/gui/preferences-dialog.c:2262
+#: app/gui/preferences-dialog.c:2270
 msgid "Number of Processors to Use:"
 msgstr "Antalet processorer att använda:"
 
-#: app/gui/preferences-dialog.c:2266
+#: app/gui/preferences-dialog.c:2274
 msgid "Scaling"
 msgstr "Skalning"
 
-#: app/gui/preferences-dialog.c:2285
+#: app/gui/preferences-dialog.c:2293
 msgid "Nearest Neighbor (Fast)"
 msgstr "Närmaste granne (snabb)"
 
-#: app/gui/preferences-dialog.c:2289
+#: app/gui/preferences-dialog.c:2297
 msgid "Cubic (Slow)"
 msgstr "Kubisk (långsam)"
 
-#: app/gui/preferences-dialog.c:2294
+#: app/gui/preferences-dialog.c:2302
 msgid "Interpolation Type:"
 msgstr "Interpolationstyp:"
 
-#: app/gui/preferences-dialog.c:2297
+#: app/gui/preferences-dialog.c:2305
 msgid "File Saving"
 msgstr "Filsparning"
 
-#: app/gui/preferences-dialog.c:2315 app/gui/preferences-dialog.c:2329
+#: app/gui/preferences-dialog.c:2323 app/gui/preferences-dialog.c:2337
 msgid "Always"
 msgstr "Alltid"
 
-#: app/gui/preferences-dialog.c:2316
+#: app/gui/preferences-dialog.c:2324
 msgid "Never"
 msgstr "Aldrig"
 
-#: app/gui/preferences-dialog.c:2320
+#: app/gui/preferences-dialog.c:2328
 msgid "Try to Write a Thumbnail File:"
 msgstr "Försök skriva tumnagelsfil:"
 
-#: app/gui/preferences-dialog.c:2328
+#: app/gui/preferences-dialog.c:2336
 msgid "Only when Modified"
 msgstr "Endast om ändrad"
 
-#: app/gui/preferences-dialog.c:2333
+#: app/gui/preferences-dialog.c:2341
 msgid "\"File > Save\" Saves the Image:"
 msgstr "\"Arkiv > Spara\" sparar bilden:"
 
-#: app/gui/preferences-dialog.c:2339
+#: app/gui/preferences-dialog.c:2347
 msgid "Session Management"
 msgstr "Sessionshantering"
 
-#: app/gui/preferences-dialog.c:2341
+#: app/gui/preferences-dialog.c:2349
 msgid "Session"
 msgstr "Session"
 
-#: app/gui/preferences-dialog.c:2349
+#: app/gui/preferences-dialog.c:2357
 msgid "Window Positions"
 msgstr "Fönsterpositioner"
 
-#: app/gui/preferences-dialog.c:2351
+#: app/gui/preferences-dialog.c:2359
 msgid "Save Window Positions on Exit"
 msgstr "Spara fönsterpositioner vid avslutning"
 
-#: app/gui/preferences-dialog.c:2365
-msgid "Clear Saved Window Positions Now"
-msgstr "Rensa sparade fönsterpositioner nu"
-
 #: app/gui/preferences-dialog.c:2373
+msgid "Clear Saved Window Positions Now"
+msgstr "Töm sparade fönsterpositioner nu"
+
+#: app/gui/preferences-dialog.c:2381
 msgid "Always Try to Restore Session"
 msgstr "Försök alltid återställa sessionen"
 
-#: app/gui/preferences-dialog.c:2382
+#: app/gui/preferences-dialog.c:2390
 msgid "Devices"
 msgstr "Enheter"
 
-#: app/gui/preferences-dialog.c:2384
+#: app/gui/preferences-dialog.c:2392
 msgid "Save Device Status on Exit"
 msgstr "Spara enhetsstatus vid avslutning"
 
-#: app/gui/preferences-dialog.c:2395 app/gui/preferences-dialog.c:2397
+#: app/gui/preferences-dialog.c:2403 app/gui/preferences-dialog.c:2405
 msgid "Monitor"
 msgstr "Bildskärm"
 
-#: app/gui/preferences-dialog.c:2405
+#: app/gui/preferences-dialog.c:2413
 msgid "Get Monitor Resolution"
 msgstr "Hämta bildskärmsupplösning"
 
-#: app/gui/preferences-dialog.c:2413
+#: app/gui/preferences-dialog.c:2421
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(För tillfället %d × %d dpi)"
 
-#: app/gui/preferences-dialog.c:2479
+#: app/gui/preferences-dialog.c:2487
 msgid "From windowing system"
 msgstr "Från fönstersystemet"
 
-#: app/gui/preferences-dialog.c:2501
+#: app/gui/preferences-dialog.c:2509
 msgid "Manually:"
 msgstr "Manuellt:"
 
-#: app/gui/preferences-dialog.c:2517 app/gui/preferences-dialog.c:2519
+#: app/gui/preferences-dialog.c:2525 app/gui/preferences-dialog.c:2527
 msgid "Directories"
 msgstr "Kataloger"
 
-#: app/gui/preferences-dialog.c:2536
+#: app/gui/preferences-dialog.c:2544
 msgid "Temp Dir:"
 msgstr "Tempkatalog:"
 
-#: app/gui/preferences-dialog.c:2536
+#: app/gui/preferences-dialog.c:2544
 msgid "Select Temp Dir"
 msgstr "Välj tempkatalog"
 
-#: app/gui/preferences-dialog.c:2537
+#: app/gui/preferences-dialog.c:2545
 msgid "Swap Dir:"
 msgstr "Swapkatalog:"
 
-#: app/gui/preferences-dialog.c:2573
+#: app/gui/preferences-dialog.c:2581 app/pdb/internal_procs.c:73
+msgid "Brushes"
+msgstr "Penslar"
+
+#: app/gui/preferences-dialog.c:2581
 msgid "Brushes Directories"
 msgstr "Penselkataloger"
 
-#: app/gui/preferences-dialog.c:2575
+#: app/gui/preferences-dialog.c:2583
 msgid "Select Brushes Dir"
 msgstr "Välj penselkatalog"
 
-#: app/gui/preferences-dialog.c:2577
+#: app/gui/preferences-dialog.c:2585 app/pdb/internal_procs.c:139
+msgid "Patterns"
+msgstr "Mönster"
+
+#: app/gui/preferences-dialog.c:2585
 msgid "Patterns Directories"
 msgstr "Mönsterkataloger"
 
-#: app/gui/preferences-dialog.c:2579
+#: app/gui/preferences-dialog.c:2587
 msgid "Select Patterns Dir"
 msgstr "Välj mönsterkatalog"
 
-#: app/gui/preferences-dialog.c:2581
+#: app/gui/preferences-dialog.c:2589
+msgid "Palettes"
+msgstr "Paletter"
+
+#: app/gui/preferences-dialog.c:2589
 msgid "Palettes Directories"
 msgstr "Palettkataloger"
 
-#: app/gui/preferences-dialog.c:2583
+#: app/gui/preferences-dialog.c:2591
 msgid "Select Palettes Dir"
 msgstr "Välj palettkatalog"
 
-#: app/gui/preferences-dialog.c:2585
+#: app/gui/preferences-dialog.c:2593 app/pdb/internal_procs.c:103
+msgid "Gradients"
+msgstr "Färgskalor"
+
+#: app/gui/preferences-dialog.c:2593
 msgid "Gradients Directories"
 msgstr "Färgskalekataloger"
 
-#: app/gui/preferences-dialog.c:2587
+#: app/gui/preferences-dialog.c:2595
 msgid "Select Gradients Dir"
 msgstr "Välj färgskalekatalog"
 
-#: app/gui/preferences-dialog.c:2589
+#: app/gui/preferences-dialog.c:2597
 msgid "Plug-Ins"
 msgstr "Insticksmoduler"
 
-#: app/gui/preferences-dialog.c:2589
+#: app/gui/preferences-dialog.c:2597
 msgid "Plug-Ins Directories"
 msgstr "Insticksmodulkataloger"
 
-#: app/gui/preferences-dialog.c:2591
+#: app/gui/preferences-dialog.c:2599
 msgid "Select Plug-Ins Dir"
 msgstr "Välj insticksmodulkatalog"
 
-#: app/gui/preferences-dialog.c:2593
+#: app/gui/preferences-dialog.c:2601
 msgid "Modules"
 msgstr "Moduler"
 
-#: app/gui/preferences-dialog.c:2593
+#: app/gui/preferences-dialog.c:2601
 msgid "Modules Directories"
 msgstr "Modulkataloger"
 
-#: app/gui/preferences-dialog.c:2595
+#: app/gui/preferences-dialog.c:2603
 msgid "Select Modules Dir"
 msgstr "Välj modulkatalog"
 
-#: app/gui/resize-dialog.c:166
+#: app/gui/resize-dialog.c:165
 msgid "Scale Layer"
 msgstr "Skala om lager"
 
-#: app/gui/resize-dialog.c:168 app/gui/resize-dialog.c:193
-#: app/tools/paint_options.c:443
+#: app/gui/resize-dialog.c:167 app/gui/resize-dialog.c:192
+#: app/tools/paint_options.c:445
 msgid "Size"
 msgstr "Storlek"
 
-#: app/gui/resize-dialog.c:172
+#: app/gui/resize-dialog.c:171
 msgid "Scale Image"
 msgstr "Skala bild"
 
-#: app/gui/resize-dialog.c:174
+#: app/gui/resize-dialog.c:173
 msgid "Pixel Dimensions"
 msgstr "Bildpunktsdimensioner"
 
-#: app/gui/resize-dialog.c:184
+#: app/gui/resize-dialog.c:183
 msgid "Set Layer Boundary Size"
 msgstr "Sätt lagerstorlek"
 
-#: app/gui/resize-dialog.c:189
+#: app/gui/resize-dialog.c:188
 msgid "Set Canvas Size"
 msgstr "Sätt storlek på kanvas"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:259 app/tools/gimpscaletool.c:191
+#: app/gui/resize-dialog.c:258 app/tools/gimpscaletool.c:193
 msgid "Original Width:"
 msgstr "Originalbredd:"
 
 #. the new size labels
-#: app/gui/resize-dialog.c:284 app/gui/resize-dialog.c:512
+#: app/gui/resize-dialog.c:283 app/gui/resize-dialog.c:511
 msgid "New Width:"
 msgstr "Ny bredd:"
 
 #. the scale ratio labels
-#: app/gui/resize-dialog.c:349
+#: app/gui/resize-dialog.c:348
 msgid "Ratio X:"
 msgstr "X ratio:"
 
-#: app/gui/resize-dialog.c:445
-msgid "X:"
-msgstr "X:"
-
-#: app/gui/resize-dialog.c:498
+#: app/gui/resize-dialog.c:497
 msgid "Print Size & Display Unit"
 msgstr "Utskriftsstorlek och Visuell enhet"
 
@@ -4752,6 +4685,42 @@ msgstr "Horisontell:"
 msgid "Vertical:"
 msgstr "Vertikal:"
 
+#: app/gui/select-commands.c:125
+msgid "Feather Selection"
+msgstr "Fjädermarkering"
+
+#: app/gui/select-commands.c:128
+msgid "Feather Selection by:"
+msgstr "Fjädermarkering:"
+
+#: app/gui/select-commands.c:161
+msgid "Shrink Selection"
+msgstr "Minska markering"
+
+#: app/gui/select-commands.c:164
+msgid "Shrink Selection by:"
+msgstr "Minska markering med:"
+
+#: app/gui/select-commands.c:173
+msgid "Shrink from image border"
+msgstr "Krymp från bildkanten"
+
+#: app/gui/select-commands.c:195
+msgid "Grow Selection"
+msgstr "Öka markering"
+
+#: app/gui/select-commands.c:198
+msgid "Grow Selection by:"
+msgstr "Öka markering med:"
+
+#: app/gui/select-commands.c:218
+msgid "Border Selection"
+msgstr "Kantmarkering"
+
+#: app/gui/select-commands.c:221
+msgid "Border Selection by:"
+msgstr "Kantmarkering med:"
+
 #: app/gui/splash.c:83
 msgid "GIMP Startup"
 msgstr "GIMP Uppstart"
@@ -4761,7 +4730,7 @@ msgstr "GIMP Uppstart"
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/gui/splash.c:325 app/gui/splash.c:327 app/gui/toolbox.c:339
+#: app/gui/splash.c:325 app/gui/splash.c:327 app/gui/toolbox.c:345
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -4806,7 +4775,7 @@ msgstr ""
 "underkatalogen tips i din GIMP-datakatalog.\n"
 "Kontrollera din installation."
 
-#: app/gui/toolbox.c:234
+#: app/gui/toolbox.c:240
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
@@ -4815,7 +4784,7 @@ msgstr ""
 "färgerna. Pilarna byter plats på färgerna. Dubbelklicka för att få upp en "
 "färgväljare."
 
-#: app/pdb/image_cmds.c:3532
+#: app/pdb/image_cmds.c:3583
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -4823,109 +4792,105 @@ msgstr ""
 "Bildupplösningen är utanför området,\n"
 "använder standardupplösningen istället."
 
-#: app/pdb/internal_procs.c:67
+#: app/pdb/internal_procs.c:70
 msgid "Internal Procedures"
 msgstr "Interna procedurer"
 
-#: app/pdb/internal_procs.c:67
+#: app/pdb/internal_procs.c:70
 msgid "Brush UI"
 msgstr "Penselanvändargränssnitt"
 
-#: app/pdb/internal_procs.c:73
+#: app/pdb/internal_procs.c:76
 msgid "Channel"
 msgstr "Kanal"
 
-#: app/pdb/internal_procs.c:76 app/tools/paint_options.c:459
+#: app/pdb/internal_procs.c:79 app/tools/paint_options.c:461
 msgid "Color"
 msgstr "Färg"
 
-#: app/pdb/internal_procs.c:79
+#: app/pdb/internal_procs.c:82
 msgid "Convert"
 msgstr "Konvertera"
 
-#: app/pdb/internal_procs.c:82
+#: app/pdb/internal_procs.c:85
 msgid "GDisplay procedures"
 msgstr "GDisplay-procedurer"
 
-#: app/pdb/internal_procs.c:85
+#: app/pdb/internal_procs.c:88
 msgid "Drawable procedures"
 msgstr "Rityteprocedurer"
 
-#: app/pdb/internal_procs.c:88
+#: app/pdb/internal_procs.c:91
 msgid "Edit procedures"
 msgstr "Modifieringsprocedurer"
 
-#: app/pdb/internal_procs.c:91
+#: app/pdb/internal_procs.c:94
 msgid "File Operations"
 msgstr "Filoperationer"
 
-#: app/pdb/internal_procs.c:94
+#: app/pdb/internal_procs.c:97
 msgid "Floating selections"
 msgstr "Flytande markeringar"
 
-#: app/pdb/internal_procs.c:97
+#: app/pdb/internal_procs.c:100
 msgid "Gimprc procedures"
 msgstr "Gimprc-procedurer"
 
-#: app/pdb/internal_procs.c:103
+#: app/pdb/internal_procs.c:106
 msgid "Gradient UI"
 msgstr "Färgskaleanvändargränssnitt"
 
-#: app/pdb/internal_procs.c:106
+#: app/pdb/internal_procs.c:109
 msgid "Guide procedures"
 msgstr "Hjälplinjeprocedurer"
 
-#: app/pdb/internal_procs.c:109
+#: app/pdb/internal_procs.c:112
 msgid "Help procedures"
 msgstr "Hjälpprocedurer"
 
-#: app/pdb/internal_procs.c:115
+#: app/pdb/internal_procs.c:118
 msgid "Layer"
 msgstr "Lager"
 
-#: app/pdb/internal_procs.c:121
+#: app/pdb/internal_procs.c:124
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: app/pdb/internal_procs.c:127
+#: app/pdb/internal_procs.c:130
 msgid "Parasite procedures"
 msgstr "Parasitprocedurer"
 
-#: app/pdb/internal_procs.c:130
+#: app/pdb/internal_procs.c:133
 msgid "Paths"
 msgstr "Slingor"
 
-#: app/pdb/internal_procs.c:133
+#: app/pdb/internal_procs.c:136
 msgid "Pattern UI"
 msgstr "Mönsteranvändargränssnitt"
 
-#: app/pdb/internal_procs.c:139
+#: app/pdb/internal_procs.c:142
 msgid "Plug-in"
 msgstr "Insticksmodul"
 
-#: app/pdb/internal_procs.c:142
+#: app/pdb/internal_procs.c:145
 msgid "Procedural database"
 msgstr "Procedurell databas"
 
-#: app/pdb/internal_procs.c:145
+#: app/pdb/internal_procs.c:148
 msgid "Image mask"
 msgstr "Bildmask"
 
-#: app/pdb/internal_procs.c:148
+#: app/pdb/internal_procs.c:151
 msgid "Text procedures"
 msgstr "Textprocedurer"
 
-#: app/pdb/internal_procs.c:151
+#: app/pdb/internal_procs.c:154
 msgid "Tool procedures"
 msgstr "Verktygsprocedurer"
 
-#: app/pdb/internal_procs.c:157
+#: app/pdb/internal_procs.c:160
 msgid "Units"
 msgstr "Enheter"
-
-#: app/pdb/procedural_db.c:47
-msgid "Procedural Database"
-msgstr "Procedurell databas"
 
 #: app/pdb/procedural_db.c:140 app/pdb/procedural_db.c:152
 #, c-format
@@ -4937,7 +4902,7 @@ msgstr "PDB-anropsfel, hittade inte %s"
 msgid "PDB calling error %s"
 msgstr "PDB-anropsfel %s"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:247
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -4946,514 +4911,514 @@ msgstr ""
 "Felaktigt antal parametrar skickades till procedural_db_run_proc:\n"
 "Argument %d till \"%s\" borde vara en %s, men skickade en %s"
 
-#: app/pdb/procedural_db_cmds.c:76
+#: app/pdb/procedural_db_cmds.c:77
 msgid "Internal GIMP procedure"
 msgstr "Interna GIMP-procedurer"
 
-#: app/pdb/procedural_db_cmds.c:77
+#: app/pdb/procedural_db_cmds.c:78
 msgid "GIMP Plug-In"
 msgstr "GIMP Insticksmodul"
 
-#: app/pdb/procedural_db_cmds.c:78
+#: app/pdb/procedural_db_cmds.c:79
 msgid "GIMP Extension"
 msgstr "GIMP Tillägg"
 
-#: app/pdb/procedural_db_cmds.c:79
+#: app/pdb/procedural_db_cmds.c:80
 msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
-#: app/tools/gimpbrightnesscontrasttool.c:130
-#: app/tools/gimpbrightnesscontrasttool.c:296
+#: app/tools/gimpbrightnesscontrasttool.c:131
+#: app/tools/gimpbrightnesscontrasttool.c:297
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
 
-#: app/tools/gimpbrightnesscontrasttool.c:131
+#: app/tools/gimpbrightnesscontrasttool.c:132
 msgid "Adjust brightness and contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
-#: app/tools/gimpbrightnesscontrasttool.c:132
+#: app/tools/gimpbrightnesscontrasttool.c:133
 msgid "/Image/Colors/Brightness-Contrast..."
 msgstr "/Bild/Färger/Ljusstyrka-Kontrast..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:216
+#: app/tools/gimpbrightnesscontrasttool.c:217
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade bilder."
 
 #. Create the brightness scale widget
-#: app/tools/gimpbrightnesscontrasttool.c:321
+#: app/tools/gimpbrightnesscontrasttool.c:322
 msgid "Brightness:"
 msgstr "Ljusstyrka:"
 
 #. Create the contrast scale widget
-#: app/tools/gimpbrightnesscontrasttool.c:352
+#: app/tools/gimpbrightnesscontrasttool.c:353
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #. The shell and main vbox
-#: app/tools/gimpcolorbalancetool.c:112 app/tools/gimpcolorbalancetool.c:353
+#: app/tools/gimpcolorbalancetool.c:113 app/tools/gimpcolorbalancetool.c:356
 msgid "Color Balance"
 msgstr "Färgbalans"
 
-#: app/tools/gimpcolorbalancetool.c:113
+#: app/tools/gimpcolorbalancetool.c:114
 msgid "Adjust color balance"
 msgstr "Justera färgbalans"
 
-#: app/tools/gimpcolorbalancetool.c:114
+#: app/tools/gimpcolorbalancetool.c:115
 msgid "/Image/Colors/Color Balance..."
 msgstr "/Bild/Färger/Färgbalans..."
 
-#: app/tools/gimpcolorbalancetool.c:200
+#: app/tools/gimpcolorbalancetool.c:203
 msgid "Color balance operates only on RGB color drawables."
 msgstr "Färgbalans fungerar endast på RGB-bilder."
 
-#: app/tools/gimpcolorbalancetool.c:342 app/tools/gimpdodgeburntool.c:707
+#: app/tools/gimpcolorbalancetool.c:345 app/tools/gimpdodgeburntool.c:712
 msgid "Shadows"
 msgstr "Skuggor"
 
-#: app/tools/gimpcolorbalancetool.c:343 app/tools/gimpdodgeburntool.c:705
+#: app/tools/gimpcolorbalancetool.c:346 app/tools/gimpdodgeburntool.c:710
 msgid "Midtones"
 msgstr "Mittentoner"
 
-#: app/tools/gimpcolorbalancetool.c:344 app/tools/gimpdodgeburntool.c:703
+#: app/tools/gimpcolorbalancetool.c:347 app/tools/gimpdodgeburntool.c:708
 msgid "Highlights"
 msgstr "Ljuspunkter"
 
-#: app/tools/gimpcolorbalancetool.c:375
+#: app/tools/gimpcolorbalancetool.c:378
 msgid "Color Levels:"
 msgstr "Färgnivåer:"
 
 #. Create the cyan-red scale widget
-#: app/tools/gimpcolorbalancetool.c:415
+#: app/tools/gimpcolorbalancetool.c:418
 msgid "Cyan"
 msgstr "Cyan"
 
 #. Create the magenta-green scale widget
-#: app/tools/gimpcolorbalancetool.c:440
+#: app/tools/gimpcolorbalancetool.c:443
 msgid "Magenta"
 msgstr "Magenta"
 
 #. Create the yellow-blue scale widget
-#: app/tools/gimpcolorbalancetool.c:465
+#: app/tools/gimpcolorbalancetool.c:468
 msgid "Yellow"
 msgstr "Gul"
 
 #. The preserve luminosity toggle
-#: app/tools/gimpcolorbalancetool.c:518
+#: app/tools/gimpcolorbalancetool.c:521
 msgid "Preserve Luminosity"
 msgstr "Behåll luminans"
 
 #. The shell and main vbox
-#: app/tools/gimpcurvestool.c:208 app/tools/gimpcurvestool.c:667
+#: app/tools/gimpcurvestool.c:209 app/tools/gimpcurvestool.c:668
 msgid "Curves"
 msgstr "Kurvor"
 
-#: app/tools/gimpcurvestool.c:209
+#: app/tools/gimpcurvestool.c:210
 msgid "Adjust color curves"
 msgstr "Justera färgkurvor"
 
-#: app/tools/gimpcurvestool.c:210
+#: app/tools/gimpcurvestool.c:211
 msgid "/Image/Colors/Curves..."
 msgstr "/Bild/Färger/Kurvor..."
 
-#: app/tools/gimpcurvestool.c:299
+#: app/tools/gimpcurvestool.c:300
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurvor för indexerade bilder kan inte justeras."
 
-#: app/tools/gimpcurvestool.c:689
+#: app/tools/gimpcurvestool.c:690
 msgid "Modify Curves for Channel:"
 msgstr "Modifiera kurvor för kanal:"
 
 #. The option menu for selecting the drawing method
-#: app/tools/gimpcurvestool.c:779
+#: app/tools/gimpcurvestool.c:780
 msgid "Curve Type:"
 msgstr "Kurvtyp:"
 
-#: app/tools/gimpcurvestool.c:786
+#: app/tools/gimpcurvestool.c:787
 msgid "Smooth"
 msgstr "Mjuk"
 
-#: app/tools/gimpcurvestool.c:787
+#: app/tools/gimpcurvestool.c:788
 msgid "Free"
 msgstr "Frihand"
 
-#: app/tools/gimpcurvestool.c:1420
+#: app/tools/gimpcurvestool.c:1421
 msgid "Load Curves"
 msgstr "Läs in kurvor"
 
-#: app/tools/gimpcurvestool.c:1435
+#: app/tools/gimpcurvestool.c:1436
 msgid "Save Curves"
 msgstr "Spara kurvor"
 
-#: app/tools/gimpcurvestool.c:1732
+#: app/tools/gimpcurvestool.c:1733
 msgid "Load/Save Curves"
 msgstr "Läs in/spara kurvor"
 
-#: app/tools/gimpairbrushtool.c:132
+#: app/tools/gimpairbrushtool.c:134
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: app/tools/gimpairbrushtool.c:133
+#: app/tools/gimpairbrushtool.c:135
 msgid "Airbrush with variable pressure"
 msgstr "Airbrush med variabelt tryck"
 
-#: app/tools/gimpairbrushtool.c:134
+#: app/tools/gimpairbrushtool.c:136
 msgid "/Tools/Paint Tools/Airbrush"
 msgstr "/Verktyg/Målarverktyg/Airbrush"
 
-#: app/tools/gimpairbrushtool.c:519 app/tools/gimpconvolvetool.c:728
-#: app/tools/gimpsmudgetool.c:536
+#: app/tools/gimpairbrushtool.c:525 app/tools/gimpconvolvetool.c:734
+#: app/tools/gimpsmudgetool.c:542
 msgid "Rate:"
 msgstr "Flöde:"
 
-#: app/tools/gimpairbrushtool.c:532
+#: app/tools/gimpairbrushtool.c:538
 msgid "Pressure:"
 msgstr "Tryck:"
 
-#: app/tools/gimpbezierselecttool.c:278
+#: app/tools/gimpbezierselecttool.c:280
 msgid "Bezier Select"
 msgstr "Beziermarkera"
 
-#: app/tools/gimpbezierselecttool.c:279
+#: app/tools/gimpbezierselecttool.c:281
 msgid "Select regions using Bezier curves"
 msgstr "Markera regioner genom att använda Bezierkurvor"
 
-#: app/tools/gimpbezierselecttool.c:280
+#: app/tools/gimpbezierselecttool.c:282
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Verktyg/Markeringsverktyg/Beziermarkera"
 
-#: app/tools/gimpbezierselecttool.c:1156
+#: app/tools/gimpbezierselecttool.c:1158
 msgid "Bezier path already closed."
 msgstr "Bezierslingan redan stängd."
 
-#: app/tools/gimpbezierselecttool.c:1178
+#: app/tools/gimpbezierselecttool.c:1180
 msgid "Corrupt curve"
 msgstr "Trasig kurva"
 
-#: app/tools/gimpbezierselecttool.c:3517
+#: app/tools/gimpbezierselecttool.c:3519
 msgid "Curve not closed!"
 msgstr "Kurvan är inte stängd!"
 
-#: app/tools/gimpblendtool.c:280
+#: app/tools/gimpblendtool.c:283
 msgid "Blend"
 msgstr "Färgtoning"
 
-#: app/tools/gimpblendtool.c:281
+#: app/tools/gimpblendtool.c:284
 msgid "Fill with a color gradient"
 msgstr "Fyll med färgtoning"
 
-#: app/tools/gimpblendtool.c:282
+#: app/tools/gimpblendtool.c:285
 msgid "/Tools/Paint Tools/Blend"
 msgstr "/Verktyg/Målarverktyg/Färgtoning"
 
-#: app/tools/gimpblendtool.c:378
+#: app/tools/gimpblendtool.c:381
 msgid "Blend: Invalid for indexed images."
 msgstr "Tona: Ogiltig för indexerade bilder."
 
-#: app/tools/gimpblendtool.c:408
+#: app/tools/gimpblendtool.c:411
 msgid "Blend: 0, 0"
 msgstr "Tona: 0, 0"
 
-#: app/tools/gimpblendtool.c:472
+#: app/tools/gimpblendtool.c:475
 msgid "Blend operation failed."
 msgstr "Toningsoperationen misslyckades."
 
-#: app/tools/gimpblendtool.c:478
+#: app/tools/gimpblendtool.c:481
 msgid "Blending..."
 msgstr "Tonar färg..."
 
-#: app/tools/gimpblendtool.c:555 app/tools/gimpblendtool.c:565
+#: app/tools/gimpblendtool.c:558 app/tools/gimpblendtool.c:568
 msgid "Blend: "
 msgstr "Färgtoning: "
 
-#: app/tools/gimpblendtool.c:703
+#: app/tools/gimpblendtool.c:706
 msgid "Offset:"
 msgstr "Offset:"
 
-#: app/tools/gimpblendtool.c:714
+#: app/tools/gimpblendtool.c:717
 msgid "FG to BG (RGB)"
 msgstr "FG till BG (RGB)"
 
-#: app/tools/gimpblendtool.c:715
+#: app/tools/gimpblendtool.c:718
 msgid "FG to BG (HSV)"
 msgstr "FG till BG (HSV)"
 
-#: app/tools/gimpblendtool.c:716
+#: app/tools/gimpblendtool.c:719
 msgid "FG to Transparent"
 msgstr "FG till Transparent"
 
-#: app/tools/gimpblendtool.c:717
+#: app/tools/gimpblendtool.c:720
 msgid "Custom Gradient"
 msgstr "Egen färgskala"
 
-#: app/tools/gimpblendtool.c:721
+#: app/tools/gimpblendtool.c:724
 msgid "Blend:"
 msgstr "Färgtoning:"
 
-#: app/tools/gimpblendtool.c:730
+#: app/tools/gimpblendtool.c:733
 msgid "Bi-Linear"
 msgstr "Bilinjär"
 
-#: app/tools/gimpblendtool.c:731
+#: app/tools/gimpblendtool.c:734
 msgid "Radial"
 msgstr "Radiell"
 
-#: app/tools/gimpblendtool.c:732
+#: app/tools/gimpblendtool.c:735
 msgid "Square"
 msgstr "Fyrkantig"
 
-#: app/tools/gimpblendtool.c:733
+#: app/tools/gimpblendtool.c:736
 msgid "Conical (symmetric)"
 msgstr "Konisk (symmetrisk)"
 
-#: app/tools/gimpblendtool.c:734
+#: app/tools/gimpblendtool.c:737
 msgid "Conical (asymmetric)"
 msgstr "Konisk (asymmetrisk)"
 
-#: app/tools/gimpblendtool.c:735
+#: app/tools/gimpblendtool.c:738
 msgid "Shapeburst (angular)"
 msgstr "Formfyllning (vinkel)"
 
-#: app/tools/gimpblendtool.c:736
+#: app/tools/gimpblendtool.c:739
 msgid "Shapeburst (spherical)"
 msgstr "Formfyllning (sfärisk)"
 
-#: app/tools/gimpblendtool.c:737
+#: app/tools/gimpblendtool.c:740
 msgid "Shapeburst (dimpled)"
 msgstr "Formfyllning (gropig)"
 
-#: app/tools/gimpblendtool.c:738
+#: app/tools/gimpblendtool.c:741
 msgid "Spiral (clockwise)"
 msgstr "Spiral (medurs)"
 
-#: app/tools/gimpblendtool.c:739
+#: app/tools/gimpblendtool.c:742
 msgid "Spiral (anticlockwise)"
 msgstr "Spiral (moturs)"
 
-#: app/tools/gimpblendtool.c:743
+#: app/tools/gimpblendtool.c:746
 msgid "Gradient:"
 msgstr "Färgskala:"
 
-#: app/tools/gimpblendtool.c:752
+#: app/tools/gimpblendtool.c:755
 msgid "Sawtooth Wave"
 msgstr "Sågtandsvåg"
 
-#: app/tools/gimpblendtool.c:753
+#: app/tools/gimpblendtool.c:756
 msgid "Triangular Wave"
 msgstr "Triangulär våg"
 
-#: app/tools/gimpblendtool.c:757
+#: app/tools/gimpblendtool.c:760
 msgid "Repeat:"
 msgstr "Upprepa:"
 
-#: app/tools/gimpblendtool.c:776
+#: app/tools/gimpblendtool.c:779
 msgid "Adaptive Supersampling"
 msgstr "Adaptiv supersampling"
 
-#: app/tools/gimpblendtool.c:804
+#: app/tools/gimpblendtool.c:807
 msgid "Max Depth:"
 msgstr "Max djup:"
 
-#: app/tools/gimpblendtool.c:817 app/tools/gimpbucketfilltool.c:268
+#: app/tools/gimpblendtool.c:820 app/tools/gimpbucketfilltool.c:270
 #: app/tools/selection_options.c:195
 msgid "Threshold:"
 msgstr "Tröskelvärde:"
 
-#: app/tools/gimpbucketfilltool.c:135
+#: app/tools/gimpbucketfilltool.c:137
 msgid "Bucket Fill"
 msgstr "Fyll"
 
-#: app/tools/gimpbucketfilltool.c:136
+#: app/tools/gimpbucketfilltool.c:138
 msgid "Fill with a color or pattern"
 msgstr "Fyll med färg eller mönster"
 
-#: app/tools/gimpbucketfilltool.c:137
+#: app/tools/gimpbucketfilltool.c:139
 msgid "/Tools/Paint Tools/Bucket Fill"
 msgstr "/Verktyg/Målarverktyg/Fyll"
 
-#: app/tools/gimpbucketfilltool.c:257 app/tools/gimpcolorpickertool.c:300
+#: app/tools/gimpbucketfilltool.c:259 app/tools/gimpcolorpickertool.c:301
 #: app/tools/selection_options.c:180
 msgid "Sample Merged"
 msgstr "Slå ihop alla provtagningar"
 
-#: app/tools/gimpbucketfilltool.c:292
+#: app/tools/gimpbucketfilltool.c:294
 msgid "FG Color Fill"
 msgstr "Fyll med förgrundsfärg"
 
-#: app/tools/gimpbucketfilltool.c:295
+#: app/tools/gimpbucketfilltool.c:297
 msgid "BG Color Fill"
 msgstr "Fyll med bakgrundsfärg"
 
-#: app/tools/gimpbucketfilltool.c:298
+#: app/tools/gimpbucketfilltool.c:300
 msgid "Pattern Fill"
 msgstr "Fyll mönster"
 
-#: app/tools/gimpbucketfilltool.c:373
+#: app/tools/gimpbucketfilltool.c:380
 msgid "Bucket Fill operation failed."
 msgstr "Fylloperation misslyckades."
 
-#: app/tools/gimpbucketfilltool.c:495
+#: app/tools/gimpbucketfilltool.c:502
 msgid "No available patterns for this operation."
 msgstr "Inga tillgängliga mönster för denna operation."
 
-#: app/tools/gimpbycolorselecttool.c:181
+#: app/tools/gimpbycolorselecttool.c:182
 msgid "Select By Color"
 msgstr "Markera via färg"
 
-#: app/tools/gimpbycolorselecttool.c:182
+#: app/tools/gimpbycolorselecttool.c:183
 msgid "Select regions by color"
 msgstr "Markera regioner via färg"
 
-#: app/tools/gimpbycolorselecttool.c:183
+#: app/tools/gimpbycolorselecttool.c:184
 msgid "/Tools/Selection Tools/By Color Select"
 msgstr "/Verktyg/Markeringsverktyg/Markera via färg"
 
 #. The shell and main vbox
-#: app/tools/gimpbycolorselecttool.c:836
+#: app/tools/gimpbycolorselecttool.c:837
 msgid "By Color Selection"
 msgstr "Markera via färg"
 
-#: app/tools/gimpbycolorselecttool.c:892
+#: app/tools/gimpbycolorselecttool.c:893
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: app/tools/gimpbycolorselecttool.c:900
+#: app/tools/gimpbycolorselecttool.c:901
 msgid "Selection Mode"
 msgstr "Markeringsläge"
 
-#: app/tools/gimpbycolorselecttool.c:905
+#: app/tools/gimpbycolorselecttool.c:906
 msgid "Replace"
 msgstr "Ersätt"
 
-#: app/tools/gimpbycolorselecttool.c:908
+#: app/tools/gimpbycolorselecttool.c:909
 msgid "Subtract"
 msgstr "Subtraktion"
 
-#: app/tools/gimpbycolorselecttool.c:909
+#: app/tools/gimpbycolorselecttool.c:910
 msgid "Intersect"
 msgstr "Snitt"
 
-#: app/tools/gimpbycolorselecttool.c:920
+#: app/tools/gimpbycolorselecttool.c:921
 msgid "Fuzziness Threshold"
 msgstr "Luddighetströskel"
 
-#: app/tools/gimpbycolorselecttool.c:950
+#: app/tools/gimpbycolorselecttool.c:951
 msgid "Invert"
 msgstr "Invertera"
 
-#: app/tools/gimpbycolorselecttool.c:957
+#: app/tools/gimpbycolorselecttool.c:958
 msgid "All"
 msgstr "Hela"
 
-#: app/tools/gimpclonetool.c:163
+#: app/tools/gimpclonetool.c:165
 msgid "Clone"
 msgstr "Klona"
 
-#: app/tools/gimpclonetool.c:164
+#: app/tools/gimpclonetool.c:166
 msgid "Paint using Patterns or Image Regions"
 msgstr "Måla genom att använda mönster eller bildregioner"
 
-#: app/tools/gimpclonetool.c:165
+#: app/tools/gimpclonetool.c:167
 msgid "/Tools/Paint Tools/Clone"
 msgstr "/Verktyg/Målarverktyg/Klona"
 
-#: app/tools/gimpclonetool.c:345
+#: app/tools/gimpclonetool.c:350
 msgid "No patterns available for this operation."
 msgstr "Inga mönster tillgängliga för denna operation."
 
-#: app/tools/gimpclonetool.c:801
+#: app/tools/gimpclonetool.c:809
 msgid "Source"
 msgstr "Källa"
 
-#: app/tools/gimpclonetool.c:805
+#: app/tools/gimpclonetool.c:813
 msgid "Image Source"
 msgstr "Bildkälla"
 
-#: app/tools/gimpclonetool.c:807
+#: app/tools/gimpclonetool.c:815
 msgid "Pattern Source"
 msgstr "Mönsterkälla"
 
-#: app/tools/gimpclonetool.c:815
+#: app/tools/gimpclonetool.c:823
 msgid "Alignment"
 msgstr "Uppställning"
 
-#: app/tools/gimpclonetool.c:819
+#: app/tools/gimpclonetool.c:827
 msgid "Non Aligned"
 msgstr "Inte uppställd"
 
-#: app/tools/gimpclonetool.c:821
+#: app/tools/gimpclonetool.c:829
 msgid "Aligned"
 msgstr "Uppställd"
 
-#: app/tools/gimpclonetool.c:823
+#: app/tools/gimpclonetool.c:831
 msgid "Registered"
 msgstr "Registrerad"
 
-#: app/tools/gimpcolorpickertool.c:159 app/tools/gimpcolorpickertool.c:392
+#: app/tools/gimpcolorpickertool.c:160 app/tools/gimpcolorpickertool.c:393
 msgid "Color Picker"
 msgstr "Färghämtaren"
 
-#: app/tools/gimpcolorpickertool.c:160
+#: app/tools/gimpcolorpickertool.c:161
 msgid "Pick colors from the image"
 msgstr "Hämta en färg från bilden"
 
-#: app/tools/gimpcolorpickertool.c:161
+#: app/tools/gimpcolorpickertool.c:162
 msgid "/Tools/Color Picker"
 msgstr "/Verktyg/Hämta färg"
 
-#: app/tools/gimpcolorpickertool.c:315
+#: app/tools/gimpcolorpickertool.c:316
 msgid "Sample Average"
 msgstr "Provmedel"
 
-#: app/tools/gimpcolorpickertool.c:358
+#: app/tools/gimpcolorpickertool.c:359
 msgid "Update Active Color"
 msgstr "Uppdatera aktiv färg"
 
-#: app/tools/gimpcolorpickertool.c:399 app/tools/gimpcolorpickertool.c:408
+#: app/tools/gimpcolorpickertool.c:400 app/tools/gimpcolorpickertool.c:409
 msgid "Red:"
 msgstr "Röd:"
 
-#: app/tools/gimpcolorpickertool.c:400 app/tools/gimpcolorpickertool.c:409
+#: app/tools/gimpcolorpickertool.c:401 app/tools/gimpcolorpickertool.c:410
 msgid "Green:"
 msgstr "Grön:"
 
-#: app/tools/gimpcolorpickertool.c:401 app/tools/gimpcolorpickertool.c:410
+#: app/tools/gimpcolorpickertool.c:402 app/tools/gimpcolorpickertool.c:411
 msgid "Blue:"
 msgstr "Blå:"
 
-#: app/tools/gimpcolorpickertool.c:402 app/tools/gimpcolorpickertool.c:411
-#: app/tools/gimpcolorpickertool.c:417
+#: app/tools/gimpcolorpickertool.c:403 app/tools/gimpcolorpickertool.c:412
+#: app/tools/gimpcolorpickertool.c:418
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/tools/gimpcolorpickertool.c:412
+#: app/tools/gimpcolorpickertool.c:413
 msgid "Hex Triplet"
 msgstr "Hexadecimal triplett"
 
-#: app/tools/gimpcolorpickertool.c:416 app/tools/gimphistogramtool.c:347
+#: app/tools/gimpcolorpickertool.c:417 app/tools/gimphistogramtool.c:348
 msgid "Intensity:"
 msgstr "Intensitet:"
 
-#: app/tools/gimpconvolvetool.c:176
+#: app/tools/gimpconvolvetool.c:179
 msgid "Convolve"
 msgstr "Konvolvera"
 
-#: app/tools/gimpconvolvetool.c:177
+#: app/tools/gimpconvolvetool.c:180
 msgid "Blur or Sharpen"
 msgstr "Gör suddigare eller skarpare"
 
-#: app/tools/gimpconvolvetool.c:178
+#: app/tools/gimpconvolvetool.c:181
 msgid "/Tools/Paint Tools/Convolve"
 msgstr "/Verktyg/Målarverktyg/Konvolvera"
 
-#: app/tools/gimpconvolvetool.c:745
+#: app/tools/gimpconvolvetool.c:751
 msgid "Convolve Type"
 msgstr "Konvolveringstyp"
 
-#: app/tools/gimpconvolvetool.c:749
+#: app/tools/gimpconvolvetool.c:755
 msgid "Blur"
 msgstr "Gör suddigare"
 
-#: app/tools/gimpconvolvetool.c:751
+#: app/tools/gimpconvolvetool.c:757
 msgid "Sharpen"
 msgstr "Gör skarpare"
 
@@ -5467,8 +5432,8 @@ msgid "Allow Enlarging"
 msgstr "Tillåt förstoring"
 
 #. tool toggle
-#: app/tools/gimpcroptool.c:263 app/tools/gimpfliptool.c:399
-#: app/tools/gimpmagnifytool.c:246
+#: app/tools/gimpcroptool.c:263 app/tools/gimpfliptool.c:400
+#: app/tools/gimpmagnifytool.c:247
 msgid "Tool Toggle"
 msgstr "Verktygsläge"
 
@@ -5506,48 +5471,48 @@ msgstr "Från markering"
 msgid "Auto Shrink"
 msgstr "Autokrymp"
 
-#: app/tools/gimpcroptool.c:1683
+#: app/tools/gimpcroptool.c:1684
 msgid "Crop Tool"
 msgstr "Beskäringsverktyg"
 
-#: app/tools/gimpcroptool.c:1684
+#: app/tools/gimpcroptool.c:1685
 msgid "Crop or Resize an image"
 msgstr "Beskär eller ändra storlek på en bild"
 
-#: app/tools/gimpcroptool.c:1685
+#: app/tools/gimpcroptool.c:1686
 msgid "/Tools/Crop Tool"
 msgstr "/Verktyg/Beskäringsverktyg"
 
-#: app/tools/gimpdodgeburntool.c:142
+#: app/tools/gimpdodgeburntool.c:145
 msgid "Dodge/Burn"
 msgstr "Blek/Bränna"
 
-#: app/tools/gimpdodgeburntool.c:143
+#: app/tools/gimpdodgeburntool.c:146
 msgid "Dodge or Burn strokes"
 msgstr "Blek eller bränn streck"
 
-#: app/tools/gimpdodgeburntool.c:144
+#: app/tools/gimpdodgeburntool.c:147
 msgid "/Tools/Paint Tools/DodgeBurn"
 msgstr "/Verktyg/Målarverktyg/BlekBränn"
 
-#: app/tools/gimpdodgeburntool.c:663
+#: app/tools/gimpdodgeburntool.c:668
 msgid "Exposure:"
 msgstr "Exponering:"
 
 #. the type (dodge or burn)
-#: app/tools/gimpdodgeburntool.c:683 app/tools/gimpinktool.c:499
+#: app/tools/gimpdodgeburntool.c:688 app/tools/gimpinktool.c:501
 msgid "Type"
 msgstr "Typ"
 
-#: app/tools/gimpdodgeburntool.c:687
+#: app/tools/gimpdodgeburntool.c:692
 msgid "Dodge"
 msgstr "Blek"
 
-#: app/tools/gimpdodgeburntool.c:689
+#: app/tools/gimpdodgeburntool.c:694
 msgid "Burn"
 msgstr "Bränn"
 
-#: app/tools/gimpdodgeburntool.c:699
+#: app/tools/gimpdodgeburntool.c:704
 msgid "Mode"
 msgstr "Läge"
 
@@ -5559,173 +5524,173 @@ msgstr "Flytta: 0, 0"
 msgid "Move: "
 msgstr "Flytta: "
 
-#: app/tools/gimpellipseselecttool.c:70
+#: app/tools/gimpellipseselecttool.c:73
 msgid "Ellipse Select"
 msgstr "Ellipsmarkering"
 
-#: app/tools/gimpellipseselecttool.c:71
+#: app/tools/gimpellipseselecttool.c:74
 msgid "Select elliptical regions"
 msgstr "Markera elliptisk region"
 
-#: app/tools/gimpellipseselecttool.c:72
+#: app/tools/gimpellipseselecttool.c:75
 msgid "/Tools/Selection Tools/Ellipse Select"
 msgstr "/Verktyg/Markeringsverktyg/Ellipsmarkera"
 
-#: app/tools/gimperasertool.c:109
+#: app/tools/gimperasertool.c:111
 msgid "Eraser"
 msgstr "Suddare"
 
-#: app/tools/gimperasertool.c:110 app/tools/gimppaintbrushtool.c:90
+#: app/tools/gimperasertool.c:112 app/tools/gimppaintbrushtool.c:92
 msgid "Paint fuzzy brush strokes"
 msgstr "Måla med luddiga penseldrag"
 
-#: app/tools/gimperasertool.c:111
+#: app/tools/gimperasertool.c:113
 msgid "/Tools/Paint Tools/Eraser"
 msgstr "/Verktyg/Målarverktyg/Suddare"
 
 #. the hard toggle
-#: app/tools/gimperasertool.c:403
+#: app/tools/gimperasertool.c:408
 msgid "Hard Edge"
 msgstr "Hård kant"
 
 #. the anti_erase toggle
-#: app/tools/gimperasertool.c:413
+#: app/tools/gimperasertool.c:418
 msgid "Anti Erase"
 msgstr "Antisudda"
 
-#: app/tools/gimpfliptool.c:108
+#: app/tools/gimpfliptool.c:109
 msgid "Flip Tool"
 msgstr "Vändverktyg"
 
-#: app/tools/gimpfliptool.c:109
+#: app/tools/gimpfliptool.c:110
 msgid "Flip the layer or selection"
 msgstr "Vänd lagret eller markeringen"
 
-#: app/tools/gimpfliptool.c:110
+#: app/tools/gimpfliptool.c:111
 msgid "/Tools/Transform Tools/Flip"
 msgstr "/Verktyg/Transformeringsverktyg/Vänd"
 
-#: app/tools/gimpfreeselecttool.c:96
+#: app/tools/gimpfreeselecttool.c:98
 msgid "Free Select"
 msgstr "Fri markering"
 
-#: app/tools/gimpfreeselecttool.c:97
+#: app/tools/gimpfreeselecttool.c:99
 msgid "Select hand-drawn regions"
 msgstr "Markerar frihand"
 
-#: app/tools/gimpfreeselecttool.c:98
+#: app/tools/gimpfreeselecttool.c:100
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Verktyg/Markeringsverktyg/Fri markering"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Fuzzy Select"
 msgstr "Luddig markering"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "Select contiguous regions"
 msgstr "Markerar kontinuerliga ytor"
 
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:100
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Verktyg/Markeringsverktyg/Luddig markering"
 
-#: app/tools/gimpinktool.c:240
+#: app/tools/gimpinktool.c:242
 msgid "Ink Tool"
 msgstr "Bläckverktyg"
 
-#: app/tools/gimpinktool.c:241
+#: app/tools/gimpinktool.c:243
 msgid "Draw in ink"
 msgstr "Måla med bläck"
 
-#: app/tools/gimpinktool.c:242
+#: app/tools/gimpinktool.c:244
 msgid "/Tools/Paint Tools/Ink"
 msgstr "/Verktyg/Målarverktyg/Bläck"
 
 #. adjust sliders
-#: app/tools/gimpinktool.c:405
+#: app/tools/gimpinktool.c:407
 msgid "Adjustment"
 msgstr "Justering:"
 
-#: app/tools/gimpinktool.c:422 app/tools/gimpinktool.c:460
+#: app/tools/gimpinktool.c:424 app/tools/gimpinktool.c:462
 msgid "Size:"
 msgstr "Storlek:"
 
 #. sens sliders
-#: app/tools/gimpinktool.c:443
+#: app/tools/gimpinktool.c:445
 msgid "Sensitivity"
 msgstr "Känslighet"
 
-#: app/tools/gimpinktool.c:473
+#: app/tools/gimpinktool.c:475
 msgid "Tilt:"
 msgstr "Lutning:"
 
-#: app/tools/gimpinktool.c:486
+#: app/tools/gimpinktool.c:488
 msgid "Speed:"
 msgstr "Hastighet:"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:568
+#: app/tools/gimpinktool.c:570
 msgid "Shape"
 msgstr "Form"
 
-#: app/tools/gimpiscissorstool.c:281
+#: app/tools/gimpiscissorstool.c:282
 msgid "Intelligent Scissors"
 msgstr "Intelligent sax"
 
-#: app/tools/gimpiscissorstool.c:282
+#: app/tools/gimpiscissorstool.c:283
 msgid "Select shapes from image"
 msgstr "Markera former i bilden"
 
-#: app/tools/gimpiscissorstool.c:283
+#: app/tools/gimpiscissorstool.c:284
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Verktyg/Markeringsverktyg/Intelligent sax"
 
-#: app/tools/gimpmagnifytool.c:109
+#: app/tools/gimpmagnifytool.c:110
 msgid "Magnify"
 msgstr "Förstora"
 
-#: app/tools/gimpmagnifytool.c:110
+#: app/tools/gimpmagnifytool.c:111
 msgid "Zoom in & out"
 msgstr "Zooma in och ut"
 
-#: app/tools/gimpmagnifytool.c:111
+#: app/tools/gimpmagnifytool.c:112
 msgid "/Tools/Magnify"
 msgstr "/Verktyg/Förstora"
 
-#: app/tools/gimpmagnifytool.c:235
+#: app/tools/gimpmagnifytool.c:236
 msgid "Allow Window Resizing"
 msgstr "Tillåt storleksförändring av fönster"
 
-#: app/tools/gimpmagnifytool.c:250
+#: app/tools/gimpmagnifytool.c:251
 msgid "Zoom in"
 msgstr "Zooma in"
 
-#: app/tools/gimpmagnifytool.c:252
+#: app/tools/gimpmagnifytool.c:253
 msgid "Zoom out"
 msgstr "Zooma ut"
 
-#: app/tools/gimpmeasuretool.c:127 app/tools/gimpmeasuretool.c:391
+#: app/tools/gimpmeasuretool.c:128 app/tools/gimpmeasuretool.c:392
 msgid "Measure Tool"
 msgstr "Mätverktyg"
 
-#: app/tools/gimpmeasuretool.c:128
-msgid "Measure angles and legnths"
+#: app/tools/gimpmeasuretool.c:129
+msgid "Measure angles and lengths"
 msgstr "Mät vinklar och längder"
 
-#: app/tools/gimpmeasuretool.c:129
+#: app/tools/gimpmeasuretool.c:130
 msgid "/Tools/Measure"
 msgstr "/Verktyg/Mät"
 
-#: app/tools/gimpmeasuretool.c:393
+#: app/tools/gimpmeasuretool.c:394
 msgid "Distance:"
 msgstr "Distans:"
 
-#: app/tools/gimpmeasuretool.c:581 app/tools/gimpmeasuretool.c:586
-#: app/tools/gimpmeasuretool.c:595 app/tools/gimpmeasuretool.c:624
+#: app/tools/gimpmeasuretool.c:582 app/tools/gimpmeasuretool.c:587
+#: app/tools/gimpmeasuretool.c:596 app/tools/gimpmeasuretool.c:625
 msgid "degrees"
 msgstr "grader"
 
-#: app/tools/gimpmeasuretool.c:811
+#: app/tools/gimpmeasuretool.c:812
 msgid "Use Info Window"
 msgstr "Använd informationsfönster"
 
@@ -5741,241 +5706,241 @@ msgstr "Flytta lager och markeringar"
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Verktyg/Transformeringsverktyg/Flytta"
 
-#: app/tools/gimppaintbrushtool.c:89
+#: app/tools/gimppaintbrushtool.c:91
 msgid "Paintbrush"
 msgstr "Pensel"
 
-#: app/tools/gimppaintbrushtool.c:91
+#: app/tools/gimppaintbrushtool.c:93
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Verktyg/Målarverktyg/Pensel"
 
-#: app/tools/gimppainttool.c:899
+#: app/tools/gimppainttool.c:909
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: app/tools/gimppathtool.c:112
+#: app/tools/gimppathtool.c:113
 msgid "Path Tool"
 msgstr "Slingverktyg"
 
-#: app/tools/gimppathtool.c:113
+#: app/tools/gimppathtool.c:114
 msgid "Path tool prototype"
 msgstr "Slingverktygsprototyp"
 
-#: app/tools/gimppathtool.c:114
+#: app/tools/gimppathtool.c:115
 msgid "/Tools/Path"
 msgstr "/Verktyg/Slinga"
 
-#: app/tools/gimppenciltool.c:82
+#: app/tools/gimppenciltool.c:84
 msgid "Pencil"
 msgstr "Penna"
 
-#: app/tools/gimppenciltool.c:83
+#: app/tools/gimppenciltool.c:85
 msgid "Paint hard edged pixels"
 msgstr "Måla bildpunkter med hårda kanter"
 
-#: app/tools/gimppenciltool.c:84
+#: app/tools/gimppenciltool.c:86
 msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Verktyg/Målarverktyg/Penna"
 
-#: app/tools/gimpperspectivetool.c:77
+#: app/tools/gimpperspectivetool.c:79
 msgid "Perspective Tool"
 msgstr "Perspektivverktyg"
 
-#: app/tools/gimpperspectivetool.c:78
+#: app/tools/gimpperspectivetool.c:80
 msgid "Change perspective of the layer or selection"
 msgstr "Ändra perspektivet på lagret eller markeringen"
 
-#: app/tools/gimpperspectivetool.c:79
+#: app/tools/gimpperspectivetool.c:81
 msgid "/Tools/Transform Tools/Perspective"
 msgstr "/Verktyg/Transformeringsverktyg/Perspektiv"
 
-#: app/tools/gimpperspectivetool.c:120
+#: app/tools/gimpperspectivetool.c:122
 msgid "Perspective..."
 msgstr "Perspektiv..."
 
-#: app/tools/gimpperspectivetool.c:256
+#: app/tools/gimpperspectivetool.c:258
 msgid "Perspective Transform Information"
 msgstr "Information över perspektivtransformation"
 
-#: app/tools/gimpperspectivetool.c:259
+#: app/tools/gimpperspectivetool.c:261
 msgid "Matrix:"
 msgstr "Matris:"
 
-#: app/tools/gimpposterizetool.c:113 app/tools/gimpposterizetool.c:276
+#: app/tools/gimpposterizetool.c:114 app/tools/gimpposterizetool.c:277
 msgid "Posterize"
 msgstr "Posterisering"
 
-#: app/tools/gimpposterizetool.c:114
+#: app/tools/gimpposterizetool.c:115
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Reducera bilden till ett fixt antal färger"
 
-#: app/tools/gimpposterizetool.c:115
+#: app/tools/gimpposterizetool.c:116
 msgid "/Image/Colors/Posterize..."
 msgstr "/Bild/Färger/Posterisering..."
 
-#: app/tools/gimpposterizetool.c:199
+#: app/tools/gimpposterizetool.c:200
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Kan inte använda posterisering på indexerade bilder."
 
-#: app/tools/gimpposterizetool.c:298
+#: app/tools/gimpposterizetool.c:299
 msgid "Posterize Levels:"
 msgstr "Posteriseringsnivåer:"
 
-#: app/tools/gimprectselecttool.c:99
+#: app/tools/gimprectselecttool.c:102
 msgid "Rect Select"
 msgstr "Rekt. markering"
 
-#: app/tools/gimprectselecttool.c:100
+#: app/tools/gimprectselecttool.c:103
 msgid "Select rectangular regions"
 msgstr "Markera rektangulära regioner"
 
-#: app/tools/gimprectselecttool.c:101
+#: app/tools/gimprectselecttool.c:104
 msgid "/Tools/Selection Tools/Rect Select"
 msgstr "/Verktyg/Markeringsverktyg/Rekt. markering"
 
-#: app/tools/gimprectselecttool.c:334
+#: app/tools/gimprectselecttool.c:337
 msgid "Selection: ADD"
 msgstr "Markering: ADDERA"
 
-#: app/tools/gimprectselecttool.c:337
+#: app/tools/gimprectselecttool.c:340
 msgid "Selection: SUBTRACT"
 msgstr "Markering: SUBTRAHERA"
 
-#: app/tools/gimprectselecttool.c:340
+#: app/tools/gimprectselecttool.c:343
 msgid "Selection: INTERSECT"
 msgstr "Markering: SKÄRNING"
 
-#: app/tools/gimprectselecttool.c:343
+#: app/tools/gimprectselecttool.c:346
 msgid "Selection: REPLACE"
 msgstr "Markering: ERSÄTT"
 
-#: app/tools/gimprectselecttool.c:566 app/tools/gimprectselecttool.c:573
+#: app/tools/gimprectselecttool.c:569 app/tools/gimprectselecttool.c:576
 msgid "Selection: "
 msgstr "Markering: "
 
-#: app/tools/gimprotatetool.c:102
+#: app/tools/gimprotatetool.c:104
 msgid "Rotate Tool"
 msgstr "Roteringsverktyg"
 
-#: app/tools/gimprotatetool.c:103
+#: app/tools/gimprotatetool.c:105
 msgid "Rotate the layer or selection"
 msgstr "Rotera lagret eller markeringen"
 
-#: app/tools/gimprotatetool.c:104
+#: app/tools/gimprotatetool.c:106
 msgid "/Tools/Transform Tools/Rotate"
 msgstr "/Verktyg/Transformeringsverktyg/Rotera"
 
-#: app/tools/gimprotatetool.c:146
+#: app/tools/gimprotatetool.c:148
 msgid "Rotating..."
 msgstr "Roterar..."
 
-#: app/tools/gimprotatetool.c:235
+#: app/tools/gimprotatetool.c:237
 msgid "Rotation Information"
 msgstr "Rotationsinformation"
 
-#: app/tools/gimprotatetool.c:255
+#: app/tools/gimprotatetool.c:257
 msgid "Center X:"
 msgstr "Centrera X:"
 
-#: app/tools/gimpscaletool.c:88
+#: app/tools/gimpscaletool.c:90
 msgid "Scale Tool"
 msgstr "Skalningsverktyg"
 
-#: app/tools/gimpscaletool.c:89
+#: app/tools/gimpscaletool.c:91
 msgid "Scale the layer or selection"
 msgstr "Skala lagret eller markeringen"
 
-#: app/tools/gimpscaletool.c:90
+#: app/tools/gimpscaletool.c:92
 msgid "/Tools/Transform Tools/Transform"
 msgstr "/Verktyg/Transformeringsverktyg/Transformera"
 
-#: app/tools/gimpscaletool.c:187
+#: app/tools/gimpscaletool.c:189
 msgid "Scaling Information"
 msgstr "Skalningsinformation"
 
-#: app/tools/gimpscaletool.c:197
+#: app/tools/gimpscaletool.c:199
 msgid "Current Width:"
 msgstr "Aktuell bredd:"
 
-#: app/tools/gimpscaletool.c:212
+#: app/tools/gimpscaletool.c:214
 msgid "Scale Ratio X:"
 msgstr "Skalningsratio X:"
 
-#: app/tools/gimpscaletool.c:589
+#: app/tools/gimpscaletool.c:591
 msgid "Scaling..."
 msgstr "Skalar..."
 
-#: app/tools/gimpsheartool.c:100
+#: app/tools/gimpsheartool.c:101
 msgid "Shear Tool"
 msgstr "Lutningsverktyg"
 
-#: app/tools/gimpsheartool.c:101
+#: app/tools/gimpsheartool.c:102
 msgid "Shear the layer or selection"
 msgstr "Luta lagret eller markeringen"
 
-#: app/tools/gimpsheartool.c:102
+#: app/tools/gimpsheartool.c:103
 msgid "/Tools/Transform Tools/Shear"
 msgstr "/Verktyg/Transformeringsverktyg/Luta"
 
-#: app/tools/gimpsheartool.c:143
+#: app/tools/gimpsheartool.c:144
 msgid "Shearing..."
 msgstr "Lutar..."
 
-#: app/tools/gimpsheartool.c:220
+#: app/tools/gimpsheartool.c:221
 msgid "Shear Information"
 msgstr "Information för lutning"
 
-#: app/tools/gimpsheartool.c:225
+#: app/tools/gimpsheartool.c:226
 msgid "Shear Magnitude X:"
 msgstr "Lutamagnitud X:"
 
-#: app/tools/gimpsmudgetool.c:119
+#: app/tools/gimpsmudgetool.c:122
 msgid "Smudge"
 msgstr "Smeta"
 
-#: app/tools/gimpsmudgetool.c:120
+#: app/tools/gimpsmudgetool.c:123
 msgid "Smudge image"
 msgstr "Smeta bilden"
 
-#: app/tools/gimpsmudgetool.c:121
+#: app/tools/gimpsmudgetool.c:124
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Verktyg/Målarverktyg/Smeta"
 
-#: app/tools/gimptexttool.c:164 app/tools/gimptexttool.c:479
+#: app/tools/gimptexttool.c:165 app/tools/gimptexttool.c:481
 msgid "Text Tool"
 msgstr "Textverktyg"
 
-#: app/tools/gimptexttool.c:165
+#: app/tools/gimptexttool.c:166
 msgid "Add text to the image"
 msgstr "Skriv text i bilden"
 
-#: app/tools/gimptexttool.c:166
+#: app/tools/gimptexttool.c:167
 msgid "/Tools/Text"
 msgstr "/Verktyg/Text"
 
-#: app/tools/gimptexttool.c:284 app/tools/selection_options.c:135
+#: app/tools/gimptexttool.c:285 app/tools/selection_options.c:135
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
-#: app/tools/gimptexttool.c:298
+#: app/tools/gimptexttool.c:299
 msgid "Border:"
 msgstr "Kant:"
 
-#: app/tools/gimptexttool.c:324
+#: app/tools/gimptexttool.c:325
 msgid "Use Dynamic Text"
 msgstr "Använd Dynamisk Text"
 
-#: app/tools/gimptexttool.c:691
+#: app/tools/gimptexttool.c:693
 #, c-format
 msgid "Font '%s' not found."
 msgstr "Hittade inte typsnittet \"%s\"."
 
-#: app/tools/gimptexttool.c:713
+#: app/tools/gimptexttool.c:715
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "Hittade inte typsnittet \"%s\".%s"
 
-#: app/tools/gimptexttool.c:716
+#: app/tools/gimptexttool.c:718
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5985,11 +5950,11 @@ msgstr ""
 "Om du inte har några skalbara typsnitt, prova att stänga av kantutjämning i "
 "verktygsmenyn."
 
-#: app/tools/gimptexttool.c:833
+#: app/tools/gimptexttool.c:835
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: app/tools/gimptransformtool.c:415
+#: app/tools/gimptransformtool.c:416
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -5998,234 +5963,234 @@ msgstr ""
 "lager som innehåller lagermasker."
 
 #. FIXME: this does not belong here
-#: app/tools/gimptransformtool.c:464
+#: app/tools/gimptransformtool.c:465
 msgid "Rotate"
 msgstr "Rotera"
 
-#: app/tools/gimptransformtool.c:465
+#: app/tools/gimptransformtool.c:466
 msgid "Scale"
 msgstr "Skala"
 
-#: app/tools/gimptransformtool.c:466
+#: app/tools/gimptransformtool.c:467
 msgid "Shear"
 msgstr "Luta"
 
-#: app/tools/gimptransformtool.c:467
+#: app/tools/gimptransformtool.c:468
 msgid "Transform"
 msgstr "Transformera"
 
-#: app/tools/gimptransformtool.c:1588
+#: app/tools/gimptransformtool.c:1589
 msgid "Transformation"
 msgstr "Transformation"
 
 #. The shell and main vbox
-#: app/tools/gimphistogramtool.c:98 app/tools/gimphistogramtool.c:357
+#: app/tools/gimphistogramtool.c:99 app/tools/gimphistogramtool.c:358
 msgid "Histogram"
 msgstr "Histogram"
 
-#: app/tools/gimphistogramtool.c:99
+#: app/tools/gimphistogramtool.c:100
 msgid "View image histogram"
 msgstr "Visa bildens histogram"
 
-#: app/tools/gimphistogramtool.c:100
+#: app/tools/gimphistogramtool.c:101
 msgid "/Image/Histogram..."
 msgstr "/Bild/Histogram..."
 
-#: app/tools/gimphistogramtool.c:183
+#: app/tools/gimphistogramtool.c:184
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Kan inte använda histogram på indexerade bilder."
 
-#: app/tools/gimphistogramtool.c:343
+#: app/tools/gimphistogramtool.c:344
 msgid "Mean:"
 msgstr "Medel:"
 
-#: app/tools/gimphistogramtool.c:344
+#: app/tools/gimphistogramtool.c:345
 msgid "Std Dev:"
 msgstr "Med. avvik:"
 
-#: app/tools/gimphistogramtool.c:345
+#: app/tools/gimphistogramtool.c:346
 msgid "Median:"
 msgstr "Median:"
 
-#: app/tools/gimphistogramtool.c:346
+#: app/tools/gimphistogramtool.c:347
 msgid "Pixels:"
 msgstr "Bildpunkter:"
 
-#: app/tools/gimphistogramtool.c:348
+#: app/tools/gimphistogramtool.c:349
 msgid "Count:"
 msgstr "Antal:"
 
-#: app/tools/gimphistogramtool.c:349
+#: app/tools/gimphistogramtool.c:350
 msgid "Percentile:"
 msgstr "Procentuellt:"
 
-#: app/tools/gimphistogramtool.c:381
+#: app/tools/gimphistogramtool.c:382
 msgid "Information on Channel:"
 msgstr "Information om kanal:"
 
 #. The shell and main vbox
-#: app/tools/gimphuesaturationtool.c:136 app/tools/gimphuesaturationtool.c:455
+#: app/tools/gimphuesaturationtool.c:137 app/tools/gimphuesaturationtool.c:456
 msgid "Hue-Saturation"
 msgstr "Nyans-Mättnad"
 
-#: app/tools/gimphuesaturationtool.c:137
+#: app/tools/gimphuesaturationtool.c:138
 msgid "Adjust hue and saturation"
 msgstr "Justera nyans och mättnad"
 
-#: app/tools/gimphuesaturationtool.c:138
+#: app/tools/gimphuesaturationtool.c:139
 msgid "/Image/Colors/Hue-Saturation..."
 msgstr "/Bild/Färger/Nyans-Mättnad..."
 
-#: app/tools/gimphuesaturationtool.c:224
+#: app/tools/gimphuesaturationtool.c:225
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Nyans-Mättnad fungerar endast på RGB bilder."
 
-#: app/tools/gimphuesaturationtool.c:441
+#: app/tools/gimphuesaturationtool.c:442
 msgid "Master"
 msgstr "Huvud"
 
-#: app/tools/gimphuesaturationtool.c:443
+#: app/tools/gimphuesaturationtool.c:444
 msgid "Y"
 msgstr "Y"
 
-#: app/tools/gimphuesaturationtool.c:445
+#: app/tools/gimphuesaturationtool.c:446
 msgid "C"
 msgstr "C"
 
-#: app/tools/gimphuesaturationtool.c:447
+#: app/tools/gimphuesaturationtool.c:448
 msgid "M"
 msgstr "M"
 
-#: app/tools/gimphuesaturationtool.c:532
+#: app/tools/gimphuesaturationtool.c:533
 msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Nyans- / Ljusstyrka- / Mättnadsjusteringar"
 
 #. Create the hue scale widget
-#: app/tools/gimphuesaturationtool.c:544
+#: app/tools/gimphuesaturationtool.c:545
 msgid "Hue:"
 msgstr "Nyans:"
 
 #. Create the lightness scale widget
-#: app/tools/gimphuesaturationtool.c:578
+#: app/tools/gimphuesaturationtool.c:579
 msgid "Lightness:"
 msgstr "Ljushet:"
 
 #. Create the saturation scale widget
-#: app/tools/gimphuesaturationtool.c:612
+#: app/tools/gimphuesaturationtool.c:613
 msgid "Saturation:"
 msgstr "Mättnad:"
 
 #. The shell and main vbox
-#: app/tools/gimplevelstool.c:212 app/tools/gimplevelstool.c:429
+#: app/tools/gimplevelstool.c:213 app/tools/gimplevelstool.c:430
 msgid "Levels"
 msgstr "Nivåer"
 
-#: app/tools/gimplevelstool.c:213
+#: app/tools/gimplevelstool.c:214
 msgid "Adjust color levels"
 msgstr "Justera färgnivåer"
 
-#: app/tools/gimplevelstool.c:214
+#: app/tools/gimplevelstool.c:215
 msgid "/Image/Colors/Levels..."
 msgstr "/Bild/Färger/Nivåer..."
 
-#: app/tools/gimplevelstool.c:300
+#: app/tools/gimplevelstool.c:301
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Kan inte justera nivåer för indexerade bilder."
 
-#: app/tools/gimplevelstool.c:458
+#: app/tools/gimplevelstool.c:459
 msgid "Modify Levels for Channel:"
 msgstr "Modifiera nivåer för kanal:"
 
-#: app/tools/gimplevelstool.c:482
+#: app/tools/gimplevelstool.c:483
 msgid "Input Levels:"
 msgstr "Nivåer, in:"
 
-#: app/tools/gimplevelstool.c:591
+#: app/tools/gimplevelstool.c:592
 msgid "Output Levels:"
 msgstr "Nivåer, ut:"
 
-#: app/tools/gimplevelstool.c:685 app/widgets/gimpimagedock.c:119
+#: app/tools/gimplevelstool.c:686 app/widgets/gimpimagedock.c:120
 msgid "Auto"
 msgstr "Auto"
 
-#: app/tools/gimplevelstool.c:1176
+#: app/tools/gimplevelstool.c:1177
 msgid "Load Levels"
 msgstr "Läs in nivåer"
 
-#: app/tools/gimplevelstool.c:1191
+#: app/tools/gimplevelstool.c:1192
 msgid "Save Levels"
 msgstr "Spara nivåer"
 
-#: app/tools/gimplevelstool.c:1520
+#: app/tools/gimplevelstool.c:1521
 msgid "Load/Save Levels"
 msgstr "Läs in/Spara nivåer"
 
-#: app/tools/gimpthresholdtool.c:119 app/tools/gimpthresholdtool.c:362
+#: app/tools/gimpthresholdtool.c:120 app/tools/gimpthresholdtool.c:363
 msgid "Threshold"
 msgstr "Tröskelvärde"
 
-#: app/tools/gimpthresholdtool.c:120
+#: app/tools/gimpthresholdtool.c:121
 msgid "Reduce image to two colors using a threshold"
 msgstr "Reducera bilden till två färger genom att använda ett tröskelvärde"
 
-#: app/tools/gimpthresholdtool.c:121
+#: app/tools/gimpthresholdtool.c:122
 msgid "/Image/Colors/Threshold..."
 msgstr "/Bild/Färger/Tröskelvärde..."
 
-#: app/tools/gimpthresholdtool.c:205
+#: app/tools/gimpthresholdtool.c:206
 msgid "Threshold does not operate on indexed drawables."
 msgstr "Kan inte använda tröskelvärde på indexerade bilder."
 
-#: app/tools/gimpthresholdtool.c:384
+#: app/tools/gimpthresholdtool.c:385
 msgid "Threshold Range:"
 msgstr "Tröskelvärdets område:"
 
-#: app/tools/paint_options.c:227
+#: app/tools/paint_options.c:229
 msgid "Incremental"
 msgstr "Inkrementiell"
 
-#: app/tools/paint_options.c:374
+#: app/tools/paint_options.c:376
 msgid "Pressure Sensitivity"
 msgstr "Tryckkänslighet"
 
-#: app/tools/paint_options.c:389
+#: app/tools/paint_options.c:391
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: app/tools/paint_options.c:407
+#: app/tools/paint_options.c:409
 msgid "Hardness"
 msgstr "Hårdhet"
 
-#: app/tools/paint_options.c:423
+#: app/tools/paint_options.c:425
 msgid "Rate"
 msgstr "Flöde"
 
-#: app/tools/paint_options.c:535
+#: app/tools/paint_options.c:537
 msgid "Gradient Options"
 msgstr "Färgskaleoperationer"
 
-#: app/tools/paint_options.c:554
+#: app/tools/paint_options.c:556
 msgid "Fade Out"
 msgstr "Tona ut"
 
 #. the gradient type
-#: app/tools/paint_options.c:645
+#: app/tools/paint_options.c:647
 msgid "Type:"
 msgstr "Typ:"
 
-#: app/tools/paint_options.c:659
+#: app/tools/paint_options.c:661
 msgid "Once Forward"
 msgstr "En gång framåt"
 
-#: app/tools/paint_options.c:660
+#: app/tools/paint_options.c:662
 msgid "Once Backward"
 msgstr "En gång bakåt"
 
-#: app/tools/paint_options.c:661
+#: app/tools/paint_options.c:663
 msgid "Loop Sawtooth"
 msgstr "Loopa sågtandat"
 
-#: app/tools/paint_options.c:662
+#: app/tools/paint_options.c:664
 msgid "Loop Triangle"
 msgstr "Loopa triangel"
 
@@ -6286,7 +6251,7 @@ msgstr "Visa slinga"
 msgid "Clip Result"
 msgstr "Klipp resultat"
 
-#: app/widgets/gimpchannellistview.c:181
+#: app/widgets/gimpchannellistview.c:180
 msgid ""
 "Channel to Selection \n"
 "<Shift> Add          <Ctrl> Subtract      <Shift><Ctrl> Intersect"
@@ -6307,12 +6272,12 @@ msgstr "Indexerad"
 msgid "(None)"
 msgstr "(Ingen)"
 
-#: app/widgets/gimpdatafactoryview.c:165
-#: app/widgets/gimpdrawablelistview.c:283
+#: app/widgets/gimpdatafactoryview.c:137
+#: app/widgets/gimpdrawablelistview.c:282
 msgid "Duplicate"
 msgstr "Duplicera"
 
-#: app/widgets/gimpdatafactoryview.c:539
+#: app/widgets/gimpdatafactoryview.c:400
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -6321,11 +6286,11 @@ msgstr ""
 "Är du säker att du vill ta bort\n"
 "\"%s\" från listan och från disk?"
 
-#: app/widgets/gimpdatafactoryview.c:544
+#: app/widgets/gimpdatafactoryview.c:405
 msgid "Delete Data Object"
 msgstr "Ta bort dataobjekt"
 
-#: app/widgets/gimpdrawablelistview.c:241
+#: app/widgets/gimpdrawablelistview.c:240
 msgid ""
 "Raise          \n"
 "<Shift> To Top"
@@ -6333,7 +6298,7 @@ msgstr ""
 "Höj            \n"
 "<Shift> Till toppen"
 
-#: app/widgets/gimpdrawablelistview.c:262
+#: app/widgets/gimpdrawablelistview.c:261
 msgid ""
 "Lower             \n"
 "<Shift> To Bottom"
@@ -6341,15 +6306,15 @@ msgstr ""
 "Sänk              \n"
 "<Shift> Till botten"
 
-#: app/widgets/gimplayerlistview.c:169
+#: app/widgets/gimplayerlistview.c:168
 msgid "Keep Trans."
 msgstr "Behåll transp."
 
-#: app/widgets/gimplayerlistview.c:179
+#: app/widgets/gimplayerlistview.c:178
 msgid "Keep Transparency"
 msgstr "Behåll transparens"
 
-#: app/widgets/gimplayerlistview.c:214
+#: app/widgets/gimplayerlistview.c:213
 msgid "Anchor"
 msgstr "Ankra"
 
@@ -6376,6 +6341,21 @@ msgstr ""
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
 
+#: app/xcf/xcf-load.c:388
+msgid ""
+"XCF warning: version 0 of XCF file format\n"
+"did not save indexed colormaps correctly.\n"
+"Substituting grayscale map."
+msgstr ""
+"XCF-varning: version 0 av XCF-filformatet\n"
+"sparade inte indexerade färgkartor rätt.\n"
+"Byter ut gråskalekartan."
+
+#: app/xcf/xcf.c:251
+#, c-format
+msgid "XCF error: unsupported XCF file version %d encountered"
+msgstr "XCF-fel: XCF-filversion %d som inte stöds påträffad"
+
 #: modules/colorsel_gtk.c:69
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTKs färgväljare som insticksbar färgväljare"
@@ -6399,6 +6379,30 @@ msgstr "Vattenfärg"
 #: modules/colorsel_water.c:472
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "Looking for data files"
+#~ msgstr "Letar efter datafiler"
+
+#~ msgid "Parasites"
+#~ msgstr "Parasiter"
+
+#~ msgid "Paste"
+#~ msgstr "Klistra in"
+
+#~ msgid "Paste Into"
+#~ msgstr "Klistra in i"
+
+#~ msgid "Paste as New"
+#~ msgstr "Klistra in som ny"
+
+#~ msgid "Paste Named Buffer"
+#~ msgstr "Klistra in namngiven buffer"
+
+#~ msgid "Select a buffer to paste:"
+#~ msgstr "Markera en buffer att klistra in:"
+
+#~ msgid "Spacing:"
+#~ msgstr "Mellanrum:"
 
 #~ msgid "No Brushes available"
 #~ msgstr "Inga penslar tillgängliga"
