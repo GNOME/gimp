@@ -1,3 +1,27 @@
+2004-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-frame.[ch]: added "gint ref_count" to
+	the PlugInProcFrame struct. Added new functions
+	plug_in_proc_frame_ref/unref().
+
+	(plug_in_proc_frame_new): set the ref_count to 1.
+
+	* app/plug-in/plug-in.[ch] (plug_in_proc_frame_push): return the
+	new proc_frame.
+
+	(plug_in_proc_frame_pop): use unref() instead of free().
+
+	* app/plug-in/plug-in-run.c (plug_in_temp_run): ref the proc_frame
+	while running its main loop. Removed the call to
+	plug_in_proc_frame_pop().
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_temp_proc_return):
+	call plug_in_proc_frame_pop() immediately after
+	plug_in_main_loop_quit() so the proc_frame goes away from the
+	stack and can't be used accidentially if the core is too busy to
+	return to the main loop before the next command arrives on the
+	wire. Really fixes bug #161114 this time.
+
 2004-12-14  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]: Changed the "gradient" parameter

@@ -97,7 +97,7 @@ void              plug_in_pop             (Gimp         *gimp);
 
 PlugInProcFrame * plug_in_get_proc_frame  (PlugIn       *plug_in);
 
-void              plug_in_proc_frame_push (PlugIn       *plug_in,
+PlugInProcFrame * plug_in_proc_frame_push (PlugIn       *plug_in,
                                            GimpContext  *context,
                                            GimpProgress *progress,
                                            ProcRecord   *proc_rec);

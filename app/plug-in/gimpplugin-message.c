@@ -550,6 +550,7 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
       plug_in_handle_proc_return_priv (plug_in, proc_return, TRUE);
 
       plug_in_main_loop_quit (plug_in);
+      plug_in_proc_frame_pop (plug_in);
     }
   else
     {

@@ -46,6 +46,8 @@ plug_in_proc_frame_new (GimpContext  *context,
 
   proc_frame = g_new0 (PlugInProcFrame, 1);
 
+  proc_frame->ref_count = 1;
+
   plug_in_proc_frame_init (proc_frame, context, progress, proc_rec);
 
   return proc_frame;
@@ -114,4 +116,27 @@ plug_in_proc_frame_free (PlugInProcFrame *proc_frame,
   plug_in_proc_frame_dispose (proc_frame, plug_in);
 
   g_free (proc_frame);
+}
+
+PlugInProcFrame *
+plug_in_proc_frame_ref (PlugInProcFrame *proc_frame)
+{
+  g_return_val_if_fail (proc_frame != NULL, NULL);
+
+  proc_frame->ref_count++;
+
+  return proc_frame;
+}
+
+void
+plug_in_proc_frame_unref (PlugInProcFrame *proc_frame,
+                          PlugIn          *plug_in)
+{
+  g_return_if_fail (proc_frame != NULL);
+  g_return_if_fail (plug_in != NULL);
+
+  proc_frame->ref_count--;
+
+  if (proc_frame->ref_count < 1)
+    plug_in_proc_frame_free (proc_frame, plug_in);
 }

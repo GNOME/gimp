@@ -250,9 +250,11 @@ plug_in_temp_run (ProcRecord   *proc_rec,
 
   if (plug_in)
     {
-      GPProcRun proc_run;
+      PlugInProcFrame *proc_frame;
+      GPProcRun        proc_run;
 
-      plug_in_proc_frame_push (plug_in, context, progress, proc_rec);
+      proc_frame = plug_in_proc_frame_push (plug_in, context, progress,
+                                            proc_rec);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
@@ -271,14 +273,17 @@ plug_in_temp_run (ProcRecord   *proc_rec,
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
       plug_in_ref (plug_in);
+      plug_in_proc_frame_ref (proc_frame);
 
       plug_in_main_loop (plug_in);
 
-      return_vals = plug_in_get_return_vals (plug_in,
-                                             plug_in->temp_proc_frames->data);
+      return_vals = plug_in_get_return_vals (plug_in, proc_frame);
 
-      plug_in_proc_frame_pop (plug_in);
+      /*  main_loop is quit and proc_frame is popped in
+       *  plug_in_handle_temp_proc_return()
+       */
 
+      plug_in_proc_frame_unref (proc_frame, plug_in);
       plug_in_unref (plug_in);
     }
 

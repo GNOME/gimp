@@ -878,7 +878,7 @@ plug_in_get_proc_frame (PlugIn *plug_in)
     return &plug_in->main_proc_frame;
 }
 
-void
+PlugInProcFrame *
 plug_in_proc_frame_push (PlugIn       *plug_in,
                          GimpContext  *context,
                          GimpProgress *progress,
@@ -886,15 +886,17 @@ plug_in_proc_frame_push (PlugIn       *plug_in,
 {
   PlugInProcFrame *proc_frame;
 
-  g_return_if_fail (plug_in != NULL);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (proc_rec != NULL);
+  g_return_val_if_fail (plug_in != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (proc_rec != NULL, NULL);
 
   proc_frame = plug_in_proc_frame_new (context, progress, proc_rec);
 
   plug_in->temp_proc_frames = g_list_prepend (plug_in->temp_proc_frames,
                                               proc_frame);
+
+  return proc_frame;
 }
 
 void
@@ -907,7 +909,7 @@ plug_in_proc_frame_pop (PlugIn *plug_in)
 
   proc_frame = (PlugInProcFrame *) plug_in->temp_proc_frames->data;
 
-  plug_in_proc_frame_free (proc_frame, plug_in);
+  plug_in_proc_frame_unref (proc_frame, plug_in);
 
   plug_in->temp_proc_frames = g_list_remove (plug_in->temp_proc_frames,
                                              proc_frame);
