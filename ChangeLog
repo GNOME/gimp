@@ -1,5 +1,10 @@
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_update_scales):
+	Block callback when updating hex entry, fixes bug #169882.
+	
+2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpimage-convert.c: check for non-empty palette
 	before converting to indexed using custom palette, otherwise
 	show warning and abort;	fixes bug #170973.
