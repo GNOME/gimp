@@ -353,6 +353,7 @@ def _interact(func_name):
     tooltips.enable()
     dialog.show()
     response = dialog.run()
+    dialog.hide()
     ret = None
     if response == gtk.RESPONSE_OK:
 	# OK was clicked

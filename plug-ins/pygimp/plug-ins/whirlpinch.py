@@ -41,7 +41,7 @@ class pixel_fetcher:
 		self.drawable = drawable
 		self.tile = None
 	def set_bg_colour(self, r, g, b, a):
-		self.bg_colour = struct.pack('bbb', r,g,b)
+		self.bg_colour = struct.pack('BBB', r,g,b)
 		if self.img_has_alpha:
 			self.bg_colour = self.bg_colour + chr(a)
 	def get_pixel(self, x, y):
@@ -90,7 +90,7 @@ def python_whirl_pinch(image, drawable, whirl, pinch, radius):
 
 	self.radius = max(xhsiz, yhsiz);
 
-	if not drawable.is_colour and not drawable.is_grey:
+	if not drawable.is_rgb and not drawable.is_grey:
 		return
 
 	gimp.tile_cache_ntiles(2 * (self.width + 63) / 64)
