@@ -40,9 +40,9 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-projection.h"
+#include "core/gimpselection.h"
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimpselectionoptions.h"
@@ -319,7 +319,7 @@ gimp_selection_editor_save_clicked (GtkWidget       *widget,
 {
   if (editor->gimage)
     {
-      gimp_image_mask_save (editor->gimage);
+      gimp_selection_save (gimp_image_get_mask (editor->gimage));
     }
 }
 

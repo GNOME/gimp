@@ -31,6 +31,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-qmask.h"
+#include "core/gimpselection.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
@@ -258,7 +259,7 @@ select_save_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_save (gimage);
+  gimp_selection_save (gimp_image_get_mask (gimage));
   gimp_image_flush (gimage);
 
   gimp_dialog_factory_dialog_raise (global_dock_factory,

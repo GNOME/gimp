@@ -34,9 +34,5 @@ GimpLayer   * gimp_image_mask_float       (GimpImage       *gimage,
                                            gint             off_x,
                                            gint             off_y);
 
-void          gimp_image_mask_load        (GimpImage       *gimage,
-                                           GimpChannel     *channel);
-GimpChannel * gimp_image_mask_save        (GimpImage       *gimage);
-
 
 #endif  /*  __GIMP_IMAGE_MASK_H__  */

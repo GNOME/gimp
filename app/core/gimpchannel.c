@@ -1655,32 +1655,3 @@ gimp_channel_shrink (GimpChannel  *channel,
   GIMP_CHANNEL_GET_CLASS (channel)->shrink (channel, radius_x, radius_y,
                                             edge_lock, push_undo);
 }
-
-void
-gimp_channel_load (GimpChannel *mask,
-		   GimpChannel *channel,
-                   gboolean     push_undo)
-{
-  PixelRegion srcPR, destPR;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  if (push_undo)
-    gimp_channel_push_undo (mask, _("Channel Load"));
-  else
-    gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (mask));
-
-  /*  copy the channel to the mask  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-		     0, 0,
-		     GIMP_ITEM (channel)->width,
-		     GIMP_ITEM (channel)->height, FALSE);
-  pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_ITEM (channel)->width,
-		     GIMP_ITEM (channel)->height, TRUE);
-  copy_region (&srcPR, &destPR);
-
-  mask->bounds_known = FALSE;
-}

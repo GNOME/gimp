@@ -210,9 +210,5 @@ void          gimp_channel_shrink             (GimpChannel      *mask,
                                                gboolean          edge_lock,
                                                gboolean          push_undo);
 
-void          gimp_channel_load               (GimpChannel      *mask,
-                                               GimpChannel      *channel,
-                                               gboolean          push_undo);
-
 
 #endif /* __GIMP_CHANNEL_H__ */

@@ -52,5 +52,9 @@ GimpChannel * gimp_selection_new        (GimpImage   *gimage,
                                          gint         width,
                                          gint         height);
 
+void          gimp_selection_load       (GimpChannel *selection,
+                                         GimpChannel *channel);
+GimpChannel * gimp_selection_save       (GimpChannel *selection);
+
 
 #endif /* __GIMP_SELECTION_H__ */

@@ -34,6 +34,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimpselection.h"
 #include "gimp-intl.h"
 
 static ProcRecord selection_bounds_proc;
@@ -959,7 +960,7 @@ selection_save_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (channel = gimp_image_mask_save (gimage)) != NULL;
+    success = (channel = gimp_selection_save (gimp_image_get_mask (gimage))) != NULL;
 
   return_args = procedural_db_return_args (&selection_save_proc, success);
 

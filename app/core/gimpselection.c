@@ -24,6 +24,9 @@
 
 #include "core-types.h"
 
+#include "paint-funcs/paint-funcs.h"
+
+#include "base/pixel-region.h"
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
@@ -599,4 +602,62 @@ gimp_selection_new (GimpImage *gimage,
 				  gimp_selection_validate);
 
   return channel;
+}
+
+void
+gimp_selection_load (GimpChannel *selection,
+                     GimpChannel *channel)
+{
+  GimpItem    *src_item;
+  GimpItem    *dest_item;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+
+  g_return_if_fail (GIMP_IS_SELECTION (selection));
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+
+  src_item  = GIMP_ITEM (channel);
+  dest_item = GIMP_ITEM (selection);
+
+  g_return_if_fail (src_item->width  == dest_item->width);
+  g_return_if_fail (src_item->height == dest_item->height);
+
+  gimp_channel_push_undo (selection, _("Selection from Channel"));
+
+  /*  copy the channel to the mask  */
+  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
+		     0, 0, src_item->width, src_item->height,
+                     FALSE);
+  pixel_region_init (&destPR, GIMP_DRAWABLE (selection)->tiles,
+		     0, 0, dest_item->width, dest_item->height,
+                     TRUE);
+  copy_region (&srcPR, &destPR);
+
+  selection->bounds_known = FALSE;
+
+  gimp_selection_changed (selection);
+}
+
+GimpChannel *
+gimp_selection_save (GimpChannel *selection)
+{
+  GimpImage   *gimage;
+  GimpChannel *new_channel;
+
+  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (selection));
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
+                                                   GIMP_TYPE_CHANNEL,
+                                                   FALSE));
+
+  /*  saved selections are not visible by default  */
+  gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE, FALSE);
+
+  gimp_image_add_channel (gimage, new_channel, -1);
+
+  return new_channel;
 }

@@ -30,11 +30,11 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer-floating-sel.h"
+#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -85,8 +85,8 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                   floating_sel_to_layer (layer);
                 }
 
-              mask = gimp_channel_new (gimage, 
-                                       gimage->width, 
+              mask = gimp_channel_new (gimage,
+                                       gimage->width,
                                        gimage->height,
                                        "Qmask",
                                        &color);
@@ -120,7 +120,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
           gimp_image_undo_group_end (gimage);
 
           /* connect to the removed signal, so the buttons get updated */
-          g_signal_connect (mask, "removed", 
+          g_signal_connect (mask, "removed",
                             G_CALLBACK (gimp_image_qmask_removed_callback),
                             gimage);
         }
@@ -130,7 +130,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
       mask = gimp_image_get_channel_by_name (gimage, "Qmask");
 
       if (mask)
-        { 
+        {
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
                                        _("Disable QuickMask"));
 
@@ -143,7 +143,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
           if (gimage->qmask_inverted)
             gimp_channel_invert (mask, TRUE);
 
-          gimp_image_mask_load (gimage, mask);
+          gimp_selection_load (gimp_image_get_mask (gimage), mask);
           gimp_image_remove_channel (gimage, mask);
 
           gimp_image_undo_group_end (gimage);

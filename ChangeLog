@@ -1,3 +1,20 @@
+2003-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.[ch]: removed gimp_channel_load().
+
+	* app/core/gimpimage-mask.[ch]: removed gimp_image_mask_load()
+	and _save().
+
+	* app/core/gimpselection.[ch]: added gimp_selection_load() and
+	_save() since these functions are specific to the selection.
+
+	* app/core/gimpimage-qmask.c
+	* app/gui/select-commands.c
+	* app/widgets/gimpselectioneditor.c
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
 2003-09-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/Makefile.am: forgot to add gimpfonts_pdb.[ch].
