@@ -1,3 +1,9 @@
+Sub Aug 29 23:00:50 1999  vidar@prosalg.no  (Vidar Madsen)
+
+	* plug-ins/gimpresionist/*.[ch]: Big rewrite of many internals
+	to get rid of the clumsy "struct rgbcolor" construct, as well
+	as removal of old and useless debugging code.
+
 Sun Aug 29 20:40:34 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/common/psp.c: Add include <sys/types.h>.
