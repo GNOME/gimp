@@ -1,15 +1,16 @@
 # Hungarian translation of gimp-libgimp.
-# Copyright (C) 2000-2004 Free Software Foundation, Inc.
-# Andras Timar <timar@gnome.hu>, 2000.
-# Laszlo Dvornik <dvornik@invitel.hu>, 2004.
+# Copyright (C) 2000, 2001, 2002, 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp-libgimp package.
+# Andras Timar <timar@gnome.hu>, 2000, 2001, 2002.
+# Laszlo Dvornik <dvornik@gnome.hu>, 2004.
 # Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 02:35+0100\n"
-"PO-Revision-Date: 2004-05-28 20:07+0200\n"
+"POT-Creation-Date: 2004-12-02 03:28+0100\n"
+"PO-Revision-Date: 2004-12-02 10:49+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -133,28 +134,28 @@ msgstr "%s számára szükséges egy alfa-csatorna"
 msgid "Add Alpha Channel"
 msgstr "Alfa-csatorna hozzáadása"
 
-#: libgimp/gimpexport.c:382
+#: libgimp/gimpexport.c:381
 msgid "Confirm Save"
 msgstr "Mentés megerősítése"
 
-#: libgimp/gimpexport.c:388
+#: libgimp/gimpexport.c:387
 msgid "Confirm"
 msgstr "Megerősítés"
 
-#: libgimp/gimpexport.c:457
+#: libgimp/gimpexport.c:454
 msgid "Export File"
 msgstr "Fájl exportálása"
 
-#: libgimp/gimpexport.c:461
+#: libgimp/gimpexport.c:458
 msgid "_Ignore"
 msgstr "_Kihagyás"
 
-#: libgimp/gimpexport.c:463
+#: libgimp/gimpexport.c:460
 msgid "_Export"
 msgstr "_Exportálás"
 
 #. the headline
-#: libgimp/gimpexport.c:485
+#: libgimp/gimpexport.c:482
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -163,12 +164,13 @@ msgstr ""
 "A képet a következő okokból exportálni kellene, mielőtt %s formátumban "
 "mentésre kerülne:"
 
-#: libgimp/gimpexport.c:563
+#. the footline
+#: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
 msgstr ""
 "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
-#: libgimp/gimpexport.c:665
+#: libgimp/gimpexport.c:653
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -177,7 +179,7 @@ msgstr ""
 "Rétegmaszkot készül menteni %s formátumba.\n"
 "Ez nem fogja menteni a látható rétegeket."
 
-#: libgimp/gimpexport.c:671
+#: libgimp/gimpexport.c:659
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -196,12 +198,11 @@ msgstr "Színátmenet kiválasztása"
 
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
-msgstr ""
+msgstr "(Üres)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Minta kiválasztása"
+msgstr "Paletta kiválasztása"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -213,73 +214,71 @@ msgstr "százalék"
 
 #: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "Kicsi"
 
 #: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "Közepes"
 
 #: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "Nagy"
 
 #: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "Világos négyzetháló"
 
 #: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Középszürke négyzetháló"
 
 #: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "Sötét négyzetháló"
 
 #: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "Csak fehér"
 
 #: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "Csak szürke"
 
 #: libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "Fekete"
+msgstr "Csak fekete"
 
 #: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB szín"
 
 #: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "Átalakítás szürkeárnyalatosba"
+msgstr "Szürkeárnyalatos"
 
 #: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "Indexelt szín"
 
 #: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Szürkeárnyalatos-alfa"
 
 #: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "Indexelt"
 
 #: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indexelt-alfa"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -331,7 +330,7 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+#: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
 msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
 
@@ -373,30 +372,26 @@ msgstr "Nincs betöltve"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "A(z) \"%s\" bélyegképmappa létrehozása sikertelen."
 
-#: libgimpthumb/gimpthumbnail.c:917
-#, fuzzy, c-format
+#: libgimpthumb/gimpthumbnail.c:919
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "A(z) \"%s\" bélyegképmappa létrehozása sikertelen."
+msgstr "Nem sikerült létrehozni bélyegképet ehhez: %s: %s"
 
 #: libgimpwidgets/gimpcolorbutton.c:99
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "/_Előtérszín"
+msgstr "_Előtérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:103
-#, fuzzy
 msgid "_Background Color"
-msgstr "/_Háttérszín"
+msgstr "_Háttérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:107
-#, fuzzy
 msgid "Blac_k"
-msgstr "/Fe_kete"
+msgstr "Fe_kete"
 
 #: libgimpwidgets/gimpcolorbutton.c:111
-#, fuzzy
 msgid "_White"
-msgstr "/_Fehér"
+msgstr "_Fehér"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -460,13 +455,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "A HTML-ben használatos hexadecimális színjelölés"
+msgstr "A HTML-ben és a CSS-ben használatos hexadecimális színjelölés"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "H_TML-jelölés:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -485,19 +479,16 @@ msgid "Select File"
 msgstr "Fájl kiválasztása"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
-msgstr "kilobájt"
+msgstr "Kilobájt"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
-msgstr "megabájt"
+msgstr "Megabájt"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
-msgstr "gigabájt"
+msgstr "Gigabájt"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
@@ -517,16 +508,16 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Négyzetek mérete"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Négyzetek stílusa"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "Előké_p"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -534,7 +525,7 @@ msgstr "Horgony"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "_Középre"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -566,7 +557,7 @@ msgstr "Látható"
 
 #: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr ""
+msgstr "_Körberajzolás"
 
 #: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
@@ -764,13 +755,12 @@ msgid "Black"
 msgstr "Fekete"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Fekete kivonása (%):"
+msgstr "_Fekete kivonása:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "A színes tintákból kivonandó fekete százaléka."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -791,9 +781,3 @@ msgstr "Vízfestmény"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Nyomás"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "He_xa hármas:"
-
-#~ msgid "None"
-#~ msgstr "Nincs"
