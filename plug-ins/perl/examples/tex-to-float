@@ -1,0 +1,178 @@
+#!/usr/local/bin/perl
+######################################################################
+#  A Perl::Fu plugin for converting TeX strings to floating layers.
+#
+#  Author: Dov Grobgeld
+#  Version: 0.11
+######################################################################
+
+use Gimp;
+use Gimp::Fu;
+
+my $fn_base = "/tmp/ttf$$";
+my %tmpfiles = (
+		"$fn_base.pgm"=>1,
+		"$fn_base.tex"=>1,
+		"$fn_base.log"=>1,
+		"$fn_base.ps"=>1,
+		"$fn_base.dvi"=>1);
+
+# Cleanup
+sub cleanup {
+    foreach my $fn (keys %tmpfiles) {
+	unlink $fn;
+    }
+}
+
+sub xec {
+    my $cmd = shift;
+    print STDERR "$cmd\n";
+    return `$cmd`;
+}
+
+sub exist_in_tex_path {
+    my $file = shift;
+
+    return 0 unless length($file);
+    return 1 if -e $file;
+    foreach my $p (split(/:/, $ENV{TEXINPUTS} . ":/tmp")) {
+	return 1 if -e "$p/$file";
+    }
+    return 0;
+}
+
+sub tex_string_to_pgm {
+    my($text, $input_file, $string, $ppi, $magstep, $anti_aliasing,
+       $output_file) = @_;
+
+    my $scale = sprintf("%.5f", 1/$anti_aliasing);
+    my $r = $ppi * $anti_aliasing;
+    my $device = "pgmraw";
+
+    chdir "/tmp";
+    if (exist_in_tex_path($input_file)) {
+	$input .= "\\input $input_file\n";
+    }
+    
+    open(TEX, ">$fn_base.tex");
+    print TEX "\\nopagenumbers\n"
+	    . "\\magnification\\magstep$magstep\n"
+	    . "\\tolerance=8000\n"
+	    . "$input\n"
+	    . "$string\n"
+            . "\\bye";
+    close(TEX);
+    
+    my $res = xec("tex $fn_base.tex < /dev/null");
+    # Deal with errors...
+
+    # Make dvips output bounding box
+    my $psoutput = xec("dvips -r$r -E -f $fn_base");
+    # Deal with errors
+
+    # Shift postscript file to origin
+    my @bbox = $psoutput=~ /^%%BoundingBox:\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/m;
+    print STDERR "bbox = @bbox\n";
+    my $w = $bbox[2]-$bbox[0];
+    my $h = $bbox[3]-$bbox[1];
+    $psoutput=~ s/^%%BoundingBox:.*$/%%BoundingBox: 0 0 $w $h/m;
+    $psoutput=~ s/^1 0 bop/-$bbox[0] -$bbox[1] translate\n$&/m;
+    
+    # Output to file in order not to have to use Open2.
+    open(PS, ">$fn_base.ps");
+    print PS $psoutput;
+    close(PS);
+    $w= int($w*$r/72+0.5);
+    $h= int($h*$r/72+0.5);
+
+    # Use gs to produce a pgmfile
+    my $cmd = "gs -g${w}x${h} -r${r} -dNOPAUSE -q -sDEVICE=$device -sOutputFile=- $fn_base.ps quit.ps |";
+    $cmd .= "pnmscale $scale |" if $scale != 1;
+    chop($cmd);
+    $cmd .= "> $output_file";
+    xec("$cmd");
+}
+
+sub grey_file_to_float {
+    my($img1, $drw1, $fn) = @_;
+
+    # Setup
+    my $save_bg = gimp_palette_get_background();
+    gimp_undo_push_group_start($img1);
+    
+    # Load the new img
+    my $grey_img = gimp_file_load(RUN_NON_INTERACTIVE, $fn, $fn);
+    
+    # Get name of new layer
+    my $grey_layer = gimp_image_get_active_layer($grey_img);
+    
+    # Create an alpha layer and copy image to alpha layer
+    gimp_layer_add_alpha($grey_layer);
+    $grey_img->selection_all();
+    gimp_edit_copy($grey_img,$grey_layer);
+    $mask = gimp_layer_create_mask($grey_layer, 0);
+    gimp_image_add_layer_mask($grey_img, $grey_layer, $mask);
+    my $floating_layer = gimp_edit_paste($grey_img, $mask, 0);
+    gimp_floating_sel_anchor($floating_layer);
+    gimp_invert($grey_img, $mask);
+    gimp_palette_set_background(gimp_palette_get_foreground());
+    gimp_edit_fill($grey_img, $grey_layer);
+    gimp_image_remove_layer_mask($grey_img, $grey_layer, 0);
+
+    # Now copy this layer to $img 1
+    gimp_edit_copy($grey_img, $grey_layer);
+    $floating_layer = gimp_edit_paste($img1, $drw1, 0);
+    gimp_edit_fill($img1, $floating_layer);
+
+    print STDERR "Yohoo!\n";
+    cleanup();
+    
+    # Get rid of $grey_img
+    gimp_image_delete($grey_img);
+
+    
+    # Restore
+    gimp_palette_set_background($save_bg);
+    gimp_undo_push_group_end($img1);
+    
+    # Update the display
+    gimp_displays_flush();
+    
+    return undef;
+}
+
+
+sub tex_string_to_float {
+    my($img1, $drw1,
+       $input_file,
+       $text,
+       $ppi,
+       $magstep,
+       $anti_aliasing) = @_;
+
+
+    tex_string_to_pgm($text, $input_file, $text, $ppi, $magstep, $anti_aliasing,
+		      "$fn_base.pgm");
+    
+    grey_file_to_float($img1, $drw1, "$fn_base.pgm");
+    
+    return undef;
+}
+
+# register the script
+register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes a TeX string as input and creates a floating layer of the rendered string in the current layer in the foreground color.",
+    "Dov Grobgeld <dov\@imagic.weizmann.ac.il>", "Dov Grobgeld",
+    "1998-11-02",
+    "<Image>/Perl-Fu/TeX String", 
+    "*",
+    [
+     [PF_TEXT,   "Input file",     "TeX macro file to input",   ""],
+     [PF_TEXT,   "TeX String",     "Enter TeX String",   ""],
+     [PF_VALUE,   "DPI",     "Resolution to render the text in",   "72"],
+     [PF_VALUE,   "Magstep",     "TeX magstep",   "2"],
+     [PF_VALUE,   "Anti-aliasing",     "Anti-aliasing factor",   "4"],
+    ],
+    \&tex_string_to_float;
+
+# Handle over control to gimp
+exit main();
