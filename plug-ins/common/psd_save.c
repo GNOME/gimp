@@ -97,19 +97,19 @@ typedef struct PsdLayerDimension
 
 typedef struct PsdImageData
 {
-  gint compression;         /* 0, if there's no compresion; 1, if there is */
+  gboolean             compression;
 
-  gint32 image_height;
-  gint32 image_width;
+  gint32               image_height;
+  gint32               image_width;
 
-  gint baseType;
+  GimpImageBaseType    baseType;
 
-  gint nChannels;           /* Number of user channels in the image */
-  gint32 *lChannels;        /* User channels in the image */
+  gint                 nChannels;   /* Number of user channels in the image */
+  gint32              *lChannels;   /* User channels in the image */
 
-  gint nLayers;                         /* Number of layers in the image */
-  gint32 *lLayers;                      /* Identifier of each layer */
-  PSD_Layer_Dimension* layersDim;       /* Dimensions of each layer */
+  gint                 nLayers;     /* Number of layers in the image */
+  gint32              *lLayers;     /* Identifier of each layer */
+  PSD_Layer_Dimension *layersDim;   /* Dimensions of each layer */
 
 } PSD_Image_Data;
 
@@ -592,15 +592,15 @@ RGBA_to_chans (guchar *rgbA, gint numpix,
 
 
 static gint
-gimpBaseTypeToPsdMode (gint gimpBaseType)
+gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
 {
   switch (gimpBaseType)
     {
-    case GIMP_RGB_IMAGE:
+    case GIMP_RGB:
       return 3;                                         /* RGB */
-    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAY:
       return 1;                                         /* Grayscale */
-    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXED:
       return 2;                                         /* Indexed */
     default:
       g_message ("Error: Can't convert GIMP base imagetype to PSD mode");
@@ -620,11 +620,11 @@ nChansLayer (gint gimpBaseType, gint hasAlpha)
 
   switch (gimpBaseType)
     {
-    case GIMP_RGB_IMAGE:
+    case GIMP_RGB:
       return 3 + incAlpha;               /* R,G,B & Alpha (if any) */
-    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAY:
       return 1 + incAlpha;               /* G & Alpha (if any) */
-    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXED:
       return 1 + incAlpha;               /* I & Alpha (if any) */
     default:
       return 0;                          /* Return 0 channels by default */
@@ -693,7 +693,7 @@ save_color_mode_data (FILE *fd, gint32 image_id)
 
   switch (PSDImageData.baseType)
     {
-    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXED:
       IFDBG printf ("      Image type: INDEXED\n");
 
       cmap = gimp_image_get_cmap (image_id, &nColors);
@@ -1191,7 +1191,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
       nChannel = 0;
       switch (PSDImageData.baseType)
         {
-        case GIMP_RGB_IMAGE:
+        case GIMP_RGB:
 
           if (gimp_drawable_has_alpha (PSDImageData.lLayers[i]))
             {
@@ -1225,7 +1225,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
                              "blue channel");
           break;
 
-        case GIMP_GRAY_IMAGE:
+        case GIMP_GRAY:
 
           if (gimp_drawable_has_alpha (PSDImageData.lLayers[i]))
             {
@@ -1254,7 +1254,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
           break;
 
-        case GIMP_INDEXED_IMAGE:
+        case GIMP_INDEXED:
           IFDBG printf ("        Writing indexed channel...\n");
           save_channel_data (fd, data, PSDImageData.layersDim[i].width,
                              PSDImageData.layersDim[i].height,
@@ -1343,7 +1343,7 @@ save_data (FILE *fd, gint32 image_id)
   nChannel = 0;
   switch (PSDImageData.baseType)
     {
-    case GIMP_RGB_IMAGE:
+    case GIMP_RGB:
       RGB_to_chans (data, ChanSize * nChannelsLayer, &red, &green, &blue);
 
       get_compress_channel_data (red, layerWidth, layerHeight,
@@ -1368,8 +1368,8 @@ save_data (FILE *fd, gint32 image_id)
       nChannel++;
       break;
 
-    case GIMP_GRAY_IMAGE:
-    case GIMP_INDEXED_IMAGE:
+    case GIMP_GRAY:
+    case GIMP_INDEXED:
       gray_indexed = data;
       get_compress_channel_data (gray_indexed, layerWidth, layerHeight,
                                  &(TLdataCompress[nChannel]), &(dataCompress[nChannel]),
@@ -1444,14 +1444,14 @@ save_data (FILE *fd, gint32 image_id)
 
       switch (PSDImageData.baseType)
         {
-        case GIMP_RGB_IMAGE:
+        case GIMP_RGB:
           xfwrite (fd, red, ChanSize, "red channel data");
           xfwrite (fd, green, ChanSize, "green channel data");
           xfwrite (fd, blue, ChanSize, "blue channel data");
           break;
 
-        case GIMP_GRAY_IMAGE:
-        case GIMP_INDEXED_IMAGE:
+        case GIMP_GRAY:
+        case GIMP_INDEXED:
           xfwrite (fd, gray_indexed, ChanSize, "gray or indexed channel data");
           break;
         }
@@ -1482,7 +1482,7 @@ get_image_data (FILE *fd, gint32 image_id)
 {
   IFDBG printf (" Function: get_image_data\n");
 
-  PSDImageData.compression = 0; /* No compression */
+  PSDImageData.compression = FALSE;
 
   PSDImageData.image_height = gimp_image_height (image_id);
   IFDBG printf ("      Got number of rows: %d\n", PSDImageData.image_height);
@@ -1495,7 +1495,7 @@ get_image_data (FILE *fd, gint32 image_id)
 
   /* PSD format does not support indexed layered images */
 
-  if (PSDImageData.baseType == GIMP_INDEXED_IMAGE)
+  if (PSDImageData.baseType == GIMP_INDEXED)
     {
       IFDBG printf ("      Flattening indexed image\n");
       gimp_image_flatten (image_id);
@@ -1542,7 +1542,7 @@ save_image (const gchar *filename,
 
   /* PSD format does not support layers in indexed images */
 
-  if (PSDImageData.baseType == GIMP_INDEXED_IMAGE)
+  if (PSDImageData.baseType == GIMP_INDEXED)
     write_glong (fd, 0, "layers info section length");
   else
     save_layer_and_mask (fd, image_id);

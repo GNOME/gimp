@@ -1,5 +1,10 @@
 2003-07-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd_save.c: fixed confusion of GimpImageType and
+	GimpImageBaseType enums that broke the plug-in for non-RGB images.
+
+2003-07-20  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: changed the gettext domain prefix to gimp20.
 
 	* m4macros/Makefile.am
