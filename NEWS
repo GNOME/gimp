@@ -10,6 +10,7 @@ dubbed GIMP 1.4.
 
 Overview of Changes in GIMP 1.3.6
 =================================
+- Support tile cache > 4GB on machines with 64bit long integers [Sven]
 - Added support for large files (> 2GB) [Sven]
 - Cleaned up configure, updated to autoconf-2.52 [Sven]
 - Temporary switch to the Move tool when Space is pressed [Mitch]

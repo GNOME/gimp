@@ -5,21 +5,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-11-16 13:26+0100\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: 2001-12-04 17:49+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: libgimp/gimpcolorbutton.c:121
-msgid "/Use Foreground Color"
-msgstr "/Pou¾ít barvu popøedí"
-
-#: libgimp/gimpcolorbutton.c:122
-msgid "/Use Background Color"
-msgstr "/Pou¾ít barvu pozadí"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
@@ -110,10 +102,7 @@ msgstr "Potvrzení zápisu"
 msgid "Confirm"
 msgstr "Potvrzení"
 
-#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:505
+#: libgimp/gimpexport.c:362
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -150,92 +139,121 @@ msgid ""
 msgstr "Pøed zápisem je tøeba obrázek exportovat z následujících dùvodù:"
 
 #. the footline
-#: libgimp/gimpexport.c:501
+#: libgimp/gimpexport.c:503
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
-#: libgimp/gimpexport.c:569
+#: libgimp/gimpexport.c:571
 msgid "a layer mask"
 msgstr "masku vrstvy"
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
 msgstr "kanál (zapsaný výbìr)"
 
-#: libgimp/gimpfileselection.c:388
-msgid "Select File"
-msgstr "Výbìr souboru"
-
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:503
-msgid "OK"
-msgstr "OK"
-
-#: libgimp/gimpunitmenu.c:241
-msgid "More..."
-msgstr "Více..."
-
-#: libgimp/gimpunitmenu.c:498
-msgid "Unit Selection"
-msgstr "Výbìr jednotek"
-
-#: libgimp/gimpunitmenu.c:535
-msgid "Unit"
-msgstr "Jednotka"
-
-#: libgimp/gimpunitmenu.c:536
-msgid "Factor"
-msgstr "Faktor"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:49
-msgid "pixel"
-msgstr "pixel"
-
-#: libgimp/gimpunit.c:49
-msgid "pixels"
-msgstr "pixelù"
-
-#. standard units
-#: libgimp/gimpunit.c:52
-msgid "inch"
-msgstr "palec"
-
-#: libgimp/gimpunit.c:52
-msgid "inches"
-msgstr "palcù"
-
-#: libgimp/gimpunit.c:53
-msgid "millimeter"
-msgstr "milimetr"
-
-#: libgimp/gimpunit.c:53
-msgid "millimeters"
-msgstr "milimetrù"
-
-#. professional units
-#: libgimp/gimpunit.c:56
-msgid "point"
-msgstr "bod"
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr ""
 
 #: libgimp/gimpunit.c:56
-msgid "points"
-msgstr "bodù"
-
-#: libgimp/gimpunit.c:57
-msgid "pica"
-msgstr "pika"
-
-#: libgimp/gimpunit.c:57
-msgid "picas"
-msgstr "pik"
-
-#: libgimp/gimpunit.c:64
 msgid "percent"
 msgstr "procenta"
 
-#: libgimp/gimpwidgets.c:717
+#: libgimpwidgets/gimpcolorbutton.c:85
+#, fuzzy
+msgid "/Foreground Color"
+msgstr "/Pou¾ít barvu popøedí"
+
+#: libgimpwidgets/gimpcolorbutton.c:87
+#, fuzzy
+msgid "/Background Color"
+msgstr "/Pou¾ít barvu pozadí"
+
+#: libgimpwidgets/gimpcolorbutton.c:90
+msgid "/Black"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorbutton.c:92
+msgid "/White"
+msgstr ""
+
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Folder"
+msgstr "Výbìr souboru"
+
+#: libgimpwidgets/gimpfileselection.c:366
+msgid "Select File"
+msgstr "Výbìr souboru"
+
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "palec"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pika"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:160
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:163
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:164
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:165
+msgid "Shear"
+msgstr ""
+
+#: libgimpwidgets/gimpunitmenu.c:265
+msgid "More..."
+msgstr "Více..."
+
+#: libgimpwidgets/gimpunitmenu.c:526
+msgid "Unit Selection"
+msgstr "Výbìr jednotek"
+
+#: libgimpwidgets/gimpunitmenu.c:571
+msgid "Unit"
+msgstr "Jednotka"
+
+#: libgimpwidgets/gimpunitmenu.c:575
+msgid "Factor"
+msgstr "Faktor"
+
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -243,25 +261,58 @@ msgstr ""
 "Pokud tlaèítko \"Èas\" není stisknuto, pou¾ije se této hodnoty pro hnízdo "
 "náhodného generátoru - umo¾òuje to zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimp/gimpwidgets.c:722
-msgid "Time"
+#: libgimpwidgets/gimpwidgets.c:850
+#, fuzzy
+msgid "_Time"
 msgstr "Èas"
 
-#: libgimp/gimpwidgets.c:731
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
 "Hnízdo náhodného generátoru z aktuálního èasu - zaruèuje pøimìøenou náhodnost"
 
-#: libgimp/gimpwidgets.c:1044
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "bajtù"
 
-#: libgimp/gimpwidgets.c:1045
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "kilobajtù"
 
-#: libgimp/gimpwidgets.c:1046
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
 msgstr "megabajtù"
+
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
+msgstr "megabajtù"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "pixel"
+#~ msgstr "pixel"
+
+#~ msgid "pixels"
+#~ msgstr "pixelù"
+
+#~ msgid "inches"
+#~ msgstr "palcù"
+
+#~ msgid "millimeter"
+#~ msgstr "milimetr"
+
+#~ msgid "millimeters"
+#~ msgstr "milimetrù"
+
+#~ msgid "point"
+#~ msgstr "bod"
+
+#~ msgid "points"
+#~ msgstr "bodù"
+
+#~ msgid "picas"
+#~ msgstr "pik"

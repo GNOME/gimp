@@ -80,7 +80,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-29 12:56+0200\n"
+"POT-Creation-Date: 2002-05-29 12:28+0200\n"
 "PO-Revision-Date: 2002-05-29 12:56+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"

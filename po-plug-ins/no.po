@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.2.2\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
+"POT-Creation-Date: 2002-05-28 15:12+0200\n"
 "PO-Revision-Date: 2001-12-02 21:09+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -15,32 +15,33 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1386 plug-ins/common/AlienMap.c:1401
-#: plug-ins/common/AlienMap2.c:1393 plug-ins/gfig/gfig.c:3375
-#: plug-ins/imagemap/imap_about.c:43 plug-ins/webbrowser/webbrowser.c:278
+#: plug-ins/common/AlienMap2.c:1393 plug-ins/gfig/gfig.c:3374
+#: plug-ins/imagemap/imap_about.c:43 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Om"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1159
+#: plug-ins/FractalExplorer/Dialogs.c:314 plug-ins/Lighting/lighting_ui.c:1165
 #: plug-ins/MapObject/mapobject_ui.c:1438 plug-ins/common/CML_explorer.c:1206
-#: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1507
-#: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:741
+#: plug-ins/common/blinds.c:347 plug-ins/common/curve_bend.c:1512
+#: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
 #: plug-ins/common/fractaltrace.c:750 plug-ins/common/glasstile.c:287
 #: plug-ins/common/grid.c:686 plug-ins/common/illusion.c:596
-#: plug-ins/common/iwarp.c:1188 plug-ins/common/jigsaw.c:2515
+#: plug-ins/common/iwarp.c:1190 plug-ins/common/jigsaw.c:2515
 #: plug-ins/common/mapcolor.c:578 plug-ins/common/max_rgb.c:368
-#: plug-ins/common/nlfilt.c:580 plug-ins/common/noisify.c:511
-#: plug-ins/common/plasma.c:334 plug-ins/common/polar.c:943
-#: plug-ins/common/ps.c:2942 plug-ins/common/sharpen.c:558
+#: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:511
+#: plug-ins/common/plasma.c:342 plug-ins/common/polar.c:943
+#: plug-ins/common/ps.c:2955 plug-ins/common/sharpen.c:558
 #: plug-ins/common/sinus.c:2122 plug-ins/common/tileit.c:412
-#: plug-ins/common/waves.c:582 plug-ins/common/whirlpinch.c:827
+#: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1037 plug-ins/flame/flame.c:947
-#: plug-ins/gfig/gfig.c:3962 plug-ins/gflare/gflare.c:2559
+#: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2559
 #: plug-ins/gflare/gflare.c:3575 plug-ins/gimpressionist/orientmap.c:511
-#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:412
+#: plug-ins/gimpressionist/preview.c:113 plug-ins/gimpressionist/sizemap.c:412
 #: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:296
-#: plug-ins/imagemap/imap_grid.c:238 plug-ins/print/gimp_main_window.c:295
+#: plug-ins/imagemap/imap_grid.c:238 plug-ins/print/gimp_main_window.c:409
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:674
 msgid "Preview"
 msgstr "Forhåndsvisning"
@@ -166,7 +167,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/CML_explorer.c:1234
-#: plug-ins/gfig/gfig.c:3549
+#: plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Last"
 
@@ -174,23 +175,9 @@ msgstr "Last"
 msgid "Load a fractal from file"
 msgstr "Last en fraktal fra en fil"
 
-#: plug-ins/FractalExplorer/Dialogs.c:536 plug-ins/common/convmatrix.c:855
-#: plug-ins/common/curve_bend.c:1363 plug-ins/common/iwarp.c:1170
-#: plug-ins/common/sample_colorize.c:1371 plug-ins/common/tileit.c:475
-#: plug-ins/fp/fp_gtk.c:923 plug-ins/gimpressionist/preview.c:129
-#: plug-ins/ifscompose/ifscompose.c:799 plug-ins/sel2path/sel2path.c:334
-msgid "Reset"
-msgstr "Sett tilbake"
-
 #: plug-ins/FractalExplorer/Dialogs.c:542
 msgid "Reset parameters to default values"
 msgstr "Sett parametere tilbake til standardverdiene"
-
-#: plug-ins/FractalExplorer/Dialogs.c:545 plug-ins/common/CML_explorer.c:1226
-#: plug-ins/gfig/gfig.c:5259 plug-ins/imagemap/imap_menu.c:226
-#: plug-ins/imagemap/imap_toolbar.c:118
-msgid "Save"
-msgstr "Lagre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:551
 msgid "Save active fractal to file"
@@ -244,7 +231,7 @@ msgid "Colors"
 msgstr "Farger"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/borderaverage.c:413
+#: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/borderaverage.c:415
 msgid "Number of Colors"
 msgstr "Antall farger"
 
@@ -276,7 +263,6 @@ msgstr "Fargetetthet"
 #: plug-ins/common/compose.c:120 plug-ins/common/compose.c:124
 #: plug-ins/common/diffraction.c:605 plug-ins/common/diffraction.c:644
 #: plug-ins/common/diffraction.c:683 plug-ins/common/exchange.c:420
-#: plug-ins/common/noisify.c:602 plug-ins/common/noisify.c:647
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Rød:"
@@ -289,7 +275,6 @@ msgstr "Endre intensiteten for rød kanal"
 #: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
 #: plug-ins/common/diffraction.c:614 plug-ins/common/diffraction.c:653
 #: plug-ins/common/diffraction.c:692 plug-ins/common/exchange.c:464
-#: plug-ins/common/noisify.c:616 plug-ins/common/noisify.c:661
 #: plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Grønn:"
@@ -302,7 +287,6 @@ msgstr "Endre intensiteten for grønn kanal"
 #: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
 #: plug-ins/common/diffraction.c:623 plug-ins/common/diffraction.c:662
 #: plug-ins/common/diffraction.c:701 plug-ins/common/exchange.c:508
-#: plug-ins/common/noisify.c:630 plug-ins/common/noisify.c:675
 #: plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Blå:"
@@ -344,8 +328,8 @@ msgstr "Kosinus"
 #: plug-ins/common/AlienMap.c:1479 plug-ins/common/AlienMap.c:1502
 #: plug-ins/common/AlienMap.c:1525 plug-ins/common/CML_explorer.c:172
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2714 plug-ins/common/ps.c:2727
-#: plug-ins/common/psp.c:444 plug-ins/common/tiff.c:1584
+#: plug-ins/common/ps.c:2727 plug-ins/common/ps.c:2740
+#: plug-ins/common/psp.c:444 plug-ins/common/tiff.c:1599
 #: plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "Ingen"
@@ -429,12 +413,12 @@ msgstr "Fraktalutforsker-gradient"
 msgid "Fractals"
 msgstr "Fraktaler"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1581 plug-ins/gfig/gfig.c:1458
+#: plug-ins/FractalExplorer/Dialogs.c:1581 plug-ins/gfig/gfig.c:1457
 #, c-format
 msgid "Error opening: %s"
 msgstr "Feil under åpning: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1583 plug-ins/gfig/gfig.c:1460
+#: plug-ins/FractalExplorer/Dialogs.c:1583 plug-ins/gfig/gfig.c:1459
 msgid "Could not save."
 msgstr "Kunne ikke lagre."
 
@@ -500,7 +484,7 @@ msgstr "<Image>/Filtre/Render/Mønster/Fraktalutforsker..."
 msgid "Rendering Fractal..."
 msgstr "Genererer fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5016
+#: plug-ins/FractalExplorer/FractalExplorer.c:735 plug-ins/gfig/gfig.c:5015
 #: plug-ins/gflare/gflare.c:3440
 #, c-format
 msgid ""
@@ -549,7 +533,7 @@ msgid "Choose Fractal by double-clicking on it"
 msgstr "Velg fraktal ved å dobbeltklikke på den"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1387 plug-ins/gfig/gfig.c:3538
+#: plug-ins/FractalExplorer/FractalExplorer.c:1387 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
 msgstr "Gjenles"
 
@@ -558,9 +542,9 @@ msgstr "Gjenles"
 msgid "Select folder and rescan collection"
 msgstr "Velg katalog og les samlingen på nytt"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1397 plug-ins/gfig/gfig.c:3569
-#: plug-ins/gflare/gflare.c:3173 plug-ins/gimpressionist/presets.c:681
-#: plug-ins/ifscompose/ifscompose.c:796 plug-ins/imagemap/imap_cmd_delete.c:58
+#: plug-ins/FractalExplorer/FractalExplorer.c:1397
+#: plug-ins/gflare/gflare.c:3173 plug-ins/gimpressionist/presets.c:679
+#: plug-ins/imagemap/imap_cmd_delete.c:58
 #: plug-ins/imagemap/imap_selection.c:187 plug-ins/imagemap/imap_tools.c:160
 msgid "Delete"
 msgstr "Slett"
@@ -614,17 +598,18 @@ msgstr "Generelle alternativer"
 #. _("Enable/disable environment mapping (reflection)"),
 #. NULL);
 #.
-#: plug-ins/Lighting/lighting_ui.c:428 plug-ins/MapObject/mapobject_ui.c:582
-msgid "Transparent Background"
+#: plug-ins/Lighting/lighting_ui.c:428
+#, fuzzy
+msgid "T_ransparent Background"
 msgstr "Gjennomsiktig bakgrunn"
 
 #: plug-ins/Lighting/lighting_ui.c:438
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Gjør målbildet gjennomsiktig når \"bump\"-høyden er null"
 
-#: plug-ins/Lighting/lighting_ui.c:441 plug-ins/MapObject/mapobject_ui.c:609
-#: plug-ins/common/tile.c:442
-msgid "Create New Image"
+#: plug-ins/Lighting/lighting_ui.c:441
+#, fuzzy
+msgid "Cre_ate New Image"
 msgstr "Lag nytt bilde"
 
 #: plug-ins/Lighting/lighting_ui.c:451 plug-ins/MapObject/mapobject_ui.c:620
@@ -632,7 +617,8 @@ msgid "Create a new image when applying filter"
 msgstr "Opprett et nytt bilde ved bruk av filter"
 
 #: plug-ins/Lighting/lighting_ui.c:453
-msgid "High Quality Preview"
+#, fuzzy
+msgid "High _Quality Preview"
 msgstr "Forhåndsvisning i høy kvalitet"
 
 #: plug-ins/Lighting/lighting_ui.c:463
@@ -644,29 +630,28 @@ msgstr "Slå på/av høykvalitets forhåndsvisning"
 msgid "Antialiasing Options"
 msgstr "Alternativer for antialiasing"
 
-#: plug-ins/Lighting/lighting_ui.c:476 plug-ins/MapObject/mapobject_ui.c:645
-msgid "Enable Antialiasing"
+#: plug-ins/Lighting/lighting_ui.c:476
+#, fuzzy
+msgid "E_nable Antialiasing"
 msgstr "Slå på antialiasing"
 
 #: plug-ins/Lighting/lighting_ui.c:486 plug-ins/MapObject/mapobject_ui.c:656
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Slå på/av fjerning av taggete kanter (antialiasing)"
 
-#: plug-ins/Lighting/lighting_ui.c:499 plug-ins/MapObject/mapobject_ui.c:669
-#: plug-ins/common/bumpmap.c:1058 plug-ins/common/emboss.c:591
-#: plug-ins/common/fractaltrace.c:835 plug-ins/common/struc.c:1330
-msgid "Depth:"
+#: plug-ins/Lighting/lighting_ui.c:499 plug-ins/common/emboss.c:573
+#: plug-ins/common/struc.c:1330
+#, fuzzy
+msgid "_Depth:"
 msgstr "Dybde:"
 
 #: plug-ins/Lighting/lighting_ui.c:502 plug-ins/MapObject/mapobject_ui.c:672
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Kvalitet for antialiasing. Høyere er bedre, men tregere"
 
-#: plug-ins/Lighting/lighting_ui.c:509 plug-ins/MapObject/mapobject_ui.c:681
-#: plug-ins/common/iwarp.c:1135 plug-ins/common/threshold_alpha.c:295
-#: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1164
-#: plug-ins/gflare/gflare.c:3095
-msgid "Threshold:"
+#: plug-ins/Lighting/lighting_ui.c:509
+#, fuzzy
+msgid "T_hreshold:"
 msgstr "Terskel:"
 
 #: plug-ins/Lighting/lighting_ui.c:512 plug-ins/MapObject/mapobject_ui.c:689
@@ -690,7 +675,8 @@ msgid "Spot"
 msgstr "Spot"
 
 #: plug-ins/Lighting/lighting_ui.c:582
-msgid "Light Type:"
+#, fuzzy
+msgid "L_ight Type:"
 msgstr "Lystype:"
 
 #: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:742
@@ -702,7 +688,8 @@ msgid "Select Lightsource Color"
 msgstr "Velg lyskildens farge"
 
 #: plug-ins/Lighting/lighting_ui.c:595
-msgid "Light Color:"
+#, fuzzy
+msgid "Lig_ht Color:"
 msgstr "Lysfarge:"
 
 #: plug-ins/Lighting/lighting_ui.c:599 plug-ins/MapObject/mapobject_ui.c:757
@@ -711,47 +698,33 @@ msgstr "Sett lyskildens farge"
 
 #: plug-ins/Lighting/lighting_ui.c:601 plug-ins/MapObject/mapobject_ui.c:759
 #: plug-ins/MapObject/mapobject_ui.c:1068
-#: plug-ins/print/gimp_main_window.c:335
+#: plug-ins/print/gimp_main_window.c:460
 msgid "Position"
 msgstr "Posisjon"
 
-#. X
-#: plug-ins/Lighting/lighting_ui.c:618 plug-ins/Lighting/lighting_ui.c:670
-#: plug-ins/MapObject/mapobject_ui.c:776 plug-ins/MapObject/mapobject_ui.c:831
-#: plug-ins/MapObject/mapobject_ui.c:1080
-#: plug-ins/MapObject/mapobject_ui.c:1127 plug-ins/common/flarefx.c:794
-#: plug-ins/common/nova.c:637 plug-ins/common/papertile.c:285
-#: plug-ins/flame/flame.c:1206 plug-ins/gflare/gflare.c:2947
-#: plug-ins/ifscompose/ifscompose.c:536
-msgid "X:"
+#: plug-ins/Lighting/lighting_ui.c:618 plug-ins/common/flarefx.c:794
+#: plug-ins/common/nova.c:637
+#, fuzzy
+msgid "_X:"
 msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:625 plug-ins/MapObject/mapobject_ui.c:784
 msgid "Light source X position in XYZ space"
 msgstr "Lyskildens X-posisjon i XYZ-rommet"
 
-#. Y
-#: plug-ins/Lighting/lighting_ui.c:631 plug-ins/Lighting/lighting_ui.c:682
-#: plug-ins/MapObject/mapobject_ui.c:790 plug-ins/MapObject/mapobject_ui.c:844
-#: plug-ins/MapObject/mapobject_ui.c:1092
-#: plug-ins/MapObject/mapobject_ui.c:1137
-#: plug-ins/MapObject/mapobject_ui.c:1236 plug-ins/common/flarefx.c:814
-#: plug-ins/common/nova.c:657 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1244 plug-ins/flame/flame.c:1220
-#: plug-ins/gflare/gflare.c:2951 plug-ins/ifscompose/ifscompose.c:550
-msgid "Y:"
+#: plug-ins/Lighting/lighting_ui.c:631 plug-ins/common/flarefx.c:815
+#: plug-ins/common/nova.c:658
+#, fuzzy
+msgid "_Y:"
 msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:638 plug-ins/MapObject/mapobject_ui.c:798
 msgid "Light source Y position in XYZ space"
 msgstr "Lyskildens Y-posisjon i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:644 plug-ins/Lighting/lighting_ui.c:694
-#: plug-ins/MapObject/mapobject_ui.c:804 plug-ins/MapObject/mapobject_ui.c:857
-#: plug-ins/MapObject/mapobject_ui.c:1104
-#: plug-ins/MapObject/mapobject_ui.c:1147
-#: plug-ins/MapObject/mapobject_ui.c:1248
-msgid "Z:"
+#: plug-ins/Lighting/lighting_ui.c:644
+#, fuzzy
+msgid "_Z:"
 msgstr "Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:651 plug-ins/MapObject/mapobject_ui.c:812
@@ -762,181 +735,227 @@ msgstr "Lyskildens Z-posisjon i XYZ-rommet"
 msgid "Direction Vector"
 msgstr "Retningsvektor"
 
+#. X
+#: plug-ins/Lighting/lighting_ui.c:670 plug-ins/MapObject/mapobject_ui.c:776
+#: plug-ins/MapObject/mapobject_ui.c:831
+#: plug-ins/MapObject/mapobject_ui.c:1080
+#: plug-ins/MapObject/mapobject_ui.c:1127 plug-ins/common/papertile.c:285
+#: plug-ins/flame/flame.c:1206 plug-ins/gflare/gflare.c:2947
+#: plug-ins/ifscompose/ifscompose.c:536
+msgid "X:"
+msgstr "X:"
+
 #: plug-ins/Lighting/lighting_ui.c:677 plug-ins/MapObject/mapobject_ui.c:839
 msgid "Light source X direction in XYZ space"
 msgstr "Lyskildens X-retning i XYZ-rommet"
+
+#. Y
+#: plug-ins/Lighting/lighting_ui.c:682 plug-ins/MapObject/mapobject_ui.c:790
+#: plug-ins/MapObject/mapobject_ui.c:844
+#: plug-ins/MapObject/mapobject_ui.c:1092
+#: plug-ins/MapObject/mapobject_ui.c:1137
+#: plug-ins/MapObject/mapobject_ui.c:1236 plug-ins/common/papertile.c:294
+#: plug-ins/common/xbm.c:1244 plug-ins/flame/flame.c:1220
+#: plug-ins/gflare/gflare.c:2951 plug-ins/ifscompose/ifscompose.c:550
+msgid "Y:"
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:689 plug-ins/MapObject/mapobject_ui.c:852
 msgid "Light source Y direction in XYZ space"
 msgstr "Lyskildens Y-retning i XYZ-rommet"
 
+#: plug-ins/Lighting/lighting_ui.c:694 plug-ins/MapObject/mapobject_ui.c:804
+#: plug-ins/MapObject/mapobject_ui.c:857
+#: plug-ins/MapObject/mapobject_ui.c:1104
+#: plug-ins/MapObject/mapobject_ui.c:1147
+#: plug-ins/MapObject/mapobject_ui.c:1248
+msgid "Z:"
+msgstr "Z:"
+
 #: plug-ins/Lighting/lighting_ui.c:701 plug-ins/MapObject/mapobject_ui.c:865
 msgid "Light source Z direction in XYZ space"
 msgstr "Lyskildens Z-retning i XYZ-rommet"
 
-#: plug-ins/Lighting/lighting_ui.c:726 plug-ins/MapObject/mapobject_ui.c:890
+#: plug-ins/Lighting/lighting_ui.c:727 plug-ins/MapObject/mapobject_ui.c:890
 msgid "Intensity Levels"
 msgstr "Intensitetsnivå"
 
-#: plug-ins/Lighting/lighting_ui.c:744 plug-ins/MapObject/mapobject_ui.c:908
-#: plug-ins/common/bumpmap.c:1098
-msgid "Ambient:"
+#: plug-ins/Lighting/lighting_ui.c:745
+#, fuzzy
+msgid "_Ambient:"
 msgstr "Ambient:"
 
-#: plug-ins/Lighting/lighting_ui.c:757 plug-ins/MapObject/mapobject_ui.c:922
+#: plug-ins/Lighting/lighting_ui.c:759 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Mengden opprinnelig farge som skal vises hvor det ikke faller direkte lys"
 
-#: plug-ins/Lighting/lighting_ui.c:769 plug-ins/Lighting/lighting_ui.c:808
-#: plug-ins/MapObject/mapobject_ui.c:934 plug-ins/MapObject/mapobject_ui.c:974
-msgid "Diffuse:"
-msgstr ""
+#: plug-ins/Lighting/lighting_ui.c:771
+#, fuzzy
+msgid "_Diffuse:"
+msgstr "Avstand:"
 
-#: plug-ins/Lighting/lighting_ui.c:782 plug-ins/MapObject/mapobject_ui.c:948
+#: plug-ins/Lighting/lighting_ui.c:785 plug-ins/MapObject/mapobject_ui.c:948
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 "Intensiteten for den opprinnelige fargen når den treffes av en lyskilde"
 
-#: plug-ins/Lighting/lighting_ui.c:790 plug-ins/MapObject/mapobject_ui.c:956
+#: plug-ins/Lighting/lighting_ui.c:793 plug-ins/MapObject/mapobject_ui.c:956
 msgid "Reflectivity"
 msgstr "Refleksjonsevne"
 
-#: plug-ins/Lighting/lighting_ui.c:821 plug-ins/MapObject/mapobject_ui.c:988
+#: plug-ins/Lighting/lighting_ui.c:811
+#, fuzzy
+msgid "D_iffuse:"
+msgstr "Avstand:"
+
+#: plug-ins/Lighting/lighting_ui.c:825 plug-ins/MapObject/mapobject_ui.c:988
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr "Høyere verdier gjør at objektet reflekterer mer lys (ser lysere ut)"
 
-#: plug-ins/Lighting/lighting_ui.c:833 plug-ins/MapObject/mapobject_ui.c:1000
-msgid "Specular:"
-msgstr ""
+#: plug-ins/Lighting/lighting_ui.c:837
+#, fuzzy
+msgid "_Specular:"
+msgstr "Entall:"
 
-#: plug-ins/Lighting/lighting_ui.c:846 plug-ins/MapObject/mapobject_ui.c:1014
+#: plug-ins/Lighting/lighting_ui.c:851 plug-ins/MapObject/mapobject_ui.c:1014
 msgid "Controls how intense the highlights will be"
 msgstr "Kontrollerer hvor intenst høylysene vil være"
 
-#: plug-ins/Lighting/lighting_ui.c:858 plug-ins/MapObject/mapobject_ui.c:1026
-#: plug-ins/common/jigsaw.c:2602
-msgid "Highlight:"
-msgstr ""
+#: plug-ins/Lighting/lighting_ui.c:863
+#, fuzzy
+msgid "_Highlight:"
+msgstr "Høylys:"
 
-#: plug-ins/Lighting/lighting_ui.c:871 plug-ins/MapObject/mapobject_ui.c:1040
+#: plug-ins/Lighting/lighting_ui.c:877 plug-ins/MapObject/mapobject_ui.c:1040
 msgid "Higher values makes the highlights more focused"
 msgstr "Høyere verdier gjør høylysene mer fokusert"
 
-#: plug-ins/Lighting/lighting_ui.c:901
+#: plug-ins/Lighting/lighting_ui.c:907
 msgid "Bumpmap Settings"
 msgstr "Instillinger for \"bumpmap\""
 
-#: plug-ins/Lighting/lighting_ui.c:910
-msgid "Enable Bump Mapping"
+#: plug-ins/Lighting/lighting_ui.c:916
+#, fuzzy
+msgid "E_nable Bump Mapping"
 msgstr "Bruk \"bump mapping\""
 
-#: plug-ins/Lighting/lighting_ui.c:920
+#: plug-ins/Lighting/lighting_ui.c:926
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Slå på/av \"bump-mapping\" (bildedybde)"
 
-#: plug-ins/Lighting/lighting_ui.c:937
-msgid "Bumpmap Image:"
+#: plug-ins/Lighting/lighting_ui.c:943
+#, fuzzy
+msgid "Bumpm_ap Image:"
 msgstr "\"Bumpmap\" bilde:"
 
-#: plug-ins/Lighting/lighting_ui.c:946 plug-ins/common/mblur.c:783
-#: plug-ins/common/sinus.c:1987 plug-ins/flame/flame.c:726
+#: plug-ins/Lighting/lighting_ui.c:952 plug-ins/common/sinus.c:1987
+#: plug-ins/flame/flame.c:726
 msgid "Linear"
 msgstr "Lineær"
 
-#: plug-ins/Lighting/lighting_ui.c:947
+#: plug-ins/Lighting/lighting_ui.c:953
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: plug-ins/Lighting/lighting_ui.c:948 plug-ins/common/sinus.c:1989
+#: plug-ins/Lighting/lighting_ui.c:954 plug-ins/common/sinus.c:1989
 #: plug-ins/flame/flame.c:727
 msgid "Sinusoidal"
 msgstr "Sinus"
 
-#: plug-ins/Lighting/lighting_ui.c:949 plug-ins/flame/flame.c:728
+#: plug-ins/Lighting/lighting_ui.c:955 plug-ins/flame/flame.c:728
 msgid "Spherical"
 msgstr "Sfærisk"
 
-#: plug-ins/Lighting/lighting_ui.c:953
-msgid "Curve:"
+#: plug-ins/Lighting/lighting_ui.c:959
+#, fuzzy
+msgid "Cu_rve:"
 msgstr "Kurve:"
 
-#: plug-ins/Lighting/lighting_ui.c:959
-msgid "Maximum Height:"
+#: plug-ins/Lighting/lighting_ui.c:965
+#, fuzzy
+msgid "Ma_ximum Height:"
 msgstr "Makimumshøyde:"
 
-#: plug-ins/Lighting/lighting_ui.c:966
+#: plug-ins/Lighting/lighting_ui.c:972
 msgid "Maximum height for bumps"
 msgstr "Makimumshøyde for bumps"
 
-#: plug-ins/Lighting/lighting_ui.c:972
-msgid "Minimum Height:"
+#: plug-ins/Lighting/lighting_ui.c:978
+#, fuzzy
+msgid "M_inimum Height:"
 msgstr "Minimumshøyde:"
 
-#: plug-ins/Lighting/lighting_ui.c:979
+#: plug-ins/Lighting/lighting_ui.c:985
 msgid "Minimum height for bumps"
 msgstr "Minimumshøyde for bumps"
 
-#: plug-ins/Lighting/lighting_ui.c:982
-msgid "Autostretch to Fit Value Range"
+#: plug-ins/Lighting/lighting_ui.c:988
+#, fuzzy
+msgid "Auto_stretch to Fit Value Range"
 msgstr "Autostrekk til å passe i verdiområdet"
 
-#: plug-ins/Lighting/lighting_ui.c:992
+#: plug-ins/Lighting/lighting_ui.c:998
 msgid "Fit into value range"
 msgstr "Tilpass til verdiområdet"
 
-#: plug-ins/Lighting/lighting_ui.c:1013
+#: plug-ins/Lighting/lighting_ui.c:1019
 msgid "Environment Settings"
 msgstr "Innstillinger for miljø"
 
-#: plug-ins/Lighting/lighting_ui.c:1022
-msgid "Enable Environment Mapping"
+#: plug-ins/Lighting/lighting_ui.c:1028
+#, fuzzy
+msgid "E_nable Environment Mapping"
 msgstr "Bruk \"environment mapping\""
 
-#: plug-ins/Lighting/lighting_ui.c:1032
+#: plug-ins/Lighting/lighting_ui.c:1038
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Slå på/av \"environment mapping\" (refleksjon)"
 
-#: plug-ins/Lighting/lighting_ui.c:1049
-msgid "Environment Image:"
+#: plug-ins/Lighting/lighting_ui.c:1055
+#, fuzzy
+msgid "En_vironment Image:"
 msgstr "Bilde for miljø:"
 
-#: plug-ins/Lighting/lighting_ui.c:1053
+#: plug-ins/Lighting/lighting_ui.c:1059
 msgid "Environment image to use"
 msgstr "Bilde for miljø som skal brukes"
 
-#. Options section
-#: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1365
-#: plug-ins/common/lic.c:1036 plug-ins/common/ripple.c:603
-#: plug-ins/gfig/gfig.c:4016 plug-ins/mosaic/mosaic.c:602
-msgid "Options"
+#: plug-ins/Lighting/lighting_ui.c:1082
+#, fuzzy
+msgid "Op_tions"
 msgstr "Alternativer"
 
-#: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1369
-msgid "Light"
+#: plug-ins/Lighting/lighting_ui.c:1086
+#, fuzzy
+msgid "_Light"
 msgstr "Lys"
 
-#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/MapObject/mapobject_ui.c:1373
-msgid "Material"
+#: plug-ins/Lighting/lighting_ui.c:1090
+#, fuzzy
+msgid "_Material"
 msgstr "Materiale"
 
-#: plug-ins/Lighting/lighting_ui.c:1088 plug-ins/common/bumpmap.c:856
-msgid "Bump Map"
+#: plug-ins/Lighting/lighting_ui.c:1094
+#, fuzzy
+msgid "_Bump Map"
 msgstr "\"Bump map\""
 
-#: plug-ins/Lighting/lighting_ui.c:1092
-msgid "Environment Map"
+#: plug-ins/Lighting/lighting_ui.c:1098
+#, fuzzy
+msgid "_Environment Map"
 msgstr "\"Environment map\""
 
-#: plug-ins/Lighting/lighting_ui.c:1134
+#: plug-ins/Lighting/lighting_ui.c:1140
 msgid "Lighting Effects"
 msgstr "Lyseffekter"
 
-#: plug-ins/Lighting/lighting_ui.c:1194 plug-ins/common/grid.c:715
-msgid "Update Preview"
+#: plug-ins/Lighting/lighting_ui.c:1200
+#, fuzzy
+msgid "_Update Preview"
 msgstr "Oppdater forhåndsvisning"
 
-#: plug-ins/Lighting/lighting_ui.c:1202 plug-ins/MapObject/mapobject_ui.c:1481
+#: plug-ins/Lighting/lighting_ui.c:1208 plug-ins/MapObject/mapobject_ui.c:1481
 msgid "Recompute preview image"
 msgstr "Beregn forhåndsvisningsbildet på nytt"
 
@@ -970,6 +989,10 @@ msgstr "Sfære"
 msgid "Type of object to map to"
 msgstr "Type objekt det skal mappes til"
 
+#: plug-ins/MapObject/mapobject_ui.c:582
+msgid "Transparent Background"
+msgstr "Gjennomsiktig bakgrunn"
+
 #: plug-ins/MapObject/mapobject_ui.c:593
 msgid "Make image transparent outside object"
 msgstr "Gjør bildet gjennomsiktig utenfor objektet"
@@ -982,6 +1005,10 @@ msgstr "Flislegg det opprinnelige bildet"
 msgid "Tile source image: useful for infinite planes"
 msgstr "Flislegg originalbilde: nyttig for endelige plan"
 
+#: plug-ins/MapObject/mapobject_ui.c:609 plug-ins/common/tile.c:442
+msgid "Create New Image"
+msgstr "Lag nytt bilde"
+
 #: plug-ins/MapObject/mapobject_ui.c:622
 msgid "Enable Tooltips"
 msgstr "Slå på verktøytips"
@@ -989,6 +1016,20 @@ msgstr "Slå på verktøytips"
 #: plug-ins/MapObject/mapobject_ui.c:632
 msgid "Enable/disable tooltip messages"
 msgstr "Slå på/av verktøytips meldinger"
+
+#: plug-ins/MapObject/mapobject_ui.c:645
+msgid "Enable Antialiasing"
+msgstr "Slå på antialiasing"
+
+#: plug-ins/MapObject/mapobject_ui.c:669 plug-ins/common/bumpmap.c:1058
+#: plug-ins/common/fractaltrace.c:835
+msgid "Depth:"
+msgstr "Dybde:"
+
+#: plug-ins/MapObject/mapobject_ui.c:681 plug-ins/common/threshold_alpha.c:295
+#: plug-ins/common/wind.c:1164 plug-ins/gflare/gflare.c:3095
+msgid "Threshold:"
+msgstr "Terskel:"
 
 #: plug-ins/MapObject/mapobject_ui.c:730
 msgid "Point Light"
@@ -1010,6 +1051,22 @@ msgstr "Type lyskilde:"
 msgid "Lightsource Color:"
 msgstr "Lyskildens farge:"
 
+#: plug-ins/MapObject/mapobject_ui.c:908 plug-ins/common/bumpmap.c:1098
+msgid "Ambient:"
+msgstr "Ambient:"
+
+#: plug-ins/MapObject/mapobject_ui.c:934 plug-ins/MapObject/mapobject_ui.c:974
+msgid "Diffuse:"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1000
+msgid "Specular:"
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_ui.c:1026 plug-ins/common/jigsaw.c:2602
+msgid "Highlight:"
+msgstr ""
+
 #: plug-ins/MapObject/mapobject_ui.c:1083
 msgid "Object X position in XYZ space"
 msgstr "Objektets X-posisjon i XYZ-rommet"
@@ -1023,7 +1080,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Objektets Z-posisjon i XYZ-rommet"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1115 plug-ins/common/ps.c:2900
+#: plug-ins/MapObject/mapobject_ui.c:1115 plug-ins/common/ps.c:2913
 msgid "Rotation"
 msgstr "Rotasjon"
 
@@ -1049,23 +1106,23 @@ msgstr "Bakside:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1176
 #: plug-ins/MapObject/mapobject_ui.c:1275
-#: plug-ins/print/gimp_main_window.c:397
+#: plug-ins/print/gimp_main_window.c:522
 msgid "Top:"
 msgstr "Øverst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1176
 #: plug-ins/MapObject/mapobject_ui.c:1275
-#: plug-ins/print/gimp_main_window.c:431
+#: plug-ins/print/gimp_main_window.c:563
 msgid "Bottom:"
 msgstr "Nederst:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1177
-#: plug-ins/print/gimp_main_window.c:386
+#: plug-ins/print/gimp_main_window.c:509
 msgid "Left:"
 msgstr "Venstre:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1177
-#: plug-ins/print/gimp_main_window.c:408
+#: plug-ins/print/gimp_main_window.c:535
 msgid "Right:"
 msgstr "Høyre:"
 
@@ -1094,14 +1151,12 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder for \"Cap Faces\""
 
 #: plug-ins/MapObject/mapobject_ui.c:1309 plug-ins/gimpressionist/size.c:55
-#: plug-ins/gimpressionist/size.c:60
+#: plug-ins/gimpressionist/size.c:60 plug-ins/print/gimp_main_window.c:1111
 msgid "Size"
 msgstr "Størrelse"
 
-#: plug-ins/MapObject/mapobject_ui.c:1321 plug-ins/common/despeckle.c:753
-#: plug-ins/common/nlfilt.c:434 plug-ins/common/nova.c:530
-#: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:879
-#: plug-ins/gfig/gfig.c:3176 plug-ins/gflare/gflare.c:2982
+#: plug-ins/MapObject/mapobject_ui.c:1321 plug-ins/common/whirlpinch.c:879
+#: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2982
 #: plug-ins/imagemap/imap_circle.c:282
 msgid "Radius:"
 msgstr "Radius:"
@@ -1110,13 +1165,28 @@ msgstr "Radius:"
 msgid "Cylinder radius"
 msgstr "Sylinderradius"
 
-#: plug-ins/MapObject/mapobject_ui.c:1334 plug-ins/common/mblur.c:809
+#: plug-ins/MapObject/mapobject_ui.c:1334
 msgid "Length:"
 msgstr "Lengde:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1338
 msgid "Cylinder length"
 msgstr "Sylinderlengde"
+
+#. Options section
+#: plug-ins/MapObject/mapobject_ui.c:1365 plug-ins/common/lic.c:1036
+#: plug-ins/common/ripple.c:603 plug-ins/gfig/gfig.c:4015
+#: plug-ins/mosaic/mosaic.c:602
+msgid "Options"
+msgstr "Alternativer"
+
+#: plug-ins/MapObject/mapobject_ui.c:1369
+msgid "Light"
+msgstr "Lys"
+
+#: plug-ins/MapObject/mapobject_ui.c:1373
+msgid "Material"
+msgstr "Materiale"
 
 #. Orientation toggle box
 #: plug-ins/MapObject/mapobject_ui.c:1377 plug-ins/common/blinds.c:373
@@ -1196,19 +1266,19 @@ msgstr "%s: ugyldig fargekart"
 #: plug-ins/bmp/bmpread.c:319 plug-ins/bmp/bmpread.c:326
 #: plug-ins/bmp/bmpread.c:333 plug-ins/common/CEL.c:301
 #: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:544
-#: plug-ins/common/decompose.c:464 plug-ins/common/film.c:995
+#: plug-ins/common/decompose.c:475 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:903 plug-ins/common/lic.c:903
 #: plug-ins/common/papertile.c:316 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:367 plug-ins/common/png.c:545
 #: plug-ins/common/pnm.c:496 plug-ins/common/psd.c:2115
-#: plug-ins/common/smooth_palette.c:244 plug-ins/common/sunras.c:929
+#: plug-ins/common/smooth_palette.c:246 plug-ins/common/sunras.c:929
 #: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:660
 #: plug-ins/common/tile.c:279 plug-ins/common/winclipboard.c:556
 #: plug-ins/common/wmf.c:2144 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:447 plug-ins/fits/fits.c:518
-#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3186 plug-ins/sgi/sgi.c:373
+#: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:373
 #: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
 msgstr "Bakgrunn"
@@ -1225,13 +1295,13 @@ msgstr "Kan ikke åpne %s"
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:507
 #: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:958
-#: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:247
+#: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:529 plug-ins/common/png.c:773
 #: plug-ins/common/png.c:775 plug-ins/common/pnm.c:780
-#: plug-ins/common/ps.c:993 plug-ins/common/sunras.c:522
-#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1321
+#: plug-ins/common/ps.c:995 plug-ins/common/sunras.c:522
+#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:651
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1629
@@ -1382,7 +1452,7 @@ msgstr "Endre vinkel for blå/luminans kanal"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/common/AlienMap2.c:1500 plug-ins/common/deinterlace.c:286
-#: plug-ins/common/hot.c:618 plug-ins/common/waves.c:379
+#: plug-ins/common/hot.c:612 plug-ins/common/waves.c:364
 #: plug-ins/rcm/rcm_dialog.c:503
 msgid "Mode"
 msgstr "Modus"
@@ -1568,7 +1638,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:205 plug-ins/common/sunras.c:1608
-#: plug-ins/print/gimp_main_window.c:1093
+#: plug-ins/print/gimp_main_window.c:1641
 msgid "Standard"
 msgstr "Standard"
 
@@ -1959,28 +2029,28 @@ msgstr "Juster synlige lag"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
-#: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:407
+#: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:409 plug-ins/common/blur.c:630
-#: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:372
+#: plug-ins/common/bumpmap.c:999 plug-ins/common/checkerboard.c:369
 #: plug-ins/common/cubism.c:332 plug-ins/common/despeckle.c:737
 #: plug-ins/common/destripe.c:639 plug-ins/common/edge.c:661
-#: plug-ins/common/emboss.c:561 plug-ins/common/engrave.c:235
+#: plug-ins/common/emboss.c:543 plug-ins/common/engrave.c:235
 #: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:372
 #: plug-ins/common/glasstile.c:305 plug-ins/common/grid.c:729
 #: plug-ins/common/illusion.c:616 plug-ins/common/jpeg.c:1659
 #: plug-ins/common/lic.c:1089 plug-ins/common/max_rgb.c:385
-#: plug-ins/common/nlfilt.c:413 plug-ins/common/noisify.c:529
+#: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:529
 #: plug-ins/common/nova.c:500 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:338 plug-ins/common/plasma.c:352
+#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:364
 #: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
-#: plug-ins/common/randomize.c:721 plug-ins/common/ripple.c:681
+#: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
 #: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:387
-#: plug-ins/common/smooth_palette.c:418 plug-ins/common/snoise.c:527
+#: plug-ins/common/smooth_palette.c:424 plug-ins/common/snoise.c:527
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
 #: plug-ins/common/struc.c:1292 plug-ins/common/threshold_alpha.c:283
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2170
-#: plug-ins/common/vpropagate.c:1054 plug-ins/common/waves.c:405
+#: plug-ins/common/vpropagate.c:1056 plug-ins/common/waves.c:390
 #: plug-ins/common/whirlpinch.c:849 plug-ins/common/wind.c:1054
 #: plug-ins/common/xpm.c:810 plug-ins/maze/maze_face.c:206
 #: plug-ins/mosaic/mosaic.c:682 plug-ins/xjt/xjt.c:802
@@ -2000,7 +2070,7 @@ msgid "Fill (right to left)"
 msgstr "Fyll (høyre til venstre)"
 
 #: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
-#: plug-ins/gfig/gfig.c:3408
+#: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
 msgstr "Fest til rutenett"
 
@@ -2138,28 +2208,32 @@ msgstr "<Image>/Filtre/Glass-effekter/Påfør linse..."
 msgid "Applying lens..."
 msgstr "Legger på linse..."
 
-#: plug-ins/common/apply_lens.c:390
+#: plug-ins/common/apply_lens.c:386
 msgid "Lens Effect"
 msgstr "Linseeffekt"
 
-#: plug-ins/common/apply_lens.c:417
-msgid "Keep Original Surroundings"
+#: plug-ins/common/apply_lens.c:413
+#, fuzzy
+msgid "_Keep Original Surroundings"
 msgstr "Behold opprinnelige omgivelser"
 
-#: plug-ins/common/apply_lens.c:431
-msgid "Set Surroundings to Index 0"
+#: plug-ins/common/apply_lens.c:425
+#, fuzzy
+msgid "_Set Surroundings to Index 0"
 msgstr "Sett omgivelsene til indeks 0"
 
-#: plug-ins/common/apply_lens.c:432
-msgid "Set Surroundings to Background Color"
+#: plug-ins/common/apply_lens.c:426
+#, fuzzy
+msgid "_Set Surroundings to Background Color"
 msgstr "Sett omgivelsene til bakgrunnsfargen"
 
-#: plug-ins/common/apply_lens.c:448
-msgid "Make Surroundings Transparent"
+#: plug-ins/common/apply_lens.c:438
+#, fuzzy
+msgid "_Make Surroundings Transparent"
 msgstr "Gjør omgivelsene gjennomsiktige"
 
-#: plug-ins/common/apply_lens.c:467
-msgid "Lens Refraction Index:"
+#: plug-ins/common/apply_lens.c:456
+msgid "_Lens Refraction Index:"
 msgstr ""
 
 #: plug-ins/common/autocrop.c:75
@@ -2193,40 +2267,37 @@ msgstr "Legger på blinding..."
 msgid "Blinds"
 msgstr "Blinding:"
 
-#. attach labels
-#: plug-ins/common/blinds.c:377 plug-ins/common/grid.c:779
-#: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:455
-#: plug-ins/pagecurl/pagecurl.c:601
-msgid "Horizontal"
+#: plug-ins/common/blinds.c:377 plug-ins/common/tileit.c:455
+#, fuzzy
+msgid "_Horizontal"
 msgstr "Horisontal"
 
-#: plug-ins/common/blinds.c:378 plug-ins/common/grid.c:780
-#: plug-ins/common/ripple.c:642 plug-ins/common/tileit.c:465
-#: plug-ins/pagecurl/pagecurl.c:602
-msgid "Vertical"
+#: plug-ins/common/blinds.c:378 plug-ins/common/tileit.c:465
+#, fuzzy
+msgid "_Vertical"
 msgstr "Vertikal"
 
-#: plug-ins/common/blinds.c:393 plug-ins/common/fractaltrace.c:776
-#: plug-ins/common/papertile.c:382 plug-ins/gfig/gfig.c:2832
-#: plug-ins/gimpressionist/general.c:244
-msgid "Transparent"
+#: plug-ins/common/blinds.c:393
+#, fuzzy
+msgid "_Transparent"
 msgstr "Gjennomsiktig"
 
 #: plug-ins/common/blinds.c:422
-msgid "Displacement:"
+#, fuzzy
+msgid "_Displacement:"
 msgstr "Forskyvning:"
 
 #: plug-ins/common/blinds.c:431
-msgid "Num Segments:"
+#, fuzzy
+msgid "_Num Segments:"
 msgstr "Antall segmenter:"
 
 #: plug-ins/common/blur.c:200
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Filtre/Blur/Blur..."
 
-#: plug-ins/common/blur.c:647 plug-ins/common/plasma.c:367
-#: plug-ins/common/randomize.c:738 plug-ins/common/sinus.c:1803
-#: plug-ins/common/snoise.c:544 plug-ins/gflare/gflare.c:4175
+#: plug-ins/common/blur.c:647 plug-ins/common/sinus.c:1803
+#: plug-ins/gflare/gflare.c:4175
 msgid "Random Seed:"
 msgstr "Tilfeldig seed:"
 
@@ -2234,15 +2305,15 @@ msgstr "Tilfeldig seed:"
 msgid "Randomization %:"
 msgstr "Tilfeldighet %:"
 
-#: plug-ins/common/blur.c:657 plug-ins/common/randomize.c:748
+#: plug-ins/common/blur.c:657 plug-ins/common/randomize.c:751
 msgid "Percentage of pixels to be filtered"
 msgstr "Prosentandel av punktene som skal filtreres"
 
-#: plug-ins/common/blur.c:666 plug-ins/common/randomize.c:757
+#: plug-ins/common/blur.c:666
 msgid "Repeat:"
 msgstr "Gjenta:"
 
-#: plug-ins/common/blur.c:669 plug-ins/common/randomize.c:760
+#: plug-ins/common/blur.c:669 plug-ins/common/randomize.c:763
 msgid "Number of times to apply filter"
 msgstr "Antall ganger filteret skal påføres"
 
@@ -2254,27 +2325,27 @@ msgstr "<Image>/Filtre/Farger/Kantgjennomsnitt..."
 msgid "Border Average..."
 msgstr "Gjennomsnitt for kant..."
 
-#: plug-ins/common/borderaverage.c:369
+#: plug-ins/common/borderaverage.c:371
 msgid "Borderaverage"
 msgstr "Kantgjennomsnitt"
 
-#: plug-ins/common/borderaverage.c:391
+#: plug-ins/common/borderaverage.c:393
 msgid "Border Size"
 msgstr "Kantstørrelse"
 
-#: plug-ins/common/borderaverage.c:400
+#: plug-ins/common/borderaverage.c:402
 msgid "Thickness:"
 msgstr "Tykkelse:"
 
-#: plug-ins/common/borderaverage.c:422
+#: plug-ins/common/borderaverage.c:424
 msgid "Bucket Size:"
 msgstr "Størrelse på bøtte:"
 
-#: plug-ins/common/borderaverage.c:430
+#: plug-ins/common/borderaverage.c:432
 msgid "1 (nonsense?)"
 msgstr "1 (tull?)"
 
-#: plug-ins/common/borderaverage.c:438
+#: plug-ins/common/borderaverage.c:440
 msgid "256 (nonsense?)"
 msgstr "256 (tull?)"
 
@@ -2285,6 +2356,10 @@ msgstr "<Image>/Filtre/Map/Bump map..."
 #: plug-ins/common/bumpmap.c:523
 msgid "Bump-mapping..."
 msgstr "Bump-mapping..."
+
+#: plug-ins/common/bumpmap.c:856
+msgid "Bump Map"
+msgstr "\"Bump map\""
 
 #: plug-ins/common/bumpmap.c:948
 msgid "Map Type"
@@ -2321,11 +2396,11 @@ msgstr "Flis-bumpmap"
 msgid "Bump Map:"
 msgstr "Bump map:"
 
-#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:573
+#: plug-ins/common/bumpmap.c:1040
 msgid "Azimuth:"
 msgstr "Azimuth:"
 
-#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:582
+#: plug-ins/common/bumpmap.c:1049
 msgid "Elevation:"
 msgstr "Forhøyelse:"
 
@@ -2354,24 +2429,26 @@ msgstr "<Image>/Bilde/Farger/Auto/Strekk kontrast"
 msgid "Auto-Stretching Contrast..."
 msgstr "Auto-strekker kontrast..."
 
-#: plug-ins/common/checkerboard.c:101
+#: plug-ins/common/checkerboard.c:98
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
 msgstr "<Image>/Filtre/Render/Mønster/Sjakkbrett..."
 
-#: plug-ins/common/checkerboard.c:164
+#: plug-ins/common/checkerboard.c:161
 msgid "Adding Checkerboard..."
 msgstr "Legger til sjakkbrett..."
 
-#: plug-ins/common/checkerboard.c:355
+#: plug-ins/common/checkerboard.c:352
 msgid "Checkerboard"
 msgstr "Sjakkbrett"
 
-#: plug-ins/common/checkerboard.c:381
-msgid "Psychobilly"
+#: plug-ins/common/checkerboard.c:378
+#, fuzzy
+msgid "_Psychobilly"
 msgstr "Psychobilly"
 
-#: plug-ins/common/checkerboard.c:396
-msgid "Check Size:"
+#: plug-ins/common/checkerboard.c:393
+#, fuzzy
+msgid "Check _Size:"
 msgstr "Rutestørrelse:"
 
 #: plug-ins/common/color_enhance.c:91
@@ -2391,22 +2468,22 @@ msgstr "<Image>/Filtre/Farger/Colorify..."
 msgid "Colorifying..."
 msgstr "Colorifying..."
 
-#: plug-ins/common/colorify.c:302
+#: plug-ins/common/colorify.c:307
 msgid "Colorify"
 msgstr "Colorify"
 
-#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
-#: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
+#: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
-#: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
+#: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Farge"
 
-#: plug-ins/common/colorify.c:333
+#: plug-ins/common/colorify.c:338
 msgid "Custom Color:"
 msgstr "Egendefinert farge:"
 
-#: plug-ins/common/colorify.c:338
+#: plug-ins/common/colorify.c:343
 msgid "Colorify Custom Color"
 msgstr "Colorify egendefinert farge"
 
@@ -2448,8 +2525,7 @@ msgstr "rgb-sammensetting"
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:425
-#: plug-ins/common/noisify.c:585 plug-ins/common/noisify.c:689
+#: plug-ins/common/compose.c:127
 msgid "Alpha:"
 msgstr "Alpha:"
 
@@ -2462,18 +2538,17 @@ msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:128 plug-ins/common/scatter_hsv.c:455
-#: plug-ins/rcm/rcm_dialog.c:456
+#: plug-ins/common/compose.c:128 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
 msgstr "Glød:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:129 plug-ins/common/scatter_hsv.c:464
-#: plug-ins/print/gimp_color_window.c:253 plug-ins/rcm/rcm_dialog.c:483
+#: plug-ins/common/compose.c:129 plug-ins/print/gimp_color_window.c:327
+#: plug-ins/rcm/rcm_dialog.c:483
 msgid "Saturation:"
 msgstr "Metning:"
 
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:473
+#: plug-ins/common/compose.c:130
 msgid "Value:"
 msgstr "Verdi:"
 
@@ -2486,17 +2561,17 @@ msgid "CMY"
 msgstr "CMY"
 
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:208
+#: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:270
 msgid "Cyan:"
 msgstr "Cyan:"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:223
+#: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:289
 msgid "Magenta:"
 msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:238
+#: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:308
 msgid "Yellow:"
 msgstr "Gul:"
 
@@ -2565,7 +2640,7 @@ msgid "Channel Representations"
 msgstr "Kanalrepresentasjoner"
 
 #: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:393
-#: plug-ins/gfig/gfig.c:3323
+#: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
 msgstr "Grå"
 
@@ -2578,8 +2653,7 @@ msgid "Extend"
 msgstr "Utvid"
 
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:409
-#: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:656
-#: plug-ins/common/warp.c:504
+#: plug-ins/common/ripple.c:656 plug-ins/common/warp.c:504
 msgid "Wrap"
 msgstr "Bryt"
 
@@ -2601,36 +2675,36 @@ msgstr ""
 msgid "Applying convolution"
 msgstr "Legger til convolution"
 
-#: plug-ins/common/convmatrix.c:850
+#: plug-ins/common/convmatrix.c:856
 msgid "Convolution Matrix"
 msgstr "Convolution matrix"
 
-#: plug-ins/common/convmatrix.c:876
+#: plug-ins/common/convmatrix.c:884
 msgid "Matrix"
 msgstr "Matrise"
 
-#: plug-ins/common/convmatrix.c:913
+#: plug-ins/common/convmatrix.c:921
 msgid "Divisor:"
 msgstr "Divisor:"
 
-#: plug-ins/common/convmatrix.c:933 plug-ins/common/depthmerge.c:780
+#: plug-ins/common/convmatrix.c:941 plug-ins/common/depthmerge.c:780
 msgid "Offset:"
 msgstr "Avstand:"
 
-#: plug-ins/common/convmatrix.c:958 plug-ins/common/ps.c:2699
+#: plug-ins/common/convmatrix.c:966 plug-ins/common/ps.c:2712
 #: plug-ins/fits/fits.c:1018
 msgid "Automatic"
 msgstr "Automatisk"
 
-#: plug-ins/common/convmatrix.c:967
+#: plug-ins/common/convmatrix.c:975
 msgid "Alpha-weighting"
 msgstr "Alpha-vektlegging"
 
-#: plug-ins/common/convmatrix.c:983
+#: plug-ins/common/convmatrix.c:991
 msgid "Border"
 msgstr "Kant"
 
-#: plug-ins/common/convmatrix.c:1009
+#: plug-ins/common/convmatrix.c:1017
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -2642,8 +2716,8 @@ msgstr "Lagre som C-kildekode"
 msgid "Prefixed Name:"
 msgstr "Prefiksnavn:"
 
-#: plug-ins/common/csource.c:692 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1609 plug-ins/common/xbm.c:1205
+#: plug-ins/common/csource.c:692 plug-ins/common/mail.c:530
+#: plug-ins/common/tiff.c:1624 plug-ins/common/xbm.c:1205
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -2677,8 +2751,7 @@ msgstr "Bruk 1 byte Run-Length-Encoding"
 msgid "Save Alpha Channel (RGBA/RGB)"
 msgstr "Lagre alfakanal (RGBA/RGB)"
 
-#: plug-ins/common/csource.c:765 plug-ins/common/sparkle.c:444
-#: plug-ins/common/tileit.c:610 plug-ins/gflare/gflare.c:3677
+#: plug-ins/common/csource.c:765 plug-ins/gflare/gflare.c:3677
 #: plug-ins/gflare/gflare.c:3707 plug-ins/gflare/gflare.c:3737
 msgid "Opacity:"
 msgstr "Ugjennomsiktighet:"
@@ -2736,79 +2809,79 @@ msgstr "Kurvebøy opererer kun på lag (men ble kalt på en kanal eller en maske)"
 msgid "Curve Bend"
 msgstr "Kurvebøy"
 
-#: plug-ins/common/curve_bend.c:1365 plug-ins/gfig/gfig.c:2836
-#: plug-ins/gfig/gfig.c:5286 plug-ins/gflare/gflare.c:3172
+#: plug-ins/common/curve_bend.c:1369 plug-ins/gfig/gfig.c:2835
+#: plug-ins/gfig/gfig.c:5285 plug-ins/gflare/gflare.c:3172
 #: plug-ins/imagemap/imap_cmd_copy.c:59
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_menu.c:297 plug-ins/imagemap/imap_toolbar.c:138
 msgid "Copy"
 msgstr "Kopier"
 
-#: plug-ins/common/curve_bend.c:1367
+#: plug-ins/common/curve_bend.c:1372
 msgid "CopyInv"
 msgstr "KopierInv"
 
-#: plug-ins/common/curve_bend.c:1369
+#: plug-ins/common/curve_bend.c:1375
 msgid "Swap"
 msgstr "Bytt"
 
 #. The Load button
-#: plug-ins/common/curve_bend.c:1388
+#: plug-ins/common/curve_bend.c:1393
 msgid "LoadCurve"
 msgstr "LoadCurve"
 
 #. The Save button
-#: plug-ins/common/curve_bend.c:1397
+#: plug-ins/common/curve_bend.c:1402
 msgid "SaveCurve"
 msgstr "SaveCurve"
 
 #. Rotate label & spinbutton
-#: plug-ins/common/curve_bend.c:1406
+#: plug-ins/common/curve_bend.c:1411
 msgid "Rotate: "
 msgstr "Roter: "
 
-#: plug-ins/common/curve_bend.c:1422
+#: plug-ins/common/curve_bend.c:1427
 msgid "Curve for Border: "
 msgstr "Kurve for kant: "
 
 #. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1435
+#: plug-ins/common/curve_bend.c:1440
 msgid "Curve Type: "
 msgstr "Kurvetype: "
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1498
+#: plug-ins/common/curve_bend.c:1503
 msgid "PreviewOnce"
 msgstr "ForhåndsvisEn"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1517
+#: plug-ins/common/curve_bend.c:1522
 msgid "Smoothing"
 msgstr "Utjevning"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1527 plug-ins/common/gqbist.c:857
+#: plug-ins/common/curve_bend.c:1532 plug-ins/common/gqbist.c:857
 #: plug-ins/common/newsprint.c:1448 plug-ins/common/ripple.c:612
-#: plug-ins/gfig/gfig.c:3149 plug-ins/mosaic/mosaic.c:610
+#: plug-ins/gfig/gfig.c:3148 plug-ins/mosaic/mosaic.c:610
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1537
+#: plug-ins/common/curve_bend.c:1542
 msgid "Work on Copy"
 msgstr "Jobb med kopi"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2168
+#: plug-ins/common/curve_bend.c:2173
 msgid "Load Curve Points from file"
 msgstr "Last kurvepunkter fra fil"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2201
+#: plug-ins/common/curve_bend.c:2206
 msgid "Save Curve Points to file"
 msgstr "Lagre kurvepunkter til fil"
 
-#: plug-ins/common/curve_bend.c:3341
+#: plug-ins/common/curve_bend.c:3346
 msgid "Curve Bend..."
 msgstr "Kurvebøy..."
 
@@ -2900,12 +2973,12 @@ msgstr "<Image>/Bilde/Modus/Bryt opp..."
 msgid "Decomposing..."
 msgstr "Bryter opp..."
 
-#: plug-ins/common/decompose.c:868
+#: plug-ins/common/decompose.c:879
 msgid "Decompose"
 msgstr "Bryt opp"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:885
+#: plug-ins/common/decompose.c:896
 msgid "Extract Channels:"
 msgstr "Hent ut kanaler:"
 
@@ -2922,11 +2995,13 @@ msgid "Deinterlace"
 msgstr "Deinterlace"
 
 #: plug-ins/common/deinterlace.c:291
-msgid "Keep Odd Fields"
+#, fuzzy
+msgid "Keep O_dd Fields"
 msgstr "Behold odde felt"
 
 #: plug-ins/common/deinterlace.c:294
-msgid "Keep Even Fields"
+#, fuzzy
+msgid "Keep _Even Fields"
 msgstr "Behold like felt"
 
 #: plug-ins/common/depthmerge.c:202
@@ -3010,21 +3085,30 @@ msgstr "Despeckle"
 msgid "Type"
 msgstr "Type"
 
-#: plug-ins/common/despeckle.c:717 plug-ins/gimpressionist/orientation.c:206
-#: plug-ins/gimpressionist/size.c:200
-msgid "Adaptive"
+#: plug-ins/common/despeckle.c:717
+#, fuzzy
+msgid "_Adaptive"
 msgstr "Tilpassende"
 
 #: plug-ins/common/despeckle.c:727
-msgid "Recursive"
+#, fuzzy
+msgid "R_ecursive"
 msgstr "Rekursiv"
 
+#: plug-ins/common/despeckle.c:753 plug-ins/common/nlfilt.c:420
+#: plug-ins/common/nova.c:530 plug-ins/common/unsharp.c:812
+#, fuzzy
+msgid "_Radius:"
+msgstr "Radius:"
+
 #: plug-ins/common/despeckle.c:766
-msgid "Black Level:"
+#, fuzzy
+msgid "_Black Level:"
 msgstr "Sort nivå:"
 
 #: plug-ins/common/despeckle.c:779
-msgid "White Level:"
+#, fuzzy
+msgid "_White Level:"
 msgstr "Hvit nivå:"
 
 #: plug-ins/common/destripe.c:149
@@ -3040,15 +3124,13 @@ msgid "Destripe"
 msgstr "Fjern striper"
 
 #: plug-ins/common/destripe.c:650
-msgid "Create Histogram"
+#, fuzzy
+msgid "Create _Histogram"
 msgstr "Lag histogram"
 
-#: plug-ins/common/destripe.c:674 plug-ins/common/gtm.c:566
-#: plug-ins/common/ps.c:2654 plug-ins/common/ps.c:2832
-#: plug-ins/common/smooth_palette.c:434 plug-ins/common/tile.c:427
-#: plug-ins/imagemap/imap_rectangle.c:397
-#: plug-ins/print/gimp_main_window.c:638
-msgid "Width:"
+#: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:440
+#, fuzzy
+msgid "_Width:"
 msgstr "Bredde:"
 
 #: plug-ins/common/diffraction.c:189
@@ -3076,7 +3158,7 @@ msgid "Sharp edges"
 msgstr "Skarpe kanter"
 
 #: plug-ins/common/diffraction.c:722 plug-ins/flame/flame.c:1021
-#: plug-ins/print/gimp_color_window.c:178
+#: plug-ins/print/gimp_color_window.c:231
 msgid "Brightness:"
 msgstr "Lysstyrke"
 
@@ -3125,17 +3207,15 @@ msgstr "Y-forskyvning:"
 msgid "On Edges:"
 msgstr "På kanter:"
 
-#: plug-ins/common/displace.c:423 plug-ins/common/edge.c:700
-#: plug-ins/common/ripple.c:657 plug-ins/common/warp.c:519
-#: plug-ins/common/waves.c:383
+#: plug-ins/common/displace.c:423 plug-ins/common/ripple.c:657
+#: plug-ins/common/warp.c:519
 msgid "Smear"
 msgstr "Smør"
 
-#: plug-ins/common/displace.c:437 plug-ins/common/edge.c:710
-#: plug-ins/common/fractaltrace.c:778 plug-ins/common/newsprint.c:459
-#: plug-ins/common/ripple.c:658 plug-ins/common/warp.c:534
-#: plug-ins/fits/fits.c:1006 plug-ins/flame/flame.c:1123
-#: plug-ins/gfig/gfig.c:3321
+#: plug-ins/common/displace.c:437 plug-ins/common/fractaltrace.c:778
+#: plug-ins/common/newsprint.c:459 plug-ins/common/ripple.c:658
+#: plug-ins/common/warp.c:534 plug-ins/fits/fits.c:1006
+#: plug-ins/flame/flame.c:1123 plug-ins/gfig/gfig.c:3320
 msgid "Black"
 msgstr "Sort"
 
@@ -3152,29 +3232,60 @@ msgid "Edge Detection"
 msgstr "Finn kant"
 
 #: plug-ins/common/edge.c:674 plug-ins/common/unsharp.c:821
-msgid "Amount:"
+#, fuzzy
+msgid "_Amount:"
 msgstr "Mengde:"
 
-#: plug-ins/common/emboss.c:169
+#: plug-ins/common/edge.c:690
+#, fuzzy
+msgid "_Wrap"
+msgstr "Bryt"
+
+#: plug-ins/common/edge.c:700 plug-ins/common/waves.c:368
+#, fuzzy
+msgid "_Smear"
+msgstr "Smør"
+
+#: plug-ins/common/edge.c:710
+#, fuzzy
+msgid "_Black"
+msgstr "Sort"
+
+#: plug-ins/common/emboss.c:154
 msgid "<Image>/Filters/Distorts/Emboss..."
 msgstr "<Image>/Filtre/Forvrengning/Emboss..."
 
-#: plug-ins/common/emboss.c:416 plug-ins/common/emboss.c:519
-#: plug-ins/common/emboss.c:554
+#: plug-ins/common/emboss.c:398 plug-ins/common/emboss.c:501
 msgid "Emboss"
 msgstr "Emboss"
 
-#: plug-ins/common/emboss.c:549
+#: plug-ins/common/emboss.c:531
 msgid "Function"
 msgstr "Funksjon"
 
-#: plug-ins/common/emboss.c:553
-msgid "Bumpmap"
+#: plug-ins/common/emboss.c:535
+#, fuzzy
+msgid "_Bumpmap"
 msgstr "Bumpmap"
 
-#: plug-ins/common/emboss.c:761 plug-ins/common/nlfilt.c:600
-#: plug-ins/common/sinus.c:2142 plug-ins/common/waves.c:602
-msgid "Do Preview"
+#: plug-ins/common/emboss.c:536
+#, fuzzy
+msgid "_Emboss"
+msgstr "Emboss"
+
+#: plug-ins/common/emboss.c:555
+#, fuzzy
+msgid "_Azimuth:"
+msgstr "Azimuth:"
+
+#: plug-ins/common/emboss.c:564
+#, fuzzy
+msgid "E_levation:"
+msgstr "Forhøyelse:"
+
+#: plug-ins/common/emboss.c:743
+#, fuzzy
+msgid "Do _Preview"
 msgstr "Forhåndsvis"
 
 #: plug-ins/common/engrave.c:118
@@ -3193,11 +3304,12 @@ msgstr "Graver"
 msgid "Limit Line Width"
 msgstr "Begrens linjebredde"
 
-#: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1235
-#: plug-ins/common/gtm.c:582 plug-ins/common/ps.c:2663
-#: plug-ins/common/ps.c:2841 plug-ins/common/smooth_palette.c:443
-#: plug-ins/common/tile.c:431 plug-ins/imagemap/imap_rectangle.c:403
-#: plug-ins/print/gimp_main_window.c:652
+#: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1238
+#: plug-ins/common/gtm.c:581 plug-ins/common/ps.c:2676
+#: plug-ins/common/ps.c:2854 plug-ins/common/tile.c:431
+#: plug-ins/imagemap/imap_rectangle.c:403
+#: plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/print/gimp_main_window.c:1229
 msgid "Height:"
 msgstr "Høyde:"
 
@@ -3258,7 +3370,7 @@ msgstr "<Image>/Filtre/Kombiner/Film..."
 msgid "Composing Images..."
 msgstr "Setter sammen bilder..."
 
-#: plug-ins/common/film.c:455
+#: plug-ins/common/film.c:455 plug-ins/common/guillotine.c:176
 msgid "Untitled"
 msgstr "Navnløs"
 
@@ -3275,101 +3387,96 @@ msgstr "Tilgjengelige bilder:"
 msgid "On Film:"
 msgstr "På film:"
 
-#: plug-ins/common/film.c:1138
+#: plug-ins/common/film.c:1141
 msgid "Add >>"
 msgstr "Legg til >>"
 
-#: plug-ins/common/film.c:1138 plug-ins/common/iwarp.c:1057
-#: plug-ins/imagemap/imap_polygon.c:473
+#: plug-ins/common/film.c:1141 plug-ins/imagemap/imap_polygon.c:473
 msgid "Remove"
 msgstr "Fjern"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1175 plug-ins/common/film.c:1208
+#: plug-ins/common/film.c:1178 plug-ins/common/film.c:1211
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1217
+#: plug-ins/common/film.c:1220
 msgid "Fit Height to Images"
 msgstr "Tilpass høyde til bilder"
 
 #. Film color
-#: plug-ins/common/film.c:1251
+#: plug-ins/common/film.c:1254
 msgid "Select Film Color"
 msgstr "Velg filmfarge"
 
-#: plug-ins/common/film.c:1256 plug-ins/common/film.c:1306
-#: plug-ins/common/nova.c:519 plug-ins/gimpressionist/color.c:79
+#: plug-ins/common/film.c:1259 plug-ins/common/film.c:1309
+#: plug-ins/gimpressionist/color.c:79
 msgid "Color:"
 msgstr "Farge:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1267
+#: plug-ins/common/film.c:1270
 msgid "Numbering"
 msgstr "Nummerering"
 
-#: plug-ins/common/film.c:1285
+#: plug-ins/common/film.c:1288
 msgid "Start Index:"
 msgstr "Startindeks:"
 
-#: plug-ins/common/film.c:1297
+#: plug-ins/common/film.c:1300
 msgid "Font:"
 msgstr "Skrifttype:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1301
+#: plug-ins/common/film.c:1304
 msgid "Select Number Color"
 msgstr "Velg fargenummer"
 
-#: plug-ins/common/film.c:1316
+#: plug-ins/common/film.c:1319
 msgid "At Bottom"
 msgstr "Nederst"
 
-#: plug-ins/common/film.c:1316
+#: plug-ins/common/film.c:1319
 msgid "At Top"
 msgstr "Øverst"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1332
+#: plug-ins/common/film.c:1335
 msgid "Image Selection"
 msgstr "Bildeutvalg"
 
-#: plug-ins/common/film.c:1349
+#: plug-ins/common/film.c:1352
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
 msgstr "Avanserte innstillinger (Alle verdier er brøkdeler av filmhøyden)"
 
-#: plug-ins/common/film.c:1365
+#: plug-ins/common/film.c:1368
 msgid "Image Height:"
 msgstr "Bildehøyde:"
 
-#: plug-ins/common/film.c:1379
+#: plug-ins/common/film.c:1382
 msgid "Image Spacing:"
 msgstr "Bildemellomrom:"
 
-#: plug-ins/common/film.c:1400
+#: plug-ins/common/film.c:1403
 msgid "Hole Offset:"
 msgstr "Hullavstand:"
 
-#: plug-ins/common/film.c:1414
+#: plug-ins/common/film.c:1417
 msgid "Hole Width:"
 msgstr "Hullbredde:"
 
-#: plug-ins/common/film.c:1428
+#: plug-ins/common/film.c:1431
 msgid "Hole Height:"
 msgstr "Hullhøyde:"
 
-#: plug-ins/common/film.c:1442
+#: plug-ins/common/film.c:1445
 msgid "Hole Spacing:"
 msgstr "Hullmellomrom:"
 
-#: plug-ins/common/film.c:1463
+#: plug-ins/common/film.c:1466
 msgid "Number Height:"
 msgstr "Tallhøyde:"
-
-#: plug-ins/common/film.c:1488
-msgid "Reset to Defaults"
-msgstr "Sett til standardverdier"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
@@ -3391,8 +3498,9 @@ msgid "Center of FlareFX"
 msgstr "Senter av FlareFx"
 
 #. show / hide cursor
-#: plug-ins/common/flarefx.c:860 plug-ins/common/nova.c:703
-msgid "Show Cursor"
+#: plug-ins/common/flarefx.c:862
+#, fuzzy
+msgid "_Show Cursor"
 msgstr "Vis markør"
 
 #: plug-ins/common/fractaltrace.c:130
@@ -3412,8 +3520,13 @@ msgstr "Utenfor-type"
 msgid "Warp"
 msgstr "Warp"
 
+#: plug-ins/common/fractaltrace.c:776 plug-ins/common/papertile.c:382
+#: plug-ins/gfig/gfig.c:2831 plug-ins/gimpressionist/general.c:244
+msgid "Transparent"
+msgstr "Gjennomsiktig"
+
 #: plug-ins/common/fractaltrace.c:780 plug-ins/fits/fits.c:1007
-#: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:3322
+#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
 msgid "White"
 msgstr "Hvit"
 
@@ -3460,7 +3573,6 @@ msgid "Blur Vertically"
 msgstr "Blur vertikalt"
 
 #: plug-ins/common/gauss_iir.c:407 plug-ins/common/gauss_rle.c:402
-#: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
 msgstr "Blur-radius:"
 
@@ -3470,13 +3582,15 @@ msgid "Blur Radius"
 msgstr "Blur-raduis"
 
 #: plug-ins/common/gauss_iir.c:479 plug-ins/common/gauss_rle.c:474
-#: plug-ins/common/jigsaw.c:2549 plug-ins/common/spread.c:409
-msgid "Horizontal:"
-msgstr "Horisontal:"
+#: plug-ins/common/spread.c:409
+#, fuzzy
+msgid "_Horizontal:"
+msgstr "Horisontal"
 
 #: plug-ins/common/gauss_iir.c:483 plug-ins/common/gauss_rle.c:478
-#: plug-ins/common/jigsaw.c:2562 plug-ins/common/spread.c:413
-msgid "Vertical:"
+#: plug-ins/common/spread.c:413
+#, fuzzy
+msgid "_Vertical:"
 msgstr "Vertikal:"
 
 #: plug-ins/common/gauss_rle.c:177
@@ -3530,16 +3644,16 @@ msgstr "Beskrivelse:"
 msgid "<Image>/Filters/Toys/Gee-Slime"
 msgstr "<Image>/Filtre/Leketøy/Gee-slime"
 
-#: plug-ins/common/gee.c:184
+#: plug-ins/common/gee.c:183
 msgid "GEE-SLIME"
 msgstr "GEE-SLIME"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:195 plug-ins/common/gee_zoom.c:213
+#: plug-ins/common/gee.c:194 plug-ins/common/gee_zoom.c:212
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Takk for at du valgte GIMP **"
 
-#: plug-ins/common/gee.c:208
+#: plug-ins/common/gee.c:207
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -3549,11 +3663,11 @@ msgstr ""
 msgid "<Image>/Filters/Toys/Gee-Zoom"
 msgstr "<Image>/Filtre/Leketøy/Gee-zoom"
 
-#: plug-ins/common/gee_zoom.c:202
+#: plug-ins/common/gee_zoom.c:201
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 msgstr ""
 
-#: plug-ins/common/gee_zoom.c:226
+#: plug-ins/common/gee_zoom.c:225
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -3756,11 +3870,13 @@ msgid "Glass Tile"
 msgstr "Glassflis"
 
 #: plug-ins/common/glasstile.c:318
-msgid "Tile Width:"
+#, fuzzy
+msgid "Tile _Width:"
 msgstr "Flisbredde:"
 
-#: plug-ins/common/glasstile.c:332 plug-ins/mosaic/mosaic.c:702
-msgid "Tile Height:"
+#: plug-ins/common/glasstile.c:332
+#, fuzzy
+msgid "Tile _Height:"
 msgstr "Flishøyde:"
 
 #: plug-ins/common/gqbist.c:427
@@ -3801,11 +3917,26 @@ msgstr "<Image>/Filtre/Render/Mønster/Rutenett..."
 msgid "Drawing Grid..."
 msgstr "Rutenett..."
 
-#: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3397
+#: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:410 plug-ins/imagemap/imap_popup.c:151
 #: plug-ins/imagemap/imap_toolbar.c:169
 msgid "Grid"
 msgstr "Rutenett"
+
+#: plug-ins/common/grid.c:715
+msgid "Update Preview"
+msgstr "Oppdater forhåndsvisning"
+
+#. attach labels
+#: plug-ins/common/grid.c:779 plug-ins/common/ripple.c:639
+#: plug-ins/pagecurl/pagecurl.c:597
+msgid "Horizontal"
+msgstr "Horisontal"
+
+#: plug-ins/common/grid.c:780 plug-ins/common/ripple.c:642
+#: plug-ins/pagecurl/pagecurl.c:598
+msgid "Vertical"
+msgstr "Vertikal"
 
 #: plug-ins/common/grid.c:781
 msgid "Intersection"
@@ -3837,15 +3968,15 @@ msgstr "Vertikal farge"
 msgid "Intersection Color"
 msgstr "Farge for krysningspunkt"
 
-#: plug-ins/common/gtm.c:370
+#: plug-ins/common/gtm.c:368
 msgid "GIMP Table Magic"
 msgstr "GIMP tabellmagi"
 
-#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4081
+#: plug-ins/common/gtm.c:398 plug-ins/gfig/gfig.c:4080
 msgid "Warning"
 msgstr "Advarsel"
 
-#: plug-ins/common/gtm.c:411
+#: plug-ins/common/gtm.c:410
 msgid ""
 "Are you crazy?\n"
 "\n"
@@ -3860,30 +3991,30 @@ msgstr ""
 "krasje din webleser."
 
 #. HTML Page Options
-#: plug-ins/common/gtm.c:421
+#: plug-ins/common/gtm.c:420
 msgid "HTML Page Options"
 msgstr "Alternativer HTML-sider"
 
-#: plug-ins/common/gtm.c:430
+#: plug-ins/common/gtm.c:429
 msgid "Generate Full HTML Document"
 msgstr "Generer fullt HTML-dokument"
 
-#: plug-ins/common/gtm.c:436
+#: plug-ins/common/gtm.c:435
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
 msgstr ""
 
 #. HTML Table Creation Options
-#: plug-ins/common/gtm.c:449
+#: plug-ins/common/gtm.c:448
 msgid "Table Creation Options"
 msgstr "Alternativer for tabelloppretting"
 
-#: plug-ins/common/gtm.c:459
+#: plug-ins/common/gtm.c:458
 msgid "Use Cellspan"
 msgstr "Bruk cellspan"
 
-#: plug-ins/common/gtm.c:465
+#: plug-ins/common/gtm.c:464
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -3891,11 +4022,11 @@ msgstr ""
 "Hvis avkrysset vil GTM erstatte enhver rektangulær seksjon av blokker med "
 "identisk farge med en stor celle med ROWSPAN og COLSPAN verdier."
 
-#: plug-ins/common/gtm.c:474
+#: plug-ins/common/gtm.c:473
 msgid "Compress TD tags"
 msgstr "Komprimer TD tags"
 
-#: plug-ins/common/gtm.c:480
+#: plug-ins/common/gtm.c:479
 msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
@@ -3905,60 +4036,68 @@ msgstr ""
 "TD taggene og celleinnholdet. Dette er kun nødvendig for kontroll av "
 "posisjonering på pikselnivå."
 
-#: plug-ins/common/gtm.c:490
+#: plug-ins/common/gtm.c:489
 msgid "Caption"
 msgstr ""
 
-#: plug-ins/common/gtm.c:496
+#: plug-ins/common/gtm.c:495
 msgid "Check if you would like to have the table captioned."
 msgstr ""
 
-#: plug-ins/common/gtm.c:511
+#: plug-ins/common/gtm.c:510
 msgid "The text for the table caption."
 msgstr ""
 
-#: plug-ins/common/gtm.c:524
+#: plug-ins/common/gtm.c:523
 msgid "Cell Content:"
 msgstr "Celleinnhold:"
 
-#: plug-ins/common/gtm.c:528
+#: plug-ins/common/gtm.c:527
 msgid "The text to go into each cell."
 msgstr "Teksten som skal inn i hver celle."
 
 #. HTML Table Options
-#: plug-ins/common/gtm.c:538
+#: plug-ins/common/gtm.c:537
 msgid "Table Options"
 msgstr "Alternativer for tabell"
 
-#: plug-ins/common/gtm.c:551
+#: plug-ins/common/gtm.c:550
 msgid "Border:"
 msgstr "Kant:"
 
-#: plug-ins/common/gtm.c:555
+#: plug-ins/common/gtm.c:554
 msgid "The number of pixels in the table border."
 msgstr "Antall piksler i tabellkanten."
 
-#: plug-ins/common/gtm.c:570
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2667
+#: plug-ins/common/ps.c:2845 plug-ins/common/tile.c:427
+#: plug-ins/imagemap/imap_rectangle.c:397
+#: plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/print/gimp_main_window.c:1216
+msgid "Width:"
+msgstr "Bredde:"
+
+#: plug-ins/common/gtm.c:569
 msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Bredden for hver celle i tabellen. Kan være et tall eller en prosent."
 
-#: plug-ins/common/gtm.c:586
+#: plug-ins/common/gtm.c:585
 msgid "The height for each table cell.  Can be a number or a percent."
 msgstr "Høyden for hver celle i tabellen. Kan være et tall eller en prosent."
 
-#: plug-ins/common/gtm.c:597
+#: plug-ins/common/gtm.c:596
 msgid "Cell-Padding:"
 msgstr "Celle-fyll:"
 
-#: plug-ins/common/gtm.c:601
+#: plug-ins/common/gtm.c:600
 msgid "The amount of cellpadding."
 msgstr "Mengden med fyll i cellen."
 
-#: plug-ins/common/gtm.c:610
+#: plug-ins/common/gtm.c:609
 msgid "Cell-Spacing:"
 msgstr "Celle-mellomrom:"
 
-#: plug-ins/common/gtm.c:614
+#: plug-ins/common/gtm.c:613
 msgid "The amount of cellspacing."
 msgstr "Mellomrom mellom cellene."
 
@@ -3979,32 +4118,36 @@ msgstr "gz: ingen fornuftig filtype, lagrer som gzippet xcf\n"
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr "gz: ingen fornuftig filtype, prøver å laste med filmagi\n"
 
-#: plug-ins/common/hot.c:233
+#: plug-ins/common/hot.c:217
 msgid "<Image>/Filters/Colors/Hot..."
 msgstr "<Image>/Filtre/Farger/Het..."
 
-#: plug-ins/common/hot.c:383 plug-ins/common/hot.c:583
+#: plug-ins/common/hot.c:377 plug-ins/common/hot.c:577
 msgid "Hot"
 msgstr "Het"
 
-#: plug-ins/common/hot.c:609
-msgid "Create New Layer"
+#: plug-ins/common/hot.c:603
+#, fuzzy
+msgid "Create _New Layer"
 msgstr "Lag nytt lag"
 
-#: plug-ins/common/hot.c:631
+#: plug-ins/common/hot.c:625
 msgid "Action"
 msgstr "Handling"
 
-#: plug-ins/common/hot.c:636
-msgid "Reduce Luminance"
+#: plug-ins/common/hot.c:630
+#, fuzzy
+msgid "Reduce _Luminance"
 msgstr "Reduser luminance"
 
-#: plug-ins/common/hot.c:639
-msgid "Reduce Saturation"
+#: plug-ins/common/hot.c:633
+#, fuzzy
+msgid "Reduce _Saturation"
 msgstr "Reduser metning"
 
-#: plug-ins/common/hot.c:642 plug-ins/common/waves.c:384
-msgid "Blacken"
+#: plug-ins/common/hot.c:636 plug-ins/common/waves.c:369
+#, fuzzy
+msgid "_Blacken"
 msgstr "Gjør sortere"
 
 #: plug-ins/common/illusion.c:122
@@ -4044,73 +4187,100 @@ msgstr "Warper..."
 msgid "Warping Frame Nr %d ..."
 msgstr "Warper ramme nr %d..."
 
-#: plug-ins/common/iwarp.c:762 plug-ins/common/iwarp.c:974
+#: plug-ins/common/iwarp.c:762
 msgid "Ping Pong"
 msgstr "Ping pong"
 
-#: plug-ins/common/iwarp.c:932 plug-ins/common/iwarp.c:987
-msgid "Animate"
+#: plug-ins/common/iwarp.c:932
+#, fuzzy
+msgid "A_nimate"
 msgstr "Animer"
 
 #: plug-ins/common/iwarp.c:956
-msgid "Number of Frames:"
+#, fuzzy
+msgid "Number of _Frames:"
 msgstr "Antall rammer:"
 
 #: plug-ins/common/iwarp.c:965
-msgid "Reverse"
+#, fuzzy
+msgid "R_everse"
 msgstr "Reverser"
 
+#: plug-ins/common/iwarp.c:974
+#, fuzzy
+msgid "_Ping Pong"
+msgstr "Ping pong"
+
+#: plug-ins/common/iwarp.c:987
+#, fuzzy
+msgid "_Animate"
+msgstr "Animer"
+
 #: plug-ins/common/iwarp.c:1015
-msgid "Deform Radius:"
+#, fuzzy
+msgid "_Deform Radius:"
 msgstr "Deformeringsradius:"
 
 #: plug-ins/common/iwarp.c:1025
-msgid "Deform Amount:"
+#, fuzzy
+msgid "D_eform Amount:"
 msgstr "Deformeringsmengde:"
 
 #: plug-ins/common/iwarp.c:1034
 msgid "Deform Mode"
 msgstr "Deformeringsmodus"
 
-#: plug-ins/common/iwarp.c:1048 plug-ins/ifscompose/ifscompose.c:867
-#: plug-ins/ifscompose/ifscompose.c:1134 plug-ins/imagemap/imap_cmd_move.c:87
-#: plug-ins/imagemap/imap_cmd_object_move.c:58
-msgid "Move"
+#: plug-ins/common/iwarp.c:1048
+#, fuzzy
+msgid "_Move"
 msgstr "Flytt"
 
 #: plug-ins/common/iwarp.c:1051
-msgid "Grow"
+#, fuzzy
+msgid "_Grow"
 msgstr "Voks"
 
 #: plug-ins/common/iwarp.c:1054
-msgid "Swirl CCW"
+msgid "S_wirl CCW"
 msgstr ""
 
+#: plug-ins/common/iwarp.c:1057
+#, fuzzy
+msgid "Remo_ve"
+msgstr "Fjern"
+
 #: plug-ins/common/iwarp.c:1060
-msgid "Shrink"
+#, fuzzy
+msgid "S_hrink"
 msgstr "Krymp"
 
 #: plug-ins/common/iwarp.c:1063
-msgid "Swirl CW"
+msgid "Sw_irl CW"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1086 plug-ins/common/sinus.c:1988
-msgid "Bilinear"
+#: plug-ins/common/iwarp.c:1086
+#, fuzzy
+msgid "_Bilinear"
 msgstr "Bilineær"
 
 #: plug-ins/common/iwarp.c:1105
-msgid "Adaptive Supersample"
+#, fuzzy
+msgid "Adaptive S_upersample"
 msgstr "Tilpassende supersample"
 
-#: plug-ins/common/iwarp.c:1125 plug-ins/gflare/gflare.c:3083
-msgid "Max Depth:"
+#: plug-ins/common/iwarp.c:1125
+#, fuzzy
+msgid "Ma_x Depth:"
 msgstr "Maks dybde:"
 
-#. parameter settings
-#: plug-ins/common/iwarp.c:1148 plug-ins/common/sample_colorize.c:1385
-#: plug-ins/common/sinus.c:1844 plug-ins/gfig/gfig.c:3973
-#: plug-ins/gflare/gflare.c:3112
-msgid "Settings"
+#: plug-ins/common/iwarp.c:1135
+#, fuzzy
+msgid "Thresho_ld:"
+msgstr "Terskel:"
+
+#: plug-ins/common/iwarp.c:1148
+#, fuzzy
+msgid "_Settings"
 msgstr "Innstillinger"
 
 #: plug-ins/common/iwarp.c:1165
@@ -4133,9 +4303,17 @@ msgstr "Puslespill"
 msgid "Number of Tiles"
 msgstr "Antall fliser"
 
+#: plug-ins/common/jigsaw.c:2549
+msgid "Horizontal:"
+msgstr "Horisontal:"
+
 #: plug-ins/common/jigsaw.c:2552
 msgid "Number of pieces going across"
 msgstr "Antall stykker på tvers"
+
+#: plug-ins/common/jigsaw.c:2562
+msgid "Vertical:"
+msgstr "Vertikal:"
 
 #: plug-ins/common/jigsaw.c:2565
 msgid "Number of pieces going down"
@@ -4199,8 +4377,8 @@ msgid "JPEG preview"
 msgstr "JPEG forhåndsvisning"
 
 #: plug-ins/common/jpeg.c:1132
-#, c-format
-msgid "Size: %lu bytes (%02.01f kB)"
+#, fuzzy, c-format
+msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Størrelse: %lu bytes (%02.01f kB)"
 
 #: plug-ins/common/jpeg.c:1541 plug-ins/common/jpeg.c:1649
@@ -4356,45 +4534,45 @@ msgstr "Makimumverdi:"
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
 msgstr "<Image>/Filtre/Kart/Van Gogh (LIC)..."
 
-#: plug-ins/common/mail.c:219
+#: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
 msgstr "<Image>/Fil/Send bilde..."
 
-#: plug-ins/common/mail.c:462
+#: plug-ins/common/mail.c:463
 msgid "Send to Mail"
 msgstr "Send som e-post"
 
-#: plug-ins/common/mail.c:493
+#: plug-ins/common/mail.c:494
 msgid "Recipient:"
 msgstr "Mottaker:"
 
-#: plug-ins/common/mail.c:505
+#: plug-ins/common/mail.c:506
 msgid "Sender:"
 msgstr "Sender:"
 
-#: plug-ins/common/mail.c:517
+#: plug-ins/common/mail.c:518
 msgid "Subject:"
 msgstr "Emne:"
 
-#: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3750
+#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3749
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Filename:"
 msgstr "Filnavn:"
 
 #. Encapsulation label
-#: plug-ins/common/mail.c:574
+#: plug-ins/common/mail.c:575
 msgid "Encapsulation:"
 msgstr "Innkapsling:"
 
-#: plug-ins/common/mail.c:586
+#: plug-ins/common/mail.c:587
 msgid "Uuencode"
 msgstr "Uuencode"
 
-#: plug-ins/common/mail.c:588
+#: plug-ins/common/mail.c:589
 msgid "MIME"
 msgstr "MIME"
 
-#: plug-ins/common/mail.c:688
+#: plug-ins/common/mail.c:689
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "mail: en feil med filtype eller mangel på denne\n"
 
@@ -4472,11 +4650,13 @@ msgid "Max RGB"
 msgstr "Maks RGB"
 
 #: plug-ins/common/max_rgb.c:390
-msgid "Hold the Maximal Channels"
+#, fuzzy
+msgid "_Hold the Maximal Channels"
 msgstr "Hold maks antall kanaler"
 
 #: plug-ins/common/max_rgb.c:393
-msgid "Hold the Minimal Channels"
+#, fuzzy
+msgid "Ho_ld the Minimal Channels"
 msgstr "Hold minimum antall kanaler"
 
 #: plug-ins/common/mblur.c:164
@@ -4495,24 +4675,33 @@ msgstr "Motion blur"
 msgid "Blur Type"
 msgstr "Blur type"
 
-#: plug-ins/common/mblur.c:786 plug-ins/gimpressionist/orientation.c:169
-#: plug-ins/gimpressionist/size.c:164
-msgid "Radial"
+#: plug-ins/common/mblur.c:783
+#, fuzzy
+msgid "_Linear"
+msgstr "Lineær"
+
+#: plug-ins/common/mblur.c:786
+#, fuzzy
+msgid "_Radial"
 msgstr "Radial"
 
-#: plug-ins/common/mblur.c:789 plug-ins/imagemap/imap_popup.c:144
-msgid "Zoom"
+#: plug-ins/common/mblur.c:789
+#, fuzzy
+msgid "_Zoom"
 msgstr "Zoom"
 
 #: plug-ins/common/mblur.c:797
 msgid "Blur Parameters"
 msgstr "Blur parametere"
 
-#. Angle
-#: plug-ins/common/mblur.c:818 plug-ins/common/newsprint.c:1059
-#: plug-ins/common/warp.c:696 plug-ins/gimpressionist/orientmap.c:560
-#: plug-ins/ifscompose/ifscompose.c:578
-msgid "Angle:"
+#: plug-ins/common/mblur.c:809
+#, fuzzy
+msgid "L_ength:"
+msgstr "Lengde:"
+
+#: plug-ins/common/mblur.c:818
+#, fuzzy
+msgid "_Angle:"
 msgstr "Vinkel:"
 
 #: plug-ins/common/mpeg.c:231
@@ -4550,6 +4739,13 @@ msgstr "<Image>/Filtre/Forvrengning/Newsprint..."
 #: plug-ins/common/newsprint.c:688
 msgid "Newsprintifing..."
 msgstr "Newsprintifiserer..."
+
+#. Angle
+#: plug-ins/common/newsprint.c:1059 plug-ins/common/warp.c:696
+#: plug-ins/gimpressionist/orientmap.c:560
+#: plug-ins/ifscompose/ifscompose.c:578
+msgid "Angle:"
+msgstr "Vinkel:"
 
 #: plug-ins/common/newsprint.c:1083
 msgid "Spot Function:"
@@ -4597,29 +4793,42 @@ msgstr "Fabrikkinnstillinger"
 msgid "Oversample:"
 msgstr "Oversample:"
 
-#: plug-ins/common/nlfilt.c:163
+#: plug-ins/common/nlfilt.c:147
 msgid "<Image>/Filters/Enhance/NL Filter..."
 msgstr "<Image>/Filtre/Forbedre/NL filter..."
 
-#: plug-ins/common/nlfilt.c:281 plug-ins/common/nlfilt.c:367
+#: plug-ins/common/nlfilt.c:267 plug-ins/common/nlfilt.c:353
 msgid "NL Filter"
 msgstr "NL filter"
 
-#: plug-ins/common/nlfilt.c:397
+#: plug-ins/common/nlfilt.c:383
 msgid "Filter"
 msgstr "Filter"
 
-#: plug-ins/common/nlfilt.c:401
-msgid "Alpha Trimmed Mean"
+#: plug-ins/common/nlfilt.c:387
+#, fuzzy
+msgid "_Alpha Trimmed Mean"
 msgstr "Alfa trimmet middelverdi"
 
-#: plug-ins/common/nlfilt.c:403
-msgid "Optimal Estimation"
+#: plug-ins/common/nlfilt.c:389
+#, fuzzy
+msgid "Op_timal Estimation"
 msgstr "Optimal estimering"
 
-#: plug-ins/common/nlfilt.c:405
-msgid "Edge Enhancement"
+#: plug-ins/common/nlfilt.c:391
+#, fuzzy
+msgid "_Edge Enhancement"
 msgstr "Kantutheving"
+
+#: plug-ins/common/nlfilt.c:411
+#, fuzzy
+msgid "A_lpha:"
+msgstr "Alpha:"
+
+#: plug-ins/common/nlfilt.c:579 plug-ins/common/waves.c:577
+#, fuzzy
+msgid "_Do Preview"
+msgstr "Forhåndsvis"
 
 #: plug-ins/common/noisify.c:146
 msgid "<Image>/Filters/Noise/Noisify..."
@@ -4634,12 +4843,34 @@ msgid "Noisify"
 msgstr "Støy"
 
 #: plug-ins/common/noisify.c:541
-msgid "Independent"
+#, fuzzy
+msgid "_Independent"
 msgstr "Uavhengig"
 
 #: plug-ins/common/noisify.c:555 plug-ins/common/noisify.c:571
-msgid "Gray:"
+#, fuzzy
+msgid "_Gray:"
 msgstr "Grå:"
+
+#: plug-ins/common/noisify.c:585 plug-ins/common/noisify.c:689
+#, fuzzy
+msgid "_Alpha:"
+msgstr "Alpha:"
+
+#: plug-ins/common/noisify.c:602 plug-ins/common/noisify.c:647
+#, fuzzy
+msgid "_Red:"
+msgstr "Rød:"
+
+#: plug-ins/common/noisify.c:616 plug-ins/common/noisify.c:661
+#, fuzzy
+msgid "_Green:"
+msgstr "Grønn:"
+
+#: plug-ins/common/noisify.c:630 plug-ins/common/noisify.c:675
+#, fuzzy
+msgid "_Blue:"
+msgstr "Blå:"
 
 #: plug-ins/common/noisify.c:706
 #, c-format
@@ -4673,18 +4904,29 @@ msgstr "Supernova"
 msgid "SuperNova Color Picker"
 msgstr "Supernova fargeplukker"
 
+#: plug-ins/common/nova.c:519
+#, fuzzy
+msgid "Co_lor:"
+msgstr "Farge:"
+
 #: plug-ins/common/nova.c:542
-msgid "Spokes:"
+msgid "_Spokes:"
 msgstr ""
 
-#: plug-ins/common/nova.c:554 plug-ins/common/sparkle.c:454
-msgid "Random Hue:"
+#: plug-ins/common/nova.c:554
+#, fuzzy
+msgid "R_andom Hue:"
 msgstr "Tilfeldig glød:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:622
 msgid "Center of SuperNova"
 msgstr "Senter av supernova"
+
+#: plug-ins/common/nova.c:705
+#, fuzzy
+msgid "S_how Cursor"
+msgstr "Vis markør"
 
 #: plug-ins/common/oilify.c:118
 msgid "<Image>/Filters/Artistic/Oilify..."
@@ -4699,11 +4941,13 @@ msgid "Oilify"
 msgstr "Oljemaleri"
 
 #: plug-ins/common/oilify.c:480
-msgid "Use Intensity Algorithm"
+#, fuzzy
+msgid "_Use Intensity Algorithm"
 msgstr "Bruk intensitetsalgoritme"
 
 #: plug-ins/common/oilify.c:490
-msgid "Mask Size:"
+#, fuzzy
+msgid "_Mask Size:"
 msgstr "Maskestørrelse:"
 
 #: plug-ins/common/papertile.c:245
@@ -4759,12 +5003,11 @@ msgstr "Invertert bilde"
 msgid "Image"
 msgstr "Bilde"
 
-#: plug-ins/common/papertile.c:388 plug-ins/common/sparkle.c:536
+#: plug-ins/common/papertile.c:388
 msgid "Foreground Color"
 msgstr "Forgrunnsfarge"
 
 #: plug-ins/common/papertile.c:390 plug-ins/common/papertile.c:399
-#: plug-ins/common/sparkle.c:539
 msgid "Background Color"
 msgstr "Bakgrunnsfarge"
 
@@ -4784,43 +5027,51 @@ msgstr "<Image>/Filtre/Kart/Papirflis..."
 msgid "Save as Pattern"
 msgstr "Lagre som mønster"
 
-#: plug-ins/common/pixelize.c:182
+#: plug-ins/common/pixelize.c:183
 msgid "<Image>/Filters/Blur/Pixelize..."
 msgstr "<Image>/Filtre/Blur/Pikseliser..."
 
-#: plug-ins/common/pixelize.c:281
+#: plug-ins/common/pixelize.c:282
 msgid "Pixelizing..."
 msgstr "Pikseliserer..."
 
-#: plug-ins/common/pixelize.c:320
+#: plug-ins/common/pixelize.c:321
 msgid "Pixelize"
 msgstr "Lag til piksler"
 
-#: plug-ins/common/pixelize.c:357
-msgid "Pixel Width:"
+#: plug-ins/common/pixelize.c:358
+#, fuzzy
+msgid "Pixel _Width:"
 msgstr "Pikselbredde:"
 
-#: plug-ins/common/pixelize.c:362
+#: plug-ins/common/pixelize.c:363
 #, fuzzy
-msgid "Pixel Height:"
+msgid "Pixel _Height:"
 msgstr "Flishøyde:"
 
 #. don't translate '<Image>', it's a special
 #. * keyword of the gtk toolkit
-#: plug-ins/common/plasma.c:194
+#: plug-ins/common/plasma.c:197
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/Filtre/Render/Skyer/Plasma..."
 
-#: plug-ins/common/plasma.c:273
+#: plug-ins/common/plasma.c:281
 msgid "Plasma..."
 msgstr "Plasma..."
 
-#: plug-ins/common/plasma.c:310
+#: plug-ins/common/plasma.c:318
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:379
-msgid "Turbulence:"
+#: plug-ins/common/plasma.c:379 plug-ins/common/randomize.c:739
+#: plug-ins/common/snoise.c:544
+#, fuzzy
+msgid "_Random Seed:"
+msgstr "Tilfeldig seed:"
+
+#: plug-ins/common/plasma.c:391
+#, fuzzy
+msgid "T_urbulence:"
 msgstr "Turbulens:"
 
 #: plug-ins/common/plugindetails.c:50
@@ -5099,141 +5350,141 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: plug-ins/common/ps.c:865
+#: plug-ins/common/ps.c:867
 msgid "PS: can't open file for reading"
 msgstr ""
 
-#: plug-ins/common/ps.c:872
+#: plug-ins/common/ps.c:874
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr ""
 
-#: plug-ins/common/ps.c:880
+#: plug-ins/common/ps.c:882
 msgid "PS: can't interprete file"
 msgstr ""
 
-#: plug-ins/common/ps.c:967
+#: plug-ins/common/ps.c:969
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: plug-ins/common/ps.c:978
+#: plug-ins/common/ps.c:980
 msgid "PS: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/ps.c:987
+#: plug-ins/common/ps.c:989
 msgid "PS: can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2183 plug-ins/common/ps.c:2309
-#: plug-ins/common/ps.c:2453 plug-ins/common/ps.c:2575
+#: plug-ins/common/ps.c:2196 plug-ins/common/ps.c:2322
+#: plug-ins/common/ps.c:2466 plug-ins/common/ps.c:2588
 msgid "write error occured"
 msgstr "feil under skriving"
 
-#: plug-ins/common/ps.c:2600
+#: plug-ins/common/ps.c:2613
 msgid "Load PostScript"
 msgstr ""
 
 #. Rendering
-#: plug-ins/common/ps.c:2627 plug-ins/flame/flame.c:1004
+#: plug-ins/common/ps.c:2640 plug-ins/flame/flame.c:1004
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2645 plug-ins/print/gimp_main_window.c:534
+#: plug-ins/common/ps.c:2658 plug-ins/print/gimp_main_window.c:1095
 msgid "Resolution:"
 msgstr "Oppløsning:"
 
-#: plug-ins/common/ps.c:2673
+#: plug-ins/common/ps.c:2686
 msgid "Pages:"
 msgstr "Sider:"
 
-#: plug-ins/common/ps.c:2679
+#: plug-ins/common/ps.c:2692
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2692
+#: plug-ins/common/ps.c:2705
 msgid "Coloring"
 msgstr "Farger"
 
-#: plug-ins/common/ps.c:2696
+#: plug-ins/common/ps.c:2709
 msgid "B/W"
 msgstr "S/HV"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2697 plug-ins/rcm/rcm_dialog.c:418
+#: plug-ins/common/ps.c:2710 plug-ins/rcm/rcm_dialog.c:418
 msgid "Gray"
 msgstr "Grå"
 
-#: plug-ins/common/ps.c:2709
+#: plug-ins/common/ps.c:2722
 msgid "Text Antialiasing"
 msgstr "Antialiasing av tekst"
 
-#: plug-ins/common/ps.c:2715 plug-ins/common/ps.c:2728
+#: plug-ins/common/ps.c:2728 plug-ins/common/ps.c:2741
 msgid "Weak"
 msgstr "Svak"
 
-#: plug-ins/common/ps.c:2716 plug-ins/common/ps.c:2729
+#: plug-ins/common/ps.c:2729 plug-ins/common/ps.c:2742
 msgid "Strong"
 msgstr "Sterk"
 
-#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2735
 msgid "Graphic Antialiasing"
 msgstr "Antialiasing av grafikk"
 
-#: plug-ins/common/ps.c:2784
+#: plug-ins/common/ps.c:2797
 msgid "Save as PostScript"
 msgstr "Lagre som PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2814
+#: plug-ins/common/ps.c:2827
 msgid "Image Size"
 msgstr "Bildestørrelse"
 
-#: plug-ins/common/ps.c:2850
+#: plug-ins/common/ps.c:2863
 msgid "X-Offset:"
 msgstr "X-avstand:"
 
-#: plug-ins/common/ps.c:2859
+#: plug-ins/common/ps.c:2872
 msgid "Y-Offset:"
 msgstr "Y-avstand:"
 
-#: plug-ins/common/ps.c:2865
+#: plug-ins/common/ps.c:2878
 msgid "Keep Aspect Ratio"
 msgstr "Behold aspektrate"
 
-#: plug-ins/common/ps.c:2871
+#: plug-ins/common/ps.c:2884
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2880
+#: plug-ins/common/ps.c:2893
 msgid "Unit"
 msgstr "Enhet"
 
-#: plug-ins/common/ps.c:2885 plug-ins/print/gimp_main_window.c:360
+#: plug-ins/common/ps.c:2898 plug-ins/print/gimp_main_window.c:1261
 msgid "Inch"
 msgstr "Tomme"
 
-#: plug-ins/common/ps.c:2888
+#: plug-ins/common/ps.c:2901
 msgid "Millimeter"
 msgstr "Millimeter"
 
 #. Format
-#: plug-ins/common/ps.c:2916
+#: plug-ins/common/ps.c:2929
 msgid "Output"
 msgstr "Utskrift"
 
-#: plug-ins/common/ps.c:2924
+#: plug-ins/common/ps.c:2937
 msgid "PostScript Level 2"
 msgstr ""
 
-#: plug-ins/common/ps.c:2933
+#: plug-ins/common/ps.c:2946
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2963
+#: plug-ins/common/ps.c:2976
 msgid "Preview Size:"
 msgstr "Størrelse på forhåndsvisning:"
 
@@ -5282,9 +5533,15 @@ msgstr "<Image>/Filtre/Støy/Plukk..."
 msgid "<Image>/Filters/Noise/Slur..."
 msgstr "<Image>/Filtre/Støy/Slur..."
 
-#: plug-ins/common/randomize.c:745
-msgid "Randomization (%):"
+#: plug-ins/common/randomize.c:748
+#, fuzzy
+msgid "R_andomization (%):"
 msgstr "Tilfeldighet (%):"
+
+#: plug-ins/common/randomize.c:760
+#, fuzzy
+msgid "R_epeat:"
+msgstr "Gjenta:"
 
 #: plug-ins/common/ripple.c:155
 msgid "<Image>/Filters/Distorts/Ripple..."
@@ -5320,7 +5577,7 @@ msgstr "Sagtann"
 msgid "Period:"
 msgstr "Periode:"
 
-#: plug-ins/common/ripple.c:703 plug-ins/common/waves.c:417
+#: plug-ins/common/ripple.c:703
 msgid "Amplitude:"
 msgstr "Amplityde:"
 
@@ -5378,82 +5635,88 @@ msgstr "<Image>/Filtre/Farger/Kart/Colorize eksempel..."
 msgid "Sample Colorize"
 msgstr "Colorize eksempel"
 
-#: plug-ins/common/sample_colorize.c:1369
+#: plug-ins/common/sample_colorize.c:1375
 msgid "Get Sample Colors"
 msgstr "Hent eksempelfarger"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
-#: plug-ins/common/sample_colorize.c:1375 plug-ins/common/tileit.c:585
-#: plug-ins/gimpressionist/presets.c:673 plug-ins/gimpressionist/sizemap.c:502
+#: plug-ins/common/sample_colorize.c:1378
+#: plug-ins/gimpressionist/presets.c:671 plug-ins/gimpressionist/sizemap.c:502
 #: plug-ins/imagemap/imap_default_dialog.c:129
 msgid "Apply"
 msgstr "Bruk"
 
+#. parameter settings
+#: plug-ins/common/sample_colorize.c:1388 plug-ins/common/sinus.c:1844
+#: plug-ins/gfig/gfig.c:3972 plug-ins/gflare/gflare.c:3112
+msgid "Settings"
+msgstr "Innstillinger"
+
 #. layer optionmenu (Dst)
-#: plug-ins/common/sample_colorize.c:1405
+#: plug-ins/common/sample_colorize.c:1408
 msgid "Destination:"
 msgstr "Mål:"
 
 #. layer optionmenu (Sample)
-#: plug-ins/common/sample_colorize.c:1424
+#: plug-ins/common/sample_colorize.c:1427
 msgid "Sample:"
 msgstr "Eksempel:"
 
 #. Add extra menu items for Gradient
-#: plug-ins/common/sample_colorize.c:1443
+#: plug-ins/common/sample_colorize.c:1446
 msgid "** From GRADIENT **"
 msgstr "** Fra GRADIENT **"
 
 #. Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample_colorize.c:1452
+#: plug-ins/common/sample_colorize.c:1455
 msgid "** From INVERSE GRADIENT **"
 msgstr "** Fra INVERS GRADIENT **"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1468
-#: plug-ins/common/sample_colorize.c:1495
+#: plug-ins/common/sample_colorize.c:1471
+#: plug-ins/common/sample_colorize.c:1498
 msgid "Show Selection"
 msgstr "Vis utvalg"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1479
-#: plug-ins/common/sample_colorize.c:1506
+#: plug-ins/common/sample_colorize.c:1482
+#: plug-ins/common/sample_colorize.c:1509
 msgid "Show Color"
 msgstr "Vis farge"
 
-#: plug-ins/common/sample_colorize.c:1617
+#: plug-ins/common/sample_colorize.c:1620
 msgid "In Level:"
 msgstr "Inn-nivå:"
 
-#: plug-ins/common/sample_colorize.c:1670
+#: plug-ins/common/sample_colorize.c:1673
 msgid "Out Level:"
 msgstr "Ut-nivå:"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1712
+#: plug-ins/common/sample_colorize.c:1715
 msgid "Hold Intensity"
 msgstr "Behold intensitetsnivå"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1723
+#: plug-ins/common/sample_colorize.c:1726
 msgid "Original Intensity"
 msgstr "Original intensitet"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1741
+#: plug-ins/common/sample_colorize.c:1744
 msgid "Use Subcolors"
 msgstr "Bruk underfarger"
 
 #. check button
-#: plug-ins/common/sample_colorize.c:1752
+#: plug-ins/common/sample_colorize.c:1755
 msgid "Smooth Samplecolors"
 msgstr "Jevn ut eksempelfarger"
 
-#: plug-ins/common/sample_colorize.c:2752
+#: plug-ins/common/sample_colorize.c:2755
 msgid "Sample Analyze..."
 msgstr ""
 
-#: plug-ins/common/sample_colorize.c:3117
+#: plug-ins/common/sample_colorize.c:3120
 msgid "Remap Colorized..."
 msgstr ""
 
@@ -5474,8 +5737,23 @@ msgid "Preview (1:4) - Right Click to Jump"
 msgstr "Forhåndsvisning (1:4) - Høyreklikk for å hoppe"
 
 #: plug-ins/common/scatter_hsv.c:446
-msgid "Holdness:"
+msgid "_Holdness:"
 msgstr ""
+
+#: plug-ins/common/scatter_hsv.c:455
+#, fuzzy
+msgid "H_ue:"
+msgstr "Glød:"
+
+#: plug-ins/common/scatter_hsv.c:464
+#, fuzzy
+msgid "_Saturation:"
+msgstr "Metning:"
+
+#: plug-ins/common/scatter_hsv.c:473
+#, fuzzy
+msgid "_Value:"
+msgstr "Verdi:"
 
 #: plug-ins/common/screenshot.c:135 plug-ins/winsnap/winsnap.c:1074
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -5524,8 +5802,14 @@ msgstr "Selektivt Gaussisk blur"
 msgid "sel_gauss: Cannot operate on indexed color images"
 msgstr "sel_gauss: Kan ikke operere på indekserte fargebilder"
 
+#: plug-ins/common/sel_gauss.c:270
+#, fuzzy
+msgid "_Blur Radius:"
+msgstr "Blur-radius:"
+
 #: plug-ins/common/sel_gauss.c:277
-msgid "Max. Delta:"
+#, fuzzy
+msgid "_Max. Delta:"
 msgstr "Maks delta:"
 
 #: plug-ins/common/semiflatten.c:88
@@ -5553,7 +5837,8 @@ msgid "Sharpen - %s"
 msgstr "Gjør skarpere - %s"
 
 #: plug-ins/common/sharpen.c:629
-msgid "Sharpness:"
+#, fuzzy
+msgid "_Sharpness:"
 msgstr "Skarphet:"
 
 #: plug-ins/common/shift.c:130
@@ -5667,6 +5952,10 @@ msgstr "Andre farge:"
 msgid "Blend Settings"
 msgstr "Instillinger for blending"
 
+#: plug-ins/common/sinus.c:1988
+msgid "Bilinear"
+msgstr "Bilineær"
+
 #: plug-ins/common/sinus.c:2001
 msgid "Exponent:"
 msgstr "Eksponent:"
@@ -5674,6 +5963,10 @@ msgstr "Eksponent:"
 #: plug-ins/common/sinus.c:2011
 msgid "Blend"
 msgstr "Blend"
+
+#: plug-ins/common/sinus.c:2142
+msgid "Do Preview"
+msgstr "Forhåndsvis"
 
 #: plug-ins/common/smooth_palette.c:89
 msgid "<Image>/Filters/Colors/Smooth Palette..."
@@ -5683,12 +5976,18 @@ msgstr "<Image>/Filtre/Farger/Myk palett..."
 msgid "Deriving smooth palette..."
 msgstr "Regner ut myk palett..."
 
-#: plug-ins/common/smooth_palette.c:401
+#: plug-ins/common/smooth_palette.c:407
 msgid "Smooth Palette"
 msgstr "Myk palett"
 
-#: plug-ins/common/smooth_palette.c:452
-msgid "Search Time:"
+#: plug-ins/common/smooth_palette.c:449
+#, fuzzy
+msgid "_Height:"
+msgstr "Høyde:"
+
+#: plug-ins/common/smooth_palette.c:458
+#, fuzzy
+msgid "_Search Time:"
 msgstr "Søketid:"
 
 #: plug-ins/common/snoise.c:186
@@ -5705,25 +6004,30 @@ msgid "Solid Noise"
 msgstr "Solid støy"
 
 #: plug-ins/common/snoise.c:551
-msgid "Detail:"
+#, fuzzy
+msgid "_Detail:"
 msgstr "Detalj:"
 
 #. Turbulent
 #: plug-ins/common/snoise.c:558
-msgid "Turbulent"
+#, fuzzy
+msgid "T_urbulent"
 msgstr "Turbulent"
 
 #. Tilable
 #: plug-ins/common/snoise.c:569
-msgid "Tilable"
+#, fuzzy
+msgid "T_ilable"
 msgstr "Flisbar"
 
 #: plug-ins/common/snoise.c:581
-msgid "X Size:"
+#, fuzzy
+msgid "_X Size:"
 msgstr "X-størrelse:"
 
 #: plug-ins/common/snoise.c:591
-msgid "Y Size:"
+#, fuzzy
+msgid "_Y Size:"
 msgstr "Y-størrelse:"
 
 #: plug-ins/common/sobel.c:141
@@ -5735,15 +6039,17 @@ msgid "Sobel Edge Detection"
 msgstr "Sobel kantgjenkjenning"
 
 #: plug-ins/common/sobel.c:272
-msgid "Sobel Horizontally"
+#, fuzzy
+msgid "Sobel _Horizontally"
 msgstr "Sobel horisontalt"
 
 #: plug-ins/common/sobel.c:281
-msgid "Sobel Vertically"
+#, fuzzy
+msgid "Sobel _Vertically"
 msgstr "Sobel vertikalt"
 
 #: plug-ins/common/sobel.c:290
-msgid "Keep Sign of Result (one Direction only)"
+msgid "_Keep Sign of Result (one Direction only)"
 msgstr ""
 
 #: plug-ins/common/sobel.c:364
@@ -5765,15 +6071,17 @@ msgid "Sparkle"
 msgstr "Glitter"
 
 #: plug-ins/common/sparkle.c:383
-msgid "Luminosity Threshold:"
-msgstr ""
+#, fuzzy
+msgid "Luminosity _Threshold:"
+msgstr "Nedre terskel:"
 
 #: plug-ins/common/sparkle.c:386
 msgid "Adjust the Luminosity Threshold"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:393
-msgid "Flare Intensity:"
+#, fuzzy
+msgid "F_lare Intensity:"
 msgstr "Intensitetsnivå for bluss:"
 
 #: plug-ins/common/sparkle.c:396
@@ -5781,15 +6089,17 @@ msgid "Adjust the Flare Intensity"
 msgstr "Juster intensivitet for bluss"
 
 #: plug-ins/common/sparkle.c:403
-msgid "Spike Length:"
-msgstr ""
+#, fuzzy
+msgid "_Spike Length:"
+msgstr "Filterlengde:"
 
 #: plug-ins/common/sparkle.c:406
 msgid "Adjust the Spike Length"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:413
-msgid "Spike Points:"
+#, fuzzy
+msgid "Sp_ike Points:"
 msgstr "Pigg-punkter:"
 
 #: plug-ins/common/sparkle.c:416
@@ -5797,7 +6107,8 @@ msgid "Adjust the Number of Spikes"
 msgstr "Juster antall pigger"
 
 #: plug-ins/common/sparkle.c:423
-msgid "Spike Angle (-1: Random):"
+#, fuzzy
+msgid "Spi_ke Angle (-1: Random):"
 msgstr "Vinkel for pigg (-1: tilfeldig):"
 
 #: plug-ins/common/sparkle.c:426
@@ -5805,23 +6116,35 @@ msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
 msgstr "Juster vinkel for pigg (-1 betyr at en tilfeldig vinkel velges)"
 
 #: plug-ins/common/sparkle.c:434
-msgid "Spike Density:"
+#, fuzzy
+msgid "Spik_e Density:"
 msgstr "Tetthet for pigger:"
 
 #: plug-ins/common/sparkle.c:437
 msgid "Adjust the Spike Density"
 msgstr "Juster tettheten for piggene"
 
+#: plug-ins/common/sparkle.c:444
+#, fuzzy
+msgid "Op_acity:"
+msgstr "Ugjennomsiktighet:"
+
 #: plug-ins/common/sparkle.c:447
 msgid "Adjust the Opacity of the Spikes"
 msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/common/sparkle.c:454
+#, fuzzy
+msgid "_Random Hue:"
+msgstr "Tilfeldig glød:"
 
 #: plug-ins/common/sparkle.c:457
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr "Juster verdien for tilfeldig endring av glød"
 
 #: plug-ins/common/sparkle.c:465
-msgid "Random Saturation:"
+#, fuzzy
+msgid "Rando_m Saturation:"
 msgstr "Tilfeldig metning:"
 
 #: plug-ins/common/sparkle.c:468
@@ -5829,7 +6152,7 @@ msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr "Juster tilfeldighet for metning"
 
 #: plug-ins/common/sparkle.c:486
-msgid "Preserve Luminosity"
+msgid "_Preserve Luminosity"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:492
@@ -5837,7 +6160,8 @@ msgid "Should the Luminosity be preserved?"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:499
-msgid "Inverse"
+#, fuzzy
+msgid "In_verse"
 msgstr "Invers"
 
 #: plug-ins/common/sparkle.c:504
@@ -5845,7 +6169,8 @@ msgid "Should an Inverse Effect be done?"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:510
-msgid "Add Border"
+#, fuzzy
+msgid "A_dd Border"
 msgstr "Legg til kant"
 
 #: plug-ins/common/sparkle.c:516
@@ -5853,8 +6178,19 @@ msgid "Draw a Border of Spikes around the Image"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:533
-msgid "Natural Color"
+#, fuzzy
+msgid "_Natural Color"
 msgstr "Naturlig farge"
+
+#: plug-ins/common/sparkle.c:536
+#, fuzzy
+msgid "_Foreground Color"
+msgstr "Forgrunnsfarge"
+
+#: plug-ins/common/sparkle.c:539
+#, fuzzy
+msgid "_Background Color"
+msgstr "Bakgrunnsfarge"
 
 #: plug-ins/common/sparkle.c:548
 msgid "Use the Color of the Image"
@@ -5905,19 +6241,23 @@ msgid "Direction"
 msgstr "Retning"
 
 #: plug-ins/common/struc.c:1307
-msgid "Top-Right"
+#, fuzzy
+msgid "_Top-Right"
 msgstr "Øverst til høyre"
 
 #: plug-ins/common/struc.c:1310
-msgid "Top-Left"
+#, fuzzy
+msgid "Top-_Left"
 msgstr "Øverst til venstre"
 
 #: plug-ins/common/struc.c:1313
-msgid "Bottom-Left"
+#, fuzzy
+msgid "_Bottom-Left"
 msgstr "Nederst til venstre"
 
 #: plug-ins/common/struc.c:1316
-msgid "Bottom-Right"
+#, fuzzy
+msgid "Bottom-_Right"
 msgstr "Nederst til høyre"
 
 #: plug-ins/common/sunras.c:386 plug-ins/fits/fits.c:351
@@ -6037,28 +6377,28 @@ msgstr "Terskel alpha"
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:1558
+#: plug-ins/common/tiff.c:1573
 msgid "Save as TIFF"
 msgstr "Lagre som TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:1579
+#: plug-ins/common/tiff.c:1594
 msgid "Compression"
 msgstr "Kompresjon"
 
-#: plug-ins/common/tiff.c:1587
+#: plug-ins/common/tiff.c:1602
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1590
+#: plug-ins/common/tiff.c:1605
 msgid "Pack Bits"
 msgstr "Pakk bits"
 
-#: plug-ins/common/tiff.c:1593
+#: plug-ins/common/tiff.c:1608
 msgid "Deflate"
 msgstr "Deflate"
 
-#: plug-ins/common/tiff.c:1596
+#: plug-ins/common/tiff.c:1611
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -6098,28 +6438,43 @@ msgstr "Vender"
 msgid "Applied to Tile"
 msgstr "Påført på flis"
 
-#: plug-ins/common/tileit.c:496
-msgid "All Tiles"
+#: plug-ins/common/tileit.c:497
+#, fuzzy
+msgid "A_ll Tiles"
 msgstr "Alle fliser"
 
-#: plug-ins/common/tileit.c:510
-msgid "Alternate Tiles"
+#: plug-ins/common/tileit.c:511
+#, fuzzy
+msgid "Al_ternate Tiles"
 msgstr "Utvalgte fliser"
 
-#: plug-ins/common/tileit.c:524
-msgid "Explicit Tile"
+#: plug-ins/common/tileit.c:525
+#, fuzzy
+msgid "_Explicit Tile"
 msgstr "Eksplisitt flis"
 
-#: plug-ins/common/tileit.c:530
-msgid "Row:"
+#: plug-ins/common/tileit.c:531
+#, fuzzy
+msgid "Ro_w:"
 msgstr "Rad:"
 
-#: plug-ins/common/tileit.c:554
-msgid "Column:"
+#: plug-ins/common/tileit.c:556
+#, fuzzy
+msgid "Col_umn:"
 msgstr "Kolonne:"
 
+#: plug-ins/common/tileit.c:588
+#, fuzzy
+msgid "_Apply"
+msgstr "Bruk"
+
+#: plug-ins/common/tileit.c:613
+#, fuzzy
+msgid "O_pacity:"
+msgstr "Ugjennomsiktighet:"
+
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:621
+#: plug-ins/common/tileit.c:624
 msgid "Segment Setting"
 msgstr "Innstillinger for segment"
 
@@ -6291,6 +6646,11 @@ msgstr "Fletter..."
 msgid "Unsharp Mask"
 msgstr "Uskarp maske"
 
+#: plug-ins/common/unsharp.c:830
+#, fuzzy
+msgid "_Threshold:"
+msgstr "Terskel:"
+
 #: plug-ins/common/video.c:49
 msgid "Staggered"
 msgstr "Staggered"
@@ -6406,52 +6766,52 @@ msgstr "<Image>/Filtre/Finn-kant/Kant..."
 msgid "<Image>/Filters/Generic/Dilate..."
 msgstr "<Image>/Filtre/Render/Gfig..."
 
-#: plug-ins/common/vpropagate.c:431
+#: plug-ins/common/vpropagate.c:433
 msgid "Value propagating..."
 msgstr "Videreføring av verdi..."
 
-#: plug-ins/common/vpropagate.c:1002
+#: plug-ins/common/vpropagate.c:1004
 msgid "Value Propagate"
 msgstr "Videreføring av verdi"
 
 #. Propagate Mode
-#: plug-ins/common/vpropagate.c:1024
+#: plug-ins/common/vpropagate.c:1026
 msgid "Propagate Mode"
 msgstr "Videreføringsmodus"
 
-#: plug-ins/common/vpropagate.c:1064
+#: plug-ins/common/vpropagate.c:1066
 msgid "Lower Threshold:"
 msgstr "Nedre terskel:"
 
-#: plug-ins/common/vpropagate.c:1073
+#: plug-ins/common/vpropagate.c:1075
 msgid "Upper Threshold:"
 msgstr "Øvre terskel:"
 
-#: plug-ins/common/vpropagate.c:1082
+#: plug-ins/common/vpropagate.c:1084
 msgid "Propagating Rate:"
 msgstr "Rate for videreføring"
 
-#: plug-ins/common/vpropagate.c:1094
+#: plug-ins/common/vpropagate.c:1096
 msgid "To Left"
 msgstr "Til venstre"
 
-#: plug-ins/common/vpropagate.c:1097
+#: plug-ins/common/vpropagate.c:1099
 msgid "To Right"
 msgstr "Til høyre"
 
-#: plug-ins/common/vpropagate.c:1100
+#: plug-ins/common/vpropagate.c:1102
 msgid "To Top"
 msgstr "Til topp"
 
-#: plug-ins/common/vpropagate.c:1103
+#: plug-ins/common/vpropagate.c:1105
 msgid "To Bottom"
 msgstr "Til bunn"
 
-#: plug-ins/common/vpropagate.c:1116
+#: plug-ins/common/vpropagate.c:1118
 msgid "Propagating Alpha Channel"
 msgstr "Viderefører alfakanal"
 
-#: plug-ins/common/vpropagate.c:1126
+#: plug-ins/common/vpropagate.c:1128
 msgid "Propagating Value Channel"
 msgstr "Viderefører verdikanal"
 
@@ -6553,27 +6913,35 @@ msgstr "Finner XY gradient..."
 msgid "Flow Step %d..."
 msgstr "Flyt steg %d..."
 
-#: plug-ins/common/waves.c:162
+#: plug-ins/common/waves.c:147
 msgid "<Image>/Filters/Distorts/Waves..."
 msgstr "<Image>/Filtre/Forvrengning/Bølger..."
 
-#: plug-ins/common/waves.c:349
+#: plug-ins/common/waves.c:334
 msgid "Waves"
 msgstr "Bølger"
 
-#: plug-ins/common/waves.c:396
-msgid "Reflective"
+#: plug-ins/common/waves.c:381
+#, fuzzy
+msgid "_Reflective"
 msgstr "Reflektiv"
 
-#: plug-ins/common/waves.c:426
-msgid "Phase:"
+#: plug-ins/common/waves.c:402
+#, fuzzy
+msgid "_Amplitude:"
+msgstr "Amplityde:"
+
+#: plug-ins/common/waves.c:411
+#, fuzzy
+msgid "_Phase:"
 msgstr "Fase:"
 
-#: plug-ins/common/waves.c:435
-msgid "Wavelength:"
+#: plug-ins/common/waves.c:420
+#, fuzzy
+msgid "_Wavelength:"
 msgstr "Bølgelendge:"
 
-#: plug-ins/common/waves.c:656
+#: plug-ins/common/waves.c:631
 msgid "Waving..."
 msgstr "Lager bølger..."
 
@@ -6685,7 +7053,7 @@ msgstr "Ledende..."
 msgid "Trailing"
 msgstr "Etterfølgende"
 
-#: plug-ins/common/wind.c:1136
+#: plug-ins/common/wind.c:1136 plug-ins/print/gimp_main_window.c:613
 msgid "Both"
 msgstr "Begge"
 
@@ -6719,34 +7087,34 @@ msgstr "PrintDlg feilet: %d"
 msgid "Printer doesn't support bitmaps"
 msgstr "Skriver støtter ikke bitkart"
 
-#: plug-ins/common/winprint.c:379
+#: plug-ins/common/winprint.c:378
 msgid "StartPage failed"
 msgstr "StartPage feilet"
 
-#: plug-ins/common/winprint.c:388 plug-ins/print/print-image-gimp.c:270
+#: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Skriver ut..."
 
-#: plug-ins/common/winprint.c:420
+#: plug-ins/common/winprint.c:419
 msgid "CreateDIBSection failed"
 msgstr "CreateDIBSection feilet"
 
-#: plug-ins/common/winprint.c:454
+#: plug-ins/common/winprint.c:453
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "SetStretchBltMode feilet (kun advarsel)"
 
-#: plug-ins/common/winprint.c:517
+#: plug-ins/common/winprint.c:516
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
 msgstr ""
 
-#: plug-ins/common/winprint.c:546
+#: plug-ins/common/winprint.c:545
 msgid "EndPage failed"
 msgstr "EndPage feilet"
 
-#: plug-ins/common/winprint.c:593
+#: plug-ins/common/winprint.c:592
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg feilet: %d"
@@ -7085,7 +7453,7 @@ msgstr ""
 msgid "Horseshoe"
 msgstr "Hestesko"
 
-#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3306
+#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3305
 msgid "Polar"
 msgstr "Polar"
 
@@ -7109,12 +7477,12 @@ msgstr "Lagre flamme"
 msgid "Flame"
 msgstr "Flamme"
 
-#: plug-ins/flame/flame.c:1035 plug-ins/print/gimp_color_window.c:193
+#: plug-ins/flame/flame.c:1035 plug-ins/print/gimp_color_window.c:251
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: plug-ins/flame/flame.c:1049 plug-ins/gimpressionist/brush.c:416
-#: plug-ins/print/gimp_color_window.c:285
+#: plug-ins/flame/flame.c:1049 plug-ins/gimpressionist/brush.c:414
+#: plug-ins/print/gimp_color_window.c:370
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -7232,7 +7600,7 @@ msgstr "Velg piksler etter"
 msgid "Show"
 msgstr "Vis"
 
-#: plug-ins/fp/fp_gtk.c:455 plug-ins/rcm/rcm_dialog.c:703
+#: plug-ins/fp/fp_gtk.c:455
 msgid "Entire Image"
 msgstr "Hele bildet"
 
@@ -7295,11 +7663,11 @@ msgstr "Forhåndsvisning under draoperasjon"
 msgid "Preview Size"
 msgstr "Størrelse på forhåndsvisning"
 
-#: plug-ins/gfig/gfig.c:675
+#: plug-ins/gfig/gfig.c:674
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Filtre/Render/Gfig..."
 
-#: plug-ins/gfig/gfig.c:821
+#: plug-ins/gfig/gfig.c:820
 #, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
@@ -7308,560 +7676,564 @@ msgid ""
 "to your %s file."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:838
+#: plug-ins/gfig/gfig.c:837
 msgid "gfig-path misconfigured - the following folders were not found:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1055
+#: plug-ins/gfig/gfig.c:1054
 msgid "First Gfig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1555
+#: plug-ins/gfig/gfig.c:1554
 msgid "Save Gfig drawing"
 msgstr "Lagre Gfig-tegning"
 
-#: plug-ins/gfig/gfig.c:1880
+#: plug-ins/gfig/gfig.c:1879
 msgid "Prev"
 msgstr "Forrige"
 
 #. More Buttons
-#: plug-ins/gfig/gfig.c:1909 plug-ins/gfig/gfig.c:5299
+#: plug-ins/gfig/gfig.c:1908 plug-ins/gfig/gfig.c:5298
 #: plug-ins/gflare/gflare.c:3171 plug-ins/imagemap/imap_menu.c:287
 #: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:155
 msgid "Edit"
 msgstr "Rediger"
 
-#: plug-ins/gfig/gfig.c:1914
+#: plug-ins/gfig/gfig.c:1913
 msgid "Edit Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1917
+#: plug-ins/gfig/gfig.c:1916
 msgid "Merge"
 msgstr "Flett sammen"
 
-#: plug-ins/gfig/gfig.c:1922
+#: plug-ins/gfig/gfig.c:1921
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1961
+#: plug-ins/gfig/gfig.c:1960
 msgid "Number of Sides/Points/Turns:"
 msgstr "Antall Sider/Punkter/Vendinger:"
 
-#: plug-ins/gfig/gfig.c:1977
+#: plug-ins/gfig/gfig.c:1976
 msgid "Clockwise"
 msgstr "Med klokken"
 
-#: plug-ins/gfig/gfig.c:1978
+#: plug-ins/gfig/gfig.c:1977
 msgid "Anti-Clockwise"
 msgstr "Mot klokken"
 
-#: plug-ins/gfig/gfig.c:1982 plug-ins/gimpressionist/orientation.c:129
-#: plug-ins/print/gimp_main_window.c:469
+#: plug-ins/gfig/gfig.c:1981 plug-ins/gimpressionist/orientation.c:129
+#: plug-ins/print/gimp_main_window.c:495
 msgid "Orientation:"
 msgstr "Orientering:"
 
-#: plug-ins/gfig/gfig.c:2002
+#: plug-ins/gfig/gfig.c:2001
 msgid "Bezier Settings"
 msgstr "Innstillinger for Bezier"
 
-#: plug-ins/gfig/gfig.c:2022
+#: plug-ins/gfig/gfig.c:2021
 msgid "Closed"
 msgstr "Lukket"
 
-#: plug-ins/gfig/gfig.c:2027
+#: plug-ins/gfig/gfig.c:2026
 msgid "Close curve on completion"
 msgstr "Lukk kurve ved komplettering"
 
-#: plug-ins/gfig/gfig.c:2032
+#: plug-ins/gfig/gfig.c:2031
 msgid "Show Line Frame"
 msgstr "Vis linjeramme"
 
-#: plug-ins/gfig/gfig.c:2037
+#: plug-ins/gfig/gfig.c:2036
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2053
+#: plug-ins/gfig/gfig.c:2052
 msgid "Regular Polygon Number of Sides"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2065
+#: plug-ins/gfig/gfig.c:2064
 msgid "Star Number of Points"
 msgstr "Antall punkter for stjerne"
 
-#: plug-ins/gfig/gfig.c:2077
+#: plug-ins/gfig/gfig.c:2076
 msgid "Spiral Number of Points"
 msgstr "Antall punkter for spiral"
 
-#: plug-ins/gfig/gfig.c:2101
+#: plug-ins/gfig/gfig.c:2100
 msgid "Ops"
 msgstr "Ops"
 
-#: plug-ins/gfig/gfig.c:2114
+#: plug-ins/gfig/gfig.c:2113
 msgid "Create line"
 msgstr "Lag linje"
 
-#: plug-ins/gfig/gfig.c:2119
+#: plug-ins/gfig/gfig.c:2118
 msgid "Create circle"
 msgstr "Lag sirkel"
 
-#: plug-ins/gfig/gfig.c:2124
+#: plug-ins/gfig/gfig.c:2123
 msgid "Create ellipse"
 msgstr "Lag ellipse"
 
-#: plug-ins/gfig/gfig.c:2129
+#: plug-ins/gfig/gfig.c:2128
 msgid "Create arch"
 msgstr "Lag bue"
 
-#: plug-ins/gfig/gfig.c:2138
+#: plug-ins/gfig/gfig.c:2137
 msgid "Create reg polygon"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2146
+#: plug-ins/gfig/gfig.c:2145
 msgid "Create star"
 msgstr "Lag stjerne"
 
-#: plug-ins/gfig/gfig.c:2155
+#: plug-ins/gfig/gfig.c:2154
 msgid "Create spiral"
 msgstr "Lag spiral"
 
-#: plug-ins/gfig/gfig.c:2165
+#: plug-ins/gfig/gfig.c:2164
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2171
+#: plug-ins/gfig/gfig.c:2170
 msgid "Move an object"
 msgstr "Flytt et objekt"
 
-#: plug-ins/gfig/gfig.c:2176
+#: plug-ins/gfig/gfig.c:2175
 msgid "Move a single point"
 msgstr "Flytt et enkelt punkt"
 
-#: plug-ins/gfig/gfig.c:2181
+#: plug-ins/gfig/gfig.c:2180
 msgid "Copy an object"
 msgstr "Kopier et objekt"
 
-#: plug-ins/gfig/gfig.c:2186
+#: plug-ins/gfig/gfig.c:2185
 msgid "Delete an object"
 msgstr "Slett et objekt"
 
-#: plug-ins/gfig/gfig.c:2349 plug-ins/gfig/gfig.c:2790
-#: plug-ins/gfig/gfig.c:4003 plug-ins/gimpressionist/brush.c:366
+#: plug-ins/gfig/gfig.c:2348 plug-ins/gfig/gfig.c:2789
+#: plug-ins/gfig/gfig.c:4002 plug-ins/gimpressionist/brush.c:366
 #: plug-ins/gimpressionist/brush.c:371
 msgid "Brush"
 msgstr "Børste"
 
-#: plug-ins/gfig/gfig.c:2350
+#: plug-ins/gfig/gfig.c:2349
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: plug-ins/gfig/gfig.c:2351
+#: plug-ins/gfig/gfig.c:2350
 msgid "Pencil"
 msgstr "Blyant"
 
-#: plug-ins/gfig/gfig.c:2352 plug-ins/gfig/gfig.c:3184
+#: plug-ins/gfig/gfig.c:2351 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
 msgstr "Mønster"
 
-#: plug-ins/gfig/gfig.c:2359
+#: plug-ins/gfig/gfig.c:2358
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
 "ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2771 plug-ins/rcm/rcm_dialog.c:130
+#: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
 msgstr "Original"
 
-#: plug-ins/gfig/gfig.c:2772 plug-ins/gfig/gfig.c:3559
-#: plug-ins/gflare/gflare.c:3170 plug-ins/ifscompose/ifscompose.c:802
+#: plug-ins/gfig/gfig.c:2771 plug-ins/gflare/gflare.c:3170
 #: plug-ins/webbrowser/webbrowser.c:320
 msgid "New"
 msgstr "Ny"
 
-#: plug-ins/gfig/gfig.c:2773
+#: plug-ins/gfig/gfig.c:2772
 msgid "Multiple"
 msgstr "Multippel"
 
-#: plug-ins/gfig/gfig.c:2778
+#: plug-ins/gfig/gfig.c:2777
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2783
+#: plug-ins/gfig/gfig.c:2782
 msgid "Draw on:"
 msgstr "Tegn på:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2792 plug-ins/imagemap/imap_selection.c:370
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:370
 #: plug-ins/rcm/rcm_dialog.c:712
 msgid "Selection"
 msgstr "Valg"
 
-#: plug-ins/gfig/gfig.c:2794
+#: plug-ins/gfig/gfig.c:2793
 msgid "Selection+Fill"
 msgstr "Utvalg+fyll"
 
-#: plug-ins/gfig/gfig.c:2821
+#: plug-ins/gfig/gfig.c:2820
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2825
+#: plug-ins/gfig/gfig.c:2824
 msgid "Using:"
 msgstr "Bruker:"
 
-#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3185
+#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
 msgid "Foreground"
 msgstr "Forgrunn"
 
-#: plug-ins/gfig/gfig.c:2840
+#: plug-ins/gfig/gfig.c:2839
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2845
+#: plug-ins/gfig/gfig.c:2844
 msgid "With BG of:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2848
+#: plug-ins/gfig/gfig.c:2847
 msgid "Reverse Line"
 msgstr "Omvendt linje"
 
-#: plug-ins/gfig/gfig.c:2855
+#: plug-ins/gfig/gfig.c:2854
 msgid "Draw lines in reverse order"
 msgstr "Tegn linjer i omvendt rekkefølge"
 
-#: plug-ins/gfig/gfig.c:2863
+#: plug-ins/gfig/gfig.c:2862
 msgid "Scale to Image"
 msgstr "Skaler til bilde"
 
-#: plug-ins/gfig/gfig.c:2871
+#: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
 msgstr "Skaler tegninger til bildestørrelse"
 
-#: plug-ins/gfig/gfig.c:2893
+#: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2900
+#: plug-ins/gfig/gfig.c:2899
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2935
+#: plug-ins/gfig/gfig.c:2934
 msgid "Gfig brush selection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2976
+#: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2999
+#: plug-ins/gfig/gfig.c:2998
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: plug-ins/gfig/gfig.c:3019
+#: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
 msgstr "Trykk:"
 
-#: plug-ins/gfig/gfig.c:3037
+#: plug-ins/gfig/gfig.c:3036
 msgid "No Options..."
 msgstr "Ingen alternativer..."
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:3052
+#: plug-ins/gfig/gfig.c:3051
 msgid "Set Brush..."
 msgstr "Sett børste..."
 
-#: plug-ins/gfig/gfig.c:3138 plug-ins/gimpressionist/orientmap.c:540
+#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:540
 #: plug-ins/gimpressionist/sizemap.c:441
 msgid "Add"
 msgstr "Legg til"
 
-#: plug-ins/gfig/gfig.c:3139
+#: plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
 msgstr "Subtraksjon"
 
-#: plug-ins/gfig/gfig.c:3140
+#: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "Erstatt"
 
-#: plug-ins/gfig/gfig.c:3141
+#: plug-ins/gfig/gfig.c:3140
 msgid "Intersect"
 msgstr "Kryss"
 
-#: plug-ins/gfig/gfig.c:3145
+#: plug-ins/gfig/gfig.c:3144
 msgid "Selection Type:"
 msgstr "Type utvalg:"
 
 #. 3
-#: plug-ins/gfig/gfig.c:3158
+#: plug-ins/gfig/gfig.c:3157
 msgid "Feather"
 msgstr "Fjær"
 
-#: plug-ins/gfig/gfig.c:3190
+#: plug-ins/gfig/gfig.c:3189
 msgid "Fill Type:"
 msgstr "Type fyll:"
 
-#: plug-ins/gfig/gfig.c:3203
+#: plug-ins/gfig/gfig.c:3202
 msgid "Fill Opacity:"
 msgstr "Ugjennomsiktighet for fyll:"
 
-#: plug-ins/gfig/gfig.c:3211
+#: plug-ins/gfig/gfig.c:3210
 msgid "Each Selection"
 msgstr "Hvert utvalg"
 
-#: plug-ins/gfig/gfig.c:3212
+#: plug-ins/gfig/gfig.c:3211
 msgid "All Selections"
 msgstr "Alle utvalg"
 
-#: plug-ins/gfig/gfig.c:3216
+#: plug-ins/gfig/gfig.c:3215
 msgid "Fill after:"
 msgstr "Fyll etter:"
 
-#: plug-ins/gfig/gfig.c:3223
+#: plug-ins/gfig/gfig.c:3222
 msgid "Segment"
 msgstr "Segment"
 
-#: plug-ins/gfig/gfig.c:3224
+#: plug-ins/gfig/gfig.c:3223
 msgid "Sector"
 msgstr "Sektor"
 
-#: plug-ins/gfig/gfig.c:3228
+#: plug-ins/gfig/gfig.c:3227
 msgid "Arc as:"
 msgstr ""
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:3282
+#: plug-ins/gfig/gfig.c:3281
 msgid "Show Image"
 msgstr "Vis bilde"
 
-#: plug-ins/gfig/gfig.c:3293
+#: plug-ins/gfig/gfig.c:3292
 msgid "Reload Image"
 msgstr "Last bilde på nytt"
 
-#: plug-ins/gfig/gfig.c:3305 plug-ins/imagemap/imap_menu.c:394
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:394
 #: plug-ins/imagemap/imap_popup.c:135 plug-ins/imagemap/imap_rectangle.c:70
 #: plug-ins/imagemap/imap_tools.c:140
 msgid "Rectangle"
 msgstr "Rektangel"
 
-#: plug-ins/gfig/gfig.c:3307
+#: plug-ins/gfig/gfig.c:3306
 msgid "Isometric"
 msgstr "Isometrisk"
 
-#: plug-ins/gfig/gfig.c:3311
+#: plug-ins/gfig/gfig.c:3310
 msgid "Grid Type:"
 msgstr "Type rutenett:"
 
-#: plug-ins/gfig/gfig.c:3320 plug-ins/gflare/gflare.c:591
+#: plug-ins/gfig/gfig.c:3319 plug-ins/gflare/gflare.c:591
 #: plug-ins/gimpressionist/orientmap.c:599
 msgid "Normal"
 msgstr "Normal"
 
-#: plug-ins/gfig/gfig.c:3324
+#: plug-ins/gfig/gfig.c:3323
 msgid "Darker"
 msgstr "Mørkere"
 
-#: plug-ins/gfig/gfig.c:3325
+#: plug-ins/gfig/gfig.c:3324
 msgid "Lighter"
 msgstr "Lysere"
 
-#: plug-ins/gfig/gfig.c:3326
+#: plug-ins/gfig/gfig.c:3325
 msgid "Very Dark"
 msgstr "Meget mørk"
 
-#: plug-ins/gfig/gfig.c:3330
+#: plug-ins/gfig/gfig.c:3329
 msgid "Grid Color:"
 msgstr "Farge på rutenett:"
 
-#: plug-ins/gfig/gfig.c:3334
+#: plug-ins/gfig/gfig.c:3333
 msgid "Max Undo:"
 msgstr "Maks angre:"
 
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3341
 msgid "Show Position"
 msgstr "Vis posisjon"
 
-#: plug-ins/gfig/gfig.c:3353
+#: plug-ins/gfig/gfig.c:3352
 msgid "Hide Control Points"
 msgstr "Skjul kontrollpunkter"
 
-#: plug-ins/gfig/gfig.c:3365
+#: plug-ins/gfig/gfig.c:3364
 msgid "Show Tooltips"
 msgstr "Vis verktøytips"
 
-#: plug-ins/gfig/gfig.c:3416
+#: plug-ins/gfig/gfig.c:3415
 msgid "Display Grid"
 msgstr "Vis rutenett"
 
-#: plug-ins/gfig/gfig.c:3427
+#: plug-ins/gfig/gfig.c:3426
 msgid "Lock on Grid"
 msgstr "Lås til rutenett"
 
-#: plug-ins/gfig/gfig.c:3442
+#: plug-ins/gfig/gfig.c:3441
 msgid "Grid Spacing:"
 msgstr "Mellomrom for rutenett:"
 
-#: plug-ins/gfig/gfig.c:3507
+#: plug-ins/gfig/gfig.c:3506
 msgid "Object"
 msgstr "Objekt"
 
-#: plug-ins/gfig/gfig.c:3543
+#: plug-ins/gfig/gfig.c:3542
 #, fuzzy
 msgid "Select folder and rescan Gfig object collection"
 msgstr "Velg katalog og les samlingen på nytt"
 
-#: plug-ins/gfig/gfig.c:3554
+#: plug-ins/gfig/gfig.c:3553
 msgid "Load a single Gfig object collection"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3563
+#: plug-ins/gfig/gfig.c:3562
 msgid "Create a new Gfig object collection for editing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3573
+#: plug-ins/gfig/gfig.c:3572
 msgid "Delete currently selected Gfig Object collection"
 msgstr ""
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3687
+#: plug-ins/gfig/gfig.c:3686
 msgid "XY Position:"
 msgstr "XY-posisjon"
 
-#: plug-ins/gfig/gfig.c:3708
+#: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
 msgstr "Objektdetaljer"
 
-#: plug-ins/gfig/gfig.c:3737
+#: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
 msgstr "Detaljer for samling"
 
-#: plug-ins/gfig/gfig.c:3744
+#: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
 msgstr "Tegn navn:"
 
-#: plug-ins/gfig/gfig.c:3756 plug-ins/gfig/gfig.c:3762
+#: plug-ins/gfig/gfig.c:3755 plug-ins/gfig/gfig.c:3761
 msgid "(none)"
 msgstr "(ingen)"
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3919
+#: plug-ins/gfig/gfig.c:3918
 msgid "GFig"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3936 plug-ins/gfig/gfig.c:3998
+#: plug-ins/gfig/gfig.c:3935 plug-ins/gfig/gfig.c:3997
 msgid "Paint"
 msgstr "Tegn"
 
-#: plug-ins/gfig/gfig.c:3939
+#: plug-ins/gfig/gfig.c:3938
 msgid "Done"
 msgstr "Fullført"
 
-#: plug-ins/gfig/gfig.c:4011 plug-ins/imagemap/imap_cmd_select.c:54
+#: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:54
 #: plug-ins/imagemap/imap_tools.c:135
 msgid "Select"
 msgstr "Velg"
 
-#: plug-ins/gfig/gfig.c:4079
+#: plug-ins/gfig/gfig.c:4078
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
 "Continue with exiting?"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4426
+#: plug-ins/gfig/gfig.c:4425
 msgid "Enter Gfig Entry Name"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4451
+#: plug-ins/gfig/gfig.c:4450
 msgid "Gfig Object Name:"
 msgstr ""
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4510
+#: plug-ins/gfig/gfig.c:4509
 msgid "Rescan for Gfig Objects"
 msgstr "Søk etter Gfig-objekter på nytt"
 
-#: plug-ins/gfig/gfig.c:4529
+#: plug-ins/gfig/gfig.c:4528
 msgid "Add Gfig Path"
 msgstr "Legg til Gfig-sti"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4603
+#: plug-ins/gfig/gfig.c:4602
 msgid "Load Gfig obj"
 msgstr "Last Gfig-objekt"
 
-#: plug-ins/gfig/gfig.c:4628
+#: plug-ins/gfig/gfig.c:4627
 msgid "Error in copy layer for onlayers"
 msgstr ""
 
 #. RGBA or GRAYA type
 #. opacity
 #. mode
-#: plug-ins/gfig/gfig.c:4660
+#: plug-ins/gfig/gfig.c:4659
 msgid "Error in creating layer"
 msgstr "Feil under oppretting av lag"
 
-#: plug-ins/gfig/gfig.c:4739
+#: plug-ins/gfig/gfig.c:4738
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Gfig-lag %d"
 
-#: plug-ins/gfig/gfig.c:4812
+#: plug-ins/gfig/gfig.c:4811
 msgid "About GFig"
 msgstr "Om GFig"
 
-#: plug-ins/gfig/gfig.c:4836
+#: plug-ins/gfig/gfig.c:4835
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - GIMP-tillegg"
 
-#: plug-ins/gfig/gfig.c:4841
+#: plug-ins/gfig/gfig.c:4840
 msgid "Release 1.3"
 msgstr "Utgave 1.3"
 
-#: plug-ins/gfig/gfig.c:4851
+#: plug-ins/gfig/gfig.c:4850
 msgid "Email alt@picnic.demon.co.uk"
 msgstr "E-post alt@picnic.demon.co.uk"
 
-#: plug-ins/gfig/gfig.c:4861
+#: plug-ins/gfig/gfig.c:4860
 msgid "Isometric grid By Rob Saunders"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:4894
+#: plug-ins/gfig/gfig.c:4893
 msgid "New gfig obj"
 msgstr "Nytt gfig-objekt"
 
-#: plug-ins/gfig/gfig.c:5020
+#: plug-ins/gfig/gfig.c:5019
 msgid "Delete Gfig Drawing"
 msgstr "Slett Gfig-tegning"
 
-#: plug-ins/gfig/gfig.c:5048 plug-ins/gfig/gfig.c:5087
+#: plug-ins/gfig/gfig.c:5047 plug-ins/gfig/gfig.c:5086
 msgid "<NONE>"
 msgstr "<INGEN>"
 
-#: plug-ins/gfig/gfig.c:5125
+#: plug-ins/gfig/gfig.c:5124
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5228
+#: plug-ins/gfig/gfig.c:5227
 #, c-format
 msgid "%s copy"
 msgstr "%s kopi"
 
-#: plug-ins/gfig/gfig.c:5273
+#: plug-ins/gfig/gfig.c:5258 plug-ins/imagemap/imap_menu.c:226
+#: plug-ins/imagemap/imap_toolbar.c:118
+msgid "Save"
+msgstr "Lagre"
+
+#: plug-ins/gfig/gfig.c:5272
 msgid "Save as..."
 msgstr "Lagre som..."
 
-#: plug-ins/gfig/gfig.c:6156
+#: plug-ins/gfig/gfig.c:6155
 msgid "Error reading file"
 msgstr "Feil under lesing av fil"
 
-#: plug-ins/gfig/gfig.c:6513
+#: plug-ins/gfig/gfig.c:6512
 msgid "Hey where has the object gone ?"
 msgstr ""
 
@@ -7869,7 +8241,7 @@ msgstr ""
 msgid "Addition"
 msgstr "Addisjon"
 
-#: plug-ins/gflare/gflare.c:593 plug-ins/gimpressionist/paper.c:156
+#: plug-ins/gflare/gflare.c:593 plug-ins/gimpressionist/paper.c:155
 msgid "Overlay"
 msgstr "Overlegg"
 
@@ -7963,6 +8335,10 @@ msgstr "Vektorlengde:"
 #: plug-ins/gflare/gflare.c:3057
 msgid "Adaptive Supersampling"
 msgstr ""
+
+#: plug-ins/gflare/gflare.c:3083
+msgid "Max Depth:"
+msgstr "Maks dybde:"
 
 #: plug-ins/gflare/gflare.c:3100
 msgid "Auto Update Preview"
@@ -8161,39 +8537,39 @@ msgstr ""
 msgid "Save brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:407
+#: plug-ins/gimpressionist/brush.c:405
 msgid "Brush Preview:"
 msgstr "Forhåndsvisning av børste:"
 
-#: plug-ins/gimpressionist/brush.c:430
+#: plug-ins/gimpressionist/brush.c:428
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:442
+#: plug-ins/gimpressionist/brush.c:440
 msgid "Select:"
 msgstr "Velg:"
 
-#: plug-ins/gimpressionist/brush.c:447
+#: plug-ins/gimpressionist/brush.c:445
 msgid "Aspect ratio:"
 msgstr "Aspektrate:"
 
-#: plug-ins/gimpressionist/brush.c:451 plug-ins/gimpressionist/paper.c:177
+#: plug-ins/gimpressionist/brush.c:449 plug-ins/gimpressionist/paper.c:176
 msgid "Relief:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:466
+#: plug-ins/gimpressionist/brush.c:464
 msgid "(None)"
 msgstr "(Ingen)"
 
-#: plug-ins/gimpressionist/brush.c:480
+#: plug-ins/gimpressionist/brush.c:478
 msgid "Save..."
 msgstr "Lagre..."
 
-#: plug-ins/gimpressionist/brush.c:495
+#: plug-ins/gimpressionist/brush.c:493
 msgid "Specifies the aspect ratio of the brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:507
+#: plug-ins/gimpressionist/brush.c:505
 msgid "Specifies the amount of embossing to apply to each brush stroke"
 msgstr ""
 
@@ -8341,21 +8717,21 @@ msgstr ""
 msgid "The GIMPressionist!"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:483
-msgid "Run with the selected settings"
-msgstr "Kjør med valgte innstillinger"
-
-#: plug-ins/gimpressionist/gimpressionist.c:490
+#: plug-ins/gimpressionist/gimpressionist.c:481
 msgid "Quit the program"
 msgstr "Avslutt programmet"
 
-#: plug-ins/gimpressionist/gimpressionist.c:492
+#: plug-ins/gimpressionist/gimpressionist.c:483
 msgid "About..."
 msgstr "Om..."
 
-#: plug-ins/gimpressionist/gimpressionist.c:497
+#: plug-ins/gimpressionist/gimpressionist.c:488
 msgid "Show some information about program"
 msgstr "Vis litt informasjon om programmet"
+
+#: plug-ins/gimpressionist/gimpressionist.c:497
+msgid "Run with the selected settings"
+msgstr "Kjør med valgte innstillinger"
 
 #: plug-ins/gimpressionist/orientation.c:81
 msgid "Directions:"
@@ -8402,6 +8778,11 @@ msgstr ""
 msgid "Selects a random direction of each stroke"
 msgstr ""
 
+#: plug-ins/gimpressionist/orientation.c:169
+#: plug-ins/gimpressionist/size.c:164
+msgid "Radial"
+msgstr "Radial"
+
 #: plug-ins/gimpressionist/orientation.c:175
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
@@ -8419,6 +8800,11 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:202
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
+
+#: plug-ins/gimpressionist/orientation.c:206
+#: plug-ins/gimpressionist/size.c:200
+msgid "Adaptive"
+msgstr "Tilpassende"
 
 #: plug-ins/gimpressionist/orientation.c:212
 msgid "The direction that matches the original image the closest is selected"
@@ -8550,33 +8936,33 @@ msgstr ""
 msgid "Paper"
 msgstr "Papir"
 
-#: plug-ins/gimpressionist/paper.c:134
+#: plug-ins/gimpressionist/paper.c:133
 msgid "Paper Preview:"
 msgstr "Forhåndsvisning av papir:"
 
 #. updatepaperprev(NULL);
-#: plug-ins/gimpressionist/paper.c:145
+#: plug-ins/gimpressionist/paper.c:144
 msgid "Invert"
 msgstr "Inverter"
 
-#: plug-ins/gimpressionist/paper.c:152
+#: plug-ins/gimpressionist/paper.c:151
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:160
+#: plug-ins/gimpressionist/paper.c:159
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:173 plug-ins/ifscompose/ifscompose.c:564
+#: plug-ins/gimpressionist/paper.c:172 plug-ins/ifscompose/ifscompose.c:564
 msgid "Scale:"
 msgstr "Skala:"
 
-#: plug-ins/gimpressionist/paper.c:192
+#: plug-ins/gimpressionist/paper.c:191
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:201
+#: plug-ins/gimpressionist/paper.c:200
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
@@ -8633,27 +9019,27 @@ msgstr "Lagre aktiv"
 msgid "Save the current settings to the specified file"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:679
+#: plug-ins/gimpressionist/presets.c:677
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:687
+#: plug-ins/gimpressionist/presets.c:685
 msgid "Deletes the selected Preset"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:689
+#: plug-ins/gimpressionist/presets.c:687
 msgid "Refresh"
 msgstr "Gjenles"
 
-#: plug-ins/gimpressionist/presets.c:695
+#: plug-ins/gimpressionist/presets.c:693
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:697
+#: plug-ins/gimpressionist/presets.c:695
 msgid "(Desc)"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:702
+#: plug-ins/gimpressionist/presets.c:700
 msgid ""
 "\n"
 "If you come up with some nice Presets,\n"
@@ -8662,16 +9048,16 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:122 plug-ins/gimpressionist/repaint.c:872
+#: plug-ins/gimpressionist/preview.c:124 plug-ins/gimpressionist/repaint.c:872
 #: plug-ins/imagemap/imap_polygon.c:455
 msgid "Update"
 msgstr "Oppdater"
 
-#: plug-ins/gimpressionist/preview.c:127
+#: plug-ins/gimpressionist/preview.c:129
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:134
+#: plug-ins/gimpressionist/preview.c:136
 msgid "Revert to the original image"
 msgstr "Gå tilbake til originalt bilde"
 
@@ -8777,6 +9163,54 @@ msgid ""
 "influence"
 msgstr ""
 
+#: plug-ins/helpbrowser/helpbrowser.c:79
+#, c-format
+msgid ""
+"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
+"center><p><small>This either means that the help for this topic has not been "
+"written yet or that something is wrong with your installation. Please check "
+"carefully before you report this as a bug.</small></body></html>"
+msgstr ""
+
+#: plug-ins/helpbrowser/helpbrowser.c:95
+#, c-format
+msgid ""
+"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
+"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
+"the help for this topic has not been written yet or that something is wrong "
+"with your installation. Please check carefully before you report this as a "
+"bug.</small></body></html>"
+msgstr ""
+
+#: plug-ins/helpbrowser/helpbrowser.c:330 plug-ins/imagemap/imap_main.c:516
+msgid "<Untitled>"
+msgstr "<Uten navn>"
+
+#: plug-ins/helpbrowser/helpbrowser.c:564
+#: plug-ins/helpbrowser/helpbrowser.c:579
+#, c-format
+msgid ""
+"GIMP Help Browser Error.\n"
+"\n"
+"Couldn't find my root html directory.\n"
+"(%s)"
+msgstr ""
+
+#: plug-ins/helpbrowser/helpbrowser.c:593
+msgid "GIMP Help Browser"
+msgstr ""
+
+#: plug-ins/helpbrowser/helpbrowser.c:911
+#, c-format
+msgid ""
+"GIMP Help Browser Error.\n"
+"\n"
+"Couldn't find GIMP_HELP_ROOT html directory.\n"
+"(%s)"
+msgstr ""
+
 #: plug-ins/ifscompose/ifscompose.c:366
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
 msgstr ""
@@ -8838,6 +9272,12 @@ msgstr "IfsCompose: Sort"
 msgid "IfsCompose"
 msgstr "IfsCompose"
 
+#: plug-ins/ifscompose/ifscompose.c:867 plug-ins/ifscompose/ifscompose.c:1134
+#: plug-ins/imagemap/imap_cmd_move.c:87
+#: plug-ins/imagemap/imap_cmd_object_move.c:58
+msgid "Move"
+msgstr "Flytt"
+
 #: plug-ins/ifscompose/ifscompose.c:876 plug-ins/ifscompose/ifscompose.c:1146
 msgid "Rotate/Scale"
 msgstr "Roter/Skaler"
@@ -8850,7 +9290,7 @@ msgstr "Strekk"
 msgid "Render Options"
 msgstr "Alternativer for rendring"
 
-#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:452
+#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:478
 msgid "Auto"
 msgstr "Auto"
 
@@ -9113,16 +9553,10 @@ msgstr "Gopher"
 msgid "Other"
 msgstr "Annet"
 
-#.
-#. * The format of the list is the File printer followed by a qsort'ed list
-#. * of system printers. So, if we want to update the file printer, it is
-#. * always first in the list, else call psearch.
-#.
 #: plug-ins/imagemap/imap_edit_area_info.c:210
-#: plug-ins/imagemap/imap_menu.c:219 plug-ins/print/print.c:944
-#: plug-ins/print/print.c:945 plug-ins/print/print.c:1026
-#: plug-ins/print/print.c:1027 plug-ins/print/print.c:1126
-#: plug-ins/print/print.c:1127 plug-ins/print/print.c:1363
+#: plug-ins/imagemap/imap_menu.c:219 plug-ins/print/print.c:733
+#: plug-ins/print/print.c:734 plug-ins/print/print.c:832
+#: plug-ins/print/print.c:1183
 msgid "File"
 msgstr "Fil"
 
@@ -9251,10 +9685,6 @@ msgstr "piksler fra toppen"
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filter/Web/Bildekart..."
 
-#: plug-ins/imagemap/imap_main.c:516 plug-ins/imagemap/imap_settings.c:163
-msgid "<Untitled>"
-msgstr "<Uten navn>"
-
 #: plug-ins/imagemap/imap_main.c:667
 msgid "Data changed"
 msgstr "Data endret"
@@ -9339,7 +9769,7 @@ msgstr "Områdeliste"
 msgid "Source..."
 msgstr "Kilde..."
 
-#: plug-ins/imagemap/imap_menu.c:339
+#: plug-ins/imagemap/imap_menu.c:339 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Gråtone"
 
@@ -9410,6 +9840,10 @@ msgstr "Kartinformasjon..."
 #: plug-ins/imagemap/imap_popup.c:131
 msgid "Tools"
 msgstr "Verktøy"
+
+#: plug-ins/imagemap/imap_popup.c:144
+msgid "Zoom"
+msgstr "Zoom"
 
 #: plug-ins/imagemap/imap_popup.c:145
 msgid "In"
@@ -9625,19 +10059,19 @@ msgstr "Prim's algoritme"
 msgid "Selection is %dx%d"
 msgstr "Utvalg er %dx%d"
 
-#: plug-ins/maze/maze_face.c:438
+#: plug-ins/maze/maze_face.c:439
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:607
+#: plug-ins/maze/maze_face.c:608
 #, c-format
 msgid "Opening %s"
 msgstr "Åpner %s"
 
-#: plug-ins/maze/maze_face.c:618
+#: plug-ins/maze/maze_face.c:619
 #, c-format
 msgid "See %s"
 msgstr "Se %s"
@@ -9695,6 +10129,10 @@ msgstr "Heksagoner"
 msgid "Octagons & Squares"
 msgstr "Oktagoner & ruter"
 
+#: plug-ins/mosaic/mosaic.c:702
+msgid "Tile Height:"
+msgstr "Flishøyde:"
+
 #: plug-ins/mosaic/mosaic.c:711
 msgid "Tile Spacing:"
 msgstr "Mellomrom mellom fliser:"
@@ -9715,93 +10153,150 @@ msgstr "Fargevariasjon:"
 msgid "Unable to add additional point.\n"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:222
+#: plug-ins/pagecurl/pagecurl.c:219
 msgid "<Image>/Filters/Distorts/Pagecurl..."
 msgstr "<Image>/Filter/Forvrengning/Sidebrett..."
 
-#: plug-ins/pagecurl/pagecurl.c:509
+#: plug-ins/pagecurl/pagecurl.c:505
 msgid "Pagecurl Effect"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:531
+#: plug-ins/pagecurl/pagecurl.c:527
 msgid "Curl Location"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:556
+#: plug-ins/pagecurl/pagecurl.c:552
 msgid "Upper Left"
 msgstr "Øvre venstre"
 
-#: plug-ins/pagecurl/pagecurl.c:557
+#: plug-ins/pagecurl/pagecurl.c:553
 msgid "Upper Right"
 msgstr "Øvre høyre"
 
-#: plug-ins/pagecurl/pagecurl.c:558
+#: plug-ins/pagecurl/pagecurl.c:554
 msgid "Lower Left"
 msgstr "Nedre venstre"
 
-#: plug-ins/pagecurl/pagecurl.c:559
+#: plug-ins/pagecurl/pagecurl.c:555
 msgid "Lower Right"
 msgstr "Nedre høyre"
 
-#: plug-ins/pagecurl/pagecurl.c:589
+#: plug-ins/pagecurl/pagecurl.c:585
 msgid "Curl Orientation"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:628
+#: plug-ins/pagecurl/pagecurl.c:624
 msgid "Shade under Curl"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:639
+#: plug-ins/pagecurl/pagecurl.c:635
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:652
+#: plug-ins/pagecurl/pagecurl.c:648
 msgid "Curl Opacity"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:781
+#: plug-ins/pagecurl/pagecurl.c:778
 msgid "Curl Layer"
 msgstr ""
 
-#: plug-ins/pagecurl/pagecurl.c:1018
+#: plug-ins/pagecurl/pagecurl.c:1015
 msgid "Page Curl..."
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:135
+#: plug-ins/print/gimp_color_window.c:184
 msgid "Print Color Adjust"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:140
+#: plug-ins/print/gimp_color_window.c:188
 msgid "Set Defaults"
 msgstr "Sett standardverdier"
 
-#: plug-ins/print/gimp_color_window.c:269
+#: plug-ins/print/gimp_color_window.c:190
+msgid "Close"
+msgstr "Lukk"
+
+#: plug-ins/print/gimp_color_window.c:221
+#, fuzzy
+msgid "Image preview"
+msgstr "Forhåndsvisning av bilde"
+
+#: plug-ins/print/gimp_color_window.c:239
+msgid ""
+"Set the brightness of the print.\n"
+"0 is solid black, 2 is solid white"
+msgstr ""
+
+#: plug-ins/print/gimp_color_window.c:259
+#, fuzzy
+msgid "Set the contrast of the print"
+msgstr "Plott grafen av instillingene"
+
+#: plug-ins/print/gimp_color_window.c:278
+#, fuzzy
+msgid "Adjust the cyan balance of the print"
+msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/print/gimp_color_window.c:297
+#, fuzzy
+msgid "Adjust the magenta balance of the print"
+msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/print/gimp_color_window.c:316
+#, fuzzy
+msgid "Adjust the yellow balance of the print"
+msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/print/gimp_color_window.c:335
+msgid ""
+"Adjust the saturation (color balance) of the print\n"
+"Use zero saturation to produce grayscale output using color and black inks"
+msgstr ""
+
+#: plug-ins/print/gimp_color_window.c:348
 msgid "Density:"
 msgstr "Tetthet:"
 
-#: plug-ins/print/gimp_color_window.c:300
+#: plug-ins/print/gimp_color_window.c:356
+msgid ""
+"Adjust the density (amount of ink) of the print. Reduce the density if the "
+"ink bleeds through the paper or smears; increase the density if black "
+"regions are not solid."
+msgstr ""
+
+#: plug-ins/print/gimp_color_window.c:378
+msgid ""
+"Adjust the gamma of the print. Larger values will produce a generally "
+"brighter print, while smaller values will produce a generally darker print. "
+"Black and white will remain the same, unlike with the brightness adjustment."
+msgstr ""
+
+#: plug-ins/print/gimp_color_window.c:394
 msgid "Dither Algorithm:"
 msgstr "Dither-algoritme:"
+
+#: plug-ins/print/gimp_color_window.c:402
+msgid ""
+"Choose the dither algorithm to be used.\n"
+"Adaptive Hybrid usually produces the best all-around quality.\n"
+"Ordered is faster and produces almost as good quality on photographs.\n"
+"Fast and Very Fast are considerably faster, and work well for text and line "
+"art.\n"
+"Hybrid Floyd-Steinberg generally produces inferior output."
+msgstr ""
 
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:255
+#: plug-ins/print/gimp_main_window.c:349
 #, c-format
 msgid "%s -- Print v%s"
 msgstr "%s -- Skriv ut v%s"
 
-#: plug-ins/print/gimp_main_window.c:264
-msgid ""
-"Print and\n"
-"Save Settings"
-msgstr ""
-"Skriv ut og\n"
-"lagre instillinger"
-
-#: plug-ins/print/gimp_main_window.c:266
+#: plug-ins/print/gimp_main_window.c:364
 msgid ""
 "Save\n"
 "Settings"
@@ -9809,178 +10304,460 @@ msgstr ""
 "Lagre\n"
 "instillinger"
 
-#: plug-ins/print/gimp_main_window.c:268
-msgid "Print"
-msgstr "Skriv ut"
+#: plug-ins/print/gimp_main_window.c:367
+msgid ""
+"Print and\n"
+"Save Settings"
+msgstr ""
+"Skriv ut og\n"
+"lagre instillinger"
 
-#: plug-ins/print/gimp_main_window.c:346
-msgid "Center Image"
-msgstr "Sentrer bilde"
+#: plug-ins/print/gimp_main_window.c:433
+msgid ""
+"Position the image on the page.\n"
+"Click and drag with the primary button to position the image.\n"
+"Click and drag with the second button to move the image with finer "
+"precision; each unit of motion moves the image one point (1/72\")\n"
+"Click and drag with the third (middle) button to move the image in units of "
+"the image size.\n"
+"Holding down the shift key while clicking and dragging constrains the image "
+"to only horizontal or vertical motion.\n"
+"If you click another button while dragging the mouse, the image will return "
+"to its original position."
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:357
-msgid "Units:"
-msgstr "Enheter:"
-
-#: plug-ins/print/gimp_main_window.c:369
-msgid "cm"
-msgstr "cm"
-
-#: plug-ins/print/gimp_main_window.c:420
-msgid "Right Border:"
-msgstr "Høyre kant:"
-
-#: plug-ins/print/gimp_main_window.c:443
-msgid "Bottom Border:"
-msgstr "Nedre kant:"
-
-#: plug-ins/print/gimp_main_window.c:455
+#: plug-ins/print/gimp_main_window.c:480
 msgid "Portrait"
 msgstr "Portrett"
 
-#: plug-ins/print/gimp_main_window.c:458
+#: plug-ins/print/gimp_main_window.c:482
 msgid "Landscape"
 msgstr "Landskap"
 
-#: plug-ins/print/gimp_main_window.c:461
+#: plug-ins/print/gimp_main_window.c:484
 msgid "Upside down"
 msgstr "Opp-ned"
 
-#: plug-ins/print/gimp_main_window.c:464
+#: plug-ins/print/gimp_main_window.c:486
 msgid "Seascape"
 msgstr ""
 
-#.
-#. *  Printer settings frame...
-#.
-#: plug-ins/print/gimp_main_window.c:476
-msgid "Printer Settings"
-msgstr "Innstillinger for skrivere"
+#: plug-ins/print/gimp_main_window.c:490
+msgid ""
+"Select the orientation: portrait, landscape, upside down, or seascape "
+"(upside down landscape)"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:498
-msgid "Media Size:"
-msgstr "Mediestørrelse:"
+#: plug-ins/print/gimp_main_window.c:513
+msgid "Distance from the left of the paper to the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:507
-msgid "Media Type:"
-msgstr "Medietype:"
+#: plug-ins/print/gimp_main_window.c:526
+msgid "Distance from the top of the paper to the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:516
-msgid "Media Source:"
-msgstr "Mediekilde:"
+#: plug-ins/print/gimp_main_window.c:539
+msgid "Distance from the left of the paper to the right of the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:525
-msgid "Ink Type:"
-msgstr "Blekktype:"
+#: plug-ins/print/gimp_main_window.c:549
+msgid "Right Border:"
+msgstr "Høyre kant:"
 
-#.
-#. * Scaling...
-#.
-#: plug-ins/print/gimp_main_window.c:540
-msgid "Scaling"
-msgstr "Skalering"
+#: plug-ins/print/gimp_main_window.c:553
+msgid "Distance from the right of the paper to the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
-msgid "Scaling:"
-msgstr "Skalering"
+#: plug-ins/print/gimp_main_window.c:567
+msgid "Distance from the top of the paper to the bottom of the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:604
-msgid "Percent"
-msgstr "Prosent"
+#: plug-ins/print/gimp_main_window.c:577
+msgid "Bottom Border:"
+msgstr "Nedre kant:"
 
-#: plug-ins/print/gimp_main_window.c:614
-msgid "PPI"
-msgstr "PPI"
+#: plug-ins/print/gimp_main_window.c:581
+msgid "Distance from the bottom of the paper to the image"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:623
-msgid "Set Image Scale"
-msgstr "Sett bildestørrelse"
+#: plug-ins/print/gimp_main_window.c:598
+#, fuzzy
+msgid "Center:"
+msgstr "Senter"
 
-#.
-#. * Image type
-#.
-#: plug-ins/print/gimp_main_window.c:669
-msgid "Image Settings"
-msgstr "Instillinger for bilde"
+#: plug-ins/print/gimp_main_window.c:602
+#, fuzzy
+msgid "Vertically"
+msgstr "Vertikal"
 
-#: plug-ins/print/gimp_main_window.c:689
-msgid "Line Art"
-msgstr "Linjekunst"
+#: plug-ins/print/gimp_main_window.c:607
+msgid "Center the image vertically on the paper"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:700
-msgid "Solid Colors"
-msgstr "Helfylte farger"
+#: plug-ins/print/gimp_main_window.c:618
+#, fuzzy
+msgid "Center the image on the paper"
+msgstr "Konverter bildet til RGB først!"
 
-#: plug-ins/print/gimp_main_window.c:711
-msgid "Photograph"
-msgstr "Fotografi"
+#: plug-ins/print/gimp_main_window.c:625
+#, fuzzy
+msgid "Horizontally"
+msgstr "Horisontal"
 
-#: plug-ins/print/gimp_main_window.c:722
-msgid "Monochrome"
-msgstr "Monokrom"
+#: plug-ins/print/gimp_main_window.c:630
+msgid "Center the image horizontally on the paper"
+msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:737
-msgid "Adjust Color"
-msgstr "Tilpass farge"
-
-#.
-#. * Output type toggles...
-#.
-#: plug-ins/print/gimp_main_window.c:749
-msgid "Output Type:"
-msgstr "Utskriftstype:"
-
-#: plug-ins/print/gimp_main_window.c:768
-msgid "B&W"
-msgstr "S/HV"
-
-#: plug-ins/print/gimp_main_window.c:802
-msgid "Printer:"
+#: plug-ins/print/gimp_main_window.c:646
+#, fuzzy
+msgid "Setup Printer"
 msgstr "Skriver:"
 
-#: plug-ins/print/gimp_main_window.c:811 plug-ins/print/gimp_main_window.c:824
-msgid "Setup"
-msgstr "Oppsett"
-
 #.
-#. * Printer driver option menu...
+#. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:853
+#: plug-ins/print/gimp_main_window.c:675 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Model:"
 msgstr "Skrivermodell:"
 
+#: plug-ins/print/gimp_main_window.c:687
+msgid "Select your printer model"
+msgstr ""
+
 #.
-#. * PPD file...
+#. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:889
+#: plug-ins/print/gimp_main_window.c:725
 msgid "PPD File:"
 msgstr "PPD fil:"
 
-#: plug-ins/print/gimp_main_window.c:904
+#: plug-ins/print/gimp_main_window.c:741
+msgid "Enter the correct PPD filename for your printer"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:744
 msgid "Browse"
 msgstr "Bla gjennom"
 
+#: plug-ins/print/gimp_main_window.c:750
+msgid "Choose the correct PPD filename for your printer"
+msgstr ""
+
 #.
-#. * Print command...
+#. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:916
+#: plug-ins/print/gimp_main_window.c:760
 msgid "Command:"
 msgstr "Kommando:"
 
+#: plug-ins/print/gimp_main_window.c:773
+msgid ""
+"Enter the correct command to print to your printer. Note: Please do not "
+"remove the `-l' or `-oraw' from the command string, or printing will "
+"probably fail!"
+msgstr ""
+
 #.
-#. * Output file selection dialog...
+#. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:931
+#: plug-ins/print/gimp_main_window.c:782
 msgid "Print To File?"
 msgstr "Skriv ut til fil?"
 
 #.
-#. * PPD file selection dialog...
+#. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:945
+#: plug-ins/print/gimp_main_window.c:797
 msgid "PPD File?"
 msgstr "PPD/Fil?"
 
-#: plug-ins/print/print.c:221
+#: plug-ins/print/gimp_main_window.c:816
+#, fuzzy
+msgid "Define New Printer"
+msgstr "Slett punkt"
+
+#: plug-ins/print/gimp_main_window.c:838 plug-ins/print/gimp_main_window.c:929
+#, fuzzy
+msgid "Printer Name:"
+msgstr "Skriver:"
+
+#: plug-ins/print/gimp_main_window.c:842
+msgid "Enter the name you wish to give this logical printer"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:854
+msgid "About Gimp-Print "
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:864
+msgid "Gimp-Print Version "
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:864
+msgid ""
+"\n"
+"\n"
+"Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
+"and the rest of the Gimp-Print Development Team.\n"
+"\n"
+"Please visit our web site at http://gimp-print.sourceforge.net.\n"
+"\n"
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:912
+msgid "Printer Settings"
+msgstr "Innstillinger for skrivere"
+
+#: plug-ins/print/gimp_main_window.c:925
+msgid ""
+"Select the name of the printer (not the type, or model, of printer) that you "
+"wish to print to"
+msgstr ""
+
+#.
+#. * Setup printer button
+#.
+#: plug-ins/print/gimp_main_window.c:945
+#, fuzzy
+msgid "Setup Printer..."
+msgstr "Deinterlace..."
+
+#: plug-ins/print/gimp_main_window.c:947
+msgid ""
+"Choose the printer model, PPD file, and command that is used to print to "
+"this printer"
+msgstr ""
+
+#.
+#. * New printer button
+#.
+#: plug-ins/print/gimp_main_window.c:962
+#, fuzzy
+msgid "New Printer..."
+msgstr "Newsprintifiserer..."
+
+#: plug-ins/print/gimp_main_window.c:964
+msgid ""
+"Define a new logical printer. This can be used to name a collection of "
+"settings that you wish to remember for future use."
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:985
+msgid "Size of paper that you wish to print to"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:988
+msgid "Media Size:"
+msgstr "Mediestørrelse:"
+
+#: plug-ins/print/gimp_main_window.c:997
+#, fuzzy
+msgid "Dimensions:"
+msgstr "Dimensjoner"
+
+#: plug-ins/print/gimp_main_window.c:1011
+msgid "Width of the paper that you wish to print to"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1028
+msgid "Height of the paper that you wish to print to"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1044
+msgid "Type of media you're printing to"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1047
+msgid "Media Type:"
+msgstr "Medietype:"
+
+#: plug-ins/print/gimp_main_window.c:1060
+msgid "Source (input slot) of media you're printing to"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1063
+msgid "Media Source:"
+msgstr "Mediekilde:"
+
+#: plug-ins/print/gimp_main_window.c:1076
+msgid "Type of ink in the printer"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1079
+msgid "Ink Type:"
+msgstr "Blekktype:"
+
+#: plug-ins/print/gimp_main_window.c:1092
+msgid "Resolution and quality of the print"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1131
+msgid "Scaling:"
+msgstr "Skalering"
+
+#: plug-ins/print/gimp_main_window.c:1137
+#, fuzzy
+msgid "Set the scale (size) of the image"
+msgstr "Bruk bildets farge"
+
+#: plug-ins/print/gimp_main_window.c:1170
+msgid ""
+"Select whether scaling is measured as percent of available page size or "
+"number of output dots per inch"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1175
+msgid "Percent"
+msgstr "Prosent"
+
+#: plug-ins/print/gimp_main_window.c:1182
+msgid "Scale the print to the size of the page"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1188
+msgid "PPI"
+msgstr "PPI"
+
+#: plug-ins/print/gimp_main_window.c:1194
+msgid "Scale the print to the number of dots per inch"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1220
+#, fuzzy
+msgid "Set the width of the print"
+msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/print/gimp_main_window.c:1233
+#, fuzzy
+msgid "Set the height of the print"
+msgstr "Juster ugjennomsiktigheten for piggene"
+
+#: plug-ins/print/gimp_main_window.c:1253
+msgid "Units:"
+msgstr "Enheter:"
+
+#: plug-ins/print/gimp_main_window.c:1258
+msgid "Select the base unit of measurement for printing"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1268
+msgid "Set the base unit of measurement to inches"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1274
+msgid "cm"
+msgstr "cm"
+
+#: plug-ins/print/gimp_main_window.c:1280
+msgid "Set the base unit of measurement to centimetres"
+msgstr ""
+
+#.
+#. * The "image size" button
+#.
+#: plug-ins/print/gimp_main_window.c:1290
+#, fuzzy
+msgid ""
+"Use Original\n"
+"Image Size"
+msgstr "Bildestørrelse"
+
+#: plug-ins/print/gimp_main_window.c:1296
+msgid "Set the print size to the size of the image"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1319
+#, fuzzy
+msgid "Image / Output Settings"
+msgstr "Instillinger for bilde"
+
+#: plug-ins/print/gimp_main_window.c:1332
+#, fuzzy
+msgid "Image Type:"
+msgstr "Bildetyper"
+
+#: plug-ins/print/gimp_main_window.c:1337
+msgid "Optimize the output for the type of image being printed"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1341
+msgid "Line Art"
+msgstr "Linjekunst"
+
+#: plug-ins/print/gimp_main_window.c:1348
+msgid "Fastest and brightest color for text and line art"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1355
+msgid "Solid Colors"
+msgstr "Helfylte farger"
+
+#: plug-ins/print/gimp_main_window.c:1362
+msgid "Best for images dominated by regions of solid color"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1370
+msgid "Photograph"
+msgstr "Fotografi"
+
+#: plug-ins/print/gimp_main_window.c:1378
+msgid ""
+"Slowest, but most accurate and smoothest color for continuous tone images "
+"and photographs"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1404
+msgid "Output Type:"
+msgstr "Utskriftstype:"
+
+#: plug-ins/print/gimp_main_window.c:1409
+msgid "Select the desired output type"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1418
+#, fuzzy
+msgid "Color output"
+msgstr "Fargemodus"
+
+#: plug-ins/print/gimp_main_window.c:1430
+msgid "Print in shades of gray using black ink"
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1437
+#, fuzzy
+msgid "Black and White"
+msgstr "Sort/hvitt"
+
+#: plug-ins/print/gimp_main_window.c:1444
+msgid "Print in black and white (no color, and no shades of gray)"
+msgstr ""
+
+#.
+#. *  Color adjust button
+#.
+#: plug-ins/print/gimp_main_window.c:1455
+msgid "Adjust Output..."
+msgstr ""
+
+#: plug-ins/print/gimp_main_window.c:1462
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgstr ""
+
+#: plug-ins/print/print.c:166
 msgid "<Image>/File/Print..."
 msgstr "<Image>/Fil/Skriv ut..."
 
@@ -10059,6 +10836,11 @@ msgstr "Kontiuerlig oppdatering"
 msgid "Area:"
 msgstr "Område:"
 
+#: plug-ins/rcm/rcm_dialog.c:703
+#, fuzzy
+msgid "Entire Layer"
+msgstr "Hele bildet"
+
 #: plug-ins/rcm/rcm_dialog.c:721
 msgid "Context"
 msgstr "Kontekst:"
@@ -10089,24 +10871,24 @@ msgstr "<Image>/Velg/Til sti"
 msgid "No selection to convert"
 msgstr "Ingen utvalg å konvertere"
 
-#: plug-ins/sel2path/sel2path.c:326
+#: plug-ins/sel2path/sel2path.c:327
 msgid "Sel2Path Advanced Settings"
 msgstr "Avanserte instillinger for Sel2Path"
 
-#: plug-ins/sel2path/sel2path.c:535
+#: plug-ins/sel2path/sel2path.c:537
 #, c-format
 msgid "print_spline: strange degree (%d)"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:544
+#: plug-ins/sel2path/sel2path.c:546
 msgid "selection_to_path"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:572
+#: plug-ins/sel2path/sel2path.c:574
 msgid "gimp_image_get_selection failed"
 msgstr ""
 
-#: plug-ins/sel2path/sel2path.c:580
+#: plug-ins/sel2path/sel2path.c:582
 msgid "Internal error. Selection bpp > 1"
 msgstr ""
 
@@ -10254,6 +11036,42 @@ msgstr "Feil: Kan ikke lese fil %s med egenskaper for XJT"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Feil: fil %s med egenskaper for XJT er tom"
 
+#~ msgid "Reset"
+#~ msgstr "Sett tilbake"
+
+#~ msgid "Reset to Defaults"
+#~ msgstr "Sett til standardverdier"
+
+#~ msgid "Contents"
+#~ msgstr "Innhold"
+
+#~ msgid "Index"
+#~ msgstr "Indeks"
+
+#~ msgid "Print"
+#~ msgstr "Skriv ut"
+
+#~ msgid "Center Image"
+#~ msgstr "Sentrer bilde"
+
+#~ msgid "Scaling"
+#~ msgstr "Skalering"
+
+#~ msgid "Set Image Scale"
+#~ msgstr "Sett bildestørrelse"
+
+#~ msgid "Monochrome"
+#~ msgstr "Monokrom"
+
+#~ msgid "Adjust Color"
+#~ msgstr "Tilpass farge"
+
+#~ msgid "B&W"
+#~ msgstr "S/HV"
+
+#~ msgid "Setup"
+#~ msgstr "Oppsett"
+
 #~ msgid "<Image>/Filters/Render/Pattern/Mosaic..."
 #~ msgstr "<Image>/Filter/Render/Mønster/Mosaikk..."
 
@@ -10262,9 +11080,6 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 
 #~ msgid "Cancel"
 #~ msgstr "Avbryt"
-
-#~ msgid "Close"
-#~ msgstr "Lukk"
 
 #~ msgid "GIF save: Your comment string is too long.\n"
 #~ msgstr "GIF lagre: Din kommentarstreng er for lang.\n"
@@ -11185,12 +12000,6 @@ msgstr "Feil: fil %s med egenskaper for XJT er tom"
 
 #~ msgid "More..."
 #~ msgstr "Mer..."
-
-#~ msgid "Contents"
-#~ msgstr "Innhold"
-
-#~ msgid "Index"
-#~ msgstr "Indeks"
 
 #~ msgid "Back"
 #~ msgstr "Tilbake"

@@ -1,5 +1,9 @@
 2002-05-29  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.3.6 release.
+
+2002-05-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.[ch]: renamed gimp_mem_size_entry_new()
 	to gimp_memsize_entry_new() for consistency. Rewrote using bitshifts.
 	Should work correctly for sizeof (gulong) > 32 now. Added new unit

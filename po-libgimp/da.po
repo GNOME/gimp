@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-28 12:52+0200\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: 2002-05-28 12:53+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -274,16 +274,21 @@ msgstr ""
 "Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
 "en god tilfældighed"
 
-#: libgimpwidgets/gimpwidgets.c:1173
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1174
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
+msgstr "Megabyte"
+
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
 msgstr "Megabyte"
 
 #~ msgid "Paste"

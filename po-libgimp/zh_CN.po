@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: 2002-03-27 23:12+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -152,6 +152,11 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr "通道(已保存的选择)"
 
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr ""
+
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "百分点"
@@ -212,19 +217,19 @@ msgstr "重置(_R)"
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:160
 msgid "Transform"
 msgstr "变换"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:163
 msgid "Rotate"
 msgstr "旋转"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:164
 msgid "Scale"
 msgstr "缩放"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:165
 msgid "Shear"
 msgstr "剪取"
 
@@ -244,7 +249,7 @@ msgstr "单位"
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:842
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -252,26 +257,32 @@ msgstr ""
 "如果“时间”按钮没有按下，将使用这个值作为随机数生成种子 - 这将允许你重复一个指"
 "定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:847
-msgid "Time"
+#: libgimpwidgets/gimpwidgets.c:850
+#, fuzzy
+msgid "_Time"
 msgstr "时间"
 
-#: libgimpwidgets/gimpwidgets.c:856
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr "以当前时间作为随机数生成器的种子 - 这保证了一定程度的随机性"
 
-#: libgimpwidgets/gimpwidgets.c:1170
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "字节"
 
-#: libgimpwidgets/gimpwidgets.c:1171
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "K 字节"
 
-#: libgimpwidgets/gimpwidgets.c:1172
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
+msgstr "M 字节"
+
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
 msgstr "M 字节"
 
 #~ msgid "pixel"

@@ -28,7 +28,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-05-28 11:20+0200\n"
+"POT-Creation-Date: 2002-05-28 15:12+0200\n"
 "PO-Revision-Date: 2002-05-28 12:21+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -4382,8 +4382,8 @@ msgid "JPEG preview"
 msgstr "JPEG-eksempel"
 
 #: plug-ins/common/jpeg.c:1132
-#, c-format
-msgid "Size: %lu bytes (%02.01f kB)"
+#, fuzzy, c-format
+msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Størrelse: %lu byte (%02.01f kb)"
 
 #: plug-ins/common/jpeg.c:1541 plug-ins/common/jpeg.c:1649

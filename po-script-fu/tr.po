@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.5\n"
-"POT-Creation-Date: 2002-04-14 19:23-0400\n"
+"POT-Creation-Date: 2002-05-28 02:11+0200\n"
 "PO-Revision-Date: 2002-04-28 04:07+0200\n"
 "Last-Translator: Ömer Fadıl USTA <omer_fad@hotmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -35,73 +35,69 @@ msgstr "Şu Anki Komut"
 msgid "Browse..."
 msgstr "Gözat..."
 
-#: plug-ins/script-fu/script-fu-console.c:570
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD çıkış veriyoluna akış açılamadı"
 
-#: plug-ins/script-fu/script-fu-console.c:576
+#: plug-ins/script-fu/script-fu-console.c:587
 msgid "Unable to open the SIOD output pipe"
 msgstr "SIOD çıkış borusu açılamadı"
 
-#: plug-ins/script-fu/script-fu-console.c:621
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu değerlendirme modu sadece etkileşimsiz çağrıma olanak tanır"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1235
+msgid "About"
+msgstr "Hakkında"
+
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1223
+#: plug-ins/script-fu/script-fu-scripts.c:1245
 msgid "Script Arguments"
 msgstr "Program Argümanları"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1268
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1293
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1398
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1381
+#: plug-ins/script-fu/script-fu-scripts.c:1403
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu Desen Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1423
+#: plug-ins/script-fu/script-fu-scripts.c:1445
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Gradyan Secimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fırça Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1479
-msgid "Reset to Defaults"
-msgstr "Öntanımlı Değerlere Döndür"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-msgid "About"
-msgstr "Hakkında"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1703
+#: plug-ins/script-fu/script-fu-scripts.c:1661
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -109,30 +105,30 @@ msgstr ""
 "Seçtiğiniz yazıtiplerinden en az biri geçersiz.\n"
 "Lütfen ayarlarını kontrol edin.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2002
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Yazar:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2008
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Telif Hakkı:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2014
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Tarih:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2022
+#: plug-ins/script-fu/script-fu-scripts.c:1981
 msgid "Image Types:"
 msgstr "Resim Tipleri:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2167
+#: plug-ins/script-fu/script-fu-scripts.c:2122
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Yazıtipi Seçimi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2237
+#: plug-ins/script-fu/script-fu-scripts.c:2192
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -593,7 +589,8 @@ msgstr "Çubuk Uzunluğu"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Madde İmi..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Madde İmi..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -603,7 +600,8 @@ msgstr "Yarıçap"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Düğme..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Yaratık Parlaması/Düğme..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
@@ -737,7 +735,8 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Ok..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Madde İmi..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Madde İmi..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -749,11 +748,13 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Düğm
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Başlık..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Başlık..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Yatay Ayraç..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Kabartılı Desen/Yatay Ayraç..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1400,16 +1401,21 @@ msgid "Shadow Color"
 msgstr "Gölge Rengi"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Genel Tüp İsimler..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Genel Tüp İsimler..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Düğme İsmi..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Düğme İsmi..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Düğme İsmi..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Düğme İsmi..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
@@ -2276,3 +2282,5 @@ msgstr "<Toolbox>/Xtns/Web Tarayıcı/Eklem Listesi"
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Xtns/Web Tarayıcı/Kullanıcı ÇSS"
 
+#~ msgid "Reset to Defaults"
+#~ msgstr "Öntanımlı Değerlere Döndür"

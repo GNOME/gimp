@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -154,6 +154,11 @@ msgstr ""
 msgid "a channel (saved selection)"
 msgstr ""
 
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr ""
+
 #: libgimp/gimpunit.c:56
 msgid "percent"
 msgstr "percento"
@@ -219,19 +224,19 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:160
 msgid "Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:163
 msgid "Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:164
 msgid "Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:165
 msgid "Shear"
 msgstr ""
 
@@ -251,7 +256,7 @@ msgstr "Unità"
 msgid "Factor"
 msgstr "Fattore"
 
-#: libgimpwidgets/gimpwidgets.c:842
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -260,11 +265,12 @@ msgstr ""
 "generazione del seme di casualità - questo vi permette di ripetereuna data "
 "operazione in modalità \"casuale\"."
 
-#: libgimpwidgets/gimpwidgets.c:847
-msgid "Time"
+#: libgimpwidgets/gimpwidgets.c:850
+#, fuzzy
+msgid "_Time"
 msgstr "Tempo"
 
-#: libgimpwidgets/gimpwidgets.c:856
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -272,16 +278,21 @@ msgstr ""
 "Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
 "casualità ragionevole"
 
-#: libgimpwidgets/gimpwidgets.c:1170
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1171
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "KByte"
 
-#: libgimpwidgets/gimpwidgets.c:1172
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
+msgstr "MByte"
+
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
 msgstr "MByte"
 
 #~ msgid "pixel"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.29\n"
-"POT-Creation-Date: 2002-03-08 09:16+0100\n"
+"POT-Creation-Date: 2002-05-28 02:11+0200\n"
 "PO-Revision-Date: 2000-11-24 15:36+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -35,76 +35,72 @@ msgstr "Commande courante"
 msgid "Browse..."
 msgstr "Parcourir..."
 
-#: plug-ins/script-fu/script-fu-console.c:570
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Impossible d'ouvrir un flot sur le tampon de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:576
+#: plug-ins/script-fu/script-fu-console.c:587
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Incapable d'ouvrir le tampon de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:621
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1196
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1235
+msgid "About"
+msgstr "À propos"
+
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1223
+#: plug-ins/script-fu/script-fu-scripts.c:1245
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1268
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1293
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1376
+#: plug-ins/script-fu/script-fu-scripts.c:1398
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1381
+#: plug-ins/script-fu/script-fu-scripts.c:1403
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du fichier (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1416
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-fu Pattern Selection"
 msgstr "Sélection des motifs (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1423
+#: plug-ins/script-fu/script-fu-scripts.c:1445
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection des dégradés (Script-Fu)"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1431
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1479
-msgid "Reset to Defaults"
-msgstr "Remettre aux valeurs par défaut"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-msgid "About"
-msgstr "À propos"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1703
+#: plug-ins/script-fu/script-fu-scripts.c:1661
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -113,29 +109,29 @@ msgstr ""
 "Veuillez vérifier vos paramètres.\n"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:487
-#: plug-ins/script-fu/script-fu-scripts.c:2002
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Auteur :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:503
-#: plug-ins/script-fu/script-fu-scripts.c:2008
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Copyright :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:495
-#: plug-ins/script-fu/script-fu-scripts.c:2014
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2022
+#: plug-ins/script-fu/script-fu-scripts.c:1981
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2167
+#: plug-ins/script-fu/script-fu-scripts.c:2122
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2237
+#: plug-ins/script-fu/script-fu-scripts.c:2192
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -233,495 +229,1222 @@ msgstr ""
 msgid "DB Browser"
 msgstr "Parcourir..."
 
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-msgid ""
-"Burn-In: Need two layers in total!\n"
-"        A foreground text layer with transparency\n"
-"        and a background layer.\n"
-msgstr ""
+#: plug-ins/gap/sel-to-anim-img.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/Animators/Sélection vers AnimImage..."
 
-#: plug-ins/script-fu/scripts/copy-visible.scm:0
-msgid "<Image>/Edit/Copy Visible"
-msgstr "<Image>/Édition/Copier visible"
+#: plug-ins/gap/sel-to-anim-img.scm.h:2
+msgid "Anim-Filter for all Copies"
+msgstr "Filtre-Anim pour toutes les copies"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Filtres/Flou/Flou mosaique..."
+#: plug-ins/gap/sel-to-anim-img.scm.h:3
+#, fuzzy
+msgid "Fill with BG Color"
+msgstr "Couleur de craie"
 
-#: plug-ins/script-fu/scripts/clothify.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Image>/Script-Fu/Alchimie/Clothify..."
+#: plug-ins/gap/sel-to-anim-img.scm.h:4
+msgid "Number of Copies"
+msgstr "Nombre de copies"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr "<Image>/Script-Fu/Alchimie/Supprime une colonne/rangée sur deux..."
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr "<Image>/Script-Fu/Alchimie/Predator..."
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Script-Fu/Alchimie/Unsharp Mask..."
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Image>/Script-Fu/Alchimie/Weave..."
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
 msgstr "<Image>/Script-Fu/Alpha vers Logo/3D Outline..."
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien Glow..."
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien Neon..."
-
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Basic I..."
-
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Basic II..."
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Blended..."
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Bovination..."
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Craie..."
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Chip Away..."
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Chrome..."
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Comic Book..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Cool Metal..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Frosty..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Glossy..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Glowing Hot..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Gradient Bevel..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Neon..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Particle Trace..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Starburst..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Starscape..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr "<Image>/Script-Fu/Alpha vers Logo/Textured..."
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Script-Fu/Animators/Blend..."
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Script-Fu/Animators/Rippling..."
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Script-Fu/Animators/Spinning Globe..."
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Script-Fu/Animators/Waves..."
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Script-Fu/Décor/Add Bevel..."
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr "<Image>/Script-Fu/Décor/Ajouter une bordure..."
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Script-Fu/Décor/Taches de café..."
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr "<Image>/Script-Fu/Décor/Bordure floue..."
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr "<Image>/Script-Fu/Décor/Vieille photo..."
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Script-Fu/Décor/Coins arrondis..."
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Image>/Script-Fu/Décor/Pellicule..."
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr "<Image>/Script-Fu/Rendu/Circuit..."
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr "<Image>/Script-Fu/Rendu/Lave..."
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr "<Image>/Script-Fu/Rendu/Line Nova..."
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Script-Fu/Rendu/Créer un système de grille..."
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Image>/Script-Fu/Sélection/Distress Selection..."
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Script-Fu/Sélection/Fade Outline..."
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Image>/Script-Fu/Sélection/Arrondi..."
-
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr "<Image>/Script-Fu/Sélection/Vers brosse..."
-
-#: plug-ins/script-fu/scripts/select_to_image.scm:0
-msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "<Image>/Script-Fu/Sélection/Vers image..."
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr "<Image>/Script-Fu/Ombre/Drop-Shadow..."
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr "<Image>/Script-Fu/Ombre/Perspective..."
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Image>/Script-Fu/Ombre/Effet (Xach)..."
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Script-Fu/Pochoir/Carve-It..."
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Image>/Script-Fu/Pochoir/Chrome-It..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Script-Fu/Utilitaires/ASCII vers calque d'image..."
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Image>/Script-Fu/Utilitaires/Dessiner graphique HSV..."
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr "<Image>/Script-Fu/Utilitaires/Afficher la structure de l'image..."
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton arrondi..."
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton à bordure simple..."
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
 msgstr "<Toolbox>/Exts/Script-Fu/Logos/3D Outline..."
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Glow..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+msgid "Bumpmap (Alpha Layer) Blur Radius"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Neon..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default Bumpmap Settings"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic I..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Police"
 
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic II..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font Size (pixels)"
+msgstr "Taille de la police (pixels)"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Blended..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+#, fuzzy
+msgid "Outline Blur Radius"
+msgstr "Rayon du flou"
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Bovination..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Motif"
 
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Carved..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#, fuzzy
+msgid "Shadow Blur Radius"
+msgstr "Rayon max. du flou"
 
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Craie..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X Offset"
+msgstr "Décalage de l'ombre en X"
 
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chip Away..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y Offset"
+msgstr "Décalage de l'ombre en Y"
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chrome..."
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Text"
+msgstr "Texte"
 
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Comic Book..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Cool Metal..."
-
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Crystal..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Frosty..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glossy..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glowing Hot..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Gradient Bevel..."
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Imigre-26..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Neon..."
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Newsprint Text..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Particle Trace..."
-
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/SOTA Chrome..."
-
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Speed Text..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starburst..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starscape..."
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Text Circle..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Textured..."
-
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Logos/Web Title Header..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique, plume..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire, plume..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire..."
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Exts/Script-Fu/Divers/Sphère..."
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
 msgstr "<Toolbox>/Exts/Script-Fu/Motifs/3D Truchet..."
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Camouflage..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Background Color"
+msgstr "Couleur de fond"
 
-#: plug-ins/script-fu/scripts/flatland.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Flatland..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Block Size"
+msgstr "Taile de bloc"
 
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Land..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+#, fuzzy
+msgid "End Blend"
+msgstr "Angle de départ"
 
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Render Map..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+#, fuzzy
+msgid "Number of X Tiles"
+msgstr "Nombres de lignes"
 
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirl-Tile..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+#, fuzzy
+msgid "Number of Y Tiles"
+msgstr "Nombres de lignes"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirly (tileable)..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#, fuzzy
+msgid "Start Blend"
+msgstr "Angle de départ"
 
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Trochoid..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+msgid "Supersample"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Truchet..."
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "Thickness"
+msgstr "Épaisseur"
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/ASCII vers image..."
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Image>/Script-Fu/Décor/Add Bevel..."
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Dégradé personnalisé..."
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep Bump Layer"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/font-map.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Carte de police..."
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+msgid "Work on Copy"
+msgstr "Travailler sur une copie"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Image>/Script-Fu/Décor/Ajouter une bordure..."
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Border Color"
+msgstr "Couleur de bordure"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X Size"
+msgstr "Taille de la bordure en X"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y Size"
+msgstr "Taille de la bordure en Y"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Delta Value on Color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
 msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Flèche..."
 
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Puce..."
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Bas"
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Bouton..."
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#, fuzzy
+msgid "Flatten Image"
+msgstr "Créer une nouvelle image"
 
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow Color"
+msgstr "Couleur de la lueur"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Gauche"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Orientation"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Droite"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Taille"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Haut"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Tiret..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar Height"
+msgstr "Hauteur de la barre"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar Length"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Puce..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "Rayon"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Bouton..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+msgid "Glow Radius"
+msgstr "Rayon de la lueur"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Marge"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+msgid "Text Color"
+msgstr "Couleur du texte"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien Glow..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Glow..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+msgid "Glow Size (pixels * 4)"
+msgstr "Taille de la lueur (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Alien Neon..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Neon..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Fade Away"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+msgid "Number of Bands"
+msgstr "Nombre de bandes"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#, fuzzy
+msgid "Width of Bands"
+msgstr "Largeur des brèches"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of Gaps"
+msgstr "Largeur des brèches"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:1
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr "<Image>/Script-Fu/Utilitaires/ASCII vers calque d'image..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/ASCII vers image..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:5
+#, no-c-format
+msgid "Buffer Amount (% Height of Text)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:6
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+msgid "Filename"
+msgstr "Nom de fichier"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+msgid "Transparent Background"
+msgstr "Fond transparent"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Basic I..."
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Basic II..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic II..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton à bordure simple..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Bevel Width"
+msgstr "Largeur de la bordure"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-Right color"
+msgstr "Couleur du bas à droite"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Activé"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+msgid "Upper-Left color"
+msgstr "Couleur du haut à gauche"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Flèche..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Puce..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Diamètre"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Bouton..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Titre..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Tiret..."
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Hauteur"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Width"
+msgstr "Largeur"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Image>/Script-Fu/Animators/Blend..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Intermediate Frames"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Max. Blur Radius"
+msgstr "Rayon max. du flou"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Blended..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Blended..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend Mode"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Custom Gradient"
+msgstr "Dégradé personnalisé"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "FG-BG-HSV"
+msgstr "Avp-Arp-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-RGB"
+msgstr "Avp-Arp-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+#, fuzzy
+msgid "FG-Transparent"
+msgstr "Fond transparent"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+msgid "Gradient"
+msgstr "Dégradé"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+msgid "Offset (pixels)"
+msgstr "Décalage (pixels)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Bovination..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Bovination..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+msgid "Spots density X"
+msgstr "Densité de points en X"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+msgid "Spots density Y"
+msgstr "Densité de points en Y"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+msgid "Add Glowing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After Glow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid ""
+"Burn-In: Need two layers in total!\n"
+"        A foreground text layer with transparency\n"
+"        and a background layer."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#, fuzzy
+msgid "Corona Width"
+msgstr "Largeur de l'image"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#, fuzzy
+msgid "Fadeout"
+msgstr "Largeur de l'image"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#, fuzzy
+msgid "Fadeout Width"
+msgstr "Largeur de l'image"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Camouflage..."
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "Couleur 1"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "Couleur 2"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "Couleur 3"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+msgid "Granularity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Image Size"
+msgstr "Taille de l'image"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+msgid "Smooth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Image>/Script-Fu/Pochoir/Carve-It..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+#, fuzzy
+msgid "Carve White Areas"
+msgstr "Luminosité du chrome"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Image to Carve"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Carved..."
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+msgid "Background Image"
+msgstr "Image de fond"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carve Raised Text"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+msgid "Padding Around Text"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Craie..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Craie..."
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Chalk Color"
+msgstr "Couleur de craie"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Chip Away..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chip Away..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Blur Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+#, fuzzy
+msgid "Drop Shadow"
+msgstr "Ajouter une ombre décalée"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Fill BG with Pattern"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+msgid "Invert"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Keep Background"
+msgstr "Garder le fond"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Image>/Script-Fu/Pochoir/Chrome-It..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome Balance"
+msgstr "Balance du chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome Factor"
+msgstr "Facteur de chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome Lightness"
+msgstr "Luminosité du chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Chrome Saturation"
+msgstr "Saturation du chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#, fuzzy
+msgid "Chrome White Areas"
+msgstr "Luminosité du chrome"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment Map"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#, fuzzy
+msgid "Highlight Balance"
+msgstr "Couleur de craie"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Chrome..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chrome..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+msgid "Offsets (pixels * 2)"
+msgstr "Décalages (pixels x 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Image>/Script-Fu/Rendu/Circuit..."
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Circuit Seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep Selection"
+msgstr "Garder la sélection"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No Background (only for separate layer)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+#, fuzzy
+msgid "Oilify Mask Size"
+msgstr "Taille du masque"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate Layer"
+msgstr "Calque séparé"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Image>/Script-Fu/Alchimie/Clothify..."
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "Azimuth"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "Flou X"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "Flou Y"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "Profondeur"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+#, fuzzy
+msgid "Elevation"
+msgstr "Orientation"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Image>/Script-Fu/Décor/Taches de café..."
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid ""
+"Darken Only\n"
+"(Better, but only for Images with alot of White)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "Tâches"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Comic Book..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Comic Book..."
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#, fuzzy
+msgid "Outline Color"
+msgstr "Couleur d'explosion"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#, fuzzy
+msgid "Outline Size"
+msgstr "Taille de bordure"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Cool Metal..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Cool Metal..."
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#, fuzzy
+msgid "Effect Size (pixels)"
+msgstr "Taille des cellules (pixels)"
+
+#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Image>/Édition/Copier visible"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Crystal..."
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Image>/Script-Fu/Sélection/Distress Selection..."
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+#, fuzzy
+msgid "Smooth Horizontally"
+msgstr "Rendre flou horizontalement"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+#, fuzzy
+msgid "Smooth Vertically"
+msgstr "Rendre flou verticalement"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+#, fuzzy
+msgid "Spread"
+msgstr "Germe"
+
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+msgid "Threshold (Bigger 1<-->255 Smaller)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Image>/Script-Fu/Ombre/Drop-Shadow..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow Resizing"
+msgstr "Permettre le redimensionnement"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Blur Radius"
+msgstr "Rayon du flou"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+msgid "Color"
+msgstr "Couleur"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "Décalage X"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "Décalage Y"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "Opacité"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Image>/Script-Fu/Alchimie/Supprime une colonne/rangée sur deux..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "Colonnes"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/Fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Pair"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/Odd"
+msgstr "Pair/Impair"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Impair"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Rangées"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/Cols"
+msgstr "Rangées/Colonnes"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Image>/Script-Fu/Sélection/Fade Outline..."
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+msgid "Apply Generated Layermask"
+msgstr "Appliquer le calque de masque généré"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+msgid "Border Size"
+msgstr "Taille de bordure"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+msgid "Clear Unselected Maskarea"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, no-c-format
+msgid "Fade From %"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, no-c-format
+msgid "Fade To   %"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+msgid "Use Growing Selection"
+msgstr "Utiliser une sélection croissante"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Flatland..."
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail Level"
+msgstr "Niveau de détail"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image Height"
+msgstr "Hauteur de l'image"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image Width"
+msgstr "Largeur de l'image"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random Seed"
+msgstr "Graine aléatoire"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "Échelle en X"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Échelle en Y"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Carte de police..."
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+msgid "Border"
+msgstr "Bordure"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Fonts"
+msgstr "Polices"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Frosty..."
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Frosty..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Image>/Script-Fu/Décor/Bordure floue..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add Shadow"
+msgstr "Ajouter une ombre"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#, fuzzy
+msgid "Blur Border"
+msgstr "Bordure"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow Weight (%)"
+msgstr "Épaisseur de l'ombre (%)"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
 msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Gros titre..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Petit titre..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "AutoCrop"
+msgstr "Rognage automatique"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark Color"
+msgstr "Couleur sombre"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight Color"
+msgstr "Couleur de craie"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index Image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of Colors"
+msgstr "Nombres de couleurs"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove Background"
+msgstr "Supprimer le fond"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-By-Color Threshold"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow Color"
+msgstr "Couleur de l'ombre"
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Étiquettes 'tube' générales..."
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Petit titre..."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de bouton 'tube'..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-bouton 'tube'..."
 
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
@@ -729,1607 +1452,906 @@ msgstr ""
 "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-sous-bouton "
 "'tube'..."
 
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Exts/Navigateur Web/FAQ Développeur"
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Glossy..."
 
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Exts/Navigateur Web/Bugs GIMP"
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glossy..."
 
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Exts/Navigateur Web/Manuel GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Exts/Navigateur Web/Nouvelles GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Exts/Navigateur Web/Tutoriaux GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Documentation"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Téléchargement"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Art GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/GTK"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Liens"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Listes de diffusions"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Ressources"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/The GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Exts/Navigateur Web/Gimp-Savvy.com"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Exts/Navigateur Web/Grokking the GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Exts/Navigateur Web/Base de greffons"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Add Background"
-msgstr "Ajouter un fond"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Add Drop-Shadow"
-msgstr "Ajouter une ombre décalée"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-msgid "Add Glowing"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Add Shadow"
-msgstr "Ajouter une ombre"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-msgid "After Glow"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Allow Resizing"
-msgstr "Permettre le redimensionnement"
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Amplitude"
-msgstr "Amplitude"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Angle"
-msgstr "Angle"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-msgid "Antialias"
-msgstr "Anti-crénelage"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Apply Generated Layermask"
-msgstr "Appliquer le calque de masque généré"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Apply Layer Mask (or discard)"
-msgstr "Appliquer le calque de masque (ou rejète)"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-msgid "AutoCrop"
-msgstr "Rognage automatique"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Azimuth"
-msgstr "Azimuth"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "BG Opacity"
-msgstr "Opacité de l'Arr. Plan"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Background Color"
-msgstr "Couleur de fond"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-msgid "Background Image"
-msgstr "Image de fond"
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-msgid "Bar Height"
-msgstr "Hauteur de la barre"
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-msgid "Bar Length"
-msgstr "Longueur de la barre"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Base Color"
-msgstr "Couleur de base"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
-msgid "Base Radius (pixels)"
-msgstr "Rayon de base (pixels)"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Behaviour"
-msgstr "Comportement"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "Bevel Height (Sharpness)"
-msgstr "Hauteur de la bordure (finesse)"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Bevel Width"
-msgstr "Largeur de la bordure"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
 #, fuzzy
 msgid "Blend Gradient (Outline)"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend Gradient (Text)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Blend Mode"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Block Size"
-msgstr "Taile de bloc"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Blur Amount"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
-msgid "Blur Border"
-msgstr "Bordure"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Horizontally"
-msgstr "Rendre flou horizontalement"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Blur Radius"
-msgstr "Rayon du flou"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Type"
-msgstr "Type de flou"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Blur Vertically"
-msgstr "Rendre flou verticalement"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-msgid "Blur X"
-msgstr "Flou X"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-msgid "Blur Y"
-msgstr "Flou Y"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Border Color"
-msgstr "Couleur de bordure"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Border Size (pixels)"
-msgstr "Taille de bordure (pixels)"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Border Size"
-msgstr "Taille de bordure"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Border X Size"
-msgstr "Taille de la bordure en X"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Border Y Size"
-msgstr "Taille de la bordure en Y"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Border"
-msgstr "Bordure"
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "Buffer Amount (% Height of Text)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "Burst Color"
-msgstr "Couleur d'explosion"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "Carve Raised Text"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-#, fuzzy
-msgid "Carve White Areas"
-msgstr "Luminosité du chrome"
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-msgid "Cell Size (pixels)"
-msgstr "Taille des cellules (pixels)"
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "Chalk Color"
-msgstr "Couleur de craie"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Chip Amount"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Balance"
-msgstr "Balance du chrome"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Factor"
-msgstr "Facteur de chrome"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Lightness"
-msgstr "Luminosité du chrome"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Saturation"
-msgstr "Saturation du chrome"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#, fuzzy
-msgid "Chrome White Areas"
-msgstr "Luminosité du chrome"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "Circuit Seed"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Clear Unselected Maskarea"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Color 1"
-msgstr "Couleur 1"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Color 2"
-msgstr "Couleur 2"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Color 3"
-msgstr "Couleur 3"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Color"
-msgstr "Couleur"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Columns"
-msgstr "Colonnes"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#, fuzzy
-msgid "Corona Width"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Create New Image"
-msgstr "Créer une nouvelle image"
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "Create Shadow"
-msgstr "Créer une ombre"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Custom Gradient"
-msgstr "Dégradé personnalisé"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-msgid "Dark Color"
-msgstr "Couleur sombre"
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid ""
-"Darken Only\n"
-"(Better, but only for Images with alot of White)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "Default Bumpmap Settings"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Defocus"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Delta Value on Color"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "Density (%)"
-msgstr "Densité (%)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Depth"
-msgstr "Profondeur"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "Description"
-msgstr "Description"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Detail Level"
-msgstr "Niveau de détail"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Detail in Middle"
-msgstr "Dtail au milieu"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-msgid "Diameter"
-msgstr "Diamètre"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Down"
-msgstr "Bas"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Drop Shadow Blur Radius"
-msgstr "Rayon max. du flou"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Drop Shadow Color"
-msgstr "Couleur de l'ombre"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Drop Shadow Opacity"
-msgstr "Opacité des filtres"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Drop Shadow X Offset"
-msgstr "Décalage de l'ombre en X"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Drop Shadow Y Offset"
-msgstr "Décalage de l'ombre en Y"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
-msgid "Drop Shadow"
-msgstr "Ajouter une ombre décalée"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Edge Amount"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Edge Only"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
-msgid "Edge Radius"
-msgstr "Rayon"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
-msgid "Edge Width"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#, fuzzy
-msgid "Effect Size (pixels * 3)"
-msgstr "Taille de la lueur (pixels * 4)"
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#, fuzzy
-msgid "Effect Size (pixels * 30)"
-msgstr "Taille de la lueur (pixels * 4)"
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
-msgid "Effect Size (pixels * 4)"
-msgstr "Taille de la lueur (pixels * 4)"
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
-msgid "Effect Size (pixels * 5)"
-msgstr "Taille de la lueur (pixels * 4)"
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#, fuzzy
-msgid "Effect Size (pixels)"
-msgstr "Taille des cellules (pixels)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#, fuzzy
-msgid "Elevation"
-msgstr "Orientation"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "End Blend"
-msgstr "Angle de départ"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "End X"
-msgstr "Fin X"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "End Y"
-msgstr "Fin Y"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
-msgid "Ending Blend"
-msgstr "Angle de départ"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Environment Map"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Erase before Draw"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Erase"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Erase/Fill"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Even"
-msgstr "Pair"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Even/Odd"
-msgstr "Pair/Impair"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "FG-BG-HSV"
-msgstr "Avp-Arp-HSV"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "FG-BG-RGB"
-msgstr "Avp-Arp-RGB"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "FG-Transparent"
-msgstr "Fond transparent"
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Fade Away"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Fade From %"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Fade To   %"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#, fuzzy
-msgid "Fadeout Width"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#, fuzzy
-msgid "Fadeout"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "Feathering"
-msgstr "Plumage"
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "Filename"
-msgstr "Nom de fichier"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#, fuzzy
-msgid "Fill Angle"
-msgstr "Angle"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Fill BG with Pattern"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Fill with BG"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
-msgid "Flatten Image"
-msgstr "Créer une nouvelle image"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "Font Color"
-msgstr "Couleur de la police"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Font Size (pixels)"
-msgstr "Taille de la police (pixels)"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Font"
-msgstr "Police"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-msgid "Fonts"
-msgstr "Polices"
-
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Foreground Color"
-msgstr "Couleur d'avant-plan"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-msgid "Frame Color"
-msgstr "Couleur de la trame"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-msgid "Frame Size"
-msgstr "Taille de trame"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Frames"
-msgstr "Trames"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "From Top-Left to Bottom-Right"
-msgstr "Depuis de Haut-Gauche vers le Bas-Droit"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "Glow Color"
-msgstr "Couleur de la lueur"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-msgid "Glow Radius"
-msgstr "Rayon de la lueur"
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "Glow Size (pixels * 4)"
-msgstr "Taille de la lueur (pixels * 4)"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Gradient"
-msgstr "Dégradé"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Granularity (1 is Low)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Granularity"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "Graph Scale"
-msgstr "Échelle du graphe"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids X"
-msgstr "Grille X"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids Y"
-msgstr "Grille Y"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Height"
-msgstr "Hauteur"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Hexagons"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#, fuzzy
-msgid "Highlight Balance"
-msgstr "Couleur de craie"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Color"
-msgstr "Couleur de craie"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Opacity"
-msgstr "Décalage de l'ombre en X"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight X Offset"
-msgstr "Décalage de l'ombre en X"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Y Offset"
-msgstr "Décalage de l'ombre en Y"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Hit Rate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Hue Rate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "IIR"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Image Height"
-msgstr "Hauteur de l'image"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Image Size"
-msgstr "Taille de l'image"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Image Width"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-msgid "Image to Carve"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Index Image"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Insert Layer Names"
-msgstr "Insèrer le nom des calques"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Intermediate Frames"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Interpolate"
-msgstr "Interpoler"
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Invert direction"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Invert"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Keep Background"
-msgstr "Garder le fond"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Keep Bump Layer"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Keep Selection"
-msgstr "Garder la sélection"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Land Height"
-msgstr "Hauteur de la barre"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Left"
-msgstr "Gauche"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Lighting (degrees)"
-msgstr "Éclairage (degrés)"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Looped"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Lower Color (Active)"
-msgstr "Couleur du bas (Actif)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Lower Color"
-msgstr "Couleur du bas"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Lower-Right color"
-msgstr "Couleur du bas à droite"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Make New Background"
-msgstr "Créer un nouveau fond"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "Mask Opacity"
-msgstr "Opacité du masque"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "Mask Size"
-msgstr "Taille du masque"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Max. Blur Radius"
-msgstr "Rayon max. du flou"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Mosaic Tile Type"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Mottle"
-msgstr "Marbrer"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "No Background (only for separate layer)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Not Pressed (Active)"
-msgstr "Normal"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Not Pressed"
-msgstr "Inactif"
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Number of Bands"
-msgstr "Nombre de bandes"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Number of Colors"
-msgstr "Nombres de couleurs"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Number of Frames"
-msgstr "Nombre de trames"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "Number of Lines"
-msgstr "Nombres de lignes"
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
-msgid "Number of Times to Whirl"
-msgstr "Nombres de lignes"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
-msgid "Number of X Tiles"
-msgstr "Nombres de lignes"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
-msgid "Number of Y Tiles"
-msgstr "Nombres de lignes"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "Number"
-msgstr "Nombre"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Octagons"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Odd"
-msgstr "Impair"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Offset (pixels)"
-msgstr "Décalage (pixels)"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "Offset Radius"
-msgstr "Décalage du rayon"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Offset X"
-msgstr "Décalage X"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Offset Y"
-msgstr "Décalage Y"
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "Offsets (pixels * 2)"
-msgstr "Décalages (pixels x 2)"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#, fuzzy
-msgid "Oilify Mask Size"
-msgstr "Taille du masque"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Opacity"
-msgstr "Opacité"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Orientation"
-msgstr "Orientation"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Outer Border"
-msgstr "Bordure"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
-msgid "Outline Blur Radius"
-msgstr "Rayon du flou"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#, fuzzy
-msgid "Outline Color"
-msgstr "Couleur d'explosion"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Outline Size"
-msgstr "Taille de bordure"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Pad Color"
-msgstr "Couleur des filtres"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Pad Opacity"
-msgstr "Opacité des filtres"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "Padding Around Text"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Padding X"
-msgstr "Marge X"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Padding Y"
-msgstr "Marge Y"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Padding for Transparent Regions"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Padding"
-msgstr "Marge"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
 #, fuzzy
 msgid "Pattern (Outline)"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
 #, fuzzy
 msgid "Pattern (Overlay)"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Text)"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Pattern"
-msgstr "Motif"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Pixel Amount"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Pixelize"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-msgid "Prepare for GIF"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Pressed"
-msgstr "Activé"
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
-msgid "Quarter Size"
-msgstr "Taille de bordure"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "RLE"
-msgstr "RLE"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Radius (pixels)"
-msgstr "Rayon (pixels)"
-
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Radius"
-msgstr "Rayon"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Random Seed"
-msgstr "Graine aléatoire"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
-msgid "Randomness"
-msgstr "Graine aléatoire"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Relative Distance of Horizon"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Relative Length of Shadow"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-msgid "Relative Radius"
-msgstr "Rayon relatif"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Remove Background"
-msgstr "Supprimer le fond"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
-msgid "Ribbon Spacing"
-msgstr "Espacement"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
-msgid "Ribbon Width"
-msgstr "Largeur de l'image"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Right"
-msgstr "Droite"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "Rippling Strength"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Roughness"
-msgstr "Rugosité"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Round Ratio"
-msgstr "Proportion de l'arrondi"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Rows"
-msgstr "Rangées"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Rows/Cols"
-msgstr "Rangées/Colonnes"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Scale X"
-msgstr "Échelle en X"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Scale Y"
-msgstr "Échelle en Y"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Sea Depth"
-msgstr "Profondeur de l'ombre"
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Seed"
-msgstr "Germe"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Select-By-Color Threshold"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Separate Layer"
-msgstr "Calque séparé"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Sepia"
-msgstr "Sépia"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
-msgid "Shadow Blur Radius"
-msgstr "Rayon max. du flou"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Shadow Color"
-msgstr "Couleur de l'ombre"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Shadow Darkness"
-msgstr "Obscurité de l'ombre"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Shadow Depth"
-msgstr "Profondeur de l'ombre"
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Shadow Weight (%)"
-msgstr "Épaisseur de l'ombre (%)"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Shadow X Offset"
-msgstr "Décalage de l'ombre en X"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Shadow Y Offset"
-msgstr "Décalage de l'ombre en Y"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Ombre"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
-msgid "Sharpness (degrees)"
-msgstr "Éclairage (degrés)"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Shear Length"
-msgstr "Longueur de la barre"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Size"
-msgstr "Taille"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
-msgid "Smooth Horizontally"
-msgstr "Rendre flou horizontalement"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
-msgid "Smooth Vertically"
-msgstr "Rendre flou verticalement"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "Smooth"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Space Between Layers"
-msgstr "Espace entre les calques"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "Spacing"
-msgstr "Espacement"
-
-#: plug-ins/script-fu/scripts/burn-in-anim.scm:0
-msgid "Speed (pixels/frame)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Sphere Color"
-msgstr "Couleur de la sphère"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density X"
-msgstr "Densité de points en X"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density Y"
-msgstr "Densité de points en Y"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
-msgid "Spread"
-msgstr "Germe"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Squares"
-msgstr "Carrés"
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid "Stains"
-msgstr "Tâches"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-msgid "Start Angle"
-msgstr "Angle de départ"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "Start Blend"
-msgstr "Angle de départ"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "Start X"
-msgstr "Début X"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "Start Y"
-msgstr "Début Y"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
-msgid "Starting Blend"
-msgstr "Angle de départ"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-msgid "Supersample"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Text Color (Active)"
-msgstr "Couleur du texte (actif)"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "Text Color"
-msgstr "Couleur du texte"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Text Pattern"
-msgstr "Motif du texte"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Text"
-msgstr "Texte"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Thickness"
-msgstr "Épaisseur"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
-msgid "Thread Density"
-msgstr "Longueur de la barre"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
-msgid "Thread Intensity"
-msgstr "Longueur de la barre"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#, fuzzy
-msgid "Thread Length"
-msgstr "Longueur de la barre"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Tile"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Transparent Background"
-msgstr "Fond transparent"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-#, fuzzy
-msgid "Turn from Left to Right"
-msgstr "Depuis de Haut-Gauche vers le Bas-Droit"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Up"
-msgstr "Haut"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Upper Color (Active)"
-msgstr "Couleur du haut (actif)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Upper Color"
-msgstr "Couleur du haut"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Upper-Left color"
-msgstr "Couleur du haut à gauche"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Use Brush"
-msgstr "Utiliser une brosse"
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Use Current Gradient"
-msgstr "Utiliser le dégradé en cours"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Use Growing Selection"
-msgstr "Utiliser une sélection croissante"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 #, fuzzy
 msgid "Use Pattern Overlay"
 msgstr "Motif (texte)"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
 #, fuzzy
 msgid "Use Pattern for Outline instead of Gradient"
 msgstr "Utiliser le dégradé en cours"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 #, fuzzy
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Utiliser le dégradé en cours"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Glowing Hot..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glowing Hot..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#, fuzzy
+msgid "Effect Size (pixels * 3)"
+msgstr "Taille de la lueur (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Gradient Bevel..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Gradient Bevel..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+msgid "Bevel Height (Sharpness)"
+msgstr "Hauteur de la bordure (finesse)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Border Size (pixels)"
+msgstr "Taille de bordure (pixels)"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Dégradé personnalisé..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Image>/Script-Fu/Rendu/Créer un système de grille..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "Grids X"
+msgstr "Grille X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Grids Y"
+msgstr "Grille Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Image>/Script-Fu/Utilitaires/Dessiner graphique HSV..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "BG Opacity"
+msgstr "Opacité de l'Arr. Plan"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+msgid "End X"
+msgstr "Fin X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End Y"
+msgstr "Fin Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "From Top-Left to Bottom-Right"
+msgstr "Depuis de Haut-Gauche vers le Bas-Droit"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+msgid "Graph Scale"
+msgstr "Échelle du graphe"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+msgid "Start X"
+msgstr "Début X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start Y"
+msgstr "Début Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-#, fuzzy
-msgid "Wavelength"
-msgstr "Longueur de la barre"
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Imigre-26..."
 
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Wheel Radius (hypo < 0 < epi)"
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame Color"
+msgstr "Couleur de la trame"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame Size"
+msgstr "Taille de trame"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Image>/Script-Fu/Utilitaires/Afficher la structure de l'image..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+msgid "Apply Layer Mask (or discard)"
+msgstr "Appliquer le calque de masque (ou rejète)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+msgid "Create New Image"
+msgstr "Créer une nouvelle image"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+msgid "Insert Layer Names"
+msgstr "Insèrer le nom des calques"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+msgid "Make New Background"
+msgstr "Créer un nouveau fond"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+#, fuzzy
+msgid "Outer Border"
+msgstr "Bordure"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad Color"
+msgstr "Couleur des filtres"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+msgid "Pad Opacity"
+msgstr "Opacité des filtres"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+msgid "Padding for Transparent Regions"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/swirltile.scm:0
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+#, fuzzy
+msgid "Shear Length"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+msgid "Space Between Layers"
+msgstr "Espace entre les calques"
+
+#: plug-ins/script-fu/scripts/land.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Land..."
+
+#: plug-ins/script-fu/scripts/land.scm.h:6
+#, fuzzy
+msgid "Land Height"
+msgstr "Hauteur de la barre"
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Profondeur de l'ombre"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Image>/Script-Fu/Rendu/Lave..."
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "Rugosité"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "Germe"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use Current Gradient"
+msgstr "Utiliser le dégradé en cours"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Image>/Script-Fu/Rendu/Line Nova..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Number of Lines"
+msgstr "Nombres de lignes"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Offset Radius"
+msgstr "Décalage du rayon"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+#, fuzzy
+msgid "Randomness"
+msgstr "Graine aléatoire"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+#, fuzzy
+msgid "Sharpness (degrees)"
+msgstr "Éclairage (degrés)"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique, plume..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire, plume..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
+msgid "Description"
+msgstr "Description"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr "Plumage"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+msgid "Spacing"
+msgstr "Espacement"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Neon..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Neon..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create Shadow"
+msgstr "Créer une ombre"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#, fuzzy
+msgid "Effect Size (pixels * 5)"
+msgstr "Taille de la lueur (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Newsprint Text..."
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Cell Size (pixels)"
+msgstr "Taille des cellules (pixels)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Densité (%)"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Image>/Script-Fu/Décor/Vieille photo..."
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+msgid "Defocus"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+msgid "Mottle"
+msgstr "Marbrer"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+msgid "Sepia"
+msgstr "Sépia"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Image>/Script-Fu/Ombre/Perspective..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Angle"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolate"
+msgstr "Interpoler"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative Distance of Horizon"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative Length of Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Image>/Script-Fu/Alchimie/Predator..."
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel Amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton arrondi..."
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower Color"
+msgstr "Couleur du bas"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower Color (Active)"
+msgstr "Couleur du bas (Actif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not Pressed"
+msgstr "Inactif"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not Pressed (Active)"
+msgstr "Normal"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "Marge X"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "Marge Y"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round Ratio"
+msgstr "Proportion de l'arrondi"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text Color (Active)"
+msgstr "Couleur du texte (actif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper Color"
+msgstr "Couleur du haut"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper Color (Active)"
+msgstr "Couleur du haut (actif)"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Render Map..."
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "Comportement"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "Dtail au milieu"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Tile"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Image>/Script-Fu/Animators/Rippling..."
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of Frames"
+msgstr "Nombre de trames"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Rippling Strength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Image>/Script-Fu/Décor/Coins arrondis..."
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add Background"
+msgstr "Ajouter un fond"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+msgid "Add Drop-Shadow"
+msgstr "Ajouter une ombre décalée"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+#, fuzzy
+msgid "Edge Radius"
+msgstr "Rayon"
+
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Image>/Script-Fu/Sélection/Vers brosse..."
+
+#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Image>/Script-Fu/Sélection/Vers image..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Image>/Script-Fu/Sélection/Arrondi..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:2
+msgid "Relative Radius"
+msgstr "Rayon relatif"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Image>/Script-Fu/Décor/Pellicule..."
+
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font Color"
+msgstr "Couleur de la police"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Nombre"
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/SOTA Chrome..."
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Speed Text..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Toolbox>/Exts/Script-Fu/Divers/Sphère..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr "Éclairage (degrés)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr "Rayon (pixels)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+msgid "Sphere Color"
+msgstr "Couleur de la sphère"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Image>/Script-Fu/Animators/Spinning Globe..."
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+msgid "Frames"
+msgstr "Trames"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+msgid "Index to n Colors (0 = Remain RGB)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+#, fuzzy
+msgid "Turn from Left to Right"
+msgstr "Depuis de Haut-Gauche vers le Bas-Droit"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Starburst..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starburst..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+msgid "Burst Color"
+msgstr "Couleur d'explosion"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+#, fuzzy
+msgid "Effect Size (pixels * 30)"
+msgstr "Taille de la lueur (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Starscape..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starscape..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#, fuzzy
+msgid "Effect Size (pixels * 4)"
+msgstr "Taille de la lueur (pixels * 4)"
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirl-Tile..."
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
 #, fuzzy
 msgid "Whirl Amount"
 msgstr "Angle de départ"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirly (tileable)..."
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#, fuzzy
+msgid "Number of Times to Whirl"
+msgstr "Nombres de lignes"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#, fuzzy
+msgid "Quarter Size"
+msgstr "Taille de bordure"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 #, fuzzy
 msgid "Whirl Angle"
 msgstr "Angle de départ"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Particle Trace..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Particle Trace..."
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Base Color"
+msgstr "Couleur de base"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge Only"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 #, fuzzy
-msgid "Width of Bands"
-msgstr "Largeur des brèches"
+msgid "Edge Width"
+msgstr "Largeur de l'image"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Width of Gaps"
-msgstr "Largeur des brèches"
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit Rate"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Width"
-msgstr "Largeur"
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Text Circle..."
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Work on Copy"
-msgstr "Travailler sur une copie"
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "Anti-crénelage"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+#, fuzzy
+msgid "Fill Angle"
+msgstr "Angle"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Angle de départ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "<Image>/Script-Fu/Alpha vers Logo/Textured..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Textured..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#, fuzzy
+msgid "Ending Blend"
+msgstr "Angle de départ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic Tile Type"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Carrés"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#, fuzzy
+msgid "Starting Blend"
+msgstr "Angle de départ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text Pattern"
+msgstr "Motif du texte"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Image>/Filtres/Flou/Flou mosaique..."
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur Horizontally"
+msgstr "Rendre flou horizontalement"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur Type"
+msgstr "Type de flou"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur Vertically"
+msgstr "Rendre flou verticalement"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Web Title Header..."
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Trochoid..."
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:2
+#, fuzzy
+msgid "Base Radius (pixels)"
+msgstr "Rayon de base (pixels)"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:3
+msgid "Erase before Draw"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:4
+msgid "Hue Rate"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:5
+msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:6
+msgid "Use Brush"
+msgstr "Utiliser une brosse"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:7
+msgid "Wheel Radius (hypo < 0 < epi)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Truchet..."
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground Color"
+msgstr "Couleur d'avant-plan"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Image>/Script-Fu/Alchimie/Unsharp Mask..."
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask Opacity"
+msgstr "Opacité du masque"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "Mask Size"
+msgstr "Taille du masque"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Image>/Script-Fu/Animators/Waves..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "Amplitude"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+#, fuzzy
+msgid "Wavelength"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Image>/Script-Fu/Alchimie/Weave..."
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+#, fuzzy
+msgid "Ribbon Spacing"
+msgstr "Espacement"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+#, fuzzy
+msgid "Ribbon Width"
+msgstr "Largeur de l'image"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow Darkness"
+msgstr "Obscurité de l'ombre"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow Depth"
+msgstr "Profondeur de l'ombre"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+#, fuzzy
+msgid "Thread Density"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+#, fuzzy
+msgid "Thread Intensity"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+#, fuzzy
+msgid "Thread Length"
+msgstr "Longueur de la barre"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Image>/Script-Fu/Ombre/Effet (Xach)..."
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#, fuzzy
+msgid "Drop Shadow Blur Radius"
+msgstr "Rayon max. du flou"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
+msgid "Drop Shadow Color"
+msgstr "Couleur de l'ombre"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
+msgid "Drop Shadow Opacity"
+msgstr "Opacité des filtres"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
+msgid "Drop Shadow X Offset"
+msgstr "Décalage de l'ombre en X"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
+msgid "Drop Shadow Y Offset"
+msgstr "Décalage de l'ombre en Y"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
+msgid "Highlight Opacity"
+msgstr "Décalage de l'ombre en X"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#, fuzzy
+msgid "Highlight X Offset"
+msgstr "Décalage de l'ombre en X"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
+msgid "Highlight Y Offset"
+msgstr "Décalage de l'ombre en Y"
+
+#: plug-ins/webbrowser/web-browser.scm.h:1
+msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+msgstr "<Toolbox>/Exts/Navigateur Web/FAQ Développeur"
+
+#: plug-ins/webbrowser/web-browser.scm.h:2
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+msgstr "<Toolbox>/Exts/Navigateur Web/Bugs GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:3
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+msgstr "<Toolbox>/Exts/Navigateur Web/Manuel GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:4
+msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+msgstr "<Toolbox>/Exts/Navigateur Web/Nouvelles GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:5
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+msgstr "<Toolbox>/Exts/Navigateur Web/Tutoriaux GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:6
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Documentation"
+
+#: plug-ins/webbrowser/web-browser.scm.h:7
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Téléchargement"
+
+#: plug-ins/webbrowser/web-browser.scm.h:8
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Art GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:9
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/GTK"
+
+#: plug-ins/webbrowser/web-browser.scm.h:10
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Liens"
+
+#: plug-ins/webbrowser/web-browser.scm.h:11
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Listes de diffusions"
+
+#: plug-ins/webbrowser/web-browser.scm.h:12
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Ressources"
+
+#: plug-ins/webbrowser/web-browser.scm.h:13
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/The GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:14
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Toolbox>/Exts/Navigateur Web/Gimp-Savvy.com"
+
+#: plug-ins/webbrowser/web-browser.scm.h:15
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Grokking the GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:16
+msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+msgstr "<Toolbox>/Exts/Navigateur Web/Base de greffons"
+
+#: plug-ins/webbrowser/web-browser.scm.h:17
+msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
+
+#~ msgid "Reset to Defaults"
+#~ msgstr "Remettre aux valeurs par défaut"
 
 #, fuzzy
 #~ msgid "Script-Fu Directory Selection"
@@ -2337,15 +2359,6 @@ msgstr "Travailler sur une copie"
 
 #~ msgid "NOT SET"
 #~ msgstr "NON DÉFINI"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animators/Sélection vers AnimImage..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtre-Anim pour toutes les copies"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Nombre de copies"
 
 #~ msgid "Close"
 #~ msgstr "Fermer"

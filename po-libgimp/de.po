@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.6\n"
-"POT-Creation-Date: 2002-05-13 15:12+0200\n"
+"POT-Creation-Date: 2002-05-29 12:29+0200\n"
 "PO-Revision-Date: 2002-05-13 15:15+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -218,19 +218,19 @@ msgstr "_Rücksetzen"
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:160
 msgid "Transform"
 msgstr "Transformation"
 
-#: libgimpwidgets/gimpstock.c:162
+#: libgimpwidgets/gimpstock.c:163
 msgid "Rotate"
 msgstr "Rotieren"
 
-#: libgimpwidgets/gimpstock.c:163
+#: libgimpwidgets/gimpstock.c:164
 msgid "Scale"
 msgstr "Skalieren"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:165
 msgid "Shear"
 msgstr "Scheren"
 
@@ -260,7 +260,8 @@ msgstr ""
 "wiederholen"
 
 #: libgimpwidgets/gimpwidgets.c:850
-msgid "Time"
+#, fuzzy
+msgid "_Time"
 msgstr "Zeit"
 
 #: libgimpwidgets/gimpwidgets.c:859
@@ -271,14 +272,19 @@ msgstr ""
 "Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
 "vernünftige Wahrscheinlichkeit"
 
-#: libgimpwidgets/gimpwidgets.c:1173
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1174
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpwidgets.c:1175
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
+msgstr "MegaByte"
+
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
 msgstr "MegaByte"
