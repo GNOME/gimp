@@ -1,6 +1,12 @@
 1998-10-19  Christopher James Lahey  <clahey@umich.edu>
 
+	* app/docindex.c: New Drag & Drop works now.
+
+1998-10-19  Christopher James Lahey  <clahey@umich.edu>
+
 	* app/docindex.c: Updated document index to use new Drag & Drop interface.
+
+	* app/docindex.c, app/docindexif.c, app/docindexif.h: Moved internationalization #include to make docindex work with go again.
 
 Sun Oct 18 16:26:51 EDT 1998 Adrian Likins <adrian@gimp.org>
 

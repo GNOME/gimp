@@ -27,7 +27,7 @@ static gint x = 0, y = 0, width = 0, height = 0;
 
 
 enum {
-  TARGET_URI_LIST,
+  TARGET_URI_LIST
 };
 
 static void create_idea_list( void );
@@ -36,6 +36,8 @@ static void load_idea_manager( idea_manager * );
 static void
 docindex_dnd_filenames_dropped( GtkWidget *widget,
 				GdkDragContext *context,
+				gint x,
+				gint y,
 				GtkSelectionData *selection_data,
 				guint info,
 				guint time)
@@ -47,7 +49,7 @@ docindex_dnd_filenames_dropped( GtkWidget *widget,
   switch ( info )
     {
     case TARGET_URI_LIST:
-      data = selection_data->data;
+      data = (gchar *) selection_data->data;
       len = selection_data->length;
       while( len > 0 )
 	{
@@ -55,7 +57,14 @@ docindex_dnd_filenames_dropped( GtkWidget *widget,
 	  if ( end != NULL )
 	    *end = 0;
 	  if ( *data != '#' )
-	    open_file_in_position( data, -1 );
+	    {
+	      gchar *filename = strchr( data, ':' );
+	      if ( filename != NULL )
+		filename ++;
+	      else
+		filename = data;
+	      open_file_in_position( filename, -1 );
+	    }
 	  if ( end )
 	    {
 	      len -= end - data + 2;
@@ -92,6 +101,8 @@ docindex_configure_drop_on_widget(GtkWidget * widget)
 static void
 docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
 				     GdkDragContext *context,
+				     gint x,
+				     gint y,
 				     GtkSelectionData *selection_data,
 				     guint info,
 				     guint time)
@@ -104,7 +115,7 @@ docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
   switch ( info )
     {
     case TARGET_URI_LIST:
-      data = selection_data->data;
+      data = (gchar *) selection_data->data;
       len = selection_data->length;
       while( len > 0 )
 	{
@@ -112,7 +123,14 @@ docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
 	  if ( end != NULL )
 	    *end = 0;
 	  if ( *data != '#' )
-	    open_file_in_position( data, position );
+	    {
+	      gchar *filename = strchr( data, ':' );
+	      if ( filename != NULL )
+		filename ++;
+	      else
+		filename = data;
+	      open_file_in_position( filename, position );
+	    }
 	  if ( end )
 	    {
 	      len -= end - data + 2;
