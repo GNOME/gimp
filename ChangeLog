@@ -1,3 +1,15 @@
+2004-01-28  Simon Budig  <simon@gimp.org>
+
+	Argh, this is getting silly.
+
+	* app/core/gimpscanconvert.c: Fix dumb bug I introduced
+	while fixing bug #132036. Instead of always closing a
+	polyline to the first point of the vpath close to the
+	first point of the current polyline
+
+	I'll close #132036 for the third time now, feel free to
+	reopen it when bugs appear...
+
 2004-01-27  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/tiff.c: Apply patch from Andrey Kiselev to 

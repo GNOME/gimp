@@ -227,12 +227,16 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
         }
     }
 
-  if (closed && (prev.x != points[i].x || prev.y != points[i].y))
+  /* close the polyline when needed */
+  if (closed && (prev.x != points[0].x ||
+                 prev.y != points[0].y))
     {
-      sc->vpath[sc->num_nodes] = sc->vpath[0];
+      sc->vpath[sc->num_nodes].x = points[0].x;
+      sc->vpath[sc->num_nodes].y = points[0].y;
       sc->vpath[sc->num_nodes].code = ART_LINETO;
       sc->num_nodes++;
     }
+
   sc->vpath[sc->num_nodes].code = ART_END;
   sc->vpath[sc->num_nodes].x = 0.0;
   sc->vpath[sc->num_nodes].y = 0.0;
