@@ -22,29 +22,25 @@
 /* Progress bars for use internally by the main GIMP application. */
 
 
-/* structures */
-struct gimp_progress_pvt;
-
-
 /* functions */
-gimp_progress * progress_start            (GDisplay      *, 
-				           const gchar   *,
-				           gboolean       ,
-				           GtkSignalFunc  , 
-				           gpointer       );
-gimp_progress * progress_restart          (gimp_progress *, 
-				           const gchar   *,
-				           GtkSignalFunc  ,
-				           gpointer       );
-void            progress_update           (gimp_progress *, 
-				           gfloat         );
-void            progress_step             (gimp_progress *);
-void            progress_end              (gimp_progress *);
+GimpProgress * progress_start            (GDisplay      *gdisp,
+					  const gchar   *message,
+					  gboolean       important,
+					  GtkSignalFunc  cancel_callback,
+					  gpointer       cancel_data);
+GimpProgress * progress_restart          (GimpProgress  *progress,
+					  const gchar   *message,
+					  GtkSignalFunc  cancel_callback,
+					  gpointer       cancel_data);
+void           progress_update           (GimpProgress  *progress,
+					  gdouble        percentage);
+void           progress_step             (GimpProgress  *progress);
+void           progress_end              (GimpProgress  *progress);
 
-void            progress_update_and_flush (gint           ,
-					   gint           ,
-					   gint           ,
-					   gpointer       );
+void           progress_update_and_flush (gint           ymin,
+					  gint           ymax,
+					  gint           curr_x,
+					  gpointer       data);
 
 
 #endif /* __GIMP_PROGRESS_H__ */

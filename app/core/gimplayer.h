@@ -37,6 +37,9 @@
 #define GIMP_IS_LAYER_MASK_CLASS(klass)  (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
 
 
+typedef struct _GimpLayerClass      GimpLayerClass;
+typedef struct _GimpLayerMaskClass  GimpLayerMaskClass;
+
 struct _GimpLayer
 {
   GimpDrawable drawable;

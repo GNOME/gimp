@@ -30,7 +30,7 @@
 #include "libgimp/gimpintl.h"
 
 
-struct gimp_progress_pvt
+struct _GimpProgress
 {
   GDisplay      *gdisp;             /* gdisp in use, or NULL*/
 
@@ -45,11 +45,14 @@ struct gimp_progress_pvt
 };
 
 /* prototypes */
-static void progress_signal_setup (gimp_progress *, GtkSignalFunc, gpointer);
+static void   progress_signal_setup (GimpProgress  *progress,
+				     GtkSignalFunc  cancel_callback,
+				     gpointer       cancel_data);
 
 
 /* These progress bar routines are re-entrant, and so should be
- * thread-safe. */
+ * thread-safe.
+ */
 
 
 /* Start a progress bar on "gdisp" with reason "message".  If "gdisp"
@@ -67,18 +70,18 @@ static void progress_signal_setup (gimp_progress *, GtkSignalFunc, gpointer);
  * user in any possible way.  Unimportant progress bars will not be
  * shown to the user if it would mean creating a new window.
  */
-gimp_progress *
+GimpProgress *
 progress_start (GDisplay      *gdisp,
 		const char    *message,
 		gboolean       important,
 		GtkSignalFunc  cancel_callback,
 		gpointer       cancel_data)
 {
-  gimp_progress *p;
-  guint cid;
-  GtkWidget *vbox;
+  GimpProgress *p;
+  guint         cid;
+  GtkWidget    *vbox;
 
-  p = g_new (gimp_progress, 1);
+  p = g_new (GimpProgress, 1);
 
   p->gdisp = gdisp;
   p->dialog = NULL;
@@ -150,8 +153,8 @@ progress_start (GDisplay      *gdisp,
 
 /* Update the message and/or the callbacks for a progress and reset
  * the bar to zero, with the minimum of disturbance to the user. */
-gimp_progress *
-progress_restart (gimp_progress *p,
+GimpProgress *
+progress_restart (GimpProgress  *p,
 		  const char    *message,
 		  GtkSignalFunc  cancel_callback,
 		  gpointer       cancel_data)
@@ -191,8 +194,8 @@ progress_restart (gimp_progress *p,
 
 
 void
-progress_update (gimp_progress *progress,
-		 float          percentage)
+progress_update (GimpProgress *progress,
+		 gdouble       percentage)
 {
   GtkWidget *bar;
 
@@ -213,12 +216,12 @@ progress_update (gimp_progress *progress,
 
 /* This function's prototype is conveniently the same as progress_func_t */
 void
-progress_update_and_flush (int       ymin,
-			   int       ymax,
-			   int       curr_y,
+progress_update_and_flush (gint      ymin,
+			   gint      ymax,
+			   gint      curr_y,
 			   gpointer  data)
 {
-  progress_update ((gimp_progress *)data,
+  progress_update ((GimpProgress *) data,
 		   (float)(curr_y - ymin) / (float)(ymax - ymin));
 
   /* HACK until we do long-running operations in the gtk idle thread */
@@ -229,10 +232,10 @@ progress_update_and_flush (int       ymin,
 
 /* Step the progress bar by one percent, wrapping at 100% */
 void
-progress_step (gimp_progress *progress)
+progress_step (GimpProgress *progress)
 {
   GtkWidget *bar;
-  float val;
+  float      val;
 
   g_return_if_fail (progress != NULL);
 
@@ -251,9 +254,9 @@ progress_step (gimp_progress *progress)
 
 /* Finish using the progress bar "p" */
 void
-progress_end (gimp_progress *p)
+progress_end (GimpProgress *p)
 {
-  int cid;
+  gint cid;
 
   g_return_if_fail (p != NULL);
 
@@ -283,7 +286,7 @@ progress_end (gimp_progress *p)
 
 /* Helper function to add or remove signals */
 static void
-progress_signal_setup (gimp_progress *p,
+progress_signal_setup (GimpProgress  *p,
 		       GtkSignalFunc  cancel_callback,
 		       gpointer       cancel_data)
 {

@@ -1,5 +1,22 @@
 2000-12-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/apptypes.h: cleaned up a bit.
+
+	* app/asupsample.[ch]
+	* app/blend.[ch]
+	* app/channel.h
+	* app/gimpprogress.[ch]
+	* app/layer.h
+	* app/perspective_tool.c
+	* app/plug_in.h
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c
+	* app/transform_core.[ch]: s/gimp_progress/GimpProgress/g and some
+	changes related to the apptypes.h cleanup.
+
+2000-12-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/airbrush.[ch]
 	* app/bezier_select.c
 	* app/bezier_selectP.h

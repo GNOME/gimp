@@ -509,15 +509,15 @@ scale_tool_scale (GImage       *gimage,
 		  gboolean      interpolation,
 		  GimpMatrix3   matrix)
 {
-  gimp_progress *progress;
-  TileManager   *ret;
+  GimpProgress *progress;
+  TileManager  *ret;
 
   progress = progress_start (gdisp, _("Scaling..."), FALSE, NULL, NULL);
 
   ret = transform_core_do (gimage, drawable, float_tiles,
 			   interpolation, matrix,
 			   progress ? progress_update_and_flush :
-			   (progress_func_t) NULL,
+			   (GimpProgressFunc) NULL,
 			   progress);
 
   if (progress)

@@ -36,6 +36,9 @@
 #define GIMP_IS_CHANNEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL))
 #define GIMP_IS_CHANNEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
 
+
+typedef struct _GimpChannelClass GimpChannelClass;
+
 struct _GimpChannel
 {
   GimpDrawable drawable;

@@ -1140,13 +1140,13 @@ transform_core_recalc (Tool     *tool,
 
 /*  Actually carry out a transformation  */
 TileManager *
-transform_core_do (GImage          *gimage,
-                   GimpDrawable    *drawable,
-                   TileManager     *float_tiles,
-                   gboolean         interpolation,
-                   GimpMatrix3      matrix,
-                   progress_func_t  progress_callback,
-                   gpointer         progress_data)
+transform_core_do (GImage           *gimage,
+                   GimpDrawable     *drawable,
+                   TileManager      *float_tiles,
+                   gboolean          interpolation,
+                   GimpMatrix3       matrix,
+                   GimpProgressFunc  progress_callback,
+                   gpointer          progress_data)
 {
   PixelRegion  destPR;
   TileManager *tiles;

@@ -68,7 +68,7 @@ struct _PlugIn
 
   GSList       *temp_proc_defs;   /* Temporary procedures  */
 
-  gimp_progress *progress;        /* Progress dialog */
+  GimpProgress *progress;         /* Progress dialog */
 
   gpointer      user_data;        /* Handle for hanging data onto */
 };

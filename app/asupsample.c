@@ -84,7 +84,7 @@ adaptive_supersample_area (gint              x1,
 			   gpointer          render_data,
 			   put_pixel_func_t  put_pixel_func,
 			   gpointer          put_pixel_data,
-			   progress_func_t   progress_func,
+			   GimpProgressFunc  progress_func,
 			   gpointer          progress_data)
 {
   int          	x, y, width;                 /* Counters, width of region */
@@ -225,7 +225,7 @@ adaptive_supersample_area (gint              x1,
       /* Call progress display function */
 
       if (progress_func && !(y & 0xf))
-	(*progress_func)(y1, y2, y, progress_data);
+	(* progress_func) (y1, y2, y, progress_data);
     }
 
   /* Free memory */

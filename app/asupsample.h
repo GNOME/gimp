@@ -49,7 +49,7 @@ gulong   adaptive_supersample_area (gint              x1,
 				    gpointer          render_data,
 				    put_pixel_func_t  put_pixel_func,
 				    gpointer          put_pixel_data,
-				    progress_func_t   progress_func,
+				    GimpProgressFunc  progress_func,
 				    gpointer          progress_data);
 
 

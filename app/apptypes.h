@@ -337,125 +337,145 @@ typedef enum /*< skip >*/
 } CursorModifier;
 
 
-typedef struct _GimpContext        GimpContext;
-typedef struct _GimpContextPreview GimpContextPreview;
+/*  objects  */
 
-typedef struct _GimpChannel        GimpChannel;
-typedef struct _GimpChannelClass   GimpChannelClass;
+typedef struct _GimpObject          GimpObject;
 
-typedef         GimpChannel        Channel;            /* convenience */
+typedef struct _GimpSet             GimpSet;
+typedef struct _GimpList            GimpList;
 
-typedef struct _GDisplay           GDisplay;
+typedef struct _GimpContext         GimpContext;
 
-typedef struct _GPattern           GPattern;
+typedef struct _GimpDrawable        GimpDrawable;
 
-typedef struct _gradient_t         gradient_t;
+typedef struct _GimpChannel         GimpChannel;
+typedef         GimpChannel         Channel;            /* convenience */
 
-typedef struct _PaletteEntries     PaletteEntries;
-typedef struct _PaletteEntry       PaletteEntry;
+typedef struct _GimpLayer           GimpLayer;
+typedef struct _GimpLayerMask       GimpLayerMask;
 
-typedef struct _GimpDrawable       GimpDrawable;
+typedef        GimpLayer            Layer;              /* convenience */
+typedef        GimpLayerMask        LayerMask;          /* convenience */
 
-typedef struct _GimpLayer          GimpLayer;
-typedef struct _GimpLayerClass     GimpLayerClass;
-typedef struct _GimpLayerMask      GimpLayerMask;
-typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
+typedef struct _GimpImage           GimpImage;
+typedef        GimpImage            GImage;
 
-typedef        GimpLayer           Layer;               /* convenience */
-typedef        GimpLayerMask       LayerMask;           /* convenience */
+typedef struct _GimpBrush	    GimpBrush;
+typedef struct _GimpBrushList       GimpBrushList;
+typedef struct _GimpBrushGenerated  GimpBrushGenerated;
+typedef struct _GimpBrushPipe       GimpBrushPipe;
 
-typedef struct _GimpImage          GimpImage;
-typedef        GimpImage           GImage;
 
-typedef struct _GimpSet            GimpSet;
-typedef struct _GimpList           GimpList;
+/*  widgets  */
 
-typedef struct _Guide              Guide;
-typedef        guint32             Tattoo;
+typedef struct _HistogramWidget     HistogramWidget;
 
-typedef struct _PaintCore          PaintCore;
-typedef struct _DrawCore           DrawCore;
 
-typedef struct _GimpBrush	   GimpBrush;
-typedef struct _GimpBrushList      GimpBrushList;
-typedef struct _GimpBrushGenerated GimpBrushGenerated;
-typedef struct _GimpBrushPipe      GimpBrushPipe;
+/*  other stuff  */
 
-typedef struct _GimpObject         GimpObject;
+typedef struct _Argument            Argument;
 
-typedef struct _GimpHistogram      GimpHistogram;
-typedef struct _GimpLut            GimpLut;
+typedef struct _BezierPoint         BezierPoint;
+typedef struct _BezierSelect        BezierSelect;
 
-typedef struct _BoundSeg           BoundSeg;
+typedef struct _BoundSeg            BoundSeg;
 
-typedef struct _layer_undo         LayerUndo;
+typedef struct _DrawCore            DrawCore;
 
-typedef struct _layer_mask_undo    LayerMaskUndo;
+typedef struct _GDisplay            GDisplay;
 
-typedef struct _fs_to_layer_undo   FStoLayerUndo;
+typedef struct _GimpContextPreview  GimpContextPreview;
 
-typedef struct _Argument           Argument;
-typedef struct _ProcArg            ProcArg;
-typedef struct _ProcRecord         ProcRecord;
+typedef struct _GimpHistogram       GimpHistogram;
 
-typedef struct _PlugIn             PlugIn;
-typedef struct _PlugInDef          PlugInDef;
-typedef struct _PlugInProcDef      PlugInProcDef;
+typedef struct _GimpImageNewValues  GimpImageNewValues;
 
-typedef struct _ParasiteList       ParasiteList;
+typedef struct _GimpLut             GimpLut;
 
-typedef struct _Tile               Tile;
-typedef struct _TileManager        TileManager;
+typedef struct _GimpParasite        GimpParasite;
 
-typedef void (* TileValidateProc) (TileManager *tm,
-				   Tile        *tile);
+typedef struct _GimpProgress        GimpProgress;
+
+typedef struct _GPattern            GPattern;
+
+typedef struct _gradient_t          gradient_t;
+
+typedef struct _Guide               Guide;
+
+typedef gpointer                    ImageMap;
+
+typedef struct _InfoDialog          InfoDialog;
+
+typedef struct _PaintCore           PaintCore;
+
+typedef struct _PaletteEntries      PaletteEntries;
+typedef struct _PaletteEntry        PaletteEntry;
+
+typedef struct _Path                Path;
+typedef struct _PathPoint           PathPoint;
+typedef struct _PathList            PathList;
+
+typedef struct _PlugIn              PlugIn;
+typedef struct _PlugInDef           PlugInDef;
+typedef struct _PlugInProcDef       PlugInProcDef;
+
+typedef struct _ParasiteList        ParasiteList;
 
 typedef struct _PixelRegionIterator PixelRegionIterator;
 typedef struct _PixelRegion         PixelRegion;
 typedef struct _PixelRegionHolder   PixelRegionHolder;
 
-typedef struct _GimpParasite        GimpParasite;
+typedef struct _ProcArg             ProcArg;
+typedef struct _ProcRecord          ProcRecord;
 
-typedef struct _Path                Path;
-typedef struct _PathPoint           PathPoint;
-typedef struct _PathList            PathList;
-typedef        GSList               PathUndo;
+typedef        guint32              Tattoo;
 
 typedef struct _TempBuf             TempBuf;
 typedef struct _TempBuf             MaskBuf;
 
+typedef struct _Tile                Tile;
+typedef struct _TileManager         TileManager;
+
 typedef struct _Tool                Tool;
 typedef struct _ToolInfo            ToolInfo;
+
 typedef struct _ToolOptions         ToolOptions;
-typedef struct _SelectionOptions    SelectionOptions;
-
-typedef void  (* ToolOptionsResetFunc) (void);
-
-typedef struct _BezierPoint         BezierPoint;
-typedef struct _BezierSelect        BezierSelect;
-
-typedef struct gimp_progress_pvt    gimp_progress;
-typedef void   (* progress_func_t)  (gint     ymin,
-				     gint     ymax,
-				     gint     curr_y,
-				     gpointer progress_data);
-
-typedef gpointer                    ImageMap;
-typedef void   (* ImageMapApplyFunc) (PixelRegion *,
-				      PixelRegion *,
-				      gpointer);
-
-typedef struct _TransformCore       TransformCore;
 
 typedef struct _ScanConvertPoint    ScanConvertPoint;
 
-typedef struct _InfoDialog          InfoDialog;
-
 typedef struct _Selection           Selection;
 
-typedef struct _HistogramWidget     HistogramWidget;
+typedef struct _SelectionOptions    SelectionOptions;
 
-typedef struct _GimpImageNewValues  GimpImageNewValues;
+typedef struct _TransformCore       TransformCore;
+
+
+/*  some undo stuff  */
+
+typedef struct _layer_undo          LayerUndo;
+
+typedef struct _layer_mask_undo     LayerMaskUndo;
+
+typedef struct _fs_to_layer_undo    FStoLayerUndo;
+
+typedef        GSList               PathUndo;
+
+
+/*  functions  */
+
+typedef void (* TileValidateProc)     (TileManager *tm,
+				       Tile        *tile);
+
+typedef void (* ToolOptionsResetFunc) (void);
+
+typedef void (* GimpProgressFunc)     (gint         ymin,
+				       gint         ymax,
+				       gint         curr_y,
+				       gpointer     progress_data);
+
+typedef void (* ImageMapApplyFunc)    (PixelRegion *,
+				       PixelRegion *,
+				       gpointer);
 
 
 #endif /* __APPTYPES_H__ */

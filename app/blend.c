@@ -162,66 +162,110 @@ static guint blend_n_targets = (sizeof (blend_target_table) /
 
 /*  local function prototypes  */
 
-static void   gradient_type_callback    (GtkWidget      *widget,
-					 gpointer        data);
+static void    gradient_type_callback            (GtkWidget      *widget,
+						  gpointer        data);
 
-static void   blend_button_press        (Tool           *tool,
-					 GdkEventButton *bevent,
-					 GDisplay       *gdisp);
-static void   blend_button_release      (Tool           *tool,
-					 GdkEventButton *bevent,
-					 GDisplay       *gdisp);
-static void   blend_motion              (Tool           *tool,
-					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
-static void   blend_cursor_update       (Tool           *tool,
-					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
-static void   blend_control             (Tool           *tool,
-					 ToolAction      action,
-					 GDisplay       *gdisp);
+static void    blend_button_press                (Tool           *tool,
+						  GdkEventButton *bevent,
+						  GDisplay       *gdisp);
+static void    blend_button_release              (Tool           *tool,
+						  GdkEventButton *bevent,
+						  GDisplay       *gdisp);
+static void    blend_motion                      (Tool           *tool,
+						  GdkEventMotion *mevent,
+						  GDisplay       *gdisp);
+static void    blend_cursor_update               (Tool           *tool,
+						  GdkEventMotion *mevent,
+						  GDisplay       *gdisp);
+static void    blend_control                     (Tool           *tool,
+						  ToolAction      action,
+						  GDisplay       *gdisp);
 
-static void   blend_options_drop_gradient  (GtkWidget *, gradient_t *, gpointer);
-static void   blend_options_drop_tool      (GtkWidget *, ToolType,     gpointer);
+static void    blend_options_drop_gradient       (GtkWidget      *,
+						  gradient_t     *,
+						  gpointer        );
+static void    blend_options_drop_tool           (GtkWidget      *,
+						  ToolType        ,
+						  gpointer        );
 
-static double gradient_calc_conical_sym_factor           (double dist, double *axis, double offset,
-							  double x, double y);
-static double gradient_calc_conical_asym_factor          (double dist, double *axis, double offset,
-							  double x, double y);
-static double gradient_calc_square_factor                (double dist, double offset,
-							  double x, double y);
-static double gradient_calc_radial_factor   	         (double dist, double offset,
-							  double x, double y);
-static double gradient_calc_linear_factor   	         (double dist, double *vec, double offset,
-							  double x, double y);
-static double gradient_calc_bilinear_factor 	         (double dist, double *vec, double offset,
-							  double x, double y);
-static double gradient_calc_spiral_factor                (double dist, double *axis, double offset,
-							  double x, double y, gint cwise);
-static double gradient_calc_shapeburst_angular_factor    (double x, double y);
-static double gradient_calc_shapeburst_spherical_factor  (double x, double y);
-static double gradient_calc_shapeburst_dimpled_factor    (double x, double y);
+static gdouble gradient_calc_conical_sym_factor  (gdouble  dist,
+						  gdouble *axis,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_conical_asym_factor (gdouble  dist,
+						  gdouble *axis,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_square_factor       (gdouble  dist,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_radial_factor   	 (gdouble  dist,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_linear_factor   	 (gdouble  dist,
+						  gdouble *vec,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_bilinear_factor 	 (gdouble  dist,
+						  gdouble *vec,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y);
+static gdouble gradient_calc_spiral_factor       (gdouble  dist,
+						  gdouble *axis,
+						  gdouble  offset,
+						  gdouble  x,
+						  gdouble  y,
+						  gint     cwise);
 
-static double gradient_repeat_none                       (double val);
-static double gradient_repeat_sawtooth                   (double val);
-static double gradient_repeat_triangular                 (double val);
+static gdouble gradient_calc_shapeburst_angular_factor   (gdouble x,
+							  gdouble y);
+static gdouble gradient_calc_shapeburst_spherical_factor (gdouble x,
+							  gdouble y);
+static gdouble gradient_calc_shapeburst_dimpled_factor   (gdouble x,
+							  gdouble y);
 
-static void   gradient_precalc_shapeburst                (GImage *gimage, GimpDrawable *drawable, 
-							  PixelRegion *PR, double dist);
+static gdouble gradient_repeat_none              (gdouble       val);
+static gdouble gradient_repeat_sawtooth          (gdouble       val);
+static gdouble gradient_repeat_triangular        (gdouble       val);
 
-static void   gradient_render_pixel                      (double x, double y, 
-							  color_t *color, void *render_data);
-static void   gradient_put_pixel                         (int x, int y, 
-							  color_t color, void *put_pixel_data);
+static void    gradient_precalc_shapeburst       (GImage       *gimage,
+						  GimpDrawable *drawable, 
+						  PixelRegion  *PR,
+						  gdouble       dist);
 
-static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR,
-					     int width, int height,
-					     BlendMode blend_mode, GradientType gradient_type,
-					     double offset, RepeatMode repeat,
-					     int supersample, int max_depth, double threshold,
-					     double sx, double sy, double ex, double ey,
-					     progress_func_t progress_callback,
-					     void *progress_data);
+static void    gradient_render_pixel             (gdouble       x,
+						  gdouble       y,
+						  color_t      *color,
+						  gpointer      render_data);
+static void    gradient_put_pixel                (gint          x,
+						  gint          y,
+						  color_t       color,
+						  gpointer      put_pixel_data);
+
+static void    gradient_fill_region              (GImage       *gimage,
+						  GimpDrawable *drawable,
+						  PixelRegion  *PR,
+						  gint          width,
+						  gint          height,
+						  BlendMode     blend_mode,
+						  GradientType  gradient_type,
+						  gdouble       offset,
+						  RepeatMode    repeat,
+						  gint          supersample,
+						  gint          max_depth,
+						  gdouble       threshold,
+						  gdouble       sx,
+						  gdouble       sy,
+						  gdouble       ex,
+						  gdouble       ey,
+						  GimpProgressFunc progress_callback,
+						  gpointer      progress_data);
 
 
 /*  functions  */
@@ -462,22 +506,27 @@ blend_button_press (Tool           *tool,
 
   /*  Keep the coordinates of the target  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
-			       &blend_tool->startx, &blend_tool->starty, FALSE, 1);
+			       &blend_tool->startx, &blend_tool->starty,
+			       FALSE, TRUE);
 
   blend_tool->endx = blend_tool->startx;
   blend_tool->endy = blend_tool->starty;
 
   /*  Make the tool active and set the gdisplay which owns it  */
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
 
   /* initialize the statusbar display */
-  blend_tool->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
-  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id, _("Blend: 0, 0"));
+  blend_tool->context_id =
+    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "blend");
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar),
+		      blend_tool->context_id, _("Blend: 0, 0"));
 
   /*  Start drawing the blend tool  */
   draw_core_start (blend_tool->core, gdisp->canvas->window, tool);
@@ -494,7 +543,7 @@ blend_button_release (Tool           *tool,
   Argument      *return_vals;
   int nreturn_vals;
 #else
-  gimp_progress *progress;
+  GimpProgress *progress;
 #endif
 
   gimage = gdisp->gimage;
@@ -561,7 +610,7 @@ blend_button_release (Tool           *tool,
 	     blend_tool->starty,
 	     blend_tool->endx,
 	     blend_tool->endy,
-	     progress ? progress_update_and_flush : (progress_func_t)NULL, 
+	     progress ? progress_update_and_flush : (GimpProgressFunc) NULL, 
 	     progress);
 
       if (progress)
@@ -756,30 +805,30 @@ blend_options_drop_tool (GtkWidget *widget,
 
 /*  The actual blending procedure  */
 void
-blend (GImage          *gimage,
-       GimpDrawable    *drawable,
-       BlendMode        blend_mode,
-       int              paint_mode,
-       GradientType     gradient_type,
-       double           opacity,
-       double           offset,
-       RepeatMode       repeat,
-       int              supersample,
-       int              max_depth,
-       double           threshold,
-       double           startx,
-       double           starty,
-       double           endx,
-       double           endy,
-       progress_func_t  progress_callback,
-       void            *progress_data)
+blend (GImage           *gimage,
+       GimpDrawable     *drawable,
+       BlendMode         blend_mode,
+       int               paint_mode,
+       GradientType      gradient_type,
+       double            opacity,
+       double            offset,
+       RepeatMode        repeat,
+       int               supersample,
+       int               max_depth,
+       double            threshold,
+       double            startx,
+       double            starty,
+       double            endx,
+       double            endy,
+       GimpProgressFunc  progress_callback,
+       gpointer          progress_data)
 {
   TileManager *buf_tiles;
-  PixelRegion bufPR;
-  int has_alpha;
-  int has_selection;
-  int bytes;
-  int x1, y1, x2, y2;
+  PixelRegion  bufPR;
+  gint         has_alpha;
+  gint         has_selection;
+  gint         bytes;
+  gint         x1, y1, x2, y2;
 
   gimp_add_busy_cursors();
 
@@ -1382,32 +1431,32 @@ gradient_put_pixel (int      x,
 }
 
 static void
-gradient_fill_region (GImage          *gimage,
-		      GimpDrawable    *drawable,
-		      PixelRegion     *PR,
-		      int              width,
-		      int              height,
-		      BlendMode        blend_mode,
-		      GradientType     gradient_type,
-		      double           offset,
-		      RepeatMode       repeat,
-		      int              supersample,
-		      int              max_depth,
-		      double           threshold,
-		      double           sx,
-		      double           sy,
-		      double           ex,
-		      double           ey,
-		      progress_func_t  progress_callback,
-		      void            *progress_data)
+gradient_fill_region (GImage           *gimage,
+		      GimpDrawable     *drawable,
+		      PixelRegion      *PR,
+		      int               width,
+		      int               height,
+		      BlendMode         blend_mode,
+		      GradientType      gradient_type,
+		      double            offset,
+		      RepeatMode        repeat,
+		      int               supersample,
+		      int               max_depth,
+		      double            threshold,
+		      double            sx,
+		      double            sy,
+		      double            ex,
+		      double            ey,
+		      GimpProgressFunc  progress_callback,
+		      gpointer          progress_data)
 {
   RenderBlendData  rbd;
   PutPixelData     ppd;
-  unsigned char    r, g, b;
-  int              x, y;
-  int              endx, endy;
-  void            *pr;
-  unsigned char   *data;
+  guchar           r, g, b;
+  gint             x, y;
+  gint             endx, endy;
+  gpointer        *pr;
+  guchar          *data;
   color_t          color;
 
   /* Get foreground and background colors, normalized */

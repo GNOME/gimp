@@ -53,26 +53,26 @@ typedef enum
   REPEAT_LAST /*< skip >*/
 } RepeatMode;
 
-void   blend            (GimpImage       *gimage,
-			 GimpDrawable    *drawable,
-			 BlendMode        blend_mode,
-			 gint             paint_mode,
-			 GradientType     gradient_type,
-			 gdouble          opacity,
-			 gdouble          offset,
-			 RepeatMode       repeat,
-			 gint             supersample,
-			 gint             max_depth,
-			 gdouble          threshold,
-			 gdouble          startx,
-			 gdouble          starty,
-			 gdouble          endx,
-			 gdouble          endy,
-			 progress_func_t  progress_callback,
-			 gpointer         progress_data);
+void   blend            (GimpImage        *gimage,
+			 GimpDrawable     *drawable,
+			 BlendMode         blend_mode,
+			 gint              paint_mode,
+			 GradientType      gradient_type,
+			 gdouble           opacity,
+			 gdouble           offset,
+			 RepeatMode        repeat,
+			 gint              supersample,
+			 gint              max_depth,
+			 gdouble           threshold,
+			 gdouble           startx,
+			 gdouble           starty,
+			 gdouble           endx,
+			 gdouble           endy,
+			 GimpProgressFunc  progress_callback,
+			 gpointer          progress_data);
 
 Tool * tools_new_blend  (void);
-void   tools_free_blend (Tool            *tool);
+void   tools_free_blend (Tool             *tool);
 
 
 #endif  /*  __BLEND_H__  */
