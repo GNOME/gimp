@@ -20,8 +20,8 @@
 #define  __GIMP_DISPLAY_SHELLLAYER_SELECT_H__
 
 
-void   gimp_display_shell_layer_select_init (GimpImage *gimage, 
-                                             gint       move, 
+void   gimp_display_shell_layer_select_init (GimpImage *gimage,
+                                             gint       move,
                                              guint32    time);
 
 

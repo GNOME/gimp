@@ -156,6 +156,7 @@ gimp_display_shell_events (GtkWidget        *widget,
         case GDK_Up:        case GDK_Down:
         case GDK_space:
         case GDK_Tab:
+        case GDK_ISO_Left_Tab:
         case GDK_Alt_L:     case GDK_Alt_R:
         case GDK_Shift_L:   case GDK_Shift_R:
         case GDK_Control_L: case GDK_Control_R:
@@ -1026,6 +1027,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
           case GDK_Tab:
+          case GDK_ISO_Left_Tab:
             if (! state)
               {
                 GimpDialogFactory *dialog_factory;
@@ -1037,15 +1039,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
             else if (! gimp_image_is_empty (gimage))
               {
-                if (state & GDK_MOD1_MASK)
+                if (state & GDK_CONTROL_MASK)
                   {
-                    gimp_display_shell_layer_select_init (gdisp->gimage,
-                                                          1, kevent->time);
-                  }
-                else if (state & GDK_CONTROL_MASK)
-                  {
-                    gimp_display_shell_layer_select_init (gdisp->gimage,
-                                                          -1, kevent->time);
+                    if (kevent->keyval == GDK_Tab)
+                      gimp_display_shell_layer_select_init (gdisp->gimage,
+                                                            1, kevent->time);
+                    else
+                      gimp_display_shell_layer_select_init (gdisp->gimage,
+                                                            -1, kevent->time);
                   }
               }
 
