@@ -475,9 +475,13 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   if (notebook_icon)
     {
-      gchar *filename;
+      GimpGuiConfig *gui_config;
+      gchar         *filename;
 
-      filename = g_build_filename (themes_get_theme_dir (gimp),
+      gui_config = GIMP_GUI_CONFIG (gimp->config);
+
+      filename = g_build_filename (themes_get_theme_dir (gimp,
+                                                         gui_config->theme),
                                    "images", "preferences", notebook_icon,
                                    NULL);
 
@@ -563,6 +567,23 @@ prefs_format_string_select_callback (GtkTreeSelection *sel,
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
       gtk_entry_set_text (entry, g_value_get_string (&val));
+      g_value_unset (&val);
+    }
+}
+
+static void
+prefs_theme_select_callback (GtkTreeSelection *sel,
+                             Gimp             *gimp)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    {
+      GValue val = { 0, };
+
+      gtk_tree_model_get_value (model, &iter, 0, &val);
+      g_object_set (gimp->config, "theme", g_value_get_string (&val), NULL);
       g_value_unset (&val);
     }
 }
@@ -1179,6 +1200,72 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "can-change-accels",
                           _("Use Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
+
+  /* Themes */
+  vbox2 = prefs_frame_new (_("Themes"), GTK_CONTAINER (vbox), FALSE);
+
+  {
+    GtkListStore       *list_store;
+    GtkWidget          *view;
+    GtkWidget          *scrolled_win;
+    GtkCellRenderer    *rend;
+    GtkTreeViewColumn  *col;
+    GtkTreeIter         iter;
+    GtkTreeSelection   *sel;
+    gchar             **themes;
+    gint                n_themes;
+    gint                i;
+
+    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+    gtk_widget_set_size_request (scrolled_win, -1, 80);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                         GTK_SHADOW_IN);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                    GTK_POLICY_NEVER,
+                                    GTK_POLICY_AUTOMATIC);
+    gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
+    gtk_widget_show (scrolled_win);
+
+    list_store = gtk_list_store_new (1, G_TYPE_STRING);
+
+    view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+    gtk_container_add (GTK_CONTAINER (scrolled_win), view);
+    gtk_widget_show (view);
+
+    g_object_unref (list_store);
+
+    rend = gtk_cell_renderer_text_new ();
+    col = gtk_tree_view_column_new_with_attributes (NULL, rend,
+                                                    "text", 0,
+                                                    NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+    themes = themes_list_themes (gimp, &n_themes);
+
+    for (i = 0; i < n_themes; i++)
+      {
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter,
+                            0, themes[i],
+                            -1);
+
+        if (GIMP_GUI_CONFIG (object)->theme &&
+            ! strcmp (GIMP_GUI_CONFIG (object)->theme, themes[i]))
+          {
+            gtk_tree_selection_select_iter (sel, &iter);
+          }
+      }
+
+    if (themes)
+      g_strfreev (themes);
+
+    g_signal_connect (sel, "changed",
+                      G_CALLBACK (prefs_theme_select_callback),
+                      gimp);
+  }
 
 
   /*****************************/

@@ -20,10 +20,15 @@
 #define __THEMES_H__
 
 
-void          themes_init          (Gimp *gimp);
-void          themes_exit          (Gimp *gimp);
+void           themes_init          (Gimp        *gimp);
+void           themes_exit          (Gimp        *gimp);
 
-const gchar * themes_get_theme_dir (Gimp *gimp);
+gchar       ** themes_list_themes   (Gimp        *gimp,
+                                     gint        *n_themes);
+const gchar  * themes_get_theme_dir (Gimp        *gimp,
+                                     const gchar *theme_name);
+void           themes_apply_theme   (Gimp        *gimp,
+                                     const gchar *theme_name);
 
 
 #endif /* __THEMES_H__ */

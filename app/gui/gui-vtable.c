@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -317,5 +319,5 @@ gui_get_display_name (Gimp *gimp,
 static const gchar *
 gui_get_theme_dir (Gimp *gimp)
 {
-  return themes_get_theme_dir (gimp);
+  return themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->theme);
 }

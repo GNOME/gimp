@@ -1,5 +1,20 @@
 2003-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/themes.[ch]: split out function themes_apply_theme()
+	from themes_init(). Connect to "notify::theme" of gimp->config and
+	change the theme in the callback. Added themes_list_themes().
+	Added "const gchar *theme_name" parameter to
+	themes_get_theme_dir().
+
+	* app/gui/gui-vtable.c (gui_get_theme_dir): changed accordingly.
+
+	* app/gui/preferences-dialog.c (prefs_dialog_create): enabled
+	theme selection on the "Interface" page. Still has many issues
+	(like using a conceptually wrong method of theme changing ;-)
+	but it won't get fixed if we cannot change themes on the fly...
+
+2003-11-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdataeditor.c (gimp_data_editor_save_dirty):
 	return early if the GimpData is not dirty.
 

@@ -36,8 +36,14 @@
 
 /*  local function prototypes  */
 
-static void   gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
-                                           gpointer                user_data);
+static void   themes_directories_foreach (const GimpDatafileData *file_data,
+                                          gpointer                user_data);
+static void   themes_list_themes_foreach (gpointer                key,
+                                          gpointer                value,
+                                          gpointer                data);
+static void   themes_theme_change_notify (GimpGuiConfig          *config,
+                                          GParamSpec             *pspec,
+                                          Gimp                   *gimp);
 
 
 /*  private variables  */
@@ -51,8 +57,6 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
-  const gchar   *theme_dir;
-  gchar         *gtkrc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -71,13 +75,84 @@ themes_init (Gimp *gimp)
 
       gimp_datafiles_read_directories (path,
 				       G_FILE_TEST_IS_DIR,
-				       gui_themes_dir_foreach_func,
+				       themes_directories_foreach,
 				       gimp);
 
       g_free (path);
     }
 
-  theme_dir = themes_get_theme_dir (gimp);
+  themes_apply_theme (gimp, config->theme);
+
+  g_signal_connect (config, "notify::theme",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+}
+
+void
+themes_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (themes_hash)
+    {
+      g_signal_handlers_disconnect_by_func (gimp->config,
+                                            themes_theme_change_notify,
+                                            gimp);
+
+      g_hash_table_destroy (themes_hash);
+      themes_hash = NULL;
+    }
+}
+
+gchar **
+themes_list_themes (Gimp *gimp,
+                    gint *n_themes)
+{
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (n_themes != NULL, NULL);
+
+  *n_themes = g_hash_table_size (themes_hash);
+
+  if (*n_themes > 0)
+    {
+      gchar **themes;
+      gchar **index;
+
+      themes = g_new0 (gchar *, *n_themes + 1);
+
+      index = themes;
+
+      g_hash_table_foreach (themes_hash, themes_list_themes_foreach, &index);
+
+      return themes;
+    }
+
+  return NULL;
+}
+
+const gchar *
+themes_get_theme_dir (Gimp        *gimp,
+                      const gchar *theme_name)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (! theme_name)
+    theme_name = "Default";
+
+  return g_hash_table_lookup (themes_hash, theme_name);
+}
+
+void
+themes_apply_theme (Gimp        *gimp,
+                    const gchar *theme_name)
+{
+  const gchar *theme_dir;
+  gchar       *gtkrc;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  theme_dir = themes_get_theme_dir (gimp, theme_name);
 
   if (theme_dir)
     {
@@ -106,43 +181,14 @@ themes_init (Gimp *gimp)
   g_free (gtkrc);
 }
 
-void
-themes_exit (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (themes_hash)
-    {
-      g_hash_table_destroy (themes_hash);
-      themes_hash = NULL;
-    }
-}
-
-const gchar *
-themes_get_theme_dir (Gimp *gimp)
-{
-  GimpGuiConfig *config;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  config = GIMP_GUI_CONFIG (gimp->config);
-
-  if (config->theme)
-    return g_hash_table_lookup (themes_hash, config->theme);
-
-  return g_hash_table_lookup (themes_hash, "Default");
-}
-
 
 /*  private functions  */
 
 static void
-gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
-                             gpointer                user_data)
+themes_directories_foreach (const GimpDatafileData *file_data,
+                            gpointer                user_data)
 {
-  Gimp *gimp;
-
-  gimp = GIMP (user_data);
+  Gimp *gimp = GIMP (user_data);
 
   if (gimp->be_verbose)
     g_print (_("Adding theme '%s' (%s)\n"),
@@ -151,4 +197,37 @@ gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
   g_hash_table_insert (themes_hash,
 		       g_strdup (file_data->basename),
 		       g_strdup (file_data->filename));
+}
+
+static void
+themes_list_themes_foreach (gpointer key,
+                            gpointer value,
+                            gpointer data)
+{
+  gchar ***index = data;
+
+  **index = g_strdup ((gchar *) key);
+
+  *index = (*index)++;
+}
+
+static void
+themes_theme_change_notify (GimpGuiConfig *config,
+                            GParamSpec    *pspec,
+                            Gimp          *gimp)
+{
+  GList *list, *toplevels;
+
+  themes_apply_theme (gimp, config->theme);
+
+  toplevels = gtk_window_list_toplevels ();
+  g_list_foreach (toplevels, (GFunc) g_object_ref, NULL);
+
+  for (list = toplevels; list; list = list->next)
+    {
+      gtk_widget_reset_rc_styles (list->data);
+      g_object_unref (list->data);
+    }
+
+  g_list_free (toplevels);
 }
