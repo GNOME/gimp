@@ -46,5 +46,23 @@ gimp_find_parasite (char *name)
   return parasite_list_find(parasites, name);
 }
 
+static void list_func(char *key, Parasite *p, char ***cur)
+{
+  *(*cur)++ = (char *) g_strdup (key);
+}
+
+char **
+gimp_parasite_list (gint *count)
+{
+  char **list, **cur;
+
+  *count = parasite_list_length (parasites);
+  cur = list = (char **) g_malloc (sizeof (char *) * *count);
+
+  parasite_list_foreach (parasites, (GHFunc)list_func, &cur);
+  
+  return list;
+}
+
 
 

@@ -1448,6 +1448,7 @@ ProcRecord drawable_get_pixel_proc =
 
 /* The Parasite procs prototypes */
 static Argument *gimp_drawable_find_parasite_invoker (Argument *);
+static Argument *gimp_drawable_parasite_list_invoker (Argument *);
 static Argument *gimp_drawable_attach_parasite_invoker (Argument *);
 static Argument *gimp_drawable_detach_parasite_invoker (Argument *);
 
@@ -1674,6 +1675,74 @@ gimp_drawable_detach_parasite_invoker (Argument *args)
 
   return_args = procedural_db_return_args (&gimp_drawable_detach_parasite_proc,
 					   success);
+
+  return return_args;
+}
+
+/***** gimp_drawable_parasite_list ****/
+ProcArg gimp_drawable_parasite_list_in_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable"
+  }
+};
+
+ProcArg gimp_drawable_parasite_list_out_args[] =
+{
+  { PDB_INT32,
+    "num_parasites",
+    "the number of attached parasites"
+  },
+  { PDB_STRINGARRAY,
+    "parasites",
+    "the names of currently attached parasites"
+  }
+};
+
+ProcRecord gimp_drawable_parasite_list_proc =
+{
+  "gimp_drawable_parasite_list",
+  "list all parasites",
+  "Returns a list of all currently attached parasites.",
+  "Marc Lehmann",
+  "Marc Lehmann",
+  "1999",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  gimp_drawable_parasite_list_in_args,
+
+  /*  Output arguments  */
+  2,
+  gimp_drawable_parasite_list_out_args,
+
+  /*  Exec method  */
+  { { gimp_drawable_parasite_list_invoker } },
+};
+
+static Argument *
+gimp_drawable_parasite_list_invoker (Argument *args)
+{
+  int success = TRUE;
+  Argument *return_args;
+  GimpDrawable *gdrawable;
+
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gdrawable = gimp_drawable_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&gimp_drawable_parasite_list_proc,
+                                           success);
+
+  /*  The real work  */
+  if (success)
+    return_args[2].value.pdb_pointer = gimp_drawable_parasite_list (gdrawable,
+                                            &return_args[1].value.pdb_int);
 
   return return_args;
 }

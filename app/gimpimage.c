@@ -924,6 +924,24 @@ gimp_image_find_parasite (const GimpImage *gimage, const char *name)
   return parasite_list_find(gimage->parasites, name);
 }
 
+static void list_func(char *key, Parasite *p, char ***cur)
+{
+  *(*cur)++ = (char *) g_strdup (key);
+}
+
+char **
+gimp_image_parasite_list (GimpImage *image, gint *count)
+{
+  char **list, **cur;
+
+  *count = parasite_list_length (image->parasites);
+  cur = list = (char **) g_malloc (sizeof (char *) * *count);
+
+  parasite_list_foreach (image->parasites, (GHFunc)list_func, &cur);
+  
+  return list;
+}
+
 void
 gimp_image_attach_parasite (GimpImage *gimage, Parasite *parasite)
 {

@@ -1,3 +1,22 @@
+Sat Feb 13 19:05:16 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * app/internal_procs.c
+        * app/parasite_cmds.h
+        * app/parasite_cmds.c
+        * app/gimpparasite.h
+        * app/gimpparasite.c
+        * app/gimage_cmds.h
+        * app/gimage_cmds.c
+        * app/gimpimage.h
+        * app/gimpimage.c
+        * app/drawable_cmds.h
+        * app/drawable_cmds.c
+        * app/gimpdrawable.h
+        * app/gimpdrawable.c
+        
+        Added parasite_list functions for global parasites, drawables and
+        images as internal (C) and pdb functions.
+
 Wed Feb 10 23:44:00 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: provide a simple way to change the 
@@ -5,12 +24,11 @@ Wed Feb 10 23:44:00 MET 1999 Sven Neumann <sven@gimp.org>
 	* app/scale.c: also update the title when using the zoom tool
 
 Mon Feb  8 18:47:00 CST 1999 Seth Burgess <sjburges@gimp.org>
-
-    * plug-ins/perl/examples/feedback.pl 
-    * plug-ins/perl/examples/xachblocks.pl 
-    * plug-ins/perl/examples/xachshadows.pl: Updated version
+	* plug-ins/perl/examples/feedback.pl 
+	* plug-ins/perl/examples/xachblocks.pl 
+	* plug-ins/perl/examples/xachshadows.pl: Updated version
 	information on my Gimp-Perl plugins that were improved by Marc
-	Lehamn so I can keep track better.
+	Lehmann so I can keep track better.
 
 Mon Feb  8 19:17:58 GMT 1999 Adam D. Moss <adam@gimp.org>
 

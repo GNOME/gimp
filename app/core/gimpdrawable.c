@@ -390,6 +390,24 @@ gimp_drawable_find_parasite (const GimpDrawable *drawable, const char *name)
   return parasite_list_find(drawable->parasites, name);
 }
 
+static void list_func(char *key, Parasite *p, char ***cur)
+{
+  *(*cur)++ = (char *) g_strdup (key);
+}
+
+char **
+gimp_drawable_parasite_list (GimpDrawable *drawable, gint *count)
+{
+  char **list, **cur;
+
+  *count = parasite_list_length (drawable->parasites);
+  cur = list = (char **) g_malloc (sizeof (char *) * *count);
+
+  parasite_list_foreach (drawable->parasites, (GHFunc)list_func, &cur);
+  
+  return list;
+}
+
 void
 gimp_drawable_attach_parasite (GimpDrawable *drawable, Parasite *parasite)
 {

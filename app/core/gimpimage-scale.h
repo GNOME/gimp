@@ -141,6 +141,8 @@ void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
 Parasite *      gimp_image_find_parasite          (const GimpImage *,
 						   const char *name);
+char **         gimp_image_parasite_list          (GimpImage *image,
+                                                   gint *count);
 void            gimp_image_attach_parasite        (GimpImage *, Parasite *);
 void            gimp_image_detach_parasite        (GimpImage *, const char *);
 

@@ -41,6 +41,7 @@ extern ProcRecord drawable_channel_proc;
 extern ProcRecord drawable_set_pixel_proc;
 extern ProcRecord drawable_get_pixel_proc;
 extern ProcRecord gimp_drawable_find_parasite_proc;
+extern ProcRecord gimp_drawable_parasite_list_proc;
 extern ProcRecord gimp_drawable_attach_parasite_proc;
 extern ProcRecord gimp_drawable_detach_parasite_proc;
 extern ProcRecord drawable_set_image_proc;

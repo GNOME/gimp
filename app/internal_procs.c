@@ -195,6 +195,7 @@ internal_procs_init ()
   procedural_db_register (&gimp_image_get_guide_orientation_proc); pcount++;
   procedural_db_register (&gimp_image_get_guide_position_proc); pcount++;
   procedural_db_register (&gimp_image_find_parasite_proc); pcount++;
+  procedural_db_register (&gimp_image_parasite_list_proc); pcount++;
   procedural_db_register (&gimp_image_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_image_detach_parasite_proc); pcount++;
   procedural_db_register (&gimp_image_get_layer_by_tattoo_proc); pcount++;
@@ -301,6 +302,7 @@ internal_procs_init ()
   procedural_db_register (&drawable_set_pixel_proc); pcount++;
   procedural_db_register (&drawable_get_pixel_proc); pcount++;
   procedural_db_register (&gimp_drawable_find_parasite_proc); pcount++;
+  procedural_db_register (&gimp_drawable_parasite_list_proc); pcount++;
   procedural_db_register (&gimp_drawable_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_drawable_detach_parasite_proc); pcount++;
   procedural_db_register (&drawable_set_image_proc); pcount++;
@@ -410,6 +412,7 @@ internal_procs_init ()
 			 pcount/total_pcount);
   /*  parasite procedures  */
   procedural_db_register (&parasite_new_proc); pcount++;
+  procedural_db_register (&gimp_parasite_list_proc); pcount++;
   procedural_db_register (&gimp_find_parasite_proc); pcount++;
   procedural_db_register (&gimp_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_detach_parasite_proc); pcount++;

@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/app/bin/perl
 
 # Revision 1.0: Released it
 #          1.1: Marc Lehman added undo capability! <pcg@goof.com>

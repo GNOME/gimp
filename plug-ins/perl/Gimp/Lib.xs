@@ -65,6 +65,9 @@
 
 #define PKG_ANY		((char *)0)
 
+static char pkg_anyable[] = PKG_DRAWABLE ", " PKG_LAYER " or " PKG_CHANNEL;
+#define PKG_ANYABLE	(pkg_anyable)
+
 static int trace = TRACE_NONE;
 
 typedef gint32 IMAGE;
@@ -452,7 +455,11 @@ static gint32
 unbless (SV *sv, char *type, char *croak_str)
 {
   if (SvROK (sv))
-    if (type == PKG_ANY || sv_derived_from (sv, type))
+    if (type == PKG_ANY
+        || (type == PKG_ANYABLE && (sv_derived_from (sv, PKG_DRAWABLE)
+                                    || sv_derived_from (sv, PKG_LAYER)
+                                    || sv_derived_from (sv, PKG_CHANNEL)))
+        || sv_derived_from (sv, type))
       {
         if (SvTYPE (SvRV (sv)) == SVt_PVMG)
           return SvIV (SvRV (sv));
@@ -467,7 +474,7 @@ unbless (SV *sv, char *type, char *croak_str)
   else
     return SvIV (sv);
   
-  abort (); /* calm down gcc */
+  return -1;
 }
 
 static void
@@ -648,9 +655,9 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
       case PARAM_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");;
       case PARAM_STRING:	arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");;
       case PARAM_DISPLAY:	arg->data.d_display	= unbless(sv, PKG_DISPLAY  , croak_str); break;
-      case PARAM_LAYER:		arg->data.d_layer	= unbless(sv, PKG_ANY      , croak_str); break;
-      case PARAM_CHANNEL:	arg->data.d_channel	= unbless(sv, PKG_ANY      , croak_str); break;
-      case PARAM_DRAWABLE:	arg->data.d_drawable	= unbless(sv, PKG_ANY      , croak_str); break;
+      case PARAM_LAYER:		arg->data.d_layer	= unbless(sv, PKG_ANYABLE  , croak_str); break;
+      case PARAM_CHANNEL:	arg->data.d_channel	= unbless(sv, PKG_ANYABLE  , croak_str); break;
+      case PARAM_DRAWABLE:	arg->data.d_drawable	= unbless(sv, PKG_ANYABLE  , croak_str); break;
       case PARAM_SELECTION:	arg->data.d_selection	= unbless(sv, PKG_SELECTION, croak_str); break;
       case PARAM_BOUNDARY:	arg->data.d_boundary	= sv2gimp_extract_noref (SvIV, "BOUNDARY");;
       case PARAM_PATH:		arg->data.d_path	= sv2gimp_extract_noref (SvIV, "PATH");;
@@ -664,7 +671,7 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
       	  arg->data.d_image = gimp_channel_get_image_id (unbless(sv, PKG_CHANNEL , croak_str));
         else if (sv_derived_from (sv, PKG_IMAGE) || !SvROK (sv))
           {
-      	                        arg->data.d_image	=unbless(sv, PKG_IMAGE   , croak_str); break;
+      	                        arg->data.d_image      = unbless(sv, PKG_IMAGE   , croak_str); break;
       	  }
       	else
       	  strcpy (croak_str, "argument incompatible with type IMAGE");

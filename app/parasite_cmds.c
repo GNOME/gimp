@@ -29,6 +29,7 @@ static Argument *parasite_new_invoker (Argument *);
 static Argument *gimp_find_parasite_invoker (Argument *);
 static Argument *gimp_attach_parasite_invoker (Argument *);
 static Argument *gimp_detach_parasite_invoker (Argument *);
+static Argument *gimp_parasite_list_invoker (Argument *);
 
 static Argument *parasite_new_invoker (Argument *args);
 
@@ -306,3 +307,55 @@ gimp_detach_parasite_invoker (Argument *args)
 
   return return_args;
 }
+
+/***** gimp_parasite_list ****/
+ProcArg gimp_parasite_list_out_args[] =
+{
+  { PDB_INT32,
+    "num_parasites",
+    "the number of attached parasites"
+  },
+  { PDB_STRINGARRAY,
+    "parasites",
+    "the names of currently attached parasites"
+  }
+};
+
+ProcRecord gimp_parasite_list_proc =
+{
+  "gimp_parasite_list",
+  "list all parasites",
+  "Returns a list of all currently attached parasites.",
+  "Marc Lehmann",
+  "Marc Lehmann",
+  "1999",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  0,
+  NULL,
+
+  /*  Output arguments  */
+  2,
+  gimp_parasite_list_out_args,
+
+  /*  Exec method  */
+  { { gimp_parasite_list_invoker } },
+};
+
+static Argument *
+gimp_parasite_list_invoker (Argument *args)
+{
+  int success = TRUE;
+  Argument *return_args;
+
+  return_args = procedural_db_return_args (&gimp_parasite_list_proc,
+                                           success);
+  /*  The real work  */
+  if (success)
+    return_args[2].value.pdb_pointer = gimp_parasite_list (&return_args[1].value.pdb_int);
+
+  return return_args;
+}
+
+

@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+	- more errornous argument types are detected now, without
+          just calling abort().
+
 1.052 Tue Feb  9 18:16:15 CET 1999
 	- moved the xlfd_size function from Gimp::Fu into Gimp
           (and maybe later into Gimp::Util?)
