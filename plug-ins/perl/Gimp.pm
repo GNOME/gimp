@@ -435,7 +435,7 @@ sub callback {
       {
          local $^W = 0;
          @cb = (
-            @{$callback{quiet}},
+            @{$callback{quit}},
          );
       }
       for (@cb) { &$_ }
@@ -631,12 +631,12 @@ Gimp-Perl pages at http://gimp.pages.de.
 Well, scheme (which is used by script-fu), is IMnsHO the crappiest language
 ever (well, the crappiest language that one actually can use, so it's not
 _that_ bad). Scheme has the worst of all languages, no data types, but still
-using variables. Look at haskell (http://www.haskell.org) to see how
+using variables. Look at Haskell (http://www.haskell.org) to see how
 functional is done right.
 
-Since I was unable to write a haskell interface (and perl is the traditional
-scripting language), I wrote a Perl interface instead. Not too bad a
-decision I believe...
+Since I was unable to write a Haskell interface (and perl is the
+traditional scripting language), I wrote a Perl interface instead. Not too
+bad a decision I believe...
 
 =head1 SYNOPSIS
 
@@ -645,7 +645,6 @@ decision I believe...
   Other modules of interest:
   
   use Gimp::Fu;		# easy scripting environment
-  use Gimp::PDL;	# interface to the Perl Data Language
   
   these have their own manpage.
 
@@ -727,7 +726,7 @@ noteworthy limitations (subject to be changed):
 =over 2
 
 =item *
-callback procedures do not poass return values to The Gimp.
+callback procedures do not pass return values to The Gimp.
 
 =back
 
@@ -863,7 +862,7 @@ parameter) and returns its size and unit (e.g. C<(20,POINTS)>). This can
 conviniently used in the gimp_text_..._fontname functions, which ignore the
 size (no joke ;). Example:
 
- $drawable->text_fontname (50, 50, "The quick", 5, 1, xlfd_size $font, $font;
+ $drawable->text_fontname (50, 50, "The quick", 5, 1, xlfd_size $font, $font);
 
 =item Gimp::gtk_init()
 
@@ -919,7 +918,7 @@ usually only the case after gimp_main or gimp_init have been called.
 
 =item Gimp::register_callback(gimp_function_name,perl_function)
 
-Using this fucntion you can overwrite the standard Gimp behaviour of
+Using this function you can overwrite the standard Gimp behaviour of
 calling a perl subroutine of the same name as the gimp function.
 
 The first argument is the name of a registered gimp function that you want

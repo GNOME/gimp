@@ -1,7 +1,9 @@
 Revision history for Gimp-Perl extension.
+
 	- added example scripts triangu gallery iland
         - fixed typo in examples/xachvision
 	- added examples/circular_text by Mike Gherlone.
+        - various bugfixes/enhancements.
 
 1.21  Fri Mar  9 18:33:04 CET 2001
 	- better Gimp::Fu argument parsing.

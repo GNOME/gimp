@@ -20,13 +20,16 @@ my %description = (
    'gtk-1.1'    => 'gtk+ version 1.1 or higher',
    'gtk-1.2'    => 'gtk+ version 1.2 or higher',
    'gtk-1.3'    => 'gtk+ version 1.3 or higher',
-   'gtk-1.4'    => 'gtk+ version 1.4 or higher',
+   'gtk-2.0'    => 'gtk+ version 2.0 or higher',
 
    'gimp-1.1'   => 'gimp version 1.1 or higher',
    'gimp-1.2'   => 'gimp version 1.2 or higher',
    'gimp-1.3'   => 'gimp version 1.3 or higher',
+   'gimp-1.4'   => 'gimp version 1.4 or higher',
+   'gimp-2.0'   => 'gimp version 2.0 or higher',
 
    'perl-5.005' => 'perl version 5.005 or higher',
+   'perl-5.6'   => 'perl version 5.6 or higher',
    'pdl'        => 'compiled-in PDL support',
    'gnome'      => 'the gnome perl module',
    'gtkxmhtml'  => 'the Gtk::XmHTML module',
@@ -66,8 +69,8 @@ sub present {
       _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=2) || Gtk->major_version>1;
    } elsif ($_ eq "gtk-1.3") {
       _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=3) || Gtk->major_version>1;
-   } elsif ($_ eq "gtk-1.4") {
-      _check_gtk and (Gtk->major_version==1 && Gtk->minor_version>=4) || Gtk->major_version>1;
+   } elsif ($_ eq "gtk-2.0") {
+      _check_gtk and (Gtk->major_version==2 && Gtk->minor_version>=0) || Gtk->major_version>2;
 
    } elsif ($_ eq "gimp-1.1") {
       (Gimp->major_version==1 && Gimp->minor_version>=1) || Gimp->major_version>1;
@@ -75,9 +78,15 @@ sub present {
       (Gimp->major_version==1 && Gimp->minor_version>=2) || Gimp->major_version>1;
    } elsif ($_ eq "gimp-1.3") {
       (Gimp->major_version==1 && Gimp->minor_version>=3) || Gimp->major_version>1;
+   } elsif ($_ eq "gimp-1.4") {
+      (Gimp->major_version==1 && Gimp->minor_version>=4) || Gimp->major_version>1;
+   } elsif ($_ eq "gimp-2.0") {
+      (Gimp->major_version==2 && Gimp->minor_version>=0) || Gimp->major_version>2;
 
    } elsif ($_ eq "perl-5.005") {
       $] >= 5.005;
+   } elsif ($_ eq "perl-5.6") {
+      $] >= 5.006;
    } elsif ($_ eq "pdl") {
       require Gimp::Config; $Gimp::Config{DEFINE1} =~ /HAVE_PDL/;
    } elsif ($_ eq "gnome") {
@@ -154,13 +163,17 @@ module offers a nicer way to check for them.
 
 checks for the presence of the gtk interface module.
 
-=item C<gtk-1.1>, C<gtk-1.2>
+=item C<gtk-1.1>, C<gtk-1.2>, C<gtk-1.3>, C<gtk-2.0>
 
-checks for the presence of gtk-1.1 (1.2) or higher.
+checks for the presence of gtk-1.1 (1.2 etc.) or higher.
 
-=item C<perl-5.005>
+=item C<gimp-1.1>, C<gimp-1.2>, C<gimp-1.3>, C<gimp-1.4>, C<gimp-2.0>
 
-checks for perl version 5.005 or higher.
+checks for the presence of gimp-1.1 (1.2 etc.) or higher.
+
+=item C<perl-5.005>, C<perl-5.6>
+
+checks for perl version 5.005 (or 5.6) or higher.
 
 =item C<pdl>
 

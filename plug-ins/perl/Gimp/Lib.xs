@@ -1973,6 +1973,18 @@ gimp_pixel_rgn_get_row2(pr, x, y, width)
 	RETVAL
 
 SV *
+gimp_pixel_rgn_get_col2(pr, x, y, height)
+	GimpPixelRgn *	pr
+	int	x
+	int	y
+	int	height
+	CODE:
+        RETVAL = newSVn (height * pr->bpp);
+	gimp_pixel_rgn_get_col (pr, (guchar *)SvPV_nolen(RETVAL), x, y, height);
+	OUTPUT:
+	RETVAL
+
+SV *
 gimp_pixel_rgn_get_rect2(pr, x, y, width, height)
 	GimpPixelRgn *	pr
 	int	x

@@ -18,7 +18,7 @@
 #include <libgimp/gimpexport.h>
 #endif
 
-/* libgimo requires a rather broken interface. this must be here because..
+/* libgimp requires a rather broken interface. this must be here because..
  * well, nobody knows why... ARGH! */
 GimpPlugInInfo PLUG_IN_INFO = { 0, 0, 0, 0 };
 

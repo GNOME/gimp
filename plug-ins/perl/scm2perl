@@ -148,7 +148,7 @@ min	=> 'sub min {
 }',
 
 fmod	=> 'sub fmod {
-   $_[0] - int($_[0]/$_[1])*$_[0];
+   $_[0] - int($_[0]/$_[1])*$_[1];
 }',
 
 'number->string' => 'sub number2string {

@@ -58,7 +58,7 @@ sub gimp_image_get_channels {
 sub server_eval {
    my @res = eval "package Gimp::Eval; $_[0]";
    die $@ if $@;
-   @res;
+   wantarray ? @res : $res[0];
 }
 
 # this is here to be atomic over the perl-server
