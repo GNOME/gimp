@@ -1,3 +1,21 @@
+2003-10-23  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-tools-[16|24].png	
+	* themes/Default/images/stock-device-status-24.png
+	* themes/Default/images/stock-tool-options-24.png: new icons drawn
+	by Jimmac.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs-menu.c: use the new GIMP_STOCK_TOOLS icon.
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: add the Tools dialog entry here as well.
+	
+	* app/widgets/gimphelp-ids: s/TOOL_DIALOG/TOOLS_DIALOG/.
+	
 2003-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-appearance.c

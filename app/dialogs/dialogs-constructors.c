@@ -394,8 +394,8 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Tools"), NULL,
-                               GTK_STOCK_MISSING_IMAGE,
-                               GIMP_HELP_TOOL_DIALOG);
+                               GIMP_STOCK_TOOLS,
+                               GIMP_HELP_TOOLS_DIALOG);
 }
 
 GtkWidget *
@@ -599,8 +599,8 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Tools"), NULL,
-                               GTK_STOCK_MISSING_IMAGE,
-                               GIMP_HELP_TOOL_DIALOG);
+                               GIMP_STOCK_TOOLS,
+                               GIMP_HELP_TOOLS_DIALOG);
 }
 
 GtkWidget *

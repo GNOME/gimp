@@ -112,13 +112,10 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            GTK_STOCK_OPEN,                   GIMP_HELP_DOCUMENT_DIALOG),
   ADD_TAB (N_("/Add Tab/_Templates"),        "gimp-template-list",
            GIMP_STOCK_TEMPLATE,              GIMP_HELP_TEMPLATE_DIALOG),
+  ADD_TAB (N_("/Add Tab/T_ools"),            "gimp-tool-list",
+           GIMP_STOCK_TOOLS,                 GIMP_HELP_TOOLS_DIALOG),
   ADD_TAB (N_("/Add Tab/Error Co_nsole"),    "gimp-error-console",
            GIMP_STOCK_WARNING,               GIMP_HELP_ERRORS_DIALOG),
-
-  MENU_SEPARATOR ("/Add Tab/---"),
-
-  ADD_TAB (N_("/Add Tab/Tools"),             "gimp-tool-list",
-           GTK_STOCK_MISSING_IMAGE,          GIMP_HELP_TOOL_DIALOG),
 
   { { N_("/_Close Tab"), "",
       dialogs_close_tab_cmd_callback, 0,

@@ -186,12 +186,13 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_FLIP_HORIZONTAL,          NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FLIP_VERTICAL,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_IMAGES,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYERS,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNELS,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATHS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOOLS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TOOL_OPTIONS,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_DEVICE_STATUS,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -340,6 +341,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_LAYERS,                   stock_layers_24                   },
   { GIMP_STOCK_CHANNELS,                 stock_channels_24                 },
   { GIMP_STOCK_PATHS,                    stock_paths_22                    },
+  { GIMP_STOCK_TOOLS,                    stock_tools_24                    },
+  { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_24             },
+  { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_24            },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_24              },
@@ -429,12 +433,13 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_FLIP_HORIZONTAL,          stock_flip_horizontal_16          },
   { GIMP_STOCK_FLIP_VERTICAL,            stock_flip_vertical_16            },
 
-  { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_16             },
-  { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_16            },
   { GIMP_STOCK_IMAGES,                   stock_images_16                   },
   { GIMP_STOCK_LAYERS,                   stock_layers_16                   },
   { GIMP_STOCK_CHANNELS,                 stock_channels_16                 },
   { GIMP_STOCK_PATHS,                    stock_paths_16                    },
+  { GIMP_STOCK_TOOLS,                    stock_tools_16                    },
+  { GIMP_STOCK_TOOL_OPTIONS,             stock_tool_options_16             },
+  { GIMP_STOCK_DEVICE_STATUS,            stock_device_status_16            },
 
   { GIMP_STOCK_CHANNEL,                  stock_channel_16                  },
   { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_16              },

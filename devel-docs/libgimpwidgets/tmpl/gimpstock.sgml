@@ -709,8 +709,17 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOLS ##### -->
+<para>
+<inlinegraphic fileref="stock-tools-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tools-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_OPTIONS ##### -->
 <para>
+<inlinegraphic fileref="stock-tool-options-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-tool-options-16.png" format="png"></inlinegraphic>
 </para>
 
@@ -718,6 +727,7 @@ the ones in dialog size).
 
 <!-- ##### MACRO GIMP_STOCK_DEVICE_STATUS ##### -->
 <para>
+<inlinegraphic fileref="stock-device-status-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-device-status-16.png" format="png"></inlinegraphic>
 </para>
 

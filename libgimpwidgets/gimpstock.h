@@ -185,6 +185,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_DEFAULT_COLORS       "gimp-default-colors"
 #define GIMP_STOCK_SWAP_COLORS          "gimp-swap-colors"
 
+#define GIMP_STOCK_TOOLS                "gimp-tools"
 #define GIMP_STOCK_TOOL_OPTIONS         "gimp-tool-options"
 #define GIMP_STOCK_DEVICE_STATUS        "gimp-device-status"
 
