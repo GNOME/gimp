@@ -46,6 +46,9 @@ static void  gimp_gui_config_get_property (GObject            *object,
                                            GValue             *value,
                                            GParamSpec         *pspec);
 
+
+#define DEFAULT_THEME     "Default"
+
 enum
 {
   PROP_0,
@@ -176,7 +179,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
-                                   NULL,
+                                   DEFAULT_THEME,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help", USE_HELP_BLURB,

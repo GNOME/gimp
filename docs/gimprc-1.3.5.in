@@ -135,6 +135,30 @@ Sets the gradient search path.  This is a colon-separated list of folders to
 search.
 
 .TP
+(default-brush "Circle (11)")
+
+Specify a default brush.  The brush is searched for in the specified brush
+path.  This is a string value.
+
+.TP
+(default-pattern "Pine")
+
+Specify a default pattern. The pattern is searched for in the specified
+pattern path.  This is a string value.
+
+.TP
+(default-palette "Default")
+
+Specify a default palette.  The palette is searched for in the specified
+palette path.  This is a string value.
+
+.TP
+(default-gradient "FG to BG (RGB)")
+
+Specify a default gradient.  The gradient is searched for in the specified
+gradient path.  This is a string value.
+
+.TP
 (default-comment "Created with The GIMP")
 
 Sets the default comment.  This is a string value.
@@ -462,6 +486,11 @@ defaults to being specified in kilobytes.
 
 Sets the theme search path.  This is a colon-separated list of folders to
 search.
+
+.TP
+(theme "Default")
+
+The name of the theme to use.  This is a string value.
 
 .TP
 (use-help yes)

@@ -92,7 +92,9 @@ main (int   argc,
 	}
     }
 
-  rc = g_object_new (GIMP_TYPE_RC, NULL);
+  rc = g_object_new (GIMP_TYPE_RC,
+                     "module-load-inhibit", "foo",  /* for completeness */
+                     NULL);
 
   g_print ("# Dump of the GIMP default configuration\n\n");
   gimp_config_serialize_properties (rc, 1, 0);
@@ -134,7 +136,10 @@ dump_system_gimprc (gint fd)
 
   write (fd, str->str, str->len);
 
-  rc = g_object_new (GIMP_TYPE_RC, NULL);
+  rc = g_object_new (GIMP_TYPE_RC,
+                     "module-load-inhibit", "foo",  /* for completeness */
+                     NULL);
+
   klass = G_OBJECT_GET_CLASS (rc);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);

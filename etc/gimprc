@@ -98,6 +98,26 @@
 #
 # (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
 
+# Specify a default brush.  The brush is searched for in the specified brush
+# path.  This is a string value.
+#
+# (default-brush "Circle (11)")
+
+# Specify a default pattern. The pattern is searched for in the specified
+# pattern path.  This is a string value.
+#
+# (default-pattern "Pine")
+
+# Specify a default palette.  The palette is searched for in the specified
+# palette path.  This is a string value.
+#
+# (default-palette "Default")
+
+# Specify a default gradient.  The gradient is searched for in the specified
+# gradient path.  This is a string value.
+#
+# (default-gradient "FG to BG (RGB)")
+
 # Sets the default comment.  This is a string value.
 #
 # (default-comment "Created with The GIMP")
@@ -150,6 +170,10 @@
 # Sets the pluginrc search path.  This is a single filename.
 #
 # (pluginrc-path "${gimp_dir}/pluginrc")
+
+# To inhibit loading of a module, add its name here.  This is a string value.
+#
+# (module-load-inhibit "foo")
 
 # Sets the default preview size.  Possible values are none, tiny,
 # extra-small, small, medium, large, extra-large, huge, enormous and
@@ -383,6 +407,10 @@
 # search.
 #
 # (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
+
+# The name of the theme to use.  This is a string value.
+#
+# (theme "Default")
 
 # When set to no the F1 help binding will be disabled.  Possible values are
 # yes and no.

@@ -46,6 +46,13 @@ static void  gimp_core_config_get_property (GObject             *object,
                                             GValue              *value,
                                             GParamSpec          *pspec);
 
+
+#define DEFAULT_BRUSH     "Circle (11)"
+#define DEFAULT_PATTERN   "Pine"
+#define DEFAULT_PALETTE   "Default"
+#define DEFAULT_GRADIENT  "FG to BG (RGB)"
+#define DEFAULT_COMMENT   "Created with The GIMP"
+
 enum
 {
   PROP_0,
@@ -172,23 +179,23 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,
-                                   NULL,
+                                   DEFAULT_BRUSH,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
                                    "default-pattern", DEFAULT_PATTERN_BLURB,
-                                   NULL,
+                                   DEFAULT_PATTERN,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_PALETTE,
                                    "default-palette", DEFAULT_PALETTE_BLURB,
-                                   NULL,
+                                   DEFAULT_PALETTE,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
                                    "default-gradient", DEFAULT_GRADIENT_BLURB,
-                                   NULL,
+                                   DEFAULT_GRADIENT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
                                    "default-comment", DEFAULT_COMMENT_BLURB,
-                                   "Created with The GIMP",
+                                   DEFAULT_COMMENT,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DEFAULT_IMAGE_TYPE,
                                  "default-image-type",
