@@ -121,6 +121,29 @@ app/core/gimpselection.c
 app/core/gimptemplate.c
 app/core/gimpunit.c
 
+app/gui/about-dialog.c
+app/gui/color-dialog.c
+app/gui/convert-dialog.c
+app/gui/dialogs-constructors.c
+app/gui/file-open-dialog.c
+app/gui/file-open-location-dialog.c
+app/gui/file-save-dialog.c
+app/gui/grid-dialog.c
+app/gui/image-new-dialog.c
+app/gui/info-dialog.c
+app/gui/info-window.c
+app/gui/module-dialog.c
+app/gui/offset-dialog.c
+app/gui/palette-import-dialog.c
+app/gui/preferences-dialog.c
+app/gui/quit-dialog.c
+app/gui/resize-dialog.c
+app/gui/resolution-calibrate-dialog.c
+app/gui/stroke-dialog.c
+app/gui/tips-dialog.c
+app/gui/tips-parser.c
+app/gui/user-install-dialog.c
+
 app/display/display-enums.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayoptions.c
@@ -139,32 +162,10 @@ app/file/file-open.c
 app/file/file-save.c
 app/file/file-utils.c
 
-app/gui/about-dialog.c
-app/gui/color-notebook.c
-app/gui/convert-dialog.c
-app/gui/dialogs-constructors.c
-app/gui/file-new-dialog.c
-app/gui/file-open-dialog.c
-app/gui/file-open-location-dialog.c
-app/gui/file-save-dialog.c
-app/gui/grid-dialog.c
 app/gui/gui.c
-app/gui/info-dialog.c
-app/gui/info-window.c
-app/gui/module-browser.c
-app/gui/offset-dialog.c
-app/gui/palette-import-dialog.c
-app/gui/preferences-dialog.c
-app/gui/quit-dialog.c
-app/gui/resize-dialog.c
-app/gui/resolution-calibrate-dialog.c
 app/gui/session.c
 app/gui/splash.c
-app/gui/stroke-dialog.c
 app/gui/themes.c
-app/gui/tips-dialog.c
-app/gui/tips-parser.c
-app/gui/user-install-dialog.c
 
 app/menus/menus.c
 
