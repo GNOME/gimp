@@ -41,6 +41,12 @@ static void         gimp_stroke_finalize             (GObject          *object);
 static gsize        gimp_stroke_get_memsize          (GimpObject       *object,
                                                       gsize            *gui_size);
 
+gdouble gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
+                                            const GimpCoords *coord,
+                                            const gdouble     precision,
+                                            GimpCoords       *ret_point,
+                                            GimpAnchor      **ret_segment_start,
+                                            gdouble          *ret_pos);
 static GimpAnchor * gimp_stroke_real_anchor_get      (const GimpStroke *stroke,
                                                       const GimpCoords *coord);
 static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
@@ -61,6 +67,23 @@ static void         gimp_stroke_real_anchor_convert  (GimpStroke       *stroke,
                                                       GimpAnchorFeatureType  feature);
 static void         gimp_stroke_real_anchor_delete   (GimpStroke       *stroke,
                                                       GimpAnchor       *anchor);
+static gboolean     gimp_stroke_real_point_is_movable
+                                              (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position);
+static void         gimp_stroke_real_point_move_relative
+                                              (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
+                                               const GimpCoords      *deltacoord,
+                                               GimpAnchorFeatureType  feature);
+static void         gimp_stroke_real_point_move_absolute
+                                              (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
+                                               const GimpCoords      *coord,
+                                               GimpAnchorFeatureType  feature);
+
 static GimpStroke * gimp_stroke_real_open            (GimpStroke       *stroke,
                                                       GimpAnchor       *end_anchor);
 static gboolean     gimp_stroke_real_anchor_is_insertable
@@ -177,6 +200,11 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->anchor_convert          = gimp_stroke_real_anchor_convert;
   klass->anchor_delete           = gimp_stroke_real_anchor_delete;
 
+  klass->point_is_movable        = gimp_stroke_real_point_is_movable;
+  klass->point_move_relative     = gimp_stroke_real_point_move_relative;
+  klass->point_move_absolute     = gimp_stroke_real_point_move_absolute;
+
+  klass->nearest_point_get       = gimp_stroke_real_nearest_point_get;
   klass->open                    = gimp_stroke_real_open;
   klass->anchor_is_insertable    = gimp_stroke_real_anchor_is_insertable;
   klass->anchor_insert           = gimp_stroke_real_anchor_insert;
@@ -252,12 +280,12 @@ gimp_stroke_anchor_get (const GimpStroke *stroke,
 
 
 gdouble
-gimp_stroke_nearest_point_get    (const GimpStroke *stroke,
-                                  const GimpCoords *coord,
-                                  const gdouble     precision,
-                                  GimpCoords       *ret_point,
-                                  GimpAnchor      **ret_segment_start,
-                                  gdouble          *ret_pos)
+gimp_stroke_nearest_point_get (const GimpStroke *stroke,
+                               const GimpCoords *coord,
+                               const gdouble     precision,
+                               GimpCoords       *ret_point,
+                               GimpAnchor      **ret_segment_start,
+                               gdouble          *ret_pos)
 {
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
   g_return_val_if_fail (coord != NULL, FALSE);
@@ -268,6 +296,18 @@ gimp_stroke_nearest_point_get    (const GimpStroke *stroke,
                                                             ret_point,
                                                             ret_segment_start,
                                                             ret_pos);
+}
+
+gdouble
+gimp_stroke_real_nearest_point_get (const GimpStroke *stroke,
+                                    const GimpCoords *coord,
+                                    const gdouble     precision,
+                                    GimpCoords       *ret_point,
+                                    GimpAnchor      **ret_segment_start,
+                                    gdouble          *ret_pos)
+{
+  g_printerr ("gimp_stroke_nearest_point_get: default implementation\n");
+  return -1;
 }
 
 static GimpAnchor *
@@ -436,6 +476,78 @@ gimp_stroke_real_anchor_move_absolute (GimpStroke            *stroke,
   anchor->position.x = coord->x;
   anchor->position.y = coord->y;
 }
+
+gboolean
+gimp_stroke_point_is_movable (GimpStroke *stroke,
+                              GimpAnchor *predec,
+                              gdouble     position)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+
+  return GIMP_STROKE_GET_CLASS (stroke)->point_is_movable (stroke, predec,
+                                                           position);
+}
+
+
+gboolean
+gimp_stroke_real_point_is_movable (GimpStroke *stroke,
+                                   GimpAnchor *predec,
+                                   gdouble     position)
+{
+  return FALSE;
+}
+
+
+void
+gimp_stroke_point_move_relative (GimpStroke            *stroke,
+                                 GimpAnchor            *predec,
+                                 gdouble                position,
+                                 const GimpCoords      *deltacoord,
+                                 GimpAnchorFeatureType  feature)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->point_move_relative (stroke, predec,
+                                                       position, deltacoord,
+                                                       feature);
+}
+
+
+void
+gimp_stroke_real_point_move_relative (GimpStroke           *stroke,
+                                      GimpAnchor           *predec,
+                                      gdouble               position,
+                                      const GimpCoords     *deltacoord,
+                                      GimpAnchorFeatureType feature)
+{
+  g_printerr ("gimp_stroke_point_move_relative: default implementation\n");
+}
+
+
+void
+gimp_stroke_point_move_absolute (GimpStroke            *stroke,
+                                 GimpAnchor            *predec,
+                                 gdouble                position,
+                                 const GimpCoords      *coord,
+                                 GimpAnchorFeatureType  feature)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->point_move_absolute (stroke, predec,
+                                                       position, coord,
+                                                       feature);
+}
+
+void
+gimp_stroke_real_point_move_absolute (GimpStroke           *stroke,
+                                      GimpAnchor           *predec,
+                                      gdouble               position,
+                                      const GimpCoords     *coord,
+                                      GimpAnchorFeatureType feature)
+{
+  g_printerr ("gimp_stroke_point_move_absolute: default implementation\n");
+}
+
 
 void
 gimp_stroke_close (GimpStroke *stroke)

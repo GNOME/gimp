@@ -438,6 +438,21 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       break;  /* here it is...  :-)  */
 
+    case VECTORS_MOVE_CURVE:
+      if (gimp_vector_tool_on_curve (tool, coords, gdisp,
+                                     NULL, &pos, &segment_start, &stroke)
+          && gimp_stroke_point_is_movable (stroke, segment_start, pos))
+        {
+          vector_tool->cur_stroke = stroke;
+          vector_tool->cur_anchor = segment_start;
+          vector_tool->cur_position = pos;
+        }
+      else
+        {
+          vector_tool->function = VECTORS_FINISHED;
+        }
+      break;
+
     case VECTORS_CONVERT_EDGE:
       if (gimp_vector_tool_on_handle (tool, coords,
                                       GIMP_ANCHOR_ANCHOR, gdisp,
@@ -544,6 +559,14 @@ gimp_vector_tool_motion (GimpTool        *tool,
         gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
                                           vector_tool->cur_anchor,
                                           coords, vector_tool->restriction);
+      break;
+
+    case VECTORS_MOVE_CURVE:
+      gimp_stroke_point_move_absolute (vector_tool->cur_stroke,
+                                       vector_tool->cur_anchor,
+                                       vector_tool->cur_position,
+                                       coords, vector_tool->restriction);
+      break;
 
     default:
       break;
@@ -894,10 +917,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_HAND;
       break;
     case VECTORS_MOVE_ANCHOR:
-      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
-      break;
     case VECTORS_MOVE_CURVE:
-      cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     default:
       cursor = GIMP_BAD_CURSOR;

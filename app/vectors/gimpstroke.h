@@ -77,6 +77,20 @@ struct _GimpStrokeClass
                                           GimpAnchorFeatureType  feature);
   void          (* anchor_delete)        (GimpStroke            *stroke,
                                           GimpAnchor            *anchor);
+  
+  gboolean      (* point_is_movable)     (GimpStroke            *stroke,
+                                          GimpAnchor            *predec,
+                                          gdouble                position);
+  void          (* point_move_relative)  (GimpStroke            *stroke,
+                                          GimpAnchor            *predec,
+                                          gdouble                position,
+                                          const GimpCoords      *deltacoord,
+                                          GimpAnchorFeatureType  feature);
+  void          (* point_move_absolute)  (GimpStroke            *stroke,
+                                          GimpAnchor            *predec,
+                                          gdouble                position,
+                                          const GimpCoords      *coord,
+                                          GimpAnchorFeatureType  feature);
 
   GimpStroke  * (* open)                 (GimpStroke            *stroke,
                                           GimpAnchor            *end_anchor);
@@ -88,6 +102,7 @@ struct _GimpStrokeClass
                                           gdouble                position);
   gboolean      (* is_extendable)        (GimpStroke            *stroke,
                                           GimpAnchor            *neighbor);
+  
   GimpAnchor  * (* extend)               (GimpStroke            *stroke,
                                           const GimpCoords      *coords,
                                           GimpAnchor            *neighbor,
@@ -181,6 +196,20 @@ void         gimp_stroke_anchor_move_relative (GimpStroke            *stroke,
                                                GimpAnchorFeatureType  feature);
 void         gimp_stroke_anchor_move_absolute (GimpStroke            *stroke,
                                                GimpAnchor            *anchor,
+                                               const GimpCoords      *coord,
+                                               GimpAnchorFeatureType  feature);
+
+gboolean     gimp_stroke_point_is_movable     (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position);
+void         gimp_stroke_point_move_relative  (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
+                                               const GimpCoords      *deltacoord,
+                                               GimpAnchorFeatureType  feature);
+void         gimp_stroke_point_move_absolute  (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
                                                const GimpCoords      *coord,
                                                GimpAnchorFeatureType  feature);
 

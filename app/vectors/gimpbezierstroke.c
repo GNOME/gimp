@@ -62,6 +62,24 @@ static void gimp_bezier_stroke_anchor_convert   (GimpStroke            *stroke,
                                                  GimpAnchorFeatureType  feature);
 static void gimp_bezier_stroke_anchor_delete        (GimpStroke        *stroke,
                                                      GimpAnchor        *anchor);
+static gboolean gimp_bezier_stroke_point_is_movable
+                                                (GimpStroke            *stroke,
+                                                 GimpAnchor            *predec,
+                                                 gdouble                position);
+static void gimp_bezier_stroke_point_move_relative
+                                              (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
+                                               const GimpCoords      *deltacoord,
+                                               GimpAnchorFeatureType  feature);
+static void gimp_bezier_stroke_point_move_absolute
+                                              (GimpStroke            *stroke,
+                                               GimpAnchor            *predec,
+                                               gdouble                position,
+                                               const GimpCoords      *coord,
+                                               GimpAnchorFeatureType  feature);
+
+
 static GimpStroke * gimp_bezier_stroke_open     (GimpStroke        *stroke,
                                                  GimpAnchor        *end_anchor);
 static gboolean gimp_bezier_stroke_anchor_is_insertable
@@ -163,6 +181,9 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->anchor_move_absolute = gimp_bezier_stroke_anchor_move_absolute;
   stroke_class->anchor_convert       = gimp_bezier_stroke_anchor_convert;
   stroke_class->anchor_delete        = gimp_bezier_stroke_anchor_delete;
+  stroke_class->point_is_movable     = gimp_bezier_stroke_point_is_movable;
+  stroke_class->point_move_relative  = gimp_bezier_stroke_point_move_relative;
+  stroke_class->point_move_absolute  = gimp_bezier_stroke_point_move_absolute;
   stroke_class->open                 = gimp_bezier_stroke_open;
   stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
   stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
@@ -408,6 +429,118 @@ gimp_bezier_stroke_anchor_insert (GimpStroke *stroke,
   return ((GimpAnchor *) segment_start->data);
 }
 
+
+static gboolean
+gimp_bezier_stroke_point_is_movable (GimpStroke *stroke,
+                                     GimpAnchor *predec,
+                                     gdouble     position)
+{
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+
+  return (g_list_find (stroke->anchors, predec) != NULL);
+}
+
+
+static void
+gimp_bezier_stroke_point_move_relative (GimpStroke            *stroke,
+                                        GimpAnchor            *predec,
+                                        gdouble                position,
+                                        const GimpCoords      *deltacoord,
+                                        GimpAnchorFeatureType  feature)
+{
+  GimpCoords beziercoords[4];
+  GList      *segment_start, *list;
+  gint        i;
+  gdouble feel_good;
+
+  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+
+  segment_start = g_list_find (stroke->anchors, predec);
+
+  g_return_if_fail (segment_start != NULL);
+
+  list = segment_start;
+
+  for (i=0; i <= 3; i++)
+    {
+      beziercoords[i] = ((GimpAnchor *) list->data)->position;
+      list = g_list_next (list);
+      if (!list)
+        list = stroke->anchors;
+    }
+
+
+  if (position <= 0.5)
+    feel_good = (pow(2 * position, 3)) / 2;
+  else
+    feel_good = (1 - pow((1-position)*2, 3)) / 2 + 0.5;
+
+  gimp_bezier_coords_mix (1.0, &(beziercoords[1]),
+                          (1-feel_good)/(3*position*(1-position)*(1-position)),
+                          deltacoord,
+                          &(beziercoords[1]));
+  gimp_bezier_coords_mix (1.0, &(beziercoords[2]),
+                          feel_good/(3*position*position*(1-position)),
+                          deltacoord,
+                          &(beziercoords[2]));
+
+  list = segment_start;
+  list = g_list_next (list);
+  if (!list)
+    list = stroke->anchors;
+
+  for (i=1; i <= 2; i++)
+    {
+      ((GimpAnchor *) list->data)->position = beziercoords[i];
+      list = g_list_next (list);
+      if (!list)
+        list = stroke->anchors;
+    }
+}
+
+
+static void
+gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
+                                        GimpAnchor            *predec,
+                                        gdouble                position,
+                                        const GimpCoords      *coord,
+                                        GimpAnchorFeatureType  feature)
+{
+  GimpCoords  deltacoord;
+  GimpCoords  tmp1, tmp2, abs_pos;
+  GimpCoords  beziercoords[4];
+  GList      *segment_start, *list;
+  gint        i;
+
+  g_return_if_fail (GIMP_IS_BEZIER_STROKE (stroke));
+
+  segment_start = g_list_find (stroke->anchors, predec);
+
+  g_return_if_fail (segment_start != NULL);
+
+  list = segment_start;
+
+  for (i=0; i <= 3; i++)
+    {
+      beziercoords[i] = ((GimpAnchor *) list->data)->position;
+      list = g_list_next (list);
+      if (!list)
+        list = stroke->anchors;
+    }
+
+  gimp_bezier_coords_mix ((1-position)*(1-position)*(1-position), &(beziercoords[0]),
+                          3*(1-position)*(1-position)*position, &(beziercoords[1]),
+                          &tmp1);
+  gimp_bezier_coords_mix (3*(1-position)*position*position, &(beziercoords[2]),
+                          position*position*position, &(beziercoords[3]),
+                          &tmp2);
+  gimp_bezier_coords_add (&tmp1, &tmp2, &abs_pos);
+
+  gimp_bezier_coords_difference (coord, &abs_pos, &deltacoord);
+
+  gimp_bezier_stroke_point_move_relative (stroke, predec, position,
+                                          &deltacoord, feature);
+}
 
 static gdouble
 gimp_bezier_stroke_nearest_point_get (const GimpStroke     *stroke,

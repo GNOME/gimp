@@ -63,10 +63,11 @@ struct _GimpVectorTool
   gint                  last_x;         /*  last x coordinate             */
   gint                  last_y;         /*  last y coordinate             */
                                                                    
-  GimpAnchor        *cur_anchor;     /*  The current Anchor            */
-  GimpStroke        *cur_stroke;     /*  The current Stroke            */
-  GimpVectors       *vectors;        /*  The current Vector data       */
-  GList             *active_anchors; /*  The currently active anchors  */
+  GimpAnchor        *cur_anchor;     /*  The current Anchor                */
+  GimpStroke        *cur_stroke;     /*  The current Stroke                */
+  gdouble            cur_position;   /*  The current Position on a segment */
+  GimpVectors       *vectors;        /*  The current Vector data           */
+  GList             *active_anchors; /*  The currently active anchors      */
 };
 
 struct _GimpVectorToolClass
