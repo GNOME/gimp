@@ -1,3 +1,11 @@
+Wed Jul 28 19:41:08 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/mkgen.pl
+	* plug-ins/common/Makefile.am: added two new plug-ins coded
+	by Wolfgang Hofer <hof@hotbot.com>
+
 1999-07-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/gdisplay_ops.c: tweaked one more dialog box: "Changes were

@@ -33,6 +33,7 @@ libexec_PROGRAMS = \
 	convmatrix \
 	csource \
 	cubism \
+	curve_bend \
 	decompose \
 	deinterlace \
 	depthmerge \
@@ -98,6 +99,7 @@ libexec_PROGRAMS = \
 	ripple \
 	rotate \
 	rotators \
+	sample_colorize \
 	scatter_hsv \
 	screenshot \
 	semiflatten \
@@ -304,6 +306,14 @@ cubism_SOURCES = \
 	cubism.c
 
 cubism_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+curve_bend_SOURCES = \
+	curve_bend.c
+
+curve_bend_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -837,6 +847,15 @@ rotators_SOURCES = \
 rotators_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
+	$(INTLLIBS)
+
+sample_colorize_SOURCES = \
+	sample_colorize.c
+
+sample_colorize_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 scatter_hsv_SOURCES = \

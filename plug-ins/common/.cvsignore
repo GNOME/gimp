@@ -23,6 +23,7 @@ compose
 convmatrix
 csource
 cubism
+curve_bend
 decompose
 deinterlace
 depthmerge
@@ -88,6 +89,7 @@ randomize
 ripple
 rotate
 rotators
+sample_colorize
 scatter_hsv
 screenshot
 semiflatten
