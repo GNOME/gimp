@@ -270,11 +270,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   else
     {
       Blob    *blob;
-      gdouble  lasttime, thistime;
       gdouble  dist;
       gdouble  velocity;
-
-      lasttime = ink->last_time;
+      guint32  lasttime = ink->last_time;
+      guint32  thistime;
 
       time_smoother_add (ink, time);
       thistime = ink->last_time = time_smoother_result (ink);

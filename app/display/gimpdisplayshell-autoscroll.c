@@ -110,47 +110,49 @@ static gboolean
 gimp_display_shell_autoscroll_timeout (gpointer data)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpDisplay      *gdisp = shell->gdisp;
   ScrollInfo       *info  = shell->scroll_info;
   GimpCoords        device_coords;
   GimpCoords        image_coords;
-  gint              off_x = 0;
-  gint              off_y = 0;
+  gint              dx = 0;
+  gint              dy = 0;
 
-  info->time += AUTOSCROLL_DT;
-
-  gimp_display_shell_get_device_coords (shell,
-                                        info->device, &device_coords);
+  gimp_display_shell_get_device_coords (shell, info->device, &device_coords);
 
   if (device_coords.x < 0)
-    off_x = device_coords.x;
+    dx = device_coords.x;
   else if (device_coords.x > shell->disp_width)
-    off_x = device_coords.x - shell->disp_width;
+    dx = device_coords.x - shell->disp_width;
 
   if (device_coords.y < 0)
-    off_y = device_coords.y;
+    dy = device_coords.y;
   else if (device_coords.y > shell->disp_height)
-    off_y = device_coords.y - shell->disp_height;
+    dy = device_coords.y - shell->disp_height;
 
-  if (off_x == 0 && off_y == 0)
+  if (dx || dy)
+    {
+      GimpDisplay *gdisp = shell->gdisp;
+
+      info->time += AUTOSCROLL_DT;
+
+      gimp_display_shell_scroll (shell,
+                                 AUTOSCROLL_DX * (gdouble) dx,
+                                 AUTOSCROLL_DX * (gdouble) dy);
+
+      gimp_display_shell_untransform_coords (shell,
+                                             &device_coords, &image_coords);
+
+      tool_manager_motion_active (gdisp->gimage->gimp,
+                                  &image_coords,
+                                  info->time, info->state,
+                                  gdisp);
+
+      return TRUE;
+    }
+  else
     {
       g_free (info);
       shell->scroll_info = NULL;
 
       return FALSE;
     }
-
-  gimp_display_shell_scroll (shell,
-                             AUTOSCROLL_DX * (gdouble) off_x,
-                             AUTOSCROLL_DX * (gdouble) off_y);
-
-  gimp_display_shell_untransform_coords (shell,
-                                         &device_coords, &image_coords);
-
-  tool_manager_motion_active (gdisp->gimage->gimp,
-                              &image_coords,
-                              info->time, info->state,
-                              gdisp);
-
-  return TRUE;
 }

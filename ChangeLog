@@ -1,3 +1,11 @@
+2005-01-03  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpink.[ch]: handle event time as guint32. That's the
+	type we deal with here and it avoids a crash that occured when
+	autoscrolling with the Ink tool.
+
+	* app/display/gimpdisplayshell-autoscroll.c: cosmetics.
+
 2005-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/Makefile.am
