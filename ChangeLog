@@ -1,5 +1,11 @@
 2005-04-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_init): switch
+	from a table to a vbox containing hboxes, so the widget's width is
+	not determined by the longest label *plus* the longest value.
+
+2005-04-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.[ch]: added new signals "sample-point-added"
 	and "sample-point-removed" and public functions to emit them.
 

@@ -82,7 +82,7 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
 static void
 gimp_color_frame_init (GimpColorFrame *frame)
 {
-  GtkWidget *table;
+  GtkWidget *vbox;
   gint       i;
 
   frame->sample_valid = FALSE;
@@ -91,33 +91,36 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
   frame->menu = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_FRAME_MODE);
-  g_signal_connect (frame->menu, "changed",
-                    G_CALLBACK (gimp_color_frame_menu_callback),
-                    frame);
   gtk_frame_set_label_widget (GTK_FRAME (frame), frame->menu);
   gtk_widget_show (frame->menu);
 
-  table = gtk_table_new (GIMP_COLOR_FRAME_ROWS, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  g_signal_connect (frame->menu, "changed",
+                    G_CALLBACK (gimp_color_frame_menu_callback),
+                    frame);
+
+  vbox = gtk_vbox_new (TRUE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
+      GtkWidget *hbox;
+
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       frame->name_labels[i] = gtk_label_new (" ");
       gtk_misc_set_alignment (GTK_MISC (frame->name_labels[i]), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), frame->name_labels[i],
-                        0, 1, i, i + 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), frame->name_labels[i],
+                          FALSE, FALSE, 0);
       gtk_widget_show (frame->name_labels[i]);
 
       frame->value_labels[i] = gtk_label_new (" ");
       gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
       gtk_misc_set_alignment (GTK_MISC (frame->value_labels[i]), 1.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), frame->value_labels[i],
-                        1, 2, i, i + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+      gtk_box_pack_end (GTK_BOX (hbox), frame->value_labels[i],
+                        FALSE, FALSE, 0);
       gtk_widget_show (frame->value_labels[i]);
     }
 }
