@@ -1,3 +1,11 @@
+2003-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_select_item): call
+	gtk_tree_selection_select_iter() in addition to
+	gtk_tree_view_set_cursor() so we get the focus *and* the selection
+	right in all cases.
+
 2003-03-28  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/Makefile.am

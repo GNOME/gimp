@@ -546,6 +546,7 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
         gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
 
       gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
+      gtk_tree_selection_select_iter (tree_view->selection, iter);
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
@@ -677,7 +678,8 @@ gimp_container_tree_view_find_click_cell (GList             *cells,
           column_area->x + start_pos + renderer->xpad + width - 1 >= tree_x)
         {
 #if 0
-          g_print ("click on cell at %d (%d width)\n", start_pos, width);
+          g_print ("click on cell at %d (%d width) (%d column->x) (%d tree_x)\n",
+                   start_pos, width, column_area->x, tree_x);
 #endif
 
           return renderer;
