@@ -9,6 +9,7 @@ app/actions/buffers-actions.c
 app/actions/channels-actions.c
 app/actions/channels-commands.c
 app/actions/colormap-editor-actions.c
+app/actions/data-commands.c
 app/actions/debug-actions.c
 app/actions/dialogs-actions.c
 app/actions/dockable-actions.c
@@ -266,7 +267,6 @@ app/vectors/gimpvectors-import.c
 app/widgets/gimpactiongroup.c
 app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
-app/widgets/gimpbufferview.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
@@ -275,7 +275,6 @@ app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpdataeditor.c
-app/widgets/gimpdatafactoryview.c
 app/widgets/gimpdevicestatus.c
 app/widgets/gimpdnd.c
 app/widgets/gimpdock.c
@@ -284,13 +283,11 @@ app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
 app/widgets/gimpfiledialog.c
-app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c
 app/widgets/gimphistogrameditor.c
 app/widgets/gimpimagedock.c
-app/widgets/gimpimageview.c
 app/widgets/gimpitemfactory.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
@@ -299,14 +296,12 @@ app/widgets/gimppropwidgets.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c
-app/widgets/gimptemplateview.c
 app/widgets/gimptexteditor.c
 app/widgets/gimpthumbbox.c
 app/widgets/gimptoolbox-color-area.c
 app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooloptionseditor.c
-app/widgets/gimptoolview.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
 app/widgets/gimpwidgets-constructors.c
