@@ -284,10 +284,10 @@ glasstile_dialog (GimpDrawable *drawable)
                                    TRUE, 0, 0,
                                    NULL, NULL);
 
-  g_signal_connect (G_OBJECT (gv->xadj), "value_changed",
+  g_signal_connect (gv->xadj, "value_changed",
                     G_CALLBACK (glasstile_size_changed),
                     gv);
-  g_signal_connect_swapped (G_OBJECT (gv->xadj), "value_changed",
+  g_signal_connect_swapped (gv->xadj, "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -298,10 +298,10 @@ glasstile_dialog (GimpDrawable *drawable)
                                    TRUE, 0, 0,
                                    NULL, NULL);
 
-  g_signal_connect (G_OBJECT (gv->yadj), "value_changed",
+  g_signal_connect (gv->yadj, "value_changed",
                     G_CALLBACK (glasstile_size_changed),
                     gv);
-  g_signal_connect_swapped (G_OBJECT (gv->yadj), "value_changed",
+  g_signal_connect_swapped (gv->yadj, "value_changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -309,7 +309,7 @@ glasstile_dialog (GimpDrawable *drawable)
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton),
                                 gtvals.constrain);
   gtk_table_attach_defaults (GTK_TABLE(table), chainbutton, 3, 4, 0, 2);
-  g_signal_connect (G_OBJECT (chainbutton), "toggled",
+  g_signal_connect (chainbutton, "toggled",
                     G_CALLBACK (glasstile_chain_toggled),
                     &gtvals.constrain);
   gtk_widget_show (chainbutton);

@@ -1,5 +1,9 @@
 2004-11-16  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/glasstile.c: Remove unnecessary G_OBJECT() casts.
+
+2004-11-16  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: 
 	* plug-ins/pygimp/Makefile.am: Compile pygimp with
 	-fno-strict-aliasing if the compiler supports it.
