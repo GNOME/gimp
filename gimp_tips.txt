@@ -89,7 +89,15 @@ guides by dragging them off the image with the Move tool.
 
 GIMP supports gzip compression on the fly. Just add .gz (or .bz2,
 if you habe bzip2 installed) to the filename and your image will be 
-saved compressed. Of course loading compressed images works too.  
+saved compressed. Of course loading compressed images works too.
+
+Pressing and holding the Shift key before making a selection allows
+you to add to the current selection instead of replacing it.  Using
+Ctrl before making a selection substracts from the current one.
+
+You can press or release the Shift and Ctrl keys while you are
+making a selection in order to constrain it to a perfect square 
+or circle, or to have it centered on its starting point.
 
 # Tips for advanced users start here
 #
@@ -117,21 +125,26 @@ will constrain the rotation to 15 degree angles.
 
 You can adjust and re-place a selection by using Alt-drag.
 
-Selections can be constrained using the Control and Shift keys.
-
 If your fonts turn out blocky, that's because they're not scalable
 fonts.  Most X servers support scalable Type 1 Postscript fonts.
 Download and install them.
 
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
 When installing a new version, be sure to 
 delete your ~/.gimp directory first.
 
-To create a perfect circle, hold shift while doing an ellipse select. To 
+Using Edit->Stroke allows you to draw simple squares or circles by
+painting the edge of your current selection with the active brush.
+More complex shapes can be drawn with Filters->Render->Gfig.
+
+To create a perfect circle, hold Shift while doing an ellipse select. To 
 place a circle precisely, drag horizontal and vertical guides tangent to 
 the circle you want to select, place your cursor at the interesection
 of the guides, and the resulting selection will just touch the guides.
 
-
-
-
+# (end of tips)
 

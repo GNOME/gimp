@@ -476,17 +476,16 @@ app_init ()
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
-  RESET_BAR();
+  app_init_update_status ("Looking for data files", "Brushes", 0.00);
   brushes_init (no_data);         /*  initialize the list of gimp brushes  */
-  RESET_BAR();
+  app_init_update_status (NULL, "Patterns", 0.25);
   patterns_init (no_data);        /*  initialize the list of gimp patterns  */
-  RESET_BAR();
+  app_init_update_status (NULL, "Palettes", 0.50);
   palettes_init (no_data);        /*  initialize the list of gimp palettes  */
-  RESET_BAR();
+  app_init_update_status (NULL, "Gradients", 0.75);
   gradients_init (no_data);       /*  initialize the list of gimp gradients  */
-  
+  app_init_update_status (NULL, NULL, 1.00);
 
-  RESET_BAR();
   plug_in_init ();         /*  initialize the plug in structures  */
   RESET_BAR();
   file_ops_post_init ();   /*  post-initialize the file types  */

@@ -51,6 +51,10 @@
 #include "curl7.xpm"
 #include <libgimp/gimp.h>
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define PLUG_IN_NAME    "plug_in_pagecurl"
 #define PLUG_IN_VERSION "Mar 1998, 0.8"
 

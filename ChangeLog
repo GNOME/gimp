@@ -1,3 +1,17 @@
+Tue Apr 14 20:36:26 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* gimp_tips.txt: applied gimp-quinet-980414-0; adds new tips
+	* plug-ins/pagecurl/pagecurl.c: applied gimp-quinet-980414-1;
+	defines M_PI
+	* app/app_procs.c: applied gimp-quinet-980414-2; adds more 
+	information to the startup screen
+	* app/gradient.c: applied gradient-041398-seth; fixes the 
+	behavior that the gradient editor would become insensitive 
+	forever if the color selection dialog were close
+	* app/regex.c
+	* plugins/script-fu/regex.c: partially applied
+	gimp-jbuhler-980412-0; adds braces to nested if/else
+
 Tue Apr 14 10:11:04 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/global_edit.c: Named cut and copy are now performed after 
