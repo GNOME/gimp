@@ -55,45 +55,43 @@
 
 static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;
+static ProcRecord image_duplicate_proc;
 static ProcRecord image_delete_proc;
 static ProcRecord image_base_type_proc;
+static ProcRecord image_width_proc;
+static ProcRecord image_height_proc;
+static ProcRecord image_free_shadow_proc;
 static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
 static ProcRecord image_crop_proc;
 static ProcRecord image_flip_proc;
-static ProcRecord image_free_shadow_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
 static ProcRecord image_active_drawable_proc;
 static ProcRecord image_unset_active_channel_proc;
+static ProcRecord image_get_floating_sel_proc;
+static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_pick_correlate_layer_proc;
+static ProcRecord image_add_layer_proc;
+static ProcRecord image_remove_layer_proc;
 static ProcRecord image_raise_layer_proc;
 static ProcRecord image_lower_layer_proc;
 static ProcRecord image_raise_layer_to_top_proc;
 static ProcRecord image_lower_layer_to_bottom_proc;
-static ProcRecord image_merge_visible_layers_proc;
-static ProcRecord image_merge_down_proc;
-static ProcRecord image_flatten_proc;
-static ProcRecord image_add_layer_proc;
-static ProcRecord image_remove_layer_proc;
-static ProcRecord image_add_layer_mask_proc;
-static ProcRecord image_remove_layer_mask_proc;
-static ProcRecord image_raise_channel_proc;
-static ProcRecord image_lower_channel_proc;
 static ProcRecord image_add_channel_proc;
 static ProcRecord image_remove_channel_proc;
+static ProcRecord image_raise_channel_proc;
+static ProcRecord image_lower_channel_proc;
+static ProcRecord image_flatten_proc;
+static ProcRecord image_merge_visible_layers_proc;
+static ProcRecord image_merge_down_proc;
+static ProcRecord image_add_layer_mask_proc;
+static ProcRecord image_remove_layer_mask_proc;
 static ProcRecord image_get_cmap_proc;
 static ProcRecord image_set_cmap_proc;
 static ProcRecord image_clean_all_proc;
 static ProcRecord image_is_dirty_proc;
-static ProcRecord image_get_floating_sel_proc;
-static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_thumbnail_proc;
-static ProcRecord image_set_tattoo_state_proc;
-static ProcRecord image_get_tattoo_state_proc;
-static ProcRecord image_duplicate_proc;
-static ProcRecord image_width_proc;
-static ProcRecord image_height_proc;
 static ProcRecord image_get_active_layer_proc;
 static ProcRecord image_set_active_layer_proc;
 static ProcRecord image_get_active_channel_proc;
@@ -110,6 +108,8 @@ static ProcRecord image_get_resolution_proc;
 static ProcRecord image_set_resolution_proc;
 static ProcRecord image_get_unit_proc;
 static ProcRecord image_set_unit_proc;
+static ProcRecord image_get_tattoo_state_proc;
+static ProcRecord image_set_tattoo_state_proc;
 static ProcRecord image_get_layer_by_tattoo_proc;
 static ProcRecord image_get_channel_by_tattoo_proc;
 
@@ -118,45 +118,43 @@ register_image_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &image_list_proc);
   procedural_db_register (gimp, &image_new_proc);
+  procedural_db_register (gimp, &image_duplicate_proc);
   procedural_db_register (gimp, &image_delete_proc);
   procedural_db_register (gimp, &image_base_type_proc);
+  procedural_db_register (gimp, &image_width_proc);
+  procedural_db_register (gimp, &image_height_proc);
+  procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_resize_proc);
   procedural_db_register (gimp, &image_scale_proc);
   procedural_db_register (gimp, &image_crop_proc);
   procedural_db_register (gimp, &image_flip_proc);
-  procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
   procedural_db_register (gimp, &image_active_drawable_proc);
   procedural_db_register (gimp, &image_unset_active_channel_proc);
+  procedural_db_register (gimp, &image_get_floating_sel_proc);
+  procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
   procedural_db_register (gimp, &image_pick_correlate_layer_proc);
+  procedural_db_register (gimp, &image_add_layer_proc);
+  procedural_db_register (gimp, &image_remove_layer_proc);
   procedural_db_register (gimp, &image_raise_layer_proc);
   procedural_db_register (gimp, &image_lower_layer_proc);
   procedural_db_register (gimp, &image_raise_layer_to_top_proc);
   procedural_db_register (gimp, &image_lower_layer_to_bottom_proc);
-  procedural_db_register (gimp, &image_merge_visible_layers_proc);
-  procedural_db_register (gimp, &image_merge_down_proc);
-  procedural_db_register (gimp, &image_flatten_proc);
-  procedural_db_register (gimp, &image_add_layer_proc);
-  procedural_db_register (gimp, &image_remove_layer_proc);
-  procedural_db_register (gimp, &image_add_layer_mask_proc);
-  procedural_db_register (gimp, &image_remove_layer_mask_proc);
-  procedural_db_register (gimp, &image_raise_channel_proc);
-  procedural_db_register (gimp, &image_lower_channel_proc);
   procedural_db_register (gimp, &image_add_channel_proc);
   procedural_db_register (gimp, &image_remove_channel_proc);
+  procedural_db_register (gimp, &image_raise_channel_proc);
+  procedural_db_register (gimp, &image_lower_channel_proc);
+  procedural_db_register (gimp, &image_flatten_proc);
+  procedural_db_register (gimp, &image_merge_visible_layers_proc);
+  procedural_db_register (gimp, &image_merge_down_proc);
+  procedural_db_register (gimp, &image_add_layer_mask_proc);
+  procedural_db_register (gimp, &image_remove_layer_mask_proc);
   procedural_db_register (gimp, &image_get_cmap_proc);
   procedural_db_register (gimp, &image_set_cmap_proc);
   procedural_db_register (gimp, &image_clean_all_proc);
   procedural_db_register (gimp, &image_is_dirty_proc);
-  procedural_db_register (gimp, &image_get_floating_sel_proc);
-  procedural_db_register (gimp, &image_floating_sel_attached_to_proc);
   procedural_db_register (gimp, &image_thumbnail_proc);
-  procedural_db_register (gimp, &image_set_tattoo_state_proc);
-  procedural_db_register (gimp, &image_get_tattoo_state_proc);
-  procedural_db_register (gimp, &image_duplicate_proc);
-  procedural_db_register (gimp, &image_width_proc);
-  procedural_db_register (gimp, &image_height_proc);
   procedural_db_register (gimp, &image_get_active_layer_proc);
   procedural_db_register (gimp, &image_set_active_layer_proc);
   procedural_db_register (gimp, &image_get_active_channel_proc);
@@ -173,6 +171,8 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_set_resolution_proc);
   procedural_db_register (gimp, &image_get_unit_proc);
   procedural_db_register (gimp, &image_set_unit_proc);
+  procedural_db_register (gimp, &image_get_tattoo_state_proc);
+  procedural_db_register (gimp, &image_set_tattoo_state_proc);
   procedural_db_register (gimp, &image_get_layer_by_tattoo_proc);
   procedural_db_register (gimp, &image_get_channel_by_tattoo_proc);
 }
@@ -339,6 +339,64 @@ static ProcRecord image_new_proc =
 };
 
 static Argument *
+image_duplicate_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpImage *new_image = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    success = (new_image = gimp_image_duplicate (gimage)) != NULL;
+
+  return_args = procedural_db_return_args (&image_duplicate_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_image_get_ID (new_image);
+
+  return return_args;
+}
+
+static ProcArg image_duplicate_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_duplicate_outargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "new_image",
+    "The new, duplicated image"
+  }
+};
+
+static ProcRecord image_duplicate_proc =
+{
+  "gimp_image_duplicate",
+  "Duplicate the specified image",
+  "This procedure duplicates the specified image, copying all layers, channels, and image information.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1997",
+  GIMP_INTERNAL,
+  1,
+  image_duplicate_inargs,
+  1,
+  image_duplicate_outargs,
+  { { image_duplicate_invoker } }
+};
+
+static Argument *
 image_delete_invoker (Gimp     *gimp,
                       Argument *args)
 {
@@ -441,6 +499,156 @@ static ProcRecord image_base_type_proc =
   1,
   image_base_type_outargs,
   { { image_base_type_invoker } }
+};
+
+static Argument *
+image_width_invoker (Gimp     *gimp,
+                     Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&image_width_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimage->width;
+
+  return return_args;
+}
+
+static ProcArg image_width_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_width_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "The image's width"
+  }
+};
+
+static ProcRecord image_width_proc =
+{
+  "gimp_image_width",
+  "Return the width of the image",
+  "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" width.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_width_inargs,
+  1,
+  image_width_outargs,
+  { { image_width_invoker } }
+};
+
+static Argument *
+image_height_invoker (Gimp     *gimp,
+                      Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&image_height_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimage->height;
+
+  return return_args;
+}
+
+static ProcArg image_height_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_height_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "The image's height"
+  }
+};
+
+static ProcRecord image_height_proc =
+{
+  "gimp_image_height",
+  "Return the height of the image",
+  "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_height_inargs,
+  1,
+  image_height_outargs,
+  { { image_height_invoker } }
+};
+
+static Argument *
+image_free_shadow_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    gimp_image_free_shadow (gimage);
+
+  return procedural_db_return_args (&image_free_shadow_proc, success);
+}
+
+static ProcArg image_free_shadow_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcRecord image_free_shadow_proc =
+{
+  "gimp_image_free_shadow",
+  "Free the specified image's shadow data (if it exists).",
+  "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically on a call to 'gimp_image_delete'.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_free_shadow_inargs,
+  0,
+  NULL,
+  { { image_free_shadow_invoker } }
 };
 
 static Argument *
@@ -735,48 +943,6 @@ static ProcRecord image_flip_proc =
 };
 
 static Argument *
-image_free_shadow_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    gimp_image_free_shadow (gimage);
-
-  return procedural_db_return_args (&image_free_shadow_proc, success);
-}
-
-static ProcArg image_free_shadow_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcRecord image_free_shadow_proc =
-{
-  "gimp_image_free_shadow",
-  "Free the specified image's shadow data (if it exists).",
-  "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically on a call to 'gimp_image_delete'.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_free_shadow_inargs,
-  0,
-  NULL,
-  { { image_free_shadow_invoker } }
-};
-
-static Argument *
 image_get_layers_invoker (Gimp     *gimp,
                           Argument *args)
 {
@@ -1035,6 +1201,130 @@ static ProcRecord image_unset_active_channel_proc =
 };
 
 static Argument *
+image_get_floating_sel_invoker (Gimp     *gimp,
+                                Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpLayer *floating_sel = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    floating_sel = gimp_image_floating_sel (gimage);
+
+  return_args = procedural_db_return_args (&image_get_floating_sel_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
+
+  return return_args;
+}
+
+static ProcArg image_get_floating_sel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_floating_sel_outargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "floating_sel",
+    "The image's floating selection"
+  }
+};
+
+static ProcRecord image_get_floating_sel_proc =
+{
+  "gimp_image_get_floating_sel",
+  "Return the floating selection of the image.",
+  "This procedure returns the image's floating selection, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_get_floating_sel_inargs,
+  1,
+  image_get_floating_sel_outargs,
+  { { image_get_floating_sel_invoker } }
+};
+
+static Argument *
+image_floating_sel_attached_to_invoker (Gimp     *gimp,
+                                        Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpDrawable *drawable = NULL;
+  GimpLayer *floating_sel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    {
+      floating_sel = gimp_image_floating_sel (gimage);
+    
+      if (floating_sel)
+	drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
+      else
+	drawable = NULL;
+    }
+
+  return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
+
+  return return_args;
+}
+
+static ProcArg image_floating_sel_attached_to_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_floating_sel_attached_to_outargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable the floating selection is attached to"
+  }
+};
+
+static ProcRecord image_floating_sel_attached_to_proc =
+{
+  "gimp_image_floating_sel_attached_to",
+  "Return the drawable the floating selection is attached to.",
+  "This procedure returns the drawable the image's floating selection is attached to, if it exists. If it doesn't exist, -1 is returned as the drawable ID.",
+  "Wolfgang Hofer",
+  "Wolfgang Hofer",
+  "1998",
+  GIMP_INTERNAL,
+  1,
+  image_floating_sel_attached_to_inargs,
+  1,
+  image_floating_sel_attached_to_outargs,
+  { { image_floating_sel_attached_to_invoker } }
+};
+
+static Argument *
 image_pick_correlate_layer_invoker (Gimp     *gimp,
                                     Argument *args)
 {
@@ -1106,6 +1396,128 @@ static ProcRecord image_pick_correlate_layer_proc =
   1,
   image_pick_correlate_layer_outargs,
   { { image_pick_correlate_layer_invoker } }
+};
+
+static Argument *
+image_add_layer_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpLayer *layer;
+  gint32 position;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  position = args[2].value.pdb_int;
+
+  if (success)
+    {
+      if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
+	  gimp_image_base_type (gimage))
+	{
+	  success = FALSE;
+	}
+      else
+	{
+	  success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+	}
+    }
+
+  return procedural_db_return_args (&image_add_layer_proc, success);
+}
+
+static ProcArg image_add_layer_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    GIMP_PDB_INT32,
+    "position",
+    "The layer position"
+  }
+};
+
+static ProcRecord image_add_layer_proc =
+{
+  "gimp_image_add_layer",
+  "Add the specified layer to the image.",
+  "This procedure adds the specified layer to the gimage at the given position. If the position is specified as -1, then the layer is inserted at the top of the layer stack. If the layer to be added has no alpha channel, it must be added at position 0. The layer type must be compatible with the image base type.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  3,
+  image_add_layer_inargs,
+  0,
+  NULL,
+  { { image_add_layer_invoker } }
+};
+
+static Argument *
+image_remove_layer_invoker (Gimp     *gimp,
+                            Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpLayer *layer;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  if (success)
+    gimp_image_remove_layer (gimage, layer);
+
+  return procedural_db_return_args (&image_remove_layer_proc, success);
+}
+
+static ProcArg image_remove_layer_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer"
+  }
+};
+
+static ProcRecord image_remove_layer_proc =
+{
+  "gimp_image_remove_layer",
+  "Remove the specified layer from the image.",
+  "This procedure removes the specified layer from the image. If the layer doesn't exist, an error is returned. If there are no layers left in the image, this call will fail. If this layer is the last layer remaining, the image will become empty and have no active layer.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  image_remove_layer_inargs,
+  0,
+  NULL,
+  { { image_remove_layer_invoker } }
 };
 
 static Argument *
@@ -1317,6 +1729,280 @@ static ProcRecord image_lower_layer_to_bottom_proc =
 };
 
 static Argument *
+image_add_channel_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+  gint32 position;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_CHANNEL (channel))
+    success = FALSE;
+
+  position = args[2].value.pdb_int;
+
+  if (success)
+    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
+
+  return procedural_db_return_args (&image_add_channel_proc, success);
+}
+
+static ProcArg image_add_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel"
+  },
+  {
+    GIMP_PDB_INT32,
+    "position",
+    "The channel position"
+  }
+};
+
+static ProcRecord image_add_channel_proc =
+{
+  "gimp_image_add_channel",
+  "Add the specified channel to the image.",
+  "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  3,
+  image_add_channel_inargs,
+  0,
+  NULL,
+  { { image_add_channel_invoker } }
+};
+
+static Argument *
+image_remove_channel_invoker (Gimp     *gimp,
+                              Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_CHANNEL (channel))
+    success = FALSE;
+
+  if (success)
+    gimp_image_remove_channel (gimage, channel);
+
+  return procedural_db_return_args (&image_remove_channel_proc, success);
+}
+
+static ProcArg image_remove_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel"
+  }
+};
+
+static ProcRecord image_remove_channel_proc =
+{
+  "gimp_image_remove_channel",
+  "Remove the specified channel from the image.",
+  "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  image_remove_channel_inargs,
+  0,
+  NULL,
+  { { image_remove_channel_invoker } }
+};
+
+static Argument *
+image_raise_channel_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpChannel *channel;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_CHANNEL (channel))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_raise_channel (gimage, channel);
+
+  return procedural_db_return_args (&image_raise_channel_proc, success);
+}
+
+static ProcArg image_raise_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_CHANNEL,
+    "channel",
+    "The channel to raise"
+  }
+};
+
+static ProcRecord image_raise_channel_proc =
+{
+  "gimp_image_raise_channel",
+  "Raise the specified channel in the image's channel stack",
+  "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  image_raise_channel_inargs,
+  0,
+  NULL,
+  { { image_raise_channel_invoker } }
+};
+
+static Argument *
+image_lower_channel_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  GimpLayer *layer;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  if (success)
+    success = gimp_image_lower_layer (gimage, layer);
+
+  return procedural_db_return_args (&image_lower_channel_proc, success);
+}
+
+static ProcArg image_lower_channel_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer to lower"
+  }
+};
+
+static ProcRecord image_lower_channel_proc =
+{
+  "gimp_image_lower_channel",
+  "Lower the specified layer in the image's layer stack",
+  "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it, or the layer has no alpha channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  image_lower_channel_inargs,
+  0,
+  NULL,
+  { { image_lower_channel_invoker } }
+};
+
+static Argument *
+image_flatten_invoker (Gimp     *gimp,
+                       Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  GimpLayer *layer = NULL;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    success = (layer = gimp_image_flatten (gimage)) != NULL;
+
+  return_args = procedural_db_return_args (&image_flatten_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
+
+  return return_args;
+}
+
+static ProcArg image_flatten_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_flatten_outargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The resulting layer"
+  }
+};
+
+static ProcRecord image_flatten_proc =
+{
+  "gimp_image_flatten",
+  "Flatten all visible layers into a single layer. Discard all invisible layers.",
+  "This procedure combines the visible layers in a manner analogous to merging with the CLIP_TO_IMAGE merge type. Non-visible layers are discarded, and the resulting image is stripped of its alpha channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_flatten_inargs,
+  1,
+  image_flatten_outargs,
+  { { image_flatten_invoker } }
+};
+
+static Argument *
 image_merge_visible_layers_invoker (Gimp     *gimp,
                                     Argument *args)
 {
@@ -1469,186 +2155,6 @@ static ProcRecord image_merge_down_proc =
 };
 
 static Argument *
-image_flatten_invoker (Gimp     *gimp,
-                       Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  GimpLayer *layer = NULL;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    success = (layer = gimp_image_flatten (gimage)) != NULL;
-
-  return_args = procedural_db_return_args (&image_flatten_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer));
-
-  return return_args;
-}
-
-static ProcArg image_flatten_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_flatten_outargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The resulting layer"
-  }
-};
-
-static ProcRecord image_flatten_proc =
-{
-  "gimp_image_flatten",
-  "Flatten all visible layers into a single layer. Discard all invisible layers.",
-  "This procedure combines the visible layers in a manner analogous to merging with the CLIP_TO_IMAGE merge type. Non-visible layers are discarded, and the resulting image is stripped of its alpha channel.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_flatten_inargs,
-  1,
-  image_flatten_outargs,
-  { { image_flatten_invoker } }
-};
-
-static Argument *
-image_add_layer_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpLayer *layer;
-  gint32 position;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
-
-  if (success)
-    {
-      if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
-	  gimp_image_base_type (gimage))
-	{
-	  success = FALSE;
-	}
-      else
-	{
-	  success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
-	}
-    }
-
-  return procedural_db_return_args (&image_add_layer_proc, success);
-}
-
-static ProcArg image_add_layer_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  },
-  {
-    GIMP_PDB_INT32,
-    "position",
-    "The layer position"
-  }
-};
-
-static ProcRecord image_add_layer_proc =
-{
-  "gimp_image_add_layer",
-  "Add the specified layer to the image.",
-  "This procedure adds the specified layer to the gimage at the given position. If the position is specified as -1, then the layer is inserted at the top of the layer stack. If the layer to be added has no alpha channel, it must be added at position 0. The layer type must be compatible with the image base type.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  3,
-  image_add_layer_inargs,
-  0,
-  NULL,
-  { { image_add_layer_invoker } }
-};
-
-static Argument *
-image_remove_layer_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpLayer *layer;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  if (success)
-    gimp_image_remove_layer (gimage, layer);
-
-  return procedural_db_return_args (&image_remove_layer_proc, success);
-}
-
-static ProcArg image_remove_layer_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  }
-};
-
-static ProcRecord image_remove_layer_proc =
-{
-  "gimp_image_remove_layer",
-  "Remove the specified layer from the image.",
-  "This procedure removes the specified layer from the image. If the layer doesn't exist, an error is returned. If there are no layers left in the image, this call will fail. If this layer is the last layer remaining, the image will become empty and have no active layer.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  image_remove_layer_inargs,
-  0,
-  NULL,
-  { { image_remove_layer_invoker } }
-};
-
-static Argument *
 image_add_layer_mask_invoker (Gimp     *gimp,
                               Argument *args)
 {
@@ -1775,222 +2281,6 @@ static ProcRecord image_remove_layer_mask_proc =
   0,
   NULL,
   { { image_remove_layer_mask_invoker } }
-};
-
-static Argument *
-image_raise_channel_invoker (Gimp     *gimp,
-                             Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  if (success)
-    success = gimp_image_raise_channel (gimage, channel);
-
-  return procedural_db_return_args (&image_raise_channel_proc, success);
-}
-
-static ProcArg image_raise_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel to raise"
-  }
-};
-
-static ProcRecord image_raise_channel_proc =
-{
-  "gimp_image_raise_channel",
-  "Raise the specified channel in the image's channel stack",
-  "This procedure raises the specified channel one step in the existing channel stack. It will not move the channel if there is no channel above it.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  image_raise_channel_inargs,
-  0,
-  NULL,
-  { { image_raise_channel_invoker } }
-};
-
-static Argument *
-image_lower_channel_invoker (Gimp     *gimp,
-                             Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpLayer *layer;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  if (success)
-    success = gimp_image_lower_layer (gimage, layer);
-
-  return procedural_db_return_args (&image_lower_channel_proc, success);
-}
-
-static ProcArg image_lower_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer to lower"
-  }
-};
-
-static ProcRecord image_lower_channel_proc =
-{
-  "gimp_image_lower_channel",
-  "Lower the specified layer in the image's layer stack",
-  "This procedure lowers the specified layer one step in the existing layer stack. It will not move the layer if there is no layer below it, or the layer has no alpha channel.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  image_lower_channel_inargs,
-  0,
-  NULL,
-  { { image_lower_channel_invoker } }
-};
-
-static Argument *
-image_add_channel_invoker (Gimp     *gimp,
-                           Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-  gint32 position;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  position = args[2].value.pdb_int;
-
-  if (success)
-    success = gimp_image_add_channel (gimage, channel, MAX (position, -1));
-
-  return procedural_db_return_args (&image_add_channel_proc, success);
-}
-
-static ProcArg image_add_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  },
-  {
-    GIMP_PDB_INT32,
-    "position",
-    "The channel position"
-  }
-};
-
-static ProcRecord image_add_channel_proc =
-{
-  "gimp_image_add_channel",
-  "Add the specified channel to the image.",
-  "This procedure adds the specified channel to the image. The position channel is not currently used, so the channel is always inserted at the top of the channel stack.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  3,
-  image_add_channel_inargs,
-  0,
-  NULL,
-  { { image_add_channel_invoker } }
-};
-
-static Argument *
-image_remove_channel_invoker (Gimp     *gimp,
-                              Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  GimpChannel *channel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
-    success = FALSE;
-
-  if (success)
-    gimp_image_remove_channel (gimage, channel);
-
-  return procedural_db_return_args (&image_remove_channel_proc, success);
-}
-
-static ProcArg image_remove_channel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_CHANNEL,
-    "channel",
-    "The channel"
-  }
-};
-
-static ProcRecord image_remove_channel_proc =
-{
-  "gimp_image_remove_channel",
-  "Remove the specified channel from the image.",
-  "This procedure removes the specified channel from the image. If the channel doesn't exist, an error is returned.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  image_remove_channel_inargs,
-  0,
-  NULL,
-  { { image_remove_channel_invoker } }
 };
 
 static Argument *
@@ -2224,130 +2514,6 @@ static ProcRecord image_is_dirty_proc =
 };
 
 static Argument *
-image_get_floating_sel_invoker (Gimp     *gimp,
-                                Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  GimpLayer *floating_sel = NULL;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    floating_sel = gimp_image_floating_sel (gimage);
-
-  return_args = procedural_db_return_args (&image_get_floating_sel_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = floating_sel ? gimp_item_get_ID (GIMP_ITEM (floating_sel)) : -1;
-
-  return return_args;
-}
-
-static ProcArg image_get_floating_sel_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_get_floating_sel_outargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "floating_sel",
-    "The image's floating selection"
-  }
-};
-
-static ProcRecord image_get_floating_sel_proc =
-{
-  "gimp_image_get_floating_sel",
-  "Return the floating selection of the image.",
-  "This procedure returns the image's floating selection, if it exists. If it doesn't exist, -1 is returned as the layer ID.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_get_floating_sel_inargs,
-  1,
-  image_get_floating_sel_outargs,
-  { { image_get_floating_sel_invoker } }
-};
-
-static Argument *
-image_floating_sel_attached_to_invoker (Gimp     *gimp,
-                                        Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  GimpDrawable *drawable = NULL;
-  GimpLayer *floating_sel;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    {
-      floating_sel = gimp_image_floating_sel (gimage);
-    
-      if (floating_sel)
-	drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
-      else
-	drawable = NULL;
-    }
-
-  return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = drawable ? gimp_item_get_ID (GIMP_ITEM (drawable)) : -1;
-
-  return return_args;
-}
-
-static ProcArg image_floating_sel_attached_to_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_floating_sel_attached_to_outargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable the floating selection is attached to"
-  }
-};
-
-static ProcRecord image_floating_sel_attached_to_proc =
-{
-  "gimp_image_floating_sel_attached_to",
-  "Return the drawable the floating selection is attached to.",
-  "This procedure returns the drawable the image's floating selection is attached to, if it exists. If it doesn't exist, -1 is returned as the drawable ID.",
-  "Wolfgang Hofer",
-  "Wolfgang Hofer",
-  "1998",
-  GIMP_INTERNAL,
-  1,
-  image_floating_sel_attached_to_inargs,
-  1,
-  image_floating_sel_attached_to_outargs,
-  { { image_floating_sel_attached_to_invoker } }
-};
-
-static Argument *
 image_thumbnail_invoker (Gimp     *gimp,
                          Argument *args)
 {
@@ -2397,7 +2563,7 @@ image_thumbnail_invoker (Gimp     *gimp,
 	{
 	  num_bytes      = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	  width          = buf->width;        
+	  width          = buf->width;
 	  height         = buf->height;
 	  bpp            = buf->bytes;
     
@@ -2481,284 +2647,6 @@ static ProcRecord image_thumbnail_proc =
   5,
   image_thumbnail_outargs,
   { { image_thumbnail_invoker } }
-};
-
-static Argument *
-image_set_tattoo_state_invoker (Gimp     *gimp,
-                                Argument *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  gint32 tattoo;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  tattoo = args[1].value.pdb_int;
-
-  if (success)
-    {
-      success = gimp_image_set_tattoo_state (gimage, tattoo);
-    }
-
-  return procedural_db_return_args (&image_set_tattoo_state_proc, success);
-}
-
-static ProcArg image_set_tattoo_state_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The new tattoo state of the image"
-  }
-};
-
-static ProcRecord image_set_tattoo_state_proc =
-{
-  "gimp_image_set_tattoo_state",
-  "Set the tattoo state associated with the image.",
-  "This procedure sets the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results. A full check of uniqueness of states in layers, channels and paths will be performed by this procedure and a execution failure will be returned if this fails. A failure will also be returned if the new tattoo state value is less than the maximum tattoo value from all of the tattoos from the paths,layers and channels. After the image data has been loaded and all the tattoos have been set then this is the last procedure that should be called. If effectively does a status check on the tattoo values that have been set to make sure that all is OK.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "2000",
-  GIMP_INTERNAL,
-  2,
-  image_set_tattoo_state_inargs,
-  0,
-  NULL,
-  { { image_set_tattoo_state_invoker } }
-};
-
-static Argument *
-image_get_tattoo_state_invoker (Gimp     *gimp,
-                                Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  gint32 tattoo = 0;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    {
-      tattoo = gimp_image_get_tattoo_state (gimage);
-    }
-
-  return_args = procedural_db_return_args (&image_get_tattoo_state_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = tattoo;
-
-  return return_args;
-}
-
-static ProcArg image_get_tattoo_state_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_get_tattoo_state_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "tattoo",
-    "The tattoo state associated with the image"
-  }
-};
-
-static ProcRecord image_get_tattoo_state_proc =
-{
-  "gimp_image_get_tattoo_state",
-  "Returns the tattoo state associated with the image.",
-  "This procedure returns the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results.",
-  "Andy Thomas",
-  "Andy Thomas",
-  "2000",
-  GIMP_INTERNAL,
-  1,
-  image_get_tattoo_state_inargs,
-  1,
-  image_get_tattoo_state_outargs,
-  { { image_get_tattoo_state_invoker } }
-};
-
-static Argument *
-image_duplicate_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  GimpImage *new_image = NULL;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    success = (new_image = gimp_image_duplicate (gimage)) != NULL;
-
-  return_args = procedural_db_return_args (&image_duplicate_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (new_image);
-
-  return return_args;
-}
-
-static ProcArg image_duplicate_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_duplicate_outargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "new_image",
-    "The new, duplicated image"
-  }
-};
-
-static ProcRecord image_duplicate_proc =
-{
-  "gimp_image_duplicate",
-  "Duplicate the specified image",
-  "This procedure duplicates the specified image, copying all layers, channels, and image information.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  GIMP_INTERNAL,
-  1,
-  image_duplicate_inargs,
-  1,
-  image_duplicate_outargs,
-  { { image_duplicate_invoker } }
-};
-
-static Argument *
-image_width_invoker (Gimp     *gimp,
-                     Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&image_width_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimage->width;
-
-  return return_args;
-}
-
-static ProcArg image_width_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_width_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "The image's width"
-  }
-};
-
-static ProcRecord image_width_proc =
-{
-  "gimp_image_width",
-  "Return the width of the image",
-  "This procedure returns the image's width. This value is independent of any of the layers in this image. This is the \"canvas\" width.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_width_inargs,
-  1,
-  image_width_outargs,
-  { { image_width_invoker } }
-};
-
-static Argument *
-image_height_invoker (Gimp     *gimp,
-                      Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  return_args = procedural_db_return_args (&image_height_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimage->height;
-
-  return return_args;
-}
-
-static ProcArg image_height_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_height_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "The image's height"
-  }
-};
-
-static ProcRecord image_height_proc =
-{
-  "gimp_image_height",
-  "Return the height of the image",
-  "This procedure returns the image's height. This value is independent of any of the layers in this image. This is the \"canvas\" height.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  image_height_inargs,
-  1,
-  image_height_outargs,
-  { { image_height_invoker } }
 };
 
 static Argument *
@@ -3585,19 +3473,18 @@ image_set_resolution_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (!FINITE (xresolution) || 
+      if (! FINITE (xresolution) ||
 	  xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-	  !FINITE (yresolution) || 
+	  ! FINITE (yresolution) ||
 	  yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
 	{
-	  g_message (_("Image resolution is out of bounds, " 
+	  g_message (_("Image resolution is out of bounds, "
 		       "using the default resolution instead."));
 	  success = FALSE;
 	}
       else
 	{
-	  gimage->xresolution = xresolution;
-	  gimage->yresolution = yresolution;
+	  gimp_image_set_resolution (gimage, xresolution, yresolution);
 	}
     }
 
@@ -3654,7 +3541,7 @@ image_get_unit_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_unit_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimage->unit;
+    return_args[1].value.pdb_int = gimp_image_get_unit (gimage);
 
   return return_args;
 }
@@ -3710,7 +3597,7 @@ image_set_unit_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimage->unit = unit;
+    gimp_image_set_unit (gimage, unit);
 
   return procedural_db_return_args (&image_set_unit_proc, success);
 }
@@ -3743,6 +3630,110 @@ static ProcRecord image_set_unit_proc =
   0,
   NULL,
   { { image_set_unit_invoker } }
+};
+
+static Argument *
+image_get_tattoo_state_invoker (Gimp     *gimp,
+                                Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&image_get_tattoo_state_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_image_get_tattoo_state (gimage);
+
+  return return_args;
+}
+
+static ProcArg image_get_tattoo_state_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_tattoo_state_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "tattoo_state",
+    "The tattoo_state"
+  }
+};
+
+static ProcRecord image_get_tattoo_state_proc =
+{
+  "gimp_image_get_tattoo_state",
+  "Returns the tattoo state associated with the image.",
+  "This procedure returns the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "2000",
+  GIMP_INTERNAL,
+  1,
+  image_get_tattoo_state_inargs,
+  1,
+  image_get_tattoo_state_outargs,
+  { { image_get_tattoo_state_invoker } }
+};
+
+static Argument *
+image_set_tattoo_state_invoker (Gimp     *gimp,
+                                Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 tattoo_state;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  tattoo_state = args[1].value.pdb_int;
+
+  if (success)
+    gimp_image_set_tattoo_state (gimage, tattoo_state);
+
+  return procedural_db_return_args (&image_set_tattoo_state_proc, success);
+}
+
+static ProcArg image_set_tattoo_state_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "tattoo_state",
+    "The new image tattoo_state"
+  }
+};
+
+static ProcRecord image_set_tattoo_state_proc =
+{
+  "gimp_image_set_tattoo_state",
+  "Set the tattoo state associated with the image.",
+  "This procedure sets the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results. A full check of uniqueness of states in layers, channels and paths will be performed by this procedure and a execution failure will be returned if this fails. A failure will also be returned if the new tattoo state value is less than the maximum tattoo value from all of the tattoos from the paths, layers and channels. After the image data has been loaded and all the tattoos have been set then this is the last procedure that should be called. If effectively does a status check on the tattoo values that have been set to make sure that all is OK.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "2000",
+  GIMP_INTERNAL,
+  2,
+  image_set_tattoo_state_inargs,
+  0,
+  NULL,
+  { { image_set_tattoo_state_invoker } }
 };
 
 static Argument *

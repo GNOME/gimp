@@ -41,15 +41,13 @@
 #include "gimp-intl.h"
 #include "plug-in/plug-in.h"
 
-static ProcRecord drawable_merge_shadow_proc;
-static ProcRecord drawable_fill_proc;
-static ProcRecord drawable_update_proc;
-static ProcRecord drawable_mask_bounds_proc;
-static ProcRecord drawable_get_image_proc;
-static ProcRecord drawable_set_image_proc;
-static ProcRecord drawable_has_alpha_proc;
+static ProcRecord drawable_delete_proc;
+static ProcRecord drawable_is_layer_proc;
+static ProcRecord drawable_is_layer_mask_proc;
+static ProcRecord drawable_is_channel_proc;
 static ProcRecord drawable_type_proc;
 static ProcRecord drawable_type_with_alpha_proc;
+static ProcRecord drawable_has_alpha_proc;
 static ProcRecord drawable_is_rgb_proc;
 static ProcRecord drawable_is_gray_proc;
 static ProcRecord drawable_is_indexed_proc;
@@ -57,9 +55,8 @@ static ProcRecord drawable_bpp_proc;
 static ProcRecord drawable_width_proc;
 static ProcRecord drawable_height_proc;
 static ProcRecord drawable_offsets_proc;
-static ProcRecord drawable_is_layer_proc;
-static ProcRecord drawable_is_layer_mask_proc;
-static ProcRecord drawable_is_channel_proc;
+static ProcRecord drawable_get_image_proc;
+static ProcRecord drawable_set_image_proc;
 static ProcRecord drawable_get_name_proc;
 static ProcRecord drawable_set_name_proc;
 static ProcRecord drawable_get_visible_proc;
@@ -68,24 +65,25 @@ static ProcRecord drawable_get_linked_proc;
 static ProcRecord drawable_set_linked_proc;
 static ProcRecord drawable_get_tattoo_proc;
 static ProcRecord drawable_set_tattoo_proc;
+static ProcRecord drawable_mask_bounds_proc;
+static ProcRecord drawable_merge_shadow_proc;
+static ProcRecord drawable_update_proc;
 static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
-static ProcRecord drawable_thumbnail_proc;
+static ProcRecord drawable_fill_proc;
 static ProcRecord drawable_offset_proc;
-static ProcRecord drawable_delete_proc;
+static ProcRecord drawable_thumbnail_proc;
 
 void
 register_drawable_procs (Gimp *gimp)
 {
-  procedural_db_register (gimp, &drawable_merge_shadow_proc);
-  procedural_db_register (gimp, &drawable_fill_proc);
-  procedural_db_register (gimp, &drawable_update_proc);
-  procedural_db_register (gimp, &drawable_mask_bounds_proc);
-  procedural_db_register (gimp, &drawable_get_image_proc);
-  procedural_db_register (gimp, &drawable_set_image_proc);
-  procedural_db_register (gimp, &drawable_has_alpha_proc);
+  procedural_db_register (gimp, &drawable_delete_proc);
+  procedural_db_register (gimp, &drawable_is_layer_proc);
+  procedural_db_register (gimp, &drawable_is_layer_mask_proc);
+  procedural_db_register (gimp, &drawable_is_channel_proc);
   procedural_db_register (gimp, &drawable_type_proc);
   procedural_db_register (gimp, &drawable_type_with_alpha_proc);
+  procedural_db_register (gimp, &drawable_has_alpha_proc);
   procedural_db_register (gimp, &drawable_is_rgb_proc);
   procedural_db_register (gimp, &drawable_is_gray_proc);
   procedural_db_register (gimp, &drawable_is_indexed_proc);
@@ -93,9 +91,8 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_width_proc);
   procedural_db_register (gimp, &drawable_height_proc);
   procedural_db_register (gimp, &drawable_offsets_proc);
-  procedural_db_register (gimp, &drawable_is_layer_proc);
-  procedural_db_register (gimp, &drawable_is_layer_mask_proc);
-  procedural_db_register (gimp, &drawable_is_channel_proc);
+  procedural_db_register (gimp, &drawable_get_image_proc);
+  procedural_db_register (gimp, &drawable_set_image_proc);
   procedural_db_register (gimp, &drawable_get_name_proc);
   procedural_db_register (gimp, &drawable_set_name_proc);
   procedural_db_register (gimp, &drawable_get_visible_proc);
@@ -104,401 +101,66 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_set_linked_proc);
   procedural_db_register (gimp, &drawable_get_tattoo_proc);
   procedural_db_register (gimp, &drawable_set_tattoo_proc);
+  procedural_db_register (gimp, &drawable_mask_bounds_proc);
+  procedural_db_register (gimp, &drawable_merge_shadow_proc);
+  procedural_db_register (gimp, &drawable_update_proc);
   procedural_db_register (gimp, &drawable_get_pixel_proc);
   procedural_db_register (gimp, &drawable_set_pixel_proc);
-  procedural_db_register (gimp, &drawable_thumbnail_proc);
+  procedural_db_register (gimp, &drawable_fill_proc);
   procedural_db_register (gimp, &drawable_offset_proc);
-  procedural_db_register (gimp, &drawable_delete_proc);
+  procedural_db_register (gimp, &drawable_thumbnail_proc);
 }
 
 static Argument *
-drawable_merge_shadow_invoker (Gimp     *gimp,
-                               Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gboolean undo;
-  gchar *undo_desc = NULL;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  undo = args[1].value.pdb_int ? TRUE : FALSE;
-
-  if (success)
-    {
-      if (gimp->current_plug_in)
-	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
-    
-      if (! undo_desc)
-	undo_desc = g_strdup (_("Plug-In"));
-    
-      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
-    
-      g_free (undo_desc);
-    }
-
-  return procedural_db_return_args (&drawable_merge_shadow_proc, success);
-}
-
-static ProcArg drawable_merge_shadow_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "undo",
-    "Push merge to undo stack?"
-  }
-};
-
-static ProcRecord drawable_merge_shadow_proc =
-{
-  "gimp_drawable_merge_shadow",
-  "Merge the shadow buffer with the specified drawable.",
-  "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The \"undo\" parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  drawable_merge_shadow_inargs,
-  0,
-  NULL,
-  { { drawable_merge_shadow_invoker } }
-};
-
-static Argument *
-drawable_fill_invoker (Gimp     *gimp,
-                       Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gint32 fill_type;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  fill_type = args[1].value.pdb_int;
-  if (fill_type < GIMP_FOREGROUND_FILL || fill_type > GIMP_NO_FILL)
-    success = FALSE;
-
-  if (success)
-    gimp_drawable_fill_by_type (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);
-
-  return procedural_db_return_args (&drawable_fill_proc, success);
-}
-
-static ProcArg drawable_fill_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "fill_type",
-    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_NO_FILL (4)"
-  }
-};
-
-static ProcRecord drawable_fill_proc =
-{
-  "gimp_drawable_fill",
-  "Fill the drawable with the specified fill mode.",
-  "This procedure fills the drawable with the fill mode. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined. This procedure is unlike the bucket fill tool because it fills regardless of a selection",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  drawable_fill_inargs,
-  0,
-  NULL,
-  { { drawable_fill_invoker } }
-};
-
-static Argument *
-drawable_update_invoker (Gimp     *gimp,
+drawable_delete_invoker (Gimp     *gimp,
                          Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 x;
-  gint32 y;
-  gint32 width;
-  gint32 height;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
-
-  x = args[1].value.pdb_int;
-
-  y = args[2].value.pdb_int;
-
-  width = args[3].value.pdb_int;
-
-  height = args[4].value.pdb_int;
-
-  if (success)
-    gimp_drawable_update (drawable, x, y, width, height);
-
-  return procedural_db_return_args (&drawable_update_proc, success);
-}
-
-static ProcArg drawable_update_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  },
-  {
-    GIMP_PDB_INT32,
-    "x",
-    "x coordinate of upper left corner of update region"
-  },
-  {
-    GIMP_PDB_INT32,
-    "y",
-    "y coordinate of upper left corner of update region"
-  },
-  {
-    GIMP_PDB_INT32,
-    "width",
-    "Width of update region"
-  },
-  {
-    GIMP_PDB_INT32,
-    "height",
-    "Height of update region"
-  }
-};
-
-static ProcRecord drawable_update_proc =
-{
-  "gimp_drawable_update",
-  "Update the specified region of the drawable.",
-  "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated with: {x->0, y->0, w->width, h->height }.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  5,
-  drawable_update_inargs,
-  0,
-  NULL,
-  { { drawable_update_invoker } }
-};
-
-static Argument *
-drawable_mask_bounds_invoker (Gimp     *gimp,
-                              Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpDrawable *drawable;
-  gboolean non_empty = FALSE;
-  gint32 x1;
-  gint32 y1;
-  gint32 x2;
-  gint32 y2;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  if (success)
-    non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  return_args = procedural_db_return_args (&drawable_mask_bounds_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = non_empty;
-      return_args[2].value.pdb_int = x1;
-      return_args[3].value.pdb_int = y1;
-      return_args[4].value.pdb_int = x2;
-      return_args[5].value.pdb_int = y2;
+      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
+	g_object_unref (drawable);
+      else
+	success = FALSE;
     }
 
-  return return_args;
+  return procedural_db_return_args (&drawable_delete_proc, success);
 }
 
-static ProcArg drawable_mask_bounds_inargs[] =
+static ProcArg drawable_delete_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
     "drawable",
-    "The drawable"
+    "The drawable to delete"
   }
 };
 
-static ProcArg drawable_mask_bounds_outargs[] =
+static ProcRecord drawable_delete_proc =
 {
-  {
-    GIMP_PDB_INT32,
-    "non_empty",
-    "TRUE if there is a selection"
-  },
-  {
-    GIMP_PDB_INT32,
-    "x1",
-    "x coordinate of the upper left corner of selection bounds"
-  },
-  {
-    GIMP_PDB_INT32,
-    "y1",
-    "y coordinate of the upper left corner of selection bounds"
-  },
-  {
-    GIMP_PDB_INT32,
-    "x2",
-    "x coordinate of the lower right corner of selection bounds"
-  },
-  {
-    GIMP_PDB_INT32,
-    "y2",
-    "y coordinate of the lower right corner of selection bounds"
-  }
-};
-
-static ProcRecord drawable_mask_bounds_proc =
-{
-  "gimp_drawable_mask_bounds",
-  "Find the bounding box of the current selection in relation to the specified drawable.",
-  "This procedure returns the whether there is a selection. If there is one, the upper left and lower righthand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower righthand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
+  "gimp_drawable_delete",
+  "Delete a drawable.",
+  "This procedure deletes the specified drawable. This must not be done if the gimage containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  drawable_mask_bounds_inargs,
-  5,
-  drawable_mask_bounds_outargs,
-  { { drawable_mask_bounds_invoker } }
-};
-
-static Argument *
-drawable_get_image_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpDrawable *drawable;
-  GimpImage *gimage = NULL;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  if (success)
-    success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;
-
-  return_args = procedural_db_return_args (&drawable_get_image_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
-
-  return return_args;
-}
-
-static ProcArg drawable_get_image_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  }
-};
-
-static ProcArg drawable_get_image_outargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The drawable's image"
-  }
-};
-
-static ProcRecord drawable_get_image_proc =
-{
-  "gimp_drawable_get_image",
-  "Returns the drawable's image.",
-  "This procedure returns the drawable's image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  drawable_get_image_inargs,
-  1,
-  drawable_get_image_outargs,
-  { { drawable_get_image_invoker } }
-};
-
-static Argument *
-drawable_set_image_invoker (Gimp     *gimp,
-                            Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpImage *gimage;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
-
-  return procedural_db_return_args (&drawable_set_image_proc, success);
-}
-
-static ProcArg drawable_set_image_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  },
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcRecord drawable_set_image_proc =
-{
-  "gimp_drawable_set_image",
-  "Set image where drawable belongs to.",
-  "Set the image the drawable should be a part of (Use this before adding a drawable to another image).",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  drawable_set_image_inargs,
+  drawable_delete_inargs,
   0,
   NULL,
-  { { drawable_set_image_invoker } }
+  { { drawable_delete_invoker } }
 };
 
 static Argument *
-drawable_has_alpha_invoker (Gimp     *gimp,
-                            Argument *args)
+drawable_is_layer_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -508,15 +170,15 @@ drawable_has_alpha_invoker (Gimp     *gimp,
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_has_alpha_proc, success);
+  return_args = procedural_db_return_args (&drawable_is_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_drawable_has_alpha (drawable);
+    return_args[1].value.pdb_int = GIMP_IS_LAYER (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
 
-static ProcArg drawable_has_alpha_inargs[] =
+static ProcArg drawable_is_layer_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -525,29 +187,137 @@ static ProcArg drawable_has_alpha_inargs[] =
   }
 };
 
-static ProcArg drawable_has_alpha_outargs[] =
+static ProcArg drawable_is_layer_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "has_alpha",
-    "Does the drawable have an alpha channel?"
+    "layer",
+    "Non-zero if the drawable is a layer"
   }
 };
 
-static ProcRecord drawable_has_alpha_proc =
+static ProcRecord drawable_is_layer_proc =
 {
-  "gimp_drawable_has_alpha",
-  "Returns non-zero if the drawable has an alpha channel.",
-  "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
+  "gimp_drawable_is_layer",
+  "Returns whether the drawable is a layer.",
+  "This procedure returns non-zero if the specified drawable is a layer.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  drawable_has_alpha_inargs,
+  drawable_is_layer_inargs,
   1,
-  drawable_has_alpha_outargs,
-  { { drawable_has_alpha_invoker } }
+  drawable_is_layer_outargs,
+  { { drawable_is_layer_invoker } }
+};
+
+static Argument *
+drawable_is_layer_mask_invoker (Gimp     *gimp,
+                                Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_IS_LAYER_MASK (drawable) ? TRUE : FALSE;
+
+  return return_args;
+}
+
+static ProcArg drawable_is_layer_mask_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_is_layer_mask_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "layer_mask",
+    "Non-zero if the drawable is a layer mask"
+  }
+};
+
+static ProcRecord drawable_is_layer_mask_proc =
+{
+  "gimp_drawable_is_layer_mask",
+  "Returns whether the drawable is a layer mask.",
+  "This procedure returns non-zero if the specified drawable is a layer mask.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_is_layer_mask_inargs,
+  1,
+  drawable_is_layer_mask_outargs,
+  { { drawable_is_layer_mask_invoker } }
+};
+
+static Argument *
+drawable_is_channel_invoker (Gimp     *gimp,
+                             Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_is_channel_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = GIMP_IS_CHANNEL (drawable) ? TRUE : FALSE;
+
+  return return_args;
+}
+
+static ProcArg drawable_is_channel_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_is_channel_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "channel",
+    "Non-zero if the drawable is a channel"
+  }
+};
+
+static ProcRecord drawable_is_channel_proc =
+{
+  "gimp_drawable_is_channel",
+  "Returns whether the drawable is a channel.",
+  "This procedure returns non-zero if the specified drawable is a channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_is_channel_inargs,
+  1,
+  drawable_is_channel_outargs,
+  { { drawable_is_channel_invoker } }
 };
 
 static Argument *
@@ -656,6 +426,60 @@ static ProcRecord drawable_type_with_alpha_proc =
   1,
   drawable_type_with_alpha_outargs,
   { { drawable_type_with_alpha_invoker } }
+};
+
+static Argument *
+drawable_has_alpha_invoker (Gimp     *gimp,
+                            Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  return_args = procedural_db_return_args (&drawable_has_alpha_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_drawable_has_alpha (drawable);
+
+  return return_args;
+}
+
+static ProcArg drawable_has_alpha_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_has_alpha_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "has_alpha",
+    "Does the drawable have an alpha channel?"
+  }
+};
+
+static ProcRecord drawable_has_alpha_proc =
+{
+  "gimp_drawable_has_alpha",
+  "Returns non-zero if the drawable has an alpha channel.",
+  "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_has_alpha_inargs,
+  1,
+  drawable_has_alpha_outargs,
+  { { drawable_has_alpha_invoker } }
 };
 
 static Argument *
@@ -1050,26 +874,30 @@ static ProcRecord drawable_offsets_proc =
 };
 
 static Argument *
-drawable_is_layer_invoker (Gimp     *gimp,
-                           Argument *args)
+drawable_get_image_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
+  GimpImage *gimage = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_layer_proc, success);
+  if (success)
+    success = (gimage = gimp_item_get_image (GIMP_ITEM (drawable))) != NULL;
+
+  return_args = procedural_db_return_args (&drawable_get_image_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_IS_LAYER (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
 
   return return_args;
 }
 
-static ProcArg drawable_is_layer_inargs[] =
+static ProcArg drawable_get_image_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -1078,137 +906,81 @@ static ProcArg drawable_is_layer_inargs[] =
   }
 };
 
-static ProcArg drawable_is_layer_outargs[] =
+static ProcArg drawable_get_image_outargs[] =
 {
   {
-    GIMP_PDB_INT32,
-    "layer",
-    "Non-zero if the drawable is a layer"
+    GIMP_PDB_IMAGE,
+    "image",
+    "The drawable's image"
   }
 };
 
-static ProcRecord drawable_is_layer_proc =
+static ProcRecord drawable_get_image_proc =
 {
-  "gimp_drawable_is_layer",
-  "Returns whether the drawable is a layer.",
-  "This procedure returns non-zero if the specified drawable is a layer.",
+  "gimp_drawable_get_image",
+  "Returns the drawable's image.",
+  "This procedure returns the drawable's image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  drawable_is_layer_inargs,
+  drawable_get_image_inargs,
   1,
-  drawable_is_layer_outargs,
-  { { drawable_is_layer_invoker } }
+  drawable_get_image_outargs,
+  { { drawable_get_image_invoker } }
 };
 
 static Argument *
-drawable_is_layer_mask_invoker (Gimp     *gimp,
-                                Argument *args)
+drawable_set_image_invoker (Gimp     *gimp,
+                            Argument *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
   GimpDrawable *drawable;
+  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = GIMP_IS_LAYER_MASK (drawable) ? TRUE : FALSE;
-
-  return return_args;
-}
-
-static ProcArg drawable_is_layer_mask_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable"
-  }
-};
-
-static ProcArg drawable_is_layer_mask_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "layer_mask",
-    "Non-zero if the drawable is a layer mask"
-  }
-};
-
-static ProcRecord drawable_is_layer_mask_proc =
-{
-  "gimp_drawable_is_layer_mask",
-  "Returns whether the drawable is a layer mask.",
-  "This procedure returns non-zero if the specified drawable is a layer mask.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  drawable_is_layer_mask_inargs,
-  1,
-  drawable_is_layer_mask_outargs,
-  { { drawable_is_layer_mask_invoker } }
-};
-
-static Argument *
-drawable_is_channel_invoker (Gimp     *gimp,
-                             Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpDrawable *drawable;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&drawable_is_channel_proc, success);
-
   if (success)
-    return_args[1].value.pdb_int = GIMP_IS_CHANNEL (drawable) ? TRUE : FALSE;
+    gimp_item_set_image (GIMP_ITEM (drawable), gimage);
 
-  return return_args;
+  return procedural_db_return_args (&drawable_set_image_proc, success);
 }
 
-static ProcArg drawable_is_channel_inargs[] =
+static ProcArg drawable_set_image_inargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
     "drawable",
     "The drawable"
-  }
-};
-
-static ProcArg drawable_is_channel_outargs[] =
-{
+  },
   {
-    GIMP_PDB_INT32,
-    "channel",
-    "Non-zero if the drawable is a channel"
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
   }
 };
 
-static ProcRecord drawable_is_channel_proc =
+static ProcRecord drawable_set_image_proc =
 {
-  "gimp_drawable_is_channel",
-  "Returns whether the drawable is a channel.",
-  "This procedure returns non-zero if the specified drawable is a channel.",
+  "gimp_drawable_set_image",
+  "Set image where drawable belongs to.",
+  "Set the image the drawable should be a part of (Use this before adding a drawable to another image).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  1,
-  drawable_is_channel_inargs,
-  1,
-  drawable_is_channel_outargs,
-  { { drawable_is_channel_invoker } }
+  2,
+  drawable_set_image_inargs,
+  0,
+  NULL,
+  { { drawable_set_image_invoker } }
 };
 
 static Argument *
@@ -1632,6 +1404,229 @@ static ProcRecord drawable_set_tattoo_proc =
 };
 
 static Argument *
+drawable_mask_bounds_invoker (Gimp     *gimp,
+                              Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gboolean non_empty = FALSE;
+  gint32 x1;
+  gint32 y1;
+  gint32 x2;
+  gint32 y2;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  if (success)
+    non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
+  return_args = procedural_db_return_args (&drawable_mask_bounds_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = non_empty;
+      return_args[2].value.pdb_int = x1;
+      return_args[3].value.pdb_int = y1;
+      return_args[4].value.pdb_int = x2;
+      return_args[5].value.pdb_int = y2;
+    }
+
+  return return_args;
+}
+
+static ProcArg drawable_mask_bounds_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_mask_bounds_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "non_empty",
+    "TRUE if there is a selection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "x1",
+    "x coordinate of the upper left corner of selection bounds"
+  },
+  {
+    GIMP_PDB_INT32,
+    "y1",
+    "y coordinate of the upper left corner of selection bounds"
+  },
+  {
+    GIMP_PDB_INT32,
+    "x2",
+    "x coordinate of the lower right corner of selection bounds"
+  },
+  {
+    GIMP_PDB_INT32,
+    "y2",
+    "y coordinate of the lower right corner of selection bounds"
+  }
+};
+
+static ProcRecord drawable_mask_bounds_proc =
+{
+  "gimp_drawable_mask_bounds",
+  "Find the bounding box of the current selection in relation to the specified drawable.",
+  "This procedure returns the whether there is a selection. If there is one, the upper left and lower righthand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower righthand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  drawable_mask_bounds_inargs,
+  5,
+  drawable_mask_bounds_outargs,
+  { { drawable_mask_bounds_invoker } }
+};
+
+static Argument *
+drawable_merge_shadow_invoker (Gimp     *gimp,
+                               Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean undo;
+  gchar *undo_desc = NULL;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  undo = args[1].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    {
+      if (gimp->current_plug_in)
+	undo_desc = plug_in_get_undo_desc (gimp->current_plug_in);
+    
+      if (! undo_desc)
+	undo_desc = g_strdup (_("Plug-In"));
+    
+      gimp_drawable_merge_shadow (drawable, undo, undo_desc);
+    
+      g_free (undo_desc);
+    }
+
+  return procedural_db_return_args (&drawable_merge_shadow_proc, success);
+}
+
+static ProcArg drawable_merge_shadow_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "undo",
+    "Push merge to undo stack?"
+  }
+};
+
+static ProcRecord drawable_merge_shadow_proc =
+{
+  "gimp_drawable_merge_shadow",
+  "Merge the shadow buffer with the specified drawable.",
+  "This procedure combines the contents of the image's shadow buffer (for temporary processing) with the specified drawable. The \"undo\" parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  drawable_merge_shadow_inargs,
+  0,
+  NULL,
+  { { drawable_merge_shadow_invoker } }
+};
+
+static Argument *
+drawable_update_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 x;
+  gint32 y;
+  gint32 width;
+  gint32 height;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  x = args[1].value.pdb_int;
+
+  y = args[2].value.pdb_int;
+
+  width = args[3].value.pdb_int;
+
+  height = args[4].value.pdb_int;
+
+  if (success)
+    gimp_drawable_update (drawable, x, y, width, height);
+
+  return procedural_db_return_args (&drawable_update_proc, success);
+}
+
+static ProcArg drawable_update_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "x",
+    "x coordinate of upper left corner of update region"
+  },
+  {
+    GIMP_PDB_INT32,
+    "y",
+    "y coordinate of upper left corner of update region"
+  },
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "Width of update region"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "Height of update region"
+  }
+};
+
+static ProcRecord drawable_update_proc =
+{
+  "gimp_drawable_update",
+  "Update the specified region of the drawable.",
+  "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated with: {x->0, y->0, w->width, h->height }.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  5,
+  drawable_update_inargs,
+  0,
+  NULL,
+  { { drawable_update_invoker } }
+};
+
+static Argument *
 drawable_get_pixel_invoker (Gimp     *gimp,
                             Argument *args)
 {
@@ -1843,6 +1838,136 @@ static ProcRecord drawable_set_pixel_proc =
 };
 
 static Argument *
+drawable_fill_invoker (Gimp     *gimp,
+                       Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 fill_type;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  fill_type = args[1].value.pdb_int;
+  if (fill_type < GIMP_FOREGROUND_FILL || fill_type > GIMP_NO_FILL)
+    success = FALSE;
+
+  if (success)
+    gimp_drawable_fill_by_type (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);
+
+  return procedural_db_return_args (&drawable_fill_proc, success);
+}
+
+static ProcArg drawable_fill_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "fill_type",
+    "The type of fill: GIMP_FOREGROUND_FILL (0), GIMP_BACKGROUND_FILL (1), GIMP_WHITE_FILL (2), GIMP_TRANSPARENT_FILL (3), GIMP_NO_FILL (4)"
+  }
+};
+
+static ProcRecord drawable_fill_proc =
+{
+  "gimp_drawable_fill",
+  "Fill the drawable with the specified fill mode.",
+  "This procedure fills the drawable with the fill mode. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined. This procedure is unlike the bucket fill tool because it fills regardless of a selection",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  drawable_fill_inargs,
+  0,
+  NULL,
+  { { drawable_fill_invoker } }
+};
+
+static Argument *
+drawable_offset_invoker (Gimp     *gimp,
+                         Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean wrap_around;
+  gint32 fill_type;
+  gint32 offset_x;
+  gint32 offset_y;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  wrap_around = args[1].value.pdb_int ? TRUE : FALSE;
+
+  fill_type = args[2].value.pdb_int;
+  if (fill_type < GIMP_OFFSET_BACKGROUND || fill_type > GIMP_OFFSET_TRANSPARENT)
+    success = FALSE;
+
+  offset_x = args[3].value.pdb_int;
+
+  offset_y = args[4].value.pdb_int;
+
+  if (success)
+    {
+      gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
+    }
+
+  return procedural_db_return_args (&drawable_offset_proc, success);
+}
+
+static ProcArg drawable_offset_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable to offset"
+  },
+  {
+    GIMP_PDB_INT32,
+    "wrap_around",
+    "wrap image around or fill vacated regions"
+  },
+  {
+    GIMP_PDB_INT32,
+    "fill_type",
+    "fill vacated regions of drawable with background or transparent: GIMP_OFFSET_BACKGROUND (0) or GIMP_OFFSET_TRANSPARENT (1)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offset_x",
+    "offset by this amount in X direction"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offset_y",
+    "offset by this amount in Y direction"
+  }
+};
+
+static ProcRecord drawable_offset_proc =
+{
+  "gimp_drawable_offset",
+  "Offset the drawable by the specified amounts in the X and Y directions",
+  "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1997",
+  GIMP_INTERNAL,
+  5,
+  drawable_offset_inargs,
+  0,
+  NULL,
+  { { drawable_offset_invoker } }
+};
+
+static Argument *
 drawable_thumbnail_invoker (Gimp     *gimp,
                             Argument *args)
 {
@@ -1975,129 +2100,4 @@ static ProcRecord drawable_thumbnail_proc =
   5,
   drawable_thumbnail_outargs,
   { { drawable_thumbnail_invoker } }
-};
-
-static Argument *
-drawable_offset_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  gboolean wrap_around;
-  gint32 fill_type;
-  gint32 offset_x;
-  gint32 offset_y;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  wrap_around = args[1].value.pdb_int ? TRUE : FALSE;
-
-  fill_type = args[2].value.pdb_int;
-  if (fill_type < GIMP_OFFSET_BACKGROUND || fill_type > GIMP_OFFSET_TRANSPARENT)
-    success = FALSE;
-
-  offset_x = args[3].value.pdb_int;
-
-  offset_y = args[4].value.pdb_int;
-
-  if (success)
-    {
-      gimp_drawable_offset (drawable, wrap_around, fill_type, offset_x, offset_y);
-    }
-
-  return procedural_db_return_args (&drawable_offset_proc, success);
-}
-
-static ProcArg drawable_offset_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to offset"
-  },
-  {
-    GIMP_PDB_INT32,
-    "wrap_around",
-    "wrap image around or fill vacated regions"
-  },
-  {
-    GIMP_PDB_INT32,
-    "fill_type",
-    "fill vacated regions of drawable with background or transparent: GIMP_OFFSET_BACKGROUND (0) or GIMP_OFFSET_TRANSPARENT (1)"
-  },
-  {
-    GIMP_PDB_INT32,
-    "offset_x",
-    "offset by this amount in X direction"
-  },
-  {
-    GIMP_PDB_INT32,
-    "offset_y",
-    "offset by this amount in Y direction"
-  }
-};
-
-static ProcRecord drawable_offset_proc =
-{
-  "gimp_drawable_offset",
-  "Offset the drawable by the specified amounts in the X and Y directions",
-  "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill_type' parameter.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  GIMP_INTERNAL,
-  5,
-  drawable_offset_inargs,
-  0,
-  NULL,
-  { { drawable_offset_invoker } }
-};
-
-static Argument *
-drawable_delete_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  if (success)
-    {
-      if (! gimp_item_get_image (GIMP_ITEM (drawable)))
-	g_object_unref (drawable);
-      else
-	success = FALSE;
-    }
-
-  return procedural_db_return_args (&drawable_delete_proc, success);
-}
-
-static ProcArg drawable_delete_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The drawable to delete"
-  }
-};
-
-static ProcRecord drawable_delete_proc =
-{
-  "gimp_drawable_delete",
-  "Delete a drawable.",
-  "This procedure deletes the specified drawable. This must not be done if the gimage containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  drawable_delete_inargs,
-  0,
-  NULL,
-  { { drawable_delete_invoker } }
 };

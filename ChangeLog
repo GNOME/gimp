@@ -1,3 +1,28 @@
+2003-12-08  Michael Natterer  <mitch@gimp.org>
+
+	Some PDB fixes/cosmetics before doing real changes again:
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/layer.pdb: changed order of generated functions
+	to make more sense.
+
+	* tools/pdbgen/pdb/misc_tools.pdb: doc cosmetics, removed unused
+	subroutines.
+
+	* tools/pdbgen/pdb/image.pdb: reordered generated functions as
+	above, fixed resolution and unit accessors to use functions
+	instead of setting gimage->foo directly, use &image_accessors()
+	for the tattoo_state functions, cleanup.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/misc_tools_cmds.c
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]
+	* libgimp/gimpmisctools_pdb.c: regenerated.
+
 2003-12-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_load_thumb): don't

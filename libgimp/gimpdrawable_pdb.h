@@ -29,26 +29,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean      gimp_drawable_merge_shadow    (gint32           drawable_ID,
-					     gboolean         undo);
-gboolean      gimp_drawable_fill            (gint32           drawable_ID,
-					     GimpFillType     fill_type);
-gboolean      gimp_drawable_update          (gint32           drawable_ID,
-					     gint             x,
-					     gint             y,
-					     gint             width,
-					     gint             height);
-gboolean      gimp_drawable_mask_bounds     (gint32           drawable_ID,
-					     gint            *x1,
-					     gint            *y1,
-					     gint            *x2,
-					     gint            *y2);
-gint32        gimp_drawable_get_image       (gint32           drawable_ID);
-gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
-					     gint32           image_ID);
-gboolean      gimp_drawable_has_alpha       (gint32           drawable_ID);
+gboolean      gimp_drawable_delete          (gint32           drawable_ID);
+gboolean      gimp_drawable_is_layer        (gint32           drawable_ID);
+gboolean      gimp_drawable_is_layer_mask   (gint32           drawable_ID);
+gboolean      gimp_drawable_is_channel      (gint32           drawable_ID);
 GimpImageType gimp_drawable_type            (gint32           drawable_ID);
 GimpImageType gimp_drawable_type_with_alpha (gint32           drawable_ID);
+gboolean      gimp_drawable_has_alpha       (gint32           drawable_ID);
 gboolean      gimp_drawable_is_rgb          (gint32           drawable_ID);
 gboolean      gimp_drawable_is_gray         (gint32           drawable_ID);
 gboolean      gimp_drawable_is_indexed      (gint32           drawable_ID);
@@ -58,9 +45,9 @@ gint          gimp_drawable_height          (gint32           drawable_ID);
 gboolean      gimp_drawable_offsets         (gint32           drawable_ID,
 					     gint            *offset_x,
 					     gint            *offset_y);
-gboolean      gimp_drawable_is_layer        (gint32           drawable_ID);
-gboolean      gimp_drawable_is_layer_mask   (gint32           drawable_ID);
-gboolean      gimp_drawable_is_channel      (gint32           drawable_ID);
+gint32        gimp_drawable_get_image       (gint32           drawable_ID);
+gboolean      gimp_drawable_set_image       (gint32           drawable_ID,
+					     gint32           image_ID);
 gchar*        gimp_drawable_get_name        (gint32           drawable_ID);
 gboolean      gimp_drawable_set_name        (gint32           drawable_ID,
 					     const gchar     *name);
@@ -73,6 +60,18 @@ gboolean      gimp_drawable_set_linked      (gint32           drawable_ID,
 gint          gimp_drawable_get_tattoo      (gint32           drawable_ID);
 gboolean      gimp_drawable_set_tattoo      (gint32           drawable_ID,
 					     gint             tattoo);
+gboolean      gimp_drawable_mask_bounds     (gint32           drawable_ID,
+					     gint            *x1,
+					     gint            *y1,
+					     gint            *x2,
+					     gint            *y2);
+gboolean      gimp_drawable_merge_shadow    (gint32           drawable_ID,
+					     gboolean         undo);
+gboolean      gimp_drawable_update          (gint32           drawable_ID,
+					     gint             x,
+					     gint             y,
+					     gint             width,
+					     gint             height);
 guint8*       gimp_drawable_get_pixel       (gint32           drawable_ID,
 					     gint             x_coord,
 					     gint             y_coord,
@@ -82,6 +81,13 @@ gboolean      gimp_drawable_set_pixel       (gint32           drawable_ID,
 					     gint             y_coord,
 					     gint             num_channels,
 					     const guint8    *pixel);
+gboolean      gimp_drawable_fill            (gint32           drawable_ID,
+					     GimpFillType     fill_type);
+gboolean      gimp_drawable_offset          (gint32           drawable_ID,
+					     gboolean         wrap_around,
+					     GimpOffsetType   fill_type,
+					     gint             offset_x,
+					     gint             offset_y);
 gboolean      _gimp_drawable_thumbnail      (gint32           drawable_ID,
 					     gint             width,
 					     gint             height,
@@ -90,12 +96,6 @@ gboolean      _gimp_drawable_thumbnail      (gint32           drawable_ID,
 					     gint            *bpp,
 					     gint            *thumbnail_data_count,
 					     guint8         **thumbnail_data);
-gboolean      gimp_drawable_offset          (gint32           drawable_ID,
-					     gboolean         wrap_around,
-					     GimpOffsetType   fill_type,
-					     gint             offset_x,
-					     gint             offset_y);
-gboolean      gimp_drawable_delete          (gint32           drawable_ID);
 
 
 G_END_DECLS

@@ -126,7 +126,7 @@ gimp_blend (gint32               drawable_ID,
  * unused. If the sample_merged parameter is non-zero, the data of the
  * composite image will be used instead of that for the specified
  * drawable. This is equivalent to sampling for colors after merging
- * all visible layers. In the case of merged sampling, the x,y
+ * all visible layers. In the case of merged sampling, the x and y
  * coordinates are relative to the image's origin; otherwise, they are
  * relative to the drawable's origin.
  *
@@ -188,7 +188,8 @@ gimp_bucket_fill (gint32               drawable_ID,
  * parameter is non-zero, the data of the composite image will be used
  * instead of that for the specified drawable. This is equivalent to
  * sampling for colors after merging all visible layers. In the case of
- * a merged sampling, the supplied drawable is ignored.
+ * a merged sampling, the supplied drawable is ignored except for
+ * finding the image it belongs to.
  *
  * Returns: TRUE on success.
  */

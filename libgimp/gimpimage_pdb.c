@@ -106,6 +106,37 @@ gimp_image_new (gint              width,
 }
 
 /**
+ * gimp_image_duplicate:
+ * @image_ID: The image.
+ *
+ * Duplicate the specified image
+ *
+ * This procedure duplicates the specified image, copying all layers,
+ * channels, and image information.
+ *
+ * Returns: The new, duplicated image.
+ */
+gint32
+gimp_image_duplicate (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 new_image_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_duplicate",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    new_image_ID = return_vals[1].data.d_image;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return new_image_ID;
+}
+
+/**
  * gimp_image_delete:
  * @image_ID: The image.
  *
@@ -168,6 +199,99 @@ gimp_image_base_type (gint32 image_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return base_type;
+}
+
+/**
+ * gimp_image_width:
+ * @image_ID: The image.
+ *
+ * Return the width of the image
+ *
+ * This procedure returns the image's width. This value is independent
+ * of any of the layers in this image. This is the \"canvas\" width.
+ *
+ * Returns: The image's width.
+ */
+gint
+gimp_image_width (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint width = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_width",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    width = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return width;
+}
+
+/**
+ * gimp_image_height:
+ * @image_ID: The image.
+ *
+ * Return the height of the image
+ *
+ * This procedure returns the image's height. This value is independent
+ * of any of the layers in this image. This is the \"canvas\" height.
+ *
+ * Returns: The image's height.
+ */
+gint
+gimp_image_height (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint height = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_height",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    height = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return height;
+}
+
+/**
+ * gimp_image_free_shadow:
+ * @image_ID: The image.
+ *
+ * Free the specified image's shadow data (if it exists).
+ *
+ * This procedure is intended as a memory saving device. If any shadow
+ * memory has been allocated, it will be freed automatically on a call
+ * to 'gimp_image_delete'.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_free_shadow (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_free_shadow",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 /**
@@ -339,37 +463,6 @@ gimp_image_flip (gint32              image_ID,
 }
 
 /**
- * gimp_image_free_shadow:
- * @image_ID: The image.
- *
- * Free the specified image's shadow data (if it exists).
- *
- * This procedure is intended as a memory saving device. If any shadow
- * memory has been allocated, it will be freed automatically on a call
- * to 'gimp_image_delete'.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_free_shadow (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_free_shadow",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_get_layers:
  * @image_ID: The image.
  * @num_layers: The number of layers contained in the image.
@@ -518,6 +611,69 @@ gimp_image_unset_active_channel (gint32 image_ID)
 }
 
 /**
+ * gimp_image_get_floating_sel:
+ * @image_ID: The image.
+ *
+ * Return the floating selection of the image.
+ *
+ * This procedure returns the image's floating selection, if it exists.
+ * If it doesn't exist, -1 is returned as the layer ID.
+ *
+ * Returns: The image's floating selection.
+ */
+gint32
+gimp_image_get_floating_sel (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 floating_sel_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_floating_sel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    floating_sel_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return floating_sel_ID;
+}
+
+/**
+ * gimp_image_floating_sel_attached_to:
+ * @image_ID: The image.
+ *
+ * Return the drawable the floating selection is attached to.
+ *
+ * This procedure returns the drawable the image's floating selection
+ * is attached to, if it exists. If it doesn't exist, -1 is returned as
+ * the drawable ID.
+ *
+ * Returns: The drawable the floating selection is attached to.
+ */
+gint32
+gimp_image_floating_sel_attached_to (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 drawable_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_floating_sel_attached_to",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    drawable_ID = return_vals[1].data.d_drawable;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return drawable_ID;
+}
+
+/**
  * gimp_image_pick_correlate_layer:
  * @image_ID: The image.
  * @x: The x coordinate for the pick.
@@ -555,6 +711,81 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return layer_ID;
+}
+
+/**
+ * gimp_image_add_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ * @position: The layer position.
+ *
+ * Add the specified layer to the image.
+ *
+ * This procedure adds the specified layer to the gimage at the given
+ * position. If the position is specified as -1, then the layer is
+ * inserted at the top of the layer stack. If the layer to be added has
+ * no alpha channel, it must be added at position 0. The layer type
+ * must be compatible with the image base type.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_add_layer (gint32 image_ID,
+		      gint32 layer_ID,
+		      gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_add_layer",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, position,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_remove_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ *
+ * Remove the specified layer from the image.
+ *
+ * This procedure removes the specified layer from the image. If the
+ * layer doesn't exist, an error is returned. If there are no layers
+ * left in the image, this call will fail. If this layer is the last
+ * layer remaining, the image will become empty and have no active
+ * layer.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_remove_layer (gint32 image_ID,
+			 gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_remove_layer",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
 }
 
 /**
@@ -695,6 +926,177 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
 }
 
 /**
+ * gimp_image_add_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ * @position: The channel position.
+ *
+ * Add the specified channel to the image.
+ *
+ * This procedure adds the specified channel to the image. The position
+ * channel is not currently used, so the channel is always inserted at
+ * the top of the channel stack.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_add_channel (gint32 image_ID,
+			gint32 channel_ID,
+			gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_add_channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, position,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_remove_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ *
+ * Remove the specified channel from the image.
+ *
+ * This procedure removes the specified channel from the image. If the
+ * channel doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_remove_channel (gint32 image_ID,
+			   gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_remove_channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_raise_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to raise.
+ *
+ * Raise the specified channel in the image's channel stack
+ *
+ * This procedure raises the specified channel one step in the existing
+ * channel stack. It will not move the channel if there is no channel
+ * above it.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_raise_channel (gint32 image_ID,
+			  gint32 channel_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_raise_channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_lower_channel:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower.
+ *
+ * Lower the specified layer in the image's layer stack
+ *
+ * This procedure lowers the specified layer one step in the existing
+ * layer stack. It will not move the layer if there is no layer below
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_lower_channel (gint32 image_ID,
+			  gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_lower_channel",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_flatten:
+ * @image_ID: The image.
+ *
+ * Flatten all visible layers into a single layer. Discard all
+ * invisible layers.
+ *
+ * This procedure combines the visible layers in a manner analogous to
+ * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
+ * discarded, and the resulting image is stripped of its alpha channel.
+ *
+ * Returns: The resulting layer.
+ */
+gint32
+gimp_image_flatten (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_image_flatten",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_ID;
+}
+
+/**
  * gimp_image_merge_visible_layers:
  * @image_ID: The image.
  * @merge_type: The type of merge.
@@ -775,114 +1177,6 @@ gimp_image_merge_down (gint32        image_ID,
 }
 
 /**
- * gimp_image_flatten:
- * @image_ID: The image.
- *
- * Flatten all visible layers into a single layer. Discard all
- * invisible layers.
- *
- * This procedure combines the visible layers in a manner analogous to
- * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
- * discarded, and the resulting image is stripped of its alpha channel.
- *
- * Returns: The resulting layer.
- */
-gint32
-gimp_image_flatten (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 layer_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_image_flatten",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    layer_ID = return_vals[1].data.d_layer;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_ID;
-}
-
-/**
- * gimp_image_add_layer:
- * @image_ID: The image.
- * @layer_ID: The layer.
- * @position: The layer position.
- *
- * Add the specified layer to the image.
- *
- * This procedure adds the specified layer to the gimage at the given
- * position. If the position is specified as -1, then the layer is
- * inserted at the top of the layer stack. If the layer to be added has
- * no alpha channel, it must be added at position 0. The layer type
- * must be compatible with the image base type.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_add_layer (gint32 image_ID,
-		      gint32 layer_ID,
-		      gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_add_layer",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_INT32, position,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_remove_layer:
- * @image_ID: The image.
- * @layer_ID: The layer.
- *
- * Remove the specified layer from the image.
- *
- * This procedure removes the specified layer from the image. If the
- * layer doesn't exist, an error is returned. If there are no layers
- * left in the image, this call will fail. If this layer is the last
- * layer remaining, the image will become empty and have no active
- * layer.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_remove_layer (gint32 image_ID,
-			 gint32 layer_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_remove_layer",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_add_layer_mask:
  * @image_ID: The image.
  * @layer_ID: The layer to receive the mask.
@@ -949,144 +1243,6 @@ gimp_image_remove_layer_mask (gint32            image_ID,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_INT32, mode,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_raise_channel:
- * @image_ID: The image.
- * @channel_ID: The channel to raise.
- *
- * Raise the specified channel in the image's channel stack
- *
- * This procedure raises the specified channel one step in the existing
- * channel stack. It will not move the channel if there is no channel
- * above it.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_raise_channel (gint32 image_ID,
-			  gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_raise_channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_lower_channel:
- * @image_ID: The image.
- * @layer_ID: The layer to lower.
- *
- * Lower the specified layer in the image's layer stack
- *
- * This procedure lowers the specified layer one step in the existing
- * layer stack. It will not move the layer if there is no layer below
- * it, or the layer has no alpha channel.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_lower_channel (gint32 image_ID,
-			  gint32 layer_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_lower_channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_add_channel:
- * @image_ID: The image.
- * @channel_ID: The channel.
- * @position: The channel position.
- *
- * Add the specified channel to the image.
- *
- * This procedure adds the specified channel to the image. The position
- * channel is not currently used, so the channel is always inserted at
- * the top of the channel stack.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_add_channel (gint32 image_ID,
-			gint32 channel_ID,
-			gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_add_channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_INT32, position,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_remove_channel:
- * @image_ID: The image.
- * @channel_ID: The channel.
- *
- * Remove the specified channel from the image.
- *
- * This procedure removes the specified channel from the image. If the
- * channel doesn't exist, an error is returned.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_remove_channel (gint32 image_ID,
-			   gint32 channel_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_remove_channel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_CHANNEL, channel_ID,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1243,69 +1399,6 @@ gimp_image_is_dirty (gint32 image_ID)
 }
 
 /**
- * gimp_image_get_floating_sel:
- * @image_ID: The image.
- *
- * Return the floating selection of the image.
- *
- * This procedure returns the image's floating selection, if it exists.
- * If it doesn't exist, -1 is returned as the layer ID.
- *
- * Returns: The image's floating selection.
- */
-gint32
-gimp_image_get_floating_sel (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 floating_sel_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_image_get_floating_sel",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    floating_sel_ID = return_vals[1].data.d_layer;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return floating_sel_ID;
-}
-
-/**
- * gimp_image_floating_sel_attached_to:
- * @image_ID: The image.
- *
- * Return the drawable the floating selection is attached to.
- *
- * This procedure returns the drawable the image's floating selection
- * is attached to, if it exists. If it doesn't exist, -1 is returned as
- * the drawable ID.
- *
- * Returns: The drawable the floating selection is attached to.
- */
-gint32
-gimp_image_floating_sel_attached_to (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 drawable_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_image_floating_sel_attached_to",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    drawable_ID = return_vals[1].data.d_drawable;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return drawable_ID;
-}
-
-/**
  * _gimp_image_thumbnail:
  * @image_ID: The image.
  * @width: The thumbnail width.
@@ -1369,174 +1462,6 @@ _gimp_image_thumbnail (gint32   image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
-}
-
-/**
- * gimp_image_set_tattoo_state:
- * @image_ID: The image.
- * @tattoo: The new tattoo state of the image.
- *
- * Set the tattoo state associated with the image.
- *
- * This procedure sets the tattoo state of the image. Use only by
- * save/load plugins that wish to preserve an images tattoo state.
- * Using this function at other times will produce unexpected results.
- * A full check of uniqueness of states in layers, channels and paths
- * will be performed by this procedure and a execution failure will be
- * returned if this fails. A failure will also be returned if the new
- * tattoo state value is less than the maximum tattoo value from all of
- * the tattoos from the paths,layers and channels. After the image data
- * has been loaded and all the tattoos have been set then this is the
- * last procedure that should be called. If effectively does a status
- * check on the tattoo values that have been set to make sure that all
- * is OK.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_set_tattoo_state (gint32 image_ID,
-			     gint   tattoo)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_image_set_tattoo_state",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_INT32, tattoo,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_get_tattoo_state:
- * @image_ID: The image.
- *
- * Returns the tattoo state associated with the image.
- *
- * This procedure returns the tattoo state of the image. Use only by
- * save/load plugins that wish to preserve an images tattoo state.
- * Using this function at other times will produce unexpected results.
- *
- * Returns: The tattoo state associated with the image.
- */
-gint
-gimp_image_get_tattoo_state (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint tattoo = 0;
-
-  return_vals = gimp_run_procedure ("gimp_image_get_tattoo_state",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    tattoo = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return tattoo;
-}
-
-/**
- * gimp_image_duplicate:
- * @image_ID: The image.
- *
- * Duplicate the specified image
- *
- * This procedure duplicates the specified image, copying all layers,
- * channels, and image information.
- *
- * Returns: The new, duplicated image.
- */
-gint32
-gimp_image_duplicate (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 new_image_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_image_duplicate",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    new_image_ID = return_vals[1].data.d_image;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return new_image_ID;
-}
-
-/**
- * gimp_image_width:
- * @image_ID: The image.
- *
- * Return the width of the image
- *
- * This procedure returns the image's width. This value is independent
- * of any of the layers in this image. This is the \"canvas\" width.
- *
- * Returns: The image's width.
- */
-gint
-gimp_image_width (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint width = 0;
-
-  return_vals = gimp_run_procedure ("gimp_image_width",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    width = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return width;
-}
-
-/**
- * gimp_image_height:
- * @image_ID: The image.
- *
- * Return the height of the image
- *
- * This procedure returns the image's height. This value is independent
- * of any of the layers in this image. This is the \"canvas\" height.
- *
- * Returns: The image's height.
- */
-gint
-gimp_image_height (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint height = 0;
-
-  return_vals = gimp_run_procedure ("gimp_image_height",
-				    &nreturn_vals,
-				    GIMP_PDB_IMAGE, image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    height = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return height;
 }
 
 /**
@@ -2084,6 +2009,81 @@ gimp_image_set_unit (gint32   image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, unit,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_get_tattoo_state:
+ * @image_ID: The image.
+ *
+ * Returns the tattoo state associated with the image.
+ *
+ * This procedure returns the tattoo state of the image. Use only by
+ * save/load plugins that wish to preserve an images tattoo state.
+ * Using this function at other times will produce unexpected results.
+ *
+ * Returns: The tattoo_state.
+ */
+gint
+gimp_image_get_tattoo_state (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint tattoo_state = 0;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_tattoo_state",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    tattoo_state = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return tattoo_state;
+}
+
+/**
+ * gimp_image_set_tattoo_state:
+ * @image_ID: The image.
+ * @tattoo_state: The new image tattoo_state.
+ *
+ * Set the tattoo state associated with the image.
+ *
+ * This procedure sets the tattoo state of the image. Use only by
+ * save/load plugins that wish to preserve an images tattoo state.
+ * Using this function at other times will produce unexpected results.
+ * A full check of uniqueness of states in layers, channels and paths
+ * will be performed by this procedure and a execution failure will be
+ * returned if this fails. A failure will also be returned if the new
+ * tattoo state value is less than the maximum tattoo value from all of
+ * the tattoos from the paths, layers and channels. After the image
+ * data has been loaded and all the tattoos have been set then this is
+ * the last procedure that should be called. If effectively does a
+ * status check on the tattoo values that have been set to make sure
+ * that all is OK.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_set_tattoo_state (gint32 image_ID,
+			     gint   tattoo_state)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_set_tattoo_state",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, tattoo_state,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

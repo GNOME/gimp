@@ -41,17 +41,17 @@
 #include "pdb_glue.h"
 
 static ProcRecord layer_new_proc;
+static ProcRecord layer_new_from_drawable_proc;
 static ProcRecord layer_copy_proc;
-static ProcRecord layer_create_mask_proc;
+static ProcRecord layer_add_alpha_proc;
 static ProcRecord layer_scale_proc;
 static ProcRecord layer_resize_proc;
 static ProcRecord layer_resize_to_image_size_proc;
 static ProcRecord layer_translate_proc;
-static ProcRecord layer_add_alpha_proc;
 static ProcRecord layer_set_offsets_proc;
+static ProcRecord layer_create_mask_proc;
 static ProcRecord layer_get_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
-static ProcRecord layer_new_from_drawable_proc;
 static ProcRecord layer_get_preserve_trans_proc;
 static ProcRecord layer_set_preserve_trans_proc;
 static ProcRecord layer_get_apply_mask_proc;
@@ -69,17 +69,17 @@ void
 register_layer_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &layer_new_proc);
+  procedural_db_register (gimp, &layer_new_from_drawable_proc);
   procedural_db_register (gimp, &layer_copy_proc);
-  procedural_db_register (gimp, &layer_create_mask_proc);
+  procedural_db_register (gimp, &layer_add_alpha_proc);
   procedural_db_register (gimp, &layer_scale_proc);
   procedural_db_register (gimp, &layer_resize_proc);
   procedural_db_register (gimp, &layer_resize_to_image_size_proc);
   procedural_db_register (gimp, &layer_translate_proc);
-  procedural_db_register (gimp, &layer_add_alpha_proc);
   procedural_db_register (gimp, &layer_set_offsets_proc);
+  procedural_db_register (gimp, &layer_create_mask_proc);
   procedural_db_register (gimp, &layer_get_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
-  procedural_db_register (gimp, &layer_new_from_drawable_proc);
   procedural_db_register (gimp, &layer_get_preserve_trans_proc);
   procedural_db_register (gimp, &layer_set_preserve_trans_proc);
   procedural_db_register (gimp, &layer_get_apply_mask_proc);
@@ -220,6 +220,92 @@ static ProcRecord layer_new_proc =
 };
 
 static Argument *
+layer_new_from_drawable_invoker (Gimp     *gimp,
+                                 Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  GimpImage *dest_image;
+  GimpLayer *layer_copy = NULL;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  dest_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (dest_image))
+    success = FALSE;
+
+  if (success)
+    {
+      GType     new_type;
+      GimpItem *new_item;
+    
+      if (GIMP_IS_LAYER (drawable))
+	new_type = G_TYPE_FROM_INSTANCE (drawable);
+      else
+	new_type = GIMP_TYPE_LAYER;
+    
+      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
+	new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
+      else
+	new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
+    
+      if (new_item)
+	layer_copy = GIMP_LAYER (new_item);
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
+
+  return return_args;
+}
+
+static ProcArg layer_new_from_drawable_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The source drawable from where the new layer is copied"
+  },
+  {
+    GIMP_PDB_IMAGE,
+    "dest_image",
+    "The destination image to which to add the layer"
+  }
+};
+
+static ProcArg layer_new_from_drawable_outargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer_copy",
+    "The newly copied layer"
+  }
+};
+
+static ProcRecord layer_new_from_drawable_proc =
+{
+  "gimp_layer_new_from_drawable",
+  "Create a new layer by copying an existing drawable.",
+  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  layer_new_from_drawable_inargs,
+  1,
+  layer_new_from_drawable_outargs,
+  { { layer_new_from_drawable_invoker } }
+};
+
+static Argument *
 layer_copy_invoker (Gimp     *gimp,
                     Argument *args)
 {
@@ -286,71 +372,45 @@ static ProcRecord layer_copy_proc =
 };
 
 static Argument *
-layer_create_mask_invoker (Gimp     *gimp,
-                           Argument *args)
+layer_add_alpha_invoker (Gimp     *gimp,
+                         Argument *args)
 {
   gboolean success = TRUE;
-  Argument *return_args;
   GimpLayer *layer;
-  gint32 mask_type;
-  GimpLayerMask *mask = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_LAYER (layer))
     success = FALSE;
 
-  mask_type = args[1].value.pdb_int;
-  if (mask_type < GIMP_ADD_WHITE_MASK || mask_type > GIMP_ADD_COPY_MASK)
-    success = FALSE;
-
   if (success)
-    success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
+    gimp_layer_add_alpha (layer);
 
-  return_args = procedural_db_return_args (&layer_create_mask_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (mask));
-
-  return return_args;
+  return procedural_db_return_args (&layer_add_alpha_proc, success);
 }
 
-static ProcArg layer_create_mask_inargs[] =
+static ProcArg layer_add_alpha_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
     "layer",
-    "The layer to which to add the mask"
-  },
-  {
-    GIMP_PDB_INT32,
-    "mask_type",
-    "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5) }"
+    "The layer"
   }
 };
 
-static ProcArg layer_create_mask_outargs[] =
+static ProcRecord layer_add_alpha_proc =
 {
-  {
-    GIMP_PDB_CHANNEL,
-    "mask",
-    "The newly created mask"
-  }
-};
-
-static ProcRecord layer_create_mask_proc =
-{
-  "gimp_layer_create_mask",
-  "Create a layer mask for the specified specified layer.",
-  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_image_add_layer_mask'.",
+  "gimp_layer_add_alpha",
+  "Add an alpha channel to the layer if it doesn't already have one.",
+  "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  2,
-  layer_create_mask_inargs,
   1,
-  layer_create_mask_outargs,
-  { { layer_create_mask_invoker } }
+  layer_add_alpha_inargs,
+  0,
+  NULL,
+  { { layer_add_alpha_invoker } }
 };
 
 static Argument *
@@ -682,48 +742,6 @@ static ProcRecord layer_translate_proc =
 };
 
 static Argument *
-layer_add_alpha_invoker (Gimp     *gimp,
-                         Argument *args)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-
-  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
-    success = FALSE;
-
-  if (success)
-    gimp_layer_add_alpha (layer);
-
-  return procedural_db_return_args (&layer_add_alpha_proc, success);
-}
-
-static ProcArg layer_add_alpha_inargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer",
-    "The layer"
-  }
-};
-
-static ProcRecord layer_add_alpha_proc =
-{
-  "gimp_layer_add_alpha",
-  "Add an alpha channel to the layer if it doesn't already have one.",
-  "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  layer_add_alpha_inargs,
-  0,
-  NULL,
-  { { layer_add_alpha_invoker } }
-};
-
-static Argument *
 layer_set_offsets_invoker (Gimp     *gimp,
                            Argument *args)
 {
@@ -810,6 +828,74 @@ static ProcRecord layer_set_offsets_proc =
   0,
   NULL,
   { { layer_set_offsets_invoker } }
+};
+
+static Argument *
+layer_create_mask_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpLayer *layer;
+  gint32 mask_type;
+  GimpLayerMask *mask = NULL;
+
+  layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_LAYER (layer))
+    success = FALSE;
+
+  mask_type = args[1].value.pdb_int;
+  if (mask_type < GIMP_ADD_WHITE_MASK || mask_type > GIMP_ADD_COPY_MASK)
+    success = FALSE;
+
+  if (success)
+    success = (mask = gimp_layer_create_mask (layer, (GimpAddMaskType) mask_type)) != NULL;
+
+  return_args = procedural_db_return_args (&layer_create_mask_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (mask));
+
+  return return_args;
+}
+
+static ProcArg layer_create_mask_inargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer",
+    "The layer to which to add the mask"
+  },
+  {
+    GIMP_PDB_INT32,
+    "mask_type",
+    "The type of mask: { GIMP_ADD_WHITE_MASK (0), GIMP_ADD_BLACK_MASK (1), GIMP_ADD_ALPHA_MASK (2), GIMP_ADD_ALPHA_TRANSFER_MASK (3), GIMP_ADD_SELECTION_MASK (4), GIMP_ADD_COPY_MASK (5) }"
+  }
+};
+
+static ProcArg layer_create_mask_outargs[] =
+{
+  {
+    GIMP_PDB_CHANNEL,
+    "mask",
+    "The newly created mask"
+  }
+};
+
+static ProcRecord layer_create_mask_proc =
+{
+  "gimp_layer_create_mask",
+  "Create a layer mask for the specified specified layer.",
+  "This procedure creates a layer mask for the specified layer. Layer masks serve as an additional alpha channel for a layer. A number of ifferent types of masks are allowed for initialisation: completely white masks (which will leave the layer fully visible), completely black masks (which will give the layer complete transparency, the layer's already existing alpha channel (which will leave the layer fully visible, but which may be more useful than a white mask), the current selection or a grayscale copy of the layer. The layer mask still needs to be added to the layer. This can be done with a call to 'gimp_image_add_layer_mask'.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  layer_create_mask_inargs,
+  1,
+  layer_create_mask_outargs,
+  { { layer_create_mask_invoker } }
 };
 
 static Argument *
@@ -918,92 +1004,6 @@ static ProcRecord layer_is_floating_sel_proc =
   1,
   layer_is_floating_sel_outargs,
   { { layer_is_floating_sel_invoker } }
-};
-
-static Argument *
-layer_new_from_drawable_invoker (Gimp     *gimp,
-                                 Argument *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpDrawable *drawable;
-  GimpImage *dest_image;
-  GimpLayer *layer_copy = NULL;
-
-  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
-    success = FALSE;
-
-  dest_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (dest_image))
-    success = FALSE;
-
-  if (success)
-    {
-      GType     new_type;
-      GimpItem *new_item;
-    
-      if (GIMP_IS_LAYER (drawable))
-	new_type = G_TYPE_FROM_INSTANCE (drawable);
-      else
-	new_type = GIMP_TYPE_LAYER;
-    
-      if (dest_image == gimp_item_get_image (GIMP_ITEM (drawable)))
-	new_item = gimp_item_duplicate (GIMP_ITEM (drawable), new_type, TRUE);
-      else
-	new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type, TRUE);
-    
-      if (new_item)
-	layer_copy = GIMP_LAYER (new_item);
-      else
-	success = FALSE;
-    }
-
-  return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
-
-  if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (layer_copy));
-
-  return return_args;
-}
-
-static ProcArg layer_new_from_drawable_inargs[] =
-{
-  {
-    GIMP_PDB_DRAWABLE,
-    "drawable",
-    "The source drawable from where the new layer is copied"
-  },
-  {
-    GIMP_PDB_IMAGE,
-    "dest_image",
-    "The destination image to which to add the layer"
-  }
-};
-
-static ProcArg layer_new_from_drawable_outargs[] =
-{
-  {
-    GIMP_PDB_LAYER,
-    "layer_copy",
-    "The newly copied layer"
-  }
-};
-
-static ProcRecord layer_new_from_drawable_proc =
-{
-  "gimp_layer_new_from_drawable",
-  "Create a new layer by copying an existing drawable.",
-  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  2,
-  layer_new_from_drawable_inargs,
-  1,
-  layer_new_from_drawable_outargs,
-  { { layer_new_from_drawable_invoker } }
 };
 
 static Argument *

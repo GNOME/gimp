@@ -79,6 +79,43 @@ _gimp_layer_new (gint32                image_ID,
 }
 
 /**
+ * gimp_layer_new_from_drawable:
+ * @drawable_ID: The source drawable from where the new layer is copied.
+ * @dest_image_ID: The destination image to which to add the layer.
+ *
+ * Create a new layer by copying an existing drawable.
+ *
+ * This procedure creates a new layer as a copy of the specified
+ * drawable. The new layer still needs to be added to the image, as
+ * this is not automatic. Add the new layer with the
+ * 'gimp_image_add_layer' command. Other attributes such as layer mask
+ * modes, and offsets should be set with explicit procedure calls.
+ *
+ * Returns: The newly copied layer.
+ */
+gint32
+gimp_layer_new_from_drawable (gint32 drawable_ID,
+			      gint32 dest_image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_copy_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_layer_new_from_drawable",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_IMAGE, dest_image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_copy_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_copy_ID;
+}
+
+/**
  * _gimp_layer_copy:
  * @layer_ID: The layer to copy.
  * @add_alpha: Add an alpha channel to the copied layer.
@@ -117,45 +154,37 @@ _gimp_layer_copy (gint32   layer_ID,
 }
 
 /**
- * gimp_layer_create_mask:
- * @layer_ID: The layer to which to add the mask.
- * @mask_type: The type of mask.
+ * gimp_layer_add_alpha:
+ * @layer_ID: The layer.
  *
- * Create a layer mask for the specified specified layer.
+ * Add an alpha channel to the layer if it doesn't already have one.
  *
- * This procedure creates a layer mask for the specified layer. Layer
- * masks serve as an additional alpha channel for a layer. A number of
- * ifferent types of masks are allowed for initialisation: completely
- * white masks (which will leave the layer fully visible), completely
- * black masks (which will give the layer complete transparency, the
- * layer's already existing alpha channel (which will leave the layer
- * fully visible, but which may be more useful than a white mask), the
- * current selection or a grayscale copy of the layer. The layer mask
- * still needs to be added to the layer. This can be done with a call
- * to 'gimp_image_add_layer_mask'.
+ * This procedure adds an additional component to the specified layer
+ * if it does not already possess an alpha channel. An alpha channel
+ * makes it possible to move a layer from the bottom of the layer stack
+ * and to clear and erase to transparency, instead of the background
+ * color. This transforms images of type RGB to RGBA, GRAY to GRAYA,
+ * and INDEXED to INDEXEDA.
  *
- * Returns: The newly created mask.
+ * Returns: TRUE on success.
  */
-gint32
-gimp_layer_create_mask (gint32          layer_ID,
-			GimpAddMaskType mask_type)
+gboolean
+gimp_layer_add_alpha (gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint32 mask_ID = -1;
+  gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_layer_create_mask",
+  return_vals = gimp_run_procedure ("gimp_layer_add_alpha",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_INT32, mask_type,
 				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    mask_ID = return_vals[1].data.d_layer_mask;
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return mask_ID;
+  return success;
 }
 
 /**
@@ -315,40 +344,6 @@ gimp_layer_translate (gint32 layer_ID,
 }
 
 /**
- * gimp_layer_add_alpha:
- * @layer_ID: The layer.
- *
- * Add an alpha channel to the layer if it doesn't already have one.
- *
- * This procedure adds an additional component to the specified layer
- * if it does not already possess an alpha channel. An alpha channel
- * makes it possible to move a layer from the bottom of the layer stack
- * and to clear and erase to transparency, instead of the background
- * color. This transforms images of type RGB to RGBA, GRAY to GRAYA,
- * and INDEXED to INDEXEDA.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_layer_add_alpha (gint32 layer_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_layer_add_alpha",
-				    &nreturn_vals,
-				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_layer_set_offsets:
  * @layer_ID: The layer.
  * @offx: Offset in x direction.
@@ -383,6 +378,48 @@ gimp_layer_set_offsets (gint32 layer_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_layer_create_mask:
+ * @layer_ID: The layer to which to add the mask.
+ * @mask_type: The type of mask.
+ *
+ * Create a layer mask for the specified specified layer.
+ *
+ * This procedure creates a layer mask for the specified layer. Layer
+ * masks serve as an additional alpha channel for a layer. A number of
+ * ifferent types of masks are allowed for initialisation: completely
+ * white masks (which will leave the layer fully visible), completely
+ * black masks (which will give the layer complete transparency, the
+ * layer's already existing alpha channel (which will leave the layer
+ * fully visible, but which may be more useful than a white mask), the
+ * current selection or a grayscale copy of the layer. The layer mask
+ * still needs to be added to the layer. This can be done with a call
+ * to 'gimp_image_add_layer_mask'.
+ *
+ * Returns: The newly created mask.
+ */
+gint32
+gimp_layer_create_mask (gint32          layer_ID,
+			GimpAddMaskType mask_type)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 mask_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_layer_create_mask",
+				    &nreturn_vals,
+				    GIMP_PDB_LAYER, layer_ID,
+				    GIMP_PDB_INT32, mask_type,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    mask_ID = return_vals[1].data.d_layer_mask;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return mask_ID;
 }
 
 /**
@@ -446,43 +483,6 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return is_floating_sel;
-}
-
-/**
- * gimp_layer_new_from_drawable:
- * @drawable_ID: The source drawable from where the new layer is copied.
- * @dest_image_ID: The destination image to which to add the layer.
- *
- * Create a new layer by copying an existing drawable.
- *
- * This procedure creates a new layer as a copy of the specified
- * drawable. The new layer still needs to be added to the image, as
- * this is not automatic. Add the new layer with the
- * 'gimp_image_add_layer' command. Other attributes such as layer mask
- * modes, and offsets should be set with explicit procedure calls.
- *
- * Returns: The newly copied layer.
- */
-gint32
-gimp_layer_new_from_drawable (gint32 drawable_ID,
-			      gint32 dest_image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 layer_copy_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp_layer_new_from_drawable",
-				    &nreturn_vals,
-				    GIMP_PDB_DRAWABLE, drawable_ID,
-				    GIMP_PDB_IMAGE, dest_image_ID,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    layer_copy_ID = return_vals[1].data.d_layer;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_copy_ID;
 }
 
 /**

@@ -31,7 +31,8 @@ sub channel_arg () {{
 
 sub new_dim_args {
     foreach (qw(width height)) {
-	push @inargs, { name => "new_$_", type => '0 < int32',
+	push @inargs, { name => "new_$_",
+                        type => '0 < int32',
 			desc => "New image $_: %%desc%%" }
     }
 }
@@ -42,11 +43,11 @@ sub image_list_proc {
     $blurb = "Returns the list of ${type}s contained in the specified image.";
 
     $help = <<HELP;
-This procedure returns the list of ${type}s contained in the specified image. 
+This procedure returns the list of ${type}s contained in the specified image.
 HELP
 
     &std_pdb_misc;
-    
+
     @inargs = ( &std_image_arg );
 
     @outargs = (
@@ -256,7 +257,7 @@ HELP
     }
 
     @outargs = (
-	{ name => 'image', type => 'image', init => 1, 
+	{ name => 'image', type => 'image', init => 1,
 	  desc => 'The ID of the newly created image' }
     );
 
@@ -268,6 +269,57 @@ HELP
 }
 CODE
     );
+}
+
+sub image_duplicate {
+    $blurb = 'Duplicate the specified image';
+
+    $help = <<'HELP';
+This procedure duplicates the specified image, copying all layers, channels,
+and image information.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'new_image', type => 'image',
+	  desc => 'The new, duplicated image', init => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-duplicate.h") ],
+        code => <<'CODE'
+success = (new_image = gimp_image_duplicate (gimage)) != NULL;
+CODE
+    );
+}
+
+sub image_delete {
+    $blurb = 'Delete the specified image.';
+
+    $help = <<'HELP';
+If there are no displays associated with this image it will be deleted.
+This means that you can not delete an image through the PDB that was
+created by the user. If the associated display was however created
+through the PDB and you know the display ID, you may delete the display.
+Removal of the last associated display will then delete the image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    %invoke = ( code => <<'CODE' );
+{
+  if (gimage->disp_count == 0)
+    g_object_unref (gimage);
+  else
+    success = FALSE;
+}
+CODE
 }
 
 sub image_resize {
@@ -340,7 +392,7 @@ sub image_crop {
     $help = <<'HELP';
 This procedure crops the image so that it's new width and height are equal to
 the supplied parameters. Offsets are also provided which describe the position
-of the previous image's content. All channels and layers within the image are 
+of the previous image's content. All channels and layers within the image are
 cropped to the new image extents; this includes the image selection mask. If
 any parameters are out of range, an error is returned.
 HELP
@@ -399,31 +451,6 @@ HELP
 }
 CODE
     );
-}
-
-sub image_delete {
-    $blurb = 'Delete the specified image.';
-
-    $help = <<'HELP';
-If there are no displays associated with this image it will be deleted. 
-This means that you can not delete an image through the PDB that was
-created by the user. If the associated display was however created 
-through the PDB and you know the display ID, you may delete the display.
-Removal of the last associated display will then delete the image.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &std_image_arg );
-
-    %invoke = ( code => <<'CODE' );
-{
-  if (gimage->disp_count == 0)
-    g_object_unref (gimage);
-  else
-    success = FALSE;
-}
-CODE
 }
 
 sub image_free_shadow {
@@ -581,7 +608,7 @@ HELP
 	&std_image_arg,
 	{ name => 'merge_layer', type => 'layer',
 	  desc => 'The layer to merge down from' },
-	{ name => 'merge_type', 
+	{ name => 'merge_type',
 	  type => 'enum GimpMergeType (no GIMP_FLATTEN_IMAGE)',
 	  desc => 'The type of merge: { %%desc%% }' }
     );
@@ -988,7 +1015,6 @@ CODE
 }
 
 foreach (qw(width height)) {
-    push @procs, "image_$_";
     eval <<SUB;
 sub image_$_ {
     \$blurb = 'Return the $_ of the image';
@@ -1208,23 +1234,23 @@ HELP
 
     $invoke{code} = <<'CODE';
 {
-  if (!FINITE (xresolution) || 
+  if (! FINITE (xresolution) ||
       xresolution < GIMP_MIN_RESOLUTION || xresolution > GIMP_MAX_RESOLUTION ||
-      !FINITE (yresolution) || 
+      ! FINITE (yresolution) ||
       yresolution < GIMP_MIN_RESOLUTION || yresolution > GIMP_MAX_RESOLUTION)
     {
-      g_message (_("Image resolution is out of bounds, " 
+      g_message (_("Image resolution is out of bounds, "
                    "using the default resolution instead."));
       success = FALSE;
     }
   else
     {
-      gimage->xresolution = xresolution;
-      gimage->yresolution = yresolution;
+      gimp_image_set_resolution (gimage, xresolution, yresolution);
     }
 }
 CODE
 CODE2
+
 
 my $unit_help = <<'HELP';
 This value is independent of any of the layers in this image. See the
@@ -1236,7 +1262,8 @@ my $unit_misc = <<'CODE';
     $author = $copyright = 'Michael Natterer';
     $date = '1998';
 CODE
-&image_accessors('unit', 'unit (min GIMP_UNIT_INCH)', 'unit', 0,
+
+&image_accessors('unit', 'unit (min GIMP_UNIT_INCH)', 'unit', 1,
 		 [ <<CODE1, <<CODE2 ]);
     \$help .= '$unit_help';
     $unit_misc
@@ -1244,6 +1271,39 @@ CODE1
     \$help .= 'No scaling or resizing is performed. $unit_help';
     $unit_misc
 CODE2
+
+
+my $tattoo_state_misc = <<'CODE';
+    $author = $copyright = 'Andy Thomas';
+    $date = '2000';
+CODE
+&image_accessors('tattoo_state', 'int32', 'tattoo_state', 1,
+		 [ <<CODE1, <<CODE2 ]);
+    \$blurb = 'Returns the tattoo state associated with the image.';
+    \$help = <<'HELP';
+This procedure returns the tattoo state of the image. Use only by
+save/load plugins that wish to preserve an images tattoo state. Using this
+function at other times will produce unexpected results.
+HELP
+    $tattoo_state_misc
+CODE1
+    \$blurb = 'Set the tattoo state associated with the image.';
+    \$help = <<'HELP';
+This procedure sets the tattoo state of the image. Use only by
+save/load plugins that wish to preserve an images tattoo state. Using
+this function at other times will produce unexpected results. A full
+check of uniqueness of states in layers, channels and paths will be
+performed by this procedure and a execution failure will be returned
+if this fails. A failure will also be returned if the new tattoo state
+value is less than the maximum tattoo value from all of the tattoos
+from the paths, layers and channels. After the image data has been
+loaded and all the tattoos have been set then this is the last
+procedure that should be called. If effectively does a status check on
+the tattoo values that have been set to make sure that all is OK.
+HELP
+    $tattoo_state_misc
+CODE2
+
 
 foreach (qw(layer channel)) {
     push @procs, "image_get_${_}_by_tattoo";
@@ -1284,7 +1344,10 @@ SUB
 sub preview_dim_args () {
     my @args;
     foreach (qw(width height bpp)) {
-	push @args, { name => $_, type => 'int32', desc => "The previews $_", init => 1 };
+	push @args, { name => $_,
+                      type => 'int32',
+                      desc => "The previews $_",
+                      init => 1 };
     }
     @args;
 }
@@ -1293,7 +1356,7 @@ sub image_thumbnail {
     $blurb = 'Get a thumbnail of an image.';
 
     $help = <<'HELP';
-This function gets data from which a thumbnail of an image preview can be 
+This function gets data from which a thumbnail of an image preview can be
 created. Maximum x or y dimension is 1024 pixels. The pixels are returned in
 the RGB[A] format. The bpp return value gives the number of bits per pixel
 in the image. If the image has an alpha channel, it is also returned.
@@ -1304,14 +1367,10 @@ HELP
 
     @inargs = (
     	&std_image_arg,
-	{ name => 'width',
-          type => '0 < int32 <= 1024',
-	  desc => 'The thumbnail width',
-	  alias => 'req_width' },
-	{ name => 'height',
-          type => '0 < int32 <= 1024',
-	  desc => 'The thumbnail height',
-	  alias => 'req_height' }
+	{ name => 'width', type => '0 < int32 <= 1024',
+	  desc => 'The thumbnail width', alias => 'req_width' },
+	{ name => 'height', type => '0 < int32 <= 1024',
+	  desc => 'The thumbnail height', alias => 'req_height' }
     );
 
     @outargs = (
@@ -1349,101 +1408,13 @@ HELP
     {
       num_bytes      = buf->height * buf->width * buf->bytes;
       thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-      width          = buf->width;	
+      width          = buf->width;
       height         = buf->height;
       bpp            = buf->bytes;
 
       temp_buf_free (buf);
     }
 }
-CODE
-    );
-}
-
-sub image_get_tattoo_state {
-    $blurb = 'Returns the tattoo state associated with the image.';
-
-    $help = <<'HELP';
-This procedure returns the tattoo state of the image. Use only by 
-save/load plugins that wish to preserve an images tattoo state. Using this 
-function at other times will produce unexpected results.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '2000';
-
-    @inargs = ( &std_image_arg );
-
-    @outargs = (
-	{ name => 'tattoo', type => 'int32',
-	  desc => 'The tattoo state associated with the image', init => 1  }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  tattoo = gimp_image_get_tattoo_state (gimage);
-}
-CODE
-    );
-}
-
-sub image_set_tattoo_state {
-    $blurb = 'Set the tattoo state associated with the image.';
-
-    $help = <<'HELP';
-This procedure sets the tattoo state of the image. Use only by 
-save/load plugins that wish to preserve an images tattoo state. Using this 
-function at other times will produce unexpected results. A full check of 
-uniqueness of states in layers, channels and paths will be performed by this
-procedure and a execution failure will be returned if this fails. A failure 
-will also be returned if the new tattoo state value is less than the maximum
-tattoo value from all of the tattoos from the paths,layers and channels. After
-the image data has been loaded and all the tattoos have been set then this is 
-the last procedure that should be called. If effectively does a status check 
-on the tattoo values that have been set to make sure that all is OK.
-HELP
-
-    $author = $copyright = 'Andy Thomas';
-    $date = '2000';
-
-    @inargs = (
-	&std_image_arg,
-	{ name => 'tattoo', type => 'int32',
-	  desc => 'The new tattoo state of the image' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  success = gimp_image_set_tattoo_state (gimage, tattoo);
-}
-CODE
-    );
-}
-
-sub image_duplicate {
-    $blurb = 'Duplicate the specified image';
-
-    $help = <<'HELP';
-This procedure duplicates the specified image, copying all layers, channels,
-and image information.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    @inargs = ( &std_image_arg );
-
-    @outargs = ( 
-	{ name => 'new_image', type => 'image',
-	  desc => 'The new, duplicated image', init => 1 }
-    );
-
-    %invoke = (
-	headers => [ qw("core/gimpimage-duplicate.h") ],
-        code => <<'CODE'
-success = (new_image = gimp_image_duplicate (gimage)) != NULL;
 CODE
     );
 }
@@ -1480,26 +1451,26 @@ gimlist_cb (gpointer im,
 }
 CODE
 
-unshift @procs, qw(image_list image_new image_delete image_base_type
-                   image_resize image_scale image_crop image_flip
+unshift @procs, qw(image_list image_new image_duplicate image_delete
+                   image_base_type
+                   image_width image_height
 		   image_free_shadow
+                   image_resize image_scale image_crop image_flip
                    image_get_layers image_get_channels
-		   image_active_drawable image_unset_active_channel
+		   image_active_drawable
+                   image_unset_active_channel
+                   image_get_floating_sel image_floating_sel_attached_to
                    image_pick_correlate_layer
-		   image_raise_layer image_lower_layer image_raise_layer_to_top
-		   image_lower_layer_to_bottom
-                   image_merge_visible_layers image_merge_down
-                   image_flatten
                    image_add_layer image_remove_layer
-                   image_add_layer_mask image_remove_layer_mask
-                   image_raise_channel image_lower_channel
+		   image_raise_layer image_lower_layer
+                   image_raise_layer_to_top image_lower_layer_to_bottom
                    image_add_channel image_remove_channel
+                   image_raise_channel image_lower_channel
+                   image_flatten image_merge_visible_layers image_merge_down
+                   image_add_layer_mask image_remove_layer_mask
                    image_get_cmap image_set_cmap
 		   image_clean_all image_is_dirty
-                   image_get_floating_sel image_floating_sel_attached_to
-                   image_thumbnail
-		   image_set_tattoo_state image_get_tattoo_state
-		   image_duplicate);
+                   image_thumbnail);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image';

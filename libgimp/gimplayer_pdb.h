@@ -36,10 +36,11 @@ gint32               _gimp_layer_new                 (gint32                imag
 						      const gchar          *name,
 						      gdouble               opacity,
 						      GimpLayerModeEffects  mode);
+gint32               gimp_layer_new_from_drawable    (gint32                drawable_ID,
+						      gint32                dest_image_ID);
 gint32               _gimp_layer_copy                (gint32                layer_ID,
 						      gboolean              add_alpha);
-gint32               gimp_layer_create_mask          (gint32                layer_ID,
-						      GimpAddMaskType       mask_type);
+gboolean             gimp_layer_add_alpha            (gint32                layer_ID);
 gboolean             gimp_layer_scale                (gint32                layer_ID,
 						      gint                  new_width,
 						      gint                  new_height,
@@ -53,14 +54,13 @@ gboolean             gimp_layer_resize_to_image_size (gint32                laye
 gboolean             gimp_layer_translate            (gint32                layer_ID,
 						      gint                  offx,
 						      gint                  offy);
-gboolean             gimp_layer_add_alpha            (gint32                layer_ID);
 gboolean             gimp_layer_set_offsets          (gint32                layer_ID,
 						      gint                  offx,
 						      gint                  offy);
+gint32               gimp_layer_create_mask          (gint32                layer_ID,
+						      GimpAddMaskType       mask_type);
 gint32               gimp_layer_get_mask             (gint32                layer_ID);
 gboolean             gimp_layer_is_floating_sel      (gint32                layer_ID);
-gint32               gimp_layer_new_from_drawable    (gint32                drawable_ID,
-						      gint32                dest_image_ID);
 gboolean             gimp_layer_get_preserve_trans   (gint32                layer_ID);
 gboolean             gimp_layer_set_preserve_trans   (gint32                layer_ID,
 						      gboolean              preserve_trans);
