@@ -21,6 +21,7 @@ API generalization
 firetext! AND _grayscale_ for map_gradient(!)
 
 bugs
+  * never grayed out = "undef" imagetypes!!!
   * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
     gimp (pid:27638): [E]xit, [H]alt, show [S]tack trace or [P]roceed:
     this should not crash the gimp itself, but rather gimp-perl (or libc).

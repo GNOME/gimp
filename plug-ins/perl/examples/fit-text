@@ -24,12 +24,11 @@ $calls = 0;
 sub growfont {
 	($fontname, $plussize) = @_;
 	@fontdesc = split /-/, $fontname;
-	if ($fontdesc[8] eq "*") {
-	  $fontdesc[7] += $plussize/72; # if in pixels  
-	} else {
-	  $fontdesc[8] += $plussize;     # if in points
-	}
+	$fontdesc[8] eq "*" ?  
+		$fontdesc[7] += $plussize/72 : # if in pixels  
+		$fontdesc[8] += $plussize;     # if in points
 	$outname = join "-", @fontdesc;
+	print ("!!!${fontdesc[8]}-${fondesc[9]}!!!\n");
 	$calls ++;
 	return $outname;
 	}

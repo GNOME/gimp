@@ -27,9 +27,9 @@ if ($ARGV[0] ne "--writemakefile") {
 }
 
 @pins =
-   qw(windify.pl prep4gif.pl webify.pl PDB tex-to-float ditherize.pl
-      feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl perlcc
+   qw(windify prep4gif webify PDB tex-to-float ditherize
+      feedback xachlego xachshadow parasite-editor
+      scratches blowinout terral_text xachvision perlcc
       animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle mirrorsplit
@@ -39,7 +39,7 @@ if ($ARGV[0] ne "--writemakefile") {
    );
 @pdl_pins =
    qw(
-      border.pl gouge map_to_gradient pixelmap view3d.pl
+      border gouge map_to_gradient pixelmap view3d
    );
 
 push @pins, @pdl_pins if $PDL;
@@ -166,7 +166,7 @@ install :: install-po
 	      exit ; \
 	   fi \
 	done ; \
-	$(MAKE) UNINST=1 really-install install-plugins'."
+	$(MAKE) really-install install-plugins'."
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 ".$install;

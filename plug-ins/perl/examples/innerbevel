@@ -46,7 +46,7 @@ register $regname, $shortdesc, $longdesc, $authorname, $author, $date, $path, $i
 
 my ($font, $text, $color1, $color2, $azimuth, $elevation, $depth, $maptype) = @_;
 # -- step 1 -- 
-#$oldst = get_state();		# function no longer exists -- klm 20.01.06
+$oldst = get_state();
 
 gimp_palette_set_background($color1);
 gimp_palette_set_foreground($color2);
@@ -91,7 +91,7 @@ $layer2->translate(2, 3);
 $img->add_new_layer(2);
 $img->gimp_selection_none();
 
-#set_state($oldst);		# function no longer exists -- klm 20.01.06
+set_state($oldst); # Doesn't seem to work - says it can't grok color 
 return();
 };
 
