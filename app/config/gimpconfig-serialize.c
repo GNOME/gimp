@@ -33,9 +33,11 @@
 #include <io.h>
 #endif
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpconfig.h"
+#include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -81,15 +83,13 @@ gimp_config_serialize_properties (GObject *object,
 
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READWRITE))
+      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
       g_value_init (&value, prop_spec->value_type);
       g_object_get_property (object, prop_spec->name, &value);
 
-      g_string_assign (str, "(");
-      g_string_append (str, prop_spec->name);
-      g_string_append_c (str, ' ');
+      g_string_printf (str, "(%s ", prop_spec->name);
       
       if (gimp_config_serialize_value (&value, str, TRUE))
         {
@@ -158,19 +158,18 @@ gimp_config_serialize_changed_properties (GObject *new,
 
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & G_PARAM_READWRITE))
+      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
       g_value_init (&new_value, prop_spec->value_type);
       g_value_init (&old_value, prop_spec->value_type);
+
       g_object_get_property (new, prop_spec->name, &new_value);
       g_object_get_property (old, prop_spec->name, &old_value);
 
       if (!gimp_config_values_equal (&new_value, &old_value))
         {
-          g_string_assign (str, "(");
-          g_string_append (str, prop_spec->name);
-          g_string_append_c (str, ' ');
+          g_string_printf (str, "(%s ", prop_spec->name);
       
           if (gimp_config_serialize_value (&new_value, str, TRUE))
             {

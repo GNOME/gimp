@@ -248,9 +248,8 @@ gimp_rc_save (GimpRc *user_rc,
   const gchar *bottom =
     "\n"
     "# Most values can be set within The GIMP by changing some options in\n"
-    "# the Preferences dialog.\n\n";
+    "# the Preferences dialog.\n";
   const gchar *footer =
-    "\n"
     "# end of gimprc\n";
 
   gchar  *header;

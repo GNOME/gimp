@@ -31,10 +31,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-params.h"
 #include "gimpconfig-substitute.h"
 #include "gimpconfig-types.h"
 
@@ -121,7 +123,7 @@ gimp_config_deserialize_properties (GObject   *object,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & G_PARAM_READWRITE)
+      if (prop_spec->flags & GIMP_PARAM_SERIALIZE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id, 
                                       prop_spec->name, prop_spec);

@@ -23,6 +23,13 @@
 #define __GIMP_CONFIG_PARAMS_H__
 
 
+#define GIMP_PARAM_SERIALIZE    (1 << (0 + G_PARAM_USER_SHIFT))
+
+#define GIMP_CONFIG_PARAM_FLAGS (G_PARAM_READWRITE | \
+                                 G_PARAM_CONSTRUCT | \
+                                 GIMP_PARAM_SERIALIZE)
+
+
 #define GIMP_TYPE_PARAM_COLOR             (gimp_param_color_get_type ())
 #define GIMP_IS_PARAM_SPEC_COLOR(pspec)   (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SPEC_COLOR))
 
@@ -79,47 +86,52 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
   g_object_class_install_property (class, id,\
                                    g_param_spec_boolean (name, NULL, NULL,\
                                    default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_COLOR(class, id, name, default)\
+  g_object_class_install_property (class, id,\
+                                   gimp_param_spec_color (name, NULL, NULL,\
+                                   default,\
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_double (name, NULL, NULL,\
                                    min, max, default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, enum_type, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_enum (name, NULL, NULL,\
                                    enum_type, default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_INT(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_int (name, NULL, NULL,\
                                    min, max, default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_memsize (name, NULL, NULL,\
                                    min, max, default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_PATH(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_path (name, NULL, NULL,\
                                    default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_STRING(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_string (name, NULL, NULL,\
                                    default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, min, max, default)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_uint (name, NULL, NULL,\
                                    min, max, default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, NULL, NULL,\
                                    default,\
-                                   G_PARAM_READWRITE | G_PARAM_CONSTRUCT))
+                                   GIMP_CONFIG_PARAM_FLAGS))
 
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */

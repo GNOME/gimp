@@ -589,36 +589,24 @@ gimp_context_class_init (GimpContextClass *klass)
 							GIMP_TYPE_TOOL_INFO,
 							G_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class,
-				   PROP_FOREGROUND,
-				   gimp_param_spec_color (gimp_context_prop_names[FOREGROUND_CHANGED],
-                                                          NULL, NULL,
-                                                          &black,
-                                                          G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FOREGROUND,
+                                  gimp_context_prop_names[FOREGROUND_CHANGED],
+                                  &black);
 
-  g_object_class_install_property (object_class,
-				   PROP_BACKGROUND,
-				   gimp_param_spec_color (gimp_context_prop_names[BACKGROUND_CHANGED],
-                                                          NULL, NULL,
-                                                          &white,
-                                                          G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_BACKGROUND,
+                                  gimp_context_prop_names[BACKGROUND_CHANGED],
+                                  &white);
 
-  g_object_class_install_property (object_class,
-				   PROP_OPACITY,
-				   g_param_spec_double (gimp_context_prop_names[OPACITY_CHANGED],
-							NULL, NULL,
-							0.0,
-							1.0,
-							1.0,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OPACITY,
+				   gimp_context_prop_names[OPACITY_CHANGED],
+                                   GIMP_OPACITY_TRANSPARENT,
+                                   GIMP_OPACITY_OPAQUE,
+                                   GIMP_OPACITY_OPAQUE);
 
-  g_object_class_install_property (object_class,
-				   PROP_PAINT_MODE,
-				   g_param_spec_enum (gimp_context_prop_names[PAINT_MODE_CHANGED],
-                                                      NULL, NULL,
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
-                                                      G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PAINT_MODE,
+				 gimp_context_prop_names[PAINT_MODE_CHANGED],
+                                 GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                 GIMP_NORMAL_MODE);
 
   g_object_class_install_property (object_class,
 				   PROP_BRUSH,
@@ -677,12 +665,6 @@ gimp_context_init (GimpContext *context)
 
   context->tool_info     = NULL;
   context->tool_name     = NULL;
-
-  gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-
-  context->opacity       = GIMP_OPACITY_OPAQUE;
-  context->paint_mode    = GIMP_NORMAL_MODE;
 
   context->brush         = NULL;
   context->brush_name    = NULL;

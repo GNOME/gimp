@@ -215,13 +215,15 @@ gimp_config_serialize (GObject      *object,
     }
 
   if (header)
-    success = (write (fd, header, strlen (header)) != -1);
+    success = (write (fd, header, strlen (header)) != -1  &&
+               write (fd, "\n", 1)                 != -1);
 
   if (success)
     success = gimp_config_iface->serialize (object, fd, data);
 
   if (success && footer)
-    success = (write (fd, footer, strlen (footer)) != -1);
+    success = (write (fd, "\n", 1)                 != -1  &&
+               write (fd, footer, strlen (footer)) != -1);
 
   if (! success)
     {

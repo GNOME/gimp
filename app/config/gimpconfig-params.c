@@ -46,9 +46,9 @@ typedef struct _GimpParamSpecColor GimpParamSpecColor;
 
 struct _GimpParamSpecColor
 {
-  GParamSpecBoxed parent_instance;
+  GParamSpecBoxed  parent_instance;
 
-  GimpRGB default_value;
+  GimpRGB          default_value;
 };
 
 GType
@@ -99,12 +99,8 @@ gimp_param_color_set_default (GParamSpec *pspec,
                               GValue     *value)
 {
   GimpParamSpecColor *cspec = GIMP_PARAM_SPEC_COLOR (pspec);
-  GimpRGB            *color;
 
-  color = value->data[0].v_pointer;
-
-  if (color)
-    *color = cspec->default_value;
+  g_value_set_static_boxed (value, &cspec->default_value);
 }
 
 static gboolean

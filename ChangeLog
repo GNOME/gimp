@@ -1,3 +1,31 @@
+2002-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am: need to link test-config against
+	libgimpcolor now.
+
+	* app/config/gimpconfig.c (gimp_config_serialize): write newlines
+	after header and before footer.
+
+	* app/config/test-config.c
+	* app/config/gimprc.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/gui/test-commands.c: removed the newlines here.
+
+	* app/config/gimpconfig-params.h: define GIMP_PARAM_SERIALZE flag
+	which can be used to mark an object property as serializable.
+	Make the GIMP_CONFIG_INSTALL_PROP_* macros set it.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: check the GIMP_PARAM_SERIALIZE
+	flag.
+
+	* app/config/gimpconfig-params.c (gimp_param_color_set_default):
+	fixed.
+
+	* app/core/gimpcontext.c: install serializable properties using the
+	GIMP_CONFIG_INSTALL_PROP_* macros.
+
 2002-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-types.[ch]: added GIMP_TYPE_COLOR as boxed

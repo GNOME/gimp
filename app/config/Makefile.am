@@ -61,6 +61,7 @@ test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\
         ../display/libappdisplay.a					\
         ../widgets/libappwidgets.a					\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 @STRIP_END@
 
 test_config_LDADD = @STRIP_BEGIN@ 	\
