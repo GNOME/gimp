@@ -163,15 +163,11 @@ nav_window_disp_area (NavWinData *iwd,
   newwidth = gimage->width;
   newheight = gimage->height;
 
-  if (!gdisp->dot_for_dot)
+  if(!gdisp->dot_for_dot)
     {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      newwidth = (gdouble)newwidth * unit_factor / gdisp->gimage->xresolution + 0.5;
-      newheight = (gdouble)newheight * unit_factor / gdisp->gimage->yresolution + 0.5;
-      iwd->dispx = (gdouble)iwd->dispx * unit_factor / gdisp->gimage->xresolution + 0.5;
-      iwd->dispy = (gdouble)iwd->dispy * unit_factor / gdisp->gimage->yresolution + 0.5;
-      iwd->dispwidth = (gdouble)iwd->dispwidth * unit_factor / gdisp->gimage->xresolution + 0.5;
-      iwd->dispheight = (gdouble)iwd->dispheight * unit_factor / gdisp->gimage->yresolution + 0.5;
+      newwidth = (newwidth * gdisp->gimage->yresolution)/ gdisp->gimage->xresolution;
+      iwd->dispx = ((gdisp->offset_x * gdisp->gimage->yresolution * iwd->ratio)/ (gdisp->gimage->xresolution *  xratio)) + 0.5; /* here */
+      iwd->dispwidth = ((gdisp->disp_width * gdisp->gimage->yresolution * iwd->ratio)/ (gdisp->gimage->xresolution *  xratio)) + 0.5; /* here */
     }
 
   if((iwd->imagewidth > 0 && newwidth != iwd->imagewidth) ||
@@ -280,15 +276,18 @@ set_size_data (NavWinData *iwd)
   sel_width = gimage->width;
   sel_height = gimage->height;
 
+  if(!gdisp->dot_for_dot)
+    sel_width = (sel_width * gdisp->gimage->yresolution)/ gdisp->gimage->xresolution;
+
   if (sel_width > sel_height) {
-    pwidth  = MIN(sel_width, iwd->nav_preview_width);
+    pwidth  = iwd->nav_preview_width;
     /*     pheight  = sel_height * pwidth / sel_width; */
     iwd->ratio = (gdouble)pwidth / ((gdouble)sel_width);
     pheight = sel_height * iwd->ratio + 0.5;
     iwd->ratio = (gdouble)pheight/(gdouble)sel_height;
     pwidth  = sel_width * iwd->ratio + 0.5;
   } else {
-    pheight = MIN(sel_height, iwd->nav_preview_height);
+    pheight = iwd->nav_preview_height;
 /*     pwidth  = sel_width * pheight / sel_height; */
     iwd->ratio = (gdouble)pheight / ((gdouble)sel_height);
     pwidth = sel_width * iwd->ratio + 0.5;
@@ -296,17 +295,8 @@ set_size_data (NavWinData *iwd)
     pheight = sel_height * iwd->ratio + 0.5;
   }
 
-  if (gdisp->dot_for_dot)
-    {
-      iwd->pwidth = pwidth;
-      iwd->pheight = pheight;
-    }
-  else
-    {
-      gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      iwd->pwidth = ((gdouble)pwidth * unit_factor)/(gdisp->gimage->xresolution);
-      iwd->pheight = ((gdouble)pheight * unit_factor)/(gdisp->gimage->yresolution);
-    }
+  iwd->pwidth = pwidth;
+  iwd->pheight = pheight;
 }
 
 static void 
@@ -387,18 +377,17 @@ update_real_view (NavWinData *iwd,
 			 */
     }
 
-  xpnt = (gint)(((gdouble)(tx)*xratio)/iwd->ratio);
+  xpnt = (gint)(((gdouble)(tx)*xratio)/iwd->ratio+0.5);
 
   if((ty + iwd->dispheight) >= iwd->pheight)
     ty = iwd->pheight; /* Same comment as for xpnt above. */
 
-  ypnt = (gint)(((gdouble)(ty)*yratio)/iwd->ratio);
+  ypnt = (gint)(((gdouble)(ty)*yratio)/iwd->ratio+0.5);
 
-  if (!gdisp->dot_for_dot)
+  if (!gdisp->dot_for_dot) /* here */
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      xpnt = ((gdouble)xpnt * gdisp->gimage->xresolution) / unit_factor + 0.5;
-      ypnt = ((gdouble)ypnt * gdisp->gimage->yresolution) / unit_factor + 0.5;
+      xpnt = ((gdouble)xpnt * gdisp->gimage->xresolution) / gdisp->gimage->yresolution + 0.5;
     }
 
   xoffset = xpnt - gdisp->offset_x;
@@ -439,11 +428,25 @@ nav_window_update_preview (NavWinData *iwd)
    *  gimp_image_construct_composite_preview() can't cope with 
    *  dot_for_dot not been set.
    */
-  if (!gdisp->dot_for_dot)
+  if (!gdisp->dot_for_dot) /* ALT */ 
     {
-      gdouble unit_factor = gimp_unit_get_factor (gimage->unit);
-      pwidth = ((gdouble)iwd->pwidth * (gimage->xresolution))/(unit_factor)+0.5;
-      pheight = ((gdouble)iwd->pheight * (gimage->yresolution))/(unit_factor)+0.5;
+      gint sel_width = gimage->width;
+      gint sel_height = gimage->height;
+      gdouble tratio;
+      
+      if (sel_width > sel_height) {
+	pwidth  = iwd->nav_preview_width;
+	tratio = (gdouble)pwidth / ((gdouble)sel_width);
+	pheight = sel_height * tratio + 0.5;
+	tratio = (gdouble)pheight/(gdouble)sel_height;
+	pwidth  = sel_width * tratio + 0.5;
+      } else {
+	pheight = iwd->nav_preview_height;
+	tratio = (gdouble)pheight / ((gdouble)sel_height);
+	pwidth = sel_width * tratio + 0.5;
+	tratio = (gdouble)pwidth/(gdouble)sel_width;
+	pheight = sel_height * tratio + 0.5;
+      }
     }
 
   preview_buf = gimp_image_construct_composite_preview (gimage,

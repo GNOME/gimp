@@ -1,3 +1,11 @@
+Wed Nov 10 23:03:33 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c 
+
+	Nav preview now really does work with !sqr pixels & dot_for_dot
+	off...
+	Nav preview for small images fixed.
+
 Wed Nov 10 11:16:54 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/fade-outline.scm: updated version
