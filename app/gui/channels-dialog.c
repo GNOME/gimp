@@ -156,8 +156,9 @@ static void channel_widget_drag_leave_callback     (GtkWidget *,
 						    guint);
 static void channel_widget_drag_indicator_callback (GtkWidget *, gpointer);
 
-static void channel_widget_set_color           (gpointer,
-						guchar, guchar, guchar);
+static void channel_widget_drop_color          (GtkWidget *,
+						guchar, guchar, guchar,
+						gpointer);
 static void channel_widget_draw_drop_indicator (ChannelWidget *, GimpDropType);
 static void channel_widget_delete              (ChannelWidget *);
 static void channel_widget_select_update       (GtkWidget *, gpointer);
@@ -1387,7 +1388,7 @@ channel_widget_create (GImage      *gimage,
 			 channel_color_target_table, n_channel_color_targets,
 			 GDK_ACTION_MOVE | GDK_ACTION_COPY);
       gimp_dnd_color_dest_set (list_item,
-			       channel_widget_set_color,
+			       channel_widget_drop_color,
 			       (gpointer) channel_widget);
 
       gtk_signal_connect (GTK_OBJECT (list_item), "drag_leave",
@@ -1630,10 +1631,11 @@ channel_widget_drag_indicator_callback (GtkWidget *widget,
 }
 
 static void
-channel_widget_set_color (gpointer  data,
-			  guchar    r,
-			  guchar    g,
-			  guchar    b)
+channel_widget_drop_color (GtkWidget *widget,
+			   guchar     r,
+			   guchar     g,
+			   guchar     b,
+			   gpointer   data)
 {
   ChannelWidget *channel_widget = (ChannelWidget *) data;
   Channel *channel = channel_widget->channel;

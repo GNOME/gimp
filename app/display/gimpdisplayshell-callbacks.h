@@ -38,9 +38,10 @@ gboolean gdisplay_drag_drop (GtkWidget      *widget,
 			     gint            y,
 			     guint           time,
 			     gpointer        data);
-void     gdisplay_set_color (gpointer        data,
+void     gdisplay_set_color (GtkWidget      *widget,
 			     guchar          r,
 			     guchar          g,
-			     guchar          b);
+			     guchar          b,
+			     gpointer        data);
 
 #endif /* __DISP_CALLBACKS_H__ */

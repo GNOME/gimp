@@ -35,8 +35,10 @@ typedef enum
 } ColorAreaTarget;
 
 /*  local function prototypes  */
-static void color_area_set_color (gpointer, guchar, guchar, guchar);
-static void color_area_get_color (gpointer, guchar *, guchar *, guchar *);
+static void color_area_drop_color (GtkWidget *,
+				   guchar, guchar, guchar, gpointer);
+static void color_area_drag_color (GtkWidget *,
+				   guchar *, guchar *, guchar *, gpointer);
 
 /*  Global variables  */
 gint active_color = FOREGROUND;
@@ -405,7 +407,7 @@ color_area_create (gint       width,
                        GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
                        color_area_target_table, n_color_area_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (color_area, color_area_get_color, NULL);
+  gimp_dnd_color_source_set (color_area, color_area_drag_color, NULL);
 
   gtk_drag_dest_set (color_area,
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -413,7 +415,7 @@ color_area_create (gint       width,
 		     GTK_DEST_DEFAULT_DROP,
 		     color_area_target_table, n_color_area_targets,
 		     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (color_area, color_area_set_color, NULL);
+  gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
 
   return color_area;
 }
@@ -425,10 +427,11 @@ color_area_update ()
 }
 
 static void
-color_area_get_color (gpointer  data,
-		      guchar   *r,
-		      guchar   *g,
-		      guchar   *b)
+color_area_drag_color (GtkWidget *widget,
+		       guchar    *r,
+		       guchar    *g,
+		       guchar    *b,
+		       gpointer   data)
 {
   if (active_color == FOREGROUND)
     palette_get_foreground (r, g, b);
@@ -437,10 +440,11 @@ color_area_get_color (gpointer  data,
 }
 
 static void
-color_area_set_color (gpointer  data,
-		      guchar    r,
-		      guchar    g,
-		      guchar    b)
+color_area_drop_color (GtkWidget *widget,
+		       guchar     r,
+		       guchar     g,
+		       guchar     b,
+		       gpointer   data)
 {
   if (color_notebook_active &&
       active_color == edit_color)

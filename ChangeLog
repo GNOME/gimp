@@ -1,5 +1,17 @@
 1999-08-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/color_panel.c
+	* app/color_select.c
+	* app/disp_callbacks.[ch]
+	* app/gimpdnd.[ch]: pass the widget to the color dnd callbacks.
+
+	* app/palette.c: color dnd for the palette dialog. Shift+click
+	toggles setting the FG/BG color now.
+
+1999-08-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/color_select.[ch]: color dnd for the standard color
 	selection widget (the "GIMP" color notebook page).
 

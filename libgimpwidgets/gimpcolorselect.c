@@ -87,12 +87,15 @@ struct _ColorSelectFill
 
 static GtkWidget * color_select_widget_new (ColorSelect *, gint, gint, gint);
 
-static void color_select_drag_new_color    (gpointer,
-					    guchar *, guchar *, guchar *);
-static void color_select_drop_new_color    (gpointer,
-					    guchar, guchar, guchar);
-static void color_select_drag_old_color    (gpointer,
-					    guchar *, guchar *, guchar *);
+static void color_select_drag_new_color    (GtkWidget *,
+					    guchar *, guchar *, guchar *,
+					    gpointer);
+static void color_select_drop_new_color    (GtkWidget *,
+					    guchar, guchar, guchar,
+					    gpointer);
+static void color_select_drag_old_color    (GtkWidget *,
+					    guchar *, guchar *, guchar *,
+					    gpointer);
 
 static void color_select_update            (ColorSelect *,
 					    ColorSelectUpdateType);
@@ -461,10 +464,11 @@ color_select_widget_new (ColorSelect *csp,
 }
 
 static void
-color_select_drag_new_color (gpointer  data,
-			     guchar   *r,
-			     guchar   *g,
-			     guchar   *b)
+color_select_drag_new_color (GtkWidget *widget,
+			     guchar    *r,
+			     guchar    *g,
+			     guchar    *b,
+			     gpointer   data)
 {
   ColorSelect *csp;
 
@@ -476,10 +480,11 @@ color_select_drag_new_color (gpointer  data,
 }
 
 static void
-color_select_drop_new_color (gpointer  data,
-			     guchar    r,
-			     guchar    g,
-			     guchar    b)
+color_select_drop_new_color (GtkWidget *widget,
+			     guchar     r,
+			     guchar     g,
+			     guchar     b,
+			     gpointer   data)
 {
   ColorSelect *csp;
 
@@ -500,10 +505,11 @@ color_select_drop_new_color (gpointer  data,
 }
 
 static void
-color_select_drag_old_color (gpointer  data,
-			     guchar   *r,
-			     guchar   *g,
-			     guchar   *b)
+color_select_drag_old_color (GtkWidget *widget,
+			     guchar    *r,
+			     guchar    *g,
+			     guchar    *b,
+			     gpointer   data)
 {
   ColorSelect *csp;
 

@@ -46,8 +46,10 @@ static gint color_panel_events          (GtkWidget *, GdkEvent *);
 static void color_panel_select_callback (gint, gint, gint,
 					 ColorNotebookState, void *);
 
-static void color_panel_get_color (gpointer, guchar *, guchar *, guchar *);
-static void color_panel_set_color (gpointer, guchar, guchar, guchar);
+static void color_panel_drag_color (GtkWidget *,
+				    guchar *, guchar *, guchar *, gpointer);
+static void color_panel_drop_color (GtkWidget *,
+				    guchar, guchar, guchar, gpointer);
 
 /*  dnd stuff  */
 static GtkTargetEntry color_panel_target_table[] =
@@ -104,7 +106,7 @@ color_panel_new (guchar *initial,
                        color_panel_target_table, n_color_panel_targets,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (private->drawing_area,
-			     color_panel_get_color, color_panel);
+			     color_panel_drag_color, color_panel);
 
   gtk_drag_dest_set (private->drawing_area,
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -113,7 +115,7 @@ color_panel_new (guchar *initial,
 		     color_panel_target_table, n_color_panel_targets,
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (private->drawing_area,
-			   color_panel_set_color, color_panel);
+			   color_panel_drop_color, color_panel);
 
   return color_panel;
 }
@@ -266,10 +268,11 @@ color_panel_select_callback (gint                r,
 }
 
 static void
-color_panel_get_color (gpointer  data,
-		       guchar   *r,
-		       guchar   *g,
-		       guchar   *b)
+color_panel_drag_color (GtkWidget *widget,
+			guchar    *r,
+			guchar    *g,
+			guchar    *b,
+			gpointer   data)
 {
   ColorPanel *color_panel = data;
 
@@ -279,10 +282,11 @@ color_panel_get_color (gpointer  data,
 }
 
 static void
-color_panel_set_color (gpointer  data,
-		       guchar    r,
-		       guchar    g,
-		       guchar    b)
+color_panel_drop_color (GtkWidget *widget,
+			guchar     r,
+			guchar     g,
+			guchar     b,
+			gpointer   data)
 {
   ColorPanel *color_panel = data;
   ColorPanelPrivate *private = (ColorPanelPrivate *) color_panel->private_part;

@@ -39,6 +39,7 @@
 #include "datafiles.h"
 #include "devices.h"
 #include "errors.h"
+#include "gimpdnd.h"
 #include "gimprc.h"
 #include "gradient_header.h"
 #include "gradient.h"
@@ -132,6 +133,10 @@ static void  palette_entries_save (PaletteEntriesP, char *);
 
 PaletteDialog * create_palette_dialog (gboolean vert);
 
+static void     palette_drag_color (GtkWidget *,
+				    guchar *, guchar *, guchar *, gpointer);
+static void     palette_drop_color (GtkWidget *,
+				    guchar, guchar, guchar, gpointer);
 static void     palette_draw_entries (PaletteDialog *palette, gint row_start,
 				      gint column_highlight);
 static void     redraw_palette       (PaletteDialog *palette);
@@ -161,6 +166,14 @@ static ImportDialog    *import_dialog = NULL;
 
 PaletteDialog          *top_level_edit_palette = NULL;
 PaletteDialog          *top_level_palette = NULL;
+
+/*  dnd stuff  */
+static GtkTargetEntry color_palette_target_table[] =
+{
+  GIMP_TARGET_COLOR
+};
+static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
+					sizeof (color_palette_target_table[0]));
 
 static void
 palette_entries_free (PaletteEntriesP entries)
@@ -442,7 +455,6 @@ palette_entry_free (PaletteEntryP entry)
 
   g_free (entry);
 }
-
 
 void
 palette_free ()
@@ -1511,9 +1523,19 @@ palette_color_area_events (GtkWidget     *widget,
 	      g = palette->color->color[1];
 	      b = palette->color->color[2];
 	      if (active_color == FOREGROUND)
-		palette_set_foreground (r, g, b);
+		{
+		  if (bevent->state & GDK_CONTROL_MASK)
+		    palette_set_background (r, g, b);
+		  else
+		    palette_set_foreground (r, g, b);
+		}
 	      else if (active_color == BACKGROUND)
-		palette_set_background (r, g, b);
+		{
+		  if (bevent->state & GDK_CONTROL_MASK)
+		    palette_set_foreground (r, g, b);
+		  else
+		    palette_set_background (r, g, b);
+		}
 
 	      palette_draw_entries (palette, row, col);
 	      /*  Update the active color name  */
@@ -2063,10 +2085,25 @@ create_palette_dialog (gint vert)
 		      (GtkSignalFunc) palette_color_area_events,
 		      palette);
 
-  gtk_widget_show (palette_region);
   gtk_container_add (GTK_CONTAINER (alignment), palette_region);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
 					 alignment);
+  gtk_widget_show (palette_region);
+
+  /*  dnd stuff  */
+  gtk_drag_source_set (palette_region,
+                       GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+                       color_palette_target_table, n_color_palette_targets,
+                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
+  gimp_dnd_color_source_set (palette_region, palette_drag_color, palette);
+
+  gtk_drag_dest_set (alignment,
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     color_palette_target_table, n_color_palette_targets,
+                     GDK_ACTION_COPY);
+  gimp_dnd_color_dest_set (alignment, palette_drop_color, palette);
 
   /*  The color name entry  */
   hbox2 = gtk_hbox_new (FALSE, 2);
@@ -2225,6 +2262,77 @@ create_palette_dialog (gint vert)
   palette_popup_menu (palette);
 
   return palette;
+}
+
+static void
+palette_drag_color (GtkWidget *widget,
+		    guchar    *r,
+		    guchar    *g,
+		    guchar    *b,
+		    gpointer   data)
+{
+  PaletteDialog *palette;
+
+  palette = (PaletteDialog *) data;
+
+  if (palette && palette->entries)
+    {
+      *r = (guchar) palette->color->color[0];
+      *g = (guchar) palette->color->color[1];
+      *b = (guchar) palette->color->color[2];
+    }
+}
+
+static void
+palette_drop_color (GtkWidget *widget,
+		    guchar      r,
+		    guchar      g,
+		    guchar      b,
+		    gpointer    data)
+{
+  PaletteDialog *palette;
+  gchar  *name;
+  gchar  *num_buf;
+  GSList *list;
+  gint    pos = 0;
+  PaletteEntriesP p_entries = NULL;
+
+  palette = (PaletteDialog *) data;
+
+  if (palette && palette->entries)
+    {
+      name = g_strdup_printf ("#%2x%2x%2x", r, g, b);
+
+      palette->color =
+	palette_add_entry (palette->entries, name, r, g, b);
+
+      g_free (name);
+
+      redraw_palette (palette);
+
+      list = palette_entries_list;
+      
+      while (list)
+	{
+	  p_entries = (PaletteEntriesP) list->data;
+	  list = g_slist_next (list);
+	  
+	  /*  to make sure we get something!  */
+	  if (p_entries == NULL)
+	    {
+	      p_entries = default_palette_entries;
+	    }
+	  if (p_entries == palette->entries)
+	    break;
+	  pos++;
+	}
+
+      num_buf = g_strdup_printf ("%d", p_entries->n_colors);;
+      palette_draw_small_preview (palette->gc, p_entries);
+      gtk_clist_set_text (GTK_CLIST (palette->clist), pos, 1, num_buf);
+      palette_select_set_text_all (palette->entries);
+      palette_select2_set_text_all (palette->entries);
+    }
 }
 
 static void

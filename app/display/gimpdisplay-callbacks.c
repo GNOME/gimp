@@ -754,10 +754,11 @@ gdisplay_drag_drop (GtkWidget      *widget,
 }
 
 void
-gdisplay_set_color (gpointer  data,
-		    guchar    r,
-		    guchar    g,
-		    guchar    b)
+gdisplay_set_color (GtkWidget *widget,
+		    guchar     r,
+		    guchar     g,
+		    guchar     b,
+		    gpointer   data)
 {
   GimpImage    *gimage;
   GimpDrawable *drawable;

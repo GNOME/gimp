@@ -231,11 +231,11 @@ gimp_dnd_color_drag_begin (GtkWidget      *widget,
   GtkWidget *window;
   GdkColor bg;
   guchar r, g, b;
-  GimpDndGetColorFunc get_color_func;
+  GimpDndDragColorFunc get_color_func;
 
   get_color_func =
-    (GimpDndGetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-					       "gimp_dnd_get_color_func");
+    (GimpDndDragColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+						"gimp_dnd_get_color_func");
 
   if (! get_color_func)
     return;
@@ -249,7 +249,7 @@ gimp_dnd_color_drag_begin (GtkWidget      *widget,
                             window,
                             (GtkDestroyNotify) gtk_widget_destroy);
 
-  (* get_color_func) (data, &r, &g, &b);
+  (* get_color_func) (widget, &r, &g, &b, data);
 
   bg.red   = 0xff * r;
   bg.green = 0xff * g;
@@ -279,16 +279,16 @@ gimp_dnd_color_drag_handle (GtkWidget        *widget,
 {
   guint16 vals[4];
   guchar r, g, b;
-  GimpDndGetColorFunc get_color_func;
+  GimpDndDragColorFunc get_color_func;
 
   get_color_func =
-    (GimpDndGetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-					       "gimp_dnd_get_color_func");
+    (GimpDndDragColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+						"gimp_dnd_get_color_func");
 
   if (! get_color_func)
     return;
 
-  (* get_color_func) (data, &r, &g, &b);
+  (* get_color_func) (widget, &r, &g, &b, data);
 
   vals[0] = r * 0xff;
   vals[1] = g * 0xff;
@@ -312,11 +312,11 @@ gimp_dnd_color_drop_handle (GtkWidget        *widget,
 {
   guint16 *vals;
   guchar r, g, b;
-  GimpDndSetColorFunc set_color_func;
+  GimpDndDropColorFunc set_color_func;
 
   set_color_func =
-    (GimpDndSetColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
-					       "gimp_dnd_set_color_func");
+    (GimpDndDropColorFunc) gtk_object_get_data (GTK_OBJECT (widget),
+						"gimp_dnd_set_color_func");
 
   if (! set_color_func)
     return;
@@ -337,13 +337,13 @@ gimp_dnd_color_drop_handle (GtkWidget        *widget,
   g = vals[1] / 0xff;
   b = vals[2] / 0xff;
 
-  (* set_color_func) (data, r, g, b);
+  (* set_color_func) (widget, r, g, b, data);
 }
 
 void
-gimp_dnd_color_source_set (GtkWidget           *widget,
-			   GimpDndGetColorFunc  get_color_func,
-			   gpointer             data)
+gimp_dnd_color_source_set (GtkWidget            *widget,
+			   GimpDndDragColorFunc  get_color_func,
+			   gpointer              data)
 {
   gtk_signal_connect (GTK_OBJECT (widget), "drag_begin",
                       GTK_SIGNAL_FUNC (gimp_dnd_color_drag_begin),
@@ -360,9 +360,9 @@ gimp_dnd_color_source_set (GtkWidget           *widget,
 }
 
 void
-gimp_dnd_color_dest_set (GtkWidget           *widget,
-			 GimpDndSetColorFunc  set_color_func,
-			 gpointer             data)
+gimp_dnd_color_dest_set (GtkWidget            *widget,
+			 GimpDndDropColorFunc  set_color_func,
+			 gpointer              data)
 {
   gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
                       GTK_SIGNAL_FUNC (gimp_dnd_color_drop_handle),

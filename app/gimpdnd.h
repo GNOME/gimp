@@ -82,15 +82,17 @@ void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 
 /*  color dnd functions  */
 
-typedef void (*GimpDndSetColorFunc) (gpointer, guchar, guchar, guchar); 
-typedef void (*GimpDndGetColorFunc) (gpointer, guchar *, guchar *, guchar *); 
+typedef void (*GimpDndDropColorFunc) (GtkWidget *,
+				      guchar, guchar, guchar, gpointer); 
+typedef void (*GimpDndDragColorFunc) (GtkWidget *,
+				      guchar *, guchar *, guchar *, gpointer); 
 
-void  gimp_dnd_color_source_set (GtkWidget           *widget,
-				 GimpDndGetColorFunc  get_color_func,
-				 gpointer             data);
+void  gimp_dnd_color_source_set (GtkWidget            *widget,
+				 GimpDndDragColorFunc  get_color_func,
+				 gpointer              data);
 
-void  gimp_dnd_color_dest_set   (GtkWidget           *widget,
-				 GimpDndSetColorFunc  set_color_func,
-				 gpointer             data);
+void  gimp_dnd_color_dest_set   (GtkWidget            *widget,
+				 GimpDndDropColorFunc  set_color_func,
+				 gpointer              data);
 
 #endif /* __GIMP_DND_H__ */
