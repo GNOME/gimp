@@ -1,3 +1,22 @@
+2003-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/tool-options-menu.[ch] (tool_options_menu_setup): new
+	function for stuff which needs to be done once, not on every
+	tool_options_menu_update(). Cleanup.
+
+	* app/gui/menus.c: register it as setup_func of <ToolOptions>.
+
+	* app/gui/tool-options-commands.c: removed the "Reset"
+	implementations and activate GimpToolOptionsEditor's buttons
+	accordingly.
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_TOOL_OPTIONS_DELETE.
+
+	* app/widgets/gimptooloptionseditor.[ch]: moved "Reset"
+	implementations to this file. Added "Delete" button. Pop up the
+	"Save", "Restore" and "Delete" submenus of the <ToolOptions>
+	item_factory when the resp. buttons are clicked.
+
 2003-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimptoolinfo.[ch]: added a GimpContainer of tool

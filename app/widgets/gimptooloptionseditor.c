@@ -29,13 +29,16 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimptooloptionseditor.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -49,7 +52,12 @@ static void   gimp_tool_options_editor_save_clicked    (GtkWidget             *w
                                                         GimpToolOptionsEditor *editor);
 static void   gimp_tool_options_editor_restore_clicked (GtkWidget             *widget,
                                                         GimpToolOptionsEditor *editor);
+static void   gimp_tool_options_editor_delete_clicked  (GtkWidget             *widget,
+                                                        GimpToolOptionsEditor *editor);
 static void   gimp_tool_options_editor_reset_clicked   (GtkWidget             *widget,
+                                                        GimpToolOptionsEditor *editor);
+static void gimp_tool_options_editor_reset_ext_clicked (GtkWidget             *widget,
+                                                        GdkModifierType        state,
                                                         GimpToolOptionsEditor *editor);
 
 static void   gimp_tool_options_editor_drop_tool       (GtkWidget             *widget,
@@ -108,10 +116,11 @@ static void
 gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 {
   GtkWidget *scrolled_win;
+  gchar     *str;
 
   editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_SAVE,
-                            _("Save current settings as default values"),
+                            _("Save options"),
                             GIMP_HELP_TOOL_OPTIONS_SAVE,
                             G_CALLBACK (gimp_tool_options_editor_save_clicked),
                             NULL,
@@ -119,19 +128,31 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 
   editor->restore_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_REVERT_TO_SAVED,
-                            _("Restore saved default values"),
+                            _("Restore saved options"),
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),
                             NULL,
                             editor);
 
-  editor->reset_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_RESET,
-                            _("Reset to factory defaults"),
-                            GIMP_HELP_TOOL_OPTIONS_RESET,
-                            G_CALLBACK (gimp_tool_options_editor_reset_clicked),
+  editor->delete_button =
+    gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_DELETE,
+                            _("Delete saved options"),
+                            GIMP_HELP_TOOL_OPTIONS_DELETE,
+                            G_CALLBACK (gimp_tool_options_editor_delete_clicked),
                             NULL,
                             editor);
+
+  str = g_strdup_printf (_("Reset to default values\n"
+                           "%s  Reset all Tool Options"),
+                         gimp_get_mod_name_shift ());
+  editor->reset_button =
+    gimp_editor_add_button (GIMP_EDITOR (editor), GIMP_STOCK_RESET,
+                            str,
+                            GIMP_HELP_TOOL_OPTIONS_RESET,
+                            G_CALLBACK (gimp_tool_options_editor_reset_clicked),
+                            G_CALLBACK (gimp_tool_options_editor_reset_ext_clicked),
+                            editor);
+  g_free (str);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -220,58 +241,116 @@ gimp_tool_options_editor_new (Gimp            *gimp,
 }
 
 static void
+gimp_tool_options_editor_menu_pos (GtkMenu  *menu,
+                                   gint     *x,
+                                   gint     *y,
+                                   gboolean *push_in,
+                                   gpointer  func_data)
+{
+  gimp_button_menu_position (GTK_WIDGET (func_data), menu, GTK_POS_RIGHT, x, y);
+}
+
+static void
+gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
+                                     GtkWidget             *button,
+                                     const gchar           *path)
+{
+  GtkItemFactory *item_factory;
+  GtkWidget      *menu;
+
+  item_factory = GTK_ITEM_FACTORY (GIMP_EDITOR (editor)->item_factory);
+
+  gimp_item_factory_update (GIMP_EDITOR (editor)->item_factory,
+                            GIMP_EDITOR (editor)->item_factory_data);
+
+  menu = gtk_item_factory_get_widget (item_factory, path);
+
+  if (menu)
+    gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+                    gimp_tool_options_editor_menu_pos, button,
+                    1, GDK_CURRENT_TIME);
+}
+
+static void
 gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
                                        GimpToolOptionsEditor *editor)
 {
-  GimpToolInfo *tool_info;
-
-  tool_info = gimp_context_get_tool (gimp_get_user_context (editor->gimp));
-
-  if (tool_info)
-    {
-      GError *error = NULL;
-
-      if (! gimp_tool_options_serialize (tool_info->tool_options, "user",
-                                         &error))
-        {
-          g_message ("EEK: %s\n", error->message);
-          g_clear_error (&error);
-        }
-    }
+  gimp_tool_options_editor_menu_popup (editor, widget, "/Save Options to");
 }
 
 static void
 gimp_tool_options_editor_restore_clicked (GtkWidget             *widget,
                                           GimpToolOptionsEditor *editor)
 {
-  GimpToolInfo *tool_info;
+  gimp_tool_options_editor_menu_popup (editor, widget, "/Restore Options from");
+}
 
-  tool_info = gimp_context_get_tool (gimp_get_user_context (editor->gimp));
-
-  if (tool_info)
-    {
-      /*  Need to reset the tool-options since only the changes
-       *  from the default values are written to disk.
-       */
-      g_object_freeze_notify (G_OBJECT (tool_info->tool_options));
-
-      gimp_tool_options_reset (tool_info->tool_options);
-      gimp_tool_options_deserialize (tool_info->tool_options, "user", NULL);
-
-      g_object_thaw_notify (G_OBJECT (tool_info->tool_options));
-    }
+static void
+gimp_tool_options_editor_delete_clicked (GtkWidget             *widget,
+                                         GimpToolOptionsEditor *editor)
+{
+  gimp_tool_options_editor_menu_popup (editor, widget, "/Delete Saved Options");
 }
 
 static void
 gimp_tool_options_editor_reset_clicked (GtkWidget             *widget,
                                         GimpToolOptionsEditor *editor)
 {
-  GimpToolInfo *tool_info;
+  gimp_tool_options_editor_reset_ext_clicked (widget, 0, editor);
+}
 
-  tool_info = gimp_context_get_tool (gimp_get_user_context (editor->gimp));
+static void
+gimp_tool_options_editor_reset_all_callback (GtkWidget *widget,
+                                             gboolean   reset_all,
+                                             gpointer   data)
+{
+  Gimp *gimp = GIMP (data);
 
-  if (tool_info)
-    gimp_tool_options_reset (tool_info->tool_options);
+  if (reset_all)
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (gimp->tool_info_list)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpToolInfo *tool_info = list->data;
+
+          gimp_tool_options_reset (tool_info->tool_options);
+        }
+    }
+}
+
+static void
+gimp_tool_options_editor_reset_ext_clicked (GtkWidget             *widget,
+                                            GdkModifierType        state,
+                                            GimpToolOptionsEditor *editor)
+{
+  if (state & GDK_SHIFT_MASK)
+    {
+      GtkWidget *qbox;
+
+      qbox = gimp_query_boolean_box (_("Reset Tool Options"),
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_TOOL_OPTIONS_RESET,
+                                     GTK_STOCK_DIALOG_QUESTION,
+                                     _("Do you really want to reset all\n"
+                                       "tool options to default values?"),
+                                     GIMP_STOCK_RESET, GTK_STOCK_CANCEL,
+                                     G_OBJECT (editor), "unmap",
+                                     gimp_tool_options_editor_reset_all_callback,
+                                     editor->gimp);
+      gtk_widget_show (qbox);
+    }
+  else
+    {
+      GimpToolInfo *tool_info;
+
+      tool_info = gimp_context_get_tool (gimp_get_user_context (editor->gimp));
+
+      if (tool_info)
+        gimp_tool_options_reset (tool_info->tool_options);
+    }
 }
 
 static void

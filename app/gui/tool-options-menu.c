@@ -44,7 +44,7 @@ GimpItemFactoryEntry tool_options_menu_entries[] =
       tool_options_save_new_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_NEW },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_TOOL_OPTIONS_SAVE, NULL },
   { { N_("/Save Options to/new-separator"), "",
       NULL, 0,
       "<Separator>", NULL },
@@ -82,6 +82,15 @@ gint n_tool_options_menu_entries = G_N_ELEMENTS (tool_options_menu_entries);
 
 
 void
+tool_options_menu_setup (GimpItemFactory *factory)
+{
+  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
+                                   "/Restore Options from/(None)", FALSE);
+  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (factory),
+                                   "/Delete Saved Options/(None)", FALSE);
+}
+
+void
 tool_options_menu_update (GtkItemFactory *factory,
                           gpointer        data)
 {
@@ -97,16 +106,11 @@ tool_options_menu_update (GtkItemFactory *factory,
 
 #define SET_VISIBLE(menu,condition) \
         gimp_item_factory_set_visible (factory, menu, (condition) != 0)
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
   SET_VISIBLE ("/Save Options to",      tool_info->options_presets);
   SET_VISIBLE ("/Restore Options from", tool_info->options_presets);
   SET_VISIBLE ("/Delete Saved Options", tool_info->options_presets);
   SET_VISIBLE ("/reset-separator",      tool_info->options_presets);
-
-  SET_SENSITIVE ("/Restore Options from/(None)", FALSE);
-  SET_SENSITIVE ("/Delete Saved Options/(None)", FALSE);
 
   if (! tool_info->options_presets)
     return;
@@ -116,19 +120,16 @@ tool_options_menu_update (GtkItemFactory *factory,
   delete_menu  = gtk_item_factory_get_widget (factory, "/Delete Saved Options");
 
   list = g_list_nth (GTK_MENU_SHELL (save_menu)->children, 1);
-
   while (g_list_next (list))
-    gtk_widget_destroy (list->next->data);
+    gtk_widget_destroy (g_list_next (list)->data);
 
   list = g_list_nth (GTK_MENU_SHELL (restore_menu)->children, 0);
-
   while (g_list_next (list))
-    gtk_widget_destroy (list->next->data);
+    gtk_widget_destroy (g_list_next (list)->data);
 
   list = g_list_nth (GTK_MENU_SHELL (delete_menu)->children, 0);
-
   while (g_list_next (list))
-    gtk_widget_destroy (list->next->data);
+    gtk_widget_destroy (g_list_next (list)->data);
 
   if (gimp_container_num_children (tool_info->options_presets))
     {
@@ -146,7 +147,7 @@ tool_options_menu_update (GtkItemFactory *factory,
       entry.entry.item_type       = "<StockItem>";
       entry.entry.extra_data      = GTK_STOCK_SAVE;
       entry.quark_string          = NULL;
-      entry.help_id               = NULL;
+      entry.help_id               = GIMP_HELP_TOOL_OPTIONS_SAVE;
       entry.description           = NULL;
 
       for (list = GIMP_LIST (tool_info->options_presets)->list;
@@ -165,6 +166,7 @@ tool_options_menu_update (GtkItemFactory *factory,
 
       entry.entry.callback   = tool_options_restore_from_cmd_callback;
       entry.entry.extra_data = GTK_STOCK_REVERT_TO_SAVED;
+      entry.help_id          = GIMP_HELP_TOOL_OPTIONS_RESTORE;
 
       for (list = GIMP_LIST (tool_info->options_presets)->list;
            list;
@@ -182,6 +184,7 @@ tool_options_menu_update (GtkItemFactory *factory,
 
       entry.entry.callback   = tool_options_delete_saved_cmd_callback;
       entry.entry.extra_data = GTK_STOCK_DELETE;
+      entry.help_id          = GIMP_HELP_TOOL_OPTIONS_DELETE;
 
       for (list = GIMP_LIST (tool_info->options_presets)->list;
            list;
@@ -205,5 +208,4 @@ tool_options_menu_update (GtkItemFactory *factory,
     }
 
 #undef SET_VISIBLE
-#undef SET_SENSITIVE
 }

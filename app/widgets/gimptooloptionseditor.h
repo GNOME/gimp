@@ -46,6 +46,7 @@ struct _GimpToolOptionsEditor
 
   GtkWidget       *save_button;
   GtkWidget       *restore_button;
+  GtkWidget       *delete_button;
   GtkWidget       *reset_button;
 
   GimpToolOptions *visible_tool_options;
