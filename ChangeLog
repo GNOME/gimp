@@ -1,3 +1,11 @@
+1999-09-23  Zach Beane  <xach@mint.net>
+
+	* app/fileops.c: Check trust_dirty_flag preference; if we don't
+	trust it, save no matter what.
+
+	* app/preferences_dialog.c, app/gimprc.c, app/gimprc.h:
+	Added trust_dirty_flag preference option, defaults to off.
+
 Thu Sep 23 13:31:41 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	applied internationalization patch from Daniel Egger
