@@ -148,7 +148,6 @@ void query (void)
     { GIMP_PDB_COLOR,    "icolor",   "Intersection Colour" },
     { GIMP_PDB_INT8,     "iopacity", "Intersection Opacity (0...255)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_grid",
 			  "Draws a grid.",
@@ -160,7 +159,7 @@ void query (void)
 			  N_("<Image>/Filters/Render/Pattern/Grid..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

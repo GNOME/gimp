@@ -195,14 +195,11 @@ query (void)
     { GIMP_PDB_STRING, "filename",      "The name of the file to load" },
     { GIMP_PDB_STRING, "raw_filename",  "The name of the file to load" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",         "Output image" }
   };
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -213,7 +210,6 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "rle",          "Specify non-zero for rle output, zero for standard output" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_sunras_load",
                           "load file of the SunRaster file format",
@@ -224,7 +220,8 @@ query (void)
                           "<Load>/SUNRAS",
                           NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_sunras_save",
@@ -237,7 +234,7 @@ query (void)
                           "<Save>/SUNRAS",
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   /* Magic information for sunras would be "0,long,0x59a66a95" */

@@ -614,8 +614,7 @@ static gchar *internal_gradients[] =
 {
   "%white", "%white_grad", "%red_grad", "%blue_grad", "%yellow_grad", "%random"
 };
-static int internal_ngradients = (sizeof (internal_gradients) /
-				  sizeof (internal_gradients[0]));
+static int internal_ngradients = G_N_ELEMENTS (internal_gradients);
 
 #ifdef DEBUG
 static gint     get_values_external_count = 0;
@@ -847,7 +846,6 @@ plugin_query (void)
     { GIMP_PDB_INT32,    "asupsample_max_depth", "Max depth for adaptive supersampling"},
     { GIMP_PDB_FLOAT,   "asupsample_threshold", "Threshold for adaptive supersampling"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gchar	 *help_string =
     " This plug-in produces a lense flare effect using custom gradients."
@@ -868,7 +866,7 @@ plugin_query (void)
 			  N_("<Image>/Filters/Light Effects/GFlare..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -1990,7 +1988,7 @@ calc_sample_one_gradient ()
   gdouble	hue_deg;
   gint		i, j, hue;
 
-  for (i = 0; i < sizeof (table) / sizeof (table[0]); i++)
+  for (i = 0; i < G_N_ELEMENTS (table); i++)
     {
       if (*(table[i].values) == NULL)
 	{
@@ -3206,7 +3204,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
    */
 
   hbox = gtk_hbox_new (FALSE, 4);
-  for (i = 0; i < sizeof (buttons) / sizeof (buttons[0]); i++)
+  for (i = 0; i < G_N_ELEMENTS (buttons); i++)
     {
       button = gtk_button_new_with_label (gettext (buttons[i].label));
       gtk_signal_connect (GTK_OBJECT (button), "clicked",

@@ -224,7 +224,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32, "number_of_tiles", "Number of tiles to make" } 
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_small_tiles",
 			  "Tiles image into smaller versions of the orginal",
@@ -235,7 +234,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Small Tiles..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -139,7 +139,7 @@ static EXTRACT extract[] =
 };
 
 /* Number of types of extractions */
-#define NUM_EXTRACT_TYPES (sizeof (extract) / sizeof (extract[0]))
+#define NUM_EXTRACT_TYPES (G_N_ELEMENTS (extract))
 
 typedef struct
 {
@@ -193,8 +193,6 @@ query (void)
     { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
     { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   gimp_install_procedure ("plug_in_decompose",
 			  "Decompose an image into different types of channels",
@@ -206,7 +204,8 @@ query (void)
 			  N_("<Image>/Image/Mode/Decompose..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 }
 

@@ -412,7 +412,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)"            },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"            }
   };
-  gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Create images based on a random genetic formula",
@@ -423,7 +422,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

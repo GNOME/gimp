@@ -834,7 +834,6 @@ plugin_query (void)
     { GIMP_PDB_INT32,    "background_color", "background color (for bg-type 5)" },
     { GIMP_PDB_INT32,    "background_alpha", "opacity (for bg-type 5)"          }
   };
-  static gint numof_args        = sizeof args / sizeof args[0];
 
   gimp_install_procedure (PLUGIN_PROCEDURE_NAME,
 			  "Cuts an image into paper tiles, and slides each paper tile.",
@@ -845,7 +844,7 @@ plugin_query (void)
 			  N_("<Image>/Filters/Map/Paper Tile..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  numof_args, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

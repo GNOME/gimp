@@ -184,7 +184,6 @@ query (void)
     { GIMP_PDB_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
     { GIMP_PDB_INT32, "bmode", "Mode for treating image borders" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_convmatrix",
 			  "A generic 5x5 convolution matrix",
@@ -195,7 +194,7 @@ query (void)
 			  N_("<Image>/Filters/Generic/Convolution Matrix..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

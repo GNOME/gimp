@@ -152,12 +152,11 @@ static PLInterface plinterface;
 static IMG_PREVIEW *
 img_preview_alloc (guint width, 
 		   guint height)
-
 {
   IMG_PREVIEW *ip;
 
-  ip = (IMG_PREVIEW *)g_malloc (sizeof (IMG_PREVIEW));
-  ip->img = (guchar *)g_malloc (width*height*3);
+  ip = g_new (IMG_PREVIEW, 1);
+  ip->img = g_new (guchar, width*height*3);
   if (ip->img == NULL)
     {
       g_free (ip);
@@ -173,7 +172,6 @@ img_preview_alloc (guint width,
 /* Free image preview */
 static void
 img_preview_free (IMG_PREVIEW *ip)
-
 {
  if (ip)
  {
@@ -325,7 +323,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable to adjust" }
   };
-  static gint nadjust_args = sizeof (adjust_args) / sizeof (adjust_args[0]);
 
   static GimpParamDef map_args[] =
   {
@@ -338,7 +335,6 @@ query (void)
     { GIMP_PDB_COLOR, "dstcolor_2", "Second destination color" },
     { GIMP_PDB_INT32, "map_mode", "Mapping mode (0: linear, others reserved)" }
   };
-  static gint nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
   gimp_install_procedure ("plug_in_color_adjust",
                           "Adjust color range given by foreground/background "
@@ -353,7 +349,7 @@ query (void)
                           N_("<Image>/Filters/Colors/Map/Adjust FG-BG"),
                           "RGB*",
                           GIMP_PLUGIN,
-                          nadjust_args, 0,
+                          G_N_ELEMENTS (adjust_args), 0,
                           adjust_args, NULL);
 
   gimp_install_procedure ("plug_in_color_map",
@@ -368,7 +364,7 @@ query (void)
                           N_("<Image>/Filters/Colors/Map/Color Range Mapping..."),
                           "RGB*",
                           GIMP_PLUGIN,
-                          nmap_args, 0,
+                          G_N_ELEMENTS (map_args), 0,
                           map_args, NULL);
 }
 

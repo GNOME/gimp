@@ -169,7 +169,6 @@ query (void)
     { GIMP_PDB_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
     { GIMP_PDB_INT32, "backgndg_trans", "background transparent; FALSE,TRUE" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_blinds",
 			  "Adds a blinds effect to the image. Rather like "
@@ -182,7 +181,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Blinds..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

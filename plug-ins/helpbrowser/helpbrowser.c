@@ -174,8 +174,6 @@ static GtkTargetEntry help_dnd_target_table[] =
 {
   { "_NETSCAPE_URL", 0, 0 },
 };
-static guint n_help_dnd_targets = (sizeof (help_dnd_target_table) /
-				   sizeof (help_dnd_target_table[0]));
 
 /*  GIMP plugin stuff  */
 
@@ -917,7 +915,8 @@ open_browser_dialog (gchar *help_path,
       /*  dnd source  */
       gtk_drag_source_set (GTK_WIDGET (drag_source),
 			   GDK_BUTTON1_MASK,
-			   help_dnd_target_table, n_help_dnd_targets, 
+			   help_dnd_target_table,
+                           G_N_ELEMENTS (help_dnd_target_table), 
 			   GDK_ACTION_MOVE | GDK_ACTION_COPY);
       gtk_signal_connect (GTK_OBJECT (drag_source), "drag_begin",
 			  GTK_SIGNAL_FUNC (combo_drag_begin),
@@ -1098,7 +1097,6 @@ install_temp_proc (void)
     { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
                                     "Can be relative to GIMP_HELP_PATH." }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
 			  "DON'T USE THIS ONE",
@@ -1110,7 +1108,7 @@ install_temp_proc (void)
 			  NULL,
 			  "",
 			  GIMP_TEMPORARY,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL,
 			  run_temp_proc);
 
@@ -1147,7 +1145,6 @@ query (void)
     { GIMP_PDB_STRING, "help_file", "Path of a local document to open. "
                                     "Can be relative to GIMP_HELP_PATH." }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (GIMP_HELP_EXT_NAME,
                           "Browse the GIMP help pages",
@@ -1160,7 +1157,7 @@ query (void)
                           NULL,
                           "",
                           GIMP_EXTENSION,
-                          nargs, 0,
+                          G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 

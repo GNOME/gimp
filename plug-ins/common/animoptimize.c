@@ -164,8 +164,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "result", "Resulting image" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_args = sizeof (return_args) / sizeof (return_args[0]);
 
   gimp_install_procedure ("plug_in_animationoptimize",
 			  "This procedure applies various optimizations to"
@@ -178,7 +176,8 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation Optimize"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_args,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_args),
 			  args, return_args);
 
   gimp_install_procedure ("plug_in_animationunoptimize",
@@ -194,7 +193,8 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation UnOptimize"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_args,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_args),
 			  args, return_args);
 
   gimp_install_procedure ("plug_in_animation_remove_backdrop",
@@ -208,7 +208,8 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation: Remove Backdrop"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_args,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_args),
 			  args, return_args);
 
   gimp_install_procedure ("plug_in_animation_find_backdrop",
@@ -223,7 +224,8 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation: Find Backdrop"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_args,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_args),
 			  args, return_args);
 }
 
@@ -484,13 +486,13 @@ do_optimizations(GimpRunModeType run_mode)
 
       guint *num_colours;
       
-      these_rows = g_malloc(total_frames * sizeof(guchar *));
-      red =        g_malloc(total_frames * sizeof(guchar *));
-      green =      g_malloc(total_frames * sizeof(guchar *));
-      blue =       g_malloc(total_frames * sizeof(guchar *));
-      count =      g_malloc(total_frames * sizeof(guint *));
+      these_rows = g_new (guchar *, total_frames);
+      red =        g_new (guchar *, total_frames);
+      green =      g_new (guchar *, total_frames);
+      blue =       g_new (guchar *, total_frames);
+      count =      g_new (guint *, total_frames);
 
-      num_colours = g_malloc(width * sizeof(guint));
+      num_colours = g_new (guint, width);
 
 g_warning("stat fun");
 
@@ -498,11 +500,11 @@ g_warning("stat fun");
 	{
 	  these_rows[this_frame_num] = g_malloc(width * pixelstep);
 
-	  red[this_frame_num] = g_malloc(width * sizeof(guchar));
-	  green[this_frame_num] = g_malloc(width * sizeof(guchar));
-	  blue[this_frame_num] = g_malloc(width * sizeof(guchar));
+	  red[this_frame_num]   = g_new (guchar, width);
+	  green[this_frame_num] = g_new (guchar, width);
+	  blue[this_frame_num]  = g_new (guchar, width);
 
-	  count[this_frame_num] = g_malloc0(width * sizeof(guint));
+	  count[this_frame_num] = g_new0(guint, width);
 	}
       
       for (row = 0; row < height; row++)

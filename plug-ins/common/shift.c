@@ -120,7 +120,6 @@ query (void)
     { GIMP_PDB_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
     { GIMP_PDB_INT32, "orientation", "vertical, horizontal orientation" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_shift",
 			  "Shift the contents of the specified drawable",
@@ -131,7 +130,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Shift..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

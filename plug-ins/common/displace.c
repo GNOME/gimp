@@ -166,7 +166,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
     { GIMP_PDB_INT32, "displace_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_displace",
 			  "Displace the contents of the specified drawable",
@@ -183,7 +182,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Displace..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

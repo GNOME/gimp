@@ -115,9 +115,7 @@ GimpParamDef load_return_vals[] =
 {
   { GIMP_PDB_IMAGE, "image", "Output image" },
 };
-gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-gint nload_return_vals = (sizeof (load_return_vals) /
-			  sizeof (load_return_vals[0]));
+gint nload_args = G_N_ELEMENTS (load_args);
 
 GimpParamDef save_args[] =
 {
@@ -129,7 +127,7 @@ GimpParamDef save_args[] =
   { GIMP_PDB_INT32, "from_frame", "Save beginning from this frame" },
   { GIMP_PDB_INT32, "to_frame", "End saving with this frame" },
 };
-gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+gint nsave_args = G_N_ELEMENTS (save_args);
 
 GimpParamDef info_args[] =
 {
@@ -142,9 +140,7 @@ GimpParamDef info_return_vals[] =
   { GIMP_PDB_INT32, "height", "Height of one frame" },
   { GIMP_PDB_INT32, "frames", "Number of Frames" },
 };
-gint ninfo_args = sizeof (info_args) / sizeof (info_args[0]);
-gint ninfo_return_vals = (sizeof (info_return_vals) /
-			  sizeof (info_return_vals[0]));
+gint ninfo_args = G_N_ELEMENTS (info_args);
 
 
 static gint32 from_frame;
@@ -167,7 +163,7 @@ query (void)
 			  "<Load>/FLI",
 			  NULL,
 			  GIMP_PLUGIN,
-			  nload_args - 2, nload_return_vals,
+			  nload_args - 2, G_N_ELEMENTS (load_return_vals),
 			  load_args, load_return_vals);
 
   gimp_register_magic_load_handler ("file_fli_load",
@@ -204,7 +200,7 @@ query (void)
 			  NULL,
 			  NULL,
 			  GIMP_EXTENSION,
-			  ninfo_args, ninfo_return_vals,
+			  ninfo_args, G_N_ELEMENTS (info_return_vals),
 			  info_args, info_return_vals);
 }
 

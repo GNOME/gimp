@@ -155,7 +155,6 @@ query (void)
     { GIMP_PDB_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
     { GIMP_PDB_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_lighting",
 			  "Apply various lighting effects to an image",
@@ -166,7 +165,7 @@ query (void)
 			  N_("<Image>/Filters/Light Effects/Lighting Effects..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -182,7 +182,6 @@ query (void)
     { GIMP_PDB_FLOAT,    "scale1",    "Depth relative scale 1" },
     { GIMP_PDB_FLOAT,    "scale2",    "Depth relative scale 2" }
   };
-  static gint numArgs = sizeof (args) / sizeof (GimpParamDef);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Combine two images using corresponding "
@@ -198,7 +197,7 @@ query (void)
 			  N_("<Image>/Filters/Combine/Depth Merge..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  numArgs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -817,10 +816,8 @@ DepthMerge_buildPreviewSourceImage (DepthMerge *dm)
 {
   int x;
 
-  dm->interface->checkRow0 = (guchar *)g_malloc(dm->interface->previewWidth *
-				                sizeof(guchar));
-  dm->interface->checkRow1 = (guchar *)g_malloc(dm->interface->previewWidth *
-				                sizeof(guchar));
+  dm->interface->checkRow0 = g_new (guchar, dm->interface->previewWidth);
+  dm->interface->checkRow1 = g_new (guchar, dm->interface->previewWidth);
 
   for (x = 0; x < dm->interface->previewWidth; x++)
     {
@@ -1117,10 +1114,9 @@ util_fillReducedBuffer (guchar    *dest,
 
   sourceBpp = sourceDrawable->bpp;
 
-  sourceBuffer          = (guchar *)g_malloc(sourceWidth * sourceHeight *
-                                             sourceBpp);
-  reducedRowBuffer      = (guchar *)g_malloc(destWidth   * sourceBpp);
-  sourceRowOffsetLookup = (int    *)g_malloc(destWidth   * sizeof(int));
+  sourceBuffer          = g_new (guchar, sourceWidth * sourceHeight * sourceBpp);
+  reducedRowBuffer      = g_new (guchar, destWidth   * sourceBpp);
+  sourceRowOffsetLookup = g_new (int, destWidth);
   gimp_pixel_rgn_init(&rgn, sourceDrawable, x0, y0, sourceWidth, sourceHeight,
 		      FALSE, FALSE);
   sourceHasAlpha = gimp_drawable_has_alpha(sourceDrawable->drawable_id);

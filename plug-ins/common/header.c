@@ -65,7 +65,6 @@ query (void)
     { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_header_save",
                           "saves files as C unsigned character array",
@@ -76,7 +75,7 @@ query (void)
                           "<Save>/Header",
 			  "INDEXED, RGB",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_save_handler ("file_header_save",

@@ -515,9 +515,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef set_load_args[] =
   {
@@ -530,8 +527,6 @@ query (void)
     { GIMP_PDB_INT32, "TextAlphaBits", "1, 2, or 4" },
     { GIMP_PDB_INT32, "GraphicsAlphaBits", "1, 2, or 4" }
   };
-  static gint nset_load_args = (sizeof (set_load_args) /
-				sizeof (set_load_args[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -552,7 +547,6 @@ query (void)
     { GIMP_PDB_INT32, "preview", "0: no preview, >0: max. size of preview" },
     { GIMP_PDB_INT32, "level", "1: PostScript Level 1, 2: PostScript Level 2" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_ps_load",
                           "load file of PostScript/PDF file format",
@@ -563,7 +557,8 @@ query (void)
                           "<Load>/PostScript",
                           NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_ps_load_setargs",
@@ -575,7 +570,7 @@ query (void)
                           NULL,
                           NULL,
                           GIMP_PLUGIN,
-                          nset_load_args, 0,
+                          G_N_ELEMENTS (set_load_args), 0,
                           set_load_args, NULL);
 
   gimp_install_procedure ("file_ps_save",
@@ -587,7 +582,7 @@ query (void)
                           "<Save>/PostScript",
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_ps_load",
@@ -886,7 +881,7 @@ load_image (gchar *filename)
       return (-1);
     }
 
-  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
+  image_list = g_new (gint32, 10);
   n_images = 0;
   max_images = 10;
 
@@ -1919,7 +1914,7 @@ dither_grey (guchar *grey,
     {
       if (fs_error) g_free (fs_error-1);
       if (linecount < 0) return;
-      fs_error = (int *)g_malloc ((npix+2)*sizeof (int));
+      fs_error = g_new (int, npix+2);
       memset ((char *)fs_error, 0, (npix+2)*sizeof (int));
       fs_error++;
 
@@ -2808,7 +2803,7 @@ save_dialog (void)
                       FALSE, FALSE, 0);
   main_vbox[0] = main_vbox[1] = NULL;
 
-  for (j = 0; j < sizeof (main_vbox) / sizeof (main_vbox[0]); j++)
+  for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)
     {
       main_vbox[j] = gtk_vbox_new (FALSE, 4);
       gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], TRUE, TRUE, 0);
@@ -2961,7 +2956,7 @@ save_dialog (void)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
-  for (j = 0; j < sizeof (main_vbox) / sizeof (main_vbox[0]); j++)
+  for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)
     gtk_widget_show (main_vbox[j]);
 
   gtk_widget_show (hbox);

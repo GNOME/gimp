@@ -77,7 +77,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32, "evenodd", "0 = keep odd, 1 = keep even" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_deinterlace",
 			  "Deinterlace",
@@ -92,7 +91,7 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Deinterlace..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

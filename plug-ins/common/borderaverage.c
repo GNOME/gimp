@@ -89,8 +89,6 @@ query (void)
   {
     { GIMP_PDB_COLOR,     "borderaverage",   "The average color of the specified border" },
   };
-  static gint nargs        = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   INIT_I18N();
 
@@ -103,7 +101,8 @@ query (void)
 			  N_("<Image>/Filters/Colors/Border Average..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 }
 

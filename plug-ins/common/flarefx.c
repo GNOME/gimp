@@ -207,7 +207,6 @@ query (void)
     { GIMP_PDB_INT32, "posx", "X-position" },
     { GIMP_PDB_INT32, "posy", "Y-position" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_flarefx",
 			  "Add lens flare effects",
@@ -220,7 +219,7 @@ query (void)
 			  N_("<Image>/Filters/Light Effects/FlareFX..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

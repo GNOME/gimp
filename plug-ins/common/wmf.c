@@ -1011,21 +1011,16 @@ query (void)
     { GIMP_PDB_STRING, "filename", "The name of the file to load" },
     { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef load_setargs_args[] =
   {
     { GIMP_PDB_FLOAT, "scale", "Scale in which to load image" }
   };
-  static gint nload_setargs_args = (sizeof (load_setargs_args) /
-				    sizeof (load_setargs_args[0]));
 
   gimp_install_procedure ("file_wmf_load",
                           "loads files of the Windows(tm) metafile file format",
@@ -1036,7 +1031,8 @@ query (void)
                           "<Load>/WMF",
 			  NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_wmf_load_setargs",
@@ -1048,7 +1044,7 @@ query (void)
 			  NULL,
 			  NULL,
 			  GIMP_PLUGIN,
-			  nload_setargs_args, 0,
+			  G_N_ELEMENTS (load_setargs_args), 0,
 			  load_setargs_args, NULL);
   
   gimp_register_magic_load_handler ("file_wmf_load",

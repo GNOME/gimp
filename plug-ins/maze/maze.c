@@ -147,7 +147,6 @@ query ()
     { GIMP_PDB_INT16, "offset", "Offset (use 1)" }
   };
   static GimpParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
   gchar *help;
 
@@ -161,7 +160,7 @@ query ()
 			  N_("<Image>/Filters/Render/Pattern/Maze..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
   g_free (help);
 }

@@ -115,7 +115,6 @@ query (void)
     { GIMP_PDB_INT32,    "outside_type", "outside type"
                                       "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "transform image with the Mandelbrot Fractal",
@@ -126,7 +125,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Fractal Trace..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

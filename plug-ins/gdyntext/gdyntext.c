@@ -82,9 +82,7 @@ gdt_query (void)
   {
     { GIMP_PDB_LAYER,    "layer",           "The text layer"               }
   };
-  static gint ngdt_args = sizeof (gdt_args) / sizeof (gdt_args[0]);
-  static gint ngdt_rets = sizeof (gdt_rets) / sizeof (gdt_rets[0]);
-    
+
   gimp_install_procedure ("plug_in_dynamic_text",
 			  "GIMP Dynamic Text",
 			  "",
@@ -94,7 +92,8 @@ gdt_query (void)
 			  N_("<Image>/Filters/Text/Dynamic Text..."),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
-			  ngdt_args, ngdt_rets,
+			  G_N_ELEMENTS (gdt_args),
+                          G_N_ELEMENTS (gdt_rets),
 			  gdt_args, gdt_rets);
 }
 

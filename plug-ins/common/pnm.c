@@ -220,9 +220,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -233,7 +230,6 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_pnm_load",
                           "loads files of the pnm file format",
@@ -244,7 +240,8 @@ query (void)
                           "<Load>/PNM",
 			  NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_pnm_save",
@@ -256,7 +253,7 @@ query (void)
                           "<Save>/PNM",
 			  "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_pnm_load",
@@ -422,7 +419,7 @@ load_image (gchar *filename)
     }
 
   /* allocate the necessary structures */
-  pnminfo = (PNMInfo *) g_malloc (sizeof (PNMInfo));
+  pnminfo = g_new (PNMInfo, 1);
 
   scan = NULL;
   /* set error handling */
@@ -647,7 +644,7 @@ pnm_load_rawpbm (PNMScanner *scan,
   fd = pnmscanner_fd(scan);
   rowlen = (int)ceil((double)(info->xres)/8.0);
   data = g_malloc (gimp_tile_height () * info->xres);
-  buf = g_malloc(rowlen*sizeof(unsigned char));
+  buf = g_new (unsigned char, rowlen);
 
   for (y = 0; y < info->yres; )
     {
@@ -980,7 +977,7 @@ pnmscanner_create (gint fd)
 {
   PNMScanner *s;
 
-  s = (PNMScanner *)g_malloc(sizeof(PNMScanner));
+  s = g_new (PNMScanner, 1);
   s->fd = fd;
   s->inbuf = 0;
   s->eof = !read(s->fd, &(s->cur), 1);
@@ -1004,7 +1001,7 @@ static void
 pnmscanner_createbuffer (PNMScanner *s,
 			 gint        bufsize)
 {
-  s->inbuf = g_malloc(sizeof(char)*bufsize);
+  s->inbuf = g_new (char, bufsize);
   s->inbufsize = bufsize;
   s->inbufpos = 0;
   s->inbufvalidsize = read(s->fd, s->inbuf, bufsize);

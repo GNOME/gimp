@@ -155,7 +155,6 @@ query (void)
     { GIMP_PDB_INT32, "depth", "The Filter Width" },
     { GIMP_PDB_INT32, "embossp", "Emboss or Bumpmap" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_emboss",
 			  "Emboss filter",
@@ -167,7 +166,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Emboss..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

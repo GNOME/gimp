@@ -389,7 +389,6 @@ query (void)
     { GIMP_PDB_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
     { GIMP_PDB_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_gif_save",
                           "saves files in Compuserve GIF file format",
@@ -406,7 +405,7 @@ query (void)
                           "<Save>/GIF",
 			  "INDEXED*, GRAY*",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_save_handler ("file_gif_save",

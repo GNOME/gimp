@@ -133,7 +133,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   gimp_install_procedure ("plug_in_flame",
 			  "Creates cosmic recursive fractal flames",
@@ -144,7 +143,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Nature/Flame..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -1126,7 +1125,7 @@ dialog (void)
 	"gris josette"
       };
       static gint good[] = { 10, 20, 68, 79, 70, 75 };
-      gint i, n = (sizeof good) / (sizeof good[0]);
+      gint i, n = G_N_ELEMENTS (good);
 
       for (i = 0; i < n; i++)
 	{

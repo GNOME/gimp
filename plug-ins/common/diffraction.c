@@ -174,7 +174,6 @@ query (void)
     { GIMP_PDB_FLOAT, 	  "scattering",   "Scattering (Speed vs. quality)" },
     { GIMP_PDB_FLOAT, 	  "polarization", "Polarization" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_diffraction",
 			  "Generate diffraction patterns",
@@ -185,7 +184,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Diffraction Patterns..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -200,7 +200,6 @@ query (void)
     { GIMP_PDB_INT8, "blueinvert", "Green inversion mode (1: enabled; 0: disabled)" },
     { GIMP_PDB_INT32, "ncolors", "Number of Colors for mapping (2<=ncolors<=8192)" }
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   INIT_I18N();
 
@@ -213,7 +212,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Fractal Explorer..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

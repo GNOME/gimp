@@ -111,7 +111,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_COLOR,    "color",    "Color to remove" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_colortoalpha",
 			  "Convert the color in an image to alpha",
@@ -124,7 +123,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Color to Alpha..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -124,7 +124,6 @@ query (void)
     { GIMP_PDB_INT8, "green_threshold", "Green threshold" },
     { GIMP_PDB_INT8, "blue_threshold", "Blue threshold" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_exchange",
 			  "Color Exchange",
@@ -136,7 +135,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Map/Color Exchange..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -207,7 +207,6 @@ query (void)
     { GIMP_PDB_INT32, "lower-limit", "0 <= lower-limit <= 255" },
     { GIMP_PDB_INT32, "upper-limit", "0 <= upper-limit <= 255" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Propagate values of the layer",
@@ -218,7 +217,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Value Propagate..."),
 			  "RGB*,GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

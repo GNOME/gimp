@@ -90,7 +90,6 @@ query ()
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
     {GIMP_PDB_STRING, "proc_name", "name of plugin procedure to run for each layer)"},
   };
-  static int nargs_foreach = sizeof(args_foreach) / sizeof(args_foreach[0]);
 
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
@@ -106,7 +105,7 @@ query ()
 			 N_("<Image>/Filters/Filter all Layers..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_foreach, nreturn_vals,
+			 G_N_ELEMENTS (args_foreach), nreturn_vals,
 			 args_foreach, return_vals);
 
   /* ------------------ ALTernative Iterators ------------------------------ */

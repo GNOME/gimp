@@ -1825,7 +1825,6 @@ query (void)
     { GIMP_PDB_INT32, "additive", "Whether the function adds the result to the original image" },
     { GIMP_PDB_INT32, "rotated", "Whether to rotate the RGB pattern by ninety degrees" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_video",
 			  "Apply low-dotpitch RGB simulation to the specified drawable",
@@ -1836,7 +1835,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Video..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

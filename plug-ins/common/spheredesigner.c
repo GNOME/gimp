@@ -2802,7 +2802,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_spheredesigner",
                           "Renders textures spheres",
@@ -2813,7 +2812,7 @@ query (void)
                           N_("<Image>/Filters/Render/Sphere Designer..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 

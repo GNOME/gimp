@@ -73,7 +73,6 @@ query (void)
     { GIMP_PDB_INT32, "ntries", "Search Time" },
     { GIMP_PDB_INT32, "show_image","Show Image?" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_smooth_palette",
 			  "derive smooth palette from image",
@@ -84,7 +83,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Smooth Palette..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

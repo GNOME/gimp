@@ -639,13 +639,11 @@ query (void)
     { GIMP_PDB_INT32,      "argc_lower_val_y", "{ 256 } "},
     { GIMP_PDB_INT8ARRAY,  "lower_val_y",   "array of 256 y freehand koord { 0 <= y <= 255 }"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
   
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_LAYER, "bent_layer", "the handled layer" }
   };
-  static gint nreturn_vals = sizeof(return_vals) / sizeof(return_vals[0]);
 
   static GimpParamDef args_iter[] =
   {
@@ -654,7 +652,6 @@ query (void)
     { GIMP_PDB_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
     { GIMP_PDB_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
   };
-  static gint nargs_iter = sizeof (args_iter) / sizeof (args_iter[0]);
 
   /* the actual installation of the bend plugin */
   gimp_install_procedure (PLUG_IN_NAME,
@@ -679,8 +676,8 @@ query (void)
                           N_("<Image>/Filters/Distorts/CurveBend..."),
                           PLUG_IN_IMAGE_TYPES,
                           GIMP_PLUGIN,
-                          nargs,
-                          nreturn_vals,
+                          G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
                           args,
                           return_vals);
  
@@ -694,7 +691,7 @@ query (void)
                           NULL,    /* do not appear in menus */
                           NULL,
                           GIMP_EXTENSION,
-                          nargs_iter, 0,
+                          G_N_ELEMENTS (args_iter), 0,
                           args_iter, NULL);
 }
 
@@ -848,7 +845,7 @@ run (char    *name,           /* name of plugin */
         /* check to see if invoked with the correct number of parameters */
         if (nparams >= 20)
         {
-           cd = g_malloc (sizeof (BenderDialog));
+           cd = g_new (BenderDialog, 1);
            cd->run = TRUE;
            cd->show_progress = FALSE;
            cd->drawable = l_active_drawable;
@@ -876,7 +873,7 @@ run (char    *name,           /* name of plugin */
         break;
 
       case GIMP_RUN_WITH_LAST_VALS:
-        cd = g_malloc (sizeof (BenderDialog));
+        cd = g_new (BenderDialog, 1);
         cd->run = TRUE;
         cd->show_progress = TRUE;
         cd->drawable = l_active_drawable;
@@ -1146,9 +1143,9 @@ p_retrieve_values (BenderDialog *cd)
   }
   else
   {
-    cd->bval_from = g_malloc(sizeof(BenderValues));
-    cd->bval_to   = g_malloc(sizeof(BenderValues));
-    cd->bval_curr  = g_malloc(sizeof(BenderValues));
+    cd->bval_from = g_new (BenderValues, 1);
+    cd->bval_to   = g_new (BenderValues, 1);
+    cd->bval_curr = g_new (BenderValues, 1);
     memcpy(cd->bval_curr, &l_bval, sizeof(l_bval));
    
     /* it seems that we are called from GAP with "Varying Values" */
@@ -1305,7 +1302,7 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkObject *data;
   int i, j;
 
-  cd = g_malloc (sizeof (BenderDialog));
+  cd = g_new (BenderDialog, 1);
 
   cd->preview = FALSE;
   cd->curve_type = SMOOTH;
@@ -3205,16 +3202,16 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
      if(gb_debug)  printf("p_bender_calculate_iter_curve ITERmode 1\n");
    
      /* init FROM curves */
-     cd_from = g_malloc (sizeof (BenderDialog));
+     cd_from = g_new (BenderDialog, 1);
      p_cd_from_bval(cd_from, cd->bval_from);
-     cd_from->curve_ptr[OUTLINE_UPPER] = g_malloc(sizeof(gint32) * (1+xmax));
-     cd_from->curve_ptr[OUTLINE_LOWER] = g_malloc(sizeof(gint32) * (1+xmax));
+     cd_from->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
+     cd_from->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
      
      /* init TO curves */
-     cd_to = g_malloc (sizeof (BenderDialog));
+     cd_to = g_new (BenderDialog, 1);
      p_cd_from_bval(cd_to, cd->bval_to);
-     cd_to->curve_ptr[OUTLINE_UPPER] = g_malloc(sizeof(gint32) * (1+xmax));
-     cd_to->curve_ptr[OUTLINE_LOWER] = g_malloc(sizeof(gint32) * (1+xmax));
+     cd_to->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
+     cd_to->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
 
      if (cd_from->curve_type == SMOOTH)
      {
@@ -3308,8 +3305,8 @@ p_vertical_bend (BenderDialog *cd,
    l_alpha_lo = 20;
 
    /* allocate array of last values (one element foreach x koordinate) */
-   last_arr = g_malloc(sizeof(t_Last) * src_gdrw->x2);
-   first_arr = g_malloc(sizeof(t_Last) * src_gdrw->x2);
+   last_arr  = g_new (t_Last, src_gdrw->x2);
+   first_arr = g_new (t_Last, src_gdrw->x2);
 
    /* ------------------------------------------------
     * foreach pixel in the SAMPLE_drawable:
@@ -3592,8 +3589,8 @@ p_main_bend (BenderDialog *cd,
    src_drawable = gimp_drawable_get (l_tmp_layer_id);
 
    xmax = ymax = src_drawable->width -1;
-   cd->curve_ptr[OUTLINE_UPPER] = g_malloc(sizeof(gint32) * (1+xmax));
-   cd->curve_ptr[OUTLINE_LOWER] = g_malloc(sizeof(gint32) * (1+xmax));
+   cd->curve_ptr[OUTLINE_UPPER] = g_new (gint32, 1+xmax);
+   cd->curve_ptr[OUTLINE_LOWER] = g_new (gint32, 1+xmax);
 
    p_bender_calculate_iter_curve(cd, xmax, ymax);
    bender_init_min_max(cd, xmax);

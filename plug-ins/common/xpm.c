@@ -139,14 +139,11 @@ query (void)
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING,    "raw_filename", "The name entered" }
   };
-  static gint nload_args        = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,    "image",         "Output image" }
   };
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -157,7 +154,6 @@ query (void)
     { GIMP_PDB_STRING,   "raw_filename",  "The name of the file to save the image in" },
     { GIMP_PDB_INT32,    "threshold",     "Alpha threshold (0-255)" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_xpm_load",
                           "loads files of the xpm file format",
@@ -168,7 +164,8 @@ query (void)
                           "<Load>/Xpm",
                           NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
   
   gimp_install_procedure ("file_xpm_save",
@@ -180,7 +177,7 @@ query (void)
                           "<Save>/Xpm",
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_xpm_load",
@@ -373,7 +370,7 @@ parse_colors (XpmImage  *xpm_image,
   colormap = DefaultColormap (display, DefaultScreen (display));
     
   /* alloc a buffer to hold the parsed colors */
-  *cmap = g_new (guchar, sizeof (guchar) * 4 * xpm_image->ncolors);
+  *cmap = g_new (guchar, 4 * xpm_image->ncolors);
 
   if ((*cmap) != NULL)
     {

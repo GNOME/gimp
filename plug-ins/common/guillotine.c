@@ -67,7 +67,6 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"      }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_guillotine",
 			  "Slice up the image into subimages, cutting along "
@@ -80,7 +79,7 @@ query (void)
 			  N_("<Image>/Image/Transform/Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -180,8 +179,8 @@ guillotine (gint32 image_ID)
 
 
   /* Allocate memory for the arrays of guide offsets, build arrays */
-  vguides = g_malloc ((num_vguides+2) * sizeof (gint));
-  hguides = g_malloc ((num_hguides+2) * sizeof (gint));
+  vguides = g_new (gint, num_vguides+2);
+  hguides = g_new (gint, num_hguides+2);
   num_vguides = 0;
   num_hguides = 0;
   vguides[num_vguides++] = 0;

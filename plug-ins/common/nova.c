@@ -212,7 +212,6 @@ query (void)
     { GIMP_PDB_INT32,    "nspoke",    "Number of spokes" },
     { GIMP_PDB_INT32,    "randomhue", "Random hue" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_nova",
                           "Produce Supernova effect to the specified drawable",
@@ -229,7 +228,7 @@ query (void)
                           N_("<Image>/Filters/Light Effects/SuperNova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
-                          nargs, 0,
+                          G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 

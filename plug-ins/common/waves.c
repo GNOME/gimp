@@ -147,7 +147,6 @@ query (void)
     { GIMP_PDB_INT32, "type", "Type of waves, black/smeared" },
     { GIMP_PDB_INT32, "reflective", "Use Reflection" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_waves",
 			  "Distort the image with waves",
@@ -158,7 +157,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Waves..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

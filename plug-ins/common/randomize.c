@@ -211,7 +211,6 @@ query (void)
     { GIMP_PDB_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { GIMP_PDB_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
   };
-  static gint nargs = sizeof(args) / sizeof (args[0]);
 
   const gchar *hurl_blurb =
     "Add a random factor to the image by hurling random data at it.";
@@ -240,7 +239,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Hurl..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[1],
@@ -252,7 +251,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Pick..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[2],
@@ -264,7 +263,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Slur..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

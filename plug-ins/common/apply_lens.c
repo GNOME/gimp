@@ -121,7 +121,6 @@ query (void)
     { GIMP_PDB_INT32, "set_background", "Set lens surroundings to bkgr value" },
     { GIMP_PDB_INT32, "set_transparent", "Set lens surroundings transparent" }
   };
-  static gint nargs = sizeof (args)/ sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_applylens",
 			  "Apply a lens effect",
@@ -132,7 +131,7 @@ query (void)
 			  N_("<Image>/Filters/Glass Effects/Apply Lens..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

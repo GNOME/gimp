@@ -665,7 +665,6 @@ static void p_install_proc_iter_ALT(char *name)
     {GIMP_PDB_FLOAT, "current_step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)"},
     {GIMP_PDB_INT32, "len_struct", "length of stored data structure with id is equal to the plug_in  proc_name"},
   };
-  static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);
 
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
@@ -682,7 +681,7 @@ static void p_install_proc_iter_ALT(char *name)
 			 NULL,    /* do not appear in menus */
 			 NULL,
 			 GIMP_EXTENSION,
-			 nargs_iter, nreturn_vals,
+			 G_N_ELEMENTS (args_iter), nreturn_vals,
 			 args_iter, return_vals);
 
   g_free(l_iter_proc_name);

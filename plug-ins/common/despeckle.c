@@ -169,7 +169,6 @@ query (void)
     { GIMP_PDB_INT32,	"black",	"Black level (-1 to 255)" },
     { GIMP_PDB_INT32,	"white",	"White level (0 to 256)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Despeckle filter, typically used to \'despeckle\' "
@@ -182,7 +181,7 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Despeckle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

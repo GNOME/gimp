@@ -179,7 +179,6 @@ query (void)
     { GIMP_PDB_INT32, "border", "Add border (TRUE/FALSE)" },
     { GIMP_PDB_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_sparkle",
 			  "Simulates pixel bloom and diffraction effects",
@@ -192,7 +191,7 @@ query (void)
 			  N_("<Image>/Filters/Light Effects/Sparkle..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

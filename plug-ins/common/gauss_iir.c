@@ -130,7 +130,6 @@ query (void)
     { GIMP_PDB_INT32, "horizontal", "Blur in horizontal direction" },
     { GIMP_PDB_INT32, "vertical", "Blur in vertical direction" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef args2[] =
   {
@@ -140,7 +139,6 @@ query (void)
     { GIMP_PDB_FLOAT, "horizontal", "Horizontal radius of gaussian blur (in pixels)" },
     { GIMP_PDB_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels)" }
   };
-  static gint nargs2 = sizeof (args2) / sizeof (args2[0]);
 
   gimp_install_procedure ("plug_in_gauss_iir",
 			  "Applies a gaussian blur to the specified drawable.",
@@ -161,7 +159,7 @@ query (void)
 			  NULL,
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure ("plug_in_gauss_iir2",
@@ -184,7 +182,7 @@ query (void)
 			  N_("<Image>/Filters/Blur/Gaussian Blur (IIR)..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs2, 0,
+			  G_N_ELEMENTS (args2), 0,
 			  args2, NULL);
 }
 

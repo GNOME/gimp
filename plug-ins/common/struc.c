@@ -1143,7 +1143,6 @@ query (void)
     { GIMP_PDB_INT32, "direction", "Light direction (0 - 3)" },
     { GIMP_PDB_INT32, "depth", "Texture depth (1 - 50)" },
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
@@ -1156,7 +1155,7 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Apply Canvas..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

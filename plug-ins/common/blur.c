@@ -173,7 +173,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs_ni = sizeof(args_ni) / sizeof (args_ni[0]);
 
   static GimpParamDef args[] =
   {
@@ -185,7 +184,6 @@ query (void)
     { GIMP_PDB_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
     { GIMP_PDB_INT32, "blur_seed", "Seed value (used only if seed type is 11)" }
   };
-  static gint nargs = sizeof(args) / sizeof (args[0]);
 
   const gchar *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
   const gchar *help = "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.";
@@ -202,7 +200,7 @@ query (void)
 			  N_("<Image>/Filters/Blur/Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -214,7 +212,7 @@ query (void)
 			  NULL,
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs_ni, 0,
+			  G_N_ELEMENTS (args_ni), 0,
 			  args_ni, NULL);
 }
 

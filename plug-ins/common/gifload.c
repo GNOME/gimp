@@ -135,9 +135,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   gimp_install_procedure ("file_gif_load",
                           "loads files of Compuserve GIF file format",
@@ -148,7 +145,8 @@ query (void)
                           "<Load>/GIF",
 			  NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_register_magic_load_handler ("file_gif_load",

@@ -209,7 +209,6 @@ query (void)
     { GIMP_PDB_STRING, "comment", "The Comment" },
     { GIMP_PDB_INT32,  "encapsulation", "Uuencode, MIME" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_mail_image",
 			  "pipe files to uuencode then mail them",
@@ -220,7 +219,7 @@ query (void)
 			  N_("<Image>/File/Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

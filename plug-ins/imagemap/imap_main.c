@@ -134,7 +134,6 @@ static void query()
       {GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
    };
    static GimpParamDef *return_vals = NULL;
-   static int nargs = sizeof (args) / sizeof (args[0]);
    static int nreturn_vals = 0;
    
    gimp_install_procedure("plug_in_imagemap",
@@ -146,7 +145,7 @@ static void query()
 			  N_("<Image>/Filters/Web/ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 }
 

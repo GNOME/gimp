@@ -341,8 +341,6 @@ query (void)
   };
 
   static GimpParamDef *return_vals = NULL;
-
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   INIT_I18N ();
@@ -362,7 +360,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Nature/IfsCompose..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 }
 

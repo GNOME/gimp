@@ -264,7 +264,6 @@ query (void)
     { GIMP_PDB_FLOAT, "vector_scale", "Scaling factor for fixed vector map (0=don't use)" },
     { GIMP_PDB_FLOAT, "vector_angle", "Angle for fixed vector map" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_warp",
 			  "Twist or smear an image. (only first six arguments are required)",
@@ -278,7 +277,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Warp..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

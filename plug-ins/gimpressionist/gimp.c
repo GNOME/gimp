@@ -91,7 +91,6 @@ query(void)
   }; /* args */
 
   static GimpParamDef *return_vals = NULL;
-  static int        nargs = sizeof(args) / sizeof(args[0]);
   static int        nreturn_vals = 0;
 
   INIT_I18N();
@@ -105,7 +104,7 @@ query(void)
 			 N_("<Image>/Filters/Artistic/GIMPressionist..."),
 			 "RGB*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs,
+			 G_N_ELEMENTS (args),
 			 nreturn_vals,
 			 args,
 			 return_vals);

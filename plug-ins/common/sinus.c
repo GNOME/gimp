@@ -1144,7 +1144,6 @@ query (void)
     { GIMP_PDB_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
     { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N ();
 
@@ -1157,7 +1156,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Sinus..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -134,7 +134,6 @@ query (void)
     { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
     { GIMP_PDB_INT32,	"avg_width",	"Averaging filter width (default = 36)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Destripe filter, used to remove vertical stripes "
@@ -147,7 +146,7 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Destripe..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

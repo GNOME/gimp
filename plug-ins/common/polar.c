@@ -203,7 +203,6 @@ query (void)
     { GIMP_PDB_INT32,    "inverse",     "Map from top?" },
     { GIMP_PDB_INT32,    "polrec",     "Polar to rectangular?" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Converts and image to and from polar coords",
@@ -215,7 +214,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Polar Coords..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

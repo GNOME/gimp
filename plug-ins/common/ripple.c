@@ -145,7 +145,6 @@ query (void)
     { GIMP_PDB_INT32, "antialias", "antialias; True or False" },
     { GIMP_PDB_INT32, "tile", "tile; if this is true, the image will retain it's tilability" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_ripple",
 			  "Ripple the contents of the specified drawable",
@@ -156,7 +155,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Ripple..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

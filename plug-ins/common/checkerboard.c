@@ -91,7 +91,6 @@ query (void)
     { GIMP_PDB_INT32, "check_mode", "Regular or Physcobilly" },
     { GIMP_PDB_INT32, "check_size", "Size of the checks" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_checkerboard",
 			  "Adds a checkerboard pattern to an image",
@@ -102,7 +101,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Checkerboard..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

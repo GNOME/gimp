@@ -259,7 +259,6 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_animationplay",
 			  "This plugin allows you to preview a GIMP layer-based animation.",
@@ -270,7 +269,7 @@ query (void)
 			  N_("<Image>/Filters/Animation/Animation Playback..."),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

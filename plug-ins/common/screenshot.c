@@ -113,13 +113,11 @@ query (void)
     { GIMP_PDB_INT32,  "root",      "Root window { TRUE, FALSE }" },
     { GIMP_PDB_STRING, "window_id", "Window id" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Creates a screenshot of a single window or the whole screen",
@@ -137,7 +135,8 @@ query (void)
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
 			  GIMP_EXTENSION,		
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 }
 

@@ -383,7 +383,6 @@ query (void)
     { GIMP_PDB_INT32, "blend_lines", "Number of lines for shading bevels >= 0" },
     { GIMP_PDB_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_jigsaw",
 			  "Renders a jigsaw puzzle look",
@@ -394,7 +393,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -2311,8 +2310,8 @@ draw_bezier_horizontal_border (guchar   *buffer,
   style_t style_index;
   gint *cachex, *cachey;
 
-  cachex = g_malloc(steps * sizeof(gint));
-  cachey = g_malloc(steps * sizeof(gint));
+  cachex = g_new (gint, steps);
+  cachey = g_new (gint, steps);
 
   for (i = 0; i < xtiles; i++)
     {

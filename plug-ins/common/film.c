@@ -236,13 +236,11 @@ query (void)
     { GIMP_PDB_INT32, "num_images", "Number of images to be used for film" },
     { GIMP_PDB_INT32ARRAY, "image_ids", "num_images image IDs to be used for film"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   gimp_install_procedure ("plug_in_film",
 			  "Compose several images to a roll film",
@@ -253,7 +251,8 @@ query (void)
 			  N_("<Image>/Filters/Combine/Film..."),
 			  "INDEXED*, GRAY*, RGB*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 }
 
@@ -1534,11 +1533,9 @@ static void
 film_reset_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  gint i, num;
+  gint i;
 
-  num = sizeof (advanced_defaults) / sizeof (advanced_defaults[0]);
-
-  for (i = 0; i < num; i++)
+  for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
     gtk_adjustment_set_value (GTK_ADJUSTMENT (filmint.advanced_adj[i]),
 			      advanced_defaults[i]);
 }

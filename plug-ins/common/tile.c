@@ -105,14 +105,12 @@ query (void)
     { GIMP_PDB_INT32,    "new_height", "New (tiled) image height"    },
     { GIMP_PDB_INT32,    "new_image",  "Create a new image?"         }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
     { GIMP_PDB_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" }
   };
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   gimp_install_procedure ("plug_in_tile",
 			  "Create a new image which is a tiled version of the "
@@ -129,7 +127,8 @@ query (void)
 			  N_("<Image>/Filters/Map/Tile..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 }
 

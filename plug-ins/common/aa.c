@@ -79,7 +79,6 @@ query (void)
     {GIMP_PDB_STRING,   "raw_filename", "The name entered"},
     {GIMP_PDB_STRING,   "file_type",    "File type to use"}
   };
-  static gint nsave_args = sizeof(save_args) / sizeof(save_args[0]);
 
   gimp_install_procedure ("file_aa_save",
 			  "Saves files in various text formats",
@@ -90,7 +89,7 @@ query (void)
 			  "<Save>/AA",
 			  "GRAY*",		/* support grayscales */
 			  GIMP_PLUGIN,
-			  nsave_args, 0,
+			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
 
   gimp_register_save_handler ("file_aa_save",

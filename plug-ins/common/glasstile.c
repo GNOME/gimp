@@ -127,7 +127,6 @@ query (void)
     { GIMP_PDB_INT32, "tilex", "Tile width (10 - 50)" },
     { GIMP_PDB_INT32, "tiley", "Tile height (10 - 50)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_glasstile",
 			  "Divide the image into square glassblocks",
@@ -138,7 +137,7 @@ query (void)
 			  N_("<Image>/Filters/Glass Effects/Glass Tile..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -655,7 +655,7 @@ gint p_gen_code_iter(char  *proc_name)
        fprintf(l_fp, "    {GIMP_PDB_FLOAT, \"current_step\", \"current (for linear iterations this is the layerstack position, otherwise some value inbetween)\"},\n");
        fprintf(l_fp, "    {GIMP_PDB_INT32, \"len_struct\", \"length of stored data structure with id is equal to the plug_in  proc_name\"},\n");
        fprintf(l_fp, "  };\n");
-       fprintf(l_fp, "  static int nargs_iter = sizeof(args_iter) / sizeof(args_iter[0]);\n");
+       fprintf(l_fp, "  static int nargs_iter = G_N_ELEMENTS (args_iter);\n");
        fprintf(l_fp, "\n");
        fprintf(l_fp, "  static GimpParamDef *return_vals = NULL;\n");
        fprintf(l_fp, "  static int nreturn_vals = 0;\n");

@@ -448,7 +448,6 @@ query ()
     {GIMP_PDB_IMAGE, "image", "(unused)"},
     {GIMP_PDB_DRAWABLE, "drawable", "(unused)"},
   };
-  static int nargs_navigator = sizeof(args_navigator) / sizeof(args_navigator[0]);
 
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
@@ -463,7 +462,7 @@ query ()
 			 N_("<Image>/Video/VCR Navigator..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_navigator, nreturn_vals,
+			 G_N_ELEMENTS (args_navigator), nreturn_vals,
 			 args_navigator, return_vals);
 }	/* end query */
 
@@ -1131,7 +1130,7 @@ navi_check_image_menu_changes()
      if(frame_nr >= 0)
      {
         item_count++;
-        new_item = g_malloc(sizeof(OpenFrameImages));
+        new_item = g_new (OpenFrameImages, 1);
 	new_item->image_id = images[i];
 	new_item->frame_nr = frame_nr;
         new_item->next = item_list;
@@ -1143,12 +1142,12 @@ navi_check_image_menu_changes()
      }
   }
   g_free(images);
-  
+
   if(item_count != naviD->OpenFrameImagesCount)
   {
     l_rc = FALSE;
   }
-  
+
   if(l_rc == TRUE)
   {
     navi_free_OpenFrameList(item_list);
@@ -1227,7 +1226,7 @@ navi_get_selected_ranges(void)
       {
          if(new_range == NULL)
 	 {
-	    new_range = g_malloc(sizeof(SelectedRange));
+	    new_range = g_new (SelectedRange, 1);
 	    new_range->next = range_list;
 	    new_range->from = fw->frame_nr;
 	    new_range->to   = fw->frame_nr;

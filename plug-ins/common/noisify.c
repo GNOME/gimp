@@ -130,7 +130,6 @@ query (void)
     { GIMP_PDB_FLOAT, "noise_3", "Noise in the third channel (blue)" },
     { GIMP_PDB_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_noisify",
 			  "Adds random noise to a drawable's channels",
@@ -141,7 +140,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Noisify..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -556,7 +556,6 @@ query (void)
     { GIMP_PDB_INT32, "oversample", "how many times to oversample spot fn" }
     /* 15 args */
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_newsprint",
 			  "Re-sample the image to give a newspaper-like effect",
@@ -571,7 +570,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Newsprint..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -115,7 +115,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
     { GIMP_PDB_INT32,    "max_p",    "1 for maximizing, 0 for minimizing"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Return an image in which each pixel holds only "
@@ -129,7 +128,7 @@ query (void)
                           N_("<Image>/Filters/Colors/Max RGB..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

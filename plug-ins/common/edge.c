@@ -152,7 +152,6 @@ query (void)
     { GIMP_PDB_FLOAT, "amount", "Edge detection amount" },
     { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gchar *help_string =
     "Perform edge detection on the contents of the specified drawable. It "
@@ -168,7 +167,7 @@ query (void)
 			  N_("<Image>/Filters/Edge-Detect/Edge..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

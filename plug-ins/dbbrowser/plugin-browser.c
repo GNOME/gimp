@@ -88,7 +88,6 @@ query (void)
   {
     { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_details",
                           "Displays plugin details",
@@ -104,7 +103,7 @@ query (void)
 			  N_("<Toolbox>/Xtns/Plugin Details..."),
 			  "",
                           GIMP_EXTENSION,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 

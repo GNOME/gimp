@@ -132,7 +132,6 @@ query (void)
     { GIMP_PDB_INT32, "saturation_distance", "distribution distance on saturation axis [0,255]"},
     { GIMP_PDB_INT32, "value_distance", "distribution distance on value axis [0,255]"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Scattering pixel values in HSV space",
@@ -143,7 +142,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Scatter HSV..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -572,8 +571,7 @@ scatter_hsv_preview_update (void)
   src_bpl = preview_width * src_bpp;
 
   if (! preview_buffer)
-    preview_buffer
-      = (guchar *) g_malloc (src_bpl * preview_height * sizeof (guchar));
+    preview_buffer = g_new (guchar, src_bpl * preview_height);
 
   if (preview_offset_x < 0)
     preview_offset_x = (bound_end_x - bound_start_x) * (- preview_offset_x) /  preview_width;

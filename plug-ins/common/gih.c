@@ -173,9 +173,6 @@ query (void)
     { GIMP_PDB_INT32,     "dimension",	 "Dimension (again)" },
     { GIMP_PDB_STRINGARRAY, "sel",	 "Selection modes" }
   };
-  static const gint ngih_save_args = (sizeof (gih_save_args) /
-				      sizeof (gih_save_args[0]));
-
 
   static GimpParamDef gih_load_args[] =
   {
@@ -187,9 +184,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE,  "image",          "Output image" }
   };
-  static gint ngih_load_args = sizeof (gih_load_args) / sizeof (gih_load_args[0]);
-  static gint ngih_load_return_vals = (sizeof (gih_load_return_vals) /
-				       sizeof (gih_load_return_vals[0]));
 
   gimp_install_procedure ("file_gih_save",
 			  "saves images in GIMP brush pipe format", 
@@ -200,7 +194,7 @@ query (void)
 			  "<Save>/GIH",
 			  "RGBA, GRAYA",
 			  GIMP_PLUGIN,
-                          ngih_save_args, 0,
+                          G_N_ELEMENTS (gih_save_args), 0,
 			  gih_save_args, NULL);
   
   gimp_install_procedure ("file_gih_load",
@@ -212,7 +206,8 @@ query (void)
 			  "<Load>/GIH",
 			  NULL,
 			  GIMP_PLUGIN,
-                          ngih_load_args, ngih_load_return_vals,
+                          G_N_ELEMENTS (gih_load_args),
+                          G_N_ELEMENTS (gih_load_return_vals),
                           gih_load_args, gih_load_return_vals);
 
   gimp_register_save_handler ("file_gih_save",

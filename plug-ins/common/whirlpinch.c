@@ -187,7 +187,6 @@ query (void)
     { GIMP_PDB_FLOAT,    "radius",    "Radius (1.0 is the largest circle that fits in the image, "
       "and 2.0 goes all the way to the corners)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Distort an image by whirling and pinching",
@@ -204,7 +203,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Whirl and Pinch..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -604,7 +603,7 @@ pixel_fetcher_new (GimpDrawable *drawable)
 {
   pixel_fetcher_t *pf;
 
-  pf = g_malloc (sizeof (pixel_fetcher_t));
+  pf = g_new (pixel_fetcher_t, 1);
 
   pf->col           = -1;
   pf->row           = -1;

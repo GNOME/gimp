@@ -153,8 +153,6 @@ query ()
   {
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
-  static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
   static GimpParamDef ext_args[] =
   {
@@ -166,7 +164,6 @@ query ()
     { GIMP_PDB_STRING, "animframe_basename", "The name for the single frames _0001.xcf is added" },
     { GIMP_PDB_INT32, "autoload", "TRUE: load 1.st extracted frame on success" },
   };
-  static int next_args = sizeof (ext_args) / sizeof (ext_args[0]);
 
   INIT_I18N();
 
@@ -179,7 +176,8 @@ query ()
                           N_("<Image>/Video/Split Video to Frames/MPEG1"),
 			  NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("extension_gap_decode_mpeg",
@@ -191,7 +189,8 @@ query ()
                           N_("<Toolbox>/Xtns/Split Video to Frames/MPEG1"),
 			  NULL,
                           GIMP_EXTENSION,
-                          next_args, nload_return_vals,
+                          G_N_ELEMENTS (ext_args),
+                          G_N_ELEMENTS (load_return_vals),
                           ext_args, load_return_vals);
 }
 

@@ -118,7 +118,6 @@ query (void)
     { GIMP_PDB_FLOAT, "spread_amount_x", "Horizontal spread amount (0 <= spread_amount_x <= 200)" },
     { GIMP_PDB_FLOAT, "spread_amount_y", "Vertical spread amount (0 <= spread_amount_y <= 200)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_spread",
 			  "Spread the contents of the specified drawable",
@@ -133,7 +132,7 @@ query (void)
 			  N_("<Image>/Filters/Noise/Spread..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -235,7 +235,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   plugin_module_install_procedure ("plug_in_iwarp_tool",
 			  "Interactive warping of the specified drawable",
@@ -245,7 +244,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/IWarp Tool..."),
 			  "RGB*, GRAY*",
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL,
 			  run);
 }

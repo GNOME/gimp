@@ -107,7 +107,6 @@ query (void)
     { GIMP_PDB_INT32,    "division",  "the number of divisions" },
     { GIMP_PDB_INT32,    "type",      "illusion type (0=type1, 1=type2)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "produce illusion",
@@ -118,7 +117,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Illusion..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

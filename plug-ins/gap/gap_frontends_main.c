@@ -99,13 +99,11 @@ query ()
     {GIMP_PDB_IMAGE, "image", "(unused)"},
     {GIMP_PDB_DRAWABLE, "drawable", "(unused)"},
   };
-  static int nargs_xanim = sizeof(args_xanim) / sizeof(args_xanim[0]);
 
   static GimpParamDef args_xanim_ext[] =
   {
     {GIMP_PDB_INT32, "run_mode", "Interactive"},
   };
-  static int nargs_xanim_ext = sizeof(args_xanim_ext) / sizeof(args_xanim_ext[0]);
 
   static GimpParamDef args_mpege[] =
   {
@@ -113,7 +111,6 @@ query ()
     {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
-  static int nargs_mpege = sizeof(args_mpege) / sizeof(args_mpege[0]);
 
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
@@ -128,7 +125,7 @@ query ()
 			 N_("<Image>/Video/Split Video to Frames/Any XANIM readable..."),
 			 NULL,
 			 GIMP_PLUGIN,
-			 nargs_xanim, nreturn_vals,
+			 G_N_ELEMENTS (args_xanim), nreturn_vals,
 			 args_xanim, return_vals);
 
   gimp_install_procedure("extension_gap_xanim_decode",
@@ -140,7 +137,7 @@ query ()
 			 N_("<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."),
 			 NULL,
 			 GIMP_EXTENSION,
-			 nargs_xanim_ext, nreturn_vals,
+			 G_N_ELEMENTS (args_xanim_ext), nreturn_vals,
 			 args_xanim_ext, return_vals);
 
   gimp_install_procedure("plug_in_gap_mpeg_encode",
@@ -152,7 +149,7 @@ query ()
 			 N_("<Image>/Video/Encode/MPEG1..."),
 			 "*",
 			 GIMP_PLUGIN,
-			 nargs_mpege, nreturn_vals,
+			 G_N_ELEMENTS (args_mpege), nreturn_vals,
 			 args_mpege, return_vals);
 
 
@@ -165,7 +162,7 @@ query ()
 			 N_("<Image>/Video/Encode/MPEG2..."),
 			 "*",
 			 GIMP_PLUGIN,
-			 nargs_mpege, nreturn_vals,
+			 G_N_ELEMENTS (args_mpege), nreturn_vals,
 			 args_mpege, return_vals);
 
 

@@ -99,7 +99,6 @@ query ()
     { GIMP_PDB_IMAGE, "image", "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" }
   };
-  static gint ncopy_args = sizeof (copy_args) / sizeof (copy_args[0]);
 
   gimp_install_procedure ("plug_in_clipboard_copy",
                           "copy image to clipboard",
@@ -110,7 +109,7 @@ query ()
                           N_("<Image>/Edit/Copy to Clipboard"),
                           "INDEXED*, RGB*",
                           GIMP_PLUGIN,
-                          ncopy_args, 0,
+                          G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
 
   gimp_install_procedure ("plug_in_clipboard_paste",
@@ -122,7 +121,7 @@ query ()
                           N_("<Image>/Edit/Paste from Clipboard"),
                           "INDEXED*, RGB*",
                           GIMP_PLUGIN,
-                          ncopy_args, 0,
+                          G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
 
   gimp_install_procedure ("extension_clipboard_paste",
@@ -134,7 +133,7 @@ query ()
                           N_("<Toolbox>/File/Acquire/From Clipboard"),
                           "",
                           GIMP_EXTENSION,
-                          ncopy_args, 0,
+                          G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
 
 }

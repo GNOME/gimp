@@ -212,14 +212,11 @@ query (void)
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -229,7 +226,6 @@ query (void)
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
     { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_xwd_load",
                           "load file of the XWD file format",
@@ -240,7 +236,8 @@ query (void)
                           "<Load>/XWD",
                           NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_xwd_save",
@@ -253,7 +250,7 @@ those with alpha channels.",
                           "<Save>/XWD",
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_xwd_load",
@@ -404,8 +401,7 @@ load_image (gchar *filename)
 
   if (xwdhdr.l_colormap_entries > 0)
     {
-      xwdcolmap = (L_XWDCOLOR *)g_malloc (sizeof (L_XWDCOLOR)
-                                        * xwdhdr.l_colormap_entries);
+      xwdcolmap = g_new (L_XWDCOLOR, xwdhdr.l_colormap_entries);
       if (xwdcolmap == NULL)
 	{
 	  g_message (_("can't get memory for colormap"));

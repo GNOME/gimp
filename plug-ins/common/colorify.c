@@ -128,7 +128,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_COLOR, "color", "Color to apply"}
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_colorify",
 			  "Similar to the \"Color\" mode for layers.",
@@ -140,7 +139,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Colorify..."), 
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

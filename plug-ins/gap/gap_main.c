@@ -126,7 +126,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_IMAGE, "image", "Input image (current one of the Anim Frames)"},
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
-  static int nargs_std = sizeof(args_std) / sizeof(args_std[0]);
+  static int nargs_std = G_N_ELEMENTS (args_std);
 
   static GimpParamDef args_goto[] =
   {
@@ -135,7 +135,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
     {GIMP_PDB_INT32, "nr", "frame nr where to go"},
   };
-  static int nargs_goto = sizeof(args_goto) / sizeof(args_goto[0]);
+  static int nargs_goto = G_N_ELEMENTS (args_goto);
 
   static GimpParamDef args_del[] =
   {
@@ -144,7 +144,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
     {GIMP_PDB_INT32, "nr", "number of frames to delete (delete starts at current frame)"},
   };
-  static int nargs_del = sizeof(args_del) / sizeof(args_del[0]);
+  static int nargs_del = G_N_ELEMENTS (args_del);
 
 
   static GimpParamDef args_dup[] =
@@ -156,7 +156,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "range_from", "frame nr to start"},
     {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
   };
-  static int nargs_dup = sizeof(args_dup) / sizeof(args_dup[0]);
+  static int nargs_dup = G_N_ELEMENTS (args_dup);
 
   static GimpParamDef args_exchg[] =
   {
@@ -165,7 +165,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
     {GIMP_PDB_INT32, "nr", "nr of frame to exchange with current frame"},
   };
-  static int nargs_exchg = sizeof(args_exchg) / sizeof(args_exchg[0]);
+  static int nargs_exchg = G_N_ELEMENTS (args_exchg);
 
   static GimpParamDef args_mov[] =
   {
@@ -173,7 +173,6 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_IMAGE, "image", "Input image (one of the Anim Frames)"},
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
-  static int nargs_mov = sizeof(args_mov) / sizeof(args_mov[0]);
 
   static GimpParamDef args_mov_path[] =
   {
@@ -218,7 +217,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     { GIMP_PDB_INT32ARRAY, "keyframe_abs",      "n: fix controlpoint to this frame number, 0: for controlpoints that are not fixed to a frame."},
     { GIMP_PDB_INT32,      "argc_keyframe_abs", "number of controlpoints"},
   };
-  static int nargs_mov_path = sizeof(args_mov_path) / sizeof(args_mov_path[0]);
+  static int nargs_mov_path = G_N_ELEMENTS (args_mov_path);
 
   static GimpParamDef args_mov_path2[] =
   {
@@ -250,7 +249,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     /* CONTROLPOINTs from file */
     { GIMP_PDB_STRING,     "pointfile",         "a file with contolpoints (readable text file with one line per controlpoint)"},
   };
-  static int nargs_mov_path2 = sizeof(args_mov_path2) / sizeof(args_mov_path2[0]);
+  static int nargs_mov_path2 = G_N_ELEMENTS (args_mov_path2);
     
 
 
@@ -270,14 +269,12 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "select_invert", "0: select normal 1: invert (select all unselected layers)"},
     {GIMP_PDB_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
   };
-  static int nargs_f2multi = sizeof(args_f2multi) / sizeof(args_f2multi[0]);
+  static int nargs_f2multi = G_N_ELEMENTS (args_f2multi);
 
   static GimpParamDef return_f2multi[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
-  static int nreturn_f2multi = sizeof(return_f2multi) / sizeof(return_f2multi[0]);
-
 
 
 
@@ -289,7 +286,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "range_from", "frame nr to start"},
     {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
   };
-  static int nargs_rflatt = sizeof(args_rflatt) / sizeof(args_rflatt[0]);
+  static int nargs_rflatt = G_N_ELEMENTS (args_rflatt);
 
   static GimpParamDef args_rlayerdel[] =
   {
@@ -300,7 +297,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "range_to", "frame nr to stop (can be lower than range_from)"},
     {GIMP_PDB_INT32, "nr", "layerstack position (0 == on top)"},
   };
-  static int nargs_rlayerdel = sizeof(args_rlayerdel) / sizeof(args_rlayerdel[0]);
+  static int nargs_rlayerdel = G_N_ELEMENTS (args_rlayerdel);
 
 
   static GimpParamDef args_rconv[] =
@@ -317,7 +314,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
     {GIMP_PDB_STRING, "basename", "(optional parameter) here you may specify the basename of the destination frames \"/my_dir/myframe\"  _0001.ext is added)"},
   };
-  static int nargs_rconv = sizeof(args_rconv) / sizeof(args_rconv[0]);
+  static int nargs_rconv = G_N_ELEMENTS (args_rconv);
 
 
   static GimpParamDef args_rconv2[] =
@@ -338,7 +335,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32,  "remove_unused", "remove unused or double colors from final palette (used only for dest_type INDEXED)"},
     {GIMP_PDB_STRING, "palette", "name of the cutom palette to use (used only for dest_type INDEXED and palette_type == CUSTOM_PALETTE) "},
   };
-  static int nargs_rconv2 = sizeof(args_rconv2) / sizeof(args_rconv2[0]);
+  static int nargs_rconv2 = G_N_ELEMENTS (args_rconv2);
 
   /* resize and crop share the same parameters */
   static GimpParamDef args_resize[] =
@@ -351,7 +348,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "offset_x", "X offset in pixels"},
     {GIMP_PDB_INT32, "offset_y", "Y offset in pixels"},
   };
-  static int nargs_resize = sizeof(args_resize) / sizeof(args_resize[0]);
+  static int nargs_resize = G_N_ELEMENTS (args_resize);
 
   static GimpParamDef args_scale[] =
   {
@@ -361,7 +358,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "new_width", "width of the resulting  anim_frame images in pixels"},
     {GIMP_PDB_INT32, "new_height", "height of the resulting  anim_frame images in pixels"},
   };
-  static int nargs_scale = sizeof(args_scale) / sizeof(args_scale[0]);
+  static int nargs_scale = G_N_ELEMENTS (args_scale);
 
 
   static GimpParamDef args_split[] =
@@ -373,14 +370,12 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "no_alpha", "True: remove alpha channel(s) in the destination frames"},
     {GIMP_PDB_STRING, "extension", "extension for the destination filetype (jpg, tif ...or any other gimp supported type)"},
   };
-  static int nargs_split = sizeof(args_split) / sizeof(args_split[0]);
+  static int nargs_split = G_N_ELEMENTS (args_split);
 
   static GimpParamDef return_split[] =
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image (first or last resulting frame)" }
   };
-  static int nreturn_split = sizeof(return_split) / sizeof(return_split[0]);
-
 
   static GimpParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
@@ -394,7 +389,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "range_from", "frame nr to start"},
     {GIMP_PDB_INT32, "range_to", "frame nr to stop"},
   };
-  static int nargs_shift = sizeof(args_shift) / sizeof(args_shift[0]);
+  static int nargs_shift = G_N_ELEMENTS (args_shift);
 
   static GimpParamDef args_modify[] =
   {
@@ -410,7 +405,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_STRING, "select_string", "string to match with layername (how to match is defined by select_mode)"},
     {GIMP_PDB_STRING, "new_layername", "is only used at action rename. [####] is replaced by the framnumber"},
   };
-  static int nargs_modify = sizeof(args_modify) / sizeof(args_modify[0]);
+  static int nargs_modify = G_N_ELEMENTS (args_modify);
 
   static GimpParamDef args_video_copy[] =
   {
@@ -420,7 +415,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_INT32, "range_from", "frame nr to start"},
     {GIMP_PDB_INT32, "range_to", "frame nr to stop"},
   };
-  static int nargs_video_copy = sizeof(args_video_copy) / sizeof(args_video_copy[0]);
+  static int nargs_video_copy = G_N_ELEMENTS (args_video_copy);
 
   static GimpParamDef args_video_paste[] =
   {
@@ -431,7 +426,7 @@ GimpPlugInInfo PLUG_IN_INFO =
                                 "1 .. paste insert before current frame "
 				"2 .. paste insert after current frame"},
   };
-  static int nargs_video_paste = sizeof(args_video_paste) / sizeof(args_video_paste[0]);
+  static int nargs_video_paste = G_N_ELEMENTS (args_video_paste);
 
   static GimpParamDef args_video_clear[] =
   {
@@ -439,7 +434,6 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_IMAGE, "image", "Input image (is ignored)"},
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
   };
-  static int nargs_video_clear = sizeof(args_video_clear) / sizeof(args_video_clear[0]);
 
   static GimpParamDef return_ainfo[] =
   {
@@ -452,7 +446,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     { GIMP_PDB_STRING, "extension",      "extension of the AnimFrames (.xcf)" },
     { GIMP_PDB_FLOAT,  "framerate",      "framerate in frames per second" }
   };
-  static int nreturn_ainfo = sizeof(return_ainfo) / sizeof(return_ainfo[0]);
+  static int nreturn_ainfo = G_N_ELEMENTS (return_ainfo);
 
   static GimpParamDef args_setrate[] =
   {
@@ -461,7 +455,7 @@ GimpPlugInInfo PLUG_IN_INFO =
     {GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)"},
     {GIMP_PDB_FLOAT,  "framerate",      "framerate in frames per second" }
   };
-  static int nargs_setrate = sizeof(args_setrate) / sizeof(args_setrate[0]);
+  static int nargs_setrate = G_N_ELEMENTS (args_setrate);
 
 
 
@@ -578,7 +572,7 @@ query ()
 			 N_("<Image>/Video/Move Path..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_mov, nreturn_vals,
+			 G_N_ELEMENTS (args_mov), nreturn_vals,
 			 args_mov, return_vals);
 
   l_help_str = g_strdup_printf(
@@ -649,7 +643,7 @@ query ()
 			 N_("<Image>/Video/Frames to Image..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_f2multi, nreturn_f2multi,
+			 nargs_f2multi, G_N_ELEMENTS (return_f2multi),
 			 args_f2multi, return_f2multi);
 
   gimp_install_procedure("plug_in_gap_range_flatten",
@@ -745,7 +739,7 @@ query ()
 			 N_("<Image>/Video/Split Image to Frames..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_split, nreturn_split,
+			 nargs_split, G_N_ELEMENTS (return_split),
 			 args_split, return_split);
 
 
@@ -817,7 +811,8 @@ query ()
 			 NULL,                     /* do not appear in menus */
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs_video_clear, nreturn_vals,
+			 G_N_ELEMENTS (args_video_clear),
+                         nreturn_vals,
 			 args_video_clear, return_vals);
 
   gimp_install_procedure("plug_in_gap_get_animinfo",
@@ -1191,7 +1186,7 @@ run (char    *name,
   {
       t_mov_values *pvals;
            
-      pvals = g_malloc(sizeof(t_mov_values));
+      pvals = g_new (t_mov_values, 1);
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
       {
           status = GIMP_PDB_CALLING_ERROR;
@@ -1214,7 +1209,7 @@ run (char    *name,
       gint32        l_startangle;
       
       pointfile = NULL;
-      pvals = g_malloc(sizeof(t_mov_values));
+      pvals = g_new (t_mov_values, 1);
       l_rotation_follow = 0;
       l_startangle = 0;
 

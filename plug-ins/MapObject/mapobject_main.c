@@ -193,7 +193,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "cyl_top_drawable",      "Cylinder top face (set these to -1 if not used)" },
     { GIMP_PDB_DRAWABLE, "cyl_bottom_drawable",   "Cylinder bottom face" }      
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_map_object",
 			  "Maps a picture to a object (plane, sphere, box or cylinder)",
@@ -204,7 +203,7 @@ query (void)
 			  N_("<Image>/Filters/Map/Map Object..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

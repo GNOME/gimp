@@ -169,7 +169,6 @@ query(void)
     { GIMP_PDB_INT32,	"left",		"Left offset (points, -1 = centered)" },
     { GIMP_PDB_INT32,	"top",		"Top offset (points, -1 = centered)" }
   };
-  static gint print_nargs = sizeof (print_args) / sizeof (print_args[0]);
 
   static GimpParamDef	pagesetup_args[] =
   {
@@ -177,8 +176,6 @@ query(void)
     { GIMP_PDB_IMAGE,	"image",	"Input image" },
     { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" }
   };
-  static gint pagesetup_nargs = (sizeof (pagesetup_args) /
-				 sizeof (pagesetup_args[0]));
 
   gimp_install_procedure (NAME_PRINT,
 			  "This plug-in prints images from the GIMP.",
@@ -189,7 +186,7 @@ query(void)
 			  N_("<Image>/File/Print"),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
-			  print_nargs, 0,
+			  G_N_ELEMENTS (print_args), 0,
 			  print_args, NULL);
 
   gimp_install_procedure (NAME_PAGE_SETUP,
@@ -201,7 +198,7 @@ query(void)
 			  N_("<Image>/File/Page Setup"),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
-			  pagesetup_nargs, 0,
+			  G_N_ELEMENTS (pagesetup_args), 0,
 			  pagesetup_args, NULL);
 }
 

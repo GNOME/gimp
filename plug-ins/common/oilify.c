@@ -105,7 +105,6 @@ query (void)
     { GIMP_PDB_INT32, "mask_size", "Oil paint mask size" },
     { GIMP_PDB_INT32, "mode", "Algorithm {RGB (0), INTENSITY (1)}" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_oilify",
 			  "Modify the specified drawable to resemble an oil "
@@ -119,7 +118,7 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Oilify..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

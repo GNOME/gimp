@@ -108,7 +108,6 @@ query (void)
     { GIMP_PDB_INT32, "height", "Resolution in pixels" },
     { GIMP_PDB_INT32, "limit", "If true, limit line width" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_engrave",
 			  "Engrave the contents of the specified drawable",
@@ -119,7 +118,7 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Engrave..."),
 			  "RGBA, GRAYA",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

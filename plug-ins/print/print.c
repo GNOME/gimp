@@ -208,7 +208,6 @@ query (void)
     { GIMP_PDB_STRING,	"dither_algorithm", "Dither algorithm" },
     { GIMP_PDB_INT32,	"unit",		"Unit 0=Inches 1=Metric" },
   };
-  static gint nargs = sizeof(args) / sizeof(args[0]);
 
   static gchar *blurb = "This plug-in prints images from The GIMP.";
   static gchar *help  = "Prints images to PostScript, PCL, or ESC/P2 printers.";
@@ -222,7 +221,7 @@ query (void)
 			  N_("<Image>/File/Print..."),
 			  types,
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -1379,7 +1378,7 @@ get_system_printers(void)
   }
   else
   {
-    for (i = 0; i < (sizeof(lpcs) / sizeof(lpcs[0])); i ++)
+    for (i = 0; i < G_N_ELEMENTS (lpcs); i ++)
     {
       sprintf(command, "%s/lpc", lpcs[i]);
 
@@ -1387,7 +1386,7 @@ get_system_printers(void)
         break;
     }
 
-    if (i < (sizeof(lpcs) / sizeof(lpcs[0])))
+    if (i < G_N_ELEMENTS (lpcs))
     {
       strcat(command, " status < /dev/null");
       type = PRINTERS_LPC;

@@ -313,8 +313,6 @@ query (void)
     { GIMP_PDB_INT32, "grout_color", "Grout color (black/white or fore/background): { BW (0), FG_BG (1) }" }
   };
   static GimpParamDef *return_vals = NULL;
-
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   INIT_I18N();
@@ -328,7 +326,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/Mosaic..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
 }
 

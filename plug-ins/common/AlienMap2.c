@@ -974,7 +974,6 @@ query (void)
     { GIMP_PDB_INT8,     "bluemode",       "Blue/luminance application mode (TRUE, FALSE)" },
   };
   static GimpParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
   INIT_I18N();
@@ -988,7 +987,7 @@ query (void)
         		  N_("<Image>/Filters/Colors/Map/Alien Map 2..."),
         		  "RGB*",
         		  GIMP_PLUGIN,
-        		  nargs, nreturn_vals,
+        		  G_N_ELEMENTS (args), nreturn_vals,
         		  args, return_vals);
 }
 
@@ -1331,8 +1330,8 @@ build_preview_source_image (void)
   guchar *p;
   guchar  pixel[4];
 
-  wint.image  = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
-  wint.wimage = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  wint.image  = g_new (guchar, preview_width * preview_height * 3);
+  wint.wimage = g_new (guchar, preview_width * preview_height * 3);
 
   left   = sel_x1;
   right  = sel_x2 - 1;

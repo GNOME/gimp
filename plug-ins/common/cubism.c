@@ -152,7 +152,6 @@ query (void)
     { GIMP_PDB_FLOAT, "tile_saturation", "Expand tiles by this amount" },
     { GIMP_PDB_INT32, "bg_color", "Background color: { BLACK (0), BG (1) }" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_cubism",
 			  "Convert the input drawable into a collection of rotated squares",
@@ -163,7 +162,7 @@ query (void)
 			  N_("<Image>/Filters/Artistic/Cubism..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -105,9 +105,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -118,7 +115,6 @@ query (void)
     { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
     { GIMP_PDB_STRING, "icon_name", "The name of the icon" }
   };
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_gicon_load",
                           "loads files of the .ico file format",
@@ -129,7 +125,8 @@ query (void)
                           "<Load>/GIcon",
                           NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gicon_save",
@@ -141,7 +138,7 @@ query (void)
                           "<Save>/GIcon",
                           "GRAY*",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_gicon_load",

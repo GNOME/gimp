@@ -79,7 +79,6 @@ query (void)
   {
     { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("extension_db_browser",
                           "List available procedures in the PDB",
@@ -90,7 +89,7 @@ query (void)
                           N_("<Toolbox>/Xtns/DB Browser..."),
 			  "",
                           GIMP_EXTENSION,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 

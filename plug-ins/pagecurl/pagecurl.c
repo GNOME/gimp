@@ -197,13 +197,11 @@ query (void)
     { GIMP_PDB_INT32, "type", "vertical (0), horizontal (1)" },
     { GIMP_PDB_INT32, "shade", "Shade the region under the curl (1) or not (0)" },
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
   }; 
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   INIT_I18N();
 
@@ -216,8 +214,8 @@ query (void)
 			  N_("<Image>/Filters/Distorts/Pagecurl..."),
 			  "RGBA, GRAYA",
 			  GIMP_PLUGIN,
-			  nargs,
-			  nreturn_vals,
+			  G_N_ELEMENTS (args),
+			  G_N_ELEMENTS (return_vals),
 			  args,
 			  return_vals);
 }

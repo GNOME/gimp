@@ -147,14 +147,11 @@ query (void)
     { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
     { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
-  static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
-  static gint nload_return_vals = (sizeof (load_return_vals) /
-				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
@@ -171,7 +168,6 @@ query (void)
     { GIMP_PDB_INT32,    "write_mask",     "(0 = ignore, 1 = save as extra file)" },
     { GIMP_PDB_STRING,   "mask_extension", "Extension of the mask file" }
   } ;
-  static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_xbm_load",
                           "Load a file in X10 or X11 bitmap (XBM) file format",
@@ -182,7 +178,8 @@ query (void)
                           "<Load>/XBM",
 			  NULL,
                           GIMP_PLUGIN,
-                          nload_args, nload_return_vals,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_xbm_save",
@@ -194,7 +191,7 @@ query (void)
                           "<Save>/XBM",
 			  "INDEXED",
                           GIMP_PLUGIN,
-                          nsave_args, 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_load_handler ("file_xbm_load",

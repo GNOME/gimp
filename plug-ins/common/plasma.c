@@ -177,7 +177,6 @@ query (void)
     { GIMP_PDB_INT32, "seed", "Random seed" },
     { GIMP_PDB_FLOAT, "turbulence", "Turbulence of plasma" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_plasma",
 			  "Create a plasma cloud like image to the specified drawable",
@@ -190,7 +189,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

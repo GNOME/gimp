@@ -139,7 +139,7 @@ static COMPOSE_DSC compose_dsc[] =
 		    N_("Black:") }, N_("cmyk-compose"), compose_cmyk }
 };
 
-#define MAX_COMPOSE_TYPES (sizeof (compose_dsc) / sizeof (compose_dsc[0]))
+#define MAX_COMPOSE_TYPES (G_N_ELEMENTS (compose_dsc))
 
 
 typedef struct
@@ -207,8 +207,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   static GimpParamDef drw_args[] =
   {
@@ -224,8 +222,6 @@ query (void)
   {
     { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
-  static gint drw_nargs = sizeof (args) / sizeof (args[0]);
-  static gint drw_nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   gimp_install_procedure ("plug_in_compose",
 			  "Compose an image from multiple gray images",
@@ -237,7 +233,8 @@ query (void)
 			  N_("<Image>/Image/Mode/Compose..."),
 			  "GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, nreturn_vals,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_vals),
 			  args, return_vals);
 
   gimp_install_procedure ("plug_in_drawable_compose",
@@ -250,7 +247,8 @@ query (void)
 			  NULL,   /* It is not available in interactive mode */
 			  "GRAY*",
 			  GIMP_PLUGIN,
-			  drw_nargs, drw_nreturn_vals,
+			  G_N_ELEMENTS (drw_args),
+                          G_N_ELEMENTS (drw_return_vals),
 			  drw_args, drw_return_vals);
 }
 

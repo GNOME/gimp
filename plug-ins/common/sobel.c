@@ -123,7 +123,6 @@ query (void)
     { GIMP_PDB_INT32, "vertical", "Sobel in vertical direction" },
     { GIMP_PDB_INT32, "keep_sign", "Keep sign of result (one direction only)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_sobel",
 			  "Edge Detection with Sobel Operation",
@@ -142,7 +141,7 @@ query (void)
 			  N_("<Image>/Filters/Edge-Detect/Sobel..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

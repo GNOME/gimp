@@ -169,7 +169,6 @@ query (void)
     { GIMP_PDB_FLOAT, "amount", "Strength of effect" },
     { GIMP_PDB_FLOAT, "threshold", "Threshold" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 	
   /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
@@ -186,7 +185,7 @@ query (void)
 			  N_("<Image>/Filters/Enhance/Unsharp Mask..."),
 			  "GRAY*, RGB*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -148,7 +148,6 @@ query (void)
     { GIMP_PDB_FLOAT, "radius", "The filter radius" },
     { GIMP_PDB_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_nlfilt",
 			  "Nonlinear swiss army knife filter",
@@ -159,7 +158,7 @@ query (void)
 			  N_("<Image>/Filters/Enhance/NL Filter..."),
 			  "RGB,GRAY",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

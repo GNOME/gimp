@@ -86,7 +86,6 @@ static struct
   { "simple_color", TOKEN_SIMPLE_COLOR },
   { "prob", TOKEN_PROB }
 };
-static guint nsymbols = sizeof (symbols) / sizeof (symbols[0]);
 
 static GTokenType 
 ifsvals_parse_color (GScanner *scanner, 
@@ -422,7 +421,7 @@ ifsvals_parse_string (char *str, IfsComposeVals *vals, AffElement ***elements)
   scanner->config->scan_identifier_1char = TRUE;
   scanner->input_name = "IfsCompose Saved Data";
   
-  for (i = 0; i < nsymbols; i++)
+  for (i = 0; i < G_N_ELEMENTS (symbols); i++)
     g_scanner_scope_add_symbol (scanner, 0,
                                 symbols[i].name, 
                                 GINT_TO_POINTER (symbols[i].token));

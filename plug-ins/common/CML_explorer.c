@@ -456,7 +456,6 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Make an image of Coupled-Map Lattice",
@@ -473,7 +472,7 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
@@ -2079,7 +2078,7 @@ CML_initial_value_sensitives_update (void)
   flag2 = (CML_INITIAL_RANDOM_INDEPENDENT <= VALS.initial_value)
     & (VALS.initial_value <= CML_INITIAL_RANDOM_SHARED);
 
-  for (; i < sizeof (random_sensitives) / sizeof (random_sensitives[0]); i++)
+  for (; i < G_N_ELEMENTS (random_sensitives) ; i++)
     if (random_sensitives[i].widget)
       gtk_widget_set_sensitive (random_sensitives[i].widget,
 				flag1 & (random_sensitives[i].logic == flag2));

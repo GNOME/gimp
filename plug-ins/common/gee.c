@@ -98,7 +98,6 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Input Image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure("plug_in_the_slimy_egg",
 			 "A big hello from the GIMP team!",
@@ -113,7 +112,7 @@ query (void)
 #endif
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
-			 nargs, 0,
+			 G_N_ELEMENTS (args), 0,
 			 args, NULL);
 }
 

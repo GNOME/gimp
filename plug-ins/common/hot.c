@@ -218,7 +218,6 @@ query (void)
     { GIMP_PDB_INT32, "action", "The action to perform" },
     { GIMP_PDB_INT32, "new_layerp", "Create a new layer iff True" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_hot",
 			  "Look for hot NTSC or PAL pixels ",
@@ -234,7 +233,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Hot..."),
 			  "RGB",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 

@@ -261,7 +261,6 @@ query (void)
     { GIMP_PDB_INT32, "out_low",   "lowest sample color intensity (0 <= out_low <= 254)" },
     { GIMP_PDB_INT32, "out_high",  "highest sample color intensity (1 <= out_high <= 255)" }
   };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static gchar *help_string =
     "This plug-in colorizes the contents of the specified (gray) layer"
@@ -306,7 +305,7 @@ query (void)
 			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
-			  nargs, 0,
+			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
 
