@@ -244,6 +244,7 @@ paint_core_button_press (Tool           *tool,
 #ifdef GTK_HAVE_SIX_VALUATORS
       paint_core->startwheel    = paint_core->lastwheel    = paint_core->curwheel;
 #endif /* GTK_HAVE_SIX_VALUATORS */
+      paint_core->distance   = 0.0;
     }
 
   /*  If shift is down and this is not the first paint
@@ -833,7 +834,6 @@ paint_core_init (PaintCore    *paint_core,
   /*  Get the initial undo extents  */
   paint_core->x1         = paint_core->x2 = paint_core->curx;
   paint_core->y1         = paint_core->y2 = paint_core->cury;
-  paint_core->distance   = 0.0;
   paint_core->pixel_dist = 0.0;
 
   return TRUE;
