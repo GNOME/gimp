@@ -2325,7 +2325,7 @@ static inline char *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-#if GLIB_CHECK_VERSION (1,3,1)
+#if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1)
   gchar *str = g_strescape (*((char **)val1p), NULL);
 #else
   gchar *str = g_strescape (*((char **)val1p));

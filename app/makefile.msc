@@ -77,6 +77,7 @@ gimp_OBJECTS = \
 	boundary.obj		\
 	brightness_contrast.obj	\
 	brush_edit.obj		\
+	brush_scale.obj		\
 	brush_select.obj	\
 	brush_select_cmds.obj	\
 	brushes_cmds.obj	\
@@ -146,6 +147,7 @@ gimp_OBJECTS = \
 	gimpbrush.obj		\
 	gimpbrushgenerated.obj	\
 	gimpbrushlist.obj	\
+	gimpbrushpixmap.obj	\
 	gimpcontext.obj		\
 	gimphistogram.obj	\
 	gimplist.obj		\
@@ -209,6 +211,7 @@ gimp_OBJECTS = \
 	perspective_tool.obj	\
 	pixel_processor.obj	\
 	pixel_region.obj	\
+	pixmapbrush.obj		\
 	plug_in.obj		\
 	plug_in_cmds.obj	\
 	posterize.obj		\

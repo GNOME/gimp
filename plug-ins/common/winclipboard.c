@@ -32,11 +32,12 @@
 /* History:
  *  
  *   08/07/99 Implementation and release.
+ *	 08/10/99 Big speed increase by using gimp_tile_cache_size()
+ *			  Thanks to Kevin Turner's documentation at:
+ *			  http://www.poboxes.com/kevint/gimp/doc/plugin-doc-2.1.html
  *
  * TODO (maybe):
  *
- *   - Speed up (e.g. by transfering greater chunks of memory between
- *     plug-in and gimp)
  *   - Support for 4,2,1 bit bitmaps
  *   - Unsupported formats could be delegated to GIMP Loader (e.g. wmf)
  *   - ...
@@ -200,7 +201,6 @@ CB_CopyImage (gboolean interactive,
 	HANDLE hDIB;
 	BOOL   bRet;
 
-	gimp_image_disable_undo(image_ID);
 	drawable = gimp_drawable_get (drawable_ID);
 	drawable_type = gimp_drawable_type (drawable_ID);
 	gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
@@ -299,6 +299,10 @@ CB_CopyImage (gboolean interactive,
 	/* following the slow part ... */
 	if (interactive)
 	  gimp_progress_init ("Copying ...");
+
+	/* speed it up with: */
+	gimp_tile_cache_size(  drawable->width * gimp_tile_height() 
+							* drawable->bpp );
 
 	/* copy data to DIB */
 	if (bRet)
@@ -400,8 +404,6 @@ CB_CopyImage (gboolean interactive,
 	if (hDIB) GlobalFree(hDIB);
 
 	gimp_drawable_detach (drawable);
-	/* shouldn't this be done by caller?? */
-	gimp_image_enable_undo(image_ID);
 
 	return bRet;
 } /* CB_CopyImage */
@@ -558,6 +560,10 @@ CB_PasteImage (gboolean interactive,
 				}
 			}
 
+			/* speed it up with: */
+			gimp_tile_cache_size(  drawable->width * gimp_tile_height() 
+									* drawable->bpp );
+			
 			/* change data format and copy data */
 			if (24 == nBitsPS)
 			{

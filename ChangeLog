@@ -1,3 +1,14 @@
+1999-08-13  Tor Lillqvist  <tml@iki.fi>
+
+	* app/makefile.{cygwin,msc} (gimp_OBJECTS): Add newest files.
+
+	* plug-ins/common/winclipboard.c: Speed up by using
+	gimp_tile_cache_size().
+
+	* app/gimprc.c
+	* plug-ins/script-fu/script-fu-scripts.c: Guard
+	use of GLIB_CHECK_VERSION from old GLibs that don't have it.
+
 Thu Aug 12 19:53:19 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am

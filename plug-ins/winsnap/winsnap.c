@@ -1195,6 +1195,8 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   /* Get our drawable */
   drawable = gimp_drawable_get(layer_id);
 		
+  gimp_tile_cache_size(ROUND4(width) * gimp_tile_height() * 3);
+
   /* Initialize a pixel region for writing to the image */
   gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0,
 		      ROUND4(width), height, TRUE, FALSE);

@@ -57,7 +57,7 @@
 
 #endif /* NATIVE_WIN32 */
 
-#if GLIB_CHECK_VERSION (1,3,1)
+#if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1)
 #define ESCAPE(string) g_strescape (string, NULL)
 #else
 #define ESCAPE(string) g_strescape (string)
