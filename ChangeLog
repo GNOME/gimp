@@ -1,3 +1,9 @@
+Fri Sep 10 18:36:34 EDT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/png.c: cheesy fix for INDEXEDA core dump: popup
+	    a window saying we can't handle it.  We should really handle
+	    it though.
+
 Thu Sep  9 21:29:16 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.9 release

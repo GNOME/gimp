@@ -655,12 +655,17 @@ save_image(char   *filename,	/* I - File to save to */
         bpp              = 2;
         break;
     case INDEXED_IMAGE :
+	bpp		 = 1;
 	info->valid      |= PNG_INFO_PLTE;
         info->color_type = PNG_COLOR_TYPE_PALETTE;
         info->palette    = (png_colorp)gimp_image_get_cmap(image_ID, &num_colors);
         info->num_palette= num_colors;
-        bpp              = 1;
         break;
+    case INDEXEDA_IMAGE :
+	g_message (_("Can't save image with alpha\n"));
+	return 0;
+	break;
+
     default:
         abort ();
   };
