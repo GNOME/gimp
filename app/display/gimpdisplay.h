@@ -137,7 +137,8 @@ struct _GDisplay
   GSList *update_areas;           /*  Update areas list                       */
   GSList *display_areas;          /*  Display areas list                      */
 
-  GdkCursorType current_cursor;   /*  Currently installed cursor              */
+  int           current_cursor;   /*  Currently installed cursor              */
+  short         cursor_type;      /*  Currently installed cursor type         */
   GdkCursorType override_cursor;  /*  Overriding cursor (ie. hourglass)       */
 
   short draw_cursor;	          /* should we draw software cursor ?         */
@@ -167,6 +168,7 @@ void       gdisplay_transform_coords_f     (GDisplay *, double, double, double *
 void       gdisplay_untransform_coords_f   (GDisplay *, double, double, double *,
 					    double *, int);
 void       gdisplay_install_tool_cursor    (GDisplay *, GdkCursorType);
+void       gdisplay_install_gimp_tool_cursor (GDisplay *, int);
 void       gdisplay_remove_tool_cursor     (GDisplay *);
 void       gdisplay_install_override_cursor(GDisplay *, GdkCursorType);
 void       gdisplay_remove_override_cursor (GDisplay *);

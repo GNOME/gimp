@@ -1308,7 +1308,7 @@ channel_border (Channel *mask, int radius)
   pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1,
 		     (x2-x1), (y2-y1), TRUE);
 
-  border_region(&bPR, radius);
+  border_region(&bPR, radius, radius);
 
   mask->bounds_known = FALSE;
 }

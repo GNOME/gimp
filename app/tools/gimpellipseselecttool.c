@@ -50,7 +50,7 @@ ellipse_select (GimpImage *gimage,
   Channel * new_mask;
 
   /*  if applicable, replace the current selection  */
-  if (op == REPLACE)
+  if (op == SELECTION_REPLACE)
     gimage_mask_clear (gimage);
   else
     gimage_mask_undo (gimage);
@@ -66,7 +66,7 @@ ellipse_select (GimpImage *gimage,
 		       feather_radius, op, 0, 0);
       channel_delete (new_mask);
     }
-  else if (op == INTERSECT)
+  else if (op == SELECTION_INTERSECT)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
@@ -137,7 +137,8 @@ tools_new_ellipse_select (void)
   tool->button_press_func = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func = rect_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
   tool->preserve = TRUE;

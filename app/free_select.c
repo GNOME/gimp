@@ -40,8 +40,10 @@ typedef struct _free_select FreeSelect;
 struct _free_select
 {
   DrawCore *      core;       /*  Core select object                      */
-  int             num_pts;    /*  Number of points in the polygon         */
+
   int             op;         /*  selection operation (ADD, SUB, etc)     */
+
+  int             num_pts;    /*  Number of points in the polygon         */
 };
 
 struct _FreeSelectPoint
@@ -316,27 +318,15 @@ free_select_button_press (Tool *tool, GdkEventButton *bevent,
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
 
-  if (bevent->state & GDK_MOD1_MASK)
-    {
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
-      return;
-    }
-  else if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
-    free_sel->op = ADD;
-  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
-    free_sel->op = SUB;
-  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
-    free_sel->op = INTERSECT;
-  else
-    {
-      if (! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) &&
-	  gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY)
-	{
-	  init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
-	  return;
-	}
-      free_sel->op = REPLACE;
-    }
+  switch (free_sel->op)
+  {
+   case SELECTION_MOVE_MASK:
+     init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+     return;
+   case SELECTION_MOVE:
+     init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+     return;
+  }
 
   add_point (0, bevent->x, bevent->y);
   free_sel->num_pts = 1;
@@ -470,6 +460,7 @@ tools_new_free_select (void)
 
   private->core = draw_core_new (free_select_draw);
   private->num_pts = 0;
+  private->op = SELECTION_REPLACE;
 
   tool->type = FREE_SELECT;
   tool->state = INACTIVE;
@@ -477,10 +468,11 @@ tools_new_free_select (void)
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
  
- tool->button_press_func = free_select_button_press;
+  tool->button_press_func = free_select_button_press;
   tool->button_release_func = free_select_button_release;
   tool->motion_func = free_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = free_select_control;
   tool->preserve = TRUE;

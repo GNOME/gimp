@@ -118,6 +118,9 @@ init_edit_selection (Tool           *tool,
   edit_select.cumly = 0;
 
   /*  Make a check to see if it should be a floating selection translation  */
+  if (edit_type == MaskToLayerTranslate && gimage_floating_sel (gdisp->gimage))
+    edit_type = FloatingSelTranslate;
+
   if (edit_type == LayerTranslate)
     {
       layer = gimage_get_active_layer (gdisp->gimage);

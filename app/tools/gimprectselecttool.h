@@ -20,6 +20,17 @@
 
 #include "gimpimageF.h"
 #include "tools.h"
+#include "channel.h"
+
+typedef enum
+{
+  SELECTION_ADD       = ADD,
+  SELECTION_SUB       = SUB,
+  SELECTION_REPLACE   = REPLACE,
+  SELECTION_INTERSECT = INTERSECT,
+  SELECTION_MOVE_MASK,
+  SELECTION_MOVE
+} SelectOps;
 
 /*  rect select action functions  */
 void          rect_select_button_press      (Tool *, GdkEventButton *, gpointer);

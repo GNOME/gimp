@@ -4425,7 +4425,7 @@ compute_transition(guchar *transition, guchar **buf, gint32 width)
 }
 
 void
-border_region(PixelRegion *src, gint16 radius)
+border_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 {
 /*
   This function has no bugs, but if you imagine some you can
@@ -4436,22 +4436,21 @@ border_region(PixelRegion *src, gint16 radius)
   gint16 *max;
   guchar **density;
   guchar **transition;
-  guint16 diameter = radius*2+1;
   guchar last_max;
   gint16 last_index;
 
-  if (radius < 0)
+  if (xradius < 0 || yradius < 0)
   {
     g_warning (_("border_region: negative radius specified."));
     return;
   }
-  if (radius == 0)
+  if (xradius == 0 || yradius == 0)
   {
     unsigned char color[] = "\0\0\0\0";
     color_region(src, color);
     return;
   }
-  if (radius == 1) /* optimize this case specifically */
+  if (xradius == 1 && yradius == 1) /* optimize this case specifically */
   {
     guchar *transition;
     guchar *source[3];
@@ -4485,60 +4484,61 @@ border_region(PixelRegion *src, gint16 radius)
       g_free(source[i]);
     g_free(transition);
     return;
-  } /* end of if (radius == 1) */
-  max = (gint16 *)g_malloc ((src->w+2*radius)*sizeof(gint16 *));
-  for (i = 0; i < (src->w+2*radius); i++)
-    max[i] = radius+2;
-  max += radius;
+  } /* end of if (xradius == 1 && yradius == 1) */
+  max = (gint16 *)g_malloc ((src->w+2*xradius)*sizeof(gint16 *));
+  for (i = 0; i < (src->w+2*xradius); i++)
+    max[i] = yradius+2;
+  max += xradius;
 
   buf = (guchar **)g_malloc ((3)*sizeof(void *));
   for (i = 0; i < 3; i++)
   {
     buf[i] = (guchar *)g_malloc ((src->w)*sizeof(guchar));
   }
-  transition = (guchar **)g_malloc ((radius+1)*sizeof(void*));
-  for (i = 0; i < radius +1; i++)
+  transition = (guchar **)g_malloc ((yradius+1)*sizeof(void*));
+  for (i = 0; i < yradius +1; i++)
   {
-    transition[i] = (guchar *)g_malloc (src->w+2*radius);
-    memset(transition[i], 0, src->w+2*radius);
-    transition[i] += radius;
+    transition[i] = (guchar *)g_malloc (src->w+2*xradius);
+    memset(transition[i], 0, src->w+2*xradius);
+    transition[i] += xradius;
   }
   out = (guchar *)g_malloc ((src->w)*sizeof(guchar));
-  density = (guchar **)g_malloc (diameter*sizeof(void *));
-  density += radius;
+  density = (guchar **)g_malloc ((2*xradius + 1)*sizeof(void *));
+  density += xradius;
 
-  for (x = 0; x < (radius+1); x++) /* allocate density[][] */
+  for (x = 0; x < (xradius+1); x++) /* allocate density[][] */
   {
-    density[x] = (guchar *)g_malloc (diameter);
-    density[x] += radius;
-    density[-x] = density[x];
+    density[ x]  = (guchar *)g_malloc (2*yradius +1);
+    density[ x] += yradius;
+    density[-x]  = density[x];
   }
-  for (x = 0; x < (radius+1); x++) /* compute density[][] */
+  for (x = 0; x < (xradius+1); x++) /* compute density[][] */
   {
-    register double tmpx, tmpy;
+    register double tmpx, tmpy, dist;
     guchar a;
-    for (y = 0; y < (radius+1); y++)
+    if (x > 0)
+      tmpx = x - 0.5;
+    else if (x < 0)
+      tmpx = x + 0.5;
+    else
+      tmpx = 0.0;
+    for (y = 0; y < (yradius+1); y++)
     {
-      if (x > 0)
-	tmpx = x - 0.5;
-      else if (x < 0)
-	tmpx = x + 0.5;
-      else
-	tmpx = 0.0;
       if (y > 0)
 	tmpy = y - 0.5;
       else if (y < 0)
 	tmpy = y + 0.5;
       else
 	tmpy = 0.0;
-      if (tmpy*tmpy + tmpx*tmpx < (radius)*(radius))
-	a = 255*(1.0 - sqrt ((tmpx*tmpx+tmpy*tmpy))/radius);
+      dist = (tmpy*tmpy)/(yradius*yradius) + (tmpx*tmpx)/(xradius*xradius);
+      if (dist < 1.0)
+	a = 255*(1.0 - sqrt (dist));
       else
 	a = 0;
       density[ x][ y] = a;
       density[ x][-y] = a;
-      density[ y][ x] = a;
-      density[ y][-x] = a;
+      density[-x][ y] = a;
+      density[-x][-y] = a;
     }
   }
   pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[0], 1);
@@ -4549,7 +4549,7 @@ border_region(PixelRegion *src, gint16 radius)
     memcpy (buf[2], buf[1], src->w);
   compute_transition (transition[1], buf, src->w);
 
-  for (y = 1; y < radius && y + 1< src->h; y++) /* set up top of image */
+  for (y = 1; y < yradius && y + 1< src->h; y++) /* set up top of image */
   {
     rotate_pointers ((void **)buf, 3);
     pixel_region_get_row (src, src->x, src->y + y + 1, src->w, buf[2], 1);
@@ -4557,8 +4557,8 @@ border_region(PixelRegion *src, gint16 radius)
   }
   for (x = 0; x < src->w; x++) /* set up max[] for top of image */
   {
-    max[x] = -(radius+7); 
-    for (j = 1; j < radius+1; j++)
+    max[x] = -(yradius+7); 
+    for (j = 1; j < yradius+1; j++)
       if (transition[j][x])
       {
 	max[x] = j;
@@ -4568,24 +4568,24 @@ border_region(PixelRegion *src, gint16 radius)
   for (y = 0; y < src->h; y++) /* main calculation loop */
   {
     rotate_pointers ((void **)buf, 3);
-    rotate_pointers ((void **)transition, radius + 1);
-    if (y < src->h - (radius+1))
+    rotate_pointers ((void **)transition, yradius + 1);
+    if (y < src->h - (yradius+1))
     {
-      pixel_region_get_row (src, src->x, src->y + y + radius + 1, src->w,
+      pixel_region_get_row (src, src->x, src->y + y + yradius + 1, src->w,
 			    buf[2], 1);
-      compute_transition (transition[radius], buf, src->w);
+      compute_transition (transition[yradius], buf, src->w);
     }
     else
-      memcpy (transition[radius], transition[radius - 1], src->w);
+      memcpy (transition[yradius], transition[yradius - 1], src->w);
 
     for (x = 0; x < src->w; x++) /* update max array */
     {
       if (max[x] < 1)
       {
-	if (max[x] <= -radius)
+	if (max[x] <= -yradius)
 	{
-	  if (transition[radius][x])
-	    max[x] = radius;
+	  if (transition[yradius][x])
+	    max[x] = yradius;
 	  else
 	    max[x]--;
 	}
@@ -4599,8 +4599,8 @@ border_region(PixelRegion *src, gint16 radius)
       }
       else
 	max[x]--;
-      if (max[x] < -radius - 1)
-	max[x] = -radius -1;
+      if (max[x] < -yradius - 1)
+	max[x] = -yradius -1;
     }
     last_max =  max[0][density[-1]];
     last_index = 1;
@@ -4610,8 +4610,8 @@ border_region(PixelRegion *src, gint16 radius)
       if (last_index >= 0)
       {
 	last_max = 0;
-	for (i = radius; i >= 0; i--)
-	  if (max[x+i] <= radius && max[x+i] >= -radius &&
+	for (i = xradius; i >= 0; i--)
+	  if (max[x+i] <= yradius && max[x+i] >= -yradius &&
 	      density[i][max[x+i]] > last_max)
 	  {
 	    last_max = density[i][max[x+i]];
@@ -4622,9 +4622,9 @@ border_region(PixelRegion *src, gint16 radius)
       else
       {
 	last_max = 0;
-	for (i = radius; i >= -radius; i--)
-	  if (max[x+i] <= radius && max[x+i] >= -radius &&
-	    density[i][max[x+i]] > last_max)
+	for (i = xradius; i >= -xradius; i--)
+	  if (max[x+i] <= yradius && max[x+i] >= -yradius &&
+	      density[i][max[x+i]] > last_max)
 	  {
 	    last_max = density[i][max[x+i]];
 	    last_index = i;
@@ -4635,16 +4635,16 @@ border_region(PixelRegion *src, gint16 radius)
       {
 	for (i = x+1; i < src->w; i++)
 	{
-	  if (max[i] >= -radius)
+	  if (max[i] >= -yradius)
 	    break;
 	}
-	if (i - x > radius)
+	if (i - x > xradius)
 	{
-	  for (; x < i - radius; x++)
+	  for (; x < i - xradius; x++)
 	    out[x] = 0;
 	  x--;
 	}
-	last_index = radius;
+	last_index = xradius;
       }
     }
     pixel_region_set_row (src, src->x, src->y + y, src->w, out);
@@ -4655,22 +4655,22 @@ border_region(PixelRegion *src, gint16 radius)
     g_free(buf[i]);
 
   g_free (buf);
-  max -= radius;
+  max -= xradius;
   g_free (max);
 
-  for (i = 0; i < radius +1; i++)
+  for (i = 0; i < yradius +1; i++)
   {
-    transition[i] -= radius;
+    transition[i] -= xradius;
     g_free (transition[i]);
   }
   g_free (transition);
 
-  for (i = 0; i < radius +1 ; i++)
+  for (i = 0; i < xradius +1 ; i++)
   {
-    density[i]-= radius;
+    density[i]-= yradius;
     g_free(density[i]);
   }
-  density -= radius;
+  density -= xradius;
   g_free(density);
 }
 
@@ -4700,7 +4700,7 @@ swap_region (PixelRegion *src,
 }
 
 
-void
+static void
 apply_mask_to_sub_region (int *opacityp,
 			  PixelRegion *src,
 			  PixelRegion *mask)
@@ -4731,7 +4731,7 @@ apply_mask_to_region (PixelRegion *src,
 }
 
 
-void
+static void
 combine_mask_and_sub_region (int *opacityp,
 			     PixelRegion *src,
 			     PixelRegion *mask)

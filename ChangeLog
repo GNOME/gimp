@@ -1,3 +1,32 @@
+1999-05-05  Jay Cox  <jaycox@earthlink.net>
+
+	* pixmaps/mouse1*: new bitmap files containing the new mouse cursors.
+
+	* app/parasitelist.c: use g_str_equal instead of parasite_compare_func.
+
+	* app/paint_core.c: interpret perfectmouse right way round.
+
+	* app/rect_select{P,}.[ch]: set custom cursors when the operation type
+ 	changes.  Centralize the calculation of op based on the modifier
+ 	keys being held.
+
+	* app/fuzzy_select.c, app/free_select.c: allow the rect_select
+ 	functions calculate the operation type.
+
+	* app/ellipse_select.c: use the SelectionOps typedefs.
+
+	* app/edit_selection.c: convert MaskToLayerTranslate into
+ 	FloatingSelTranslate if there is already a floating selection in
+ 	init_edit_selection.
+
+	* app/disp_callbacks.c: fixed the calculation of state.
+
+	* app/gdisplay.[ch], app/cursorutil.[ch]: new functions to allow
+ 	the loading of customized cursors.
+
+	* app/paint_funcs.[ch], app/channel.c: border_region now accepts
+ 	seperate xradius and yradius arguments.
+
 Tue May  4 15:51:16 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: use the sinclude bit again, since it works in

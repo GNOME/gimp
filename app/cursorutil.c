@@ -19,10 +19,80 @@
 #include "cursorutil.h"
 #include "dialog_handler.h"
 #include "gdisplay.h" /* for gdisplay_*_override_cursor() */
+#include "../pixmaps/mouse1"
+#include "../pixmaps/mouse1msk"
+#include "../pixmaps/mouse1_p"
+#include "../pixmaps/mouse1_pmsk"
+#include "../pixmaps/mouse1_m"
+#include "../pixmaps/mouse1_mmsk"
+#include "../pixmaps/bigcirc"
+#include "../pixmaps/bigcircmsk"
+
+typedef struct
+{
+  unsigned char *bits;
+  unsigned char *mask_bits;
+  int width, height;
+  int x_hot, y_hot;
+  GdkCursor *cursor;
+} BM_Cursor;
+    
+static BM_Cursor gimp_cursors[] =
+/* these have to match up with the enum in cursorutil.h */
+{
+  { mouse1_bits, mouse1msk_bits, mouse1_width, mouse1_height,
+    mouse1_x_hot, mouse1_y_hot, NULL},
+  { mouse1_p_bits, mouse1_pmsk_bits, mouse1_p_width, mouse1_p_height,
+    mouse1_p_x_hot, mouse1_p_y_hot, NULL},
+  { mouse1_m_bits, mouse1_mmsk_bits, mouse1_m_width, mouse1_m_height,
+    mouse1_m_x_hot, mouse1_m_y_hot, NULL},
+  { bigcirc_bits, bigcircmsk_bits, bigcirc_width, bigcirc_height,
+    bigcirc_x_hot, bigcirc_y_hot, NULL},
+};
+
 
 
 extern GSList* display_list; /* It's in gdisplay.c, FYI */
 static gboolean pending_removebusy = FALSE;
+
+
+static void
+create_cursor(BM_Cursor *bmcursor)
+{
+  GdkPixmap *pixmap;
+  GdkPixmap *pixmapmsk;
+  GdkColor fg, bg;
+
+  /* should have a way to configure the mouse colors */
+  gdk_color_parse("#FFFFFF", &bg);
+  gdk_color_parse("#000000", &fg);
+
+  pixmap = gdk_bitmap_create_from_data (NULL, bmcursor->bits,
+					bmcursor->width, bmcursor->height);
+  g_return_if_fail(pixmap != NULL);
+
+  pixmapmsk = gdk_bitmap_create_from_data (NULL, bmcursor->mask_bits,
+					   bmcursor->width,
+					   bmcursor->height);
+  g_return_if_fail(pixmapmsk != NULL);
+  
+  bmcursor->cursor = gdk_cursor_new_from_pixmap(pixmap, pixmapmsk, &fg, &bg,
+						bmcursor->x_hot,
+						bmcursor->y_hot);
+  g_return_if_fail(bmcursor->cursor != NULL);
+}
+
+void
+gimp_change_win_cursor(GdkWindow *win, GimpCursorType curtype)
+{
+  GdkCursor *cursor;
+
+  g_return_if_fail (curtype < GIMP_LAST_CURSOR_ENTRY);
+  if (!gimp_cursors[(int)curtype].cursor)
+    create_cursor(&gimp_cursors[(int)curtype]);
+  cursor = gimp_cursors[(int)curtype].cursor;
+  gdk_window_set_cursor (win, cursor);
+}
 
 
 void

@@ -36,7 +36,6 @@ static guint parasite_list_signals[LAST_SIGNAL];
 static void parasite_list_destroy    (GtkObject* list);
 static void parasite_list_init       (ParasiteList* list);
 static void parasite_list_class_init (ParasiteListClass *klass);
-static int  parasite_compare_func    (gconstpointer n1, gconstpointer n2);
 static int  free_a_parasite          (void *key, void *parasite, void *unused);
 
 static void
@@ -91,12 +90,6 @@ parasite_list_new()
 }
 
 static int
-parasite_compare_func(gconstpointer n1, gconstpointer n2)
-{
-  return (!strcmp((char*)n1, (char*)n2));
-}
-
-static int
 free_a_parasite(void *key, void *parasite, void *unused)
 {
   parasite_free((Parasite *)parasite);
@@ -143,7 +136,7 @@ parasite_list_add(ParasiteList *list, Parasite *p)
 {
   g_return_if_fail(list != NULL);
   if (list->table == NULL)
-    list->table = g_hash_table_new(g_str_hash, parasite_compare_func);
+    list->table = g_hash_table_new(g_str_hash, g_str_equal);
   g_return_if_fail(p != NULL);
   g_return_if_fail(p->name != NULL);
   parasite_list_remove(list, p->name);

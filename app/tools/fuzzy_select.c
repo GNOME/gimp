@@ -39,12 +39,13 @@ struct _fuzzy_select
 {
   DrawCore *     core;         /*  Core select object                      */
 
+  int            op;           /*  selection operation (ADD, SUB, etc)     */
+
   int            x, y;         /*  Point from which to execute seed fill  */
   int            last_x;       /*                                         */
   int            last_y;       /*  variables to keep track of sensitivity */
   int            threshold;    /*  threshold value for soft seed fill     */
 
-  int            op;           /*  selection operation (ADD, SUB, etc)     */
 };
 
 
@@ -343,26 +344,15 @@ fuzzy_select_button_press (Tool *tool, GdkEventButton *bevent,
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
 
-  if (bevent->state & GDK_MOD1_MASK)
+  if (fuzzy_sel->op == SELECTION_MOVE_MASK)
     {
       init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
       return;
     }
-  else if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
-    fuzzy_sel->op = ADD;
-  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
-    fuzzy_sel->op = SUB;
-  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
-    fuzzy_sel->op = INTERSECT;
-  else
+  else if (fuzzy_sel->op == SELECTION_MOVE)
     {
-      if (! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) &&
-	  gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY)
-	{
-	  init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
-	  return;
-	}
-      fuzzy_sel->op = REPLACE;
+      init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+      return;
     }
 
   /*  calculate the region boundary  */

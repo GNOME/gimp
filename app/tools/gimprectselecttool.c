@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -24,6 +25,7 @@
 #include "rect_select.h"
 #include "rect_selectP.h"
 #include "selection_options.h"
+#include "cursorutil.h"
 
 #include "config.h"
 #include "libgimp/gimpunitmenu.h"
@@ -39,6 +41,8 @@ static SelectionOptions *rect_options = NULL;
 extern SelectionOptions *ellipse_options;
 extern void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
 
+static void selection_tool_update_op_state(RectSelect *rect_sel, int x, int y,
+					   int state,  GDisplay *gdisp);
 
 /*************************************/
 /*  Rectangular selection apparatus  */
@@ -56,7 +60,7 @@ rect_select (GimpImage *gimage,
   Channel * new_mask;
 
   /*  if applicable, replace the current selection  */
-  if (op == REPLACE)
+  if (op == SELECTION_REPLACE)
     gimage_mask_clear (gimage);
   else
     gimage_mask_undo (gimage);
@@ -72,7 +76,7 @@ rect_select (GimpImage *gimage,
 		       feather_radius, op, 0, 0);
       channel_delete (new_mask);
     }
-  else if (op == INTERSECT)
+  else if (op == SELECTION_INTERSECT)
     {
       new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_rect (new_mask, ADD, x, y, w, h);
@@ -154,43 +158,31 @@ rect_select_button_press (Tool           *tool,
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
 
-  if (bevent->state & GDK_MOD1_MASK)
-    {
-      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
-      return;
-    }
-  else if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
-    rect_sel->op = ADD;
-  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
-    rect_sel->op = SUB;
-  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
-    rect_sel->op = INTERSECT;
-  else
-    {
-      if (! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) &&
-	  gdisplay_mask_value (gdisp, bevent->x, bevent->y) > HALF_WAY)
-	{
-	  init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
-	  return;
-	}
-      rect_sel->op = REPLACE;
-    }
+  switch (rect_sel->op)
+  {
+   case SELECTION_MOVE_MASK:
+     init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+     return;
+   case SELECTION_MOVE:
+     init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+     return;
+  }
 
   /* initialize the statusbar display */
   rect_sel->context_id =
     gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "selection");
   switch (rect_sel->op)
     {
-    case ADD:
+    case SELECTION_ADD:
       g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: ADD"));
       break;
-    case SUB:
+    case SELECTION_SUB:
       g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: SUBTRACT"));
       break;
-    case INTERSECT:
+    case SELECTION_INTERSECT:
       g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: INTERSECT"));
       break;
-    case REPLACE:
+    case SELECTION_REPLACE:
       g_snprintf (select_mode, STATUSBAR_SIZE, _("Selection: REPLACE"));
       break;
     default:
@@ -453,31 +445,68 @@ rect_select_draw (Tool *tool)
 
 
 void
+static selection_tool_update_op_state(RectSelect *rect_sel, int x, int y, int state,  
+		       GDisplay *gdisp)
+{
+  if (active_tool->state == ACTIVE)
+    return;
+
+  if (state & GDK_MOD1_MASK &&
+      !(layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))))
+    rect_sel->op = SELECTION_MOVE_MASK;  /* move just the selection mask */
+  else if (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage)) || 
+	   (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
+	    gdisplay_mask_value (gdisp, x, y)))
+    rect_sel->op = SELECTION_MOVE;      /* move the selection */
+  else if ((state & GDK_SHIFT_MASK) &&
+	   !(state & GDK_CONTROL_MASK))
+    rect_sel->op = SELECTION_ADD;       /* add to the selection */
+  else if ((state & GDK_CONTROL_MASK) &&
+	   !(state & GDK_SHIFT_MASK))
+    rect_sel->op = SELECTION_SUB;      /* subtract from the selection */
+  else if ((state & GDK_CONTROL_MASK) &&
+	   (state & GDK_SHIFT_MASK))
+    rect_sel->op = SELECTION_INTERSECT;/* intersect with selection */
+  else
+    rect_sel->op = SELECTION_REPLACE;  /* replace the selection */
+}
+
+void
 rect_select_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
   int active;
-
-  gdisp = (GDisplay *) gdisp_ptr;
+  RectSelect *rect_sel;
+  GDisplay *gdisp;
+  gdisp = (GDisplay *)gdisp_ptr;
   active = (active_tool->state == ACTIVE);
+  rect_sel = (RectSelect*)tool->private;
 
-  /*  if alt key is depressed, use the diamond cursor  */
-  if (mevent->state & GDK_MOD1_MASK && !active)
-    gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
-  /*  if the cursor is over the selected region, but no modifiers
-   *  are depressed, use a fleur cursor--for cutting and moving the selection
-   */
-  else if (gdisplay_mask_value (gdisp, mevent->x, mevent->y) &&
-	   ! (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))) &&
-	   ! (mevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
-	   ! active)
-    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
-  else
-    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+  selection_tool_update_op_state(rect_sel, mevent->x, mevent->y,
+				 mevent->state, gdisp_ptr);
+
+  switch (rect_sel->op)
+  {
+   case SELECTION_ADD:
+     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
+     break;
+   case SELECTION_SUB:
+     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+     break;
+   case SELECTION_INTERSECT: /* need a real cursor for this one */
+     gdisplay_install_gimp_tool_cursor (gdisp, GIMP_BIGCIRC_CURSOR);
+     break;
+   case SELECTION_REPLACE:
+     gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+     break;
+   case SELECTION_MOVE_MASK:
+     gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+     break;
+   case SELECTION_MOVE:
+     gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+  }
 }
-
 
 void
 rect_select_control (Tool     *tool,
@@ -528,6 +557,7 @@ tools_new_rect_select ()
   private->core = draw_core_new (rect_select_draw);
   private->x = private->y = 0;
   private->w = private->h = 0;
+  private->op = SELECTION_REPLACE;
 
   tool->type = RECT_SELECT;
   tool->state = INACTIVE;
@@ -538,7 +568,8 @@ tools_new_rect_select ()
   tool->button_press_func = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func = rect_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
   tool->preserve = TRUE;
