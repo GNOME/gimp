@@ -151,6 +151,7 @@ gimp_color_area_init (GimpColorArea *area)
   area->type      = GIMP_COLOR_AREA_FLAT;
   gimp_rgba_set (&area->color, 0.0, 0.0, 0.0, 1.0);
 
+  area->draw_border  = FALSE;
   area->needs_render = TRUE;
 }
 
@@ -226,6 +227,13 @@ gimp_color_area_expose (GtkWidget      *widget,
                                 area->rowstride,
                                 event->area.x,
                                 event->area.y);
+
+  if (area->draw_border)
+    gdk_draw_rectangle (widget->window,
+                        widget->style->fg_gc[widget->state],
+                        FALSE,
+                        0, 0,
+                        area->width - 1, area->height - 1);
 
   return FALSE;
 }
@@ -352,6 +360,26 @@ gimp_color_area_set_type (GimpColorArea     *area,
   area->type = type;
 
   area->needs_render = TRUE;
+  gtk_widget_queue_draw (GTK_WIDGET (area));
+}
+
+/**
+ * gimp_color_area_set_draw_border:
+ * @area: Pointer to a #GimpColorArea.
+ * @draw_border: whether to draw a border or not
+ *
+ * The @area can draw a thin border in the foreground color around
+ * itself.  This function allows to toggle this behaviour on and
+ * off. The default is not draw a border.
+ **/
+void
+gimp_color_area_set_draw_border (GimpColorArea *area,
+                                 gboolean       draw_border)
+{
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));  
+
+  area->draw_border = draw_border ? TRUE : FALSE;
+
   gtk_widget_queue_draw (GTK_WIDGET (area));
 }
 

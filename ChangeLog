@@ -1,5 +1,13 @@
 2003-03-14  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.[ch]: let GimpColorArea optionally
+	draw a thin border around itself.
+
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_color): use
+	a GimpColorArea instead of a deprecated GtkPreview.
+
+2003-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.[ch]: some cleanup to event handling
 	and drawing code. Doesn't draw outside the expose_event handler
 	any longer but could still be improved.

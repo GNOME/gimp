@@ -55,8 +55,8 @@ struct _GimpColorArea
 
   GimpColorAreaType    type;
   GimpRGB              color;
-
-  gboolean             needs_render;
+  guint                draw_border  : 1;
+  guint                needs_render : 1;
 };
 
 struct _GimpColorAreaClass
@@ -67,19 +67,21 @@ struct _GimpColorAreaClass
 };
 
 
-GType       gimp_color_area_get_type   (void) G_GNUC_CONST;
+GType       gimp_color_area_get_type        (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_area_new        (const GimpRGB     *color,
-					GimpColorAreaType  type,
-					GdkModifierType    drag_mask);
+GtkWidget * gimp_color_area_new             (const GimpRGB     *color,
+                                             GimpColorAreaType  type,
+                                             GdkModifierType    drag_mask);
 
-void        gimp_color_area_set_color  (GimpColorArea     *area,
-					const GimpRGB     *color);
-void        gimp_color_area_get_color  (GimpColorArea     *area,
-					GimpRGB           *color);
-gboolean    gimp_color_area_has_alpha  (GimpColorArea     *area);
-void        gimp_color_area_set_type   (GimpColorArea     *area,
-					GimpColorAreaType  type);
+void        gimp_color_area_set_color       (GimpColorArea     *area,
+                                             const GimpRGB     *color);
+void        gimp_color_area_get_color       (GimpColorArea     *area,
+                                             GimpRGB           *color);
+gboolean    gimp_color_area_has_alpha       (GimpColorArea     *area);
+void        gimp_color_area_set_type        (GimpColorArea     *area,
+                                             GimpColorAreaType  type);
+void        gimp_color_area_set_draw_border (GimpColorArea     *area,
+                                             gboolean           draw_border);
 
 
 G_END_DECLS

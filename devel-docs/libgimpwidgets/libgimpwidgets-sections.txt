@@ -27,6 +27,7 @@ gimp_color_area_set_color
 gimp_color_area_get_color
 gimp_color_area_has_alpha
 gimp_color_area_set_type
+gimp_color_area_set_draw_border
 <SUBSECTION Standard>
 GIMP_COLOR_AREA
 GIMP_IS_COLOR_AREA

@@ -85,3 +85,12 @@ GimpColorArea
 @gca: 
 
 
+<!-- ##### FUNCTION gimp_color_area_set_draw_border ##### -->
+<para>
+
+</para>
+
+@area: 
+@draw_border: 
+
+

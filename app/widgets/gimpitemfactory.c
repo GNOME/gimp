@@ -20,11 +20,6 @@
 
 #include "string.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -43,6 +38,10 @@
 #include "gimphelp.h"
 
 #include "libgimp/gimpintl.h"
+
+
+#define COLOR_BOX_WIDTH  16
+#define COLOR_BOX_HEIGHT 16
 
 
 /*  local function prototypes  */
@@ -459,8 +458,8 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
                              gboolean        set_label)
 {
   GtkWidget *widget;
-  GtkWidget *preview = NULL;
-  GtkWidget *label   = NULL;
+  GtkWidget *area  = NULL;
+  GtkWidget *label = NULL;
 
   g_return_if_fail (GTK_IS_ITEM_FACTORY (factory));
   g_return_if_fail (path != NULL);
@@ -476,13 +475,10 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       return;
     }
 
-#define COLOR_BOX_WIDTH  16
-#define COLOR_BOX_HEIGHT 16
-
   if (GTK_IS_HBOX (GTK_BIN (widget)->child))
     {
-      preview = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
-                                   "preview");
+      area = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
+                                "color_area");
       label = g_object_get_data (G_OBJECT (GTK_BIN (widget)->child),
                                  "label");
     }
@@ -500,100 +496,24 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       gtk_container_add (GTK_CONTAINER (widget), hbox);
       gtk_widget_show (hbox);
 
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (preview),
-                        COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
-      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-      gtk_widget_show (preview);
+      area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
+      gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+
+      gtk_widget_set_size_request (area, COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
+      gtk_box_pack_start (GTK_BOX (hbox), area, FALSE, FALSE, 0);
+      gtk_widget_show (area);
 
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
       gtk_widget_show (label);
 
       g_object_unref (label);
 
-      g_object_set_data (G_OBJECT (hbox), "preview", preview);
-      g_object_set_data (G_OBJECT (hbox), "label",   label);
+      g_object_set_data (G_OBJECT (hbox), "color_area", area);
+      g_object_set_data (G_OBJECT (hbox), "label",      label);
     }
 
-  if (preview)
-    {
-      guchar  rows[3][COLOR_BOX_WIDTH * 3];
-      gint    x, y;
-      gint    r0, g0, b0;
-      gint    r1, g1, b1;
-      guchar *p0, *p1, *p2;
-
-      /* Fill rows */
-
-      r0 = (GIMP_CHECK_DARK + (color->r - GIMP_CHECK_DARK) * color->a) * 255.0;
-      r1 = (GIMP_CHECK_LIGHT + (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      g0 = (GIMP_CHECK_DARK + (color->g - GIMP_CHECK_DARK) * color->a) * 255.0;
-      g1 = (GIMP_CHECK_LIGHT + (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      b0 = (GIMP_CHECK_DARK + (color->b - GIMP_CHECK_DARK) * color->a) * 255.0;
-      b1 = (GIMP_CHECK_LIGHT + (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.0;
-
-      p0 = rows[0];
-      p1 = rows[1];
-      p2 = rows[2];
-
-      for (x = 0; x < COLOR_BOX_WIDTH; x++)
-        {
-          if ((x == 0) || (x == (COLOR_BOX_WIDTH - 1)))
-            {
-              *p0++ = 0;
-              *p0++ = 0;
-              *p0++ = 0;
-
-              *p1++ = 0;
-              *p1++ = 0;
-              *p1++ = 0;
-            }
-          else if ((x / GIMP_CHECK_SIZE) & 1)
-            {
-              *p0++ = r1;
-              *p0++ = g1;
-              *p0++ = b1;
-
-              *p1++ = r0;
-              *p1++ = g0;
-              *p1++ = b0;
-            }
-          else
-            {
-              *p0++ = r0;
-              *p0++ = g0;
-              *p0++ = b0;
-
-              *p1++ = r1;
-              *p1++ = g1;
-              *p1++ = b1;
-            }
-
-          *p2++ = 0;
-          *p2++ = 0;
-          *p2++ = 0;
-        }
-
-      /* Fill preview */
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
-                            0, 0, COLOR_BOX_WIDTH);
-
-      for (y = 1; y < (COLOR_BOX_HEIGHT - 1); y++)
-        if ((y / GIMP_CHECK_SIZE) & 1)
-          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[1],
-                                0, y, COLOR_BOX_WIDTH);
-        else
-          gtk_preview_draw_row (GTK_PREVIEW (preview), rows[0],
-                                0, y, COLOR_BOX_WIDTH);
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), rows[2],
-                            0, y, COLOR_BOX_WIDTH);
-
-      gtk_widget_queue_draw (preview);
-    }
+  if (area)
+    gimp_color_area_set_color (GIMP_COLOR_AREA (area), color);
 
   if (label && set_label)
     {
@@ -606,9 +526,6 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
 
       g_free (str);
     }
-
-#undef COLOR_BOX_WIDTH
-#undef COLOR_BOX_HEIGHT
 }
 
 void
