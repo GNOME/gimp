@@ -294,6 +294,10 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
+  /* do nothing if we are an FINISHED state */
+  if (vector_tool->function == VECTORS_FINISHED)
+    return;
+
   g_return_if_fail (vector_tool->vectors  != NULL                  ||
                     vector_tool->function == VECTORS_SELECT_VECTOR ||
                     vector_tool->function == VECTORS_CREATE_VECTOR);

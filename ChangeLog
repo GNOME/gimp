@@ -1,3 +1,9 @@
+2004-01-26  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: do nothing in _button_press when
+	the tool is in the VECTORS_FINISHED state.
+	Fixes bug #132508.
+
 2004-01-25  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/postscript.c: use GSpawn instead of popen, -dBATCH,
