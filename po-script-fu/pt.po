@@ -9,35 +9,35 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:02+0100\n"
-"PO-Revision-Date: 2003-09-28 01:55+0000\n"
+"Project-Id-Version: 2.6\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-11-20 01:10+0000\n"
+"PO-Revision-Date: 2003-11-20 01:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-console.c:144
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "O modo de consola Script-Fu apenas permite invocação interactiva"
 
-#: plug-ins/script-fu/script-fu-console.c:170
+#: plug-ins/script-fu/script-fu-console.c:171
 msgid "Script-Fu Console"
 msgstr "Consola Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:194
+#: plug-ins/script-fu/script-fu-console.c:193
 msgid "SIOD Output"
 msgstr "Saída SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:267
+#: plug-ins/script-fu/script-fu-console.c:266
 msgid "Current Command"
 msgstr "Comando Actual"
 
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Procurar..."
 
@@ -54,80 +54,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "O modo de avaliação Script-Fu apenas permite invocação não interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1118
+#: plug-ins/script-fu/script-fu-scripts.c:1120
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1132
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1163
+#: plug-ins/script-fu/script-fu-scripts.c:1167
 msgid "About"
 msgstr "Sobre"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1173
+#: plug-ins/script-fu/script-fu-scripts.c:1177
 msgid "Script Arguments"
 msgstr "Argumentos do Script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1200
+#: plug-ins/script-fu/script-fu-scripts.c:1205
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1249
 msgid "Script-Fu Color Selection"
 msgstr "Selecção de Cores do Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1324
+#: plug-ins/script-fu/script-fu-scripts.c:1322
 msgid "Script-Fu File Selection"
 msgstr "Selecção de Ficheiro Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1329
+#: plug-ins/script-fu/script-fu-scripts.c:1326
 msgid "Script-Fu Folder Selection"
 msgstr "Selecção de Pasta Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-Fu Font Selection"
 msgstr "Selecção de Fonte do Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1354
+#: plug-ins/script-fu/script-fu-scripts.c:1347
 msgid "Script-fu Pattern Selection"
 msgstr "Selecção de Padrão Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1361
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecção de Gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1369
+#: plug-ins/script-fu/script-fu-scripts.c:1360
 msgid "Script-Fu Brush Selection"
 msgstr "Selecção de Pincel Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1863
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1869
-#: plug-ins/dbbrowser/dbbrowser_utils.c:508
+#: plug-ins/script-fu/script-fu-scripts.c:1963
+#: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1875
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/script-fu/script-fu-scripts.c:1969
+#: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1883
+#: plug-ins/script-fu/script-fu-scripts.c:1977
 msgid "Image Types:"
 msgstr "Tipos de Imagem:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2005
+#: plug-ins/script-fu/script-fu-scripts.c:2010
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -138,7 +138,7 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:602
 msgid "Script-Fu Server Options"
 msgstr "Opções do Servidor Script-Fu"
 
@@ -151,76 +151,73 @@ msgid "Server Logfile:"
 msgstr "Ficheiro de Log do Servidor:"
 
 #: plug-ins/script-fu/script-fu.c:120
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Exten/Script-Fu/_Consola..."
+msgstr "<Toolbox>/Exten/Script-Fu/_Consola Script-Fu..."
 
 #: plug-ins/script-fu/script-fu.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Exten/Script-Fu/_Servidor..."
+msgstr "<Toolbox>/Exten/Script-Fu/Iniciar _Servidor..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Nova leitura de todos os scripts disponíveis"
 
 #: plug-ins/script-fu/script-fu.c:274
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Exten/Script-Fu/_Actualizar"
+msgstr "<Toolbox>/Exten/Script-Fu/_Actualizar Scripts"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:119
-#: plug-ins/dbbrowser/dbbrowser_utils.c:138
+#: plug-ins/dbbrowser/dbbrowser_utils.c:118
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
 msgid "DB Browser"
 msgstr "Navegador da DB"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:124
-#: plug-ins/dbbrowser/dbbrowser_utils.c:143
+#: plug-ins/dbbrowser/dbbrowser_utils.c:122
+#: plug-ins/dbbrowser/dbbrowser_utils.c:136
 msgid "Search by _Name"
 msgstr "Procurar por _Nome"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:126
-#: plug-ins/dbbrowser/dbbrowser_utils.c:145
+#: plug-ins/dbbrowser/dbbrowser_utils.c:123
+#: plug-ins/dbbrowser/dbbrowser_utils.c:137
 msgid "Search by _Blurb"
 msgstr "Procurar por _Sumário"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:211
+#: plug-ins/dbbrowser/dbbrowser_utils.c:205
 msgid "_Search:"
 msgstr "_Procurar:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:351
+#: plug-ins/dbbrowser/dbbrowser_utils.c:345
 msgid "Name:"
 msgstr "Nome:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#: plug-ins/dbbrowser/dbbrowser_utils.c:354
 msgid "Blurb:"
 msgstr "Sumário:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:372
+#: plug-ins/dbbrowser/dbbrowser_utils.c:366
 msgid "In:"
 msgstr "Dentro:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:420
+#: plug-ins/dbbrowser/dbbrowser_utils.c:414
 msgid "Out:"
 msgstr "Fora:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:474
+#: plug-ins/dbbrowser/dbbrowser_utils.c:468
 msgid "Help:"
 msgstr "Ajuda:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:579
 msgid "Searching by name - please wait"
 msgstr "A procurar por nome - por favor aguarde"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:603
 msgid "Searching by blurb - please wait"
 msgstr "A procurar por sumário - por favor aguarde"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
 msgstr "A procurar - por favor aguarde"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:669
+#: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
 msgstr "Nenhum resultado"
 
@@ -851,9 +848,8 @@ msgid "Spots density Y"
 msgstr "Densidade de manchas Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators/B_urn-In..."
-msgstr "<Image>/Script-Fu/Animadores/_Misturar..."
+msgstr "<Image>/Script-Fu/Animadores/_Marcar a Ferro..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add Glowing"
@@ -869,7 +865,7 @@ msgstr "Gravar: Necessárias duas camadas!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
+msgstr "Efeito tipo marcar a ferro quente numa camada de 1º plano (texto) e fundo; V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1332,48 +1328,40 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/Exten/Script-Fu/Utilitários/Mapa _Fontes..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active Colors"
-msgstr "Cor Contorno"
+msgstr "Cores Activas"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
-msgstr ""
+msgstr "Preto sobre Branco"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _Size (pixels)"
-msgstr "Tamanho da Fonte (pixeis)"
+msgstr "_Tamanho da Fonte (pixeis)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
-#, fuzzy
 msgid "Use Font _Name as Text"
-msgstr "Utilizar Nome Fonte como Texto"
+msgstr "Utilizar _Nome Fonte como Texto"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
-#, fuzzy
 msgid "_Border (pixels)"
-msgstr "Margem (pixeis)"
+msgstr "_Margem (pixeis)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color Scheme"
-msgstr "Cor 3"
+msgstr "Esquema _Cores"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
-#, fuzzy
 msgid "_Filter (regexp)"
-msgstr "Filtro (exp reg)"
+msgstr "_Filtro (exp reg)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
-#, fuzzy
 msgid "_Labels"
-msgstr "Etiquetas"
+msgstr "_Etiquetas"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
-#, fuzzy
 msgid "_Text"
-msgstr "Texto"
+msgstr "_Texto"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
@@ -2043,9 +2031,8 @@ msgid "Turn from Left to Right"
 msgstr "Girar da Esquerda para Direita"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
-msgstr "<Image>/Script-Fu/Renderizar/_Grelha..."
+msgstr "<Image>/Script-Fu/Renderizar/_Spyrogimp..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2068,6 +2055,8 @@ msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
+"Desenhar Spirografos, Epitrocoidos e Curvas Lissajous. Mais informações em "
+"http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2203,9 +2192,8 @@ msgid "Whirl Amount"
 msgstr "Quantidade Voltas"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Exten/Script-Fu/Padrões/Mosaico de Redemoin_ho..."
+msgstr "<Toolbox>/Exten/Script-Fu/Padrões/Redemoin_ho..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
