@@ -43,6 +43,9 @@ static void   gimp_undo_editor_init         (GimpUndoEditor      *undo_editor);
 static void   gimp_undo_editor_set_image    (GimpImageEditor     *editor,
                                              GimpImage           *gimage);
 
+static void   gimp_undo_editor_fill         (GimpUndoEditor      *editor);
+static void   gimp_undo_editor_clear        (GimpUndoEditor      *editor);
+
 static void   gimp_undo_editor_undo_clicked (GtkWidget           *widget,
                                              GimpImageEditor     *editor);
 static void   gimp_undo_editor_redo_clicked (GtkWidget           *widget,
@@ -138,19 +141,11 @@ static void
 gimp_undo_editor_set_image (GimpImageEditor *image_editor,
                             GimpImage       *gimage)
 {
-  GimpUndoEditor *editor;
-
-  editor = GIMP_UNDO_EDITOR (image_editor);
+  GimpUndoEditor *editor = GIMP_UNDO_EDITOR (image_editor);
 
   if (image_editor->gimage)
     {
-      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
-                                         NULL);
-      g_object_unref (editor->container);
-      editor->container = NULL;
-
-      g_object_unref (editor->base_item);
-      editor->base_item = NULL;
+      gimp_undo_editor_clear (editor);
 
       g_signal_handlers_disconnect_by_func (image_editor->gimage,
 					    gimp_undo_editor_undo_event,
@@ -159,78 +154,11 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
 
   GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
 
-  if (gimage)
+  if (image_editor->gimage)
     {
-      GimpUndo *top_undo_item;
-      GimpUndo *top_redo_item;
-      GList    *list;
+      gimp_undo_editor_fill (editor);
 
-      /*  create a container as model for the undo history list  */
-      editor->container = gimp_list_new (GIMP_TYPE_UNDO,
-                                         GIMP_CONTAINER_POLICY_STRONG);
-      editor->base_item = gimp_undo_new (gimage,
-                                         GIMP_UNDO_GROUP_NONE,
-                                         _("[ Base Image ]"),
-                                         NULL, 0, FALSE, NULL, NULL);
-
-      /*  the list prepends its items, so first add the redo items...  */
-      for (list = GIMP_LIST (gimage->redo_stack->undos)->list;
-           list;
-           list = g_list_next (list))
-        {
-          gimp_container_add (editor->container, GIMP_OBJECT (list->data));
-        }
-
-      /*  ...reverse the list so the redo items are in ascending order...  */
-      gimp_list_reverse (GIMP_LIST (editor->container));
-
-      /*  ...then add the undo items in descending order...  */
-      for (list = GIMP_LIST (gimage->undo_stack->undos)->list;
-           list;
-           list = g_list_next (list))
-        {
-          gimp_container_add (editor->container, GIMP_OBJECT (list->data));
-        }
-
-      /*  ...finally, the first item is the special "base_item" which stands
-       *  for the image with no more undos available to pop
-       */
-      gimp_container_add (editor->container, GIMP_OBJECT (editor->base_item));
-
-      /*  display the container  */
-      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
-                                         editor->container);
-
-      /*  get the top item of both stacks  */
-      top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
-      top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
-
-      gtk_widget_set_sensitive (editor->undo_button, top_undo_item != NULL);
-      gtk_widget_set_sensitive (editor->redo_button, top_redo_item != NULL);
-
-      g_signal_handlers_block_by_func (editor->view,
-                                       gimp_undo_editor_select_item,
-                                       editor);
-
-      /*  select the current state of the image  */
-      if (top_undo_item)
-        {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                           GIMP_VIEWABLE (top_undo_item));
-          gimp_undo_create_preview (top_undo_item, FALSE);
-        }
-      else
-        {
-          gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                           GIMP_VIEWABLE (editor->base_item));
-          gimp_undo_create_preview (editor->base_item, TRUE);
-        }
-
-      g_signal_handlers_unblock_by_func (editor->view,
-                                         gimp_undo_editor_select_item,
-                                         editor);
-
-      g_signal_connect (gimage, "undo_event",
+      g_signal_connect (image_editor->gimage, "undo_event",
 			G_CALLBACK (gimp_undo_editor_undo_event),
 			editor);
     }
@@ -256,6 +184,107 @@ gimp_undo_editor_new (GimpImage *gimage)
 
 
 /*  private functions  */
+
+static void
+gimp_undo_editor_fill (GimpUndoEditor *editor)
+{
+  GimpImage *gimage;
+  GimpUndo  *top_undo_item;
+  GimpUndo  *top_redo_item;
+  GList     *list;
+
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
+
+  /*  create a container as model for the undo history list  */
+  editor->container = gimp_list_new (GIMP_TYPE_UNDO,
+                                     GIMP_CONTAINER_POLICY_STRONG);
+  editor->base_item = gimp_undo_new (gimage,
+                                     GIMP_UNDO_GROUP_NONE,
+                                     _("[ Base Image ]"),
+                                     NULL, 0, FALSE, NULL, NULL);
+
+  /*  the list prepends its items, so first add the redo items...  */
+  for (list = GIMP_LIST (gimage->redo_stack->undos)->list;
+       list;
+       list = g_list_next (list))
+    {
+      gimp_container_add (editor->container, GIMP_OBJECT (list->data));
+    }
+
+  /*  ...reverse the list so the redo items are in ascending order...  */
+  gimp_list_reverse (GIMP_LIST (editor->container));
+
+  /*  ...then add the undo items in descending order...  */
+  for (list = GIMP_LIST (gimage->undo_stack->undos)->list;
+       list;
+       list = g_list_next (list))
+    {
+      /*  Don't add the topmost item if it is an open undo group,
+       *  it will be added upon closing of the group.
+       */
+      if (list->prev || ! GIMP_IS_UNDO_STACK (list->data) ||
+          gimage->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
+        {
+          gimp_container_add (editor->container, GIMP_OBJECT (list->data));
+        }
+    }
+
+  /*  ...finally, the first item is the special "base_item" which stands
+   *  for the image with no more undos available to pop
+   */
+  gimp_container_add (editor->container, GIMP_OBJECT (editor->base_item));
+
+  /*  display the container  */
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
+                                     editor->container);
+
+  /*  get the top item of both stacks  */
+  top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
+  top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
+
+  gtk_widget_set_sensitive (editor->undo_button, top_undo_item != NULL);
+  gtk_widget_set_sensitive (editor->redo_button, top_redo_item != NULL);
+
+  g_signal_handlers_block_by_func (editor->view,
+                                   gimp_undo_editor_select_item,
+                                   editor);
+
+  /*  select the current state of the image  */
+  if (top_undo_item)
+    {
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
+                                       GIMP_VIEWABLE (top_undo_item));
+      gimp_undo_create_preview (top_undo_item, FALSE);
+    }
+  else
+    {
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
+                                       GIMP_VIEWABLE (editor->base_item));
+      gimp_undo_create_preview (editor->base_item, TRUE);
+    }
+
+  g_signal_handlers_unblock_by_func (editor->view,
+                                     gimp_undo_editor_select_item,
+                                     editor);
+}
+
+static void
+gimp_undo_editor_clear (GimpUndoEditor *editor)
+{
+  if (editor->container)
+    {
+      gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
+                                         NULL);
+      g_object_unref (editor->container);
+      editor->container = NULL;
+    }
+
+  if (editor->base_item)
+    {
+      g_object_unref (editor->base_item);
+      editor->base_item = NULL;
+    }
+}
 
 static void
 gimp_undo_editor_undo_clicked (GtkWidget       *widget,
@@ -291,17 +320,21 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
   top_undo_item = gimp_undo_stack_peek (gimage->undo_stack);
   top_redo_item = gimp_undo_stack_peek (gimage->redo_stack);
 
-  g_signal_handlers_block_by_func (editor->view,
-                                   gimp_undo_editor_select_item,
-                                   editor);
-
   switch (event)
     {
     case GIMP_UNDO_EVENT_UNDO_PUSHED:
+      g_signal_handlers_block_by_func (editor->view,
+                                       gimp_undo_editor_select_item,
+                                       editor);
+
       gimp_container_insert (editor->container, GIMP_OBJECT (undo), -1);
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
                                        GIMP_VIEWABLE (undo));
       gimp_undo_create_preview (undo, FALSE);
+
+      g_signal_handlers_unblock_by_func (editor->view,
+                                         gimp_undo_editor_select_item,
+                                         editor);
       break;
 
     case GIMP_UNDO_EVENT_UNDO_EXPIRED:
@@ -311,6 +344,10 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
 
     case GIMP_UNDO_EVENT_UNDO:
     case GIMP_UNDO_EVENT_REDO:
+      g_signal_handlers_block_by_func (editor->view,
+                                       gimp_undo_editor_select_item,
+                                       editor);
+
       if (top_undo_item)
         {
           gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
@@ -323,16 +360,24 @@ gimp_undo_editor_undo_event (GimpImage      *gimage,
                                            GIMP_VIEWABLE (editor->base_item));
           gimp_undo_create_preview (editor->base_item, TRUE);
         }
+
+      g_signal_handlers_unblock_by_func (editor->view,
+                                         gimp_undo_editor_select_item,
+                                         editor);
       break;
 
     case GIMP_UNDO_EVENT_UNDO_FREE:
-      gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), NULL);
+      gimp_undo_editor_clear (editor);
+      break;
+
+    case GIMP_UNDO_EVENT_UNDO_FREEZE:
+      gimp_undo_editor_clear (editor);
+      break;
+
+    case GIMP_UNDO_EVENT_UNDO_THAW:
+      gimp_undo_editor_fill (editor);
       break;
     }
-
-  g_signal_handlers_unblock_by_func (editor->view,
-                                     gimp_undo_editor_select_item,
-                                     editor);
 
   gtk_widget_set_sensitive (editor->undo_button, top_undo_item != NULL);
   gtk_widget_set_sensitive (editor->redo_button, top_redo_item != NULL);

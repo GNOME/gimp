@@ -370,7 +370,9 @@ typedef enum  /*< pdb-skip >*/
   GIMP_UNDO_EVENT_REDO_EXPIRED, /* a redo has been freed from the redo stack   */
   GIMP_UNDO_EVENT_UNDO,         /* an undo has been executed                   */
   GIMP_UNDO_EVENT_REDO,         /* a redo has been executed                    */
-  GIMP_UNDO_EVENT_UNDO_FREE     /* all undo and redo info has been cleared     */
+  GIMP_UNDO_EVENT_UNDO_FREE,    /* all undo and redo info has been cleared     */
+  GIMP_UNDO_EVENT_UNDO_FREEZE,  /* undo has been frozen                        */
+  GIMP_UNDO_EVENT_UNDO_THAW     /* undo has been thawn                         */
 } GimpUndoEvent;
 
 

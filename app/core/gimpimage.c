@@ -1475,6 +1475,8 @@ gimp_image_undo_freeze (GimpImage *gimage)
 
   gimage->undo_on = FALSE;
 
+  gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_FREEZE, NULL);
+
   return TRUE;
 }
 
@@ -1484,6 +1486,8 @@ gimp_image_undo_thaw (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   gimage->undo_on = TRUE;
+
+  gimp_image_undo_event (gimage, GIMP_UNDO_EVENT_UNDO_THAW, NULL);
 
   return TRUE;
 }
@@ -1502,7 +1506,10 @@ gimp_image_undo_event (GimpImage     *gimage,
                        GimpUndo      *undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (event == GIMP_UNDO_EVENT_UNDO_FREE || GIMP_IS_UNDO (undo));
+  g_return_if_fail (((event == GIMP_UNDO_EVENT_UNDO_FREE   ||
+                      event == GIMP_UNDO_EVENT_UNDO_FREEZE ||
+                      event == GIMP_UNDO_EVENT_UNDO_THAW) && undo == NULL) ||
+                    GIMP_IS_UNDO (undo));
 
   g_signal_emit (gimage, gimp_image_signals[UNDO_EVENT], 0, event, undo);
 }
