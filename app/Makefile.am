@@ -366,6 +366,8 @@ gimp_SOURCES = \
 	rect_selectP.h		\
 	regex.h			\
 	regex.c			\
+	resolution_calibrate.c	\
+	resolution_calibrate.h	\
 	resize.c		\
 	resize.h		\
 	rotate_tool.c		\

@@ -31,6 +31,7 @@
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
+#include "resolution_calibrate.h"
 #include "session.h"
 #include "tile_cache.h"
 
@@ -52,24 +53,25 @@ typedef enum
 
 
 /*  preferences local functions  */
-static PrefsState  file_prefs_check_settings        (void);
-static void        file_prefs_ok_callback           (GtkWidget *, GtkWidget *);
-static void        file_prefs_save_callback         (GtkWidget *, GtkWidget *);
-static void        file_prefs_cancel_callback       (GtkWidget *, GtkWidget *);
+static PrefsState  prefs_check_settings          (void);
+static void        prefs_ok_callback             (GtkWidget *, GtkWidget *);
+static void        prefs_save_callback           (GtkWidget *, GtkWidget *);
+static void        prefs_cancel_callback         (GtkWidget *, GtkWidget *);
 
-static void  file_prefs_toggle_callback             (GtkWidget *, gpointer);
-static void  file_prefs_preview_size_callback       (GtkWidget *, gpointer);
-static void  file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
-static void  file_prefs_string_callback             (GtkWidget *, gpointer);
-static void  file_prefs_text_callback               (GtkWidget *, gpointer);
-static void  file_prefs_filename_callback           (GtkWidget *, gpointer);
-static void  file_prefs_path_callback               (GtkWidget *, gpointer);
-static void  file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
-static void  file_prefs_default_size_callback       (GtkWidget *, gpointer);
-static void  file_prefs_default_resolution_callback (GtkWidget *, gpointer);
-static void  file_prefs_res_source_callback         (GtkWidget *, gpointer);
-static void  file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
-static void  file_prefs_restart_notification        (void);
+static void  prefs_toggle_callback               (GtkWidget *widget, gpointer data);
+static void  prefs_preview_size_callback         (GtkWidget *widget, gpointer data);
+static void  prefs_nav_preview_size_callback     (GtkWidget *widget, gpointer data);
+static void  prefs_string_callback               (GtkWidget *widget, gpointer data);
+static void  prefs_text_callback                 (GtkWidget *widget, gpointer data);
+static void  prefs_filename_callback             (GtkWidget *widget, gpointer data);
+static void  prefs_path_callback                 (GtkWidget *widget, gpointer data);
+static void  prefs_clear_session_info_callback   (GtkWidget *widget, gpointer data);
+static void  prefs_default_size_callback         (GtkWidget *widget, gpointer data);
+static void  prefs_default_resolution_callback   (GtkWidget *widget, gpointer data);
+static void  prefs_res_source_callback           (GtkWidget *widget, gpointer data);
+static void  prefs_monitor_resolution_callback   (GtkWidget *widget, gpointer data);
+static void  prefs_resolution_calibrate_callback (GtkWidget *widget, gpointer data);
+static void  prefs_restart_notification          (void);
 
 
 /*  static variables  */
@@ -211,7 +213,7 @@ static GtkWidget *        prefs_dlg = NULL;
  *  in the destination if there is one there already.
  */
 static void
-file_prefs_strset (gchar **dst,
+prefs_strset (gchar **dst,
 		   gchar  *src)
 {
   if (*dst)
@@ -222,14 +224,14 @@ file_prefs_strset (gchar **dst,
 
 /*  Duplicate the string, but treat NULL as the empty string.  */
 static gchar *
-file_prefs_strdup (gchar *src)
+prefs_strdup (gchar *src)
 {
   return g_strdup (src == NULL ? "" : src);
 }
 
 /*  Compare two strings, but treat NULL as the empty string.  */
 static int
-file_prefs_strcmp (gchar *src1,
+prefs_strcmp (gchar *src1,
 		   gchar *src2)
 {
   return strcmp (src1 == NULL ? "" : src1,
@@ -237,7 +239,7 @@ file_prefs_strcmp (gchar *src1,
 }
 
 static PrefsState
-file_prefs_check_settings (void)
+prefs_check_settings (void)
 {
   /*  First, check for invalid values...  */
   if (levels_of_undo < 0) 
@@ -318,15 +320,15 @@ file_prefs_check_settings (void)
       edit_nav_window_per_display    != old_nav_window_per_display    ||
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
 
-      file_prefs_strcmp (old_temp_path,      edit_temp_path)      ||
-      file_prefs_strcmp (old_swap_path,      edit_swap_path)      ||
-      file_prefs_strcmp (old_brush_path,     edit_brush_path)     ||
-      file_prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path) ||
-      file_prefs_strcmp (old_pattern_path,   edit_pattern_path)   ||
-      file_prefs_strcmp (old_palette_path,   edit_palette_path)   ||
-      file_prefs_strcmp (old_gradient_path,  edit_gradient_path)  ||
-      file_prefs_strcmp (old_plug_in_path,   edit_plug_in_path)   ||
-      file_prefs_strcmp (old_module_path,    edit_module_path))
+      prefs_strcmp (old_temp_path,      edit_temp_path)      ||
+      prefs_strcmp (old_swap_path,      edit_swap_path)      ||
+      prefs_strcmp (old_brush_path,     edit_brush_path)     ||
+      prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path) ||
+      prefs_strcmp (old_pattern_path,   edit_pattern_path)   ||
+      prefs_strcmp (old_palette_path,   edit_palette_path)   ||
+      prefs_strcmp (old_gradient_path,  edit_gradient_path)  ||
+      prefs_strcmp (old_plug_in_path,   edit_plug_in_path)   ||
+      prefs_strcmp (old_module_path,    edit_module_path))
     {
       return PREFS_RESTART;
     }
@@ -335,10 +337,10 @@ file_prefs_check_settings (void)
 }
 
 static void
-file_prefs_restart_notification_save_callback (GtkWidget *widget,
+prefs_restart_notification_save_callback (GtkWidget *widget,
 					       gpointer   data)
 {
-  file_prefs_save_callback (widget, prefs_dlg);
+  prefs_save_callback (widget, prefs_dlg);
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
@@ -347,7 +349,7 @@ file_prefs_restart_notification_save_callback (GtkWidget *widget,
  *  settings.
  */
 static void
-file_prefs_restart_notification (void)
+prefs_restart_notification (void)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
@@ -359,7 +361,7 @@ file_prefs_restart_notification (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
 
-			 _("Save"), file_prefs_restart_notification_save_callback,
+			 _("Save"), prefs_restart_notification_save_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Close"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
@@ -390,12 +392,12 @@ file_prefs_restart_notification (void)
 }
 
 static void
-file_prefs_ok_callback (GtkWidget *widget,
+prefs_ok_callback (GtkWidget *widget,
 			GtkWidget *dlg)
 {
   PrefsState state;
 
-  state = file_prefs_check_settings ();
+  state = prefs_check_settings ();
   switch (state)
     {
     case PREFS_CORRUPT:
@@ -404,7 +406,7 @@ file_prefs_ok_callback (GtkWidget *widget,
 
     case PREFS_RESTART:
       gtk_widget_set_sensitive (prefs_dlg, FALSE);
-      file_prefs_restart_notification ();
+      prefs_restart_notification ();
       break;
 
     case PREFS_OK:
@@ -432,7 +434,7 @@ file_prefs_ok_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_save_callback (GtkWidget *widget,
+prefs_save_callback (GtkWidget *widget,
 			  GtkWidget *dlg)
 {
   GList *update = NULL; /*  options that should be updated in .gimprc  */
@@ -458,7 +460,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_palette_path;
   gchar *save_gradient_path;
 
-  state = file_prefs_check_settings ();
+  state = prefs_check_settings ();
   switch (state)
     {
     case PREFS_CORRUPT:
@@ -594,7 +596,7 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "default-image-type");
     }
-  if (file_prefs_strcmp (default_comment, old_default_comment))
+  if (prefs_strcmp (default_comment, old_default_comment))
     {
       update = g_list_append (update, "default-comment");
     }
@@ -640,7 +642,7 @@ file_prefs_save_callback (GtkWidget *widget,
       monitor_xres = 0.0;
       monitor_yres = 0.0;
     }
-  if (file_prefs_strcmp (image_title_format, old_image_title_format))
+  if (prefs_strcmp (image_title_format, old_image_title_format))
     {
       update = g_list_append (update, "image-title-format");
     }
@@ -729,47 +731,47 @@ file_prefs_save_callback (GtkWidget *widget,
       remove = g_list_append (remove, "info-window-per-display");
     }
 
-  if (file_prefs_strcmp (old_temp_path, edit_temp_path))
+  if (prefs_strcmp (old_temp_path, edit_temp_path))
     {
       temp_path = edit_temp_path;
       update = g_list_append (update, "temp-path");
     }
-  if (file_prefs_strcmp (old_swap_path, edit_swap_path))
+  if (prefs_strcmp (old_swap_path, edit_swap_path))
     {
       swap_path = edit_swap_path;
       update = g_list_append (update, "swap-path");
     }
-  if (file_prefs_strcmp (old_brush_path, edit_brush_path))
+  if (prefs_strcmp (old_brush_path, edit_brush_path))
     {
       brush_path = edit_brush_path;
       update = g_list_append (update, "brush-path");
     }
-  if (file_prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path))
+  if (prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path))
     {
       brush_vbr_path = edit_brush_vbr_path;
       update = g_list_append (update, "brush-vbr-path");
     }
-  if (file_prefs_strcmp (old_pattern_path, edit_pattern_path))
+  if (prefs_strcmp (old_pattern_path, edit_pattern_path))
     {
       pattern_path = edit_pattern_path;
       update = g_list_append (update, "pattern-path");
     }
-  if (file_prefs_strcmp (old_palette_path, edit_palette_path))
+  if (prefs_strcmp (old_palette_path, edit_palette_path))
     {
       palette_path = edit_palette_path;
       update = g_list_append (update, "palette-path");
     }
-  if (file_prefs_strcmp (old_gradient_path, edit_gradient_path))
+  if (prefs_strcmp (old_gradient_path, edit_gradient_path))
     {
       gradient_path = edit_gradient_path;
       update = g_list_append (update, "gradient-path");
     }
-  if (file_prefs_strcmp (old_plug_in_path, edit_plug_in_path))
+  if (prefs_strcmp (old_plug_in_path, edit_plug_in_path))
     {
       plug_in_path = edit_plug_in_path;
       update = g_list_append (update, "plug-in-path");
     }
-  if (file_prefs_strcmp (old_module_path, edit_module_path))
+  if (prefs_strcmp (old_module_path, edit_module_path))
     {
       module_path = edit_module_path;
       update = g_list_append (update, "module-path");
@@ -816,7 +818,7 @@ file_prefs_save_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_cancel_callback (GtkWidget *widget,
+prefs_cancel_callback (GtkWidget *widget,
 			    GtkWidget *dlg)
 {
   gtk_widget_destroy (dlg);
@@ -880,8 +882,8 @@ file_prefs_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  file_prefs_strset (&image_title_format, old_image_title_format);
-  file_prefs_strset (&default_comment, old_default_comment);
+  prefs_strset (&image_title_format, old_image_title_format);
+  prefs_strset (&default_comment, old_default_comment);
 
   context_manager_set_global_paint_options (old_global_paint_options);
 
@@ -895,21 +897,21 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_nav_window_per_display    = old_nav_window_per_display;
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
 
-  file_prefs_strset (&edit_temp_path,      old_temp_path);
-  file_prefs_strset (&edit_swap_path,      old_swap_path);
-  file_prefs_strset (&edit_brush_path,     old_brush_path);
-  file_prefs_strset (&edit_brush_vbr_path, old_brush_vbr_path);
-  file_prefs_strset (&edit_pattern_path,   old_pattern_path);
-  file_prefs_strset (&edit_palette_path,   old_palette_path);
-  file_prefs_strset (&edit_gradient_path,  old_gradient_path);
-  file_prefs_strset (&edit_plug_in_path,   old_plug_in_path);
-  file_prefs_strset (&edit_module_path,    old_module_path);
+  prefs_strset (&edit_temp_path,      old_temp_path);
+  prefs_strset (&edit_swap_path,      old_swap_path);
+  prefs_strset (&edit_brush_path,     old_brush_path);
+  prefs_strset (&edit_brush_vbr_path, old_brush_vbr_path);
+  prefs_strset (&edit_pattern_path,   old_pattern_path);
+  prefs_strset (&edit_palette_path,   old_palette_path);
+  prefs_strset (&edit_gradient_path,  old_gradient_path);
+  prefs_strset (&edit_plug_in_path,   old_plug_in_path);
+  prefs_strset (&edit_module_path,    old_module_path);
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 }
 
 static void
-file_prefs_toggle_callback (GtkWidget *widget,
+prefs_toggle_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   gint *val;
@@ -977,12 +979,12 @@ file_prefs_toggle_callback (GtkWidget *widget,
        *  probably have to set your preferences value in one of the
        *  branches above...
        */
-      g_warning ("Unknown file_prefs_toggle_callback() invoker - ignored.");
+      g_warning ("Unknown prefs_toggle_callback() invoker - ignored.");
     }
 }
 
 static void
-file_prefs_preview_size_callback (GtkWidget *widget,
+prefs_preview_size_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   lc_dialog_rebuild ((long) gtk_object_get_user_data (GTK_OBJECT (widget)));
@@ -990,7 +992,7 @@ file_prefs_preview_size_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_nav_preview_size_callback (GtkWidget *widget,
+prefs_nav_preview_size_callback (GtkWidget *widget,
 				      gpointer   data)
 {
   nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
@@ -998,17 +1000,17 @@ file_prefs_nav_preview_size_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_string_callback (GtkWidget *widget,
+prefs_string_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   gchar **val;
 
   val = data;
-  file_prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
+  prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 static void
-file_prefs_text_callback (GtkWidget *widget,
+prefs_text_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   gchar **val;
@@ -1025,11 +1027,11 @@ file_prefs_text_callback (GtkWidget *widget,
       g_free (text);
     }
   else
-    file_prefs_strset (val, text);
+    prefs_strset (val, text);
 }
 
 static void
-file_prefs_filename_callback (GtkWidget *widget,
+prefs_filename_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   gchar **val;
@@ -1037,12 +1039,12 @@ file_prefs_filename_callback (GtkWidget *widget,
 
   val = data;
   filename = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (widget));
-  file_prefs_strset (val, filename);
+  prefs_strset (val, filename);
   g_free (filename);
 }
 
 static void
-file_prefs_path_callback (GtkWidget *widget,
+prefs_path_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   gchar **val;
@@ -1050,12 +1052,12 @@ file_prefs_path_callback (GtkWidget *widget,
 
   val  = (gchar **) data;
   path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget));
-  file_prefs_strset (val, path);
+  prefs_strset (val, path);
   g_free (path);
 }
 
 static void
-file_prefs_clear_session_info_callback (GtkWidget *widget,
+prefs_clear_session_info_callback (GtkWidget *widget,
 					gpointer   data)
 {
   g_list_free (session_info_updates);
@@ -1063,7 +1065,7 @@ file_prefs_clear_session_info_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_default_size_callback (GtkWidget *widget,
+prefs_default_size_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   default_width =
@@ -1074,7 +1076,7 @@ file_prefs_default_size_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_default_resolution_callback (GtkWidget *widget,
+prefs_default_resolution_callback (GtkWidget *widget,
 					gpointer   data)
 {
   GtkWidget *size_sizeentry;
@@ -1125,21 +1127,12 @@ file_prefs_default_resolution_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_res_source_callback (GtkWidget *widget,
+prefs_res_source_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GtkWidget *resolution_xserver_label;
   GtkWidget *monitor_resolution_sizeentry;
 
-  resolution_xserver_label =
-    gtk_object_get_data (GTK_OBJECT (widget), "resolution_xserver_label");
-  monitor_resolution_sizeentry =
-    gtk_object_get_data (GTK_OBJECT (widget), "monitor_resolution_sizeentry");
-
-  gtk_widget_set_sensitive (resolution_xserver_label,
-			    GTK_TOGGLE_BUTTON (widget)->active);
-  gtk_widget_set_sensitive (monitor_resolution_sizeentry,
-			    ! GTK_TOGGLE_BUTTON (widget)->active);
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
@@ -1148,6 +1141,9 @@ file_prefs_res_source_callback (GtkWidget *widget,
     }
   else
     {
+      monitor_resolution_sizeentry =
+	gtk_object_get_data (GTK_OBJECT (widget), "monitor_resolution_sizeentry");
+
       if (monitor_resolution_sizeentry)
 	{
 	  monitor_xres = gimp_size_entry_get_refval
@@ -1160,7 +1156,7 @@ file_prefs_res_source_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_monitor_resolution_callback (GtkWidget *widget,
+prefs_monitor_resolution_callback (GtkWidget *widget,
 					gpointer   data)
 {
   static gdouble xres = 0.0;
@@ -1197,9 +1193,16 @@ file_prefs_monitor_resolution_callback (GtkWidget *widget,
   monitor_yres = yres;
 }
 
+static void
+prefs_resolution_calibrate_callback (GtkWidget *widget,
+					 gpointer   data)
+{
+  resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL);
+}
+
 /*  create a new notebook page  */
 static GtkWidget *
-file_prefs_notebook_append_page (GtkNotebook   *notebook,
+prefs_notebook_append_page (GtkNotebook   *notebook,
 				 gchar         *notebook_label,
 				 GtkCTree      *ctree,
 				 gchar         *tree_label,
@@ -1253,7 +1256,7 @@ file_prefs_notebook_append_page (GtkNotebook   *notebook,
 
 /*  select a notebook page  */
 static void
-file_pref_tree_select_callback (GtkWidget    *widget,
+prefs_tree_select_callback (GtkWidget    *widget,
 				GtkCTreeNode *node)
 {
   GtkNotebook *notebook;
@@ -1270,7 +1273,7 @@ file_pref_tree_select_callback (GtkWidget    *widget,
 
 /*  create a frame with title and a vbox  */
 static GtkWidget *
-file_prefs_frame_new (gchar  *label,
+prefs_frame_new (gchar  *label,
 		      GtkBox *vbox)
 {
   GtkWidget *frame;
@@ -1289,7 +1292,7 @@ file_prefs_frame_new (gchar  *label,
 }
 
 static void
-file_prefs_help_func (gchar *help_data)
+prefs_help_func (gchar *help_data)
 {
   GtkWidget *notebook;
   GtkWidget *event_box;
@@ -1307,8 +1310,8 @@ file_prefs_help_func (gchar *help_data)
  *  create the preferences dialog
  */
 void
-file_pref_cmd_callback (GtkWidget *widget,
-			gpointer   client_data)
+prefs_cmd_callback (GtkWidget *widget,
+			 gpointer   client_data)
 {
   GtkWidget    *ctree;
   gchar        *titles[1];
@@ -1334,6 +1337,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkObject *adjustment;
   GtkWidget *sizeentry;
   GtkWidget *sizeentry2;
+  GtkWidget *separator;
+  GtkWidget *calibrate_button;
   GtkWidget *text;
   GSList    *group;
 
@@ -1360,15 +1365,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       edit_nav_window_per_display    = nav_window_per_display;
       edit_info_window_follows_mouse = info_window_follows_mouse;
 
-      edit_temp_path      = file_prefs_strdup (temp_path);	
-      edit_swap_path      = file_prefs_strdup (swap_path);
-      edit_plug_in_path   = file_prefs_strdup (plug_in_path);
-      edit_module_path    = file_prefs_strdup (module_path);
-      edit_brush_path     = file_prefs_strdup (brush_path);
-      edit_brush_vbr_path = file_prefs_strdup (brush_vbr_path);
-      edit_pattern_path   = file_prefs_strdup (pattern_path);
-      edit_palette_path   = file_prefs_strdup (palette_path);
-      edit_gradient_path  = file_prefs_strdup (gradient_path);
+      edit_temp_path      = prefs_strdup (temp_path);	
+      edit_swap_path      = prefs_strdup (swap_path);
+      edit_plug_in_path   = prefs_strdup (plug_in_path);
+      edit_module_path    = prefs_strdup (module_path);
+      edit_brush_path     = prefs_strdup (brush_path);
+      edit_brush_vbr_path = prefs_strdup (brush_vbr_path);
+      edit_pattern_path   = prefs_strdup (pattern_path);
+      edit_palette_path   = prefs_strdup (palette_path);
+      edit_gradient_path  = prefs_strdup (gradient_path);
     }
 
   /*  assign edit variables for values which get changed on "OK" and "Save"
@@ -1416,8 +1421,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_default_threshold        = default_threshold;
   old_num_processors           = num_processors;
 
-  file_prefs_strset (&old_image_title_format, image_title_format);	
-  file_prefs_strset (&old_default_comment, default_comment);	
+  prefs_strset (&old_image_title_format, image_title_format);	
+  prefs_strset (&old_default_comment, default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -1429,15 +1434,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_nav_window_per_display    = edit_nav_window_per_display;
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
 
-  file_prefs_strset (&old_temp_path,      edit_temp_path);
-  file_prefs_strset (&old_swap_path,      edit_swap_path);
-  file_prefs_strset (&old_plug_in_path,   edit_plug_in_path);
-  file_prefs_strset (&old_module_path,    edit_module_path);
-  file_prefs_strset (&old_brush_path,     edit_brush_path);
-  file_prefs_strset (&old_brush_vbr_path, edit_brush_vbr_path);
-  file_prefs_strset (&old_pattern_path,   edit_pattern_path);
-  file_prefs_strset (&old_palette_path,   edit_palette_path);
-  file_prefs_strset (&old_gradient_path,  edit_gradient_path);
+  prefs_strset (&old_temp_path,      edit_temp_path);
+  prefs_strset (&old_swap_path,      edit_swap_path);
+  prefs_strset (&old_plug_in_path,   edit_plug_in_path);
+  prefs_strset (&old_module_path,    edit_module_path);
+  prefs_strset (&old_brush_path,     edit_brush_path);
+  prefs_strset (&old_brush_vbr_path, edit_brush_vbr_path);
+  prefs_strset (&old_pattern_path,   edit_pattern_path);
+  prefs_strset (&old_palette_path,   edit_palette_path);
+  prefs_strset (&old_gradient_path,  edit_gradient_path);
 
   /*  values which will be changed on "OK" and "Save"  */
   old_tile_cache_size = edit_tile_cache_size;
@@ -1445,16 +1450,16 @@ file_pref_cmd_callback (GtkWidget *widget,
   /* Create the dialog */
   prefs_dlg =
     gimp_dialog_new (_("Preferences"), "gimp_preferences",
-		     file_prefs_help_func,
+		     prefs_help_func,
 		     "dialogs/preferences/preferences.html",
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, FALSE,
 
-		     _("OK"), file_prefs_ok_callback,
+		     _("OK"), prefs_ok_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Save"), file_prefs_save_callback,
+		     _("Save"), prefs_save_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), file_prefs_cancel_callback,
+		     _("Cancel"), prefs_cancel_callback,
 		     NULL, NULL, NULL, TRUE, TRUE,
 
 		     NULL);
@@ -1487,13 +1492,13 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_object_set_user_data (GTK_OBJECT (ctree), notebook);
 
   gtk_signal_connect (GTK_OBJECT (ctree), "tree_select_row",
-		      GTK_SIGNAL_FUNC (file_pref_tree_select_callback),
+		      GTK_SIGNAL_FUNC (prefs_tree_select_callback),
 		      NULL);
 
   page_index = 0;
 
   /* New File page */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("New File"),
 					  GTK_CTREE (ctree),
 					  _("New File"),
@@ -1541,13 +1546,13 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, default_height);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_default_size_callback),
+		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_default_size_callback),
+		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (sizeentry), "refval_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_default_size_callback),
+		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
 		      NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
@@ -1595,13 +1600,13 @@ file_pref_cmd_callback (GtkWidget *widget,
 			      1, default_yresolution);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry2), "unit_changed",
-		      (GtkSignalFunc) file_prefs_default_resolution_callback,
+		      (GtkSignalFunc) prefs_default_resolution_callback,
 		      button);
   gtk_signal_connect (GTK_OBJECT (sizeentry2), "value_changed",
-		      (GtkSignalFunc) file_prefs_default_resolution_callback,
+		      (GtkSignalFunc) prefs_default_resolution_callback,
 		      button);
   gtk_signal_connect (GTK_OBJECT (sizeentry2), "refval_changed",
-		      (GtkSignalFunc) file_prefs_default_resolution_callback,
+		      (GtkSignalFunc) prefs_default_resolution_callback,
 		      button);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry2, FALSE, FALSE, 0);
@@ -1619,7 +1624,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &default_type, (gpointer) default_type,
 
 			   _("RGB"),       (gpointer) RGB, NULL,
@@ -1643,7 +1648,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     hbox, 1, TRUE);
 
   /* Default Comment page */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Default Comment"),
 					  GTK_CTREE (ctree),
 					  _("Default Comment"),
@@ -1667,13 +1672,13 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
   gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, default_comment, -1);
   gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      GTK_SIGNAL_FUNC (file_prefs_text_callback),
+		      GTK_SIGNAL_FUNC (prefs_text_callback),
 		      &default_comment);
   gtk_container_add (GTK_CONTAINER (hbox), text);
   gtk_widget_show (text);
 
   /* Display page */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Display"),
 					  GTK_CTREE (ctree),
 					  _("Display"),
@@ -1700,7 +1705,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &transparency_type, (gpointer) transparency_type,
 
 			   _("Light Checks"),    (gpointer) LIGHT_CHECKS, NULL,
@@ -1716,7 +1721,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &transparency_size, (gpointer) transparency_size,
 
 			   _("Small"),  (gpointer) SMALL_CHECKS, NULL,
@@ -1728,7 +1733,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Check Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  vbox2 = file_prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_BOX (vbox));
 
   if (g_visual->depth != 8)
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
@@ -1756,7 +1761,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_install_cmap);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_install_cmap);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1765,14 +1770,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_cycled_marching_ants);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_cycled_marching_ants);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
 
   /* Interface */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Interface"),
 					  GTK_CTREE (ctree),
 					  _("Interface"),
@@ -1783,7 +1788,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("General"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_BOX (vbox));
 
   table = gtk_table_new (4, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -1800,13 +1805,13 @@ file_pref_cmd_callback (GtkWidget *widget,
                                    auto_save);
      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-	                 GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+	                 GTK_SIGNAL_FUNC (prefs_toggle_callback),
 			 &auto_save);
      gtk_widget_show (button);
   */
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_preview_size_callback,
+    gimp_option_menu_new2 (FALSE, prefs_preview_size_callback,
 			   &preview_size, (gpointer) preview_size,
 
 			   _("None"),   (gpointer)   0, NULL,
@@ -1822,7 +1827,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_nav_preview_size_callback,
+    gimp_option_menu_new2 (FALSE, prefs_nav_preview_size_callback,
 			   &nav_preview_size, (gpointer) nav_preview_size,
 
 			   _("Small"),  (gpointer)  48, NULL,
@@ -1845,7 +1850,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     spinbutton, 1, TRUE);
 
   /* Indicators */
-  vbox2 = file_prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Toolbox"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label
     (_("Display Brush, Pattern and Gradient Indicators"));
@@ -1853,18 +1858,18 @@ file_pref_cmd_callback (GtkWidget *widget,
 				edit_show_indicators);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_show_indicators);
   gtk_widget_show (button);
 
-  vbox2 = file_prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Navigation Window per Display"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_nav_window_per_display);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_nav_window_per_display);
   gtk_widget_show (button);
 
@@ -1873,12 +1878,12 @@ file_pref_cmd_callback (GtkWidget *widget,
 				edit_info_window_follows_mouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_info_window_follows_mouse);
   gtk_widget_show (button);
 
   /* Interface / Help System */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Help System"),
 					  GTK_CTREE (ctree),
 					  _("Help System"),
@@ -1889,14 +1894,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("General"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("General"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Show Tool Tips"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				show_tool_tips);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &show_tool_tips);
   gtk_widget_show (button);
 
@@ -1906,11 +1911,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 				use_help);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &use_help);
   gtk_widget_show (button);
 
-  vbox2 = file_prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -1919,7 +1924,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &help_browser, (gpointer) help_browser,
 
 			   _("Internal"), (gpointer) HELP_BROWSER_GIMP, NULL,
@@ -1931,7 +1936,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     optionmenu, 1, TRUE);
 
   /* Interface / Image Windows */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Image Windows"),
 					  GTK_CTREE (ctree),
 					  _("Image Windows"),
@@ -1942,14 +1947,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("Appearance"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Appearance"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				default_dot_for_dot);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &default_dot_for_dot);
   gtk_widget_show (button);
 
@@ -1958,7 +1963,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				allow_resize_windows);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &allow_resize_windows);
   gtk_widget_show (button);
 
@@ -1967,7 +1972,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				show_rulers);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &show_rulers);
   gtk_widget_show (button);
 
@@ -1976,7 +1981,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				show_statusbar);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &show_statusbar);
   gtk_widget_show (button);
 
@@ -2031,7 +2036,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (comboitem);
 
   gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), "changed",
-		      GTK_SIGNAL_FUNC (file_prefs_string_callback), 
+		      GTK_SIGNAL_FUNC (prefs_string_callback), 
 		      &image_title_format);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -2039,7 +2044,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     combo, 1, FALSE);
   /* End of the title format string */
 
-  vbox2 = file_prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Pointer Movement Feedback"), GTK_BOX (vbox));
 
   button =
     gtk_check_button_new_with_label (_("Perfect-but-Slow Pointer Tracking"));
@@ -2047,7 +2052,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &perfectmouse);
   gtk_widget_show (button);
 
@@ -2056,7 +2061,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				no_cursor_updating);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &no_cursor_updating);
   gtk_widget_show (button);
 
@@ -2067,7 +2072,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &cursor_mode, (gpointer) cursor_mode,
 
 			   _("Tool Icon"),
@@ -2084,7 +2089,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 
   /* Interface / Tool Options */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Tool Options"),
 					  GTK_CTREE (ctree),
 					  _("Tool Options"),
@@ -2095,7 +2100,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("Paint Options"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Paint Options"), GTK_BOX (vbox));
 
   button =
     gtk_check_button_new_with_label(_("Use Global Paint Options"));
@@ -2103,11 +2108,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 				global_paint_options);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &global_paint_options);
   gtk_widget_show (button);
 
-  vbox2 = file_prefs_frame_new (_("Finding Contiguous Regions"),
+  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
 				GTK_BOX (vbox));
 
   table = gtk_table_new (1, 2, FALSE);
@@ -2134,7 +2139,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 
   /* Environment */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Environment"),
 					  GTK_CTREE (ctree),
 					  _("Environment"),
@@ -2145,13 +2150,13 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("Resource Consumption"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label(_("Conservative Memory Usage"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				edit_stingy_memory_use);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &edit_stingy_memory_use);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -2217,7 +2222,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &interpolation_type, (gpointer) interpolation_type,
 
 			   _("Nearest Neighbor (Fast)"),
@@ -2232,7 +2237,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Interpolation Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  vbox2 = file_prefs_frame_new (_("File Saving"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("File Saving"), GTK_BOX (vbox));
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
@@ -2246,7 +2251,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (table);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &thumbnail_mode, (gpointer) thumbnail_mode,
 
 			   _("Always"), (gpointer) 1, NULL,
@@ -2258,7 +2263,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+    gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
 			   &trust_dirty_flag, (gpointer) trust_dirty_flag,
 
 			   _("Only when Modified"), (gpointer) 1, NULL,
@@ -2271,7 +2276,7 @@ file_pref_cmd_callback (GtkWidget *widget,
                                      
 
   /* Session Management */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Session Management"),
 					  GTK_CTREE (ctree),
 					  _("Session"),
@@ -2282,14 +2287,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("Window Positions"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Save Window Positions on Exit"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				save_session_info);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &save_session_info);
   gtk_widget_show (button);
 
@@ -2302,7 +2307,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (file_prefs_clear_session_info_callback),
+		      GTK_SIGNAL_FUNC (prefs_clear_session_info_callback),
 		      NULL);
   gtk_widget_show (button);
 
@@ -2311,23 +2316,23 @@ file_pref_cmd_callback (GtkWidget *widget,
 				always_restore_session);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &always_restore_session);
   gtk_widget_show (button);
 
-  vbox2 = file_prefs_frame_new (_("Devices"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Devices"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Save Device Status on Exit"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				save_device_status);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
+		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
 		      &save_device_status);
   gtk_widget_show (button);
 
   /* Monitor */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Monitor"),
 					  GTK_CTREE (ctree),
 					  _("Monitor"),
@@ -2338,7 +2343,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (vbox);
   page_index++;
 
-  vbox2 = file_prefs_frame_new (_("Get Monitor Resolution"), GTK_BOX (vbox));
+  vbox2 = prefs_frame_new (_("Get Monitor Resolution"), GTK_BOX (vbox));
 
   {
     gdouble  xres, yres;
@@ -2365,6 +2370,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (ABS (monitor_xres - monitor_yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
+   gtk_object_set_data (GTK_OBJECT (sizeentry), "chain_button", button); 
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), button, 1, 3, 3, 4);
   gtk_widget_show (button);
 
@@ -2386,32 +2392,50 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, monitor_yres);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_monitor_resolution_callback),
+		      GTK_SIGNAL_FUNC (prefs_monitor_resolution_callback),
 		      button);
   gtk_signal_connect (GTK_OBJECT (sizeentry), "refval_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_monitor_resolution_callback),
+		      GTK_SIGNAL_FUNC (prefs_monitor_resolution_callback),
 		      button);
 
   gtk_container_add (GTK_CONTAINER (abox), sizeentry);
   gtk_widget_show (sizeentry);
-
   gtk_widget_set_sensitive (sizeentry, !using_xserver_resolution);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+
+  calibrate_button = gtk_button_new_with_label (_("Calibrate"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
+  gtk_signal_connect (GTK_OBJECT (calibrate_button), "clicked",
+		      GTK_SIGNAL_FUNC (prefs_resolution_calibrate_callback),
+		      sizeentry);
+  gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
+  gtk_widget_show (calibrate_button);
+  gtk_widget_set_sensitive (calibrate_button, !using_xserver_resolution);
 
   group = NULL;
   button = gtk_radio_button_new_with_label (group, _("From windowing system"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      GTK_SIGNAL_FUNC (file_prefs_res_source_callback),
+		      GTK_SIGNAL_FUNC (prefs_res_source_callback),
 		      NULL);
-  gtk_object_set_data (GTK_OBJECT (button), "resolution_xserver_label",
-		       label);
   gtk_object_set_data (GTK_OBJECT (button), "monitor_resolution_sizeentry",
 		       sizeentry);
+  gtk_object_set_data (GTK_OBJECT (button), "set_sensitive",
+		       label);
+  gtk_object_set_data (GTK_OBJECT (button), "inverse_sensitive",
+		       sizeentry);
+  gtk_object_set_data (GTK_OBJECT (sizeentry), "inverse_sensitive",
+		       calibrate_button);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  separator = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
+  gtk_widget_show (separator);
 
   button = gtk_radio_button_new_with_label (group, _("Manually:"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -2421,11 +2445,14 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  if (!using_xserver_resolution)
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+ if (!using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
   /* Directories */
-  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+  vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Directories"),
 					  GTK_CTREE (ctree),
 					  _("Directories"),
@@ -2462,7 +2489,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 						 *(dirs[i].mdir),
 						 TRUE, TRUE);
 	gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
-			    GTK_SIGNAL_FUNC (file_prefs_filename_callback),
+			    GTK_SIGNAL_FUNC (prefs_filename_callback),
 			    dirs[i].mdir);
 	gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				   gettext(dirs[i].label), 1.0, 0.5,
@@ -2515,7 +2542,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	
     for (i = 0; i < npaths; i++)
       {
-	vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+	vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 						gettext (paths[i].label),
 						GTK_CTREE (ctree),
 						gettext (paths[i].tree_label),
@@ -2529,7 +2556,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
 					   *(paths[i].mpath));
 	gtk_signal_connect (GTK_OBJECT (patheditor), "path_changed",
-			    GTK_SIGNAL_FUNC (file_prefs_path_callback),
+			    GTK_SIGNAL_FUNC (prefs_path_callback),
 			    paths[i].mpath);
 	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
 	gtk_widget_show (patheditor);

@@ -15,8 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __INSTALL_H__
-#define __INSTALL_H__
+
+#ifndef __USER_INSTALL_H__
+#define __USER_INSTALL_H__
+
 
 /*  Install callback function  */
 typedef void (* UserInstallCallback) (void);
@@ -24,4 +26,5 @@ typedef void (* UserInstallCallback) (void);
 /*  Function declarations  */
 void user_install_verify (UserInstallCallback user_install_callback);
 
-#endif /* INSTALL_H */
+
+#endif /* __USER_INSTALL_H__ */

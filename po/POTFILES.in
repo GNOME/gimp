@@ -96,6 +96,7 @@ app/procedural_db_cmds.c
 app/qmask.c
 app/rect_select.c
 app/resize.c
+app/resolution_calibrate.c
 app/rotate_tool.c
 app/scale_tool.c
 app/scan_convert.c

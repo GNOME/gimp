@@ -34,6 +34,7 @@
 #include "menus.h"
 #include "paths_dialog.h"
 #include "paint_funcs.h"
+#include "preferences_dialog.h"
 #include "procedural_db.h"
 #include "scale.h"
 #include "tools.h"
@@ -106,7 +107,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
+  { { N_("/File/Preferences..."), NULL, prefs_cmd_callback, 0 },
     "file/dialogs/preferences/preferences.html", NULL },
 
   /*  <Toolbox>/File/Dialogs  */

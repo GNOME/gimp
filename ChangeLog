@@ -1,3 +1,13 @@
+2000-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/resolution_calibrate.[ch]: new files. Code for the resolution 
+	calibration dialog that used to live in user_install.c
+
+	* app/Makefile.in
+	* app/menus.c
+	* app/preferences_dialog.[ch]
+	* app/user_install.[ch]: added a Calibrate button to the Preferences
+	
 2000-09-23  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	* plug-ins/pygimp/gimpmodule.c (newpfobject): use correct type for
