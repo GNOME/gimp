@@ -69,7 +69,7 @@ libcdisplay_highcontrast_la_LIBADD = $(cdisplay_libadd)
 
 libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcdisplay_proof_la_LIBADD = $(cdisplay_libadd)
+libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LCMS_LIBS)
 
 libcontroller_linux_input_la_SOURCES = controller_linux_input.c
 libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)

@@ -1,5 +1,10 @@
 2004-07-06  Sven Neumann  <sven@gimp.org>
 
+	* modules/Makefile.am (libcdisplay_proof_la_LIBADD): added back
+	$(LCMS_LIBS) that I had accidentally removed.
+
+2004-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpvectorstreeview.c (gimp_vectors_tree_view_drag_svg):
 	return the proper type.
 
