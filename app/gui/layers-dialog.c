@@ -859,6 +859,8 @@ layers_dialog_update (int gimage_id)
 void
 layers_dialog_clear ()
 {
+  ops_button_box_set_insensitive (layers_ops_buttons);
+
   layersD->gimage_id = -1;
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
 }

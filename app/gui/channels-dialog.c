@@ -453,6 +453,8 @@ channels_dialog_update (int gimage_id)
 void
 channels_dialog_clear ()
 {
+  ops_button_box_set_insensitive (channels_ops_buttons);
+
   suspend_gimage_notify++;
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
   suspend_gimage_notify--;

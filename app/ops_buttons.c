@@ -91,6 +91,18 @@ GtkWidget *ops_button_box_new (GtkWidget   *parent,
   return (button_box);
 }
 
+
+void
+ops_button_box_set_insensitive(OpsButton *ops_buttons)
+{
+  while (ops_buttons->widget)
+    {
+      ops_button_set_sensitive (*ops_buttons, FALSE);
+      ops_buttons++;
+    }
+}
+
+
 void
 ops_button_set_sensitive(OpsButton ops_button, 
 			 gint      sensitive)
@@ -110,3 +122,4 @@ ops_button_set_sensitive(OpsButton ops_button,
 
   gtk_widget_set_sensitive (ops_button.widget, sensitive);
 }
+

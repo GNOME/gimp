@@ -1,3 +1,10 @@
+Sat Apr  4 15:43:28 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/ops_buttons.[c|h]
+        * app/channels_dialog.c
+        * app/layers_dialog.c: The sensitivity of the buttons wasn't set
+	correctly when deleting an image.
+
 Fri Apr  3 13:49:38 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/menus.c

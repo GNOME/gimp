@@ -47,7 +47,8 @@ struct _OpsButton
 GtkWidget * ops_button_box_new        (GtkWidget *,      /* parent widget */
 				       GtkTooltips *,    
 				       OpsButton *);
-void        ops_button_set_sensitive  (OpsButton, gint);
+void ops_button_box_set_insensitive   (OpsButton *);
+void ops_button_set_sensitive         (OpsButton, gint);
 
 #endif /* __OPS_BUTTONS_H__ */
 
