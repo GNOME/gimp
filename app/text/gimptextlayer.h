@@ -42,6 +42,7 @@ struct _GimpTextLayer
 
   GimpText     *text;
   guint         idle_render_id;
+  gboolean      auto_rename;
 };
 
 struct _GimpTextLayerClass

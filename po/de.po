@@ -6,9 +6,9 @@
 # Christian Neumair <chris@gnome-de.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.13\n"
-"POT-Creation-Date: 2003-03-31 02:15+0200\n"
-"PO-Revision-Date: 2003-03-31 02:16+0200\n"
+"Project-Id-Version: GIMP 1.3.14\n"
+"POT-Creation-Date: 2003-03-31 19:44+0200\n"
+"PO-Revision-Date: 2003-03-31 19:45+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -954,7 +954,7 @@ msgstr "Auswahl anheben"
 msgid "Anchor Floating Selection"
 msgstr "Schwebende Auswahl verankern"
 
-#: app/core/core-enums.c:449 app/core/gimpedit.c:229
+#: app/core/core-enums.c:449 app/core/gimpedit.c:199
 #: app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Einfügen"
@@ -967,7 +967,7 @@ msgstr "Ausschneiden"
 msgid "Copy"
 msgstr "Kopieren"
 
-#: app/core/core-enums.c:452 app/tools/gimptexttool.c:114
+#: app/core/core-enums.c:452 app/tools/gimptexttool.c:113
 msgid "Text"
 msgstr "Text"
 
@@ -1433,27 +1433,27 @@ msgstr "Ebene transformieren"
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
-#: app/core/gimpedit.c:220 app/core/gimpedit.c:284
+#: app/core/gimpedit.c:190 app/core/gimpedit.c:268
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
-#: app/core/gimpedit.c:332
+#: app/core/gimpedit.c:316
 msgid "Clear"
 msgstr "Löschen"
 
-#: app/core/gimpedit.c:368
+#: app/core/gimpedit.c:352
 msgid "Fill with FG Color"
 msgstr "Füllen mit VG-Farbe"
 
-#: app/core/gimpedit.c:373 app/core/gimpedit.c:398
+#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
 msgid "Fill with BG Color"
 msgstr "Füllen mit HG-Farbe"
 
-#: app/core/gimpedit.c:380
+#: app/core/gimpedit.c:364
 msgid "Fill with White"
 msgstr "Füllen mit weiß"
 
-#: app/core/gimpedit.c:389
+#: app/core/gimpedit.c:373
 msgid "Fill with Transparency"
 msgstr "Füllen mit Transparenz"
 
@@ -2959,19 +2959,19 @@ msgstr "Das Invertieren funktioniert mit indizierten Bildern nicht."
 msgid "Equalize does not operate on indexed drawables."
 msgstr "Das Angleichen funktioniert mit indizierten Bildern nicht."
 
-#: app/gui/edit-commands.c:221
+#: app/gui/edit-commands.c:192
 msgid "Cut Named"
 msgstr "In Ablage ausschneiden"
 
-#: app/gui/edit-commands.c:224 app/gui/edit-commands.c:242
+#: app/gui/edit-commands.c:195 app/gui/edit-commands.c:213
 msgid "Enter a name for this buffer"
 msgstr "Geben Sie dieser Ablage einen Namen"
 
-#: app/gui/edit-commands.c:239
+#: app/gui/edit-commands.c:210
 msgid "Copy Named"
 msgstr "In Ablage kopieren"
 
-#: app/gui/edit-commands.c:318 app/gui/edit-commands.c:347
+#: app/gui/edit-commands.c:289 app/gui/edit-commands.c:318
 msgid "(Unnamed Buffer)"
 msgstr "(Namenlose Ablage)"
 
@@ -6602,18 +6602,26 @@ msgid "Starting extension: \"%s\"\n"
 msgstr "Erweiterung »%s« wird gestartet\n"
 
 #: app/text/text-enums.c:13
+msgid "From Left to Right"
+msgstr "Von Links nach Rechts"
+
+#: app/text/text-enums.c:14
+msgid "From Right to Left"
+msgstr "Von Rechts nach Links"
+
+#: app/text/text-enums.c:32
 msgid "Left Justified"
 msgstr "Linksbündig"
 
-#: app/text/text-enums.c:14
+#: app/text/text-enums.c:33
 msgid "Right Justified"
 msgstr "Rechtsbündig"
 
-#: app/text/text-enums.c:15
+#: app/text/text-enums.c:34
 msgid "Centered"
 msgstr "Zentriert"
 
-#: app/text/text-enums.c:16
+#: app/text/text-enums.c:35
 msgid "Filled"
 msgstr "Blocksatz"
 
@@ -6626,6 +6634,10 @@ msgid ""
 msgstr ""
 "Zwei Boxkämpfer jagen\n"
 "Eva quer durch Sylt."
+
+#: app/text/gimptext-compat.c:100 app/tools/gimptexttool.c:309
+msgid "Add Text Layer"
+msgstr "Textebene hinzufügen"
 
 #: app/text/gimptext.c:157
 msgid ""
@@ -6640,9 +6652,13 @@ msgstr ""
 msgid "Additional line spacing (in pixels)"
 msgstr "Zusätzlicher Zeilenabstand (in Pixeln)"
 
-#: app/text/gimptext-compat.c:100 app/tools/gimptexttool.c:310
-msgid "Add Text Layer"
-msgstr "Textebene hinzufügen"
+#: app/text/gimptextlayer.c:123
+msgid "Text Layer"
+msgstr "Textebene"
+
+#: app/text/gimptextlayer.c:329
+msgid "Empty Text Layer"
+msgstr "Leere Textebene"
 
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush with variable pressure"
@@ -7496,15 +7512,15 @@ msgstr "Rand um Auswahl verschieben"
 msgid "Move Pixels"
 msgstr "Pixel verschieben"
 
-#: app/tools/gimpmovetool.c:104
+#: app/tools/gimpmovetool.c:103
 msgid "Move"
 msgstr "Verschieben"
 
-#: app/tools/gimpmovetool.c:105
+#: app/tools/gimpmovetool.c:104
 msgid "Move layers & selections"
 msgstr "Ebenen und Auswahlen verschieben"
 
-#: app/tools/gimpmovetool.c:106
+#: app/tools/gimpmovetool.c:105
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Werkzeuge/Transformationen/Verschieben"
 
@@ -7756,15 +7772,15 @@ msgstr ""
 "Zeilen-\n"
 "abstand:"
 
-#: app/tools/gimptextoptions.c:332
+#: app/tools/gimptextoptions.c:380
 msgid "Open the font selection dialog"
 msgstr "Den Dialog zur Schriftauswahl öffnen"
 
-#: app/tools/gimptexttool.c:115
+#: app/tools/gimptexttool.c:114
 msgid "Add text to the image"
 msgstr "Text zum Bild hinzufügen"
 
-#: app/tools/gimptexttool.c:116
+#: app/tools/gimptexttool.c:115
 msgid "/Tools/Text"
 msgstr "/Werkzeuge/Text"
 
@@ -7930,6 +7946,14 @@ msgstr "Netscape"
 msgid "Logarithmic"
 msgstr "Logarithmisch"
 
+#: app/widgets/widgets-enums.c:70
+msgid "View as List"
+msgstr "Als Liste anzeigen"
+
+#: app/widgets/widgets-enums.c:71
+msgid "View as Grid"
+msgstr "Als Raster anzeigen"
+
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
 msgstr "Härte:"
@@ -8008,21 +8032,13 @@ msgstr "Farbindex:"
 msgid "(None)"
 msgstr "(Keine)"
 
-#: app/widgets/gimpcontainerpopup.c:471
+#: app/widgets/gimpcontainerpopup.c:470
 msgid "Smaller Previews"
-msgstr "Kleinere Vorschau"
+msgstr "Kleinere Vorschaubilder"
 
-#: app/widgets/gimpcontainerpopup.c:476
+#: app/widgets/gimpcontainerpopup.c:475
 msgid "Larger Previews"
-msgstr "Grössere Vorschau"
-
-#: app/widgets/gimpcontainerpopup.c:483
-msgid "View as List"
-msgstr "Als Liste anzeigen"
-
-#: app/widgets/gimpcontainerpopup.c:492
-msgid "View as Grid"
-msgstr "Als Raster anzeigen"
+msgstr "Grössere Vorschaubilder"
 
 #: app/widgets/gimpdataeditor.c:131
 msgid "Save"
@@ -8300,7 +8316,7 @@ msgstr "Nicht definiert"
 msgid "Columns:"
 msgstr "Spalten:"
 
-#: app/widgets/gimppropwidgets.c:1271
+#: app/widgets/gimppropwidgets.c:1273
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Dieses Eingabefeld ist auf %d Zeichen beschränkt."
@@ -8309,24 +8325,24 @@ msgstr "Dieses Eingabefeld ist auf %d Zeichen beschränkt."
 msgid "Save Selection to Channel"
 msgstr "Auswahl in Kanal speichern"
 
-#: app/widgets/gimptexteditor.c:96
+#: app/widgets/gimptexteditor.c:191
 msgid "Load Text from File"
 msgstr "Text aus Datei laden"
 
-#: app/widgets/gimptexteditor.c:100
+#: app/widgets/gimptexteditor.c:195
 msgid "Clear all Text"
 msgstr "Allen Text löschen"
 
-#: app/widgets/gimptexteditor.c:135
+#: app/widgets/gimptexteditor.c:317
 msgid "Open Text File (UTF-8)"
 msgstr "Text-Datei (UTF-8) öffnen"
 
-#: app/widgets/gimptexteditor.c:184
+#: app/widgets/gimptexteditor.c:366
 #, c-format
 msgid "Error opening file '%s': %s"
 msgstr "Datei »%s« konnte nicht geöffnet werden: %s"
 
-#: app/widgets/gimptexteditor.c:213
+#: app/widgets/gimptexteditor.c:395
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ungültige UTF-8-Daten in Datei »%s«."
@@ -8600,3 +8616,9 @@ msgstr "Anzahl der Gitterlinien"
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
 msgstr "Abstand der Gitterlinien"
+
+#~ msgid "View as list"
+#~ msgstr "Als Liste anzeigen"
+
+#~ msgid "View as grid"
+#~ msgstr "Als Raster anzeigen"

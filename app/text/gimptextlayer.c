@@ -40,24 +40,29 @@
 #include "gimptextlayer.h"
 #include "gimptextlayout.h"
 
+#include "gimp-intl.h"
+
 
 static void       gimp_text_layer_class_init    (GimpTextLayerClass *klass);
-static void       gimp_text_layer_init          (GimpTextLayer      *layer);
-static void       gimp_text_layer_dispose       (GObject            *object);
+static void       gimp_text_layer_init          (GimpTextLayer  *layer);
+static void       gimp_text_layer_dispose       (GObject        *object);
 
-static gsize      gimp_text_layer_get_memsize   (GimpObject         *object);
-static TempBuf  * gimp_text_layer_get_preview   (GimpViewable       *viewable,
-                                                 gint                width,
-                                                 gint                height);
-static GimpItem * gimp_text_layer_duplicate     (GimpItem           *item,
-                                                 GType               new_type,
-                                                 gboolean            add_alpha);
+static gsize      gimp_text_layer_get_memsize   (GimpObject     *object);
+static TempBuf  * gimp_text_layer_get_preview   (GimpViewable   *viewable,
+                                                 gint            width,
+                                                 gint            height);
+static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
+                                                 GType           new_type,
+                                                 gboolean        add_alpha);
+static void       gimp_text_layer_rename        (GimpItem       *item,
+                                                 const gchar    *new_name,
+                                                 const gchar    *undo_desc);
 
-static void       gimp_text_layer_notify_text   (GimpTextLayer      *layer);
-static gboolean   gimp_text_layer_idle_render   (GimpTextLayer      *layer);
-static gboolean   gimp_text_layer_render        (GimpTextLayer      *layer);
-static void       gimp_text_layer_render_layout (GimpTextLayer      *layer,
-                                                 GimpTextLayout     *layout);
+static void       gimp_text_layer_notify_text   (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_idle_render   (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_render        (GimpTextLayer  *layer);
+static void       gimp_text_layer_render_layout (GimpTextLayer  *layer,
+                                                 GimpTextLayout *layout);
 
 
 static GimpLayerClass *parent_class = NULL;
@@ -114,12 +119,16 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   viewable_class->get_preview      = gimp_text_layer_get_preview;
 
   item_class->duplicate            = gimp_text_layer_duplicate;
+  item_class->rename               = gimp_text_layer_rename;
+  item_class->default_name         = _("Text Layer");
 }
 
 static void
 gimp_text_layer_init (GimpTextLayer *layer)
 {
-  layer->text = NULL;
+  layer->text           = NULL;
+  layer->idle_render_id = 0;
+  layer->auto_rename    = TRUE;
 }
 
 static void
@@ -199,6 +208,16 @@ gimp_text_layer_duplicate (GimpItem *item,
                            new_text_layer, G_CONNECT_SWAPPED);
 
   return new_item;
+}
+
+static void
+gimp_text_layer_rename (GimpItem    *item,
+                        const gchar *new_name,
+                        const gchar *undo_desc)
+{
+  GIMP_TEXT_LAYER (item)->auto_rename = FALSE;
+  
+  GIMP_ITEM_CLASS (parent_class)->rename (item, new_name, undo_desc);
 }
 
 GimpLayer *
@@ -304,7 +323,10 @@ gimp_text_layer_render (GimpTextLayer *layer)
         }
     }
 
-  gimp_object_set_name_safe (GIMP_OBJECT (layer), layer->text->text);
+  if (layer->auto_rename)
+    gimp_object_set_name_safe (GIMP_OBJECT (layer),
+                               layer->text->text ?
+                               layer->text->text : _("Empty Text Layer"));
 
   gimp_text_layer_render_layout (layer, layout);
   g_object_unref (layout);

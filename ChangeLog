@@ -1,5 +1,15 @@
 2003-03-31  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.[ch]: when the user has changed the layer
+	name from the layers dialog, don't change it with the text any longer.
+
+	* app/tools/gimpmovetool.c: removed redundant include.
+
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/widgets-enums.[ch]: fixed spelling.
+
+2003-03-31  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am
 	* themes/Default/images/stock-text-dir-ltr-24.png
 	* themes/Default/images/stock-text-dir-rtl-24.png: placeholders

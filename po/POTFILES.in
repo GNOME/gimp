@@ -171,8 +171,9 @@ app/plug-in/plug-ins.c
 
 app/text/text-enums.c
 app/text/gimpfont.c
-app/text/gimptext.c
 app/text/gimptext-compat.c
+app/text/gimptext.c
+app/text/gimptextlayer.c
 
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
