@@ -28,7 +28,7 @@ sub pdb_misc {
 sub text_arg () {{
     name => 'text',
     type => 'string',
-    desc => 'The text to generate'
+    desc => 'The text to generate (in UTF-8 encoding)'
 }}
 
 sub fontname_arg () {{

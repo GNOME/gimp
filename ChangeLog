@@ -1,8 +1,15 @@
+2005-01-10  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/text_tool.pdb: explicitely mention the encoding.
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
+
 2005-01-10  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/sparkle.c: update the preview when a parameter
-	change.  Updating the preview is now disabled by default since it can
-	be very slow.
+	change.  Updating the preview is now disabled by default since it
+	can be very slow.
 
 2005-01-09  Sven Neumann  <sven@gimp.org>
 

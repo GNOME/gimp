@@ -149,7 +149,7 @@ static ProcArg text_fontname_inargs[] =
   {
     GIMP_PDB_STRING,
     "text",
-    "The text to generate"
+    "The text to generate (in UTF-8 encoding)"
   },
   {
     GIMP_PDB_INT32,
@@ -267,7 +267,7 @@ static ProcArg text_get_extents_fontname_inargs[] =
   {
     GIMP_PDB_STRING,
     "text",
-    "The text to generate"
+    "The text to generate (in UTF-8 encoding)"
   },
   {
     GIMP_PDB_FLOAT,
@@ -464,7 +464,7 @@ static ProcArg text_inargs[] =
   {
     GIMP_PDB_STRING,
     "text",
-    "The text to generate"
+    "The text to generate (in UTF-8 encoding)"
   },
   {
     GIMP_PDB_INT32,
@@ -652,7 +652,7 @@ static ProcArg text_get_extents_inargs[] =
   {
     GIMP_PDB_STRING,
     "text",
-    "The text to generate"
+    "The text to generate (in UTF-8 encoding)"
   },
   {
     GIMP_PDB_FLOAT,
