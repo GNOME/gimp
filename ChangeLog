@@ -1,3 +1,9 @@
+Mon Aug 30 22:15:29 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/devices.c: use the new [gimp|pattern]_preview_widgets.
+
+	* plug-ins/xjt/xjt.c: correct a gccism
+
 Mon Aug 30 03:37:28 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/brush_edit.[ch]: Allow the user to change a brush's name.

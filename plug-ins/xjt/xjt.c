@@ -142,7 +142,7 @@ typedef enum
   PTYP_2xINT = 5,
   PTYP_3xINT = 6,
   PTYP_2xFLT = 7,
-  PTYP_3xFLT = 8,
+  PTYP_3xFLT = 8
 } t_param_typ;
 
 typedef struct
