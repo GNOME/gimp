@@ -53,10 +53,8 @@ EXTRA_DIST = \
 	README.win32		\
 	TODO.xml		\
 	config.h.win32		\
-	gimp.spec.in		\
-	gimp.spec		\
 	gimp-zip.in		\
-	gimpdefs.msc	\
+	gimpdefs.msc		\
 	gimptool-win32.c.in	\
 	intltool-extract.in	\
 	intltool-merge.in	\

@@ -1607,7 +1607,6 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
-gimp.spec
 gimp-zip
 Makefile
 ])
