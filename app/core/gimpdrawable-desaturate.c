@@ -24,8 +24,6 @@
 
 #include "base/pixel-region.h"
 
-#include "paint-funcs/paint-funcs.h"
-
 #include "gimpdrawable.h"
 #include "gimpdrawable-desaturate.h"
 #include "gimpimage.h"

@@ -3,7 +3,7 @@
 imagedatadir = $(gimpdatadir)/images
 
 imagedata_DATA = \
-	gimp_logo.ppm	\
+	gimp_logo.png	\
 	gimp_splash.png	\
 	tips_wilber.png
 

@@ -47,12 +47,12 @@
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE   2
 
+
 static gboolean  about_dialog_load_logo   (GtkWidget      *window);
 static void      about_dialog_destroy     (GtkObject      *object,
 					   gpointer        data);
 static void      about_dialog_unmap       (GtkWidget      *widget,
-					   GdkEvent       *event,
-					   gpointer        data);
+                                           gpointer        data);
 static gint      about_dialog_logo_expose (GtkWidget      *widget,
 					   GdkEventExpose *event,
 					   gpointer        data);
@@ -139,7 +139,7 @@ about_dialog_create (void)
       g_signal_connect (G_OBJECT (about_dialog), "destroy",
 			G_CALLBACK (about_dialog_destroy),
 			NULL);
-      g_signal_connect (G_OBJECT (about_dialog), "unmap_event",
+      g_signal_connect (G_OBJECT (about_dialog), "unmap",
 			G_CALLBACK (about_dialog_unmap),
 			NULL);
       g_signal_connect (G_OBJECT (about_dialog), "button_press_event",
@@ -304,81 +304,55 @@ about_dialog_create (void)
 static gboolean
 about_dialog_load_logo (GtkWidget *window)
 {
-  GtkWidget *preview;
-  GdkGC     *gc;
-  gchar      buf[1024];
   gchar     *filename;
-  guchar    *pixelrow;
-  FILE      *fp;
-  gint       count;
+  GdkPixbuf *pixbuf;
+  GdkGC     *gc;
   gint       i, j, k;
 
   if (logo_pixmap)
     return TRUE;
 
   filename = g_build_filename (gimp_data_directory (), "images",
-                               "gimp_logo.ppm", NULL);
-  fp = fopen (filename, "rb");
+                               "gimp_logo.png", NULL);
+
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
   g_free (filename);
 
-  if (!fp)
+  if (! pixbuf)
     return FALSE;
 
-  fgets (buf, 1024, fp);
-
-  if (strncmp (buf, "P6", 2) != 0)
-    {
-      fclose (fp);
-      return FALSE;
-    }
-
-  fgets (buf, 1024, fp);
-  fgets (buf, 1024, fp);
-  sscanf (buf, "%d %d", &logo_width, &logo_height);
-
-  fgets (buf, 1024, fp);
-  if (strncmp (buf, "255", 3) != 0)
-    {
-      fclose (fp);
-      return FALSE;
-    }
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), logo_width, logo_height);
-  pixelrow = g_new (guchar, logo_width * 3);
-
-  for (i = 0; i < logo_height; i++)
-    {
-      count = fread (pixelrow, sizeof (guchar), logo_width * 3, fp);
-      if (count != (logo_width * 3))
-	{
-	  gtk_object_sink (GTK_OBJECT (preview));
-	  g_free (pixelrow);
-	  fclose (fp);
-	  return FALSE;
-	}
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
-    }
+  logo_width  = gdk_pixbuf_get_width (pixbuf);
+  logo_height = gdk_pixbuf_get_height (pixbuf);
 
   gtk_widget_realize (window);
-  logo_pixmap = gdk_pixmap_new (window->window, logo_width, logo_height, 
-				gtk_preview_get_visual ()->depth);
+
+  logo_pixmap = gdk_pixmap_new (window->window,
+                                logo_width, logo_height,
+                                gtk_widget_get_visual (window)->depth);
+
   gc = gdk_gc_new (logo_pixmap);
-  gtk_preview_put (GTK_PREVIEW (preview),
-		   logo_pixmap, gc,
-		   0, 0, 0, 0, logo_width, logo_height);
-  g_object_unref (gc);
 
-  gtk_object_sink (GTK_OBJECT (preview));
-  g_free (pixelrow);
+  gdk_pixbuf_render_to_drawable (pixbuf,
+                                 GDK_DRAWABLE (logo_pixmap),
+                                 gc,
+                                 0, 0,
+                                 0, 0,
+                                 logo_width,
+                                 logo_height,
+                                 GDK_RGB_DITHER_MAX,
+                                 0, 0);
 
-  fclose (fp);
+  g_object_unref (G_OBJECT (gc));
+  g_object_unref (G_OBJECT (pixbuf));
 
   dissolve_width =
-    (logo_width / ANIMATION_SIZE) + (logo_width % ANIMATION_SIZE == 0 ? 0 : 1);
+    (logo_width / ANIMATION_SIZE) +
+    (logo_width % ANIMATION_SIZE == 0 ? 0 : 1);
+
   dissolve_height =
-    (logo_height / ANIMATION_SIZE) + (logo_height % ANIMATION_SIZE == 0 ? 0 : 1);
+    (logo_height / ANIMATION_SIZE) +
+    (logo_height % ANIMATION_SIZE == 0 ? 0 : 1);
 
   dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
 
@@ -396,13 +370,12 @@ about_dialog_destroy (GtkObject *object,
 		      gpointer   data)
 {
   about_dialog = NULL;
-  about_dialog_unmap (NULL, NULL, NULL);
+  about_dialog_unmap (NULL, NULL);
 }
 
 static void
 about_dialog_unmap (GtkWidget *widget,
-		    GdkEvent  *event,
-		    gpointer   data)
+                    gpointer   data)
 {
   if (timer)
     {

@@ -549,8 +549,7 @@ sub ink {
 }
 
 @headers = qw("libgimpmath/gimpmath.h" "core/gimpimage-mask-select.h"
-	      "tools/tools-types.h" "core/gimpdrawable.h"
-              "base/tile-manager.h");
+	      "tools/tools-types.h" "core/gimpdrawable.h");
 
 @procs = qw(airbrush airbrush_default
             clone clone_default

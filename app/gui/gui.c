@@ -55,7 +55,6 @@
 #include "gui.h"
 #include "menus.h"
 #include "palette-select.h"
-#include "palette-import-dialog.h"
 #include "pattern-select.h"
 #include "session.h"
 #include "tool-options-dialog.h"
@@ -91,14 +90,11 @@ static void         gui_display_changed             (GimpContext *context,
                                                      gpointer     data);
 static void         gui_image_disconnect            (GimpImage   *gimage,
                                                      gpointer     data);
-static void         gui_image_name_changed          (GimpImage   *gimage,
-                                                     gpointer     data);
 
 
 /*  private variables  */
 
-static GQuark image_disconnect_handler_id   = 0;
-static GQuark image_name_changed_handler_id = 0;
+static GQuark image_disconnect_handler_id = 0;
 
 static GHashTable *themes_hash = NULL;
 
@@ -231,11 +227,6 @@ gui_init (Gimp *gimp)
 				G_CALLBACK (gui_image_disconnect),
 				gimp);
 
-  image_name_changed_handler_id =
-    gimp_container_add_handler (gimp->images, "name_changed",
-				G_CALLBACK (gui_image_name_changed),
-				gimp);
-
   g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)), "display_changed",
 		    G_CALLBACK (gui_display_changed),
 		    gimp);
@@ -336,10 +327,8 @@ gui_exit (Gimp *gimp)
   gimp_help_free ();
 
   gimp_container_remove_handler (gimp->images, image_disconnect_handler_id);
-  gimp_container_remove_handler (gimp->images, image_name_changed_handler_id);
 
-  image_disconnect_handler_id   = 0;
-  image_name_changed_handler_id = 0;
+  image_disconnect_handler_id = 0;
 
   if (themes_hash)
     {
@@ -580,15 +569,4 @@ gui_image_disconnect (GimpImage *gimage,
       gimp_dialog_factory_dialog_raise (global_dialog_factory,
                                         "gimp:toolbox", -1);
     }
-}
-
-static void
-gui_image_name_changed (GimpImage *gimage,
-			gpointer   data)
-{
-  Gimp *gimp;
-
-  gimp = (Gimp *) data;
-
-  palette_import_image_renamed (gimage);
 }

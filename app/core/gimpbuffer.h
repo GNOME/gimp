@@ -48,12 +48,12 @@ struct _GimpBufferClass
 
 GType        gimp_buffer_get_type   (void) G_GNUC_CONST;
 
-GimpBuffer * gimp_buffer_new        (TileManager *tiles,
-                                     const gchar *name,
-                                     gboolean     copy_pixels);
+GimpBuffer * gimp_buffer_new        (TileManager      *tiles,
+                                     const gchar      *name,
+                                     gboolean          copy_pixels);
 
-gint         gimp_buffer_get_width  (GimpBuffer  *buffer);
-gint         gimp_buffer_get_height (GimpBuffer  *buffer);
+gint         gimp_buffer_get_width  (const GimpBuffer *buffer);
+gint         gimp_buffer_get_height (const GimpBuffer *buffer);
 
 
 #endif /* __GIMP_BUFFER_H__ */

@@ -1,3 +1,40 @@
+2001-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added -DGDK_PIXBUF_DISABLE_DEPRECATED to CPPFLAGS.
+
+	* app/core/gimpbuffer.[ch]: gimp_buffer_get_[width|height]:
+	added "const" to the GimpBuffer parameter.
+
+	* app/core/gimpchannel.c: indentation and comment changes.
+
+	* app/core/gimpdrawable-desaturate.c: don't include
+	"paint-funcs/paint-funcs.h".
+
+	* app/display/gimpdisplayshell.c: don't include "base/temp-buf.h".
+
+	* app/gui/gui.c: removed the image container's "name_changed"
+	handler.
+
+	* app/gui/palette-import-dialog.[ch]: use GimpPreview and
+	GimpContainerMenu instead of doing the same manually. Removed lots
+	of code. Not perfect yet.
+
+	* app/tools/gimpfuzzyselecttool.c: no need to include tile stuff.
+
+	* app/widgets/gimpcontainerview-utils.c: better g_warning() message.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: don't include
+	"base/tile-manager.h".
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+	* data/images/Makefile.am
+	* data/images/gimp_logo.ppm: removed...
+	* data/images/gimp_logo.png: ...and added as PNG.
+
+	* app/gui/about-dialog.c: use gdk_pixbuf_new_from_file() to load
+	the PNG logo instead of manually parsing the PPM.
+
 2001-12-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdrawablelistview.[ch]: changed

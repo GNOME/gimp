@@ -276,25 +276,30 @@ gimp_channel_scale (GimpChannel *channel,
 			GIMP_DRAWABLE (channel)->width,
 			GIMP_DRAWABLE (channel)->height);
 
+  /*  Allocate the new channel  */
+  new_tiles = tile_manager_new (new_width, new_height, 1);
+
   /*  Configure the pixel regions  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
 		     0, 0,
 		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height, FALSE);
+		     GIMP_DRAWABLE (channel)->height,
+                     FALSE);
 
-  /*  Allocate the new channel, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, 1);
-  pixel_region_init (&destPR, new_tiles, 0, 0, new_width, new_height, TRUE);
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     new_width, new_height,
+                     TRUE);
 
-  /*  Add an alpha channel  */
+  /*  Sclae the channel  */
   scale_region (&srcPR, &destPR);
 
   /*  Push the channel on the undo stack  */
   undo_push_channel_mod (GIMP_DRAWABLE (channel)->gimage, channel);
 
   /*  Configure the new channel  */
-  GIMP_DRAWABLE (channel)->tiles = new_tiles;
-  GIMP_DRAWABLE (channel)->width = new_width;
+  GIMP_DRAWABLE (channel)->tiles  = new_tiles;
+  GIMP_DRAWABLE (channel)->width  = new_width;
   GIMP_DRAWABLE (channel)->height = new_height;
 
   /*  bounds are now unknown  */
@@ -323,7 +328,7 @@ gimp_channel_resize (GimpChannel *channel,
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  if (!new_width || !new_height)
+  if (new_width == 0 || new_height == 0)
     return;
 
   x1 = CLAMP (offx, 0, new_width);
@@ -379,7 +384,11 @@ gimp_channel_resize (GimpChannel *channel,
   /*  Set to black (empty--for selections)  */
   if (clear)
     {
-      pixel_region_init (&destPR, new_tiles, 0, 0, new_width, new_height, TRUE);
+      pixel_region_init (&destPR, new_tiles,
+                         0, 0,
+                         new_width, new_height,
+                         TRUE);
+
       color_region (&destPR, &bg);
     }
 

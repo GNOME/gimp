@@ -196,7 +196,7 @@ gimp_buffer_new (TileManager *tiles,
 }
 
 gint
-gimp_buffer_get_width (GimpBuffer *buffer)
+gimp_buffer_get_width (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 
@@ -204,7 +204,7 @@ gimp_buffer_get_width (GimpBuffer *buffer)
 }
 
 gint
-gimp_buffer_get_height (GimpBuffer *buffer)
+gimp_buffer_get_height (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), 0);
 

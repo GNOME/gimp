@@ -29,7 +29,6 @@
 #include "tools/tools-types.h"
 #include "procedural_db.h"
 
-#include "base/tile-manager.h"
 #include "core/core-enums.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"

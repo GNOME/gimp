@@ -20,12 +20,8 @@
 #define __PALETTE_IMPORT_H__
 
 
-void   palette_import_dialog_show    (Gimp      *gimp);
+void   palette_import_dialog_show    (Gimp *gimp);
 void   palette_import_dialog_destroy (void);
-
-
-/* FIXME */
-void   palette_import_image_renamed  (GimpImage *gimage);
 
 
 #endif /* __PALETTE_IMPORT_H__ */

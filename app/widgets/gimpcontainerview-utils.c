@@ -162,8 +162,8 @@ gimp_container_view_get_name_func_preview (GtkWidget *widget)
       return GIMP_PREVIEW (GIMP_MENU_ITEM (widget)->preview);
     }
 
-  g_warning ("gimp_container_view_get_name_func_preview(): "
-	     "widget type does not match");
+  g_warning ("%s: widget type %s does not contain a GimpPreview",
+             G_STRLOC, g_type_name (G_TYPE_FROM_INSTANCE (widget)));
 
   return NULL;
 }

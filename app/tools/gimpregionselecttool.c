@@ -30,8 +30,6 @@
 
 #include "base/boundary.h"
 #include "base/pixel-region.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
