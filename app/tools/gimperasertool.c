@@ -179,7 +179,7 @@ eraser_motion (PaintCore *paint_core, GimpDrawable *drawable, gboolean hard, gbo
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
-  opacity = OPAQUE_OPACITY * paint_core->curpressure;
+  opacity = OPAQUE_OPACITY * (paint_core->curpressure / 0.5);
   if(opacity > 255) opacity=255;
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,

@@ -1,3 +1,7 @@
+Mon Jun 22 22:57:00 EDT 1998 Manish Vachharajani <mvachhar@vger.rutgers.edu>
+
+	* app/eraser.c:  Added support for pressure sensitive eraser
+	
 Mon Jun 22 23:35:52 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/pixmaps.h: Made a new pixmap for the ink tool that fits
