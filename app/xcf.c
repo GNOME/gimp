@@ -1175,11 +1175,11 @@ xcf_save_prop (XcfInfo  *info,
 
 	size =
 	  2 * 4 +
-	  strlen (unit_strings[0]) + 5 +
-	  strlen (unit_strings[1]) + 5 +
-	  strlen (unit_strings[2]) + 5 +
-	  strlen (unit_strings[3]) + 5 +
-	  strlen (unit_strings[4]) + 5;
+	  strlen (unit_strings[0]) ? strlen (unit_strings[0]) + 5 : 4 +
+	  strlen (unit_strings[1]) ? strlen (unit_strings[1]) + 5 : 4 +
+	  strlen (unit_strings[2]) ? strlen (unit_strings[2]) + 5 : 4 +
+	  strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4 +
+	  strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4;
 
 	info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
 	info->cp += xcf_write_int32 (info->fp, &size, 1);
@@ -1848,6 +1848,10 @@ xcf_load_image_props (XcfInfo *info,
 	    info->cp += xcf_read_float (info->fp, &factor, 1);
 	    info->cp += xcf_read_int32 (info->fp, &digits, 1);
 	    info->cp += xcf_read_string (info->fp, unit_strings, 5);
+
+	    for (i = 0; i < 5; i++)
+	      if (unit_strings[i] == NULL)
+		unit_strings[i] = g_strdup ("");
 
 	    num_units = gimp_unit_get_number_of_units ();
 	    

@@ -1,5 +1,13 @@
 1999-03-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/gdisplay.h: double the length of the cursor_format_str as
+	users may define strange units now
+	
+	* app/xcf.c: forgot a sanity check when loading/saving the user
+	unit property
+
+1999-03-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	This implements the rest of the unit system (unitrc loading and
 	saving and full PDB interface)
 	

@@ -68,7 +68,7 @@
 #define CURSOR_STR_LENGTH 256
 
 /* maximal length of the format string for the cursor-coordinates */
-#define CURSOR_FORMAT_LENGTH 16
+#define CURSOR_FORMAT_LENGTH 32
 
 typedef struct _IdleRenderStruct
 {
