@@ -1,22 +1,41 @@
 EXPORTS
+	_gp_params_destroy
 	gimp_data_directory
 	gimp_directory
 	gimp_gtkrc
+	gimp_parasite_compare
+	gimp_parasite_copy
+	gimp_parasite_data
+	gimp_parasite_data_size
+	gimp_parasite_flags
+	gimp_parasite_free
+	gimp_parasite_has_flag
+	gimp_parasite_is_persistent
+	gimp_parasite_is_type
+	gimp_parasite_is_undoable
+	gimp_parasite_name
+	gimp_parasite_new
 	gimp_path_free
+	gimp_path_get_user_writable_dir
 	gimp_path_parse
+	gimp_path_to_str
 	gimp_personal_rc_file
-	gimp_unit_get_abbreviation
-	gimp_unit_get_deletion_flag
-	gimp_unit_get_digits
-	gimp_unit_get_factor
-	gimp_unit_get_identifier
-	gimp_unit_get_number_of_built_in_units
-	gimp_unit_get_number_of_units
-	gimp_unit_get_plural
-	gimp_unit_get_singular
-	gimp_unit_get_symbol
-	gimp_unit_new
-	gimp_unit_set_deletion_flag
+	gimp_pixpipe_params_build
+	gimp_pixpipe_params_init
+	gimp_pixpipe_params_parse
+	gimp_sysconf_directory
+;	gimp_unit_get_abbreviation
+;	gimp_unit_get_deletion_flag
+;	gimp_unit_get_digits
+;	gimp_unit_get_factor
+;	gimp_unit_get_identifier
+;	gimp_unit_get_number_of_built_in_units
+;	gimp_unit_get_number_of_units
+;	gimp_unit_get_plural
+;	gimp_unit_get_singular
+;	gimp_unit_get_symbol
+;	gimp_unit_new
+;	gimp_unit_set_deletion_flag
 	gp_config_write
 	gp_extension_ack_write
 	gp_init

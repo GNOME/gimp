@@ -1,5 +1,8 @@
 EXPORTS
 	gimp_adaptive_supersample_area
+	gimp_bilinear
+	gimp_bilinear_rgb
+	gimp_bilinear_rgba
 	gimp_hls_to_rgb_int
 	gimp_hsv_clamp
 	gimp_hsv_to_rgb

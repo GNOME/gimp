@@ -78,22 +78,19 @@ struct _GimpColorSelectorMethods
 typedef gpointer GimpColorSelectorID;
 
 
-#ifndef __COLOR_NOTEBOOK_C__
+#include <gmodule.h>
 
-/*  Bypass when compiling the source for these functions.
- */
+G_MODULE_EXPORT
 GimpColorSelectorID
 gimp_color_selector_register   (const gchar                 *name,
 				const gchar                 *help_page,
 				GimpColorSelectorMethods    *methods);
 
+G_MODULE_EXPORT
 gboolean
 gimp_color_selector_unregister (GimpColorSelectorID          id,
 				GimpColorSelectorFinishedCB  finished_cb,
 				gpointer                     finished_data);
-
-#endif /* !__COLOR_NOTEBOOK_C__ */
-
 
 #ifdef __cplusplus
 }

@@ -87,3 +87,8 @@ EXPORTS
 	gimp_unit_menu_new
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
+gimp_button_new
+gimp_offset_area_get_type
+gimp_offset_area_new
+gimp_offset_area_set_offsets
+gimp_offset_area_set_size

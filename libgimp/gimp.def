@@ -41,7 +41,7 @@ EXPORTS
 	gimp_channel_get_tattoo
 	gimp_channel_get_visible
 	gimp_channel_new
-	gimp_channel_ops_duplicate
+;	gimp_channel_ops_duplicate
 	gimp_channel_set_color
 	gimp_channel_set_name
 	gimp_channel_set_opacity
@@ -144,6 +144,7 @@ EXPORTS
 	gimp_image_clean_all
 	gimp_image_delete
 	gimp_image_delete_guide
+	gimp_image_duplicate
 	gimp_image_find_next_guide
 	gimp_image_flatten
 	gimp_image_floating_selection
@@ -237,34 +238,20 @@ EXPORTS
 	gimp_palette_set_background
 	gimp_palette_set_foreground
 	gimp_parasite_attach
-	gimp_parasite_compare
-	gimp_parasite_copy
-	gimp_parasite_data
-	gimp_parasite_data_size
 	gimp_parasite_detach
 	gimp_parasite_find
-	gimp_parasite_flags
-	gimp_parasite_free
-	gimp_parasite_has_flag
-	gimp_parasite_is_persistent
-	gimp_parasite_is_type
-	gimp_parasite_is_undoable
-	gimp_parasite_name
-	gimp_parasite_new
 	gimp_path_delete
 	gimp_path_get_current
 	gimp_path_get_locked
 	gimp_path_get_point_at_dist
 	gimp_path_get_points
 	gimp_path_get_tattoo
-	gimp_path_get_user_writable_dir
 	gimp_path_list
 	gimp_path_set_current
 	gimp_path_set_locked
 	gimp_path_set_points
 	gimp_path_set_tattoo
 	gimp_path_stroke_current
-	gimp_path_to_str
 	gimp_patterns_close_popup
 	gimp_patterns_get_pattern_data
 	gimp_patterns_set_popup
@@ -283,9 +270,6 @@ EXPORTS
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
-	gimp_pixpipe_params_build
-	gimp_pixpipe_params_init
-	gimp_pixpipe_params_parse
 	gimp_plugin_domain_register
 	gimp_plugin_help_register
 	gimp_procedural_db_get_data
@@ -333,6 +317,7 @@ EXPORTS
 	gimp_undo_push_group_end
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
+	gimp_unit_get_factor
 	gimp_use_xshm
 	gimp_version
 	set_gimp_PLUG_IN_INFO_PTR

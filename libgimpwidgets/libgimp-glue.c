@@ -43,6 +43,7 @@ gimp_unit_get_symbol
 #include <glib.h>
 
 #include "libgimpcolor/gimpcolortypes.h"
+#include "libgimpbase/gimpbasetypes.h"
 #include "libgimpbase/gimpunit.h"
 
 #include "libgimp/gimppalette_pdb.h"

@@ -250,6 +250,28 @@ WinMain(HINSTANCE hInstance,
   set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
   return gimp_main(__argc, __argv);
 }
+
+/*
+ * main
+ *
+ * allow to build as console app as well
+ */
+int main (int argc, char *argv[])
+{
+#ifdef _DEBUG
+  /* When in debug version, we allow different run modes...
+   * make sure that it is correctly set.
+   */
+  setRunMode(__argv);
+#endif /* _DEBUG */
+
+  /*
+   * Now, call gimp_main... This is what the MAIN() macro
+   * would usually do.
+   */
+  set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);
+  return gimp_main(__argc, __argv);
+}
 	
 /*
  * initTwainAppIdentity

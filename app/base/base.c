@@ -33,6 +33,7 @@
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
+#include <io.h> /* for _unlink() */
 #endif
  
 #include "base-types.h"

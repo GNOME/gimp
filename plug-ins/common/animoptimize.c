@@ -589,6 +589,7 @@ g_warning("stat fun");
 		  /*		  else
 				  g_warning("OOH!");*/
 		same:
+		  /* nop */;
 		}
 	    }
 
@@ -732,6 +733,7 @@ g_warning("stat fun");
 		      this_frame[yit*width*pixelstep + xit*pixelstep
 				+ pixelstep - 1] = 0;
 		    enough:
+		      /* nop */;
 		    }
 		}
 	    }

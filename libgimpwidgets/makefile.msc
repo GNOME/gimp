@@ -34,6 +34,7 @@ install : all
 	$(INSTALL) gimpmath-$(GIMP_VER).dll $(BIN)
 
 OBJECTS = \
+	gimpbutton.obj \
 	gimpchainbutton.obj \
 	gimpcolorarea.obj \
 	gimpdialog.obj \
@@ -46,6 +47,7 @@ OBJECTS = \
 	gimphelpui.obj \
 	gimpsizeentry.obj \
 	gimpunitmenu.obj \
+	gimpoffsetarea.obj \
 	libgimp-glue.obj
 
 # questionable dependency between libgimpui/libgimpwidgets
