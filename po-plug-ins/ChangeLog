@@ -1,3 +1,9 @@
+Fri Jan 28 14:01:19 CET 2000  Fellmann Joaquim <joaquim@hrnet.fr>
+
+	* POTFILES.in: Updated _plugin_ files list.
+	* fr.po: Updated French translation (contains now only plugins
+	  translations).
+	
 Thu Jan 27 23:52:48 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* de.po: updated german translation
