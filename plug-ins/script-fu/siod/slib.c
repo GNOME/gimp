@@ -435,7 +435,7 @@ myruntime (void)
   total = b.tms_utime;
   total += b.tms_stime;
   return (total / 60.0);
-#elif G_OS_WIN32
+#elif defined (G_OS_WIN32)
   FILETIME creation, exit, kernel, user;
   GetProcessTimes (GetCurrentProcess (), &creation, &exit, &kernel, &user);
   return (kernel.dwLowDateTime * 1e7 + user.dwLowDateTime * 1e7);

@@ -54,7 +54,7 @@ colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
 colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj module.def
-	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
 colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def

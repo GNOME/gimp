@@ -8,6 +8,7 @@ EXPORTS
 	gimp_chain_button_set_active
 	gimp_channel_menu_new
 	gimp_drawable_menu_new
+	gimp_export_image
 	gimp_file_selection_get_filename
 	gimp_file_selection_get_type
 	gimp_file_selection_new

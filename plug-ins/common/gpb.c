@@ -1127,6 +1127,10 @@ run (char    *name,
 	  
 	case RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_gih_save", &info);
+	  pipe_parasite = gimp_image_find_parasite (image_ID, "gimp-brush-pipe-parameters");
+	  pixpipeparams_init (&gihparms);
+	  if (pipe_parasite)
+	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
 	  break;
 	}
       

@@ -1,3 +1,18 @@
+1999-10-06  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/gpb.c: Fix the file_gih_save RUN_WITH_LAST_VALS
+	case, initialise pixpipe parameters from the parasite (Hi, Adrian!).
+
+	* plug-ins/script-fu/interp_slib.c: Fix preprocessor syntax error.
+
+	* app/makefile.{cygwin,msc} libgimp/makefile.{cygwin,msc}: Add new
+	object files.
+
+	* libgimp/gimp.def libgimp/gimpui.def: Add new entry points.
+
+	* modules/makefile.{cygwin,msc}: Add -I path to the common gdk
+	directory.
+
 Tue Oct  5 14:02:07 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* app/iscissors.c: all-singing, all-dancing iscissors.  Now

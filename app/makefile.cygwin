@@ -202,6 +202,8 @@ gimp_OBJECTS = \
 	parasite_cmds.o		\
 	parasitelist.o		\
 	path_tool.o		\
+	path_bezier.o		\
+	path_curves.o		\
 	paths_cmds.o		\
 	paths_dialog.o		\
 	pattern_select.o	\
@@ -225,6 +227,7 @@ gimp_OBJECTS = \
 	rotate_tool.o		\
 	scale.o			\
 	scale_tool.o		\
+	scan_convert.o		\
 	scroll.o		\
 	selection.o		\
 	session.o		\

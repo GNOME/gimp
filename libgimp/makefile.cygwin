@@ -132,6 +132,7 @@ gimpui_OBJECTS = \
 	gimpmenu.o	\
 	gimpbrushmenu.o	\
 	gimpchainbutton.o \
+	gimpexport.o \
 	gimpfileselection.o \
 	gimpgradientmenu.o \
 	gimppatternmenu.o \

@@ -85,10 +85,14 @@ EXPORTS
 	gimp_image_attach_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
+	gimp_image_convert_grayscale
+	gimp_image_convert_indexed
+	gimp_image_convert_rgb
 	gimp_image_delete
 	gimp_image_delete_guide
 	gimp_image_detach_parasite
 	gimp_image_disable_undo
+	gimp_image_duplicate
 	gimp_image_enable_undo
 	gimp_image_find_next_guide
 	gimp_image_find_parasite
