@@ -226,11 +226,15 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   bytes = gimp_drawable_bytes (drawable);
   has_alpha = gimp_drawable_has_alpha (drawable);
 
-  /*  If there is no selection mask, the do a seed bucket
-   *  fill...To do this, calculate a new contiguous region
+  /*  Do a seed bucket fill...To do this, calculate a new 
+   *  contiguous region. If there is a selection, calculate the 
+   *  intersection of this region with the existing selection.
    */
-  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) && do_seed_fill)
+  if (do_seed_fill)
     {
+      GimpChannel *old_mask = NULL;
+      
+      old_mask = gimp_image_get_mask (gimage);
       mask = gimp_image_contiguous_region_by_seed (gimage, drawable,
                                                    sample_merged,
                                                    TRUE,
@@ -239,6 +243,16 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
                                                    (gint) x,
                                                    (gint) y);
 
+      if ( gimp_channel_bounds (old_mask, &x1, &y1, &x2, &y2))
+        {
+          gint off_x, off_y;
+
+          gimp_drawable_offsets (drawable, &off_x, &off_y);
+          gimp_channel_combine_mask (mask, old_mask, 
+                                     GIMP_CHANNEL_OP_INTERSECT,
+                                     off_x, off_y);
+        }
+      
       gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 
       /*  make sure we handle the mask correctly if it was sample-merged  */

@@ -1,3 +1,11 @@
+2002-09-04  Dave Neary  <bolsh@gimp.org>
+        * app/core/gimpdrawable-bucket-fill.c: Small patch to
+        modify the behaviour of the bucket fill tool if there
+        is an active selection. Question: Should the bucket fill
+        only work if clicked inside the selection? Currently a
+        click anywhere works, and stuff gets drawn if the region
+        intersects the selection. This patch closes bug #72896.
+
 2002-09-04  Michael Natterer  <mitch@gimp.org>
 
 	More color correction stuff cleanup:
