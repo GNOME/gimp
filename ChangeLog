@@ -1,3 +1,7 @@
+2004-08-01  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/scatter_hsv.c: ported to GimpPreviewArea.
+
 2004-08-01  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpbrusheditor.c: Fixed oversight that accidentially
