@@ -23,42 +23,47 @@
 #define __GIMP_WIDGETS_UTILS_H__
 
 
-void          gimp_message_box           (const gchar *stock_id,
-                                          const gchar *domain,
-                                          const gchar *message,
-                                          GtkCallback  callback,
-                                          gpointer     data);
+void          gimp_message_box           (const gchar     *stock_id,
+                                          const gchar     *domain,
+                                          const gchar     *message,
+                                          GtkCallback      callback,
+                                          gpointer         data);
 
-void          gimp_menu_position         (GtkMenu     *menu,
-                                          gint        *x,
-                                          gint        *y,
-                                          gpointer     data);
+void          gimp_menu_position         (GtkMenu         *menu,
+                                          gint            *x,
+                                          gint            *y,
+                                          gpointer         data);
+void          gimp_button_menu_position  (GtkWidget       *button,
+                                          GtkMenu         *menu,
+                                          GtkPositionType  position,
+                                          gint            *x,
+                                          gint            *y);
 
-void          gimp_table_attach_stock    (GtkTable    *table,
-					  gint         row,
-					  const gchar *label_text,
-					  gdouble      yalign,
-					  GtkWidget   *widget,
-					  gint         colspan,
-					  const gchar *stock_id);
+void          gimp_table_attach_stock    (GtkTable        *table,
+					  gint             row,
+					  const gchar     *label_text,
+					  gdouble          yalign,
+					  GtkWidget       *widget,
+					  gint             colspan,
+					  const gchar     *stock_id);
 
-GtkIconSize   gimp_get_icon_size         (GtkWidget   *widget,
-                                          const gchar *stock_id,
-                                          GtkIconSize  max_size,
-                                          gint         width,
-                                          gint         height);
+GtkIconSize   gimp_get_icon_size         (GtkWidget       *widget,
+                                          const gchar     *stock_id,
+                                          GtkIconSize      max_size,
+                                          gint             width,
+                                          gint             height);
 
 const gchar * gimp_get_mod_name_shift    (void);
 const gchar * gimp_get_mod_name_control  (void);
 const gchar * gimp_get_mod_name_alt      (void);
 const gchar * gimp_get_mod_separator     (void);
 
-void          gimp_get_screen_resolution (GdkScreen   *screen,
-                                          gdouble     *xres,
-                                          gdouble     *yres);
+void          gimp_get_screen_resolution (GdkScreen       *screen,
+                                          gdouble         *xres,
+                                          gdouble         *yres);
 
-void          gimp_rgb_get_gdk_color     (const GimpRGB *rgb,
-                                          GdkColor      *gdk_color);
+void          gimp_rgb_get_gdk_color     (const GimpRGB   *rgb,
+                                          GdkColor        *gdk_color);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

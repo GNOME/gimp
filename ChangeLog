@@ -1,5 +1,14 @@
 2003-09-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.[ch]: added a utility function
+	that positions a menu that pops up from a button widget.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/widgets/gimpdockable.c: use the new utility function instead
+	of duplicating the code.
+
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimplayertreeview.c (gimp_layer_tree_view_init):
 	pack the widgets without using an alignment. Looks better and
 	works in RTL mode as well.

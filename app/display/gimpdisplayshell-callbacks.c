@@ -1641,40 +1641,7 @@ gimp_display_shell_origin_menu_position (GtkMenu  *menu,
                                          gint     *y,
                                          gpointer  data)
 {
-  GtkRequisition  menu_requisition;
-  GtkWidget      *widget;
-  GtkWidget      *origin;
-  GdkScreen      *screen;
-  gint            origin_x;
-  gint            origin_y;
-
-  widget = GTK_WIDGET (menu);
-  origin = GTK_WIDGET (data);
-
-  gdk_window_get_origin (origin->window, &origin_x, &origin_y);
-
-  gtk_widget_size_request (widget, &menu_requisition);
-
-  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
-    *x = origin_x + origin->allocation.x + origin->allocation.width - 1;
-  else
-    *x = origin_x + origin->allocation.x - menu_requisition.width - 1;
-
-  *y = origin_y + origin->allocation.y + (origin->allocation.height - 1) / 2;
-
-  screen = gtk_widget_get_screen (menu);
-
-  if (*x + menu_requisition.width > gdk_screen_get_width (screen))
-    *x -= menu_requisition.width + origin->allocation.width;
-
-  if (*x < 0)
-    *x += menu_requisition.width + origin->allocation.width;
-
-  if (*y + widget->allocation.height > gdk_screen_get_height (screen))
-    *y -= menu_requisition.height;
-
-  if (*y < 0)
-    *y = 0;
+  gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
 }
 
 /* gimp_display_shell_compress_motion:

@@ -675,45 +675,9 @@ gimp_dockable_menu_position (GtkMenu  *menu,
                              gint     *y,
                              gpointer  data)
 {
-  GtkRequisition  menu_requisition;
-  GtkRequisition  button_requisition;
-  GtkWidget      *dockable;
-  GtkContainer   *container;
-  GdkScreen      *screen;
+  GimpDockable *dockable = GIMP_DOCKABLE (data);
 
-  dockable  = GTK_WIDGET (data);
-  container = GTK_CONTAINER (data);
-
-  gdk_window_get_origin (dockable->window, x, y);
-
-  gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
-  gtk_widget_size_request (GIMP_DOCKABLE (dockable)->close_button,
-                           &button_requisition);
-
-  if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_LTR)
-    *x += (dockable->allocation.x + dockable->allocation.width -
-           container->border_width - 2 * button_requisition.width -
-           menu_requisition.width);
-  else
-    *x += (dockable->allocation.x + container->border_width +
-           2 * button_requisition.width);
-
-  *y += (dockable->allocation.y + container->border_width +
-         button_requisition.height / 2);
-
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
-
-  if (*x + menu_requisition.width > gdk_screen_get_width (screen))
-    *x -= menu_requisition.width + button_requisition.width;
-
-  if (*x < 0)
-    *x += menu_requisition.width + button_requisition.width;
-
-  if (*y + menu_requisition.height > gdk_screen_get_height (screen))
-    *y -= menu_requisition.height;
-
-  if (*y < 0)
-    *y = 0;
+  gimp_button_menu_position (dockable->menu_button, menu, GTK_POS_LEFT, x, y);
 }
 
 static void

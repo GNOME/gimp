@@ -275,6 +275,78 @@ gimp_menu_position (GtkMenu  *menu,
   *y = MAX (*y, 0);
 }
 
+/**
+ * gimp_button_menu_position:
+ * @button: a button widget to popup the menu from
+ * @menu: the menu to position
+ * @position: the preferred popup direction for the menu (left or right)
+ * @x: return location for x coordinate
+ * @y: return location for y coordinate
+ *
+ * Utility function to position a menu that pops up from a button.
+ **/
+void
+gimp_button_menu_position (GtkWidget       *button,
+                           GtkMenu         *menu,
+                           GtkPositionType  position,
+                           gint            *x,
+                           gint            *y)
+{
+  GdkScreen      *screen;
+  GtkRequisition  menu_requisition;
+
+  g_return_if_fail (GTK_WIDGET_REALIZED (button));
+  g_return_if_fail (GTK_IS_MENU (menu));
+  g_return_if_fail (x != NULL);
+  g_return_if_fail (y != NULL);
+
+  if (gtk_widget_get_direction (button) == GTK_TEXT_DIR_RTL)
+    {
+      switch (position)
+        {
+        case GTK_POS_LEFT:   position = GTK_POS_RIGHT;  break;
+        case GTK_POS_RIGHT:  position = GTK_POS_LEFT;   break;
+        default:
+          break;
+        }
+    }
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+
+  gdk_window_get_origin (button->window, x, y);
+
+  gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
+
+  *x += button->allocation.x;
+
+  switch (position)
+    {
+    case GTK_POS_LEFT:
+      *x -= menu_requisition.width;
+      if (*x < 0)
+        *x += menu_requisition.width + button->allocation.width;
+      break;
+
+    case GTK_POS_RIGHT:
+      *x += button->allocation.width;
+      if (*x + menu_requisition.width > gdk_screen_get_width (screen))
+        *x -= button->allocation.width + menu_requisition.width;
+      break;
+
+    default:
+      g_warning ("gimp_button_menu_position: "
+                 "unhandled position (%d)", position);
+      break;
+    }
+
+  *y += button->allocation.y + button->allocation.height / 2;
+
+  if (*y + menu_requisition.height > gdk_screen_get_height (screen))
+    *y -= menu_requisition.height;
+  if (*y < 0)
+    *y = 0;
+}
+
 void
 gimp_table_attach_stock (GtkTable    *table,
                          gint         row,
