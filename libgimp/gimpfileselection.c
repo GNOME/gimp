@@ -30,12 +30,15 @@
 #endif
 #include <string.h>
 
+#include <gtk/gtk.h>
+
 #include "gimpfileselection.h"
 
 #include "libgimp-intl.h"
 
 #include "pixmaps/yes.xpm"
 #include "pixmaps/no.xpm"
+
 
 #ifdef G_OS_WIN32
 # ifndef S_ISDIR

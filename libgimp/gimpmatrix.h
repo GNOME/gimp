@@ -23,11 +23,10 @@
 #ifndef __GIMP_MATRIX_H__
 #define __GIMP_MATRIX_H__
 
-#include <glib.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
 
 typedef gdouble GimpMatrix3[3][3];
 typedef gdouble GimpMatrix4[4][4];
@@ -68,8 +67,9 @@ void          gimp_matrix4_to_deg          (GimpMatrix4  matrix,
 					    gdouble     *b,
 					    gdouble     *c);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /*  __GIMP_MATRIX_H__  */
+#endif /* __GIMP_MATRIX_H__ */

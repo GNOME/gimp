@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <gtk/gtk.h>
+
 #include "gimpchainbutton.h"
 #include "gimphelpui.h"
 #include "gimppixmap.h"
@@ -30,6 +32,7 @@
 #include "gimpmath.h"
 
 #include "libgimp-intl.h"
+
 
 /*
  *  Widget Constructors

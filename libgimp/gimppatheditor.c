@@ -19,7 +19,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #include <string.h>
+
+#include <gtk/gtk.h>
 
 #include "gimppatheditor.h"
 
@@ -30,6 +33,7 @@
 #include "pixmaps/delete.xpm"
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
+
 
 /*  forward declaration  */
 static void gimp_path_editor_select_callback   (GtkWidget *widget,

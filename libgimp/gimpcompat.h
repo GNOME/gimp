@@ -23,6 +23,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
+
 /* some compatibility defines for older plug-ins */
 
 #ifndef GIMP_DISABLE_COMPAT_H
@@ -76,6 +77,7 @@ extern "C" {
 #define pixpipeparams_build             gimp_pixpipe_params_build
 
 #endif /* GIMP_DISABLE_COMPAT_H */
+
 
 #ifdef __cplusplus
 }

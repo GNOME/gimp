@@ -19,12 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_PARASITE_IO_H__
 #define __GIMP_PARASITE_IO_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 /*  Data structures for various standard parasites used by plug-ins and
  *  the GIMP core, and functions to build and parse their string

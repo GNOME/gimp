@@ -19,14 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_PIXMAP_H__
 #define __GIMP_PIXMAP_H__
-
-#include <gtk/gtk.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_PIXMAP            (gimp_pixmap_get_type ())
 #define GIMP_PIXMAP(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PIXMAP, GimpPixmap))
@@ -48,8 +50,9 @@ GtkWidget * gimp_pixmap_new      (gchar      **xpm_data);
 void        gimp_pixmap_set      (GimpPixmap  *pixmap,
 				  gchar      **xpm_data);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /* __GIMP_PIXMAP_H__ */
+#endif /* __GIMP_PIXMAP_H__ */

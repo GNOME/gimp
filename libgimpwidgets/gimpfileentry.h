@@ -23,11 +23,12 @@
 #ifndef __GIMP_FILE_SELECTION_H__
 #define __GIMP_FILE_SELECTION_H__
 
-#include <gtk/gtk.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_FILE_SELECTION            (gimp_file_selection_get_type ())
 #define GIMP_FILE_SELECTION(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_FILE_SELECTION, GimpFileSelection))
@@ -78,6 +79,7 @@ gchar*      gimp_file_selection_get_filename (GimpFileSelection *gfs);
 
 void        gimp_file_selection_set_filename (GimpFileSelection *gfs,
 					      gchar             *filename);
+
 
 #ifdef __cplusplus
 }

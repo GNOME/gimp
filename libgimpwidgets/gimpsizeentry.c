@@ -21,9 +21,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <gtk/gtk.h>
+
 #include "gimplimits.h"
 #include "gimpsizeentry.h"
 #include "gimpunitmenu.h"
+
 
 #define SIZE_MAX_VALUE 500000.0
 

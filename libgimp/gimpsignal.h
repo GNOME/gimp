@@ -15,21 +15,25 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- *
- *  $Revision$
  */
+
 #ifndef __GIMP_SIGNAL_H__
 #define __GIMP_SIGNAL_H__
+
+#include <signal.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 /* A gimp-level interface to a Posix.1-compliant signal package lives here
  * For 1.2, this gimp-level interface mostly passes through to posix calls
  * without modification. Certain calls manipulate struct sigaction in
  * ways useful to Gimp.
  */
-
-#include <signal.h>
-
-#include <glib.h>
 
 #ifdef __EMX__
 /* hope this is right for OS/2 */
@@ -53,5 +57,10 @@ GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
  * quietly requests the restarting of system calls. Addresses #2742
  */
 #define gimp_signal_syscallrestart(signum,handler) gimp_signal_private ((signum), (handler), SA_RESTART)
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_SIGNAL_H__ */

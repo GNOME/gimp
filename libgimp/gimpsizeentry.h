@@ -20,16 +20,18 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_SIZE_ENTRY_H__
 #define __GIMP_SIZE_ENTRY_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpunit.h"
+#include <libgimp/gimpunit.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_SIZE_ENTRY            (gimp_size_entry_get_type ())
 #define GIMP_SIZE_ENTRY(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
@@ -137,6 +139,7 @@ void        gimp_size_entry_set_unit              (GimpSizeEntry *gse,
 					           GimpUnit       unit);
 
 void        gimp_size_entry_grab_focus            (GimpSizeEntry *gse);
+
 
 #ifdef __cplusplus
 }

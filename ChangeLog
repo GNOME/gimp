@@ -1,3 +1,10 @@
+2000-05-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpunit.c
+	* libgimp/*: all libgimp headers are included via gimp.h or
+	gimpui.h, so include <gtk/gtk.h> there and in the *.c files.
+	Various cleanups.
+
 Wed May 31 00:43:09 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
         * tips/gimp_tips.cs.txt: Updated translation.

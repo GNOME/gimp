@@ -16,10 +16,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */                                                                             
+
 #ifndef __GIMP_PROTOCOL_H__
 #define __GIMP_PROTOCOL_H__
 
-#include <glib.h>
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 /* Increment every time the protocol changes
  */
@@ -205,5 +211,9 @@ gboolean  gp_proc_uninstall_write   (GIOChannel      *channel,
 gboolean  gp_extension_ack_write    (GIOChannel      *channel);
 gboolean  gp_request_wakeups_write  (GIOChannel      *channel);
 
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_PROTOCOL_H__ */

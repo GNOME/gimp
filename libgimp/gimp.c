@@ -16,6 +16,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <locale.h>
@@ -46,6 +47,8 @@
 #ifndef WAIT_ANY
 #define WAIT_ANY -1
 #endif
+
+#include <gtk/gtk.h>
 
 #ifndef G_OS_WIN32
 #include "gimpsignal.h"

@@ -19,6 +19,8 @@
  * $Revision$
  */                                                                             
 
+#include <glib.h>
+
 #include "gimpsignal.h"
 
 

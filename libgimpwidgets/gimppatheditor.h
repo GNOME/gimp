@@ -19,14 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_PATH_EDITOR_H__
 #define __GIMP_PATH_EDITOR_H__
-
-#include <gtk/gtk.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_PATH_EDITOR            (gimp_path_editor_get_type ())
 #define GIMP_PATH_EDITOR(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
@@ -71,6 +73,7 @@ GtkWidget * gimp_path_editor_new      (gchar          *filesel_title,
 				       gchar          *path);
 
 gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
+
 
 #ifdef __cplusplus
 }

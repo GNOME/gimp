@@ -19,14 +19,18 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */         
+
 #ifndef __GIMP_QUERY_BOX_H__
 #define __GIMP_QUERY_BOX_H__
 
-#include <gtk/gtk.h>
+#include <libgimp/gimpunit.h>
 
-#include "gimphelpui.h"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-#include "gimpunit.h"
+/* For information look into the C source or the html documentation */
+
 
 /*  query box callback prototypes  */
 typedef void (* GimpQueryStringCallback)  (GtkWidget *query_box,
@@ -113,5 +117,10 @@ GtkWidget * gimp_query_boolean_box (gchar                    *title,
 				    gchar                    *signal,
 				    GimpQueryBooleanCallback  callback,
 				    gpointer                  data);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_QUERY_BOX_H__ */

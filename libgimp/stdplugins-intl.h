@@ -18,10 +18,12 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __STDPLUGINS_INTL_H__
 #define __STDPLUGINS_INTL_H__
 
 #include "gimpintl.h"
+
 
 #ifdef HAVE_LC_MESSAGES
 #define INIT_I18N()	G_STMT_START{			\
@@ -43,5 +45,6 @@
   setlocale (LC_NUMERIC, "C");		\
   INIT_I18N();				\
 			}G_STMT_END
+
 
 #endif /* __STDPLUGINS_INTL_H__ */

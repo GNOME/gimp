@@ -22,29 +22,35 @@
 #include <glib.h>
 #include <gmodule.h>
 
-#include "gimpparasite.h"
+#include <libgimp/gimpparasite.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* For information look at the html documentation */
 
 
-typedef void           (* GimpColorDisplayInit)       (void);
-typedef gpointer       (* GimpColorDisplayNew)        (gint          type);
-typedef gpointer       (* GimpColorDisplayClone)      (gpointer      cd_ID);
-typedef void           (* GimpColorDisplayConvert)    (gpointer      cd_ID,
-						       guchar       *buf,
-						       gint          width,
-						       gint          height,
-						       gint          bpp,
-						       gint          bpl);
-typedef void           (* GimpColorDisplayDestroy)    (gpointer      cd_ID);
-typedef void           (* GimpColorDisplayFinalize)   (void);
-typedef void           (* GimpColorDisplayLoadState)  (gpointer      cd_ID,
-						       GimpParasite *state);
-typedef GimpParasite * (* GimpColorDisplaySaveState)  (gpointer      cd_ID);
-typedef void           (* GimpColorDisplayConfigure)  (gpointer      cd_ID,
-						       GFunc         ok_func,
-						       gpointer      ok_data,
-						       GFunc         cancel_func,
-						       gpointer      cancel_data);
-typedef void      (* GimpColorDisplayConfigureCancel) (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayInit)      (void);
+typedef gpointer       (* GimpColorDisplayNew)       (gint          type);
+typedef gpointer       (* GimpColorDisplayClone)     (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayConvert)   (gpointer      cd_ID,
+						      guchar       *buf,
+						      gint          width,
+						      gint          height,
+						      gint          bpp,
+						      gint          bpl);
+typedef void           (* GimpColorDisplayDestroy)   (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayFinalize)  (void);
+typedef void           (* GimpColorDisplayLoadState) (gpointer      cd_ID,
+						      GimpParasite *state);
+typedef GimpParasite * (* GimpColorDisplaySaveState) (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayConfigure) (gpointer      cd_ID,
+						      GFunc         ok_func,
+						      gpointer      ok_data,
+						      GFunc         cancel_func,
+						      gpointer      cancel_data);
+typedef void     (* GimpColorDisplayConfigureCancel) (gpointer      cd_ID);
 
 typedef struct _GimpColorDisplayMethods GimpColorDisplayMethods;
 
@@ -72,5 +78,10 @@ gboolean   gimp_color_display_register   (const gchar             *name,
 					  GimpColorDisplayMethods *methods);
 G_MODULE_EXPORT
 gboolean   gimp_color_display_unregister (const gchar             *name);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_COLOR_DISPLAY_H__ */

@@ -19,16 +19,15 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_WIDGETS_H__
 #define __GIMP_WIDGETS_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpsizeentry.h"
+#include <libgimp/gimpsizeentry.h>
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /* __cplusplus */
 
 /* For information look into the C source or the html documentation */
 
@@ -244,8 +243,9 @@ void gimp_table_attach_aligned     (GtkTable           *table,
 				    gint                colspan,
 				    gboolean            left_align);
 
+
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
 
 #endif /* __GIMP_WIDGETS_H__ */

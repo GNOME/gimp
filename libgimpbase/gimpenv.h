@@ -30,6 +30,7 @@ extern "C" {
 
 /* For information look into the C source or the html documentation */
 
+
 gchar * gimp_directory                  (void);
 gchar * gimp_personal_rc_file           (gchar     *basename);
 gchar * gimp_data_directory             (void);
@@ -43,6 +44,7 @@ gchar * gimp_path_to_str                (GList     *path);
 void    gimp_path_free                  (GList     *path);
 
 gchar * gimp_path_get_user_writable_dir (GList     *path);
+
 
 #ifdef __cplusplus
 }

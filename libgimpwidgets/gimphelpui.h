@@ -19,14 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_HELP_UI_H__
 #define __GIMP_HELP_UI_H__
-
-#include <gtk/gtk.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 typedef void (* GimpHelpFunc) (gchar *help_data);
 
@@ -54,13 +56,9 @@ void  gimp_help_set_help_data      (GtkWidget    *widget,
 /*  activate the context help inspector  */
 void  gimp_context_help            (void);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif /* __GIMP_HELP_UI_H__ */
-
-
-
-
-

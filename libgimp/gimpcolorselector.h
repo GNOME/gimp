@@ -21,6 +21,10 @@
 #ifndef __COLOR_SELECTOR_H__
 #define __COLOR_SELECTOR_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* For information look at the html documentation */
 
 
@@ -56,6 +60,7 @@ struct _GimpColorSelectorMethods
 
 typedef gpointer GimpColorSelectorID;
 
+
 #ifndef __COLOR_NOTEBOOK_C__
 
 /*  Bypass when compiling the source for these functions.
@@ -66,10 +71,15 @@ GimpColorSelectorID   gimp_color_selector_register (const gchar *name,
 
 typedef void (* GimpColorSelectorFinishedCB) (gpointer           finished_data);
 
-gboolean gimp_color_selector_unregister    (GimpColorSelectorID  id,
+gboolean   gimp_color_selector_unregister  (GimpColorSelectorID  id,
 				    GimpColorSelectorFinishedCB  finished_cb,
 					    gpointer             finished_data);
 
 #endif /* !__COLOR_NOTEBOOK_C__ */
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __COLOR_SELECTOR_H__ */

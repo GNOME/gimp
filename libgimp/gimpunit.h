@@ -30,11 +30,12 @@
 #ifndef __GIMPUNIT_H__
 #define __GIMPUNIT_H__
 
-#include <glib.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 typedef enum
 {
@@ -50,7 +51,6 @@ typedef enum
   GIMP_UNIT_PERCENT = 65536
 } GimpUnit;
 
-/* For information look into the C source or the html documentation */
 
 gint       gimp_unit_get_number_of_units          (void);
 gint       gimp_unit_get_number_of_built_in_units (void);
@@ -78,8 +78,9 @@ gchar    * gimp_unit_get_abbreviation    (GimpUnit  unit);
 gchar    * gimp_unit_get_singular        (GimpUnit  unit);
 gchar    * gimp_unit_get_plural          (GimpUnit  unit);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /*  __GIMPUNIT_H__  */
+#endif /* __GIMPUNIT_H__ */

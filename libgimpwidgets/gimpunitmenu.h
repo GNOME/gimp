@@ -19,16 +19,18 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpunit.h"
+#include <libgimp/gimpunit.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_UNIT_MENU            (gimp_unit_menu_get_type ())
 #define GIMP_UNIT_MENU(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_UNIT_MENU, GimpUnitMenu))
@@ -62,7 +64,6 @@ struct _GimpUnitMenuClass
   void (* unit_changed) (GimpUnitMenu *gum);
 };
 
-/* For information look into the C source or the html documentation */
 
 GtkType     gimp_unit_menu_get_type (void);
 
@@ -76,6 +77,7 @@ void        gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 				     GimpUnit      unit);
 
 GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *gum);
+
 
 #ifdef __cplusplus
 }

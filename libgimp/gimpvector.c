@@ -25,8 +25,11 @@
 /* A little collection of useful vector stuff */
 /**********************************************/
 
+#include <glib.h>
+
 #include "gimpmath.h"
 #include "gimpvector.h"
+
 
 /*************************/
 /* Some useful constants */

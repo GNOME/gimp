@@ -20,17 +20,20 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "gimpquerybox.h"
+#include "config.h"
+
+#include <gtk/gtk.h>
 
 #include "gimpdialog.h"
 #include "gimppixmap.h"
+#include "gimpquerybox.h"
 #include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 
-#include "config.h"
 #include "libgimp-intl.h"
 
 #include "pixmaps/eek.xpm"
+
 
 /*
  *  String, integer, double and size query boxes

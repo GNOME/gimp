@@ -19,17 +19,18 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_DIALOG_H__
 #define __GIMP_DIALOG_H__
 
-#include <gtk/gtk.h>
-
-#include "gimphelpui.h"
-#include "gimpunit.h"
+#include <libgimp/gimphelpui.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 GtkWidget * gimp_dialog_new                 (const gchar        *title,
 					     const gchar        *wmclass_name,
@@ -83,24 +84,9 @@ void        gimp_dialog_create_action_area  (GtkDialog          *dialog,
 void        gimp_dialog_create_action_areav (GtkDialog          *dialog,
 					     va_list             args);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif /* __GIMP_DIALOG_H__ */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

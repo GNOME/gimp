@@ -19,8 +19,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_LIMITS_H__
 #define __GIMP_LIMITS_H__
+
 
 /*  pixel sizes
  */
@@ -41,5 +43,6 @@
  */
 #define GIMP_CHECK_DARK   0.4          /*  corresponds to GRAY_CHECKS as  */
 #define GIMP_CHECK_LIGHT  0.6          /*  defined in app/image_render.c  */
+
 
 #endif /* __GIMP_LIMITS_H__ */

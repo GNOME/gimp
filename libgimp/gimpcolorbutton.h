@@ -29,8 +29,6 @@
 #ifndef __GIMP_COLOR_BUTTON_H__
 #define __GIMP_COLOR_BUTTON_H__
 
-#include <gtk/gtk.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -53,22 +51,22 @@ struct _GimpColorButtonClass
 };
 
 
-GtkType    gimp_color_button_get_type   (void);
-GtkWidget* gimp_color_button_new        (gchar   *title,
-					 gint     width,
-					 gint     height,
-					 guchar  *color,
-					 gint     bpp);
-GtkWidget* gimp_color_button_double_new (gchar   *title,
-					 gint     width,
-					 gint     height,
-					 gdouble *color,
-					 gint     bpp);
-void       gimp_color_button_update     (GimpColorButton *gcb);
+GtkType     gimp_color_button_get_type   (void);
+GtkWidget * gimp_color_button_new        (gchar   *title,
+					  gint     width,
+					  gint     height,
+					  guchar  *color,
+					  gint     bpp);
+GtkWidget * gimp_color_button_double_new (gchar   *title,
+					  gint     width,
+					  gint     height,
+					  gdouble *color,
+					  gint     bpp);
+void        gimp_color_button_update     (GimpColorButton *gcb);
+
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-
 
 #endif /* __COLOR_BUTTON_H__ */

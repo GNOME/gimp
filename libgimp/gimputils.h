@@ -28,13 +28,14 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/* For information look into the C source or the html documentation */
+
+
 /*  
  *  Right now all you find here is the g_strescape function out of 
  *  glib-1.3. We need its functionality, but don't want to rely on
  *  that version being installed 
  */
-
-/* For information look into the C source or the html documentation */
 
 #if (defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
 #define gimp_strescape(string, exceptions) g_strescape (string, exceptions)
@@ -43,8 +44,9 @@ gchar* gimp_strescape (const gchar *source,
 		       const gchar *exceptions);
 #endif  /* GLIB <= 1.3 */
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /*  __GIMPUTILS_H__  */
+#endif /* __GIMPUTILS_H__ */

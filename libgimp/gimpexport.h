@@ -23,13 +23,15 @@
 #ifndef __GIMP_EXPORT_H__
 #define __GIMP_EXPORT_H__
 
-#include <glib.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-typedef enum {
+/* For information look into the C source or the html documentation */
+
+
+typedef enum
+{
   CAN_HANDLE_RGB                 = 1 << 0,
   CAN_HANDLE_GRAY                = 1 << 1,
   CAN_HANDLE_INDEXED             = 1 << 2,
@@ -51,8 +53,9 @@ GimpExportReturnType gimp_export_image (gint32                 *image_ID,
 					gchar                  *format_name,
 					GimpExportCapabilities  capabilities);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif
+#endif /* __GIMP_EXPORT_H__ */

@@ -16,6 +16,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */         
+
 #ifndef __GIMP_UI_H__
 #define __GIMP_UI_H__
 
@@ -35,7 +36,19 @@
 #include <libgimp/gimpunitmenu.h>
 #include <libgimp/gimpwidgets.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
+
 void gimp_ui_init (gchar    *prog_name,
 		   gboolean  preview);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_UI_H__ */

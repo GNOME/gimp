@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library                                                   
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphelp.c
+ * gimphelp_pdb.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or

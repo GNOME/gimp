@@ -18,8 +18,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __LIBGIMP_INTL_H__
 #define __LIBGIMP_INTL_H__
+
 
 #ifdef ENABLE_NLS
 #    include <libintl.h>
@@ -38,19 +40,5 @@
 #    define N_(String) (String)
 #endif
 
+
 #endif /* __LIBGIMP_INTL_H__ */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

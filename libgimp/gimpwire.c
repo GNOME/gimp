@@ -36,6 +36,8 @@
 #include <io.h>
 #endif
 
+#include <glib.h>
+
 #include "gimpwire.h"
 
 

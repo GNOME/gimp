@@ -19,12 +19,16 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMP_PARASITE_H__
 #define __GIMP_PARASITE_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_PARASITE_PERSISTENT 1
 #define GIMP_PARASITE_UNDOABLE   2

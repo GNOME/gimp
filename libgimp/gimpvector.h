@@ -24,11 +24,12 @@
 #ifndef __GIMP_VECTOR_H__
 #define __GIMP_VECTOR_H__
 
-#include <glib.h>
-
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
 
 typedef struct _GimpVector2 GimpVector2;
 typedef struct _GimpVector3 GimpVector3;
@@ -121,8 +122,9 @@ void        gimp_vector_3d_to_2d       (gint         sx,
 					GimpVector3 *vp,
 					GimpVector3 *p);
 
+
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
 
 #endif  /* __GIMP_VECTOR_H__ */

@@ -20,18 +20,20 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMPMATH_H__
 #define __GIMPMATH_H__
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
 #include <math.h>
 
 #ifdef G_OS_WIN32
 #include <float.h>
 #endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 
 /* Some portability enhancing stuff. For use both by the gimp app
  * as well as plug-ins and modules.
@@ -90,8 +92,9 @@ extern "C" {
 #endif
 #endif
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /*  __GIMPMATH_H__  */
+#endif /* __GIMPMATH_H__ */

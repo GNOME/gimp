@@ -22,7 +22,10 @@
 
 #include <stdio.h>
 
+#include <gtk/gtk.h>
+
 #include "gimppixmap.h"
+
 
 struct _GimpPixmap
 {

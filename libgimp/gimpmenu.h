@@ -16,69 +16,66 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */        
+
 #ifndef __GIMP_MENU_H__
 #define __GIMP_MENU_H__
-
-
-#include <gtk/gtk.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 
-
-typedef gint (*GimpConstraintFunc)   (gint32    image_id,
-				      gint32    drawable_id,
-				      gpointer  data);
-typedef void (*GimpMenuCallback)     (gint32    id,
-				      gpointer  data);
+typedef gint (* GimpConstraintFunc)   (gint32    image_id,
+				       gint32    drawable_id,
+				       gpointer  data);
+typedef void (* GimpMenuCallback)     (gint32    id,
+				       gpointer  data);
 
 
 /* Popup the brush dialog interactively */
-typedef void (* GRunBrushCallback)   (gchar    *name,
-				      gdouble   opacity,
-				      gint      spacing,
-				      gint      paint_mode,
-				      gint      width,
-				      gint      height,
-				      gchar    *mask_data,
-				      gboolean  dialog_closing,
-				      gpointer  user_data);
+typedef void (* GRunBrushCallback)    (gchar    *name,
+				       gdouble   opacity,
+				       gint      spacing,
+				       gint      paint_mode,
+				       gint      width,
+				       gint      height,
+				       gchar    *mask_data,
+				       gboolean  dialog_closing,
+				       gpointer  user_data);
 
 /* Popup the pattern dialog */
-typedef void (*GRunPatternCallback)  (gchar    *name,
-				      gint      width,
-				      gint      height,
-				      gint      bpp,
-				      gchar    *mask_data,
-				      gboolean  dialog_closing,
-				      gpointer  user_data);
+typedef void (* GRunPatternCallback)  (gchar    *name,
+				       gint      width,
+				       gint      height,
+				       gint      bpp,
+				       gchar    *mask_data,
+				       gboolean  dialog_closing,
+				       gpointer  user_data);
   
 /* Popup the gradient dialog */
-typedef void (*GRunGradientCallback) (gchar    *name,
-				      gint      width,
-				      gdouble  *grad_data,
-				      gboolean  dialog_closing,
-				      gpointer  user_data);
+typedef void (* GRunGradientCallback) (gchar    *name,
+				       gint      width,
+				       gdouble  *grad_data,
+				       gboolean  dialog_closing,
+				       gpointer  user_data);
 
   
-GtkWidget* gimp_image_menu_new    (GimpConstraintFunc constraint,
-				   GimpMenuCallback   callback,
-				   gpointer           data,
-				   gint32             active_image);
-GtkWidget* gimp_layer_menu_new    (GimpConstraintFunc constraint,
-				   GimpMenuCallback   callback,
-				   gpointer           data,
-				   gint32             active_layer);
-GtkWidget* gimp_channel_menu_new  (GimpConstraintFunc constraint,
-				   GimpMenuCallback   callback,
-				   gpointer           data,
-				   gint32             active_channel);
-GtkWidget* gimp_drawable_menu_new (GimpConstraintFunc constraint,
-				   GimpMenuCallback   callback,
-				   gpointer           data,
-				   gint32             active_drawable);
+GtkWidget * gimp_image_menu_new    (GimpConstraintFunc constraint,
+				    GimpMenuCallback   callback,
+				    gpointer           data,
+				    gint32             active_image);
+GtkWidget * gimp_layer_menu_new    (GimpConstraintFunc constraint,
+				    GimpMenuCallback   callback,
+				    gpointer           data,
+				    gint32             active_layer);
+GtkWidget * gimp_channel_menu_new  (GimpConstraintFunc constraint,
+				    GimpMenuCallback   callback,
+				    gpointer           data,
+				    gint32             active_channel);
+GtkWidget * gimp_drawable_menu_new (GimpConstraintFunc constraint,
+				    GimpMenuCallback   callback,
+				    gpointer           data,
+				    gint32             active_drawable);
 
 
 gpointer   gimp_interactive_selection_brush    (gchar             *dialogname,
@@ -168,9 +165,9 @@ gboolean  gimp_gradient_set_popup                 (gpointer              popup_p
 						   gchar                *pname);
 gboolean  gimp_gradient_close_popup               (gpointer              popup_pnt);
 
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-
 
 #endif /* __GIMP_MENU_H__ */

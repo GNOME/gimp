@@ -20,7 +20,10 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <gtk/gtk.h>
+
 #include "gimpchainbutton.h"
+
 #include "pixmaps/chain.xpm"
 
 static gchar **gimp_chain_xpm[] =

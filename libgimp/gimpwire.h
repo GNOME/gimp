@@ -20,8 +20,11 @@
 #ifndef __GIMP_WIRE_H__
 #define __GIMP_WIRE_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-#include <glib.h>
+/* For information look into the C source or the html documentation */
 
 
 typedef struct _WireMessage  WireMessage;
@@ -101,5 +104,10 @@ gboolean  wire_write_double (GIOChannel      *channel,
 gboolean  wire_write_string (GIOChannel      *channel,
 			     gchar          **data,
 			     gint             count);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMP_WIRE_H__ */

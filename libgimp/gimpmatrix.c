@@ -20,8 +20,11 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <glib.h>
+
 #include "gimpmath.h"
 #include "gimpmatrix.h"
+
 
 #define EPSILON 1e-6
 

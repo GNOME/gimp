@@ -23,7 +23,12 @@
 
 #include <gmodule.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 /* For information look at the html documentation */
+
 
 typedef enum
 {
@@ -50,6 +55,7 @@ struct _GimpModuleInfo
 
 typedef GimpModuleStatus (* GimpModuleInitFunc) (GimpModuleInfo **module_info);
 
+
 #ifndef MODULE_COMPILATION
 
 /*  On Win32 this declaration clashes with the definition
@@ -69,6 +75,7 @@ typedef void (* GimpModuleUnloadFunc)  (gpointer               shutdown_data,
 					GimpModuleCompletedCB  completed_cb,
 					gpointer               completed_data);
 
+
 #ifndef MODULE_COMPILATION
 
 /*  The same as for module_init.
@@ -76,5 +83,10 @@ typedef void (* GimpModuleUnloadFunc)  (gpointer               shutdown_data,
 GimpModuleUnloadFunc module_unload;
 
 #endif /* ! MODULE_COMPILATION */
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __GIMPMODULE_H__ */

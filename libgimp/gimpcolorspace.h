@@ -20,6 +20,13 @@
 #ifndef __GIMPCOLORSPACE_H__
 #define __GIMPCOLORSPACE_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+/* For information look into the C source or the html documentation */
+
+
 /*  Color conversion routines  */
 
 void    gimp_rgb_to_hsv		(gint    *red         /* returns hue        */,
@@ -64,5 +71,10 @@ void    gimp_hsv_to_rgb4        (guchar  *rgb,
 #define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
 			  (g) * INTENSITY_GREEN + \
 			  (b) * INTENSITY_BLUE  + 0.001)
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif  /* __GIMPCOLORSPACE_H__ */

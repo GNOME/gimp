@@ -20,21 +20,26 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
+
+#include <glib.h>
+
+#include "unitrc.h"
+
+#include "app_procs.h"
+#include "gimprc.h"
 
 /* NOTE:
  *
  * one of our header files is in libgimp/ (see the note there)
  */
 #include "libgimp/gimpunit.h"
-
-#include "unitrc.h"
-
-#include "app_procs.h"
-#include "gimprc.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+
+#include "libgimp/gimpintl.h"
+
 
 /* internal structures */
 

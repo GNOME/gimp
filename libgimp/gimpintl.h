@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library                                                   
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
- * libgimp-intl.h
+ * gimpintl.h
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,15 +18,17 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
+
 #ifndef __GIMPINTL_H__
 #define __GIMPINTL_H__
 
 #include <glib.h>
 #include <locale.h>
 
-/* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com> *
- * Heavily modified by Daniel Egger <Daniel.Egger@t-online.de>       *
- * So be sure to hit me instead of him if something is wrong here    */ 
+/* Copied from gnome-i18n.h by Tom Tromey <tromey@creche.cygnus.com>
+ * Heavily modified by Daniel Egger <Daniel.Egger@t-online.de>
+ * So be sure to hit me instead of him if something is wrong here
+ */ 
 
 #ifndef LOCALEDIR
 #define LOCALEDIR g_strconcat (gimp_data_directory (), \
