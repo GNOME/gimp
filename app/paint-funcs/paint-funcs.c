@@ -56,9 +56,9 @@ typedef enum
 typedef struct _LayerMode LayerMode;
 struct _LayerMode
 {
-  guchar   affect_alpha : 1;     /*  does the layer mode affect the alpha channel  */
-  guchar   increase_opacity : 1; /*  layer mode can increase opacity */
-  guchar   decrease_opacity : 1; /*  layer mode can decrease opacity */
+  guint   affect_alpha     : 1; /*  does the layer mode affect the alpha channel  */
+  guint   increase_opacity : 1; /*  layer mode can increase opacity */
+  guint   decrease_opacity : 1; /*  layer mode can decrease opacity */
 };
 
 static const LayerMode layer_modes[] =

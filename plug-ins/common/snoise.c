@@ -82,8 +82,8 @@
 #define WEIGHT(T)     ((2.0*fabs(T)-3.0)*(T)*(T)+1.0)
 
 #define SCALE_WIDTH   128
-#define SIZE_MIN      0.1
-#define SIZE_MAX      16.0
+#define MIN_SIZE      0.1
+#define MAX_SIZE      16.0
 
 #define PREVIEW_SIZE  128
 
@@ -447,8 +447,8 @@ solid_noise_init (void)
 
   /*  Force sane parameters  */
   snvals.detail = CLAMP (snvals.detail, 0, 15);
-  snvals.xsize  = CLAMP (snvals.xsize, SIZE_MIN, SIZE_MAX);
-  snvals.ysize  = CLAMP (snvals.ysize, SIZE_MIN, SIZE_MAX);
+  snvals.xsize  = CLAMP (snvals.xsize, MIN_SIZE, MAX_SIZE);
+  snvals.ysize  = CLAMP (snvals.ysize, MIN_SIZE, MAX_SIZE);
 
   /*  Set scaling factors  */
   if (snvals.tilable)
@@ -689,7 +689,7 @@ solid_noise_dialog (void)
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_X size:"), SCALE_WIDTH, 0,
-                              snvals.xsize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
+                              snvals.xsize, MIN_SIZE, MAX_SIZE, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
@@ -702,7 +702,7 @@ solid_noise_dialog (void)
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
                               _("_Y size:"), SCALE_WIDTH, 0,
-                              snvals.ysize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
+                              snvals.ysize, MIN_SIZE, MAX_SIZE, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",

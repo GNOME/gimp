@@ -78,7 +78,7 @@ enum
   GRADIENT,
   ROBERTS,
   DIFFERENTIAL,
-  LAPLACE,
+  LAPLACE
 };
 
 typedef struct

@@ -1,5 +1,27 @@
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
+	Applied a bunch of AIX portability fixes (bug #148813):
+
+	* configure.in: when testing for Xmu library, link with -lXt -lX11.
+
+	* app/gui/tips-parser.c
+	* app/gui/user-install-dialog.c
+	* app/tools/tools-enums.h
+	* app/widgets/gimpdasheditor.c
+	* app/widgets/widgets-enums.h
+	* libgimpthumb/gimpthumb-error.h
+	* libgimpwidgets/gimpcolorbutton.c
+	* plug-ins/common/edge.c: removed trailing commas from enums.
+
+	* plug-ins/common/snoise.c
+
+	* plug-ins/imagemap/imap_cmd_move.c: no C++ style comments.
+
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.c: use integers for bit fields.
+
+2004-07-30  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/bumpmap.c: removed preview code that isn't used
 	any longer.
 

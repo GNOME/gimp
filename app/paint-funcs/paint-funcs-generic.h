@@ -52,8 +52,8 @@
 /* FIXME: Move to a more global place */
 struct apply_layer_mode_struct
 {
-  guchar             bytes1 : 3;
-  guchar             bytes2 : 3;
+  guint              bytes1 : 3;
+  guint              bytes2 : 3;
   guchar            *src1;
   guchar            *src2;
   guchar            *mask;

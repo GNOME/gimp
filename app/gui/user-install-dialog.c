@@ -110,7 +110,7 @@ typedef enum
 {
   TREE_ITEM_DO_NOTHING,        /* Don't pre-create            */
   TREE_ITEM_MKDIR,             /* Create the directory        */
-  TREE_ITEM_FROM_SYSCONF_DIR,  /* Copy from sysconf directory */
+  TREE_ITEM_FROM_SYSCONF_DIR   /* Copy from sysconf directory */
 } TreeItemType;
 
 static struct

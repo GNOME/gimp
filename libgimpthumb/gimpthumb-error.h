@@ -31,7 +31,7 @@ typedef enum
 {
   GIMP_THUMB_ERROR_OPEN,         /*  open failed                            */
   GIMP_THUMB_ERROR_OPEN_ENOENT,  /*  file does not exist                    */
-  GIMP_THUMB_ERROR_MKDIR,        /*  mkdir failed                           */
+  GIMP_THUMB_ERROR_MKDIR         /*  mkdir failed                           */
 } GimpThumbError;
 
 
