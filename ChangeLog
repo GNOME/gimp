@@ -1,5 +1,10 @@
 2003-11-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectselecttool.c
+	(gimp_rect_select_tool_button_release): remove unused variables.
+
+2003-11-16  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in
 	* themes/Makefile.am
 	* themes/Small/.cvsignore

@@ -265,9 +265,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 {
   GimpRectSelectTool *rect_sel;
   GimpSelectionTool  *sel_tool;
-  gdouble                x1, y1;
-  gdouble                x2, y2;
-  gdouble                w, h;
+  gdouble             x, y;
+  gdouble             w, h;
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -281,8 +280,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
     {
-      x1 = (rect_sel->w < 0) ? rect_sel->x + rect_sel->w : rect_sel->x;
-      y1 = (rect_sel->h < 0) ? rect_sel->y + rect_sel->h : rect_sel->y;
+      x = (rect_sel->w < 0) ? rect_sel->x + rect_sel->w : rect_sel->x;
+      y = (rect_sel->h < 0) ? rect_sel->y + rect_sel->h : rect_sel->y;
 
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
@@ -301,11 +300,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
           return;
         }
 
-      x2 = x1 + w;
-      y2 = y1 + h;
-
       gimp_rect_select_tool_rect_select (rect_sel,
-                                         RINT(x1), RINT(y1), RINT(w), RINT(h));
+                                         RINT (x), RINT (y), RINT (w), RINT (h));
 
       /*  show selection on all views  */
       gimp_image_flush (gdisp->gimage);
