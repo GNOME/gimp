@@ -1,5 +1,11 @@
 2004-10-27  Philip Lafleur <plafleur@cvs.gnome.org>
 
+	* app/display/gimpdisplayshell-preview.c: Really fixed all cases
+	of the perspective tool preview breaking with certain orientations by
+	using triangles instead of quads.
+
+2004-10-27  Philip Lafleur <plafleur@cvs.gnome.org>
+
 	* app/display/gimpdisplayshell-preview.c: Hopefully fixed all cases
 	of the perspective tool preview breaking with certain orientations.
 

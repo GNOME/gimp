@@ -49,7 +49,16 @@ static void    gimp_display_shell_draw_quad          (GimpDrawable *texture,
                                                       gint         *y,
                                                       gfloat       *u,
                                                       gfloat       *v);
-static void    gimp_display_shell_draw_quad_row      (GimpDrawable *texture,
+static void    gimp_display_shell_draw_tri           (GimpDrawable *texture,
+                                                      GdkDrawable  *dest,
+                                                      GimpChannel  *mask,
+                                                      gint          mask_offx,
+                                                      gint          mask_offy,
+                                                      gint         *x,
+                                                      gint         *y,
+                                                      gfloat       *u,
+                                                      gfloat       *v);
+static void    gimp_display_shell_draw_tri_row       (GimpDrawable *texture,
                                                       GdkDrawable  *dest,
                                                       GdkPixbuf    *row,
                                                       gint          x1,
@@ -59,7 +68,7 @@ static void    gimp_display_shell_draw_quad_row      (GimpDrawable *texture,
                                                       gfloat        u2,
                                                       gfloat        v2,
                                                       gint          y);
-static void    gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
+static void    gimp_display_shell_draw_tri_row_mask  (GimpDrawable *texture,
                                                       GdkDrawable  *dest,
                                                       GdkPixbuf    *row,
                                                       GimpChannel  *mask,
@@ -72,7 +81,7 @@ static void    gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
                                                       gfloat        u2,
                                                       gfloat        v2,
                                                       gint          y);
-static void    gimp_display_shell_trace_quad_edge    (gint         *dest,
+static void    gimp_display_shell_trace_tri_edge     (gint         *dest,
                                                       gint          x1,
                                                       gint          y1,
                                                       gint          x2,
@@ -176,8 +185,32 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
                               gint          mask_offy,
                               gint         *x,
                               gint         *y,
-                              gfloat       *u, /* texture coords */
-                              gfloat       *v) /* 0.0 ... tex width, height */
+                              gfloat       *u,
+                              gfloat       *v)
+{
+  gint   x2 [3], y2 [3];
+  gfloat u2 [3], v2 [3];
+
+  x2 [0] = x [3];  y2 [0] = y [3];  u2 [0] = u [3];  v2 [0] = v [3];
+  x2 [1] = x [2];  y2 [1] = y [2];  u2 [1] = u [2];  v2 [1] = v [2];
+  x2 [2] = x [1];  y2 [2] = y [1];  u2 [2] = u [1];  v2 [2] = v [1];
+
+  gimp_display_shell_draw_tri (texture, dest, mask, mask_offx, mask_offy,
+                               x, y, u, v);
+  gimp_display_shell_draw_tri (texture, dest, mask, mask_offx, mask_offy,
+                               x2, y2, u2, v2);
+}
+
+static void
+gimp_display_shell_draw_tri (GimpDrawable *texture,
+                             GdkDrawable  *dest,
+                             GimpChannel  *mask,
+                             gint          mask_offx,
+                             gint          mask_offy,
+                             gint         *x,
+                             gint         *y,
+                             gfloat       *u, /* texture coords */
+                             gfloat       *v) /* 0.0 ... tex width, height */
 {
   GdkPixbuf   *row;
   gint         dwidth, dheight;    /* clip boundary */
@@ -200,33 +233,6 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 
   gdk_drawable_get_size (dest, &dwidth, &dheight);
 
-  /* is the preview in the window? */
-  {
-    gboolean in_window_x, in_window_y;
-
-    in_window_x = in_window_y = FALSE;
-    for (j = 0; j < 4; j++)
-      {
-        if (x [j] >= 0)
-          in_window_x = TRUE;
-        if (y [j] >= 0)
-          in_window_y = TRUE;
-      }
-    if (! (in_window_x && in_window_y))
-      return;
-
-    in_window_x = in_window_y = FALSE;
-    for (j = 0; j < 4; j++)
-      {
-        if (x [j] < dwidth)
-          in_window_x = TRUE;
-        if (y [j] < dheight)
-          in_window_y = TRUE;
-      }
-    if (! (in_window_x && in_window_y))
-      return;
-  }
-
   row = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
                         mask ? TRUE : gimp_drawable_has_alpha (texture),
                         8, dwidth, 1);
@@ -234,8 +240,8 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 
   /* sort vertices in order of y-coordinate */
 
-  for (j = 0; j < 4; j++)
-    for (k = j + 1; k < 4; k++)
+  for (j = 0; j < 3; j++)
+    for (k = j + 1; k < 3; k++)
       if (y [k] < y [j])
         {
           gint tmp;
@@ -247,122 +253,90 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
           ftmp = v [k];  v [k] = v [j];  v [j] = ftmp;
         }
 
-  if (y [3] == y [0])
+  if (y [2] == y [0])
     return;
 
-  l_edge = g_malloc ((y [3] - y [0]) * sizeof (gint));
-  r_edge = g_malloc ((y [3] - y [0]) * sizeof (gint));
+  l_edge = g_malloc ((y [2] - y [0]) * sizeof (gint));
+  r_edge = g_malloc ((y [2] - y [0]) * sizeof (gint));
 
-  /* draw the quad */
+  /* draw the triangle */
 
-#define QUAD_TRACE_L_EDGE(a, b) \
-      if (y [a] != y [b]) \
-        { \
-          gimp_display_shell_trace_quad_edge (l_edge, \
-                                              x [a], y [a], \
-                                              x [b], y [b]); \
-          left = l_edge; \
-          dul  = (u [b] - u [a]) / (y [b] - y [a]); \
-          dvl  = (v [b] - v [a]) / (y [b] - y [a]); \
-          u_l  = u [a]; \
-          v_l  = v [a]; \
-        }
+  gimp_display_shell_trace_tri_edge (l_edge,
+                                     x [0], y [0],
+                                     x [2], y [2]);
+  left = l_edge;
+  dul  = (u [2] - u [0]) / (y [2] - y [0]);
+  dvl  = (v [2] - v [0]) / (y [2] - y [0]);
+  u_l  = u [0];
+  v_l  = v [0];
 
-#define QUAD_TRACE_R_EDGE(a, b) \
-      if (y [a] != y [b]) \
-        { \
-          gimp_display_shell_trace_quad_edge (r_edge, \
-                                              x [a], y [a], \
-                                              x [b], y [b]); \
-          right = r_edge; \
-          dur   = (u [b] - u [a]) / (y [b] - y [a]); \
-          dvr   = (v [b] - v [a]) / (y [b] - y [a]); \
-          u_r   = u [a]; \
-          v_r   = v [a]; \
-        }
-
-#define QUAD_DRAW_SECTION(a, b) \
-      if (y [a] != y [b]) \
-        for (ry = y [a]; ry < y [b]; ry++) \
-          { \
-            if (ry >= 0 && ry < dheight) \
-              { \
-                if (mask) \
-                  gimp_display_shell_draw_quad_row_mask \
-                                                    (texture, dest, row, \
-                                                    mask, mask_offx, mask_offy,\
-                                                    *left, u_l, v_l, \
-                                                    *right, u_r, v_r, \
-                                                    ry); \
-                else \
-                  gimp_display_shell_draw_quad_row (texture, dest, row, \
-                                                    *left, u_l, v_l, \
-                                                    *right, u_r, v_r, \
-                                                    ry); \
-              } \
-            left ++;      right ++; \
-            u_l += dul;   v_l += dvl; \
-            u_r += dur;   v_r += dvr; \
-          } \
-
-
-  if ((((x [0] > x [1]) && (x [3] > x [2])) ||
-       ((x [0] < x [1]) && (x [3] < x [2]))) &&
-      (! (((x [0] > x [2]) && (x [0] < x [1]) && (x [3] < x [2])) ||
-          ((x [0] < x [2]) && (x [0] > x [1]) && (x [3] > x [2])) ||
-          ((x [3] > x [1]) && (x [3] < x [2]) && (x [0] < x [1])) ||
-          ((x [3] < x [1]) && (x [3] > x [2]) && (x [0] > x [2])))))
+  if (y [0] != y [1])
     {
-      /*
-       *     v0
-       *       |--__
-       * _____ |....--_ v1 ____
-       *       |       |
-       *       |       |
-       * _____ |.....__| ______
-       *       |__---   v2
-       *     v3
-       */
+      gimp_display_shell_trace_tri_edge (r_edge,
+                                         x [0], y [0],
+                                         x [1], y [1]);
+      right = r_edge;
+      dur   = (u [1] - u [0]) / (y [1] - y [0]);
+      dvr   = (v [1] - v [0]) / (y [1] - y [0]);
+      u_r   = u [0];
+      v_r   = v [0];
 
-      QUAD_TRACE_L_EDGE (0, 3);
-
-      QUAD_TRACE_R_EDGE (0, 1);
-      QUAD_DRAW_SECTION (0, 1);  /* top section */
-
-      QUAD_TRACE_R_EDGE (1, 2);
-      QUAD_DRAW_SECTION (1, 2);  /* middle section */
-
-      QUAD_TRACE_R_EDGE (2, 3);
-      QUAD_DRAW_SECTION (2, 3);  /* bottom section */
-    }
-  else
-    {
-      /*
-       *           v0
-       *           /-___
-       * -------- /.....-- v1 ---
-       *         /       /
-       * ___ v2 /__...../________
-       *           ---_/
-       *               v3
-       */
-
-      QUAD_TRACE_L_EDGE (0, 2);
-
-      QUAD_TRACE_R_EDGE (0, 1);
-      QUAD_DRAW_SECTION (0, 1);  /* top section */
-
-      QUAD_TRACE_R_EDGE (1, 3);
-
-      QUAD_DRAW_SECTION (1, 2);  /* middle section */
-
-      QUAD_TRACE_L_EDGE (2, 3);
-      QUAD_DRAW_SECTION (2, 3);  /* bottom section */
+      for (ry = y [0]; ry < y [1]; ry++)
+        {
+          if (ry >= 0 && ry < dheight)
+            {
+              if (mask)
+                gimp_display_shell_draw_tri_row_mask
+                                                (texture, dest, row,
+                                                 mask, mask_offx, mask_offy,
+                                                 *left, u_l, v_l,
+                                                 *right, u_r, v_r,
+                                                 ry);
+              else
+                gimp_display_shell_draw_tri_row (texture, dest, row,
+                                                 *left, u_l, v_l,
+                                                 *right, u_r, v_r,
+                                                 ry);
+            }
+          left ++;      right ++;
+          u_l += dul;   v_l += dvl;
+          u_r += dur;   v_r += dvr;
+        }
     }
 
-#undef QUAD_TRACE_L_EDGE
-#undef QUAD_TRACE_R_EDGE
-#undef QUAD_DRAW_SECTION
+  if (y [1] != y [2])
+    {
+      gimp_display_shell_trace_tri_edge (r_edge,
+                                         x [1], y [1],
+                                         x [2], y [2]);
+      right = r_edge;
+      dur   = (u [2] - u [1]) / (y [2] - y [1]);
+      dvr   = (v [2] - v [1]) / (y [2] - y [1]);
+      u_r   = u [1];
+      v_r   = v [1];
+
+      for (ry = y [1]; ry < y [2]; ry++)
+        {
+          if (ry >= 0 && ry < dheight)
+            {
+              if (mask)
+                gimp_display_shell_draw_tri_row_mask
+                                                (texture, dest, row,
+                                                 mask, mask_offx, mask_offy,
+                                                 *left,  u_l, v_l,
+                                                 *right, u_r, v_r,
+                                                 ry);
+              else
+                gimp_display_shell_draw_tri_row (texture, dest, row,
+                                                 *left,  u_l, v_l,
+                                                 *right, u_r, v_r,
+                                                 ry);
+            }
+          left ++;      right ++;
+          u_l += dul;   v_l += dvl;
+          u_r += dur;   v_r += dvr;
+        }
+    }
 
   g_object_unref (row);
   g_free (l_edge);
@@ -370,16 +344,16 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
 }
 
 static void
-gimp_display_shell_draw_quad_row (GimpDrawable *texture,
-                                  GdkDrawable  *dest,
-                                  GdkPixbuf    *row,
-                                  gint          x1,
-                                  gfloat        u1,
-                                  gfloat        v1,
-                                  gint          x2,
-                                  gfloat        u2,
-                                  gfloat        v2,
-                                  gint          y)
+gimp_display_shell_draw_tri_row (GimpDrawable *texture,
+                                 GdkDrawable  *dest,
+                                 GdkPixbuf    *row,
+                                 gint          x1,
+                                 gfloat        u1,
+                                 gfloat        v1,
+                                 gint          x2,
+                                 gfloat        u2,
+                                 gfloat        v2,
+                                 gint          y)
 {
   TileManager *tiles;
   guchar      *pptr;
@@ -527,19 +501,19 @@ gimp_display_shell_draw_quad_row (GimpDrawable *texture,
 }
 
 static void
-gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
-                                       GdkDrawable  *dest,
-                                       GdkPixbuf    *row,
-                                       GimpChannel  *mask,
-                                       gint          mask_offx,
-                                       gint          mask_offy,
-                                       gint          x1,
-                                       gfloat        u1,
-                                       gfloat        v1,
-                                       gint          x2,
-                                       gfloat        u2,
-                                       gfloat        v2,
-                                       gint          y)
+gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
+                                      GdkDrawable  *dest,
+                                      GdkPixbuf    *row,
+                                      GimpChannel  *mask,
+                                      gint          mask_offx,
+                                      gint          mask_offy,
+                                      gint          x1,
+                                      gfloat        u1,
+                                      gfloat        v1,
+                                      gint          x2,
+                                      gfloat        u2,
+                                      gfloat        v2,
+                                      gint          y)
 {
   TileManager *tiles, *masktiles;
   guchar      *pptr;
@@ -722,11 +696,11 @@ gimp_display_shell_draw_quad_row_mask (GimpDrawable *texture,
 }
 
 static void
-gimp_display_shell_trace_quad_edge (gint *dest,
-                                    gint  x1,
-                                    gint  y1,
-                                    gint  x2,
-                                    gint  y2)
+gimp_display_shell_trace_tri_edge (gint *dest,
+                                   gint  x1,
+                                   gint  y1,
+                                   gint  x2,
+                                   gint  y2)
 {
   const gint  dy = y2 - y1;
   gint        dx;
