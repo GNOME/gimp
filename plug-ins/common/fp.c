@@ -89,7 +89,7 @@ query (void)
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "Pavel Grinfeld (pavel@ml.com)",
 			  "27th March 1997",
-			  N_("<Image>/Filters/Colors/Filter Pack..."),
+			  N_("<Image>/Filters/Colors/_Filter Pack..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,

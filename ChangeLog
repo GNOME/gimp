@@ -1,3 +1,12 @@
+2003-08-05  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/align_layers.c
+	* app/gui/image-menu.c
+	* plug-ins/fp/fp.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/ccanalyze.c: added even more mnemonics to fix more of
+	#106991. Many more to follow...
+
 2003-08-04  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/gui/image-menu.c (image_menu_entries): reverted change to

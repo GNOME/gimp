@@ -186,7 +186,7 @@ query (void)
                           "robert@experimental.net",
                           "robert@experimental.net",
                           "June 20th, 1997",
-                          N_("<Image>/Filters/Colors/Colorcube Analysis..."),
+                          N_("<Image>/Filters/Colors/Colorcube A_nalysis..."),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
