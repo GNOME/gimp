@@ -7,6 +7,16 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release.
 
 
+Overview of Changes in GIMP 1.3.17
+==================================
+- Cleaned up the brush/font/gradient/pattern selector API [Mitch]
+- Support for patterns with alpha channel [Bolsh]
+- Lots of bug fixes
+
+Other contributors:
+  Manish Singh, Henrik Brix Andersen
+
+
 Overview of Changes in GIMP 1.3.16
 ==================================
 - Vector tool improvements [Simon]
@@ -165,7 +175,7 @@ Overview of Changes in GIMP 1.3.10
 
 Other contributors:
   Maurits Rijk, Michael Niedermayer, Garry R. Osgood, David Necas,
-  Toby Smith, Raphael Quinet, Dave Neary, Jim Meier
+  Toby Smith, Raphael Quinet, Dave Neary, Jim Meyer
 
 
 Overview of Changes in GIMP 1.3.9
