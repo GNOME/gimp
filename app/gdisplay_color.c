@@ -16,10 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <string.h>
+
 #include "gdisplay_color.h"
+#include "gdisplay.h"
 #include "gimpimageP.h"
+
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
+
 #include <gtk/gtk.h>
 
 typedef struct _ColorDisplayInfo ColorDisplayInfo;
@@ -42,6 +47,12 @@ struct _GammaContext
   GtkWidget *shell;
   GtkWidget *spinner;
 };
+
+static void       gdisplay_color_detach_real      (GDisplay         *gdisp,
+						   ColorDisplayNode *node,
+						   gboolean          unref);
+static gint       node_name_compare               (ColorDisplayNode *node,
+						   const char       *name);
 
 static gpointer   gamma_new                       (int           type);
 static void       gamma_create_lookup_table       (GammaContext *context);
@@ -110,12 +121,30 @@ gboolean
 gimp_color_display_unregister (const char *name)
 {
   ColorDisplayInfo *info;
+  GDisplay *gdisp;
+  GList *node;
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {
+      GSList *refs = info->refs;
+
+      while (refs)
+	{
+	  gdisp = (GDisplay *) refs->data;
+
+	  node = g_list_find_custom (gdisp->cd_list, name, node_name_compare);
+	  gdisp->cd_list = g_slist_remove_link (gdisp->cd_list, node);
+
+	  gdisplay_color_detach_real (gdisp, node->data, FALSE);
+
+	  g_list_free_1 (node);
+
+	  refs = refs->next;
+	}
+
+      g_slist_free (info->refs);
+
       g_hash_table_remove (color_display_table, name);
-      
-      /* FIXME: Check refs here */
 
       g_free (info->name);
       g_free (info);
@@ -129,48 +158,87 @@ gdisplay_color_attach (GDisplay   *gdisp,
     		       const char *name)
 {
   ColorDisplayInfo *info;
-  
-  gdisplay_color_detach (gdisp);
-
-  gdisp->cd_name = g_strdup (name);
-  gdisp->cd_ID = NULL;
-  gdisp->cd_convert = NULL;
+  ColorDisplayNode *node;
 
   if ((info = g_hash_table_lookup (color_display_table, name)))
     {
+      node = g_new (ColorDisplayNode, 1);
+
+      node->cd_name = g_strdup (name);
+      node->cd_ID = NULL;
+
       if (!info->refs && info->methods.init)
 	info->methods.init ();
 
       info->refs = g_slist_append (info->refs, gdisp);
 
       if (info->methods.new)
-	gdisp->cd_ID = info->methods.new (gdisp->gimage->base_type);
+	node->cd_ID = info->methods.new (gdisp->gimage->base_type);
 
-      gdisp->cd_convert = info->methods.convert;
+      node->cd_convert = info->methods.convert;
+
+      gdisp->cd_list = g_list_append (gdisp->cd_list, name);
     }
+  else
+    g_warning ("Tried to attach a nonexistant color display");
 }
 
 void
-gdisplay_color_detach (GDisplay *gdisp)
+gdisplay_color_detach (GDisplay   *gdisp,
+		       const char *name)
+{
+  GList *node;
+
+  node = g_list_find_custom (gdisp->cd_list, name, node_name_compare);
+  gdisplay_color_detach_real (gdisp, node->data, TRUE);
+
+  gdisp->cd_list = g_list_remove_link (gdisp->cd_list, node);
+  g_list_free_1 (node);
+}
+
+void
+gdisplay_color_detach_all (GDisplay *gdisp)
+{
+  GList *list = gdisp->cd_list;
+
+  while (list)
+    {
+      gdisplay_color_detach_real (gdisp, list->data, TRUE);
+      list = list->next;
+    }
+
+  g_list_free (gdisp->cd_list);
+  gdisp->cd_list = NULL;
+}
+
+static void
+gdisplay_color_detach_real (GDisplay         *gdisp,
+			    ColorDisplayNode *node,
+			    gboolean          unref)
 {
   ColorDisplayInfo *info;
-  
-  if (gdisp->cd_name)
+
+  if ((info = g_hash_table_lookup (color_display_table, node->cd_name)))
     {
-      if ((info = g_hash_table_lookup (color_display_table, gdisp->cd_name)))
-	{
-	  if (info->methods.destroy)
-	    info->methods.destroy (gdisp->cd_ID);
+      if (info->methods.destroy)
+	info->methods.destroy (node->cd_ID);
 
-	  info->refs = g_slist_remove (info->refs, gdisp);
+      if (unref)
+        info->refs = g_slist_remove (info->refs, gdisp);
       
-	  if (!info->refs && info->methods.finalize)
-	    info->methods.finalize ();
-	}
+      if (!info->refs && info->methods.finalize)
+	info->methods.finalize ();
+    }
 
-      g_free (gdisp->cd_name);
-      gdisp->cd_name = NULL;
-    }  
+  g_free (node->cd_name);
+  g_free (node);
+}  
+
+static gint
+node_name_compare (ColorDisplayNode *node,
+		   const char       *name)
+{
+  return strcmp (node->cd_name, name);
 }
 
 /* The Gamma Color Display */

@@ -15,10 +15,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#ifndef __GDISPLAY_COLOR_H__
+#define __GDISPLAY_COLOR_H__
 
-#include "gdisplay.h"
+#include "libgimp/color_display.h"
+#include "gdisplayF.h"
 
-void gdisplay_color_init   (void);
-void gdisplay_color_attach (GDisplay   *gdisp,
-    			    const char *name);
-void gdisplay_color_detach (GDisplay   *gdisp);
+typedef struct _ColorDisplayNode ColorDisplayNode;
+
+struct _ColorDisplayNode {
+  char                   *cd_name;
+  gpointer                cd_ID; 
+  GimpColorDisplayConvert cd_convert;
+};
+
+void gdisplay_color_init       (void);
+void gdisplay_color_attach     (GDisplay   *gdisp,
+				const char *name);
+void gdisplay_color_detach     (GDisplay   *gdisp,
+				const char *name);
+void gdisplay_color_detach_all (GDisplay   *gdisp);
+
+#endif /* __GDISPLAY_COLOR_H__ */

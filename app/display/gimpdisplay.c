@@ -123,7 +123,7 @@ gdisplay_new (GimpImage    *gimage,
   gdisp->idle_render.update_areas = NULL;
   gdisp->idle_render.active = FALSE;
 
-  gdisp->cd_name = NULL;
+  gdisp->cd_list = NULL;
 
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);

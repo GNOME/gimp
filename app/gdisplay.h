@@ -22,8 +22,6 @@
 #include "info_dialog.h"
 #include "selection.h"
 
-#include "libgimp/color_display.h"
-
 #include "gdisplayF.h"
 
 /*
@@ -154,9 +152,7 @@ struct _GDisplay
   
   IdleRenderStruct idle_render;   /* state of this gdisplay's render thread   */
   
-  char *cd_name;                  /* color display conversion stuff           */
-  gpointer cd_ID;
-  GimpColorDisplayConvert cd_convert;
+  GList *cd_list;                 /* color display conversion stuff           */
 };
 
 
@@ -220,4 +216,3 @@ void       gdisplay_flush_displays_only (GDisplay *gdisp); /* no rerender! */
 
 
 #endif /*  __GDISPLAY_H__  */
-

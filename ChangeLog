@@ -1,3 +1,9 @@
+Sat Aug 28 15:36:36 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gdisplay.[ch]
+	* app/gdisplay_color.[ch]: added framework for having multiple
+	simultaneous displays
+
 Sat Aug 28 12:15:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/borderaverage/borderaverage.c
