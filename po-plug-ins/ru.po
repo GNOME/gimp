@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-12-09 11:19-0800\n"
-"PO-Revision-Date: 2000-12-04 19:27+03:00\n"
+"POT-Creation-Date: 2000-12-13 15:59+0300\n"
+"PO-Revision-Date: 2000-12-13 16:01+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr "О программе"
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
 #: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:403
-#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:800
+#: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:842
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
 #: plug-ins/common/curve_bend.c:1369 plug-ins/common/decompose.c:874
 #: plug-ins/common/deinterlace.c:271 plug-ins/common/depthmerge.c:643
@@ -69,10 +69,10 @@ msgstr "О программе"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2232
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2219
 #: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
 #: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1586
+#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
 #: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
 #: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
 #: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
@@ -117,7 +117,7 @@ msgstr "Да"
 #: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:405 plug-ins/common/compose.c:778
-#: plug-ins/common/convmatrix.c:804 plug-ins/common/csource.c:655
+#: plug-ins/common/convmatrix.c:846 plug-ins/common/csource.c:655
 #: plug-ins/common/cubism.c:305 plug-ins/common/curve_bend.c:1371
 #: plug-ins/common/decompose.c:876 plug-ins/common/deinterlace.c:273
 #: plug-ins/common/depthmerge.c:645 plug-ins/common/despeckle.c:622
@@ -151,10 +151,10 @@ msgstr "Да"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2236 plug-ins/common/spread.c:384
+#: plug-ins/common/spheredesigner.c:2223 plug-ins/common/spread.c:384
 #: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
 #: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1588 plug-ins/common/tile.c:407
+#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
 #: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
 #: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
 #: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
@@ -201,7 +201,7 @@ msgstr "Отмена"
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
-#: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
+#: plug-ins/common/spheredesigner.c:2241 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
 #: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
@@ -342,7 +342,7 @@ msgstr ""
 "кроме Мандельброта и Серпинского)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2329
+#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2316
 #: plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Загрузить"
@@ -351,10 +351,10 @@ msgstr "Загрузить"
 msgid "Load a fractal from file"
 msgstr "Загрузить фрактал из файла"
 
-#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:802
+#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:844
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
 #: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2234 plug-ins/common/tileit.c:467
+#: plug-ins/common/spheredesigner.c:2221 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -365,7 +365,7 @@ msgid "Reset parameters to default values"
 msgstr "Сбросить параметры в исходные значения"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
+#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2323
 #: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
 #: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
@@ -525,7 +525,7 @@ msgstr "Косинус"
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
 #: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1607
+#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1606
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
 msgstr "Никакой"
@@ -1107,7 +1107,7 @@ msgid "Options"
 msgstr "Параметры"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1575 plug-ins/common/spheredesigner.c:2614
+#: plug-ins/common/spheredesigner.c:1562 plug-ins/common/spheredesigner.c:2601
 msgid "Light"
 msgstr "Свет"
 
@@ -1279,7 +1279,7 @@ msgid "Map Images to Box Faces"
 msgstr "Отобразить изображение на грани куба"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2442
+#: plug-ins/common/spheredesigner.c:2429
 msgid "Scale X:"
 msgstr "Масштаб X:"
 
@@ -1363,7 +1363,7 @@ msgstr "Показать скрыть каркас просмотра"
 #: plug-ins/common/pix.c:326 plug-ins/common/png.c:426
 #: plug-ins/common/png.c:428 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1731 plug-ins/common/sunras.c:441
-#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:455
+#: plug-ins/common/tga.c:429 plug-ins/common/tiff.c:454
 #: plug-ins/common/xbm.c:734 plug-ins/common/xpm.c:334
 #: plug-ins/common/xwd.c:430 plug-ins/faxg3/faxg3.c:196
 #: plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330 plug-ins/sgi/sgi.c:332
@@ -1408,7 +1408,7 @@ msgstr "%s: плохая цветовая карта"
 #: plug-ins/common/png.c:547 plug-ins/common/pnm.c:502
 #: plug-ins/common/psd.c:2114 plug-ins/common/smooth_palette.c:241
 #: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:923
-#: plug-ins/common/tiff.c:681 plug-ins/common/tile.c:280
+#: plug-ins/common/tiff.c:680 plug-ins/common/tile.c:280
 #: plug-ins/common/winclipboard.c:515 plug-ins/common/wmf.c:2350
 #: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:448
 #: plug-ins/fits/fits.c:521 plug-ins/gfig/gfig.c:2832
@@ -1438,7 +1438,7 @@ msgstr "Невозможно открыть %s"
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
 #: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1022
-#: plug-ins/common/tiff.c:1338 plug-ins/common/xbm.c:982
+#: plug-ins/common/tiff.c:1337 plug-ins/common/xbm.c:982
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
 #: plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679 plug-ins/sgi/sgi.c:548
 #: plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -2369,11 +2369,11 @@ msgstr "Делать окружение прозрачным"
 msgid "Lens Refraction Index:"
 msgstr "Коэффициент преломления линзы:"
 
-#: plug-ins/common/autocrop.c:73
+#: plug-ins/common/autocrop.c:74
 msgid "<Image>/Image/Transforms/Autocrop"
 msgstr "<Image>/Изображение/Преобразование/Автокадр"
 
-#: plug-ins/common/autocrop.c:117
+#: plug-ins/common/autocrop.c:119
 msgid "Cropping..."
 msgstr "Кадрирование..."
 
@@ -2795,40 +2795,48 @@ msgstr "Обрезать"
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
 msgstr "<Image>/Фильтры/Общие/Свертка матрицы..."
 
-#: plug-ins/common/convmatrix.c:264
+#: plug-ins/common/convmatrix.c:225
+msgid ""
+"Convolution Matrix does not work\n"
+"on layers smaller than 3 pixels."
+msgstr ""
+"Свертка матрицы не работает\n"
+"на слоях меньших трех точек растра."
+
+#: plug-ins/common/convmatrix.c:278
 msgid "Applying convolution"
 msgstr "Применение свертки"
 
-#: plug-ins/common/convmatrix.c:795
+#: plug-ins/common/convmatrix.c:837
 msgid "Convolution Matrix"
 msgstr "Свертка матрицы"
 
-#: plug-ins/common/convmatrix.c:821
+#: plug-ins/common/convmatrix.c:863
 msgid "Matrix"
 msgstr "Матрица"
 
-#: plug-ins/common/convmatrix.c:857
+#: plug-ins/common/convmatrix.c:899
 msgid "Divisor:"
 msgstr "Делитель:"
 
-#: plug-ins/common/convmatrix.c:876 plug-ins/common/depthmerge.c:775
+#: plug-ins/common/convmatrix.c:918 plug-ins/common/depthmerge.c:775
 msgid "Offset:"
 msgstr "Смещение:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
+#: plug-ins/common/convmatrix.c:942 plug-ins/common/ps.c:2708
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Автоматически"
 
-#: plug-ins/common/convmatrix.c:908
+#: plug-ins/common/convmatrix.c:950
 msgid "Alpha-weighting"
 msgstr "Альфа-взвешивание"
 
-#: plug-ins/common/convmatrix.c:923
+#: plug-ins/common/convmatrix.c:965
 msgid "Border"
 msgstr "Рамка"
 
-#: plug-ins/common/convmatrix.c:948
+#: plug-ins/common/convmatrix.c:990
 msgid "Channels"
 msgstr "Каналы"
 
@@ -2841,7 +2849,7 @@ msgid "Prefixed Name:"
 msgstr "Префиксное имя:"
 
 #: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1622 plug-ins/common/xbm.c:1202
+#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
 msgid "Comment:"
 msgstr "Комментарий:"
 
@@ -3356,7 +3364,7 @@ msgstr "Выделение края..."
 msgid "Edge Detection"
 msgstr "Выделение края"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
+#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2620
 #: plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "Величина:"
@@ -3374,7 +3382,7 @@ msgstr "Барельеф"
 msgid "Function"
 msgstr "Функция"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
+#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1561
 msgid "Bumpmap"
 msgstr "Рельеф"
 
@@ -3699,12 +3707,12 @@ msgstr "Интервал: "
 msgid "Description:"
 msgstr "Описание:"
 
-#: plug-ins/common/gee.c:198
+#: plug-ins/common/gee.c:201
 msgid "GEE!  The GIMP E'er Egg!"
 msgstr "GEE! The GIMP E'er Egg!"
 
 #. Action area - 'close' button only.
-#: plug-ins/common/gee.c:209
+#: plug-ins/common/gee.c:212
 msgid "** Thank you for choosing GIMP **"
 msgstr "** Спасибо за то что выбрали Gimp **"
 
@@ -4952,7 +4960,7 @@ msgstr "Плазма..."
 msgid "Plasma"
 msgstr "Плазма"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2425
+#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2412
 msgid "Turbulence:"
 msgstr "Турбулентность:"
 
@@ -5016,7 +5024,7 @@ msgid "Help:"
 msgstr "Справка:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2357
+#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2344
 #: plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Тип:"
@@ -6048,114 +6056,114 @@ msgstr "Спираль"
 msgid "Spots"
 msgstr "Пятна"
 
-#: plug-ins/common/spheredesigner.c:1573 plug-ins/common/spheredesigner.c:2602
+#: plug-ins/common/spheredesigner.c:1560 plug-ins/common/spheredesigner.c:2589
 msgid "Texture"
 msgstr "Текстура"
 
-#: plug-ins/common/spheredesigner.c:1576
+#: plug-ins/common/spheredesigner.c:1563
 msgid "(unknown!?)"
 msgstr "(неизвестное!?)"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1837
 msgid "Open file"
 msgstr "Открыть файл"
 
-#: plug-ins/common/spheredesigner.c:1850
+#: plug-ins/common/spheredesigner.c:1837
 msgid "Save file"
 msgstr "Сохранить файл"
 
-#: plug-ins/common/spheredesigner.c:2111 plug-ins/common/spheredesigner.c:2149
+#: plug-ins/common/spheredesigner.c:2098 plug-ins/common/spheredesigner.c:2136
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
 msgstr "Диалог выбора цвета"
 
-#: plug-ins/common/spheredesigner.c:2227
+#: plug-ins/common/spheredesigner.c:2214
 msgid "Sphere Designer"
 msgstr "Создатель Сфер"
 
-#: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
+#: plug-ins/common/spheredesigner.c:2255 plug-ins/gimpressionist/preview.c:117
+#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
 #: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr "Обновить"
 
-#: plug-ins/common/spheredesigner.c:2277
+#: plug-ins/common/spheredesigner.c:2264
 msgid "Textures"
 msgstr "Текстуры"
 
-#: plug-ins/common/spheredesigner.c:2302 plug-ins/gfig/gfig.c:3137
+#: plug-ins/common/spheredesigner.c:2289 plug-ins/gfig/gfig.c:3137
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
 msgstr "Добавить"
 
-#: plug-ins/common/spheredesigner.c:2309
+#: plug-ins/common/spheredesigner.c:2296
 msgid "Dup"
 msgstr "Скопировать"
 
-#: plug-ins/common/spheredesigner.c:2316
+#: plug-ins/common/spheredesigner.c:2303
 msgid "Del"
 msgstr "Удалить"
 
-#: plug-ins/common/spheredesigner.c:2343
+#: plug-ins/common/spheredesigner.c:2330
 msgid "Texture Properties"
 msgstr "Свойства текстуры"
 
-#: plug-ins/common/spheredesigner.c:2364
+#: plug-ins/common/spheredesigner.c:2351
 msgid "Texture:"
 msgstr "Текстура:"
 
-#: plug-ins/common/spheredesigner.c:2371
+#: plug-ins/common/spheredesigner.c:2358
 msgid "Colors:"
 msgstr "Цвета:"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2408 plug-ins/gimpressionist/paper.c:169
+#: plug-ins/common/spheredesigner.c:2395 plug-ins/gimpressionist/paper.c:169
 #: plug-ins/ifscompose/ifscompose.c:563
 msgid "Scale:"
 msgstr "Масштаб:"
 
-#: plug-ins/common/spheredesigner.c:2459
+#: plug-ins/common/spheredesigner.c:2446
 msgid "Scale Y:"
 msgstr "Масштаб Y:"
 
-#: plug-ins/common/spheredesigner.c:2476
+#: plug-ins/common/spheredesigner.c:2463
 msgid "Scale Z:"
 msgstr "Масштаб Z:"
 
-#: plug-ins/common/spheredesigner.c:2494
+#: plug-ins/common/spheredesigner.c:2481
 msgid "Rotate X:"
 msgstr "Поворот по X: "
 
-#: plug-ins/common/spheredesigner.c:2511
+#: plug-ins/common/spheredesigner.c:2498
 msgid "Rotate Y:"
 msgstr "Поворот по Y: "
 
-#: plug-ins/common/spheredesigner.c:2528
+#: plug-ins/common/spheredesigner.c:2515
 msgid "Rotate Z:"
 msgstr "Поворот по Z: "
 
-#: plug-ins/common/spheredesigner.c:2545
+#: plug-ins/common/spheredesigner.c:2532
 msgid "Pos X:"
 msgstr "Поз. X: "
 
-#: plug-ins/common/spheredesigner.c:2562
+#: plug-ins/common/spheredesigner.c:2549
 msgid "Pos Y:"
 msgstr "Поз. Y: "
 
-#: plug-ins/common/spheredesigner.c:2579
+#: plug-ins/common/spheredesigner.c:2566
 msgid "Pos Z:"
 msgstr "Поз. Z: "
 
-#: plug-ins/common/spheredesigner.c:2608
+#: plug-ins/common/spheredesigner.c:2595
 msgid "Bump"
 msgstr "Шероховатость"
 
-#: plug-ins/common/spheredesigner.c:2650
+#: plug-ins/common/spheredesigner.c:2637
 msgid "Exp:"
 msgstr "Эксп:"
 
-#: plug-ins/common/spheredesigner.c:2667
+#: plug-ins/common/spheredesigner.c:2654
 msgid ""
 "by Vidar Madsen\n"
 "September 1999"
@@ -6163,11 +6171,11 @@ msgstr ""
 "Vidar Madsen\n"
 "Сентябрь 1999"
 
-#: plug-ins/common/spheredesigner.c:2787
+#: plug-ins/common/spheredesigner.c:2774
 msgid "Rendering..."
 msgstr "Визуализация..."
 
-#: plug-ins/common/spheredesigner.c:2837
+#: plug-ins/common/spheredesigner.c:2824
 msgid "<Image>/Filters/Render/Sphere Designer..."
 msgstr "<Image>/Фильтры/Визуализация/Создатель сфер..."
 
@@ -6329,31 +6337,31 @@ msgstr "Порог альфа-канала: Окрашивание прозрачности..."
 msgid "Threshold Alpha"
 msgstr "Порог альфа-канала"
 
-#: plug-ins/common/tiff.c:690
+#: plug-ins/common/tiff.c:689
 msgid "TIFF Channel"
 msgstr "Каналы TIFF"
 
-#: plug-ins/common/tiff.c:1581
+#: plug-ins/common/tiff.c:1580
 msgid "Save as TIFF"
 msgstr "Сохранить как TIFF"
 
-#: plug-ins/common/tiff.c:1603
+#: plug-ins/common/tiff.c:1602
 msgid "Compression"
 msgstr "Cжатие"
 
-#: plug-ins/common/tiff.c:1608
+#: plug-ins/common/tiff.c:1607
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1609
+#: plug-ins/common/tiff.c:1608
 msgid "Pack Bits"
 msgstr "Упакованные биты"
 
-#: plug-ins/common/tiff.c:1610
+#: plug-ins/common/tiff.c:1609
 msgid "Deflate"
 msgstr "Сдуть"
 
-#: plug-ins/common/tiff.c:1611
+#: plug-ins/common/tiff.c:1610
 msgid "JPEG"
 msgstr "JPEG"
 
