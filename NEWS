@@ -10,14 +10,22 @@ Overview of Changes since 2.0
 =============================
 
 GIMP 2.1 includes the following enhancements:
+
  - Major user interface improvements.
-   * Work has begun to make the GIMP user interface comply better with
-     the GNOME HIG. This is an ongoing effort and the interface is still
-     inconsistent at the moment.
+
+   * Large parts of the GIMP user interface have been changed to 
+     comply better with the GNOME Human Interface Guidelines. This is
+     an ongoing effort and the interface may still be inconsistent in
+     a few places.
+
    * Users are now allowed to clear the undo history.
-   * Pixels are now considered image units; this simplifies the handling of 
-     units.
+
+   * The unit to be used for the rulers and the coordinates display is now
+     a display property and can be changed in the statusbar of the image
+     window.
+
    * New widgets and frameworks provided by GTK+ 2.4 are used; this means
+
      + uses the new GtkFileChooser dialog, vastly improving the file dialogs.
      + includes port of menus to GtkUIManager, which creates all core menus
        from XML files at runtime. This means that menu items can be rearranged
@@ -27,16 +35,42 @@ GIMP 2.1 includes the following enhancements:
        or image window you are using.
      + adds replacement widgets based on GtkComboBox for most uses of
        GtkOptionMenu (GimpUnitMenu remains to be ported)
+     * adds GimpContainerEntry, a GtkEntry with completion based on
+       the contents of a GimpContainer.
      + makes the order and visibility of tools in the toolbox configurable
      + allows keeping toolbox and dock windows above other windows (if the WM 
        supports this hint)
+
+   * The toolbox now has an optional preview of the active image.
+
+   * Gradients can now be created, deleted, renamed and edited through
+     the PDB.
+
  - Some changes to plug-ins.
+
    * Plug-ins can now register the same procedures in multiple places (the
      API to register menu entries has been changed in a backward-compatible 
      fashion.)
+
    * Plug-ins can now optionally register a menu icon.
+
    * File plug-ins can now register a mime-type.
+
+   * All plug-in dialogs have been reviewed and changed to make them
+     comply better with the GNOME Human Interface Guidelines.
+
    * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap 2 does
      everything than AlienMap did, and the GIMP-specific GIcon format has not
      been used by anything for quite some time now.
+
    * A plug-in to load and save windows icon files has been added.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Maurits Rijk, Manish Singh,
+   Henrik Brix Andersen, Philip Lafleur, Raphae«l Quinet, Simon Budig,
+   William Skaggs, Shlomi Fish, Kevin, Cozens, Jakub Steiner, Daniel
+   Kobras, Jordi Gay, Yeti, Marco Munari, David Necas, Nils Philippsen,
+   Soeren Wedel Nielsen, Joao S. O. Bueno, lots of translators and
+   the contributors that I accidentally missed.

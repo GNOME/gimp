@@ -1,9 +1,18 @@
-The GIMP: The GNU Image Manipulation Program
-============================================
+THIS IS AN UNSTABLE DEVELOPMENT VERSION! DO NOT USE!
+====================================================
 
 This is the development branch of The GIMP. Here's where new features
 are being added. Somewhen this summer the next stable GIMP release,
-GIMP 2.2, will emerge out of this.
+GIMP 2.2, will emerge out of this. This is an early development
+snapshot, there are bugs and quite some loose ends.
+
+Since the plug-in API of GIMP 2.2 will be compatible with GIMP 2.0,
+2.2 is supposed to install itself into the gimp-2.0 directories. It is
+thus not possible to install this development version into the same
+prefix with GIMP 2.0. A number of files will clash, so please use a
+separate prefix to install this development version.
+
+Please do not distribute binary packages of gimp-2.1!
 
 If you want to hack on The GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.

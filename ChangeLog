@@ -1,3 +1,8 @@
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
+	* NEWS
+	* README: updated.
+
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_init): accept
