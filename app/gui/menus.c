@@ -691,7 +691,9 @@ static GimpItemFactoryEntry layers_entries[] =
   { { N_("/Add Layer Mask..."), NULL, layers_dialog_add_layer_mask_callback, 0 },
     "dialogs/add_mask.html", NULL },
   { { N_("/Apply Layer Mask..."), NULL, layers_dialog_apply_layer_mask_callback, 0 },
-    "dialogs/apply_mask.html", NULL },
+    "apply_mask.html", NULL },
+  { { N_("/Delete Layer Mask..."), NULL, layers_dialog_delete_layer_mask_callback, 0 },
+    "delete_mask.html", NULL },
   { { N_("/Mask to Selection"), NULL, layers_dialog_mask_select_callback, 0 },
     "mask_to_selection.html", NULL },
 

@@ -573,7 +573,8 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 {
   static popup_timeout_args_t popup_timeout_args;
 
-  g_return_if_fail (gcp_popup_timer == 0);
+  if (gcp_popup_timer != 0)
+    return;
 
   popup_timeout_args.gcp = gcp;
   popup_timeout_args.x   = x;

@@ -32,6 +32,7 @@ void  layers_dialog_resize_layer_callback          (GtkWidget *, gpointer);
 void  layers_dialog_resize_to_image_callback       (GtkWidget *, gpointer);
 void  layers_dialog_add_layer_mask_callback        (GtkWidget *, gpointer);
 void  layers_dialog_apply_layer_mask_callback      (GtkWidget *, gpointer);
+void  layers_dialog_delete_layer_mask_callback     (GtkWidget *, gpointer);
 void  layers_dialog_anchor_layer_callback          (GtkWidget *, gpointer);
 void  layers_dialog_merge_layers_callback          (GtkWidget *, gpointer);
 void  layers_dialog_merge_down_callback            (GtkWidget *, gpointer);

@@ -1,3 +1,14 @@
+Wed Mar  1 00:13:24 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.c: return without warning if popup_timeout
+	is already set. Suppresses warning that occured on double-click.
+
+	* app/layers_dialog.[ch]
+	* app/menus.c: added "Delete Mask" menu entry and removed dialog
+	asking if mask is to applied or discarded on "Apply Mask".
+
+	* app/tools.c: Magnify is not a transform tool
+
 Tue Feb 29 21:35:11 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/sample_colorize.c: applied patch from Wolfgang

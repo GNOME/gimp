@@ -189,7 +189,6 @@ static void layer_widget_layer_flush         (GtkWidget *, gpointer);
 static void layers_dialog_new_layer_query    (GimpImage*);
 static void layers_dialog_edit_layer_query   (LayerWidget *);
 static void layers_dialog_add_mask_query     (Layer *);
-static void layers_dialog_apply_mask_query   (Layer *);
 static void layers_dialog_scale_layer_query  (GImage *, Layer *);
 static void layers_dialog_resize_layer_query (GImage *, Layer *);
 void        layers_dialog_layer_merge_query  (GImage *, gboolean);
@@ -1032,6 +1031,7 @@ layers_dialog_set_menu_sensitivity (void)
 
   SET_SENSITIVE ("Add Layer Mask...", fs && ac && gimage && !lm && lp && alpha);
   SET_SENSITIVE ("Apply Layer Mask...", fs && ac && gimage && lm && lp);
+  SET_SENSITIVE ("Delete Layer Mask...", fs && ac && gimage && lm && lp);
   SET_SENSITIVE ("Mask to Selection", fs && ac && gimage && lm && lp);
 
   SET_SENSITIVE ("Add Alpha Channel", !alpha);
@@ -1633,7 +1633,25 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
   if ((layer =  gimage->active_layer) != NULL)
     {
       if (layer->mask)
-	layers_dialog_apply_mask_query (gimage->active_layer);
+	gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)), layer, APPLY);
+    }
+}
+
+void
+layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
+					 gpointer   data)
+{
+  GImage *gimage;
+  Layer  *layer;
+
+  if (!layersD || !(gimage = layersD->gimage))
+    return;
+
+  /*  Make sure there is a layer mask to apply  */
+  if ((layer =  gimage->active_layer) != NULL)
+    {
+      if (layer->mask)
+	gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)), layer, DISCARD);
     }
 }
 
@@ -3624,99 +3642,6 @@ layers_dialog_add_mask_query (Layer *layer)
   gtk_widget_show (options->query_box);
 }
 
-/*********************************/
-/*  The apply layer mask dialog  */
-/*********************************/
-
-typedef struct _ApplyMaskOptions ApplyMaskOptions;
-
-struct _ApplyMaskOptions
-{
-  GtkWidget *query_box;
-  Layer     *layer;
-};
-
-static void
-apply_mask_query_apply_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  ApplyMaskOptions *options;
-
-  options = (ApplyMaskOptions *) data;
-
-  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (options->layer)),
-			    options->layer, APPLY);
-  gtk_widget_destroy (options->query_box);
-  g_free (options);
-}
-
-static void
-apply_mask_query_discard_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-  ApplyMaskOptions *options;
-
-  options = (ApplyMaskOptions *) data;
-
-  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (options->layer)),
-			    options->layer, DISCARD);
-  gtk_widget_destroy (options->query_box);
-  g_free (options);
-}
-
-static void
-apply_mask_query_cancel_callback (GtkWidget *widget,
-				  gpointer   data)
-{
-  ApplyMaskOptions *options;
-
-  options = (ApplyMaskOptions *) data;
-  gtk_widget_destroy (options->query_box);
-  g_free (options);
-}
-
-static void
-layers_dialog_apply_mask_query (Layer *layer)
-{
-  ApplyMaskOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
-
-  /*  The new options structure  */
-  options = g_new (ApplyMaskOptions, 1);
-  options->layer = layer;
-
-  /*  The dialog  */
-  options->query_box =
-    gimp_dialog_new (_("Layer Mask Options"), "layer_mask_options",
-		     gimp_standard_help_func,
-		     "dialogs/layers/apply_mask.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
-
-		     _("Apply"), apply_mask_query_apply_callback,
-		     options, NULL, NULL, TRUE, FALSE,
-		     _("Discard"), apply_mask_query_discard_callback,
-		     options, NULL, NULL, FALSE, FALSE,
-		     _("Cancel"), apply_mask_query_cancel_callback,
-		     options, NULL, NULL, FALSE, TRUE,
-
-		     NULL);
-
-  /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     vbox);
-
-  /*  The name entry hbox, label and entry  */
-  label = gtk_label_new (_("Apply layer mask?"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (options->query_box);
-}
 
 /****************************/
 /*  The scale layer dialog  */
