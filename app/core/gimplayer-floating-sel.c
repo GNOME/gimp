@@ -56,11 +56,12 @@ floating_sel_attach (GimpLayer    *layer,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  floating_sel = gimp_image_floating_sel (gimage);
+
   /*  If there is already a floating selection, anchor it  */
-  if (gimage->floating_sel)
+  if (floating_sel)
     {
-      floating_sel = gimage->floating_sel;
-      floating_sel_anchor (gimp_image_floating_sel (gimage));
+      floating_sel_anchor (floating_sel);
 
       /*  if we were pasting to the old floating selection, paste now
        *  to the drawable

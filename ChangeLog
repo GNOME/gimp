@@ -1,3 +1,16 @@
+2004-03-23  Michael Natterer  <mitch@gimp.org>
+
+	The floating_sel code is really from the stone age:
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_attach): call
+	gimp_image_floating_sel() once and work on the return value
+	instead of accessing gimage->floating_sel directly twice and
+	calling gimp_image_floating_sel() for the thrid access.
+
+	* app/core/gimpimage.c (gimp_image_floating_sel): no need to
+	return NULL if gimage->floating_sel is NULL, just always return
+	gimage->floating_sel.
+
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer-floating-sel.c (floating_sel_attach): don't

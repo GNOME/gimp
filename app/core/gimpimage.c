@@ -1329,10 +1329,7 @@ gimp_image_floating_sel (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  if (gimage->floating_sel == NULL)
-    return NULL;
-  else
-    return gimage->floating_sel;
+  return gimage->floating_sel;
 }
 
 void
