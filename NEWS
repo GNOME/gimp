@@ -1,4 +1,4 @@
-The GNU Image Manipulation Program Version 2.2
+2The GNU Image Manipulation Program Version 2.2
 ----------------------------------------------
 
 This is the stable branch of GIMP 2.2. Only bug-fixes are applied
@@ -22,6 +22,14 @@ Bugs fixed in GIMP 2.2.5
 - fixed handling of resolution unit in Print Size dialog (bug #170200)
 - disable "gtk-alternative-button-order" setting because our code
   doesn't honor it (bug #170543)
+- fixed behaviour of selection tool when dragging from top-right (bug #143887)
+- speed up conversion of grayscale images to indexed colors (bug #170801)
+- fixed bug in grayscale to indexed color conversion (bug #170825)
+- don't offer empty palettes for conversion to indexed color (bug #170973)
+- disable search in container tree-views since it interferes with global 
+  accelerators (bug #169339)
+- corrected mousewheel section of default controllerrc (bug #171083)
+- fixed build on amd64/gcc-4.0 (bug #300227)
 
 
 Bugs fixed in GIMP 2.2.4

@@ -2,6 +2,16 @@
 
 	Merged from HEAD branch:
 
+	* app/actions/dialogs-actions.h: bail out if
+	widgets/gimpactiongroup.h has not been included beforehand.
+
+	* app/actions/actions.c: include widgets/gimpactiongroup.h. Fixes
+	build with amd64/gcc-4.0 (Debian bug report #300227).
+
+2005-03-21  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* etc/controllerrc: fixed defaults for mouse wheel controller (bug
 	#171083, fix spotted by Michael Schumacher).
 
