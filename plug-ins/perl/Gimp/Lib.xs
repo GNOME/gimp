@@ -19,9 +19,14 @@
 #undef MAX
 
 #if HAVE_PDL
+#define PDL_clean_namespace
 #include <pdlcore.h>
 #undef croak
+#ifdef Perl_croak_nocontext
+#define croak Perl_croak_nocontext
+#else
 #define croak Perl_croak
+#endif
 #endif
 
 /* various functions allocate static buffers, STILL.  */
@@ -926,7 +931,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 #define sv2gimp_extract_noref(fun,str) \
 	fun(sv); \
 	if (SvROK(sv)) \
-	  sprintf (croak_str, "Unable to convert a reference to type '%s'\n", str); \
+	  sprintf (croak_str, "Unable to convert a reference to type '%s'", str); \
       	break;
 /*
  * convert a perl scalar into a GParam, return true if
@@ -1605,7 +1610,7 @@ gimp_call_procedure (proc_name, ...)
                       }
                     
                     error:
-                    
+
                     if (values)
                       gimp_destroy_params (values, nreturn_vals);
                     
@@ -1701,13 +1706,6 @@ gimp_get_data(id)
 	        XPUSHs (sv_2mortal (data));
 	}
 
-void
-gimp_register_magic_load_handler(name, extensions, prefixes, magics)
-	char *	name
-	char *	extensions
-	char *	prefixes
-	char *	magics
-
 gdouble
 gimp_gamma()
 
@@ -1768,8 +1766,6 @@ void
 gimp_tile_cache_ntiles(ntiles)
 	gulong	ntiles
 
-#if HAVE_PDL
-
 SV *
 gimp_drawable_get(drawable_ID)
 	DRAWABLE	drawable_ID
@@ -1781,28 +1777,6 @@ gimp_drawable_get(drawable_ID)
 void
 gimp_drawable_flush(drawable)
 	GDrawable *	drawable
-
-SV *
-gimp_drawable_get_tile(gdrawable, shadow, row, col)
-	SV *	gdrawable
-	gint	shadow
-	gint	row
-	gint	col
-	CODE:
-	RETVAL = new_tile (gimp_drawable_get_tile (old_gdrawable (gdrawable), shadow, row, col), gdrawable);
-	OUTPUT:
-	RETVAL
-
-SV *
-gimp_drawable_get_tile2(gdrawable, shadow, x, y)
-	SV *	gdrawable
-	gint	shadow
-	gint	x
-	gint	y
-	CODE:
-	RETVAL = new_tile (gimp_drawable_get_tile2 (old_gdrawable (gdrawable), shadow, x, y), gdrawable);
-	OUTPUT:
-	RETVAL
 
 SV *
 gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
@@ -1827,145 +1801,6 @@ gimp_pixel_rgn_resize(pr, x, y, width, height)
 	int	height
 	CODE:
 	gimp_pixel_rgn_resize (pr, x, y, width, height);
-
-pdl *
-gimp_pixel_rgn_get_pixel(pr, x, y)
-	GPixelRgn *	pr
-	int	x
-	int	y
-	CODE:
-        RETVAL = new_pdl (0, 0, pr->bpp);
-	gimp_pixel_rgn_get_pixel (pr, RETVAL->data, x, y);
-	OUTPUT:
-	RETVAL
-
-pdl *
-gimp_pixel_rgn_get_row(pr, x, y, width)
-	GPixelRgn *	pr
-	int	x
-	int	y
-	int	width
-	CODE:
-        RETVAL = new_pdl (0, width, pr->bpp);
-	gimp_pixel_rgn_get_row (pr, RETVAL->data, x, y, width);
-	OUTPUT:
-	RETVAL
-
-pdl *
-gimp_pixel_rgn_get_col(pr, x, y, height)
-	GPixelRgn *	pr
-	int	x
-	int	y
-	int	height
-	CODE:
-        RETVAL = new_pdl (height, 0, pr->bpp);
-	gimp_pixel_rgn_get_col (pr, RETVAL->data, x, y, height);
-	OUTPUT:
-	RETVAL
-
-pdl *
-gimp_pixel_rgn_get_rect(pr, x, y, width, height)
-	GPixelRgn *	pr
-	int	x
-	int	y
-	int	width
-	int	height
-	CODE:
-        RETVAL = new_pdl (height, width, pr->bpp);
-	gimp_pixel_rgn_get_rect (pr, RETVAL->data, x, y, width, height);
-	OUTPUT:
-	RETVAL
-
-void
-gimp_pixel_rgn_set_pixel(pr, pdl, x, y)
-	GPixelRgn *	pr
-	pdl *	pdl
-	int	x
-	int	y
-	CODE:
-        old_pdl (&pdl, 0, pr->bpp);
-	gimp_pixel_rgn_set_pixel (pr, pdl->data, x, y);
-
-void
-gimp_pixel_rgn_set_row(pr, pdl, x, y)
-	GPixelRgn *	pr
-	pdl *	pdl
-	int	x
-	int	y
-	CODE:
-        old_pdl (&pdl, 1, pr->bpp);
-	gimp_pixel_rgn_set_row (pr, pdl->data, x, y, pdl->dims[pdl->ndims-1]);
-
-void
-gimp_pixel_rgn_set_col(pr, pdl, x, y)
-	GPixelRgn *	pr
-	pdl *	pdl
-	int	x
-	int	y
-	CODE:
-        old_pdl (&pdl, 1, pr->bpp);
-	gimp_pixel_rgn_set_col (pr, pdl->data, x, y, pdl->dims[pdl->ndims-1]);
-
-void
-gimp_pixel_rgn_set_rect(pr, pdl, x, y)
-	GPixelRgn *	pr
-	pdl *	pdl
-	int	x
-	int	y
-	CODE:
-        old_pdl (&pdl, 2, pr->bpp);
-	gimp_pixel_rgn_set_rect (pr, pdl->data, x, y, pdl->dims[pdl->ndims-2], pdl->dims[pdl->ndims-1]);
-
-pdl *
-gimp_pixel_rgn_data(pr,newdata=0)
-	GPixelRgn *	pr
-        pdl *	newdata
-	CODE:
-        if (newdata)
-	  {
-            char *src;
-            char *dst;
-            int y, stride;
-
-            old_pdl (&newdata, 2, pr->bpp);
-            stride = pr->bpp * newdata->dims[newdata->ndims-2];
-
-            if (pr->h != newdata->dims[newdata->ndims-1])
-              croak ("pdl height != region height");
-
-            for (y   = 0, src = newdata->data, dst = pr->data;
-                 y < pr->h;
-                 y++    , src += stride      , dst += pr->rowstride)
-              Copy (src, dst, stride, char);
-
-            RETVAL = newdata;
-          }
-        else
-          {
-            int ndims = 2 + (pr->bpp > 1);
-
-            pdl *p = PDL->new();
-            PDL_Long dims[3];
-
-            dims[0] = pr->bpp;
-            dims[ndims-2] = pr->rowstride / pr->bpp;
-            dims[ndims-1] = pr->h;
-
-            PDL->setdims (p, dims, ndims);
-            p->datatype = PDL_B;
-            p->data = pr->data;
-            p->state |= PDL_DONTTOUCHDATA | PDL_ALLOCATED;
-            PDL->add_deletedata_magic(p, pixel_rgn_pdl_delete_data, 0);
-
-            if (pr->w != dims[ndims-2])
-              p = redim_pdl (p, ndims-2, pr->w);
-
-            RETVAL = p;
-          }
-	OUTPUT:
-	RETVAL
-
-# ??? any possibility to implement these in perl? maybe replacement functions in Gimp.pm?
 
 GPixelRgnIterator
 gimp_pixel_rgns_register(...)
@@ -2151,6 +1986,180 @@ gimp_tile_drawable(tile)
 	OUTPUT:
 	RETVAL
 
+SV *
+gimp_pixel_rgn_get_rect2(pr, x, y, width, height)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	int	width
+	int	height
+	CODE:
+        RETVAL = newSVn (width * height * pr->bpp);
+	gimp_pixel_rgn_get_rect (pr, SvPV_nolen(RETVAL), x, y, width, height);
+	OUTPUT:
+	RETVAL
+
+#if HAVE_PDL
+
+SV *
+gimp_drawable_get_tile(gdrawable, shadow, row, col)
+	SV *	gdrawable
+	gint	shadow
+	gint	row
+	gint	col
+	CODE:
+	RETVAL = new_tile (gimp_drawable_get_tile (old_gdrawable (gdrawable), shadow, row, col), gdrawable);
+	OUTPUT:
+	RETVAL
+
+SV *
+gimp_drawable_get_tile2(gdrawable, shadow, x, y)
+	SV *	gdrawable
+	gint	shadow
+	gint	x
+	gint	y
+	CODE:
+	RETVAL = new_tile (gimp_drawable_get_tile2 (old_gdrawable (gdrawable), shadow, x, y), gdrawable);
+	OUTPUT:
+	RETVAL
+
+pdl *
+gimp_pixel_rgn_get_pixel(pr, x, y)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	CODE:
+        RETVAL = new_pdl (0, 0, pr->bpp);
+	gimp_pixel_rgn_get_pixel (pr, RETVAL->data, x, y);
+	OUTPUT:
+	RETVAL
+
+pdl *
+gimp_pixel_rgn_get_row(pr, x, y, width)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	int	width
+	CODE:
+        RETVAL = new_pdl (0, width, pr->bpp);
+	gimp_pixel_rgn_get_row (pr, RETVAL->data, x, y, width);
+	OUTPUT:
+	RETVAL
+
+pdl *
+gimp_pixel_rgn_get_col(pr, x, y, height)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	int	height
+	CODE:
+        RETVAL = new_pdl (height, 0, pr->bpp);
+	gimp_pixel_rgn_get_col (pr, RETVAL->data, x, y, height);
+	OUTPUT:
+	RETVAL
+
+pdl *
+gimp_pixel_rgn_get_rect(pr, x, y, width, height)
+	GPixelRgn *	pr
+	int	x
+	int	y
+	int	width
+	int	height
+	CODE:
+        RETVAL = new_pdl (height, width, pr->bpp);
+	gimp_pixel_rgn_get_rect (pr, RETVAL->data, x, y, width, height);
+	OUTPUT:
+	RETVAL
+
+void
+gimp_pixel_rgn_set_pixel(pr, pdl, x, y)
+	GPixelRgn *	pr
+	pdl *	pdl
+	int	x
+	int	y
+	CODE:
+        old_pdl (&pdl, 0, pr->bpp);
+	gimp_pixel_rgn_set_pixel (pr, pdl->data, x, y);
+
+void
+gimp_pixel_rgn_set_row(pr, pdl, x, y)
+	GPixelRgn *	pr
+	pdl *	pdl
+	int	x
+	int	y
+	CODE:
+        old_pdl (&pdl, 1, pr->bpp);
+	gimp_pixel_rgn_set_row (pr, pdl->data, x, y, pdl->dims[pdl->ndims-1]);
+
+void
+gimp_pixel_rgn_set_col(pr, pdl, x, y)
+	GPixelRgn *	pr
+	pdl *	pdl
+	int	x
+	int	y
+	CODE:
+        old_pdl (&pdl, 1, pr->bpp);
+	gimp_pixel_rgn_set_col (pr, pdl->data, x, y, pdl->dims[pdl->ndims-1]);
+
+void
+gimp_pixel_rgn_set_rect(pr, pdl, x, y)
+	GPixelRgn *	pr
+	pdl *	pdl
+	int	x
+	int	y
+	CODE:
+        old_pdl (&pdl, 2, pr->bpp);
+	gimp_pixel_rgn_set_rect (pr, pdl->data, x, y, pdl->dims[pdl->ndims-2], pdl->dims[pdl->ndims-1]);
+
+pdl *
+gimp_pixel_rgn_data(pr,newdata=0)
+	GPixelRgn *	pr
+        pdl *	newdata
+	CODE:
+        if (newdata)
+	  {
+            char *src;
+            char *dst;
+            int y, stride;
+
+            old_pdl (&newdata, 2, pr->bpp);
+            stride = pr->bpp * newdata->dims[newdata->ndims-2];
+
+            if (pr->h != newdata->dims[newdata->ndims-1])
+              croak ("pdl height != region height");
+
+            for (y   = 0, src = newdata->data, dst = pr->data;
+                 y < pr->h;
+                 y++    , src += stride      , dst += pr->rowstride)
+              Copy (src, dst, stride, char);
+
+            RETVAL = newdata;
+          }
+        else
+          {
+            int ndims = 2 + (pr->bpp > 1);
+
+            pdl *p = PDL->new();
+            PDL_Long dims[3];
+
+            dims[0] = pr->bpp;
+            dims[ndims-2] = pr->rowstride / pr->bpp;
+            dims[ndims-1] = pr->h;
+
+            PDL->setdims (p, dims, ndims);
+            p->datatype = PDL_B;
+            p->data = pr->data;
+            p->state |= PDL_DONTTOUCHDATA | PDL_ALLOCATED;
+            PDL->add_deletedata_magic(p, pixel_rgn_pdl_delete_data, 0);
+
+            if (pr->w != dims[ndims-2])
+              p = redim_pdl (p, ndims-2, pr->w);
+
+            RETVAL = p;
+          }
+	OUTPUT:
+	RETVAL
+
 # ??? optimize these two functions so tile_*ref will only be called once on
 # construction/destruction.
 
@@ -2175,15 +2184,24 @@ gimp_tile_set_data(tile,data)
 
 #else
 
-PROTOTYPES: DISABLE
-
 void
-gimp_drawable_get(...)
+gimp_pixel_rgn_data(...)
+	ALIAS:
+          gimp_drawable_get_tile	= 1
+          gimp_drawable_get_tile2	= 2
+          gimp_pixel_rgn_get_pixel	= 3
+          gimp_pixel_rgn_get_row	= 4
+          gimp_pixel_rgn_get_col	= 5
+          gimp_pixel_rgn_get_rect	= 6
+          gimp_pixel_rgn_set_pixel	= 7
+          gimp_pixel_rgn_set_row	= 8
+          gimp_pixel_rgn_set_col	= 9
+          gimp_pixel_rgn_set_rect	= 10
+          gimp_tile_get_data		= 11
+          gimp_tile_set_data		= 12
 	CODE:
         croak ("This module was built without support for PDL.");
  
-PROTOTYPES: ENABLE
-
 #endif
 
 BOOT:
@@ -2292,6 +2310,7 @@ gimp_default_display()
 
 MODULE = Gimp::Lib	PACKAGE = Gimp::UI
 
+#if 0
 #if UI
 #if GIMP11
 
@@ -2299,7 +2318,7 @@ GtkWidget *
 _new_pattern_select(dname, ipattern, nameref)
 	gchar *	dname
 	gchar *	ipattern
-	SV *	nameref;
+	SV *	nameref
 	CODE:
 	{
 		if (!SvROK (nameref))
@@ -2314,5 +2333,6 @@ _new_pattern_select(dname, ipattern, nameref)
 	OUTPUT:
 	RETVAL
 
+#endif
 #endif
 #endif

@@ -697,7 +697,7 @@ sub mangle_key {
    $key;
 }
 
-sub net {
+Gimp::on_net {
    no strict 'refs';
    my $this = this_script;
    my(%map,@args);
@@ -746,13 +746,20 @@ sub net {
    $this->[0]->($interact>0 ? $this->[7]=~/^<Image>/ ? (&Gimp::RUN_FULLINTERACTIVE,undef,undef,@args)
                                                      : (&Gimp::RUN_INTERACTIVE,@args)
                             : (&Gimp::RUN_NONINTERACTIVE,@args));
-}
+};
 
 # the <Image> arguments
 @image_params = ([&Gimp::PARAM_IMAGE	, "image",	"The image to work on"],
                  [&Gimp::PARAM_DRAWABLE	, "drawable",	"The drawable to work on"]);
 
-sub query {
+@load_params  = ([&Gimp::PARAM_STRING	, "filename",	"The name of the file"],
+                 [&Gimp::PARAM_STRING	, "raw_filename","The name of the file"]);
+
+@save_params  = (@image_params, @load_params);
+
+@load_retvals = ([&Gimp::PARAM_IMAGE	, "image",	"Output image"]);
+
+Gimp::on_query {
    my($type);
    expand_podsections;
    script:
@@ -767,12 +774,20 @@ sub query {
       if ($menupath=~/^<Image>\//) {
          $type=&Gimp::PROC_PLUG_IN;
          unshift(@$params,@image_params);
+      } elsif ($menupath=~/^<Load>\//) {
+         $type=&Gimp::PROC_PLUG_IN;
+         unshift(@$params,@load_params);
+         unshift(@$results,@load_retvals);
+      } elsif ($menupath=~/^<Save>\//) {
+         $type=&Gimp::PROC_PLUG_IN;
+         unshift(@$params,@save_params);
       } elsif ($menupath=~/^<Toolbox>\//) {
          $type=&Gimp::PROC_EXTENSION;
       } elsif ($menupath=~/^<None>/) {
          $type=&Gimp::PROC_EXTENSION;
+         $menupath=undef;
       } else {
-         die "menupath _must_ start with <Image>, <Toolbox> or <None>!";
+         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
       
       unshift(@$params,
@@ -798,7 +813,7 @@ sub query {
 
       Gimp::logger(message => 'OK', function => $function, fatal => 0);
    }
-}
+};
 
 =cut
 
@@ -828,9 +843,10 @@ sub query {
 
 The pdb name of the function, i.e. the name under which is will be
 registered in the Gimp database. If it doesn't start with "perl_fu_",
-"plug_in_" or "extension_", it will be prepended. If you don't want this,
-prefix your function name with a single "+". The idea here is that every
-Gimp::Fu plug-in will be found under the common C<perl_fu_>-prefix.
+"file_", "plug_in_" or "extension_", it will be prepended. If you
+don't want this, prefix your function name with a single "+". The idea
+here is that every Gimp::Fu plug-in will be found under the common
+C<perl_fu_>-prefix.
 
 =item blurb
 
@@ -1057,7 +1073,7 @@ sub register($$$$$$$$$;@) {
 
    $function=~/^[0-9a-z_]+(-ALT)?$/ or carp "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
    
-   $function="perl_fu_".$function unless $function=~/^(?:perl_fu|extension|plug_in)/ || $function=~s/^\+//;
+   $function="perl_fu_".$function unless $function=~/^(?:\+|perl_fu_|extension_|plug_in_|file_)/;
    
    Gimp::logger message => "function name contains dashes instead of underscores",
                 function => $function, fatal => 0
@@ -1070,10 +1086,13 @@ sub register($$$$$$$$$;@) {
       if ($menupath=~/^<Image>\//) {
          @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";
          @pre = (shift,shift);
-      } elsif ($menupath=~/^<Toolbox>\//) {
+      } elsif ($menupath=~/^<Toolbox>\// or !defined $menupath) {
          # valid ;)
+      } elsif ($menupath=~/^<(?:Load|Save)>\//) {
+         @_ >= 4 or die "<Load/Save> plug-in called without the 5 standard arguments!\n";
+         @pre = (shift,shift,shift,shift);
       } else {
-         die "menupath _must_ start with <Image> or <Toolbox>!";
+         die "menupath _must_ start with <Image>, <Toolbox>, <Load> or <Save>!";
       }
       
       if (@defaults) {

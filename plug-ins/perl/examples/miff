@@ -1,0 +1,63 @@
+#!/usr/bin/perl
+# pcg@goof.com
+# a fairly complete miff save filter
+
+use Gimp;
+use Gimp::Fu;
+use Fcntl;
+
+# Gimp::set_trace(TRACE_ALL);
+
+sub write_layer {
+   my($fh,$l)=@_;
+   my($w,$h)=($l->width,$l->height);
+   my $r = new PixelRgn $l,0,0,$w,$h,0,0;
+   print $fh "rows=$h columns=$w\n",
+         "matte=", $r->bpp&1 ? "False" : "True", "\n",
+         ":\012";
+   # inefficient as hell, but "what shells?" ;*>
+   for my $y (0..$h-1) {
+      print $fh $r->get_rect2(0,$y,$w,1);
+   }
+}
+
+register "file_miff_save",
+         "save images as miff (Magick Interchange File Format)",
+         "Saves images in the miff (Magick Interchange File Format) format used by the ImageMagick package",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-07-27",
+         "<Save>/MIFF",
+         "RGB, RGBA, GRAY, INDEXED-NOT-YET",	# weird, but no matte for !DirectColour
+         [],
+         sub {
+   my($img,$drawable,$filename) =@_;
+   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
+   my $hdr = eval { $img->find_parasite("gimp-comment")->data };
+   $hdr = "   COMMENT: $hdr\n" if $hdr;
+   $hdr = <<EOF;
+id=ImageMagick
+{
+   CREATOR: file_miff_save gimp plug-in, see http://www.gimp.org/
+$hdr}
+EOF
+   my $scene = 0;
+   for ($img->get_layers) {
+      print FILE $hdr,
+            "scene=$scene\n",
+            "class=", $_->color ? "DirectClass" : "PseudoClass", "\n";
+            #"gamma=", Gimp->gamma, "\n";
+      write_layer(*FILE,$_);
+      $scene++;
+   }
+   close FILE;
+   ();
+};
+
+Gimp::on_query {
+   ##Gimp->register_magic_load_handler("file_miff_load", "miff", "", "0,string,id=ImageMagick");
+   Gimp->register_save_handler("file_miff_save", "miff", "");
+};
+
+exit main;
+

@@ -121,7 +121,7 @@ sub read_pixels {
    for(my $y=0; $y<$y2; $y+=$th) {
       # calling internal function, sorry folks!
       Gimp->progress_update ($y/$y2*100);
-      print TEMP Gimp::PixelRgn::_get_rect($region,0,$y,$x2,$y2-$y > $th ? $th : $y2-$y);
+      print TEMP $region->rect2($region,0,$y,$x2,$y2-$y > $th ? $th : $y2-$y);
    }
    close TEMP;
    $im->Set(size => $x2.'x'.$y2);

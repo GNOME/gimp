@@ -20,11 +20,11 @@ sub stamps {
 			gimp_ellipse_select($img,
 					$x, 0,
 					$diameter, $diameter,
-					SELECTION_ADD, 1, 0, 0);
+					ADD, 1, 0, 0);
 			gimp_ellipse_select($img,
 					0, $x,
 					$diameter, $diameter,
-					SELECTION_ADD, 1, 0, 0);
+					ADD, 1, 0, 0);
 			$x = $x + $diameter + $gap;
 	}
 	gimp_palette_set_background($paper);

@@ -7,6 +7,7 @@ Revision history for Gimp-Perl extension.
           supplied).
         - enabled limited pixel access functions even when PDL was not found.
         - added examples/miff (a save filter for miff images).
+        - close DATA in Gimp unconditionally, saves one open filehandle.
 
 1.0981 Wed Jul 28 00:09:50 CEST 1999
 	- improved gouge ;) In a sense, it's actually pretty code now!

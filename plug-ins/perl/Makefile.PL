@@ -13,7 +13,7 @@ $|=1;
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
       oneliners randomart1 pixelmap glowing_steel frame_reshuffle frame_filter
-      logulator
+      logulator miff
    );
 @shebang = (map("examples/$_",@examples),
    qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
@@ -263,7 +263,7 @@ WriteMakefile(
     'LIBS'	=> [''],
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
-    'EXE_FILES'	=> ['scm2perl','scm2scm','gimpdoc'],
+    'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm)],
     'macro'	=> \%cfg,
     'realclean'	=> { FILES => "config.status config.cache config.pl config.log config.h Gimp/Config.pm" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },

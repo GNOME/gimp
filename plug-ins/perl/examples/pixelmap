@@ -7,15 +7,15 @@ use Gimp::Util;
 use PDL;
 
 register "pixelmap",
-         "Maps Pixel values and coordinates through general Perl exprtessions",
-         "=pod()",
+         "Maps Pixel values and coordinates through general Perl expressions",
+         "=pod(DESCRIPTION)",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
          "19990528",
          "<Image>/Filters/Map/Pixelmap",
          "*",	
          [
-           [PF_STRING,		"expression"	, "The perl expression to use",	'$p=outer($x,$y)->slice("*$bpp")']
+           [PF_TEXT,		"expression"	, "The perl expression to use",	'$p=outer($x,$y)->slice("*$bpp")']
          ],
          sub {					# es folgt das eigentliche Skript...
    my($image,$drawable,$expr)=@_;
@@ -62,6 +62,10 @@ exit main;
 =head1 DESCRIPTION
 
 Not yet written yet, sorry...
+
+=head1 HI
+
+x
 
 
 

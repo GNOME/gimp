@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# -r	print raw format (i.e. suitable for groff -man)
+# -r	print raw format (i.e. suitable for troff -man)
 
 use Gimp qw(:consts spawn_options=no-data);
 use Getopt::Std;

@@ -44,7 +44,7 @@ register "plug_in_ditherize",
    my ($w,$h)=($x2-$x1,$y2-$y1);
 
    my $sel = $image->selection_save;
-   $image->rect_select($x1,$y1,$w,$h,SELECTION_REPLACE,0,0);
+   $image->rect_select($x1,$y1,$w,$h,REPLACE,0,0);
    $drawable->edit_copy;
    $sel->selection_load;
    $sel->remove_channel;

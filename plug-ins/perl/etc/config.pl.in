@@ -101,7 +101,7 @@ EOF
    } else {
       $do_config_msg && print <<EOF;
 
-WARNING: PDL version $PDL::Version::VERSION is installed. Gimp::PDL was only
+WARNING: PDL version $PDL::Version::VERSION is installed. Gimp was only
          tested with 2.0 and higher.  In case of problems its advisable to
          upgrade PDL to at least version 2.
 
@@ -111,10 +111,10 @@ EOF
    $do_config_msg && print <<EOF;
 
 WARNING: unable to use PDL (the perl data language). This means that
-         Gimp::PDL is non-functional. Unless you plan to use Tile/PixelRgn
-         functions together with PDL, this is harmless. The plug-ins using
-         PDL, however, will NOT WORK and you can NO LONGER install PDL
-         later. You can get PDL from any CPAN mirror.
+         normal pixel access is non-functional. Unless you plan to use
+         Tile/PixelRgn functions together with PDL, this is harmless. The
+         plug-ins using PDL, however, will NOT WORK and you can NO LONGER
+         install PDL later. You can get PDL from any CPAN mirror.
 
 EOF
 }

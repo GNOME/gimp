@@ -32,7 +32,7 @@ register "webify",
 
    if ($alpha) {
       $drawable->add_alpha;
-      $drawable->by_color_select($bg,$thresh,SELECTION_REPLACE,1,0,0,0);
+      $drawable->by_color_select($bg,$thresh,REPLACE,1,0,0,0);
       $drawable->edit_cut if $img->selection_bounds;
    }
    Plugin->autocrop($drawable) if $autocrop;

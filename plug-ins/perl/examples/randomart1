@@ -65,7 +65,7 @@ register "random_art_1",			# Funktionsname
       }
 
       # Selektiere die Region
-      $image->free_select (\@ecken, SELECTION_REPLACE, 1, 1, $feather);
+      $image->free_select (\@ecken, REPLACE, 1, 1, $feather);
 
       # Wähle zufällig zwei Farben aus
       Palette->set_foreground([rand(256),rand(256),rand(256)]);

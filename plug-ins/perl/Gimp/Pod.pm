@@ -1,7 +1,5 @@
 package Gimp::Pod;
 
-use Config;
-
 $VERSION=$Gimp::VERSION;
 
 sub myqx(&) {
@@ -16,13 +14,18 @@ sub myqx(&) {
 }
 
 sub find_converters {
-   my $path = $Config{installscript};
+   my $path = eval 'use Config; $Config{installscript}';
 
-   $converter{text} = sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000,       $pod) } };
-   $converter{texta}= sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000, '-a', $pod) } };
+   if ($] < 5.00558) {
+      $converter{text} = sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000,       $pod) } };
+      $converter{texta}= sub { my $pod=shift; require Pod::Text; myqx { Pod::Text::pod2text (-60000, '-a', $pod) } };
+   } else {
+      $converter{text} = sub { qx($path/pod2text $_[0]) } if -x "$path/pod2text" ;
+      $converter{texta}= sub { qx($path/pod2text $_[0]) } if -x "$path/pod2text" ;
+   }
    $converter{html} = sub { my $pod=shift; require Pod::Html; myqx { Pod::Html::pod2html ($pod) } };
-   $converter{man}  = sub { qx($path/pod2man   $pod) } if -x "$path/pod2man" ;
-   $converter{latex}= sub { qx($path/pod2latex $pod) } if -x "$path/pod2latex" ;
+   $converter{man}  = sub { qx($path/pod2man   $_[0]) } if -x "$path/pod2man" ;
+   $converter{latex}= sub { qx($path/pod2latex $_[0]) } if -x "$path/pod2latex" ;
 }
 
 sub find {
@@ -64,14 +67,18 @@ sub sections {
 sub section {
    my $self = shift;
    my $doc = $self->_cache('text');
-   ($doc) = $$doc =~ /^$_[0]$(.*?)^[A-Z]/sm;
-   if ($doc) {
-      $doc =~ y/\r//d;
-      $doc =~ s/^\s*\n//;
-      $doc =~ s/[ \t\r\n]+$/\n/;
-      $doc =~ s/^    //mg;
+   if (defined $$doc) {
+      ($doc) = $$doc =~ /^$_[0]$(.*?)(?:^[A-Z]|$)/sm;
+      if ($doc) {
+         $doc =~ y/\r//d;
+         $doc =~ s/^\s*\n//;
+         $doc =~ s/[ \t\r\n]+$/\n/;
+         $doc =~ s/^    //mg;
+      }
+      $doc;
+   } else {
+      ();
    }
-   $doc;
 }
 
 sub author {

@@ -211,7 +211,7 @@ sub canonicalize_colour {
             next unless /^\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*$/;
             $rgb_db{lc($4)}=[$1,$2,$3];
          }
-         close RGB_TEXT if defined $rgb_db_path;
+         close RGB_TEXT;
       }
       if ($rgb_db{lc($_[0])}) {
          return $rgb_db{lc($_[0])};

@@ -211,6 +211,7 @@ sub try_connect {
 }
 
 sub gimp_init {
+   $Gimp::in_top=1;
    if (@_) {
       $server_fh = try_connect ($_[0]);
    } elsif (defined($Gimp::host)) {
@@ -260,6 +261,7 @@ sub gimp_end {
 sub gimp_main {
    gimp_init;
    no strict 'refs';
+   $Gimp::in_top=0;
    eval { Gimp::callback("-net") };
    if($@ && $@ ne "IGNORE THIS MESSAGE\n") {
       Gimp::logger(message => substr($@,0,-1), fatal => 1, function => 'DIE');

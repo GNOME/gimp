@@ -585,7 +585,7 @@ sub script_fu_chalk_logo {
       plug_in_ripple ($img, $text_layer, 27, 2, 1, 0, 0, 1, 1);
       plug_in_sobel ($img, $text_layer, 1, 1, 1);
       gimp_levels ($text_layer, 0, 0, 120, 3.5, 0, 255);
-      gimp_rect_select ($img, 0, 0, $width, 1, SELECTION_ADD, 0, 0);
+      gimp_rect_select ($img, 0, 0, $width, 1, ADD, 0, 0);
       gimp_edit_clear ($text_layer);
       gimp_selection_none ($img);
       gimp_layer_set_preserve_trans ($text_layer, 1);
@@ -912,7 +912,7 @@ sub script_fu_cool_metal_logo {
          gimp_gradients_set_active ("Horizon_1");
       }
       gimp_blend ($text_layer, CUSTOM, NORMAL_MODE, LINEAR, 100, 0, REPEAT_NONE, 0, 0, 0, 0, 0, 0, ($height + 5));
-      gimp_rect_select ($img, 0, ($height / 2 - $feather), $img_width, 2 * $feather, SELECTION_REPLACE, 0, 0);
+      gimp_rect_select ($img, 0, ($height / 2 - $feather), $img_width, 2 * $feather, REPLACE, 0, 0);
       plug_in_gauss_iir ($img, $text_layer, $smear, 1, 1);
       gimp_selection_none ($img);
       plug_in_ripple ($img, $text_layer, $period, $amplitude, 1, 0, 1, 1, 0);
@@ -935,7 +935,7 @@ sub script_fu_cool_metal_logo {
       gimp_perspective ($fs, 0, (5 + 0.15 * $height), ($height - 0.15 * $height), (5 + $width + 0.15 * $height), ($height - 0.15 * $height), 5, $height, (5 + $width), $height);
       gimp_floating_sel_anchor ($fs);
       plug_in_gauss_rle ($img, $shadow_layer, $smear, 1, 1);
-      gimp_rect_select ($img, 5, 5, $width, $height, SELECTION_REPLACE, 0, 0);
+      gimp_rect_select ($img, 5, 5, $width, $height, REPLACE, 0, 0);
       gimp_edit_copy ($text_layer);
       $fs = gimp_edit_paste ($reflect_layer, 0);
       gimp_floating_sel_anchor ($fs);
@@ -2000,8 +2000,8 @@ sub script_fu_sota_chrome_logo {
       gimp_edit_clear ($shadow);
       gimp_layer_set_visible ($text_layer, 0);
       gimp_layer_set_visible ($shadow, 0);
-      gimp_rect_select ($img, $b_size / 2, $b_size / 2, ($width - $b_size), ($height - $b_size), SELECTION_REPLACE, 0, 0);
-      gimp_rect_select ($img, $b_size, $b_size, ($width - $b_size * 2), ($height - $b_size * 2), SELECTION_SUB, 0, 0);
+      gimp_rect_select ($img, $b_size / 2, $b_size / 2, ($width - $b_size), ($height - $b_size), REPLACE, 0, 0);
+      gimp_rect_select ($img, $b_size, $b_size, ($width - $b_size * 2), ($height - $b_size * 2), SUB, 0, 0);
       gimp_edit_fill ($text_layer);
       gimp_selection_layer_alpha ($text_layer);
       gimp_palette_set_background ([0, 0, 0]);
@@ -2502,7 +2502,7 @@ sub script_fu_textured_logo {
       gimp_edit_clear ($drop_shadow_layer);
       gimp_palette_set_background ($bg_color);
       gimp_drawable_fill ($shadow_layer, BG_IMAGE_FILL);
-      gimp_rect_select ($img, $b_size_2, $b_size_2, ($width - $b_size), ($height - $b_size), SELECTION_REPLACE, 1, $b_size_2);
+      gimp_rect_select ($img, $b_size_2, $b_size_2, ($width - $b_size), ($height - $b_size), REPLACE, 1, $b_size_2);
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($shadow_layer);
       gimp_selection_layer_alpha ($text_layer);
@@ -2665,7 +2665,7 @@ sub script_fu_blended_logo {
       gimp_edit_fill ($text_layer);
       gimp_palette_set_background ($bg_color);
       gimp_drawable_fill ($shadow_layer, BG_IMAGE_FILL);
-      gimp_rect_select ($img, $b_size_2, $b_size_2, ($width - $b_size), ($height - $b_size), SELECTION_REPLACE, 1, $b_size_2);
+      gimp_rect_select ($img, $b_size_2, $b_size_2, ($width - $b_size), ($height - $b_size), REPLACE, 1, $b_size_2);
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($shadow_layer);
       gimp_selection_layer_alpha ($text_layer);
