@@ -28,6 +28,7 @@ Conflicts:	gimp-print >= @GIMPPRINT_TOONEW_VERSION@
 Requires:	gtkhtml2 >= @GTKHTML2_REQUIRED_VERSION@
 Requires:	librsvg2 >= @RSVG_REQUIRED_VERSION@
 Requires:	lcms
+Requires:	libexif
 BuildRequires:	gtk2-devel >= @GTK_REQUIRED_VERSION@
 BuildRequires:  fontconfig-devel >= @FONTCONFIG_REQUIRED_VERSION@
 BuildRequires:  libart_lgpl-devel >= 2.0
