@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-03 01:08-0800\n"
+"POT-Creation-Date: 2000-03-03 17:47-0800\n"
 "PO-Revision-Date: 2000-02-29 15:53+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -361,11 +361,11 @@ msgstr "再読み込み"
 msgid "No Brushes available"
 msgstr "利用可能なブラシがありません"
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
 msgid "Opacity:"
 msgstr "不透明度:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
 msgid "Mode:"
 msgstr "モード:"
 
@@ -450,7 +450,7 @@ msgstr "置換"
 msgid "Add"
 msgstr "追加"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "減算"
 
@@ -875,7 +875,8 @@ msgid "Crop & Resize"
 msgstr "切抜き & サイズ変更"
 
 #: app/crop.c:189
-msgid "Current Layer Only"
+#, fuzzy
+msgid "Current Layer only"
 msgstr "現在のレイヤーのみ"
 
 #. enlarge toggle
@@ -948,7 +949,7 @@ msgid "Modify Curves for Channel:"
 msgstr "カーブ変更対象チャンネル:"
 
 #: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
-#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
+#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:910
 msgid "Value"
 msgstr "明度"
 
@@ -2169,7 +2170,7 @@ msgstr "色相 / 明度 / 彩度 調整"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
-#: app/tool_options.c:906
+#: app/tool_options.c:907
 msgid "Hue"
 msgstr "色相"
 
@@ -2180,7 +2181,7 @@ msgstr "明度"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
-#: app/tool_options.c:907
+#: app/tool_options.c:908
 msgid "Saturation"
 msgstr "彩度"
 
@@ -2825,7 +2826,7 @@ msgid "Channel Ops"
 msgstr "チャンネル操作"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
-#: app/tool_options.c:793 app/tool_options.c:908
+#: app/tool_options.c:794 app/tool_options.c:909
 msgid "Color"
 msgstr "色"
 
@@ -2985,43 +2986,43 @@ msgstr "レイヤー固定"
 msgid "Delete Layer"
 msgstr "レイヤー削除"
 
-#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:895
 msgid "Normal"
 msgstr "標準"
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:896
 msgid "Dissolve"
 msgstr "消散"
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:898
 msgid "Multiply (Burn)"
 msgstr "乗算"
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:899
 msgid "Divide (Dodge)"
 msgstr "除算"
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:900
 msgid "Screen"
 msgstr "スクリーン"
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:901
 msgid "Overlay"
 msgstr "オーバーレイ"
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:902
 msgid "Difference"
 msgstr "差分"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:903
 msgid "Addition"
 msgstr "加算"
 
-#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:905
 msgid "Darken Only"
 msgstr "比較(暗)"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:906
 msgid "Lighten Only"
 msgstr "比較(明)"
 
@@ -4242,7 +4243,7 @@ msgstr "なび: 画像無し"
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
-#: app/paint_funcs.c:85 app/tool_options.c:896
+#: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
 msgstr "後ろ"
 
@@ -5226,7 +5227,7 @@ msgstr "選択: "
 msgid "Scale Layer"
 msgstr "レイヤー拡大縮小"
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:773
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:774
 msgid "Size"
 msgstr "大きさ"
 
@@ -5500,23 +5501,23 @@ msgstr "暗室"
 msgid "Smudge Tool"
 msgstr "にじみツール"
 
-#: app/tool_options.c:584
+#: app/tool_options.c:583
 msgid "Incremental"
 msgstr "重ね塗り"
 
-#: app/tool_options.c:688
+#: app/tool_options.c:689
 msgid "Pressure Sensitivity"
 msgstr "圧力感度"
 
-#: app/tool_options.c:706
+#: app/tool_options.c:707
 msgid "Opacity"
 msgstr "不透明度"
 
-#: app/tool_options.c:729
+#: app/tool_options.c:730
 msgid "Pressure"
 msgstr "圧力"
 
-#: app/tool_options.c:749
+#: app/tool_options.c:750
 msgid "Rate"
 msgstr "割合"
 

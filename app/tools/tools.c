@@ -50,13 +50,13 @@
 #include "measure.h"
 #include "move.h"
 #include "paintbrush.h"
-#include "path_tool.h"
+/* #include "path_tool.h" */
 #include "pencil.h"
 #include "posterize.h"
 #include "rect_select.h"
 #include "session.h"
 #include "smudge.h"
-#include "xinput_airbrush.h"
+/* #include "xinput_airbrush.h" */
 #include "text_tool.h"
 #include "threshold.h"
 #include "tools.h"

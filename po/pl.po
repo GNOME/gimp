@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2000-03-03 01:08-0800\n"
+"POT-Creation-Date: 2000-03-03 17:47-0800\n"
 "PO-Revision-Date: 1999-11-06 19:22+0200\n"
 "Last-Translator: GNOME PL Team\n"
 "Language-Team: Polish <gnomepl@pandora.info.bielsko.pl>\n"
@@ -360,11 +360,11 @@ msgstr "Od¶wie¿"
 msgid "No Brushes available"
 msgstr ""
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
 msgid "Opacity:"
 msgstr "Prze¼roczysto¶æ:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
 msgid "Mode:"
 msgstr "Tryb:"
 
@@ -449,7 +449,7 @@ msgstr "Zast±p"
 msgid "Add"
 msgstr "Dodaj"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "Odejmij"
 
@@ -885,7 +885,8 @@ msgid "Crop & Resize"
 msgstr ""
 
 #: app/crop.c:189
-msgid "Current Layer Only"
+#, fuzzy
+msgid "Current Layer only"
 msgstr "Tylko bie¿±ca warstwa"
 
 #. enlarge toggle
@@ -958,7 +959,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Modyfikuj krzywe kana³u:"
 
 #: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
-#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
+#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:910
 msgid "Value"
 msgstr "Warto¶æ"
 
@@ -2152,7 +2153,7 @@ msgstr "Ustawienia odcieni / jasno¶ci / nasycenia"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
-#: app/tool_options.c:906
+#: app/tool_options.c:907
 msgid "Hue"
 msgstr "Odcieñ"
 
@@ -2163,7 +2164,7 @@ msgstr "Jasno¶æ"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
-#: app/tool_options.c:907
+#: app/tool_options.c:908
 msgid "Saturation"
 msgstr "Nasycenie"
 
@@ -2705,7 +2706,7 @@ msgid "Channel Ops"
 msgstr "Kana³y"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
-#: app/tool_options.c:793 app/tool_options.c:908
+#: app/tool_options.c:794 app/tool_options.c:909
 msgid "Color"
 msgstr "Kolor"
 
@@ -2866,43 +2867,43 @@ msgstr "Zakotwicza warstwê"
 msgid "Delete Layer"
 msgstr "Usuwa warstwê"
 
-#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:895
 msgid "Normal"
 msgstr ""
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:896
 msgid "Dissolve"
 msgstr ""
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:898
 msgid "Multiply (Burn)"
 msgstr ""
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:899
 msgid "Divide (Dodge)"
 msgstr ""
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:900
 msgid "Screen"
 msgstr ""
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:901
 msgid "Overlay"
 msgstr ""
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:902
 msgid "Difference"
 msgstr "Ró¿nica"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:903
 msgid "Addition"
 msgstr "Suma"
 
-#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:905
 msgid "Darken Only"
 msgstr "Tylko ciemniejsze"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:906
 msgid "Lighten Only"
 msgstr "Tylko ja¶niejsze"
 
@@ -4202,7 +4203,7 @@ msgstr ""
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostêpnych pêdzli dla tego narzêdzia."
 
-#: app/paint_funcs.c:85 app/tool_options.c:896
+#: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
 msgstr ""
 
@@ -5175,7 +5176,7 @@ msgstr "Zaznaczenie: "
 msgid "Scale Layer"
 msgstr "Skaluj warstwê"
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:773
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:774
 msgid "Size"
 msgstr "Rozmiar"
 
@@ -5451,24 +5452,24 @@ msgstr ""
 msgid "Smudge Tool"
 msgstr "Narzêdzie pomiarów"
 
-#: app/tool_options.c:584
+#: app/tool_options.c:583
 msgid "Incremental"
 msgstr ""
 
-#: app/tool_options.c:688
+#: app/tool_options.c:689
 #, fuzzy
 msgid "Pressure Sensitivity"
 msgstr "Czu³o¶æ nacisku"
 
-#: app/tool_options.c:706
+#: app/tool_options.c:707
 msgid "Opacity"
 msgstr "Prze¼roczysto¶æ"
 
-#: app/tool_options.c:729
+#: app/tool_options.c:730
 msgid "Pressure"
 msgstr "Nacisk"
 
-#: app/tool_options.c:749
+#: app/tool_options.c:750
 #, fuzzy
 msgid "Rate"
 msgstr "Wklej"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-03-03 11:42-0800\n"
+"POT-Creation-Date: 2000-03-03 17:47-0800\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -85,12 +85,12 @@ msgstr "대하여"
 #: plug-ins/common/spread.c:380 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:274
 #: plug-ins/common/tiff.c:1468 plug-ins/common/tile.c:397
-#: plug-ins/common/tileit.c:405 plug-ins/common/uniteditor.c:155
+#: plug-ins/common/tileit.c:405 plug-ins/common/uniteditor.c:170
 #: plug-ins/common/unsharp.c:794 plug-ins/common/video.c:2175
 #: plug-ins/common/vpropagate.c:942 plug-ins/common/warp.c:443
 #: plug-ins/common/waves.c:356 plug-ins/common/whirlpinch.c:829
 #: plug-ins/common/wind.c:703 plug-ins/common/wind.c:758
-#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:973
+#: plug-ins/common/wmf.c:938 plug-ins/common/xbm.c:1134
 #: plug-ins/common/xpm.c:799 plug-ins/fits/fits.c:1003
 #: plug-ins/flame/flame.c:582 plug-ins/flame/flame.c:894
 #: plug-ins/fp/fp_gtk.c:882 plug-ins/gap/gap_arr_dialog.c:768
@@ -167,12 +167,12 @@ msgstr "확인"
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:276
 #: plug-ins/common/tiff.c:1470 plug-ins/common/tile.c:399
-#: plug-ins/common/tileit.c:407 plug-ins/common/uniteditor.c:157
+#: plug-ins/common/tileit.c:407 plug-ins/common/uniteditor.c:172
 #: plug-ins/common/unsharp.c:796 plug-ins/common/video.c:2177
 #: plug-ins/common/vpropagate.c:944 plug-ins/common/warp.c:445
 #: plug-ins/common/waves.c:358 plug-ins/common/whirlpinch.c:831
 #: plug-ins/common/wind.c:760 plug-ins/common/wmf.c:940
-#: plug-ins/common/xbm.c:725 plug-ins/common/xbm.c:975
+#: plug-ins/common/xbm.c:884 plug-ins/common/xbm.c:1136
 #: plug-ins/common/xpm.c:801 plug-ins/fits/fits.c:1005
 #: plug-ins/flame/flame.c:590 plug-ins/flame/flame.c:903
 #: plug-ins/fp/fp_gtk.c:886 plug-ins/gap/gap_arr_dialog.c:1010
@@ -1137,8 +1137,8 @@ msgstr " XYZ 공간중 라이트 근원지 X위치"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:763
 #: plug-ins/common/nova.c:512 plug-ins/common/papertile.c:292
-#: plug-ins/gap/gap_mov_dialog.c:1572 plug-ins/gflare/gflare.c:2878
-#: plug-ins/ifscompose/ifscompose.c:526
+#: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
+#: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
 msgstr "Y:"
 
@@ -1526,7 +1526,7 @@ msgstr ""
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
-#: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
+#: plug-ins/common/xbm.c:665 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
 #: plug-ins/xjt/xjt.c:3238
@@ -1575,7 +1575,7 @@ msgstr "%s: 잘못된 컬러맵\n"
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2362
-#: plug-ins/common/xbm.c:642 plug-ins/faxg3/faxg3.c:443
+#: plug-ins/common/xbm.c:801 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/gfig/gfig.c:2848
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
@@ -1601,7 +1601,7 @@ msgstr "%s를 열수 없습니다.\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:790
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:949
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
 #: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
@@ -2354,7 +2354,7 @@ msgstr "에니메이션 되돌리기: "
 
 #. The close button
 #: plug-ins/common/animationplay.c:709 plug-ins/common/plugindetails.c:1002
-#: plug-ins/common/sample_colorize.c:1389 plug-ins/common/uniteditor.c:501
+#: plug-ins/common/sample_colorize.c:1389 plug-ins/common/uniteditor.c:531
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 #: plug-ins/gap/gap_navigator_dialog.c:2852
@@ -2923,7 +2923,7 @@ msgid "Prefixed Name:"
 msgstr "프레임 미리보기:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1025
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1186
 #, fuzzy
 msgid "Comment:"
 msgstr "GIF 설명: "
@@ -6734,125 +6734,165 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Unit Editor..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/common/uniteditor.c:150 plug-ins/common/uniteditor.c:573
+#: plug-ins/common/uniteditor.c:165 plug-ins/common/uniteditor.c:629
 #, fuzzy
 msgid "New Unit"
 msgstr "단위"
 
-#: plug-ins/common/uniteditor.c:178
+#: plug-ins/common/uniteditor.c:193
 msgid "ID:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:188
+#: plug-ins/common/uniteditor.c:205
 #, fuzzy
 msgid "Factor:"
 msgstr "제(곱 지수)"
 
-#: plug-ins/common/uniteditor.c:197
+#: plug-ins/common/uniteditor.c:216
 #, fuzzy
 msgid "Digits:"
 msgstr "나누기"
 
-#: plug-ins/common/uniteditor.c:208
+#: plug-ins/common/uniteditor.c:229
 msgid "Symbol:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:219
+#: plug-ins/common/uniteditor.c:242
 #, fuzzy
 msgid "Abbreviation:"
 msgstr "앙각"
 
-#: plug-ins/common/uniteditor.c:230
+#: plug-ins/common/uniteditor.c:255
 #, fuzzy
 msgid "Singular:"
 msgstr "비추는 곳:"
 
-#: plug-ins/common/uniteditor.c:241
+#: plug-ins/common/uniteditor.c:268
 msgid "Plural:"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:276
+#: plug-ins/common/uniteditor.c:305
 msgid "Unit factor must not be 0."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:286
+#: plug-ins/common/uniteditor.c:315
 msgid "All text fields must contain a value."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:494
+#: plug-ins/common/uniteditor.c:524
 #, fuzzy
 msgid "Unit Editor"
 msgstr "크기 맵 편집기"
 
-#: plug-ins/common/uniteditor.c:499 plug-ins/gimpressionist/presets.c:656
+#: plug-ins/common/uniteditor.c:529 plug-ins/gimpressionist/presets.c:656
 #, fuzzy
 msgid "Refresh"
 msgstr " 새로고침 "
 
-#: plug-ins/common/uniteditor.c:526
+#: plug-ins/common/uniteditor.c:542
+msgid ""
+"A unit definition will only be saved before GIMP exits if this column is "
+"checked."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:544
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:546
+msgid "How man units make up an inch."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:547
+msgid ""
+"This field is a hint for numerical input fields. It specifies how many "
+"decimal digits the input field should provide to get approximately the same "
+"accuracy as an \"inch\" input field with two decimal digits."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:553
+msgid ""
+"The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
+"abbreviation if it doesn't have a symbol."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:556
+msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:558
+msgid "The unit's singular form."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:559
+msgid "The unit's plural form."
+msgstr ""
+
+#: plug-ins/common/uniteditor.c:575
 #, fuzzy
 msgid "Saved"
 msgstr "저장"
 
-#: plug-ins/common/uniteditor.c:527
+#: plug-ins/common/uniteditor.c:576
 msgid "ID"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:528
+#: plug-ins/common/uniteditor.c:577
 #, fuzzy
 msgid "Factor"
 msgstr "백터"
 
-#: plug-ins/common/uniteditor.c:529
+#: plug-ins/common/uniteditor.c:578
 #, fuzzy
 msgid "Digits"
 msgstr "하이라이트:"
 
-#: plug-ins/common/uniteditor.c:530
+#: plug-ins/common/uniteditor.c:579
 msgid "Symbol"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:531
+#: plug-ins/common/uniteditor.c:580
 msgid "Abbr."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:532
+#: plug-ins/common/uniteditor.c:581
 #, fuzzy
 msgid "Singular"
 msgstr "사인곡선"
 
-#: plug-ins/common/uniteditor.c:533
+#: plug-ins/common/uniteditor.c:582
 msgid "Plural"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:580
+#: plug-ins/common/uniteditor.c:636
 msgid "Create a new unit from scratch."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:582
+#: plug-ins/common/uniteditor.c:638
 #, fuzzy
 msgid "Duplicate Unit"
 msgstr "프레임범위 복사"
 
-#: plug-ins/common/uniteditor.c:589
+#: plug-ins/common/uniteditor.c:645
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:592
+#: plug-ins/common/uniteditor.c:648
 msgid "Don't Save Unit"
 msgstr ""
 
-#: plug-ins/common/uniteditor.c:599
+#: plug-ins/common/uniteditor.c:655
 #, fuzzy
 msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "선택된 미리조절 삭제"
 
-#: plug-ins/common/uniteditor.c:604
+#: plug-ins/common/uniteditor.c:660
 #, fuzzy
 msgid "Save Unit"
 msgstr "포인트 저장"
 
-#: plug-ins/common/uniteditor.c:611
+#: plug-ins/common/uniteditor.c:667
 #, fuzzy
 msgid "Save the currently selected unit before GIMP exits."
 msgstr "선택된 미리조절 삭제"
@@ -7398,37 +7438,37 @@ msgstr "%s 인터프리팅과 읽기는 중:"
 msgid "Transferring image"
 msgstr ""
 
-#: plug-ins/common/xbm.c:235
+#: plug-ins/common/xbm.c:238
 msgid "Created with The GIMP"
 msgstr ""
 
-#: plug-ins/common/xbm.c:549
+#: plug-ins/common/xbm.c:661
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: \"%s\"를 열수 없습니다.\n"
 
-#: plug-ins/common/xbm.c:613
+#: plug-ins/common/xbm.c:744
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: 해더를 읽을 수 없습니다. (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:619
+#: plug-ins/common/xbm.c:750
 msgid "XBM: no image width specified\n"
 msgstr "XBM: 지정된 이미지 폭 없음\n"
 
-#: plug-ins/common/xbm.c:625
+#: plug-ins/common/xbm.c:756
 msgid "XBM: no image height specified\n"
 msgstr "XBM: 지정된 이미지 높이 없음\n"
 
-#: plug-ins/common/xbm.c:631
+#: plug-ins/common/xbm.c:762
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: 지정된 이미지 데이터 유형 없음\n"
 
-#: plug-ins/common/xbm.c:720
+#: plug-ins/common/xbm.c:879
 msgid "XBM Warning"
 msgstr "XBM 경고"
 
-#: plug-ins/common/xbm.c:741
+#: plug-ins/common/xbm.c:900
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7442,30 +7482,40 @@ msgstr ""
 "그것을 블랙-엔-화이트(1-bit) 인덱스 이미지로\n"
 "변환하고 다시 시도해 주세요."
 
-#: plug-ins/common/xbm.c:812
+#: plug-ins/common/xbm.c:971
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: \"%s\"을 생성할 수 없습니다\n"
 
-#: plug-ins/common/xbm.c:968
+#: plug-ins/common/xbm.c:1129
 msgid "Save as XBM"
 msgstr "XBM으로 저장"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:985
+#: plug-ins/common/xbm.c:1146
 msgid "XBM Options"
 msgstr "XBM 옵션"
 
 #. X10 format
-#: plug-ins/common/xbm.c:996
+#: plug-ins/common/xbm.c:1157
 #, fuzzy
 msgid "X10 Format Bitmap"
 msgstr "X10 형식 비트맵"
 
-#: plug-ins/common/xbm.c:1014
+#: plug-ins/common/xbm.c:1175
 #, fuzzy
 msgid "Identifier Prefix:"
 msgstr "식별 접두사: "
+
+#. hotspot toggle
+#: plug-ins/common/xbm.c:1193
+msgid "Write Hot Spot Values"
+msgstr ""
+
+#: plug-ins/common/xbm.c:1217
+#, fuzzy
+msgid "Hot Spot X:"
+msgstr "회전하기"
 
 #: plug-ins/common/xpm.c:794
 #, fuzzy

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-03-03 01:08-0800\n"
+"POT-Creation-Date: 2000-03-03 17:47-0800\n"
 "PO-Revision-Date: 2000-02-11 23:15+0200\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
@@ -360,11 +360,11 @@ msgstr "Virkistä"
 msgid "No Brushes available"
 msgstr "Ei siveltimiä"
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
 msgid "Opacity:"
 msgstr "Peitto:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
 msgid "Mode:"
 msgstr "Toiminta:"
 
@@ -449,7 +449,7 @@ msgstr "Korvaa"
 msgid "Add"
 msgstr "Lisää"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "Vähennä"
 
@@ -874,7 +874,8 @@ msgid "Crop & Resize"
 msgstr "Rajaa ja muokkaa kokoa"
 
 #: app/crop.c:189
-msgid "Current Layer Only"
+#, fuzzy
+msgid "Current Layer only"
 msgstr "Vain nykyinen taso"
 
 #. enlarge toggle
@@ -947,7 +948,7 @@ msgid "Modify Curves for Channel:"
 msgstr "Muokkaa värikäyrät kanavalle:"
 
 #: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
-#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
+#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:910
 msgid "Value"
 msgstr "Arvo"
 
@@ -1445,7 +1446,8 @@ msgstr "Tuntematon formaatin versio #%s sivellintiedostossa \"%s\"\n"
 msgid ""
 "Warning: Failed to load brush\n"
 "\"%s\""
-msgstr "Siveltimen lataus epäonnostui\n"
+msgstr ""
+"Siveltimen lataus epäonnostui\n"
 "\"%s\""
 
 #: app/gimpbrushlist.c:206
@@ -1453,7 +1455,8 @@ msgstr "Siveltimen lataus epäonnostui\n"
 msgid ""
 "Warning: Failed to load pixmap brush\n"
 "\"%s\""
-msgstr "Kuvasiveltimen lataus epäonnostui\n"
+msgstr ""
+"Kuvasiveltimen lataus epäonnostui\n"
 "\"%s\""
 
 #: app/gimpbrushlist.c:215
@@ -1461,7 +1464,8 @@ msgstr "Kuvasiveltimen lataus epäonnostui\n"
 msgid ""
 "Warning: Failed to load pixmap pipe\n"
 "\"%s\""
-msgstr "Kuvaletkun lataus epäonnostui\n"
+msgstr ""
+"Kuvaletkun lataus epäonnostui\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:308
@@ -2164,7 +2168,7 @@ msgstr "Sävyn (H) / Valoisuuden (L) / Värikylläisyyden (S) säätö"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
-#: app/tool_options.c:906
+#: app/tool_options.c:907
 msgid "Hue"
 msgstr "Sävy (H)"
 
@@ -2175,7 +2179,7 @@ msgstr "Valoisuus (L)"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
-#: app/tool_options.c:907
+#: app/tool_options.c:908
 msgid "Saturation"
 msgstr "Värikylläisyys (S)"
 
@@ -2795,7 +2799,7 @@ msgid "Channel Ops"
 msgstr "Kanavatoiminnot"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
-#: app/tool_options.c:793 app/tool_options.c:908
+#: app/tool_options.c:794 app/tool_options.c:909
 msgid "Color"
 msgstr "Värit"
 
@@ -2955,43 +2959,43 @@ msgstr "Ankkuroi taso"
 msgid "Delete Layer"
 msgstr "Poista taso"
 
-#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:895
 msgid "Normal"
 msgstr "Normaali"
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:896
 msgid "Dissolve"
 msgstr "Liukeneminen"
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:898
 msgid "Multiply (Burn)"
 msgstr "Kertautuminen (Burn)"
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:899
 msgid "Divide (Dodge)"
 msgstr "Jakautuminen (Dodge)"
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:900
 msgid "Screen"
 msgstr ""
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:901
 msgid "Overlay"
 msgstr "Peitto"
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:902
 msgid "Difference"
 msgstr "Erotus"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:903
 msgid "Addition"
 msgstr "Yhteenlasku"
 
-#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:905
 msgid "Darken Only"
 msgstr "Vain tummennus"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:906
 msgid "Lighten Only"
 msgstr "Vain vaalennus"
 
@@ -4212,7 +4216,7 @@ msgstr ""
 msgid "No brushes available for use with this tool."
 msgstr "Ei siveltimiä käytettävissä tälle työkalulle."
 
-#: app/paint_funcs.c:85 app/tool_options.c:896
+#: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
 msgstr "Takana"
 
@@ -4551,6 +4555,7 @@ msgid "Extensions"
 msgstr "Lisäykset"
 
 #: app/plug_in.c:775
+#, c-format
 msgid "Unable to locate plug-in: \"%s\""
 msgstr "Liitännäistä %s ei lötynyt: \"%s\""
 
@@ -5178,7 +5183,7 @@ msgstr "Valinta: "
 msgid "Scale Layer"
 msgstr ""
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:773
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:774
 msgid "Size"
 msgstr "Koko"
 
@@ -5449,23 +5454,23 @@ msgstr "Tummenna tai valkaise"
 msgid "Smudge Tool"
 msgstr "Sormi"
 
-#: app/tool_options.c:584
+#: app/tool_options.c:583
 msgid "Incremental"
 msgstr "Inkrementaalinen"
 
-#: app/tool_options.c:688
+#: app/tool_options.c:689
 msgid "Pressure Sensitivity"
 msgstr "Paineherkkyys"
 
-#: app/tool_options.c:706
+#: app/tool_options.c:707
 msgid "Opacity"
 msgstr "Peitto"
 
-#: app/tool_options.c:729
+#: app/tool_options.c:730
 msgid "Pressure"
 msgstr "Paine"
 
-#: app/tool_options.c:749
+#: app/tool_options.c:750
 msgid "Rate"
 msgstr "Virtaama"
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
-"POT-Creation-Date: 2000-03-03 01:08-0800\n"
+"POT-Creation-Date: 2000-03-03 17:47-0800\n"
 "PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -364,11 +364,11 @@ msgstr "다시 그림"
 msgid "No Brushes available"
 msgstr "브러쉬를 사용할 수 없음"
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
 msgid "Opacity:"
 msgstr "불투명:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
 msgid "Mode:"
 msgstr "모드:"
 
@@ -453,7 +453,7 @@ msgstr "바꿈"
 msgid "Add"
 msgstr "추가"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr "빼기"
 
@@ -895,7 +895,7 @@ msgstr "자르고 크기 바꾸기"
 
 #: app/crop.c:189
 #, fuzzy
-msgid "Current Layer Only"
+msgid "Current Layer only"
 msgstr "현재 계층만"
 
 #. enlarge toggle
@@ -968,7 +968,7 @@ msgid "Modify Curves for Channel:"
 msgstr "채널에서 곡선 수정:"
 
 #: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
-#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
+#: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:910
 msgid "Value"
 msgstr "값"
 
@@ -2194,7 +2194,7 @@ msgstr "색상 / 밝기 / 채도 조정"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
-#: app/tool_options.c:906
+#: app/tool_options.c:907
 msgid "Hue"
 msgstr "색상"
 
@@ -2205,7 +2205,7 @@ msgstr "밝기"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
-#: app/tool_options.c:907
+#: app/tool_options.c:908
 msgid "Saturation"
 msgstr "채도"
 
@@ -2833,7 +2833,7 @@ msgid "Channel Ops"
 msgstr "채널 동작"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
-#: app/tool_options.c:793 app/tool_options.c:908
+#: app/tool_options.c:794 app/tool_options.c:909
 msgid "Color"
 msgstr "색상"
 
@@ -2994,43 +2994,43 @@ msgstr "계층 고정"
 msgid "Delete Layer"
 msgstr "계층 삭제"
 
-#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:895
 msgid "Normal"
 msgstr "표준"
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:896
 msgid "Dissolve"
 msgstr "분해"
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:898
 msgid "Multiply (Burn)"
 msgstr "곱하기 (태우기)"
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:899
 msgid "Divide (Dodge)"
 msgstr "나누기 (피하기)"
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:900
 msgid "Screen"
 msgstr "화면"
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:901
 msgid "Overlay"
 msgstr "씌우기"
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:902
 msgid "Difference"
 msgstr "차이점"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:903
 msgid "Addition"
 msgstr "더하기"
 
-#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:905
 msgid "Darken Only"
 msgstr "어둡게만"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:906
 msgid "Lighten Only"
 msgstr "밝게만"
 
@@ -4282,7 +4282,7 @@ msgstr ""
 msgid "No brushes available for use with this tool."
 msgstr "이 도구을 사용하기 위해 사용가능한 브러쉬 없음."
 
-#: app/paint_funcs.c:85 app/tool_options.c:896
+#: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
 msgstr "뒤로"
 
@@ -5271,7 +5271,7 @@ msgstr "셀렉션: "
 msgid "Scale Layer"
 msgstr "계층 스케일"
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:773
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:774
 msgid "Size"
 msgstr "크기"
 
@@ -5553,24 +5553,24 @@ msgstr "피하기 혹은 태우기"
 msgid "Smudge Tool"
 msgstr "얼룩(smudge)"
 
-#: app/tool_options.c:584
+#: app/tool_options.c:583
 msgid "Incremental"
 msgstr "증가"
 
-#: app/tool_options.c:688
+#: app/tool_options.c:689
 #, fuzzy
 msgid "Pressure Sensitivity"
 msgstr "밝음 유지"
 
-#: app/tool_options.c:706
+#: app/tool_options.c:707
 msgid "Opacity"
 msgstr "불투명:"
 
-#: app/tool_options.c:729
+#: app/tool_options.c:730
 msgid "Pressure"
 msgstr "압력"
 
-#: app/tool_options.c:749
+#: app/tool_options.c:750
 msgid "Rate"
 msgstr "비율"
 
