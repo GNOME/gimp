@@ -45,6 +45,7 @@
 
 #include "config.h"
 
+#include <glib.h>		/* Include early for NATIVE_WIN32 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -531,7 +531,8 @@ text_gdk_image_to_region (GdkImage    *image,
   unsigned char * data;
 
   scale2 = scale * scale;
-#ifndef WINDOWS_DISPLAY
+/* GDK_WINDOWING is defined only with GTk+ 1.3 */
+#if !defined(GDK_WINDOWING) || (GDK_WINDOWING == GDK_WINDOWING_X11)
   black.red = black.green = black.blue = 0;
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   black_pixel = black.pixel;
@@ -669,7 +670,7 @@ text_render (GimpImage *gimage,
   /*  get black and white pixels for this gdisplay  */
   black.red = black.green = black.blue = 0;
   white.red = white.green = white.blue = 65535;
-#ifndef WINDOWS_DISPLAY
+#if !defined(GDK_WINDOWING) || (GDK_WINDOWING == GDK_WINDOWING_X11)
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &white, FALSE, TRUE);
 #else

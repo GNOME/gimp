@@ -479,7 +479,7 @@ palette_entries_save (PaletteEntriesP  palette,
     return;
 
   /*  Open the requested file  */
-  if (! (fp = fopen (filename, "wb")))
+  if (! (fp = fopen (filename, "w")))
     {
       g_message (_("can't save palette \"%s\"\n"), filename);
       return;
@@ -607,7 +607,7 @@ palette_entries_load (char *filename)
 
   /*  Open the requested file  */
 
-  if (!(fp = fopen (filename, "rb")))
+  if (!(fp = fopen (filename, "r")))
     {
       palette_entries_free (entries);
       g_warning ("failed to open palette file %s: can't happen?", filename);

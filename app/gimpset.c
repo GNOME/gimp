@@ -230,7 +230,6 @@ void
 gimp_set_set_active (GimpSet* set, gpointer ob)
 {
 	if (ob != set->active_element && gimp_set_have(set, ob)) {
-		g_warning("Gimp_Set got new active element");
 		set->active_element = ob;
         	gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[ACTIVE_CHANGED], ob);
 	}

@@ -1,3 +1,45 @@
+1999-06-15  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Mention using GNU gettext.
+
+	* config.h.win32: Enable NLS stuff. Remove the X11 & Unix vs. Win32
+	feature test macros, we use those from glibconfig.h and gdkconfig.h.
+
+	* app/makefile.msc: Use gettext. New object files.
+
+	* app/batch.c: No need to include <io.h> on Win32.
+
+	* app/errorconsole.c
+	* app/plug_in.c
+	* app/tile_swap.c: Include <glib.h> early to get Win32 feature
+	test macros from <glibconfig.h>.
+
+	* app/gimpset.c: Remove unnecessary (?) warning.
+
+	* app/main.c
+	* libgimp/stdplugins-intl.h: If no LOCALEDIR defined
+	(as on Win32), use the "locale" subdir in gimp_data_directory().
+
+	* app/palette.c: Open palette file in text mode.
+
+	* app/session.c
+	* app/text_tool.c: Use GDK's GDK_WINDOWING feature test macro
+	if available, not WINDOWS_DISPLAY.
+
+	* libgimp/gimpfeatures.h.win32: Correct GIMP_VERSION.
+
+	* libgimp/makefile.msc: Use gettext.
+
+	* plug-ins/makefile.msc: Use gettext. Add some missing
+ 	plug-ins. Advice how to build "unofficial" plug-ins.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/gbr/gbr.c
+	* plug-ins/gz/gz.c: Include <glib.h> early.
+
+	* plug-ins/tga/tga.c: Include config.h, use HAVE_UNISTD_H.
+
 Sun Jun 13 21:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
 	* app/devices

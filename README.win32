@@ -11,6 +11,12 @@ compiler. Eventually gcc (egcs) on cygwin will also be supported, but
 without the produced executables depending on the cygwin dll (gcc
 -mno-cygwin).
 
+The GIMP wants to be built with the GNU gettext library for
+internationalisation (i18n). Get the version ported to Win32 (not a
+very big deal) from tml's web site mentioned above. If you don't want
+any i18n stuff, undefine ENABLE_NLS in the config.h.win32 file, and
+remove references to the gnu-intl library from the makefiles.
+
 First, build in the libgimp directory, then in tools/gcg, then in app,
 plug-ins, and finally in modules. Check the makefile.msc files in said
 directories.

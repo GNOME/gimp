@@ -29,8 +29,9 @@ GLIB_VER = 1.3
 
 GTK = ..\..\gtk+
 GLIB = ..\..\glib
+GETTEXT = ..\..\gettext-0.10.35
 
-CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -DGIMPDIR=\"$(GIMPDIR)\"
+CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl -DGIMPDIR=\"$(GIMPDIR)\"
 
 all : \
 	..\config.h	\
@@ -88,7 +89,7 @@ gimp_OBJECTS = \
 	parasite.obj
 
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
-	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
 
 # Pass -DLIBGIMP_COMPILATION when compiling these
 
@@ -137,7 +138,7 @@ gimpui_OBJECTS = \
 	gimppatternmenu.obj
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
-	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
 
 gimpmenu.obj : gimpmenu.c
 	$(CC) $(CFLAGS) -GD -c gimpmenu.c

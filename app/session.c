@@ -111,7 +111,7 @@ session_set_window_geometry (GtkWidget   *window,
   if ( window == NULL || info == NULL)
     return;
   
-#ifdef WINDOWS_DISPLAY
+#if defined(GDK_WINDOWING) && (GDK_WINDOWING == GDK_WINDOWING_WIN32)
   /* We should not position windows so that no decoration is visible */
   if (info->y > 0)
     gtk_widget_set_uposition (window, info->x, info->y);

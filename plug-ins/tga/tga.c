@@ -68,6 +68,8 @@
 /* #define PROFILE 1 */
 /* #define VERBOSE 1 */
 
+#include "config.h"
+
 #ifdef PROFILE
 # include <sys/times.h>
 #endif
@@ -75,7 +77,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <gtk/gtk.h>
 #include "libgimp/gimp.h"
 

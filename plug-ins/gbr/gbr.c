@@ -13,6 +13,7 @@
 
 #include "config.h"
 
+#include <glib.h>		/* Include early for NATIVE_WIN32 */
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>

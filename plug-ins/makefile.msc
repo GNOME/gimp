@@ -19,19 +19,18 @@ BIN = $(GIMP)\plug-ins
 FROMPLUGINSDIR=YES		# Used to bypass other parts below
 
 # List plug-ins. We must use several lists to work around nmake's limits
-SIMPLE1 = AlienMap CEL CML_explorer FractalExplorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur bumpmap borderaverage c_astretch checkerboard colorify compose convmatrix cubism
+SIMPLE1 = AlienMap CEL CML_explorer FractalExplorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix cubism
 SIMPLE2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-SIMPLE3 = gauss_iir gauss_rle gbr gif gee gfig gicon glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw laplace lic
+SIMPLE3 = gauss_iir gauss_rle gbr gee gfig gicon gif gifload glasstile gqbist gradmap grid gtm guillotine header hot hrz gz illusion jigsaw laplace lic
 SIMPLE4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify pagecurl palette papertile pat pcx pix pixelize plasma plugindetails pnm polar psd randomize ripple rotate rotators
-SIMPLE5 = scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spread threshold_alpha tile tileit tiler waves whirlpinch wind video vinvert vpropagate wmf xbm zealouscrop
-COMPLEX1 = Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfli ifscompose iwarp jpeg maze png tiff
+SIMPLE5 = scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spread struc tga threshold_alpha tile tileit tiler video vinvert vpropagate waves whirlpinch wind wmf xbm zealouscrop
+COMPLEX1 = Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfli ifscompose iwarp jpeg maze png rcm tiff
 
 # These are unofficial, ie not in the CVS To build these, you should
-# get tml's source snapshot and copy them from
-# ..\unofficial-plug-ins. Also uncomment the reference to COMPLEX2
-# below.
+# get tml's source snapshot and copy this makefile to the
+# ..\unofficial-plug-ins directory, and do "nmake -f makefile.msc unofficial".
 
-COMPLEX2 = guash user_filter twain
+UNOFFICIAL = guash user_filter twain
 
 # The main target
 
@@ -41,6 +40,9 @@ all : ..\config.h libs-all simple-plugins-all complex-plugins-all
 	copy ..\config.h.win32 ..\config.h
 
 install : libs-install simple-plugins-install complex-plugins-install scripts-install
+
+unofficial:
+	for %d in ($(UNOFFICIAL)) do nmake -nologo -f makefile.msc sub-one-complex DIR=%d TARGET=install
 
 clean : libs-clean simple-plugins-clean complex-plugins-clean
 
@@ -107,7 +109,6 @@ sub-complex-plugins :
 	@cd script-fu
 	@nmake -nologo -f ..\makefile.msc TOP=..\.. PLUGIN=script-fu COMPLEX_script_fu=1 $(TARGET)
 	@cd ..
-#	for %d in ($(COMPLEX2)) do nmake -nologo -f makefile.msc sub-one-complex DIR=%d TARGET=$(TARGET)
 
 sub-one-complex :
 	@cd $(DIR)
@@ -118,6 +119,7 @@ scripts-install :
 	$(INSTALL) script-fu\scripts\*.scm $(GIMP)\scripts
 	$(INSTALL) script-fu\scripts\*.jpg $(GIMP)\scripts
 	$(INSTALL) FractalExplorer\fractalexplorer-examples\* $(GIMP)\fractalexplorer
+	del $(GIMP)\fractalexplorer\Makefile.am
 
 !ENDIF
 !ENDIF
@@ -241,6 +243,16 @@ EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
 EXTRALIBS = $(PNG)\libpng.lib $(ZLIB)\zlib.lib
 !ENDIF
 
+!IFDEF COMPLEX_rcm
+OBJECTS = \
+	rcm.obj \
+	rcm_callback.obj \
+	rcm_dialog.obj \
+	rcm_gdk.obj \
+	rcm_misc.obj
+OPTIMIZE = 
+!ENDIF
+
 !IFDEF COMPLEX_script_fu
 OBJECTS = \
 	interp_md5.obj \
@@ -285,14 +297,13 @@ OBJECTS = \
 
 !IFDEF COMPLEX_twain
 OBJECTS = \
-	tw_dump.obj \
 	tw_func.obj \
-	tw_sess.obj \
 	tw_util.obj \
 	twain.obj
+EXTRALIBS = user32.lib
 !ENDIF
 
-LDFLAGS = /link /subsystem:windows /machine:ix86 /debug
+LDFLAGS = /link /subsystem:windows /machine:ix86 # /debug
 
 GIMP_VER = 1.1
 GTK_VER = 1.3
@@ -300,16 +311,17 @@ GLIB_VER = 1.3
 
 GTK = $(TOP)\..\gtk+
 GLIB = $(TOP)\..\glib
+GETTEXT = $(TOP)\..\gettext-0.10.35
 
 PLUGINDIR = $(TOP)\plug-ins
 
 !IFNDEF OPTIMIZE
-#OPTIMIZE = -Ox
-OPTIMIZE = -Zi
+OPTIMIZE = -Ox
+#OPTIMIZE = -Zi
 !ENDIF
-CC = cl -nologo -G5 -GF $(OPTIMIZE) -W3 -MD -Zm200
+CC = cl -nologo -G5 -GF $(OPTIMIZE) -W2 -MD -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(TOP) -I$(PLUGINDIR) -I$(PLUGINDIR)\libgck -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl
 
 !IFDEF PLUGIN
 
@@ -334,7 +346,7 @@ RESOURCE = ..\..\app\gimp.res
 !ENDIF
 
 $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
-	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) ..\megawidget\megawidget.lib ..\gpc\gpc.lib  ..\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) -MD -Fe$(PLUGIN).exe $(OBJECTS) $(RESOURCE) $(PLUGINDIR)\megawidget\megawidget.lib $(PLUGINDIR)\gpc\gpc.lib  $(PLUGINDIR)\libgck\gck\gck.lib ..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc
 	rc -r -fo $(PLUGIN).res $(PLUGIN).rc
@@ -367,5 +379,7 @@ clean :
 	erase *.lib
 	erase *.exp
 	erase *.exe
+	erase *.pdb
+	erase *.ilk
 
 !ENDIF

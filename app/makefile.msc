@@ -19,7 +19,6 @@ CC = cl -GA -G5 -GF $(OPTIMIZE) -W3 -MD -nologo
 # Change to /subsystem:console when debugging
 LDFLAGS = /link /subsystem:windows /machine:ix86 /debug
 INSTALL = copy
-TOUCH = copy makefile.msc+nul
 
 GIMP_VER = 1.1
 GTK_VER = 1.3
@@ -28,24 +27,27 @@ GLIB_VER = 1.3
 GTK = ..\..\gtk+
 GLIB = ..\..\glib
 GMODULE = $(GLIB)\gmodule
+GETTEXT = ..\..\gettext-0.10.35
 
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK)
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl
 
 GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
 
 all : \
 	..\config.h	\
+	..\libgimp\gimpfeatures.h \
 	gimpim.lib	\
 	colormap_dialog.c \
 	gimp.exe
-	$(TOUCH) all
 
 install : gimp.exe
 	$(INSTALL) gimp.exe $(BIN)
-	$(TOUCH) install
 
 ..\config.h : ..\config.h.win32
-	copy ..\config.h.win32 ..\config.h
+	copy ..\config.h.win32 $@
+
+..\libgimp\gimpfeatures.h : ..\libgimp\gimpfeatures.h.win32
+	copy ..\libgimp\gimpfeatures.h.win32 $@
 
 gimpim_OBJECTS = \
 	gimpdrawable.obj\
@@ -148,7 +150,7 @@ gimp_OBJECTS = \
 	gradient.obj		\
 	gradient_cmds.obj	\
 	gradient_select.obj	\
-	gradient_select_cmds.obj	\
+	gradient_select_cmds.obj\
 	guides_cmds.obj		\
 	gximage.obj		\
 	histogramwidget.obj 	\
@@ -156,6 +158,7 @@ gimp_OBJECTS = \
 	hue_saturation.obj	\
 	image_map.obj		\
 	image_render.obj	\
+	indicator_area.obj	\
 	info_dialog.obj		\
 	info_window.obj		\
 	ink.obj         	\
@@ -169,6 +172,7 @@ gimp_OBJECTS = \
 	layer_cmds.obj		\
 	layer_select.obj	\
 	layers_dialog.obj	\
+	lc_dialog.obj		\
 	levels.obj		\
 	lut_funcs.obj		\
 	magnify.obj		\
@@ -241,7 +245,7 @@ gimp.res : gimp.rc wilber.ico
 	rc -r -fo gimp.res gimp.rc
 
 gimp.exe : ..\config.h $(gimp_OBJECTS) gimpim.lib gimp.def gimp.res ..\libgimp\gimpi.lib
-	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\win32\gdk-$(GTK_VER).lib $(GETTEXT)\intl\gnu-intl.lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
 
 # General rule for building $(gimp_OBJECTS)
 .c.obj:

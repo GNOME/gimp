@@ -9,10 +9,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef NATIVE_WIN32
-#include <io.h>
-#endif
-
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
@@ -133,6 +129,7 @@ batch_run_cmd (char *cmd)
   return;
 }
 
+#ifndef NATIVE_WIN32
 
 static void
 batch_read (gpointer          data,
@@ -187,6 +184,8 @@ batch_read (gpointer          data,
 	}
     }
 }
+
+#endif /* !NATIVE_WIN32 */
 
 static void
 batch_pserver  (int                run_mode,

@@ -25,6 +25,8 @@
 
 #include "config.h"
 
+#include <glib.h>		/* For NATIVE_WIN32 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H

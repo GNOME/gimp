@@ -37,6 +37,7 @@
 #endif   /*  WAIT_ANY  */
 
 #include "libgimp/gimpfeatures.h"
+#include "libgimp/gimpenv.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -123,7 +124,14 @@ main (int argc, char **argv)
 #ifdef HAVE_LC_MESSAGES
   setlocale(LC_MESSAGES, "");
 #endif
+#ifdef LOCALEDIR
   bindtextdomain("gimp", LOCALEDIR);
+#else
+  bindtextdomain("gimp", g_strconcat (gimp_data_directory (),
+				      G_DIR_SEPARATOR_S,
+				      "locale",
+				      NULL));
+#endif
   textdomain("gimp");
 
   gtk_init (&argc, &argv);

@@ -58,6 +58,8 @@
 
 #include "config.h"
 
+#include <glib.h>		/* For NATIVE_WIN32 */
+
 #ifdef NATIVE_WIN32
 #define STRICT
 #include <windows.h>
