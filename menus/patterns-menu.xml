@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="patterns-menu">
 
     <!-- disabled because they are useless now
     <menuitem action="patterns-edit" />

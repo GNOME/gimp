@@ -36,6 +36,8 @@
 
 static GimpActionEntry palette_editor_actions[] =
 {
+  { "palette-editor-popup", NULL, N_("Palette Editor Menu") },
+
   { "palette-editor-edit-color", GIMP_STOCK_EDIT,
     N_("_Edit Color..."), "", NULL,
     G_CALLBACK (palette_editor_edit_color_cmd_callback),

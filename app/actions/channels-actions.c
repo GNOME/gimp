@@ -40,6 +40,8 @@
 
 static GimpActionEntry channels_actions[] =
 {
+  { "channels-popup", NULL, N_("Channels Menu") },
+
   { "channels-edit-attributes", GIMP_STOCK_EDIT,
     N_("_Edit Channel Attributes..."), NULL, NULL,
     G_CALLBACK (channels_edit_attributes_cmd_callback),

@@ -45,16 +45,11 @@
 
 static GimpActionEntry dockable_actions[] =
 {
-  { "dockable-menu", GTK_STOCK_MISSING_IMAGE, NULL },
-
-  { "dockable-add-tab-menu", NULL,
-    N_("_Add Tab") },
-
-  { "dockable-preview-size-menu", NULL,
-    N_("Preview Si_ze") },
-
-  { "dockable-tab-style-menu", NULL,
-    N_("/_Tab Style") },
+  { "dockable-popup",             NULL, N_("Dialogs Menu")      },
+  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, NULL },
+  { "dockable-add-tab-menu",      NULL, N_("_Add Tab")          },
+  { "dockable-preview-size-menu", NULL, N_("Preview Si_ze")     },
+  { "dockable-tab-style-menu",    NULL, N_("/_Tab Style")       },
 
   { "dockable-close-tab", GTK_STOCK_CLOSE,
     N_("_Close Tab"), "", NULL,

@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="images-popup">
     <menuitem action="images-raise-views" />
     <menuitem action="images-new-view" />
     <menuitem action="images-delete" />

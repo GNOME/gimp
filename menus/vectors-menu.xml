@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="vectors-popup">
     <menuitem action="vectors-path-tool" />
     <menuitem action="vectors-edit-attributes" />
     <separator />
@@ -17,7 +17,7 @@
     <menuitem action="vectors-selection-add" />
     <menuitem action="vectors-selection-subtract" />
     <menuitem action="vectors-selection-intersect" />
-    <menuitem action="vectors-selection-to-path" />
+    <menuitem action="vectors-selection-to-vectors" />
     <menuitem action="vectors-stroke" />
     <separator />
     <menuitem action="vectors-copy" />

@@ -39,6 +39,8 @@
 
 static GimpActionEntry images_actions[] =
 {
+  { "images-popup", NULL, N_("Images Menu") },
+
   { "images-raise-views", GTK_STOCK_GOTO_TOP,
     N_("_Raise Views"), "", NULL,
     G_CALLBACK (images_raise_views_cmd_callback),

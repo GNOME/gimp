@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="dockable-popup">
     <menuitem action="dockable-menu" />
     <menu action="dockable-add-tab-menu">
       <menuitem action="dialogs-tool-options" />

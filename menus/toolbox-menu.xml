@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <menubar>
+  <menubar action="toolbox-menubar">
 
     <menu action="file-menu">
       <menuitem action="file-new" />

@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
     <menuitem action="layers-edit-attributes" />
     <separator />

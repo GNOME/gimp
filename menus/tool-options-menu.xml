@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="tool-options-popup">
     <menu action="tool-options-save-menu">
       <menuitem action="tool-options-save-new" />
       <separator />

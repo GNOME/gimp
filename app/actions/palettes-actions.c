@@ -42,6 +42,8 @@
 
 static GimpActionEntry palettes_actions[] =
 {
+  { "palettes-popup", NULL, N_("Palettes Menu") },
+
   { "palettes-edit", GIMP_STOCK_EDIT,
     N_("_Edit Palette..."), NULL, NULL,
     G_CALLBACK (data_edit_data_cmd_callback),

@@ -10,10 +10,14 @@
 <!ELEMENT toolitem     EMPTY >
 <!ELEMENT separator    EMPTY >
 <!ELEMENT accelerator  EMPTY >
-<!ATTLIST menubar      name         CDATA #IMPLIED >
-<!ATTLIST toolbar      name         CDATA #IMPLIED >
-<!ATTLIST popup        name         CDATA #IMPLIED >
-<!ATTLIST placeholder  name         CDATA #IMPLIED >
+<!ATTLIST menubar      name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST toolbar      name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST popup        name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
+<!ATTLIST placeholder  name         CDATA #IMPLIED
+                       action       CDATA #IMPLIED >
 <!ATTLIST menu         name         CDATA #IMPLIED
                        action       CDATA #REQUIRED
                        position (top|bot) #IMPLIED >

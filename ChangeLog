@@ -1,3 +1,15 @@
+2004-04-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/actions.c: forgot to register the "patterns" actions.
+
+	* app/actions/*-actions.c: added actions representing the toplevel
+	menus (popups and menubars). Fixed some typos.
+
+	* menus/*-menu.xml: added action="foo" attributes to all toplevel
+	menus. Fixed typos here too.
+
+	* menus/gtkuimanager.dtd: fixed possible attributes.
+
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmenu.c (gimp_menu_add_none): use the same label as

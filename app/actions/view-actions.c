@@ -225,7 +225,7 @@ static GimpRadioActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-other", NULL,
-    "/View/Zoom/O_ther...", NULL, NULL,
+    "O_ther...", NULL, NULL,
     0,
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
@@ -386,7 +386,7 @@ view_actions_set_zoom (GimpActionGroup  *group,
 
   if (!action)
     {
-      action = "/View/Zoom/Other...";
+      action = "view-zoom-other";
 
       label = g_strdup_printf (_("Other (%s) ..."), buf);
       gimp_action_group_set_action_label (group, action, label);

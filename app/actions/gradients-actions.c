@@ -42,6 +42,8 @@
 
 static GimpActionEntry gradients_actions[] =
 {
+  { "gradients-popup", NULL, N_("Gradients Menu") },
+
   { "gradients-edit", GIMP_STOCK_EDIT,
     N_("_Edit Gradient..."), NULL, NULL,
     G_CALLBACK (data_edit_data_cmd_callback),

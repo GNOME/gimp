@@ -2,7 +2,7 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="palettes-popup">
     <menuitem action="palettes-edit" />
     <separator />
     <menuitem action="palettes-new" />

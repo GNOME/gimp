@@ -45,6 +45,7 @@
 
 static GimpActionEntry image_actions[] =
 {
+  { "toolbox-menubar",      NULL, N_("Toolbox Menu") },
   { "image-menubar",        NULL, N_("Image Menu") },
   { "image-menu",           NULL, N_("_Image")     },
   { "image-mode-menu",      NULL, N_("_Mode")      },

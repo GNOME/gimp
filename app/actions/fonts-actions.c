@@ -41,6 +41,8 @@
 
 static GimpActionEntry fonts_actions[] =
 {
+  { "fonts-popup", NULL, N_("Fonts Menu") },
+
   { "fonts-refresh", GTK_STOCK_REFRESH,
     N_("_Rescan Font List"), "", NULL,
     G_CALLBACK (fonts_refresh_cmd_callback),

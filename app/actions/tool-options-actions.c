@@ -53,22 +53,16 @@ static void tool_options_actions_update_presets (GimpActionGroup *group,
 
 static GimpActionEntry tool_options_actions[] =
 {
-  { "tool-options-save-menu", NULL,
-    N_("_Save Options to") },
+  { "tool-options-popup",        NULL, N_("Tool Options Menu")     },
+  { "tool-options-save-menu",    NULL, N_("_Save Options to")      },
+  { "tool-options-restore-menu", NULL, N_("_Restore Options from") },
+  { "tool-options-rename-menu",  NULL, N_("Re_name Saved Options") },
+  { "tool-options-delete-menu",  NULL, N_("_Delete Saved Options") },
 
   { "tool-options-save-new", GTK_STOCK_NEW,
     N_("_New Entry..."), "", NULL,
     G_CALLBACK (tool_options_save_new_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_SAVE },
-
-  { "tool-options-restore-menu", NULL,
-    N_("_Restore Options from") },
-
-  { "tool-options-rename-menu", NULL,
-    N_("Re_name Saved Options") },
-
-  { "tool-options-delete-menu", NULL,
-    N_("_Delete Saved Options") },
 
   { "tool-options-reset", GIMP_STOCK_RESET,
     N_("R_eset Tool Options"), "", NULL,

@@ -2,10 +2,10 @@
 <!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
-  <popup>
+  <popup action="documents-popup">
     <menuitem action="documents-open" />
     <menuitem action="documents-raise-or-open" />
-    <menuitem action="documents-file-new-dialog" />
+    <menuitem action="documents-file-open-dialog" />
     <menuitem action="documents-remove" />
     <separator />
     <menuitem action="documents-recreate-preview" />
