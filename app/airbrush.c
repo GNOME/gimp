@@ -78,7 +78,7 @@ struct _AirbrushOptions
 static AirbrushOptions *airbrush_options = NULL; 
 
 /*  local variables  */
-static gint             timer;  /*  timer for successive paint applications  */
+static guint            timer;  /*  timer for successive paint applications  */
 static gint             timer_state = OFF;       /*  state of airbrush tool  */
 static AirbrushTimeout  airbrush_timeout;
 
@@ -201,12 +201,8 @@ airbrush_paint_func (PaintCore    *paint_core,
   switch (state)
     {
     case INIT_PAINT :
-      /* timer_state = OFF; */
       if (timer_state == ON)
-	{
-	  g_warning ("killing stray timer, please report to lewing@gimp.org");
-	  gtk_timeout_remove (timer);
-	}
+        gtk_timeout_remove (timer);
       timer_state = OFF;
       break;
 
