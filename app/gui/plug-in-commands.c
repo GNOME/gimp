@@ -157,7 +157,7 @@ plug_in_repeat_cmd_callback (GtkWidget *widget,
 
   interactive = action ? TRUE : FALSE;
 
-  plug_in_repeat (GIMP (data),
+  plug_in_repeat (the_gimp,
                   gimp_display_get_ID (gdisp),
                   gimp_image_get_ID (gdisp->gimage),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),

@@ -1,5 +1,11 @@
 2002-12-14  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/plug-in-commands.c (plug_in_repeat_cmd_callback): data
+	is not a Gimp pointer if this function is called from an image
+	menubar. Use the_gimp instead of crashing.
+
+2002-12-14  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpimagemaptool.c: made it compile after Mitch's
 	changes.
 
@@ -11,7 +17,7 @@
 	* app/config/gimpdisplayconfig.[ch]: renamed "menu_bar_per_display"
 	to "show_menubar". Removed GIMP_PARAM_RESTART flag.
 
-	* app/display/gimpdisplayshell.[ch]: chaged shell->item_factory to
+	* app/display/gimpdisplayshell.[ch]: changed shell->item_factory to
 	shell->menubar_factory plus shell->popup_factory and always create
 	both of them. Added "gboolean update_popup" to
 	gimp_display_shell_set_menu_sensitivity() and call it recursively
