@@ -315,7 +315,6 @@ EXPORTS
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
-	gimp_run_temp
 	gimp_scale
 	gimp_selection_bounds
 	gimp_selection_clear

@@ -5,6 +5,7 @@
 2003-07-20  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.def
+	* libgimp/gimpui.def
 	* libgimpcolor/gimpcolor.def 
 	* libgimpmath/gimpmath.def: Updates.
 
