@@ -35,7 +35,6 @@ app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
-app/core/gimpimage-text.c
 app/core/gimpimage.c
 app/core/gimpimagefile.c
 app/core/gimpitem.c
