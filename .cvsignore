@@ -4,6 +4,9 @@ configure
 config.log
 config.h
 config.cache
+config.status
+config.guess
+config.sub
 stamp-h
 stamp-h1
 gimp-1.2.1
@@ -12,7 +15,6 @@ gimprc
 gimprc-1.2.5
 gimptool-1.2.1
 gimp-remote-1.2.1
-config.status
 libtool
 aclocal.m4
 gimprc_user
