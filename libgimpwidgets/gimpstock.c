@@ -646,6 +646,14 @@ gimp_stock_direction_pixbufs[] =
 };
 
 
+/**
+ * gimp_stock_init:
+ *
+ * Initializes the GIMP stock icon factory.
+ *
+ * You don't need to call this function as gimp_ui_init() already does
+ * this for you.
+ */
 void
 gimp_stock_init (void)
 {

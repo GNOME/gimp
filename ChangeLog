@@ -1,5 +1,9 @@
 2004-12-14  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.c (gimp_stock_init): documented.
+
+2004-12-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_misc.c (make_toolbar_radio_icon): don't
 	call gtk_radio_tool_button_new_with_stock_from_widget() with a
 	NULL widget. Fixes bug #161210.
