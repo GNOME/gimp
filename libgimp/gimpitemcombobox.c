@@ -73,7 +73,9 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          num_images;
   gint          i;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
@@ -130,7 +132,9 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          num_images;
   gint          i;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
@@ -180,7 +184,9 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          num_images;
   gint          i;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 

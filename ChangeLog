@@ -1,5 +1,15 @@
 2005-02-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpintcombobox.c: added an "ellipsize" construct
+	property and changed the default behaviour back to not doing
+	ellipsation on the text.
+
+	* libgimp/gimpimagecombobox.c
+	* libgimp/gimpdrawablecombobox.c: set "ellipsize" to middle for
+	drawable and image combo boxes.
+
+2005-02-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable-blend.c: improved readability by
 	introducing a macro for the dithering code.
 

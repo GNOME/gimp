@@ -32,7 +32,38 @@
 #include "gimpintstore.h"
 
 
-static void  gimp_int_combo_box_init (GimpIntComboBox *combo_box);
+enum
+{
+  PROP_0,
+  PROP_ELLIPSIZE
+};
+
+typedef struct
+{
+  PangoEllipsizeMode  ellipsize;
+} GimpIntComboBoxPrivate;
+
+#define GIMP_INT_COMBO_BOX_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_INT_COMBO_BOX, GimpIntComboBoxPrivate))
+
+
+static void  gimp_int_combo_box_class_init   (GimpIntComboBoxClass *klass);
+static void  gimp_int_combo_box_init         (GimpIntComboBox      *combo_box);
+
+static void  gimp_int_combo_box_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void  gimp_int_combo_box_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+static GObject *
+             gimp_int_combo_box_constructor  (GType                  type,
+                                              guint                  n_params,
+                                              GObjectConstructParam *params);
+
+
+static GtkComboBoxClass *parent_class = NULL;
 
 
 GType
@@ -47,7 +78,7 @@ gimp_int_combo_box_get_type (void)
         sizeof (GimpIntComboBoxClass),
         NULL,           /* base_init      */
         NULL,           /* base_finalize  */
-        NULL,           /* class_init     */
+        (GClassInitFunc) gimp_int_combo_box_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpIntComboBox),
@@ -64,31 +95,120 @@ gimp_int_combo_box_get_type (void)
 }
 
 static void
-gimp_int_combo_box_init (GimpIntComboBox *combo_box)
+gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 {
-  GtkListStore    *store;
-  GtkCellRenderer *cell;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->constructor  = gimp_int_combo_box_constructor;
+  object_class->set_property = gimp_int_combo_box_set_property;
+  object_class->get_property = gimp_int_combo_box_get_property;
+
+  /**
+   * GimpIntComboBox:ellipsize:
+   *
+   * Specifies the preferred place to ellipsize text in the combo-box,
+   * if the cell renderer does not have enough room to display the
+   * entire string.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class,
+                                   PROP_ELLIPSIZE,
+                                   g_param_spec_enum ("ellipsize", NULL, NULL,
+						      PANGO_TYPE_ELLIPSIZE_MODE,
+						      PANGO_ELLIPSIZE_NONE,
+						      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
+}
+
+static void
+gimp_int_combo_box_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_ELLIPSIZE:
+      priv->ellipsize = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_int_combo_box_get_property (GObject      *object,
+                                 guint         property_id,
+                                 GValue       *value,
+                                 GParamSpec   *pspec)
+{
+  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_ELLIPSIZE:
+      g_value_set_enum (value, priv->ellipsize);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static GObject *
+gimp_int_combo_box_constructor (GType                  type,
+                                guint                  n_params,
+                                GObjectConstructParam *params)
+{
+  GObject                *object;
+  GtkListStore           *store;
+  GtkCellRenderer        *cell;
+  GimpIntComboBoxPrivate *priv;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   store = gimp_int_store_new ();
-
-  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
-
+  gtk_combo_box_set_model (GTK_COMBO_BOX (object), GTK_TREE_MODEL (store));
   g_object_unref (store);
 
   cell = gtk_cell_renderer_pixbuf_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (object), cell, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (object), cell,
                                   "stock_id", GIMP_INT_STORE_STOCK_ID,
                                   "pixbuf",   GIMP_INT_STORE_PIXBUF,
                                   NULL);
 
-  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                       "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
-                       NULL);
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box), cell, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box), cell,
+  priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (object);
+
+  if (priv->ellipsize != PANGO_ELLIPSIZE_NONE)
+    cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                         "ellipsize", priv->ellipsize,
+                         NULL);
+  else
+    cell = gtk_cell_renderer_text_new ();
+
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (object), cell, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (object), cell,
                                   "text", GIMP_INT_STORE_LABEL,
                                   NULL);
+
+  return object;
+}
+
+static void
+gimp_int_combo_box_init (GimpIntComboBox *combo_box)
+{
+  GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+
+  priv->ellipsize = PANGO_ELLIPSIZE_NONE;
 }
 
 

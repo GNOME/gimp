@@ -71,7 +71,9 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
   gint32       *images;
   gint          num_images;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
