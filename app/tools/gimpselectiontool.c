@@ -31,10 +31,9 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpdrawtool.h"
 #include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);

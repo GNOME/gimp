@@ -20,7 +20,7 @@
 #define __GIMP_VECTOR_OPTIONS_H__
 
 
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 
 
 #define GIMP_TYPE_VECTOR_OPTIONS            (gimp_vector_options_get_type ())

@@ -50,7 +50,7 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimpbezierselecttool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 #include "tool_manager.h"
 
 #include "app_procs.h"

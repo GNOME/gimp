@@ -41,7 +41,7 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 
 #include "libgimp/gimpintl.h"
 

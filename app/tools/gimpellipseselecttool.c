@@ -35,7 +35,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpellipseselecttool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 
 #include "libgimp/gimpintl.h"
 

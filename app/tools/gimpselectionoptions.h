@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SELECTION_OPTIONS_H__
-#define __SELECTION_OPTIONS_H__
+#ifndef __GIMP_SELECTION_OPTIONS_H__
+#define __GIMP_SELECTION_OPTIONS_H__
 
 
 #include "tool_options.h"
@@ -68,4 +68,4 @@ GType   gimp_selection_options_get_type (void) G_GNUC_CONST;
 void    gimp_selection_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif  /*  __SELCTION_OPTIONS_H__  */
+#endif  /*  __GIMP_SELCTION_OPTIONS_H__  */

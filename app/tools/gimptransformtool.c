@@ -53,8 +53,8 @@
 #include "display/gimpprogress.h"
 
 #include "gimptransformtool.h"
+#include "gimptransformoptions.h"
 #include "tool_manager.h"
-#include "transform_options.h"
 
 #include "undo.h"
 #include "path_transform.h"

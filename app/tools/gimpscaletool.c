@@ -42,7 +42,7 @@
 #include "gui/info-dialog.h"
 
 #include "gimpscaletool.h"
-#include "transform_options.h"
+#include "gimptransformoptions.h"
 
 #include "libgimp/gimpintl.h"
 

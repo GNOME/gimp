@@ -39,10 +39,11 @@ struct _GimpInkOptions
   GimpPaintOptions  paint_options;
 
   gdouble           size;
-  gdouble           sensitivity;
+  gdouble           tilt_angle;
+
+  gdouble           size_sensitivity;
   gdouble           vel_sensitivity;
   gdouble           tilt_sensitivity;
-  gdouble           tilt_angle;
 
   GimpInkBlobType   blob_type;
   gdouble           blob_aspect;

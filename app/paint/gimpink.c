@@ -488,7 +488,7 @@ ink_pen_ellipse (GimpInkOptions *options,
 
   /* Adjust the size depending on pressure. */
 
-  size = options->size * (1.0 + options->sensitivity *
+  size = options->size * (1.0 + options->size_sensitivity *
                           (2.0 * pressure - 1.0) );
 
   /* Adjust the size further depending on pointer velocity
@@ -502,9 +502,9 @@ ink_pen_ellipse (GimpInkOptions *options,
   g_print ("%f (%f) -> ", (float)size, (float)velocity);
 #endif  
 
-  size = options->vel_sensitivity *
-    ((4.5 * size) / (1.0 + options->vel_sensitivity * (2.0*(velocity))))
-    + (1.0 - options->vel_sensitivity) * size;
+  size = (options->vel_sensitivity *
+          ((4.5 * size) / (1.0 + options->vel_sensitivity * (2.0 * velocity)))
+          + (1.0 - options->vel_sensitivity) * size);
 
 #ifdef VERBOSE
   g_print ("%f\n", (float)size);
@@ -512,10 +512,11 @@ ink_pen_ellipse (GimpInkOptions *options,
 
   /* Clamp resulting size to sane limits */
 
-  if (size > options->size * (1.0 + options->sensitivity))
-    size = options->size * (1.0 + options->sensitivity);
+  if (size > options->size * (1.0 + options->size_sensitivity))
+    size = options->size * (1.0 + options->size_sensitivity);
 
-  if (size*SUBSAMPLE < 1.0) size = 1.0/SUBSAMPLE;
+  if (size * SUBSAMPLE < 1.0)
+    size = 1.0 / SUBSAMPLE;
 
   /* Add brush angle/aspect to tilt vectorially */
 

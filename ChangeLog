@@ -1,3 +1,33 @@
+2003-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/transform_options.[ch]
+	* app/tools/selection_options.[ch]: removed...
+
+	* app/tools/gimpselectionoptions.[ch]
+	* app/tools/gimptransformoptions.[ch]: ...and added here.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectoroptions.h: changed accordingly.
+
+	* app/tools/gimpinkoptions.[ch]: renamed "sensitivity" to
+	"size_sensitivity". Reordered properties. Added utility
+	constructors blob_button_new() and brush_widget_new().
+
+	* app/tools/gimpinktool.c: changed accordingly.
+
 2003-02-08  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/enumcode-py.pl: use True and False if available.

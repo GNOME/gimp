@@ -33,12 +33,11 @@
 
 #include "widgets/gimppropwidgets.h"
 
+#include "gimpbycolorselecttool.h"
 #include "gimpellipseselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
-#include "gimprectselecttool.h"
-#include "gimpbycolorselecttool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
@@ -587,7 +586,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
 
       g_object_set_data (G_OBJECT (optionmenu), "set_digits",
                          width_spinbutton);
-      g_object_set_data (G_OBJECT (optionmenu), "set_digits",
+      g_object_set_data (G_OBJECT (width_spinbutton), "set_digits",
                          height_spinbutton);
 
       gtk_widget_show (table);

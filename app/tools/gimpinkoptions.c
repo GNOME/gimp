@@ -45,68 +45,30 @@ enum
 {
   PROP_0,
   PROP_SIZE,
-  PROP_SENSITIVITY,
+  PROP_TILT_ANGLE,
+  PROP_SIZE_SENSITIVITY,
   PROP_VEL_SENSITIVITY,
   PROP_TILT_SENSITIVITY,
-  PROP_TILT_ANGLE,
   PROP_BLOB_TYPE,
   PROP_BLOB_ASPECT,
   PROP_BLOB_ANGLE
 };
 
 
-typedef struct _BrushWidget BrushWidget;
-
-struct _BrushWidget
-{
-  GtkWidget      *widget;
-  gboolean        state;
-
-  /* EEK */
-  GimpInkOptions *ink_options;
-};
-
-
 static void   gimp_ink_options_init       (GimpInkOptions      *options);
 static void   gimp_ink_options_class_init (GimpInkOptionsClass *options_class);
 
-static void   gimp_ink_options_set_property (GObject        *object,
-                                             guint           property_id,
-                                             const GValue   *value,
-                                             GParamSpec     *pspec);
-static void   gimp_ink_options_get_property (GObject        *object,
-                                             guint           property_id,
-                                             GValue         *value,
-                                             GParamSpec     *pspec);
+static void   gimp_ink_options_set_property (GObject         *object,
+                                             guint            property_id,
+                                             const GValue    *value,
+                                             GParamSpec      *pspec);
+static void   gimp_ink_options_get_property (GObject         *object,
+                                             guint            property_id,
+                                             GValue          *value,
+                                             GParamSpec      *pspec);
 
-static void   gimp_ink_options_notify       (GimpInkOptions *options,
-                                             GParamSpec     *pspec,
-                                             BrushWidget    *brush_w);
-
-static void     brush_widget_active_rect    (BrushWidget    *brush_widget,
-                                             GtkWidget      *widget,
-                                             GdkRectangle   *rect);
-static void     brush_widget_realize        (GtkWidget      *widget);
-static gboolean brush_widget_expose         (GtkWidget      *widget,
-                                             GdkEventExpose *event,
-                                             BrushWidget    *brush_widget);
-static gboolean brush_widget_button_press   (GtkWidget      *widget,
-                                             GdkEventButton *event,
-                                             BrushWidget    *brush_widget);
-static gboolean brush_widget_button_release (GtkWidget      *widget,
-                                             GdkEventButton *event,
-                                             BrushWidget    *brush_widget);
-static gboolean brush_widget_motion_notify  (GtkWidget      *widget,
-                                             GdkEventMotion *event,
-                                             BrushWidget    *brush_widget);
-
-static gboolean blob_button_expose          (GtkWidget      *widget,
-                                             GdkEventExpose *event,
-                                             BlobFunc        function);
-
-static void     paint_blob                  (GdkDrawable    *drawable,
-                                             GdkGC          *gc,
-                                             Blob           *blob);
+static GtkWidget * brush_widget_new         (GimpInkOptions  *options);
+static GtkWidget * blob_button_new          (GimpInkBlobType  blob_type);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -156,8 +118,13 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                                    "size", NULL,
                                    0.0, 20.0, 4.4,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SENSITIVITY,
-                                   "sensitivity", NULL,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
+                                   "tilt-angle", NULL,
+                                   -90.0, 90.0, 0.0,
+                                   0);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SIZE_SENSITIVITY,
+                                   "size-sensitivity", NULL,
                                    0.0, 1.0, 1.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_VEL_SENSITIVITY,
@@ -168,10 +135,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
                                    "tilt-sensitivity", NULL,
                                    0.0, 1.0, 0.4,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
-                                   "tilt-angle", NULL,
-                                   -90.0, 90.0, 0.0,
-                                   0);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BLOB_TYPE,
                                  "blob-type", NULL,
                                  GIMP_TYPE_INK_BLOB_TYPE,
@@ -207,17 +171,17 @@ gimp_ink_options_set_property (GObject      *object,
     case PROP_SIZE:
       options->size = g_value_get_double (value);
       break;
-    case PROP_SENSITIVITY:
-      options->sensitivity = g_value_get_double (value);
+    case PROP_TILT_ANGLE:
+      options->tilt_angle = g_value_get_double (value);
+      break;
+    case PROP_SIZE_SENSITIVITY:
+      options->size_sensitivity = g_value_get_double (value);
       break;
     case PROP_VEL_SENSITIVITY:
       options->vel_sensitivity = g_value_get_double (value);
       break;
     case PROP_TILT_SENSITIVITY:
       options->tilt_sensitivity = g_value_get_double (value);
-      break;
-    case PROP_TILT_ANGLE:
-      options->tilt_angle = g_value_get_double (value);
       break;
     case PROP_BLOB_TYPE:
       options->blob_type = g_value_get_enum (value);
@@ -249,17 +213,17 @@ gimp_ink_options_get_property (GObject    *object,
     case PROP_SIZE:
       g_value_set_double (value, options->size);
       break;
-    case PROP_SENSITIVITY:
-      g_value_set_double (value, options->sensitivity);
+    case PROP_TILT_ANGLE:
+      g_value_set_double (value, options->tilt_angle);
+      break;
+    case PROP_SIZE_SENSITIVITY:
+      g_value_set_double (value, options->size_sensitivity);
       break;
     case PROP_VEL_SENSITIVITY:
       g_value_set_double (value, options->vel_sensitivity);
       break;
     case PROP_TILT_SENSITIVITY:
       g_value_set_double (value, options->tilt_sensitivity);
-      break;
-    case PROP_TILT_ANGLE:
-      g_value_set_double (value, options->tilt_angle);
       break;
     case PROP_BLOB_TYPE:
       g_value_set_enum (value, options->blob_type);
@@ -279,17 +243,14 @@ gimp_ink_options_get_property (GObject    *object,
 void
 gimp_ink_options_gui (GimpToolOptions *tool_options)
 {
-  GObject        *config;
-  GimpInkOptions *options;
-  GtkWidget      *table;
-  GtkWidget      *vbox;
-  GtkWidget      *hbox;
-  GtkWidget      *frame;
-  GtkWidget      *darea;
-  BrushWidget    *brush_w;
+  GObject   *config;
+  GtkWidget *table;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *brush;
 
-  config  = G_OBJECT (tool_options);
-  options = GIMP_INK_OPTIONS (tool_options);
+  config = G_OBJECT (tool_options);
 
   gimp_paint_options_gui (tool_options);
 
@@ -334,12 +295,12 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /* size sens slider */
-  gimp_prop_scale_entry_new (config, "sensitivity",
+  gimp_prop_scale_entry_new (config, "size-sensitivity",
                              GTK_TABLE (table), 0, 0,
                              _("Size:"),
                              0.01, 0.1, 1,
                              FALSE, 0.0, 0.0);
-  
+
   /* tilt sens slider */
   gimp_prop_scale_entry_new (config, "tilt-sensitivity",
                              GTK_TABLE (table), 0, 1,
@@ -356,7 +317,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
 
   /*  bottom hbox */
   hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Brush type radiobuttons */
@@ -366,34 +327,27 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   {
-    GtkWidget *blob;
-    GList     *children;
-    GList     *list;
-    gint       i;
-
-    BlobFunc blob_funcs[] = { blob_ellipse, blob_square, blob_diamond};
+    GList           *children;
+    GList           *list;
+    GimpInkBlobType  blob_type;
 
     children =
       gtk_container_get_children (GTK_CONTAINER (GTK_BIN (frame)->child));
 
-    for (list = children, i = 0;
+    for (list = children, blob_type = GIMP_INK_BLOB_TYPE_ELLIPSE;
          list;
-         list = g_list_next (list), i++)
+         list = g_list_next (list), blob_type++)
       {
         GtkWidget *radio;
+        GtkWidget *blob;
 
         radio = GTK_WIDGET (list->data);
 
         gtk_container_remove (GTK_CONTAINER (radio), GTK_BIN (radio)->child);
 
-        blob = gtk_drawing_area_new ();
-        gtk_widget_set_size_request (blob, 21, 21);
+        blob = blob_button_new (blob_type);
         gtk_container_add (GTK_CONTAINER (radio), blob);
         gtk_widget_show (blob);
-
-        g_signal_connect (blob, "expose_event",
-                          G_CALLBACK (blob_button_expose),
-                          blob_funcs[i]);
       }
 
     g_list_free (children);
@@ -414,46 +368,96 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  darea = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (darea, 60, 60);
-  gtk_widget_set_events (darea, 
-			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
-			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), darea);
-  gtk_widget_show (darea);
+  brush = brush_widget_new (GIMP_INK_OPTIONS (tool_options));
+  gtk_container_add (GTK_CONTAINER (frame), brush);
+  gtk_widget_show (brush);
+}
+
+
+/*  BrushWidget functions  */
+
+typedef struct _BrushWidget BrushWidget;
+
+struct _BrushWidget
+{
+  GtkWidget      *widget;
+  gboolean        state;
+
+  /* EEK */
+  GimpInkOptions *ink_options;
+};
+
+static void     brush_widget_notify         (GimpInkOptions *options,
+                                             GParamSpec     *pspec,
+                                             BrushWidget    *brush_widget);
+static void     brush_widget_active_rect    (BrushWidget    *brush_widget,
+                                             GtkWidget      *widget,
+                                             GdkRectangle   *rect);
+static void     brush_widget_realize        (GtkWidget      *widget);
+static gboolean brush_widget_expose         (GtkWidget      *widget,
+                                             GdkEventExpose *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_button_press   (GtkWidget      *widget,
+                                             GdkEventButton *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_button_release (GtkWidget      *widget,
+                                             GdkEventButton *event,
+                                             BrushWidget    *brush_widget);
+static gboolean brush_widget_motion_notify  (GtkWidget      *widget,
+                                             GdkEventMotion *event,
+                                             BrushWidget    *brush_widget);
+
+static void     paint_blob                  (GdkDrawable    *drawable,
+                                             GdkGC          *gc,
+                                             Blob           *blob);
+
+static GtkWidget *
+brush_widget_new (GimpInkOptions *options)
+{
+  BrushWidget *brush_w;
 
   brush_w = g_new (BrushWidget, 1);
-  brush_w->widget      = darea;
+  brush_w->widget      = gtk_drawing_area_new ();
   brush_w->state       = FALSE;
   brush_w->ink_options = options;
 
+  gtk_widget_set_size_request (brush_w->widget, 60, 60);
+  gtk_widget_set_events (brush_w->widget,
+			 GDK_BUTTON_PRESS_MASK   |
+                         GDK_BUTTON_RELEASE_MASK |
+			 GDK_POINTER_MOTION_MASK |
+                         GDK_EXPOSURE_MASK);
+
   g_signal_connect (options, "notify",
-                    G_CALLBACK (gimp_ink_options_notify),
+                    G_CALLBACK (brush_widget_notify),
                     brush_w);
 
-  g_signal_connect (darea, "button_press_event",
+  g_signal_connect (brush_w->widget, "button_press_event",
 		    G_CALLBACK (brush_widget_button_press),
 		    brush_w);
-  g_signal_connect (darea, "button_release_event",
+  g_signal_connect (brush_w->widget, "button_release_event",
 		    G_CALLBACK (brush_widget_button_release),
 		    brush_w);
-  g_signal_connect (darea, "motion_notify_event",
+  g_signal_connect (brush_w->widget, "motion_notify_event",
 		    G_CALLBACK (brush_widget_motion_notify),
 		    brush_w);
-  g_signal_connect (darea, "expose_event",
+  g_signal_connect (brush_w->widget, "expose_event",
 		    G_CALLBACK (brush_widget_expose), 
 		    brush_w);
-  g_signal_connect (darea, "realize",
+  g_signal_connect (brush_w->widget, "realize",
 		    G_CALLBACK (brush_widget_realize),
 		    brush_w);
 
-  gtk_widget_show_all (hbox);
+  g_object_weak_ref (G_OBJECT (brush_w->widget),
+                     (GWeakNotify) g_free, brush_w);
+
+  return brush_w->widget;
 }
 
 static void
-gimp_ink_options_notify (GimpInkOptions *options,
-                         GParamSpec     *pspec,
-                         BrushWidget    *brush_w)
+brush_widget_notify (GimpInkOptions *options,
+                     GParamSpec     *pspec,
+                     BrushWidget    *brush_w)
 {
   switch (pspec->param_id)
     {
@@ -467,9 +471,6 @@ gimp_ink_options_notify (GimpInkOptions *options,
       break;
     }
 }
-
-
-/*  BrushWidget functions  */
 
 static void
 brush_widget_active_rect (BrushWidget  *brush_widget,
@@ -644,6 +645,41 @@ brush_widget_motion_notify (GtkWidget      *widget,
 
 
 /*  blob button functions  */
+
+static gboolean   blob_button_expose (GtkWidget      *widget,
+                                      GdkEventExpose *event,
+                                      BlobFunc        function);
+
+static GtkWidget *
+blob_button_new (GimpInkBlobType blob_type)
+{
+  GtkWidget *blob;
+  BlobFunc   function = blob_ellipse;
+
+  switch (blob_type)
+    {
+    case GIMP_INK_BLOB_TYPE_ELLIPSE:
+      function = blob_ellipse;
+      break;
+
+    case GIMP_INK_BLOB_TYPE_SQUARE:
+      function = blob_square;
+      break;
+
+    case GIMP_INK_BLOB_TYPE_DIAMOND:
+      function = blob_diamond;
+      break;
+    }
+
+  blob = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (blob, 21, 21);
+
+  g_signal_connect (blob, "expose_event",
+                    G_CALLBACK (blob_button_expose),
+                    function);
+
+  return blob;
+}
 
 static gboolean
 blob_button_expose (GtkWidget      *widget,

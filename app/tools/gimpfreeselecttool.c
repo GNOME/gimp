@@ -40,7 +40,7 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
-#include "selection_options.h"
+#include "gimpselectionoptions.h"
 
 
 #include "libgimp/gimpintl.h"

@@ -37,7 +37,7 @@
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimptransformtool.h"
-#include "transform_options.h"
+#include "gimptransformoptions.h"
 #include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"

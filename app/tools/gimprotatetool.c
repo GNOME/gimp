@@ -43,7 +43,7 @@
 #include "gui/info-dialog.h"
 
 #include "gimprotatetool.h"
-#include "transform_options.h"
+#include "gimptransformoptions.h"
 
 #include "libgimp/gimpintl.h"
 

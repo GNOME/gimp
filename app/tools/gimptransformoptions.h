@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TRANSFORM_OPTIONS_H__
-#define __TRANSFORM_OPTIONS_H_
+#ifndef __GIMP_TRANSFORM_OPTIONS_H__
+#define __GIMP_TRANSFORM_OPTIONS_H_
 
 
 #include "tool_options.h"
@@ -54,4 +54,4 @@ GType   gimp_transform_options_get_type (void) G_GNUC_CONST;
 void    gimp_transform_options_gui      (GimpToolOptions *tool_options);
 
 
-#endif /* __TRANSFORM_OPTIONS_H__ */
+#endif /* __GIMP_TRANSFORM_OPTIONS_H__ */
