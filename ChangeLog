@@ -4,6 +4,13 @@
 
 2003-08-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.c
+	(gimp_paint_tool_oper_update,cursor_update): always look for the
+	active drawable, not for the active layer. Fixes line and brush
+	preview drawing for channels.
+
+2003-08-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpdisplayconfig.[ch]
 	* app/config/gimprc-blurbs.h: added "gboolean show_brush_outline".
 

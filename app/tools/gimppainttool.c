@@ -31,7 +31,12 @@
 
 #include "config/gimpdisplayconfig.h"
 
+#include "base/boundary.h"
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -50,14 +55,6 @@
 #include "gimppainttool.h"
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
-
-
-#include "base/boundary.h"
-#include "base/pixel-region.h"
-#include "base/temp-buf.h"
-#include "core/gimpbrush.h"
-#include "display/gimpdisplayshell-transform.h"
-
 
 #include "gimp-intl.h"
 
@@ -561,7 +558,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
   GimpDrawTool     *draw_tool;
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
-  GimpLayer        *layer;
+  GimpDrawable     *drawable;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
@@ -608,7 +605,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       tool->gdisp = gdisp;
     }
 
-  if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
+  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
       paint_tool->brush_x = coords->x;
       paint_tool->brush_y = coords->y;
@@ -625,7 +622,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
           core->cur_coords = *coords;
 
-          gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+          gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
           core->cur_coords.x -= off_x;
           core->cur_coords.y -= off_y;
@@ -682,7 +679,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  if (gimp_image_get_active_layer (gdisp->gimage))
+  if (gimp_image_active_drawable (gdisp->gimage))
     {
       GimpDrawTool     *draw_tool;
       GimpDisplayShell *shell;
