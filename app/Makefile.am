@@ -287,8 +287,7 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"	\
-	-DVERSION=\"$(VERSION)\"
+	-DGIMPDIR=\""$(gimpdir)"\"
 
 INCLUDES = \
 	$(X_CFLAGS)			\

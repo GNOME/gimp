@@ -14,10 +14,7 @@
    Leave the following blank line there!!  Autoheader needs it.  */
 
 
-/* These get defined to the version numbers in configure.in */
-#undef GIMP_MAJOR_VERSION_NUMBER
-#undef GIMP_MINOR_VERSION_NUMBER
-#undef GIMP_MICRO_VERSION_NUMBER
+#undef GIMP_VERSION
 
 #undef HAVE_DIRENT_H
 #undef HAVE_DOPRNT

@@ -1,0 +1,84 @@
+#!/bin/sh
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+exec_prefix_set=no
+
+usage="\
+Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c]"
+
+if test $# -eq 0; then
+      echo "${usage}" 1>&2
+      exit 1
+fi
+
+if test x${GTK_CONFIG+set} != xset ; then
+      gtk_config=@GTK_CONFIG@
+else
+      gtk_config=$GTK_CONFIG
+fi
+
+if test x${CC+set} != xset ; then
+      cc=@CC@
+else
+      cc=$CC
+fi
+
+if test x${CFLAGS+set} != xset ; then
+      cflags='@CFLAGS@'
+else
+      cflags="$CFLAGS"
+fi
+
+while test $# -gt 0; do
+  case "$1" in
+  -*=*) optarg=`echo "$1" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+  *) optarg= ;;
+  esac
+
+  case $1 in
+    --prefix=*)
+      prefix=$optarg
+      if test $exec_prefix_set = no ; then
+        exec_prefix=$optarg
+      fi
+      ;;
+    --prefix)
+      echo $prefix
+      ;;
+    --exec-prefix=*)
+      exec_prefix=$optarg
+      exec_prefix_set=yes
+      ;;
+    --exec-prefix)
+      echo $exec_prefix
+      ;;
+    --version)
+      echo @GIMP_VERSION@
+      ;;
+    --cflags)
+      if test @includedir@ != /usr/include ; then
+        includes=-I@includedir@
+      fi
+      echo $includes `$gtk_config --cflags`
+      ;;
+    --libs)
+      echo -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`
+      ;;
+    --build)
+      if test @includedir@ != /usr/include ; then
+        includes=-I@includedir@
+      fi
+      shift
+      cmd="$cc $cflags $includes `gtk-config --cflags` -o `echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
+      echo $cmd
+      eval $cmd
+      ;;
+    *)
+      echo "${usage}" 1>&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+

@@ -175,7 +175,7 @@ main (int argc, char **argv)
     }
 
   if (show_version)
-    g_print ("GIMP version " VERSION "\n");
+    g_print ("GIMP version " GIMP_VERSION "\n");
 
   if (show_help)
     {

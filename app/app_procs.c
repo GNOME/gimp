@@ -55,6 +55,8 @@
 #include "xcf.h"
 #include <gtk/gtk.h>
 
+#include "config.h"
+
 #define LOGO_WIDTH_MIN 350
 #define LOGO_HEIGHT_MIN 110 
 #define NAME "The GIMP"
@@ -262,9 +264,9 @@ splash_text_draw (GtkWidget *widget)
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->black_gc,
-		   ((logo_area_width - gdk_string_width (font, VERSION)) / 2), 
+		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2), 
 		   (0.45 * logo_area_height),
-		   VERSION);
+		   GIMP_VERSION);
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->black_gc,

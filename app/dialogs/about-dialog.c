@@ -1,9 +1,28 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
 #include "about_dialog.h"
 #include "interface.h"
+
+#include "config.h"
 
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE 2
@@ -167,7 +186,7 @@ about_dialog_create (int timeout)
       style->font = gdk_font_load ("-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*");
       gtk_widget_push_style (style);
 
-      label = gtk_label_new ("Version " VERSION " brought to you by");
+      label = gtk_label_new ("Version " GIMP_VERSION " brought to you by");
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 

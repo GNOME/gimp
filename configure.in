@@ -2,15 +2,17 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(gimprc.in)
 
 dnl Initialize automake stuff
-dnl $Format: "GIMP_MAJOR_VERSION_NUMBER=$ReleaseMajorVersion$" $
-GIMP_MAJOR_VERSION_NUMBER=0
-dnl $Format: "GIMP_MINOR_VERSION_NUMBER=$ReleaseMinorVersion$" $
-GIMP_MINOR_VERSION_NUMBER=99
-dnl $Format: "GIMP_MICRO_VERSION_NUMBER=$ReleaseMicroVersion$" $
-GIMP_MICRO_VERSION_NUMBER=28
+dnl $Format: "GIMP_MAJOR_VERSION=$ReleaseMajorVersion$" $
+GIMP_MAJOR_VERSION=0
+dnl $Format: "GIMP_MINOR_VERSION=$ReleaseMinorVersion$" $
+GIMP_MINOR_VERSION=99
+dnl $Format: "GIMP_MICRO_VERSION=$ReleaseMicroVersion$" $
+GIMP_MICRO_VERSION=28
+
+GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
 
 dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
-AM_INIT_AUTOMAKE(gimp, 0.99.28)
+AM_INIT_AUTOMAKE(gimp, $GIMP_VERSION)
 
 dnl Specify a header configuration file
 AM_CONFIG_HEADER(config.h)
@@ -304,7 +306,7 @@ CPPFLAGS="$gimp_save_CPPFLAGS"
 LIBS="$gimp_save_LIBS"
 
 gimpdatadir=$datadir/gimp
-gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION_NUMBER.$GIMP_MINOR_VERSION_NUMBER
+gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 
 brushdata=`ls -1 $srcdir/data/brushes | grep -v Makefile`
 gradientdata=`ls -1 $srcdir/data/gradients | grep -v Makefile`
@@ -380,6 +382,9 @@ if test $ac_cv_path_LPC_COMMAND != ":"; then
   LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
 fi
 
+AC_DEFINE_UNQUOTED(GIMP_VERSION, "$GIMP_VERSION")
+
+AC_SUBST(GIMP_VERSION)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
@@ -416,6 +421,7 @@ AC_OUTPUT(
 Makefile
 gimprc
 gimprc_user
+gimptool
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build
@@ -555,5 +561,6 @@ data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
-data/patterns/Makefile
+data/patterns/Makefile,
+chmod +x gimptool
 )

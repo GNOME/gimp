@@ -1,4 +1,12 @@
-Sat May  2 16:10:05 EDT 1998  EDT 1998  Matthew Wilson  <msw@gimp.org>
+Sat May  2 14:31:46 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/main.c: use GIMP_VERSION from config.h now
+
+	* gimptool made to ease plug-in development and installation
+
+Sat May  2 16:10:05 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/channels_dialog.c: removed my broken fix, put in a fix
 	that works
