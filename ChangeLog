@@ -1,5 +1,11 @@
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	my last change removed the sanity check for array_length >= 0.
+	Put it back.
+
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpbase.def: updated.
 
 2004-10-25  DindinX  <dindinx@gimp.org>
