@@ -82,9 +82,10 @@
 #define HELP_ID      "plug-in-blur"
 
 #define SEED_DEFAULT 10
-#define SEED_USER 11
+#define SEED_USER    11
 
-#define SCALE_WIDTH 100
+#define SCALE_WIDTH  64
+
 
 /*********************************
  *
@@ -130,15 +131,15 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static void blur (GimpDrawable *drawable);
+static void         blur             (GimpDrawable *drawable);
 
-static inline void blur_prepare_row (GimpPixelRgn *pixel_rgn,
-                                     guchar       *data,
-                                     gint          x,
-                                     gint          y,
-                                     gint          w);
+static inline void  blur_prepare_row (GimpPixelRgn *pixel_rgn,
+                                      guchar       *data,
+                                      gint          x,
+                                      gint          y,
+                                      gint          w);
 
-static gint blur_dialog             (void);
+static gboolean     blur_dialog      (void);
 
 /************************************ Guts ***********************************/
 
@@ -577,11 +578,10 @@ blur (GimpDrawable *drawable)
  *  GUI ROUTINES
  ********************************/
 
-static gint
+static gboolean
 blur_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *seed_hbox;
@@ -604,23 +604,18 @@ blur_dialog (void)
    *
    *  First set up the basic containers, label them, etc.
    */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER(frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.blur_randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("_Random Seed:"), 1.0, 0.5,
-                                     seed_hbox, 1, TRUE);
+                                     _("_Random Seed:"), 0.0, 0.5,
+                                     seed_hbox, 2, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
                                  GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
 

@@ -551,9 +551,9 @@ static void
 doDialog (void)
 {
   GtkWidget   *dialog;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
   GtkWidget   *frame;
-  GtkWidget   *xframe;
-  GtkWidget   *table;
   GtkWidget   *preview;
   gchar       *memsize;
   struct stat  st;
@@ -569,51 +569,46 @@ doDialog (void)
 
                             NULL);
 
-  /* set up frame */
-  frame = gtk_frame_new (_("Results"));
-  gtk_container_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
                       TRUE, TRUE, 0);
 
-  table = gtk_table_new (12, 1, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_border_width (GTK_CONTAINER (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  xframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), xframe,
-                    0, 1, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
   /* use preview for histogram window */
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), PREWIDTH, PREHEIGHT);
-  gtk_container_add (GTK_CONTAINER (xframe), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
 
   fillPreview (preview);
 
   /* output results */
-  doLabel (table, _("Image dimensions: %d x %d"), width, height);
+  doLabel (vbox, _("Image dimensions: %d x %d"), width, height);
 
   if (uniques == 0)
-    doLabel (table, _("No colors"));
+    doLabel (vbox, _("No colors"));
   else if (uniques == 1)
-    doLabel (table, _("Only one unique color"));
+    doLabel (vbox, _("Only one unique color"));
   else
-    doLabel (table, _("Number of unique colors: %d"), uniques);
+    doLabel (vbox, _("Number of unique colors: %d"), uniques);
 
   memsize = gimp_memsize_to_string (width * height * bpp);
-  doLabel (table, _("Uncompressed size: %s"), memsize);
+  doLabel (vbox, _("Uncompressed size: %s"), memsize);
   g_free (memsize);
 
   if (filename && !stat (filename, &st) && !gimp_image_is_dirty (imageID))
     {
       gchar *memsize = gimp_memsize_to_string (st.st_size);
 
-      doLabel (table, _("Filename: %s"), filename);
-      doLabel (table, _("Compressed size: %s"), memsize);
-      doLabel (table, _("Compression ratio (approx.): %d to 1"),
+      doLabel (vbox, _("Filename: %s"), filename);
+      doLabel (vbox, _("Compressed size: %s"), memsize);
+      doLabel (vbox, _("Compression ratio (approx.): %d to 1"),
                       (gint) RINT ((gdouble) (width * height * bpp) / st.st_size));
 
       g_free (memsize);
@@ -629,14 +624,13 @@ doDialog (void)
 
 /* shortcut */
 static void
-doLabel (GtkWidget *table,
-         const char *format,
+doLabel (GtkWidget   *vbox,
+         const gchar *format,
          ...)
 {
-  static gint  idx = 1;
-  GtkWidget   *label;
-  gchar       *text;
-  va_list      args;
+  GtkWidget *label;
+  gchar     *text;
+  va_list    args;
 
   va_start (args, format);
   text = g_strdup_vprintf (format, args);
@@ -644,15 +638,10 @@ doLabel (GtkWidget *table,
 
   label = gtk_label_new (text);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gtk_table_attach (GTK_TABLE (table), label,
-                    0, 1, idx, idx + 1,
-                    GTK_FILL, 0, 5, 0);
-
   g_free (text);
-
-  idx += 2;
 }
 
 /* fill our preview image with the color-histogram */

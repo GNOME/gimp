@@ -1,5 +1,12 @@
 2004-05-18  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/blur.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/ccanalyze.c: HIG-ified.
+
+2004-05-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpsizeentry.[ch] (gimp_size_entry_attach_label):
 	return the created label widget so that it can for example be put
 	into a GtkSizeGroup.

@@ -41,7 +41,7 @@ static void      run    (const gchar      *name,
 static void      borderaverage (GimpDrawable *drawable,
                                 GimpRGB      *result);
 
-static gint      borderaverage_dialog (void);
+static gboolean  borderaverage_dialog (void);
 
 static void      add_new_color (gint    bytes,
                                 guchar *buffer,
@@ -344,18 +344,19 @@ add_new_color (gint    bytes,
   cube[(r << (bucket_rexpo << 1)) + (g << bucket_rexpo) + b]++;
 }
 
-static gint
+static gboolean
 borderaverage_dialog (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *combo;
-  gboolean   run;
+  GtkWidget    *dlg;
+  GtkWidget    *frame;
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *label;
+  GtkWidget    *spinbutton;
+  GtkWidget    *combo;
+  GtkSizeGroup *group;
+  GtkObject    *adj;
+  gboolean      run;
 
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
@@ -371,23 +372,27 @@ borderaverage_dialog (void)
 
                          NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Border Size"));
+  frame = gimp_frame_new (_("Border Size"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Thickness:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  gtk_size_group_add_widget (group, label);
+  g_object_unref (group);
 
   spinbutton = gimp_spin_button_new (&adj, borderaverage_thickness,
                                      0, 256, 1, 5, 0, 0, 0);
@@ -399,18 +404,20 @@ borderaverage_dialog (void)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &borderaverage_thickness);
 
-  frame = gtk_frame_new (_("Number of Colors"));
+  frame = gimp_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Bucket Size:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  gtk_size_group_add_widget (group, label);
 
   combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (labels), labels);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
