@@ -1,3 +1,9 @@
+Thu Mar  2 01:02:44 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/measure.c: Fixed my latest "fix" which introduced a new
+	problem. Clean statusbar and info window when starting a new
+	measurement.
+
 2000-03-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/rect_select.[ch]: added a modifier_key_func which gives

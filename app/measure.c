@@ -238,12 +238,25 @@ measure_tool_button_press (Tool           *tool,
   if (measure_tool->function == CREATING)
     {
       if (tool->state == ACTIVE)
-	draw_core_stop (measure_tool->core, tool);
-      else
-	/* initialize the statusbar display */
-	measure_tool->context_id = 
-	  gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "measure");
+	{
+	  /* reset everything */
+	  draw_core_stop (measure_tool->core, tool);
 
+	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
+	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id, "");
+
+	  distance_buf[0] = '\0';
+	  angle_buf[0] = '\0';
+	  if (measure_tool_info)
+	    measure_tool_info_update ();
+	}
+      else
+	{
+	  /* initialize the statusbar display */
+	  measure_tool->context_id = 
+	    gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "measure");
+	}
+      
       /*  set the first point and go into ADDING mode  */
       gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
 				   &measure_tool->x[0], &measure_tool->y[0], TRUE, FALSE);
@@ -427,6 +440,10 @@ measure_tool_motion (Tool           *tool,
   if (gdisp->dot_for_dot)
     {
       distance = sqrt (SQR (ax - bx) + SQR (ay - by));
+
+      if (measure_tool->num_points != 3)
+	bx = ax > 0 ? 1 : -1;
+
       measure_tool->angle1 = measure_get_angle (ax, ay, 1.0, 1.0);
       measure_tool->angle2 = measure_get_angle (bx, by, 1.0, 1.0);
       angle = fabs (measure_tool->angle1 - measure_tool->angle2);
@@ -450,8 +467,11 @@ measure_tool_motion (Tool           *tool,
 					   _("degrees"));
       
       distance =  gimp_unit_get_factor (gdisp->gimage->unit) * 
-	sqrt (SQR ((double)(ax - bx) / gdisp->gimage->xresolution) +
-	      SQR ((double)(ay - by) / gdisp->gimage->yresolution));
+	sqrt (SQR ((gdouble)(ax - bx) / gdisp->gimage->xresolution) +
+	      SQR ((gdouble)(ay - by) / gdisp->gimage->yresolution));
+
+      if (measure_tool->num_points != 3)
+	bx = ax > 0 ? 1 : -1;
 
       measure_tool->angle1 = measure_get_angle (ax, ay, 
 						gdisp->gimage->xresolution, 
