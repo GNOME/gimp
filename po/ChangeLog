@@ -1,3 +1,8 @@
+Sat Feb 19 17:43:36 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* POTFILES.in: Path Tool and XInput Airbrush are not built
+	anymore, no need to include their strings in the catalog
+
 Sat Feb 19 10:59:51 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
