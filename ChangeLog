@@ -1,3 +1,9 @@
+Fri Mar 27 14:33:42 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* plugins/dbbrowser/dbbrowser_utils.c
+	* plugins/sparkle/sparkle.c: small changes to make it compile
+	on irix-6.4 with the native compiler.
+
 Fri Mar 27 00:19:38 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.23 release

@@ -713,7 +713,11 @@ rpnt (GDrawable *drawable,
   guchar *pixel;
   guchar *guc_tmp;
   gdouble *gd_tmp;
-  gint oldrow = row - 1, oldcol = col - 1;
+  gint *oldrow;
+  gint *oldcol;
+
+  oldrow = row - 1;
+  oldcol = col - 1;
 
   x = (int) (xr);	/* integer coord. to upper left of real point */
   y = (int) (yr);
