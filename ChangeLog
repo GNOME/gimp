@@ -28,7 +28,7 @@
 	* app/levels.c
 	* app/posterize.c
 	* app/threshold.c:
-	Reorder the action are buttons: [ "OK" "Reset" "Cancel" ]
+	Reorder the action area buttons: [ "OK" "Reset" "Cancel" ]
 
 	* app/menus.c: Some more cleanups in the menu code. Reorder
 	<Image>/Filters/Misc only if it exists. Generalized
