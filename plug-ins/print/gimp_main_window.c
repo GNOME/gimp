@@ -355,9 +355,6 @@ create_top_level_structure(void)
                      GTK_WIN_POS_MOUSE,
                      FALSE, TRUE, FALSE,
 
-                     GTK_STOCK_CANCEL, gtk_widget_destroy,
-                     NULL, 1, NULL, FALSE, TRUE,
-
 		     _("About"), gimp_about_callback,
                      NULL, NULL, NULL, FALSE, FALSE,
 
@@ -366,6 +363,9 @@ create_top_level_structure(void)
 
                      _("Print and\nSave Settings"), gimp_printandsave_callback,
                      NULL, NULL, NULL, FALSE, FALSE,
+
+                     GTK_STOCK_CANCEL, gtk_widget_destroy,
+                     NULL, 1, NULL, FALSE, TRUE,
 
                      GTK_STOCK_PRINT, gimp_print_callback,
                      NULL, NULL, NULL, FALSE, FALSE,

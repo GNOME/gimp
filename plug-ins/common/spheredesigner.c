@@ -2208,11 +2208,11 @@ GtkWidget* makewindow (void)
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, sphere_cancel,
-			    NULL, NULL, &cancelbutton, FALSE, TRUE,
-
 			    GIMP_STOCK_RESET, sphere_reset,
 			    NULL, NULL, &resetbutton, FALSE, FALSE,
+
+			    GTK_STOCK_CANCEL, sphere_cancel,
+			    NULL, NULL, &cancelbutton, FALSE, TRUE,
 
 			    GTK_STOCK_OK, sphere_ok,
 			    NULL, NULL, &okbutton, TRUE, FALSE,

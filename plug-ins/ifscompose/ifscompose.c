@@ -790,17 +790,17 @@ ifs_compose_dialog (GimpDrawable *drawable)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+			 GIMP_STOCK_RESET, ifs_compose_defaults_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
 
 			 GTK_STOCK_DELETE, ifs_compose_delete_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
 
-			 GIMP_STOCK_RESET, ifs_compose_defaults_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
 			 GTK_STOCK_NEW, ifs_compose_new_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
+
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
 
 			 GTK_STOCK_OK, ifs_compose_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,

@@ -134,7 +134,7 @@ typedef struct
   GtkWidget    **args_widgets;
   GtkWidget     *status;
   GtkWidget     *about_dialog;
-  gchar         *window_title;
+  gchar         *title;
   gchar         *last_command;
   gint           command_count;
   gint           consec_command_count;
@@ -1189,17 +1189,17 @@ script_fu_interface (SFScript *script)
   /* strip the first part of the menupath if it contains _("/Script-Fu/") */
   buf = strstr (gettext (script->description), _("/Script-Fu/"));
   if (buf)
-    sf_interface->window_title = g_strdup_printf (_("Script-Fu: %s"), 
-						  (buf + strlen (_("/Script-Fu/"))));
+    sf_interface->title = g_strdup (buf + strlen (_("/Script-Fu/")));
   else 
-    sf_interface->window_title = g_strdup_printf (_("Script-Fu: %s"), 
-                                                  gettext (script->description));
+    sf_interface->title = g_strdup (gettext (script->description));
 
-  buf = strstr (sf_interface->window_title, "...");
+  buf = strstr (sf_interface->title, "...");
   if (buf)
     *buf = '\0';
 
-  dlg = gimp_dialog_new (sf_interface->window_title, "script-fu",
+  buf = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
+
+  dlg = gimp_dialog_new (buf, "script-fu",
                          gimp_standard_help_func, "filters/script-fu.html",
                          GTK_WIN_POS_MOUSE,
 			 TRUE, FALSE, TRUE,
@@ -1210,8 +1210,9 @@ script_fu_interface (SFScript *script)
 			 GTK_STOCK_OK, script_fu_ok_callback,
 			 script, NULL, NULL, TRUE, FALSE,
 
-			 NULL);
-  
+			 NULL);  
+  g_free (buf);
+
   sf_interface->dialog = dlg;
 
   g_signal_connect_swapped (G_OBJECT (dlg), "destroy",
@@ -1225,8 +1226,12 @@ script_fu_interface (SFScript *script)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  sf_interface->status = gtk_label_new (sf_interface->window_title);
-  gtk_label_set_justify (GTK_LABEL (sf_interface->status), GTK_JUSTIFY_LEFT);
+  sf_interface->status = gtk_label_new (NULL);
+  buf = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
+                         sf_interface->title);
+  gtk_label_set_markup (GTK_LABEL (sf_interface->status), buf);
+  g_free (buf);
+  gtk_misc_set_alignment (GTK_MISC (sf_interface->status), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), sf_interface->status, TRUE, TRUE, 0);
   gtk_widget_show (sf_interface->status);
 
@@ -1518,7 +1523,7 @@ script_fu_interface_quit (SFScript *script)
   g_return_if_fail (script != NULL);
   g_return_if_fail (sf_interface != NULL);  
 
-  g_free (sf_interface->window_title);
+  g_free (sf_interface->title);
 
   if (sf_interface->about_dialog)
     gtk_widget_destroy (sf_interface->about_dialog);
@@ -1884,7 +1889,7 @@ script_fu_about_callback (GtkWidget *widget,
 
   if (sf_interface->about_dialog == NULL)
     {
-      dialog = gimp_dialog_new (sf_interface->window_title, "script-fu-about",
+      dialog = gimp_dialog_new (sf_interface->title, "script-fu-about",
 				gimp_standard_help_func,
 				"filters/script-fu.html",
 				GTK_WIN_POS_MOUSE,
