@@ -415,7 +415,7 @@ file_save_callback (GtkWidget *w,
   if (!gdisplay) return;
 
   /*  Only save if the gimage has been modified  */
-  if (gdisplay->gimage->dirty != 0)
+  if (!trust_dirty_flag || gdisplay->gimage->dirty != 0)
     {
       if (gdisplay->gimage->has_filename == FALSE)
 	{
