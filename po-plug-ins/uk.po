@@ -23,7 +23,7 @@ msgstr "Чужа мапа: Перетворення ..."
 
 #: plug-ins/AlienMap/AlienMap.c:627
 msgid "AlienMap"
-msgstr "Чужа мапа"
+msgstr "Чужа Мапа"
 
 #: plug-ins/AlienMap/AlienMap.c:632 plug-ins/AlienMap2/AlienMap2.c:624
 #: plug-ins/FractalExplorer/Dialogs.c:298
@@ -243,21 +243,21 @@ msgstr "Зм╕на ╕нтенсивност╕ синього каналу"
 #: plug-ins/common/convmatrix.c:82 plug-ins/common/decompose.c:115
 #: plug-ins/common/newsprint.c:394
 msgid "Red"
-msgstr ""
+msgstr "Червоний"
 
 #: plug-ins/AlienMap/AlienMap.c:706 plug-ins/AlienMap/AlienMap.c:729
 #: plug-ins/AlienMap/AlienMap.c:752 plug-ins/FractalExplorer/Dialogs.c:733
 #: plug-ins/FractalExplorer/Dialogs.c:774
 #: plug-ins/FractalExplorer/Dialogs.c:815 plug-ins/common/ripple.c:682
 msgid "Sine"
-msgstr ""
+msgstr "Синус"
 
 #: plug-ins/AlienMap/AlienMap.c:707 plug-ins/AlienMap/AlienMap.c:730
 #: plug-ins/AlienMap/AlienMap.c:753 plug-ins/FractalExplorer/Dialogs.c:735
 #: plug-ins/FractalExplorer/Dialogs.c:776
 #: plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Cosine"
-msgstr ""
+msgstr "Косинус"
 
 #: plug-ins/AlienMap/AlienMap.c:708 plug-ins/AlienMap/AlienMap.c:731
 #: plug-ins/AlienMap/AlienMap.c:754 plug-ins/FractalExplorer/Dialogs.c:737
@@ -269,7 +269,7 @@ msgstr ""
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:276
 #: plug-ins/print/print.c:1644
 msgid "None"
-msgstr ""
+msgstr "Нема╓"
 
 #: plug-ins/AlienMap/AlienMap.c:713
 msgid "Use sine-function for red component."
@@ -288,7 +288,7 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:83 plug-ins/common/decompose.c:116
 #: plug-ins/common/newsprint.c:402
 msgid "Green"
-msgstr ""
+msgstr "Зелений"
 
 #: plug-ins/AlienMap/AlienMap.c:736
 msgid "Use sine-function for green component."
@@ -308,7 +308,7 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:84 plug-ins/common/decompose.c:117
 #: plug-ins/common/newsprint.c:410
 msgid "Blue"
-msgstr ""
+msgstr "Син╕й"
 
 #: plug-ins/AlienMap/AlienMap.c:759
 msgid "Use sine-function for blue component."
@@ -325,7 +325,7 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:893
 msgid "About AlienMap"
-msgstr "Про Чужу мапу"
+msgstr "Про Чужу Мапу"
 
 #: plug-ins/AlienMap2/AlienMap2.c:205
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
@@ -333,11 +333,11 @@ msgstr "<Image>/Ф╕льтри/Кольори/Карта/Чужа мапа 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
 msgid "AlienMap2: Transforming ..."
-msgstr "Чужа мапа 2: Перетворення ..."
+msgstr "Чужа Мапа 2: Перетворення ..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:619
 msgid "AlienMap2"
-msgstr "Чужа мапа 2"
+msgstr "Чужа Мапа 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:668
 msgid "R/H-Frequency:"
@@ -392,7 +392,7 @@ msgstr ""
 #: plug-ins/common/hot.c:623 plug-ins/common/waves.c:381
 #: plug-ins/rcm/rcm_dialog.c:471
 msgid "Mode"
-msgstr ""
+msgstr "Режим"
 
 #: plug-ins/AlienMap2/AlienMap2.c:733
 msgid "RGB Color Model"
@@ -428,7 +428,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:907
 msgid "About AlienMap2"
-msgstr ""
+msgstr "Про Чужу Мапу 2"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/Lighting/lighting_ui.c:1093
@@ -450,7 +450,7 @@ msgstr ""
 #: plug-ins/rcm/rcm_dialog.c:115 plug-ins/rcm/rcm_dialog.c:627
 #: plug-ins/sinus/sinus.c:1184
 msgid "Preview"
-msgstr ""
+msgstr "Перегляд"
 
 #: plug-ins/FractalExplorer/Dialogs.c:368
 msgid "Realtime Preview"
@@ -651,21 +651,21 @@ msgstr ""
 #: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:910
 #: plug-ins/sinus/sinus.c:928 plug-ins/sinus/sinus.c:1014
 msgid "Colors"
-msgstr ""
+msgstr "Кольори"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:641
 #: plug-ins/borderaverage/borderaverage.c:439 plug-ins/gap/gap_range_ops.c:344
 msgid "Number of Colors"
-msgstr ""
+msgstr "К╕льк╕сть кольор╕в"
 
 #: plug-ins/FractalExplorer/Dialogs.c:654
 msgid "Number of Colors:"
-msgstr ""
+msgstr "К╕льк╕сть кольор╕в:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:657
 msgid "Change the number of colors in the mapping"
-msgstr ""
+msgstr "Зм╕нити к╕льк╕сть кольор╕в в мапуванн╕"
 
 #: plug-ins/FractalExplorer/Dialogs.c:664
 msgid "Use loglog Smoothing"
@@ -849,15 +849,15 @@ msgstr "Стерти"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:829
 msgid "Edit fractal name"
-msgstr ""
+msgstr "Зм╕нити назву фрактала"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:840
 msgid "Fractal name:"
-msgstr ""
+msgstr "Назва фрактала:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:881
 msgid "New Fractal"
-msgstr ""
+msgstr "Новий фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1153
 msgid ""
@@ -875,7 +875,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1345
 msgid "My first fractal"
-msgstr ""
+msgstr "М╕й перший фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1362
 msgid "Choose Fractal by double-clicking on it"
@@ -1044,7 +1044,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:597 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
 msgid "Position"
-msgstr ""
+msgstr "Позиц╕я"
 
 #. X
 #. table col, row
@@ -1056,7 +1056,7 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1554 plug-ins/gflare/gflare.c:2874
 #: plug-ins/ifscompose/ifscompose.c:512
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:621 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
@@ -1073,7 +1073,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:1227 plug-ins/gap/gap_mov_dialog.c:1572
 #: plug-ins/gflare/gflare.c:2878 plug-ins/ifscompose/ifscompose.c:526
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:634 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
@@ -1085,7 +1085,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1102
 #: plug-ins/MapObject/mapobject_ui.c:1200
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:647 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:783
 msgid "Direction Vector"
-msgstr ""
+msgstr "Напрямок вектора"
 
 #: plug-ins/Lighting/lighting_ui.c:673 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
@@ -1226,7 +1226,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:1129 plug-ins/MapObject/mapobject_ui.c:1433
 #: plug-ins/common/diffraction.c:606
 msgid "Preview!"
-msgstr ""
+msgstr "Перегляд!"
 
 #: plug-ins/Lighting/lighting_ui.c:1137 plug-ins/MapObject/mapobject_ui.c:1441
 msgid "Recompute preview image"
@@ -1302,7 +1302,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2559
 #: plug-ins/gdyntext/gdyntext_ui.c:388
 msgid "Rotation"
-msgstr ""
+msgstr "Обертання"
 
 #: plug-ins/MapObject/mapobject_ui.c:1087
 msgid "Rotation angle about X axis"
@@ -1370,7 +1370,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
 #: plug-ins/gimpressionist/size.c:56
 msgid "Size"
-msgstr ""
+msgstr "Розм╕р"
 
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:763
 #: plug-ins/common/nlfilt.c:421 plug-ins/common/nova.c:399
@@ -1378,19 +1378,19 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3166 plug-ins/gflare/gflare.c:2909
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
-msgstr ""
+msgstr "Рад╕ус:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Cylinder radius"
-msgstr ""
+msgstr "Ряд╕ус цил╕ндра"
 
 #: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:824
 msgid "Length:"
-msgstr ""
+msgstr "Довжина:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1288
 msgid "Cylinder length"
-msgstr ""
+msgstr "Довжина цил╕ндра"
 
 #: plug-ins/MapObject/mapobject_ui.c:1326 plug-ins/common/blinds.c:388
 #: plug-ins/common/ripple.c:650 plug-ins/gimpressionist/orientation.c:52
@@ -1426,12 +1426,12 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:3238
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "Завантаження %s:"
 
 #: plug-ins/bmp/bmpread.c:65
 #, c-format
 msgid "%s: can't open \"%s\"\n"
-msgstr ""
+msgstr "%s: неможливо в╕дкрити \"%s\"\n"
 
 #: plug-ins/bmp/bmpread.c:73
 #, c-format
@@ -1447,7 +1447,7 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:145
 #, c-format
 msgid "%s: too many colors: %u\n"
-msgstr ""
+msgstr "%s: недто багато кольор╕в: %u\n"
 
 #: plug-ins/bmp/bmpread.c:235
 #, c-format
@@ -1474,7 +1474,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:3176 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
 #: plug-ins/winsnap/winsnap.c:1201
 msgid "Background"
-msgstr ""
+msgstr "Тло"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "bmp: cannot operate on unknown image types or alpha images"
@@ -1483,7 +1483,7 @@ msgstr ""
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
 msgid "can't open %s\n"
-msgstr ""
+msgstr "неможливо в╕дкрити %s\n"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:512
@@ -1510,11 +1510,11 @@ msgstr "Зберегти як BMP"
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:574
 msgid "Save Options"
-msgstr ""
+msgstr "Параметри збереження"
 
 #: plug-ins/bmp/bmpwrite.c:582
 msgid "RLE encoded"
-msgstr ""
+msgstr "Кодовано RLE"
 
 #: plug-ins/borderaverage/borderaverage.c:106
 msgid "<Image>/Filters/Colors/Border Average..."
@@ -1774,14 +1774,14 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:249 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
-msgstr ""
+msgstr "В╕дт╕нок"
 
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1299
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
 #: plug-ins/fp/fp_gtk.c:266 plug-ins/fp/fp_gtk.c:398 plug-ins/fp/fp_gtk.c:462
 #: plug-ins/gap/gap_mov_dialog.c:250 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
-msgstr ""
+msgstr "Насичен╕сть"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1304
 #: plug-ins/common/decompose.c:123 plug-ins/fp/fp_gtk.c:270
@@ -1817,11 +1817,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1291
 msgid "Hue Settings"
-msgstr ""
+msgstr "Настройки в╕дт╕нка"
 
 #: plug-ins/common/CML_explorer.c:1296
 msgid "Saturation Settings"
-msgstr ""
+msgstr "Настройки насиченост╕"
 
 #: plug-ins/common/CML_explorer.c:1301
 msgid "Value (Gray Image) Settings"
@@ -1846,7 +1846,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1378
 msgid "Initial Value:"
-msgstr ""
+msgstr "Початкове значення:"
 
 #: plug-ins/common/CML_explorer.c:1382
 msgid "Zoom Scale:"
@@ -2000,7 +2000,7 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:2201 plug-ins/common/CML_explorer.c:2403
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "Помилка: не вдалося в╕дкрити \"%s\""
 
 #: plug-ins/common/CML_explorer.c:2242
 #, c-format
@@ -2019,6 +2019,8 @@ msgid ""
 "%s\n"
 "exists, Overwrite?"
 msgstr ""
+"%s\n"
+"╕сну╓, переписати?"
 
 #: plug-ins/common/CML_explorer.c:2318
 msgid "Load Parameters from"
@@ -2034,7 +2036,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2431
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "Попередження: це файл старого формату."
 
 #: plug-ins/common/CML_explorer.c:2433
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
@@ -2047,17 +2049,17 @@ msgstr ""
 #. Create the actual window.
 #: plug-ins/common/aa.c:358
 msgid "Save as Text"
-msgstr ""
+msgstr "Зберегти як текст"
 
 #. file save type
 #: plug-ins/common/aa.c:375 plug-ins/common/pnm.c:962
 #: plug-ins/common/sunras.c:1605
 msgid "Data Formatting"
-msgstr ""
+msgstr "Форматування даних"
 
 #: plug-ins/common/align_layers.c:149 plug-ins/common/align_layers.c:150
 msgid "Align visible layers"
-msgstr ""
+msgstr "Вир╕вняти видим╕ шари"
 
 #: plug-ins/common/align_layers.c:154
 msgid "<Image>/Layers/Align Visible Layers..."
@@ -2069,7 +2071,7 @@ msgstr ""
 
 #: plug-ins/common/align_layers.c:415
 msgid "Align Visible Layers"
-msgstr ""
+msgstr "Вир╕внювання видимих шар╕в"
 
 #.
 #. *  Parameter settings
@@ -2101,7 +2103,7 @@ msgstr ""
 #: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
 #: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:808
 msgid "Parameter Settings"
-msgstr ""
+msgstr "Установки параметр╕в"
 
 #: plug-ins/common/align_layers.c:449 plug-ins/common/align_layers.c:482
 msgid "Collect"
@@ -4856,12 +4858,12 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #: plug-ins/dbbrowser/dbbrowser_utils.c:170
 msgid "Search by Name"
-msgstr ""
+msgstr "Пошук за назвою"
 
 #. list : list in a scrolled_win
 #: plug-ins/common/plugindetails.c:1037
 msgid "Name"
-msgstr ""
+msgstr "Назва"
 
 #: plug-ins/common/plugindetails.c:1038 plug-ins/common/plugindetails.c:1065
 msgid "Ins Date"
@@ -4962,7 +4964,7 @@ msgstr ""
 
 #: plug-ins/common/pnm.c:945
 msgid "Save as PNM"
-msgstr ""
+msgstr "Зберегт╕ як PNM"
 
 #: plug-ins/common/pnm.c:966
 msgid "Raw"
@@ -5179,11 +5181,11 @@ msgstr ""
 
 #: plug-ins/common/psp.c:461
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/common/psp.c:462
 msgid "LZ77"
-msgstr ""
+msgstr "LZ77"
 
 #: plug-ins/common/randomize.c:106
 msgid "Random Hurl 1.7"
@@ -5944,7 +5946,7 @@ msgstr ""
 
 #: plug-ins/common/sunras.c:1588
 msgid "Save as SUNRAS"
-msgstr ""
+msgstr "Зберегти як SUNRAS"
 
 #: plug-ins/common/sunras.c:1609
 msgid "RunLength Encoded"
@@ -5952,17 +5954,17 @@ msgstr ""
 
 #: plug-ins/common/tga.c:1458
 msgid "Save as TGA"
-msgstr ""
+msgstr "Зберегти як TGA"
 
 #. regular tga parameter settings
 #: plug-ins/common/tga.c:1475
 msgid "Targa Options"
-msgstr ""
+msgstr "Параметри Targa"
 
 #. rle
 #: plug-ins/common/tga.c:1485
 msgid "RLE compression"
-msgstr ""
+msgstr "стиснення RLE"
 
 #: plug-ins/common/threshold_alpha.c:103
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
@@ -5995,7 +5997,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:1463
 msgid "Save as TIFF"
-msgstr ""
+msgstr "Зберегти TIFF"
 
 #: plug-ins/common/tiff.c:1485
 msgid "Compression"
@@ -6003,7 +6005,7 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:1490
 msgid "LZW"
-msgstr ""
+msgstr "LZW"
 
 #: plug-ins/common/tiff.c:1491
 msgid "Pack Bits"
@@ -6264,7 +6266,7 @@ msgstr ""
 
 #: plug-ins/common/video.c:47
 msgid "3x3"
-msgstr ""
+msgstr "3x3"
 
 #: plug-ins/common/video.c:48
 msgid "Large 3x3"
@@ -7447,15 +7449,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:210
 msgid "XCF"
-msgstr ""
+msgstr "XCF"
 
 #: plug-ins/gap/gap_decode_xanim.c:210
 msgid "PPM"
-msgstr ""
+msgstr "PPM"
 
 #: plug-ins/gap/gap_decode_xanim.c:210
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/gap/gap_decode_xanim.c:213
 msgid "Video:"
@@ -7683,7 +7685,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_filter_main.c:105
 msgid "<Image>/Filters/Filter all Layers..."
-msgstr ""
+msgstr "<Image>/Ф╕льтри/Ф╕льтрувати вс╕ шари..."
 
 #: plug-ins/gap/gap_frontends_main.c:127
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
@@ -7695,11 +7697,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_frontends_main.c:151
 msgid "<Image>/Video/Encode/MPEG1..."
-msgstr ""
+msgstr "<Image>/В╕део/Кодування/MPEG1..."
 
 #: plug-ins/gap/gap_frontends_main.c:164
 msgid "<Image>/Video/Encode/MPEG2..."
-msgstr ""
+msgstr "<Image>/В╕део/Кодування/MPEG2..."
 
 #: plug-ins/gap/gap_lib.c:994
 msgid ""
@@ -8939,7 +8941,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:307
 msgid "WEB Palette"
-msgstr ""
+msgstr "Пал╕тра WWW"
 
 #: plug-ins/gap/gap_range_ops.c:308
 msgid "Use Custom Palette"
@@ -10439,7 +10441,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr ""
+msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/GIMPressionist..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -12374,47 +12376,47 @@ msgstr "Другий кол╕р:"
 
 #: plug-ins/sinus/sinus.c:1024
 msgid "Blend Settings"
-msgstr ""
+msgstr "Установки зм╕шувача"
 
 #: plug-ins/sinus/sinus.c:1041
 msgid "Sinusodial"
-msgstr ""
+msgstr "Синусо╖дальний"
 
 #: plug-ins/sinus/sinus.c:1053
 msgid "Exponent:"
-msgstr ""
+msgstr "Експонента:"
 
 #: plug-ins/sinus/sinus.c:1063
 msgid "Blend"
-msgstr ""
+msgstr "Зм╕шувач"
 
 #: plug-ins/struc/struc.c:129
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr ""
+msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/Застосувати полотно..."
 
 #: plug-ins/struc/struc.c:215
 msgid "Applying Canvas..."
-msgstr ""
+msgstr "Застосування полотна..."
 
 #: plug-ins/struc/struc.c:256
 msgid "Apply Canvas"
-msgstr ""
+msgstr "Застосування полотна"
 
 #: plug-ins/struc/struc.c:288
 msgid "Top-Right"
-msgstr ""
+msgstr "Зверху праворуч"
 
 #: plug-ins/struc/struc.c:289
 msgid "Top-Left"
-msgstr ""
+msgstr "Зверху л╕воруч"
 
 #: plug-ins/struc/struc.c:290
 msgid "Bottom-Left"
-msgstr ""
+msgstr "Знизу л╕воруч"
 
 #: plug-ins/struc/struc.c:291
 msgid "Bottom-Right"
-msgstr ""
+msgstr "Зверху праворуч"
 
 #: plug-ins/twain/twain.c:513
 msgid "<Toolbox>/File/Acquire/TWAIN..."
@@ -12423,7 +12425,7 @@ msgstr "<Toolbox>/Файл/Acquire/TWAIN..."
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:645
 msgid "Transferring TWAIN data"
-msgstr ""
+msgstr "Передача даних TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:124
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
@@ -12504,7 +12506,7 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:1223
 #, c-format
 msgid "Can't open (write): %s"
-msgstr ""
+msgstr "Неможливо в╕дкрити (запис): %s"
 
 #: plug-ins/xjt/xjt.c:1615
 msgid "xjt: cannot operate on indexed color images"
@@ -12528,7 +12530,7 @@ msgstr "Неможливо в╕дкрити : %s"
 #: plug-ins/xjt/xjt.c:2463 plug-ins/xjt/xjt.c:2470
 #, c-format
 msgid "Can't open (read): %s"
-msgstr ""
+msgstr "Неможливо в╕дкрити (зчитування): %s"
 
 #: plug-ins/xjt/xjt.c:3111
 #, c-format

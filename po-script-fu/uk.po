@@ -30,7 +30,7 @@ msgstr "Закрити"
 #. The info vbox
 #: plug-ins/script-fu/script-fu-console.c:214
 msgid "SIOD Output"
-msgstr ""
+msgstr "Вив╕д SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:291
@@ -39,15 +39,15 @@ msgstr "Поточна команда"
 
 #: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
-msgstr ""
+msgstr "Переглянути..."
 
 #: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
-msgstr ""
+msgstr "Неможливо в╕дкрити канал виводу SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr ""
+msgstr "Неможливо в╕дкрити пот╕к на канал╕ виводу SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -96,7 +96,7 @@ msgstr "Виб╕р пензля Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1440
 msgid "Reset to Defaults"
-msgstr ""
+msgstr "Скасувати"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
@@ -122,6 +122,8 @@ msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
+"Принаймн╕ один з вибраних вами шрифт╕в нев╕рний.\n"
+"Будь ласка, перев╕рте ваш╕ настройки.\n"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1932
 msgid "Author:"
@@ -159,11 +161,11 @@ msgstr "Журнальний файл сервера: "
 
 #: plug-ins/script-fu/script-fu.c:165
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Консоль..."
+msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
 
 #: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Сервер..."
+msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
 
 #: plug-ins/script-fu/script-fu.c:1007 plug-ins/script-fu/script-fu.c:1008
 msgid "Re-read all available scripts"
@@ -171,4 +173,4 @@ msgstr "Перечитати ус╕ ╕снуюч╕ скрипти"
 
 #: plug-ins/script-fu/script-fu.c:1012
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Xtns/Script-Fu/Поновити"
+msgstr "<Toolbox>/Розширення/Script-Fu/Поновити"
