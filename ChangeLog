@@ -1,5 +1,11 @@
 2004-11-09  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/bmpread.c: if the file has space in the colormap for
+	more than 256 entries, ignore them instead of failing. Fixes bug
+	#157775.
+
+2004-11-09  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/bmpread.c: Fix cut'n'paste err so grayscale images
 	load again. Fixes bug #157764.
 
