@@ -66,6 +66,10 @@
 #define REVERT_DATA_KEY "revert_confirm_dialog"
 
 
+static int   file_open_with_proc_and_display (gchar         *filename,
+                                              gchar         *raw_filename,
+                                              PlugInProcDef *file_proc);
+
 static void     file_open_dialog_create      (void);
 
 static void     file_revert_confirm_callback (GtkWidget     *widget,
@@ -226,6 +230,17 @@ gint
 file_open_with_display (gchar *filename,
 			gchar *raw_filename)
 {
+  return file_open_with_proc_and_display (filename, raw_filename, NULL);
+}
+
+
+/*  private functions  */
+
+static int
+file_open_with_proc_and_display (gchar         *filename,
+                                 gchar         *raw_filename,
+                                 PlugInProcDef *file_proc)
+{
   GimpImage *gimage;
   GDisplay  *gdisplay;
   gchar     *absolute;
@@ -234,7 +249,7 @@ file_open_with_display (gchar *filename,
   if ((gimage = file_open_image (filename,
 				 raw_filename,
 				 _("Open"),
-				 NULL,
+				 file_proc,
 				 RUN_INTERACTIVE,
 				 &status)) != NULL)
     {
@@ -261,9 +276,6 @@ file_open_with_display (gchar *filename,
 
   return status;
 }
-
-
-/*  private functions  */
 
 static void
 file_open_dialog_create (void)
@@ -713,7 +725,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 	    gimage_to_be_thumbed = file_open_image (full_filename,
 						    list->data,
 						    NULL,
-						    load_file_proc,
+						    NULL,
 						    RUN_NONINTERACTIVE,
 						    &dummy);
 
@@ -809,7 +821,9 @@ file_open_ok_callback (GtkWidget *widget,
   if (err) /* e.g. http://server/filename.jpg */
     full_filename = raw_filename;
 
-  status = file_open_with_display (full_filename, raw_filename);
+  status = file_open_with_proc_and_display (full_filename, 
+                                            raw_filename, 
+                                            load_file_proc);
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -851,8 +865,9 @@ file_open_ok_callback (GtkWidget *widget,
             if (! (err == 0 && (buf.st_mode & S_IFDIR)))
               { /* Is not directory. */
 
-                status = file_open_with_display (full_filename,
-						 (gchar *) list->data);
+                status = file_open_with_proc_and_display (full_filename,
+                                                          (gchar *) list->data,
+                                                          load_file_proc);
 
                 if (status == GIMP_PDB_SUCCESS)
                   {
@@ -926,7 +941,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       new_gimage = file_open_image (filename, filename,
 				    _("Revert"),
-				    load_file_proc,
+				    NULL,
 				    RUN_INTERACTIVE,
 				    &status);
 

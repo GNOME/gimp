@@ -236,7 +236,7 @@ script_fu_console_interface (void)
   cint.font_weak = 
     gdk_font_load ("-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*");
   cint.font = 
-    gdk_font_load ("-*-*-medium-r-normal-*-*-100-*-*-c-*-*-*");
+    gdk_fontset_load ("-*-*-medium-r-normal-*-*-100-*-*-c-*-iso8859-1,*");
 
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (cint.console);
@@ -244,7 +244,7 @@ script_fu_console_interface (void)
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_strong, NULL, NULL,
 		   "The GIMP - GNU Image Manipulation Program\n\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
-		   "Copyright (C) 1995-2000\n", -1);
+		   "Copyright (C) 1995-2001\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_emphasis, NULL, NULL,
 		   "Spencer Kimball, Peter Mattis and the GIMP Development Team\n", -1);
   gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,

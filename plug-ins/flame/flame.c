@@ -205,6 +205,11 @@ run (gchar   *name,
       gimp_get_data ("plug_in_flame", &config);
       maybe_init_cp ();
 
+      /*  reusing a drawable_ID from the last run is a bad idea
+          since the drawable might have vanished  (bug #37761)   */
+      if (config.cmap_drawable >= 0)
+        config.cmap_drawable = GRADIENT_DRAWABLE;
+
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       config.cp.width = drawable->width;
       config.cp.height = drawable->height;
@@ -246,11 +251,10 @@ run (gchar   *name,
 static void
 drawable_to_cmap (control_point *cp) 
 {
-  gint       i, j;
+  gint          i, j;
   GimpPixelRgn  pr;
   GimpDrawable *d;
-  guchar    *p;
-  gint       indexed;
+  guchar       *p;
 
   if (TABLE_DRAWABLE >= config.cmap_drawable)
     {
@@ -274,7 +278,6 @@ drawable_to_cmap (control_point *cp)
   else
     {
       d = gimp_drawable_get (config.cmap_drawable);
-      indexed = gimp_drawable_is_indexed (config.cmap_drawable);
       p = g_new (guchar, d->bpp);
       gimp_pixel_rgn_init (&pr, d, 0, 0,
 			   d->width, d->height, FALSE, FALSE);

@@ -59,10 +59,12 @@
  *                          Fix problem with loop when reading not all
  *                          images of a multi page file.
  *         PK, 31-Aug-2000: Load PS: Add checks for space in filename.
+ * V 1.12  PK, 19-Jun-2001: Fix problem with command line switch --
+ *                          (reported by Ferenc Wagner)
  */
-#define VERSIO 1.11
-static char dversio[] = "v1.11  31-Aug-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.11  31-Aug-2000";
+#define VERSIO 1.12
+static char dversio[] = "v1.12  19-Jun-2001";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.12  19-Jun-2001";
 
 #include "config.h"
 
@@ -1398,7 +1400,7 @@ ps_open (gchar            *filename,
 
   /* Offset command for gs to get image part with negative x/y-coord. */
   if ((offx != 0) || (offy != 0))
-    sprintf (offset, "-c %d %d translate -- ", offx, offy);
+    sprintf (offset, "-c %d %d translate ", offx, offy);
 
   /* Antialiasing not available for PBM-device */
   if ((loadopt->pnm_type != 4) && (loadopt->textalpha != 1))
@@ -1412,7 +1414,7 @@ ps_open (gchar            *filename,
     sprintf (geometry,"-g%dx%d ", width, height);
 
   cmd = g_strdup_printf ("%s -sDEVICE=%s -r%d %s%s%s-q -dNOPAUSE %s \
--sOutputFile=%s %s%s %s-c quit",
+-sOutputFile=%s %s-f %s %s-c quit",
 			 gs, driver, resolution, geometry,
 			 TextAlphaBits, GraphicsAlphaBits,
 			 gs_opts, pnmfile, offset, filename,
