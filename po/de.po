@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-14 00:05+0100\n"
-"PO-Revision-Date: 2004-11-10 02:24+0100\n"
+"POT-Creation-Date: 2004-11-14 00:11+0100\n"
+"PO-Revision-Date: 2004-11-14 00:11+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1823,9 +1823,8 @@ msgid "F_it Canvas to Layers"
 msgstr "Leinwand auf Ebenen anpassen"
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 msgid "_Print Size..."
-msgstr "Größe beim Drucken:"
+msgstr "_Druckgröße..."
 
 #: app/actions/image-actions.c:90
 msgid "_Scale Image..."
@@ -1868,7 +1867,6 @@ msgid "Resizing..."
 msgstr "Größe verändern..."
 
 #: app/actions/image-commands.c:242
-#, fuzzy
 msgid "Set Image Print Resolution"
 msgstr "Bildauflösung ändern"
 
@@ -1895,9 +1893,8 @@ msgstr ""
 "Breite und Höhe müssen größer als Null sein."
 
 #: app/actions/image-commands.c:479
-#, fuzzy
 msgid "Change Print Size"
-msgstr "Größe beim Drucken:"
+msgstr "Druckgröße ändern"
 
 #: app/actions/image-commands.c:503 app/core/gimpimage-scale.c:71
 #: app/dialogs/image-scale-dialog.c:91
@@ -6886,9 +6883,8 @@ msgid "Select Theme Folders"
 msgstr "Wählen Sie die Themenordner"
 
 #: app/dialogs/print-size-dialog.c:127
-#, fuzzy
 msgid "Print Size"
-msgstr "Größe beim Drucken:"
+msgstr "Größe des Ausdrucks"
 
 #: app/dialogs/quit-dialog.c:84
 msgid "Quit The GIMP"
