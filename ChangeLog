@@ -1,3 +1,10 @@
+2002-02-03  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-convert.c: merged fix from stable branch (#70344).
+	
+	* plug-ins/common/smooth_palette.c: merged fix from stable branch
+	(#70333).
+
 2002-02-03  Manish Singh  <yosh@gimp.org>
 
 	* configure.in

@@ -2464,11 +2464,12 @@ custompal_pass1 (QuantizeObj *quantobj)
   GimpPaletteEntry *entry;
   guchar            r, g, b;
 
-  /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
-			 theCustomPalette->name, theCustomPalette->filename); */
+  /* fprintf (stderr, 
+              "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
+	      theCustomPalette->name, theCustomPalette->filename); */
 
   for (i = 0, list = theCustomPalette->colors;
-       list;
+       i < 256 && list;
        i++, list = g_list_next (list))
     {
       entry = (GimpPaletteEntry *) list->data;
