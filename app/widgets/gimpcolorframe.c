@@ -107,18 +107,18 @@ gimp_color_frame_init (GimpColorFrame *frame)
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
       frame->name_labels[i] = gtk_label_new (" ");
-      gtk_misc_set_alignment (GTK_MISC (frame->name_labels[i]), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (frame->name_labels[i]), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), frame->name_labels[i],
                         0, 1, i, i + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                        GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (frame->name_labels[i]);
 
       frame->value_labels[i] = gtk_label_new (" ");
       gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (frame->value_labels[i]), 0.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (frame->value_labels[i]), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), frame->value_labels[i],
                         1, 2, i, i + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                        GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (frame->value_labels[i]);
     }
 }

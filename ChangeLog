@@ -1,3 +1,8 @@
+2004-09-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorframe.c: changed label alignment to be more
+	HIG conformant and consistent with the rest of the user interface.
+
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: added "name", "blurb",
