@@ -1,3 +1,8 @@
+2002-11-01  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/stock-reset-16.png: finally a Reset icon
+	from Jakub Steiner <jimmac@ximian.com>.
+
 2002-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpcolor/gimpcolorspace.h (gimp_rgb_to_hsv4): "rgb" and
