@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 do '../config.pl';
 
 print "Portable message objects...";
-if ($MSGFMT =~ /./) {
+if ($MSGFMT =~ /./ && $MSGFMT ne "no") {
    for (<*.po>) {
       my ($po) = /(.*)\.po$/;
       print " $po";
@@ -13,8 +13,10 @@ if ($MSGFMT =~ /./) {
       $uninstall .= "	\$(RM_F) \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
       $mofiles   .= " $po.gmo";
    }
+   $alltarget = "update-po";
 } else {
    print " skipped";
+   $alltarget = "";
 }
 print "\n";
 
@@ -37,7 +39,7 @@ datadir  = $datadir
 	-msgmerge -w 83 \$*.po gimp-perl.pot >\$*.po~
 	-if cmp -s \$*.po~ \$*.po; then : ; else mv \$*.po~ \$*.po; fi
 
-all :: update-gmo
+all :: $alltarget
 
 update-gmo: $mofiles
 

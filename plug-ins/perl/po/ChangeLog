@@ -1,3 +1,10 @@
+Wed Apr  5 06:02:58 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: possible fix for #8148. basically, nothing at all
+        will be done when MSGFMT == "no" or empty. Otherwise, msgmerge is
+        assumed to be in the path somewhere (just like po/Makefile.in.in
+        btw).
+
 2000-04-03  Sven Neumann  <sven@gimp.org>
 
 	* de.po: more updates
