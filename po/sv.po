@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:22+0100\n"
-"PO-Revision-Date: 2004-01-06 20:32+0900\n"
+"POT-Creation-Date: 2004-01-08 22:56+0900\n"
+"PO-Revision-Date: 2004-01-08 22:58+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1450,9 +1450,8 @@ msgid "Fill with Transparency"
 msgstr "Fyll med transparent"
 
 #: app/core/gimp-edit.c:248
-#, fuzzy
 msgid "Fill with Pattern"
-msgstr "/Redigera/Fyll med _mönster"
+msgstr "Fyll med mönster"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -2589,9 +2588,11 @@ msgstr "Översatt av"
 #. Translators: insert your names here, separated by newline
 #. we'd prefer just the names, please no email adresses.
 #: app/gui/about-dialog.c:56
-#, fuzzy
 msgid "translator-credits"
-msgstr "transformera"
+msgstr ""
+"Jan Morén\n"
+"Christian Rose\n"
+"Tomas Ögren"
 
 #: app/gui/about-dialog.c:61
 msgid "Contributions by"
