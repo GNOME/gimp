@@ -240,6 +240,7 @@ shoot (void)
   gchar     *xwdargv[7];    /*  need a maximum of 7 arguments to xwd  */
   gdouble    xres, yres;
   gint       pid;
+  gint       wret;
   gint       status;
   gint       i = 0;
 
@@ -288,10 +289,14 @@ shoot (void)
     }
 #endif
     {
-      waitpid (pid, &status, 0);
+      status = -1;
+      wret = waitpid (pid, &status, 0);
 	      
-      if (!WIFEXITED (status))
+      if ((wret < 0) || !WIFEXITED (status))
 	{
+	  /*  the tmpfile may have been created even if xwd failed  */
+	  unlink (tmpname);
+	  g_free (tmpname);
 	  g_message ("screenshot: xwd didn't work\n");
 	  return;
 	}
