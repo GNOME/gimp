@@ -17,8 +17,6 @@
 #include "docindex.h"
 #include "docindexif.h"
 
-#include "libgimp/gimpintl.h"
-
 void
 raise_if_match( gpointer data, gpointer user_data )
 {

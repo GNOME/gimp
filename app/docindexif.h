@@ -21,6 +21,7 @@
 #include <gdk/gdkprivate.h>
 #include <stdio.h>
  
+#include "libgimp/gimpintl.h"
 #include "gimage.h"
 #include "fileops.h"
 #include "file_new_dialog.h"

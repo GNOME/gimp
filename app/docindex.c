@@ -21,62 +21,129 @@
 #include "docindex.h"
 #include "docindexif.h"
 
-#include "libgimp/gimpintl.h"
-
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
 static gint x = 0, y = 0, width = 0, height = 0;
 
 
-static char *image_drop_types[] = {"url:ALL"};
+enum {
+  TARGET_URI_LIST,
+};
 
 static void create_idea_list( void );
 static void load_idea_manager( idea_manager * );
 
 static void
-idea_dnd_drop_data_available_callback(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer user_data)
+docindex_dnd_filenames_dropped( GtkWidget *widget,
+				GdkDragContext *context,
+				GtkSelectionData *selection_data,
+				guint info,
+				guint time)
 {
-  gint len = event->data_numbytes;
-  gchar *data = event->data; 
- 
-  /* Test for the type that was dropped */
-  if (strcmp (event->data_type, "url:ALL") == 0)
+  gint len;
+  gchar *data;
+  gchar *end;
+
+  switch ( info )
     {
+    case TARGET_URI_LIST:
+      data = selection_data->data;
+      len = selection_data->length;
       while( len > 0 )
 	{
-	  open_file_in_position( data, -1 );
-	  len -= ( strlen( data ) + 1 );
-	  data += strlen( data ) + 1;
+	  end = strstr( data, "\x13\x10" );
+	  if ( end != NULL )
+	    *end = 0;
+	  if ( *data != '#' )
+	    open_file_in_position( data, -1 );
+	  if ( end )
+	    {
+	      len -= end - data + 2;
+	      data = end + 2;
+	    }
+	  else
+	    len = 0;
 	}
+      break;
     }
   return;
-  /*
-    panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
-    return;*/
+}
+
+void
+docindex_configure_drop_on_widget(GtkWidget * widget)
+{
+  static GtkTargetEntry drag_types[] =
+  {
+    { "text/uri-list", 0, TARGET_URI_LIST },
+  };
+  static gint n_drag_types = sizeof(drag_types)/sizeof(drag_types[0]);
+
+  gtk_drag_dest_set (widget,
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_DROP,
+                     drag_types, n_drag_types,
+                     GDK_ACTION_COPY);
+
+  gtk_signal_connect(GTK_OBJECT(widget), "drag_data_received",
+                       GTK_SIGNAL_FUNC(docindex_dnd_filenames_dropped), NULL);
 }
 
 static void
-idea_cell_dnd_drop_data_available_callback(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer user_data)
+docindex_cell_dnd_filenames_dropped( GtkWidget *widget,
+				     GdkDragContext *context,
+				     GtkSelectionData *selection_data,
+				     guint info,
+				     guint time)
 {
-  gint len = event->data_numbytes;
-  gchar *data = event->data;
+  gint len;
+  gchar *data;
+  gchar *end;
   gint position = g_list_index( GTK_TREE( ideas->tree )->children, widget );
-  
-  /* Test for the type that was dropped */
-  if (strcmp (event->data_type, "url:ALL") == 0)
+
+  switch ( info )
     {
+    case TARGET_URI_LIST:
+      data = selection_data->data;
+      len = selection_data->length;
       while( len > 0 )
 	{
-	  open_file_in_position( data, position );
-	  len -= ( strlen( data ) + 1 );
-	  data += strlen( data ) + 1;
-	  position += 1;
+	  end = strstr( data, "\x13\x10" );
+	  if ( end != NULL )
+	    *end = 0;
+	  if ( *data != '#' )
+	    open_file_in_position( data, position );
+	  if ( end )
+	    {
+	      len -= end - data + 2;
+	      data = end + 2;
+	    }
+	  else
+	    len = 0;
 	}
+      break;
     }
   return;
-  /*
-    panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
-    return;*/
+}
+
+void
+docindex_cell_configure_drop_on_widget(GtkWidget * widget)
+{
+  static GtkTargetEntry drag_types[] =
+  {
+    { "text/uri-list", 0, TARGET_URI_LIST },
+  };
+  static gint n_drag_types = sizeof(drag_types)/sizeof(drag_types[0]);
+
+  gtk_drag_dest_set (widget,
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_DROP,
+                     drag_types, n_drag_types,
+                     GDK_ACTION_COPY);
+
+  gtk_signal_connect(GTK_OBJECT(widget), "drag_data_received",
+                       GTK_SIGNAL_FUNC(docindex_cell_dnd_filenames_dropped), NULL);
 }
 
 static gboolean
@@ -100,7 +167,7 @@ idea_hide_callback( GtkWidget *widget, gpointer data )
     save_idea_manager( ideas );
 
   /* False if exitting */
-  if( ( ! exit_from_go() ) && ideas)
+  if( ( ! exit_from_go() ) && ideas )
     {
       create_idea_list();
       gtk_widget_destroy( ideas->window );
@@ -188,10 +255,7 @@ make_idea_window( int x, int y )
   gtk_container_add( GTK_CONTAINER( ideas->window ), main_vbox );
   gtk_widget_show( main_vbox );
 
-  gtk_signal_connect( GTK_OBJECT( ideas->tree ),
-		      "drop_data_available_event",
-		      GTK_SIGNAL_FUNC( idea_dnd_drop_data_available_callback ),
-		      NULL );
+  docindex_configure_drop_on_widget(ideas->tree);
 
   /* Load and Show window */
   load_idea_manager( ideas );
@@ -199,8 +263,6 @@ make_idea_window( int x, int y )
   /* Set the position of the window if it was requested */
   if ( x >= 0 && y >= 0 )
     gtk_widget_set_uposition( ideas->window, x, y );
-
-  gtk_widget_dnd_drop_set( ideas->tree, TRUE, image_drop_types, 1, FALSE );
 }
 
 static void
@@ -235,7 +297,7 @@ load_idea_manager( idea_manager *ideas )
 	}
     }
   
-  if ( idea_list || fp)
+  if ( idea_list || fp )
     {
       gtk_widget_set_usize( ideas->window, width, height );
       gtk_widget_show( ideas->window );
@@ -247,7 +309,7 @@ load_idea_manager( idea_manager *ideas )
 	  gint length;
 	  clear_white( fp );
 	  
-	  while ( ! feof( fp ) && !ferror(fp))
+	  while ( ! feof( fp ) && !ferror( fp ) )
 	    {
 	      length = getinteger( fp );
 	      title = g_malloc0( length + 1 );
@@ -421,14 +483,9 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 			      GTK_SIGNAL_FUNC( open_or_raise_callback ),
 			      NULL );
 	  
-	  gtk_signal_connect( GTK_OBJECT( treeitem ),
-			      "drop_data_available_event",
-			      GTK_SIGNAL_FUNC( idea_cell_dnd_drop_data_available_callback ),
-			      NULL );
+	  docindex_cell_configure_drop_on_widget( treeitem );
 	  
 	  gtk_widget_show( treeitem );
-	  
-	  gtk_widget_dnd_drop_set( treeitem, TRUE, image_drop_types, 1, FALSE );
 	  
 	  if ( select )
 	    gtk_tree_select_item( GTK_TREE( ideas->tree ), gtk_tree_child_position( GTK_TREE( ideas->tree ), treeitem ) );
@@ -462,7 +519,7 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 
 	      clear_white( fp );
 	  
-	      while ( ! feof( fp ) && !ferror(fp))
+	      while ( ! feof( fp ) && !ferror( fp ) )
 		{
 		  length = getinteger( fp );
 		  title = g_malloc0( length + 1 );
