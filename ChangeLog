@@ -1,3 +1,9 @@
+2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* app/paint/gimpbrushcore.c: make previously committed change
+	in pressure-size relationship apply only to airbrush, as
+	intended.
+	
 2004-12-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/plug-in-actions.c: use the orininal string if
