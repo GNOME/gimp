@@ -23,8 +23,10 @@
 #define __GIMP_TYPES_H__
 
 
+#include <libgimpcolor/gimpcolortypes.h>
+
+
 /*  these will go to a separate library soon  */
-#include "gimpcolor.h"
 #include "gimpunit.h"
 
 

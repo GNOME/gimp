@@ -17,11 +17,17 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <glib.h>
 
-#include "gimpcolor.h"
+#include "gimpcolortypes.h"
+
 #include "gimpcolorspace.h"
-#include "gimpmath.h"
+#include "gimprgb.h"
+#include "gimphsv.h"
+
+#include "libgimp/gimpmath.h"
 
 
 #define GIMP_HSV_UNDEFINED -1.0

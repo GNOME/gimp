@@ -732,6 +732,8 @@ gimp.spec
 libgimp/gimpfeatures.h
 libgimp/Makefile
 libgimp/makefile.mingw
+libgimpcolor/Makefile
+libgimpcolor/makefile.mingw
 app/Makefile
 app/makefile.mingw
 app/pdb/Makefile

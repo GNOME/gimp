@@ -21,15 +21,11 @@
 
 #include <glib.h>
 
-#include "gimpcolor.h"
-#include "gimpcolorspace.h"
-#include "gimppalette_pdb.h"
-#include "gimpmath.h"
+#include "gimpcolortypes.h"
 
+#include "gimprgb.h"
 
-/***************************
- *   channels operations   *
- ***************************/
+#include "libgimp/gimpmath.h"
 
 
 /*  RGB functions  */
@@ -322,50 +318,3 @@ gimp_rgba_distance (const GimpRGB *rgba1,
   return (fabs (rgba1->r - rgba2->r) + fabs (rgba1->g - rgba2->g) +
           fabs (rgba1->b - rgba2->b) + fabs (rgba1->a - rgba2->a));
 }
-
-
-/*  HSV functions  */
-
-void
-gimp_hsv_set (GimpHSV *hsv,
-	      gdouble  h,
-	      gdouble  s,
-	      gdouble  v)
-{
-  g_return_if_fail (hsv != NULL);
-
-  hsv->h = h;
-  hsv->s = s;
-  hsv->v = v;
-}
-
-void
-gimp_hsv_clamp (GimpHSV *hsv)
-{
-  g_return_if_fail (hsv != NULL);
-
-  hsv->h -= (gint) hsv->h;
-
-  if (hsv->h < 0)
-    hsv->h += 1.0;
-
-  hsv->s = CLAMP (hsv->s, 0.0, 1.0);
-  hsv->v = CLAMP (hsv->v, 0.0, 1.0);
-  hsv->a = CLAMP (hsv->a, 0.0, 1.0);
-}
-
-void
-gimp_hsva_set (GimpHSV *hsva,
-	       gdouble  h,
-	       gdouble  s,
-	       gdouble  v,
-	       gdouble  a)
-{
-  g_return_if_fail (hsva != NULL);
-
-  hsva->h = h;
-  hsva->s = s;
-  hsva->v = v;
-  hsva->a = a;
-}
-

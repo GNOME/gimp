@@ -137,10 +137,6 @@ EXPORTS
 	gimp_gradients_set_popup
 	gimp_gtkrc
 	gimp_help
-	gimp_hls_to_rgb
-	gimp_hsv_to_rgb
-	gimp_hsv_to_rgb4
-	gimp_hsv_to_rgb_double
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer
@@ -325,11 +321,6 @@ EXPORTS
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
 	gimp_register_save_handler
-	gimp_rgb_to_hls
-	gimp_rgb_to_hsv
-	gimp_rgb_to_hsv4
-	gimp_rgb_to_hsv_double
-	gimp_rgb_to_l
 	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2

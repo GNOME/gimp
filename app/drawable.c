@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "drawable.h"

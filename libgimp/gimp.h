@@ -24,14 +24,14 @@
 
 #include <glib.h>
 
+#include <libgimpcolor/gimpcolor.h>
+
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
 #include <libgimp/gimpadaptivesupersample.h>
 #include <libgimp/gimpbilinear.h>
 #include <libgimp/gimpchannel.h>
-#include <libgimp/gimpcolor.h>
-#include <libgimp/gimpcolorspace.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfeatures.h>
 #include <libgimp/gimpgradientselect.h>

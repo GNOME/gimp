@@ -1,5 +1,108 @@
 2001-01-23  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am
+	* configure.in
+	* gimptool.in: added stuff for the new library below.
+
+	* libgimpcolor/.cvsignore
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/gimpcolor.h
+	* libgimpcolor/gimpcolorspace.c
+	* libgimpcolor/gimpcolorspace.h
+	* libgimpcolor/gimpcolortypes.h
+	* libgimpcolor/gimphsv.c
+	* libgimpcolor/gimphsv.h
+	* libgimpcolor/gimprgb.c
+	* libgimpcolor/gimprgb.h: new shared library which both the app
+	and plug-ins link against. The library depends only on glib.
+
+	* libgimpcolor/gimpcolor.def
+	* libgimpcolor/makefile.mingw.in
+	* libgimpcolor/makefile.msc: added Win32 build files which
+	definitely don't work.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpcolor.[ch]
+	* libgimp/gimpcolorspace.[ch]: removed.
+
+	* libgimp/gimp.h
+	* libgimp/gimpadaptivesupersample.c
+	* libgimp/gimpbilinear.c
+	* libgimp/gimppalette.c
+	* libgimp/gimptypes.h: include the stuff from libgimpcolor.
+
+	Plug-Ins don't need to include <libgimpcolor/gimpcolor.h>
+	explicitely. LibGimp depends on libgimpcolor and thus also includes
+	it's headers.
+
+	* libgimp/gimp.def
+	* libgimp/makefile.mingw.in: fiddled around with Win32 stuff...
+
+	* app/Makefile.am: link against libgimpcolor.la
+
+	* app/apptypes.h: include "libgimpcolor/gimpcolortypes.h"
+
+	* app/asupsample.c
+	* app/channels_dialog.c
+	* app/colormap_dialog.c
+	* app/commands.c
+	* app/convert.c
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/drawable.c
+	* app/gimpcontext.c
+	* app/gimpdnd.c
+	* app/gimpimage.c
+	* app/gimppalette.c
+	* app/gimprc.c
+	* app/gradient.c
+	* app/libgimp_glue.c
+	* app/palette.c
+	* app/palette_import.c
+	* app/qmask.c
+	* app/xcf.c
+	* app/tools/paint_core.c
+	* app/tools/paintbrush.c
+	* app/tools/pencil.c: include "libgimpcolor/gimpcolor.h" before all
+	gimp includes because it's a standalone library.
+
+	* plug-ins/FractalExplorer/Makefile.am
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/fits/Makefile.am
+	* plug-ins/flame/Makefile.am
+	* plug-ins/fp/Makefile.am
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gfig/Makefile.am
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gfli/Makefile.am
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/ifscompose/Makefile.am
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/maze/Makefile.am
+	* plug-ins/mosaic/Makefile.am
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/print/Makefile.am
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/sel2path/Makefile.am
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/xjt/Makefile.am: add libgimpcolor.la to LDADD.
+
+	* INSTALL: don't recommend to --disable-shared for development.
+
+	* TODO.xml: increased some percentages, added plug-in help stuff.
+
+2001-01-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/libgimp_glue.[ch]: new files containing stuff needed for
 	linking libgimp stuff against the app. This file is not needed

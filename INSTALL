@@ -42,10 +42,8 @@ recognizes. These are:
 
   1. --enable-shared and --disable-shared. This option affects whether
      shared libraries will be built or not. Shared libraries provide
-     for much smaller executables, but they are difficult to debug
-     with. If you are interested in doing development, it is probably
-     wise to specify `--disable-shared'. The default is to enable
-     shared libraries.
+     for much smaller executables. The default is to enable shared
+     libraries. Disabling shared libraries is almost never a good idea.
 
   2. --enable-debug and --disable-debug. This option causes the build
      process to compile with debugging enabled. If debugging is

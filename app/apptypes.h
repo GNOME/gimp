@@ -20,15 +20,17 @@
 #define __APPTYPES_H__
 
 
-#include "undo_types.h"
+#include "libgimpcolor/gimpcolortypes.h"
+#include "libgimp/gimpuitypes.h"
 
-/*  these will go into a general purpose library  */
-#include "libgimp/gimpcolor.h"
+
+/* stuff that will go to general-purpose libraries */
 #include "libgimp/gimpmatrix.h"
 #include "libgimp/gimpvector.h"
 #include "libgimp/gimpunit.h"
 
-#include "libgimp/gimpuitypes.h"
+
+#include "undo_types.h"
 
 #include "appenums.h"
 

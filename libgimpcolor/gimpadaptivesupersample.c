@@ -21,7 +21,8 @@
 
 #include <glib.h>
 
-#include "gimpcolor.h"
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpadaptivesupersample.h"
 #include "gimpmath.h"
 

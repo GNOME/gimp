@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "channel.h"
@@ -44,9 +46,10 @@
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpcolorarea.h"
 
-#define DRAG_PREVIEW_SIZE 32
 
+#define DRAG_PREVIEW_SIZE 32
 #define DRAG_ICON_OFFSET  -8
+
 
 typedef enum
 {

@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"

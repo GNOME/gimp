@@ -81,14 +81,16 @@ foreach (sort keys %plugins) {
 
     $libgimp .= "\$(top_builddir)/libgimp/libgimp.la";
     if (exists $plugins{$_}->{ui}) {
-	$libgimp .= "\t\\\n\t$libgimp";
+	$libgimp .= "\t\t\\\n\t$libgimp";
 	$libgimp =~ s/gimp\./gimpui./;
     }
+
+    $libgimp .= "\t\t\\\n\t\$(top_builddir)/libgimpcolor/libgimpcolor.la";
 
     my $optlib = ""; 
     if (exists $plugins{$_}->{optional}) {
 	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\\";
+	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\\";
     }
 
     if (exists $plugins{$_}->{libsupp}) {
@@ -96,7 +98,6 @@ foreach (sort keys %plugins) {
 	foreach $lib (@lib) {
 	    $libgimp = "\$(top_builddir)/plug-ins/$lib/lib$lib.a\t\\\n\t$libgimp";
 	}
-	$libgimp =~ s@gck/libgck\.a@libgck/gck/libgck.la@;
     }
 
     print MK <<EOT;
@@ -106,7 +107,7 @@ ${_}_SOURCES = \\
 
 ${_}_LDADD = \\
 	$libgimp	\\$optlib
-	\$(\U$plugins{$_}->{libdep}\E_LIBS)				\\
+	\$(\U$plugins{$_}->{libdep}\E_LIBS)					\\
 	\$(INTLLIBS)
 EOT
 

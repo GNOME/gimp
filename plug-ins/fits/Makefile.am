@@ -15,9 +15,10 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
+	$(top_builddir)/libgimp/libgimpui.la		\
+	$(top_builddir)/libgimp/libgimp.la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor.la	\
+	$(GTK_LIBS)					\
 	$(INTLLIBS)
 
 AM_CPPFLAGS = \

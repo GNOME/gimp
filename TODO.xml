@@ -173,7 +173,7 @@
   <section>
     <title>LibGimp</title>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="medium" status="10%" target="1.4">
       <title>Restructure LibGimp</title>
       <description>
 	<p>
@@ -187,7 +187,7 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="easy" status="0%" target="1.4">
+    <entry size="small" difficulty="easy" status="20%" target="1.4">
       <title>Utility library</title>
       <description>
 	<p>
@@ -213,7 +213,7 @@
       </contact>
     </entry>
      
-    <entry size="medium" difficulty="medium" status="80%" target="1.4">
+    <entry size="medium" difficulty="medium" status="90%" target="1.4">
       <title>Move GCK functionality into LibGimp</title>
       <description>
 	<p>
@@ -399,13 +399,37 @@
       </contact>
     </entry>
 
-  </section> <!-- User Interface -->    
-  
+  </section> <!-- User Interface -->
+
+  <section>
+    <title>Help System</title>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Rethink Plug-In and Script Help</title>
+      <description>
+	<p>
+	  Currently a Plug-In's help file determined by the application
+	  from it's executable name. This is broken because is does not
+	  cover multiple PDB procedures implemented in one Plug-In.
+	</p>
+	<p>
+	  A possible solution would be to pass the relative path to the
+	  help file to gimp_install_procedure(). A similar fix should be
+	  applied to Script-Fu and Perl.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+  </section> <!-- Help System -->
+
   <section>
     <title>Internationalization</title>
 
     <entry size="small" difficulty="medium" status="0%" target="1.4">
-      <title>Context-sensitive translations</title>
+      <title>Context-Sensitive Translations</title>
       <description>
 	<p>
 	  The same english string used in different contexts may need to

@@ -3,6 +3,7 @@
 SUBDIRS = \
 	tools		\
 	intl		\
+	libgimpcolor	\
 	libgimp		\
 	app		\
 	$(GIMP_PLUGINS)	\

@@ -40,6 +40,7 @@ AM_CPPFLAGS = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la		\
 	$(top_builddir)/libgimp/libgimp.la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor.la	\
 	$(GTK_LIBS)					\
 	$(INTLLIBS)
 

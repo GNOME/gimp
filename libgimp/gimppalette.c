@@ -21,7 +21,8 @@
 
 #include <glib.h>
 
-#include "gimpcolor.h"
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimppalette_pdb.h"
 
 

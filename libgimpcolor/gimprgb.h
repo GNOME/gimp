@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_COLOR_H__
-#define __GIMP_COLOR_H__
+#ifndef __GIMP_RGB_H__
+#define __GIMP_RGB_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,19 +29,6 @@ extern "C" {
 
 /*  RGB and RGBA color types and operations taken from LibGCK  */
 
-typedef struct _GimpRGB GimpRGB;
-
-struct _GimpRGB
-{
-  gdouble r, g, b, a;
-};
-
-typedef struct _GimpHSV GimpHSV;
-
-struct _GimpHSV
-{
-  gdouble h, s, v, a;
-};
 
 typedef enum
 {
@@ -111,21 +98,19 @@ void      gimp_rgba_multiply  (GimpRGB       *rgba,
 gdouble   gimp_rgba_distance  (const GimpRGB *rgba1, 
 			       const GimpRGB *rgba2);
 
-void      gimp_hsv_set        (GimpHSV       *hsv,
-			       gdouble        h,
-			       gdouble        s,
-			       gdouble        v);
-void      gimp_hsv_clamp      (GimpHSV       *hsv);
 
-void      gimp_hsva_set       (GimpHSV       *hsva,
-			       gdouble        h,
-			       gdouble        s,
-			       gdouble        v,
-			       gdouble        a);
+/*  Map RGB to intensity  */
+
+#define INTENSITY_RED   0.30
+#define INTENSITY_GREEN 0.59
+#define INTENSITY_BLUE  0.11
+#define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
+			  (g) * INTENSITY_GREEN + \
+			  (b) * INTENSITY_BLUE  + 0.001)
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif  /* __GIMP_COLOR_H__ */
+#endif  /* __GIMP_RGB_H__ */

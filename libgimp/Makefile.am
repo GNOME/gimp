@@ -97,16 +97,12 @@ PDB_WRAPPERS_H = \
 	gimpunit_pdb.h
 
 libgimpi_a_SOURCES = \
-	gimpcolor.c		\
-	gimpcolor.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpcolorarea.c		\
 	gimpcolorarea.h		\
 	gimpcolorbutton.c	\
 	gimpcolorbutton.h	\
-	gimpcolorspace.c	\
-	gimpcolorspace.h	\
 	gimpdialog.c		\
 	gimpdialog.h		\
 	gimpenv.c		\
@@ -163,10 +159,6 @@ libgimp_la_SOURCES = \
 	gimpadaptivesupersample.h	\
 	gimpbilinear.c			\
 	gimpbilinear.h			\
-	gimpcolor.c			\
-	gimpcolor.h			\
-	gimpcolorspace.c		\
-	gimpcolorspace.h		\
 	gimpchannel.c			\
 	gimpchannel.h			\
 	gimpdrawable.c			\
@@ -240,12 +232,10 @@ gimpinclude_HEADERS = \
 	gimpbilinear.h			\
 	gimpchainbutton.h		\
 	gimpchannel.h			\
-	gimpcolor.h			\
 	gimpcolorarea.h			\
 	gimpcolorbutton.h		\
 	gimpcolordisplay.h		\
 	gimpcolorselector.h		\
-	gimpcolorspace.h		\
         gimpcompat.h			\
 	gimpdrawable.h			\
 	gimpdialog.h			\

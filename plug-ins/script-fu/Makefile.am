@@ -41,6 +41,7 @@ LDADD = \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
 	$(top_builddir)/libgimp/libgimpui.la			\
 	$(top_builddir)/libgimp/libgimp.la			\
+	$(top_builddir)/libgimpcolor/libgimpcolor.la		\
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
 
