@@ -1,3 +1,7 @@
+2004-08-27  Sven Neumann  <sven@gimp.org>
+
+	* de.po: merged fixes from stable branch.
+
 2004-08-13  Tommi Vainikainen  <thv@iki.fi>
 
 	* fi.po: Unified some fields in po headers for Finnish team.

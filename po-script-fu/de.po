@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-08-06 02:08+0200\n"
-"PO-Revision-Date: 2004-07-04 17:25+0200\n"
+"PO-Revision-Date: 2004-08-27 22:50+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,9 +85,8 @@ msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1357
-#, fuzzy
 msgid "Script-Fu Palette Selection"
-msgstr "Skript-Fu Musterauswahl"
+msgstr "Skript-Fu Palettenauswahl"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-fu Pattern Selection"
@@ -2001,11 +2000,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Skript-Fu/Auswahl/Zu _Pinsel..."
+msgstr "<Image>/Skript-Fu/Auswahl/Zu _Muster..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
 msgid "Pattern name"
-msgstr "Muster"
+msgstr "Mustername"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
@@ -2414,15 +2413,15 @@ msgstr "Fadenlänge"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Xtns/GIMP Online/_Plugin Registrierung"
+msgstr "<Toolbox>/Hilfe/GIMP Online/_Plugin Registrierung"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
-msgstr "<Toolbox>/Xtns/GIMP Online/_Entwicklung"
+msgstr "<Toolbox>/Hilfe/GIMP Online/_Entwicklung"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
-msgstr "<Toolbox>/Xtns/GIMP Online/_GIMP"
+msgstr "<Toolbox>/Hilfe/GIMP Online/_GIMP"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
