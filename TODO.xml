@@ -1,19 +1,14 @@
 <!-- Stuff that is scheduled to be done. Ideas do not go here, put
-     them into the old TODO file for now.   -->
+     them into the old TODO file for now.
 
-<!-- The following comment is not yet valid, since we have not yet
-     set up the website and updated the commit scripts. Please check
-     for parse errors anyway.
-
-     This is used to generate the online TODO list for GIMP using
-     the script docs/make-todo. Whenever a change to this file is
-     committed to CVS, the file is run through make-todo and the online
-     version updated. If you modify this file, you should check for
-     parse errors by running:
+     This is used to generate the online TODO list for GIMP using the 
+     script docs/make-todo. There is a script on developer.gimp.org
+     that updates this file daily from anoncvs. If you modify this file, 
+     you should check for parse errors by running:
 
      $ docs/make-todo TODO.xml > /dev/null
 
-     before committing, or you may screw up the online version -->
+     before committing, or you may screw up the online version   -->
 
 <todo logourl="wilber.png">
   <title>GIMP TODO List</title>
@@ -49,7 +44,7 @@
       </contact>
     </entry>    
 
-    <entry size="big" difficulty="medium" status="10%" target="1.4">
+    <entry size="big" difficulty="medium" status="20%" target="1.4">
       <title>Code reorganization</title>
       <description>
 	<p>
@@ -63,7 +58,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="40%" target="1.4">
+    <entry size="medium" difficulty="medium" status="50%" target="1.4">
       <title>Unify color data types</title>
       <description>
 	<p>
@@ -71,6 +66,21 @@
 	  whereever possible. If necessary we can change this to a
 	  more generic struct later. Migrating to GimpRGB first will make
 	  this much easier.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
+    <entry size="medium" difficulty="advanced" status="0%" target="1.4">
+      <title>Script-Fu overhaul</title>
+      <description>
+	<p>
+	  Script-Fu shouldn't be an extension running all the time, but
+	  an interpreter that gets started once a script is run and
+	  terminates after script execution. This should also solve the
+	  problem of having multiple scripts running at the same time.
 	</p>
       </description>
       <contact>
@@ -203,6 +213,20 @@
       </contact>
     </entry>
      
+    <entry size="medium" difficulty="medium" status="80%" target="1.4">
+      <title>Move GCK functionality into LibGimp</title>
+      <description>
+	<p>
+	  libgck, as found in the plug-ins dir has some nice functions we
+	  want to clean up and make available in LibGimp so they can be 
+	  used by the core and plug-ins.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
   </section> <!-- LibGimp -->    
 
   <section>
@@ -290,7 +314,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="50%" target="1.4">
+    <entry size="medium" difficulty="medium" status="60%" target="1.4">
       <title>Cleanup GIMP's color selectors</title>
       <description>
 	<p>

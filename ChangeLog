@@ -1,3 +1,7 @@
+2001-01-23  Sven Neumann  <sven@gimp.org>
+
+	* TODO.xml: updated, added sections about libgck and script-fu
+
 2001-01-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
