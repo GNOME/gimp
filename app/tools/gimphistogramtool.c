@@ -25,6 +25,11 @@
 
 #include "tools-types.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
@@ -36,12 +41,15 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
+
+#include "gui/dialogs.h"
 
 #include "gimphistogramtool.h"
 #include "tool_manager.h"
@@ -429,6 +437,10 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
 			GTK_FILL, GTK_FILL, 2, 2);
       gtk_widget_show (htd->info_labels[i]);
     }
+
+  gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                   "gimp-histogram-tool-dialog",
+                                   htd->shell);
 
   return htd;
 }

@@ -42,11 +42,13 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "gui/dialogs.h"
 #include "gui/info-dialog.h"
 
 #include "gimpmeasureoptions.h"
@@ -395,6 +397,10 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 				      measure_tool_info, NULL, NULL, TRUE, TRUE,
 
 				      NULL);
+
+      gimp_dialog_factory_add_foreign (global_dialog_factory,
+                                       "gimp-measure-tool-dialog",
+                                       measure_tool_info->shell);
     }
 
   if (measure_tool_info)
