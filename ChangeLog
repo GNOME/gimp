@@ -1,3 +1,8 @@
+2003-06-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/plug-in-commands.c (plug_in_run_cmd_callback): pass the
+	gdisp_ID to plug_in_run() again. Broke this with my last commit...
+
 2003-06-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c (gimp_config): fixed error messages.

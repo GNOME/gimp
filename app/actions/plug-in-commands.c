@@ -96,6 +96,8 @@ plug_in_run_cmd_callback (GtkWidget *widget,
 
           if (gdisplay)
             {
+              gdisp_ID = gimp_display_get_ID (gdisplay);
+
               args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
               argc++;
 
