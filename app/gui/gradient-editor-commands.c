@@ -35,8 +35,6 @@
 #include "color-notebook.h"
 #include "gradient-editor-commands.h"
 
-#include "app_procs.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -113,7 +111,7 @@ gradient_editor_load_left_cmd_callback (GtkWidget *widget,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (the_gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
 
   i = (gint) action;
 
@@ -236,7 +234,7 @@ gradient_editor_load_right_cmd_callback (GtkWidget *widget,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (the_gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
 
   i = (gint) action;
 
@@ -947,9 +945,9 @@ gradient_editor_menu_update (GtkItemFactory *factory,
   gboolean             selection;
   gboolean             delete;
 
-  editor = (GimpGradientEditor *) data;
+  editor = GIMP_GRADIENT_EDITOR (data);
 
-  user_context = gimp_get_user_context (the_gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
 
   if (editor->control_sel_l->prev)
     left_seg = editor->control_sel_l->prev;

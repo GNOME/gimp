@@ -1,3 +1,29 @@
+2002-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.[ch]: changed gimp_channel_get_color() to
+	not return the color but take a second GimpRGB* parameter like all
+	other _get_color() functions. Reordered some functions to make
+	more sense, added some g_return_if_fail().
+
+	* app/core/gimppalette.[ch]: added gimp_palette_[set|get]_n_columns()
+
+	* app/gui/menus.c: added a "<PaletteEditor>" item factory.
+
+	* app/gui/Makefile.am
+	* app/gui/palette-editor-commands.[ch]: callbacks for the factory.
+
+	* app/widgets/gimppaletteeditor.[ch]: removed the menu stuff here,
+	added a spinbutton to adjust the number of columns.
+
+	* app/gui/gradient-editor-commands.c: removed usage of "the_gimp".
+
+	* app/widgets/gimpgradienteditor.c: minor cleanup.
+
+	* app/widgets/gimpbrusheditor.h
+	* app/widgets/gimpgradienteditor.h
+	* app/widgets/gimppaletteeditor.h: forgot to declare the _get_type()
+	functions publically.
+
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
 	Handle gtk-doc just like GTK+ does it now:

@@ -79,6 +79,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	module-browser.h		\
 	offset-dialog.c			\
 	offset-dialog.h			\
+	palette-editor-commands.c	\
+	palette-editor-commands.h	\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
 	palette-select.c		\

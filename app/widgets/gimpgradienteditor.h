@@ -114,10 +114,12 @@ struct _GimpGradientEditorClass
 };
 
 
-GimpDataEditor * gimp_gradient_editor_new    (Gimp                     *gimp);
+GType            gimp_gradient_editor_get_type (void) G_GNUC_CONST;
 
-void             gimp_gradient_editor_update (GimpGradientEditor       *editor,
-                                              GradientEditorUpdateMask  flags);
+GimpDataEditor * gimp_gradient_editor_new      (Gimp                     *gimp);
+
+void             gimp_gradient_editor_update   (GimpGradientEditor       *editor,
+                                                GradientEditorUpdateMask  flags);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */

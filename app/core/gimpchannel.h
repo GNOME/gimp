@@ -80,7 +80,8 @@ gdouble         gimp_channel_get_opacity       (const GimpChannel *channel);
 void            gimp_channel_set_opacity       (GimpChannel       *channel,
 						gdouble            opacity);
 
-const GimpRGB * gimp_channel_get_color         (const GimpChannel *channel);
+void            gimp_channel_get_color         (const GimpChannel *channel,
+                                                GimpRGB           *color);
 void 		gimp_channel_set_color         (GimpChannel       *channel, 
 						const GimpRGB     *color);
 
@@ -100,6 +101,7 @@ void            gimp_channel_resize            (GimpChannel       *channel,
 GimpChannel   * gimp_channel_new_mask          (GimpImage         *gimage,
 						gint               width,
 						gint               height);
+
 gboolean        gimp_channel_boundary          (GimpChannel       *mask,
 						BoundSeg         **segs_in,
 						BoundSeg         **segs_out,
@@ -118,6 +120,7 @@ gint            gimp_channel_value             (GimpChannel       *mask,
 						gint               x, 
 						gint               y);
 gboolean        gimp_channel_is_empty          (GimpChannel       *mask);
+
 void            gimp_channel_add_segment       (GimpChannel       *mask,
 						gint               x,
 						gint               y,
@@ -146,16 +149,18 @@ void            gimp_channel_combine_mask      (GimpChannel       *mask,
 						ChannelOps         op,
 						gint               off_x,
 						gint               off_y);
+
 void            gimp_channel_feather           (GimpChannel       *mask,
 						gdouble            radius_x,
 						gdouble            radius_y,
                                                 gboolean           push_undo);
+void            gimp_channel_sharpen           (GimpChannel       *mask);
 
 void            gimp_channel_push_undo         (GimpChannel       *mask);
+
 void            gimp_channel_clear             (GimpChannel       *mask);
-void            gimp_channel_invert            (GimpChannel       *mask);
-void            gimp_channel_sharpen           (GimpChannel       *mask);
 void            gimp_channel_all               (GimpChannel       *mask);
+void            gimp_channel_invert            (GimpChannel       *mask);
 
 void            gimp_channel_border            (GimpChannel      *mask,
 						gint              radius_x,

@@ -706,12 +706,10 @@ preview_events (GtkWidget          *widget,
     {
     case GDK_EXPOSE:
       preview_update (editor, FALSE);
-
       return FALSE;
 
     case GDK_LEAVE_NOTIFY:
       gradient_editor_set_hint (editor, "", "", "");
-
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -735,7 +733,6 @@ preview_events (GtkWidget          *widget,
 	      preview_set_hint (editor, x);
 	    }
 	}
-
       break;
 
     case GDK_BUTTON_PRESS:
@@ -767,7 +764,6 @@ preview_events (GtkWidget          *widget,
 	default:
 	  break;
 	}
-
       break;
 
     case GDK_SCROLL:
@@ -792,7 +788,6 @@ preview_events (GtkWidget          *widget,
 
 	  gtk_adjustment_set_value (adj, new_value);
 	}
-
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -810,7 +805,6 @@ preview_events (GtkWidget          *widget,
 	    preview_set_foreground (editor, x);
 	  break;
 	}
-
       break;
 
     default:

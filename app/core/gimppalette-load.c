@@ -525,7 +525,6 @@ gimp_palette_add_entry (GimpPalette *palette,
   GimpPaletteEntry *entry;
 
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
-
   g_return_val_if_fail (color != NULL, NULL);
 
   entry = g_new0 (GimpPaletteEntry, 1);
@@ -551,7 +550,6 @@ gimp_palette_delete_entry (GimpPalette      *palette,
   gint   pos = 0;
 
   g_return_if_fail (GIMP_IS_PALETTE (palette));
-
   g_return_if_fail (entry != NULL);
 
   if (g_list_find (palette->colors, entry))
@@ -586,6 +584,33 @@ gimp_palette_delete_entry (GimpPalette      *palette,
       gimp_data_dirty (GIMP_DATA (palette));
     }
 }
+
+void
+gimp_palette_set_n_columns (GimpPalette *palette,
+                            gint         n_columns)
+{
+  g_return_if_fail (GIMP_IS_PALETTE (palette));
+
+  n_columns = CLAMP (n_columns, 0, 64);
+
+  if (palette->n_columns != n_columns)
+    {
+      palette->n_columns = n_columns;
+
+      gimp_data_dirty (GIMP_DATA (palette));
+    }
+}
+
+gint
+gimp_palette_get_n_columns  (GimpPalette *palette)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
+
+  return palette->n_columns;
+}
+
+
+/*  private functions  */
 
 static void
 gimp_palette_entry_free (GimpPaletteEntry *entry)

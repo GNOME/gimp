@@ -62,6 +62,7 @@
 #include "image-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
+#include "palette-editor-commands.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "patterns-commands.h"
@@ -1743,6 +1744,28 @@ static GimpItemFactoryEntry gradients_entries[] =
 };
 
 
+/*****  <PaletteEditor>  *****/
+
+static GimpItemFactoryEntry palette_editor_entries[] =
+{
+  { { N_("/New Color"), NULL,
+      palette_editor_new_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Color..."), NULL,
+      palette_editor_edit_color_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Color"), NULL,
+      palette_editor_delete_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    NULL, NULL }
+};
+
+
 /*****  <Palettes>  *****/
 
 static GimpItemFactoryEntry palettes_entries[] =
@@ -1893,6 +1916,7 @@ static GimpItemFactory *brushes_factory         = NULL;
 static GimpItemFactory *patterns_factory        = NULL;
 static GimpItemFactory *gradient_editor_factory = NULL;
 static GimpItemFactory *gradients_factory       = NULL;
+static GimpItemFactory *palette_editor_factory  = NULL;
 static GimpItemFactory *palettes_factory        = NULL;
 static GimpItemFactory *buffers_factory         = NULL;
 static GimpItemFactory *documents_factory       = NULL;
@@ -2069,6 +2093,14 @@ menus_init (Gimp *gimp)
                                              gradients_entries,
                                              gimp,
                                              FALSE);
+
+  palette_editor_factory = gimp_item_factory_new (GTK_TYPE_MENU,
+                                                  "<PaletteEditor>", "palette_editor",
+                                            palette_editor_menu_update,
+                                            G_N_ELEMENTS (palette_editor_entries),
+                                            palette_editor_entries,
+                                            gimp,
+                                            FALSE);
 
   palettes_factory = gimp_item_factory_new (GTK_TYPE_MENU,
                                             "<Palettes>", "palettes",
@@ -2266,6 +2298,12 @@ menus_exit (Gimp *gimp)
     {
       g_object_unref (G_OBJECT (gradients_factory));
       gradients_factory = NULL;
+    }
+
+  if (palette_editor_factory)
+    {
+      g_object_unref (G_OBJECT (palette_editor_factory));
+      palette_editor_factory = NULL;
     }
 
   if (palettes_factory)

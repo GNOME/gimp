@@ -250,12 +250,14 @@ gimp_channel_set_color (GimpChannel   *channel,
     }
 }
 
-const GimpRGB *
-gimp_channel_get_color (const GimpChannel *channel)
+void
+gimp_channel_get_color (const GimpChannel *channel,
+                        GimpRGB           *color)
 {
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), NULL);
+  g_return_if_fail (GIMP_IS_CHANNEL (channel));
+  g_return_if_fail (color != NULL);
 
-  return &channel->color;
+  *color = channel->color;
 }
 
 gdouble
@@ -1196,6 +1198,28 @@ gimp_channel_feather (GimpChannel *mask,
 }
 
 void
+gimp_channel_sharpen (GimpChannel *mask)
+{
+  PixelRegion  maskPR;
+  GimpLut     *lut;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
+  /*  push the current channel onto the undo stack  */
+  gimp_channel_push_undo (mask);
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+		     0, 0,
+		     GIMP_DRAWABLE (mask)->width,
+		     GIMP_DRAWABLE (mask)->height, TRUE);
+  lut = threshold_lut_new (0.5, 1);
+
+  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
+				  lut, 1, &maskPR);
+  gimp_lut_free (lut);
+}
+
+void
 gimp_channel_push_undo (GimpChannel *mask)
 {
   gint         x1, y1, x2, y2;
@@ -1262,52 +1286,6 @@ gimp_channel_clear (GimpChannel *mask)
 }
 
 void
-gimp_channel_invert (GimpChannel *mask)
-{
-  PixelRegion  maskPR;
-  GimpLut     *lut;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  /*  push the current channel onto the undo stack  */
-  gimp_channel_push_undo (mask);
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, TRUE);
-  
-  lut = invert_lut_new (1);
-
-  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
-				  lut, 1, &maskPR);
-  gimp_lut_free (lut);
-  mask->bounds_known = FALSE;
-}
-
-void
-gimp_channel_sharpen (GimpChannel *mask)
-{
-  PixelRegion  maskPR;
-  GimpLut     *lut;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  /*  push the current channel onto the undo stack  */
-  gimp_channel_push_undo (mask);
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (mask)->width,
-		     GIMP_DRAWABLE (mask)->height, TRUE);
-  lut = threshold_lut_new (0.5, 1);
-
-  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
-				  lut, 1, &maskPR);
-  gimp_lut_free (lut);
-}
-
-void
 gimp_channel_all (GimpChannel *mask)
 {
   PixelRegion maskPR;
@@ -1332,6 +1310,30 @@ gimp_channel_all (GimpChannel *mask)
   mask->y1           = 0;
   mask->x2           = GIMP_DRAWABLE (mask)->width;
   mask->y2           = GIMP_DRAWABLE (mask)->height;
+}
+
+void
+gimp_channel_invert (GimpChannel *mask)
+{
+  PixelRegion  maskPR;
+  GimpLut     *lut;
+
+  g_return_if_fail (GIMP_IS_CHANNEL (mask));
+
+  /*  push the current channel onto the undo stack  */
+  gimp_channel_push_undo (mask);
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
+		     0, 0,
+		     GIMP_DRAWABLE (mask)->width,
+		     GIMP_DRAWABLE (mask)->height, TRUE);
+  
+  lut = invert_lut_new (1);
+
+  pixel_regions_process_parallel ((p_func) gimp_lut_process_inline,
+				  lut, 1, &maskPR);
+  gimp_lut_free (lut);
+  mask->bounds_known = FALSE;
 }
 
 void
@@ -1601,6 +1603,7 @@ gimp_channel_layer_alpha (GimpChannel *mask,
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)));
 
   /*  push the current mask onto the undo stack  */
   gimp_channel_push_undo (mask);
@@ -1640,6 +1643,7 @@ gimp_channel_layer_mask (GimpChannel *mask,
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (gimp_layer_get_mask (layer));
 
   /*  push the current mask onto the undo stack  */
   gimp_channel_push_undo (mask);

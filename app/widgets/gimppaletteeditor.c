@@ -38,6 +38,7 @@
 #include "core/gimppalette.h"
 
 #include "gimpdnd.h"
+#include "gimpitemfactory.h"
 #include "gimppaletteeditor.h"
 #include "gimppreview.h"
 
@@ -72,18 +73,6 @@ static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
 static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
                                                     GimpData          *data);
 
-static void   palette_editor_create_popup_menu     (GimpPaletteEditor *editor);
-static void   palette_editor_new_entry_callback    (GtkWidget         *widget,
-						    GimpPaletteEditor *editor);
-static void   palette_editor_edit_entry_callback   (GtkWidget         *widget,
-						    GimpPaletteEditor *editor);
-static void   palette_editor_delete_entry_callback (GtkWidget         *widget,
-						    GimpPaletteEditor *editor);
-static void   palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-						      const GimpRGB      *color,
-						      ColorNotebookState  state,
-						      gpointer            data);
-
 static gint   palette_editor_eventbox_button_press (GtkWidget         *widget,
 						    GdkEventButton    *bevent,
 						    GimpPaletteEditor *editor);
@@ -97,6 +86,8 @@ static void   palette_editor_redraw                (GimpPaletteEditor *editor);
 static void   palette_editor_scroll_top_left       (GimpPaletteEditor *editor);
 
 static void   palette_editor_color_name_changed    (GtkWidget         *widget,
+                                                    GimpPaletteEditor *editor);
+static void   palette_editor_columns_changed       (GtkAdjustment     *adj,
                                                     GimpPaletteEditor *editor);
 static void   palette_editor_zoom_in_callback      (GtkWidget         *widget,
                                                     GimpPaletteEditor *editor);
@@ -183,9 +174,11 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GtkWidget *scrolledwindow;
   GtkWidget *palette_region;
-  GtkWidget *entry;
   GtkWidget *eventbox;
   GtkWidget *alignment;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *spinbutton;
 
   editor->zoom_factor   = 1.0;
   editor->columns       = COLUMNS;
@@ -248,17 +241,35 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 			      palette_editor_drop_palette,
                               editor);
 
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   /*  The color name entry  */
-  entry = editor->color_name = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (editor), entry, FALSE, FALSE, 0);
-  gtk_entry_set_text (GTK_ENTRY (entry), _("Undefined"));
-  gtk_widget_set_sensitive (entry, FALSE);
-  gtk_widget_show (entry);
+  editor->color_name = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
+  gtk_entry_set_text (GTK_ENTRY (editor->color_name), _("Undefined"));
+  gtk_widget_set_sensitive (editor->color_name, FALSE);
+  gtk_widget_show (editor->color_name);
 
   editor->entry_sig_id =
-    g_signal_connect (G_OBJECT (entry), "changed",
+    g_signal_connect (G_OBJECT (editor->color_name), "changed",
 		      G_CALLBACK (palette_editor_color_name_changed),
 		      editor);
+
+  label = gtk_label_new (_("Columns:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  spinbutton = gimp_spin_button_new ((GtkObject **) &editor->columns_data,
+                                     0, 0, 64, 1, 4, 4, 1, 0);
+  gtk_widget_set_size_request (spinbutton, 50, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  g_signal_connect (G_OBJECT (editor->columns_data), "value_changed",
+                    G_CALLBACK (palette_editor_columns_changed),
+                    editor);
 
   /*  + and - buttons  */
   gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -281,8 +292,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                           G_CALLBACK (palette_editor_zoom_out_callback),
                           NULL,
                           editor);
-
-  palette_editor_create_popup_menu (editor);
 }
 
 static void
@@ -326,6 +335,12 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 
   palette_editor = GIMP_PALETTE_EDITOR (editor);
 
+  g_signal_handler_block (G_OBJECT (palette_editor->color_name),
+                          palette_editor->entry_sig_id);
+  g_signal_handlers_block_by_func (G_OBJECT (palette_editor->columns_data),
+                                   palette_editor_columns_changed,
+                                   editor);
+
   if (editor->data)
     {
       if (palette_editor->color_notebook)
@@ -342,31 +357,41 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
       palette_editor->columns_valid = FALSE;
       palette_editor->color         = NULL;
 
-      g_signal_handler_block (G_OBJECT (palette_editor->color_name),
-                              palette_editor->entry_sig_id);
-
       gtk_entry_set_text (GTK_ENTRY (palette_editor->color_name),
                           _("Undefined")); 
 
-      g_signal_handler_unblock (G_OBJECT (palette_editor->color_name),
-                                palette_editor->entry_sig_id);
-
       gtk_widget_set_sensitive (palette_editor->color_name, FALSE);
+
+      gtk_adjustment_set_value (palette_editor->columns_data, 0);
     }
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
   if (editor->data)
     {
+      GimpPalette *palette;
+
+      palette = GIMP_PALETTE (editor->data);
+
       g_signal_connect (G_OBJECT (editor->data), "invalidate_preview",
                         G_CALLBACK (palette_editor_invalidate_preview),
                         editor);
+
+      gtk_adjustment_set_value (palette_editor->columns_data,
+                                palette->n_columns);
 
       palette_editor_invalidate_preview (GIMP_PALETTE (editor->data),
                                          palette_editor);
 
       palette_editor_scroll_top_left (palette_editor);
+
     }
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (palette_editor->columns_data),
+                                     palette_editor_columns_changed,
+                                     editor);
+  g_signal_handler_unblock (G_OBJECT (palette_editor->color_name),
+                            palette_editor->entry_sig_id);
 }
 
 /*  public functions  */
@@ -427,162 +452,6 @@ gimp_palette_editor_update_color (GimpContext          *context,
 
 /*  private functions  */
 
-/*  the palette dialog popup menu & callbacks  *******************************/
-
-static void
-palette_editor_create_popup_menu (GimpPaletteEditor *palette_editor)
-{
-  GtkWidget *menu;
-  GtkWidget *menu_item;
-
-  palette_editor->popup_menu = menu = gtk_menu_new ();
-
-  menu_item = gtk_menu_item_new_with_label (_("New"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-  gtk_widget_show (menu_item);
-
-  g_signal_connect (G_OBJECT (menu_item), "activate", 
-		    G_CALLBACK (palette_editor_new_entry_callback),
-		    palette_editor);
-
-  menu_item = gtk_menu_item_new_with_label (_("Edit"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-  gtk_widget_show (menu_item);
-
-  g_signal_connect (G_OBJECT (menu_item), "activate", 
-		    G_CALLBACK (palette_editor_edit_entry_callback),
-		    palette_editor);
-
-  palette_editor->edit_menu_item = menu_item;
-
-  menu_item = gtk_menu_item_new_with_label (_("Delete"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
-  gtk_widget_show (menu_item);
-
-  g_signal_connect (G_OBJECT (menu_item), "activate", 
-		    G_CALLBACK (palette_editor_delete_entry_callback),
-		    palette_editor);
-
-  palette_editor->delete_menu_item = menu_item;
-}
-
-static void
-palette_editor_new_entry_callback (GtkWidget         *widget,
-				   GimpPaletteEditor *editor)
-{
-  GimpPalette *palette;
-  GimpContext *user_context;
-  GimpRGB      color;
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  if (! palette)
-    return;
-
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
-
-  if (active_color == FOREGROUND)
-    gimp_context_get_foreground (user_context, &color);
-  else if (active_color == BACKGROUND)
-    gimp_context_get_background (user_context, &color);
-
-  editor->color = gimp_palette_add_entry (palette, NULL, &color);
-}
-
-static void
-palette_editor_edit_entry_callback (GtkWidget         *widget,
-				    GimpPaletteEditor *editor)
-{
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  if (! (palette && editor->color))
-    return;
-
-  if (! editor->color_notebook)
-    {
-      editor->color_notebook =
-	color_notebook_new (_("Edit Palette Color"),
-			    (const GimpRGB *) &editor->color->color,
-			    palette_editor_color_notebook_callback,
-			    editor,
-			    FALSE,
-			    FALSE);
-      editor->color_notebook_active = TRUE;
-    }
-  else
-    {
-      if (! editor->color_notebook_active)
-	{
-	  color_notebook_show (editor->color_notebook);
-	  editor->color_notebook_active = TRUE;
-	}
-
-      color_notebook_set_color (editor->color_notebook,
-				&editor->color->color);
-    }
-}
-
-static void
-palette_editor_delete_entry_callback (GtkWidget         *widget,
-				      GimpPaletteEditor *editor)
-{
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  if (! (palette && editor->color))
-    return;
-
-  gimp_palette_delete_entry (palette, editor->color);
-}
-
-static void
-palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
-					const GimpRGB      *color,
-					ColorNotebookState  state,
-					gpointer            data)
-{
-  GimpPaletteEditor *editor;
-  GimpPalette       *palette;
-  GimpContext       *user_context;
-
-  editor = GIMP_PALETTE_EDITOR (data);
-
-  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
-
-  switch (state)
-    {
-    case COLOR_NOTEBOOK_UPDATE:
-      break;
-
-    case COLOR_NOTEBOOK_OK:
-      if (editor->color)
-	{
-	  editor->color->color = *color;
-
-	  /*  Update either foreground or background colors  */
-	  if (active_color == FOREGROUND)
-	    gimp_context_set_foreground (user_context, color);
-	  else if (active_color == BACKGROUND)
-	    gimp_context_set_background (user_context, color);
-
-	  gimp_data_dirty (GIMP_DATA (palette));
-	}
-
-      /* Fallthrough */
-    case COLOR_NOTEBOOK_CANCEL:
-      if (editor->color_notebook_active)
-	{
-	  color_notebook_hide (editor->color_notebook);
-	  editor->color_notebook_active = FALSE;
-	}
-    }
-}
-
 /*  the color area event callbacks  ******************************************/
 
 static gint
@@ -595,15 +464,11 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 
   if (bevent->button == 3)
     {
-      if (GTK_WIDGET_SENSITIVE (editor->edit_menu_item))
-	{
-	  gtk_widget_set_sensitive (editor->edit_menu_item, FALSE);
-	  gtk_widget_set_sensitive (editor->delete_menu_item, FALSE);
-	}
+      GimpItemFactory *factory;
 
-      gtk_menu_popup (GTK_MENU (editor->popup_menu), NULL, NULL, 
-		      NULL, NULL, 3,
-		      bevent->time);
+      factory = gimp_item_factory_from_path ("<PaletteEditor>");
+
+      gimp_item_factory_popup_with_data (factory, editor, NULL);
     }
 
   return TRUE;
@@ -631,7 +496,7 @@ palette_editor_color_area_events (GtkWidget         *widget,
     {
     case GDK_EXPOSE:
       palette_editor_redraw (editor);
-      break;
+      return FALSE;
 
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
@@ -685,9 +550,6 @@ palette_editor_color_area_events (GtkWidget         *widget,
 	      palette_editor_draw_entries (editor, row, col);
 
 	      /*  Update the active color name  */
-	      g_print ("former color name: '%s'\n",
-		       editor->color->name);
-
 	      g_signal_handler_block (G_OBJECT (editor->color_name),
 				      editor->entry_sig_id);
 
@@ -697,40 +559,27 @@ palette_editor_color_area_events (GtkWidget         *widget,
 	      g_signal_handler_unblock (G_OBJECT (editor->color_name),
 					editor->entry_sig_id);
 
-	      g_print ("new color name: '%s'\n",
-		       editor->color->name);
-
 	      gtk_widget_set_sensitive (editor->color_name, TRUE);
 	      /* palette_update_current_entry (editor); */
 
 	      if (bevent->button == 3)
 		{
-		  if (! GTK_WIDGET_SENSITIVE (editor->edit_menu_item))
-		    {
-		      gtk_widget_set_sensitive (editor->edit_menu_item, TRUE);
-		      gtk_widget_set_sensitive (editor->delete_menu_item, TRUE);
-		    }
+                  GimpItemFactory *factory;
 
-		  gtk_menu_popup (GTK_MENU (editor->popup_menu),
-				  NULL, NULL, 
-				  NULL, NULL, 3,
-				  bevent->time);
+                  factory = gimp_item_factory_from_path ("<PaletteEditor>");
+
+                  gimp_item_factory_popup_with_data (factory, editor, NULL);
 		}
 	    }
 	  else
 	    {
 	      if (bevent->button == 3)
 		{
-		  if (GTK_WIDGET_SENSITIVE (editor->edit_menu_item))
-		    {
-		      gtk_widget_set_sensitive (editor->edit_menu_item, FALSE);
-		      gtk_widget_set_sensitive (editor->delete_menu_item, FALSE);
-		    }
+                  GimpItemFactory *factory;
 
-		  gtk_menu_popup (GTK_MENU (editor->popup_menu),
-				  NULL, NULL, 
-				  NULL, NULL, 3,
-				  bevent->time);
+                  factory = gimp_item_factory_from_path ("<PaletteEditor>");
+
+                  gimp_item_factory_popup_with_data (factory, editor, NULL);
 		}
 	    }
 	}
@@ -740,7 +589,7 @@ palette_editor_color_area_events (GtkWidget         *widget,
       break;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 /*  functions for drawing & updating the palette dialog color area  **********/
@@ -1092,6 +941,22 @@ palette_editor_color_name_changed (GtkWidget         *widget,
   gimp_data_dirty (GIMP_DATA (palette));
 }
 
+/*  the columns spinbutton callback  *****************************************/
+
+static void
+palette_editor_columns_changed (GtkAdjustment     *adj,
+                                GimpPaletteEditor *editor)
+{
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+
+  if (! palette)
+    return;
+
+  gimp_palette_set_n_columns (palette, ROUND (adj->value));
+}
+
 /*  palette zoom functions & callbacks  **************************************/
 
 static void
@@ -1154,12 +1019,22 @@ palette_editor_redraw_zoom (GimpPaletteEditor *editor)
       editor->zoom_factor = 0.1;
     }
 
-  editor->columns = COLUMNS;
+  if (GIMP_DATA_EDITOR (editor)->data)
+    {
+      GimpPalette *palette;
 
-  editor->columns_valid = FALSE;
-  palette_editor_redraw (editor); 
+      palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  palette_editor_scroll_top_left (editor);
+      if (palette->n_columns)
+        editor->columns = palette->n_columns;
+      else
+        editor->columns = COLUMNS;
+
+      editor->columns_valid = FALSE;
+      palette_editor_redraw (editor); 
+
+      palette_editor_scroll_top_left (editor);
+    }
 }
 
 
@@ -1214,6 +1089,11 @@ static void
 palette_editor_invalidate_preview (GimpPalette       *palette,
 				   GimpPaletteEditor *editor)
 {
+  if (palette->n_columns)
+    editor->columns = palette->n_columns;
+  else
+    editor->columns = COLUMNS;
+
   editor->columns_valid = FALSE;
 
   palette_editor_redraw (editor);

@@ -49,11 +49,9 @@ struct _GimpPaletteEditor
 
   GtkWidget        *color_area;
   GtkWidget        *scrolled_window;
-  GtkWidget        *color_name;
 
-  GtkWidget        *popup_menu;
-  GtkWidget        *delete_menu_item;
-  GtkWidget        *edit_menu_item;
+  GtkWidget        *color_name;
+  GtkAdjustment    *columns_data;
 
   ColorNotebook    *color_notebook;
   gboolean          color_notebook_active;
@@ -75,6 +73,8 @@ struct _GimpPaletteEditorClass
   GimpDataEditorClass  parent_class;
 };
 
+
+GType            gimp_palette_editor_get_type     (void) G_GNUC_CONST;
 
 GimpDataEditor * gimp_palette_editor_new          (Gimp *gimp);
 

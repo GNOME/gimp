@@ -74,5 +74,9 @@ GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
 void               gimp_palette_delete_entry   (GimpPalette      *palette,
 					        GimpPaletteEntry *entry);
 
+void               gimp_palette_set_n_columns  (GimpPalette      *palette,
+                                                gint              n_columns);
+gint               gimp_palette_get_n_columns  (GimpPalette      *palette);
+
 
 #endif /* __GIMP_PALETTE_H__ */
