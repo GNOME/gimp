@@ -30,6 +30,7 @@
 #include "libgimp/gimp.h"
 
 #include "domain.h"
+#include "locales.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -42,7 +43,6 @@
 #define GIMP_HELP_PREFIX          "help"
 #define GIMP_HELP_ENV_URI         "GIMP2_HELP_URI"
 
-#define GIMP_HELP_DEFAULT_LOCALE  "C"
 #define GIMP_HELP_DEFAULT_ID      "gimp-main"
 
 
@@ -50,7 +50,7 @@ typedef struct
 {
   gchar *procedure;
   gchar *help_domain;
-  gchar *help_locale;
+  gchar *help_locales;
   gchar *help_id;
 } IdleHelp;
 
@@ -73,7 +73,7 @@ static void     temp_proc_run     (const gchar      *name,
 
 static void     load_help         (const gchar      *procedure,
                                    const gchar      *help_domain,
-                                   const gchar      *help_locale,
+                                   const gchar      *help_locales,
                                    const gchar      *help_id);
 static gboolean load_help_idle    (gpointer          data);
 
@@ -210,10 +210,10 @@ temp_proc_install (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_STRING, "procedure",   "The procedure of the browser to use" },
-    { GIMP_PDB_STRING, "help_domain", "Help domain to use" },
-    { GIMP_PDB_STRING, "help_locale", "Language to use"    },
-    { GIMP_PDB_STRING, "help_id",     "Help ID to open"    }
+    { GIMP_PDB_STRING, "procedure",    "The procedure of the browser to use" },
+    { GIMP_PDB_STRING, "help_domain",  "Help domain to use" },
+    { GIMP_PDB_STRING, "help_locales", "Language to use"    },
+    { GIMP_PDB_STRING, "help_id",      "Help ID to open"    }
   };
 
   gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_NAME,
@@ -240,17 +240,14 @@ temp_proc_run (const gchar      *name,
                GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-  const gchar       *procedure   = ""; /* FIXME */
-  const gchar       *help_domain = GIMP_HELP_DEFAULT_DOMAIN;
-  const gchar       *help_locale = GIMP_HELP_DEFAULT_LOCALE;
-  const gchar       *help_id     = GIMP_HELP_DEFAULT_ID;
+  GimpPDBStatusType  status       = GIMP_PDB_SUCCESS;
+  const gchar       *procedure    = NULL;
+  const gchar       *help_domain  = GIMP_HELP_DEFAULT_DOMAIN;
+  const gchar       *help_locales = NULL;
+  const gchar       *help_id      = GIMP_HELP_DEFAULT_ID;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
 
   /*  make sure all the arguments are there  */
   if (nparams == 4)
@@ -262,29 +259,36 @@ temp_proc_run (const gchar      *name,
         help_domain = param[1].data.d_string;
 
       if (param[2].data.d_string && strlen (param[2].data.d_string))
-        help_locale = param[2].data.d_string;
+        help_locales = param[2].data.d_string;
 
       if (param[3].data.d_string && strlen (param[3].data.d_string))
         help_id = param[3].data.d_string;
     }
 
-  load_help (procedure, help_domain, help_locale, help_id);
+  if (! procedure)
+    status = GIMP_PDB_CALLING_ERROR;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
+
+  if (status == GIMP_PDB_SUCCESS)
+    load_help (procedure, help_domain, help_locales, help_id);
 }
 
 static void
 load_help (const gchar *procedure,
            const gchar *help_domain,
-           const gchar *help_locale,
+           const gchar *help_locales,
            const gchar *help_id)
 {
   IdleHelp *idle_help;
 
   idle_help = g_new0 (IdleHelp, 1);
 
-  idle_help->procedure   = g_strdup (procedure);
-  idle_help->help_domain = g_strdup (help_domain);
-  idle_help->help_locale = g_strdup (help_locale);
-  idle_help->help_id     = g_strdup (help_id);
+  idle_help->procedure    = g_strdup (procedure);
+  idle_help->help_domain  = g_strdup (help_domain);
+  idle_help->help_locales = g_strdup (help_locales);
+  idle_help->help_id      = g_strdup (help_id);
 
   g_idle_add (load_help_idle, idle_help);
 }
@@ -294,30 +298,30 @@ load_help_idle (gpointer data)
 {
   IdleHelp   *idle_help;
   HelpDomain *domain;
-  gchar      *full_uri;
 
   idle_help = (IdleHelp *) data;
-
-  g_printerr ("help: got a request for %s %s %s\n",
-              idle_help->help_domain,
-              idle_help->help_locale,
-              idle_help->help_id);
 
   domain = domain_lookup (idle_help->help_domain);
 
   if (domain)
     {
-      full_uri = domain_map (domain,
-                             idle_help->help_locale,
-                             idle_help->help_id);
+      GList *locales = locales_parse (idle_help->help_locales);
+      gchar *full_uri;
+
+      full_uri = domain_map (domain, locales, idle_help->help_id);
+
+      g_list_foreach (locales, (GFunc) g_free, NULL);
+      g_list_free (locales);
 
       if (full_uri)
         {
           GimpParam *return_vals;
           gint       n_return_vals;
 
+#ifdef GIMP_HELP_DEBUG
           g_printerr ("help: calling '%s' for '%s'\n",
                       idle_help->procedure, full_uri);
+#endif
 
           return_vals = gimp_run_procedure (idle_help->procedure,
                                             &n_return_vals,
@@ -332,7 +336,7 @@ load_help_idle (gpointer data)
 
   g_free (idle_help->procedure);
   g_free (idle_help->help_domain);
-  g_free (idle_help->help_locale);
+  g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
   g_free (idle_help);
 

@@ -21,23 +21,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DOMAIN_H__
-#define __DOMAIN_H__
+#ifndef __LOCALES_H__
+#define __LOCALES_H__
 
 
-#define GIMP_HELP_DEFAULT_DOMAIN  "http://www.gimp.org/help"
+GList * locales_parse (const gchar *help_locales);
 
 
-typedef struct _HelpDomain HelpDomain;
+#endif /* ! __LOCALES_H__ */
 
-
-void         domain_register (const gchar  *domain_name,
-                              const gchar  *domain_uri);
-HelpDomain * domain_lookup   (const gchar  *domain_name);
-
-gchar      * domain_map      (HelpDomain   *domain,
-                              GList        *help_locales,
-                              const gchar  *help_id);
-
-
-#endif /* ! __DOMAIN_H__ */

@@ -10,6 +10,8 @@ libexec_PROGRAMS = help
 help_SOURCES = \
 	domain.c	\
 	domain.h	\
+	locales.c	\
+	locales.h	\
 	help.c
 
 INCLUDES = \

@@ -1,3 +1,13 @@
+2004-03-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/help/Makefile.am
+	* plug-ins/help/locales.[ch]: new files with code to handle locales.
+
+	* plug-ins/help/help.c: changed accordingly.
+
+	* plug-ins/help/domain.[ch]: added support for a fallback URL to
+	handle missing help content. i18n support is missing still.
+
 2004-03-17  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpbrushpipe.c: ensure that each rank of a
