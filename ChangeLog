@@ -1,3 +1,8 @@
+Tue Jul 27 22:47:33 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: fixed a bug that was 
+	introduced by the latest portability changes
+
 Tue Jul 27 01:21:02 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/clone.c: more cursor support.

@@ -163,22 +163,22 @@ extern long  nlength      (LISP obj);
  *  Local Functions
  */
 
-static void       script_fu_script_proc      (char     *name,
-					      int       nparams,
-					      GParam   *params,
-					      int      *nreturn_vals,
-					      GParam  **return_vals);
+static void       script_fu_script_proc      (char      *name,
+					      int        nparams,
+					      GParam    *params,
+					      int       *nreturn_vals,
+					      GParam   **return_vals);
 
-static SFScript  *script_fu_find_script      (gchar    *script_name);
-static void       script_fu_free_script      (SFScript *script);
+static SFScript  *script_fu_find_script      (gchar     *script_name);
+static void       script_fu_free_script      (SFScript  *script);
 static void       script_fu_enable_cc        (void);
-static void       script_fu_disable_cc       (gint    err_msg);
-static void       script_fu_interface        (SFScript *script);
+static void       script_fu_disable_cc       (gint       err_msg);
+static void       script_fu_interface        (SFScript  *script);
 static void       script_fu_color_preview    (GtkWidget *preview,
 					      gdouble   *color);
 static void       script_fu_font_preview     (GtkWidget *preview,
-					      gchar    *fontname);
-static void       script_fu_cleanup_widgets  (SFScript *script);
+					      gchar     *fontname);
+static void       script_fu_cleanup_widgets  (SFScript  *script);
 static void       script_fu_ok_callback      (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_close_callback   (GtkWidget *widget,
@@ -216,19 +216,19 @@ static void       script_fu_about_dialog_close     (GtkWidget *widget,
 static gint       script_fu_about_dialog_delete    (GtkWidget *widget,
 						    GdkEvent  *event,
 						    gpointer   data);
-static void       script_fu_pattern_preview        (gchar    *name,
-						    gint     width,
-						    gint     height,
-						    gint     bytes,
-						    gchar *  mask_data,
-						    gint     closing,
-						    gpointer udata);
+static void       script_fu_pattern_preview        (gchar     *name,
+						    gint      width,
+						    gint      height,
+						    gint      bytes,
+						    gchar    *mask_data,
+						    gint      closing,
+						    gpointer  udata);
 
 static void       script_fu_gradient_preview       (gchar    *name,
-						    gint     width,
-						    gdouble *  mask_data,
-						    gint     closing,
-						    gpointer udata);
+						    gint      width,
+						    gdouble  *mask_data,
+						    gint      closing,
+						    gpointer  udata);
 
 static void       script_fu_brush_preview          (char *, /* Name */
 						    gdouble, /* opacity */
@@ -1436,12 +1436,12 @@ script_fu_color_preview (GtkWidget *preview,
 
 static void
 script_fu_pattern_preview (gchar    *name,
-			   gint     width,
-			   gint     height,
-			   gint     bytes,
-			   gchar *  mask_data,
-			   gint     closing,
-			   gpointer udata)
+			   gint      width,
+			   gint      height,
+			   gint      bytes,
+			   gchar    *mask_data,
+			   gint      closing,
+			   gpointer  udata)
 {
   gchar ** pname = (gchar **) udata;
   g_free(*pname);
@@ -1450,10 +1450,10 @@ script_fu_pattern_preview (gchar    *name,
 
 static void
 script_fu_gradient_preview(gchar    *name,
-			   gint     width,
-			   gdouble *  mask_data,
-			   gint     closing,
-			   gpointer udata)
+			   gint      width,
+			   gdouble  *mask_data,
+			   gint      closing,
+			   gpointer  udata)
 {
   gchar ** pname = (gchar **) udata;
   g_free(*pname);
@@ -1461,15 +1461,15 @@ script_fu_gradient_preview(gchar    *name,
 }
 
 static void      
-script_fu_brush_preview(char * name, /* Name */
-			gdouble opacity, /* opacity */
-			gint spacing,    /* spacing */
-			gint paint_mode,    /* paint_mode */
-			gint width,    /* width */
-			gint height,    /* height */
-			gchar * mask_data, /* mask data */
-			gint closing,    /* dialog closing */
-			gpointer udata/* user data */)
+script_fu_brush_preview(char    *name,       /* Name */
+			gdouble  opacity,    /* opacity */
+			gint     spacing,    /* spacing */
+			gint     paint_mode, /* paint_mode */
+			gint     width,      /* width */
+			gint     height,     /* height */
+			gchar    *mask_data, /* mask data */
+			gint     closing,    /* dialog closing */
+			gpointer udata)      /* user data */
 {
   SFBrush *brush = (SFBrush *)udata;
   g_free(brush->name);
@@ -1675,7 +1675,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	case SF_STRING:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = text; 
+	  script->arg_values[i].sfa_value = g_strdup (text); 
 	  escaped = g_strescape (text);
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
 	  g_free (escaped);
@@ -1690,8 +1690,10 @@ script_fu_ok_callback (GtkWidget *widget,
 	      text = buffer;
 	      break;
 	    case SF_SPINNER:
-	      script->arg_values[i].sfa_adjustment.value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i]));
-	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);		       text = buffer;
+	      script->arg_values[i].sfa_adjustment.value = 
+		gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i]));
+	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);		       
+	      text = buffer;
 	      break;
 	    default:
 	      break;
@@ -2051,7 +2053,7 @@ script_fu_color_preview_callback (GtkWidget *widget,
 
 static void
 script_fu_color_preview_changed (GtkWidget *widget,
-				 gpointer data)
+				 gpointer   data)
 {
   SFColor *color;
 
@@ -2063,7 +2065,7 @@ script_fu_color_preview_changed (GtkWidget *widget,
 
 static void
 script_fu_color_preview_cancel (GtkWidget *widget,
-				gpointer data)
+				gpointer   data)
 {
   SFColor *color;
 
@@ -2080,8 +2082,8 @@ script_fu_color_preview_cancel (GtkWidget *widget,
 
 static gint
 script_fu_color_preview_delete (GtkWidget *widget,
-				GdkEvent *event,
-				gpointer data)
+				GdkEvent  *event,
+				gpointer   data)
 {
   script_fu_color_preview_cancel (widget, data);
   return TRUE;
@@ -2136,7 +2138,7 @@ script_fu_font_preview_callback (GtkWidget *widget,
 
 static void
 script_fu_font_dialog_ok (GtkWidget *widget,
-			  gpointer data)
+			  gpointer   data)
 {
   SFFont *font;
   gchar  *fontname;
@@ -2157,7 +2159,7 @@ script_fu_font_dialog_ok (GtkWidget *widget,
 
 static void
 script_fu_font_dialog_cancel (GtkWidget *widget,
-			      gpointer data)
+			      gpointer   data)
 {
   SFFont *font;
 
@@ -2168,8 +2170,8 @@ script_fu_font_dialog_cancel (GtkWidget *widget,
 
 static gint
 script_fu_font_dialog_delete (GtkWidget *widget,
-			      GdkEvent *event,
-			      gpointer data)
+			      GdkEvent  *event,
+			      gpointer   data)
 {
   script_fu_font_dialog_cancel (widget, data);
   return TRUE;
@@ -2178,7 +2180,7 @@ script_fu_font_dialog_delete (GtkWidget *widget,
 
 static void
 script_fu_about_dialog_close (GtkWidget *widget,
-			      gpointer data)
+			      gpointer   data)
 {
   if (data != NULL)
     gtk_widget_hide (GTK_WIDGET (data));
@@ -2186,9 +2188,11 @@ script_fu_about_dialog_close (GtkWidget *widget,
 
 static gint
 script_fu_about_dialog_delete (GtkWidget *widget,
-			       GdkEvent *event,
-			       gpointer data)
+			       GdkEvent  *event,
+			       gpointer   data)
 {
   script_fu_about_dialog_close (widget, data);
   return TRUE;
 }
+
+
