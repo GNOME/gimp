@@ -20,6 +20,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -35,7 +36,12 @@
 #include "libgimp/gimpenv.h"
 
 #ifndef NATIVE_WIN32
+#  ifndef __EMX__
 #  define USER_INSTALL "user_install"
+#  else
+#  include <process.h>
+#  define USER_INSTALL "user_install.cmd"
+#  endif
 #else
 #  define STRICT
 #  include <windows.h>
@@ -488,9 +494,23 @@ install_run (InstallCallback callback)
 		       "was successful! Otherwise, quit and investigate\n"
 		       "the possible reason...\n", -1);
 #else
+#ifndef __EMX__
       g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
 		  gimp_data_directory (), gimp_data_directory(),
 		  gimp_directory ());
+#else
+      g_snprintf (buffer, sizeof(buffer), "cmd.exe /c %s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
+		  gimp_data_directory (), gimp_data_directory(),
+		  gimp_directory ());
+      {
+	char *s = buffer + 10;
+	while (*s)
+	  {
+	    if (*s == '/') *s = '\\';
+	    s++;
+	  }
+      }
+#endif
 
       /* urk - should really use something better than popen(), since
        * we can't tell if the installation script failed --austin */
