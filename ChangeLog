@@ -1,3 +1,8 @@
+Sat Apr 18 22:19:10 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/gimprc.c: don't dereference NULL pointer when a gimprc
+	variable is used before it's defined. Exit gracefully
+
 Sat Apr 18 11:45:04 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Made 0.99.27 release

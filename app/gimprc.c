@@ -1396,6 +1396,10 @@ transform_path (char *path,
 		{
 		  is_env = TRUE;
 		}
+	      else
+		{
+		  terminate("gimprc token referenced but not defined: %s", token);
+		}
 	    }
 	  tmp2 = transform_path (tmp2, FALSE);
 	  if (is_env)
