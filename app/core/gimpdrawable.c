@@ -50,6 +50,7 @@
 #include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
 
+#include "undo_types.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

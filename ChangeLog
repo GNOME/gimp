@@ -1,3 +1,7 @@
+2002-02-23  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable.c: include undo_types.h to fix the build.
+
 2002-02-23  Michael Natterer  <mitch@gimp.org>
 
 	General undo cleanup:
@@ -27,7 +31,7 @@
 	* app/core/gimplayer.h
 	* app/core/gimplayermask.h
 	* app/paint/gimppaintcore.h
-	* app/tools/gimptransformtool.h: removed undo stuct definitions.
+	* app/tools/gimptransformtool.h: removed undo struct definitions.
 
 	* app/undo_history.c
 	* app/path_transform.h
