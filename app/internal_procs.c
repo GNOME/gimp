@@ -81,7 +81,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 257;
+  gfloat total_pcount = 258;
 
   app_init_update_status(_("Internal Procedures"), _("Tool procedures"),
 			 pcount/total_pcount);
@@ -303,6 +303,7 @@ internal_procs_init ()
   procedural_db_register (&gimp_drawable_find_parasite_proc); pcount++;
   procedural_db_register (&gimp_drawable_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_drawable_detach_parasite_proc); pcount++;
+  procedural_db_register (&drawable_set_image_proc); pcount++;
 
   app_init_update_status(NULL, _("Floating selections"),
 			 pcount/total_pcount);

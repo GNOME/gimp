@@ -1678,3 +1678,79 @@ gimp_drawable_detach_parasite_invoker (Argument *args)
   return return_args;
 }
 
+
+/************************/
+/*  DRAWABLE_SET_IMAGE  */
+
+static Argument *
+drawable_set_image_invoker (Argument *args)
+{
+  int int_value;
+  GimpImage *gimage;
+  GimpDrawable *gdrawable;
+  Argument *return_args;
+
+  success = TRUE;
+  /*  the GimpDrawable  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gdrawable = gimp_drawable_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      int_value = args[1].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)) == NULL)
+	success = FALSE;
+    }
+  if (success)
+    {
+       gimp_drawable_set_gimage (gdrawable, gimage);
+    }
+
+  return_args = procedural_db_return_args (&drawable_set_image_proc, success);
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg drawable_set_image_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the drawable"
+  },
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  }  
+};
+
+
+ProcRecord drawable_set_image_proc =
+{
+  "gimp_drawable_set_image",
+  "Set image where drawable belongs to",
+  "Set the image the drawable should be a part of. (Use this before adding a drawable to another image)",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  drawable_set_image_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { drawable_set_image_invoker } },
+};
+
+
+
+

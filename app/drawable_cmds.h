@@ -43,5 +43,6 @@ extern ProcRecord drawable_get_pixel_proc;
 extern ProcRecord gimp_drawable_find_parasite_proc;
 extern ProcRecord gimp_drawable_attach_parasite_proc;
 extern ProcRecord gimp_drawable_detach_parasite_proc;
+extern ProcRecord drawable_set_image_proc;
 
 #endif /* __DRAWABLE_CMDS_H__ */
