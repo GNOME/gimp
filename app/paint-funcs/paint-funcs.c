@@ -3162,6 +3162,7 @@ scale_region (PixelRegion           *srcPR,
   /*  the data pointers...  */
   for (i = 0; i < 4; i++)
     src[i] = g_new (gdouble, width * bytes);
+
   dest = g_new (guchar, width * bytes);
 
   src_tmp = g_new (guchar, orig_width * bytes);
@@ -4017,7 +4018,8 @@ border_region (PixelRegion *src,
      blame them on jaycox@gimp.org
   */
   register gint32 i, j, x, y;
-  guchar **buf, *out;
+  guchar  *buf[3];
+  guchar  *out;
   gint16  *max;
   guchar **density;
   guchar **transition;
@@ -4081,11 +4083,9 @@ border_region (PixelRegion *src,
     max[i] = yradius + 2;
   max += xradius;
 
-  buf = g_new (guchar *, 3);
   for (i = 0; i < 3; i++)
-    {
-      buf[i] = g_new (guchar, src->w);
-    }
+    buf[i] = g_new (guchar, src->w);
+
   transition = g_new (guchar *, yradius + 1);
   for (i = 0; i < yradius + 1; i++)
     {
@@ -4248,7 +4248,6 @@ border_region (PixelRegion *src,
   for (i = 0; i < 3; i++)
     g_free (buf[i]);
 
-  g_free (buf);
   max -= xradius;
   g_free (max);
 
@@ -4261,7 +4260,7 @@ border_region (PixelRegion *src,
 
   for (i = 0; i < xradius + 1 ; i++)
     {
-      density[i]-= yradius;
+      density[i] -= yradius;
       g_free (density[i]);
     }
   density -= xradius;

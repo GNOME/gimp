@@ -1460,8 +1460,9 @@ sample_adapt (TileManager *tm,
             (arow)[step+step+step] * (row)[step+step+step])
 
 
-/* Note: cubic function no longer clips result */
-static gdouble
+/*  Note: cubic function no longer clips result. */
+/*  Inlining this function makes sample_cubic() run about 10% faster. (Sven) */
+static inline gdouble
 gimp_drawable_transform_cubic (gdouble dx,
                                gint    jm1,
                                gint    j,

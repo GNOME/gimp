@@ -1,3 +1,13 @@
+2004-06-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-transform.c: declared
+	gimp_drawable_transform_cubic() as inline function. Makes
+	sample_cubic() run about 10% faster and causes a 7% speedup on
+	cubic transformations.
+
+	* app/paint-funcs/paint-funcs.c (border_region): avoid an
+	unnecessary memory allocation.
+
 2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimptransformtool.c: Disable preview in corrective
