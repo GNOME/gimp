@@ -1,3 +1,9 @@
+Mon Jun 15 14:39:43 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/preferences_dialog.c: Added units (B,KB,MB) to the 
+	tile_cache_size entry. Added spinbuttons where appropriate (used
+	parts of the patch Nuke <nuke@bayside.net> sent to the list).	
+
 Sun Jun 15 00:41:05 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
 	* app/interface.c: Table spacings

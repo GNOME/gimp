@@ -63,8 +63,9 @@ static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
 static gint file_prefs_delete_callback (GtkWidget *, GdkEvent *, GtkWidget *);
 static void file_prefs_toggle_callback (GtkWidget *, gpointer);
 static void file_prefs_text_callback (GtkWidget *, gpointer);
+static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
-
+static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_type = RGB;
@@ -108,6 +109,8 @@ static   int          edit_tile_cache_size;
 static   int          edit_install_cmap;
 static   int          edit_cycled_marching_ants;
 
+static   GtkWidget   *tile_cache_size_spinbutton = NULL;
+static   int          mem_size_unit = 1;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
 
@@ -298,10 +301,10 @@ file_prefs_save_callback (GtkWidget *widget,
       stingy_memory_use = edit_stingy_memory_use;
       restart_notification = TRUE;
     }
-  if (edit_tile_cache_size != tile_cache_size)
+  if ((edit_tile_cache_size * mem_size_unit) != tile_cache_size)
     {
       update = g_list_append (update, "tile-cache-size");
-      tile_cache_size = edit_tile_cache_size;
+      tile_cache_size = edit_tile_cache_size * mem_size_unit;
       restart_notification = TRUE;
     }
   if (edit_install_cmap != old_install_cmap)
@@ -490,6 +493,25 @@ file_prefs_preview_size_callback (GtkWidget *widget,
 }
 
 static void
+file_prefs_mem_size_unit_callback (GtkWidget *widget,
+				    gpointer   data)
+{
+  int new_unit;
+  int new_size;
+
+  new_unit = (int*)data;
+
+  if (new_unit != mem_size_unit)
+    {
+      new_size = edit_tile_cache_size * mem_size_unit / new_unit;
+      edit_tile_cache_size = new_size;
+      mem_size_unit = new_unit;
+
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton), (float)edit_tile_cache_size);
+    }
+}
+
+static void
 file_prefs_text_callback (GtkWidget *widget,
 			  gpointer   data)
 {
@@ -497,6 +519,16 @@ file_prefs_text_callback (GtkWidget *widget,
 
   val = data;
   *val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+file_prefs_spinbutton_callback (GtkWidget *widget,
+                                gpointer   data)
+{
+  int *val;
+
+  val = data;
+  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 }
 
 static void
@@ -522,11 +554,13 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkWidget *label;
   GtkWidget *radio_box;
   GtkWidget *entry;
+  GtkWidget *spinbutton;
   GtkWidget *menu;
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
   GtkWidget *notebook;
   GtkWidget *table;
+  GtkAdjustment *adj;
   GSList *group;
   char buffer[32];
   char *transparencies[] =
@@ -561,6 +595,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   };
   struct {
     char *label;
+    int unit;
+  } mem_size_units[] =
+    {
+      {"Bytes", 1},
+      {"KiloBytes", 1024},
+      {"MegaBytes", (1024*1024)}
+    };
+  struct {
+    char *label;
     char **mpath;
   } dirs[] =
     {
@@ -572,10 +615,10 @@ file_pref_cmd_callback (GtkWidget *widget,
       {"Palette dir:", &edit_palette_path},
       {"Plug-in dir:", &edit_plug_in_path}
     };
-    struct {
-      char *label;
-      int size;
-    } preview_sizes[] =
+  struct {
+    char *label;
+    int size;
+  } preview_sizes[] =
     {
       {"None",0},
       {"Small",32},
@@ -586,6 +629,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   int nchecks = sizeof (checks) / sizeof (checks[0]);
   int ndirs = sizeof(dirs) / sizeof (dirs[0]);
   int npreview_sizes = sizeof(preview_sizes) / sizeof (preview_sizes[0]); 
+  int nmem_size_units = sizeof(mem_size_units) / sizeof (mem_size_units[0]);
   int i;
 
   if (!prefs_dlg)
@@ -602,7 +646,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  edit_plug_in_path = file_prefs_strdup (plug_in_path);
 	  edit_gradient_path = file_prefs_strdup (gradient_path);
 	  edit_stingy_memory_use = stingy_memory_use;
-	  edit_tile_cache_size = tile_cache_size;
+	  edit_tile_cache_size = tile_cache_size;     /* take care! edit_tile_cache_size
+							 will be divided by mem_size_unit */
 	  edit_install_cmap = install_cmap;
 	  edit_cycled_marching_ants = cycled_marching_ants;
 	}
@@ -631,6 +676,13 @@ file_pref_cmd_callback (GtkWidget *widget,
       file_prefs_strset (&old_palette_path, edit_palette_path);
       file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
       file_prefs_strset (&old_gradient_path, edit_gradient_path);
+
+      for (i = 0; i < nmem_size_units; i++)
+	{ 
+	  if (edit_tile_cache_size % mem_size_units[i].unit == 0)
+	    mem_size_unit = mem_size_units[i].unit;
+	}
+      edit_tile_cache_size = edit_tile_cache_size / mem_size_unit;
 
       prefs_dlg = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
@@ -691,7 +743,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
 
-      frame = gtk_frame_new ("Image size"); 
+      frame = gtk_frame_new ("Default image size"); 
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -718,29 +770,37 @@ file_pref_cmd_callback (GtkWidget *widget,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
       
-      entry = gtk_entry_new ();
-      gtk_widget_set_usize (entry, 25, 0);
-      sprintf (buffer, "%d", default_width);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 0, 1,
-                       GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                          (GtkSignalFunc) file_prefs_text_callback,
+      adj = (GtkAdjustment *) gtk_adjustment_new (default_width, 1.0,
+                                                  65536.0, 1.0, 50.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_widget_set_usize (spinbutton, 25, 0);
+      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
+                                         GTK_UPDATE_ALWAYS);
+      gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
+                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &default_width);
-      gtk_widget_show (entry);
+      gtk_widget_show (spinbutton);
 
-      entry = gtk_entry_new ();
-      gtk_widget_set_usize (entry, 25, 0);
-      sprintf (buffer, "%d", default_height);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer); 
-      gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2,
+      adj = (GtkAdjustment *) gtk_adjustment_new (default_height, 1.0,
+                                                  65536.0, 1.0, 50.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_widget_set_usize (spinbutton, 25, 0);
+      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
+                                         GTK_UPDATE_ALWAYS);
+      gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
 			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			  (GtkSignalFunc) file_prefs_text_callback,
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+			                    (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &default_height);
-      gtk_widget_show (entry);
+      gtk_widget_show (spinbutton);
 
-      frame = gtk_frame_new ("Image type");
+      frame = gtk_frame_new ("Default image type");
       gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
@@ -857,7 +917,6 @@ file_pref_cmd_callback (GtkWidget *widget,
           gtk_widget_show (button);
         }
       
-
       label = gtk_label_new ("Display");
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
 
@@ -879,15 +938,19 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      entry = gtk_entry_new ();
-      gtk_widget_set_usize (entry, 75, 0);
-      sprintf (buffer, "%d", levels_of_undo);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                          (GtkSignalFunc) file_prefs_text_callback,
+      adj = (GtkAdjustment *) gtk_adjustment_new (levels_of_undo, 0.0,
+                                                  255.0, 1.0, 5.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
+                                         GTK_UPDATE_ALWAYS);
+      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &levels_of_undo);
-      gtk_widget_show (entry);
+      gtk_widget_show (spinbutton);
       
       button = gtk_check_button_new_with_label("Resize window on zoom");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
@@ -937,15 +1000,19 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      entry = gtk_entry_new ();
-      gtk_widget_set_usize (entry, 75, 0);
-      sprintf (buffer, "%d", marching_speed);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                          (GtkSignalFunc) file_prefs_text_callback,
+      adj = (GtkAdjustment *) gtk_adjustment_new (marching_speed, 0.0,
+                                                  32000.0, 50.0, 100.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spinbutton), TRUE);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spinbutton),
+                                         GTK_UPDATE_ALWAYS);
+      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &marching_speed);
-      gtk_widget_show (entry);      
+      gtk_widget_show (spinbutton);
 
       label = gtk_label_new ("Interface");
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
@@ -974,19 +1041,42 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Tile cache size (bytes):");
+      label = gtk_label_new ("Tile cache size:");
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      entry = gtk_entry_new ();
-      gtk_widget_set_usize (entry, 75, 0);
-      sprintf (buffer, "%d", old_tile_cache_size);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                          (GtkSignalFunc) file_prefs_text_callback,
+      adj = (GtkAdjustment *) gtk_adjustment_new (edit_tile_cache_size, 0.0,
+                                                  (4069.0 * 1024 * 1024), 1.0,
+                                                  16.0, 0.0);
+      tile_cache_size_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON(tile_cache_size_spinbutton), 
+					 GTK_UPDATE_ALWAYS);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(tile_cache_size_spinbutton), 
+				       GTK_SHADOW_NONE);      
+      gtk_widget_set_usize (tile_cache_size_spinbutton, 75, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
                           &edit_tile_cache_size);
-      gtk_widget_show (entry);
+      gtk_widget_show (tile_cache_size_spinbutton);
+      
+      menu = gtk_menu_new ();
+      for (i = 0; i < nmem_size_units; i++)
+        {
+          menuitem = gtk_menu_item_new_with_label (mem_size_units[i].label);
+	  gtk_menu_append (GTK_MENU (menu), menuitem);
+	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			      (GtkSignalFunc) file_prefs_mem_size_unit_callback,
+			      (gpointer) mem_size_units[i].unit);
+	  gtk_widget_show (menuitem);
+	}
+      optionmenu = gtk_option_menu_new ();
+      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+      gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
+      gtk_widget_show (optionmenu);
+      for (i = 0; i < nmem_size_units; i++)
+	if (mem_size_unit == mem_size_units[i].unit)
+	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
       
       button = gtk_check_button_new_with_label("Install colormap (8-bit only)");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
