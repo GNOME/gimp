@@ -11,8 +11,13 @@ helpdata_DATA = \
 	duplicate_icon.png		\
 	lower_icon.png			\
 	new_icon.png			\
-	path_to_selection_icon.png	\
+	pen_add_icon.png		\
+	pen_delete_icon.png		\
+	pen_edit_icon.png		\
+	pen_normal_icon.png		\
+	to_selection_icon.png		\
 	raise_icon.png			\
+	selection_to_path_icon.png	\
 	stroke_icon.png			\
 	\
 	layers_example.png		\

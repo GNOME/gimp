@@ -1,5 +1,9 @@
 2000-12-17  Michael Natterer  <mitch@gimp.org>
 
+	* images/*: More cleanup, sync'ed Makefile.am again.
+
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
 	* images/*: flattened all PNGs against a white background (because
 	transparent PNG viewing is broken in GtkXmHTML) and crop all GIFs
 	(because they were too large).
