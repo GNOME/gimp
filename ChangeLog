@@ -1,3 +1,9 @@
+2003-08-24  Seth Burgess <sjburges@gimp.org>
+
+	* plug-ins/rcm/rcm_callback.c: do redraws instead
+	of trying to erase.  Also redraw upon release. Mostly
+	fixes bug #118177.
+
 2003-08-24  Simon Budig  <simon@gimp.org>
 
 	* data/brushes/feltpen.gih

@@ -515,7 +515,10 @@ rcm_release_event (GtkWidget *widget,
 		   RcmCircle *circle)
 {
   if (circle->action_flag == DRAGING)
-    rcm_draw_arrows(widget->window, widget->style->black_gc, circle->angle); 
+    {
+       gtk_widget_queue_draw(circle->preview);
+       rcm_draw_arrows(widget->window, widget->style->black_gc, circle->angle); 
+    }
   circle->action_flag = VIRGIN;
   
   if (!Current.RealTime)
@@ -560,9 +563,8 @@ rcm_motion_notify_event (GtkWidget *widget,
       gtk_widget_queue_draw(circle->preview);
       circle->action_flag = DRAGING;
     }
-    else 
-      rcm_draw_arrows(widget->window, xor_gc, circle->angle);  /* erase! */
-    
+      else
+        gtk_widget_queue_draw(circle->preview);
     if (circle->mode == EACH)
       *(circle->target)=clicked_angle;
     else {
