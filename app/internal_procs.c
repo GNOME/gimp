@@ -41,6 +41,7 @@ void register_gdisplay_procs        (void);
 void register_gimage_procs          (void);
 void register_gimage_mask_procs     (void);
 void register_gimprc_procs          (void);
+void register_gimphelp_procs        (void);
 void register_gradient_procs        (void);
 void register_gradient_select_procs (void);
 void register_guides_procs          (void);
@@ -59,7 +60,7 @@ void register_tools_procs           (void);
 void register_undo_procs            (void);
 void register_unit_procs            (void);
 
-/* 312 procedures registered total */
+/* 313 procedures registered total */
 
 void
 internal_procs_init (void)
@@ -73,61 +74,64 @@ internal_procs_init (void)
   app_init_update_status (NULL, _("Channel"), 0.045);
   register_channel_procs ();
 
-  app_init_update_status (NULL, _("Channel Ops"), 0.09);
+  app_init_update_status (NULL, _("Channel Ops"), 0.089);
   register_channel_ops_procs ();
 
   app_init_update_status (NULL, _("Color"), 0.096);
   register_color_procs ();
 
-  app_init_update_status (NULL, _("Convert"), 0.135);
+  app_init_update_status (NULL, _("Convert"), 0.134);
   register_convert_procs ();
 
   app_init_update_status (NULL, _("Drawable procedures"), 0.144);
   register_drawable_procs ();
 
-  app_init_update_status (NULL, _("Edit procedures"), 0.215);
+  app_init_update_status (NULL, _("Edit procedures"), 0.214);
   register_edit_procs ();
 
-  app_init_update_status (NULL, _("File Operations"), 0.234);
+  app_init_update_status (NULL, _("File Operations"), 0.233);
   register_fileops_procs ();
 
-  app_init_update_status (NULL, _("Floating selections"), 0.26);
+  app_init_update_status (NULL, _("Floating selections"), 0.259);
   register_floating_sel_procs ();
 
-  app_init_update_status (NULL, _("GDisplay procedures"), 0.279);
+  app_init_update_status (NULL, _("GDisplay procedures"), 0.278);
   register_gdisplay_procs ();
 
   app_init_update_status (NULL, _("Image"), 0.288);
   register_gimage_procs ();
 
-  app_init_update_status (NULL, _("Image mask"), 0.471);
+  app_init_update_status (NULL, _("Image mask"), 0.47);
   register_gimage_mask_procs ();
 
-  app_init_update_status (NULL, _("Gimprc procedures"), 0.526);
+  app_init_update_status (NULL, _("Gimprc procedures"), 0.524);
   register_gimprc_procs ();
 
-  app_init_update_status (NULL, _("Gradients"), 0.535);
+  app_init_update_status (NULL, _("Help procedures"), 0.534);
+  register_gimphelp_procs ();
+
+  app_init_update_status (NULL, _("Gradients"), 0.537);
   register_gradient_procs ();
 
-  app_init_update_status (NULL, _("Gradient UI"), 0.551);
+  app_init_update_status (NULL, _("Gradient UI"), 0.553);
   register_gradient_select_procs ();
 
-  app_init_update_status (NULL, _("Guide procedures"), 0.564);
+  app_init_update_status (NULL, _("Guide procedures"), 0.565);
   register_guides_procs ();
 
-  app_init_update_status (NULL, _("Interface"), 0.583);
+  app_init_update_status (NULL, _("Interface"), 0.585);
   register_interface_procs ();
 
-  app_init_update_status (NULL, _("Layer"), 0.593);
+  app_init_update_status (NULL, _("Layer"), 0.594);
   register_layer_procs ();
 
-  app_init_update_status (NULL, _("Miscellaneous"), 0.689);
+  app_init_update_status (NULL, _("Miscellaneous"), 0.69);
   register_misc_procs ();
 
   app_init_update_status (NULL, _("Palette"), 0.696);
   register_palette_procs ();
 
-  app_init_update_status (NULL, _("Parasite procedures"), 0.718);
+  app_init_update_status (NULL, _("Parasite procedures"), 0.719);
   register_parasite_procs ();
 
   app_init_update_status (NULL, _("Paths"), 0.76);
@@ -136,10 +140,10 @@ internal_procs_init (void)
   app_init_update_status (NULL, _("Pattern UI"), 0.792);
   register_pattern_select_procs ();
 
-  app_init_update_status (NULL, _("Patterns"), 0.801);
+  app_init_update_status (NULL, _("Patterns"), 0.802);
   register_patterns_procs ();
 
-  app_init_update_status (NULL, _("Plug-in"), 0.814);
+  app_init_update_status (NULL, _("Plug-in"), 0.815);
   register_plug_in_procs ();
 
   app_init_update_status (NULL, _("Procedural database"), 0.827);
@@ -148,7 +152,7 @@ internal_procs_init (void)
   app_init_update_status (NULL, _("Text procedures"), 0.853);
   register_text_tool_procs ();
 
-  app_init_update_status (NULL, _("Tool procedures"), 0.865);
+  app_init_update_status (NULL, _("Tool procedures"), 0.866);
   register_tools_procs ();
 
   app_init_update_status (NULL, _("Undo"), 0.958);
