@@ -564,6 +564,7 @@ gimp_data_get_extension
 gimp_data_set_filename
 gimp_data_create_filename
 gimp_data_duplicate
+gimp_data_make_internal
 GIMP_DATA_ERROR
 gimp_data_error_quark
 <SUBSECTION Standard>
@@ -1347,6 +1348,7 @@ gimp_viewable_get_preview_size
 gimp_viewable_get_popup_size
 gimp_viewable_get_preview
 gimp_viewable_get_new_preview
+gimp_viewable_get_dummy_preview
 gimp_viewable_get_preview_pixbuf
 gimp_viewable_get_new_preview_pixbuf
 gimp_viewable_get_description
@@ -2616,6 +2618,7 @@ GIMP_FUZZY_SELECT_TOOL_GET_CLASS
 <FILE>gimphistogramoptions</FILE>
 <TITLE>GimpHistogramOptions</TITLE>
 GimpHistogramOptions
+GimpHistogramOptionsClass
 gimp_histogram_options_gui
 gimp_histogram_options_connect_view
 <SUBSECTION Standard>
@@ -5642,6 +5645,7 @@ gimp_image_invalidate_without_render
 <SECTION>
 <FILE>gimpimage-qmask</FILE>
 <TITLE>GimpImage-qmask</TITLE>
+GIMP_IMAGE_QMASK_NAME
 gimp_image_set_qmask_state
 gimp_image_get_qmask_state
 gimp_image_qmask_invert
