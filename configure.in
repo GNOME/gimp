@@ -304,6 +304,19 @@ AC_CHECK_FUNC(random, [
 dnl check for difftime
 AC_CHECK_FUNC(difftime, , AC_DEFINE(NO_DIFFTIME))
 
+dnl check for inline
+AC_MSG_CHECKING([for inline definition in glibconfig.h])
+AC_EGREP_CPP(glib_defines_inline,
+[#include <glibconfig.h>
+#ifdef inline
+   glib_defines_inline
+#endif
+], have_glib_inline=yes, have_glib_inline=no)
+AC_MSG_RESULT($have_glib_inline)
+if test "$have_glib_inline" = "no"; then
+  AC_C_INLINE
+fi  
+
 CPPFLAGS="$gimp_save_CPPFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"
 LIBS="$gimp_save_LIBS"

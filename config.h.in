@@ -25,6 +25,9 @@
 /* Define if you have the vprintf function.  */
 #undef HAVE_VPRINTF
 
+/* Define as __inline if that's what the C compiler calls it.  */
+#undef inline
+
 /* Define to `int' if <sys/types.h> doesn't define.  */
 #undef pid_t
 

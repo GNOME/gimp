@@ -16,6 +16,10 @@
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /* Declare local functions. */
 static void query(void);
 static void run(char *name,

@@ -1,3 +1,14 @@
+Mon Jul 13 23:15:15 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: check for inline by ourselves if it's not
+	defined in glibconfig.h. So inline works if glib is compiled
+	with a different compiler than gimp. The plug-ins that use
+	inline #include "config.h" now (blur, destripe, emboss,
+	gfli, nlfilt, ps, randomize, sinus, and zealouscrop)
+
+	* plug-ins/dbbrowser/dbbrowser_utils.c: searching by name does
+	- <-> _ translation
+
 Tue Jul  7 23:50:23 EST 1998 Kevin Cozens <kcozens@interlog.com>
 
 	* Force a redraw of the image after applying a layer mask

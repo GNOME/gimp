@@ -38,6 +38,11 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <plug-ins/megawidget/megawidget.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #ifdef USE_LOGO
 #include "sinus_logo.h"
 #endif
