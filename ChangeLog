@@ -1,4 +1,13 @@
+2004-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplay-foreach.[ch]: added new function
+	gimp_displays_get_dirty_images().
+
+	* app/gui/quit-dialog.c: show a container treview of all dirty
+	images in the quit dialog. Still work in progress...
+
 2004-07-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* gimp/plug-ins/gfig/gfig-circle.c
 	* gimp/plug-ins/gfig/gfig-dialog.c
 	* gimp/plug-ins/gfig/gfig-dobject.c

@@ -43,11 +43,41 @@ gimp_displays_dirty (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
-      if (((GimpDisplay *) list->data)->gimage->dirty != 0)
+      if (((GimpDisplay *) list->data)->gimage->dirty)
 	return TRUE;
     }
 
   return FALSE;
+}
+
+GimpContainer *
+gimp_displays_get_dirty_images (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp_displays_dirty (gimp))
+    {
+      GimpContainer *container = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
+      GList         *list;
+
+      for (list = GIMP_LIST (gimp->displays)->list;
+           list;
+           list = g_list_next (list))
+        {
+          GimpDisplay *display = list->data;
+          GimpImage   *image   = display->gimage;
+
+          if (image->dirty &&
+              ! gimp_container_have (container, GIMP_OBJECT (image)))
+            {
+              gimp_container_add (container, GIMP_OBJECT (image));
+            }
+        }
+
+      return container;
+    }
+
+  return NULL;
 }
 
 void
