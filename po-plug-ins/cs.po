@@ -7067,7 +7067,7 @@ msgid "Rotated"
 msgstr "Rotovaný"
 
 #: plug-ins/common/vinvert.c:83
-msgid "Invert the 'value' componant of an indexed/RGB image in HSV colourspace"
+msgid "Invert the 'value' component of an indexed/RGB image in HSV colourspace"
 msgstr "Invertuje 'hodnotu' komponenty indexovaného/RGB obrázku v prostoru HSV"
 
 #: plug-ins/common/vinvert.c:84
