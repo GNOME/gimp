@@ -194,7 +194,7 @@ typedef struct
   struct jpeg_compress_struct cinfo;
   gint          tile_height;
   FILE         *outfile;
-  gint          has_alpha;
+  gboolean      has_alpha;
   gint          rowstride;
   guchar       *temp;
   guchar       *data;
@@ -210,37 +210,37 @@ static gboolean *abort_me = NULL;
 
 /* Declare local functions.
  */
-static void   query                     (void);
-static void   run                       (gchar            *name,
-					 gint              nparams,
-					 GimpParam        *param,
-					 gint             *nreturn_vals,
-					 GimpParam       **return_vals);
-static gint32 load_image                (gchar            *filename, 
-					 GimpRunModeType   runmode, 
-					 gboolean          preview);
-static gint   save_image                (gchar            *filename,
-					 gint32            image_ID,
-					 gint32            drawable_ID,
-					 gint32            orig_image_ID,
-					 gboolean          preview);
+static void     query                     (void);
+static void     run                       (gchar            *name,
+					   gint              nparams,
+					   GimpParam        *param,
+					   gint             *nreturn_vals,
+					   GimpParam       **return_vals);
+static gint32   load_image                (gchar            *filename, 
+					   GimpRunModeType   runmode, 
+					   gboolean          preview);
+static gboolean save_image                (gchar            *filename,
+					   gint32            image_ID,
+					   gint32            drawable_ID,
+					   gint32            orig_image_ID,
+					   gboolean          preview);
 
-static gint   save_dialog                (void);
+static gboolean save_dialog                (void);
 
-static void   save_close_callback        (GtkWidget       *widget,
-					  gpointer         data);
-static void   save_ok_callback           (GtkWidget       *widget,
-					  gpointer         data);
-static void   save_restart_toggle_update (GtkWidget       *toggle,
-					  GtkAdjustment   *adjustment);
-static void   save_restart_update        (GtkAdjustment   *adjustment,
-					  GtkWidget       *toggle);
+static void     save_close_callback        (GtkWidget       *widget,
+					    gpointer         data);
+static void     save_ok_callback           (GtkWidget       *widget,
+					    gpointer         data);
+static void     save_restart_toggle_update (GtkWidget       *toggle,
+					    GtkAdjustment   *adjustment);
+static void     save_restart_update        (GtkAdjustment   *adjustment,
+					    GtkWidget       *toggle);
 
-static void   make_preview               (void);
-static void   destroy_preview            (void);
+static void     make_preview               (void);
+static void     destroy_preview            (void);
 
-static void   menu_callback              (GtkWidget       *widget, 
-					  gpointer         data);
+static void     menu_callback              (GtkWidget       *widget, 
+					    gpointer         data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -347,24 +347,24 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32  image_ID;
-  gint32  drawable_ID;
-  gint32  orig_image_ID;
-  gint32  display_ID = -1;
+  static GimpParam      values[2];
+  GimpRunModeType       run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  gint32                image_ID;
+  gint32                drawable_ID;
+  gint32                orig_image_ID;
+  gint32                display_ID = -1;
 #ifdef GIMP_HAVE_PARASITES
-  GimpParasite *parasite;
+  GimpParasite         *parasite;
 #endif /* GIMP_HAVE_PARASITES */
-  gint          err;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  gboolean              err;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -622,7 +622,7 @@ run (gchar   *name,
 static guint
 jpeg_getc (j_decompress_ptr cinfo)
 {
-  struct jpeg_source_mgr * datasrc = cinfo->src;
+  struct jpeg_source_mgr *datasrc = cinfo->src;
 
   if (datasrc->bytes_in_buffer == 0) 
     {
@@ -630,6 +630,7 @@ jpeg_getc (j_decompress_ptr cinfo)
 	ERREXIT (cinfo, JERR_CANT_SUSPEND);
     }
   datasrc->bytes_in_buffer--;
+
   return *datasrc->next_input_byte++;
 }
 
@@ -647,8 +648,8 @@ static GString *local_image_comments = NULL;
 static boolean
 COM_handler (j_decompress_ptr cinfo)
 {
-  int length;
-  unsigned int ch;
+  gint  length;
+  guint ch;
 
   length = jpeg_getc (cinfo) << 8;
   length += jpeg_getc (cinfo);
@@ -700,22 +701,22 @@ load_image (gchar           *filename,
 	    GimpRunModeType  runmode, 
 	    gboolean         preview)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  gint32 volatile image_ID;
-  gint32 layer_ID;
+  GimpPixelRgn     pixel_rgn;
+  GimpDrawable    *drawable;
+  gint32 volatile  image_ID;
+  gint32           layer_ID;
   struct jpeg_decompress_struct cinfo;
-  struct my_error_mgr jerr;
-  FILE *infile;
-  guchar *buf;
-  guchar * volatile padded_buf = NULL;
+  struct my_error_mgr           jerr;
+  FILE    *infile;
+  guchar  *buf;
+  guchar  * volatile padded_buf = NULL;
   guchar **rowbuf;
-  gchar *name;
-  gint image_type;
-  gint layer_type;
-  gint tile_height;
-  gint scanlines;
-  gint i, start, end;
+  gchar   *name;
+  gint     image_type;
+  gint     layer_type;
+  gint     tile_height;
+  gint     scanlines;
+  gint     i, start, end;
 
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
@@ -723,7 +724,6 @@ load_image (gchar           *filename,
   GimpParasite * volatile vals_parasite    = NULL;
 #endif /* GIMP_HAVE_PARASITES */
 
-  
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
@@ -778,46 +778,47 @@ load_image (gchar           *filename,
    */
 
 #ifdef GIMP_HAVE_PARASITES
-  if (!preview) {
-    /* if we had any comments then make a parasite for them */
-    if (local_image_comments && local_image_comments->len) 
-      {
-	gchar *string = local_image_comments->str;
-	g_string_free (local_image_comments, FALSE);
-	local_image_comments = NULL;
-	comment_parasite = gimp_parasite_new ("gimp-comment",
-					      GIMP_PARASITE_PERSISTENT,
-					      strlen (string) + 1, string);
-      } 
-    else 
-      {
-	comment_parasite = NULL;
-      }
-  
-    /* pw - figuring out what the saved values were is non-trivial.
-     * They don't seem to be in the cinfo structure. For now, I will
-     * just use the defaults, but if someone figures out how to derive
-     * them this is the place to store them. */
-
-    local_save_vals.quality     = DEFAULT_QUALITY;
-    local_save_vals.smoothing   = DEFAULT_SMOOTHING;
-    local_save_vals.optimize    = DEFAULT_OPTIMIZE;
-  
+  if (!preview) 
+    {
+      /* if we had any comments then make a parasite for them */
+      if (local_image_comments && local_image_comments->len) 
+	{
+	  gchar *string = local_image_comments->str;
+	  g_string_free (local_image_comments, FALSE);
+	  local_image_comments = NULL;
+	  comment_parasite = gimp_parasite_new ("gimp-comment",
+						GIMP_PARASITE_PERSISTENT,
+						strlen (string) + 1, string);
+	} 
+      else 
+	{
+	  comment_parasite = NULL;
+	}
+      
+      /* pw - figuring out what the saved values were is non-trivial.
+       * They don't seem to be in the cinfo structure. For now, I will
+       * just use the defaults, but if someone figures out how to derive
+       * them this is the place to store them. */
+      
+      local_save_vals.quality     = DEFAULT_QUALITY;
+      local_save_vals.smoothing   = DEFAULT_SMOOTHING;
+      local_save_vals.optimize    = DEFAULT_OPTIMIZE;
+      
 #ifdef HAVE_PROGRESSIVE_JPEG 
-    local_save_vals.progressive = cinfo.progressive_mode;
+      local_save_vals.progressive = cinfo.progressive_mode;
 #else
-    local_save_vals.progressive = 0;
+      local_save_vals.progressive = 0;
 #endif /* HAVE_PROGRESSIVE_JPEG */
-    local_save_vals.baseline    = DEFAULT_BASELINE;
-    local_save_vals.subsmp      = DEFAULT_SUBSMP;   /* sg - this _is_ there, but I'm too lazy */ 
-    local_save_vals.restart     = DEFAULT_RESTART;
-    local_save_vals.dct         = DEFAULT_DCT;
-    local_save_vals.preview     = DEFAULT_PREVIEW;
-  
-    vals_parasite = gimp_parasite_new ("jpeg-save-options", 0,
-				       sizeof (local_save_vals),
-				       &local_save_vals);
-  } 
+      local_save_vals.baseline    = DEFAULT_BASELINE;
+      local_save_vals.subsmp      = DEFAULT_SUBSMP;   /* sg - this _is_ there, but I'm too lazy */ 
+      local_save_vals.restart     = DEFAULT_RESTART;
+      local_save_vals.dct         = DEFAULT_DCT;
+      local_save_vals.preview     = DEFAULT_PREVIEW;
+      
+      vals_parasite = gimp_parasite_new ("jpeg-save-options", 0,
+					 sizeof (local_save_vals),
+					 &local_save_vals);
+    } 
 #endif /* GIMP_HAVE_PARASITES */
   
   
@@ -862,14 +863,17 @@ load_image (gchar           *filename,
       image_type = GIMP_GRAY;
       layer_type = preview ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
+
     case 3:
       image_type = GIMP_RGB;
       layer_type = preview ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
+
     default:
       g_message ("don't know how to load JPEGs\nwith %d color channels",
-                   cinfo.output_components);
+		 cinfo.output_components);
       gimp_quit ();
+      break;
     }
 
   if (preview) 
@@ -885,10 +889,11 @@ load_image (gchar           *filename,
 
   if (preview) 
     {
-      layer_ID_global = layer_ID = gimp_layer_new (image_ID, _("JPEG preview"),
-						   cinfo.output_width,
-						   cinfo.output_height,
-						   layer_type, 100, GIMP_NORMAL_MODE);
+      layer_ID_global = layer_ID = 
+	gimp_layer_new (image_ID, _("JPEG preview"),
+			cinfo.output_width,
+			cinfo.output_height,
+			layer_type, 100, GIMP_NORMAL_MODE);
     }
   else 
     {
@@ -951,23 +956,18 @@ load_image (gchar           *filename,
   while (cinfo.output_scanline < cinfo.output_height)
     {
       start = cinfo.output_scanline;
-      end = cinfo.output_scanline + tile_height;
-      end = MIN (end, cinfo.output_height);
+      end   = cinfo.output_scanline + tile_height;
+      end   = MIN (end, cinfo.output_height);
       scanlines = end - start;
 
       for (i = 0; i < scanlines; i++)
 	jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
-      /*
-      for (i = start; i < end; i++)
-	gimp_pixel_rgn_set_row (&pixel_rgn, tilerow[i - start], 0, i, drawable->width);
-	*/
-
       if (preview) /* Add a dummy alpha channel -- convert buf to padded_buf */
 	{
 	  guchar *dest = padded_buf;
 	  guchar *src  = buf;
-	  gint num = drawable->width * scanlines;
+	  gint    num  = drawable->width * scanlines;
 
 	  switch (cinfo.output_components)
 	    {
@@ -978,6 +978,7 @@ load_image (gchar           *filename,
 		  *(dest++) = 255;
 		}
 	      break;
+
 	    case 3:
 	      for (i=0; i<num; i++)
 		{
@@ -987,8 +988,10 @@ load_image (gchar           *filename,
 		  *(dest++) = 255;
 		}
 	      break;
+
 	    default:
 	      g_warning ("JPEG - shouldn't have gotten here.  Report to adam@gimp.org");
+	      break;
 	    }
 	}
 
@@ -997,7 +1000,8 @@ load_image (gchar           *filename,
 
       if (runmode != GIMP_RUN_NONINTERACTIVE)
 	{
-	  gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
+	  gimp_progress_update ((gdouble) cinfo.output_scanline / 
+				(gdouble) cinfo.output_height);
 	}
     }
 
@@ -1046,6 +1050,7 @@ load_image (gchar           *filename,
 	  gimp_image_parasite_attach (image_ID, comment_parasite);
 	  gimp_parasite_free (comment_parasite);
 	}
+
       if (vals_parasite)
 	{
 	  gimp_image_parasite_attach (image_ID, vals_parasite);
@@ -1070,19 +1075,16 @@ background_error_exit (j_common_ptr cinfo)
   (*cinfo->err->output_message) (cinfo);
 }
 
-static gint
+static gboolean
 background_jpeg_save (PreviewPersistent *pp)
 {
   guchar *t;
   guchar *s;
-  gint i, j;
-  gint yend;
+  gint    i, j;
+  gint    yend;
 
   if (pp->abort_me || (pp->cinfo.next_scanline >= pp->cinfo.image_height))
     {
-      struct stat buf;
-      gchar temp[256];
-
       /* clean up... */
       if (pp->abort_me)
 	{
@@ -1099,11 +1101,15 @@ background_jpeg_save (PreviewPersistent *pp)
       g_free (pp->temp);
       g_free (pp->data);
 
-      if (pp->drawable) gimp_drawable_detach (pp->drawable);
+      if (pp->drawable) 
+	gimp_drawable_detach (pp->drawable);
 
       /* display the preview stuff */
       if (!pp->abort_me) 
 	{
+	  struct stat buf;
+	  gchar       temp[128];
+
 	  stat (pp->file_name, &buf);
 	  g_snprintf (temp, sizeof (temp),
 		      _("Size: %lu bytes (%02.01f kB)"),
@@ -1160,26 +1166,26 @@ background_jpeg_save (PreviewPersistent *pp)
     }
 }
 
-static gint
+static gboolean
 save_image (gchar    *filename,
 	    gint32    image_ID,
 	    gint32    drawable_ID,
 	    gint32    orig_image_ID,
 	    gboolean  preview)
 {
-  GimpPixelRgn pixel_rgn;
-  GimpDrawable *drawable;
-  GimpImageType drawable_type;
+  GimpPixelRgn   pixel_rgn;
+  GimpDrawable  *drawable;
+  GimpImageType  drawable_type;
   struct jpeg_compress_struct cinfo;
-  struct my_error_mgr jerr;
-  FILE * volatile outfile;
-  guchar *temp, *t;
-  guchar *data;
-  guchar *src, *s;
-  gchar *name;
-  gint has_alpha;
-  gint rowstride, yend;
-  gint i, j;
+  struct my_error_mgr         jerr;
+  FILE     * volatile outfile;
+  guchar   *temp, *t;
+  guchar   *data;
+  guchar   *src, *s;
+  gchar    *name;
+  gboolean  has_alpha;
+  gint      rowstride, yend;
+  gint      i, j;
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1245,19 +1251,22 @@ save_image (gchar    *filename,
     case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = drawable->bpp;
-      has_alpha = 0;
+      has_alpha = FALSE;
       break;
+
     case GIMP_RGBA_IMAGE:
     case GIMP_GRAYA_IMAGE:
       /*gimp_message ("jpeg: image contains a-channel info which will be lost");*/
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = drawable->bpp - 1;
-      has_alpha = 1;
+      has_alpha = TRUE;
       break;
+
     case GIMP_INDEXED_IMAGE:
       /*gimp_message ("jpeg: cannot operate on indexed color images");*/
       return FALSE;
       break;
+
     default:
       /*gimp_message ("jpeg: cannot operate on unknown image types");*/
       return FALSE;
@@ -1282,8 +1291,8 @@ save_image (gchar    *filename,
    */
   jpeg_set_defaults (&cinfo);
 
-  jpeg_set_quality (&cinfo, (int) (jsvals.quality * 100), jsvals.baseline);
-  cinfo.smoothing_factor = (int) (jsvals.smoothing * 100);
+  jpeg_set_quality (&cinfo, (gint) (jsvals.quality * 100), jsvals.baseline);
+  cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
 
 #ifdef HAVE_PROGRESSIVE_JPEG
@@ -1304,6 +1313,7 @@ save_image (gchar    *filename,
       cinfo.comp_info[2].h_samp_factor = 1;
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
+
     case 1:
       cinfo.comp_info[0].h_samp_factor = 2;
       cinfo.comp_info[0].v_samp_factor = 1;
@@ -1312,6 +1322,7 @@ save_image (gchar    *filename,
       cinfo.comp_info[2].h_samp_factor = 1;
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
+
     case 2:
       cinfo.comp_info[0].h_samp_factor = 1;
       cinfo.comp_info[0].v_samp_factor = 1;
@@ -1331,9 +1342,11 @@ save_image (gchar    *filename,
     default:
       cinfo.dct_method = JDCT_ISLOW;
       break;
+
     case 1:
       cinfo.dct_method = JDCT_IFAST;
       break;
+
     case 2:
       cinfo.dct_method = JDCT_FLOAT;
       break;
@@ -1432,7 +1445,7 @@ save_image (gchar    *filename,
       
       jerr.pub.error_exit = background_error_exit;
  
-      gtk_idle_add ((GtkFunction) background_jpeg_save, (gpointer *)pp);
+      gtk_idle_add ((GtkFunction) background_jpeg_save, (gpointer) pp);
       
       /* background_jpeg_save() will cleanup as needed */
       return TRUE;
@@ -1525,21 +1538,25 @@ destroy_preview (void)
     {
       *abort_me = TRUE;   /* signal the background save to stop */
     }
+
   if (drawable_global) 
     {
       gimp_drawable_detach (drawable_global);
       drawable_global = NULL;
     }
+
   if (layer_ID_global != -1 && image_ID_global != -1) 
     {
+      /*  assuming that reference counting is working correctly, 
+	  we do not need to delete the layer, removing it from
+	  the image should be sufficient  */
       gimp_image_remove_layer (image_ID_global, layer_ID_global);
       
-      /* gimp_layer_delete(layer_ID_global); */
       layer_ID_global = -1;
     }
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
@@ -1858,6 +1875,7 @@ save_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   GtkWidget *text;
+
   jsint.run = TRUE;
 
   /* pw - get the comment text object and grab it's data */
@@ -1898,7 +1916,7 @@ save_restart_update (GtkAdjustment *adjustment,
 
 static void
 menu_callback (GtkWidget *widget,
-	      gpointer   data)
+	       gpointer   data)
 {
   gimp_menu_item_update (widget, data);
   make_preview ();

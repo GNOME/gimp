@@ -1,5 +1,15 @@
 2000-12-03  Sven Neumann  <sven@gimp.org>
 
+	* app/layer.c
+	* app/layers_dialog.c
+	* plug-ins/common/jpeg.c: reviewed code in an attempt to fix the 
+	crash-on-jpeg-save. The only thing that I have changed (despite 
+	lots of indentation) is that we now connect the preview rewdraw
+	using gtk_signal_connect_while_alive() which should keep gimp from
+	trying to create previews of nonexistant drawables.
+	
+2000-12-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpunitmenu.c (gimp_unit_menu_new): set empty menu_items
 	used as separators insensitive. Something seems to be wrong in GTK+
 	when it comes to separators in option_menus. This change seems to 
