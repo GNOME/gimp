@@ -1,5 +1,11 @@
 2003-10-08  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: fix SF_ADJUSTMENT handling
+	when crafting the string to call, since it now gets a GIMP_PDB_FLOAT.
+	(This bug has been there since 1.3.4...)
+
+2003-10-08  Manish Singh  <yosh@gimp.org>
+
         * plug-ins/common/png.c: fix handling and docs of offs, phys, and time
         parameters.
 

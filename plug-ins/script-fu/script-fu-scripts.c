@@ -833,7 +833,7 @@ script_fu_script_proc (const gchar      *name,
 		    break;
 
 		  case SF_ADJUSTMENT:
-		    length += strlen (params[i + 1].data.d_string) + 1;
+		    length += G_ASCII_DTOSTR_BUF_SIZE;
 		    break;
 
 		  case SF_FONT:
@@ -902,7 +902,8 @@ script_fu_script_proc (const gchar      *name,
                           break;
 
                         case SF_ADJUSTMENT:
-                          text = params[i + 1].data.d_string;
+                          text = g_ascii_dtostr (buffer, sizeof (buffer),
+                                                 params[i + 1].data.d_float);
                           break;
 
                         case SF_FONT:
@@ -1596,7 +1597,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	break;
 
       case SF_ADJUSTMENT:
-	length += 24;  /*  Maximum size of float value  */
+	length += G_ASCII_DTOSTR_BUF_SIZE;
 	break;
 
       case SF_FILENAME:
