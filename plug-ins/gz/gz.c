@@ -287,7 +287,10 @@ save_image (char   *filename,
   else if (pid == 0)
     {
 
-      f = fopen(filename,"w");
+      if (!(f = fopen(filename,"w"))){
+	      g_warning("gz: fopen failed: %s\n", g_strerror(errno));
+	      _exit(127);
+      }
 
       /* make stdout for this process be the output file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
@@ -347,7 +350,10 @@ load_image (char *filename, gint32 run_mode)
   else if (pid == 0)  /* child process */
     {
       FILE* f;
-      f = fopen(tmpname,"w");
+       if (!(f = fopen(tmpname,"w"))){
+	      g_warning("gz: fopen failed: %s\n", g_strerror(errno));
+	      _exit(127);
+      }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
