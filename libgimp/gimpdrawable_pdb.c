@@ -804,7 +804,7 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
  * Find the bounding box of the current selection in relation to the
  * specified drawable.
  *
- * This procedure returns the whether there is a selection. If there is
+ * This procedure returns whether there is a selection. If there is
  * one, the upper left and lower righthand corners of its bounding box
  * are returned. These coordinates are specified relative to the
  * drawable's origin, and bounded by the drawable's extents. Please
@@ -812,6 +812,10 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
  * the bounding box is not part of the selection. The selection ends at
  * the upper left corner of this pixel. This means the width of the
  * selection can be calculated as (x2 - x1), its height as (y2 - y1).
+ * Note that the returned boolean does NOT correspond with the returned
+ * region being empty or not, it always returns whether the selection
+ * is non_empty. See gimp_drawable_mask_intersect() for a boolean
+ * return value which is more useful in most cases.
  *
  * Returns: TRUE if there is a selection.
  */
@@ -838,6 +842,57 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
       *y1 = return_vals[3].data.d_int32;
       *x2 = return_vals[4].data.d_int32;
       *y2 = return_vals[5].data.d_int32;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return non_empty;
+}
+
+/**
+ * gimp_drawable_mask_intersect:
+ * @drawable_ID: The drawable.
+ * @x: x coordinate of the upper left corner of the intersection.
+ * @y: y coordinate of the upper left corner of the intersection.
+ * @width: width of the intersection.
+ * @height: height of the intersection.
+ *
+ * Find the bounding box of the current selection in relation to the
+ * specified drawable.
+ *
+ * This procedure returns whether there is an intersection between the
+ * drawable and the selection. Unlike gimp_drawable_mask_bounds(), the
+ * intersection's bounds are returned as x, y, width, height. If there
+ * is no selection this function returns TRUE and the returned bounds
+ * are the extents of the whole drawable.
+ *
+ * Returns: TRUE if the returned area is not empty.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_drawable_mask_intersect (gint32  drawable_ID,
+			      gint   *x,
+			      gint   *y,
+			      gint   *width,
+			      gint   *height)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean non_empty = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_mask_intersect",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      non_empty = return_vals[1].data.d_int32;
+      *x = return_vals[2].data.d_int32;
+      *y = return_vals[3].data.d_int32;
+      *width = return_vals[4].data.d_int32;
+      *height = return_vals[5].data.d_int32;
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

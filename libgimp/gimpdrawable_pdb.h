@@ -65,6 +65,11 @@ gboolean      gimp_drawable_mask_bounds     (gint32           drawable_ID,
 					     gint            *y1,
 					     gint            *x2,
 					     gint            *y2);
+gboolean      gimp_drawable_mask_intersect  (gint32           drawable_ID,
+					     gint            *x,
+					     gint            *y,
+					     gint            *width,
+					     gint            *height);
 gboolean      gimp_drawable_merge_shadow    (gint32           drawable_ID,
 					     gboolean         undo);
 gboolean      gimp_drawable_update          (gint32           drawable_ID,

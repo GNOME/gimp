@@ -257,13 +257,18 @@ drawable.
 BLURB
 
     $help = <<'HELP';
-This procedure returns the whether there is a selection. If there is one, the
+This procedure returns whether there is a selection. If there is one, the
 upper left and lower righthand corners of its bounding box are returned. These
 coordinates are specified relative to the drawable's origin, and bounded by
 the drawable's extents. Please note that the pixel specified by the lower
 righthand coordinate of the bounding box is not part of the selection. The
 selection ends at the upper left corner of this pixel. This means the width
 of the selection can be calculated as (x2 - x1), its height as (y2 - y1).
+
+Note that the returned boolean does NOT correspond with the returned
+region being empty or not, it always returns whether the selection
+is non_empty. See gimp_drawable_mask_intersect() for a boolean
+return value which is more useful in most cases.
 HELP
 
     &std_pdb_misc;
@@ -288,6 +293,48 @@ HELP
     %invoke = (
 	code => <<'CODE'
 non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+CODE
+    );
+}
+
+sub drawable_mask_intersect {
+    $blurb = <<'BLURB';
+Find the bounding box of the current selection in relation to the specified
+drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns whether there is an intersection between the
+drawable and the selection. Unlike gimp_drawable_mask_bounds(), the
+intersection's bounds are returned as x, y, width, height.
+
+If there is no selection this function returns TRUE and the returned
+bounds are the extents of the whole drawable.
+HELP
+
+    $author    = 'Michael Natterer <mitch@gimp.org>';
+    $copyright = 'Michael Natterer';
+    $date      = '2004';
+    $since     = '2.2';
+
+    @inargs = ( &drawable_arg );
+
+    @outargs = (
+	{ name => 'non_empty', type => 'boolean', init => 1,
+	  desc => 'TRUE if the returned area is not empty' },
+	{ name => 'x', type => 'int32',
+          desc => 'x coordinate of the upper left corner of the intersection' },
+	{ name => 'y', type => 'int32',
+          desc => 'y coordinate of the upper left corner of the intersection' },
+	{ name => 'width', type => 'int32',
+          desc => 'width of the intersection' },
+	{ name => 'height', type => 'int32',
+          desc => 'height of the intersection' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+non_empty = gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
 CODE
     );
 }
@@ -716,7 +763,8 @@ CODE
             drawable_get_visible drawable_set_visible
             drawable_get_linked drawable_set_linked
             drawable_get_tattoo drawable_set_tattoo
-            drawable_mask_bounds drawable_merge_shadow drawable_update
+            drawable_mask_bounds drawable_mask_intersect
+            drawable_merge_shadow drawable_update
             drawable_get_pixel drawable_set_pixel
 	    drawable_fill drawable_offset
             drawable_thumbnail);

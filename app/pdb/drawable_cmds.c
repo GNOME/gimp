@@ -64,6 +64,7 @@ static ProcRecord drawable_set_linked_proc;
 static ProcRecord drawable_get_tattoo_proc;
 static ProcRecord drawable_set_tattoo_proc;
 static ProcRecord drawable_mask_bounds_proc;
+static ProcRecord drawable_mask_intersect_proc;
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_update_proc;
 static ProcRecord drawable_get_pixel_proc;
@@ -100,6 +101,7 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_get_tattoo_proc);
   procedural_db_register (gimp, &drawable_set_tattoo_proc);
   procedural_db_register (gimp, &drawable_mask_bounds_proc);
+  procedural_db_register (gimp, &drawable_mask_intersect_proc);
   procedural_db_register (gimp, &drawable_merge_shadow_proc);
   procedural_db_register (gimp, &drawable_update_proc);
   procedural_db_register (gimp, &drawable_get_pixel_proc);
@@ -1551,7 +1553,7 @@ static ProcRecord drawable_mask_bounds_proc =
 {
   "gimp_drawable_mask_bounds",
   "Find the bounding box of the current selection in relation to the specified drawable.",
-  "This procedure returns the whether there is a selection. If there is one, the upper left and lower righthand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower righthand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
+  "This procedure returns whether there is a selection. If there is one, the upper left and lower righthand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower righthand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1). Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See gimp_drawable_mask_intersect() for a boolean return value which is more useful in most cases.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1562,6 +1564,97 @@ static ProcRecord drawable_mask_bounds_proc =
   5,
   drawable_mask_bounds_outargs,
   { { drawable_mask_bounds_invoker } }
+};
+
+static Argument *
+drawable_mask_intersect_invoker (Gimp         *gimp,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gboolean non_empty = FALSE;
+  gint32 x;
+  gint32 y;
+  gint32 width;
+  gint32 height;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  if (success)
+    non_empty = gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
+
+  return_args = procedural_db_return_args (&drawable_mask_intersect_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = non_empty;
+      return_args[2].value.pdb_int = x;
+      return_args[3].value.pdb_int = y;
+      return_args[4].value.pdb_int = width;
+      return_args[5].value.pdb_int = height;
+    }
+
+  return return_args;
+}
+
+static ProcArg drawable_mask_intersect_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  }
+};
+
+static ProcArg drawable_mask_intersect_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "non_empty",
+    "TRUE if the returned area is not empty"
+  },
+  {
+    GIMP_PDB_INT32,
+    "x",
+    "x coordinate of the upper left corner of the intersection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "y",
+    "y coordinate of the upper left corner of the intersection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "width",
+    "width of the intersection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "height",
+    "height of the intersection"
+  }
+};
+
+static ProcRecord drawable_mask_intersect_proc =
+{
+  "gimp_drawable_mask_intersect",
+  "Find the bounding box of the current selection in relation to the specified drawable.",
+  "This procedure returns whether there is an intersection between the drawable and the selection. Unlike gimp_drawable_mask_bounds(), the intersection's bounds are returned as x, y, width, height. If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
+  "Michael Natterer <mitch@gimp.org>",
+  "Michael Natterer",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  drawable_mask_intersect_inargs,
+  5,
+  drawable_mask_intersect_outargs,
+  { { drawable_mask_intersect_invoker } }
 };
 
 static Argument *
