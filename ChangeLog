@@ -1,3 +1,9 @@
+2004-06-22  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-regression.c: define timersub()
+	macro in case it's undefined. Patch by Tim Mooney, fixes 'make
+	check' on Tru64 (bug #144780).
+
 2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpcurvestool.c: added Store/Recall buttons for
