@@ -1,3 +1,12 @@
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpcolordisplaystack.[ch]: new object
+	GimpColorDisplayStack which manages a list of GimpColorDisplays.
+	(unfinished, just for others to look at).
+
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/makefile.msc: s/gimpfileselection/gimpfileentry/ 

@@ -31,6 +31,7 @@
 #include <libgimpwidgets/gimpcolorarea.h>
 #include <libgimpwidgets/gimpcolorbutton.h>
 #include <libgimpwidgets/gimpcolordisplay.h>
+#include <libgimpwidgets/gimpcolordisplaystack.h>
 #include <libgimpwidgets/gimpcolornotebook.h>
 #include <libgimpwidgets/gimpcolorscale.h>
 #include <libgimpwidgets/gimpcolorscales.h>

@@ -55,26 +55,27 @@ typedef enum
 } GimpSizeEntryUpdatePolicy;
 
 
-typedef struct _GimpButton         GimpButton;
-typedef struct _GimpChainButton    GimpChainButton;
-typedef struct _GimpColorArea      GimpColorArea;
-typedef struct _GimpColorButton    GimpColorButton;
-typedef struct _GimpColorDisplay   GimpColorDisplay;
-typedef struct _GimpColorNotebook  GimpColorNotebook;
-typedef struct _GimpColorScale     GimpColorScale;
-typedef struct _GimpColorScales    GimpColorScales;
-typedef struct _GimpColorSelector  GimpColorSelector;
-typedef struct _GimpColorSelect    GimpColorSelect;
-typedef struct _GimpColorSelection GimpColorSelection;
-typedef struct _GimpDialog         GimpDialog;
-typedef struct _GimpFileEntry      GimpFileEntry;
-typedef struct _GimpMemsizeEntry   GimpMemsizeEntry;
-typedef struct _GimpOffsetArea     GimpOffsetArea;
-typedef struct _GimpPathEditor     GimpPathEditor;
-typedef struct _GimpPickButton     GimpPickButton;
-typedef struct _GimpPixmap         GimpPixmap;
-typedef struct _GimpSizeEntry      GimpSizeEntry;
-typedef struct _GimpUnitMenu       GimpUnitMenu;
+typedef struct _GimpButton            GimpButton;
+typedef struct _GimpChainButton       GimpChainButton;
+typedef struct _GimpColorArea         GimpColorArea;
+typedef struct _GimpColorButton       GimpColorButton;
+typedef struct _GimpColorDisplay      GimpColorDisplay;
+typedef struct _GimpColorDisplayStack GimpColorDisplayStack;
+typedef struct _GimpColorNotebook     GimpColorNotebook;
+typedef struct _GimpColorScale        GimpColorScale;
+typedef struct _GimpColorScales       GimpColorScales;
+typedef struct _GimpColorSelector     GimpColorSelector;
+typedef struct _GimpColorSelect       GimpColorSelect;
+typedef struct _GimpColorSelection    GimpColorSelection;
+typedef struct _GimpDialog            GimpDialog;
+typedef struct _GimpFileEntry         GimpFileEntry;
+typedef struct _GimpMemsizeEntry      GimpMemsizeEntry;
+typedef struct _GimpOffsetArea        GimpOffsetArea;
+typedef struct _GimpPathEditor        GimpPathEditor;
+typedef struct _GimpPickButton        GimpPickButton;
+typedef struct _GimpPixmap            GimpPixmap;
+typedef struct _GimpSizeEntry         GimpSizeEntry;
+typedef struct _GimpUnitMenu          GimpUnitMenu;
 
 
 typedef void (* GimpHelpFunc) (const gchar *help_id,
