@@ -23,7 +23,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -115,7 +114,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
                                           _("Spacing:"), -1, -1,
                                           0.0, 1.0, 200.0, 1.0, 10.0, 1,
                                           FALSE, 1.0, 5000.0,
-                                          _("Percentage of width of brush"), 
+                                          _("Percentage of width of brush"),
                                           NULL));
 
   view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
@@ -212,9 +211,7 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
       gimp_container_have (GIMP_CONTAINER_EDITOR (view)->view->container,
 			   GIMP_OBJECT (viewable)))
     {
-      GimpBrush *brush;
-
-      brush = GIMP_BRUSH (viewable);
+      GimpBrush *brush = GIMP_BRUSH (viewable);
 
       spacing_sensitive = TRUE;
 
@@ -256,9 +253,7 @@ static void
 gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
 					GimpBrushFactoryView *view)
 {
-  GimpBrush *brush;
-
-  brush = GIMP_CONTAINER_EDITOR (view)->view->context->brush;
+  GimpBrush *brush = GIMP_CONTAINER_EDITOR (view)->view->context->brush;
 
   if (brush && view->change_brush_spacing)
     {

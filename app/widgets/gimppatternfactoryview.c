@@ -23,27 +23,17 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimppattern.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
 #include "gimppatternfactoryview.h"
 #include "gimppreviewrenderer.h"
-
-#include "gimp-intl.h"
-
-
-static void   gimp_pattern_factory_view_class_init (GimpPatternFactoryViewClass *klass);
-static void   gimp_pattern_factory_view_init       (GimpPatternFactoryView      *view);
-
-static GimpDataFactoryViewClass *parent_class = NULL;
 
 
 GType
@@ -56,14 +46,14 @@ gimp_pattern_factory_view_get_type (void)
       static const GTypeInfo view_info =
       {
         sizeof (GimpPatternFactoryViewClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_pattern_factory_view_class_init,
+        NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
+        NULL,           /* class_init     */
         NULL,           /* class_finalize */
-        NULL,           /* class_data */
+        NULL,           /* class_data     */
         sizeof (GimpPatternFactoryView),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_pattern_factory_view_init,
+        0,              /* n_preallocs    */
+        NULL            /* instance_init  */
       };
 
       view_type = g_type_register_static (GIMP_TYPE_DATA_FACTORY_VIEW,
@@ -72,17 +62,6 @@ gimp_pattern_factory_view_get_type (void)
     }
 
   return view_type;
-}
-
-static void
-gimp_pattern_factory_view_class_init (GimpPatternFactoryViewClass *klass)
-{
-  parent_class = g_type_class_peek_parent (klass);
-}
-
-static void
-gimp_pattern_factory_view_init (GimpPatternFactoryView *view)
-{
 }
 
 GtkWidget *
@@ -95,7 +74,6 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
 			       GimpMenuFactory  *menu_factory)
 {
   GimpPatternFactoryView *factory_view;
-  GimpContainerEditor  *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 &&
@@ -119,8 +97,6 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
     }
 
   gtk_widget_hide (GIMP_DATA_FACTORY_VIEW (factory_view)->duplicate_button);
-
-  editor = GIMP_CONTAINER_EDITOR (factory_view);
 
   return GTK_WIDGET (factory_view);
 }
