@@ -44,21 +44,22 @@ enum
 };
 
 
-static void    gimp_object_class_init       (GimpObjectClass *klass);
-static void    gimp_object_init             (GimpObject      *object);
+static void    gimp_object_class_init        (GimpObjectClass *klass);
+static void    gimp_object_init              (GimpObject      *object);
 
-static void    gimp_object_dispose          (GObject         *object);
-static void    gimp_object_finalize         (GObject         *object);
-static void    gimp_object_set_property     (GObject         *object,
-                                             guint            property_id,
-                                             const GValue    *value,
-                                             GParamSpec      *pspec);
-static void    gimp_object_get_property     (GObject         *object,
-                                             guint            property_id,
-                                             GValue          *value,
-                                             GParamSpec      *pspec);
-static gsize   gimp_object_real_get_memsize (GimpObject      *object,
-                                             gsize           *gui_size);
+static void    gimp_object_dispose           (GObject         *object);
+static void    gimp_object_finalize          (GObject         *object);
+static void    gimp_object_set_property      (GObject         *object,
+                                              guint            property_id,
+                                              const GValue    *value,
+                                              GParamSpec      *pspec);
+static void    gimp_object_get_property      (GObject         *object,
+                                              guint            property_id,
+                                              GValue          *value,
+                                              GParamSpec      *pspec);
+static gsize   gimp_object_real_get_memsize  (GimpObject      *object,
+                                              gsize           *gui_size);
+static void    gimp_object_name_normalize    (GimpObject      *object);
 
 
 static guint   object_signals[LAST_SIGNAL] = { 0 };
@@ -66,7 +67,7 @@ static guint   object_signals[LAST_SIGNAL] = { 0 };
 static GObjectClass *parent_class = NULL;
 
 
-GType 
+GType
 gimp_object_get_type (void)
 {
   static GType object_type = 0;
@@ -87,7 +88,7 @@ gimp_object_get_type (void)
       };
 
       object_type = g_type_register_static (G_TYPE_OBJECT,
-					    "GimpObject", 
+					    "GimpObject",
 					    &object_info, 0);
     }
 
@@ -141,7 +142,8 @@ gimp_object_class_init (GimpObjectClass *klass)
 static void
 gimp_object_init (GimpObject *object)
 {
-  object->name = NULL;
+  object->name       = NULL;
+  object->normalized = NULL;
 }
 
 static void
@@ -169,6 +171,14 @@ gimp_object_finalize (GObject *object)
   GimpObject *gimp_object;
 
   gimp_object = GIMP_OBJECT (object);
+
+  if (gimp_object->normalized)
+    {
+      if (gimp_object->normalized != gimp_object->name)
+        g_free (gimp_object->normalized);
+
+      gimp_object->normalized = NULL;
+    }
 
   if (gimp_object->name)
     {
@@ -221,6 +231,14 @@ gimp_object_get_property (GObject    *object,
     }
 }
 
+/**
+ * gimp_object_set_name:
+ * @object: a #GimpObject
+ * @name: the @object's new name
+ *
+ * Sets the @object's name. Takes care of freeing the old name and
+ * emitting the "name_changed" signal if the old and new name differ.
+ **/
 void
 gimp_object_set_name (GimpObject  *object,
 		      const gchar *name)
@@ -238,9 +256,15 @@ gimp_object_set_name (GimpObject  *object,
   gimp_object_name_changed (object);
 }
 
-/*  A safe version of gimp_object_set_name() that takes care
- *  of newlines and overly long names.
- */
+/**
+ * gimp_object_set_name_safe:
+ * @object: a #GimpObject
+ * @name: the @object's new name
+ *
+ * A safe version of gimp_object_set_name() that takes care of
+ * handling newlines and overly long names. The actual name set
+ * may be different to the @name you pass.
+ **/
 void
 gimp_object_set_name_safe (GimpObject  *object,
                            const gchar *name)
@@ -271,7 +295,62 @@ gimp_object_name_changed (GimpObject *object)
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
+  if (object->normalized)
+    {
+      if (object->normalized != object->name)
+        g_free (object->normalized);
+
+      object->normalized = NULL;
+    }
+
   g_signal_emit (object, object_signals[NAME_CHANGED], 0);
+}
+
+/**
+ * gimp_object_name_collate:
+ * @object1: a #GimpObject
+ * @object2: another #GimpObject
+ *
+ * Compares two object names for ordering using the linguistically
+ * correct rules for the current locale. It caches the normalized
+ * version of the object name to speed up subsequent calls.
+ *
+ * Return value: -1 if object1 compares before object2,
+ *                0 if they compare equal,
+ *                1 if object1 compares after object2.
+ **/
+gint
+gimp_object_name_collate (GimpObject *object1,
+                          GimpObject *object2)
+{
+  if (! object1->normalized)
+    gimp_object_name_normalize (object1);
+
+  if (! object2->normalized)
+    gimp_object_name_normalize (object2);
+
+  return strcoll (object1->normalized, object2->normalized);
+}
+
+static void
+gimp_object_name_normalize (GimpObject *object)
+{
+  g_return_if_fail (object->normalized == NULL);
+
+  if (object->name)
+    {
+      gchar *key = g_utf8_collate_key (object->name, -1);
+
+      if (strcmp (key, object->name))
+        {
+          object->normalized = key;
+        }
+      else
+        {
+          g_free (key);
+          object->normalized = object->name;
+        }
+    }
 }
 
 
@@ -375,3 +454,4 @@ gimp_object_real_get_memsize (GimpObject *object,
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }
+

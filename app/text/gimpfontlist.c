@@ -46,19 +46,16 @@
 #endif
 
 
-static void   gimp_font_list_class_init        (GimpFontListClass    *klass);
-static void   gimp_font_list_init              (GimpFontList         *list);
+static void   gimp_font_list_class_init   (GimpFontListClass    *klass);
+static void   gimp_font_list_init         (GimpFontList         *list);
 
-static gint   gimp_font_list_font_compare_func (gconstpointer         first,
-                                                gconstpointer         second);
+static void   gimp_font_list_add_font     (GimpFontList         *list,
+                                           PangoContext         *context,
+                                           PangoFontDescription *desc);
 
-static void   gimp_font_list_add_font          (GimpFontList         *list,
-                                                PangoContext         *context,
-                                                PangoFontDescription *desc);
-
-static void   gimp_font_list_load_names        (GimpFontList         *list,
-                                                PangoFontMap         *fontmap,
-                                                PangoContext         *context);
+static void   gimp_font_list_load_names   (GimpFontList         *list,
+                                           PangoFontMap         *fontmap,
+                                           PangoContext         *context);
 
 
 static GimpListClass *parent_class = NULL;
@@ -85,7 +82,7 @@ gimp_font_list_get_type (void)
       };
 
       list_type = g_type_register_static (GIMP_TYPE_LIST,
-					  "GimpFontList", 
+					  "GimpFontList",
 					  &list_info, 0);
     }
 
@@ -131,7 +128,7 @@ gimp_font_list_restore (GimpFontList *list)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
-  fontmap = pango_ft2_font_map_new (); 
+  fontmap = pango_ft2_font_map_new ();
   pango_ft2_font_map_set_resolution (PANGO_FT2_FONT_MAP (fontmap),
                                      list->xresolution, list->yresolution);
 
@@ -143,17 +140,9 @@ gimp_font_list_restore (GimpFontList *list)
   gimp_font_list_load_names (list, fontmap, context);
   g_object_unref (context);
 
-  gimp_list_sort (GIMP_LIST (list), gimp_font_list_font_compare_func);
+  gimp_list_sort_by_name (GIMP_LIST (list));
 
   gimp_container_thaw (GIMP_CONTAINER (list));
-}
-
-static gint
-gimp_font_list_font_compare_func (gconstpointer first,
-				  gconstpointer second)
-{
-  return g_utf8_collate (((const GimpObject *) first)->name,
-		         ((const GimpObject *) second)->name);
 }
 
 static void
@@ -195,9 +184,13 @@ gimp_font_list_make_alias (GimpFontList *list,
   PangoFontDescription *desc = pango_font_description_new ();
 
   pango_font_description_set_family (desc, family);
-  pango_font_description_set_style (desc, italic ? PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+  pango_font_description_set_style (desc,
+                                    italic ?
+                                    PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
   pango_font_description_set_variant (desc, PANGO_VARIANT_NORMAL);
-  pango_font_description_set_weight (desc, bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
+  pango_font_description_set_weight (desc,
+                                     bold ?
+                                     PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
   pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
 
   gimp_font_list_add_font (list, context, desc);
@@ -234,7 +227,8 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
 
   desc = pango_font_description_new ();
 
-  g_assert (FcPatternGetString (pattern, FC_FAMILY, 0, (FcChar8 **) &s) == FcResultMatch);
+  g_assert (FcPatternGetString (pattern,
+                                FC_FAMILY, 0, (FcChar8 **) &s) == FcResultMatch);
 
   pango_font_description_set_family (desc, s);
 
@@ -294,7 +288,7 @@ gimp_font_list_load_names (GimpFontList *list,
   pat = FcPatternCreate ();
 
   fontset = FcFontList (NULL, pat, os);
-   
+
   FcPatternDestroy (pat);
   FcObjectSetDestroy (os);
 
@@ -326,7 +320,7 @@ gimp_font_list_load_names (GimpFontList *list,
   for (i = 0; i < n_families; i++)
     {
       pango_font_family_list_faces (families[i], &faces, &n_faces);
-      
+
       for (j = 0; j < n_faces; j++)
         {
           PangoFontDescription *desc;

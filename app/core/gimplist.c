@@ -285,6 +285,17 @@ gimp_list_get_child_index (const GimpContainer *container,
   return g_list_index (list->list, (gpointer) object);
 }
 
+/**
+ * gimp_list_new:
+ * @children_type: the #GType of objects the list is going to hold
+ * @policy: the #GimpContainerPolicy for the new list
+ *
+ * Creates a new #GimpList object. Since #GimpList is a #GimpContainer
+ * implementation, it holds GimpObjects. Thus @children_type must be
+ * GIMP_TYPE_OBJECT or a type derived from it.
+ *
+ * Return value: a new #GimpList object
+ **/
 GimpContainer *
 gimp_list_new (GType                children_type,
 	       GimpContainerPolicy  policy)
@@ -303,6 +314,12 @@ gimp_list_new (GType                children_type,
   return GIMP_CONTAINER (list);
 }
 
+/**
+ * gimp_list_reverse:
+ * @list: a #GimpList
+ *
+ * Reverses the order of elements in a #GimpList.
+ **/
 void
 gimp_list_reverse (GimpList *list)
 {
@@ -316,6 +333,14 @@ gimp_list_reverse (GimpList *list)
     }
 }
 
+/**
+ * gimp_list_sort:
+ * @list: a #GimpList
+ * @compare_func: a #GCompareFunc
+ *
+ * Sorts the elements of a #GimpList according to the given @compare_func.
+ * See g_list_sort() for a detailed description of this function.
+ **/
 void
 gimp_list_sort (GimpList     *list,
                 GCompareFunc  compare_func)
@@ -329,6 +354,20 @@ gimp_list_sort (GimpList     *list,
       list->list = g_list_sort (list->list, compare_func);
       gimp_container_thaw (GIMP_CONTAINER (list));
     }
+}
+
+/**
+ * gimp_list_sort_by_name:
+ * @list: a #GimpList
+ *
+ * Sorts the #GimpObject elements of a #GimpList by their names.
+ **/
+void
+gimp_list_sort_by_name (GimpList *list)
+{
+  g_return_if_fail (GIMP_IS_LIST (list));
+
+  gimp_list_sort (list, (GCompareFunc) gimp_object_name_collate);
 }
 
 void

@@ -56,6 +56,7 @@ GimpContainer * gimp_list_new           (GType                children_type,
 void            gimp_list_reverse       (GimpList            *list);
 void            gimp_list_sort          (GimpList            *list,
                                          GCompareFunc         compare_func);
+void            gimp_list_sort_by_name  (GimpList            *list);
 void            gimp_list_uniquefy_name (GimpList            *gimp_list,
                                          GimpObject          *object,
                                          gboolean             use_set_name);

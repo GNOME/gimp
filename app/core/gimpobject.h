@@ -35,6 +35,9 @@ struct _GimpObject
   GObject  parent_instance;
 
   gchar   *name;
+
+  /*<  private  >*/
+  gchar   *normalized;
 };
 
 struct _GimpObjectClass
@@ -59,6 +62,9 @@ const gchar * gimp_object_get_name      (const GimpObject *object);
 void          gimp_object_set_name_safe (GimpObject       *object,
                                          const gchar      *name);
 void          gimp_object_name_changed  (GimpObject       *object);
+
+gint          gimp_object_name_collate  (GimpObject       *object1,
+                                         GimpObject       *object2);
 
 gsize         gimp_object_get_memsize   (GimpObject       *object,
                                          gsize            *gui_size);

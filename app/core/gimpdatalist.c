@@ -84,7 +84,7 @@ static void
 gimp_data_list_class_init (GimpDataListClass *klass)
 {
   GimpContainerClass *container_class;
-  
+
   container_class = GIMP_CONTAINER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -197,6 +197,6 @@ gimp_data_list_data_compare_func (gconstpointer first,
   if (first_data->internal != second_data->internal)
     return first_data->internal ? -1 : 1;
 
-  return strcmp (((const GimpObject *) first)->name,
-		 ((const GimpObject *) second)->name);
+  return gimp_object_name_collate ((GimpObject *) first,
+                                   (GimpObject *) second);
 }

@@ -1,3 +1,19 @@
+2003-10-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpobject.[ch]: added new function
+	gimp_object_name_collate() which compares two object names for
+	ordering using the linguistically correct rules for the current
+	locale and does some caching to speed up subsequent calls.
+
+	* app/core/gimpdatalist.c (gimp_data_list_data_compare_func): use
+	gimp_object_name_collate() from here.
+
+	* app/core/gimplist.[ch]: added convenience function
+	gimp_list_sort_by_name.
+
+	* app/text/gimpfontlist.c (gimp_font_list_restore): use
+	gimp_list_sort_by_name() instead of g_utf8_collate.
+
 2003-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.h: added GIMP_VIEWABLE_MAX_BUTTON_SIZE
