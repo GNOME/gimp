@@ -44,8 +44,8 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1  1997/11/24 22:03:20  sopwith
- *   Initial revision
+ *   Revision 1.1.1.1  1997/11/24 22:03:20  sopwith
+ *   Let's try this import one last time.
  *
  *   Revision 1.2  1997/09/27 10:30:27  nobody
  *   Boatload of changes from 0.99.11 to 0.99.12.  For details, see the ChangeLog :-)

@@ -22,8 +22,8 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1  1997/11/24 22:03:36  sopwith
- *   Initial revision
+ *   Revision 1.1.1.1  1997/11/24 22:03:36  sopwith
+ *   Let's try this import one last time.
  *
  *   Revision 1.3  1997/09/30 09:16:02  nobody
  *   work I men it...

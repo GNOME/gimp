@@ -37,8 +37,8 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1  1997/11/24 22:04:45  sopwith
- *   Initial revision
+ *   Revision 1.1.1.1  1997/11/24 22:04:45  sopwith
+ *   Let's try this import one last time.
  *
  *   Revision 1.4  1997/11/18 03:04:24  nobody
  *   fixed ugly comment-bugs introduced by evil darkwing

@@ -40,8 +40,8 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1  1997/11/24 22:03:37  sopwith
- *   Initial revision
+ *   Revision 1.1.1.1  1997/11/24 22:03:37  sopwith
+ *   Let's try this import one last time.
  *
  *   Revision 1.5  1997/10/25 07:02:34  nobody
  *   Final patches for the 0.99.15 release.  Please see the ChangeLog for
