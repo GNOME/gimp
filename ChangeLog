@@ -1,5 +1,8 @@
 2005-03-04  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/metadata/xmpdump.c: test program that tries to extract
+	XMP metadata from files (image files, AI files, PDF documents...)
+
 	* menus/image-menu.xml.in: Added placeholder for file properties.
 
 	* plug-ins/metadata/.cvsignore
