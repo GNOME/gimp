@@ -28,35 +28,22 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpdock.h"
-
 #include "display/gimpdisplay.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
+#include "actions.h"
 #include "tools-commands.h"
-
-
-#define return_if_no_gimp(gimp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gimp = ((GimpDisplay *) data)->gimage->gimp; \
-  else if (GIMP_IS_GIMP (data)) \
-    gimp = data; \
-  else if (GIMP_IS_DOCK (data)) \
-    gimp = ((GimpDock *) data)->context->gimp; \
-  else \
-    gimp = NULL; \
-  if (! gimp) \
-    return
 
 
 void
 tools_default_colors_cmd_callback (GtkAction *action,
 				   gpointer   data)
 {
-  Gimp *gimp;
-  return_if_no_gimp (gimp, data);
+  Gimp *gimp = action_data_get_gimp (data);
+  if (! gimp)
+    return;
 
   gimp_context_set_default_colors (gimp_get_user_context (gimp));
 }
@@ -65,8 +52,9 @@ void
 tools_swap_colors_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
-  Gimp *gimp;
-  return_if_no_gimp (gimp, data);
+  Gimp *gimp = action_data_get_gimp (data);
+  if (! gimp)
+    return;
 
   gimp_context_swap_colors (gimp_get_user_context (gimp));
 }
@@ -80,7 +68,10 @@ tools_select_cmd_callback (GtkAction   *action,
   GimpToolInfo *tool_info;
   GimpContext  *context;
   GimpDisplay  *gdisp;
-  return_if_no_gimp (gimp, data);
+
+  gimp = action_data_get_gimp (data);
+  if (! gimp)
+    return;
 
   tool_info = (GimpToolInfo *)
     gimp_container_get_child_by_name (gimp->tool_info_list, value);

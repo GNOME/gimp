@@ -54,6 +54,7 @@
 #include "gui/grid-dialog.h"
 #include "gui/resize-dialog.h"
 
+#include "actions.h"
 #include "image-commands.h"
 
 #include "gimp-intl.h"
@@ -68,26 +69,12 @@ typedef struct
 
 
 #define return_if_no_display(gdisp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gdisp = data; \
-  else if (GIMP_IS_GIMP (data)) \
-    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
-  else \
-    gdisp = NULL; \
+  gdisp = action_data_get_display (data); \
   if (! gdisp) \
     return
 
 #define return_if_no_image(gimage,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gimage = ((GimpDisplay *) data)->gimage; \
-  else if (GIMP_IS_GIMP (data)) \
-    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
-  else \
-    gimage = NULL; \
+  gimage = action_data_get_image (data); \
   if (! gimage) \
     return
 

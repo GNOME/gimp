@@ -29,9 +29,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "qmask-actions.h"
 #include "qmask-commands.h"
 
@@ -100,23 +98,9 @@ void
 qmask_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpDisplay      *gdisp  = NULL;
-  GimpDisplayShell *shell  = NULL;
-  GimpImage        *gimage = NULL;
+  GimpImage *gimage;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
-
-  if (gdisp)
-    gimage = gdisp->gimage;
+  gimage = action_data_get_image (data);
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active))

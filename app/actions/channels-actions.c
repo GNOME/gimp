@@ -30,11 +30,8 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcomponenteditor.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemtreeview.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "channels-actions.h"
 #include "channels-commands.h"
 
@@ -128,7 +125,7 @@ void
 channels_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *gimage    = NULL;
+  GimpImage   *gimage;
   GimpChannel *channel   = NULL;
   gboolean     fs        = FALSE;
   gboolean     component = FALSE;
@@ -147,12 +144,7 @@ channels_actions_update (GimpActionGroup *group,
     }
   else
     {
-      if (GIMP_IS_ITEM_TREE_VIEW (data))
-        gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
-      else if (GIMP_IS_DISPLAY_SHELL (data))
-        gimage = GIMP_DISPLAY_SHELL (data)->gdisp->gimage;
-      else if (GIMP_IS_DISPLAY (data))
-        gimage = GIMP_DISPLAY (data)->gimage;
+      gimage = action_data_get_image (data);
 
       if (gimage)
         {

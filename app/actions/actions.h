@@ -23,8 +23,13 @@
 extern GimpActionFactory *global_action_factory;
 
 
-void   actions_init (Gimp *gimp);
-void   actions_exit (Gimp *gimp);
+void          actions_init            (Gimp     *gimp);
+void          actions_exit            (Gimp     *gimp);
+
+Gimp        * action_data_get_gimp    (gpointer  data);
+GimpImage   * action_data_get_image   (gpointer  data);
+GimpDisplay * action_data_get_display (gpointer  data);
+GtkWidget   * action_data_get_widget  (gpointer  data);
 
 
 #endif /* __ACTIONS_H__ */

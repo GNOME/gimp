@@ -27,18 +27,17 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-qmask.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "actions.h"
 #include "qmask-commands.h"
 
 #include "gimp-intl.h"
@@ -57,30 +56,12 @@ struct _EditQmaskOptions
 
 
 #define return_if_no_display(gdisp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gdisp = data; \
-  else if (GIMP_IS_DISPLAY_SHELL (data)) \
-    gdisp = ((GimpDisplayShell *) data)->gdisp; \
-  else if (GIMP_IS_GIMP (data)) \
-    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
-  else \
-    gdisp = NULL; \
+  gdisp = action_data_get_display (data); \
   if (! gdisp) \
     return
 
 #define return_if_no_image(gimage,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gimage = ((GimpDisplay *) data)->gimage; \
-  else if (GIMP_IS_DISPLAY_SHELL (data)) \
-    gimage = ((GimpDisplayShell *) data)->gdisp->gimage; \
-  else if (GIMP_IS_GIMP (data)) \
-    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
-  else \
-    gimage = NULL; \
+  gimage = action_data_get_image (data); \
   if (! gimage) \
     return
 

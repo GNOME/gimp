@@ -25,8 +25,18 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
 #include "widgets/gimpactionfactory.h"
+#include "widgets/gimpdock.h"
+#include "widgets/gimpimageeditor.h"
+#include "widgets/gimpitemtreeview.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+
+#include "gui/dialogs.h"
 
 #include "brushes-actions.h"
 #include "buffers-actions.h"
@@ -201,3 +211,82 @@ actions_exit (Gimp *gimp)
   g_object_unref (global_action_factory);
   global_action_factory = NULL;
 }
+
+Gimp *
+action_data_get_gimp (gpointer data)
+{
+  if (! data)
+    return NULL;
+
+  if (GIMP_IS_DISPLAY (data))
+    return ((GimpDisplay *) data)->gimage->gimp;
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    return ((GimpDisplayShell *) data)->gdisp->gimage->gimp;
+  else if (GIMP_IS_ITEM_TREE_VIEW (data))
+    return ((GimpItemTreeView *) data)->gimage->gimp;
+  else if (GIMP_IS_IMAGE_EDITOR (data))
+    return ((GimpImageEditor *) data)->gimage->gimp;
+  else if (GIMP_IS_GIMP (data))
+    return data;
+  else if (GIMP_IS_DOCK (data))
+    return ((GimpDock *) data)->context->gimp;
+
+  return NULL;
+}
+
+GimpImage *
+action_data_get_image (gpointer data)
+{
+  if (! data)
+    return NULL;
+
+  if (GIMP_IS_DISPLAY (data))
+    return ((GimpDisplay *) data)->gimage;
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    return ((GimpDisplayShell *) data)->gdisp->gimage;
+  else if (GIMP_IS_ITEM_TREE_VIEW (data))
+    return ((GimpItemTreeView *) data)->gimage;
+  else if (GIMP_IS_IMAGE_EDITOR (data))
+    return ((GimpImageEditor *) data)->gimage;
+  else if (GIMP_IS_GIMP (data))
+    return gimp_context_get_image (gimp_get_user_context (data));
+  else if (GIMP_IS_DOCK (data))
+    return gimp_context_get_image (((GimpDock *) data)->context);
+
+  return NULL;
+}
+
+GimpDisplay *
+action_data_get_display (gpointer data)
+{
+  if (! data)
+    return NULL;
+
+  if (GIMP_IS_DISPLAY (data))
+    return data;
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    return ((GimpDisplayShell *) data)->gdisp;
+  else if (GIMP_IS_GIMP (data))
+    return gimp_context_get_display (gimp_get_user_context (data));
+  else if (GIMP_IS_DOCK (data))
+    return gimp_context_get_display (((GimpDock *) data)->context);
+
+  return NULL;
+}
+
+GtkWidget *
+action_data_get_widget (gpointer data)
+{
+  if (! data)
+    return NULL;
+
+  if (GIMP_IS_DISPLAY (data))
+    return ((GimpDisplay *) data)->shell;
+  else if (GIMP_IS_GIMP (data))
+    return dialogs_get_toolbox ();
+  else if (GTK_IS_WIDGET (data))
+    return data;
+
+  return NULL;
+}
+

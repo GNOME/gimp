@@ -36,9 +36,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "file-actions.h"
 #include "file-commands.h"
 
@@ -173,38 +171,23 @@ void
 file_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay      *gdisp    = NULL;
-  GimpDisplayShell *shell    = NULL;
-  GimpImage        *gimage   = NULL;
-  GimpDrawable     *drawable = NULL;
+  GimpImage    *gimage   = NULL;
+  GimpDrawable *drawable = NULL;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
+  gimage = action_data_get_image (data);
 
-  if (gdisp)
-    {
-      gimage = gdisp->gimage;
-
-      drawable = gimp_image_active_drawable (gimage);
-    }
+  if (gimage)
+    drawable = gimp_image_active_drawable (gimage);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-save",             gdisp && drawable);
-  SET_SENSITIVE ("file-save-as",          gdisp && drawable);
-  SET_SENSITIVE ("file-save-a-copy",      gdisp && drawable);
-  SET_SENSITIVE ("file-save-as-template", gdisp);
-  SET_SENSITIVE ("file-revert",           gdisp && GIMP_OBJECT (gimage)->name);
-  SET_SENSITIVE ("file-close",            gdisp);
+  SET_SENSITIVE ("file-save",             gimage && drawable);
+  SET_SENSITIVE ("file-save-as",          gimage && drawable);
+  SET_SENSITIVE ("file-save-a-copy",      gimage && drawable);
+  SET_SENSITIVE ("file-save-as-template", gimage);
+  SET_SENSITIVE ("file-revert",           gimage && GIMP_OBJECT (gimage)->name);
+  SET_SENSITIVE ("file-close",            gimage);
 
 #undef SET_SENSITIVE
 }

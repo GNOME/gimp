@@ -28,7 +28,6 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -39,11 +38,8 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemtreeview.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "plug-in-actions.h"
 #include "plug-in-commands.h"
 
@@ -135,16 +131,11 @@ void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage     *gimage = NULL;
+  GimpImage     *gimage;
   GimpImageType  type   = -1;
   GSList        *list;
 
-  if (GIMP_IS_ITEM_TREE_VIEW (data))
-    gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
-  else if (GIMP_IS_DISPLAY_SHELL (data))
-    gimage = GIMP_DISPLAY_SHELL (data)->gdisp->gimage;
-  else if (GIMP_IS_DISPLAY (data))
-    gimage = GIMP_DISPLAY (data)->gimage;
+  gimage = action_data_get_image (data);
 
   if (gimage)
     {

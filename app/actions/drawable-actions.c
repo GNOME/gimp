@@ -33,9 +33,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "drawable-actions.h"
 #include "drawable-commands.h"
 
@@ -119,29 +117,16 @@ void
 drawable_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpDisplay      *gdisp      = NULL;
-  GimpDisplayShell *shell      = NULL;
-  GimpImage        *gimage     = NULL;
-  GimpDrawable     *drawable   = NULL;
-  gboolean          is_rgb     = FALSE;
-  gboolean          is_gray    = FALSE;
-  gboolean          is_indexed = FALSE;
+  GimpImage    *gimage;
+  GimpDrawable *drawable   = NULL;
+  gboolean      is_rgb     = FALSE;
+  gboolean      is_gray    = FALSE;
+  gboolean      is_indexed = FALSE;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
+  gimage = action_data_get_image (data);
 
-  if (gdisp)
+  if (gimage)
     {
-      gimage = gdisp->gimage;
-
       drawable = gimp_image_active_drawable (gimage);
 
       if (drawable)

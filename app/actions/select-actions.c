@@ -31,9 +31,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-
+#include "actions.h"
 #include "select-actions.h"
 #include "select-commands.h"
 #include "tools-commands.h"
@@ -134,29 +132,16 @@ void
 select_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
-  GimpDisplay      *gdisp   = NULL;
-  GimpDisplayShell *shell   = NULL;
-  GimpImage        *gimage  = NULL;
-  GimpVectors      *vectors = NULL;
-  gboolean          fs      = FALSE;
-  gboolean          lp      = FALSE;
-  gboolean          sel     = FALSE;
+  GimpImage   *gimage;
+  GimpVectors *vectors = NULL;
+  gboolean     fs      = FALSE;
+  gboolean     lp      = FALSE;
+  gboolean     sel     = FALSE;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
+  gimage = action_data_get_image (data);
 
-  if (gdisp)
+  if (gimage)
     {
-      gimage = gdisp->gimage;
-
       fs  = (gimp_image_floating_sel (gimage) != NULL);
       lp  = ! gimp_image_is_empty (gimage);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));

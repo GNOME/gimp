@@ -36,11 +36,7 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-selection.h"
-
+#include "actions.h"
 #include "edit-actions.h"
 #include "edit-commands.h"
 
@@ -190,27 +186,14 @@ void
 edit_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay      *gdisp    = NULL;
-  GimpDisplayShell *shell    = NULL;
-  GimpImage        *gimage   = NULL;
-  GimpDrawable     *drawable = NULL;
-  gboolean          sel      = FALSE;
+  GimpImage    *gimage;
+  GimpDrawable *drawable = NULL;
+  gboolean      sel      = FALSE;
 
-  if (GIMP_IS_DISPLAY_SHELL (data))
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-  else if (GIMP_IS_DISPLAY (data))
-    {
-      gdisp = GIMP_DISPLAY (data);
-      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-    }
+  gimage = action_data_get_image (data);
 
-  if (gdisp)
+  if (gimage)
     {
-      gimage = gdisp->gimage;
-
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
       drawable = gimp_image_active_drawable (gimage);
@@ -225,7 +208,7 @@ edit_actions_update (GimpActionGroup *group,
     gchar *undo_name = NULL;
     gchar *redo_name = NULL;
 
-    if (gdisp && gimp_image_undo_is_enabled (gimage))
+    if (gimage && gimp_image_undo_is_enabled (gimage))
       {
         GimpUndo *undo;
         GimpUndo *redo;
@@ -256,10 +239,10 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("edit-cut",        drawable);
   SET_SENSITIVE ("edit-copy",       drawable);
-  SET_SENSITIVE ("edit-paste",      gdisp && group->gimp->global_buffer);
-  SET_SENSITIVE ("edit-paste-into", gdisp && group->gimp->global_buffer);
+  SET_SENSITIVE ("edit-paste",      gimage && group->gimp->global_buffer);
+  SET_SENSITIVE ("edit-paste-into", gimage && group->gimp->global_buffer);
 
-  SET_SENSITIVE ("edit-named-cut",  drawable);
+  SET_SENSITIVE ("edit-named-cut",   drawable);
   SET_SENSITIVE ("edit-named-paste", drawable);
 
   SET_SENSITIVE ("edit-clear",        drawable);

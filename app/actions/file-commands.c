@@ -39,7 +39,6 @@
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
-#include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
@@ -53,6 +52,7 @@
 #include "gui/file-save-dialog.h"
 #include "gui/menus.h"
 
+#include "actions.h"
 #include "file-commands.h"
 
 #include "gimp-intl.h"
@@ -62,38 +62,17 @@
 
 
 #define return_if_no_gimp(gimp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gimp = ((GimpDisplay *) data)->gimage->gimp; \
-  else if (GIMP_IS_GIMP (data)) \
-    gimp = data; \
-  else if (GIMP_IS_DOCK (data)) \
-    gimp = ((GimpDock *) data)->context->gimp; \
-  else \
-    gimp = NULL; \
+  gimp = action_data_get_gimp (data); \
   if (! gimp) \
     return
 
 #define return_if_no_display(gdisp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gdisp = data; \
-  else if (GIMP_IS_GIMP (data)) \
-    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
-  else \
-    gdisp = NULL; \
+  gdisp = action_data_get_display (data); \
   if (! gdisp) \
     return
 
 #define return_if_no_widget(widget,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    widget = ((GimpDisplay *) data)->shell; \
-  else if (GIMP_IS_GIMP (data)) \
-    widget = dialogs_get_toolbox (); \
-  else if (GIMP_IS_DOCK (data)) \
-    widget = data; \
-  else \
-    widget = NULL; \
+  widget = action_data_get_widget (data); \
   if (! widget) \
     return
 

@@ -45,7 +45,6 @@
 
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpitemtreeview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -54,26 +53,16 @@
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
-#include "gui/dialogs.h"
 #include "gui/stroke-dialog.h"
 
+#include "actions.h"
 #include "vectors-commands.h"
 
 #include "gimp-intl.h"
 
 
 #define return_if_no_image(gimage,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gimage = ((GimpDisplay *) data)->gimage; \
-  else if (GIMP_IS_GIMP (data)) \
-    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gimage = gimp_context_get_image (((GimpDock *) data)->context); \
-  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
-    gimage = ((GimpItemTreeView *) data)->gimage; \
-  else \
-    gimage = NULL; \
-  \
+  gimage = action_data_get_image (data); \
   if (! gimage) \
     return
 
@@ -84,16 +73,7 @@
     return
 
 #define return_if_no_widget(widget,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    widget = ((GimpDisplay *) data)->shell; \
-  else if (GIMP_IS_GIMP (data)) \
-    widget = dialogs_get_toolbox (); \
-  else if (GIMP_IS_DOCK (data)) \
-    widget = data; \
-  else if (GIMP_IS_ITEM_TREE_VIEW (data)) \
-    widget = data; \
-  else \
-    widget = NULL; \
+  widget = action_data_get_widget (data); \
   if (! widget) \
     return
 
@@ -176,9 +156,10 @@ vectors_duplicate_cmd_callback (GtkAction *action,
   GimpVectors *new_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (active_vectors),
-                                                   G_TYPE_FROM_INSTANCE (active_vectors),
-                                                   TRUE));
+  new_vectors =
+    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (active_vectors),
+                                       G_TYPE_FROM_INSTANCE (active_vectors),
+                                       TRUE));
   gimp_image_add_vectors (gimage, new_vectors, -1);
   gimp_image_flush (gimage);
 }

@@ -25,7 +25,6 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -33,24 +32,10 @@
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc.h"
 
-#include "widgets/gimpdock.h"
-
 #include "display/gimpdisplay.h"
 
+#include "actions.h"
 #include "plug-in-commands.h"
-
-
-#define return_if_no_display(gdisp,data) \
-  if (GIMP_IS_DISPLAY (data)) \
-    gdisp = data; \
-  else if (GIMP_IS_GIMP (data)) \
-    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
-  else if (GIMP_IS_DOCK (data)) \
-    gdisp = gimp_context_get_display (((GimpDock *) data)->context); \
-  else \
-    gdisp = NULL; \
-  if (! gdisp) \
-    return
 
 
 void
@@ -66,13 +51,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
   gint           argc;
   GimpImageType  drawable_type = GIMP_RGB_IMAGE;
 
-  if (GIMP_IS_DISPLAY (data))
-    gimp = ((GimpDisplay *) data)->gimage->gimp;
-  else if (GIMP_IS_GIMP (data))
-    gimp = data;
-  else if (GIMP_IS_DOCK (data))
-    gimp = ((GimpDock *) data)->context->gimp;
-  else
+  gimp = action_data_get_gimp (data);
+  if (! gimp)
     return;
 
   proc_rec = &proc_def->db_info;
@@ -98,9 +78,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
       if (proc_rec->num_args >= 2 &&
           proc_rec->args[1].arg_type == GIMP_PDB_IMAGE)
         {
-          GimpDisplay *gdisplay;
-
-          gdisplay = gimp_context_get_display (gimp_get_user_context (gimp));
+          GimpDisplay *gdisplay = action_data_get_display (data);
 
           if (gdisplay)
             {
@@ -169,10 +147,12 @@ plug_in_repeat_cmd_callback (GtkAction *action,
   GimpDisplay  *gdisp;
   GimpDrawable *drawable;
   gboolean      interactive;
-  return_if_no_display (gdisp, data);
+
+  gdisp = action_data_get_display (data);
+  if (! gdisp)
+    return;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
-
   if (! drawable)
     return;
 

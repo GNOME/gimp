@@ -24,14 +24,7 @@
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-
-#include "widgets/gimpdock.h"
-
-#include "display/gimpdisplay.h"
-
-#include "gui/dialogs.h"
-
+#include "actions.h"
 #include "help-commands.h"
 
 
@@ -46,14 +39,7 @@ void
 help_context_help_cmd_callback (GtkAction *action,
 				gpointer   data)
 {
-  GtkWidget *widget = NULL;
-
-  if (GIMP_IS_GIMP (data))
-    widget = dialogs_get_toolbox ();
-  else if (GIMP_IS_DISPLAY (data))
-    widget = GIMP_DISPLAY (data)->shell;
-  else if (GIMP_IS_DOCK (data))
-    widget = data;
+  GtkWidget *widget = action_data_get_widget (data);
 
   if (widget)
     gimp_context_help (widget);

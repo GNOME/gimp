@@ -1,3 +1,34 @@
+2004-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/actions.[ch]: added some utility functions to get a
+	Gimp, GimpImage, GimpDisplay and GtkWidget from the "data" pointer
+	passed to action callbacks.
+
+	* app/actions/channels-actions.c
+	* app/actions/channels-commands.c
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.c
+	* app/actions/edit-actions.c
+	* app/actions/edit-commands.c
+	* app/actions/file-actions.c
+	* app/actions/file-commands.c
+	* app/actions/help-commands.c
+	* app/actions/image-actions.c
+	* app/actions/image-commands.c
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.c
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.c
+	* app/actions/qmask-actions.c
+	* app/actions/qmask-commands.c
+	* app/actions/select-actions.c
+	* app/actions/select-commands.c
+	* app/actions/tools-commands.c
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.c
+	* app/actions/view-commands.c: use the new functions instead of
+	duplicating insane macros and if() constructs over and over again.
+
 2004-05-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c: use a GimpFrame for
