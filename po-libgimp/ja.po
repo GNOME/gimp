@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-12 08:33+0900\n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-09-10 21:52+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -194,6 +194,11 @@ msgstr ""
 "(%s \"%s\")\n"
 "のようなエントリをあなたの %s ファイルに\n"
 "追加する必要があります."
+
+#: libgimp/gimpmiscui.c:556
+#, fuzzy
+msgid "Parameter Settings"
+msgstr "パターン選択"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -382,83 +387,83 @@ msgstr ""
 "eyedropper をクリックし, スクリーン上のどこかをクリックしてその場所の色を選択"
 "します."
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "固定"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "複製(_D)"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "リンク済み"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "新規にペースト"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "選択領域内にペースト"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "リセット(_R)"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "可視"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "文字間隔(_E)"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "行間隔(_I)"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "サイズ変更(_R)"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
 msgid "_Scale"
 msgstr "拡大縮小(_S)"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:256
 msgid "Crop"
 msgstr "切り抜き"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:274
 msgid "_Transform"
 msgstr "変換"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Rotate"
 msgstr "回転(_R)"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Shear"
 msgstr "せん断変形(_S)"
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "詳細設定..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "単位選択"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "単位"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "倍率"
 

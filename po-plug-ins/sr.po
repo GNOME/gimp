@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-04 13:25+0200\n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-10-04 13:47+0200\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiangnome-listaL@nongnu.org>\n"
@@ -304,7 +304,9 @@ msgstr "Користи косинусну функцију за овај део 
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
-msgstr "Користи линеарно пресликавање уместо тригонометријске функције за овај канал боје"
+msgstr ""
+"Користи линеарно пресликавање уместо тригонометријске функције за овај канал "
+"боје"
 
 #: plug-ins/FractalExplorer/Dialogs.c:966
 #: plug-ins/FractalExplorer/Dialogs.c:1007
@@ -412,7 +414,7 @@ msgstr ""
 #: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:879
-#: plug-ins/common/psd.c:1711 plug-ins/common/psp.c:1489
+#: plug-ins/common/psd.c:1716 plug-ins/common/psp.c:1489
 #: plug-ins/common/sunras.c:393 plug-ins/common/svg.c:253
 #: plug-ins/common/svg.c:648 plug-ins/common/tga.c:425
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:730
@@ -1122,7 +1124,7 @@ msgstr ""
 #: plug-ins/common/jpeg.c:780 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
-#: plug-ins/common/ps.c:885 plug-ins/common/psd.c:1715
+#: plug-ins/common/ps.c:885 plug-ins/common/psd.c:1720
 #: plug-ins/common/sunras.c:444 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:432
@@ -1158,7 +1160,7 @@ msgstr ""
 #: plug-ins/common/jpeg.c:935 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
-#: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2101
+#: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2106
 #: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
 #: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
@@ -10842,7 +10844,9 @@ msgstr "Подешавање штампача"
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
-msgstr "Изаберите име штампача (не врсту или модел штампача) на који желите да штампате"
+msgstr ""
+"Изаберите име штампача (не врсту или модел штампача) на који желите да "
+"штампате"
 
 #.
 #. * Setup printer button
@@ -10855,7 +10859,9 @@ msgstr "Подесите штампач..."
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
-msgstr "Изаберите модел штампача, PPD датотеку и наредбу којом се штампа на овај штампач"
+msgstr ""
+"Изаберите модел штампача, PPD датотеку и наредбу којом се штампа на овај "
+"штампач"
 
 #.
 #. * New printer button
@@ -10868,7 +10874,9 @@ msgstr "Нови штампач..."
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
-msgstr "Одредите нови логички штампач. Ово се може користити за именовање скупа подешавања која желите да сачувате за наредне употребе."
+msgstr ""
+"Одредите нови логички штампач. Ово се може користити за именовање скупа "
+"подешавања која желите да сачувате за наредне употребе."
 
 #: plug-ins/print/gimp_main_window.c:985
 msgid "Size of paper that you wish to print to"
@@ -10930,7 +10938,9 @@ msgstr "Поставите размеру (величину) слике"
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
-msgstr "Изаберите да ли се размера узима као постотак доступне величине странице или као број излазних тачака по инчу"
+msgstr ""
+"Изаберите да ли се размера узима као постотак доступне величине странице или "
+"као број излазних тачака по инчу"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid "Percent"
@@ -11031,7 +11041,9 @@ msgstr "Фотографија"
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
-msgstr "Најспорије, али најтачније и најбоље боје за слике и фотографије са непрекидним прелазом боја"
+msgstr ""
+"Најспорије, али најтачније и најбоље боје за слике и фотографије са "
+"непрекидним прелазом боја"
 
 #: plug-ins/print/gimp_main_window.c:1404
 msgid "Output Type:"

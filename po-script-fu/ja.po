@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-13 12:49+0900\n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2003-09-12 18:36+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -149,11 +149,13 @@ msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/拡張/Script-Fu/コンソール(_C)..."
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/拡張/Script-Fu/サーバ(_S)..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -161,7 +163,8 @@ msgid "Re-read all available scripts"
 msgstr "全てのスクリプトを再読み込み"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み(_R)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2147,8 +2150,9 @@ msgid "Whirl Amount"
 msgstr "回転量"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻 (タイル化可能)(_S)..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻タイル(_T)..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2330,6 +2334,19 @@ msgstr "糸強度"
 msgid "Thread Length"
 msgstr "糸の長さ"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr "<Toolbox>/拡張/Web ブラウザ/プラグイン登録所"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Script-Fu/影/Xach 効果(_X)..."
@@ -2366,73 +2383,56 @@ msgstr "ハイライト X オフセット"
 msgid "Highlight Y Offset"
 msgstr "ハイライト Y オフセット"
 
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/拡張/Web ブラウザ/開発者向け FAQ"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/拡張/Script-Fu/パターン/渦巻 (タイル化可能)(_S)..."
 
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP のバグ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/開発者向け FAQ"
 
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP マニュアル"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP のバグ"
 
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP ニュース"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP マニュアル"
 
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP チュートリアル"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP ニュース"
 
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/関連文書"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP チュートリアル"
 
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/ダウンロード"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/関連文書"
 
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GIMP 利用作品"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/ダウンロード"
 
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GIMP 利用作品"
 
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/リンク"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GTK"
 
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/メーリングリスト"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/リンク"
 
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/リソース"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/メーリングリスト"
 
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/リソース"
 
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP.ORG/GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP を理解しよう"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP-Savvy.com"
 
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/拡張/Web ブラウザ/プラグイン登録所"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/GIMP を理解しよう"
 
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザ/利用者向け FAQ"
 
 #~ msgid "Border"
 #~ msgstr "枠"

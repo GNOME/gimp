@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -197,6 +197,11 @@ msgstr ""
 "(%s \"%s\")\n"
 "לקובץ %s שלך."
 
+#: libgimp/gimpmiscui.c:556
+#, fuzzy
+msgid "Parameter Settings"
+msgstr "בחירת דוגמה"
+
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
 msgstr "בחירת דוגמה"
@@ -383,83 +388,83 @@ msgid ""
 msgstr ""
 "יש ללחוץ על הטפטפת, ואז ללחוץ על צבע במקום כלשהו על המסך כדי לבחור בצבע זה."
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "עוגן"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_שכפול"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "מקושר"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "הדבק כחדש"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "הדבק לתוך"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_אתחול"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "נראה"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "_ריווח אותיות"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "ריווח _שורות"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "שינוי _גודל"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
 msgid "_Scale"
 msgstr "שינוי _קנה מידה"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:256
 msgid "Crop"
 msgstr "גזיזה"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:274
 msgid "_Transform"
 msgstr "_עיבוד"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Rotate"
 msgstr "_סיבוב"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Shear"
 msgstr "_חתיכה"
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "עוד..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "בחירת יחידה"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "יחידה"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "יחס"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -193,6 +193,11 @@ msgid ""
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
+
+#: libgimp/gimpmiscui.c:556
+#, fuzzy
+msgid "Parameter Settings"
+msgstr "Utvalg for enhet"
 
 #: libgimp/gimppatternmenu.c:115
 #, fuzzy
@@ -382,83 +387,83 @@ msgstr ""
 "Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
 "for å velge denne fargen."
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Anker"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Duplikat"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Lenket"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Lim inn som nytt"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Lim inn i"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Nullstill"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "M_ellomrom mellom bokstaver"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "Mellomrom mellom l_injer"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:256
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:274
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Shear"
 msgstr "_Klipp"
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "Utvalg for enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "Faktor"
 

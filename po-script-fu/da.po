@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:55+0200\n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2002-12-15 18:51+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -161,12 +161,12 @@ msgstr "Tjenestelogfil:"
 
 #: plug-ins/script-fu/script-fu.c:120
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Udvidelser/Script-Fu/Konsol..."
 
 #: plug-ins/script-fu/script-fu.c:145
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Udvidelser/Script-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -175,7 +175,7 @@ msgstr "Genindlæs alle tilgængelige programmer"
 
 #: plug-ins/script-fu/script-fu.c:274
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Udvidelser/Script-Fu/Genopfrisk"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2302,11 +2302,10 @@ msgstr "<Toolbox>/Udvidelser/Script-Fu/Mønstre/Hvirvelflise..."
 msgid "Whirl Amount"
 msgstr "Omdrejningsgrad"
 
-# genererer sådan nogle krummelureagtige tingester
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Udvidelser/Script-Fu/Mønstre/Krummelureflise..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Udvidelser/Script-Fu/Mønstre/Hvirvelflise..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2498,6 +2497,19 @@ msgstr "Trådintensitet"
 msgid "Thread Length"
 msgstr "Trådlængde"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr "<Toolbox>/Udvidelser/Internet/Udvidelsesmodulregistrering"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr ""
+
 # dækker vist bedre end Xach (hvad i alverden er det?)
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 #, fuzzy
@@ -2537,75 +2549,60 @@ msgstr "Højlysafstand x"
 msgid "Highlight Y Offset"
 msgstr "Højlysafstand y"
 
+# genererer sådan nogle krummelureagtige tingester
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Udvidelser/Script-Fu/Mønstre/Krummelureflise..."
+
 # 'internet' dækker fint i stedet for 'web browser'
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Udvidelser/Internet/OSS for udviklere"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/OSS for udviklere"
 
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp-fejl"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp-fejl"
 
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp-brugervejledning"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp-brugervejledning"
 
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp-nyheder"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp-nyheder"
 
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp-selvstudier"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp-selvstudier"
 
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Dokumentation"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Dokumentation"
 
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Hentning"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Hentning"
 
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gimp-kunst"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gimp-kunst"
 
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gtk+"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gtk+"
 
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Henvisninger"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Henvisninger"
 
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Postlister"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Postlister"
 
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Resurser"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Resurser"
 
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gimp'en"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp.org/Gimp'en"
 
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Udvidelser/Internet/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Gimp-Savvy.com"
 
 # bogtitel
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Udvidelser/Internet/Grokking the GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/Grokking the GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Udvidelser/Internet/Udvidelsesmodulregistrering"
-
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Udvidelser/Internet/OSS for brugere"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Udvidelser/Internet/OSS for brugere"
 
 #~ msgid "Border"
 #~ msgstr "Kant"

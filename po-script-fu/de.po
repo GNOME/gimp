@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:55+0200\n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2003-06-24 13:07+0200\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -148,12 +148,12 @@ msgstr "Server Logdatei:"
 
 #: plug-ins/script-fu/script-fu.c:120
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Konsole..."
 
 #: plug-ins/script-fu/script-fu.c:145
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -162,7 +162,7 @@ msgstr "Alle Skripte neu einlesen"
 
 #: plug-ins/script-fu/script-fu.c:274
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Skript-Fu/Auffrischen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2239,8 +2239,8 @@ msgstr "Stärke des Verdrehens"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Quirlige Kacheln..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Strudel-Kachel..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2431,6 +2431,19 @@ msgstr "Fadenintensität"
 msgid "Thread Length"
 msgstr "Fadenlänge"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
@@ -2468,73 +2481,57 @@ msgstr "Glanzlicht X-Versatz"
 msgid "Highlight Y Offset"
 msgstr "Glanzlicht Y-Versatz"
 
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Web-Browser/Entwickler FAQ"
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Muster/Quirlige Kacheln..."
 
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Bugs"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/Entwickler FAQ"
 
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Handbuch"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Bugs"
 
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Neuigkeiten"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Handbuch"
 
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Tutorials"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Neuigkeiten"
 
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Dokumentation"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/GIMP Tutorials"
 
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Download"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Dokumentation"
 
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP Kunst"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Download"
 
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GTK+"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP Kunst"
 
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Links"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GTK+"
 
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Mailing-Listen"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Links"
 
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Resourcen"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Mailing-Listen"
 
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/Resourcen"
 
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Xtns/Web-Browser/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/gimp.org/GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Xtns/Web-Browser/Grokking the GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/Gimp-Savvy.com"
 
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Xtns/Web-Browser/Plugin Registrierung"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/Grokking the GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Xtns/Web-Browser/Benutzer FAQ"
 
 #~ msgid "Border"
 #~ msgstr "Rand"

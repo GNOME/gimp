@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-19 17:13+0200\n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-09-19 17:23+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -386,83 +386,83 @@ msgid ""
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Ancora"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Duplica"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Collegato"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Incolla come nuovo"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Incolla dentro"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Reimposta"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Visibile"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "Spaziatura l_ettere"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "Spaziatura r_ighe"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
 msgid "_Scale"
 msgstr "_Scala"
 
-#: libgimpwidgets/gimpstock.c:237
+#: libgimpwidgets/gimpstock.c:256
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:274
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: libgimpwidgets/gimpstock.c:260
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "Altri..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "Selezione delle unità"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "Unità"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "Fattore"
 

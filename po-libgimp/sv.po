@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-09-18 23:05+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-09-18 23:09+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: libgimp/gimpbrushmenu.c:132
 msgid "Brush Selection"
@@ -388,83 +388,83 @@ msgstr ""
 "Klicka på pipetten och klicka sedan på en färg någonstans på din skärm för "
 "att välja den färgen."
 
-#: libgimpwidgets/gimpstock.c:101
+#: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Ankare"
 
-#: libgimpwidgets/gimpstock.c:102
+#: libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Duplicera"
 
-#: libgimpwidgets/gimpstock.c:103
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Redigera"
 
-#: libgimpwidgets/gimpstock.c:104
+#: libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Länkad"
 
-#: libgimpwidgets/gimpstock.c:105
+#: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Klistra in som ny"
 
-#: libgimpwidgets/gimpstock.c:106
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Klistra in i"
 
-#: libgimpwidgets/gimpstock.c:107
+#: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: libgimpwidgets/gimpstock.c:108
+#: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:172
+#: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:278
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:237
+#: libgimpwidgets/gimpstock.c:256
 msgid "Crop"
 msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:255
+#: libgimpwidgets/gimpstock.c:274
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:277
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:260
+#: libgimpwidgets/gimpstock.c:279
 msgid "_Shear"
 msgstr "_Luta"
 
-#: libgimpwidgets/gimpunitmenu.c:267
+#: libgimpwidgets/gimpunitmenu.c:268
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:527
+#: libgimpwidgets/gimpunitmenu.c:576
 msgid "Unit Selection"
 msgstr "Enhetsval"
 
-#: libgimpwidgets/gimpunitmenu.c:573
+#: libgimpwidgets/gimpunitmenu.c:622
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:577
+#: libgimpwidgets/gimpunitmenu.c:626
 msgid "Factor"
 msgstr "Faktor"
 

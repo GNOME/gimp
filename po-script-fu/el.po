@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:55+0200\n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -175,12 +175,13 @@ msgstr "Αποθήκευση Αρχείου Καταγραφών"
 
 #: plug-ins/script-fu/script-fu.c:120
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "Κονσόλα Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+msgstr "Κονσόλα Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 #, fuzzy
@@ -188,8 +189,9 @@ msgid "Re-read all available scripts"
 msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
+msgstr "Κονσόλα Script-Fu"
 
 #
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2496,8 +2498,9 @@ msgid "Whirl Amount"
 msgstr "Αριθμός Λέξεων"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr ""
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "Κονσόλα Script-Fu"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 #, fuzzy
@@ -2725,6 +2728,18 @@ msgstr "Τοπική θύελλα"
 msgid "Thread Length"
 msgstr "Διάρκεια"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr ""
+
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 #, fuzzy
@@ -2771,74 +2786,6 @@ msgstr "Επιλεγμένο"
 #, fuzzy
 msgid "Highlight Y Offset"
 msgstr "Επιλεγμένο"
-
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr ""
-
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr ""
 
 #~ msgid "Border"
 #~ msgstr "Πλαίσιο"

@@ -499,7 +499,7 @@
 # How many recently opened image filenames to keep on the File menu.  This is
 # an integer value.
 #
-# (last-opened-size 4)
+# (last-opened-size 10)
 
 # GIMP will warn the user if an attempt is made to create an image that would
 # take more memory than the size specified here.  The integer size can
@@ -507,7 +507,7 @@
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
 # suffix is specified the size defaults to being specified in kilobytes.
 #
-# (max-new-image-size 32M)
+# (max-new-image-size 64M)
 
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.

@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-09-28 11:37+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2003-09-28 11:42+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -150,11 +150,13 @@ msgid "Server Logfile:"
 msgstr "Serverloggfil:"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Utökningar/Script-Fu/_Konsoll..."
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Utökningar/Script-Fu/_Server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -162,7 +164,8 @@ msgid "Re-read all available scripts"
 msgstr "Läs om alla tillgängliga skript"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Utökningar/Script-Fu/_Uppdatera"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2158,8 +2161,9 @@ msgid "Whirl Amount"
 msgstr "Virvelmängd"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/_Virvlande (brickor)..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvelbricka..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2388,6 +2392,9 @@ msgstr "X-avstånd för markering"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y-avstånd för markering"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/_Virvlande (brickor)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Utökningar/Webbläsare/Frågor och svar för utvecklare"
@@ -2766,9 +2773,6 @@ msgstr "Y-avstånd för markering"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
 #~ msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Stjärnlandskap..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-#~ msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvelbricka..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
 #~ msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvlande (brickor)..."

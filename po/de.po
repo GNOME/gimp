@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.21\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-02 02:47+0200\n"
+"POT-Creation-Date: 2003-10-06 00:16+0200\n"
 "PO-Revision-Date: 2003-10-02 02:45+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/app_procs.c:197
+#: app/app_procs.c:176
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Starten Sie GIMP ohne die Option »--nointerface«, um die "
 "Benutzerinstallation durchzuführen."
 
-#: app/app_procs.c:340
+#: app/app_procs.c:268
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -933,12 +933,12 @@ msgid "Indexed-Alpha"
 msgstr "Indiziert-Alpha"
 
 #: app/core/core-enums.c:361 app/gui/preferences-dialog.c:1076
-#: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:1363
+#: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:1365
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: app/core/core-enums.c:362 app/gui/preferences-dialog.c:1078
-#: app/gui/preferences-dialog.c:1736 app/gui/user-install-dialog.c:1365
+#: app/gui/preferences-dialog.c:1736 app/gui/user-install-dialog.c:1367
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -1298,67 +1298,72 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr "VG nach HG (HSV Farbton im Uhrzeigersinn)"
 
 #. register all internal procedures
-#: app/core/gimp.c:768
+#: app/core/gimp.c:664
 msgid "Procedural Database"
 msgstr "Prozedurdatenbank"
 
-#: app/core/gimp.c:771
+#: app/core/gimp.c:667
 msgid "Plug-In Environment"
 msgstr "Plugin-Umgebung"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:787
+#: app/core/gimp.c:875
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: app/core/gimp.c:787
+#: app/core/gimp.c:875
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:791 app/gui/dialogs-constructors.c:354
+#: app/core/gimp.c:879 app/gui/dialogs-constructors.c:354
 #: app/gui/dialogs-constructors.c:588 app/gui/preferences-dialog.c:1945
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:795 app/gui/dialogs-constructors.c:377
+#: app/core/gimp.c:883 app/gui/dialogs-constructors.c:377
 #: app/gui/dialogs-constructors.c:611 app/gui/preferences-dialog.c:1949
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:799 app/gui/dialogs-constructors.c:423
+#: app/core/gimp.c:887 app/gui/dialogs-constructors.c:423
 #: app/gui/dialogs-constructors.c:657 app/gui/preferences-dialog.c:1953
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:803 app/gui/dialogs-constructors.c:400
+#: app/core/gimp.c:891 app/gui/dialogs-constructors.c:400
 #: app/gui/dialogs-constructors.c:634 app/gui/preferences-dialog.c:1957
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Farbverläufe"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:807 app/gui/dialogs-constructors.c:444
+#: app/core/gimp.c:895 app/gui/dialogs-constructors.c:444
 #: app/gui/dialogs-constructors.c:678 app/gui/preferences-dialog.c:1871
 #: app/gui/preferences-dialog.c:1961 app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Schriften"
 
 #. initialize the document history
-#: app/core/gimp.c:811
+#: app/core/gimp.c:899
 msgid "Documents"
 msgstr "Dokumente"
 
 #. initialize the template list
-#: app/core/gimp.c:815 app/gui/dialogs-constructors.c:539
+#: app/core/gimp.c:903 app/gui/dialogs-constructors.c:539
 msgid "Templates"
 msgstr "Vorlagen"
+
+#. initialize the module list
+#: app/core/gimp.c:907 app/gui/preferences-dialog.c:1973
+msgid "Modules"
+msgstr "Module"
 
 #: app/core/gimpbrush.c:411 app/core/gimpbrushgenerated.c:377
 #: app/core/gimpbrushpipe.c:352 app/core/gimpgradient.c:355
@@ -1397,7 +1402,7 @@ msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: app/core/gimpbrush.c:609 app/core/gimpbrushpipe.c:376
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
-#: app/core/gimpitem.c:434 app/core/gimppalette.c:441
+#: app/core/gimpitem.c:422 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
 #: app/tools/gimpvectortool.c:323
 msgid "Unnamed"
@@ -2294,45 +2299,45 @@ msgid "Custom Color"
 msgstr "Benutzerdefinierte Farbe"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:779
+#: app/display/gimpdisplayshell.c:789
 msgid "Set Canvas Padding Color"
 msgstr "Farbe des Leinwandrahmens festlegen"
 
 # CHECK
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:798
 msgid "Set canvas padding color"
 msgstr "Farbe des Leinwandrahmens festlegen"
 
-#: app/display/gimpdisplayshell.c:800
+#: app/display/gimpdisplayshell.c:810
 msgid "/From Theme"
 msgstr "/Dem Thema entsprechend"
 
-#: app/display/gimpdisplayshell.c:803
+#: app/display/gimpdisplayshell.c:813
 msgid "/Light Check Color"
 msgstr "/Helle Schachbrett-Farbe"
 
-#: app/display/gimpdisplayshell.c:806
+#: app/display/gimpdisplayshell.c:816
 msgid "/Dark Check Color"
 msgstr "/Dunkle Schachbrett-Farbe"
 
-#: app/display/gimpdisplayshell.c:812
+#: app/display/gimpdisplayshell.c:822
 msgid "/Select Custom Color..."
 msgstr "/Farbe frei wählen..."
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:826
 msgid "/As in Preferences"
 msgstr "/Aus den Einstellungen"
 
-#: app/display/gimpdisplayshell.c:841
+#: app/display/gimpdisplayshell.c:851
 msgid "Toggle QuickMask"
 msgstr "QuickMask aktivieren/deaktivieren"
 
-#: app/display/gimpdisplayshell.c:1830
+#: app/display/gimpdisplayshell.c:1840
 #, c-format
 msgid "Close %s?"
 msgstr "%s schließen?"
 
-#: app/display/gimpdisplayshell.c:1832
+#: app/display/gimpdisplayshell.c:1842
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -2728,8 +2733,8 @@ msgstr ""
 msgid "Select Custom Palette"
 msgstr "Wählen sie eine Palette"
 
-#: app/gui/dialogs-constructors.c:260 app/gui/preferences-dialog.c:1303
-#: app/gui/preferences-dialog.c:1306
+#: app/gui/dialogs-constructors.c:260 app/gui/gui.c:340
+#: app/gui/preferences-dialog.c:1303 app/gui/preferences-dialog.c:1306
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
@@ -3622,7 +3627,7 @@ msgstr "Höhe"
 
 #: app/gui/grid-dialog.c:219 app/gui/grid-dialog.c:270
 #: app/gui/preferences-dialog.c:1048 app/gui/preferences-dialog.c:1061
-#: app/gui/user-install-dialog.c:1348 app/widgets/gimptemplateeditor.c:220
+#: app/gui/user-install-dialog.c:1350 app/widgets/gimptemplateeditor.c:220
 msgid "Pixels"
 msgstr "Pixel"
 
@@ -3636,11 +3641,11 @@ msgstr "Versatz"
 msgid "Remove Grid"
 msgstr "Gitter entfernen"
 
-#: app/gui/gui.c:543
+#: app/gui/gui.c:400
 msgid "Quit The GIMP?"
 msgstr "GIMP beenden?"
 
-#: app/gui/gui.c:547
+#: app/gui/gui.c:404
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -4752,7 +4757,7 @@ msgid "%g x %g %s"
 msgstr "%g x %g %s"
 
 #: app/gui/info-window.c:723 app/gui/preferences-dialog.c:1080
-#: app/gui/preferences-dialog.c:1738 app/gui/user-install-dialog.c:1367
+#: app/gui/preferences-dialog.c:1738 app/gui/user-install-dialog.c:1369
 msgid "dpi"
 msgstr "DPI"
 
@@ -5705,7 +5710,7 @@ msgstr "Minimale Anzahl an Schritten:"
 msgid "Maximum Undo Memory:"
 msgstr "Maximaler Speicher für Rückgängigmachung:"
 
-#: app/gui/preferences-dialog.c:1836 app/gui/user-install-dialog.c:1240
+#: app/gui/preferences-dialog.c:1836 app/gui/user-install-dialog.c:1242
 msgid "Tile Cache Size:"
 msgstr "Größe des Datenspeichers:"
 
@@ -5767,7 +5772,7 @@ msgstr "Wählen Sie das temporäre Verzeichnis"
 msgid "Swap Dir:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/gui/preferences-dialog.c:1912 app/gui/user-install-dialog.c:1262
+#: app/gui/preferences-dialog.c:1912 app/gui/user-install-dialog.c:1264
 msgid "Select Swap Dir"
 msgstr "Wählen Sie das Auslagerungsverzeichnis"
 
@@ -5834,10 +5839,6 @@ msgstr "Skript-Fu-Ordner"
 #: app/gui/preferences-dialog.c:1971
 msgid "Select Script-Fu Folders"
 msgstr "Wählen Sie die Skript-Fu-Ordner"
-
-#: app/gui/preferences-dialog.c:1973
-msgid "Modules"
-msgstr "Module"
 
 #: app/gui/preferences-dialog.c:1973
 msgid "Module Folders"
@@ -6115,24 +6116,24 @@ msgstr "_Nächster Tipp"
 msgid "tips-locale:C"
 msgstr "tips-locale:de"
 
-#: app/gui/tool-options-commands.c:85
+#: app/gui/tool-options-commands.c:91
 msgid "Save Tool Options"
 msgstr "Werkzeugeinstellungen sichern"
 
-#: app/gui/tool-options-commands.c:88
+#: app/gui/tool-options-commands.c:94
 msgid "Enter a name for the saved options"
 msgstr "Geben Sie diesen Einstellungen einen Namen"
 
-#: app/gui/tool-options-commands.c:89 app/gui/tool-options-commands.c:170
-#: app/gui/tool-options-commands.c:190
+#: app/gui/tool-options-commands.c:95 app/gui/tool-options-commands.c:176
+#: app/gui/tool-options-commands.c:196
 msgid "Saved Options"
 msgstr "Gesicherte Einstellungen"
 
-#: app/gui/tool-options-commands.c:114
+#: app/gui/tool-options-commands.c:120
 msgid "Rename Save Tool Options"
 msgstr "Gesicherte Einstellungen umbenennen"
 
-#: app/gui/tool-options-commands.c:117
+#: app/gui/tool-options-commands.c:123
 msgid "Enter a new name for the saved options"
 msgstr "Geben Sie diesen Einstellungen einen neuen Namen"
 
@@ -6717,48 +6718,48 @@ msgstr ""
 msgid "Aborting Installation..."
 msgstr "Installation wird abgebrochen..."
 
-#: app/gui/user-install-dialog.c:994
+#: app/gui/user-install-dialog.c:996
 #, c-format
 msgid "Cannot open '%s' for reading: %s"
 msgstr "»%s« konnte nicht zum Lesen geöffnet werden: %s"
 
-#: app/gui/user-install-dialog.c:1003
+#: app/gui/user-install-dialog.c:1005
 #, c-format
 msgid "Cannot open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
-#: app/gui/user-install-dialog.c:1014 app/gui/user-install-dialog.c:1037
+#: app/gui/user-install-dialog.c:1016 app/gui/user-install-dialog.c:1039
 #: app/vectors/gimpvectors-export.c:113
 #, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Fehler beim Schreiben von »%s«: %s"
 
-#: app/gui/user-install-dialog.c:1025
+#: app/gui/user-install-dialog.c:1027
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Fehler beim Lesen von »%s«: %s"
 
-#: app/gui/user-install-dialog.c:1114 app/gui/user-install-dialog.c:1146
+#: app/gui/user-install-dialog.c:1116 app/gui/user-install-dialog.c:1148
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Ordner »%s« wird angelegt..."
 
-#: app/gui/user-install-dialog.c:1128
+#: app/gui/user-install-dialog.c:1130
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Ordner »%s« konnte nicht angelegt werden: %s"
 
-#: app/gui/user-install-dialog.c:1160
+#: app/gui/user-install-dialog.c:1162
 #, c-format
 msgid "Cannot create folder: %s"
 msgstr "Ordner konnte nicht angelegt werden: %s"
 
-#: app/gui/user-install-dialog.c:1181
+#: app/gui/user-install-dialog.c:1183
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Datei »%s« wird von »%s« kopiert..."
 
-#: app/gui/user-install-dialog.c:1228
+#: app/gui/user-install-dialog.c:1230
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6769,7 +6770,7 @@ msgstr ""
 "in den Arbeitsspeicher passt. Bedenken Sie dabei die Menge an\n"
 "Arbeitsspeicher, die bereits von anderen Programmen belegt wird."
 
-#: app/gui/user-install-dialog.c:1252
+#: app/gui/user-install-dialog.c:1254
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6782,11 +6783,11 @@ msgstr ""
 "Unter UNIX ist das systemweite temporäre Verzeichnis eine gute Wahl\n"
 "(meist »/tmp« oder »/var/tmp«)."
 
-#: app/gui/user-install-dialog.c:1267
+#: app/gui/user-install-dialog.c:1269
 msgid "Swap Folder:"
 msgstr "Auslagerungsordner:"
 
-#: app/gui/user-install-dialog.c:1318
+#: app/gui/user-install-dialog.c:1320
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6794,12 +6795,12 @@ msgstr ""
 "GIMP kann diese Information vom Fenstersystem erfragen.\n"
 "Allerdings liefern die wenigsten Systeme hier vernünftige Werte."
 
-#: app/gui/user-install-dialog.c:1326
+#: app/gui/user-install-dialog.c:1328
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Auflösung vom Fenstersystem beziehen (zur Zeit %d x %d dpi)"
 
-#: app/gui/user-install-dialog.c:1346
+#: app/gui/user-install-dialog.c:1348
 msgid ""
 "Alternatively, you can set\n"
 "the monitor resolution manually."
@@ -6807,7 +6808,7 @@ msgstr ""
 "Alternativ können Sie die Bildschirmauflösung\n"
 "von Hand einstellen."
 
-#: app/gui/user-install-dialog.c:1391
+#: app/gui/user-install-dialog.c:1393
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -6816,7 +6817,7 @@ msgstr ""
 "Fenster zu öffnen, in dem Sie Bildschirmauflösung interaktiv\n"
 "bestimmen können."
 
-#: app/gui/user-install-dialog.c:1394
+#: app/gui/user-install-dialog.c:1396
 msgid "Calibrate"
 msgstr "Kalibrieren"
 
@@ -7621,15 +7622,15 @@ msgstr "Nur RGB Bilder können eingefärbt werden."
 msgid "Select Color"
 msgstr "Farbe auswählen"
 
-#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:369
+#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:367
 msgid "_Hue:"
 msgstr "_Farbton:"
 
-#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:383
+#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:381
 msgid "_Lightness:"
 msgstr "_Helligkeit:"
 
-#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:397
+#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:395
 msgid "_Saturation:"
 msgstr "_Sättigung:"
 
@@ -7983,47 +7984,47 @@ msgstr "Farbton / Helligkeit / Sättigung anpassen"
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Farbton-Sättigung funktioniert nur bei RGB Bildern."
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
 msgstr "A_lle"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:272
+#: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:273
+#: app/tools/gimphuesaturationtool.c:271
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:278
+#: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
 msgstr "Zu bearbeitende Primärfarbe auswählen"
 
-#: app/tools/gimphuesaturationtool.c:307
+#: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
 msgstr "Alle Farben bearbeiten"
 
-#: app/tools/gimphuesaturationtool.c:350
+#: app/tools/gimphuesaturationtool.c:348
 msgid "Modify Selected Color"
 msgstr "Gewählte Farbe bearbeiten"
 
-#: app/tools/gimphuesaturationtool.c:413
+#: app/tools/gimphuesaturationtool.c:411
 msgid "R_eset Color"
 msgstr "Farbe _zurücksetzen"
 

@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-28 01:50+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2003-09-28 01:55+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -151,11 +151,13 @@ msgid "Server Logfile:"
 msgstr "Ficheiro de Log do Servidor:"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Exten/Script-Fu/_Consola..."
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Exten/Script-Fu/_Servidor..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -163,7 +165,8 @@ msgid "Re-read all available scripts"
 msgstr "Nova leitura de todos os scripts disponíveis"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Exten/Script-Fu/_Actualizar"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2154,8 +2157,9 @@ msgid "Whirl Amount"
 msgstr "Quantidade Voltas"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Exten/Script-Fu/Padrões/Redemoinho (divi_sível)..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Exten/Script-Fu/Padrões/Mosaico de Redemoin_ho..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2384,6 +2388,9 @@ msgstr "Deslocamento X Destaque"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Deslocamento Y Sestaque"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Exten/Script-Fu/Padrões/Redemoinho (divi_sível)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Exten/Navegador da Web/FAQ Programador"

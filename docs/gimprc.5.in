@@ -637,13 +637,13 @@ Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
 yes and no.
 
 .TP
-(last-opened-size 4)
+(last-opened-size 10)
 
 How many recently opened image filenames to keep on the File menu.  This is an
 integer value.
 
 .TP
-(max-new-image-size 32M)
+(max-new-image-size 64M)
 
 GIMP will warn the user if an attempt is made to create an image that would
 take more memory than the size specified here.  The integer size can contain a

@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-28 01:55+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-05 20:23+0200\n"
 "PO-Revision-Date: 2003-09-28 02:00+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -20,16 +20,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:297
-#: plug-ins/FractalExplorer/Dialogs.c:1405 plug-ins/gfig/gfig.c:3222
+#: plug-ins/FractalExplorer/Dialogs.c:495
+#: plug-ins/FractalExplorer/Dialogs.c:1586 plug-ins/gfig/gfig.c:3222
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
 msgid "About"
 msgstr "Sobre"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:320 plug-ins/Lighting/lighting_ui.c:1150
+#: plug-ins/FractalExplorer/Dialogs.c:521 plug-ins/Lighting/lighting_ui.c:1150
 #: plug-ins/MapObject/mapobject_ui.c:1402 plug-ins/common/CML_explorer.c:1191
-#: plug-ins/common/curve_bend.c:1219 plug-ins/common/destripe.c:578
+#: plug-ins/common/curve_bend.c:1219 plug-ins/common/destripe.c:582
 #: plug-ins/common/emboss.c:713 plug-ins/common/fractaltrace.c:776
 #: plug-ins/common/grid.c:671 plug-ins/common/iwarp.c:1229
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/nlfilt.c:455
@@ -45,85 +45,81 @@ msgstr "Sobre"
 msgid "Preview"
 msgstr "Antever"
 
-#: plug-ins/FractalExplorer/Dialogs.c:366
+#: plug-ins/FractalExplorer/Dialogs.c:567
 msgid "Realtime Preview"
 msgstr "Antever Em Tempo Real"
 
-#: plug-ins/FractalExplorer/Dialogs.c:373
+#: plug-ins/FractalExplorer/Dialogs.c:574
 msgid "If you enable this option the preview will be redrawn automatically"
 msgstr "Se activar esta opção a antevisão será redesenhada automaticamente"
 
-#: plug-ins/FractalExplorer/Dialogs.c:376
+#: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Redraw"
 msgstr "Redesenhar"
 
-#: plug-ins/FractalExplorer/Dialogs.c:382
+#: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Redraw preview"
 msgstr "Antevisão do desenho"
 
 #. Zoom Options
-#: plug-ins/FractalExplorer/Dialogs.c:385
+#: plug-ins/FractalExplorer/Dialogs.c:586
 msgid "Zoom Options"
 msgstr "Opções de Zoom"
 
-#: plug-ins/FractalExplorer/Dialogs.c:399
+#: plug-ins/FractalExplorer/Dialogs.c:600
 msgid "Undo last zoom"
 msgstr "Desfaz último zoom"
 
-#: plug-ins/FractalExplorer/Dialogs.c:409
+#: plug-ins/FractalExplorer/Dialogs.c:610
 msgid "Redo last zoom"
 msgstr "Refazer último zoom"
 
-#.
-#. *  Scales
-#.
-#: plug-ins/FractalExplorer/Dialogs.c:441 plug-ins/gflare/gflare.c:2666
-#: plug-ins/gflare/gflare.c:3475 plug-ins/gflare/gflare.c:3582
-#: plug-ins/gflare/gflare.c:3721
-msgid "Parameters"
+#: plug-ins/FractalExplorer/Dialogs.c:642
+#, fuzzy
+msgid "_Parameters"
 msgstr "Parâmetros"
 
-#: plug-ins/FractalExplorer/Dialogs.c:444
+#: plug-ins/FractalExplorer/Dialogs.c:645
 msgid "Fractal Parameters"
 msgstr "Parâmetros de Fractais"
 
-#: plug-ins/FractalExplorer/Dialogs.c:458
+#: plug-ins/FractalExplorer/Dialogs.c:659
 msgid "XMIN:"
 msgstr "XMIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:461
+#: plug-ins/FractalExplorer/Dialogs.c:662
 msgid "Change the first (minimal) x-coordinate delimitation"
 msgstr "\"Alterar a primeira (mínima) delimitação da coordenada-x"
 
-#: plug-ins/FractalExplorer/Dialogs.c:469
+#: plug-ins/FractalExplorer/Dialogs.c:670
 msgid "XMAX:"
 msgstr "XMAX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:472
+#: plug-ins/FractalExplorer/Dialogs.c:673
 msgid "Change the second (maximal) x-coordinate delimitation"
 msgstr "Altera a segunda delimitação (máxima) da coordenada x"
 
-#: plug-ins/FractalExplorer/Dialogs.c:480
+#: plug-ins/FractalExplorer/Dialogs.c:681
 msgid "YMIN:"
 msgstr "YMIN:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:483
+#: plug-ins/FractalExplorer/Dialogs.c:684
 msgid "Change the first (minimal) y-coordinate delimitation"
 msgstr "Altera a primeira delimitação (mínima) da coordenada y"
 
-#: plug-ins/FractalExplorer/Dialogs.c:491
+#: plug-ins/FractalExplorer/Dialogs.c:692
 msgid "YMAX:"
 msgstr "YMAX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:494
+#: plug-ins/FractalExplorer/Dialogs.c:695
 msgid "Change the second (maximal) y-coordinate delimitation"
 msgstr "Altera a segunda delimitação (máxima) da coordenada y"
 
-#: plug-ins/FractalExplorer/Dialogs.c:502
+#: plug-ins/FractalExplorer/Dialogs.c:703
 msgid "ITER:"
 msgstr "ITER:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:505
+#: plug-ins/FractalExplorer/Dialogs.c:706
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
@@ -131,11 +127,11 @@ msgstr ""
 "Altera o valor de iteração. Quanto maior, mais detalhes serão calculados e "
 "levará mais tempo"
 
-#: plug-ins/FractalExplorer/Dialogs.c:514
+#: plug-ins/FractalExplorer/Dialogs.c:715
 msgid "CX:"
 msgstr "CX:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:517
+#: plug-ins/FractalExplorer/Dialogs.c:718
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -143,11 +139,11 @@ msgstr ""
 "Altera o valor CX (altera o aspecto do fractal, activo em todos os fractais "
 "excepto Mandelbrot e Sierpinski)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:526
+#: plug-ins/FractalExplorer/Dialogs.c:727
 msgid "CY:"
 msgstr "CY:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:529
+#: plug-ins/FractalExplorer/Dialogs.c:730
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
@@ -155,147 +151,149 @@ msgstr ""
 "Altera o valor CY (altera o aspecto do fractal, activo em todos os fractais "
 "excepto Mandelbrot e Sierpinski)"
 
-#: plug-ins/FractalExplorer/Dialogs.c:546
+#: plug-ins/FractalExplorer/Dialogs.c:747
 msgid "Load a fractal from file"
 msgstr "Carrega um fractal do ficheiro"
 
-#: plug-ins/FractalExplorer/Dialogs.c:554
+#: plug-ins/FractalExplorer/Dialogs.c:755
 msgid "Reset parameters to default values"
 msgstr "Restaura parâmetros para valores padrão"
 
-#: plug-ins/FractalExplorer/Dialogs.c:563
+#: plug-ins/FractalExplorer/Dialogs.c:764
 msgid "Save active fractal to file"
 msgstr "Gravar fractal activo ao ficheiro"
 
 #. Fractal type toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:566
+#: plug-ins/FractalExplorer/Dialogs.c:767
 msgid "Fractal Type"
 msgstr "Tipo de Fractal"
 
-#: plug-ins/FractalExplorer/Dialogs.c:579
+#: plug-ins/FractalExplorer/Dialogs.c:780
 msgid "Mandelbrot"
 msgstr "Mandelbrot"
 
-#: plug-ins/FractalExplorer/Dialogs.c:581
+#: plug-ins/FractalExplorer/Dialogs.c:782
 msgid "Julia"
 msgstr "Julia"
 
-#: plug-ins/FractalExplorer/Dialogs.c:583
+#: plug-ins/FractalExplorer/Dialogs.c:784
 msgid "Barnsley 1"
 msgstr "Barnsley 1"
 
-#: plug-ins/FractalExplorer/Dialogs.c:585
+#: plug-ins/FractalExplorer/Dialogs.c:786
 msgid "Barnsley 2"
 msgstr "Barnsley 2"
 
-#: plug-ins/FractalExplorer/Dialogs.c:587
+#: plug-ins/FractalExplorer/Dialogs.c:788
 msgid "Barnsley 3"
 msgstr "Barnsley 3"
 
-#: plug-ins/FractalExplorer/Dialogs.c:589
+#: plug-ins/FractalExplorer/Dialogs.c:790
 msgid "Spider"
 msgstr "Spider"
 
-#: plug-ins/FractalExplorer/Dialogs.c:591
+#: plug-ins/FractalExplorer/Dialogs.c:792
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: plug-ins/FractalExplorer/Dialogs.c:593
+#: plug-ins/FractalExplorer/Dialogs.c:794
 msgid "Lambda"
 msgstr "Lambda"
 
-#: plug-ins/FractalExplorer/Dialogs.c:595
+#: plug-ins/FractalExplorer/Dialogs.c:796
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:645 plug-ins/common/sinus.c:796
-#: plug-ins/common/sinus.c:814
-msgid "Colors"
-msgstr "Cores"
+#: plug-ins/FractalExplorer/Dialogs.c:846 plug-ins/common/sinus.c:905
+#: plug-ins/imagemap/imap_preferences.c:515
+msgid "Co_lors"
+msgstr "C_ores"
 
 #. Number of Colors frame
-#: plug-ins/FractalExplorer/Dialogs.c:649 plug-ins/common/borderaverage.c:414
+#: plug-ins/FractalExplorer/Dialogs.c:850 plug-ins/common/borderaverage.c:414
 msgid "Number of Colors"
 msgstr "Número de Cores"
 
-#: plug-ins/FractalExplorer/Dialogs.c:662
-msgid "Number of Colors:"
+#: plug-ins/FractalExplorer/Dialogs.c:863
+#, fuzzy
+msgid "Number of colors:"
 msgstr "Número de Cores:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:665
+#: plug-ins/FractalExplorer/Dialogs.c:866
 msgid "Change the number of colors in the mapping"
 msgstr "Altera o número de cores no mapeamento"
 
-#: plug-ins/FractalExplorer/Dialogs.c:672
-msgid "Use loglog Smoothing"
+#: plug-ins/FractalExplorer/Dialogs.c:873
+#, fuzzy
+msgid "Use loglog smoothing"
 msgstr "Utiliza Uniformidade de registro"
 
-#: plug-ins/FractalExplorer/Dialogs.c:679
+#: plug-ins/FractalExplorer/Dialogs.c:880
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Utiliza uniformidade de registro para eliminar \"ligação\" no resultado"
 
 #. Color Density frame
-#: plug-ins/FractalExplorer/Dialogs.c:683
+#: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "Color Density"
 msgstr "Densidade Cores"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:697 plug-ins/common/compose.c:133
+#: plug-ins/FractalExplorer/Dialogs.c:898 plug-ins/common/compose.c:133
 #: plug-ins/common/compose.c:143 plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Vermelho:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:700
+#: plug-ins/FractalExplorer/Dialogs.c:901
 msgid "Change the intensity of the red channel"
 msgstr "Altera intensidade do canal vermelho"
 
-#: plug-ins/FractalExplorer/Dialogs.c:707 plug-ins/common/compose.c:134
+#: plug-ins/FractalExplorer/Dialogs.c:908 plug-ins/common/compose.c:134
 #: plug-ins/common/compose.c:144 plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Verde:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:710
+#: plug-ins/FractalExplorer/Dialogs.c:911
 msgid "Change the intensity of the green channel"
 msgstr "Altera intensidade do canal verde"
 
-#: plug-ins/FractalExplorer/Dialogs.c:717 plug-ins/common/compose.c:135
+#: plug-ins/FractalExplorer/Dialogs.c:918 plug-ins/common/compose.c:135
 #: plug-ins/common/compose.c:145 plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Azul:"
 
-#: plug-ins/FractalExplorer/Dialogs.c:720
+#: plug-ins/FractalExplorer/Dialogs.c:921
 msgid "Change the intensity of the blue channel"
 msgstr "Altera intensidade do canal azul"
 
 #. Color Function frame
-#: plug-ins/FractalExplorer/Dialogs.c:726
+#: plug-ins/FractalExplorer/Dialogs.c:927
 msgid "Color Function"
 msgstr "Função Cores"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:737 plug-ins/common/AlienMap.c:1230
+#: plug-ins/FractalExplorer/Dialogs.c:938 plug-ins/common/AlienMap.c:1230
 #: plug-ins/common/decompose.c:128
 msgid "Red"
 msgstr "Vermelho"
 
-#: plug-ins/FractalExplorer/Dialogs.c:741
-#: plug-ins/FractalExplorer/Dialogs.c:782
-#: plug-ins/FractalExplorer/Dialogs.c:823
+#: plug-ins/FractalExplorer/Dialogs.c:942
+#: plug-ins/FractalExplorer/Dialogs.c:983
+#: plug-ins/FractalExplorer/Dialogs.c:1024
 msgid "Sine"
 msgstr "Seno"
 
-#: plug-ins/FractalExplorer/Dialogs.c:743
-#: plug-ins/FractalExplorer/Dialogs.c:784
-#: plug-ins/FractalExplorer/Dialogs.c:825
+#: plug-ins/FractalExplorer/Dialogs.c:944
+#: plug-ins/FractalExplorer/Dialogs.c:985
+#: plug-ins/FractalExplorer/Dialogs.c:1026
 msgid "Cosine"
 msgstr "Cosseno"
 
-#: plug-ins/FractalExplorer/Dialogs.c:745
-#: plug-ins/FractalExplorer/Dialogs.c:786
-#: plug-ins/FractalExplorer/Dialogs.c:827 plug-ins/Lighting/lighting_ui.c:518
+#: plug-ins/FractalExplorer/Dialogs.c:946
+#: plug-ins/FractalExplorer/Dialogs.c:987
+#: plug-ins/FractalExplorer/Dialogs.c:1028 plug-ins/Lighting/lighting_ui.c:518
 #: plug-ins/common/CML_explorer.c:170 plug-ins/common/align_layers.c:434
 #: plug-ins/common/align_layers.c:467 plug-ins/common/ps.c:2752
 #: plug-ins/common/ps.c:2765 plug-ins/common/psp.c:444
@@ -303,21 +301,21 @@ msgstr "Cosseno"
 msgid "None"
 msgstr "Nenhum"
 
-#: plug-ins/FractalExplorer/Dialogs.c:750
-#: plug-ins/FractalExplorer/Dialogs.c:791
-#: plug-ins/FractalExplorer/Dialogs.c:832
+#: plug-ins/FractalExplorer/Dialogs.c:951
+#: plug-ins/FractalExplorer/Dialogs.c:992
+#: plug-ins/FractalExplorer/Dialogs.c:1033
 msgid "Use sine-function for this color component"
 msgstr "Utilizar função de seno para componente vermelho"
 
-#: plug-ins/FractalExplorer/Dialogs.c:753
-#: plug-ins/FractalExplorer/Dialogs.c:794
-#: plug-ins/FractalExplorer/Dialogs.c:835
+#: plug-ins/FractalExplorer/Dialogs.c:954
+#: plug-ins/FractalExplorer/Dialogs.c:995
+#: plug-ins/FractalExplorer/Dialogs.c:1036
 msgid "Use cosine-function for this color component"
 msgstr "Utilizar função de cosseno para componente vermelho"
 
-#: plug-ins/FractalExplorer/Dialogs.c:756
-#: plug-ins/FractalExplorer/Dialogs.c:797
-#: plug-ins/FractalExplorer/Dialogs.c:838
+#: plug-ins/FractalExplorer/Dialogs.c:957
+#: plug-ins/FractalExplorer/Dialogs.c:998
+#: plug-ins/FractalExplorer/Dialogs.c:1039
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -325,15 +323,15 @@ msgstr ""
 "Utilizar mapeamento linear em vez de qualquer função trigonométrica para "
 "este canal de cor"
 
-#: plug-ins/FractalExplorer/Dialogs.c:765
-#: plug-ins/FractalExplorer/Dialogs.c:806
-#: plug-ins/FractalExplorer/Dialogs.c:847
+#: plug-ins/FractalExplorer/Dialogs.c:966
+#: plug-ins/FractalExplorer/Dialogs.c:1007
+#: plug-ins/FractalExplorer/Dialogs.c:1048
 msgid "Inversion"
 msgstr "Inversão"
 
-#: plug-ins/FractalExplorer/Dialogs.c:773
-#: plug-ins/FractalExplorer/Dialogs.c:814
-#: plug-ins/FractalExplorer/Dialogs.c:855
+#: plug-ins/FractalExplorer/Dialogs.c:974
+#: plug-ins/FractalExplorer/Dialogs.c:1015
+#: plug-ins/FractalExplorer/Dialogs.c:1056
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
@@ -342,27 +340,28 @@ msgstr ""
 "mais baixos e vice versa"
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:778 plug-ins/common/AlienMap.c:1253
+#: plug-ins/FractalExplorer/Dialogs.c:979 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/decompose.c:129
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/AlienMap.c:1276
+#: plug-ins/FractalExplorer/Dialogs.c:1020 plug-ins/common/AlienMap.c:1276
 #: plug-ins/common/decompose.c:134
 msgid "Blue"
 msgstr "Azul"
 
 #. Colormode toggle box
-#: plug-ins/FractalExplorer/Dialogs.c:860
+#: plug-ins/FractalExplorer/Dialogs.c:1061
 msgid "Color Mode"
 msgstr "Modo Cores"
 
-#: plug-ins/FractalExplorer/Dialogs.c:871
-msgid "As Specified above"
+#: plug-ins/FractalExplorer/Dialogs.c:1072
+#, fuzzy
+msgid "As specified above"
 msgstr "Como Acima especificado"
 
-#: plug-ins/FractalExplorer/Dialogs.c:883
+#: plug-ins/FractalExplorer/Dialogs.c:1084
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -370,29 +369,31 @@ msgstr ""
 "Cria um mapa de cores com as opções especificadas acima (densidade da cor/ "
 "função). O resultado é visível na imagem de antevisão."
 
-#: plug-ins/FractalExplorer/Dialogs.c:893
-msgid "Apply Active Gradient to Final Image"
+#: plug-ins/FractalExplorer/Dialogs.c:1094
+#, fuzzy
+msgid "Apply active gradient to final image"
 msgstr "Aplica Gradiente Activo à Imagem Final"
 
-#: plug-ins/FractalExplorer/Dialogs.c:905
+#: plug-ins/FractalExplorer/Dialogs.c:1106
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr "Cria um mapa de cores utilizando um gradiente do editor de gradientes"
 
-#: plug-ins/FractalExplorer/Dialogs.c:911
+#: plug-ins/FractalExplorer/Dialogs.c:1112
 msgid "FractalExplorer Gradient"
 msgstr "Gradiente FractalExpler "
 
-#: plug-ins/FractalExplorer/Dialogs.c:943
-msgid "Fractals"
+#: plug-ins/FractalExplorer/Dialogs.c:1144
+#, fuzzy
+msgid "_Fractals"
 msgstr "Fractais"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1599 plug-ins/bmp/bmpwrite.c:199
+#: plug-ins/FractalExplorer/Dialogs.c:1776 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
 #: plug-ins/common/gbr.c:490 plug-ins/common/gif.c:1014
 #: plug-ins/common/gih.c:1228 plug-ins/common/gtm.c:238
 #: plug-ins/common/jpeg.c:1305 plug-ins/common/pat.c:385
 #: plug-ins/common/pcx.c:579 plug-ins/common/pix.c:514
-#: plug-ins/common/png.c:936 plug-ins/common/ps.c:999
+#: plug-ins/common/png.c:962 plug-ins/common/ps.c:999
 #: plug-ins/common/psd_save.c:1526 plug-ins/common/sunras.c:520
 #: plug-ins/common/tiff.c:1519 plug-ins/common/xbm.c:1002
 #: plug-ins/common/xwd.c:529 plug-ins/fits/fits.c:461
@@ -405,7 +406,7 @@ msgstr ""
 "Incapaz de abrir '%s' para escrita:\n"
 "%s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1614
+#: plug-ins/FractalExplorer/Dialogs.c:1791
 #, c-format
 msgid ""
 "Failed to write '%s':\n"
@@ -414,48 +415,32 @@ msgstr ""
 "Falha ao escrever '%s':\n"
 "%s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1636
+#: plug-ins/FractalExplorer/Dialogs.c:1809
 msgid "Save: No filename given"
 msgstr "Gravar: Nome de ficheiro não especificado"
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1643
+#: plug-ins/FractalExplorer/Dialogs.c:1816
 msgid "Save: Can't save to a folder."
 msgstr "Gravar: Não se pode gravar numa pasta."
 
-#: plug-ins/FractalExplorer/Dialogs.c:1688
+#: plug-ins/FractalExplorer/Dialogs.c:1852
 msgid "Load Fractal Parameters"
 msgstr "Carregar Parâmetros Fractais"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1700
-msgid "Click here to load your file"
-msgstr "Clique aqui para carregar seu ficheiro"
-
-#: plug-ins/FractalExplorer/Dialogs.c:1707
-msgid "Click here to cancel load procedure"
-msgstr "Clique aqui para cancelar procedimento de carga"
-
-#: plug-ins/FractalExplorer/Dialogs.c:1725
+#: plug-ins/FractalExplorer/Dialogs.c:1880
 msgid "Save Fractal Parameters"
 msgstr "Gravas Parâmetros Fractais"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1737
-msgid "Click here to save your file"
-msgstr "Clique aqui para gravar o seu ficheiro"
-
-#: plug-ins/FractalExplorer/Dialogs.c:1744
-msgid "Click here to cancel save procedure"
-msgstr "Clique aqui para cancelar procedimento de gravação"
-
 #. Do not rely on librsvg setting GError on failure!
-#: plug-ins/FractalExplorer/Dialogs.c:2008 plug-ins/bmp/bmpread.c:97
+#: plug-ins/FractalExplorer/Dialogs.c:2079 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
 #: plug-ins/common/gbr.c:298 plug-ins/common/gih.c:628
 #: plug-ins/common/hrz.c:337 plug-ins/common/jpeg.c:776
 #: plug-ins/common/pat.c:269 plug-ins/common/pcx.c:301
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:879
-#: plug-ins/common/psd.c:1711 plug-ins/common/psp.c:1489
+#: plug-ins/common/psd.c:1716 plug-ins/common/psp.c:1489
 #: plug-ins/common/sunras.c:393 plug-ins/common/svg.c:253
 #: plug-ins/common/svg.c:648 plug-ins/common/tga.c:425
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:730
@@ -469,7 +454,7 @@ msgstr ""
 "Incapaz de abrir '%s':\n"
 "%s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2015
+#: plug-ins/FractalExplorer/Dialogs.c:2086
 #, c-format
 msgid ""
 "'%s'\n"
@@ -478,7 +463,7 @@ msgstr ""
 "'%s'\n"
 "não é um ficheiro FractalExplorer"
 
-#: plug-ins/FractalExplorer/Dialogs.c:2020
+#: plug-ins/FractalExplorer/Dialogs.c:2091
 #, c-format
 msgid ""
 "'%s' is corrupt.\n"
@@ -487,15 +472,16 @@ msgstr ""
 "'%s' está corrompido.\n"
 "Secção da opção incorrecta na linha %d"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:203
-msgid "<Image>/Filters/Render/Pattern/_Fractal Explorer..."
+#: plug-ins/FractalExplorer/FractalExplorer.c:267
+#, fuzzy
+msgid "<Image>/Filters/Render/_Fractal Explorer..."
 msgstr "<Image>/Filtros/Renderizar/Padrão/_Fractal Explorer..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:343
+#: plug-ins/FractalExplorer/FractalExplorer.c:395
 msgid "Rendering Fractal..."
 msgstr "A Renderizar Fractal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:721 plug-ins/gfig/gfig.c:4805
+#: plug-ins/FractalExplorer/FractalExplorer.c:769 plug-ins/gfig/gfig.c:4805
 #: plug-ins/gflare/gflare.c:3104
 #, c-format
 msgid ""
@@ -505,28 +491,28 @@ msgstr ""
 "Tem certeza que quer eliminar\n"
 "\"%s\" da lista e do disco?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:725
+#: plug-ins/FractalExplorer/FractalExplorer.c:773
 msgid "Delete Fractal"
 msgstr "Apagar Fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:811
+#: plug-ins/FractalExplorer/FractalExplorer.c:859
 msgid "Edit fractal name"
 msgstr "Editar nome do fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:822
+#: plug-ins/FractalExplorer/FractalExplorer.c:870
 msgid "Fractal name:"
 msgstr "Nome Fractal:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:863
+#: plug-ins/FractalExplorer/FractalExplorer.c:911
 msgid "New Fractal"
 msgstr "Novo Fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1169
+#: plug-ins/FractalExplorer/FractalExplorer.c:1191
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "O ficheiro '%s' não é um ficheiro FractalExplorer"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1177
+#: plug-ins/FractalExplorer/FractalExplorer.c:1199
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -535,27 +521,27 @@ msgstr ""
 "O ficheiro '%s' está corrompido.\n"
 "Secção da opção incorrecta na linha %d"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1229
+#: plug-ins/FractalExplorer/FractalExplorer.c:1248
 msgid "My first fractal"
 msgstr "Meu primeiro fractal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1245
+#: plug-ins/FractalExplorer/FractalExplorer.c:1264
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Escolha o Fractal com clique duplo no mesmo"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1282
+#: plug-ins/FractalExplorer/FractalExplorer.c:1301
 msgid "Select folder and rescan collection"
 msgstr "Seleccionar pasta e reexaminar colecção"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1294
+#: plug-ins/FractalExplorer/FractalExplorer.c:1313
 msgid "Delete currently selected fractal"
 msgstr "Apagar fractal actualmente selecionado"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1342
+#: plug-ins/FractalExplorer/FractalExplorer.c:1360
 msgid "Rescan for Fractals"
 msgstr "Reexaminar por Fractais"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1359
+#: plug-ins/FractalExplorer/FractalExplorer.c:1377
 msgid "Add FractalExplorer Path"
 msgstr "Acrescentar Caminho FractalExpoler"
 
@@ -1176,7 +1162,7 @@ msgstr "Mapa de cor inadequado"
 #: plug-ins/common/jpeg.c:780 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
-#: plug-ins/common/ps.c:885 plug-ins/common/psd.c:1715
+#: plug-ins/common/ps.c:885 plug-ins/common/psd.c:1720
 #: plug-ins/common/sunras.c:444 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:447 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:342 plug-ins/common/xwd.c:432
@@ -1214,7 +1200,7 @@ msgstr ""
 #: plug-ins/common/jpeg.c:935 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
-#: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2101
+#: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2106
 #: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
 #: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
@@ -1236,7 +1222,7 @@ msgstr ""
 #: plug-ins/common/gtm.c:258 plug-ins/common/hrz.c:470
 #: plug-ins/common/jpeg.c:1261 plug-ins/common/pat.c:390
 #: plug-ins/common/pcx.c:540 plug-ins/common/pix.c:520
-#: plug-ins/common/png.c:943 plug-ins/common/pnm.c:787
+#: plug-ins/common/png.c:969 plug-ins/common/pnm.c:787
 #: plug-ins/common/ps.c:1004 plug-ins/common/psd_save.c:1531
 #: plug-ins/common/sunras.c:525 plug-ins/common/tga.c:1031
 #: plug-ins/common/tiff.c:1524 plug-ins/common/xbm.c:1007
@@ -2110,7 +2096,7 @@ msgstr "A Procurar Fundo Animação..."
 msgid "Optimizing Animation..."
 msgstr "A Optimizar Animação..."
 
-#: plug-ins/common/animoptimize.c:481
+#: plug-ins/common/animoptimize.c:482
 msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr "Memória insuficiente para alocar buffers para optimização.\n"
 
@@ -2847,8 +2833,8 @@ msgid "Automatic Pre_view"
 msgstr "Ante_visão Automática"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1272 plug-ins/common/ripple.c:461
-#: plug-ins/gfig/gfig.c:3836 plug-ins/mosaic/mosaic.c:592
+#: plug-ins/common/curve_bend.c:1272 plug-ins/common/mosaic.c:546
+#: plug-ins/common/ripple.c:461 plug-ins/gfig/gfig.c:3836
 msgid "Options"
 msgstr "Opções"
 
@@ -2864,7 +2850,7 @@ msgstr "Unif_ormizar"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1315 plug-ins/common/gqbist.c:860
-#: plug-ins/common/ripple.c:470 plug-ins/mosaic/mosaic.c:600
+#: plug-ins/common/mosaic.c:554 plug-ins/common/ripple.c:470
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -3239,25 +3225,25 @@ msgstr "Nível de _Preto:"
 msgid "_White Level:"
 msgstr "Nível de _Branco:"
 
-#: plug-ins/common/destripe.c:149
+#: plug-ins/common/destripe.c:158
 msgid "<Image>/Filters/Enhance/Des_tripe..."
 msgstr "<Image>/Filtros/Realce/Suprimir Lis_tas..."
 
-#: plug-ins/common/destripe.c:348
+#: plug-ins/common/destripe.c:358
 msgid "Destriping..."
 msgstr "A suprimir listas..."
 
-#: plug-ins/common/destripe.c:548
+#: plug-ins/common/destripe.c:562
 msgid "Destripe"
 msgstr "Supressão Listas"
 
-#: plug-ins/common/destripe.c:641
+#: plug-ins/common/destripe.c:646
 msgid "Create _Histogram"
 msgstr "Criar _Histograma"
 
-#: plug-ins/common/destripe.c:665 plug-ins/common/gtm.c:606
+#: plug-ins/common/destripe.c:663 plug-ins/common/gtm.c:606
 #: plug-ins/common/ps.c:2692 plug-ins/common/ps.c:2868
-#: plug-ins/common/smooth_palette.c:450 plug-ins/common/tile.c:426
+#: plug-ins/common/smooth_palette.c:450 plug-ins/common/tile.c:427
 #: plug-ins/imagemap/imap_cmd_guides.c:159
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3439,7 +3425,7 @@ msgstr "_Limitar Largura Linha"
 #: plug-ins/common/engrave.c:244 plug-ins/common/film.c:1233
 #: plug-ins/common/gtm.c:622 plug-ins/common/ps.c:2701
 #: plug-ins/common/ps.c:2877 plug-ins/common/smooth_palette.c:455
-#: plug-ins/common/tile.c:430 plug-ins/imagemap/imap_cmd_guides.c:169
+#: plug-ins/common/tile.c:431 plug-ins/imagemap/imap_cmd_guides.c:169
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Altura:"
@@ -3682,34 +3668,34 @@ msgstr "<Image>/Filtros/Desfocar/Desfoc. Gaussiano (_IIR)..."
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr "gauss_iir: deve-se especificar horizontal ou vertical (ou ambos)"
 
-#: plug-ins/common/gauss_iir.c:296 plug-ins/common/gauss_iir.c:349
-#: plug-ins/common/gauss_iir.c:426
+#: plug-ins/common/gauss_iir.c:297 plug-ins/common/gauss_iir.c:353
+#: plug-ins/common/gauss_iir.c:430
 msgid "IIR Gaussian Blur"
 msgstr "Desfoc. Gaussiano IIR"
 
-#: plug-ins/common/gauss_iir.c:368 plug-ins/common/gauss_rle.c:362
+#: plug-ins/common/gauss_iir.c:372 plug-ins/common/gauss_rle.c:366
 msgid "Blur Horizontally"
 msgstr "Desfocam. Horizontal"
 
-#: plug-ins/common/gauss_iir.c:377 plug-ins/common/gauss_rle.c:371
+#: plug-ins/common/gauss_iir.c:381 plug-ins/common/gauss_rle.c:375
 msgid "Blur Vertically"
 msgstr "Desfocam. Vertical"
 
-#: plug-ins/common/gauss_iir.c:389 plug-ins/common/gauss_rle.c:383
+#: plug-ins/common/gauss_iir.c:393 plug-ins/common/gauss_rle.c:387
 msgid "Blur Radius:"
 msgstr "Raio de Desfoc.:"
 
 #. parameter settings
-#: plug-ins/common/gauss_iir.c:444 plug-ins/common/gauss_rle.c:438
+#: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:442
 msgid "Blur Radius"
 msgstr "Raio de Desfocamento"
 
-#: plug-ins/common/gauss_iir.c:459 plug-ins/common/gauss_rle.c:453
+#: plug-ins/common/gauss_iir.c:463 plug-ins/common/gauss_rle.c:457
 #: plug-ins/common/jigsaw.c:2585 plug-ins/common/spread.c:373
 msgid "_Horizontal:"
 msgstr "_Horizontal:"
 
-#: plug-ins/common/gauss_iir.c:463 plug-ins/common/gauss_rle.c:457
+#: plug-ins/common/gauss_iir.c:467 plug-ins/common/gauss_rle.c:461
 #: plug-ins/common/jigsaw.c:2598 plug-ins/common/spread.c:377
 msgid "_Vertical:"
 msgstr "_Vertical:"
@@ -3722,8 +3708,8 @@ msgstr "<Image>/Filtros/Desfocar/Desfoc. Gaussiano (_RLE)..."
 msgid "You must specify either horizontal or vertical (or both)"
 msgstr "Tem de especificar horizontal ou vertical (ou ambos)"
 
-#: plug-ins/common/gauss_rle.c:290 plug-ins/common/gauss_rle.c:343
-#: plug-ins/common/gauss_rle.c:420
+#: plug-ins/common/gauss_rle.c:291 plug-ins/common/gauss_rle.c:347
+#: plug-ins/common/gauss_rle.c:424
 msgid "RLE Gaussian Blur"
 msgstr "Desfoc. Gaussiano RLE"
 
@@ -4026,7 +4012,7 @@ msgstr "Mosaico Vidro"
 msgid "Tile _Width:"
 msgstr "_Largura Mosaico:"
 
-#: plug-ins/common/glasstile.c:281 plug-ins/mosaic/mosaic.c:692
+#: plug-ins/common/glasstile.c:281 plug-ins/common/mosaic.c:645
 msgid "Tile _Height:"
 msgstr "_Altura Mosaico:"
 
@@ -4767,9 +4753,9 @@ msgid "Max RGB"
 msgstr "RGB Máx."
 
 #. parameter settings
-#: plug-ins/common/max_rgb.c:287 plug-ins/common/shift.c:344
-#: plug-ins/common/video.c:2169 plug-ins/maze/maze_face.c:205
-#: plug-ins/mosaic/mosaic.c:672 plug-ins/xjt/xjt.c:874
+#: plug-ins/common/max_rgb.c:287 plug-ins/common/mosaic.c:625
+#: plug-ins/common/shift.c:344 plug-ins/common/video.c:2169
+#: plug-ins/maze/maze_face.c:205 plug-ins/xjt/xjt.c:874
 msgid "Parameter Settings"
 msgstr "Configurações Parâmetro"
 
@@ -4861,7 +4847,7 @@ msgstr "Descartar Frames por Omissão:"
 msgid "PNG Compression Level:"
 msgstr "Nível Compressão PNG:"
 
-#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1390
+#: plug-ins/common/mng.c:1346 plug-ins/common/png.c:1416
 msgid "Choose a high compression level for small file size"
 msgstr ""
 "Seleccione um nível de compressão elevado para um tamanho de ficheiro pequeno"
@@ -4889,6 +4875,81 @@ msgstr "Atraso Frame por Omissão:"
 #: plug-ins/common/mng.c:1426
 msgid "milliseconds"
 msgstr "milissegundos"
+
+#: plug-ins/common/mosaic.c:321
+msgid "<Image>/Filters/Distorts/_Mosaic..."
+msgstr "<Image>/Filtros/Distorções/_Mosaico..."
+
+#. progress bar for gradient finding
+#: plug-ins/common/mosaic.c:444
+msgid "Finding Edges..."
+msgstr "A Procurar Margens..."
+
+#. Progress bar for rendering tiles
+#: plug-ins/common/mosaic.c:493
+msgid "Rendering Tiles..."
+msgstr "A Renderizar Mosaicos..."
+
+#: plug-ins/common/mosaic.c:518
+msgid "Mosaic"
+msgstr "Mosaico"
+
+#: plug-ins/common/mosaic.c:563
+msgid "Co_lor Averaging"
+msgstr "Mé_dia de Cor"
+
+#: plug-ins/common/mosaic.c:573
+msgid "Allo_w Tile splitting"
+msgstr "Permitir di_visão Mosaicos"
+
+#: plug-ins/common/mosaic.c:583
+msgid "_Pitted Surfaces"
+msgstr "Su_perfícies Extraídas"
+
+#: plug-ins/common/mosaic.c:593
+msgid "_FG/BG Lighting"
+msgstr "Iluminação de _Frente/Fundo"
+
+#. tiling primitive
+#: plug-ins/common/mosaic.c:607
+msgid "Tiling Primitives"
+msgstr "Dividir Anteriores"
+
+#: plug-ins/common/mosaic.c:611
+msgid "_Squares"
+msgstr "_Quadrados"
+
+#: plug-ins/common/mosaic.c:613
+msgid "He_xagons"
+msgstr "He_xágonos"
+
+#: plug-ins/common/mosaic.c:615
+msgid "Oc_tagons & Squares"
+msgstr "Oc_tógonos & Quadrados"
+
+#: plug-ins/common/mosaic.c:636
+msgid "T_ile Size:"
+msgstr "Tamanho Mosa_ico:"
+
+#: plug-ins/common/mosaic.c:654
+msgid "Til_e Spacing:"
+msgstr "_Espaçamento Mosaico:"
+
+#: plug-ins/common/mosaic.c:663
+msgid "Tile _Neatness:"
+msgstr "Orga_nização Mosaico:"
+
+#: plug-ins/common/mosaic.c:673
+msgid "Light _Direction:"
+msgstr "_Direcção da Luz:"
+
+#: plug-ins/common/mosaic.c:682
+msgid "Color _Variation:"
+msgstr "_Variação de Cores:"
+
+#: plug-ins/common/mosaic.c:2414
+msgid "Unable to add additional point.\n"
+msgstr "Impossível adicionar mais pontos.\n"
 
 #: plug-ins/common/newsprint.c:153
 msgid "Round"
@@ -5307,7 +5368,8 @@ msgid "Temporary Procedure"
 msgstr "Procedimento Temporário"
 
 #: plug-ins/common/plugindetails.c:145
-msgid "<Toolbox>/Xtns/_Plugin Details..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/_Plugin Details"
 msgstr "<Toolbox>/Exten/Detalhes _Plugin..."
 
 #: plug-ins/common/plugindetails.c:221
@@ -5412,7 +5474,7 @@ msgstr ""
 "'%s':\n"
 "Modelo de cor PNG desconhecido"
 
-#: plug-ins/common/png.c:922
+#: plug-ins/common/png.c:948
 #, c-format
 msgid ""
 "'%s':\n"
@@ -5423,7 +5485,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1270
+#: plug-ins/common/png.c:1296
 msgid ""
 "Couldn't losslessly save transparency,\n"
 "saving opacity instead."
@@ -5431,44 +5493,44 @@ msgstr ""
 "Incapaz de gravar transparência sem perder qualidade,\n"
 "a gravar opaco."
 
-#: plug-ins/common/png.c:1294
+#: plug-ins/common/png.c:1320
 msgid "Save as PNG"
 msgstr "Gravar como PNG"
 
 #. parameter settings
-#: plug-ins/common/png.c:1306 plug-ins/common/sample_colorize.c:1382
+#: plug-ins/common/png.c:1332 plug-ins/common/sample_colorize.c:1382
 msgid "Settings"
 msgstr "Configurações"
 
-#: plug-ins/common/png.c:1319
+#: plug-ins/common/png.c:1345
 msgid "_Interlacing (Adam7)"
 msgstr "_Entrelaçado (Adam7)"
 
-#: plug-ins/common/png.c:1329
+#: plug-ins/common/png.c:1355
 msgid "Save _Background Color"
 msgstr "Gravar Cor _Fundo"
 
-#: plug-ins/common/png.c:1337
+#: plug-ins/common/png.c:1363
 msgid "Save _Gamma"
 msgstr "Gravar _Gama"
 
-#: plug-ins/common/png.c:1345
+#: plug-ins/common/png.c:1371
 msgid "Save _Layer Offset"
 msgstr "Gravar Des_locamento Camada"
 
-#: plug-ins/common/png.c:1353
+#: plug-ins/common/png.c:1379
 msgid "Save _Resolution"
 msgstr "Gravar _Resolução"
 
-#: plug-ins/common/png.c:1361
+#: plug-ins/common/png.c:1387
 msgid "Save Creation _Time"
 msgstr "Gravar Da_ta Criação"
 
-#: plug-ins/common/png.c:1369
+#: plug-ins/common/png.c:1395
 msgid "Save Comme_nt"
 msgstr "Gravar Come_ntário"
 
-#: plug-ins/common/png.c:1386
+#: plug-ins/common/png.c:1412
 msgid "Co_mpression Level:"
 msgstr "Nível de Co_mpressão:"
 
@@ -5944,36 +6006,36 @@ msgid "Loading Screen Shot..."
 msgstr "A Ler Captura Ecrã..."
 
 #. main dialog
-#: plug-ins/common/screenshot.c:347 plug-ins/common/screenshot.c:524
+#: plug-ins/common/screenshot.c:347 plug-ins/common/screenshot.c:525
 msgid "Screen Shot"
 msgstr "Captura Ecrã"
 
-#: plug-ins/common/screenshot.c:448
+#: plug-ins/common/screenshot.c:449
 msgid "Specified window not found"
 msgstr "Janela especificada não encontrada"
 
-#: plug-ins/common/screenshot.c:480
+#: plug-ins/common/screenshot.c:481
 msgid "Error obtaining Screen Shot"
 msgstr "Erro ao obter Captura Ecrã"
 
 #. single window
-#: plug-ins/common/screenshot.c:548 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:549 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Capturar"
 
-#: plug-ins/common/screenshot.c:557
+#: plug-ins/common/screenshot.c:558
 msgid "a _Single Window"
 msgstr "uma Única _Janela"
 
-#: plug-ins/common/screenshot.c:572
+#: plug-ins/common/screenshot.c:573
 msgid "the _Whole Screen"
 msgstr "o Ecrã _Inteiro"
 
-#: plug-ins/common/screenshot.c:591
+#: plug-ins/common/screenshot.c:592
 msgid "_after"
 msgstr "_após"
 
-#: plug-ins/common/screenshot.c:604 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:605 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "Segundos Atraso"
 
@@ -6102,6 +6164,10 @@ msgstr "_Ideal"
 msgid "_Distorted"
 msgstr "_Deformado"
 
+#: plug-ins/common/sinus.c:796 plug-ins/common/sinus.c:814
+msgid "Colors"
+msgstr "Cores"
+
 #. if in grey scale, the colors are necessarily black and white
 #: plug-ins/common/sinus.c:807
 msgid "The colors are white and black."
@@ -6138,10 +6204,6 @@ msgstr "Pr_imeira Cor:"
 #: plug-ins/common/sinus.c:889
 msgid "S_econd Color:"
 msgstr "S_egunda Cor:"
-
-#: plug-ins/common/sinus.c:905 plug-ins/imagemap/imap_preferences.c:515
-msgid "Co_lors"
-msgstr "C_ores"
 
 #: plug-ins/common/sinus.c:914
 msgid "Blend Settings"
@@ -6810,16 +6872,16 @@ msgstr "<Image>/Filtros/Mapa/Casca_ta.."
 msgid "Tiling..."
 msgstr "A Criar Cascata..."
 
-#: plug-ins/common/tile.c:398
+#: plug-ins/common/tile.c:399
 msgid "Tile"
 msgstr "Cascata"
 
 #. parameter settings
-#: plug-ins/common/tile.c:415
+#: plug-ins/common/tile.c:416
 msgid "Tile to New Size"
 msgstr "Cascata para o Novo Tamanho"
 
-#: plug-ins/common/tile.c:441
+#: plug-ins/common/tile.c:442
 msgid "C_reate New Image"
 msgstr "C_riar Nova Imagem"
 
@@ -6962,7 +7024,8 @@ msgid "The unit's plural form."
 msgstr "A forma plural da unidade."
 
 #: plug-ins/common/uniteditor.c:115
-msgid "<Toolbox>/Xtns/_Unit Editor..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/_Unit Editor"
 msgstr "<Toolbox>/Exten/Editor _Unidade..."
 
 #: plug-ins/common/uniteditor.c:179
@@ -7731,7 +7794,8 @@ msgid "Nothing to crop."
 msgstr "Nada a recortar."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
-msgid "<Toolbox>/Xtns/_DB Browser..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/_DB Browser"
 msgstr "<Toolbox>/Exten/_DB Browser..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -8768,6 +8832,14 @@ msgstr "O `Padrão' foi criado."
 #: plug-ins/gflare/gflare.c:2400
 msgid "Default"
 msgstr "Por Omissão"
+
+#.
+#. *  Scales
+#.
+#: plug-ins/gflare/gflare.c:2666 plug-ins/gflare/gflare.c:3475
+#: plug-ins/gflare/gflare.c:3582 plug-ins/gflare/gflare.c:3721
+msgid "Parameters"
+msgstr "Parâmetros"
 
 #: plug-ins/gflare/gflare.c:2693
 msgid "Ro_tation:"
@@ -10655,81 +10727,6 @@ msgstr "A Abrir %s"
 msgid "See %s"
 msgstr "Consulte %s"
 
-#: plug-ins/mosaic/mosaic.c:325
-msgid "<Image>/Filters/Distorts/_Mosaic..."
-msgstr "<Image>/Filtros/Distorções/_Mosaico..."
-
-#. progress bar for gradient finding
-#: plug-ins/mosaic/mosaic.c:450
-msgid "Finding Edges..."
-msgstr "A Procurar Margens..."
-
-#. Progress bar for rendering tiles
-#: plug-ins/mosaic/mosaic.c:514
-msgid "Rendering Tiles..."
-msgstr "A Renderizar Mosaicos..."
-
-#: plug-ins/mosaic/mosaic.c:543
-msgid "Mosaic"
-msgstr "Mosaico"
-
-#: plug-ins/mosaic/mosaic.c:609
-msgid "Co_lor Averaging"
-msgstr "Mé_dia de Cor"
-
-#: plug-ins/mosaic/mosaic.c:619
-msgid "Allo_w Tile splitting"
-msgstr "Permitir di_visão Mosaicos"
-
-#: plug-ins/mosaic/mosaic.c:629
-msgid "_Pitted Surfaces"
-msgstr "Su_perfícies Extraídas"
-
-#: plug-ins/mosaic/mosaic.c:639
-msgid "_FG/BG Lighting"
-msgstr "Iluminação de _Frente/Fundo"
-
-#. tiling primitive
-#: plug-ins/mosaic/mosaic.c:654
-msgid "Tiling Primitives"
-msgstr "Dividir Anteriores"
-
-#: plug-ins/mosaic/mosaic.c:658
-msgid "_Squares"
-msgstr "_Quadrados"
-
-#: plug-ins/mosaic/mosaic.c:660
-msgid "He_xagons"
-msgstr "He_xágonos"
-
-#: plug-ins/mosaic/mosaic.c:662
-msgid "Oc_tagons & Squares"
-msgstr "Oc_tógonos & Quadrados"
-
-#: plug-ins/mosaic/mosaic.c:683
-msgid "T_ile Size:"
-msgstr "Tamanho Mosa_ico:"
-
-#: plug-ins/mosaic/mosaic.c:701
-msgid "Til_e Spacing:"
-msgstr "_Espaçamento Mosaico:"
-
-#: plug-ins/mosaic/mosaic.c:710
-msgid "Tile _Neatness:"
-msgstr "Orga_nização Mosaico:"
-
-#: plug-ins/mosaic/mosaic.c:720
-msgid "Light _Direction:"
-msgstr "_Direcção da Luz:"
-
-#: plug-ins/mosaic/mosaic.c:729
-msgid "Color _Variation:"
-msgstr "_Variação de Cores:"
-
-#: plug-ins/mosaic/mosaic.c:2495
-msgid "Unable to add additional point.\n"
-msgstr "Impossível adicionar mais pontos.\n"
-
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
 msgstr "<Image>/Filtros/Distorções/Dobrar _Página..."
@@ -11642,6 +11639,18 @@ msgstr "Erro: Impossível ler ficheiro de propriedade %s XJT"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Erro: o ficheiro de propriedade %s XJT está vazio"
+
+#~ msgid "Click here to load your file"
+#~ msgstr "Clique aqui para carregar seu ficheiro"
+
+#~ msgid "Click here to cancel load procedure"
+#~ msgstr "Clique aqui para cancelar procedimento de carga"
+
+#~ msgid "Click here to save your file"
+#~ msgstr "Clique aqui para gravar o seu ficheiro"
+
+#~ msgid "Click here to cancel save procedure"
+#~ msgstr "Clique aqui para cancelar procedimento de gravação"
 
 #~ msgid "<Image>/Filters/Render/_Sinus..."
 #~ msgstr "<Image>/Filtros/Renderizar/_Sinuosidade..."

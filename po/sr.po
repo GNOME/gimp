@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-04 12:38+0200\n"
+"POT-Creation-Date: 2003-10-06 00:16+0200\n"
 "PO-Revision-Date: 2003-10-04 13:24+0200\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -2361,44 +2361,44 @@ msgid "Custom Color"
 msgstr "Произвољна боја"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:779
+#: app/display/gimpdisplayshell.c:789
 msgid "Set Canvas Padding Color"
 msgstr "Подеси Боју Подлоге Платна"
 
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:798
 msgid "Set canvas padding color"
 msgstr "Подеси боју подлоге платна"
 
-#: app/display/gimpdisplayshell.c:800
+#: app/display/gimpdisplayshell.c:810
 msgid "/From Theme"
 msgstr "/Из Теме"
 
-#: app/display/gimpdisplayshell.c:803
+#: app/display/gimpdisplayshell.c:813
 msgid "/Light Check Color"
 msgstr "/Провера светлих боја"
 
-#: app/display/gimpdisplayshell.c:806
+#: app/display/gimpdisplayshell.c:816
 msgid "/Dark Check Color"
 msgstr "/Провера тамних боја"
 
-#: app/display/gimpdisplayshell.c:812
+#: app/display/gimpdisplayshell.c:822
 msgid "/Select Custom Color..."
 msgstr "/Изабери произвољну боју..."
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:826
 msgid "/As in Preferences"
 msgstr "/Као што је подешено"
 
-#: app/display/gimpdisplayshell.c:841
+#: app/display/gimpdisplayshell.c:851
 msgid "Toggle QuickMask"
 msgstr "Укључи-искључи БрзуМаску"
 
-#: app/display/gimpdisplayshell.c:1830
+#: app/display/gimpdisplayshell.c:1840
 #, c-format
 msgid "Close %s?"
 msgstr "Затворити %s?"
 
-#: app/display/gimpdisplayshell.c:1832
+#: app/display/gimpdisplayshell.c:1842
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -7664,15 +7664,15 @@ msgstr "Бојење ради само на RGB цртежима."
 msgid "Select Color"
 msgstr "Изабери боју"
 
-#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:369
+#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:367
 msgid "_Hue:"
 msgstr "Тип"
 
-#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:383
+#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:381
 msgid "_Lightness:"
 msgstr "Осветљење:"
 
-#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:397
+#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:395
 msgid "_Saturation:"
 msgstr "_Засићеност:"
 
@@ -8025,47 +8025,47 @@ msgstr "Подеси Тип / Осветљење / Засићеност"
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Тип-Засићеност ради само на RGB цртежима"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
 msgstr "_Главни"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:272
+#: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:273
+#: app/tools/gimphuesaturationtool.c:271
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:278
+#: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
 msgstr "Изаберите примарну боју за измену"
 
-#: app/tools/gimphuesaturationtool.c:307
+#: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
 msgstr "Измени све боје"
 
-#: app/tools/gimphuesaturationtool.c:350
+#: app/tools/gimphuesaturationtool.c:348
 msgid "Modify Selected Color"
 msgstr "Измени изабрану боју"
 
-#: app/tools/gimphuesaturationtool.c:413
+#: app/tools/gimphuesaturationtool.c:411
 msgid "R_eset Color"
 msgstr "Поново постави боју"
 

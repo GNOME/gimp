@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-04 12:38+0200\n"
+"POT-Creation-Date: 2003-10-06 00:16+0200\n"
 "PO-Revision-Date: 2003-10-04 13:24+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -407,8 +407,8 @@ msgid ""
 "Context-dependent cursors are cool.  They are enabled by default. However, "
 "they require overhead that you may want to do without."
 msgstr ""
-"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano su "
-"uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
+"Kursori koji se menjaju u zavisnosti od konteksta su strava. Podrazumevano "
+"su uključeni. Ipak, povećavaju zahtevnost što vam možda neće odgovarati."
 
 #: app/config/gimprc-blurbs.h:53
 msgid ""
@@ -426,11 +426,11 @@ msgid ""
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
 msgstr ""
-"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine prema "
-"algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i nastavlja "
-"dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu ne bude "
-"veća od odrećene granične vrednosti. Ova vrednost predstavlja podrazumevanu "
-"graničnu vrednost."
+"Alatke kao što su nejasno-označavanje i popunjavanje bojom traže celine "
+"prema algoritmu popunjavanja osnove. Osnova počinje od prve izabrane tačke i "
+"nastavlja dalje u svim pravcima dok razlika boje nove tačke u odnosu na prvu "
+"ne bude veća od odrećene granične vrednosti. Ova vrednost predstavlja "
+"podrazumevanu graničnu vrednost."
 
 #: app/config/gimprc-blurbs.h:139
 msgid "Sets the browser used by the help system."
@@ -456,8 +456,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se otvori "
-"datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
+"Kada je uključeno, ovo osigurava da će cela slika biti vidljiva kada se "
+"otvori datoteka, u suprotnom će biti prikazano sa razmerom 1:1."
 
 #: app/config/gimprc-blurbs.h:155
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -502,8 +502,8 @@ msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
-"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu prozora "
-"slike."
+"Podešava veličinu navigacionog prikaza dostupnog u donjem desnom uglu "
+"prozora slike."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -523,9 +523,9 @@ msgid ""
 msgstr ""
 "Kada je uključeno, X server će na svaki pokret biti upitan za trenutni "
 "položaj miša, radije nego da se oslanjamo na nagoveštaj položaja. Ovo znači "
-"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da stvar "
-"bude čudnija, na nekim X serverima uključivanje ove opcije će rezultirati "
-"bržim crtanjem."
+"da će crtanje velikim četkama biti preciznije, ali moguće i sporije. Da "
+"stvar bude čudnija, na nekim X serverima uključivanje ove opcije će "
+"rezultirati bržim crtanjem."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
@@ -577,8 +577,8 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz konture "
-"trenutne četke"
+"Kada je uključeno, sve alatke za crtanje će pokazivati umanjeni prikaz "
+"konture trenutne četke"
 
 #: app/config/gimprc-blurbs.h:254
 msgid ""
@@ -593,16 +593,16 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati preko "
-"„Pogled->Prikaži lenjire“ naredbe."
+"Kada je uključeno, lenjiri su podrazumevano vidljivi. Ovo se može menjati "
+"preko „Pogled->Prikaži lenjire“ naredbe."
 
 #: app/config/gimprc-blurbs.h:262
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se takođe "
-"može menjati preko „Pogled->Prikaži linije sa klizačem“ naredbe."
+"Kada je uključeno, linije sa klizačem su podrazumevano vidljive. Ovo se "
+"takođe može menjati preko „Pogled->Prikaži linije sa klizačem“ naredbe."
 
 #: app/config/gimprc-blurbs.h:266
 msgid ""
@@ -710,16 +710,16 @@ msgid ""
 msgstr ""
 "Podešava direktorijum za privremene datoteke. Datoteke će se pojavljivati tu "
 "tokom rada u GIMP-u. Većina datoteka će nestati kada se GIMP zatvori, ali "
-"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude direktorijum "
-"koji delite sa drugim korisnicima."
+"neke datoteke će verovatno ostati, pa je najbolje da ovo ne bude "
+"direktorijum koji delite sa drugim korisnicima."
 
 #: app/config/gimprc-blurbs.h:330
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
 msgstr ""
-"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte da "
-"GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
+"Podešava veličinu umanjenog prikaza koji se snima sa svakom slikom. Znajte "
+"da GIMP ne može da čuva umanjene prikaze ako su pregledi slojeva isključeni."
 
 #: app/config/gimprc-blurbs.h:334
 msgid ""
@@ -730,8 +730,8 @@ msgid ""
 msgstr ""
 "Ostava za deliće osigurava da GIMP ne izgubi delić između memorije i diska. "
 "Postavljanje biše vrednosti znači da će GIMP koristiti manju privremenu "
-"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da će "
-"GIMP više koristiti privremenu datoteku a manje memoriju."
+"datoteku, ali će više koristiti memoriju. Obrnuto, manja vrednost znači da "
+"će GIMP više koristiti privremenu datoteku a manje memoriju."
 
 #: app/config/gimprc-blurbs.h:341
 msgid "Sets the manner in which transparency is displayed in images."
@@ -762,8 +762,8 @@ msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack."
 msgstr ""
-"Podešava gornju granicu količine memorije koja može biti korišćena za čuvanje "
-"operacija za poništavanje po slici."
+"Podešava gornju granicu količine memorije koja može biti korišćena za "
+"čuvanje operacija za poništavanje po slici."
 
 #: app/config/gimprc-blurbs.h:359
 msgid "When enabled, pressing F1 will open the help browser."
@@ -777,10 +777,10 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
-"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna putanja "
-"ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji (PATH). "
-"Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će adresa "
-"biti dodata na naredbu razdvojena razmakom."
+"Postavlja spoljašnji čitač veba koji da koristim. Ovo može biti potpuna "
+"putanja ili ime izvršnog programa koji ću tražiti u korisnikovoj putanji "
+"(PATH). Ukoliko naredba sadrži „%s“, ono će biti zamenjeno adresom, inače će "
+"adresa biti dodata na naredbu razdvojena razmakom."
 
 #: app/config/gimpscanner.c:93 app/tools/gimpcurvestool.c:1292
 #: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:78
@@ -2361,44 +2361,44 @@ msgid "Custom Color"
 msgstr "Proizvoljna boja"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:779
+#: app/display/gimpdisplayshell.c:789
 msgid "Set Canvas Padding Color"
 msgstr "Podesi Boju Podloge Platna"
 
-#: app/display/gimpdisplayshell.c:788
+#: app/display/gimpdisplayshell.c:798
 msgid "Set canvas padding color"
 msgstr "Podesi boju podloge platna"
 
-#: app/display/gimpdisplayshell.c:800
+#: app/display/gimpdisplayshell.c:810
 msgid "/From Theme"
 msgstr "/Iz Teme"
 
-#: app/display/gimpdisplayshell.c:803
+#: app/display/gimpdisplayshell.c:813
 msgid "/Light Check Color"
 msgstr "/Provera svetlih boja"
 
-#: app/display/gimpdisplayshell.c:806
+#: app/display/gimpdisplayshell.c:816
 msgid "/Dark Check Color"
 msgstr "/Provera tamnih boja"
 
-#: app/display/gimpdisplayshell.c:812
+#: app/display/gimpdisplayshell.c:822
 msgid "/Select Custom Color..."
 msgstr "/Izaberi proizvoljnu boju..."
 
-#: app/display/gimpdisplayshell.c:816
+#: app/display/gimpdisplayshell.c:826
 msgid "/As in Preferences"
 msgstr "/Kao što je podešeno"
 
-#: app/display/gimpdisplayshell.c:841
+#: app/display/gimpdisplayshell.c:851
 msgid "Toggle QuickMask"
 msgstr "Uključi-isključi BrzuMasku"
 
-#: app/display/gimpdisplayshell.c:1830
+#: app/display/gimpdisplayshell.c:1840
 #, c-format
 msgid "Close %s?"
 msgstr "Zatvoriti %s?"
 
-#: app/display/gimpdisplayshell.c:1832
+#: app/display/gimpdisplayshell.c:1842
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -6740,8 +6740,8 @@ msgstr "Kliknite na „Nastavi“ da prihvatite navedena podešavanja."
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti.</"
-"b>"
+"<b>Za najbolje GIMP performanse, neka podešavanja će možda trebati promeniti."
+"</b>"
 
 #: app/gui/user-install-dialog.c:956
 msgid "Monitor Resolution"
@@ -6810,7 +6810,8 @@ msgid ""
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP koristi ograničenu količinu memorije za skladištenje podataka o slikama\n"
+"GIMP koristi ograničenu količinu memorije za skladištenje podataka o "
+"slikama\n"
 "tzv. „Ostavu za deliće“. Trebate podesiti njenu veličinu kako bi stala u "
 "memoriju.\n"
 "Mislite i na memoriju potrebnu za ostale procese na sistemu."
@@ -7664,15 +7665,15 @@ msgstr "Bojenje radi samo na RGB crtežima."
 msgid "Select Color"
 msgstr "Izaberi boju"
 
-#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:369
+#: app/tools/gimpcolorizetool.c:258 app/tools/gimphuesaturationtool.c:367
 msgid "_Hue:"
 msgstr "Tip"
 
-#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:383
+#: app/tools/gimpcolorizetool.c:272 app/tools/gimphuesaturationtool.c:381
 msgid "_Lightness:"
 msgstr "Osvetljenje:"
 
-#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:397
+#: app/tools/gimpcolorizetool.c:286 app/tools/gimphuesaturationtool.c:395
 msgid "_Saturation:"
 msgstr "_Zasićenost:"
 
@@ -8025,47 +8026,47 @@ msgstr "Podesi Tip / Osvetljenje / Zasićenost"
 msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "Tip-Zasićenost radi samo na RGB crtežima"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
 msgstr "_Glavni"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:271
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:272
+#: app/tools/gimphuesaturationtool.c:270
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:273
+#: app/tools/gimphuesaturationtool.c:271
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:278
+#: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
 msgstr "Izaberite primarnu boju za izmenu"
 
-#: app/tools/gimphuesaturationtool.c:307
+#: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
 msgstr "Izmeni sve boje"
 
-#: app/tools/gimphuesaturationtool.c:350
+#: app/tools/gimphuesaturationtool.c:348
 msgid "Modify Selected Color"
 msgstr "Izmeni izabranu boju"
 
-#: app/tools/gimphuesaturationtool.c:413
+#: app/tools/gimphuesaturationtool.c:411
 msgid "R_eset Color"
 msgstr "Ponovo postavi boju"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-27 11:55+0200\n"
+"POT-Creation-Date: 2003-10-05 20:25+0200\n"
 "PO-Revision-Date: 2003-09-27 16:15+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -148,11 +148,13 @@ msgid "Server Logfile:"
 msgstr "Žurnálový soubor serveru:"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr "<Toolbox>/Rozš./Skript-fu/_Konzola..."
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Rozš./Skript-fu/_Server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
@@ -160,7 +162,8 @@ msgid "Re-read all available scripts"
 msgstr "Znovu načíst všechny dostupné skripty"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Rozš./Skript-fu/_Obnovit"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
@@ -2153,8 +2156,9 @@ msgid "Whirl Amount"
 msgstr "Míra víření"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/_Víry (dlaždicovatelné)..."
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/Vířivá _dlaždice..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2383,6 +2387,9 @@ msgstr "X posun světel"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y posun světel"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Rozš./Skript-fu/Vzorky/_Víry (dlaždicovatelné)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 #~ msgstr "<Toolbox>/Rozš./Webový prohlížeč/Chyby programu GIMP"
