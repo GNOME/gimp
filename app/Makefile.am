@@ -71,6 +71,7 @@ AM_CPPFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
+	$(PANGOFT2_CFLAGS) \
 	-I$(includedir)
 
 gimp_2_0_LDFLAGS = \
