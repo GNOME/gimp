@@ -653,6 +653,7 @@ gimp_drawable_apply_region (GimpDrawable         *drawable,
                             gint                  y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (src2PR != NULL);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_region (drawable, src2PR,
                                                     push_undo, undo_desc,
@@ -672,6 +673,8 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
                               gint          y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (src2PR != NULL);
+  g_return_if_fail (maskPR != NULL);
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->replace_region (drawable, src2PR,
                                                       push_undo, undo_desc,

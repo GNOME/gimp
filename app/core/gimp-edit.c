@@ -45,6 +45,16 @@
 #include "gimp-intl.h"
 
 
+/*  local function protypes  */
+
+static gboolean gimp_edit_fill_internal (GimpImage    *gimage,
+                                         GimpDrawable *drawable,
+                                         GimpFillType  fill_type,
+                                         const gchar  *undo_desc);
+
+
+/*  public functions  */
+
 const GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
 	       GimpDrawable *drawable)
@@ -289,41 +299,12 @@ gboolean
 gimp_edit_clear (GimpImage    *gimage,
 		 GimpDrawable *drawable)
 {
-  TileManager *buf_tiles;
-  PixelRegion  bufPR;
-  gint         x1, y1, x2, y2;
-  guchar       col[MAX_CHANNELS];
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  gimp_image_get_background (gimage, drawable, col);
-  if (gimp_drawable_has_alpha (drawable))
-    col [gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-
-  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if (!(x2 - x1) || !(y2 - y1))
-    return TRUE;  /*  nothing to do, but the clear succeded  */
-
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-				gimp_drawable_bytes (drawable));
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
-  color_region (&bufPR, col);
-
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_drawable_apply_region (drawable, &bufPR,
-                              TRUE, _("Clear"),
-                              GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
-                              NULL, x1, y1);
-
-  /*  update the image  */
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
-
-  /*  free the temporary tiles  */
-  tile_manager_unref (buf_tiles);
-
-  return TRUE;
+  return gimp_edit_fill_internal (gimage, drawable,
+                                  GIMP_TRANSPARENT_FILL,
+                                  _("Clear"));
 }
 
 gboolean
@@ -331,45 +312,26 @@ gimp_edit_fill (GimpImage    *gimage,
 		GimpDrawable *drawable,
 		GimpFillType  fill_type)
 {
-  TileManager *buf_tiles;
-  PixelRegion  bufPR;
-  gint         x1, y1, x2, y2;
-  guchar       col[MAX_CHANNELS];
   const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_has_alpha (drawable))
-    col [gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
-
-  g_print ("fill_type: %d\n", fill_type);
-
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      gimp_image_get_foreground (gimage, drawable, col);
       undo_desc = _("Fill with FG Color");
       break;
 
     case GIMP_BACKGROUND_FILL:
-      gimp_image_get_background (gimage, drawable, col);
       undo_desc = _("Fill with BG Color");
       break;
 
     case GIMP_WHITE_FILL:
-      col[RED_PIX]   = 255;
-      col[GREEN_PIX] = 255;
-      col[BLUE_PIX]  = 255;
       undo_desc = _("Fill with White");
       break;
 
     case GIMP_TRANSPARENT_FILL:
-      col[RED_PIX]   = 0;
-      col[GREEN_PIX] = 0;
-      col[BLUE_PIX]  = 0;
-      if (gimp_drawable_has_alpha (drawable))
-	col [gimp_drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
       undo_desc = _("Fill with Transparency");
       break;
 
@@ -378,32 +340,77 @@ gimp_edit_fill (GimpImage    *gimage,
 
     default:
       g_warning ("%s: unknown fill type", G_GNUC_PRETTY_FUNCTION);
-      gimp_image_get_background (gimage, drawable, col);
+      fill_type = GIMP_BACKGROUND_FILL;
       undo_desc = _("Fill with BG Color");
       break;
     }
 
+  return gimp_edit_fill_internal (gimage, drawable, fill_type, undo_desc);
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_edit_fill_internal (GimpImage    *gimage,
+                         GimpDrawable *drawable,
+                         GimpFillType  fill_type,
+                         const gchar  *undo_desc)
+{
+  TileManager *buf_tiles;
+  PixelRegion  bufPR;
+  gint         x1, y1, x2, y2;
+  guchar       tmp_col[MAX_CHANNELS];
+  guchar       col[MAX_CHANNELS];
+
+  switch (fill_type)
+    {
+    case GIMP_FOREGROUND_FILL:
+      gimp_image_get_foreground (gimage, drawable, col);
+      break;
+
+    case GIMP_BACKGROUND_FILL:
+    case GIMP_TRANSPARENT_FILL:
+      gimp_image_get_background (gimage, drawable, col);
+      break;
+
+    case GIMP_WHITE_FILL:
+      tmp_col[RED_PIX]   = 255;
+      tmp_col[GREEN_PIX] = 255;
+      tmp_col[BLUE_PIX]  = 255;
+      gimp_image_transform_color (gimage, drawable, col, GIMP_RGB, tmp_col);
+      undo_desc = _("Fill with White");
+      break;
+
+    case GIMP_NO_FILL:
+      return TRUE;  /*  nothing to do, but the fill succeded  */
+    }
+
+  if (gimp_drawable_has_alpha (drawable))
+    col[gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  if (!(x2 - x1) || !(y2 - y1))
+  if (x1 == x2 || y1 == y2)
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
+  buf_tiles = tile_manager_new (x2 - x1, y2 - y1,
 				gimp_drawable_bytes (drawable));
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, TRUE);
   color_region (&bufPR, col);
 
-  pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&bufPR, buf_tiles, 0, 0, x2 - x1, y2 - y1, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, undo_desc,
-                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                              GIMP_OPACITY_OPAQUE,
+                              (fill_type == GIMP_TRANSPARENT_FILL) ?
+                              GIMP_ERASE_MODE : GIMP_NORMAL_MODE,
                               NULL, x1, y1);
 
-  /*  update the image  */
-  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
-
-  /*  free the temporary tiles  */
   tile_manager_unref (buf_tiles);
+
+  gimp_drawable_update (drawable, x1, y1, x2 - x1, y2 - y1);
 
   return TRUE;
 }

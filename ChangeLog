@@ -1,5 +1,20 @@
 2003-10-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c (gimp_edit_fill_internal): new utility
+	function which does everything gimp_edit_clear() and
+	gimp_edit_fill() do but doesn't fail to:
+
+	- fill an indexed drawable with white.
+	- fill a drawable with alpha with transparency.
+
+	(gimp_edit_clear)
+	(gimp_edit_fill): use gimp_edit_fill_internal().
+
+	* app/core/gimpdrawable.c (gimp_drawable_[apply,replace]_region):
+	added more g_return_if_fail(required_parameter != NULL).
+
+2003-10-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdock.[ch]: added new pure virtual function
 	GimpDock::setup() which configures a dock like a passed template
 	dock.
