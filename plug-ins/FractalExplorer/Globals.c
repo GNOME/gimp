@@ -10,41 +10,41 @@
   Global variables  
  *********************************************************************/
 
-double              xmin = -2,
-                    xmax = 1,
-                    ymin = -1.5,
-                    ymax = 1.5;
-double              xbild,
-                    ybild,
-                    xdiff,
-                    ydiff;
-double              x_press = -1.0,
-                    y_press = -1.0;
-double              x_release = -1.0,
-                    y_release = -1.0;
-float               cx = -0.75;
-float               cy = -0.2;
+gdouble             xmin = -2;
+gdouble             xmax = 1;
+gdouble             ymin = -1.5;
+gdouble             ymax = 1.5;
+gdouble             xbild;
+gdouble             ybild;
+gdouble             xdiff;
+gdouble             ydiff;
+gdouble             x_press = -1.0;
+gdouble             y_press = -1.0;
+gdouble             x_release = -1.0;
+gdouble             y_release = -1.0;
+gfloat              cx = -0.75;
+gfloat              cy = -0.2;
 GimpDrawable          *drawable;
-gint                tile_width,
-                    tile_height;
-gint                img_width,
-                    img_height,
-                    img_bpp;
-gint                sel_x1,
-                    sel_y1,
-                    sel_x2,
-                    sel_y2;
-gint                sel_width,
-                    sel_height;
-gint                preview_width,
-                    preview_height;
-GimpTile              *the_tile = NULL;
-double              cen_x,
-                    cen_y;
-double              xpos,
-                    ypos,
-                    oldxpos = -1,
-                    oldypos = -1;
+gint                tile_width;
+gint                tile_height;
+gint                img_width;
+gint                img_height;
+gint                img_bpp;
+gint                sel_x1;
+gint                sel_y1;
+gint                sel_x2;
+gint                sel_y2;
+gint                sel_width;
+gint                sel_height;
+gint                preview_width;
+gint                preview_height;
+GimpTile           *the_tile = NULL;
+gdouble             cen_x;
+gdouble             cen_y;
+gdouble             xpos;
+gdouble             ypos;
+gdouble             oldxpos = -1;
+gdouble             oldypos = -1;
 GtkWidget          *maindlg;
 GtkWidget          *logodlg;
 GtkWidget          *cmap_preview;
@@ -53,19 +53,19 @@ GtkWidget          *fractalexplorer_gtk_list;
 GtkWidget          *save_menu_item;
 GtkWidget          *fractalexplorer_op_menu;
 GdkCursor          *MyCursor;
-int                 ready_now = FALSE;
+gboolean            ready_now = FALSE;
 explorer_vals_t     zooms[100];
 DialogElements     *elements = NULL;
-int                 zoomindex = 1;
-int                 zoommax = 1;
+gint                zoomindex = 1;
+gint                zoommax = 1;
 gdouble            *gg;
-int                 line_no;
+gint                line_no;
 gchar              *filename;
 clrmap              colormap;
-GList		   *fractalexplorer_path_list = NULL;
+gchar		   *fractalexplorer_path = NULL;
 GList		   *fractalexplorer_list = NULL;
-GList		   *gradient_list = NULL;
-gchar 		   *tpath = NULL;
+GList		   *gradient_list        = NULL;
+gchar 		   *tpath                = NULL;
 fractalexplorerOBJ *fractalexplorer_obj_for_menu;
 GList              *rescan_list = NULL;
 

@@ -49,7 +49,8 @@ static void    gimp_data_factory_finalize      (GObject              *object);
 
 static gsize   gimp_data_factory_get_memsize   (GimpObject           *object);
 
-static void    gimp_data_factory_load_callback (GimpDatafileData     *file_data);
+static void    gimp_data_factory_load_data   (const GimpDatafileData *file_data,
+                                              gpointer                user_data);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -205,7 +206,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
       gimp_datafiles_read_directories (path,
                                        G_FILE_TEST_EXISTS,
-				       gimp_data_factory_load_callback,
+				       gimp_data_factory_load_data,
 				       factory);
     }
 
@@ -415,12 +416,13 @@ gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 }
 
 static void
-gimp_data_factory_load_callback (GimpDatafileData *file_data)
+gimp_data_factory_load_data (const GimpDatafileData *file_data,
+                             gpointer                user_data)
 {
   GimpDataFactory *factory;
   gint             i;
 
-  factory = (GimpDataFactory *) file_data->user_data;
+  factory = GIMP_DATA_FACTORY (user_data);
 
   for (i = 0; i < factory->n_loader_entries; i++)
     {

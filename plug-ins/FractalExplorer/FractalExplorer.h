@@ -163,27 +163,26 @@ extern fractalexplorerOBJ *current_obj;
 extern fractalexplorerOBJ *pic_obj;
 extern GtkWidget          *delete_dialog;
 
-GtkWidget * add_objects_list                   (void);
-void        plug_in_parse_fractalexplorer_path (void);
+GtkWidget * add_objects_list (void);
 
 /**********************************************************************
   Global variables  
  *********************************************************************/
 
-extern double       xmin,
-                    xmax,
-                    ymin,
-                    ymax;
-extern double       xbild,
-                    ybild,
-                    xdiff,
-                    ydiff;
-extern double       x_press,
-                    y_press;
-extern double       x_release,
-                    y_release;
-extern float        cx;
-extern float        cy;
+extern gdouble      xmin;
+extern gdouble      xmax;
+extern gdouble      ymin;
+extern gdouble      ymax;
+extern gdouble      xbild;
+extern gdouble      ybild;
+extern gdouble      xdiff;
+extern gdouble      ydiff;
+extern gdouble      x_press;
+extern gdouble      y_press;
+extern gdouble      x_release;
+extern gdouble      y_release;
+extern gfloat       cx;
+extern gfloat       cy;
 extern GimpDrawable   *drawable;
 extern gint         tile_width,
                     tile_height;
@@ -224,7 +223,7 @@ extern gdouble     *gg;
 extern int          line_no;
 extern gchar       *filename;
 extern clrmap       colormap;
-extern GList	   *fractalexplorer_path_list;
+extern gchar       *fractalexplorer_path;
 extern GList	   *fractalexplorer_list;
 extern GList	   *gradient_list;
 extern gchar 	   *tpath;

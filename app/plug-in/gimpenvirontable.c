@@ -54,7 +54,8 @@ static void     gimp_environ_table_init           (GimpEnvironTable      *enviro
 
 static void     gimp_environ_table_finalize       (GObject               *object);
 
-static void     gimp_environ_table_load_env_file  (GimpDatafileData      *file_data);
+static void    gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
+                                                  gpointer                user_data);
 static gboolean gimp_environ_table_legal_name     (gchar                 *name);
 
 static void     gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
@@ -240,7 +241,8 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
 /* private */
 
 static void
-gimp_environ_table_load_env_file (GimpDatafileData *file_data)
+gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
+                                  gpointer                user_data)
 {
   GimpEnvironTable *environ_table;
   FILE             *env;
@@ -249,7 +251,7 @@ gimp_environ_table_load_env_file (GimpDatafileData *file_data)
   gchar            *name, *value, *separator, *p, *q;
   GimpEnvironValue *val;
 
-  environ_table = GIMP_ENVIRON_TABLE (file_data->user_data);
+  environ_table = GIMP_ENVIRON_TABLE (user_data);
 
   env = fopen (file_data->filename, "r");
   if (! env)

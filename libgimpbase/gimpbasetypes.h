@@ -33,7 +33,8 @@ typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 
 
-typedef void (* GimpDatafileLoaderFunc) (GimpDatafileData *file_data);
+typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
+                                         gpointer                user_data);
 
 
 typedef enum

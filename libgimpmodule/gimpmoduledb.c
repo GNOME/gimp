@@ -56,7 +56,8 @@ static void         gimp_module_db_init           (GimpModuleDB      *db);
 
 static void         gimp_module_db_finalize            (GObject      *object);
 
-static void         gimp_module_db_module_initialize   (GimpDatafileData *file_data);
+static void         gimp_module_db_module_initialize   (const GimpDatafileData *file_data,
+                                                        gpointer                user_data);
 
 static GimpModule * gimp_module_db_module_find_by_path (GimpModuleDB *db,
                                                         const char   *fullpath);
@@ -389,13 +390,14 @@ valid_module_name (const gchar *filename)
 }
 
 static void
-gimp_module_db_module_initialize (GimpDatafileData *file_data)
+gimp_module_db_module_initialize (const GimpDatafileData *file_data,
+                                  gpointer                user_data)
 {
   GimpModuleDB *db;
   GimpModule   *module;
   gboolean      load_inhibit;
 
-  db = GIMP_MODULE_DB (file_data->user_data);
+  db = GIMP_MODULE_DB (user_data);
 
   if (! valid_module_name (file_data->filename))
     return;

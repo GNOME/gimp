@@ -586,8 +586,8 @@ static GimpPixelFetcher   *tk_write;
 static GFlareDialog       *dlg = NULL;
 static GFlareEditor       *ed = NULL;
 static GList              *gflares_list = NULL;
-static gint                num_gflares = 0;
-static GList              *gflare_path_list = NULL;
+static gint                num_gflares  = 0;
+static gchar              *gflare_path  = NULL;
 static CalcParams          calc;
 static GList              *gradient_menus;
 static gchar             **gradient_names = NULL;
@@ -824,13 +824,13 @@ plugin_query (void)
     { GIMP_PDB_FLOAT,   "asupsample_threshold", "Threshold for adaptive supersampling"}
   };
 
-  gchar	 *help_string =
-    " This plug-in produces a lense flare effect using custom gradients."
-    " In interactive call, the user can edit his/her own favorite lense flare"
-    " (GFlare) and render it. Edited gflare is saved automatically to"
-    " the folder in gflare-path, if it is defined in gimprc."
-    " In non-interactive call, the user can only render one of GFlare"
-    " which has been stored in gflare-path already.";
+  const gchar *help_string =
+    "This plug-in produces a lense flare effect using custom gradients. "
+    "In interactive call, the user can edit his/her own favorite lense flare "
+    "(GFlare) and render it. Edited gflare is saved automatically to "
+    "the folder in gflare-path, if it is defined in gimprc. "
+    "In non-interactive call, the user can only render one of GFlare "
+    "which has been stored in gflare-path already.";
 
   gimp_install_procedure ("plug_in_gflare",
 			  "Produce lense flare effect using custom gradients",
@@ -890,8 +890,7 @@ plugin_run (const gchar      *name,
    *	Parse gflare path from gimprc and load gflares
    */
 
-  gflare_path_list = 
-    gimp_plug_in_parse_path ("gflare-path", "gflare");
+  gflare_path = gimp_plug_in_get_path ("gflare-path", "gflare");
   gflares_list_load_all ();
 
   gimp_tile_cache_ntiles (drawable->width / gimp_tile_width () + 2);
@@ -1185,11 +1184,13 @@ plugin_progress_func (gint     y1,
  */
 
 static GFlare *
-gflare_new ()
+gflare_new (void)
 {
   GFlare *gflare = g_new0 (GFlare, 1);
-  gflare->name = NULL;
+
+  gflare->name     = NULL;
   gflare->filename = NULL;
+
   return gflare;
 }
 
@@ -1200,7 +1201,8 @@ gflare_new_with_default (const gchar *new_name)
 }
 
 static GFlare *
-gflare_dup (const GFlare *src, const gchar *new_name)
+gflare_dup (const GFlare *src,
+            const gchar  *new_name)
 {
   GFlare *dest = g_new0 (GFlare, 1);
 
@@ -1213,7 +1215,8 @@ gflare_dup (const GFlare *src, const gchar *new_name)
 }
 
 static void
-gflare_copy (GFlare *dest, const GFlare *src)
+gflare_copy (GFlare       *dest,
+             const GFlare *src)
 {
   gchar *name, *filename;
 
@@ -1238,7 +1241,8 @@ gflare_free (GFlare *gflare)
 }
 
 GFlare *
-gflare_load (const gchar *filename, const gchar *name)
+gflare_load (const gchar *filename,
+             const gchar *name)
 {
   FILE		*fp;
   GFlareFile	*gf;
@@ -1323,7 +1327,8 @@ gflare_load (const gchar *filename, const gchar *name)
 }
 
 static void
-gflare_read_int (gint *intvar, GFlareFile *gf)
+gflare_read_int (gint       *intvar,
+                 GFlareFile *gf)
 {
   if (gf->error)
     return;
@@ -1333,7 +1338,8 @@ gflare_read_int (gint *intvar, GFlareFile *gf)
 }
 
 static void
-gflare_read_double (gdouble *dblvar, GFlareFile *gf)
+gflare_read_double (gdouble    *dblvar,
+                    GFlareFile *gf)
 {
   gchar buf[30];
 
@@ -1421,33 +1427,41 @@ gflare_save (GFlare *gflare)
 
   if (gflare->filename == NULL)
     {
-      if (gflare_path_list == NULL)
+      GList *list;
+
+      if (gflare_path == NULL)
 	{
-	  if (!message_ok)
+	  if (! message_ok)
 	    {
-	      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-	      gchar *gflare_path = g_strescape
-		("${gimp_dir}" G_DIR_SEPARATOR_S "gflare",
-		 NULL);
-	      gchar *dir = gimp_personal_rc_file ("gflare");
+	      gchar *gimprc      = gimp_personal_rc_file ("gimprc");
+	      gchar *dir         = gimp_personal_rc_file ("gflare");
+	      gchar *gflare_dir;
+
+	      gflare_dir =
+                g_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare", NULL);
 
 	      g_message (_("GFlare `%s' is not saved.\n"
 			   "If you add a new entry in %s, like:\n"
 			   "(gflare-path \"%s\")\n"
 			   "and make a folder %s,\n"
-			   "then you can save your own GFlare's into that folder."), 
-			 gflare->name, gimprc, gflare_path, dir);
+			   "then you can save your own GFlares into that folder."), 
+			 gflare->name, gimprc, gflare_dir, dir);
+
 	      g_free (gimprc);
-	      g_free (gflare_path);
+	      g_free (gflare_dir);
 	      g_free (dir);
+
 	      message_ok = TRUE;
 	    }	      
+
 	  return;
 	}
 
-      path = gimp_path_get_user_writable_dir (gflare_path_list);
+      list = gimp_path_parse (gflare_path, 16, FALSE, NULL);
+      path = gimp_path_get_user_writable_dir (list);
+      gimp_path_free (list);
 
-      if (!path)
+      if (! path)
 	path = g_strdup (gimp_directory ());
 
       gflare->filename = g_build_filename (path, gflare->name, NULL);
@@ -1502,7 +1516,8 @@ gflare_save (GFlare *gflare)
 }
 
 static void
-gflare_write_gradient_name (GradientName name, FILE *fp)
+gflare_write_gradient_name (GradientName  name,
+                            FILE         *fp)
 {
   gchar	enc[1024];
 
@@ -1515,7 +1530,8 @@ gflare_write_gradient_name (GradientName name, FILE *fp)
 }
 
 static void
-gflare_name_copy (gchar *dest, const gchar *src)
+gflare_name_copy (gchar       *dest,
+                  const gchar *src)
 {
   strncpy (dest, src, GFLARE_NAME_MAX);
   dest[GFLARE_NAME_MAX-1] = '\0';
@@ -1528,7 +1544,8 @@ gflare_name_copy (gchar *dest, const gchar *src)
 /*************************************************************************/
 
 static gint
-gflare_compare (const GFlare *flare1, const GFlare *flare2)
+gflare_compare (const GFlare *flare1,
+                const GFlare *flare2)
 {
   return strcmp (flare1->name, flare2->name);
 }
@@ -1543,7 +1560,8 @@ gflares_list_insert (GFlare *gflare)
 }
 
 static gint
-gflare_compare_name (const GFlare *flare, const gchar *name)
+gflare_compare_name (const GFlare *flare,
+                     const gchar  *name)
 {
   return strcmp (flare->name, name);
 }
@@ -1591,49 +1609,26 @@ gflares_list_remove (GFlare *gflare)
  * Load all gflares, which are founded in gflare-path-list, into gflares_list.
  */
 static void
+gflares_list_load_one (const GimpDatafileData *file_data,
+                       gpointer                user_data)
+{
+  GFlare *gflare;
+
+  gflare = gflare_load (file_data->filename, file_data->basename);
+
+  if (gflare)
+    gflares_list_insert (gflare);
+}
+
+static void
 gflares_list_load_all (void)
 {
-  GFlare	*gflare;
-  GList		*list;
-  gchar		*path;
-  gchar		*filename;
-  GDir		*dir;
-  const gchar 	*dir_ent;
-
   /*  Make sure to clear any existing gflares  */
   gflares_list_free_all ();
 
-  list = gflare_path_list;
-  while (list)
-    {
-      path = list->data;
-      list = list->next;
-
-      /* Open directory */
-      dir = g_dir_open (path, 0, NULL);
-
-      if (!dir)
-	g_message (_("Error reading GFlare folder '%s'"), path);
-      else
-	{
-	  while ((dir_ent = g_dir_read_name (dir)))
-	    {
-	      filename = g_build_filename (path, dir_ent, NULL);
-
-	      /* Check the file and see that it is not a sub-directory */
-	      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-		{
-		  gflare = gflare_load (filename, dir_ent);
-		  if (gflare)
-		    gflares_list_insert (gflare);
-		}
-
-	      g_free (filename);
-	    } /* while */
-
-	  g_dir_close (dir);
-	} /* else */
-    }
+  gimp_datafiles_read_directories (gflare_path, G_FILE_TEST_EXISTS,
+                                   gflares_list_load_one,
+                                   NULL);
 }
 
 static void
@@ -1660,29 +1655,34 @@ gflares_list_free_all (void)
  */
 
 static void
-calc_init_params (GFlare *gflare, gint calc_type,
-		  gdouble xcenter, gdouble ycenter,
-		  gdouble radius, gdouble rotation, gdouble hue,
-		  gdouble vangle, gdouble vlength)
+calc_init_params (GFlare  *gflare,
+                  gint     calc_type,
+		  gdouble  xcenter,
+                  gdouble  ycenter,
+		  gdouble  radius,
+                  gdouble  rotation,
+                  gdouble  hue,
+		  gdouble  vangle,
+                  gdouble  vlength)
 {
-  calc.type	   = calc_type;
-  calc.gflare	   = gflare;
-  calc.xcenter	   = xcenter;
-  calc.ycenter	   = ycenter;
-  calc.radius	   = radius;
-  calc.rotation	   = rotation * G_PI / 180.0;
-  calc.hue	   = hue;
-  calc.vangle	   = vangle * G_PI / 180.0;
-  calc.vlength	   = radius * vlength / 100.0;
-  calc.glow_radius   = radius * gflare->glow_size / 100.0;
-  calc.rays_radius   = radius * gflare->rays_size / 100.0;
-  calc.sflare_radius = radius * gflare->sflare_size / 100.0;
-  calc.glow_rotation = (rotation + gflare->glow_rotation) * G_PI / 180.0;
-  calc.rays_rotation = (rotation + gflare->rays_rotation) * G_PI / 180.0;
+  calc.type	       = calc_type;
+  calc.gflare	       = gflare;
+  calc.xcenter	       = xcenter;
+  calc.ycenter	       = ycenter;
+  calc.radius	       = radius;
+  calc.rotation	       = rotation * G_PI / 180.0;
+  calc.hue	       = hue;
+  calc.vangle	       = vangle * G_PI / 180.0;
+  calc.vlength	       = radius * vlength / 100.0;
+  calc.glow_radius     = radius * gflare->glow_size / 100.0;
+  calc.rays_radius     = radius * gflare->rays_size / 100.0;
+  calc.sflare_radius   = radius * gflare->sflare_size / 100.0;
+  calc.glow_rotation   = (rotation + gflare->glow_rotation) * G_PI / 180.0;
+  calc.rays_rotation   = (rotation + gflare->rays_rotation) * G_PI / 180.0;
   calc.sflare_rotation = (rotation + gflare->sflare_rotation) * G_PI / 180.0;
-  calc.glow_opacity  = gflare->glow_opacity * 255 / 100.0;
-  calc.rays_opacity  = gflare->rays_opacity * 255 / 100.0;
-  calc.sflare_opacity = gflare->sflare_opacity * 255 / 100.0;
+  calc.glow_opacity    = gflare->glow_opacity * 255 / 100.0;
+  calc.rays_opacity    = gflare->rays_opacity * 255 / 100.0;
+  calc.sflare_opacity  = gflare->sflare_opacity * 255 / 100.0;
 
   calc.glow_bounds.x0 = calc.xcenter - calc.glow_radius - 0.1;
   calc.glow_bounds.x1 = calc.xcenter + calc.glow_radius + 0.1;
@@ -1694,9 +1694,9 @@ calc_init_params (GFlare *gflare, gint calc_type,
   calc.rays_bounds.y1 = calc.ycenter + calc.rays_radius + 0.1;
 
   /* Thanks to Marcelo Malheiros for this algorithm */
-  calc.rays_thinness = log (gflare->rays_thickness / 100.0) / log(0.8);
+  calc.rays_thinness  = log (gflare->rays_thickness / 100.0) / log(0.8);
 
-  calc.rays_spike_mod	= 1.0 / (2 * gflare->rays_nspikes);
+  calc.rays_spike_mod = 1.0 / (2 * gflare->rays_nspikes);
 
   /*
     Initialize part of sflare
@@ -1710,21 +1710,21 @@ calc_init_params (GFlare *gflare, gint calc_type,
       calc.sflare_factor = 1.0 / cos (calc.sflare_angle);
     }
 
-  calc.glow_radial	 = NULL;
-  calc.glow_angular	 = NULL;
-  calc.glow_angular_size = NULL;
-  calc.rays_radial	 = NULL;
-  calc.rays_angular	 = NULL;
-  calc.rays_angular_size = NULL;
-  calc.sflare_radial	 = NULL;
-  calc.sflare_sizefac	 = NULL;
+  calc.glow_radial        = NULL;
+  calc.glow_angular       = NULL;
+  calc.glow_angular_size  = NULL;
+  calc.rays_radial        = NULL;
+  calc.rays_angular       = NULL;
+  calc.rays_angular_size  = NULL;
+  calc.sflare_radial      = NULL;
+  calc.sflare_sizefac     = NULL;
   calc.sflare_probability = NULL;
 
   calc.init = TRUE;
 }
 
 static int
-calc_init_progress ()
+calc_init_progress (void)
 {
   if (calc_sample_one_gradient ())
     return TRUE;
@@ -1737,7 +1737,7 @@ calc_init_progress ()
    this routine is called during Calc initialization
    this code is very messy... :( */
 static int
-calc_sample_one_gradient ()
+calc_sample_one_gradient (void)
 {
   static struct {
     guchar	**values;
@@ -1823,7 +1823,7 @@ calc_sample_one_gradient ()
 }
 
 static void
-calc_place_sflare ()
+calc_place_sflare (void)
 {
   GFlare	*gflare;
   CalcSFlare	*sflare;
@@ -1894,7 +1894,7 @@ calc_place_sflare ()
 }
 
 static void
-calc_deinit ()
+calc_deinit (void)
 {
   if (!calc.init)
     {
@@ -1931,7 +1931,7 @@ calc_deinit ()
  *	guchar	pix[4]
  */
 static void
-calc_get_gradient(guchar *pix, guchar *gradient, gdouble pos)
+calc_get_gradient (guchar *pix, guchar *gradient, gdouble pos)
 {
   gint		ipos;
   gdouble	frac;
@@ -2475,7 +2475,8 @@ ed_preview_calc_window (void)
 }
 
 static gboolean
-dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event)
+dlg_preview_handle_event (GtkWidget *widget,
+                          GdkEvent  *event)
 {
   GdkEventButton *bevent;
   gint		 bx, by, x, y;
@@ -2517,7 +2518,7 @@ dlg_preview_handle_event (GtkWidget *widget, GdkEvent *event)
 }
 
 static void
-dlg_preview_update ()
+dlg_preview_update (void)
 {
   if (!dlg->init && dlg->update_preview)
     {
@@ -3905,7 +3906,7 @@ ed_put_gradient_menu (GtkWidget    *table,
 		      gchar        *caption,
 		      GradientMenu *gm)
 {
-  GtkWidget	*label;
+  GtkWidget *label;
 
   label = gtk_label_new (caption);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -3924,9 +3925,10 @@ ed_put_gradient_menu (GtkWidget    *table,
 }
 
 static void
-ed_mode_menu_callback (GtkWidget *widget, gpointer data)
+ed_mode_menu_callback (GtkWidget *widget,
+                       gpointer   data)
 {
-  GFlareMode	*mode_var;
+  GFlareMode *mode_var;
 
   mode_var = data;
   *mode_var = (GFlareMode) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -3935,7 +3937,8 @@ ed_mode_menu_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-ed_gradient_menu_callback (const gchar *gradient_name, gpointer data)
+ed_gradient_menu_callback (const gchar *gradient_name,
+                           gpointer     data)
 {
   gchar	*dest_string = data;
 
@@ -3954,9 +3957,10 @@ ed_shape_radio_callback (GtkWidget *widget,
 }
 
 static void
-ed_ientry_callback (GtkWidget *widget, gpointer data)
+ed_ientry_callback (GtkWidget *widget,
+                    gpointer   data)
 {
-  gint		new_val;
+  gint new_val;
 
   new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
   *(gint *)data = new_val;
@@ -3969,9 +3973,10 @@ ed_ientry_callback (GtkWidget *widget, gpointer data)
   signal of changing pages of gtknotebook.
  */
 static void
-ed_page_map_callback (GtkWidget *widget, gpointer data)
+ed_page_map_callback (GtkWidget *widget,
+                      gpointer   data)
 {
-  gint		page_num = GPOINTER_TO_INT (data);
+  gint page_num = GPOINTER_TO_INT (data);
 
   DEBUG_PRINT(("ed_page_map_callback\n"));
 
@@ -3981,7 +3986,7 @@ ed_page_map_callback (GtkWidget *widget, gpointer data)
 
 
 static void
-ed_preview_update ()
+ed_preview_update (void)
 {
   if (ed->init)
     return;

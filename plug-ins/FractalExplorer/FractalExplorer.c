@@ -151,7 +151,7 @@ static void        fractalexplorer_list_free_all      (void);
 static fractalexplorerOBJ * fractalexplorer_load      (const gchar *filename,
                                                        const gchar *name);
 
-static void        fractalexplorer_list_load_all      (GList       *plist);
+static void        fractalexplorer_list_load_all      (const gchar *path);
 static void        fractalexplorer_rescan_ok_callback (GtkWidget   *widget,
                                                        gpointer     data);
 static void        fractalexplorer_rescan_list        (void);
@@ -1113,13 +1113,6 @@ list_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
-void
-plug_in_parse_fractalexplorer_path (void)
-{
-  fractalexplorer_path_list = 
-    gimp_plug_in_parse_path ("fractalexplorer-path", "fractalexplorer");
-}
-
 static void
 fractalexplorer_free (fractalexplorerOBJ *fractalexplorer)
 {
@@ -1208,59 +1201,39 @@ fractalexplorer_load (const gchar *filename,
 }
 
 static void
-fractalexplorer_list_load_all (GList *plist)
+fractalexplorer_list_load_one (const GimpDatafileData *file_data,
+                               gpointer                user_data)
 {
   fractalexplorerOBJ *fractalexplorer;
-  GList              *list;
-  gchar	             *path;
-  gchar	             *filename;
-  GDir	             *dir;
-  const gchar        *dir_ent;
 
+  fractalexplorer = fractalexplorer_load (file_data->filename,
+                                          file_data->basename);
+
+  if (fractalexplorer)
+    {
+      /* Read only ?*/
+      if (access (filename, W_OK))
+        fractalexplorer->obj_status |= fractalexplorer_READONLY;
+
+      fractalexplorer_list_insert (fractalexplorer);
+    }
+}
+
+static void
+fractalexplorer_list_load_all (const gchar *path)
+{
   /*  Make sure to clear any existing fractalexplorers  */
   current_obj = pic_obj = NULL;
   fractalexplorer_list_free_all ();
-  list = plist;
-  while (list)
+
+  gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
+                                   fractalexplorer_list_load_one,
+                                   NULL);
+
+  if (! fractalexplorer_list)
     {
-      path = list->data;
-      list = list->next;
+      fractalexplorerOBJ *fractalexplorer;
 
-      /* Open directory */
-      dir = g_dir_open (path, 0, NULL);
-
-      if (!dir)
-        {
-          g_warning ("error reading fractalexplorer folder \"%s\"", path);
-        }
-      else
-	{
-	  while ((dir_ent = g_dir_read_name (dir)))
-	    {
-	      filename = g_build_filename (path, dir_ent, NULL);
-
-              if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-		{
-		  fractalexplorer = fractalexplorer_load (filename, dir_ent);
-		  
-		  if (fractalexplorer)
-		    {
-		      /* Read only ?*/
-		      if (access (filename, W_OK))
-			fractalexplorer->obj_status |= fractalexplorer_READONLY;
-
-		      fractalexplorer_list_insert (fractalexplorer);
-		    }
-		}
-
-	      g_free (filename);
-	    }
-	  g_dir_close (dir);
-	}
-    }
-
-  if (!fractalexplorer_list)
-    {
       /* lets have at least one! */
       fractalexplorer = fractalexplorer_new ();
       fractalexplorer->draw_name = g_strdup (_("My first fractal"));
@@ -1306,7 +1279,7 @@ add_objects_list (void)
 					 list);
   gtk_widget_show (list);
 
-  fractalexplorer_list_load_all (fractalexplorer_path_list);
+  fractalexplorer_list_load_all (fractalexplorer_path);
   build_list_items (list);
 
   /* Put buttons in */
@@ -1342,26 +1315,20 @@ fractalexplorer_rescan_ok_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GtkWidget *patheditor;
-  gchar     *raw_path;
 
   gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
-
-  gimp_path_free (fractalexplorer_path_list);
-  fractalexplorer_path_list = NULL;
 
   patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (data),
                                               "patheditor"));
 
-  raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
+  g_free (fractalexplorer_path);
+  fractalexplorer_path =
+    gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
-  fractalexplorer_path_list = gimp_path_parse (raw_path, 16, FALSE, NULL);
-
-  g_free (raw_path);
-
-  if (fractalexplorer_path_list)
+  if (fractalexplorer_path)
     {
       gtk_list_clear_items (GTK_LIST (fractalexplorer_gtk_list), 0, -1);
-      fractalexplorer_list_load_all (fractalexplorer_path_list);
+      fractalexplorer_list_load_all (fractalexplorer_path);
       build_list_items (fractalexplorer_gtk_list);
       list_button_update (current_obj);
     }
@@ -1375,7 +1342,6 @@ fractalexplorer_rescan_list (void)
   static GtkWidget *dlg = NULL;
 
   GtkWidget *patheditor;
-  gchar     *path;
 
   if (dlg)
     {
@@ -1400,15 +1366,12 @@ fractalexplorer_rescan_list (void)
                     G_CALLBACK (gtk_widget_destroyed),
                     &dlg);
 
-  path = gimp_path_to_str (fractalexplorer_path_list);
-
-  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"), path);
+  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"),
+                                     fractalexplorer_path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
                       TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
-
-  g_free (path);
 
   g_object_set_data (G_OBJECT (dlg), "patheditor", patheditor);
 

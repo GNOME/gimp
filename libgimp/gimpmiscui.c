@@ -509,45 +509,41 @@ gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 }
 
-GList *
-gimp_plug_in_parse_path (const gchar *path_name,
-			 const gchar *dir_name)
+gchar *
+gimp_plug_in_get_path (const gchar *path_name,
+                       const gchar *dir_name)
 {
-  GList *path_list = NULL;
   gchar *path;
+
+  g_return_val_if_fail (path_name != NULL, NULL);
+  g_return_val_if_fail (dir_name != NULL, NULL);
 
   path = gimp_gimprc_query (path_name);
 
-  if (!path)
+  if (! path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
       gchar *full_path;
       gchar *esc_path;
 
-      full_path = g_strconcat 
-	("${gimp_dir}", G_DIR_SEPARATOR_S, dir_name,
-	 G_SEARCHPATH_SEPARATOR_S,
-	 "${gimp_data_dir}", G_DIR_SEPARATOR_S, dir_name,
-	 NULL);
+      full_path =
+        g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, dir_name,
+                     G_SEARCHPATH_SEPARATOR_S,
+                     "${gimp_data_dir}", G_DIR_SEPARATOR_S, dir_name,
+                     NULL);
       esc_path = g_strescape (full_path, NULL);
+      g_free (full_path);
 
       g_message (_("No %s in gimprc:\n"
 		   "You need to add an entry like\n"
 		   "(%s \"%s\")\n"
-		   "to your %s file."), path_name, path_name, esc_path, 
-		 gimprc);
+		   "to your %s file."),
+                 path_name, path_name, esc_path, gimprc);
 
       g_free (gimprc);
-      g_free (full_path);
       g_free (esc_path);
-
-      return NULL;
     }
 
-  path_list = gimp_path_parse (path, 16, TRUE, NULL);
-
-  g_free (path);
-
-  return path_list;
+  return path;
 }
 

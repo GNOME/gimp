@@ -94,7 +94,7 @@ void      gimp_fixme_preview_get_pixel       (GimpFixMePreview *preview,
                                               gint              y,
                                               guchar           *pixel);
 
-GList   * gimp_plug_in_parse_path            (const gchar *path_name,
+gchar   * gimp_plug_in_get_path              (const gchar *path_name,
                                               const gchar *dir_name);
 
 

@@ -79,7 +79,8 @@ static void         gui_message                 (Gimp             *gimp,
 static GimpObject * gui_display_new             (GimpImage        *gimage,
                                                  guint             scale);
 
-static void         gui_themes_dir_foreach_func (GimpDatafileData *file_data);
+static void   gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
+                                           gpointer                user_data);
 static gboolean     gui_exit_callback           (Gimp             *gimp,
                                                  gboolean          kill_it);
 static gboolean     gui_exit_finish_callback    (Gimp             *gimp,
@@ -456,20 +457,19 @@ gui_display_new (GimpImage *gimage,
 }
 
 static void
-gui_themes_dir_foreach_func (GimpDatafileData *file_data)
+gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
+                             gpointer                user_data)
 {
-  Gimp  *gimp;
-  gchar *basename;
+  Gimp *gimp;
 
-  gimp = (Gimp *) file_data->user_data;
-
-  basename = g_path_get_basename (file_data->filename);
+  gimp = GIMP (user_data);
 
   if (gimp->be_verbose)
-    g_print (_("Adding theme '%s' (%s)\n"), basename, file_data->filename);
+    g_print (_("Adding theme '%s' (%s)\n"),
+             file_data->basename, file_data->filename);
 
   g_hash_table_insert (themes_hash,
-		       basename,
+		       g_strdup (file_data->basename),
 		       g_strdup (file_data->filename));
 }
 

@@ -75,7 +75,8 @@ struct _PlugInHelpPathDef
 };
 
 
-static void            plug_ins_init_file       (GimpDatafileData *file_data);
+static void            plug_ins_init_file (const GimpDatafileData *file_data,
+                                           gpointer                user_data);
 static void            plug_ins_add_to_db       (Gimp             *gimp);
 static PlugInProcDef * plug_ins_proc_def_insert (Gimp             *gimp,
                                                  PlugInProcDef    *proc_def);
@@ -796,16 +797,14 @@ plug_ins_image_types_parse (gchar *image_types)
 /*  private functions  */
 
 static void
-plug_ins_init_file (GimpDatafileData *file_data)
+plug_ins_init_file (const GimpDatafileData *file_data,
+                    gpointer                user_data)
 {
   PlugInDef  *plug_in_def;
   GSList    **plug_in_defs;
   GSList     *list;
-  gchar      *basename;
 
-  plug_in_defs = file_data->user_data;
-
-  basename = g_path_get_basename (file_data->filename);
+  plug_in_defs = (GSList **) user_data;
 
   for (list = *plug_in_defs; list; list = g_slist_next (list))
     {
@@ -815,21 +814,18 @@ plug_ins_init_file (GimpDatafileData *file_data)
 
       plug_in_name = g_path_get_basename (plug_in_def->prog);
 
-      if (g_ascii_strcasecmp (basename, plug_in_name) == 0)
+      if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
 	{
 	  g_print ("skipping duplicate plug-in: \"%s\"\n",
                    file_data->filename);
 
           g_free (plug_in_name);
-          g_free (basename);
 
 	  return;
 	}
 
       g_free (plug_in_name);
     }
-
-  g_free (basename);
 
   plug_in_def = plug_in_def_new (file_data->filename);
 

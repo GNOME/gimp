@@ -141,7 +141,8 @@ extern long  nlength (LISP obj);
  *  Local Functions
  */
 
-static void       script_fu_load_script      (GimpDatafileData *file_data);
+static void       script_fu_load_script (const GimpDatafileData *file_data,
+                                         gpointer                user_data);
 static gboolean   script_fu_install_script   (gpointer           foo,
 					      SFScript          *script,
 					      gpointer           bar);
@@ -660,7 +661,8 @@ script_fu_report_cc (gchar *command)
 /*  private functions  */
 
 static void
-script_fu_load_script (GimpDatafileData *file_data)
+script_fu_load_script (const GimpDatafileData *file_data,
+                       gpointer                user_data)
 {
   if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
     {

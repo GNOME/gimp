@@ -131,24 +131,22 @@ gimp_datafiles_read_directories (const gchar            *path_str,
   g_return_if_fail (path_str != NULL);
   g_return_if_fail (loader_func != NULL);
 
-  file_data.user_data = user_data;
-
   local_path = g_strdup (path_str);
-
-#ifdef __EMX__
-  /*
-   *  Change drive so opendir works.
-   */
-  if (local_path[1] == ':')
-    {
-      _chdrive (local_path[0]);
-    }
-#endif
 
   path = gimp_path_parse (local_path, 16, TRUE, NULL);
 
   for (list = path; list; list = g_list_next (list))
     {
+#ifdef __EMX__
+      /*
+       *  Change drive so opendir works.
+       */
+      if (((gchar *) list->data)[1] == ':')
+        {
+          _chdrive (((gchar *) list->data)[0]);
+        }
+#endif
+
       dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
       if (dir)
@@ -158,10 +156,10 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	      filename = g_build_filename ((gchar *) list->data,
                                            dir_ent, NULL);
 
-	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
 
               file_data.filename = filename;
+              file_data.basename = dir_ent;
               file_data.atime    = filestat.st_atime;
               file_data.mtime    = filestat.st_mtime;
               file_data.ctime    = filestat.st_ctime;
@@ -170,23 +168,23 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 		{
                   if (flags & G_FILE_TEST_EXISTS)
                     {
-                      (* loader_func) (&file_data);
+                      (* loader_func) (&file_data, user_data);
                     }
                   else if ((flags & G_FILE_TEST_IS_REGULAR) &&
                            S_ISREG (filestat.st_mode))
                     {
-                      (* loader_func) (&file_data);
+                      (* loader_func) (&file_data, user_data);
                     }
 		  else if ((flags & G_FILE_TEST_IS_DIR) &&
                            S_ISDIR (filestat.st_mode))
 		    {
-		      (* loader_func) (&file_data);
+		      (* loader_func) (&file_data, user_data);
 		    }
 #ifndef G_OS_WIN32
 		  else if ((flags & G_FILE_TEST_IS_SYMLINK) &&
                            S_ISLNK (filestat.st_mode))
 		    {
-		      (* loader_func) (&file_data);
+		      (* loader_func) (&file_data, user_data);
 		    }
 #endif
 		  else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
@@ -195,7 +193,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
                             (S_ISREG (filestat.st_mode) &&
                              is_script (filename))))
 		    {
-		      (* loader_func) (&file_data);
+		      (* loader_func) (&file_data, user_data);
 		    }
 		}
 

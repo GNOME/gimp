@@ -1,3 +1,31 @@
+2003-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpbasetypes.h: changed GimpDatafileLoaderFunc to
+	take a separate "gpointer user_data" parameter (passing user_data
+	in a struct was a quite nonstandard API design). Made the
+	GimpDatafileData pointer const.
+
+	* libgimpbase/gimpdatafiles.[ch]: removed user_data from the
+	GimpDatafileData struct and added "const gchar *basename" so we
+	don't need to g_path_get_basename() in many callbacks.
+
+	* libgimp/gimpmiscui.[ch]: changed gimp_plug_in_parse_path() to
+	gimp_plug_in_get_path() and return the unparsed path.
+
+	* app/core/gimpdatafactory.c
+	* app/core/gimpenvirontable.c
+	* app/gui/gui.c
+	* app/plug-in/plug-ins.c
+	* libgimpmodule/gimpmoduledb.c
+	* plug-ins/script-fu/script-fu-scripts.c: changed accordingly.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]
+	* plug-ins/FractalExplorer/Globals.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c: use gimp_datafiles_read_directories()
+	instead of fiddling with g_dir_open() manually. Random cleanups.
+
 2003-07-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins: last bunch of plug-ins adapted to libgimp changes.

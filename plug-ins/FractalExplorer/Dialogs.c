@@ -276,7 +276,8 @@ explorer_dialog (void)
 
   gimp_ui_init ("fractalexplorer", TRUE);
 
-  plug_in_parse_fractalexplorer_path ();
+  fractalexplorer_path = gimp_plug_in_get_path ("fractalexplorer-path",
+                                                "fractalexplorer");
 
   wint.wimage = g_new (guchar, preview_width * preview_height * 3);
   elements    = g_new (DialogElements, 1);
@@ -1743,11 +1744,14 @@ create_file_selection (void)
     {
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
     }
-  else if (fractalexplorer_path_list)
+  else if (fractalexplorer_path)
     {
+      GList *path_list;
       gchar *dir;
 
-      dir = gimp_path_get_user_writable_dir (fractalexplorer_path_list);
+      path_list = gimp_path_parse (fractalexplorer_path, 16, FALSE, NULL);
+
+      dir = gimp_path_get_user_writable_dir (path_list);
 
       if (!dir)
 	dir = g_strdup (gimp_directory ());
@@ -1755,6 +1759,7 @@ create_file_selection (void)
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
 
       g_free (dir);
+      gimp_path_free (path_list);
     }
   else
     {

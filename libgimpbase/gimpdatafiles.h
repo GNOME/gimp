@@ -28,12 +28,11 @@
 struct _GimpDatafileData
 {
   const gchar *filename;
+  const gchar *basename;
 
   time_t       atime;
   time_t       mtime;
   time_t       ctime;
-
-  gpointer     user_data;
 };
 
 

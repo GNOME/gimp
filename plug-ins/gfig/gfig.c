@@ -416,8 +416,8 @@ struct selection_option
 };
 
 
-static GList *gfig_path_list = NULL;
-static GList *gfig_list      = NULL;
+static gchar *gfig_path       = NULL;
+static GList *gfig_list       = NULL;
 static gint   line_no;
 
 static gint poly_num_sides    = 3; /* Default to three sided object */
@@ -900,61 +900,39 @@ gfig_list_free_all (void)
   gfig_list = NULL;
 }
 
+static void
+gfig_list_load_one (const GimpDatafileData *file_data,
+                    gpointer                user_data)
+{
+  GFigObj *gfig;
+
+  gfig = gfig_load (file_data->filename, file_data->basename);
+
+  if (gfig)
+    {
+      /* Read only ?*/
+      if (access (file_data->filename, W_OK))
+        gfig->obj_status |= GFIG_READONLY;
+
+      gfig_list_insert (gfig);
+    }
+}
 
 static void
-gfig_list_load_all (GList *plist)
+gfig_list_load_all (const gchar *path)
 {
-  GFigObj     *gfig;
-  GList       *list;
-  gchar	      *path;
-  gchar	      *filename;
-  GDir	      *dir;
-  const gchar *dir_ent;
-
   /*  Make sure to clear any existing gfigs  */
   current_obj = pic_obj = NULL;
   gfig_list_free_all ();
 
-  list = plist;
-  while (list)
+  gimp_datafiles_read_directories (path, G_FILE_TEST_EXISTS,
+                                   gfig_list_load_one,
+                                   NULL);
+
+  if (! gfig_list)
     {
-      path = list->data;
-      list = list->next;
+      GFigObj *gfig;
 
-      /* Open directory */
-      dir = g_dir_open (path, 0, NULL);
-
-      if (!dir)
-	g_warning ("Error reading Gfig folder \"%s\"", path);
-      else
-	{
-	  while ((dir_ent = g_dir_read_name (dir)))
-	    {
-	      filename = g_build_filename (path, dir_ent, NULL);
-
-	      /* Check the file and see that it is not a sub-directory */
-              if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-		{
-		  gfig = gfig_load (filename, dir_ent);
-		  
-		  if (gfig)
-		    {
-		      /* Read only ?*/
-		      if (access (filename, W_OK))
-			gfig->obj_status |= GFIG_READONLY;
-
-		      gfig_list_insert (gfig);
-		    }
-		}
-
-	      g_free (filename);
-	    }
-	  g_dir_close (dir);
-	}
-    }
-
-  if (!gfig_list)
-    {
       /* lets have at least one! */
       gfig = gfig_new ();
       gfig->draw_name = g_strdup (_("First Gfig"));
@@ -1472,13 +1450,16 @@ create_file_selection (GFigObj *obj,
     {
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
     }
-  else if (gfig_path_list)
+  else if (gfig_path)
     {
+      GList *list;
       gchar *dir;
 
-      dir = gimp_path_get_user_writable_dir (gfig_path_list);
+      list = gimp_path_parse (gfig_path, 16, FALSE, 0);
+      dir = gimp_path_get_user_writable_dir (list);
+      gimp_path_free (list);
 
-      if (!dir)
+      if (! dir)
 	dir = g_strdup (gimp_directory ());
 
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
@@ -1492,8 +1473,7 @@ create_file_selection (GFigObj *obj,
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tmp);
     }
 
-  if (!GTK_WIDGET_VISIBLE (window))
-    gtk_widget_show (window);
+  gtk_window_present (GTK_WINDOW (window));
 }
 
 static void
@@ -3387,7 +3367,7 @@ add_objects_list (void)
   gtk_widget_show (list);
 
   /* Load saved objects */
-  gfig_list_load_all (gfig_path_list);
+  gfig_list_load_all (gfig_path);
 
   /* Put list in */
   build_list_items (list);
@@ -3760,7 +3740,7 @@ gfig_dialog (void)
 
   xxx = gdk_rgb_get_colormap ();
 
-  gfig_path_list = gimp_plug_in_parse_path ("gfig-path", "gfig");
+  gfig_path = gimp_plug_in_get_path ("gfig-path", "gfig");
 
   /*cache_preview (); Get the preview image and store it also set has_alpha */
 
@@ -4272,26 +4252,19 @@ gfig_rescan_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   GtkWidget *patheditor;
-  gchar     *raw_path;
 
   gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
-
-  gimp_path_free (gfig_path_list);
-  gfig_path_list = NULL;
 
   patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (data),
                                               "patheditor"));
 
-  raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
+  g_free (gfig_path);
+  gfig_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
-  gfig_path_list = gimp_path_parse (raw_path, 16, FALSE, NULL);
-
-  g_free (raw_path);
-
-  if (gfig_path_list)
+  if (gfig_path)
     {
       clear_list_items (GTK_LIST (gfig_gtk_list));
-      gfig_list_load_all (gfig_path_list);
+      gfig_list_load_all (gfig_path);
       build_list_items (gfig_gtk_list);
       list_button_update (current_obj);
     }
@@ -4305,7 +4278,6 @@ gfig_rescan_list (void)
   static GtkWidget *dlg = NULL;
 
   GtkWidget *patheditor;
-  gchar     *path;
 
   if (dlg)
     {
@@ -4331,15 +4303,11 @@ gfig_rescan_list (void)
                     G_CALLBACK (gtk_widget_destroyed),
                     &dlg);
 
-  path = gimp_path_to_str (gfig_path_list);
-
-  patheditor = gimp_path_editor_new (_("Add Gfig Path"), path);
+  patheditor = gimp_path_editor_new (_("Add Gfig Path"), gfig_path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
 		      TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
-
-  g_free (path);
 
   g_object_set_data (G_OBJECT (dlg), "patheditor", patheditor);
 
