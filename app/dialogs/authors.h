@@ -38,6 +38,7 @@ static gchar *authors[] =
   "Piers Cornwell",
   "Daniel Cotting",
   "Jay Cox",
+  "Kevin Cozens",
   "Brian Degenhardt",
   "Gert Dewit",
   "Andreas Dilger",
