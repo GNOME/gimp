@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:48+0100\n"
-"PO-Revision-Date: 2004-02-02 13:35+0900\n"
+"POT-Creation-Date: 2004-02-05 11:44+0900\n"
+"PO-Revision-Date: 2004-02-05 11:45+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3996,49 +3996,40 @@ msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/Visa/Zooma/_Passa till fönstret"
 
 #: app/gui/image-menu.c:381
-#, fuzzy
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/Visa/Zooma/16:1"
+msgstr "/Visa/Zooma/16:1  (1600%)"
 
 #: app/gui/image-menu.c:385
-#, fuzzy
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/Visa/Zooma/8:1"
+msgstr "/Visa/Zooma/8:1  (800%)"
 
 #: app/gui/image-menu.c:389
-#, fuzzy
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/Visa/Zooma/4:1"
+msgstr "/Visa/Zooma/4:1  (400%)"
 
 #: app/gui/image-menu.c:393
-#, fuzzy
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/Visa/Zooma/2:1"
+msgstr "/Visa/Zooma/2:1  (200%)"
 
 #: app/gui/image-menu.c:397
-#, fuzzy
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/Visa/Zooma/1:1"
+msgstr "/Visa/Zooma/1:1  (100%)"
 
 #: app/gui/image-menu.c:401
-#, fuzzy
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/Visa/Zooma/1:2"
+msgstr "/Visa/Zooma/1:2  (50%)"
 
 #: app/gui/image-menu.c:405
-#, fuzzy
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/Visa/Zooma/1:2"
+msgstr "/Visa/Zooma/1:2  (25%)"
 
 #: app/gui/image-menu.c:409
-#, fuzzy
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/Visa/Zooma/1:1"
+msgstr "/Visa/Zooma/1:1  (12.5%)"
 
 #: app/gui/image-menu.c:413
-#, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/Visa/Zooma/1:16"
+msgstr "/Visa/Zooma/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:427
 msgid "/View/_Info Window"
@@ -4664,14 +4655,14 @@ msgid "_Redo"
 msgstr "_Gör om"
 
 #: app/gui/image-menu.c:1712
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "Annat (%.0f%%) ..."
+msgstr "Annat (%s) ..."
 
 #: app/gui/image-menu.c:1721
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "_Zooma (%.0f%%)"
+msgstr "_Zooma (%s)"
 
 #: app/gui/images-menu.c:42
 msgid "/_Raise Views"
