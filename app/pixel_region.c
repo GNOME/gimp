@@ -271,6 +271,14 @@ pixel_region_set_col (PixelRegion   *PR,
     }
 }
 
+int
+pixel_region_has_alpha(PixelRegion *PR)
+{
+  if (PR->bytes == 2 || PR->bytes == 4)
+    return 1;
+  return 0;
+}
+
 void *
 pixel_regions_register (int num_regions, 
 			...)

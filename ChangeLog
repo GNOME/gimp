@@ -1,3 +1,16 @@
+Fri Aug 20 02:17:18 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/apptypes.h: added InterpolationType enum.
+	* app/gimprc.[ch], app/preferences_dialog.c: replaced 
+	cubic_interpolation flag with interpolation_type variable.
+
+	* app/pixel_region.[ch]: added pixel_region_has_alpha function.
+
+	* app/paint_funcs.c: rewrote scale_region.  It now behaves
+	correctly on images with alpha, no longer leaves an artifact on the
+	right edge of images when scailing up, and runs signifigantly
+	faster.
+
 Fri Aug 20 11:21:57 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/tips_dialog.c (read_tips_file): open tips file with "rt".

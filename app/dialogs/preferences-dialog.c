@@ -68,7 +68,7 @@ static int        old_no_cursor_updating;
 static int        old_show_tool_tips;
 static int        old_show_rulers;
 static int        old_show_statusbar;
-static int        old_cubic_interpolation;
+static InterpolationType old_interpolation_type;
 static int        old_confirm_on_close;
 static int        old_save_session_info;
 static int        old_save_device_status;
@@ -360,8 +360,8 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "show-statusbar");
       remove = g_list_append (remove, "dont-show-statusbar");
     }
-  if (cubic_interpolation != old_cubic_interpolation)
-    update = g_list_append (update, "cubic-interpolation");
+  if (interpolation_type != old_interpolation_type)
+    update = g_list_append (update, "interpolation-type");
   if (confirm_on_close != old_confirm_on_close)
     {
       update = g_list_append (update, "confirm-on-close");
@@ -556,7 +556,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   show_tool_tips = old_show_tool_tips;
   show_rulers = old_show_rulers;
   show_statusbar = old_show_statusbar;
-  cubic_interpolation = old_cubic_interpolation;
+  interpolation_type = old_interpolation_type;
   confirm_on_close = old_confirm_on_close;
   save_session_info = old_save_session_info;
   save_device_status = old_save_device_status;
@@ -634,8 +634,6 @@ file_prefs_toggle_callback (GtkWidget *widget,
     show_rulers = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &show_statusbar)
     show_statusbar = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &cubic_interpolation)
-    cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &save_session_info)
@@ -669,7 +667,7 @@ file_prefs_toggle_callback (GtkWidget *widget,
     context_manager_set_global_paint_options (GTK_TOGGLE_BUTTON (widget)->active);
   else if (data == &show_indicators)
     show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &thumbnail_mode)
+  else if (data == &thumbnail_mode || data == &interpolation_type)
     {
       val = data;
       *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1426,7 +1424,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_show_tool_tips = show_tool_tips;
   old_show_rulers = show_rulers;
   old_show_statusbar = show_statusbar;
-  old_cubic_interpolation = cubic_interpolation;
+  old_interpolation_type = interpolation_type;
   old_confirm_on_close = confirm_on_close;
   old_save_session_info = save_session_info;
   old_save_device_status = save_device_status;
@@ -1705,14 +1703,20 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  button = gtk_check_button_new_with_label(_("Cubic Interpolation"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				cubic_interpolation);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) file_prefs_toggle_callback,
-		      &cubic_interpolation);
-  gtk_widget_show (button);
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) interpolation_type,
+			  _("Nearest Neighbor"), &interpolation_type,
+			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION,
+			  _("Linear"), &interpolation_type,
+			  (gpointer) LINEAR_INTERPOLATION,
+			  _("Cubic"), &interpolation_type,
+			  (gpointer) CUBIC_INTERPOLATION,
+			  NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox2), optionmenu, FALSE, FALSE, 0);
+  
+  gtk_widget_show (optionmenu);
 
   /* Interface */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

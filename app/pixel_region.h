@@ -47,8 +47,12 @@ void  pixel_region_get_row       (PixelRegion *, int, int, int, unsigned char *,
 void  pixel_region_set_row       (PixelRegion *, int, int, int, unsigned char *);
 void  pixel_region_get_col       (PixelRegion *, int, int, int, unsigned char *, int);
 void  pixel_region_set_col       (PixelRegion *, int, int, int, unsigned char *);
+int   pixel_region_has_alpha     (PixelRegion *);
+
+
 void *pixel_regions_register     (int, ...);
 void *pixel_regions_process      (void *);
 void  pixel_regions_process_stop (void *);
+
 
 #endif /* __PIXEL_REGION_H__ */

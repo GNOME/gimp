@@ -44,7 +44,7 @@
 #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
 
 /* This version of INT_MULT3 is very fast, but suffers from some
-   slight roundoff errors.  It returns the correct result 99.987%
+   slight roundoff errors.  It returns the correct result 99.987
    percent of the time */
 #define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c)+ 0x7F5B, \
                             ((((t) >> 7) + (t)) >> 16))
@@ -131,6 +131,7 @@ static void apply_layer_mode_replace (unsigned char *, unsigned char *,
 				      unsigned char *, unsigned char *,
 				      int, int, int,
 				      int, int, int, int *);
+static void   rotate_pointers(void **p, guint32 n);
 
 
 void
@@ -474,6 +475,7 @@ draw_segments (PixelRegion *destPR,
 }
 #endif
 
+/* Note: cubic function no longer clips result */
 static double
 cubic (double dx,
        int    jm1,
@@ -483,14 +485,23 @@ cubic (double dx,
 {
   double result;
 
+#if 0
+  /* Equivalent to Gimp 1.1.1 and earlier - some ringing */
   result = ((( ( - jm1 + j - jp1 + jp2 ) * dx +
                ( jm1 + jm1 - j - j + jp1 - jp2 ) ) * dx +
                ( - jm1 + jp1 ) ) * dx + j );
+  /* Recommended by Mitchell and Netravali - too blurred? */
+  result = ((( ( - 7 * jm1 + 21 * j - 21 * jp1 + 7 * jp2 ) * dx +
+               ( 15 * jm1 - 36 * j + 27 * jp1 - 6 * jp2 ) ) * dx +
+               ( - 9 * jm1 + 9 * jp1 ) ) * dx + (jm1 + 16 * j + jp1) ) / 18.0;
+#else
 
-  if (result < 0.0)
-    result = 0.0;
-  if (result > 255.0)
-    result = 255.0;
+  /* Catmull-Rom - not bad */
+  result = ((( ( - jm1 + 3 * j - 3 * jp1 + jp2 ) * dx +
+               ( 2 * jm1 - 5 * j + 4 * jp1 - jp2 ) ) * dx +
+               ( - jm1 + jp1 ) ) * dx + (j + j) ) / 2.0;
+
+#endif
 
   return result;
 }
@@ -3812,28 +3823,183 @@ scale_region_no_resample (PixelRegion *srcPR,
 }
 
 
+static void
+get_premultiplied_double_row(PixelRegion *srcPR, int x, int y,
+			     int w, double *row, guchar *tmp_src, int n,
+			     int extra)
+{
+  int b;
+  int bytes = srcPR->bytes;
+  pixel_region_get_row (srcPR, x, y, w, tmp_src, n);
+  if (pixel_region_has_alpha(srcPR))
+  { /* premultiply the alpha into the double array */
+    double *irow = row;
+    int alpha = bytes - 1;
+    double mod_alpha;
+    for (x = 0; x < w; x++)
+    {
+      mod_alpha = tmp_src[alpha] / 255.0;
+      for (b = 0; b < alpha; b++)
+	irow[b] = mod_alpha * tmp_src[b];
+      irow[b] = tmp_src[alpha];
+      irow += bytes;
+      tmp_src += bytes;
+    }
+  }
+  else /* no alpha */
+  {
+    for (x = 0; x <  w*bytes; x++)
+      row[x] = tmp_src[x];
+  }
+
+  /* set the off edge pixels to their nearest neighbor */
+  for (b = 0; b < extra * bytes; b++)
+    row[-extra*bytes + b] = row[(b%bytes)];
+  for (b = 0; b < bytes * extra; b++)
+    row[w*bytes + b] = row[(w - 1) * bytes + (b%bytes)];
+}
+
+
+static
+void expand_line(double *dest, double *src, int bytes,
+		 int old_width, int width, InterpolationType interp)
+{
+  double ratio;
+  int x,b;
+  int src_col;
+  double frac;
+  double *s;
+  ratio = old_width/(double)width;
+
+/* this could be opimized much more by precalculating the coeficients for
+   each x */
+  switch(interp)
+  {
+    case CUBIC_INTERPOLATION:
+      for (x = 0; x < width; x++)
+      {
+	src_col = ((int)((x - 0.5) * ratio + 2.0)) - 2;
+	/* +2, -2 is there because (int) rounds towards 0 and we need 
+	   to round down */
+	frac =          ((x - 0.5) * ratio) - src_col;
+	s = &src[src_col * bytes];
+	for (b = 0; b < bytes; b++)
+	  dest[b] = cubic (frac, s[b - bytes], s[b], s[b+bytes], s[b+bytes*2]);
+	dest += bytes;
+      }
+      break;
+    case LINEAR_INTERPOLATION:
+      for (x = 0; x < width; x++)
+      {
+	src_col = ((int)((x - 0.5) * ratio + 2.0)) - 2;
+	/* +2, -2 is there because (int) rounds towards 0 and we need 
+	   to round down */
+	frac =          ((x - 0.5) * ratio) - src_col;
+	s = &src[src_col * bytes];
+	for (b = 0; b < bytes; b++)
+	  dest[b] = ((s[b + bytes] - s[b]) * frac + s[b]);
+	dest += bytes;
+      }
+      break;
+   case NEAREST_NEIGHBOR_INTERPOLATION:
+     g_error("sampling_type can't be "
+	     "NEAREST_NEIGHBOR_INTERPOLATION");
+  }
+}
+
+
+static void shrink_line(double *dest, double *src, int bytes,
+			int old_width, int width, InterpolationType interp)
+{
+  int x, b;
+  double *source, *destp;
+  register double accum;
+  register unsigned int max;
+  register double mant, tmp;
+  register const double step = old_width/(double)width;
+  register const double inv_step = 1.0/step;
+  double position;
+  for (b = 0; b < bytes; b++)
+  {
+    
+    source = &src[b];
+    destp = &dest[b];
+    position = -1;
+
+    mant = *source;
+
+    for (x = 0; x < width; x++)
+    {
+      source+= bytes;
+      accum = 0;
+      max = ((int)(position+step)) - ((int)(position));
+      max--;
+      while (max)
+      {
+	accum += *source;
+	source += bytes;
+	max--;
+      }
+      tmp = accum + mant;
+      mant = ((position+step) - (int)(position + step));
+      mant *= *source;
+      tmp += mant;
+      tmp *= inv_step;
+      mant = *source - mant;
+      *(destp) = tmp;
+      destp += bytes;
+      position += step;
+	
+    }
+  }
+}
+
+static void
+get_scaled_row(void **src, int y, int new_width, PixelRegion *srcPR, double *row,
+	       guchar *src_tmp, int extra_pixels)
+{
+/* get the necesary lines from the source image, scale them,
+   and put them into src[] */
+  rotate_pointers(src, 4);
+  if (y < 0)
+    y = 0;
+  if (y < srcPR->h)
+  {
+    if (new_width == srcPR->w) /* no scailing so load it straight to it's */
+      row = src[3];		       /* destination */
+    get_premultiplied_double_row(srcPR, 0, y, srcPR->w,
+				 row, src_tmp, 1, extra_pixels);
+    if (new_width > srcPR->w)
+      expand_line(src[3], row, srcPR->bytes, 
+		  srcPR->w, new_width, interpolation_type);
+    else if (srcPR->w > new_width)
+      shrink_line(src[3], row, srcPR->bytes, 
+		  srcPR->w, new_width, interpolation_type);
+  }
+  else
+    memcpy(src[3], src[2], sizeof (double) * new_width);
+}
 void
 scale_region (PixelRegion *srcPR,
 	      PixelRegion *destPR)
 {
-  unsigned char * src_m1, * src, * src_p1, * src_p2;
-  unsigned char * s_m1, * s, * s_p1, * s_p2;
-  unsigned char * dest, * d;
-  double * row, * r;
-  int src_row, src_col;
+  double  *src[4];
+  unsigned char * src_tmp;
+  unsigned char * dest;
+  double * row, *accum;
   int bytes, b;
   int width, height;
   int orig_width, orig_height;
   double x_rat, y_rat;
-  double x_cum, y_cum;
-  double x_last, y_last;
-  double * x_frac, y_frac, tot_frac;
-  float dx, dy;
-  int i, j;
-  int frac;
-  int advance_dest_x, advance_dest_y;
-  int minus_x, plus_x, plus2_x;
-  ScaleType scale_type;
+  int i;
+  int old_y = -3, new_y;
+  int x, y;
+
+  if (interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+  {
+    scale_region_no_resample (srcPR, destPR);
+    return;
+   }
 
   orig_width = srcPR->w;
   orig_height = srcPR->h;
@@ -3841,233 +4007,165 @@ scale_region (PixelRegion *srcPR,
   width = destPR->w;
   height = destPR->h;
 
-  /*  Some calculations...  */
-  bytes = destPR->bytes;
-
-  /*  the data pointers...  */
-  src_m1 = (unsigned char *) g_malloc (orig_width * bytes);
-  src    = (unsigned char *) g_malloc (orig_width * bytes);
-  src_p1 = (unsigned char *) g_malloc (orig_width * bytes);
-  src_p2 = (unsigned char *) g_malloc (orig_width * bytes);
-  dest   = (unsigned char *) g_malloc (width * bytes);
-
   /*  find the ratios of old x to new x and old y to new y  */
   x_rat = (double) orig_width / (double) width;
   y_rat = (double) orig_height / (double) height;
 
-  /*  determine the scale type  */
-  if (x_rat < 1.0 && y_rat < 1.0)
-    scale_type = MagnifyX_MagnifyY;
-  else if (x_rat < 1.0 && y_rat >= 1.0)
-    scale_type = MagnifyX_MinifyY;
-  else if (x_rat >= 1.0 && y_rat < 1.0)
-    scale_type = MinifyX_MagnifyY;
-  else
-    scale_type = MinifyX_MinifyY;
+  /*  Some calculations...  */
+  bytes = destPR->bytes;
 
-  /*  allocate an array to help with the calculations  */
-  row    = (double *) g_malloc (sizeof (double) * width * bytes);
-  x_frac = (double *) g_malloc (sizeof (double) * (width + orig_width));
+  /*  the data pointers...  */
+  for (i = 0; i < 4; i++)
+    src[i]    = g_new(double, (width) * bytes);
+  dest   = g_new(guchar, width * bytes);
 
-  /*  initialize the pre-calculated pixel fraction array  */
-  src_col = 0;
-  x_cum = (double) src_col;
-  x_last = x_cum;
+  src_tmp = g_new(char, orig_width * bytes);
 
-  for (i = 0; i < width + orig_width; i++)
-    {
-      if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	{
-	  x_cum += x_rat;
-	  x_frac[i] = x_cum - x_last;
-	}
-      else
-	{
-	  src_col ++;
-	  x_frac[i] = src_col - x_last;
-	}
-      x_last += x_frac[i];
-    }
+ /* offset the row pointer by 2*bytes so the range of the array 
+    is [-2*bytes] to [(orig_width + 2)*bytes] */
+  row = g_new(double, (orig_width + 2*2) * bytes);
+  row += bytes*2;
 
-  /*  clear the "row" array  */
-  memset (row, 0, sizeof (double) * width * bytes);
-
-  /*  counters...  */
-  src_row = 0;
-  y_cum = (double) src_row;
-  y_last = y_cum;
-
-  /*  Get the first src row  */
-  pixel_region_get_row (srcPR, 0, src_row, orig_width, src, 1);
-  /*  Get the next two if possible  */
-  if (src_row < (orig_height - 1))
-    pixel_region_get_row (srcPR, 0, (src_row + 1), orig_width, src_p1, 1);
-  if ((src_row + 1) < (orig_height - 1))
-    pixel_region_get_row (srcPR, 0, (src_row + 2), orig_width, src_p2, 1);
+  accum = g_new(double, (width) * bytes);
 
   /*  Scale the selected region  */
-  i = height;
-  while (i)
+  
+  for (y = 0; y < height;  y++)
+  {
+    if (height < orig_height)
     {
-      src_col = 0;
-      x_cum = (double) src_col;
+      int max;
+      double frac;
+      const double inv_ratio = 1.0 / y_rat;
+      if (y == 0) /* load the first row if this it the first time through  */
+	get_scaled_row((void **)&src[0], 0, width, srcPR, row,
+		       src_tmp, 2);
+      new_y = (int)((y) * y_rat);
+      frac = 1.0 - (y*y_rat - new_y);
+      for (x  = 0; x < width*bytes; x++)
+	accum[x] = src[3][x] * frac;
 
-      /* determine the fraction of the src pixel we are using for y */
-      if (y_cum + y_rat <= (src_row + 1 + EPSILON))
-	{
-	  y_cum += y_rat;
-	  dy = y_cum - src_row;
-	  y_frac = y_cum - y_last;
-	  advance_dest_y = TRUE;
-	}
-      else
-	{
-	  y_frac = (src_row + 1) - y_last;
-	  dy = 1.0;
-	  advance_dest_y = FALSE;
-	}
+      max = ((int)((y+1) *y_rat)) - (new_y);
+      max--;
 
-      y_last += y_frac;
+      get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
+		     src_tmp, 2);
+      
+      while (max > 0)
+      {
+	for (x  = 0; x < width*bytes; x++)
+	  accum[x] += src[3][x];
+	get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
+		       src_tmp, 2);
+	max--;
+      }
+      frac = (y + 1)*y_rat - ((int)((y + 1)*y_rat));
+      for (x  = 0; x < width*bytes; x++)
+      {
+	accum[x] += frac * src[3][x];
+	accum[x] *= inv_ratio;
+      }
+    }      
+    else if (height > orig_height)
+    {
+      new_y = ((int)((y - 0.5) * y_rat + 2.0)) - 2;
+    
+      while (old_y <= new_y)
+      { /* get the necesary lines from the source image, scale them,
+	   and put them into src[] */
+	get_scaled_row((void **)&src[0], old_y + 2, width, srcPR, row,
+		       src_tmp, 2);
+	old_y++;
+      }
+      switch(interpolation_type)
+      {
+       case CUBIC_INTERPOLATION:
+       {
+	 double p0, p1, p2, p3;
+	 double dy = ((y - 0.5) * y_rat) - new_y;
+	 p0 = cubic(dy, 1, 0, 0, 0);
+	 p1 = cubic(dy, 0, 1, 0, 0);
+	 p2 = cubic(dy, 0, 0, 1, 0);
+	 p3 = cubic(dy, 0, 0, 0, 1);
+	 for (x = 0; x < width * bytes; x++)
+	   accum[x] = p0 * src[0][x] + p1 * src[1][x] +
+	     p2 * src[2][x] + p3 * src[3][x];
+       } break;
+       case LINEAR_INTERPOLATION:
+       {
+	 double dy = ((y - 0.5) * y_rat) - new_y;
+	 double idy = 1.0 - dy;
+	 for (x = 0; x < width * bytes; x++)
+	   accum[x] = dy * src[1][x] + idy * src[2][x];
+       } break;
+       case NEAREST_NEIGHBOR_INTERPOLATION:
+	 g_error("sampling_type can't be "
+		 "NEAREST_NEIGHBOR_INTERPOLATION");
 
-      s = src;
-      s_m1 = (src_row > 0) ? src_m1 : src;
-      s_p1 = (src_row < (orig_height - 1)) ? src_p1 : src;
-      s_p2 = ((src_row + 1) < (orig_height - 1)) ? src_p2 : s_p1;
-
-      r = row;
-
-      frac = 0;
-      j = width;
-
-      while (j)
-	{
-	  if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	    {
-	      x_cum += x_rat;
-	      dx = x_cum - src_col;
-	      advance_dest_x = TRUE;
-	    }
-	  else
-	    {
-	      dx = 1.0;
-	      advance_dest_x = FALSE;
-	    }
-
-	  tot_frac = x_frac[frac++] * y_frac;
-
-	  minus_x = (src_col > 0) ? -bytes : 0;
-	  plus_x = (src_col < (orig_width - 1)) ? bytes : 0;
-	  plus2_x = ((src_col + 1) < (orig_width - 1)) ? bytes * 2 : plus_x;
-
-	  if (cubic_interpolation)
-	    switch (scale_type)
-	      {
-	      case MagnifyX_MagnifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += cubic (dy, cubic (dx, s_m1[b+minus_x], s_m1[b], s_m1[b+plus_x], s_m1[b+plus2_x]),
-				 cubic (dx, s[b+minus_x], s[b],	s[b+plus_x], s[b+plus2_x]),
-				 cubic (dx, s_p1[b+minus_x], s_p1[b], s_p1[b+plus_x], s_p1[b+plus2_x]),
-				 cubic (dx, s_p2[b+minus_x], s_p2[b], s_p2[b+plus_x], s_p2[b+plus2_x])) * tot_frac;
-		break;
-	      case MagnifyX_MinifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += cubic (dx, s[b+minus_x], s[b], s[b+plus_x], s[b+plus2_x]) * tot_frac;
-		break;
-	      case MinifyX_MagnifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += cubic (dy, s_m1[b], s[b], s_p1[b], s_p2[b]) * tot_frac;
-		break;
-	      case MinifyX_MinifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += s[b] * tot_frac;
-		break;
-	      }
-	  else
-	    switch (scale_type)
-	      {
-	      case MagnifyX_MagnifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += ((1 - dy) * ((1 - dx) * s[b] + dx * s[b+plus_x]) +
-			   dy  * ((1 - dx) * s_p1[b] + dx * s_p1[b+plus_x])) * tot_frac;
-		break;
-	      case MagnifyX_MinifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += (s[b] * (1 - dx) + s[b+plus_x] * dx) * tot_frac;
-		break;
-	      case MinifyX_MagnifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += (s[b] * (1 - dy) + s_p1[b] * dy) * tot_frac;
-		break;
-	      case MinifyX_MinifyY:
-		for (b = 0; b < bytes; b++)
-		  r[b] += s[b] * tot_frac;
-		break;
-	      }
-
-	  if (advance_dest_x)
-	    {
-	      r += bytes;
-	      j--;
-	    }
-	  else
-	    {
-	      s_m1 += bytes;
-	      s    += bytes;
-	      s_p1 += bytes;
-	      s_p2 += bytes;
-	      src_col++;
-	    }
-	}
-
-      if (advance_dest_y)
-	{
-	  tot_frac = 1.0 / (x_rat * y_rat);
-
-	  /*  copy "row" to "dest"  */
-	  d = dest;
-	  r = row;
-
-	  j = width;
-	  while (j--)
-	    {
-	      b = bytes;
-	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac + 0.5);
-	    }
-
-	  /*  set the pixel region span  */
-	  pixel_region_set_row (destPR, 0, (height - i), width, dest);
-
-	  /*  clear the "row" array  */
-	  memset (row, 0, sizeof (double) * width * bytes);
-
-	  i--;
-	}
-      else
-	{
-	  /*  Shuffle pointers  */
-	  s = src_m1;
-	  src_m1 = src;
-	  src = src_p1;
-	  src_p1 = src_p2;
-	  src_p2 = s;
-
-	  src_row++;
-	  if ((src_row + 1) < (orig_height - 1))
-	    pixel_region_get_row (srcPR, 0, (src_row + 2), orig_width, src_p2, 1);
-	}
+      }
     }
+    else /* height == orig_height */
+    {
+      get_scaled_row((void **)&src[0], y, width, srcPR, row,
+		     src_tmp, 2);
+      memcpy(accum, src[3], sizeof(double) * width * bytes);
+    }
+    if (pixel_region_has_alpha(srcPR))
+    { /* unmultiply the alpha */
+      double inv_alpha;
+      double *p = accum;
+      int alpha = bytes - 1;
+      int result;
+      guchar *d = dest;
+      for (x = 0; x < width; x++)
+      {
+	inv_alpha = 255.0 / p[alpha];
+	for (b = 0; b < alpha; b++)
+	{
+	  result = RINT(inv_alpha * p[b]);
+	  if (result < 0)
+	    d[b] = 0;
+	  else if (result > 255)
+	    d[b] = 255;
+	  else
+	    d[b] = result;
+	}
+	result = RINT(p[alpha]);
+	if (result < 0)
+	  d[alpha] = 0;
+	else if (result > 255)
+	  d[alpha] = 255;
+	else
+	  d[alpha] = result;
+	d += bytes;
+	p += bytes;
+      }
+    }
+    else
+    {
+      int w = width * bytes;
+      for (x = 0; x < w; x++)
+      {
+	if (accum[x] < 0.0)
+	  dest[x] = 0;
+	else if (accum[x] > 255.0)
+	  dest[x] = 255;
+	else
+	  dest[x] = RINT(accum[x]);
+      }
+    }
+    pixel_region_set_row (destPR, 0, y, width, dest);
+  }
 
   /*  free up temporary arrays  */
-  g_free (row);
-  g_free (x_frac);
-  g_free (src_m1);
-  g_free (src);
-  g_free (src_p1);
-  g_free (src_p2);
+  g_free (accum);
+  for (i = 0; i < 4; i++)
+    g_free (src[i]);
+  g_free (src_tmp);
   g_free (dest);
+  row -= 2*bytes;
+  g_free (row);
 }
-
 
 void
 subsample_region (PixelRegion *srcPR,

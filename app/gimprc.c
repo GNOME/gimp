@@ -64,6 +64,7 @@ typedef enum {
   TT_POSITION,
   TT_MEMSIZE,
   TT_IMAGETYPE,
+  TT_INTERP,
   TT_XCOLORCUBE,
   TT_XPREVSIZE,
   TT_XUNIT,
@@ -130,6 +131,7 @@ int       show_statusbar = TRUE;
 GUnit     default_units = UNIT_INCH;
 int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
+InterpolationType interpolation_type = LINEAR_INTERPOLATION;
 int       confirm_on_close = TRUE;
 int       save_session_info = TRUE;
 int       save_device_status = FALSE;
@@ -168,6 +170,7 @@ static int parse_boolean (gpointer val1p, gpointer val2p);
 static int parse_position (gpointer val1p, gpointer val2p);
 static int parse_mem_size (gpointer val1p, gpointer val2p);
 static int parse_image_type (gpointer val1p, gpointer val2p);
+static int parse_interpolation_type (gpointer val1p, gpointer val2p);
 static int parse_color_cube (gpointer val1p, gpointer val2p);
 static int parse_preview_size (gpointer val1p, gpointer val2p);
 static int parse_units (gpointer val1p, gpointer val2p);
@@ -259,7 +262,7 @@ static ParseFunc funcs[] =
   { "default-units",             TT_XUNIT,      &default_units, NULL },
   { "auto-save",                 TT_BOOLEAN,    &auto_save, NULL },
   { "dont-auto-save",            TT_BOOLEAN,    NULL, &auto_save },
-  { "cubic-interpolation",       TT_BOOLEAN,    &cubic_interpolation, NULL },
+  { "interpolation-type",        TT_INTERP,     &interpolation_type, NULL },
   { "confirm-on-close",          TT_BOOLEAN,    &confirm_on_close, NULL },
   { "dont-confirm-on-close",     TT_BOOLEAN,    NULL, &confirm_on_close },
   { "save-session-info",         TT_BOOLEAN,    &save_session_info, NULL },
@@ -768,6 +771,8 @@ parse_statement ()
 	  return parse_mem_size (funcs[i].val1p, funcs[i].val2p);
 	case TT_IMAGETYPE:
 	  return parse_image_type (funcs[i].val1p, funcs[i].val2p);
+	case TT_INTERP:
+	  return parse_interpolation_type (funcs[i].val1p, funcs[i].val2p);
 	case TT_XCOLORCUBE:
 	  return parse_color_cube (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
@@ -1094,6 +1099,38 @@ parse_image_type (gpointer val1p,
     *typep = RGB;
   else if ((!strcmp (token_sym, "gray")) || (!strcmp (token_sym, "grey")))
     *typep = GRAY;
+  else
+    return ERROR;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static int
+parse_interpolation_type (gpointer val1p,
+			  gpointer val2p)
+{
+  int token;
+  InterpolationType *typep;
+  
+  g_assert (val1p != NULL);
+  typep = (InterpolationType *)val1p;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_SYMBOL))
+    return ERROR;
+  token = get_next_token ();
+ 
+  if (strcmp (token_sym, "nearest-neighbor") == 0)
+    *typep = NEAREST_NEIGHBOR_INTERPOLATION;
+  else if (strcmp (token_sym, "linear") == 0)
+    *typep = LINEAR_INTERPOLATION;
+  else if (strcmp (token_sym, "cubic") == 0)
+    *typep = CUBIC_INTERPOLATION;
   else
     return ERROR;
 
@@ -2303,6 +2340,8 @@ value_to_str (char *name)
 	  return mem_size_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_IMAGETYPE:
 	  return image_type_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_INTERP:
+	  return interpolation_type_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XCOLORCUBE:
 	  return color_cube_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPREVSIZE:
@@ -2415,6 +2454,26 @@ image_type_to_str (gpointer val1p,
     return g_strdup ("gray");
   else
     return g_strdup ("rgb");
+}
+
+static inline char *
+interpolation_type_to_str (gpointer val1p,
+			   gpointer val2p)
+{
+  InterpolationType type;
+
+  type = *((InterpolationType *)val1p);
+  switch (type)
+  {
+   case LINEAR_INTERPOLATION:
+     return g_strdup ("linear");
+   case CUBIC_INTERPOLATION:
+     return g_strdup ("cubic");
+   case NEAREST_NEIGHBOR_INTERPOLATION:
+     return g_strdup ("nearest-neighbor");
+   default:
+     return g_strdup ("bad interpolation type");
+  }
 }
 
 static inline char *

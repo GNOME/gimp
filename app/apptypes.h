@@ -127,6 +127,14 @@ typedef enum {
 } GradientPaintMode;
 
 
+/* gradient paint modes */
+typedef enum
+{
+  LINEAR_INTERPOLATION,
+  CUBIC_INTERPOLATION,
+  NEAREST_NEIGHBOR_INTERPOLATION
+} InterpolationType;
+
 typedef struct _GimpChannel      GimpChannel;
 typedef struct _GimpChannelClass GimpChannelClass;
 

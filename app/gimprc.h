@@ -20,6 +20,7 @@
 
 #include <glib.h>
 #include "libgimp/gimpunit.h"
+#include "apptypes.h"
 
 /*  global gimprc variables  */
 extern char *    plug_in_path;
@@ -56,6 +57,7 @@ extern GUnit     default_units;
 extern int       show_statusbar;
 extern int       auto_save;
 extern int       cubic_interpolation;
+extern InterpolationType interpolation_type;
 extern int       confirm_on_close;
 extern int       default_width, default_height;
 extern int       default_type;
