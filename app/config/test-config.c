@@ -84,11 +84,16 @@ main (int   argc,
   gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
                                      output_unknown_token, &header);
 
-  g_print ("\n\nTesting gimp_rc_write_changes() ... \n\n");
+  g_print ("\n\nChanging a property ... ");
+  g_object_set (G_OBJECT (gimprc), "use-help", FALSE, NULL);
 
-  gimprc2 = gimp_rc_new ();
+  g_print ("\nTesting gimp_rc_duplicate() ... ");
+  gimprc2 = gimp_rc_duplicate (gimprc);
+  g_print ("done.\n");
+
+  g_print ("\nTesting gimp_rc_write_changes() ... \n\n");
+
   g_object_set (G_OBJECT (gimprc2), "show-tips", FALSE, NULL);
-
   gimp_rc_write_changes (gimprc2, gimprc, NULL);
 
   g_print ("\n");

@@ -1,5 +1,12 @@
 2002-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc.[ch]: added gimp_rc_duplicate() and started to
+	add inline documentation.
+	
+	* app/config/test-config.c: test the new functionality.
+
+2002-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpbaseconfig.c
 	* app/config/gimpcoreconfig.c
 	* app/config/gimpdisplayconfig.c

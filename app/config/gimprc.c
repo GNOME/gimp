@@ -118,21 +118,89 @@ gimp_rc_deserialize (GObject  *object,
   return gimp_config_deserialize_properties (object, scanner, TRUE);
 }
 
+/**
+ * gimp_rc_new:
+ * 
+ * Creates a new #GimpRc object with default configuration values.
+ * 
+ * Return value: the newly generated #GimpRc object.
+ **/
 GimpRc *
 gimp_rc_new (void)
 {
   return GIMP_RC (g_object_new (GIMP_TYPE_RC, NULL));
 }
 
+/**
+ * gimp_rc_duplicate:
+ * @rc: a #GimpRc object to duplicate.
+ * 
+ * Creates a new @GimpRc object with all configuration values copied
+ * from @rc.
+ * 
+ * Return value: the duplicated #GimpRc object.
+ **/
+GimpRc *
+gimp_rc_duplicate (GimpRc *rc)
+{
+  GObject       *dup;
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+
+  g_return_val_if_fail (GIMP_IS_RC (rc), NULL);
+
+  dup = g_object_new (GIMP_TYPE_RC, NULL);
+
+  klass = G_OBJECT_GET_CLASS (rc);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return GIMP_RC (dup);
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec  *prop_spec;
+      GValue       value = { 0, };
+
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READWRITE))
+        continue;
+
+      g_value_init (&value, prop_spec->value_type);
+      
+      g_object_get_property (G_OBJECT (rc),  prop_spec->name, &value);
+      g_object_set_property (G_OBJECT (dup), prop_spec->name, &value);
+    }
+
+  return GIMP_RC (dup);
+}
+
+/**
+ * gimp_rc_write_changes:
+ * @new_rc: a #GimpRc object.
+ * @old_rc: another #GimpRc object.
+ * @filename: the name of the rc file to generate. If it is %NULL, stdout 
+ * will be used.
+ * 
+ * Writes all configuration values of @new_rc that differ from the values
+ * set in @old_rc to the file specified by @filename. If the file already
+ * exists, it is overwritten.
+ * 
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
-gimp_rc_write_changes (GimpRc      *new,
-                       GimpRc      *old,
+gimp_rc_write_changes (GimpRc      *new_rc,
+                       GimpRc      *old_rc,
                        const gchar *filename)
 {
   gint fd;
 
-  g_return_val_if_fail (GIMP_IS_RC (new), FALSE);
-  g_return_val_if_fail (GIMP_IS_RC (old), FALSE);
+  g_return_val_if_fail (GIMP_IS_RC (new_rc), FALSE);
+  g_return_val_if_fail (GIMP_IS_RC (old_rc), FALSE);
 
   if (filename)
     fd = open (filename, O_WRONLY | O_CREAT, 
@@ -148,8 +216,8 @@ gimp_rc_write_changes (GimpRc      *new,
     }
 
   gimp_rc_write_header (fd);
-  gimp_rc_serialize_changed_properties (new, old, fd);
-  gimp_config_serialize_unknown_tokens (G_OBJECT (new), fd);
+  gimp_rc_serialize_changed_properties (new_rc, old_rc, fd);
+  gimp_config_serialize_unknown_tokens (G_OBJECT (new_rc), fd);
 
   if (filename)
     close (fd);
@@ -158,8 +226,8 @@ gimp_rc_write_changes (GimpRc      *new,
 }
 
 static void
-gimp_rc_serialize_changed_properties (GimpRc *new,
-                                      GimpRc *old,
+gimp_rc_serialize_changed_properties (GimpRc *new_rc,
+                                      GimpRc *old_rc,
                                       gint    fd)
 {
   GObjectClass  *klass;
@@ -168,7 +236,7 @@ gimp_rc_serialize_changed_properties (GimpRc *new,
   guint          i;
   GString       *str;
 
-  klass = G_OBJECT_GET_CLASS (new);
+  klass = G_OBJECT_GET_CLASS (new_rc);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
@@ -190,8 +258,8 @@ gimp_rc_serialize_changed_properties (GimpRc *new,
 
       g_value_init (&new_value, prop_spec->value_type);
       g_value_init (&old_value, prop_spec->value_type);
-      g_object_get_property (G_OBJECT (new), prop_spec->name, &new_value);
-      g_object_get_property (G_OBJECT (old), prop_spec->name, &old_value);
+      g_object_get_property (G_OBJECT (new_rc), prop_spec->name, &new_value);
+      g_object_get_property (G_OBJECT (old_rc), prop_spec->name, &old_value);
 
       if (!gimp_values_equal (&new_value, &old_value))
         {
@@ -206,7 +274,7 @@ gimp_rc_serialize_changed_properties (GimpRc *new,
           else if (prop_spec->value_type != G_TYPE_STRING)
             {
               g_warning ("couldn't serialize property %s::%s of type %s",
-                         g_type_name (G_TYPE_FROM_INSTANCE (new)),
+                         g_type_name (G_TYPE_FROM_INSTANCE (new_rc)),
                          prop_spec->name, 
                          g_type_name (prop_spec->value_type));
             }
