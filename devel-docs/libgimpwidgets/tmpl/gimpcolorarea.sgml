@@ -46,8 +46,10 @@ GimpColorArea
 
 </para>
 
-@gca: 
+@area: 
 @color: 
+<!-- # Unused Parameters # -->
+@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_get_color ##### -->
@@ -55,8 +57,10 @@ GimpColorArea
 
 </para>
 
-@gca: 
+@area: 
 @color: 
+<!-- # Unused Parameters # -->
+@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_has_alpha ##### -->
@@ -64,8 +68,10 @@ GimpColorArea
 
 </para>
 
-@gca: 
+@area: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@gca: 
 
 
 <!-- ##### FUNCTION gimp_color_area_set_type ##### -->
@@ -73,7 +79,9 @@ GimpColorArea
 
 </para>
 
-@gca: 
+@area: 
 @type: 
+<!-- # Unused Parameters # -->
+@gca: 
 
 

@@ -5,6 +5,7 @@
 <!entity GimpColorButton SYSTEM "sgml/gimpcolorbutton.sgml">
 <!entity GimpColorDisplay SYSTEM "sgml/gimpcolordisplay.sgml">
 <!entity GimpColorNotebook SYSTEM "sgml/gimpcolornotebook.sgml">
+<!entity GimpColorScale SYSTEM "sgml/gimpcolorscale.sgml">
 <!entity GimpColorScales SYSTEM "sgml/gimpcolorscales.sgml">
 <!entity GimpColorSelect SYSTEM "sgml/gimpcolorselect.sgml">
 <!entity GimpColorSelector SYSTEM "sgml/gimpcolorselector.sgml">
@@ -30,6 +31,7 @@
     &GimpChainButton;
     &GimpColorArea;
     &GimpColorButton;
+    &GimpColorScale;
     &GimpFileSelection;
     &GimpPathEditor;
     &GimpPixmap;

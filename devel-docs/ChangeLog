@@ -1,3 +1,12 @@
+2002-10-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpcolorscale.sgml: added GimpColorScale.
+	
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpcolorarea.sgml: updated.
+
 2002-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml

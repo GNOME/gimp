@@ -1,0 +1,31 @@
+<!-- ##### SECTION Title ##### -->
+GimpColorScale
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpColorScale ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+
+<!-- ##### FUNCTION gimp_color_scale_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

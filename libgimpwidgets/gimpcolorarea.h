@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimpcolorarea.h
- * Copyright (C) 2001 Sven Neumann
+ * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -72,12 +72,12 @@ GtkWidget * gimp_color_area_new        (const GimpRGB     *color,
 					GimpColorAreaType  type,
 					GdkModifierType    drag_mask);
 
-void        gimp_color_area_set_color  (GimpColorArea     *gca,
+void        gimp_color_area_set_color  (GimpColorArea     *area,
 					const GimpRGB     *color);
-void        gimp_color_area_get_color  (GimpColorArea     *gca,
+void        gimp_color_area_get_color  (GimpColorArea     *area,
 					GimpRGB           *color);
-gboolean    gimp_color_area_has_alpha  (GimpColorArea     *gca);
-void        gimp_color_area_set_type   (GimpColorArea     *gca,
+gboolean    gimp_color_area_has_alpha  (GimpColorArea     *area);
+void        gimp_color_area_set_type   (GimpColorArea     *area,
 					GimpColorAreaType  type);
 
 

@@ -444,6 +444,21 @@ GIMP_COLOR_NOTEBOOK_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolorscale</FILE>
+<TITLE>GimpColorScale</TITLE>
+GimpColorScale
+gimp_color_scale_new
+<SUBSECTION Standard>
+GIMP_COLOR_SCALE
+GIMP_IS_COLOR_SCALE
+GIMP_TYPE_COLOR_SCALE
+gimp_color_scale_get_type
+GIMP_COLOR_SCALE_CLASS
+GIMP_IS_COLOR_SCALE_CLASS
+GIMP_COLOR_SCALE_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcolorscales</FILE>
 GimpColorScales
 gimp_color_scales_set_toggles_sensitive
