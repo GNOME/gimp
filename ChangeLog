@@ -2,8 +2,8 @@
 
 	* plug-ins/common/unsharp.c: reverted the last change since it
 	introduced artefacts. Even had to increase the border around the
-	previewed area. Fixed a bug in the unsharp_region where it was
-	using the wrong source region for blurring.
+	previewed area. Fixed a bug in unsharp_region() where it was using
+	the wrong source region for blurring.
 
 2004-12-21  Sven Neumann  <sven@gimp.org>
 
