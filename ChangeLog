@@ -1,3 +1,9 @@
+2004-11-16  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: implemented the gradient fill, using a
+	shapeburst blend.  This is very slow, but I dont see how it could be
+	done otherwise.
+
 2004-11-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpfgbgeditor.c: get rid of the

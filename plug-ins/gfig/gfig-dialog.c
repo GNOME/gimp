@@ -1704,7 +1704,21 @@ paint_layer_fill (void)
       fill_mode = GIMP_PATTERN_BUCKET_FILL;
       break;
 
-    default:
+    case FILL_GRADIENT:
+      gimp_edit_blend (gfig_context->drawable_id,
+                       GIMP_CUSTOM_MODE,
+                       GIMP_NORMAL_MODE,
+                       GIMP_GRADIENT_SHAPEBURST_DIMPLED,
+                       100.0,             /* opacity            */
+                       0.0,               /* offset             */
+                       GIMP_REPEAT_NONE,
+                       FALSE,             /* reverse            */
+                       FALSE,             /* supersampling      */
+                       0,                 /* max_depth          */
+                       0.0,               /* threshold          */
+                       FALSE,             /* dither             */
+                       0.0, 0.0,          /* (x1, y1) - ignored */
+                       0.0, 0.0);         /* (x2, y2) - ignored */
       return;
     }
 
