@@ -21,18 +21,20 @@
  *
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "config.h"
 #include "imap_cmd_delete_point.h"
 #include "imap_cmd_insert_point.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_polygon.h"
 #include "imap_table.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "polygon.xpm"
 

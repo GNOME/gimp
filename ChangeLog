@@ -1,3 +1,10 @@
+2001-11-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/*.c: marked strings for translation, include
+	config.h and corrected include order. Added a check for NULL pointers
+	that might fix bug #33802 (I can't reproduce the problem, so I can't 
+	check).
+
 2001-11-04  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/app.pl: include config.h from all generated files.

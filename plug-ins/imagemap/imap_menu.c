@@ -21,11 +21,10 @@
  *
  */
 
+#include "config.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
-
-#include "config.h"
-#include "libgimp/stdplugins-intl.h"
 
 #include "imap_circle.h"
 #include "imap_file.h"
@@ -40,6 +39,8 @@
 #include "imap_settings.h"
 #include "imap_source.h"
 #include "imap_tools.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static gint _menu_callback_lock;
 static Menu_t _menu;
@@ -240,7 +241,8 @@ command_list_changed(Command_t *command, gpointer data)
    /* Set undo entry */
    if (_menu.undo)
       gtk_widget_destroy(_menu.undo);
-   scratch = g_strdup_printf (_("Undo %s"), (command) ? command->name : "");
+   scratch = g_strdup_printf (_("Undo %s"), 
+                              command && command->name ? command->name : "");
    _menu.undo = insert_item_with_label(_menu.edit_menu, 1, scratch,
 				       menu_command, &_menu.cmd_undo);
    g_free (scratch);
@@ -251,7 +253,8 @@ command_list_changed(Command_t *command, gpointer data)
    command = command_list_get_redo_command();
    if (_menu.redo)
       gtk_widget_destroy(_menu.redo);
-   scratch = g_strdup_printf (_("Redo %s"), (command) ? command->name : "");
+   scratch = g_strdup_printf (_("Redo %s"), 
+                              command && command->name ? command->name : "");
    _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
 				       menu_command, &_menu.cmd_redo);
    g_free (scratch);

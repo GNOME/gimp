@@ -40,7 +40,7 @@ make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window, char **data,
 				       data);
    iconw = gtk_pixmap_new(icon, mask);
    return gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-				  identifier, tooltip, "Private", iconw,
+				  identifier, tooltip, NULL, iconw,
 				  GTK_SIGNAL_FUNC(callback), udata);
 }
 
@@ -63,7 +63,7 @@ make_toolbar_radio_icon(GtkWidget *toolbar, GtkWidget *window,
    iconw = gtk_pixmap_new(icon, mask);
    return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
 				     GTK_TOOLBAR_CHILD_RADIOBUTTON, prev,
-				     identifier, tooltip, "Private", iconw,
+				     identifier, tooltip, NULL, iconw,
 				     GTK_SIGNAL_FUNC(callback), udata);
 }
 
@@ -86,7 +86,7 @@ make_toolbar_toggle_icon(GtkWidget *toolbar, GtkWidget *window,
    iconw = gtk_pixmap_new(icon, mask);
    return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
 				     GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
-				     identifier, tooltip, "Private", iconw,
+				     identifier, tooltip, NULL, iconw,
 				     GTK_SIGNAL_FUNC(callback), udata);
 }
 

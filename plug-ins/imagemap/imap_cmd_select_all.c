@@ -21,10 +21,13 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_all.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t select_all_command_execute(Command_t *parent);
 static void select_all_command_undo(Command_t *parent);

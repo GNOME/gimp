@@ -207,6 +207,7 @@ plug-ins/imagemap/imap_cmd_move.c
 plug-ins/imagemap/imap_cmd_move_down.c
 plug-ins/imagemap/imap_cmd_move_sash.c
 plug-ins/imagemap/imap_cmd_move_selected.c
+plug-ins/imagemap/imap_cmd_move_to_front.c
 plug-ins/imagemap/imap_cmd_move_up.c
 plug-ins/imagemap/imap_cmd_object_down.c
 plug-ins/imagemap/imap_cmd_object_move.c
@@ -215,6 +216,7 @@ plug-ins/imagemap/imap_cmd_paste.c
 plug-ins/imagemap/imap_cmd_select.c
 plug-ins/imagemap/imap_cmd_select_all.c
 plug-ins/imagemap/imap_cmd_select_next.c
+plug-ins/imagemap/imap_cmd_select_prev.c
 plug-ins/imagemap/imap_cmd_select_region.c
 plug-ins/imagemap/imap_cmd_send_to_back.c
 plug-ins/imagemap/imap_cmd_unselect.c

@@ -21,10 +21,14 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_create.h"
 #include "imap_cmd_delete.h"
 #include "imap_cmd_move_to_front.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t move_to_front_command_execute(Command_t *parent);
 static void move_to_front_command_undo(Command_t *parent);
@@ -47,7 +51,7 @@ move_to_front_command_new(ObjectList_t *list)
 {
    MoveToFrontCommand_t *command = g_new(MoveToFrontCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Move To Front", 
+   return command_init(&command->parent, _("Move To Front"), 
 		       &move_to_front_command_class);
 }
 

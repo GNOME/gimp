@@ -21,10 +21,14 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_prev.h"
 #include "imap_cmd_unselect.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t select_prev_command_execute(Command_t *parent);
 static void select_prev_command_undo(Command_t *command);
@@ -47,7 +51,7 @@ select_prev_command_new(ObjectList_t *list)
 {
    SelectPrevCommand_t *command = g_new(SelectPrevCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Select Previous", 
+   return command_init(&command->parent, _("Select Previous"), 
 		       &select_prev_command_class);
 }
 

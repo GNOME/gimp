@@ -21,10 +21,13 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_delete.h"
 #include "imap_cmd_cut.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static void cut_command_destruct(Command_t *parent);
 static CmdExecuteValue_t cut_command_execute(Command_t *parent);

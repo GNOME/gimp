@@ -21,11 +21,14 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_create.h"
 #include "imap_cmd_delete.h"
 #include "imap_cmd_send_to_back.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t send_to_back_command_execute(Command_t *parent);
 static void send_to_back_command_undo(Command_t *parent);

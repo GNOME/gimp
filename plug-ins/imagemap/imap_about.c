@@ -21,8 +21,11 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_about.h"
 #include "imap_default_dialog.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 void

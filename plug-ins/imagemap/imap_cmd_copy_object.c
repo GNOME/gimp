@@ -21,7 +21,10 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_copy_object.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 static void copy_object_command_destruct(Command_t *parent);

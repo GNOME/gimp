@@ -21,7 +21,10 @@
  *
  */
 
+#include "config.h"
+
 #include "imap_cmd_copy.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t copy_command_execute(Command_t *parent);

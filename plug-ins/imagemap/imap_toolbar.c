@@ -22,10 +22,12 @@
  */
 
 #include "config.h"
-#include "libgimp/stdplugins-intl.h"
+
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_toolbar.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 #include "copy.xpm"
 #include "cut.xpm"

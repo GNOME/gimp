@@ -21,13 +21,16 @@
  *
  */
 
+#include "config.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 
 #include "imap_default_dialog.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_source.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 static void 
 save_to_view(gpointer param, const char* format, ...)

@@ -22,13 +22,14 @@
  */
 
 #include "config.h"
+
 #include "imap_browse.h"
-#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_settings.h"
 #include "imap_string.h"
 #include "imap_table.h"
 
+#include "libgimp/stdplugins-intl.h"
 
 static MapFormat_t _map_format = CSIM;
 
