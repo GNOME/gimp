@@ -1,3 +1,64 @@
+2001-02-17  Hans Breuer  <hans@breuer.org>
+
+	* */*/makefile.msc */makefile.msc : from now on use 
+	make.msc from $(TOP)/glib/build/win32; all occurences
+	of DIRENT removed and general update
+
+	* app/config/makefile.msc app/paint/makefile.msc
+	  app/plug-in/makefile.msc themes/Default/makefile.msc :
+	new files
+
+	* app/base/base.c : ported to GDir usage
+
+	* app/config/gimpconfig-serialize.c :
+	  app/config/gimpconfig-deserialize.c : HAVE_UNISTD_H
+	* app/config/gimpconfig.c :
+	  app/config/gimprc.c : HAVE_UNISTD_H, use <io.h> for
+	open() prototype and merged pmode parameter 
+	(_S_IREAD | _S_IWRITE)
+
+	* app/core/cpercep.c : msvc doesn't have cbrt(), provide
+	it via pow(). Also include <glib.h> for painless 'inline'
+	definition.
+
+	* app/core/gimpdatafiles.c : ported to GDir usage
+
+	* app/core/gimpimage-convert.c : work around a msvc compiler
+	limitation (can't convert from uint64 to double)
+
+	* app/file/file-open.c app/file/file-save.c :
+	access() -> _access() for G_OS_WIN32
+
+	* app/plug-in/plug-in.c : HAVE_UNISTD_H and <io.h>
+
+	* libgimpbase/gimpbase.def : updated externals
+
+	* libgimpbase/gimpenv.c : define WIN32_LEAN_AND_MEAN to
+	avoid clashes with incompatible DATADIR definitions
+
+	* libgimpcolor/gimpcolor.def : updated externals
+
+	* lingimpmath/gimpmath.def : updated externals
+
+	* libgimpwidgets/gimpwidgets.def : updated externals
+
+	* libgimpwidgets/libgimp-glue.c : adapt to const changes
+	of some prototypes
+
+	* plug-ins/makefile.msc : disabled gdyntext
+
+	* plug-ins/gap/iter_ALT/*/*.inc : GimpRunModeType -> GimpRunMode
+
+	* plug-ins/FractalExplorer/FractalExplorer.c :
+	* plug-ins/gap/gap_lib.c :
+	* plug-ins/gfig/gfig.c :
+	* plug-ins/gflare/gflare.c :
+	* plug-ins/gimpressionist/gimpressionist.c :
+	replaced DIRENT usage with GDir
+
+	* plug-ins/script-fu/script-fu-scripts.c : #include <windows.h>
+	to get the Sleep() prototype
+
 2002-02-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: made
