@@ -20,7 +20,7 @@
  */
 
 #include "config.h"
-
+#include <stdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -204,10 +204,7 @@ gimp_size_box_constructor (GType                  type,
   GtkWidget          *entry;
   GtkWidget          *table;
   GtkWidget          *hbox;
-  GtkWidget          *width;
-  GtkWidget          *height;
   GtkWidget          *chain;
-  GtkWidget          *vbox;
   GtkWidget          *label;
   GtkObject          *adjustment;
   GList              *focus_chain = NULL;
@@ -216,184 +213,82 @@ gimp_size_box_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   box = GIMP_SIZE_BOX (object);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  width = gimp_spin_button_new (&adjustment,
-                                1, 1, 1, 1, 10, 0,
-                                1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
-
-  height = gimp_spin_button_new (&adjustment,
-                                 1, 1, 1, 1, 10, 0,
-                                 1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
-
-  entry = gimp_size_entry_new (0, box->unit, "%p",
-                               TRUE, TRUE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
-
-  label = gtk_label_new_with_mnemonic (_("_Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new_with_mnemonic (_("H_eight:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+  priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
+  gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  gtk_table_set_row_spacing (GTK_TABLE (entry), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 2);
+  entry = gimp_coordinates_new (box->unit, "%p",
+                                TRUE, TRUE, SB_WIDTH,
+                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                TRUE, TRUE,
+                                _("_Width:"),
+                                box->width, box->xresolution,
+                                1, 1, 1, 10,
+                                _("H_eight:"),
+                                box->height, box->yresolution,
+                                1, 1, 1, 10);
+
+  priv->size_entry  = GIMP_SIZE_ENTRY (entry);
+  priv->size_chain  = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
+  priv->aspect      = (gdouble) box->width / (gdouble) box->height;
+
+  /*
+   * let gimp_prop_coordinates_callback know how to
+   * interpret the chainbutton.  This should be removed
+   * eventually.
+   */
+  g_object_set_data (G_OBJECT (priv->size_chain),
+                     "constrains-ratio",
+                     GINT_TO_POINTER (TRUE));
+
+  gimp_prop_coordinates_connect (G_OBJECT (box),
+                                 "width", "height",
+                                 "unit",
+                                 entry, NULL,
+                                 box->xresolution,
+                                 box->yresolution);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
-
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-			     GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), height, 0, 1, 1, 2);
-  gtk_widget_show (height);
-
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-			     GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), width, 0, 1, 0, 1);
-  gtk_widget_show (width);
-
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0, 0, box->width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 1, 0, box->height);
-
-  gimp_prop_coordinates_connect (G_OBJECT (box),
-                                 "width", "height", "unit",
-                                 entry, NULL,
-                                 box->xresolution, box->yresolution);
-
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
-  gtk_widget_show (chain);
-
-  gimp_help_set_help_data (GIMP_CHAIN_BUTTON (chain)->button,
-                           _("Keep aspect ratio"), NULL);
-
-  vbox = gtk_vbox_new (2, FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 3, 2, 3);
-  gtk_widget_show (vbox);
 
   label = gtk_label_new (NULL);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  focus_chain = g_list_prepend (focus_chain, GIMP_SIZE_ENTRY (entry)->unitmenu);
-  focus_chain = g_list_prepend (focus_chain, chain);
-  focus_chain = g_list_prepend (focus_chain, height);
-  focus_chain = g_list_prepend (focus_chain, width);
-
-  gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
-  g_list_free (focus_chain);
-
-  priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
-
-  priv->size_entry  = GIMP_SIZE_ENTRY (entry);
-  priv->size_chain  = GIMP_CHAIN_BUTTON (chain);
   priv->pixel_label = label;
-  priv->aspect      = (gdouble) box->width / (gdouble) box->height;
+
 
   if (box->edit_resolution)
     {
-      GtkWidget *xres;
-      GtkWidget *yres;
-
-      gtk_table_resize (GTK_TABLE (table), 5, 3);
-      gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
-
-      xres = gimp_spin_button_new (&adjustment,
-                                   1, 1, 1, 1, 10, 0,
-                                   1, 2);
-      gtk_entry_set_width_chars (GTK_ENTRY (xres), SB_WIDTH);
-
-      yres = gimp_spin_button_new (&adjustment,
-                                   1, 1, 1, 1, 10, 0,
-                                   1, 2);
-      gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
-
-      /*  the resolution labels  */
-      label = gtk_label_new_with_mnemonic (_("_X resolution:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-
-      label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      gtk_widget_show (label);
-
-      /*  the resolution sizeentry  */
       hbox = gtk_hbox_new (FALSE, 0);
-      gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 3, 5);
+      gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      entry = gimp_size_entry_new (0, box->resolution_unit, _("pixels/%a"),
-                                   FALSE, FALSE, FALSE, SB_WIDTH,
-                                   GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+      entry = gimp_coordinates_new (box->resolution_unit, _("pixels/%a"),
+                                    FALSE, FALSE, SB_WIDTH,
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                    TRUE, FALSE,
+                                    _("_X resolution:"),
+                                    box->xresolution, 1.0,
+                                    1, 1, 1, 10,
+                                    _("_Y resolution:"),
+                                    box->yresolution, 1.0,
+                                    1, 1, 1, 10);
 
-      gtk_table_set_row_spacing (GTK_TABLE (entry), 0, 2);
-      gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
-      gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 2);
 
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
       gtk_widget_show (entry);
 
-      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-                                 GTK_SPIN_BUTTON (yres), NULL);
-      gtk_table_attach_defaults (GTK_TABLE (entry), yres, 0, 1, 1, 2);
-      gtk_widget_show (yres);
-
-      gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
-                                 GTK_SPIN_BUTTON (xres), NULL);
-      gtk_table_attach_defaults (GTK_TABLE (entry), xres, 0, 1, 0, 1);
-      gtk_widget_show (xres);
-
-      /*  the resolution chainbutton  */
-      chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-      gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
-      gtk_widget_show (chain);
-
-      focus_chain = NULL;
-      focus_chain = g_list_prepend (focus_chain,
-                                    GIMP_SIZE_ENTRY (entry)->unitmenu);
-      focus_chain = g_list_prepend (focus_chain, chain);
-      focus_chain = g_list_prepend (focus_chain, yres);
-      focus_chain = g_list_prepend (focus_chain, xres);
-
-      gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
-      g_list_free (focus_chain);
-
       gimp_prop_coordinates_connect (G_OBJECT (box),
                                      "xresolution", "yresolution",
                                      "resolution-unit",
-                                     entry, chain,
+                                     entry, NULL,
                                      1.0, 1.0);
      }
   else
@@ -403,7 +298,7 @@ gimp_size_box_constructor (GType                  type,
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
       priv->res_label = label;
@@ -428,25 +323,11 @@ gimp_size_box_set_property (GObject      *object,
     {
     case PROP_WIDTH:
       box->width = g_value_get_int (value);
-      if (priv->size_chain && gimp_chain_button_get_active (priv->size_chain))
-        {
-          gint  height = ROUND ((gdouble) box->width / priv->aspect);
-
-          if (box->height != height)
-            gimp_size_entry_set_refval (priv->size_entry, 1, height);
-        }
       gimp_size_box_update_size (box);
       break;
 
     case PROP_HEIGHT:
       box->height = g_value_get_int (value);
-      if (priv->size_chain && gimp_chain_button_get_active (priv->size_chain))
-        {
-          gint  width = ROUND ((gdouble) box->height * priv->aspect);
-
-          if (box->width != width)
-            gimp_size_entry_set_refval (priv->size_entry, 0, width);
-        }
       gimp_size_box_update_size (box);
       break;
 

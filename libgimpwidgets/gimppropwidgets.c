@@ -2431,6 +2431,11 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   if (! old_x_value || ! old_y_value || (unit_param_spec && ! old_unit_value))
     return;
 
+  /*
+   * FIXME: if the entry was created using gimp_coordinates_new, then
+   * the chain button is handled automatically and the following block
+   * of code is unnecessary (and, in fact, redundant).
+   */
   if (x_value != y_value)
     {
       GtkWidget *chainbutton;
@@ -2438,7 +2443,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
       chainbutton = g_object_get_data (G_OBJECT (sizeentry), "chainbutton");
 
       if (chainbutton &&
-          gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)))
+          gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton)) &&
+          ! g_object_get_data (G_OBJECT (chainbutton), "constrains-ratio"))
         {
           if (x_value != *old_x_value)
             y_value = x_value;

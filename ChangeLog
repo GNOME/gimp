@@ -1,3 +1,11 @@
+2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* gimp/app/widgets/gimpsizebox.c: use gimp_coordinates_new()
+	instead of duplicating a lot of code.  Fixes bug #161756.
+	
+	* gimp/app/widgets/gimppropwidgets.c: small change in 
+	chainbutton handling to make above work.
+
 2004-12-23  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in-proc-frame.[ch]: made plug_in_proc_frame_free()
