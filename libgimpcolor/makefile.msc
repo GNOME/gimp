@@ -6,7 +6,7 @@
 # only, it probably is best to keep them in the GIMP's bin directory.
 BIN = C:\install\gimp\bin
 TOP = ..\..
-!include ..\..\build\win32\make.msc
+!include $(TOP)\glib\build\win32\make.msc
 
 GIMP_VER = 1.3
 
@@ -20,7 +20,10 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 INCLUDES = -I.. 
 # DEFINES = -DG_LOG_DOMAIN=\"LibGimpColor\"
-DEPCFLAGS = $(GLIB_CFLAGS)
+DEPCFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	$(GLIB_CFLAGS)
+
 DEPLIBS = $(GLIB_LIBS)
 
 all : \

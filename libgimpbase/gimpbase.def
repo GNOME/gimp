@@ -23,6 +23,8 @@ EXPORTS
 	gimp_pixpipe_params_build
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
+	gimp_plug_in_directory
+;	gimp_signal_private
 	gimp_sysconf_directory
 ;	gimp_unit_get_abbreviation
 ;	gimp_unit_get_deletion_flag
@@ -38,6 +40,7 @@ EXPORTS
 ;	gimp_unit_set_deletion_flag
 	gp_config_write
 	gp_extension_ack_write
+	gp_has_init_write
 	gp_init
 	gp_proc_install_write
 	gp_proc_return_write

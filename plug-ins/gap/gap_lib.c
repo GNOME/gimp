@@ -79,9 +79,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"
@@ -685,8 +682,8 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
    char          *l_exptr;
    char          *l_dummy;
    /* int            l_cmp_len;   */
-   DIR           *l_dirp;
-   struct dirent *l_dp;
+   GDir          *l_dirp;
+   const gchar   *l_entry;
    long           l_nr;
    long           l_maxnr;
    long           l_minnr;
@@ -723,20 +720,20 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
    else                           { l_dirname_ptr = l_dirname; l_dirflag = 2; }
 
    if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: DIRNAME:%s\n", l_dirname_ptr);
-   l_dirp = opendir( l_dirname_ptr );  
+   l_dirp = g_dir_open( l_dirname_ptr, 0, NULL );  
    
    if(!l_dirp) fprintf(stderr, "ERROR p_dir_ainfo: can't read directory %s\n", l_dirname_ptr);
    else
    {
-     while ( (l_dp = readdir( l_dirp )) != NULL )
+     while ( (l_entry = g_dir_read_name( l_dirp )) != NULL )
      {
 
-       /* if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: l_dp->d_name:%s\n", l_dp->d_name); */
+       /* if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo: l_entry:%s\n", l_entry); */
        
        
        /* findout extension of the directory entry name */
-       l_exptr = &l_dp->d_name[strlen(l_dp->d_name)];
-       while(l_exptr != l_dp->d_name)
+       l_exptr = &l_entry[strlen(l_entry)];
+       while(l_exptr != l_entry)
        {
          if(*l_exptr == G_DIR_SEPARATOR) { break; }                 /* dont run into dir part */
          if(*l_exptr == '.')       { break; }
@@ -750,23 +747,23 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
          switch(l_dirflag)
          {
            case 0:
-            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s", l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s", l_entry);
             break;
            case 1:
-            g_snprintf(dirname_buff, sizeof(dirname_buff), "%c%s",  G_DIR_SEPARATOR, l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%c%s",  G_DIR_SEPARATOR, l_entry);
             break;
            default:
             /* UNIX:  "/dir/file"
              * DOS:   "drv:\dir\file"
              */
-            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s%c%s", l_dirname_ptr,  G_DIR_SEPARATOR,  l_dp->d_name);
+            g_snprintf(dirname_buff, sizeof(dirname_buff), "%s%c%s", l_dirname_ptr,  G_DIR_SEPARATOR,  l_entry);
             break;
          }
          
          if(1 == p_file_exists(dirname_buff)) /* check for regular file */
          {
            /* get basename and frame number of the directory entry */
-           l_dummy = p_alloc_basename(l_dp->d_name, &l_nr);
+           l_dummy = p_alloc_basename(l_entry, &l_nr);
            if(l_dummy != NULL)
            { 
                /* check for files, with equal basename (frames)
@@ -774,12 +771,12 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
                 * because of the frame_nr part "0000")
                 */
                if((0 == strcmp(l_ptr, l_dummy))
-               && ( strlen(l_dp->d_name) > strlen(l_dummy) + strlen(l_exptr)  ))
+               && ( strlen(l_entry) > strlen(l_dummy) + strlen(l_exptr)  ))
                {
                  ainfo_ptr->frame_cnt++;
 
 
-                 if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo:  %s NR=%ld\n", l_dp->d_name, l_nr);
+                 if(gap_debug) fprintf(stderr, "DEBUG p_dir_ainfo:  %s NR=%ld\n", l_entry, l_nr);
 
                  if (l_nr > l_maxnr)
                     l_maxnr = l_nr;
@@ -792,7 +789,7 @@ int p_dir_ainfo(t_anim_info *ainfo_ptr)
          }
        }
      }
-     closedir( l_dirp );
+     g_dir_close( l_dirp );
    }
 
   g_free(l_dirname);
@@ -2487,11 +2484,11 @@ p_clear_or_count_video_paste(gint delete_flag)
   gchar *l_fname_thumbnail;
   gint   l_len;
   gint32 l_framecount;
-  DIR           *l_dirp;
-  struct dirent *l_dp;
+  GDir          *l_dirp;
+  const char    *l_entry;
 
   l_dir = p_get_video_paste_dir();
-  l_dirp = opendir(l_dir);  
+  l_dirp = g_dir_open(l_dir, 0, NULL);  
   l_framecount = 0;
   
   if(!l_dirp)
@@ -2504,11 +2501,11 @@ p_clear_or_count_video_paste(gint delete_flag)
      l_basename = p_get_video_paste_basename();
      
      l_len = strlen(l_basename);
-     while ( (l_dp = readdir( l_dirp )) != NULL )
+     while ( (l_entry = g_dir_read_name( l_dirp )) != NULL )
      {
-       if(strncmp(l_basename, l_dp->d_name, l_len) == 0)
+       if(strncmp(l_basename, l_entry, l_len) == 0)
        {
-          l_filename = g_strdup_printf("%s%s%s", l_dir, G_DIR_SEPARATOR_S, l_dp->d_name);
+          l_filename = g_strdup_printf("%s%s%s", l_dir, G_DIR_SEPARATOR_S, l_entry);
           if(1 == p_file_exists(l_filename)) /* check for regular file */
 	  {
              /* delete all files in the video paste directory
@@ -2529,7 +2526,7 @@ p_clear_or_count_video_paste(gint delete_flag)
           g_free(l_filename);
        }
      }
-     closedir( l_dirp );
+     g_dir_close( l_dirp );
      g_free(l_basename);
    }
    g_free(l_dir);

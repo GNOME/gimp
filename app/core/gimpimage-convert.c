@@ -1450,9 +1450,20 @@ find_split_candidate (const boxptr boxlist,
     {
       if (boxp->volume > 0)
 	{
+#ifndef _MSC_VER
 	  etype rpe = (double)((boxp->rerror) * R_SCALE * R_SCALE);
 	  etype gpe = (double)((boxp->gerror) * G_SCALE * G_SCALE);
 	  etype bpe = (double)((boxp->berror) * B_SCALE * B_SCALE);
+#else
+	  /*
+	   * Sorry about the mess, otherwise would get :
+	   * error C2520: conversion from unsigned __int64 to double 
+	   *              not implemented, use signed __int64
+	   */
+	  etype rpe = (double)(((__int64)boxp->rerror) * R_SCALE * R_SCALE);
+	  etype gpe = (double)(((__int64)boxp->gerror) * G_SCALE * G_SCALE);
+	  etype bpe = (double)(((__int64)boxp->berror) * B_SCALE * B_SCALE);
+#endif
 
 	  if (Lbias * rpe > maxc &&
 	      boxp->Rmin < boxp->Rmax)

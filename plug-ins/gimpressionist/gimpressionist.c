@@ -9,9 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -258,10 +255,10 @@ void reselect(GtkWidget *list, char *fname)
 void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
 {
   char *fpath;
-  struct dirent *de;
+  const gchar *de;
   struct stat st;
   GtkWidget *selectedw = NULL, *tmpw;
-  DIR *dir;
+  GDir *dir;
   GList *flist = NULL;
  
   if(selected) {
@@ -274,20 +271,20 @@ void readdirintolist_real(char *subdir, GtkWidget *list, char *selected)
     }
   }
 
-  dir = opendir(subdir);
+  dir = g_dir_open(subdir);
 
   if(!dir)
     return;
 
   for(;;) {
-    if(!(de = readdir(dir))) break;
-    fpath = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", subdir, de->d_name);
+    if(!(de = g_dir_read-name(dir))) break;
+    fpath = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", subdir, de);
     stat(fpath, &st);
     g_free(fpath);
     if(!S_ISREG(st.st_mode)) continue;
-    flist = g_list_insert_sorted(flist, g_strdup(de->d_name), (GCompareFunc)g_ascii_strcasecmp);
+    flist = g_list_insert_sorted(flist, g_strdup(de), (GCompareFunc)g_ascii_strcasecmp);
   }
-  closedir(dir);
+  g_dir_close(dir);
 
   while(flist) {
     tmpw = gtk_list_item_new_with_label(flist->data);

@@ -25,7 +25,7 @@ EXPORTS
 	gimp_dialog_get_type
 	gimp_dialog_new
 	gimp_dialog_newv
-	gimp_dialog_set_icon
+;	gimp_dialog_set_icon
 	gimp_double_adjustment_update
 	gimp_file_selection_get_filename
 	gimp_file_selection_get_type
@@ -65,6 +65,7 @@ EXPORTS
 	gimp_radio_button_update
 	gimp_radio_group_new
 	gimp_radio_group_new2
+	gimp_radio_group_set_active
 	gimp_random_seed_new
 	gimp_scale_entry_new
 	gimp_size_entry_add_field
@@ -103,4 +104,5 @@ EXPORTS
 	gimp_unit_menu_new
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
+	gimp_widgets_init
 

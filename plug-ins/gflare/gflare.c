@@ -47,9 +47,6 @@ static char rcsid[] = "$Id$";
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -1807,8 +1804,8 @@ gflares_list_load_all (void)
   GList		*list;
   gchar		*path;
   gchar		*filename;
-  DIR		*dir;
-  struct dirent *dir_ent;
+  GDir		*dir;
+  const gchar 	*dir_ent;
   struct stat	filestat;
   gint		err;
 
@@ -1827,22 +1824,22 @@ gflares_list_load_all (void)
       list = list->next;
 
       /* Open directory */
-      dir = opendir (path);
+      dir = g_dir_open (path, 0, NULL);
 
       if (!dir)
 	g_warning(_("error reading GFlare folder \"%s\""), path);
       else
 	{
-	  while ((dir_ent = readdir (dir)))
+	  while ((dir_ent = g_dir_read_name (dir)))
 	    {
-	      filename = g_build_filename (path, dir_ent->d_name, NULL);
+	      filename = g_build_filename (path, dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
 
 	      if (!err && S_ISREG (filestat.st_mode))
 		{
-		  gflare = gflare_load (filename, dir_ent->d_name);
+		  gflare = gflare_load (filename, dir_ent);
 		  if (gflare)
 		    gflares_list_insert (gflare);
 		}
@@ -1850,7 +1847,7 @@ gflares_list_load_all (void)
 	      g_free (filename);
 	    } /* while */
 
-	  closedir (dir);
+	  g_dir_close (dir);
 	} /* else */
     }
 }

@@ -5,7 +5,7 @@ TOP = ..\..
 PRJ_TOP = ..
 PACKAGE = gimp
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
@@ -22,7 +22,9 @@ sub-one:
 	cd ..
 
 PKG_LINK = \
+	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
+	plug-in/appplug-in.lib \
 	pdb/apppdb.lib \
 	tools/apptools.lib \
 	gui/appgui.lib \
@@ -37,7 +39,6 @@ PKG_LINK = \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
-	$(DIRENT_LIBS) \
 	$(GLIB_LIBS) \
 	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
@@ -61,19 +62,14 @@ mmx_sources = \
 	
 
 OBJECTS = \
-	colormaps.obj \
-	devices.obj \
 	gimpprogress.obj \
 	nav_window.obj \
 	ops_buttons.obj \
-	qmask.obj \
 	undo_history.obj \
 	image_map.obj \
-	user_install.obj \
 	floating_sel.obj \
 	general.obj \
 	gimprc.obj \
-	plug_in.obj \
 	path.obj \
 	path_curves.obj \
 	path_bezier.obj \

@@ -34,6 +34,12 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#define R_OK 4
+#define access(f,p) _access(f,p)
+#endif
+
 #include "core/core-types.h"
 
 #include "core/gimp.h"

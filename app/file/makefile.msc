@@ -3,7 +3,7 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = appfile
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 OBJECTS = \
 	file-open.obj \

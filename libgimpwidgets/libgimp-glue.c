@@ -124,7 +124,7 @@ gimp_standard_help_func (const gchar *help_data)
     FreeLibrary (h);
 }
 
-gchar *
+const gchar *
 gimp_unit_get_abbreviation (GimpUnit unit)
 {
   HMODULE h = NULL;
@@ -138,7 +138,7 @@ gimp_unit_get_abbreviation (GimpUnit unit)
   return ret;
 }
 
-gchar *
+const gchar *
 gimp_unit_get_singular (GimpUnit unit)
 {
   HMODULE h = NULL;
@@ -152,7 +152,7 @@ gimp_unit_get_singular (GimpUnit unit)
   return ret;
 }
 
-gchar *
+const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
   HMODULE h = NULL;
@@ -222,7 +222,7 @@ gimp_unit_get_number_of_units (void)
   return ret;
 }
 
-gchar *
+const gchar *
 gimp_unit_get_symbol (GimpUnit unit)
 {
   HMODULE h = NULL;

@@ -3,10 +3,10 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = appcore
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 PKG_LINK = \
-	$(GLIB_LIBS) $(DIRENT_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
+	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
 	..\base\appbase-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
 	..\xcf\xcf.lib \
@@ -15,6 +15,7 @@ PKG_LINK = \
 	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib
 
 OBJECTS = \
+	cpercep.obj \
 	gimp.obj \
 	gimpbrush.obj \
 	gimpbrushgenerated.obj \
@@ -30,12 +31,16 @@ OBJECTS = \
 	gimpdatalist.obj \
 	gimpdocuments.obj \
 	gimpdrawable.obj \
+	gimpdrawable-blend.obj \
+	gimpdrawable-bucket-fill.obj \
 	gimpdrawable-desaturate.obj \
 	gimpdrawable-equalize.obj \
 	gimpdrawable-histogram.obj \
 	gimpdrawable-invert.obj \
 	gimpdrawable-offset.obj \
 	gimpdrawable-preview.obj \
+	gimpdrawable-transform.obj \
+	gimpdrawable-transform-utils.obj \
 	gimpedit.obj \
 	gimpgradient.obj \
 	gimpimage.obj \
@@ -44,9 +49,16 @@ OBJECTS = \
 	gimpimage-convert.obj \
 	gimpimage-crop.obj \
 	gimpimage-duplicate.obj \
+	gimpimage-guides.obj \
 	gimpimage-mask.obj \
 	gimpimage-mask-select.obj \
+	gimpimage-merge.obj \
 	gimpimage-new.obj \
+	gimpimage-pick-color.obj \
+	gimpimage-projection.obj \
+	gimpimage-qmask.obj \
+	gimpimage-resize.obj \
+	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimagefile.obj \
 	gimplayer.obj \
@@ -84,7 +96,7 @@ OTHER_FILES = \
 INCLUDES = \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
-	$(DIRENT_CFLAGS) $(GTK2_CFLAGS) \
+	$(GTK2_CFLAGS) \
 
 all : \
 	$(PRJ_TOP)\config.h \
@@ -98,7 +110,7 @@ all : \
 gimpmarshal.h : gimpmarshal.list
 	echo #ifndef __GIMP_MARSHAL_H__ > xgen-gmh
 	echo #define __GIMP_MARSHAL_H__ >> xgen-gmh
-	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal gimpmarshal.list --header >> xgen-gmh
+	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_marshal gimpmarshal.list --header >> xgen-gmh
 	echo #endif /* __GIMP_MARSHAL_H__ */ >> xgen-gmh
 	copy xgen-gmh gimpmarshal.h
 
@@ -106,7 +118,7 @@ gimpmarshal.c : gimpmarshal.h gimpmarshal.list
 	echo #include "glib.h" > xgen-gmc
 	echo #include "glib-object.h" >> xgen-gmc
 	echo #include "gimpmarshal.h" >> xgen-gmc
-	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal gimpmarshal.list --body >> xgen-gmc
+	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_marshal gimpmarshal.list --body >> xgen-gmc
 	copy xgen-gmc gimpmarshal.c
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

@@ -24,11 +24,17 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 
 #include <glib-object.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 
@@ -204,7 +210,11 @@ gimp_rc_write_changes (GimpRc      *new_rc,
 
   if (filename)
     fd = open (filename, O_WRONLY | O_CREAT, 
+#ifndef G_OS_WIN32
                S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+#else
+               _S_IREAD | _S_IWRITE);
+#endif
   else
     fd = 1; /* stdout */
 

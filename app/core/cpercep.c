@@ -57,6 +57,13 @@ from the Author.
 #include <stdlib.h>
 #include <math.h>
 
+#ifdef _MSC_VER
+/* msvc does not now cbrt() is it nonstandard ? */
+#define cbrt(x) (pow(x, 1.0/3.0)) 
+#endif
+
+#include <glib.h> /* to get working 'inline' */
+
 /* defines:
 
    SANITY: emits warnings when passed non-sane colours (and usually

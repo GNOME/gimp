@@ -34,6 +34,7 @@
 
 #ifdef G_OS_WIN32
 #define STRICT
+#define WIN32_LEAN_AND_MEAN	/* without it DATADIR in objidl.h will collide */
 #include <windows.h>		/* For GetModuleFileName */
 #include <io.h>
 #ifndef S_IWUSR

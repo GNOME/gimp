@@ -3,7 +3,7 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = appgui
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
@@ -21,17 +21,18 @@ PKG_LINK = \
 OBJECTS = \
 	about-dialog.obj \
 	brush-editor.obj \
-	brush-select.obj \
 	brushes-commands.obj \
+	brush-select.obj \
 	buffers-commands.obj \
 	channels-commands.obj \
 	color-area.obj \
+	colormap-dialog.obj \
 	color-notebook.obj \
 	color-select.obj \
-	colormap-dialog.obj \
 	commands.obj \
 	convert-dialog.obj \
 	data-commands.obj \
+	device-status-dialog.obj \
 	dialogs.obj \
 	dialogs-commands.obj \
 	dialogs-constructors.obj \
@@ -44,26 +45,28 @@ OBJECTS = \
 	file-open-dialog.obj \
 	file-save-dialog.obj \
 	gradient-editor.obj \
-	gradient-select.obj \
+	gradient-editor-commands.obj \
 	gradients-commands.obj \
+	gradient-select.obj \
 	gui.obj \
 	image-commands.obj \
 	indicator-area.obj \
 	info-dialog.obj \
 	info-window.obj \
-	layer-select.obj \
+	input-dialog.obj \
 	layers-commands.obj \
 	menus.obj \
 	module-browser.obj \
 	offset-dialog.obj \
 	palette-editor.obj \
 	palette-import-dialog.obj \
-	palette-select.obj \
 	palettes-commands.obj \
+	palette-select.obj \
 	paths-dialog.obj \
-	pattern-select.obj \
 	patterns-commands.obj \
+	pattern-select.obj \
 	preferences-dialog.obj \
+	qmask-commands.obj \
 	resize-dialog.obj \
 	resolution-calibrate-dialog.obj \
 	select-commands.obj \
@@ -71,9 +74,10 @@ OBJECTS = \
 	splash.obj \
 	test-commands.obj \
 	tips-dialog.obj \
-	tool-options-dialog.obj \
 	toolbox.obj \
+	tool-options-dialog.obj \
 	tools-commands.obj \
+	user-install-dialog.obj \
 	view-commands.obj \
 
 INCLUDES = \

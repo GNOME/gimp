@@ -18,7 +18,7 @@ GIMPTOP = ..
 !ENDIF
 
 TOP = ..\$(GIMPTOP)
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 !IFNDEF LIBRARY
 !IFNDEF PLUGIN
@@ -39,10 +39,10 @@ COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_pal
 COMMON6 = waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # not any longer supported ?
-DROPPED = gpb
+DROPPED = gpb gdyntext 
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -176,7 +176,6 @@ OBJECTS = \
 	Events.obj \
 	FractalExplorer.obj \
 	Globals.obj
-EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_Lighting
@@ -279,7 +278,6 @@ OBJECTS = \
 	gap_exchange_image.obj \
 	gap_pdb_calls.obj \
 	resize.obj
-EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gdyntext
@@ -291,14 +289,6 @@ OBJECTS = \
 	gdyntext_ui.obj \
 	message_window.obj \
 	gdyntextcompat.obj
-!ENDIF
-
-!IFDEF EXTRA_gfig
-EXTRALIBS = $(DIRENT_LIBS)
-!ENDIF
-
-!IFDEF EXTRA_gflare
-EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gfli
@@ -446,7 +436,7 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	..\dbbrowser\dbbrowser_utils.obj
-EXTRALIBS = ..\..\regexrepl\regexrepl.lib $(DIRENT_LIBS)
+EXTRALIBS = ..\..\regexrepl\regexrepl.lib kernel32.lib 
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
@@ -504,7 +494,6 @@ OBJECTS = \
 	size.obj \
 	sizemap.obj
 
-EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -590,7 +579,7 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) $(DIRENT_CFLAGS) \
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) \
 	-DGETTEXT_PACKAGE=\"libgimp14\" -DLOCALEDIR=\"?\" \
 	-I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) $(INTL_CFLAGS)
 

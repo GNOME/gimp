@@ -6,7 +6,7 @@
 # only, it probably is best to keep them in the GIMP's bin directory.
 BIN = C:\install\gimp\bin
 TOP = ..\..
-!include ..\..\build\win32\make.msc
+!include $(TOP)\glib\build\win32\make.msc
 
 GIMP_VER = 1.3
 
@@ -20,7 +20,9 @@ GIMPDIR = _gimp$(GIMP_VER)
 
 INCLUDES = -I.. 
 # DEFINES = -DG_LOG_DOMAIN=\"LibGimpWidgets\"
-DEPCFLAGS = $(GLIB_CFLAGS) $(GTK2_CFLAGS) $(INTL_CFLAGS)
+DEPCFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	$(GLIB_CFLAGS) $(GTK2_CFLAGS) $(INTL_CFLAGS)
 DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
 		$(GTK2)\gdk-pixbuf\gdk_pixbuf-$(GTK_VER).lib 
 
@@ -35,6 +37,7 @@ install : all
 	$(INSTALL) gimpmath-$(GIMP_VER).dll $(BIN)
 
 OBJECTS = \
+	gimpwidgetsmarshal.obj \
 	gimpbutton.obj \
 	gimpchainbutton.obj \
 	gimpcolorarea.obj \
@@ -51,6 +54,12 @@ OBJECTS = \
 	gimpunitmenu.obj \
 	gimpoffsetarea.obj \
 	libgimp-glue.obj
+
+gimpwidgetsmarshal.h : gimpwidgetsmarshal.list
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimp_widgets_marshal gimpwidgetsmarshal.list --header >gimpwidgetsmarshal.h
+
+gimpwidgetsmarshal.c : gimpwidgetsmarshal.list gimpwidgetsmarshal.h
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimp_widgets_marshal gimpwidgetsmarshal.list --body >gimpwidgetsmarshal.c
 
 # questionable dependency between libgimpui/libgimpwidgets
 gimpunit.obj : ..\app\gimpunit.c

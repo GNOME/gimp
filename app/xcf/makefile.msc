@@ -3,7 +3,7 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = xcf
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)

@@ -4,18 +4,20 @@ TOP = ..\..
 PRJ_TOP = ..
 PACKAGE = gimpbase
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 # The name of the directory in your %HOME% where the GIMP's personal settings
 # and stuff is saved.
 GIMPDIR = _gimp$(PKG_VER)
-DEFINES = -DGIMPDIR=\"$(GIMPDIR)\"
+DEFINES = -DGIMPDIR=\"$(GIMPDIR)\" -DDATADIR=\"data\" -DSYSCONFDIR=\"etc\" \
+	-DPLUGINDIR=\"plug-ins\"
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/intl \
 	-I../intl \
@@ -28,7 +30,6 @@ PKG_LINK = \
 OBJECTS = \
 	gimpenv.obj \
 #	gimpsignal.obj \
-	gimputils.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \

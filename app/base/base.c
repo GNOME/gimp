@@ -18,9 +18,6 @@
 
 #include "config.h"
 
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
@@ -96,17 +93,17 @@ base_exit (void)
 static void
 toast_old_temp_files (void)
 {
-  DIR *dir = NULL;
-  struct dirent *entry;
+  GDir *dir = NULL;
+  const char *entry;
 
   if (base_config->swap_path)
-    dir = opendir (base_config->swap_path);
+    dir = g_dir_open (base_config->swap_path, 0, NULL);
 
   if (!dir)
     return;
 
-  while ((entry = readdir (dir)) != NULL)
-    if (! strncmp (entry->d_name, "gimpswap.", 9))
+  while ((entry = g_dir_read_name (dir)) != NULL)
+    if (! strncmp (entry, "gimpswap.", 9))
       {
         /* don't try to kill swap files of running processes
          * yes, I know they might not all be gimp processes, and when you
@@ -116,7 +113,7 @@ toast_old_temp_files (void)
          * we'll probably get it the next time around
          */
 
-	gint pid = atoi (entry->d_name + 9);
+	gint pid = atoi (entry + 9);
 
         /*  On Windows, you can't remove open files anyhow,
          *  so no harm trying.
@@ -127,7 +124,7 @@ toast_old_temp_files (void)
 	  {
             gchar *filename;
 
-	    filename = g_build_filename (base_config->swap_path, entry->d_name,
+	    filename = g_build_filename (base_config->swap_path, entry,
                                          NULL);
 
 	    unlink (filename);
@@ -136,5 +133,5 @@ toast_old_temp_files (void)
 	  }
       }
 
-  closedir (dir);
+  g_dir_close (dir);
 }

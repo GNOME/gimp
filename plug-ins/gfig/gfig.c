@@ -58,9 +58,6 @@
 #include <unistd.h>
 #endif
 #include <string.h>
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #include <ctype.h>
 
 #ifdef __GNUC__
@@ -1007,8 +1004,8 @@ gfig_list_load_all (GList *plist)
   GList         *list;
   gchar	        *path;
   gchar	        *filename;
-  DIR	        *dir;
-  struct dirent *dir_ent;
+  GDir	        *dir;
+  const gchar	  *dir_ent;
   struct stat    filestat;
   gint           err;
 
@@ -1023,22 +1020,22 @@ gfig_list_load_all (GList *plist)
       list = list->next;
 
       /* Open directory */
-      dir = opendir (path);
+      dir = g_dir_open (path, 0, NULL);
 
       if (!dir)
 	g_warning ("Error reading GFig folder \"%s\"", path);
       else
 	{
-	  while ((dir_ent = readdir (dir)))
+	  while ((dir_ent = g_dir_read_name (dir)))
 	    {
-	      filename = g_build_filename (path, dir_ent->d_name, NULL);
+	      filename = g_build_filename (path, dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
 
 	      if (!err && S_ISREG (filestat.st_mode))
 		{
-		  gfig = gfig_load (filename, dir_ent->d_name);
+		  gfig = gfig_load (filename, dir_ent);
 		  
 		  if (gfig)
 		    {
@@ -1052,7 +1049,7 @@ gfig_list_load_all (GList *plist)
 
 	      g_free (filename);
 	    }
-	  closedir (dir);
+	  g_close_close (dir);
 	}
     }
 

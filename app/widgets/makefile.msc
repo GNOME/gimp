@@ -3,7 +3,7 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = appwidgets
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
@@ -37,6 +37,8 @@ OBJECTS = \
 	gimpcursor.obj \
 	gimpdatafactoryview.obj \
 	gimpdialogfactory.obj \
+	gimpdeviceinfo.obj \
+	gimpdevices.obj \
 	gimpdnd.obj \
 	gimpdock.obj \
 	gimpdockable.obj \
@@ -50,7 +52,9 @@ OBJECTS = \
 	gimpgradientpreview.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
+	gimpimagefilepreview.obj \
 	gimpimagepreview.obj \
+	gimpitemfactory.obj \
 	gimplayerlistitem.obj \
 	gimplayerlistview.obj \
 	gimplistitem.obj \

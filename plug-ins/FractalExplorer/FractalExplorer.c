@@ -56,9 +56,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -1293,8 +1290,8 @@ fractalexplorer_list_load_all (GList *plist)
   GList              *list;
   gchar	             *path;
   gchar	             *filename;
-  DIR	             *dir;
-  struct dirent      *dir_ent;
+  GDir	             *dir;
+  const gchar        *dir_ent;
   struct stat	      filestat;
   gint		      err;
 
@@ -1308,7 +1305,7 @@ fractalexplorer_list_load_all (GList *plist)
       list = list->next;
 
       /* Open directory */
-      dir = opendir (path);
+      dir = g_dir_open (path, 0, NULL);
 
       if (!dir)
         {
@@ -1316,9 +1313,9 @@ fractalexplorer_list_load_all (GList *plist)
         }
       else
 	{
-	  while ((dir_ent = readdir (dir)))
+	  while ((dir_ent = g_dir_read_name (dir)))
 	    {
-	      filename = g_build_filename (path, dir_ent->d_name, NULL);
+	      filename = g_build_filename (path, dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -1326,7 +1323,7 @@ fractalexplorer_list_load_all (GList *plist)
 	      if (!err && S_ISREG (filestat.st_mode))
 		{
 
-		  fractalexplorer = fractalexplorer_load (filename, dir_ent->d_name);
+		  fractalexplorer = fractalexplorer_load (filename, dir_ent);
 		  
 		  if (fractalexplorer)
 		    {
@@ -1340,7 +1337,7 @@ fractalexplorer_list_load_all (GList *plist)
 
 	      g_free (filename);
 	    }
-	  closedir (dir);
+	  g_dir_close (dir);
 	}
     }
 

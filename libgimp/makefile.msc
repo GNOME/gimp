@@ -7,7 +7,7 @@
 BIN = C:\install\gimp\bin
 
 TOP = ..\..
-!INCLUDE $(TOP)\build\win32\make.msc 
+!INCLUDE $(TOP)\glib\build\win32\make.msc 
 
 GIMP_VER = 1.3
 
@@ -56,9 +56,11 @@ PDB_WRAPPERS_O = \
 	gimpguides_pdb.obj \
 	gimphelp_pdb.obj \
 	gimpimage_pdb.obj \
+	gimppainttools_pdb.obj \
 	gimplayer_pdb.obj \
 	gimpmessage_pdb.obj \
 	gimpmisc_pdb.obj \
+	gimpmisctools_pdb.obj \
 	gimppalette_pdb.obj \
 	gimpparasite_pdb.obj \
 	gimppaths_pdb.obj \
@@ -69,7 +71,7 @@ PDB_WRAPPERS_O = \
 	gimpselection_pdb.obj \
 	gimpselectiontools_pdb.obj \
 	gimptexttool_pdb.obj \
-	gimptools_pdb.obj \
+	gimptransformtools_pdb.obj \
 	gimpundo_pdb.obj \
 	gimpunit_pdb.obj \
 

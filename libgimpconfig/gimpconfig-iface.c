@@ -24,11 +24,17 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <sys/stat.h>
 #include <sys/types.h>
 
 #include <glib-object.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
@@ -111,7 +117,11 @@ gimp_config_serialize (GObject      *object,
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
   fd = open (filename, O_WRONLY | O_CREAT, 
+#ifndef G_OS_WIN32
              S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+#else
+             _S_IREAD | _S_IWRITE);
+#endif
 
   if (fd == -1)
     {

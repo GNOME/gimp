@@ -29,9 +29,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
 
 #include <glib-object.h>
 
@@ -131,8 +128,8 @@ gimp_datafiles_read_directories (const gchar            *path_str,
   GList         *list;
   gchar         *filename;
   gint           err;
-  DIR           *dir;
-  struct dirent *dir_ent;
+  GDir          *dir;
+  const gchar   *dir_ent;
 
   g_return_if_fail (path_str != NULL);
   g_return_if_fail (loader_func != NULL);
@@ -154,7 +151,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
   for (list = path; list; list = g_list_next (list))
     {
       /* Open directory */
-      dir = opendir ((gchar *) list->data);
+      dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
       if (!dir)
 	{
@@ -163,16 +160,10 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	}
       else
 	{
-	  while ((dir_ent = readdir (dir)))
+	  while ((dir_ent = g_dir_read_name (dir)))
 	    {
-	      if (! strcmp (dir_ent->d_name, ".") ||
-		  ! strcmp (dir_ent->d_name, ".."))
-		{
-		  continue;
-		}
-
 	      filename = g_build_filename ((gchar *) list->data,
-                                           dir_ent->d_name, NULL);
+                                           dir_ent, NULL);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -199,7 +190,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	      g_free (filename);
 	    }
 
-	  closedir (dir);
+	  g_dir_close (dir);
 	}
     }
 

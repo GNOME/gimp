@@ -3,7 +3,7 @@ TOP = ..\..\..
 PRJ_TOP = ..\..
 PACKAGE = apppdb
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
@@ -46,6 +46,8 @@ OBJECTS = \
 	layer_cmds.obj \
 	message_cmds.obj \
 	misc_cmds.obj \
+	misc_tools_cmds.obj \
+	paint_tools_cmds.obj \
 	palette_cmds.obj \
 	parasite_cmds.obj \
 	paths_cmds.obj \
@@ -56,7 +58,7 @@ OBJECTS = \
 	selection_cmds.obj \
 	selection_tools_cmds.obj \
 	text_tool_cmds.obj \
-	tools_cmds.obj \
+	transform_tools_cmds.obj \
 	undo_cmds.obj \
 	unit_cmds.obj \
 
