@@ -1,3 +1,10 @@
+2003-05-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdrawabletreeview.c
+	(gimp_drawable_tree_view_eye_clicked): implement <shift>+click on
+	the eye icon the same way it was in 1.2 (hide all other drawables
+	if any is visible, show them all otherwise). Fixes bug #113479.
+
 2003-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/Makefile.am

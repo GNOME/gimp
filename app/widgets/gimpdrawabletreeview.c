@@ -440,11 +440,10 @@ gimp_drawable_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
 
       if (state & GDK_SHIFT_MASK)
         {
-          gboolean iter_valid;
-
-          gimp_image_undo_group_start (gimage,
-                                       GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY,
-                                       _("Set Drawable Exclusive Visible"));
+          GList    *visible   = NULL;
+          GList    *invisible = NULL;
+          GList    *list;
+          gboolean  iter_valid;
 
           for (iter_valid = gtk_tree_model_get_iter_first (tree_view->model,
                                                            &iter);
@@ -456,16 +455,42 @@ gimp_drawable_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
                                   tree_view->model_column_renderer, &renderer,
                                   -1);
 
-              if (renderer->viewable != (GimpViewable *) drawable)
-                gimp_drawable_set_visible (GIMP_DRAWABLE (renderer->viewable),
-                                           FALSE, TRUE);
+              if ((GimpDrawable *) renderer->viewable != drawable)
+                {
+                  if (gimp_drawable_get_visible (GIMP_DRAWABLE (renderer->viewable)))
+                    visible = g_list_prepend (visible, renderer->viewable);
+                  else
+                    invisible = g_list_prepend (invisible, renderer->viewable);
+                }
 
               g_object_unref (renderer);
             }
 
+          if (visible || invisible)
+            gimp_image_undo_group_start (gimage,
+                                         GIMP_UNDO_GROUP_DRAWABLE_VISIBILITY,
+                                         _("Set Drawable Exclusive Visible"));
+
           gimp_drawable_set_visible (drawable, TRUE, TRUE);
 
-          gimp_image_undo_group_end (gimage);
+          if (visible)
+            {
+              for (list = visible; list; list = g_list_next (list))
+                gimp_drawable_set_visible (GIMP_DRAWABLE (list->data), FALSE,
+                                           TRUE);
+            }
+          else if (invisible)
+            {
+              for (list = invisible; list; list = g_list_next (list))
+                gimp_drawable_set_visible (GIMP_DRAWABLE (list->data), TRUE,
+                                           TRUE);
+            }
+
+          if (visible || invisible)
+            gimp_image_undo_group_end (gimage);
+
+          g_list_free (visible);
+          g_list_free (invisible);
         }
       else
         {
