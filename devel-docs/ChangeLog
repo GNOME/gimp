@@ -1,3 +1,8 @@
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated after gimpgradient.c chopping.
+
 2004-07-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/libgimpcolor-sections.txt: added gimp_rgb_parse_name().

@@ -735,8 +735,6 @@ GimpGradientSegment
 GimpGradient
 gimp_gradient_new
 gimp_gradient_get_standard
-gimp_gradient_load
-gimp_gradient_save_as_pov
 gimp_gradient_get_color_at
 gimp_gradient_get_segment_at
 gimp_gradient_segment_new
@@ -780,6 +778,19 @@ gimp_gradient_get_type
 GIMP_GRADIENT_CLASS
 GIMP_IS_GRADIENT_CLASS
 GIMP_GRADIENT_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpgradient-load</FILE>
+<TITLE>GimpGradient-load</TITLE>
+gimp_gradient_load
+</SECTION>
+
+<SECTION>
+<FILE>gimpgradient-save</FILE>
+<TITLE>GimpGradient-save</TITLE>
+gimp_gradient_save
+gimp_gradient_save_as_pov
 </SECTION>
 
 <SECTION>
@@ -6566,9 +6577,8 @@ gimp_marshal_VOID__OBJECT_INT
 gimp_marshal_VOID__OBJECT_POINTER
 gimp_marshal_VOID__POINTER
 gimp_marshal_VOID__STRING
+gimp_marshal_VOID__STRING_BOOLEAN_UINT_FLAGS
 gimp_marshal_VOID__STRING_FLAGS
-gimp_marshal_VOID__STRING_UINT_FLAGS
-gimp_marshal_VOID__UINT_STRING
 gimp_marshal_VOID__VOID
 </SECTION>
 

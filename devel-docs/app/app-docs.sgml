@@ -195,6 +195,8 @@
       <xi:include href="xml/gimpbrushgenerated.xml" />
       <xi:include href="xml/gimpbrushpipe.xml" />
       <xi:include href="xml/gimpgradient.xml" />
+      <xi:include href="xml/gimpgradient-load.xml" />
+      <xi:include href="xml/gimpgradient-save.xml" />
       <xi:include href="xml/gimppalette.xml" />
       <xi:include href="xml/gimppalette-import.xml" />
       <xi:include href="xml/gimppattern.xml" />
