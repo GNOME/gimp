@@ -1,12 +1,12 @@
-# Czech translation of GIMP 1.1.25.
+# Czech translation of GIMP 1.1.28.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.25\n"
-"POT-Creation-Date: 2000-10-16 11:48-0700\n"
-"PO-Revision-Date: 2000-08-23 09:27+02:00\n"
+"Project-Id-Version: GIMP 1.1.28\n"
+"POT-Creation-Date: 2000-10-18 13:55+0200\n"
+"PO-Revision-Date: 2000-10-18 14:15+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1572,11 +1572,8 @@ msgid "Brush pipes should have at least one brush."
 msgstr "Kolony stop by mìly mít alespoò jednu stopu."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
-msgstr ""
-"Nepodaøilo se naèíst jednu\n"
-"ze stop v obrázkové kolonì."
+msgstr "Nepodaøilo se naèíst jednu ze stop v obrázkové kolonì."
 
 #: app/gimpbrushpipe.c:484 app/gimpbrushpipe.c:492
 msgid "Failed to load pixmap brush."
@@ -1605,7 +1602,7 @@ msgstr "Typ vrstvy %d není podporován."
 
 #: app/gimphelp.c:190
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "Nepodaøilo se nalézt prohlí¾eè GIMP nápovìdy"
 
 #: app/gimphelp.c:192
 msgid ""
@@ -1619,7 +1616,7 @@ msgstr ""
 
 #: app/gimphelp.c:195
 msgid "Use Netscape instead"
-msgstr ""
+msgstr "Nahradit programem Netscape"
 
 #: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
@@ -4150,24 +4147,24 @@ msgid "No Patterns available"
 msgstr "®ádné vzorky nejsou k dispozici"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Neznámá verze programu GIMP: #%d v \"%s\"\n"
+msgstr "Neznámá verze #%d vzorku GIMP v \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Chyba v souboru GIMP vzorku... ru¹í se."
+msgstr "Chyba v souboru GIMP vzorku \"%s\""
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "Soubor GIMP vzorku je zøejmì useknutý."
+msgstr "Soubor GIMP vzorku \"%s\" je zøejmì useknutý."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Chyba pøi otvírání souboru: %s\n"
+msgstr "Chyba pøi otvírání vzorku \"%s\""
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"
@@ -4892,7 +4889,7 @@ msgstr "Velikost"
 
 #: app/resize.c:161
 msgid "Scale Image"
-msgstr "Velikost obrázeku"
+msgstr "Velikost obrázku"
 
 #: app/resize.c:163
 msgid "Pixel Dimensions"
@@ -6285,7 +6282,6 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "Instalace selhala. Spojte se se systémovým administrátorem."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -6407,12 +6403,3 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
-
-#~ msgid "Pattern load failed"
-#~ msgstr "Ètení vzorku selhalo"
-
-#~ msgid "attach parasite to image"
-#~ msgstr "parazit pøipojen k obrázku"
-
-#~ msgid "detach parasite from image"
-#~ msgstr "parazit odpojen od obrázku"

@@ -1,12 +1,12 @@
-# Czech translation of GIMP plugins 1.1.26.
+# Czech translation of GIMP plugins 1.1.28.
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@k332.feld.cvut.cz>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.26\n"
-"POT-Creation-Date: 2000-10-16 11:59-0700\n"
-"PO-Revision-Date: 2000-09-26 13:53+02:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.28\n"
+"POT-Creation-Date: 2000-10-18 13:56+0200\n"
+"PO-Revision-Date: 2000-10-18 14:16+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -362,7 +362,7 @@ msgstr "Obnovit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:534
 msgid "Reset parameters to default values"
-msgstr "Nastaví parametry na implicitní hodnody"
+msgstr "Nastaví parametry na implicitní hodnoty"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
 #: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
@@ -2248,9 +2248,8 @@ msgid "Bottom Edge"
 msgstr "Spodní hrana"
 
 #: plug-ins/common/align_layers.c:511
-#, fuzzy
 msgid "Vertical Base:"
-msgstr "Svisle:"
+msgstr "Svislá základna:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
@@ -3564,7 +3563,7 @@ msgstr "Vý¹ka èíslic:"
 
 #: plug-ins/common/film.c:1476
 msgid "Reset to Defaults"
-msgstr "Nastavit na implicitní hodnody"
+msgstr "Nastavit na implicitní hodnoty"
 
 #: plug-ins/common/flarefx.c:218
 msgid "<Image>/Filters/Light Effects/FlareFX..."
@@ -5142,9 +5141,8 @@ msgid "PNM: Premature end of file."
 msgstr "PNM: Pøedèasný konec souboru."
 
 #: plug-ins/common/pnm.c:452
-#, fuzzy
 msgid "PNM: Invalid file."
-msgstr "PNM: Neplatná nejvy¹¹í hodnota."
+msgstr "PNM: Neplatný soubor."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5152,11 +5150,11 @@ msgstr "PNM: Soubor není v podporovaném formátu."
 
 #: plug-ins/common/pnm.c:474
 msgid "PNM: Invalid X resolution."
-msgstr "PNM: Neplatné X rozli¾ení."
+msgstr "PNM: Neplatné X rozli¹ení."
 
 #: plug-ins/common/pnm.c:481
 msgid "PNM: Invalid Y resolution."
-msgstr "PNM: Neplatné Y rozli¾ení."
+msgstr "PNM: Neplatné Y rozli¹ení."
 
 #: plug-ins/common/pnm.c:493
 msgid "PNM: Invalid maximum value."
@@ -8959,7 +8957,7 @@ msgstr "Smazat bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
 msgid "Reset the current Controlpoint to default Values"
-msgstr "Nastaví aktuální øídící bod na implicitní hodnody"
+msgstr "Nastaví aktuální øídící bod na implicitní hodnoty"
 
 #: plug-ins/gap/gap_mov_dialog.c:2412
 msgid "Clear All Points"
@@ -10206,7 +10204,7 @@ msgstr ""
 msgid " Upgrading old GDynText layer to %s."
 msgstr "Aktualizuje se stará vrstva GDynText do %s."
 
-#: plug-ins/gdyntext/message_window.c:114
+#: plug-ins/gdyntext/message_window.c:115
 msgid "Dismiss"
 msgstr "Odmítnout"
 
@@ -12685,9 +12683,8 @@ msgid "Print Color Adjust"
 msgstr "Nastavení tiskových barev"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
-msgstr "Nastavit na implicitní hodnody"
+msgstr "Nastavení implicitních hodnot"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
@@ -12738,14 +12735,12 @@ msgid "cm"
 msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Obvod:"
+msgstr "Pravý okraj:"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Spodní hrana"
+msgstr "Spodní okraj:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12757,12 +12752,11 @@ msgstr "Nale¾ato"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Vzhùru nohama"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Nale¾ato"
+msgstr "Obrácenì nale¾ato"
 
 #.
 #. *  Printer settings frame...
@@ -12791,9 +12785,8 @@ msgstr "Typ inkoustu:"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Zmìna velikosti:"
+msgstr "Zmìna velikosti"
 
 #: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
@@ -12815,9 +12808,8 @@ msgstr "Nastavení velikosti obrázku"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:669
-#, fuzzy
 msgid "Image Settings"
-msgstr "Nastavení odstínu"
+msgstr "Nastavení obrázku"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
@@ -12862,9 +12854,8 @@ msgstr "Nastavení"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:853
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Re¾im kreslení:"
+msgstr "Model tiskárny:"
 
 #.
 #. * PPD file...
@@ -12903,14 +12894,12 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Soubor/Tisknout..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Soubor/Tisknout..."
+msgstr "<Image>/Soubor/Tisknout (Gtk)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Soubor/Tisknout..."
+msgstr "<Image>/Soubor/Tisknout (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -13177,27 +13166,3 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
-
-#~ msgid "PNM: %s is not a valid file."
-#~ msgstr "PNM: %s není platný soubor."
-
-#~ msgid "to"
-#~ msgstr "do"
-
-#~ msgid "Output Level:"
-#~ msgstr "Výstupní úroveò:"
-
-#~ msgid "Normal Scale"
-#~ msgstr "Normální velikost"
-
-#~ msgid "Experimental Linear Scale"
-#~ msgstr "Experimentální lineání zvìt¹ení"
-
-#~ msgid "Image Type"
-#~ msgstr "Typ obrázku"
-
-#~ msgid "Scaling and Color Settings"
-#~ msgstr "Nastavení velikosti a barev"
-
-#~ msgid "Driver:"
-#~ msgstr "Ovladaè:"
