@@ -46,16 +46,40 @@
  *      http://www.wilberworks.com/bugs.cgi
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <string.h>
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 #include <ctype.h>
 #include <math.h>
 #include <gtk/gtk.h>
+
+#ifdef NATIVE_WIN32
+#  include <io.h>
+#  ifndef W_OK
+#    define W_OK 2
+#  endif
+#  ifndef S_ISDIR
+#    define S_ISDIR(m) ((m) & _S_IFDIR)
+#  endif
+#  ifndef S_ISREG
+#    define S_ISREG(m) ((m) & _S_IFREG)
+#  endif
+#endif
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include "pix_data.h"

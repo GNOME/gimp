@@ -15,12 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+
 #include "siod.h"
 #include "script-fu-console.h"
 #include "script-fu-scripts.h"
@@ -140,6 +146,7 @@ query ()
 			  PROC_EXTENSION,
 			  0, 0, NULL, NULL);
 
+#ifndef NATIVE_WIN32
   gimp_install_procedure ("extension_script_fu_console",
 			  "Provides a console mode for script-fu development",
 			  "Provides an interface which allows interactive scheme development.",
@@ -163,6 +170,7 @@ query ()
 			  PROC_EXTENSION,
 			  nserver_args, 0,
 			  server_args, NULL);
+#endif
 
   gimp_install_procedure ("extension_script_fu_eval",
 			  "Evaluate scheme code",
@@ -217,6 +225,9 @@ run (char    *name,
       /*  Acknowledge that the extension is properly initialized  */
       gimp_extension_ack ();
 
+      /* We need wakeups (on Win32) when getting callbacks from the GIMP */
+      gimp_request_wakeups ();
+
       while (1)
 	gimp_extension_process (0);
 
@@ -226,6 +237,7 @@ run (char    *name,
       values[0].type = PARAM_STATUS;
       values[0].data.d_status = status;
     }
+#ifndef NATIVE_WIN32
   /*
    *  The script-fu console for interactive SIOD development
    */
@@ -240,6 +252,7 @@ run (char    *name,
     {
       script_fu_server_run (name, nparams, param, nreturn_vals, return_vals);
     }
+#endif
   /*
    *  A non-interactive "console" (for batch mode)
    */
@@ -1002,11 +1015,11 @@ marshall_proc_db_call (LISP a)
 
   /*  reverse the return values  */
   return_val = nreverse (return_val);
-
+#ifndef NATIVE_WIN32
   /*  if we're in server mode, listen for additional commands for 10 ms  */
   if (server_mode)
     script_fu_server_listen (10);
-
+#endif
   return return_val;
 }
 

@@ -31,21 +31,34 @@
  * That makes the size 256*240*3 = 184320 bytes.
  */
 
+#include "config.h"
+
+#include <glib.h>
 
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <unistd.h>
-#ifndef __EMX__
+#ifdef HAVE_MMAP
 #include <sys/mman.h>
 #endif
+
+#ifdef NATIVE_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -280,7 +293,8 @@ load_image (char *filename)
   g_free (temp);
 
   /* open the file */
-  filedes = open(filename, O_RDONLY);
+  filedes = open(filename, O_RDONLY | _O_BINARY);
+
   if (filedes == -1)
     {
       /* errno is set to indicate the error, but the user won't know :-( */
@@ -294,7 +308,7 @@ load_image (char *filename)
       fprintf(stderr, "hrz filter: file is not HRZ type\n");
       return -1;
     }
-#ifndef __EMX__
+#ifdef HAVE_MMAP
   mapped = mmap(NULL, 256*240*3, PROT_READ, MAP_PRIVATE, filedes, 0);
   if(mapped == (void *)(-1))
     {
@@ -303,11 +317,6 @@ load_image (char *filename)
     }
 #else
   mapped = g_malloc(256*240*3);
-  if(mapped == NULL)
-    {
-      fprintf(stderr, "hrz filter: could not allocate memory\n");
-      return -1;
-    }
   if (read(filedes, mapped, 256*240*3) != 256*240*3)
     {
       fprintf(stderr, "hrz filter: file read error\n");
@@ -332,12 +341,10 @@ load_image (char *filename)
   do_hrz_load(mapped, &pixel_rgn);
 
   /* close the file */
-#ifndef NeXT /* @#%@! NeXTStep */
-#ifndef __EMX__
+#ifdef HAVE_MMAP
   munmap(mapped, 256*240*3);
 #else
   g_free(mapped);
-#endif
 #endif
 
   /* Tell the GIMP to display the image.

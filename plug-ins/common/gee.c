@@ -34,6 +34,9 @@
 #include "config.h"
 
 
+#ifndef HAVE_RINT
+#define rint(x) floor ((x) + 0.5)
+#endif
 
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
 #ifdef __GDK_RGB_H__

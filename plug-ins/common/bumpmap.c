@@ -84,13 +84,15 @@
  * - Speed-ups
  */
 
+#include "config.h"
 
 #include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-
+#endif
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"

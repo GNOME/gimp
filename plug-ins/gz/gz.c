@@ -56,20 +56,34 @@
  * -Dan Risacher, 0430 CDT, 26 May 1997
  */
 
+#include "config.h"
+
+#ifdef NATIVE_WIN32
+#define STRICT
+#include <windows.h>
+#endif
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
 #include <sys/stat.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <errno.h>
+
 #ifdef __EMX__
 #include <fcntl.h>
 #include <process.h>
 #endif
+
 #include "libgimp/gimp.h"
 
 /* Author 1: Josh MacDonald (url.c) */
@@ -275,13 +289,21 @@ save_image (char   *filename,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  FILE* f;
   GParam* params;
   gint retvals;
   char* ext;
   char* tmpname;
+#ifndef NATIVE_WIN32
+  FILE* f;
   int pid;
   int status;
+#else
+  SECURITY_ATTRIBUTES secattr;
+  HANDLE f;
+  STARTUPINFO startupinfo;
+  PROCESS_INFORMATION processinfo;
+  gchar *cmdline;
+#endif
 
   ext = find_extension(filename);
   if (0 == *ext) {
@@ -317,7 +339,10 @@ save_image (char   *filename,
 /*     return -1; */
 /*   } */
 
+#ifndef NATIVE_WIN32
+
 #ifndef __EMX__
+
   /* fork off a gzip process */
   if ((pid = fork()) < 0)
     {
@@ -356,6 +381,46 @@ save_image (char   *filename,
 	  return 0;
 	}
     }
+#else  /* NATIVE_WIN32 */
+  secattr.nLength = sizeof (SECURITY_ATTRIBUTES);
+  secattr.lpSecurityDescriptor = NULL;
+  secattr.bInheritHandle = TRUE;
+  
+  if ((f = CreateFile (filename, GENERIC_WRITE, FILE_SHARE_READ,
+		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
+      == INVALID_HANDLE_VALUE)
+    {
+      g_message ("gz: CreateFile failed\n");
+      _exit (127);
+    }
+
+  startupinfo.cb = sizeof (STARTUPINFO);
+  startupinfo.lpReserved = NULL;
+  startupinfo.lpDesktop = NULL;
+  startupinfo.lpTitle = NULL;
+  startupinfo.dwFlags =
+    STARTF_FORCEOFFFEEDBACK | STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+  startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
+  startupinfo.cbReserved2 = 0;
+  startupinfo.lpReserved2 = NULL;
+  startupinfo.hStdInput = GetStdHandle (STD_INPUT_HANDLE);
+  startupinfo.hStdOutput = f;
+  startupinfo.hStdError = GetStdHandle (STD_ERROR_HANDLE);
+
+  cmdline = g_strdup_printf ("gzip -cf %s", tmpname);
+
+  if (!CreateProcess (NULL, cmdline, NULL, NULL,
+		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
+		      &startupinfo, &processinfo))
+    {
+      g_message ("gz: CreateProcess failed\n");
+      _exit (127);
+    }
+  CloseHandle (f);
+  CloseHandle (processinfo.hThread);
+  WaitForSingleObject (processinfo.hProcess, INFINITE);
+
+#endif /* NATIVE_WIN32 */
 
   unlink (tmpname);
 
@@ -369,8 +434,16 @@ load_image (char *filename, gint32 run_mode)
   gint retvals;
   char* ext;
   char* tmpname;
+#ifndef NATIVE_WIN32
   int pid;
   int status;
+#else
+  SECURITY_ATTRIBUTES secattr;
+  HANDLE f;
+  STARTUPINFO startupinfo;
+  PROCESS_INFORMATION processinfo;
+  gchar *cmdline;
+#endif
 
   ext = find_extension(filename);
   if (0 == *ext) {
@@ -385,7 +458,10 @@ load_image (char *filename, gint32 run_mode)
 
   tmpname = params[1].data.d_string;
 
+#ifndef NATIVE_WIN32
+
 #ifndef __EMX__
+
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
@@ -424,6 +500,46 @@ load_image (char *filename, gint32 run_mode)
 	  return -1;
 	}
     }
+#else
+  secattr.nLength = sizeof (SECURITY_ATTRIBUTES);
+  secattr.lpSecurityDescriptor = NULL;
+  secattr.bInheritHandle = TRUE;
+  
+  if ((f = CreateFile (tmpname, GENERIC_WRITE, FILE_SHARE_READ,
+		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
+      == INVALID_HANDLE_VALUE)
+    {
+      g_message ("gz: CreateFile failed\n");
+      _exit (127);
+    }
+
+  startupinfo.cb = sizeof (STARTUPINFO);
+  startupinfo.lpReserved = NULL;
+  startupinfo.lpDesktop = NULL;
+  startupinfo.lpTitle = NULL;
+  startupinfo.dwFlags =
+    STARTF_FORCEOFFFEEDBACK | STARTF_USESHOWWINDOW | STARTF_USESTDHANDLES;
+  startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
+  startupinfo.cbReserved2 = 0;
+  startupinfo.lpReserved2 = NULL;
+  startupinfo.hStdInput = GetStdHandle (STD_INPUT_HANDLE);
+  startupinfo.hStdOutput = f;
+  startupinfo.hStdError = GetStdHandle (STD_ERROR_HANDLE);
+
+  cmdline = g_strdup_printf ("gzip -cfd %s", filename);
+
+  if (!CreateProcess (NULL, cmdline, NULL, NULL,
+		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
+		      &startupinfo, &processinfo))
+    {
+      g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
+      _exit (127);
+    }
+  CloseHandle (f);
+  CloseHandle (processinfo.hThread);
+  WaitForSingleObject (processinfo.hProcess, INFINITE);
+
+#endif /* NATIVE_WIN32 */
 
   /* now that we un-gziped it, load the temp file */
 

@@ -7,11 +7,15 @@
 
 /* Alexander.Schulz@stud.uni-karlsruhe.de			 */
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include "bmp.h"

@@ -37,14 +37,20 @@
  *
  */
 
-#ifdef MAZE_DEBUG
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef MAZE_DEBUG
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #endif
 
 #include <time.h>  /* For random seeding */
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
 #include "maze.h"
 
 extern gint      maze_dialog (void);

@@ -44,10 +44,14 @@
  *     Smash all bugs :-)
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <math.h>
 #include <signal.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>

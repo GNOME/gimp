@@ -20,9 +20,13 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <errno.h>
 #include <string.h>
 #include <time.h>
@@ -30,8 +34,6 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpmenu.h"
 #include "libgimp/gimpwire.h"
-
-#include "config.h"
 
 #include "megawidget.h"
 
@@ -270,10 +272,6 @@ static void doit(GDrawable * drawable)
   }
 
   tmp = (guchar *) g_malloc(width * height * 4);
-  if (tmp == NULL) {
-    fprintf(stderr, "cannot malloc %d bytes.\n", width * height * bytes);
-    return;
-  }
 
   /* render */
   config.cp.width = width;
@@ -294,10 +292,7 @@ static void doit(GDrawable * drawable)
     int i, j;
     GPixelRgn src_pr, dst_pr;
     guchar *sl = (guchar *) g_malloc(3 * width);
-    if (sl == NULL) {
-      fprintf(stderr, "cannot malloc %d bytes.\n", width * 3);
-      return;
-    }
+
     gimp_pixel_rgn_init(&src_pr, drawable,
 			0, 0, width, height, FALSE, FALSE);
     gimp_pixel_rgn_init(&dst_pr, drawable,

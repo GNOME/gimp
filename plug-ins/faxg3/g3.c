@@ -1,11 +1,14 @@
 /* #ident "@(#)g3.c	3.1 95/08/30 Copyright (c) Gert Doering" */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#include <sys/types.h>
 #include <string.h>
-#include <fcntl.h>
 
 #include "g3.h"
 

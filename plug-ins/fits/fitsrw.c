@@ -84,10 +84,14 @@ static char ident[] = "@(#) libfits.c              0.11  20-Dec-97  (%I%)";
 /* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. */
 /******************************************************************************/
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "fitsrw.h"
 

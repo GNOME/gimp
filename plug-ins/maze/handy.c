@@ -23,6 +23,8 @@
  *
  */
 
+#include <string.h>
+
 #include "libgimp/gimp.h"
 
 /* get_colors Returns the current foreground and background colors in

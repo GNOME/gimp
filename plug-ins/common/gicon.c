@@ -19,11 +19,15 @@
 /*  saves and loads gimp icon files (For toolbox, etc)...
  */
 
+#include "config.h"
+
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +35,6 @@
 #include <math.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-#include <netinet/in.h>
 
 
 typedef struct

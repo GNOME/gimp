@@ -43,13 +43,23 @@
  *    gtk_label_set() -> gtk_label_set_text()
  */
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <gtk/gtk.h>
-#include "libgimp/gimp.h"
+
+#include <libgimp/gimp.h>
+
+#ifndef HAVE_RINT
+#define rint(x) floor((x)+0.5)
+#endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";

@@ -48,16 +48,19 @@
  * 
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <sys/types.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
-#include <sys/types.h>
-#include <signal.h>
-#include <unistd.h>
-
 
 typedef enum {
 	EXTEND,

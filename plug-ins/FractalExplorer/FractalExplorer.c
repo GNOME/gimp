@@ -43,15 +43,35 @@
  Include necessary files  
  *********************************************************************/
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
+
+#ifdef NATIVE_WIN32
+#include <io.h>
+
+#ifndef W_OK
+#define W_OK 2
+#endif
+#ifndef S_ISDIR
+#define S_ISDIR(m) ((m) & _S_IFDIR)
+#endif
+#ifndef S_ISREG
+#define S_ISREG(m) ((m) & _S_IFREG)
+#endif
+#endif
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
@@ -298,6 +318,7 @@ run(char *name,
     values[0].data.d_status = status;
 
     gimp_drawable_detach(drawable);
+
 }
 
 /**********************************************************************
@@ -336,8 +357,8 @@ explorer(GDrawable * drawable)
     bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-    src_row = (guchar *) malloc((x2 - x1) * bytes);
-    dest_row = (guchar *) malloc((x2 - x1) * bytes);
+    src_row = (guchar *) g_malloc((x2 - x1) * bytes);
+    dest_row = (guchar *) g_malloc((x2 - x1) * bytes);
 
   /*  initialize the pixel regions  */
     gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
@@ -369,8 +390,8 @@ explorer(GDrawable * drawable)
     gimp_drawable_merge_shadow(drawable->id, TRUE);
     gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 
-    free(src_row);
-    free(dest_row);
+    g_free(src_row);
+    g_free(dest_row);
 }
 
 /**********************************************************************
@@ -596,9 +617,7 @@ fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
   
-  str = g_malloc((strlen(sel_obj->draw_name) + 32 * sizeof(char)));
-    
-  sprintf(str, msg[lng][MSG_DELSURE2], sel_obj->draw_name);
+  str = g_strdup_printf(msg[lng][MSG_DELSURE2], sel_obj->draw_name);
   
   label = gtk_label_new(str);
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
@@ -1217,9 +1236,7 @@ fractalexplorer_rename_menu_callback(GtkWidget *widget, gpointer data)
 static void
 fractalexplorer_copy_menu_callback(GtkWidget *widget, gpointer data)
 {
-  gchar *new_name = g_malloc(strlen(fractalexplorer_obj_for_menu->draw_name) + 6);
-
-  sprintf(new_name,msg[lng][MSG_COPYNAME],fractalexplorer_obj_for_menu->draw_name);
+  gchar *new_name = g_strup_printf(msg[lng][MSG_COPYNAME],fractalexplorer_obj_for_menu->draw_name);
   new_fractalexplorer_obj(new_name);
   g_free(new_name);
 
@@ -1416,13 +1433,11 @@ plug_in_parse_fractalexplorer_path()
 
       if (*token == '~')
 	{
-	  path = g_malloc (strlen (home) + strlen (token) + 2);
-	  sprintf (path, "%s%s", home, token + 1);
+	  path = g_strdup_printf ("%s%s", home, token + 1);
 	}
       else
 	{
-	  path = g_malloc (strlen (token) + 2);
-	  strcpy (path, token);
+	  path = g_strdup (token);
 	} /* else */
 
       /* Check if directory exists */
@@ -1722,9 +1737,7 @@ fractalexplorer_list_load_all(GList *plist)
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_malloc (strlen(path) + strlen (dir_ent->d_name) + 1);
-
-	      sprintf (filename, "%s%s", path, dir_ent->d_name);
+	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);
@@ -1791,9 +1804,7 @@ gradient_list_load_all(GList *plist)
 	{
 	  while ((dir_ent = readdir (dir)))
 	    {
-	      filename = g_malloc (strlen(path) + strlen (dir_ent->d_name) + 1);
-
-	      sprintf (filename, "%s%s", path, dir_ent->d_name);
+	      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
 
 	      /* Check the file and see that it is not a sub-directory */
 	      err = stat (filename, &filestat);

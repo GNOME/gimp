@@ -565,7 +565,9 @@ destripe_dialog(void)
   gtk_rc_parse(gimp_gtkrc());
   gdk_set_use_xshm(gimp_use_xshm());
 
+#ifdef SIGBUS
   signal(SIGBUS, SIG_DFL);
+#endif
   signal(SIGSEGV, SIG_DFL);
   gtk_preview_set_gamma(gimp_gamma());
   gtk_preview_set_install_cmap(gimp_install_cmap());

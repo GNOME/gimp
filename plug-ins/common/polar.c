@@ -55,14 +55,18 @@
  *                                     - Daniel Dunbar
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846

@@ -11,20 +11,32 @@
  *       etc. 
  */
 
+#include "config.h"
+
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#ifdef NATIVE_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "app/brush_header.h"
-#include <netinet/in.h>
 
 
 /* Declare local data types
@@ -206,7 +218,8 @@ static gint32 load_image (char *filename) {
 	gimp_progress_init(temp);
 	g_free (temp);
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename, O_RDONLY | _O_BINARY);
+
 	if (fd == -1) {
 		return -1;
 	}
@@ -217,13 +230,13 @@ static gint32 load_image (char *filename) {
 	}
 
   /*  rearrange the bytes in each unsigned int  */
-	ph.header_size = ntohl(ph.header_size);
-	ph.version = ntohl(ph.version);
-	ph.width = ntohl(ph.width);
-	ph.height = ntohl(ph.height);
-	ph.bytes = ntohl(ph.bytes);
-	ph.magic_number = ntohl(ph.magic_number);
-	ph.spacing = ntohl(ph.spacing);
+	ph.header_size = g_ntohl(ph.header_size);
+	ph.version = g_ntohl(ph.version);
+	ph.width = g_ntohl(ph.width);
+	ph.height = g_ntohl(ph.height);
+	ph.bytes = g_ntohl(ph.bytes);
+	ph.magic_number = g_ntohl(ph.magic_number);
+	ph.spacing = g_ntohl(ph.spacing);
 
 	/* How much extra to add ot the header seek - 1 needs a bit more */
 	version_extra = 0;
@@ -305,19 +318,20 @@ static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
 	gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
 			drawable->height, FALSE, FALSE);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+
 	if (fd == -1) {
 		printf("Unable to open %s\n", filename);
 		return 0;
 	}
 
-	ph.header_size = htonl(sizeof(ph) + strlen(info.description) + 1);
-	ph.version = htonl(2);
-	ph.width = htonl(drawable->width);
-	ph.height = htonl(drawable->height);
-	ph.bytes = htonl(drawable->bpp);
-	ph.magic_number = htonl(GBRUSH_MAGIC);
-	ph.spacing = htonl(info.spacing);
+	ph.header_size = g_htonl(sizeof(ph) + strlen(info.description) + 1);
+	ph.version = g_htonl(2);
+	ph.width = g_htonl(drawable->width);
+	ph.height = g_htonl(drawable->height);
+	ph.bytes = g_htonl(drawable->bpp);
+	ph.magic_number = g_htonl(GBRUSH_MAGIC);
+	ph.spacing = g_htonl(info.spacing);
 
 	if (write(fd, &ph, sizeof(ph)) != sizeof(ph)) {
 		close(fd);

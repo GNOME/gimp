@@ -4,16 +4,19 @@
 
 1999-05-28  Tor Lillqvist  <tml@iki.fi>
 
+	Merge in Win32 changes to plug-ins. Small Win32-related changes
+	to app and libgimp.
+
 	* configure.in: Check for mmap.
 
 	* app/makefile.msc: Depend on gimpi.lib.
 	
 	* app/app_procs.c (app_init): Fix gccism: Allocate filenames (an
- 	array with non-constant size) dynamically.
+	array with non-constant size) dynamically.
 
 	* app/{datafiles,fileops,general,install,module_db,temp_buf}.c:
- 	Include glib.h before standard headers, because of certain obscure
- 	details related to compiling with gcc on Win32.
+	Include glib.h before standard headers, because of certain obscure
+	details related to compiling with gcc on Win32.
 
 	(If you really want to know: glib.h defines he names of POSIXish
 	(but non-ANSI) functions as prefixed with underscore, because
@@ -40,8 +43,8 @@
 	* libgimp/{gimp,gimpui}.def: Add two entry points.
 
 	* libgimp/gimp.h: Can't use __declspec(dllexport) for PLUG_IN_INFO
-	when compiling with gcc on Win32. Also handle __argc, __argv and
-	_stdcall differently with gcc on Win32
+ 	when compiling with gcc on Win32. Also handle __argc, __argv and
+ 	_stdcall differently with gcc on Win32
 
 	* libgimp/gimpenv.c: Include <string.h>.
 
@@ -54,6 +57,52 @@
 
 	* libgimp/makefile.msc: Miscellaneous updates. The gimpi library
  	is now built as a static library.
+
+	* modules/colorsel_triangle.c: No need to include gdkx.h. Define
+	M_PI if needed.
+
+	* modules/makefile.msc: Use GLib 1.3, update GTk+ paths.
+
+	* plug-ins/makefile.msc: New file.
+
+	* plug-ins/*/*.c (Well, not really all files, but many):
+ 	Portability fixes. Include config.h, and guard inclusion of POSIX
+ 	and Unix headers like <unistd.h>, <dirent.h> and
+ 	<sys/time.h>. Include <string.h> if functions from it are
+ 	used. Use g_ntohl() and g_htonl() insteead of ntohl() and htonl(),
+ 	thus no need to include <netinet/in.h>. Include <io.h> on Win32
+ 	when using open/read/write (which actually are defined as
+ 	_open/_read/_write by glib.h). Define S_* macros if necessary on
+ 	Win32. Define rint() and M_PI if necessary (these definitions
+ 	should be factored out somewhere, no sense repeating them in lots
+ 	of files). Open files in binary mode when needed.
+
+	* plug-ins/FractalExplorer/FractalExplorer.c: Use
+ 	g_malloc()/g_free(). Use g_strdup_printf().
+
+  	* plug-ins/dbbrowser/dbbrowser.c: No need to include <X11/Xlib.h>.
+
+	* plug-ins/destripe/destripe.c: Guard use of SIGBUS.
+
+	* plug-ins/{flame/flame,hrz/hrz,pnm/pnm}.c: No need to check for
+ 	NULL returns from g_malloc() and g_new() as they abort on failure.
+	Use g_strdup_printf().
+
+	* plug-ins/gz/gz.c: Win32 version of running the subprocess.
+
+	* plug-ins/hrz/hrz.c: Win32 version. Use more generic tests for
+ 	non-Unix (OS/2 and Win32), for instance HAVE_MMAP.
+
+	* plug-ins/script-fu/interp_slib.c: Win32 version of myruntime().
+
+	* plug-ins/script-fu/interp_sliba.c: Handle \\ (escaped backslahsh).
+
+	* plug-ins/script-fu/script-fu-console.c: Bypass on Win32.
+
+	* plug-ins/script-fu/script-fu-scripts.c: Portability fixes. Use
+ 	g_strdup_printf() instead of separate malloc() and sprintf(). Use
+ 	g_strescape() for strings being passed to Scheme. Some Win32-only
+ 	stuff.
 
 Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
 

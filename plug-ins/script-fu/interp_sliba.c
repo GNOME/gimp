@@ -667,6 +667,9 @@ lreadstring (struct gen_readio * f)
 	    my_err ("eof after \\", NIL);
 	  switch (c)
 	    {
+	    case '\\':
+	      c = '\\';
+	      break;
 	    case 'n':
 	      c = '\n';
 	      break;

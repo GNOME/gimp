@@ -23,14 +23,27 @@
 
 #define VERSION "0.6"
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#include <sys/types.h>
 #include <string.h>
 #include <fcntl.h>
 
+#ifdef NATIVE_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include <libgimp/gimp.h>
+
 #include "g3.h"
 
 /* Declare local functions.
@@ -181,7 +194,7 @@ load_image (char *filename)
 
   init_byte_tab( 0, byte_tab );
 
-  fd = open(filename, O_RDONLY );
+  fd = open(filename, O_RDONLY | _O_BINARY );
 
   hibit = 0;
   data = 0;

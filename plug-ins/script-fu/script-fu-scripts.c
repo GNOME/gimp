@@ -16,19 +16,44 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#if HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 #include <sys/stat.h>
 #include <ctype.h>		/* For toupper() */
+
 #include "gtk/gtk.h"
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include "libgimp/gimpfileselection.h"
+
 #include "siod.h"
 #include "script-fu-scripts.h"
+
+#ifdef NATIVE_WIN32
+#define STRICT
+#include <windows.h>
+
+#include <io.h>
+
+#ifndef W_OK
+#define W_OK 2
+#endif
+#ifndef S_ISDIR
+#define S_ISDIR(m) ((m) & _S_IFDIR)
+#endif
+#ifndef S_ISREG
+#define S_ISREG(m) ((m) & _S_IFREG)
+#endif
+
+#endif /* NATIVE_WIN32 */
 
 #define TEXT_WIDTH  100
 #define TEXT_HEIGHT 25
@@ -288,7 +313,7 @@ script_fu_find_scripts ()
       /* Set local path to contain temp_path, where (supposedly)
        * there may be working files.
        */
-      home = getenv ("HOME");
+      home = g_get_home_dir ();
       local_path = g_strdup (path_str);
 
       /* Search through all directories in the local path */
@@ -315,8 +340,8 @@ script_fu_find_scripts ()
 
 	  if (!my_err && S_ISDIR (filestat.st_mode))
 	    {
-	      if (path[strlen (path) - 1] != '/')
-		strcat (path, "/");
+	      if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
+		strcat (path, G_DIR_SEPARATOR_S);
 
 	      /* Open directory */
 	      dir = opendir (path);
@@ -327,25 +352,28 @@ script_fu_find_scripts ()
 		{
 		  while ((dir_ent = readdir (dir)))
 		    {
-		      filename = g_malloc (strlen(path) + strlen (dir_ent->d_name) + 1);
+		      filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
 
-		      sprintf (filename, "%s%s", path, dir_ent->d_name);
-
-		      if (strcmp (filename + strlen (filename) - 4, ".scm") == 0)
+		      if (g_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
 			{
 			  /* Check the file and see that it is not a sub-directory */
 			  my_err = stat (filename, &filestat);
 
 			  if (!my_err && S_ISREG (filestat.st_mode))
 			    {
+			      char *qf = g_strescape (filename);
 #ifdef __EMX__
-			      _fnslashify(filename);
+			      _fnslashify(qf);
 #endif
-			      command = g_new (char, strlen ("(load \"\")") + strlen (filename) + 1);
-			      sprintf (command, "(load \"%s\")", filename);
-
+			      command = g_strdup_printf ("(load \"%s\")", qf);
+			      g_free (qf);
 			      repl_c_string (command, 0, 0, 1);
-
+#ifdef NATIVE_WIN32
+			      /* No, I don't know why, but this is 
+			       * necessary on NT 4.0.
+			       */
+			      Sleep(0);
+#endif
 			      g_free (command);
 			    }
 			}
@@ -592,6 +620,20 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_file.filename = g_strdup (get_c_string (car (a)));
+
+#ifdef NATIVE_WIN32
+		  /* Replace POSIX slashes with Win32 backslashes. This
+		   * is just so script-fus can be written with only
+		   * POSIX directory separators.
+		   */
+		  val = script->arg_defaults[i].sfa_file.filename;
+		  while (*val)
+		    {
+		      if (*val == '/')
+			*val = '\\';
+		      val++;
+		    }
+#endif
 		  script->arg_values[i].sfa_file.filename =  g_strdup (script->arg_defaults[i].sfa_file.filename);
 		  script->arg_values[i].sfa_file.fileselection = NULL;
 
@@ -733,6 +775,7 @@ script_fu_script_proc (char     *name,
   GRunModeType run_mode;
   SFScript *script;
   int min_args;
+  char *escaped;
 
   run_mode = params[0].data.d_int32;
 
@@ -799,10 +842,10 @@ script_fu_script_proc (char     *name,
 		    length += strlen (params[i + 1].data.d_string) + 1;
 		    break;
 		  case SF_STRING:
-		    length += strlen (params[i + 1].data.d_string) + 3;
-		    break;
 		  case SF_FILENAME:
-		    length += strlen (params[i + 1].data.d_string) + 3;
+		    escaped = g_strescape (params[i + 1].data.d_string);
+		    length += strlen (escaped) + 3;
+		    g_free (escaped);
 		    break;
 		  case SF_ADJUSTMENT:
 		    length += strlen (params[i + 1].data.d_string) + 1;
@@ -856,7 +899,9 @@ script_fu_script_proc (char     *name,
 		      break;
 		    case SF_STRING:
 		    case SF_FILENAME:
-		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+		      escaped = g_strescape (params[i + 1].data.d_string);
+		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+		      g_free (escaped);
 		      text = buffer;
 		      break;
 		    case SF_ADJUSTMENT:
@@ -1526,6 +1571,7 @@ script_fu_ok_callback (GtkWidget *widget,
   int length;
   int i;
   GdkFont *font;
+  char *escaped;
 
   if ((script = sf_interface.script) == NULL)
     return;
@@ -1564,13 +1610,17 @@ script_fu_ok_callback (GtkWidget *widget,
 	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 1;
 	break;
       case SF_STRING:
-	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 3;
+	escaped = g_strescape (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i])));
+	length += strlen (escaped) + 3;
+	g_free (escaped);
 	break;
       case SF_ADJUSTMENT:
 	length += 24;  /*  Maximum size of float value should not exceed this many characters  */
 	break;
       case SF_FILENAME:
-	length += strlen (script->arg_values[i].sfa_file.filename) + 3;
+	escaped = g_strescape (script->arg_values[i].sfa_file.filename);
+	length += strlen (escaped) + 3;
+	g_free (escaped);
 	break;
       case SF_FONT:
 	length += strlen (script->arg_values[i].sfa_font.fontname) + 3;
@@ -1623,8 +1673,10 @@ script_fu_ok_callback (GtkWidget *widget,
 	case SF_STRING:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = g_strdup (text); 
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", text);
+	  script->arg_values[i].sfa_value = text; 
+	  escaped = g_strescape (text);
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+	  g_free (escaped);
 	  text = buffer;
 	  break;
 	case SF_ADJUSTMENT:
@@ -1644,7 +1696,9 @@ script_fu_ok_callback (GtkWidget *widget,
 	    }
 	  break;
 	case SF_FILENAME:
-	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", script->arg_values[i].sfa_file.filename);
+	  escaped = g_strescape (script->arg_values[i].sfa_file.filename);
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
+	  g_free (escaped);
 	  text = buffer;
 	  break;
 	case SF_FONT:

@@ -16,20 +16,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#if HAVE_DIRENT_H
 #include <dirent.h>
+#endif
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <sys/stat.h>
+
 #include "gdk/gdkkeysyms.h"
 #include "gtk/gtk.h"
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+
 #include "siod.h"
 #include "script-fu-console.h"
 #include <plug-ins/dbbrowser/dbbrowser.h>
+
+#ifdef NATIVE_WIN32
+#include <fcntl.h>
+#include <io.h>
+#endif
+
+#ifndef NATIVE_WIN32
 
 #define TEXT_WIDTH  400
 #define TEXT_HEIGHT 400
@@ -571,6 +587,8 @@ script_fu_close_siod_console ()
   close (siod_output_pipe[0]);
   close (siod_output_pipe[1]);
 }
+
+#endif /* !NATIVE_WIN32 */
 
 void
 script_fu_eval_run (char     *name,

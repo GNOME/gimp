@@ -16,6 +16,9 @@ plug-ins, and finally in modules. Check the makefile.msc files in said
 directories.
 
 The current build setup for Windows is a mess, with complex
-hand-maintained makefiles. I know.
+hand-maintained makefiles. I know. Adding parallel makefiles for gcc
+isn't going to make it any better. On the other hand, I don't think
+using the Unix style configuration mechanism (under cygwin) is quite
+feasible, either.
 
 --Tor Lillqvist <tml@iki.fi>

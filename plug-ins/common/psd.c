@@ -130,14 +130,22 @@
 
 #define IFDBG if (PSD_DEBUG)
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <string.h>
 #include <math.h>
-#include <glib.h>
-#include "libgimp/gimp.h"
 
+#include <glib.h>
+#include <libgimp/gimp.h>
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
 
 /* Local types etc
  */

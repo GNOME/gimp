@@ -68,6 +68,8 @@
    Release 3.2X MAR-96. dynamic linking, subr closures, other improvements.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -78,8 +80,16 @@
 #include <time.h>
 #include <errno.h>
 #include <sys/types.h>
+#if HAVE_SYS_TIMES_H
 #include <sys/times.h>
+#endif
+
 #include <glib.h>
+
+#ifdef NATIVE_WIN32
+#define STRICT
+#include <windows.h>
+#endif
 
 #include "siod.h"
 #include "siodp.h"
@@ -418,12 +428,18 @@ repl_c_string (char *str,
 double
 myruntime (void)
 {
+#if HAVE_SYS_TIMES_H
   double total;
   struct tms b;
   times (&b);
   total = b.tms_utime;
   total += b.tms_stime;
   return (total / 60.0);
+#elif NATIVE_WIN32
+  FILETIME creation, exit, kernel, user;
+  GetProcessTimes (GetCurrentProcess (), &creation, &exit, &kernel, &user);
+  return (kernel.dwLowDateTime * 1e7 + user.dwLowDateTime * 1e7);
+#endif
 }
 
 #if defined(__osf__)

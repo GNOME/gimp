@@ -25,19 +25,31 @@
  * does not contain any code from the netpbm or pbmplus distributions.
  */
 
+#include "config.h"
+
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
 
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+
+#ifdef NATIVE_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
 
 /* Declare local data types
  */
@@ -340,13 +352,13 @@ load_image (char *filename)
   PNMScanner *scan;
   int ctr;
 
-  temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, "Loading %s:", filename);
+  temp = g_strdup_printf ("Loading %s:", filename);
   gimp_progress_init (temp);
   g_free (temp);
 
   /* open the file */
-  fd = open(filename, O_RDONLY);
+  fd = open(filename, O_RDONLY | _O_BINARY);
+
   if (fd == -1)
     {
       /*gimp_message("pnm filter: can't open file\n");*/
@@ -355,11 +367,6 @@ load_image (char *filename)
 
   /* allocate the necessary structures */
   pnminfo = (PNMInfo *) g_malloc(sizeof(PNMInfo));
-  if (!pnminfo)
-    {
-      close (fd);
-      return -1;
-    }
 
   scan = NULL;
   /* set error handling */
@@ -579,9 +586,7 @@ static pnm_load_rawpbm (PNMScanner *scan,
   fd = pnmscanner_fd(scan);
   rowlen = (int)ceil((double)(info->xres)/8.0);
   data = g_malloc (gimp_tile_height () * info->xres);
-
-  CHECK_FOR_ERROR((NULL == (buf = g_malloc(rowlen*sizeof(unsigned char)))),
-		  info->jmpbuf, "pnm filter: malloc failed\n");
+  buf = g_malloc(rowlen*sizeof(unsigned char));
 
   for (y = 0; y < info->yres; )
     {
@@ -713,16 +718,16 @@ save_image (char   *filename,
       return FALSE;
     }
 
-  temp = g_malloc (strlen (filename) + 11);
-  sprintf (temp, "Saving %s:", filename);
+  temp = g_strdup_printf ("Saving %s:", filename);
   gimp_progress_init (temp);
   g_free (temp);
 
   /* open the file */
-  fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+  fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC | _O_BINARY, 0644);
+
   if (fd == -1)
     {
-      g_message ("pnm: can't open \"%s\"\n", filename);
+      g_message ("pnm: can't open \"%s\"", filename);
       return FALSE;
     }
 
@@ -946,7 +951,6 @@ pnmscanner_create (int fd)
   PNMScanner *s;
 
   s = (PNMScanner *)g_malloc(sizeof(PNMScanner));
-  if (!s) return(NULL);
   s->fd = fd;
   s->inbuf = 0;
   s->eof = !read(s->fd, &(s->cur), 1);
