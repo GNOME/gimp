@@ -1,3 +1,8 @@
+2004-11-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_ok):
+	actually retrieve the value from the GtkEntry for SF-VALUE.
+
 2004-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb: applied modified patch from Geert

@@ -417,9 +417,6 @@ script_fu_interface (SFScript *script)
                                             0,
                                             script->arg_defaults[i].sfa_adjustment.digits);
 	      break;
-
-	    default:
-	      break;
 	    }
 
           g_signal_connect (script->arg_values[i].sfa_adjustment.adj,
@@ -502,9 +499,6 @@ script_fu_interface (SFScript *script)
           g_signal_connect (widget, "changed",
                             G_CALLBACK (script_fu_combo_callback),
                             &script->arg_values[i].sfa_option);
-	  break;
-
-	default:
 	  break;
 	}
 
@@ -778,6 +772,10 @@ script_fu_ok (SFScript *script)
           break;
 
         case SF_VALUE:
+          g_free (arg_value->sfa_value);
+          arg_value->sfa_value =
+            g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
+
           g_string_append (s, arg_value->sfa_value);
           break;
 
@@ -856,9 +854,6 @@ script_fu_ok (SFScript *script)
 
         case SF_OPTION:
           g_string_append_printf (s, "%d", arg_value->sfa_option.history);
-          break;
-
-        default:
           break;
         }
     }
@@ -967,9 +962,6 @@ script_fu_reset (SFScript *script)
         case SF_OPTION:
           gtk_combo_box_set_active (GTK_COMBO_BOX (widget),
                                     script->arg_defaults[i].sfa_option.history);
-          break;
-
-        default:
           break;
         }
     }
