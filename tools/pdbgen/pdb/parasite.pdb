@@ -53,12 +53,12 @@ sub convert_proc {
     # gimp_parasite_copy -> GIMP_parasite_copy -> gimp_parasite_copy
     # because of a lack op perl knowledge :)  --Mitch
 
-    $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/e;
+    $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/;
 
-    $invoke{code} =~ s/gimp_/"gimp_$type_"/e;
-    $invoke{code} =~ s/"gimp, "/"$var, "/e;
+    $invoke{code} =~ s/gimp_/"gimp_$type\_"/e;
+    $invoke{code} =~ s/gimp, /"$var, "/e;
 
-    $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/e;
+    $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/;
 }
 
 # The defs
