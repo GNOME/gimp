@@ -21,6 +21,7 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <glib.h>
 
 #include "app_procs.h"
 #include "appenv.h"
