@@ -18,9 +18,9 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <errno.h>
 
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -598,7 +598,7 @@ gimp_image_map_tool_load_save (GimpImageMapTool *tool,
                                const gchar      *filename,
                                gboolean          save)
 {
-  FILE *file = fopen (filename, save ? "wt" : "rt");
+  FILE *file = g_fopen (filename, save ? "wt" : "rt");
 
   if (! file)
     {

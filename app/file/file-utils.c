@@ -21,19 +21,21 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
 #endif
+
 #include <sys/types.h>
-#include <sys/stat.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -215,7 +217,7 @@ file_utils_find_proc (GSList       *procs,
               if (head_size == -2)
                 {
                   head_size = 0;
-                  if ((ifp = fopen (filename, "rb")) != NULL)
+                  if ((ifp = g_fopen (filename, "rb")) != NULL)
                     head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
                 }
 

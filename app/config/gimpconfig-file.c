@@ -50,7 +50,7 @@ gimp_config_file_copy (const gchar  *source,
   struct stat  stat_buf;
   gint         nbytes;
 
-  sfile = fopen (source, "rb");
+  sfile = g_fopen (source, "rb");
   if (sfile == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -59,7 +59,7 @@ gimp_config_file_copy (const gchar  *source,
       return FALSE;
     }
 
-  dfile = fopen (dest, "wb");
+  dfile = g_fopen (dest, "wb");
   if (dfile == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),

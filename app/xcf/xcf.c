@@ -19,11 +19,11 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -231,7 +231,7 @@ xcf_load_invoker (Gimp         *gimp,
 
   filename = args[1].value.pdb_pointer;
 
-  info.fp = fopen (filename, "rb");
+  info.fp = g_fopen (filename, "rb");
 
   if (info.fp)
     {
@@ -319,7 +319,7 @@ xcf_save_invoker (Gimp         *gimp,
   gimage   = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
-  info.fp = fopen (filename, "wb");
+  info.fp = g_fopen (filename, "wb");
 
   if (info.fp)
     {

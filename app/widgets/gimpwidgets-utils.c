@@ -23,15 +23,15 @@
 
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -759,7 +759,7 @@ gimp_text_buffer_load (GtkTextBuffer  *buffer,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = fopen (filename, "r");
+  file = g_fopen (filename, "r");
 
   if (! file)
     {

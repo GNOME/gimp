@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <stdio.h>
+#include <glib/gstdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -392,7 +392,7 @@ procedural_db_dump_invoker (Gimp         *gimp,
 
   if (success)
     {
-      if ((file = fopen (filename, "w")))
+      if ((file = g_fopen (filename, "w")))
         {
           g_hash_table_foreach (gimp->procedural_ht,
                                 procedural_db_print_entry, file);

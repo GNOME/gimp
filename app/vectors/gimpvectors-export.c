@@ -18,11 +18,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <errno.h>
 #include <string.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -77,7 +77,7 @@ gimp_vectors_export_file (const GimpImage    *image,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = fopen (filename, "w");
+  file = g_fopen (filename, "w");
   if (!file)
     {
       g_set_error (error, 0, 0, _("Could not open '%s' for writing: %s"),

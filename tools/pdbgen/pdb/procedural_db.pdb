@@ -149,11 +149,11 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(<stdio.h> "core/gimp.h") ],
+	headers => [ qw(<glib/gstdio.h> "core/gimp.h") ],
         vars => [ "FILE *file" ],
 	code => <<'CODE'
 {
-  if ((file = fopen (filename, "w")))
+  if ((file = g_fopen (filename, "w")))
     {
       g_hash_table_foreach (gimp->procedural_ht,
                             procedural_db_print_entry, file);

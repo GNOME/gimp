@@ -1,5 +1,18 @@
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-file.c
+	* app/file/file-utils.c
+	* app/gui/themes.c
+	* app/tools/gimpimagemaptool.c
+	* app/vectors/gimpvectors-export.c
+	* app/widgets/gimpwidgets-utils.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/procedural_db.pdb: use gstdio wrappers.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c
 	* app/base/temp-buf.c
 	* app/base/tile-swap.c
