@@ -2,22 +2,27 @@ The GNU Image Manipulation Program Version 2.2
 ----------------------------------------------
 
 This is the stable branch of GIMP 2.2. Only bug-fixes are applied
-here. New features are being added in the HEAD branch that will lead
-to GIMP version 2.4.
+here. New features are being added in the HEAD branch that will be
+released as GIMP version 2.4.
 
 
 Bugs fixed in GIMP 2.2.4
 ========================
-- corrected coordinate limits in New Guide script (bug #167529)
-- show clone source when cloning from a different image (bug #167002)
-- workaround problems with font names ending in numbers (bug #166540)
-- fixed image types registration for some python plug-ins (bug #1666650)
-- fixed crash in winicon save plug-in (bug #162742)
-- improved handling of UNC paths on Windows
-- fixed button order in resize and scale dialogs
-- fixed indexed conversion on floating selections (bug #165342)
-- limit aspect ratio in crop tool to sane values (bug #164827)
 - fixed an out-of-bounds read access in the Edge plug-in (bug #164963)
+- limit aspect ratio in crop tool to sane values (bug #164827)
+- fixed indexed conversion on floating selections (bug #165342)
+- fixed button order in resize and scale dialogs
+- improved handling of UNC paths on Windows
+- fixed crash in winicon save plug-in (bug #162742)
+- fixed image types registration for some python plug-ins (bug #1666650)
+- workaround problems with font names ending in numbers (bug #166540)
+- show clone source when cloning from a different image (bug #167002)
+- corrected coordinate limits in New Guide script (bug #167529)
+- fixed crash in gradient editor (bug #167604)
+- don't allow the combo boxes at the bottom of the image window to
+  grab the keyboard focus (bug #167809)
+- fixed saving of MNG files that include layers with negative offsets
+  (bug #166059)
 
 
 Bugs fixed in GIMP 2.2.3
