@@ -24,6 +24,7 @@
 
 G_BEGIN_DECLS
 
+typedef struct _GimpMatrix2 GimpMatrix2;
 typedef struct _GimpMatrix3 GimpMatrix3;
 typedef struct _GimpMatrix4 GimpMatrix4;
 

@@ -27,6 +27,11 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+struct _GimpMatrix2
+{
+  gdouble coeff[2][2];
+};
+
 struct _GimpMatrix3
 {
   gdouble coeff[3][3];
@@ -37,6 +42,8 @@ struct _GimpMatrix4
   gdouble coeff[4][4];
 };
 
+
+void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
 
 void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix, 
 					    gdouble            x, 

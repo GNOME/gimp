@@ -29,22 +29,28 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
+
+#include "config-types.h"
 
 #include "gimpconfig-types.h"
 
 
-static GimpRGB * color_copy        (const GimpRGB *color);
-static void      color_free        (GimpRGB       *color);
+static GimpRGB     * color_copy        (const GimpRGB     *color);
+static void          color_free        (GimpRGB           *color);
 
-static void      memsize_to_string (const GValue  *src_value,
-                                    GValue        *dest_value);
-static void      string_to_memsize (const GValue  *src_value,
-                                    GValue        *dest_value);
+static GimpMatrix2 * matrix2_copy      (const GimpMatrix2 *matrix);
+static void          matrix2_free      (GimpMatrix2       *matrix);
 
-static void      unit_to_string    (const GValue  *src_value,
-                                    GValue        *dest_value);
-static void      string_to_unit    (const GValue  *src_value,
-                                    GValue        *dest_value);
+static void          memsize_to_string (const GValue      *src_value,
+                                        GValue            *dest_value);
+static void          string_to_memsize (const GValue      *src_value,
+                                        GValue            *dest_value);
+
+static void          unit_to_string    (const GValue      *src_value,
+                                        GValue            *dest_value);
+static void          string_to_unit    (const GValue      *src_value,
+                                        GValue            *dest_value);
 
 
 GType
@@ -58,6 +64,19 @@ gimp_color_get_type (void)
                                                (GBoxedFreeFunc) color_free);
 
   return color_type;
+}
+
+GType
+gimp_matrix2_get_type (void)
+{
+  static GType matrix_type = 0;
+
+  if (!matrix_type)
+    matrix_type = g_boxed_type_register_static ("GimpMatrix2",
+					       (GBoxedCopyFunc) matrix2_copy,
+					       (GBoxedFreeFunc) matrix2_free);
+
+  return matrix_type;
 }
 
 GType
@@ -215,6 +234,19 @@ string_to_memsize (const GValue *src_value,
 
   if (!str || !gimp_memsize_set_from_string (dest_value, str))
     g_warning ("Can't convert string to GimpMemsize.");
+}
+
+
+static GimpMatrix2 *
+matrix2_copy (const GimpMatrix2 *matrix)
+{
+  return (GimpMatrix2 *) g_memdup (matrix, sizeof (GimpMatrix2));
+}
+
+static void
+matrix2_free (GimpMatrix2 *matrix)
+{
+  g_free (matrix);
 }
 
 

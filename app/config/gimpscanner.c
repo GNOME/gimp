@@ -37,7 +37,9 @@
 #include <io.h>
 #endif
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "config-types.h"
 
@@ -366,8 +368,9 @@ gimp_scanner_parse_color (GScanner *scanner,
                 gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
                 gimp_rgb_clamp (&color);
               }
+
+            token = G_TOKEN_RIGHT_PAREN;
           }
-          token = G_TOKEN_RIGHT_PAREN;
           break;
 
         case G_TOKEN_RIGHT_PAREN:
@@ -390,6 +393,77 @@ gimp_scanner_parse_color (GScanner *scanner,
   else
     {
       *dest = color;
+    }
+
+  g_scanner_set_scope (scanner, old_scope_id);
+
+  return (token == G_TOKEN_NONE);
+}
+
+gboolean
+gimp_scanner_parse_matrix2 (GScanner    *scanner,
+                            GimpMatrix2 *dest)
+{
+  guint        scope_id;
+  guint        old_scope_id;
+  GTokenType   token;
+  GimpMatrix2  matrix;
+
+  scope_id = g_quark_from_static_string ("gimp_scanner_parse_matrix");
+  old_scope_id = g_scanner_set_scope (scanner, scope_id);
+
+  if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "matrix"))
+    g_scanner_scope_add_symbol (scanner, scope_id, "matrix", 0);
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          {
+            token = G_TOKEN_FLOAT;
+
+            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][0]))
+              goto finish;
+            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[0][1]))
+              goto finish;
+            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][0]))
+              goto finish;
+            if (! gimp_scanner_parse_float (scanner, &matrix.coeff[1][1]))
+              goto finish;
+
+            token = G_TOKEN_RIGHT_PAREN;
+          }
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_NONE; /* indicates success */
+          goto finish;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+ finish:
+
+  if (token != G_TOKEN_NONE)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+    }
+  else
+    {
+      *dest = matrix;
     }
 
   g_scanner_set_scope (scanner, old_scope_id);

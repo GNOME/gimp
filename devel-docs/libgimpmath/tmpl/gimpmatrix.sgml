@@ -24,6 +24,13 @@ basic matrix manipulations and tests.
 #GimpVector4
 </para>
 
+<!-- ##### STRUCT GimpMatrix2 ##### -->
+<para>
+
+</para>
+
+@coeff: 
+
 <!-- ##### STRUCT GimpMatrix3 ##### -->
 <para>
 
@@ -37,6 +44,22 @@ basic matrix manipulations and tests.
 </para>
 
 @coeff: 
+
+<!-- ##### FUNCTION gimp_matrix2_identity ##### -->
+<para>
+
+</para>
+
+@matrix: 
+
+
+<!-- ##### FUNCTION gimp_matrix3_identity ##### -->
+<para>
+
+</para>
+
+@matrix: 
+
 
 <!-- ##### FUNCTION gimp_matrix3_transform_point ##### -->
 <para>
@@ -57,14 +80,6 @@ basic matrix manipulations and tests.
 
 @matrix1: 
 @matrix2: 
-
-
-<!-- ##### FUNCTION gimp_matrix3_identity ##### -->
-<para>
-
-</para>
-
-@matrix: 
 
 
 <!-- ##### FUNCTION gimp_matrix3_translate ##### -->

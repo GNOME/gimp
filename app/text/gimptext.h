@@ -53,6 +53,7 @@ struct _GimpText
   gdouble                box_width;
   gdouble                box_height;
   GimpUnit               box_unit;
+  GimpMatrix2            transformation;
   /* for historical reasons, don't use */
   gint                   border;
 };

@@ -25,7 +25,7 @@
 
 #include <glib-object.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "config-types.h"
 

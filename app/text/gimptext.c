@@ -62,6 +62,7 @@ enum
   PROP_BOX_WIDTH,
   PROP_BOX_HEIGHT,
   PROP_BOX_UNIT,
+  PROP_TRANSFORMATION,
   PROP_BORDER
 };
 
@@ -124,6 +125,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GObjectClass *object_class;
   GParamSpec   *param_spec;
   GimpRGB       black;
+  GimpMatrix2   identity;
   gchar        *language;
 
   object_class = G_OBJECT_CLASS (klass);
@@ -135,6 +137,7 @@ gimp_text_class_init (GimpTextClass *klass)
   object_class->set_property = gimp_text_set_property;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_matrix2_identity (&identity);
 
   language = gimp_text_get_default_language ();
 
@@ -221,6 +224,10 @@ gimp_text_class_init (GimpTextClass *klass)
                                  "box-unit", NULL,
                                  TRUE, GIMP_UNIT_PIXEL,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
+                                    "transformation", NULL,
+                                    &identity,
+                                    0);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -316,6 +323,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_BOX_UNIT:
       g_value_set_int (value, text->box_unit);
       break;
+    case PROP_TRANSFORMATION:
+      g_value_set_boxed (value, &text->transformation);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -328,8 +338,9 @@ gimp_text_set_property (GObject      *object,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpText *text = GIMP_TEXT (object);
-  GimpRGB  *color;
+  GimpText    *text = GIMP_TEXT (object);
+  GimpRGB     *color;
+  GimpMatrix2 *matrix;
 
   switch (property_id)
     {
@@ -387,6 +398,10 @@ gimp_text_set_property (GObject      *object,
       break;
     case PROP_BOX_UNIT:
       text->box_unit = g_value_get_int (value);
+      break;
+    case PROP_TRANSFORMATION:
+      matrix = g_value_get_boxed (value);
+      text->transformation = *matrix;
       break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);

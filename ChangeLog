@@ -1,5 +1,22 @@
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbasetypes.h: include <libgimpmath/gimpmathtypes.h>.
+
+	* libgimpmath/gimpmathtypes.h
+	* libgimpmath/gimpmatrix.[ch]: added GimpMatrix2 struct definition
+	and new function gimp_matrix2_identity().
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-params.[ch]
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-types.[ch]
+	* app/config/gimpconfig.c
+	* app/config/gimpscanner.[ch]: added a boxed type around GimpMatrix2.
+
+	* app/text/gimptext.[ch]: added new property "transformation".
+
+2003-07-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/gimpvector.[ch]: added const qualifiers.
 	
 2003-07-07  Sven Neumann  <sven@gimp.org>

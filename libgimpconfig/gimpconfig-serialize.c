@@ -34,6 +34,7 @@
 #endif
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "config-types.h"
@@ -338,7 +339,7 @@ gimp_config_serialize_value (const GValue *value,
       g_string_append (str, bool ? "yes" : "no");
       return TRUE;
     }
-
+  
   if (G_VALUE_HOLDS_ENUM (value))
     {
       GEnumClass *enum_class;
@@ -405,6 +406,24 @@ gimp_config_serialize_value (const GValue *value,
 
       g_string_append_printf (str, "(color-rgba %s %s %s %s)",
                               buf[0], buf[1], buf[2], buf[3]);
+      return TRUE;
+    }
+
+  if (GIMP_VALUE_HOLDS_MATRIX2 (value))
+    {
+      GimpMatrix2 *trafo;
+      gchar        buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+      gint         i, j, k;
+
+      trafo = g_value_get_boxed (value);
+
+      for (i = 0, k = 0; i < 2; i++)
+        for (j = 0; j < 2; j++, k++)
+          g_ascii_formatd (buf[k],
+                           G_ASCII_DTOSTR_BUF_SIZE, "%f", trafo->coeff[i][j]);
+
+      g_string_append_printf (str, "(matrix %s %s %s %s)",
+			      buf[0], buf[1], buf[2], buf[3]);
       return TRUE;
     }
 

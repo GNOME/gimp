@@ -22,6 +22,7 @@
 
 
 #include <libgimpcolor/gimpcolortypes.h>
+#include <libgimpmath/gimpmathtypes.h>
 
 
 G_BEGIN_DECLS

@@ -51,6 +51,22 @@ GParamSpec * gimp_param_spec_color        (const gchar    *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_MATRIX2
+ */
+
+#define GIMP_TYPE_PARAM_MATRIX2            (gimp_param_matrix2_get_type ())
+#define GIMP_IS_PARAM_SPEC_MATRIX2(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX2))
+
+GType        gimp_param_matrix2_get_type   (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_matrix2       (const gchar        *name,
+                                            const gchar        *nick,
+                                            const gchar        *blurb,
+                                            const GimpMatrix2  *default_value,
+                                            GParamFlags         flags);
+
+
+/*
  * GIMP_TYPE_PARAM_MEMSIZE
  */
 
@@ -59,13 +75,13 @@ GParamSpec * gimp_param_spec_color        (const gchar    *name,
 
 GType        gimp_param_memsize_get_type  (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_memsize      (const gchar    *name,
-                                           const gchar    *nick,
-                                           const gchar    *blurb,
-                                           gulong          minimum,
-                                           gulong          maximum,
-                                           gulong          default_value,
-                                           GParamFlags     flags);
+GParamSpec * gimp_param_spec_memsize      (const gchar  *name,
+                                           const gchar  *nick,
+                                           const gchar  *blurb,
+                                           gulong        minimum,
+                                           gulong        maximum,
+                                           gulong        default_value,
+                                           GParamFlags   flags);
 
 
 /*
@@ -85,14 +101,14 @@ typedef enum
 
 GType        gimp_param_path_get_type     (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_path         (const gchar         *name,
-                                           const gchar         *nick,
-                                           const gchar         *blurb,
-					   GimpParamPathType    type,
-                                           gchar               *default_value,
-                                           GParamFlags          flags);
+GParamSpec * gimp_param_spec_path         (const gchar        *name,
+                                           const gchar        *nick,
+                                           const gchar        *blurb,
+					   GimpParamPathType   type,
+                                           gchar              *default_value,
+                                           GParamFlags         flags);
 
-GimpParamPathType  gimp_param_spec_path_type (GParamSpec       *pspec);
+GimpParamPathType  gimp_param_spec_path_type (GParamSpec      *pspec);
 
 
 /*
@@ -104,12 +120,12 @@ GimpParamPathType  gimp_param_spec_path_type (GParamSpec       *pspec);
 
 GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_unit         (const gchar    *name,
-                                           const gchar    *nick,
-                                           const gchar    *blurb,
-                                           gboolean        allow_pixels,
-                                           GimpUnit        default_value,
-                                           GParamFlags     flags);
+GParamSpec * gimp_param_spec_unit         (const gchar  *name,
+                                           const gchar  *nick,
+                                           const gchar  *blurb,
+                                           gboolean      allow_pixels,
+                                           GimpUnit      default_value,
+                                           GParamFlags   flags);
 
 
 /* some convenience macros to install object properties */
@@ -143,6 +159,12 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
   g_object_class_install_property (class, id,\
                                    g_param_spec_int (name, NULL, blurb,\
                                    min, max, default,\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_MATRIX2(class, id,\
+                                        name, blurb, default, flags)\
+  g_object_class_install_property (class, id,\
+                                   gimp_param_spec_matrix2 (name, NULL, blurb,\
+                                   default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id,\
                                          name, blurb, min, max, default, flags)\

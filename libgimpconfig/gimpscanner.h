@@ -45,6 +45,8 @@ gboolean   gimp_scanner_parse_float              (GScanner     *scanner,
                                                   gdouble      *dest);
 gboolean   gimp_scanner_parse_color              (GScanner     *scanner,
                                                   GimpRGB      *dest);
+gboolean   gimp_scanner_parse_matrix2            (GScanner     *scanner,
+                                                  GimpMatrix2  *dest);
 
 
 #endif /* __GIMP_SCANNER_H__ */

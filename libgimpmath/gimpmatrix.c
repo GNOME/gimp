@@ -29,6 +29,21 @@
 
 #define EPSILON 1e-6
 
+/**
+ * gimp_matrix2_identity:
+ * @matrix: A matrix.
+ * 
+ * Sets the matrix to the identity matrix.
+ */
+void
+gimp_matrix2_identity (GimpMatrix2 *matrix)
+{
+  static const GimpMatrix2 identity = { { { 1.0, 0.0 },
+                                          { 0.0, 1.0 } } };
+
+  *matrix = identity;
+}
+
 
 /**
  * gimp_matrix3_transform_point:

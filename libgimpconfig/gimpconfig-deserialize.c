@@ -33,6 +33,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "config-types.h"
 
@@ -75,6 +76,9 @@ static GTokenType  gimp_config_deserialize_path        (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_color       (GValue     *value,
+                                                        GParamSpec *prop_spec,
+                                                        GScanner   *scanner);
+static GTokenType  gimp_config_deserialize_matrix2     (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_object      (GValue     *value,
@@ -346,6 +350,10 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return gimp_config_deserialize_color (value, prop_spec, scanner);
     }
+  else if (prop_spec->value_type == GIMP_TYPE_MATRIX2)
+    {
+      return gimp_config_deserialize_matrix2 (value, prop_spec, scanner);
+    }
   else if (prop_spec->value_type == G_TYPE_VALUE_ARRAY)
     {
       return gimp_config_deserialize_value_array (value,
@@ -596,6 +604,21 @@ gimp_config_deserialize_color (GValue     *value,
     return G_TOKEN_NONE;
 
   g_value_set_boxed (value, &color);
+
+  return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
+gimp_config_deserialize_matrix2 (GValue     *value,
+                                 GParamSpec *prop_spec,
+                                 GScanner   *scanner)
+{
+  GimpMatrix2 matrix;
+
+  if (! gimp_scanner_parse_matrix2 (scanner, &matrix))
+    return G_TOKEN_NONE;
+
+  g_value_set_boxed (value, &matrix);
 
   return G_TOKEN_RIGHT_PAREN;
 }
