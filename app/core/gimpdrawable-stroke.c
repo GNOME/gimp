@@ -76,6 +76,8 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   w = x2 - x1;
   h = y2 - y1;
 
+  gimp_item_offsets (GIMP_ITEM (drawable), &x2, &y2);
+
   scan_convert = gimp_scan_convert_new (w, h, antialias ? 1 : 0);
 
   /* For each Stroke in the vector, interpolate it, and add it to the
@@ -122,7 +124,7 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   /* fill a 1-bpp Tilemanager with black, this will describe the shape
    * of the stroke. */
   mask = tile_manager_new (w, h, 1);
-  tile_manager_set_offsets (mask, x1, y1);
+  tile_manager_set_offsets (mask, x1+x2, y1+y2);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, TRUE);
   color_region (&maskPR, bg);
 
@@ -138,7 +140,7 @@ gimp_drawable_stroke_vectors (GimpDrawable         *drawable,
   /* Fill a TileManager with the stroke color */
   gimp_rgb_get_uchar (color, &(ucolor[0]), &(ucolor[1]), &(ucolor[2]));
   base = tile_manager_new (w, h, bytes);
-  tile_manager_set_offsets (base, x1, y1);
+  tile_manager_set_offsets (base, x1+x2, y1+y2);
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   color_region (&basePR, ucolor);
 

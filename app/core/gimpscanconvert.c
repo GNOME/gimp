@@ -43,10 +43,13 @@ struct _GimpScanConvert
 
   gboolean     antialias;   /* do we want antialiasing? */
 
-  /* record the first and last points so we can close the current polygon. */
+  /* stuff necessary for the _add_polygons API...  :-/  */
   gboolean     got_first;
-  gboolean     have_open;
+  gboolean     need_closing;
+  GimpVector2  first;
+  GimpVector2  prev;
 
+  gboolean     have_open;
   guint        num_nodes;
   ArtVpath    *vpath;
 
@@ -55,7 +58,8 @@ struct _GimpScanConvert
 };
 
 /* Private functions */
-static void gimp_scan_convert_finish (GimpScanConvert *sc);
+static void gimp_scan_convert_finish           (GimpScanConvert *sc);
+static void gimp_scan_convert_close_add_points (GimpScanConvert *sc);
 
 /*  public functions  */
 GimpScanConvert *
@@ -75,7 +79,9 @@ gimp_scan_convert_new (guint width,
   sc->width     = width;
   sc->height    = height;
 
-  sc->got_first = FALSE;
+  sc->got_first    = FALSE;
+  sc->need_closing = FALSE;
+
   sc->have_open = FALSE;
 
   sc->num_nodes = 0;
@@ -102,7 +108,6 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
                               GimpVector2     *points,
                               gboolean         new_polygon)
 {
-  GimpVector2  prev;
   gint  i;
 
   g_return_if_fail (sc != NULL);
@@ -111,33 +116,59 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
   g_return_if_fail (sc->svp == NULL);
 
   /* We need an extra nodes to end the path */
-  sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + n_points + 2);
+  sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + n_points + 1);
 
-  sc->vpath[sc->num_nodes].code = ((! sc->got_first) || new_polygon) ?
-                                        ART_MOVETO : ART_LINETO;
-  sc->vpath[sc->num_nodes].x = points[0].x;
-  sc->vpath[sc->num_nodes].y = points[0].y;
-  sc->num_nodes++;
-  sc->got_first = TRUE;
-  prev  = points[0];
-
-  for (i = 1; i < n_points; i++)
+  if (sc->num_nodes == 0 || new_polygon)
     {
-      if (prev.x != points[i].x || prev.y != points[i].y)
+      if (sc->need_closing)
+        gimp_scan_convert_close_add_points (sc);
+
+      sc->got_first = FALSE;
+    }
+
+  /* We have to compress multiple identical coordinates */
+  
+  for (i = 0; i < n_points; i++)
+    {
+      if (sc->got_first == FALSE || 
+          sc->prev.x != points[i].x || sc->prev.y != points[i].y)
         {
-          sc->vpath[sc->num_nodes].code = ART_LINETO;
+          sc->vpath[sc->num_nodes].code = ((! sc->got_first) || new_polygon) ?
+                                           ART_MOVETO : ART_LINETO;
           sc->vpath[sc->num_nodes].x = points[i].x;
           sc->vpath[sc->num_nodes].y = points[i].y;
           sc->num_nodes++;
-          prev = points[i];
+          sc->prev = points[i];
+
+          if (!sc->got_first)
+            {
+              sc->got_first = TRUE;
+              sc->first = points[i];
+            }
         }
     }
 
-  /* for some reason we need to duplicate the last node?? */
+  sc->need_closing = TRUE;
 
-  sc->vpath[sc->num_nodes] = sc->vpath[sc->num_nodes - 1];
-  sc->num_nodes++;
   sc->vpath[sc->num_nodes].code = ART_END;
+}
+
+
+static void
+gimp_scan_convert_close_add_points (GimpScanConvert *sc)
+{
+  if (sc->need_closing && 
+      (sc->prev.x != sc->first.x || sc->prev.y != sc->first.y))
+    {
+      sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + 2);
+      sc->vpath[sc->num_nodes].code = ART_LINETO;
+      sc->vpath[sc->num_nodes].x = sc->first.x;
+      sc->vpath[sc->num_nodes].y = sc->first.y;
+      sc->num_nodes++;
+      sc->vpath[sc->num_nodes].code = ART_END;
+    }
+
+  sc->need_closing = FALSE;
 }
 
 
@@ -162,6 +193,9 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
   g_return_if_fail (points != NULL);
   g_return_if_fail (n_points > 0);
   g_return_if_fail (sc->svp == NULL);
+
+  if (sc->need_closing)
+    gimp_scan_convert_close_add_points (sc);
 
   if (!closed)
     sc->have_open = TRUE;
@@ -220,6 +254,9 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
   ArtPathStrokeCapType   artcap  = 0;
 
   g_return_if_fail (sc->svp == NULL);
+
+  if (sc->need_closing)
+    gimp_scan_convert_close_add_points (sc);
 
   switch (join)
     {
@@ -344,8 +381,8 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
 
   g_return_if_fail (sc->vpath != NULL);
 
-  /* gimp_scan_convert_stroke (sc, GIMP_JOIN_MITER, GIMP_CAP_BUTT, 15.0);
-   */
+  if (sc->need_closing)
+    gimp_scan_convert_close_add_points (sc);
 
   if (sc->svp)
     return;   /* We already have a valid SVP */
