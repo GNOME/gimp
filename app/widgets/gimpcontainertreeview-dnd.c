@@ -72,6 +72,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
     case GIMP_DND_TYPE_COLOR:
     case GIMP_DND_TYPE_SVG:
     case GIMP_DND_TYPE_SVG_XML:
+    case GIMP_DND_TYPE_COMPONENT:
       break;
 
     default:
@@ -399,6 +400,28 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
                                              (const gchar *) stream,
                                              stream_length,
                                              dest_viewable, drop_pos);
+
+                  success = TRUE;
+                }
+            }
+          break;
+
+        case GIMP_DND_TYPE_COMPONENT:
+          if (tree_view_class->drop_component)
+            {
+              GimpImage       *image = NULL;
+              GimpChannelType  component;
+
+              if (tree_view->dnd_gimp)
+                image = gimp_selection_data_get_component (selection_data,
+                                                           tree_view->dnd_gimp,
+                                                           &component);
+
+              if (image)
+                {
+                  tree_view_class->drop_component (tree_view,
+                                                   image, component,
+                                                   dest_viewable, drop_pos);
 
                   success = TRUE;
                 }

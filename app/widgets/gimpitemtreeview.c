@@ -324,6 +324,9 @@ gimp_item_tree_view_set_context (GimpDocked  *docked,
 
   if (context)
     {
+      if (! GIMP_CONTAINER_TREE_VIEW (view)->dnd_gimp)
+        GIMP_CONTAINER_TREE_VIEW (view)->dnd_gimp = context->gimp;
+
       g_signal_connect_swapped (context, "image_changed",
                                 G_CALLBACK (gimp_item_tree_view_set_image),
                                 view);

@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -101,6 +101,11 @@ static void    gimp_layer_tree_view_drop_color    (GimpContainerTreeView *view,
                                                    GtkTreeViewDropPosition  drop_pos);
 static void    gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView *view,
                                                    GList               *uri_list,
+                                                   GimpViewable        *dest_viewable,
+                                                   GtkTreeViewDropPosition  drop_pos);
+static void   gimp_layer_tree_view_drop_component (GimpContainerTreeView *tree_view,
+                                                   GimpImage           *gimage,
+                                                   GimpChannelType      component,
                                                    GimpViewable        *dest_viewable,
                                                    GtkTreeViewDropPosition  drop_pos);
 
@@ -225,6 +230,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class->drop_viewable   = gimp_layer_tree_view_drop_viewable;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
   tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
+  tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
 
   item_view_class->item_type       = GIMP_TYPE_LAYER;
   item_view_class->signal_name     = "active-layer-changed";
@@ -406,16 +412,18 @@ gimp_layer_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_layer_tree_view_mask_clicked),
                     layer_view);
 
-  gimp_dnd_uri_list_dest_add (GTK_WIDGET (tree_view->view),
-                              NULL, tree_view);
-  gimp_dnd_color_dest_add (GTK_WIDGET (tree_view->view),
-                           NULL, tree_view);
-  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
-                              NULL, tree_view);
-  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
-                              NULL, tree_view);
-  gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
-                              NULL, tree_view);
+  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
+  gimp_dnd_color_dest_add     (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
+  gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
+                               NULL, tree_view);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
+                               NULL, tree_view);
+  gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
+                               NULL, tree_view);
 
   /*  hide basically useless edit button  */
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
@@ -659,6 +667,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
   if  (src_type == GIMP_DND_TYPE_URI_LIST     ||
        src_type == GIMP_DND_TYPE_TEXT_PLAIN   ||
        src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
+       src_type == GIMP_DND_TYPE_COMPONENT    ||
        GIMP_IS_DRAWABLE (src_viewable))
     {
       GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
@@ -814,6 +823,43 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
     }
 
   gimp_image_flush (gimage);
+}
+
+static void
+gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
+                                     GimpImage               *src_image,
+                                     GimpChannelType          component,
+                                     GimpViewable            *dest_viewable,
+                                     GtkTreeViewDropPosition  drop_pos)
+{
+  GimpItemTreeView *view       = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *dest_image = view->gimage;
+  GimpChannel      *channel;
+  GimpLayer        *layer;
+  gint              index;
+  const gchar      *desc;
+  gchar            *name;
+
+  index = gimp_image_get_layer_index (dest_image, GIMP_LAYER (dest_viewable));
+
+  if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+    index++;
+
+  channel = gimp_channel_new_from_component (src_image, component, NULL, NULL);
+
+  layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (channel), dest_image,
+                                         GIMP_TYPE_LAYER, TRUE));
+
+  g_object_unref (channel);
+
+  gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
+                       NULL, NULL, &desc, NULL);
+  name = g_strdup_printf (_("%s Channel Copy"), desc);
+  gimp_object_set_name (GIMP_OBJECT (layer), name);
+  g_free (name);
+
+  gimp_image_add_layer (dest_image, layer, drop_pos);
+  gimp_image_flush (dest_image);
 }
 
 

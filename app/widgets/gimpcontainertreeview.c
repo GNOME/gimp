@@ -163,6 +163,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   klass->drop_color         = NULL;
   klass->drop_uri_list      = NULL;
   klass->drop_svg           = NULL;
+  klass->drop_component     = NULL;
 }
 
 static void

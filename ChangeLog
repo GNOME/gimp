@@ -1,5 +1,20 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.[ch]: added virtual function
+	GimpContainerTreeView::drop_component(). Added EEKy "dnd_gimp"
+	needed for gimp_selection_data_get_component().
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_set_context):
+	set the "dnd_gimp" pointer if it is NULL.
+
+	* app/widgets/gimpcontainertreeview-dnd.c: handle component drops
+	and dispatch ::drop_component() accordingly.
+
+	* app/widgets/gimplayertreeview.c: implement dropping of
+	components as new layers. Addresses bugs #158483 and #158133.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c
 	* app/display/gimpdisplayshell-dnd.[ch]
 	* app/widgets/gimptoolbox-dnd.c: enabled dropping of components
