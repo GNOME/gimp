@@ -10377,7 +10377,7 @@ msgstr "계층 머지모드 :"
 
 #: plug-ins/gap/gap_range_ops.c:641
 msgid "Exclude BG-Layer"
-msgstr "배경-계층 제� "
+msgstr "배경-계층 제"
 
 #: plug-ins/gap/gap_range_ops.c:642
 msgid ""
