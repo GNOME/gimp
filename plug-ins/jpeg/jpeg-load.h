@@ -356,10 +356,10 @@ run (gchar   *name,
   static GimpParam values[2];
   GimpRunModeType  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
-  gint32        orig_image_ID;
-  gint32        display_ID = -1;
+  gint32  image_ID;
+  gint32  drawable_ID;
+  gint32  orig_image_ID;
+  gint32  display_ID = -1;
 #ifdef GIMP_HAVE_PARASITES
   GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
@@ -427,7 +427,7 @@ run (gchar   *name,
       
       g_free (image_comment);
       image_comment = NULL;
-}
+    
 #ifdef GIMP_HAVE_PARASITES
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
       if (parasite) 
