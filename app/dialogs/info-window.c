@@ -26,6 +26,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -671,6 +673,8 @@ info_window_update (GimpDisplay *gdisp)
   gint              type;
   gdouble           unit_factor;
   gint              unit_digits;
+  GimpUnit          res_unit;
+  gdouble           res_unit_factor;
   gchar             format_buf[32];
   InfoDialog       *info_win;
 
@@ -711,13 +715,20 @@ info_window_update (GimpDisplay *gdisp)
 	      _gimp_unit_get_plural (gdisp->gimage->gimp,
 				     gdisp->gimage->unit));
   g_snprintf (iwd->real_dimensions_str, MAX_BUF, format_buf,
-	      gdisp->gimage->width * unit_factor / gdisp->gimage->xresolution,
+	      gdisp->gimage->width  * unit_factor / gdisp->gimage->xresolution,
 	      gdisp->gimage->height * unit_factor / gdisp->gimage->yresolution);
 
   /*  image resolution  */
-  g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g dpi"),
-	      gdisp->gimage->xresolution,
-	      gdisp->gimage->yresolution);
+  res_unit = gdisp->gimage->gimp->config->default_resolution_unit;
+
+  res_unit_factor = _gimp_unit_get_factor (gdisp->gimage->gimp, res_unit);
+
+  g_snprintf (format_buf, sizeof (format_buf), _("pixels/%s"),
+              _gimp_unit_get_abbreviation (gdisp->gimage->gimp, res_unit));
+  g_snprintf (iwd->resolution_str, MAX_BUF, _("%g x %g %s"),
+	      gdisp->gimage->xresolution / res_unit_factor,
+	      gdisp->gimage->yresolution / res_unit_factor,
+              res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
   g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
