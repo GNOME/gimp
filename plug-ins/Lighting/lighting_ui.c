@@ -384,7 +384,7 @@ create_options_page (void)
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *table;
-  // GtkWidget *spinbutton;
+  /*GtkWidget *spinbutton;*/
   GtkObject *adj;
 
   page = gtk_vbox_new (FALSE, 4);

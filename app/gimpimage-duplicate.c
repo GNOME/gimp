@@ -776,9 +776,9 @@ duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
 	gimage_invalidate_without_render (gdisp->gimage, 0,0,
 					  gdisp->gimage->width,
 					  gdisp->gimage->height,
-					  //	  64,64,128,128);
-					  //					  newgdisplay->disp_width,newgdisplay->disp_height,
-					  //					  newgdisplay->disp_width+newgdisplay->disp_xoffset,newgdisplay->disp_height+newgdisplay->disp_yoffset
+					  	  64,64,128,128);
+					  /*					  newgdisplay->disp_width,newgdisplay->disp_height,
+					  					  newgdisplay->disp_width+newgdisplay->disp_xoffset,newgdisplay->disp_height+newgdisplay->disp_yoffset */
 					  x1, y1, x2, y2
 					  );
 	

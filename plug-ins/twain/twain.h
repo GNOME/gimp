@@ -53,12 +53,12 @@
 /*  Force 32-bit twain to use same packing of twain structures as existing */
 /*  16-bit twain.  This allows 16/32-bit thunking.                         */
 #ifdef  WIN32
-    #ifdef __BORLANDC__ //(Mentor June 13, 1996) if using a Borland compiler
-        #pragma option -a2  //(Mentor June 13, 1996) switch to word alignment
-    #else   //(Mentor June 13, 1996) if we're using some other compiler
+    #ifdef __BORLANDC__ /* (Mentor June 13, 1996) if using a Borland compiler */
+        #pragma option -a2  /*(Mentor June 13, 1996) switch to word alignment*/
+    #else   /*(Mentor June 13, 1996) if we're using some other compiler*/
         #pragma pack (push, before_twain)
         #pragma pack (2)
-    #endif  //(Mentor June 13, 1996)
+    #endif  /*(Mentor June 13, 1996)*/
 #else   /* WIN32 */
 #endif  /* WIN32 */
 
@@ -384,7 +384,7 @@ typedef struct
     TW_INT16    dataArgType;    /* DSM_Entry dataArgType parameter          */
     TW_INT16    message;        /* DSM_Entry message parameter              */
     TW_INT32    pDataSize;      /* Size of pData (0 if NULL)                */
-    //  TW_MEMREF   pData;      /* Based on implementation specifics, a     */
+    /*  TW_MEMREF   pData;         Based on implementation specifics, a     */
                                 /* pData parameter makes no sense in this   */
                                 /* structure, but data (if provided) will be*/
                                 /* appended in the data block.              */
@@ -397,7 +397,7 @@ typedef struct
     TW_UINT16   returnCode;     /* Thunker DsEntry return code.             */
     TW_UINT16   conditionCode;  /* Thunker DsEntry condition code.          */
     TW_INT32    pDataSize;      /* Size of pData (0 if NULL)                */
-    //  TW_MEMREF   pData;      /* Based on implementation specifics, a     */
+    /*  TW_MEMREF   pData;         Based on implementation specifics, a     */
                                 /* pData parameter makes no sense in this   */
                                 /* structure, but data (if provided) will be*/
                                 /* appended in the data block.              */
@@ -661,7 +661,7 @@ typedef struct {
 #define TWSS_A5          5
 #define TWSS_B4          6
 #define TWSS_B6          7
-//#define TWSS_B          8
+/*#define TWSS_B          8 */
 /* Added 1.7 */
 #define TWSS_USLEDGER    9
 #define TWSS_USEXECUTIVE 10
@@ -1808,11 +1808,11 @@ typedef TW_UINT16 (*DSENTRYPROC)(pTW_IDENTITY,
 /*  Force 32-bit twain to use same packing of twain structures as existing */
 /*  16-bit twain.  This allows 16/32-bit thunking. */
 #ifdef  WIN32
-    #ifdef __BORLANDC__ //(Mentor June 13, 1996) if we're using a Borland compiler
-        #pragma option -a.  //(Mentor October 30, 1996) switch back to original alignment
-    #else   //(Mentor June 13, 1996) if NOT using a Borland compiler
+    #ifdef __BORLANDC__ /*(Mentor June 13, 1996) if we're using a Borland compiler */
+        #pragma option -a.  /*(Mentor October 30, 1996) switch back to original alignment */
+    #else   /*(Mentor June 13, 1996) if NOT using a Borland compiler */
         #pragma pack (pop, before_twain)
-    #endif  //(Mentor June 13, 1996)
+    #endif  /*(Mentor June 13, 1996) */
 #else   /* WIN32 */
 #endif  /* WIN32 */
 

@@ -363,7 +363,7 @@ CB_CopyImage (gboolean interactive,
 						  pData[x*3+y*nSizeLine]   = pLine[x*drawable->bpp+2]; /* blue */
 						  pData[x*3+y*nSizeLine+1] = pLine[x*drawable->bpp+1]; /* green */
 						  pData[x*3+y*nSizeLine+2] = pLine[x*drawable->bpp];   /* red */
-						  //pData[x+y*drawable->width*3+3] = 0;          /* reserved */
+						  /*pData[x+y*drawable->width*3+3] = 0;*/          /* reserved */
 					  }
 				  }
 			  }

@@ -68,4 +68,4 @@ void logBegin(pTW_IMAGEINFO, void *);
 void logData(pTW_IMAGEINFO, pTW_IMAGEMEMXFER, void *);
 #endif
 
-#endif // __TW_UTIL_H
+#endif /* __TW_UTIL_H */

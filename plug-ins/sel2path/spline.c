@@ -91,7 +91,7 @@ evaluate_spline (spline_type s, real t)
         real_coordinate_type t2 = Pmult_scalar (V[j - 1].v[i + 1], t);
         V[j].v[i] = Padd (t1, t2);
 #else
-	/* //HB: the above is really nice, but is there any other compiler
+	/* HB: the above is really nice, but is there any other compiler
 	 * supporting this ??
 	 */
         real_coordinate_type t1;

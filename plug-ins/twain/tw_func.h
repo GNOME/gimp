@@ -232,4 +232,4 @@ void registerWindowHandle(pTW_SESSION, HWND);
 void registerTransferCallbacks(pTW_SESSION, pTXFR_CB_FUNCS, void *);
 void setClientData(pTW_SESSION session, void *clientData);
 
-#endif // _TW_FUNC_H
+#endif /* _TW_FUNC_H */

@@ -255,7 +255,7 @@ tile_manager_validate (TileManager *tm,
 
 /* DEBUG STUFF ->  if (tm->user_data)
     {
-      //      fprintf(stderr,"V%p  ",tm->user_data);
+            fprintf(stderr,"V%p  ",tm->user_data);
       fprintf(stderr,"V");
     }
   else

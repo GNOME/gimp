@@ -2168,9 +2168,9 @@ update_box_rgb (Histogram histogram,
  finished_axesscan:
 
   /*
-    //  boxp->Rhalferror = (Rmin+Rmax)/2;
-    //  boxp->Ghalferror = (Gmin+Gmax)/2;
-    //  boxp->Bhalferror = (Bmin+Bmax)/2;
+      boxp->Rhalferror = (Rmin+Rmax)/2;
+      boxp->Ghalferror = (Gmin+Gmax)/2;
+      boxp->Bhalferror = (Bmin+Bmax)/2;
   */
 
   /*boxp->error = (sqrt((double)(boxp->error/ccount)));*/

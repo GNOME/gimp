@@ -1,3 +1,18 @@
+Wed Sep 27 00:46:31 CEST 2000  Daniel Egger  <egger@suse.de>
+
+	* app/channel_ops.c:
+	* app/convert.c:
+	* app/tile_manager.c:
+	* plug-ins/Lighting/lighting_ui.c:
+	* plug-ins/common/jpeg.c:
+	* plug-ins/common/winclipboard.c:
+	* plug-ins/sel2path/spline.c:
+	* plug-ins/twain/tw_func.h:
+	* plug-ins/twain/tw_util.h:
+	* plug-ins/twain/twain.h:
+	* plug-ins/winsnap/winsnap.c: Turned C++ style comments into
+	C ones.
+
 Mon Sep 25 17:04:39 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/print/print-canon.c: portability fix for varargs usage

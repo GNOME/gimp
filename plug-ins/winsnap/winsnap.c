@@ -1249,7 +1249,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   gimp_pixel_rgn_set_rect(&pixel_rgn, (guchar *) capBytes,
 			  0, 0, ROUND4(width), height);
 
-  /* //HB: update data BEFORE size change */
+  /* HB: update data BEFORE size change */
   gimp_drawable_flush(drawable);
   /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4(width)) {
