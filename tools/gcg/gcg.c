@@ -3,9 +3,17 @@
 #include <errno.h>
 #include "gcg.h"
 #include "parse.h"
+#ifndef NATIVE_WIN32
 #include <unistd.h>
+#endif
 #include "output.h"
 #include "marshall.h"
+
+#ifdef NATIVE_WIN32
+extern int opterr, optind, optopt;
+extern char *optarg;
+extern int getopt(int nargc, char** nargv, char* ostr);
+#endif
 
 #ifndef CPP_PROGRAM
 #define CPP_PROGRAM "cpp"

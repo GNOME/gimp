@@ -1,3 +1,10 @@
+1999-05-19  Tor Lillqvist  <tml@iki.fi>
+	* Makefile.am: Distribute getopt.c and makefile.msc.
+
+	* getopt.c makefile.msc: New files.
+
+	* gcg.c lexer.l: Portability improvements for Win32.
+
 Wed Jan 20 20:46:39 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* AUTHORS

@@ -1,0 +1,68 @@
+## Makefile for building gcg with Microsoft C
+## Use: nmake -f makefile.msc
+
+################################################################
+
+# Nothing much configurable below
+
+# cl -? describes the options
+CC = cl -GA -G5 -GF -Ox -W3 -MD -nologo
+
+# flex is from cygwin, for instance
+LEX = flex
+# yacc is bison, also from cygwin
+YACC = bison -y
+
+LDFLAGS = /link /subsystem:console /machine:ix86
+INSTALL = copy
+
+GLIB_VER = 1.3
+
+GLIB = ..\..\..\glib
+
+CFLAGS =  -I$(GLIB) -DCPP_PROGRAM="\"cl -E\""
+CPP = cl -E -I.
+
+all: gcg.exe
+
+YFLAGS			= -d -v
+LFLAGS			= -d 
+
+lexer.c : lexer.l
+	$(LEX) $(LFLAGS) -t lexer.l >lexer.c
+
+parser.c parser.h: parser.y
+	$(YACC) $(YFLAGS) parser.y
+	copy y.tab.c parser.c
+	copy y.tab.h parser.h
+
+gcg_OBJECTS = \
+	gcg.obj		\
+	getopt.obj	\
+	parser.obj	\
+	lexer.obj	\
+	output.obj	\
+	pnode.obj	\
+	db.obj		\
+	output_enum.obj	\
+	output_flags.obj\
+	output_object.obj\
+	fp.obj		\
+	marshall.obj	\
+
+gcg.exe : $(gcg_OBJECTS)
+	$(CC) $(CFLAGS) -Fegcg.exe $(gcg_OBJECTS) $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS)
+
+clean:
+	del parser.c
+	del parser.h
+	del lexer.c
+	del *.exe
+	del *.lib
+	del *.obj
+	del *.exp
+	del *.err
+	del *.map
+	del *.sym
+	del *.pdb
+	del *.ilk

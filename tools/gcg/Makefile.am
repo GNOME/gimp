@@ -2,6 +2,10 @@ noinst_PROGRAMS = gcg
 
 # CPP=cpp -nostdinc -I /usr/share/gcg -I /usr/local/share/gcg -I .
 
+EXTRA_DIST = \
+	getopt.c	\
+	makefile.msc
+
 #CPPFLAGS		= -DCPP_SEARCH=\"" -I $(datadir)/gcg -I ."\"
 CPPFLAGS		= -DCPP_SEARCH=\"" -I ."\"
 INCLUDES		= @GLIB_CFLAGS@

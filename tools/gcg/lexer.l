@@ -2,6 +2,8 @@
 %option yylineno
 
 %{
+#include <stdlib.h>
+#include <string.h>
 #include "gcg.h"
 #include "parser.h"
 #include "parse.h"
