@@ -1,11 +1,11 @@
 # Hungarian translation of the GIMP image manipulation program
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Balazs Nagy <julian7@kva.hu>, 1998.
-# Andras Timar <timar@gnome.hu>, 2000.
+# Andras Timar <timar@gnome.hu>, 2000, 2001.
 # Gabor Suveg <gsuveg@sgsystem.com>, 2001.
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1\n"
+"Project-Id-Version: GIMP 1.2.2\n"
 "POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-25 19:03+0200\n"
 "Last-Translator: Gabor Suveg <gsuveg@sgsystem.com>\n"
@@ -74,7 +74,7 @@ msgstr "Adatfájlok keresése"
 
 #: app/app_procs.c:569
 msgid "Parasites"
-msgstr ""
+msgstr "Élõsködõk"
 
 #. initialize  the global parasite table
 #: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
@@ -788,11 +788,11 @@ msgstr "---"
 
 #: app/commands.c:340
 msgid "Feather Selection"
-msgstr "Elmosott szélû kijelölés"
+msgstr "Lágy szélû kijelölés"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
-msgstr "Kijelölés elmosásának mértéke:"
+msgstr "A kijelölés lágy szélének mérete:"
 
 #: app/commands.c:376
 msgid "Shrink Selection"
@@ -816,12 +816,11 @@ msgstr "Kijelölés növelése ennyivel:"
 
 #: app/commands.c:433
 msgid "Border Selection"
-msgstr "Keret kiválasztása"
+msgstr "Kijelölés keretezése"
 
 #: app/commands.c:436
-#, fuzzy
 msgid "Border Selection by:"
-msgstr "Háttér kiválasztás"
+msgstr "A kijelölés keretezésének mértéke:"
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -870,9 +869,8 @@ msgid "Dither Options"
 msgstr "Színszórás tulajdonságok"
 
 #: app/convert.c:682
-#, fuzzy
 msgid "No Color Dithering"
-msgstr "Színpipetta"
+msgstr "Nincs színszórás"
 
 #: app/convert.c:696
 msgid "Positioned Color Dithering"
@@ -887,9 +885,8 @@ msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Floyd-Steinberg típusú színszórás"
 
 #: app/convert.c:737
-#, fuzzy
 msgid "Enable Dithering of Transparency"
-msgstr "Háttérszínig vagy átlátszóságig töröl"
+msgstr "Színszórás vagy átlátszóság engedélyezése"
 
 #: app/convert.c:766
 msgid "[ Warning ]"
@@ -908,9 +905,8 @@ msgid "Select Custom Palette"
 msgstr "Egyéni paletta kiválasztása"
 
 #: app/convolve.c:187
-#, fuzzy
 msgid "Convolve Type"
-msgstr "Mázolás"
+msgstr "Mázolás típusa"
 
 #: app/convolve.c:191
 msgid "Blur"
@@ -1075,16 +1071,15 @@ msgstr ""
 
 #: app/docindex.c:129
 msgid "Remove the selected entry from the index"
-msgstr ""
+msgstr "A kijelölt elem eltávolítása az indexbõl"
 
 #: app/docindex.c:770
 msgid "Document Index"
 msgstr "Dokumentumindex"
 
 #: app/dodgeburn.c:142
-#, fuzzy
 msgid "Exposure:"
-msgstr "Forrás"
+msgstr "Kitettség:"
 
 #. the type (dodge or burn)
 #: app/dodgeburn.c:162 app/ink.c:390
@@ -1424,6 +1419,8 @@ msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
 msgstr ""
+"Nem lehet rögzíteni ezt a réteget,\n"
+"mert nem lebegõ kijelölés."
 
 #: app/floating_sel.c:185
 msgid ""
@@ -1431,6 +1428,9 @@ msgid ""
 "selection because it belongs to a\n"
 "layer mask or channel."
 msgstr ""
+"Nem lehet új réteget létrehozni a lebegõ\n"
+"kijelölésbõl, mert az rétegmaszkhoz vagy\n"
+"csatornához tartozik."
 
 #: app/gdisplay.c:239
 msgid "RGB-empty"
@@ -1450,7 +1450,7 @@ msgstr "szürkeárnyalatos"
 
 #: app/gdisplay.c:245
 msgid "indexed-empty"
-msgstr ""
+msgstr "indexelt-üres"
 
 #: app/gdisplay.c:245
 msgid "indexed"
@@ -1535,12 +1535,12 @@ msgstr ""
 "\"%s\""
 
 #: app/gimpbrushlist.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to load brush pipe\n"
 "\"%s\""
 msgstr ""
-"Figyelem: A következõ festékszóró betöltése sikertelen:\n"
+"Figyelem: A következõ ecsetkészlet betöltése sikertelen:\n"
 "\"%s\""
 
 #: app/gimpbrushpipe.c:296
@@ -1549,6 +1549,8 @@ msgid ""
 "Brush pipes should have at least one brush:\n"
 "\"%s\""
 msgstr ""
+"Az ecsetkészletben legalább egy ecsetnek kell lennie:\n"
+"\"%s\""
 
 #: app/gimpbrushpipe.c:387
 #, c-format
@@ -1556,20 +1558,20 @@ msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
 "\"%s\""
 msgstr ""
+"Nem sikerült az egyik ecsetet betölteni az ecsetkészletbõl\n"
+"\"%s\""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
 msgstr ""
 
 #: app/gimpdrawable.c:509
-#, fuzzy
 msgid "parasite attach to drawable"
-msgstr "az érintett rajzfelület"
+msgstr "élõsködõ hozzáadása a rajzfelülethez"
 
 #: app/gimpdrawable.c:544
-#, fuzzy
 msgid "detach parasite from drawable"
-msgstr "az érintett rajzfelület"
+msgstr "élõsködõ eltávolítása a rajzfelületrõl"
 
 #: app/gimpdrawable.c:752
 msgid "unnamed"
@@ -2071,9 +2073,8 @@ msgid "Replicate segment"
 msgstr "Szelet másolása"
 
 #: app/gradient.c:3852
-#, fuzzy
 msgid "Blending function for selection"
-msgstr "Kijelölést szintátmenet funciója"
+msgstr "Kijelölés színátmenet funkciója"
 
 #: app/gradient.c:3854
 msgid "Coloring type for selection"
@@ -2438,9 +2439,8 @@ msgid "Sensitivity"
 msgstr "Érzékenység"
 
 #: app/ink.c:364
-#, fuzzy
 msgid "Tilt:"
-msgstr "Hexa hármas:"
+msgstr "Rázás:"
 
 #: app/ink.c:377
 msgid "Speed:"
@@ -2545,9 +2545,8 @@ msgid "Palette"
 msgstr "Paletta"
 
 #: app/internal_procs.c:131
-#, fuzzy
 msgid "Parasite procedures"
-msgstr "Görbe javítása"
+msgstr "Élõsködõ-eljárások"
 
 #: app/internal_procs.c:134 app/lc_dialog.c:201
 msgid "Paths"
@@ -3180,7 +3179,7 @@ msgstr "/Kijelölés/Lebegõ"
 
 #: app/menus.c:288
 msgid "/Select/Feather..."
-msgstr "/Kijelölés/Elmosás..."
+msgstr "/Kijelölés/Lágy szél..."
 
 #: app/menus.c:290
 msgid "/Select/Sharpen"
@@ -3285,7 +3284,6 @@ msgid "/View/New View"
 msgstr "/Nézet/Új nézet"
 
 #: app/menus.c:359
-#, fuzzy
 msgid "/View/Shrink Wrap"
 msgstr "/Nézet/Teljes nézet"
 
@@ -3590,9 +3588,8 @@ msgid "/Layer Boundary Size..."
 msgstr "/Réteg Határvonal Mérete..."
 
 #: app/menus.c:640
-#, fuzzy
 msgid "/Layer to Imagesize"
-msgstr "/Rétegek/Réteg kép méretüvé"
+msgstr "/Réteg kép méretûvé"
 
 #: app/menus.c:642
 msgid "/Scale Layer..."
@@ -3759,7 +3756,7 @@ msgstr "modul betöltése: \"%s\"\n"
 #: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr ""
+msgstr "modul kihagyva: \"%s\"\n"
 
 #: app/module_db.c:635
 #, c-format
@@ -3824,9 +3821,9 @@ msgstr "Mozgatás eszköz"
 
 #. create the info dialog
 #: app/nav_window.c:1308
-#, fuzzy, c-format
+#, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr "/Nézet/Ablak infó..."
+msgstr "Navigáció: %s-%d.%d"
 
 #: app/nav_window.c:1613
 msgid "Navigation: No Image"
@@ -4111,7 +4108,7 @@ msgstr "NIncsenek pontok megadva %s útvonalfájlban"
 #: app/paths_dialog.c:1956
 #, c-format
 msgid "Failed to read path points from %s"
-msgstr ""
+msgstr "Nem sikerült útvonalpontokat beolvasni innen: %s"
 
 #: app/paths_dialog.c:2029 app/xcf.c:438
 #, c-format
@@ -4244,18 +4241,16 @@ msgid "Error: Default height must be one or greater."
 msgstr "Hiba: az alapértelmezett magasság csak 1, vagy nagyobb lehet."
 
 #: app/preferences_dialog.c:292
-#, fuzzy
 msgid "Error: Default unit must be within unit range."
-msgstr "Hiba: az alapértelmezett szélesség csak 1, vagy nagyobb lehet."
+msgstr "Hiba: az alapértelmezett egységnek az egységtartományban kell lennie."
 
 #: app/preferences_dialog.c:299
 msgid "Error: Default resolution must not be zero."
 msgstr "Hiba: az alapértelmezett felbontás nem lehet nulla."
 
 #: app/preferences_dialog.c:307
-#, fuzzy
 msgid "Error: Default resolution unit must be within unit range."
-msgstr "Hiba: az alapértelmezett szélesség csak 1, vagy nagyobb lehet."
+msgstr "Hiba: az alapértelmezett felbontási egységnek az egységtartományban kell lennie."
 
 #: app/preferences_dialog.c:314
 msgid "Error: Monitor resolution must not be zero."
@@ -4433,9 +4428,8 @@ msgid "Preview Size:"
 msgstr "Elõnézeti kép mérete:"
 
 #: app/preferences_dialog.c:1862
-#, fuzzy
 msgid "Nav Preview Size:"
-msgstr "Bemutatókép mérete: "
+msgstr "Navigálókép mérete:"
 
 #: app/preferences_dialog.c:1872
 msgid "Recent Documents List Size:"
@@ -5116,7 +5110,7 @@ msgstr "Szín szerinti kijelölés"
 
 #: app/tool_options.c:195
 msgid "Feather"
-msgstr "Elmosás"
+msgstr "Lágy szél"
 
 #: app/tool_options.c:316
 msgid "Fixed Size / Aspect Ratio"
@@ -5175,23 +5169,20 @@ msgid "Incremental"
 msgstr "Összeadódó"
 
 #: app/tool_options.c:715
-#, fuzzy
 msgid "Pressure Sensitivity"
-msgstr "Fényesség megõrzése"
+msgstr "Nyomásérzékenység"
 
 #: app/tool_options.c:734
 msgid "Opacity"
 msgstr "Átlátszatlanság"
 
 #: app/tool_options.c:757
-#, fuzzy
 msgid "Hardness"
-msgstr "Élesség:"
+msgstr "Keménység"
 
 #: app/tool_options.c:777
-#, fuzzy
 msgid "Rate"
-msgstr "Forgat"
+msgstr "Mérték"
 
 #: app/tools.c:153
 msgid "Rect Select"
@@ -5619,7 +5610,7 @@ msgstr "kép"
 
 #: app/undo.c:2908
 msgid "image mod"
-msgstr ""
+msgstr "kép vált."
 
 #: app/undo.c:2909
 msgid "mask"
@@ -5648,7 +5639,7 @@ msgstr "réteg törlése"
 
 #: app/undo.c:2915
 msgid "layer mod"
-msgstr ""
+msgstr "réteg vált."
 
 #: app/undo.c:2916
 msgid "add layer mask"
@@ -5665,9 +5656,8 @@ msgid "rename layer"
 msgstr "réteg átnevezése"
 
 #: app/undo.c:2919
-#, fuzzy
 msgid "layer reposition"
-msgstr "Réteg összefésülés beállítások"
+msgstr "réteg áthelyezése"
 
 #. ok
 #: app/undo.c:2920
@@ -5679,14 +5669,12 @@ msgid "delete channel"
 msgstr "csatorna törlése"
 
 #: app/undo.c:2922
-#, fuzzy
 msgid "channel mod"
-msgstr "Csatorna neve: "
+msgstr "csatorna vált."
 
 #: app/undo.c:2923
-#, fuzzy
 msgid "FS to layer"
-msgstr "Lejjebb"
+msgstr "LK-t rétegre"
 
 #. ok
 #: app/undo.c:2924
@@ -5695,11 +5683,11 @@ msgstr "gimage"
 
 #: app/undo.c:2925
 msgid "FS rigor"
-msgstr ""
+msgstr "Merev LK"
 
 #: app/undo.c:2926
 msgid "FS relax"
-msgstr ""
+msgstr "Rugalmas LK"
 
 #: app/undo.c:2927
 msgid "guide"
@@ -5722,13 +5710,12 @@ msgid "cut"
 msgstr "kivágás"
 
 #: app/undo.c:2932
-#, fuzzy
 msgid "transform core"
-msgstr "Átalakítás"
+msgstr "átalakító mag"
 
 #: app/undo.c:2933
 msgid "paint core"
-msgstr ""
+msgstr "festõ mag"
 
 #: app/undo.c:2934
 msgid "floating layer"
@@ -5750,12 +5737,11 @@ msgstr "réteg összefésülése"
 
 #: app/undo.c:2938
 msgid "FS anchor"
-msgstr ""
+msgstr "LK rögzítése"
 
 #: app/undo.c:2939
-#, fuzzy
 msgid "gimage mod"
-msgstr "Skálázás"
+msgstr "gimage vált."
 
 #: app/undo.c:2940
 msgid "crop"
@@ -5774,13 +5760,12 @@ msgid "quickmask"
 msgstr "gyorsmaszk"
 
 #: app/undo.c:2944
-#, fuzzy
 msgid "attach parasite"
-msgstr "Alakok kijelölése a képrõl"
+msgstr "élõsködõ hozzáadása"
 
 #: app/undo.c:2945
 msgid "remove parasite"
-msgstr "alakok eltávolítása"
+msgstr "élõsködõ eltávolítása"
 
 #: app/undo.c:2946
 msgid "resolution change"
@@ -6265,6 +6250,9 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
+"XFC figyelmeztetés: az XFC fájlformátum 0. változata\n"
+"nem mentette helyesen az indexelt színtérképeket.\n"
+"Szürkeárnyalatos térképre cserélve."
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
