@@ -291,8 +291,7 @@ arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    if (event->button == 1)
       do_main_popup_menu(event);
-   gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), "button_press_event");
-   return FALSE;
+   return TRUE;
 }
 
 static gboolean

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,6 @@ select_row_cb(GtkWidget *widget, gint row, gint column, GdkEventButton *event,
 	 subcommand_end();
       }
       command_execute(command);
-      redraw_preview();		/* Fix me! */
    }
 }
 
@@ -104,7 +103,6 @@ unselect_row_cb(GtkWidget *widget, gint row, gint column,
       Command_t *command;
       command = unselect_command_new(obj);
       command_execute(command);
-      redraw_preview();		/* Fix me! */
    }
    data->selected_child = NULL;
    set_buttons(data);
@@ -118,7 +116,7 @@ row_move_cb(GtkWidget *widget, gint src, gint des)
 
 static gboolean doubleclick;
 
-static void
+static gboolean
 button_press_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
 {
    if (event->button == 1) {
@@ -134,13 +132,15 @@ button_press_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
 	 doubleclick = TRUE;
       }
    }
+   return FALSE;
 }
 
-static void
+static gboolean
 button_release_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    if (event->button == 1)
       doubleclick = FALSE;
+   return FALSE;
 }
 
 static void
@@ -390,24 +390,24 @@ make_selection(ObjectList_t *object_list)
    /* Drop support */
    gtk_drag_dest_set(list, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   gtk_signal_connect(GTK_OBJECT(list), "drag_data_received",
-		      GTK_SIGNAL_FUNC(handle_drop), NULL);
+   g_signal_connect(G_OBJECT(list), "drag_data_received",
+		    G_CALLBACK(handle_drop), NULL);
 
    /* Callbacks we are interested in */
-   gtk_signal_connect(GTK_OBJECT(list), "click_column",
-		      GTK_SIGNAL_FUNC(toggle_order), data);
-   gtk_signal_connect(GTK_OBJECT(list), "select_row",
-		      GTK_SIGNAL_FUNC(select_row_cb), data);
-   gtk_signal_connect(GTK_OBJECT(list), "unselect_row",
-		      GTK_SIGNAL_FUNC(unselect_row_cb), data);
-   gtk_signal_connect(GTK_OBJECT(list), "row_move",
-		      GTK_SIGNAL_FUNC(row_move_cb), data);
+   g_signal_connect(G_OBJECT(list), "click_column",
+		    G_CALLBACK(toggle_order), data);
+   g_signal_connect(G_OBJECT(list), "select_row",
+		    G_CALLBACK(select_row_cb), data);
+   g_signal_connect(G_OBJECT(list), "unselect_row",
+		    G_CALLBACK(unselect_row_cb), data);
+   g_signal_connect(G_OBJECT(list), "row_move",
+		    G_CALLBACK(row_move_cb), data);
 
    /* For handling doubleclick */
-   gtk_signal_connect(GTK_OBJECT(list), "button_press_event",
-		      GTK_SIGNAL_FUNC(button_press_cb), data);
-   gtk_signal_connect(GTK_OBJECT(list), "button_release_event",
-		      GTK_SIGNAL_FUNC(button_release_cb), data);
+   g_signal_connect(G_OBJECT(list), "button_press_event",
+		    G_CALLBACK(button_press_cb), data);
+   g_signal_connect(G_OBJECT(list), "button_release_event",
+		    G_CALLBACK(button_release_cb), data);
 
    gtk_clist_set_selection_mode(GTK_CLIST(list), GTK_SELECTION_MULTIPLE);
 
