@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GRADIENT_H__
-#define __GRADIENT_H__
+#ifndef __GRADIENT_EDITOR_H__
+#define __GRADIENT_EDITOR_H__
 
 
 void      gradient_editor_create       (void);
@@ -40,4 +40,4 @@ void      gradient_clist_insert        (GtkWidget    *shell,
 					gboolean      select);
 
 
-#endif  /* __GRADIENT_H__ */
+#endif  /* __GRADIENT_EDITOR_H__ */

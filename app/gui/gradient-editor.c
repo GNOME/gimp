@@ -73,7 +73,7 @@
 #include "gimpgradient.h"
 #include "gimplist.h"
 #include "gimprc.h"
-#include "gradient.h"
+#include "gradient_editor.h"
 #include "gradients.h"
 #include "gradient_select.h"
 

@@ -163,8 +163,8 @@ gimp_SOURCES = \
 	gimpviewable.h		\
 	global_edit.c		\
 	global_edit.h		\
-	gradient.c		\
-	gradient.h		\
+	gradient_editor.c	\
+	gradient_editoe.h	\
 	gradients.c		\
 	gradients.h		\
 	gradient_select.h	\

@@ -48,7 +48,7 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpgradient.h"
-#include "gradient.h"
+#include "gradient_editor.h"
 #include "gradients.h"
 #include "gradient_select.h"
 #include "session.h"

@@ -1,6 +1,15 @@
 2001-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
+	* app/gradient.[ch]: renamed...
+
+	* app/gradient_editor.[ch]: ...to this
+
+	* app/gradient_select.c: changed #include
+
+2001-02-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
 	* app/gradientP.h
 	* app/gradient_header.h: removed.
 
@@ -8,8 +17,8 @@
 
 	* app/gradients.[ch]: new files for managing the gradient list.
 
-	* app/gradient.[ch]: containes only the gradient editor now (which
-	still badly poked aroung in the GimpGradient structure).
+	* app/gradient.[ch]: contains only the gradient editor now (which
+	still badly pokes around in the GimpGradient structure).
 
 	* app/app_procs.c
 	* app/apptypes.h
@@ -33,7 +42,7 @@
 	changes to the preview and view stuff.
 
 	* app/gimppreview.[ch]: removed the "context" attribute again
-	because it was overkill (a simple gtk_signal-connect_object does
+	because it was overkill (a simple gtk_signal_connect_object does
 	the same as doing the autoconnection magic inside the GimpPreview
 	object).
 
