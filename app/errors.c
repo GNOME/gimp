@@ -63,9 +63,10 @@ gimp_errors_init (const gchar        *_full_prog_name,
                   GimpStackTraceMode  _stack_trace_mode)
 {
   g_return_if_fail (_full_prog_name != NULL);
+  g_return_if_fail (full_prog_name == NULL);
 
 #if (GIMP_MINOR_VERSION % 2) == 1
-  g_printerr ("This is a development version of the GIMP\n"
+  g_printerr ("This is a development version of The GIMP.\n"
 	      "Debug messages may appear here.\n\n");
 
 #ifdef G_OS_WIN32

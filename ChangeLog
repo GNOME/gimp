@@ -1,5 +1,7 @@
 2003-10-24  Sven Neumann  <sven@gimp.org>
 
+	* app/errors.c (gimp_errors_init): fixed spelling of The GIMP.
+
 	* app/widgets/gimphistogramview.c: code cleanup.
 
 2003-10-24  Sven Neumann  <sven@gimp.org>
