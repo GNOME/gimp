@@ -1,3 +1,12 @@
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpnavigationpreview.c
+	(gimp_navigation_preview_move_to): applied another patch from Pedro
+	Gimeno that fixes even the most evil zoom ratios.
+
+	(gimp_navigation_preview_draw_marker): fixed marker drawing for
+	very large zoom ratios.
+
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimputils.c (gimp_memsize_to_string): this should

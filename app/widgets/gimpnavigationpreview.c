@@ -263,39 +263,26 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
   if (! preview->viewable)
     return;
 
-  tx = CLAMP (tx, 0, preview->renderer->width);
-  ty = CLAMP (ty, 0, preview->renderer->height);
-  
-  if ((tx + nav_preview->p_width) >= preview->renderer->width)
-    {
-      tx = preview->renderer->width - nav_preview->p_width;
-    }
-  
-  if ((ty + nav_preview->p_height) >= preview->renderer->height)
-    {
-      ty = preview->renderer->height - nav_preview->p_height;
-    }
-
-  if (nav_preview->p_x == tx && nav_preview->p_y == ty)
-    return;
+  tx = CLAMP (tx, 0, preview->renderer->width  - nav_preview->p_width);
+  ty = CLAMP (ty, 0, preview->renderer->height - nav_preview->p_height);
 
   gimage = GIMP_IMAGE (preview->viewable);
 
   /*  transform to image coordinates  */
-  if (gimage->width == nav_preview->width)
+  if (preview->renderer->width != nav_preview->p_width)
+    ratiox = ((gimage->width - nav_preview->width + 1.0) /
+              (preview->renderer->width - nav_preview->p_width));
+  else
     ratiox = 1.0;
+ 
+  if (preview->renderer->height != nav_preview->p_height)
+    ratioy = ((gimage->height - nav_preview->height + 1.0) /
+              (preview->renderer->height - nav_preview->p_height));
   else
-    ratiox = ((gdouble) (preview->renderer->width - nav_preview->p_width) /
-	      (gdouble) (gimage->width - nav_preview->width));
-
-  if (gimage->height == nav_preview->height)
     ratioy = 1.0;
-  else
-    ratioy = ((gdouble) (preview->renderer->height - nav_preview->p_height) /
-	      (gdouble) (gimage->height - nav_preview->height));
-
-  x = tx / ratiox;
-  y = ty / ratioy;
+ 
+  x = tx * ratiox;
+  y = ty * ratioy;
 
   g_signal_emit (preview, preview_signals[MARKER_CHANGED], 0, x, y);
 }
@@ -581,8 +568,8 @@ gimp_navigation_preview_draw_marker (GimpNavigationPreview *nav_preview,
 			      FALSE,
 			      nav_preview->p_x + 1,
 			      nav_preview->p_y + 1,
-			      nav_preview->p_width  - BORDER_PEN_WIDTH + 1,
-			      nav_preview->p_height - BORDER_PEN_WIDTH + 1);
+			      MAX (1, nav_preview->p_width  - BORDER_PEN_WIDTH),
+			      MAX (1, nav_preview->p_height - BORDER_PEN_WIDTH));
 
 	  if (area)
 	    gdk_gc_set_clip_rectangle (nav_preview->gc, NULL);
