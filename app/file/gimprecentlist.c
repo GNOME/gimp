@@ -26,7 +26,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -40,9 +39,11 @@
 
 #include <glib-object.h>
 
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
+#ifndef G_OS_WIN32  /* This code doesn't compile on win32 and the use of
+                     * the freedesktop standard doesn't make much sense
+                     * there anyway. If someone wants to contribute a win32
+                     * specific implementation, that would be appreciated.
+                     */
 
 #include "config/config-types.h"
 
@@ -433,32 +434,36 @@ gimp_recent_list_write (gint   fd,
         string = g_string_append (string,
                                   "    <" TAG_PRIVATE "/>\n");
 
-      /* write the groups */
-      string = g_string_append (string,
-				"    <" TAG_GROUPS ">\n");
       groups = gimp_recent_item_get_groups (item);
 
-      if (groups == NULL && gimp_recent_item_get_private (item))
-        g_warning ("Item with URI \"%s\" marked as private, but"
-                   " does not belong to any groups.\n", uri);
-
-      while (groups)
+      if (groups)
         {
-          const gchar *group = groups->data;
-          gchar       *escaped_group;
+          /* write the groups */
+          string = g_string_append (string,
+                                    "    <" TAG_GROUPS ">\n");
 
-          escaped_group = g_markup_escape_text (group, strlen(group));
+          if (groups == NULL && gimp_recent_item_get_private (item))
+            g_warning ("Item with URI \"%s\" marked as private, but"
+                       " does not belong to any groups.\n", uri);
 
-          g_string_append_printf (string,
-                                  "      <" TAG_GROUP ">%s</" TAG_GROUP ">\n",
-                                  escaped_group);
+          while (groups)
+            {
+              const gchar *group = groups->data;
+              gchar       *escaped_group;
 
-          g_free (escaped_group);
+              escaped_group = g_markup_escape_text (group, strlen(group));
 
-          groups = groups->next;
+              g_string_append_printf (string,
+                                      "      <" TAG_GROUP ">%s</" TAG_GROUP ">\n",
+                                      escaped_group);
+
+              g_free (escaped_group);
+
+              groups = groups->next;
+            }
+
+          string = g_string_append (string, "    </" TAG_GROUPS ">\n");
         }
-
-      string = g_string_append (string, "    </" TAG_GROUPS ">\n");
 
       string = g_string_append (string,
 				"  </" TAG_RECENT_ITEM ">\n");
@@ -587,10 +592,13 @@ gimp_recent_list_add_item (GimpRecentItem *item)
 /**
  * gimp_recent_list_add_uri:
  * @uri:       an URI
- * @mime_type: a mime-type
+ * @mime_type: a MIME type
  *
  * This function adds an item to the list of recently used URIs.
  * See http://freedesktop.org/Standards/recent-file-spec/.
+ *
+ * On the Win32 platform, this call is unimplemented and will always
+ * fail.
  *
  * Returns: %TRUE on success, %FALSE otherwise
  */
@@ -622,3 +630,14 @@ gimp_recent_list_add_uri (const gchar *uri,
 
   return success;
 }
+
+#else  /* G_OS_WIN32  */
+
+gboolean
+gimp_recent_list_add_uri (const gchar *uri,
+                          const gchar *mime_type)
+{
+  return FALSE;
+}
+
+#endif

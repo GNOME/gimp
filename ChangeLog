@@ -1,5 +1,15 @@
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/file/gimprecentlist.c (gimp_recent_list_write): don't write
+	empty groups.
+
+	* app/file/gimprecentlist.c: disabled the code for the win32
+	platform. It doesn't make much sense there anyway. If someone
+	wants to contribute a win32 specific implementation, we'd welcome
+	that. A Mac OS X implementation would be nice to have as well.
+
+2004-09-28  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: updated for GIMP 2.1 by Eric Pierce.
 
 2004-09-28  Maurits Rijk  <m.rijk@chello.nl>
