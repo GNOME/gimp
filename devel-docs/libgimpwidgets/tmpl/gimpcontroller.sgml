@@ -76,6 +76,11 @@ An abstract interface for implementing arbitrary input controllers.
 
 </para>
 
+<!-- ##### ARG GimpController:state ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_controller_new ##### -->
 <para>
 

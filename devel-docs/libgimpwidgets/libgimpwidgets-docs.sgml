@@ -64,6 +64,9 @@
 
   <part id="libgimpwidgets-controller">
     <title>GIMP Controllers</title>
+    <para>
+      Note that the controller API is work in progress.
+    </para>
     <xi:include href="xml/gimpcontroller.xml" />
   </part>
 
