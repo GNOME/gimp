@@ -1,3 +1,8 @@
+Wed Apr 15 13:18:47 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/disp_callbacks.c: restart current tool when changing
+	gdisplays
+
 Wed Apr 15 17:40:55 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/iscissors.c: changed toggle_buttons to check_buttons since
