@@ -7,3 +7,4 @@ cat-id-tbl.c
 *.pot
 stamp-cat-id
 messages
+missing
