@@ -1,0 +1,15 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity GimpModuleTypes SYSTEM "sgml/gimpmoduletypes.sgml">
+<!entity GimpModule SYSTEM "sgml/gimpmodule.sgml">
+]>
+<book id="index">
+  <bookinfo>
+    <title>GIMP Module Library Reference Manual</title>
+  </bookinfo>
+
+  <chapter id="libgimpmodule">
+    <title>GIMP Module Library</title>
+    &GimpModuleTypes;
+    &GimpModule;
+  </chapter>
+</book>

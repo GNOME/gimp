@@ -5,13 +5,11 @@ GimpColorDisplay
 Functions and definitiions for creating a pluggable GIMP
 display color correction module.
 
-
 <!-- ##### SECTION Long_Description ##### -->
 <para>
 Functions and definitiions for creating a pluggable GIMP
 display color correction module.
 </para>
-
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
@@ -23,7 +21,6 @@ display color correction module.
 <para>
 #libgimp-gimpmodule
 </para>
-
 
 <!-- ##### FUNCTION gimp_color_display_new ##### -->
 <para>

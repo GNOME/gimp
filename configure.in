@@ -237,6 +237,10 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED_VERSION,,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
   gobject)
 
+PKG_CHECK_MODULES(GMODULE, gmodule-2.0)
+AC_SUBST(GMODULE_CFLAGS)
+AC_SUBST(GMODULE_LIBS)
+
 dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
 LIBS="$LIBS $GLIB_LIBS"
@@ -1101,6 +1105,7 @@ libgimpcolor/Makefile
 libgimpcolor/makefile.mingw
 libgimpmath/Makefile
 libgimpmath/makefile.mingw
+libgimpmodule/Makefile
 libgimpproxy/Makefile
 libgimptool/Makefile
 libgimpwidgets/Makefile
@@ -1167,6 +1172,7 @@ devel-docs/libgimp/Makefile
 devel-docs/libgimpbase/Makefile
 devel-docs/libgimpcolor/Makefile
 devel-docs/libgimpmath/Makefile
+devel-docs/libgimpmodule/Makefile
 devel-docs/libgimpwidgets/Makefile
 docs/Makefile
 docs/gimp-1.3.1

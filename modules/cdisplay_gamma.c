@@ -24,9 +24,8 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
-
-#include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -1,3 +1,32 @@
+2002-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* libgimpmodule/.cvsignore
+	* libgimpmodule/Makefile.am
+	* libgimpmodule/gimpmodule.[ch]
+	* libgimpmodule/gimpmodule.def
+	* libgimpmodule/gimpmoduletypes.h
+	* libgimpmodule/makefile.msc: new library for module loading.
+
+	* configure.in: generate Makefiles for libgimpmodule and its
+	devel-docs. Added GMODULE_CFLAGS and GMODULE_LIBS.
+
+	* app/Makefile.am: link the app against it.
+
+	* libgimp/gimpmodule.h
+	* app/core/gimpmoduleinfo.[ch]: removed.
+
+	* libgimp/Makefile.am
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpmodules.c
+	* app/gui/module-browser.c: changed accordingly.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: #include "libgimpmodule/gimpmodule.h"
+
 2002-10-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpmoduleinfo.[ch]

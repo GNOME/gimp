@@ -28,7 +28,6 @@
 <!entity GimpTools SYSTEM "sgml/gimptools.sgml">
 <!entity GimpUndo SYSTEM "sgml/gimpundo.sgml">
 <!entity GimpEnums SYSTEM "sgml/gimpenums.sgml">
-<!entity GimpModule SYSTEM "sgml/gimpmodule.sgml">
 <!entity GimpExport SYSTEM "sgml/gimpexport.sgml">
 <!entity GimpMenu SYSTEM "sgml/gimpmenu.sgml">
 <!entity GimpUI SYSTEM "sgml/gimpui.sgml">
@@ -80,10 +79,5 @@
     &GimpUI;
     &GimpExport;
     &GimpMenu;
-  </chapter>
-
-  <chapter id="gimpmodule">
-    <title>GIMP Module Header Files</title>
-    &GimpModule;
   </chapter>
 </book>

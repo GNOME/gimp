@@ -23,6 +23,7 @@
 
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpmodule/gimpmoduletypes.h"
 
 #include "base/base-types.h"
 
@@ -105,8 +106,6 @@ typedef struct _GimpObject          GimpObject; /*< proxy-include >*/
 typedef struct _Gimp                Gimp;
 
 typedef struct _GimpParasiteList    GimpParasiteList;
-
-typedef struct _GimpModuleInfoObj   GimpModuleInfoObj;
 
 typedef struct _GimpContainer       GimpContainer;
 typedef struct _GimpList            GimpList;

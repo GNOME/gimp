@@ -1,0 +1,12 @@
+Makefile
+Makefile.in
+libgimpmodule.args
+libgimpmodule.hierarchy
+libgimpmodule.signals
+libgimpmodule-decl.txt
+libgimpmodule-decl-list.txt
+libgimpmodule-unused.txt
+libgimpmodule-undocumented.txt
+html
+sgml
+*.stamp

@@ -11,7 +11,6 @@ Functions and definitiions for creating a pluggable GIMP
 color selector module.
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 #GModule
@@ -22,7 +21,6 @@ color selector module.
 <para>
 #libgimp-gimpmodule
 </para>
-
 
 <!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
 <para>

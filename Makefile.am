@@ -15,9 +15,10 @@ SUBDIRS = \
 	data			\
 	etc			\
 	tips			\
-	libgimpbase		\
 	libgimpcolor		\
 	libgimpmath		\
+	libgimpbase		\
+	libgimpmodule		\
 	libgimpwidgets		\
 	libgimpproxy            \
 	libgimptool		\

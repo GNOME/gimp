@@ -38,7 +38,6 @@ app/core/gimpitem.c
 app/core/gimplayer.c
 app/core/gimplayer-floating-sel.c
 app/core/gimplayermask.c
-app/core/gimpmoduleinfo.c
 app/core/gimpmodules.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c

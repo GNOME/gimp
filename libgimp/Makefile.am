@@ -148,7 +148,6 @@ gimpinclude_HEADERS = \
 	gimpenums.h		\
 	gimpimage.h		\
 	gimplayer.h		\
-	gimpmodule.h		\
 	gimppixelrgn.h		\
 	gimpproceduraldb.h	\
 	gimpselection.h		\

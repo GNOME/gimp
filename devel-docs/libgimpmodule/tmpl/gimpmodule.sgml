@@ -1,0 +1,123 @@
+<!-- ##### SECTION Title ##### -->
+GimpModule
+
+<!-- ##### SECTION Short_Description ##### -->
+Common definitions for creating a pluggable GIMP module.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Common definitions for creating a pluggable GIMP module.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+#GModule
+</para>
+<para>
+#GTypeModule
+</para>
+
+<!-- ##### ENUM GimpModuleState ##### -->
+<para>
+
+</para>
+
+@GIMP_MODULE_STATE_ERROR: 
+@GIMP_MODULE_STATE_LOADED_OK: 
+@GIMP_MODULE_STATE_LOAD_FAILED: 
+@GIMP_MODULE_STATE_UNLOADED_OK: 
+
+<!-- ##### STRUCT GimpModuleInfo ##### -->
+<para>
+
+</para>
+
+@purpose: 
+@author: 
+@version: 
+@copyright: 
+@date: 
+
+<!-- ##### USER_FUNCTION GimpModuleQueryFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION GimpModuleRegisterFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_module_new ##### -->
+<para>
+
+</para>
+
+@filename: 
+@inhibit_str: 
+@verbose: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_module_modified ##### -->
+<para>
+
+</para>
+
+@module: 
+
+
+<!-- ##### FUNCTION gimp_module_set_load_inhibit ##### -->
+<para>
+
+</para>
+
+@module: 
+@inhibit_list: 
+
+
+<!-- ##### FUNCTION gimp_module_info_new ##### -->
+<para>
+
+</para>
+
+@purpose: 
+@author: 
+@version: 
+@copyright: 
+@date: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_module_info_copy ##### -->
+<para>
+
+</para>
+
+@info: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_module_info_free ##### -->
+<para>
+
+</para>
+
+@info: 
+
+
+<!-- ##### SIGNAL GimpModule::modified ##### -->
+<para>
+
+</para>
+
+@gimpmodule: the object which received the signal.
+

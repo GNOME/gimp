@@ -88,13 +88,6 @@ gimp_ui_init
 </SECTION>
 
 <SECTION>
-<FILE>gimpmodule</FILE>
-GimpModuleInfo
-GimpModuleQueryFunc
-GimpModuleRegisterFunc
-</SECTION>
-
-<SECTION>
 <FILE>gimpexport</FILE>
 GimpExportCapabilities
 GimpExportReturnType

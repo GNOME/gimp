@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmoduleinfo.c
+ * gimpmodule.c
  * (C) 1999 Austin Donnelly <austin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,12 +25,7 @@
 
 #include <glib-object.h>
 
-#include "libgimp/gimpmodule.h"
-
-#include "core-types.h"
-
-#include "gimpmarshal.h"
-#include "gimpmoduleinfo.h"
+#include "gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -42,53 +37,53 @@ enum
 };
 
 
-static void       gimp_module_info_class_init (GimpModuleInfoObjClass *klass);
-static void       gimp_module_info_init       (GimpModuleInfoObj      *mod);
+static void       gimp_module_class_init     (GimpModuleClass *klass);
+static void       gimp_module_init           (GimpModule      *module);
 
-static void       gimp_module_info_finalize       (GObject           *object);
+static void       gimp_module_finalize       (GObject         *object);
 
-static gboolean   gimp_module_info_load           (GTypeModule       *module);
-static void       gimp_module_info_unload         (GTypeModule       *module);
+static gboolean   gimp_module_load           (GTypeModule     *module);
+static void       gimp_module_unload         (GTypeModule     *module);
 
-static void       gimp_module_info_set_last_error (GimpModuleInfoObj *module_info,
-                                                   const gchar       *error_str);
+static void       gimp_module_set_last_error (GimpModule      *module,
+                                              const gchar     *error_str);
 
 
-static guint module_info_signals[LAST_SIGNAL];
+static guint module_signals[LAST_SIGNAL];
 
 static GTypeModuleClass *parent_class = NULL;
 
 
 GType
-gimp_module_info_get_type (void)
+gimp_module_get_type (void)
 {
-  static GType module_info_type = 0;
+  static GType module_type = 0;
 
-  if (! module_info_type)
+  if (! module_type)
     {
-      static const GTypeInfo module_info_info =
+      static const GTypeInfo module_info =
       {
-        sizeof (GimpModuleInfoObjClass),
+        sizeof (GimpModuleClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_module_info_class_init,
+        (GClassInitFunc) gimp_module_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpModuleInfoObj),
+        sizeof (GimpModule),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_module_info_init,
+        (GInstanceInitFunc) gimp_module_init,
       };
 
-      module_info_type = g_type_register_static (G_TYPE_TYPE_MODULE,
-						 "GimpModuleInfoObj",
-						 &module_info_info, 0);
+      module_type = g_type_register_static (G_TYPE_TYPE_MODULE,
+                                            "GimpModule",
+                                            &module_info, 0);
     }
 
-  return module_info_type;
+  return module_type;
 }
 
 static void
-gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
+gimp_module_class_init (GimpModuleClass *klass)
 {
   GObjectClass     *object_class;
   GTypeModuleClass *module_class;
@@ -98,249 +93,250 @@ gimp_module_info_class_init (GimpModuleInfoObjClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  module_info_signals[MODIFIED] =
+  module_signals[MODIFIED] =
     g_signal_new ("modified",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpModuleInfoObjClass, modified),
+		  G_STRUCT_OFFSET (GimpModuleClass, modified),
 		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
+		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->finalize = gimp_module_info_finalize;
+  object_class->finalize = gimp_module_finalize;
 
-  module_class->load     = gimp_module_info_load;
-  module_class->unload   = gimp_module_info_unload;
+  module_class->load     = gimp_module_load;
+  module_class->unload   = gimp_module_unload;
 
   klass->modified        = NULL;
 }
 
 static void
-gimp_module_info_init (GimpModuleInfoObj *module_info)
+gimp_module_init (GimpModule *module)
 {
-  module_info->filename          = NULL;
-  module_info->verbose           = FALSE;
-  module_info->state             = GIMP_MODULE_STATE_ERROR;
-  module_info->on_disk           = FALSE;
-  module_info->load_inhibit      = FALSE;
+  module->filename          = NULL;
+  module->verbose           = FALSE;
+  module->state             = GIMP_MODULE_STATE_ERROR;
+  module->on_disk           = FALSE;
+  module->load_inhibit      = FALSE;
 
-  module_info->module            = NULL;
-  module_info->last_module_error = NULL;
+  module->module            = NULL;
+  module->info              = NULL;
+  module->last_module_error = NULL;
 
-  module_info->register_module   = NULL;
+  module->query_module      = NULL;
+  module->register_module   = NULL;
 }
 
 static void
-gimp_module_info_finalize (GObject *object)
+gimp_module_finalize (GObject *object)
 {
-  GimpModuleInfoObj *mod;
+  GimpModule *module;
 
-  mod = GIMP_MODULE_INFO (object);
+  module = GIMP_MODULE (object);
 
-  if (mod->last_module_error)
+  if (module->info)
     {
-      g_free (mod->last_module_error);
-      mod->last_module_error = NULL;
+      gimp_module_info_free (module->info);
+      module->info = NULL;
     }
 
-  if (mod->filename)
+  if (module->last_module_error)
     {
-      g_free (mod->filename);
-      mod->filename = NULL;
+      g_free (module->last_module_error);
+      module->last_module_error = NULL;
+    }
+
+  if (module->filename)
+    {
+      g_free (module->filename);
+      module->filename = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gboolean
-gimp_module_info_load (GTypeModule *module)
+gimp_module_load (GTypeModule *module)
 {
-  GimpModuleInfoObj    *module_info;
+  GimpModule           *gimp_module;
   const GimpModuleInfo *info;
   gpointer              symbol;
   gboolean              retval;
 
-  g_return_val_if_fail (GIMP_IS_MODULE_INFO (module), FALSE);
+  g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
-  module_info = GIMP_MODULE_INFO (module);
+  gimp_module = GIMP_MODULE (module);
 
-  g_return_val_if_fail (module_info->filename != NULL, FALSE);
-  g_return_val_if_fail (module_info->module == NULL, FALSE);
+  g_return_val_if_fail (gimp_module->filename != NULL, FALSE);
+  g_return_val_if_fail (gimp_module->module == NULL, FALSE);
 
-  if (module_info->verbose)
-    g_print (_("loading module: '%s'\n"), module_info->filename);
+  if (gimp_module->verbose)
+    g_print (_("loading module: '%s'\n"), gimp_module->filename);
 
-  module_info->module = g_module_open (module_info->filename,
+  gimp_module->module = g_module_open (gimp_module->filename,
                                        G_MODULE_BIND_LAZY);
 
-  if (! module_info->module)
+  if (! gimp_module->module)
     {
-      module_info->state = GIMP_MODULE_STATE_ERROR;
-      gimp_module_info_set_last_error (module_info, g_module_error ());
+      gimp_module->state = GIMP_MODULE_STATE_ERROR;
+      gimp_module_set_last_error (gimp_module, g_module_error ());
 
-      if (module_info->verbose)
+      if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   module_info->filename, module_info->last_module_error);
+		   gimp_module->filename, gimp_module->last_module_error);
       return FALSE;
     }
 
   /* find the gimp_module_query symbol */
-  if (! g_module_symbol (module_info->module, "gimp_module_query", &symbol))
+  if (! g_module_symbol (gimp_module->module, "gimp_module_query", &symbol))
     {
-      module_info->state = GIMP_MODULE_STATE_ERROR;
+      gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
-      gimp_module_info_set_last_error (module_info,
-                                       _("Missing gimp_module_query() symbol"));
+      gimp_module_set_last_error (gimp_module,
+                                  _("Missing gimp_module_query() symbol"));
 
-      if (module_info->verbose)
+      if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   module_info->filename, module_info->last_module_error);
-      g_module_close (module_info->module);
-      module_info->module = NULL;
+		   gimp_module->filename, gimp_module->last_module_error);
+      g_module_close (gimp_module->module);
+      gimp_module->module = NULL;
       return FALSE;
     }
 
-  module_info->query_module = symbol;
+  gimp_module->query_module = symbol;
 
-  info = module_info->query_module (module);
+  info = gimp_module->query_module (module);
+
+  if (gimp_module->info)
+    {
+      gimp_module_info_free (gimp_module->info);
+      gimp_module->info = NULL;
+    }
 
   if (! info)
     {
-      module_info->state = GIMP_MODULE_STATE_ERROR;
+      gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
-      gimp_module_info_set_last_error (module_info,
-                                       _("gimp_module_query() returned NULL"));
+      gimp_module_set_last_error (gimp_module,
+                                  _("gimp_module_query() returned NULL"));
 
-      if (module_info->verbose)
+      if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   module_info->filename, module_info->last_module_error);
-      g_module_close (module_info->module);
-      module_info->module       = NULL;
-      module_info->query_module = NULL;
+		   gimp_module->filename, gimp_module->last_module_error);
+      g_module_close (gimp_module->module);
+      gimp_module->module       = NULL;
+      gimp_module->query_module = NULL;
       return FALSE;
     }
 
-  g_free ((gchar *) module_info->info.purpose);
-  module_info->info.purpose = g_strdup (info->purpose);
-
-  g_free ((gchar *) module_info->info.author);
-  module_info->info.author = g_strdup (info->author);
-
-  g_free ((gchar *) module_info->info.version);
-  module_info->info.version = g_strdup (info->version);
-
-  g_free ((gchar *) module_info->info.copyright);
-  module_info->info.copyright = g_strdup (info->copyright);
-
-  g_free ((gchar *) module_info->info.date);
-  module_info->info.date = g_strdup (info->date);
+  gimp_module->info = gimp_module_info_copy (info);
 
   /* find the gimp_module_register symbol */
-  if (! g_module_symbol (module_info->module, "gimp_module_register", &symbol))
+  if (! g_module_symbol (gimp_module->module, "gimp_module_register", &symbol))
     {
-      module_info->state = GIMP_MODULE_STATE_ERROR;
+      gimp_module->state = GIMP_MODULE_STATE_ERROR;
 
-      gimp_module_info_set_last_error (module_info,
-                                       _("Missing gimp_module_register() symbol"));
+      gimp_module_set_last_error (gimp_module,
+                                  _("Missing gimp_module_register() symbol"));
 
-      if (module_info->verbose)
+      if (gimp_module->verbose)
 	g_message (_("Module '%s' load error:\n%s"),
-		   module_info->filename, module_info->last_module_error);
-      g_module_close (module_info->module);
-      module_info->module = NULL;
+		   gimp_module->filename, gimp_module->last_module_error);
+      g_module_close (gimp_module->module);
+      gimp_module->module = NULL;
       return FALSE;
     }
 
-  module_info->register_module = symbol;
+  gimp_module->register_module = symbol;
 
-  retval = module_info->register_module (module);
+  retval = gimp_module->register_module (module);
 
   if (retval)
-    module_info->state = GIMP_MODULE_STATE_LOADED_OK;
+    gimp_module->state = GIMP_MODULE_STATE_LOADED_OK;
   else
-    module_info->state = GIMP_MODULE_STATE_LOAD_FAILED;
+    gimp_module->state = GIMP_MODULE_STATE_LOAD_FAILED;
 
   return retval;
 }
 
 static void
-gimp_module_info_unload (GTypeModule *module)
+gimp_module_unload (GTypeModule *module)
 {
-  GimpModuleInfoObj *module_info;
+  GimpModule *gimp_module;
 
-  g_return_if_fail (GIMP_IS_MODULE_INFO (module));
+  g_return_if_fail (GIMP_IS_MODULE (module));
 
-  module_info = GIMP_MODULE_INFO (module);
+  gimp_module = GIMP_MODULE (module);
 
-  g_return_if_fail (module_info->module != NULL);
+  g_return_if_fail (gimp_module->module != NULL);
 
-  g_module_close (module_info->module); /* FIXME: error handling */
-  module_info->module          = NULL;
-  module_info->query_module    = NULL;
-  module_info->register_module = NULL;
+  g_module_close (gimp_module->module); /* FIXME: error handling */
+  gimp_module->module          = NULL;
+  gimp_module->query_module    = NULL;
+  gimp_module->register_module = NULL;
 
-  module_info->state = GIMP_MODULE_STATE_UNLOADED_OK;
+  gimp_module->state = GIMP_MODULE_STATE_UNLOADED_OK;
 }
 
-GimpModuleInfoObj *
-gimp_module_info_new (const gchar *filename,
-                      const gchar *inhibit_list,
-                      gboolean     verbose)
+GimpModule *
+gimp_module_new (const gchar *filename,
+                 const gchar *inhibit_list,
+                 gboolean     verbose)
 {
-  GimpModuleInfoObj *module_info;
+  GimpModule *module;
 
   g_return_val_if_fail (filename != NULL, NULL);
 
-  module_info = g_object_new (GIMP_TYPE_MODULE_INFO, NULL);
+  module = g_object_new (GIMP_TYPE_MODULE, NULL);
 
-  module_info->filename = g_strdup (filename);
-  module_info->verbose  = verbose ? TRUE : FALSE;
-  module_info->on_disk  = TRUE;
+  module->filename = g_strdup (filename);
+  module->verbose  = verbose ? TRUE : FALSE;
+  module->on_disk  = TRUE;
 
-  gimp_module_info_set_load_inhibit (module_info, inhibit_list);
+  gimp_module_set_load_inhibit (module, inhibit_list);
 
-  if (! module_info->load_inhibit)
+  if (! module->load_inhibit)
     {
-      if (gimp_module_info_load (G_TYPE_MODULE (module_info)))
-        gimp_module_info_unload (G_TYPE_MODULE (module_info));
+      if (gimp_module_load (G_TYPE_MODULE (module)))
+        gimp_module_unload (G_TYPE_MODULE (module));
     }
   else
     {
       if (verbose)
 	g_print (_("skipping module: '%s'\n"), filename);
 
-      module_info->state = GIMP_MODULE_STATE_UNLOADED_OK;
+      module->state = GIMP_MODULE_STATE_UNLOADED_OK;
     }
 
-  return module_info;
+  return module;
 }
 
 void
-gimp_module_info_modified (GimpModuleInfoObj *module_info)
+gimp_module_modified (GimpModule *module)
 {
-  g_return_if_fail (GIMP_IS_MODULE_INFO (module_info));
+  g_return_if_fail (GIMP_IS_MODULE (module));
 
-  g_signal_emit (G_OBJECT (module_info), module_info_signals[MODIFIED], 0);
+  g_signal_emit (G_OBJECT (module), module_signals[MODIFIED], 0);
 }
 
 void
-gimp_module_info_set_load_inhibit (GimpModuleInfoObj *module_info,
-                                   const gchar       *inhibit_list)
+gimp_module_set_load_inhibit (GimpModule  *module,
+                              const gchar *inhibit_list)
 {
   gchar       *p;
   gint         pathlen;
   const gchar *start;
   const gchar *end;
 
-  g_return_if_fail (GIMP_IS_MODULE_INFO (module_info));
-  g_return_if_fail (module_info->filename != NULL);
+  g_return_if_fail (GIMP_IS_MODULE (module));
+  g_return_if_fail (module->filename != NULL);
 
-  module_info->load_inhibit = FALSE;
+  module->load_inhibit = FALSE;
 
   if (! inhibit_list || ! strlen (inhibit_list))
     return;
 
-  p = strstr (inhibit_list, module_info->filename);
+  p = strstr (inhibit_list, module->filename);
   if (!p)
     return;
 
@@ -356,18 +352,67 @@ gimp_module_info_set_load_inhibit (GimpModuleInfoObj *module_info,
   if (! end)
     end = inhibit_list + strlen (inhibit_list);
 
-  pathlen = strlen (module_info->filename);
+  pathlen = strlen (module->filename);
 
   if ((end - start) == pathlen)
-    module_info->load_inhibit = TRUE;
+    module->load_inhibit = TRUE;
 }
 
 static void
-gimp_module_info_set_last_error (GimpModuleInfoObj *module_info,
-                                 const gchar       *error_str)
+gimp_module_set_last_error (GimpModule  *module,
+                            const gchar *error_str)
 {
-  if (module_info->last_module_error)
-    g_free (module_info->last_module_error);
+  if (module->last_module_error)
+    g_free (module->last_module_error);
 
-  module_info->last_module_error = g_strdup (error_str);
+  module->last_module_error = g_strdup (error_str);
+}
+
+
+/*  GimpModuleInfo functions  */
+
+GimpModuleInfo *
+gimp_module_info_new (const gchar    *purpose,
+                      const gchar    *author,
+                      const gchar    *version,
+                      const gchar    *copyright,
+                      const gchar    *date)
+{
+  GimpModuleInfo *info;
+
+  info = g_new0 (GimpModuleInfo, 1);
+
+  info->purpose   = g_strdup (purpose);
+  info->author    = g_strdup (author);
+  info->version   = g_strdup (version);
+  info->copyright = g_strdup (copyright);
+  info->date      = g_strdup (date);
+
+  return info;
+}
+
+GimpModuleInfo *
+gimp_module_info_copy (const GimpModuleInfo *info)
+{
+  g_return_val_if_fail (info != NULL, NULL);
+
+  return gimp_module_info_new (info->purpose,
+                               info->author,
+                               info->version,
+                               info->copyright,
+                               info->date);
+}
+
+void
+gimp_module_info_free (GimpModuleInfo *info)
+{
+  g_return_if_fail (info != NULL);
+
+  g_free (info->purpose);
+  g_free (info->author);
+  g_free (info->version);
+  g_free (info->copyright);
+  g_free (info->date);
+
+  g_free (info);
 }

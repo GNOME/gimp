@@ -134,8 +134,6 @@ libappcore_a_sources = \
 	gimplayermask.h			\
 	gimplist.c			\
 	gimplist.h			\
-	gimpmoduleinfo.c		\
-	gimpmoduleinfo.h		\
 	gimpmodules.c			\
 	gimpmodules.h			\
 	gimpobject.c			\

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmoduleinfo.h
+ * gimpmodule.h
  * (C) 1999 Austin Donnelly <austin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,34 +19,57 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_MODULE_INFO_H__
-#define __GIMP_MODULE_INFO_H__
+#ifndef __GIMP_MODULE_H__
+#define __GIMP_MODULE_H__
 
+#include <gmodule.h>
 
-#include "libgimp/gimpmodule.h"
+#include <libgimpmodule/gimpmoduletypes.h>
+
+G_BEGIN_DECLS
 
 
 typedef enum
 {
-  GIMP_MODULE_STATE_ERROR,             /* missing module_load function or other error    */
-  GIMP_MODULE_STATE_LOADED_OK,         /* happy and running (normal state of affairs)    */
-  GIMP_MODULE_STATE_LOAD_FAILED,       /* module_load returned GIMP_MODULE_UNLOAD        */
-  GIMP_MODULE_STATE_UNLOAD_REQUESTED,  /* sent unload request, waiting for callback      */
-  GIMP_MODULE_STATE_UNLOADED_OK        /* callback arrived, module not in memory anymore */
+  GIMP_MODULE_STATE_ERROR,       /* missing gimp_module_register function
+                                  * or other error
+                                  */
+  GIMP_MODULE_STATE_LOADED_OK,   /* an instance of a type implemented by
+                                  * this module is allocated
+                                  */
+  GIMP_MODULE_STATE_LOAD_FAILED, /* gimp_module_register returned FALSE
+                                  */
+  GIMP_MODULE_STATE_UNLOADED_OK  /* there are no instances allocated of
+                                  * types implemented by this module
+                                  */
 } GimpModuleState;
 
 
-#define GIMP_TYPE_MODULE_INFO            (gimp_module_info_get_type ())
-#define GIMP_MODULE_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObj))
-#define GIMP_MODULE_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObjClass))
-#define GIMP_IS_MODULE_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE_INFO))
-#define GIMP_IS_MODULE_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE_INFO))
-#define GIMP_MODULE_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE_INFO, GimpModuleInfoObjClass))
+struct _GimpModuleInfo
+{
+  gchar *purpose;
+  gchar *author;
+  gchar *version;
+  gchar *copyright;
+  gchar *date;
+};
 
 
-typedef struct _GimpModuleInfoObjClass GimpModuleInfoObjClass;
+typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
+typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
 
-struct _GimpModuleInfoObj
+
+#define GIMP_TYPE_MODULE            (gimp_module_get_type ())
+#define GIMP_MODULE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE, GimpModule))
+#define GIMP_MODULE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE, GimpModuleClass))
+#define GIMP_IS_MODULE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE))
+#define GIMP_IS_MODULE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE))
+#define GIMP_MODULE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE, GimpModuleClass))
+
+
+typedef struct _GimpModuleClass GimpModuleClass;
+
+struct _GimpModule
 {
   GTypeModule      parent_instance;
 
@@ -58,30 +81,43 @@ struct _GimpModuleInfoObj
 
   /* stuff from now on may be NULL depending on the state the module is in    */
   GModule         *module;       /* handle on the module                      */
-  GimpModuleInfo   info;         /* returned values from module_query         */
+  GimpModuleInfo  *info;         /* returned values from module_query         */
   gchar           *last_module_error;
 
-  const GimpModuleInfo * (* query_module)    (GTypeModule *module);
-  gboolean               (* register_module) (GTypeModule *module);
+  GimpModuleQueryFunc     query_module;
+  GimpModuleRegisterFunc  register_module;
 };
 
-struct _GimpModuleInfoObjClass
+struct _GimpModuleClass
 {
   GTypeModuleClass  parent_class;
 
-  void (* modified) (GimpModuleInfoObj *module_info);
+  void (* modified) (GimpModule *module);
 };
 
 
-GType               gimp_module_info_get_type         (void) G_GNUC_CONST;
+GType        gimp_module_get_type         (void) G_GNUC_CONST;
 
-GimpModuleInfoObj * gimp_module_info_new              (const gchar       *filename,
-                                                       const gchar       *inhibit_str,
-                                                       gboolean           verbose);
+GimpModule * gimp_module_new              (const gchar *filename,
+                                           const gchar *inhibit_str,
+                                           gboolean     verbose);
 
-void                gimp_module_info_modified         (GimpModuleInfoObj *module);
-void                gimp_module_info_set_load_inhibit (GimpModuleInfoObj *module,
-                                                       const gchar       *inhibit_list);
+void         gimp_module_modified         (GimpModule  *module);
+void         gimp_module_set_load_inhibit (GimpModule  *module,
+                                           const gchar *inhibit_list);
 
+
+/*  GimpModuleInfo functions  */
+
+GimpModuleInfo * gimp_module_info_new  (const gchar          *purpose,
+                                        const gchar          *author,
+                                        const gchar          *version,
+                                        const gchar          *copyright,
+                                        const gchar          *date);
+GimpModuleInfo * gimp_module_info_copy (const GimpModuleInfo *info);
+void             gimp_module_info_free (GimpModuleInfo       *info);
+
+
+G_END_DECLS
 
 #endif  /* __GIMP_MODULE_INFO_H__ */

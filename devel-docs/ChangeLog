@@ -1,3 +1,25 @@
+2002-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* libgimpmodule/.cvsignore
+	* libgimpmodule/Makefile.am
+	* libgimpmodule/libgimpmodule-docs.sgml
+	* libgimpmodule/libgimpmodule-sections.txt
+	* libgimpmodule/libgimpmodule.types
+	* libgimpmodule/tmpl/.cvsignore
+	* libgimpmodule/tmpl/gimpmodule.sgml
+	* libgimpmodule/tmpl/gimpmoduletypes.sgml: added API docs for the
+	new module loading lib.
+
+	* libgimp/tmpl/gimpmodule.sgml: removed.
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt: changed accordingly.
+
+	* libgimpwidgets/tmpl/gimpcolordisplay.sgml
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml
+	* libgimpwidgets/tmpl/gimpcolorselector.sgml: updated.
+
 2002-10-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpcolordisplay.sgml

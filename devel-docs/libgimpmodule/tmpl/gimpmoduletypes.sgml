@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimpcolorselect
+gimpmoduletypes
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -14,9 +14,20 @@ gimpcolorselect
 
 </para>
 
-<!-- ##### STRUCT GimpColorSelectClass ##### -->
+<!-- ##### STRUCT GimpModule ##### -->
 <para>
 
 </para>
 
+
+<!-- ##### STRUCT GimpModuleInfo ##### -->
+<para>
+
+</para>
+
+@purpose: 
+@author: 
+@version: 
+@copyright: 
+@date: 
 

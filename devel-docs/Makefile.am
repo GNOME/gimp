@@ -1,6 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = libgimpcolor libgimpmath libgimpbase libgimpwidgets libgimp
+SUBDIRS = \
+	libgimpcolor	\
+	libgimpmath	\
+	libgimpbase	\
+	libgimpmodule	\
+	libgimpwidgets	\
+	libgimp
 
 EXTRA_DIST = \
 	ChangeLog	\
