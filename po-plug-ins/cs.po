@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:49+0100\n"
-"PO-Revision-Date: 2004-02-02 18:43+0100\n"
+"POT-Creation-Date: 2004-02-11 03:47+0100\n"
+"PO-Revision-Date: 2004-02-11 06:09+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,9 +39,30 @@ msgid "About"
 msgstr "O programu"
 
 #. Preview
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1244
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
@@ -282,6 +303,7 @@ msgid "Color Function"
 msgstr "Barevná funkce"
 
 #. Redmode radio frame
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -347,12 +369,14 @@ msgstr ""
 "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -394,7 +418,7 @@ msgstr "_Fraktály"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:835
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:996 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
@@ -405,7 +429,7 @@ msgstr "_Fraktály"
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1763 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2592
@@ -437,9 +461,10 @@ msgid "Save Fractal Parameters"
 msgstr "Zapsat parametry fraktálu"
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:887
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:761
@@ -450,7 +475,7 @@ msgstr "Zapsat parametry fraktálu"
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:241
 #: plug-ins/common/svg.c:624 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:502 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -1154,6 +1179,11 @@ msgid "Bad colormap"
 msgstr "Špatná barevná mapa"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1162,7 +1192,7 @@ msgstr "Špatná barevná mapa"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1743 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:507
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1200,7 +1230,7 @@ msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2130 plug-ins/common/smooth_palette.c:252
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:800 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
@@ -1220,6 +1250,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Nemohu pracovat s neznámými typy obrázků."
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1003
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1228,7 +1260,7 @@ msgstr "Nemohu pracovat s neznámými typy obrázků."
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1768
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
@@ -1305,7 +1337,7 @@ msgid "Cos_ine"
 msgstr "Kos_inus"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2067
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
 msgid "_None"
 msgstr "_Nic"
 
@@ -1946,6 +1978,35 @@ msgstr "Zarovnání viditelných vrstev"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:322
@@ -2838,135 +2899,140 @@ msgstr "_Sytost dlaždice:"
 msgid "Cubistic Transformation"
 msgstr "Kubistická transformace"
 
-#: plug-ins/common/curve_bend.c:568
+#: plug-ins/common/curve_bend.c:577
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtry/Zkreslení/_Zkřivit..."
 
-#: plug-ins/common/curve_bend.c:699
-msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr ""
-"Zkřivení pracuje pouze s vrstvami (ale bylo voláno na kanál nebo masku)"
+#: plug-ins/common/curve_bend.c:709
+msgid "Can operate on layers only (but was called on channel or mask)."
+msgstr "Pracuje pouze s vrstvami (ale bylo voláno na kanál nebo masku)."
+
+#: plug-ins/common/curve_bend.c:734
+msgid "Cannot operate on empty selections."
+msgstr "Nemohu pracovat s prázdnými výběry."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1214
+#: plug-ins/common/curve_bend.c:1238
 msgid "Curve Bend"
 msgstr "Zkřivení"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1278
+#: plug-ins/common/curve_bend.c:1302
 msgid "_Preview Once"
 msgstr "_Náhled jednou"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1287
+#: plug-ins/common/curve_bend.c:1311
 msgid "Automatic Pre_view"
 msgstr "_Automatická aktualizace náhledu"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve_bend.c:1297 plug-ins/common/mosaic.c:528
+#. the vertical box and its toggle buttons
+#. Options section
+#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
 msgid "Options"
 msgstr "Volby"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1312
+#: plug-ins/common/curve_bend.c:1336
 msgid "Rotat_e:"
 msgstr "R_otovat:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1330
+#: plug-ins/common/curve_bend.c:1354
 msgid "Smoo_thing"
 msgstr "_Vyhlazování"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1340 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:535 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1350
+#: plug-ins/common/curve_bend.c:1374
 msgid "Work on Cop_y"
 msgstr "_Pracovat na kopii"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1360
+#: plug-ins/common/curve_bend.c:1384
 msgid "Modify Curves"
 msgstr "Upravit křivky"
 
-#: plug-ins/common/curve_bend.c:1389
+#: plug-ins/common/curve_bend.c:1413
 msgid "Curve for Border"
 msgstr "Křivka hranic"
 
-#: plug-ins/common/curve_bend.c:1393
+#: plug-ins/common/curve_bend.c:1417
 msgid "_Upper"
 msgstr "_Horní"
 
-#: plug-ins/common/curve_bend.c:1394
+#: plug-ins/common/curve_bend.c:1418
 msgid "_Lower"
 msgstr "_Dolní"
 
-#: plug-ins/common/curve_bend.c:1404
+#: plug-ins/common/curve_bend.c:1428
 msgid "Curve Type"
 msgstr "Typ křivky"
 
-#: plug-ins/common/curve_bend.c:1408
+#: plug-ins/common/curve_bend.c:1432
 msgid "Smoot_h"
 msgstr "_Plynulá"
 
-#: plug-ins/common/curve_bend.c:1409
+#: plug-ins/common/curve_bend.c:1433
 msgid "_Free"
 msgstr "_Volná"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1424
+#: plug-ins/common/curve_bend.c:1448
 msgid "_Copy"
 msgstr "_Kopírovat"
 
-#: plug-ins/common/curve_bend.c:1429
+#: plug-ins/common/curve_bend.c:1453
 msgid "Copy the active curve to the other border"
 msgstr "Kopírovat aktivní křivku na druhou hranici"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1436
+#: plug-ins/common/curve_bend.c:1460
 msgid "_Mirror"
 msgstr "_Zrcadlit"
 
-#: plug-ins/common/curve_bend.c:1441
+#: plug-ins/common/curve_bend.c:1465
 msgid "Mirror the active curve to the other border"
 msgstr "Zrcadlit aktivní křivku na druhou hranici"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1472
 msgid "S_wap"
 msgstr "Pro_hodit"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1477
 msgid "Swap the two curves"
 msgstr "Prohodit tyto dvě křivky"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1489
 msgid "Reset the active curve"
 msgstr "Obnovit aktivní křivku"
 
-#: plug-ins/common/curve_bend.c:1482
+#: plug-ins/common/curve_bend.c:1506
 msgid "Load the curves from a file"
 msgstr "Načtení křivek ze souboru"
 
-#: plug-ins/common/curve_bend.c:1494
+#: plug-ins/common/curve_bend.c:1518
 msgid "Save the curves to a file"
 msgstr "Uložení křivek do souboru"
 
-#: plug-ins/common/curve_bend.c:2031
+#: plug-ins/common/curve_bend.c:2055
 msgid "Load Curve Points from file"
 msgstr "Načtení bodů křivky ze souboru"
 
-#: plug-ins/common/curve_bend.c:2058
+#: plug-ins/common/curve_bend.c:2082
 msgid "Save Curve Points to file"
 msgstr "Uložení bodů křivky do souboru"
 
-#: plug-ins/common/curve_bend.c:2958
+#: plug-ins/common/curve_bend.c:2980
 msgid "Curve Bend..."
 msgstr "Zkřivení..."
 
@@ -5108,6 +5174,7 @@ msgid "_Factory Defaults"
 msgstr "_Tovární nastavení"
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Vyhlazování"
@@ -6058,6 +6125,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Chyba při získávání snímku obrazovky"
 
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Zachytit"
@@ -6848,16 +6916,16 @@ msgstr "Práh alfy"
 msgid "Threshold:"
 msgstr "Práh:"
 
-#: plug-ins/common/tiff.c:802
+#: plug-ins/common/tiff.c:831
 #, c-format
 msgid "Page %d"
 msgstr "Strana %d"
 
-#: plug-ins/common/tiff.c:816
+#: plug-ins/common/tiff.c:846
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: plug-ins/common/tiff.c:825
+#: plug-ins/common/tiff.c:855
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6868,7 +6936,7 @@ msgstr ""
 "Obrázek, který načítáte, má 16 bitů na kanál. GIMP umí zpracovat jen 8 bitů, "
 "takže jej převede. Při tomto převodu se ztratí informace."
 
-#: plug-ins/common/tiff.c:1900
+#: plug-ins/common/tiff.c:1930
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6876,36 +6944,36 @@ msgstr ""
 "Formát TIFF podporuje komentáře jen v sedmibitovém\n"
 "kódování ASCII. Komentář nebyl uložen."
 
-#: plug-ins/common/tiff.c:2049
+#: plug-ins/common/tiff.c:2079
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2063
+#: plug-ins/common/tiff.c:2093
 msgid "Compression"
 msgstr "Komprese"
 
-#: plug-ins/common/tiff.c:2068
+#: plug-ins/common/tiff.c:2098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2069
+#: plug-ins/common/tiff.c:2099
 msgid "_Pack Bits"
 msgstr "_Pakování bitů"
 
-#: plug-ins/common/tiff.c:2070
+#: plug-ins/common/tiff.c:2100
 msgid "_Deflate"
 msgstr "_Deflační"
 
-#: plug-ins/common/tiff.c:2071
+#: plug-ins/common/tiff.c:2101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2080
+#: plug-ins/common/tiff.c:2110
 msgid "Save _color values from transparent pixels"
 msgstr "Uložit _hodnoty barvy průhledných pixelů"
 
-#: plug-ins/common/tiff.c:2095 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Komentář:"
 
@@ -7543,6 +7611,7 @@ msgstr "Vítr"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Styl"
@@ -8759,6 +8828,7 @@ msgid "(none)"
 msgstr "(nic)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr "<NIC>"
 
@@ -8844,6 +8914,9 @@ msgstr "Implicitní"
 
 #.
 #. *  Scales
+#.
+#.
+#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2672 plug-ins/gflare/gflare.c:3483
 #: plug-ins/gflare/gflare.c:3590 plug-ins/gflare/gflare.c:3729
