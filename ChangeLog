@@ -1,3 +1,8 @@
+2001-02-13  Seth Burgess  <sjburges@gimp.org>
+
+	* plug-ins/perl/Gimp/Lib.xs : made perl compilable again.  Didn't
+	change to turn back on by default.
+	
 2001-02-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
