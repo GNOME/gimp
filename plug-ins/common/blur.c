@@ -100,7 +100,7 @@ typedef struct {
 } BlurVals;
 
 static BlurVals pivals = {
-    50.0,
+    100.0,
     1.0,
     SEED_TIME,
     0,

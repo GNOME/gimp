@@ -158,24 +158,27 @@ static double gradient_calc_square_factor                (double dist, double of
 							  double x, double y);
 static double gradient_calc_radial_factor   	         (double dist, double offset,
 							  double x, double y);
-static double gradient_calc_linear_factor   	         (double dist, double *vec,
+static double gradient_calc_linear_factor   	         (double dist, double *vec, double offset,
 							  double x, double y);
 static double gradient_calc_bilinear_factor 	         (double dist, double *vec, double offset,
 							  double x, double y);
 static double gradient_calc_spiral_factor                (double dist, double *axis, double offset,
-							  double x, double y,gint cwise);
+							  double x, double y, gint cwise);
 static double gradient_calc_shapeburst_angular_factor    (double x, double y);
 static double gradient_calc_shapeburst_spherical_factor  (double x, double y);
 static double gradient_calc_shapeburst_dimpled_factor    (double x, double y);
 
-static double gradient_repeat_none(double val);
-static double gradient_repeat_sawtooth(double val);
-static double gradient_repeat_triangular(double val);
+static double gradient_repeat_none                       (double val);
+static double gradient_repeat_sawtooth                   (double val);
+static double gradient_repeat_triangular                 (double val);
 
-static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR, double dist);
+static void   gradient_precalc_shapeburst                (GImage *gimage, GimpDrawable *drawable, 
+							  PixelRegion *PR, double dist);
 
-static void   gradient_render_pixel(double x, double y, color_t *color, void *render_data);
-static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
+static void   gradient_render_pixel                      (double x, double y, 
+							  color_t *color, void *render_data);
+static void   gradient_put_pixel                         (int x, int y, 
+							  color_t color, void *put_pixel_data);
 
 static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelRegion *PR,
 					     int width, int height,
@@ -186,8 +189,8 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 					     progress_func_t progress_callback,
 					     void *progress_data);
 
-static void calc_rgb_to_hsv(double *r, double *g, double *b);
-static void calc_hsv_to_rgb(double *h, double *s, double *v);
+static void   calc_rgb_to_hsv                            (double *r, double *g, double *b);
+static void   calc_hsv_to_rgb                            (double *h, double *s, double *v);
 
 
 /*  functions  */
@@ -1018,6 +1021,7 @@ gradient_calc_radial_factor (double dist,
 static double
 gradient_calc_linear_factor (double  dist,
 			     double *vec,
+			     double  offset,
 			     double  x,
 			     double  y)
 {
@@ -1028,8 +1032,17 @@ gradient_calc_linear_factor (double  dist,
     rat = 0.0;
   else
     {
+      offset = offset / 100.0;
+
       r   = vec[0] * x + vec[1] * y;
       rat = r / dist;
+
+      if (rat < offset)
+	rat = 0.0;
+      else if (offset == 1)
+        rat = (rat>=1) ? 1 : 0;
+      else
+	rat = (rat - offset) / (1.0 - offset);
     } /* else */
 
   return rat;
@@ -1295,45 +1308,45 @@ gradient_render_pixel (double   x,
   switch (rbd->gradient_type)
     {
     case RADIAL:
-      factor = gradient_calc_radial_factor(rbd->dist, rbd->offset,
-					   x - rbd->sx, y - rbd->sy);
+      factor = gradient_calc_radial_factor (rbd->dist, rbd->offset,
+					    x - rbd->sx, y - rbd->sy);
       break;
 
     case CONICAL_SYMMETRIC:
-      factor = gradient_calc_conical_sym_factor(rbd->dist, rbd->vec, rbd->offset,
-						x - rbd->sx, y - rbd->sy);
-      break;
-
-    case CONICAL_ASYMMETRIC:
-      factor = gradient_calc_conical_asym_factor(rbd->dist, rbd->vec, rbd->offset,
+      factor = gradient_calc_conical_sym_factor (rbd->dist, rbd->vec, rbd->offset,
 						 x - rbd->sx, y - rbd->sy);
       break;
 
+    case CONICAL_ASYMMETRIC:
+      factor = gradient_calc_conical_asym_factor (rbd->dist, rbd->vec, rbd->offset,
+						  x - rbd->sx, y - rbd->sy);
+      break;
+
     case SQUARE:
-      factor = gradient_calc_square_factor(rbd->dist, rbd->offset,
-					   x - rbd->sx, y - rbd->sy);
+      factor = gradient_calc_square_factor (rbd->dist, rbd->offset,
+					    x - rbd->sx, y - rbd->sy);
       break;
 
     case LINEAR:
-      factor = gradient_calc_linear_factor(rbd->dist, rbd->vec,
-					   x - rbd->sx, y - rbd->sy);
+      factor = gradient_calc_linear_factor (rbd->dist, rbd->vec, rbd->offset,
+					    x - rbd->sx, y - rbd->sy);
       break;
 
     case BILINEAR:
-      factor = gradient_calc_bilinear_factor(rbd->dist, rbd->vec, rbd->offset,
-					     x - rbd->sx, y - rbd->sy);
+      factor = gradient_calc_bilinear_factor (rbd->dist, rbd->vec, rbd->offset,
+					      x - rbd->sx, y - rbd->sy);
       break;
 
     case SHAPEBURST_ANGULAR:
-      factor = gradient_calc_shapeburst_angular_factor(x, y);
+      factor = gradient_calc_shapeburst_angular_factor (x, y);
       break;
 
     case SHAPEBURST_SPHERICAL:
-      factor = gradient_calc_shapeburst_spherical_factor(x, y);
+      factor = gradient_calc_shapeburst_spherical_factor (x, y);
       break;
 
     case SHAPEBURST_DIMPLED:
-      factor = gradient_calc_shapeburst_dimpled_factor(x, y);
+      factor = gradient_calc_shapeburst_dimpled_factor (x, y);
       break;
 
     case SPIRAL_CLOCKWISE:
@@ -1347,8 +1360,8 @@ gradient_render_pixel (double   x,
       break;
 
     default:
-      gimp_fatal_error("gradient_render_pixel(): Unknown gradient type %d",
-		       (int) rbd->gradient_type);
+      gimp_fatal_error ("gradient_render_pixel(): Unknown gradient type %d",
+			(int) rbd->gradient_type);
       return;
     }
 
@@ -1359,7 +1372,7 @@ gradient_render_pixel (double   x,
   /* Blend the colors */
 
   if (rbd->blend_mode == CUSTOM_MODE)
-    grad_get_color_at(factor, &color->r, &color->g, &color->b, &color->a);
+    grad_get_color_at (factor, &color->r, &color->g, &color->b, &color->a);
   else
     {
       /* Blend values */
@@ -1370,7 +1383,7 @@ gradient_render_pixel (double   x,
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
       if (rbd->blend_mode == FG_BG_HSV_MODE)
-	calc_hsv_to_rgb(&color->r, &color->g, &color->b);
+	calc_hsv_to_rgb (&color->r, &color->g, &color->b);
     }
 }
 

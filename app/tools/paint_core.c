@@ -713,83 +713,39 @@ paint_core_init (PaintCore    *paint_core,
   paint_core->x1 = paint_core->x2 = paint_core->curx;
   paint_core->y1 = paint_core->y2 = paint_core->cury;
   paint_core->distance = 0.0;
+  paint_core->pixel_dist = 0.0;
 
   return TRUE;
 }
 
 void
 paint_core_get_color_from_gradient (PaintCore *paint_core, 
-				    double gradient_length, 
-				    double *r, double *g, double *b, double *a, 
-				    int mode)
+				    double     gradient_length, 
+				    double    *r, 
+				    double    *g, 
+				    double    *b, 
+				    double    *a, 
+				    int        mode)
 {
   double y;
   double distance;      /* distance in current brush stroke */
-  double position;      /* position in the gradient to ge the color from */
   double temp_opacity;  /* so i can blank out stuff */
 
-  distance = paint_core->distance;
+  distance = paint_core->pixel_dist;
   y = ((double) distance / gradient_length);
-  temp_opacity = 1.0; 
- 
+  temp_opacity = 1.0;
 
-  /* if were past the first chunk... */
-  if ((y/gradient_length) > 1.0)
-    {
-      /* if this is an "odd" chunk... */
-      if ((int)(y/gradient_length) & 1)
-	{
-	  /* draw it "normally" */
-	  y = y - (gradient_length*(int)(y/gradient_length));
-	}
-      /* if this is an "even" chunk... */
-      else 
-	{
-	  /* draw it "backwards"  */
-	  switch (mode)
-	    {
-	    case LOOP_SAWTOOTH:
-	      y = y - (gradient_length*(int)(y/gradient_length));
-	      break;
-	    case LOOP_TRIANGLE:
-	      y = gradient_length - fmod(y,gradient_length);
-	      break;
-	    }
-	}
-      if(mode == ONCE_FORWARD || mode == ONCE_BACKWARDS)
-	{
-	 /*  printf("got here \n"); */
-	  /* for the once modes, set alpha to 0.0 */
-	  temp_opacity = 0.0;
-	}
+  /* for the once modes, set alpha to 0.0 after the first chunk */
+  if (y >= 1.0 && (mode == ONCE_FORWARD || mode == ONCE_BACKWARDS))
+    temp_opacity = 0.0; 
 
-    }
-  /* if this is the first chunk... */
+  if ( ((int)y & 1 && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
+    y = 1.0 - (y - (int)y);
   else
-    {
-      /* draw it backwards */
-      switch (mode)
-	{
-	case ONCE_FORWARD:
-	case ONCE_END_COLOR:
-	case LOOP_TRIANGLE:
-  	  y = gradient_length - y;
-	  break;
-	default:
-	  /* all the other modes go here ;-> */
-	  break;
-	}
-      /* if it doesnt need to be reveresed, let y be y ;-> */
-    }
-  /* stolen from the fade effect in paintbrush */
+    y = y - (int)y;
 
-  /* model this on a gaussian curve */
-  /* position = exp (- y * y * 0.5); */
-  position = y/gradient_length;
-  grad_get_color_at(position,r,g,b,a);
-  /* set opacity to zero if this isnt a repeater call */
+  grad_get_color_at (y, r, g, b, a);
   *a = (temp_opacity * *a);
-
 }
   
 
@@ -804,13 +760,15 @@ paint_core_interpolate (PaintCore    *paint_core,
 #else /* !GTK_HAVE_SIX_VALUATORS */
   double dpressure, dxtilt, dytilt;
 #endif /* GTK_HAVE_SIX_VALUATORS */
-  double spacing;
-  double lastscale, curscale;
+  /*   double spacing; */
+  /*   double lastscale, curscale; */
   double left;
   double t;
   double initial;
   double dist;
   double total;
+  double pixel_dist;
+  double pixel_initial;
   double xd, yd;
   double mag;
   delta.x = paint_core->curx - paint_core->lastx;
@@ -837,23 +795,23 @@ paint_core_interpolate (PaintCore    *paint_core,
   mag = vector2d_magnitude (&(paint_core->brush->y_axis));
   yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) / (mag*mag);
 
-  dist = .5 * sqrt (xd*xd + yd*yd); 
-
+  dist = 0.5 * sqrt (xd*xd + yd*yd); 
   total = dist + paint_core->distance;
   initial = paint_core->distance;
 
-  /*  FIXME: the adaptive spacing is pretty dumb !!  */
-  lastscale = 
-    paint_core->lastpressure > 1/256 ? paint_core->lastpressure : 1/256;
-  curscale = 
-    paint_core->curpressure > 1/256 ? paint_core->curpressure : 1/256;   
-  spacing = paint_core->spacing * sqrt (0.5 * (lastscale + curscale));
+  pixel_dist = vector2d_magnitude (&delta);
+  pixel_initial = paint_core->pixel_dist;  
+
+  /*  FIXME: need to adapt the spacing to the size  */
+  /*   lastscale = MIN (paint_core->lastpressure, 1/256); */
+  /*   curscale = MIN (paint_core->curpressure,  1/256); */
+  /*   spacing = paint_core->spacing * sqrt (0.5 * (lastscale + curscale)); */
 
   while (paint_core->distance < total)
     {
       n = (int) (paint_core->distance / paint_core->spacing + 1.0 + EPSILON);
       left = n * paint_core->spacing - paint_core->distance;
-
+      
       paint_core->distance += left;
 
       if (paint_core->distance <= (total+EPSILON))
@@ -862,6 +820,7 @@ paint_core_interpolate (PaintCore    *paint_core,
 
 	  paint_core->curx = paint_core->lastx + delta.x * t;
 	  paint_core->cury = paint_core->lasty + delta.y * t;
+	  paint_core->pixel_dist = pixel_initial + pixel_dist * t;
 	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
 	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
 	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
@@ -875,8 +834,8 @@ paint_core_interpolate (PaintCore    *paint_core,
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
 	}
     }
-
   paint_core->distance = total;
+  paint_core->pixel_dist = pixel_initial + pixel_dist;
   paint_core->curx = paint_core->lastx + delta.x;
   paint_core->cury = paint_core->lasty + delta.y;
   paint_core->curpressure = paint_core->lastpressure + dpressure;

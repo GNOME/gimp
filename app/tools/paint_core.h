@@ -74,7 +74,8 @@ struct _paint_core
   int             state;         /*  state of buttons and keys  */
 
   double          distance;      /*  distance traveled by brush */
-  double          spacing;       /*  distance traveled by brush */
+  double          pixel_dist;    /*  distance in pixels         */
+  double          spacing;       /*  spacing                    */
 
   int             x1, y1;        /*  image space coordinate     */
   int             x2, y2;        /*  image space coords         */

@@ -1,3 +1,17 @@
+Sat Sep 25 21:43:35 MEST 1999  Jens Lautenbacher <jens@tellux.de>
+                               Sven Neumann <sven@gimp.org>
+
+	* app/blend.c: enable offset for linear gradients
+
+	* paint_core.[ch]: paint_core now knows about the distance in pixels
+	too (needed for what follows). 
+	Rewrote paint_core_get_color_from_gradient ().
+
+	* app/paintbrush.c: you can now set gradient_length and fade_out in 
+	units that make sense
+
+	* plug-ins/common/blur.c: set reasonable defaults
+
 Sat Sep 25 19:14:27 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/unittest/Makefile.am: add parse_gimprc program.
