@@ -16,7 +16,6 @@ blinds
 blur
 borderaverage
 bumpmap
-bz2
 c_astretch
 cartoon
 ccanalyze
@@ -26,6 +25,7 @@ color_enhance
 colorify
 colortoalpha
 compose
+compressor
 convmatrix
 csource
 cubism
@@ -60,7 +60,6 @@ gradmap
 grid
 gtm
 guillotine
-gz
 header
 hot
 illusion

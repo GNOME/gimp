@@ -41,7 +41,6 @@ libexec_PROGRAMS = \
 	blur \
 	borderaverage \
 	bumpmap \
-	$(BZ2) \
 	c_astretch \
 	cartoon \
 	ccanalyze \
@@ -51,6 +50,7 @@ libexec_PROGRAMS = \
 	colorify \
 	colortoalpha \
 	compose \
+	compressor \
 	convmatrix \
 	csource \
 	cubism \
@@ -85,7 +85,6 @@ libexec_PROGRAMS = \
 	grid \
 	gtm \
 	guillotine \
-	gz \
 	header \
 	hot \
 	illusion \
@@ -169,7 +168,6 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	aa \
-	bz2 \
 	jpeg \
 	mail \
 	mng \
@@ -371,18 +369,6 @@ bumpmap_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-bz2_SOURCES = \
-	bz2.c
-
-bz2_LDADD = \
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(LIBBZ2)		\
-	$(GLIB_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
 c_astretch_SOURCES = \
 	c_astretch.c
 
@@ -495,6 +481,17 @@ compose_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+compressor_SOURCES = \
+	compressor.c
+
+compressor_LDADD = \
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -927,17 +924,6 @@ guillotine_SOURCES = \
 	guillotine.c
 
 guillotine_LDADD = \
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-gz_SOURCES = \
-	gz.c
-
-gz_LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\

@@ -1314,13 +1314,11 @@ if test x"$os_win32" = xyes; then
   WINCLIPBOARD='winclipboard$(EXEEXT)'
   WINPRINT='winprint$(EXEEXT)'
 else
-  BZ2='bz2$(EXEEXT)'
   MAIL='mail$(EXEEXT)'
   SCREENSHOT='screenshot$(EXEEXT)'
   URL='url$(EXEEXT)'
 fi
 
-AC_SUBST(BZ2)
 AC_SUBST(MAIL)
 AC_SUBST(SCREENSHOT)
 AC_SUBST(URL)
