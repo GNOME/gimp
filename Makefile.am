@@ -247,6 +247,7 @@ if DEFAULT_BINARY
 endif
 endif
 
+if DEFAULT_BINARY
 install-data-hook:
 	@list='$(man_MANS)'; \
 	for i in $$list; do \
@@ -260,6 +261,7 @@ install-data-hook:
 	  echo "ln -s $$i $$f"; \
 	  ln -s $$i $$f; \
 	done
+endif
 
 uninstall-local:
 if OS_WIN32

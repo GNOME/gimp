@@ -1,3 +1,7 @@
+Sat Feb  2 22:50:00 PST 2002 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: oops, guard the manpage stuff in DEFAULT_BINARY too
+
 Sat Feb  2 22:07:27 PST 2002 Manish Singh <yosh@gimp.org>
 
 	* tools/Makefile.am: gimp-remote is optional, so make the link only
