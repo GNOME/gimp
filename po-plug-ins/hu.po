@@ -6,17 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2000-12-22 14:55+0100\n"
-"Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
+"PO-Revision-Date: 2001-01-11 02:58+01:00\n"
+"Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO 8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:282
-#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/common/AlienMap.c:1396
-#: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:560
-#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:33
+#: plug-ins/FractalExplorer/Dialogs.c:1372
+#: plug-ins/common/AlienMap.c:1396
+#: plug-ins/common/AlienMap2.c:1388
+#: plug-ins/gdyntext/gdyntext_ui.c:560
+#: plug-ins/gfig/gfig.c:3374
+#: plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Névjegy"
@@ -220,7 +223,7 @@ msgstr "Valósidejû elõnézet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:359
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
+msgstr "Ha ezt bekapcsolod, a program automatikusan újrarajzolja az elõnézetet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:362
 msgid "Redraw"
@@ -228,7 +231,7 @@ msgstr "Újrarajzolás"
 
 #: plug-ins/FractalExplorer/Dialogs.c:368
 msgid "Redraw preview"
-msgstr ""
+msgstr "Elõnézet újrarajzolása"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:371
@@ -237,27 +240,27 @@ msgstr "Nagyítás beállításai"
 
 #: plug-ins/FractalExplorer/Dialogs.c:381
 msgid "Undo Zoom"
-msgstr ""
+msgstr "Nagyítás visszavonása"
 
 #: plug-ins/FractalExplorer/Dialogs.c:387
 msgid "Undo last zoom"
-msgstr ""
+msgstr "Utolsó nagyítás visszavonása"
 
 #: plug-ins/FractalExplorer/Dialogs.c:389
 msgid "Redo Zoom"
-msgstr ""
+msgstr "Újra nagyítás"
 
 #: plug-ins/FractalExplorer/Dialogs.c:395
 msgid "Redo last zoom"
-msgstr ""
+msgstr "Újra végrehajtja az utolsó visszavont naygítást"
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
 msgid "Step In"
-msgstr ""
+msgstr "Közelítés"
 
 #: plug-ins/FractalExplorer/Dialogs.c:404
 msgid "Step Out"
-msgstr ""
+msgstr "Távolítás"
 
 #.
 #. *  Scales
@@ -266,15 +269,15 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3738 plug-ins/gflare/gflare.c:3848
 #: plug-ins/gflare/gflare.c:3990
 msgid "Parameters"
-msgstr ""
+msgstr "Paraméterek"
 
 #: plug-ins/FractalExplorer/Dialogs.c:424
 msgid "Fractal Parameters"
-msgstr ""
+msgstr "A fraktál paraméterei"
 
 #: plug-ins/FractalExplorer/Dialogs.c:438
 msgid "XMIN:"
-msgstr ""
+msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:441
 msgid "Change the first (minimal) x-coordinate delimitation"
@@ -282,7 +285,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:449
 msgid "XMAX:"
-msgstr ""
+msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:452
 msgid "Change the second (maximal) x-coordinate delimitation"
@@ -290,7 +293,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:460
 msgid "YMIN:"
-msgstr ""
+msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:463
 msgid "Change the first (minimal) y-coordinate delimitation"
@@ -298,7 +301,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:471
 msgid "YMAX:"
-msgstr ""
+msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:474
 msgid "Change the second (maximal) y-coordinate delimitation"
@@ -306,139 +309,145 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:482
 msgid "ITER:"
-msgstr ""
+msgstr "ITER:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:485
-msgid ""
-"Change the iteration value. The higher it is, the more details will be "
-"calculated, which will take more time"
-msgstr ""
+msgid "Change the iteration value. The higher it is, the more details will be calculated, which will take more time"
+msgstr "Itt változtathatod meg az iteráció értékét. Minnél nagyobb ez az érték, annál több részletet számol ki a program és annál tovább tart a számítás"
 
 #: plug-ins/FractalExplorer/Dialogs.c:494
 msgid "CX:"
-msgstr ""
+msgstr "CX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:497
-msgid ""
-"Change the CX value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
+msgid "Change the CX value (changes aspect of fractal, active with every fractal but Mandelbrot and Sierpinski)"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:506
 msgid "CY:"
-msgstr ""
+msgstr "CY:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:509
-msgid ""
-"Change the CY value (changes aspect of fractal, active with every fractal "
-"but Mandelbrot and Sierpinski)"
+msgid "Change the CY value (changes aspect of fractal, active with every fractal but Mandelbrot and Sierpinski)"
 msgstr ""
 
-#: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
+#: plug-ins/FractalExplorer/Dialogs.c:520
+#: plug-ins/common/CML_explorer.c:1229
+#: plug-ins/common/gqbist.c:686
+#: plug-ins/gfig/gfig.c:3548
 msgid "Load"
-msgstr ""
+msgstr "Betöltés"
 
 #: plug-ins/FractalExplorer/Dialogs.c:526
 msgid "Load a fractal from file"
-msgstr ""
+msgstr "Fraktál betöltése fájlból"
 
-#: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:858
-#: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
-#: plug-ins/common/sample_colorize.c:1372 plug-ins/common/tileit.c:467
-#: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
-#: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
+#: plug-ins/FractalExplorer/Dialogs.c:528
+#: plug-ins/common/convmatrix.c:858
+#: plug-ins/common/curve_bend.c:1361
+#: plug-ins/common/iwarp.c:1144
+#: plug-ins/common/sample_colorize.c:1372
+#: plug-ins/common/tileit.c:467
+#: plug-ins/fp/fp_gtk.c:906
+#: plug-ins/gimpressionist/preview.c:124
+#: plug-ins/ifscompose/ifscompose.c:809
+#: plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
-msgstr ""
+msgstr "VisszaállÍtás"
 
 #: plug-ins/FractalExplorer/Dialogs.c:534
 msgid "Reset parameters to default values"
-msgstr ""
+msgstr "Paraméterek visszaállÍtása az alapértelmezett értékekre"
 
-#: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
-#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
+#: plug-ins/FractalExplorer/Dialogs.c:537
+#: plug-ins/common/CML_explorer.c:1222
+#: plug-ins/common/gqbist.c:694
+#: plug-ins/gfig/gfig.c:3927
+#: plug-ins/gfig/gfig.c:5256
+#: plug-ins/imagemap/imap_menu.c:218
 #: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 #: plug-ins/FractalExplorer/Dialogs.c:543
 msgid "Save active fractal to file"
-msgstr ""
+msgstr "Az aktív fraktál mentése fájlba"
 
 #. Fractal type toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:546
 msgid "Fractal Type"
-msgstr ""
+msgstr "Fraktál típusa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:559
 msgid "Mandelbrot"
-msgstr ""
+msgstr "Mandelbrot"
 
 #: plug-ins/FractalExplorer/Dialogs.c:561
 msgid "Julia"
-msgstr ""
+msgstr "Julia"
 
 #: plug-ins/FractalExplorer/Dialogs.c:563
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Barnsley 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:565
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Barnsley 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:567
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:569
 msgid "Spider"
-msgstr ""
+msgstr "Spider"
 
 #: plug-ins/FractalExplorer/Dialogs.c:571
 msgid "Man'o'war"
-msgstr ""
+msgstr "Man'o'war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Lambda"
-msgstr ""
+msgstr "Lambda"
 
 #: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Sierpinski"
-msgstr ""
+msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
-#: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
+#: plug-ins/FractalExplorer/Dialogs.c:621
+#: plug-ins/common/sinus.c:1859
+#: plug-ins/common/sinus.c:1877
+#: plug-ins/common/sinus.c:1963
 #: plug-ins/imagemap/imap_preferences.c:542
 msgid "Colors"
-msgstr ""
+msgstr "Színek"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:625 plug-ins/common/borderaverage.c:431
 #: plug-ins/gap/gap_range_ops.c:346
 msgid "Number of Colors"
-msgstr ""
+msgstr "Színek száma"
 
 #: plug-ins/FractalExplorer/Dialogs.c:638
 msgid "Number of Colors:"
-msgstr ""
+msgstr "Színek száma:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:641
 msgid "Change the number of colors in the mapping"
-msgstr ""
+msgstr "Színek számának megváltoztatása a leképezésben"
 
 #: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "Use loglog Smoothing"
-msgstr ""
+msgstr "Loglog simítás használata"
 
 #: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Loglog simítás használata, ez eltünteti a végeredménybõl a \"csíkokat\""
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:659
 msgid "Color Density"
-msgstr ""
+msgstr "Színsûrûség"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -450,207 +459,228 @@ msgstr ""
 #: plug-ins/common/noisify.c:588 plug-ins/common/noisify.c:624
 #: plug-ins/fp/fp_gtk.c:20
 msgid "Red:"
-msgstr ""
+msgstr "Vörös:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Change the intensity of the red channel"
-msgstr ""
+msgstr "A vörös csatorna intenzitásának megváltoztatása"
 
-#: plug-ins/FractalExplorer/Dialogs.c:683 plug-ins/common/AlienMap.c:1448
-#: plug-ins/common/compose.c:121 plug-ins/common/compose.c:125
-#: plug-ins/common/diffraction.c:609 plug-ins/common/diffraction.c:648
-#: plug-ins/common/diffraction.c:687 plug-ins/common/exchange.c:471
-#: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:635
+#: plug-ins/FractalExplorer/Dialogs.c:683
+#: plug-ins/common/AlienMap.c:1448
+#: plug-ins/common/compose.c:121
+#: plug-ins/common/compose.c:125
+#: plug-ins/common/diffraction.c:609
+#: plug-ins/common/diffraction.c:648
+#: plug-ins/common/diffraction.c:687
+#: plug-ins/common/exchange.c:471
+#: plug-ins/common/noisify.c:599
+#: plug-ins/common/noisify.c:635
 #: plug-ins/fp/fp_gtk.c:21
 msgid "Green:"
-msgstr ""
+msgstr "Zöld:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:686
 msgid "Change the intensity of the green channel"
-msgstr ""
+msgstr "A zöld csatorna intenzitásának megváltoztatása"
 
-#: plug-ins/FractalExplorer/Dialogs.c:693 plug-ins/common/AlienMap.c:1457
-#: plug-ins/common/compose.c:122 plug-ins/common/compose.c:126
-#: plug-ins/common/diffraction.c:618 plug-ins/common/diffraction.c:657
-#: plug-ins/common/diffraction.c:696 plug-ins/common/exchange.c:512
-#: plug-ins/common/noisify.c:610 plug-ins/common/noisify.c:646
+#: plug-ins/FractalExplorer/Dialogs.c:693
+#: plug-ins/common/AlienMap.c:1457
+#: plug-ins/common/compose.c:122
+#: plug-ins/common/compose.c:126
+#: plug-ins/common/diffraction.c:618
+#: plug-ins/common/diffraction.c:657
+#: plug-ins/common/diffraction.c:696
+#: plug-ins/common/exchange.c:512
+#: plug-ins/common/noisify.c:610
+#: plug-ins/common/noisify.c:646
 #: plug-ins/fp/fp_gtk.c:22
 msgid "Blue:"
-msgstr ""
+msgstr "Kék:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:696
 msgid "Change the intensity of the blue channel"
-msgstr ""
+msgstr "A kék csatorna intenzitásának megváltoztatása"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:702
 msgid "Color Function"
-msgstr ""
+msgstr "Színfüggvény"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:713 plug-ins/common/AlienMap.c:1466
 #: plug-ins/common/convmatrix.c:86 plug-ins/common/decompose.c:116
 #: plug-ins/common/newsprint.c:396
 msgid "Red"
-msgstr ""
+msgstr "Vörös"
 
 #: plug-ins/FractalExplorer/Dialogs.c:717
 #: plug-ins/FractalExplorer/Dialogs.c:758
-#: plug-ins/FractalExplorer/Dialogs.c:799 plug-ins/common/AlienMap.c:1470
-#: plug-ins/common/AlienMap.c:1493 plug-ins/common/AlienMap.c:1516
+#: plug-ins/FractalExplorer/Dialogs.c:799
+#: plug-ins/common/AlienMap.c:1470
+#: plug-ins/common/AlienMap.c:1493
+#: plug-ins/common/AlienMap.c:1516
 #: plug-ins/common/ripple.c:666
 msgid "Sine"
-msgstr ""
+msgstr "Sinus"
 
 #: plug-ins/FractalExplorer/Dialogs.c:719
 #: plug-ins/FractalExplorer/Dialogs.c:760
-#: plug-ins/FractalExplorer/Dialogs.c:801 plug-ins/common/AlienMap.c:1471
-#: plug-ins/common/AlienMap.c:1494 plug-ins/common/AlienMap.c:1517
+#: plug-ins/FractalExplorer/Dialogs.c:801
+#: plug-ins/common/AlienMap.c:1471
+#: plug-ins/common/AlienMap.c:1494
+#: plug-ins/common/AlienMap.c:1517
 msgid "Cosine"
-msgstr ""
+msgstr "Cosinus"
 
 #: plug-ins/FractalExplorer/Dialogs.c:721
 #: plug-ins/FractalExplorer/Dialogs.c:762
-#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/Lighting/lighting_ui.c:572
-#: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
-#: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
-#: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2720 plug-ins/common/ps.c:2733
-#: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1606
-#: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:299
+#: plug-ins/FractalExplorer/Dialogs.c:803
+#: plug-ins/Lighting/lighting_ui.c:572
+#: plug-ins/common/AlienMap.c:1472
+#: plug-ins/common/AlienMap.c:1495
+#: plug-ins/common/AlienMap.c:1518
+#: plug-ins/common/CML_explorer.c:167
+#: plug-ins/common/align_layers.c:452
+#: plug-ins/common/align_layers.c:485
+#: plug-ins/common/ps.c:2720
+#: plug-ins/common/ps.c:2733
+#: plug-ins/common/psp.c:445
+#: plug-ins/common/tiff.c:1606
+#: plug-ins/fits/fits.c:1032
+#: plug-ins/gap/gap_mov_dialog.c:299
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #: plug-ins/FractalExplorer/Dialogs.c:726
 #: plug-ins/FractalExplorer/Dialogs.c:767
 #: plug-ins/FractalExplorer/Dialogs.c:808
 msgid "Use sine-function for this color component"
-msgstr ""
+msgstr "Sinus függvény használata ennél a színkomponensnél"
 
 #: plug-ins/FractalExplorer/Dialogs.c:729
 #: plug-ins/FractalExplorer/Dialogs.c:770
 #: plug-ins/FractalExplorer/Dialogs.c:811
 msgid "Use cosine-function for this color component"
-msgstr ""
+msgstr "Cosinus függvény használata ennél a színkomponensnél"
 
 #: plug-ins/FractalExplorer/Dialogs.c:732
 #: plug-ins/FractalExplorer/Dialogs.c:773
 #: plug-ins/FractalExplorer/Dialogs.c:814
-msgid ""
-"Use linear mapping instead of any trigonometrical function for this color "
-"channel"
-msgstr ""
+msgid "Use linear mapping instead of any trigonometrical function for this color channel"
+msgstr "Lineáris leképezés használata trigonometrikus függvények helett ehhez a színcsatornához "
 
 #: plug-ins/FractalExplorer/Dialogs.c:741
 #: plug-ins/FractalExplorer/Dialogs.c:782
 #: plug-ins/FractalExplorer/Dialogs.c:823
 msgid "Inversion"
-msgstr ""
+msgstr "Inverzió"
 
 #: plug-ins/FractalExplorer/Dialogs.c:749
 #: plug-ins/FractalExplorer/Dialogs.c:790
 #: plug-ins/FractalExplorer/Dialogs.c:831
-msgid ""
-"If you enable this option higher color values will be swapped with lower "
-"ones and vice versa"
-msgstr ""
+msgid "If you enable this option higher color values will be swapped with lower ones and vice versa"
+msgstr "Ha ezt bekapcsolod, a magas szÍnértékeket a program az alacsony színértékekkel cseréli ki, és fordítva."
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:754 plug-ins/common/AlienMap.c:1489
 #: plug-ins/common/convmatrix.c:87 plug-ins/common/decompose.c:117
 #: plug-ins/common/newsprint.c:404
 msgid "Green"
-msgstr ""
+msgstr "Zöld"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:795 plug-ins/common/AlienMap.c:1512
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/decompose.c:118
 #: plug-ins/common/newsprint.c:412
 msgid "Blue"
-msgstr ""
+msgstr "Kék"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:836
 msgid "Color Mode"
-msgstr ""
+msgstr "Szín mód"
 
 #: plug-ins/FractalExplorer/Dialogs.c:847
 msgid "As Specified above"
-msgstr ""
+msgstr "Mint fent"
 
 #: plug-ins/FractalExplorer/Dialogs.c:858
-msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
-msgstr ""
+msgid "Create a color-map with the options you specified above (color density/function). The result is visible in the preview image"
+msgstr "Színtérkép létrehozása a fent megadott beállításokkal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "Apply Active Gradient to Final Image"
-msgstr ""
+msgstr "Aktív színátmenet alakalmazása a végsõ képre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
+msgstr "Színtérkép létrehozása a színátmenet-szerkesztõben található színátmenetbõl"
 
 #: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "FractalExplorer Gradient"
-msgstr ""
+msgstr "Fraktálböngészõ színátmenet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Fractals"
-msgstr ""
+msgstr "Fraktálok"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1458
+#: plug-ins/FractalExplorer/Dialogs.c:1566
+#: plug-ins/gfig/gfig.c:1458
 #, c-format
 msgid "Error opening: %s"
-msgstr ""
+msgstr "Hiba a következõ megnyitásakor: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1460
+#: plug-ins/FractalExplorer/Dialogs.c:1568
+#: plug-ins/gfig/gfig.c:1460
 msgid "Could not save."
-msgstr ""
+msgstr "Mentés sikertelen."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1584
-msgid "Failed to write file\n"
+msgid ""
+"Failed to write file\n"
+""
 msgstr ""
+"A fájl írása sikertelen\n"
+""
 
 #: plug-ins/FractalExplorer/Dialogs.c:1606
 msgid "Save: No filename given"
-msgstr ""
+msgstr "Mentés: Nem adtál meg fájlnevet"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1616
 msgid "Save: Can't save to a directory"
-msgstr ""
+msgstr "Mentés: Nem lehet könyvtárba menteni"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1665
 msgid "Load Fractal Parameters"
-msgstr ""
+msgstr "Fraktál paraméterek betöltése"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1676
 msgid "Click here to load your file"
-msgstr ""
+msgstr "Kattints ide a fájl betöltéséhez"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1682
 msgid "Click here to cancel load procedure"
-msgstr ""
+msgstr "Kattints ide a betöltés megszakításához"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1700
 msgid "Save Fractal Parameters"
-msgstr ""
+msgstr "Fraktál paraméterek mentése"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1712
 msgid "Click here to save your file"
-msgstr ""
+msgstr "Kattints ide a fájl mentéséhez"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1719
 msgid "Click here to cancel save procedure"
-msgstr ""
+msgstr "Kattints ide a mentés megszakításához"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1982
 #: plug-ins/FractalExplorer/FractalExplorer.c:1253
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr ""
+msgstr "A következõ fájl nem Fraktálböngészõ fájl: '%s'"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1987
 #: plug-ins/FractalExplorer/FractalExplorer.c:1261
@@ -659,47 +689,57 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
+"A következõ fájl hibás: '%s' .\n"
+"A hiba helye: %d. sor, 'Option' szekció hibás"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:212
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Fraktálböngészõ..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:351
 msgid "Rendering Fractal..."
-msgstr ""
+msgstr "Fraktál megjelenítése..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:5012
+#: plug-ins/FractalExplorer/FractalExplorer.c:731
+#: plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3369
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr ""
+"Biztos, hogy törölni szeretnéd a\n"
+"listából és a lemezrõl a következõ\n"
+"fájlt: '%s'"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:735
 msgid "Delete Fractal"
-msgstr ""
+msgstr "Fraktál törlése"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:740
-#: plug-ins/FractalExplorer/FractalExplorer.c:1400 plug-ins/gfig/gfig.c:3568
-#: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3102
-#: plug-ins/gflare/gflare.c:3378 plug-ins/gimpressionist/presets.c:648
-#: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:53
+#: plug-ins/FractalExplorer/FractalExplorer.c:1400
+#: plug-ins/gfig/gfig.c:3568
+#: plug-ins/gfig/gfig.c:5021
+#: plug-ins/gflare/gflare.c:3102
+#: plug-ins/gflare/gflare.c:3378
+#: plug-ins/gimpressionist/presets.c:648
+#: plug-ins/ifscompose/ifscompose.c:807
+#: plug-ins/imagemap/imap_cmd_delete.c:53
 #: plug-ins/imagemap/imap_selection.c:175
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:825
 msgid "Edit fractal name"
-msgstr ""
+msgstr "Fraktál nevének szerkesztése"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:836
 msgid "Fractal name:"
-msgstr ""
+msgstr "Fraktál neve:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:877
 msgid "New Fractal"
-msgstr ""
+msgstr "Új fraktál"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1149
 #, c-format
@@ -709,50 +749,53 @@ msgid ""
 "(fractalexplorer-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Nincs fractalexplorer-path a gimprc-ben:\n"
+"Hozzá kell adnod egy ilyen sort\n"
+"(fractalexplorer-path \"%s\")\n"
+"a következõ fájlhoz: %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1166
-msgid ""
-"fractalexplorer-path misconfigured - the following directories were not found"
-msgstr ""
+msgid "fractalexplorer-path misconfigured - the following directories were not found"
+msgstr "fractalexplorer-path rosszul van beállÍtva - a következõ könyvtárak nem találhatók"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1342
 msgid "My first fractal"
-msgstr ""
+msgstr "Az elsõ fraktálom"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1359
 msgid "Choose Fractal by double-clicking on it"
-msgstr ""
+msgstr "A fraktált dupla-kattintással választhatod ki"
 
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
-msgstr ""
+msgstr "Újraolvasás"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 msgid "Select directory and rescan collection"
-msgstr ""
+msgstr "Könyvtár kiválasztása és a gyûjtemény újraolvasása"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1408
 msgid "Delete currently selected fractal"
-msgstr ""
+msgstr "A kijelölt fraktál törlése"
 
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1460
 msgid "Rescan for Fractals"
-msgstr ""
+msgstr "Fraktálok újraolvasása"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 msgid "Add FractalExplorer Path"
-msgstr ""
+msgstr "FractalExplorer elérési útvonal hozzáadása"
 
 #: plug-ins/Lighting/lighting_main.c:169
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Fényhatások/Fényhatások..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:395 plug-ins/MapObject/mapobject_ui.c:532
 msgid "General Options"
-msgstr ""
+msgstr "Általános beállítások"
 
 #.
 #. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
@@ -783,103 +826,118 @@ msgstr ""
 #.
 #: plug-ins/Lighting/lighting_ui.c:430 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
-msgstr ""
+msgstr "Átlátszó háttér"
 
 #: plug-ins/Lighting/lighting_ui.c:440
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:443 plug-ins/MapObject/mapobject_ui.c:590
+#: plug-ins/Lighting/lighting_ui.c:443
+#: plug-ins/MapObject/mapobject_ui.c:590
 #: plug-ins/common/tile.c:443
 msgid "Create New Image"
-msgstr ""
+msgstr "Új kép létrehozása"
 
-#: plug-ins/Lighting/lighting_ui.c:453 plug-ins/MapObject/mapobject_ui.c:600
+#: plug-ins/Lighting/lighting_ui.c:453
+#: plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
-msgstr ""
+msgstr "Új kép létrehozása szûrõ alkalmazásakoz"
 
 #: plug-ins/Lighting/lighting_ui.c:455
 msgid "High Quality Preview"
-msgstr ""
+msgstr "Jó minõségû elõnézet"
 
 #: plug-ins/Lighting/lighting_ui.c:465
 msgid "Enable/disable high quality preview"
-msgstr ""
+msgstr "Jó minõségû elõnézet ki- és bekapcsolása"
 
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:469 plug-ins/MapObject/mapobject_ui.c:615
 msgid "Antialiasing Options"
-msgstr ""
+msgstr "Élsimítás beállításai"
 
-#: plug-ins/Lighting/lighting_ui.c:478 plug-ins/MapObject/mapobject_ui.c:624
+#: plug-ins/Lighting/lighting_ui.c:478
+#: plug-ins/MapObject/mapobject_ui.c:624
 msgid "Enable Antialiasing"
-msgstr ""
+msgstr "Élsimítás bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:488
 msgid "Enable/disable jagged edges removal(antialiasing)"
-msgstr ""
+msgstr "Ki- és bekapcsolja a recés szélek eltüntetését (élsimítást)"
 
-#: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
+#: plug-ins/Lighting/lighting_ui.c:501
+#: plug-ins/MapObject/mapobject_ui.c:647
+#: plug-ins/common/bumpmap.c:1042
+#: plug-ins/common/emboss.c:589
 #: plug-ins/common/struc.c:1324
 msgid "Depth:"
-msgstr ""
+msgstr "Mélység:"
 
-#: plug-ins/Lighting/lighting_ui.c:504 plug-ins/MapObject/mapobject_ui.c:650
+#: plug-ins/Lighting/lighting_ui.c:504
+#: plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
+msgstr "Élsimítás minõsége. Minnél magasabb, annál jobb, de lassabb"
 
-#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
-#: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:830
-#: plug-ins/common/wind.c:1138 plug-ins/gflare/gflare.c:3024
+#: plug-ins/Lighting/lighting_ui.c:511
+#: plug-ins/common/iwarp.c:1107
+#: plug-ins/common/threshold_alpha.c:294
+#: plug-ins/common/unsharp.c:830
+#: plug-ins/common/wind.c:1138
+#: plug-ins/gflare/gflare.c:3024
 msgid "Threshold:"
-msgstr ""
+msgstr "Küszöb:"
 
-#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:666
+#: plug-ins/Lighting/lighting_ui.c:514
+#: plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
+msgstr "Leállás, amikor a pixelek különbsége kisebb mint ez az érték"
 
-#: plug-ins/Lighting/lighting_ui.c:557 plug-ins/MapObject/mapobject_ui.c:692
+#: plug-ins/Lighting/lighting_ui.c:557
+#: plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
-msgstr ""
+msgstr "Fénybeállítások"
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Directional"
-msgstr ""
+msgstr "Irányított"
 
 #: plug-ins/Lighting/lighting_ui.c:576
 msgid "Point"
-msgstr ""
+msgstr "Pont"
 
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
-msgstr ""
+msgstr "Szpot"
 
 #: plug-ins/Lighting/lighting_ui.c:583
 msgid "Light Type:"
-msgstr ""
+msgstr "Fény típusa:"
 
-#: plug-ins/Lighting/lighting_ui.c:586 plug-ins/MapObject/mapobject_ui.c:718
+#: plug-ins/Lighting/lighting_ui.c:586
+#: plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "Az alkalmazandó fényforrás típusa"
 
-#: plug-ins/Lighting/lighting_ui.c:588 plug-ins/MapObject/mapobject_ui.c:720
+#: plug-ins/Lighting/lighting_ui.c:588
+#: plug-ins/MapObject/mapobject_ui.c:720
 msgid "Select Lightsource Color"
-msgstr ""
+msgstr "Add meg a fényforrás színét"
 
 #: plug-ins/Lighting/lighting_ui.c:592
 msgid "Light Color:"
-msgstr ""
+msgstr "Fény színe:"
 
-#: plug-ins/Lighting/lighting_ui.c:596 plug-ins/MapObject/mapobject_ui.c:728
+#: plug-ins/Lighting/lighting_ui.c:596
+#: plug-ins/MapObject/mapobject_ui.c:728
 msgid "Set light source color"
-msgstr ""
+msgstr "A fényforrás színének beállítása"
 
-#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:730
+#: plug-ins/Lighting/lighting_ui.c:598
+#: plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
 #: plug-ins/print/gimp_main_window.c:335
 msgid "Position"
-msgstr ""
+msgstr "Helyzet"
 
 #. X
 #. table col, row
@@ -892,11 +950,12 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1837 plug-ins/gflare/gflare.c:2876
 #: plug-ins/ifscompose/ifscompose.c:535
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:622 plug-ins/MapObject/mapobject_ui.c:754
+#: plug-ins/Lighting/lighting_ui.c:622
+#: plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
-msgstr ""
+msgstr "A fényforrás X helyzete az XYZ térben"
 
 #. Y
 #. table col, row
@@ -909,151 +968,175 @@ msgstr ""
 #: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:1855
 #: plug-ins/gflare/gflare.c:2880 plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:635 plug-ins/MapObject/mapobject_ui.c:767
+#: plug-ins/Lighting/lighting_ui.c:635
+#: plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
-msgstr ""
+msgstr "A fényforrás Y helyzete az XYZ térben"
 
-#: plug-ins/Lighting/lighting_ui.c:641 plug-ins/Lighting/lighting_ui.c:691
-#: plug-ins/MapObject/mapobject_ui.c:773 plug-ins/MapObject/mapobject_ui.c:823
+#: plug-ins/Lighting/lighting_ui.c:641
+#: plug-ins/Lighting/lighting_ui.c:691
+#: plug-ins/MapObject/mapobject_ui.c:773
+#: plug-ins/MapObject/mapobject_ui.c:823
 #: plug-ins/MapObject/mapobject_ui.c:1062
 #: plug-ins/MapObject/mapobject_ui.c:1102
 #: plug-ins/MapObject/mapobject_ui.c:1200
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:780
+#: plug-ins/Lighting/lighting_ui.c:648
+#: plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
-msgstr ""
+msgstr "A fényforrás Z helyzete az XYZ térben"
 
-#: plug-ins/Lighting/lighting_ui.c:651 plug-ins/MapObject/mapobject_ui.c:783
+#: plug-ins/Lighting/lighting_ui.c:651
+#: plug-ins/MapObject/mapobject_ui.c:783
 msgid "Direction Vector"
-msgstr ""
+msgstr "Irányvektor"
 
-#: plug-ins/Lighting/lighting_ui.c:674 plug-ins/MapObject/mapobject_ui.c:806
+#: plug-ins/Lighting/lighting_ui.c:674
+#: plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
-msgstr ""
+msgstr "A fényforrás X iránya az XYZ térben"
 
-#: plug-ins/Lighting/lighting_ui.c:686 plug-ins/MapObject/mapobject_ui.c:818
+#: plug-ins/Lighting/lighting_ui.c:686
+#: plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
-msgstr ""
+msgstr "A fényforrás Y iránya az XYZ térben"
 
-#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/MapObject/mapobject_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:698
+#: plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
-msgstr ""
+msgstr "A fényforrás Z iránya az XYZ térben"
 
-#: plug-ins/Lighting/lighting_ui.c:723 plug-ins/MapObject/mapobject_ui.c:855
+#: plug-ins/Lighting/lighting_ui.c:723
+#: plug-ins/MapObject/mapobject_ui.c:855
 msgid "Intensity Levels"
-msgstr ""
+msgstr "Intenzitás mértéke"
 
-#: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
+#: plug-ins/Lighting/lighting_ui.c:741
+#: plug-ins/MapObject/mapobject_ui.c:873
 #: plug-ins/common/bumpmap.c:1082
 msgid "Ambient:"
-msgstr ""
+msgstr "Ambiens:"
 
-#: plug-ins/Lighting/lighting_ui.c:754 plug-ins/MapObject/mapobject_ui.c:886
+#: plug-ins/Lighting/lighting_ui.c:754
+#: plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
+msgstr "Az eredeti szín megjelenõ mennyisége, ott, ahova nem esik közvetlenül fény"
 
-#: plug-ins/Lighting/lighting_ui.c:766 plug-ins/Lighting/lighting_ui.c:805
-#: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
+#: plug-ins/Lighting/lighting_ui.c:766
+#: plug-ins/Lighting/lighting_ui.c:805
+#: plug-ins/MapObject/mapobject_ui.c:898
+#: plug-ins/MapObject/mapobject_ui.c:937
 msgid "Diffuse:"
-msgstr ""
+msgstr "Szórt:"
 
-#: plug-ins/Lighting/lighting_ui.c:779 plug-ins/MapObject/mapobject_ui.c:911
+#: plug-ins/Lighting/lighting_ui.c:779
+#: plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
-msgstr ""
+msgstr "Az eredeti szín intenzitása, ha rávilágít a fényforrás"
 
-#: plug-ins/Lighting/lighting_ui.c:787 plug-ins/MapObject/mapobject_ui.c:919
+#: plug-ins/Lighting/lighting_ui.c:787
+#: plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
-msgstr ""
+msgstr "Fényvisszaverés"
 
-#: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:950
+#: plug-ins/Lighting/lighting_ui.c:818
+#: plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
+msgstr "Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
 
-#: plug-ins/Lighting/lighting_ui.c:830 plug-ins/MapObject/mapobject_ui.c:962
+#: plug-ins/Lighting/lighting_ui.c:830
+#: plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:843 plug-ins/MapObject/mapobject_ui.c:975
+#: plug-ins/Lighting/lighting_ui.c:843
+#: plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:855 plug-ins/MapObject/mapobject_ui.c:987
+#: plug-ins/Lighting/lighting_ui.c:855
+#: plug-ins/MapObject/mapobject_ui.c:987
 #: plug-ins/common/jigsaw.c:2598
 msgid "Highlight:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:868 plug-ins/MapObject/mapobject_ui.c:1000
+#: plug-ins/Lighting/lighting_ui.c:868
+#: plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
-msgstr ""
+msgstr "xxxHepehupás leképezés"
 
 #: plug-ins/Lighting/lighting_ui.c:907
 msgid "Enable Bump Mapping"
-msgstr ""
+msgstr "xxxHepehupás leképezés bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:917
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr ""
+msgstr "xxxHepehupás leképezés ki- és bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:934
 msgid "Bumpmap Image:"
-msgstr ""
+msgstr "A leképezés forrása (kép):"
 
-#: plug-ins/Lighting/lighting_ui.c:942 plug-ins/common/mblur.c:784
-#: plug-ins/common/sinus.c:1988 plug-ins/flame/flame.c:721
+#: plug-ins/Lighting/lighting_ui.c:942
+#: plug-ins/common/mblur.c:784
+#: plug-ins/common/sinus.c:1988
+#: plug-ins/flame/flame.c:721
 msgid "Linear"
-msgstr ""
+msgstr "Lineáris"
 
 #: plug-ins/Lighting/lighting_ui.c:943
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmikus"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:722
+#: plug-ins/Lighting/lighting_ui.c:944
+#: plug-ins/flame/flame.c:722
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sinusos"
 
-#: plug-ins/Lighting/lighting_ui.c:945 plug-ins/flame/flame.c:723
+#: plug-ins/Lighting/lighting_ui.c:945
+#: plug-ins/flame/flame.c:723
 msgid "Spherical"
-msgstr ""
+msgstr "Szferikus"
 
 #: plug-ins/Lighting/lighting_ui.c:949
 msgid "Curve:"
-msgstr ""
+msgstr "Görbe:"
 
 #: plug-ins/Lighting/lighting_ui.c:955
 msgid "Maximum Height:"
-msgstr ""
+msgstr "Maximális magaság:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
 msgid "Maximum height for bumps"
-msgstr ""
+msgstr "Hepehupák legnagyobb magassága"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
-msgstr ""
+msgstr "Minimális magasság:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
 msgid "Minimum height for bumps"
-msgstr ""
+msgstr "Hepehupák legkisebb magassága"
 
 #: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
-msgstr ""
+msgstr "Automatikusan az értéktartományhoz igazít"
 
 #: plug-ins/Lighting/lighting_ui.c:988
 msgid "Fit into value range"
-msgstr ""
+msgstr "Értéktartományhoz igazít"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
-msgstr ""
+msgstr "Környezet beállításai"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
 msgid "Enable Environment Mapping"
@@ -1065,155 +1148,162 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1045
 msgid "Environment Image:"
-msgstr ""
+msgstr "xxxKörnyezet kép:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
 msgid "Environment image to use"
-msgstr ""
+msgstr "Használandó környezet kép"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
 #: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4010
 msgid "Options"
-msgstr ""
+msgstr "Beállítások"
 
-#: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
+#: plug-ins/Lighting/lighting_ui.c:1076
+#: plug-ins/MapObject/mapobject_ui.c:1318
 msgid "Light"
-msgstr ""
+msgstr "Szín"
 
-#: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1322
+#: plug-ins/Lighting/lighting_ui.c:1080
+#: plug-ins/MapObject/mapobject_ui.c:1322
 msgid "Material"
-msgstr ""
+msgstr "Anyag"
 
-#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:844
+#: plug-ins/Lighting/lighting_ui.c:1084
+#: plug-ins/common/bumpmap.c:844
 msgid "Bump Map"
-msgstr ""
+msgstr "xxxHepehupás leképezés"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
 msgid "Environment Map"
-msgstr ""
+msgstr "xxxKörnyezet leképezése"
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
-msgstr ""
+msgstr "Világítás hatásai"
 
-#: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:709
+#: plug-ins/Lighting/lighting_ui.c:1197
+#: plug-ins/common/grid.c:709
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Update Preview"
-msgstr ""
+msgstr "Elõnézet frissítése"
 
-#: plug-ins/Lighting/lighting_ui.c:1205 plug-ins/MapObject/mapobject_ui.c:1442
+#: plug-ins/Lighting/lighting_ui.c:1205
+#: plug-ins/MapObject/mapobject_ui.c:1442
 msgid "Recompute preview image"
-msgstr ""
+msgstr "Az elõnézet újraszámolása"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Leképezés, tárgyak..."
 
-#: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
+#: plug-ins/MapObject/mapobject_ui.c:262
+#: plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
 msgid "Box"
-msgstr ""
+msgstr "Doboz"
 
-#: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
+#: plug-ins/MapObject/mapobject_ui.c:280
+#: plug-ins/MapObject/mapobject_ui.c:557
 #: plug-ins/MapObject/mapobject_ui.c:1338
 msgid "Cylinder"
-msgstr ""
+msgstr "Henger"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
-msgstr ""
+msgstr "xxxLeképezés erre:"
 
 #: plug-ins/MapObject/mapobject_ui.c:554
 msgid "Plane"
-msgstr ""
+msgstr "Sík"
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
-msgstr ""
+msgstr "Gömb"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
-msgstr ""
+msgstr "Céltárgy típusa"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr ""
+msgstr "A kép átlátszó a tárgyon kívül"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr ""
+msgstr "Mozaik a forrásképbõl"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
-msgstr ""
+msgstr "Mozaik a forrásképbõl: hasznos végtelen síkok esetén"
 
 #: plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
-msgstr ""
+msgstr "Segégszöveg bekapcsolása"
 
 #: plug-ins/MapObject/mapobject_ui.c:611
 msgid "Enable/disable tooltip messages"
-msgstr ""
+msgstr "Segédszöveg ki- és bekapcsolása"
 
 #: plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr ""
+msgstr "Ki- és bekapcsolja a recés szélek eltüntetését (élsimítás)"
 
 #: plug-ins/MapObject/mapobject_ui.c:662
 msgid "Treshold:"
-msgstr ""
+msgstr "Küszöb:"
 
 #: plug-ins/MapObject/mapobject_ui.c:706
 msgid "Point Light"
-msgstr ""
+msgstr "Pontszerû fényforrás"
 
 #: plug-ins/MapObject/mapobject_ui.c:708
 msgid "Directional Light"
-msgstr ""
+msgstr "Irányított fényforrás"
 
 #: plug-ins/MapObject/mapobject_ui.c:710
 msgid "No Light"
-msgstr ""
+msgstr "Nincs fény"
 
 #: plug-ins/MapObject/mapobject_ui.c:715
 msgid "Lightsource Type:"
-msgstr ""
+msgstr "Fényforrás típusa:"
 
 #: plug-ins/MapObject/mapobject_ui.c:724
 msgid "Lightsource Color:"
-msgstr ""
+msgstr "Fényforrás színe:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1043
 msgid "Object X position in XYZ space"
-msgstr ""
+msgstr "Tárgy X heelyzete az XYZ térben"
 
 #: plug-ins/MapObject/mapobject_ui.c:1054
 msgid "Object Y position in XYZ space"
-msgstr ""
+msgstr "Tárgy Y helyzete az XYZ térben"
 
 #: plug-ins/MapObject/mapobject_ui.c:1065
 msgid "Object Z position in XYZ space"
-msgstr ""
+msgstr "Tárgy Z helyzete az XYZ térben"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2898
 #: plug-ins/gdyntext/gdyntext_ui.c:470
 msgid "Rotation"
-msgstr ""
+msgstr "Forgatás"
 
 #: plug-ins/MapObject/mapobject_ui.c:1087
 msgid "Rotation angle about X axis"
-msgstr ""
+msgstr "Elfordulás szöge az X tengely körül"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 msgid "Rotation angle about Y axis"
-msgstr ""
+msgstr "Elfordulás szöge az Y tengely körül"
 
 #: plug-ins/MapObject/mapobject_ui.c:1105
 msgid "Rotation angle about Z axis"
-msgstr ""
+msgstr "Elfordulás szöge az Z tengely körül"
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
 msgid "Front:"
@@ -1238,91 +1328,100 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:386
 msgid "Left:"
-msgstr ""
+msgstr "Bal:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:408
 msgid "Right:"
-msgstr ""
+msgstr "Jobb:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
-msgstr ""
+msgstr "xxxKépek leképezése a doboz oldalaira"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
 msgid "Scale X:"
-msgstr ""
+msgstr "X skála:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1181
 msgid "X scale (size)"
-msgstr ""
+msgstr "X skála (méret)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1192
 msgid "Y scale (size)"
-msgstr ""
+msgstr "Y skála (méret)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1203
 msgid "Z scale (size)"
-msgstr ""
+msgstr "Z skála (méret)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1231
 msgid "Images for the Cap Faces"
 msgstr ""
 
-#: plug-ins/MapObject/mapobject_ui.c:1260 plug-ins/gimpressionist/size.c:51
+#: plug-ins/MapObject/mapobject_ui.c:1260
+#: plug-ins/gimpressionist/size.c:51
 #: plug-ins/gimpressionist/size.c:56
 msgid "Size"
-msgstr ""
+msgstr "Méret"
 
-#: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
-#: plug-ins/common/nlfilt.c:430 plug-ins/common/nova.c:504
-#: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:877
-#: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2911
+#: plug-ins/MapObject/mapobject_ui.c:1272
+#: plug-ins/common/despeckle.c:745
+#: plug-ins/common/nlfilt.c:430
+#: plug-ins/common/nova.c:504
+#: plug-ins/common/unsharp.c:812
+#: plug-ins/common/whirlpinch.c:877
+#: plug-ins/gfig/gfig.c:3175
+#: plug-ins/gflare/gflare.c:2911
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
-msgstr ""
+msgstr "Sugár:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Cylinder radius"
-msgstr ""
+msgstr "Henger sugara"
 
-#: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:804
+#: plug-ins/MapObject/mapobject_ui.c:1284
+#: plug-ins/common/mblur.c:804
 msgid "Length:"
-msgstr ""
+msgstr "Hossz:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1288
 msgid "Cylinder length"
-msgstr ""
+msgstr "Henger hossza"
 
-#: plug-ins/MapObject/mapobject_ui.c:1326 plug-ins/common/blinds.c:369
-#: plug-ins/common/ripple.c:634 plug-ins/gimpressionist/orientation.c:52
+#: plug-ins/MapObject/mapobject_ui.c:1326
+#: plug-ins/common/blinds.c:369
+#: plug-ins/common/ripple.c:634
+#: plug-ins/gimpressionist/orientation.c:52
 #: plug-ins/gimpressionist/orientation.c:57
 msgid "Orientation"
-msgstr ""
+msgstr "Irány"
 
 #: plug-ins/MapObject/mapobject_ui.c:1377
 msgid "Map to Object"
-msgstr ""
+msgstr "Leképezés tárgyra"
 
-#: plug-ins/MapObject/mapobject_ui.c:1434 plug-ins/common/diffraction.c:575
+#: plug-ins/MapObject/mapobject_ui.c:1434
+#: plug-ins/common/diffraction.c:575
 msgid "Preview!"
-msgstr ""
+msgstr "Elõnézet!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1451
 msgid "Zoom out (make image smaller)"
-msgstr ""
+msgstr "Távolít (kisebb kép)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1460
 msgid "Zoom in (make image bigger)"
-msgstr ""
+msgstr "Közelít (nagyobb kép)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1462
 msgid "Show Preview Wireframe"
-msgstr ""
+msgstr "Drótvázas elõnézet"
 
 #: plug-ins/MapObject/mapobject_ui.c:1470
 msgid "Show/hide preview wireframe"
-msgstr ""
+msgstr "Drótvázas elõnézet mutatása/elrejtése"
 
 #. memory mapped file data
 #. must check file size
@@ -1340,30 +1439,33 @@ msgstr ""
 #: plug-ins/sgi/sgi.c:332 plug-ins/xjt/xjt.c:3246
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "%s betöltése:"
 
 #: plug-ins/bmp/bmpread.c:63
 #, c-format
 msgid "%s: can't open \"%s\""
-msgstr ""
+msgstr "%s: '%s' megnyitása sikertelen"
 
 #: plug-ins/bmp/bmpread.c:71
 #, c-format
 msgid "%s: %s is not a valid BMP file"
-msgstr ""
+msgstr "%s: %s nem érvényes BMP fájl"
 
-#: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
-#: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
-#: plug-ins/bmp/bmpread.c:163 plug-ins/bmp/bmpread.c:168
+#: plug-ins/bmp/bmpread.c:89
+#: plug-ins/bmp/bmpread.c:107
+#: plug-ins/bmp/bmpread.c:127
+#: plug-ins/bmp/bmpread.c:145
+#: plug-ins/bmp/bmpread.c:163
+#: plug-ins/bmp/bmpread.c:168
 #: plug-ins/bmp/bmpread.c:173
 #, c-format
 msgid "%s: error reading BMP file header"
-msgstr ""
+msgstr "%s: hiba a BMP fájl fejléce beolvasása során"
 
 #: plug-ins/bmp/bmpread.c:246
 #, c-format
 msgid "%s: bad colormap"
-msgstr ""
+msgstr "%s: rossz színtérkép"
 
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:295
@@ -1384,16 +1486,16 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
 #: plug-ins/twain/twain.c:722 plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
-msgstr ""
+msgstr "Háttér"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr ""
+msgstr "BMP: nem tudok ismeretlen képtípussal vagy alfás képpel dolgozni"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
 msgid "Can't open %s"
-msgstr ""
+msgstr "%s megnyitása sikertelen"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
@@ -1410,134 +1512,132 @@ msgstr ""
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
 #, c-format
 msgid "Saving %s:"
-msgstr ""
+msgstr "%s mentése:"
 
 #: plug-ins/bmp/bmpwrite.c:559
 msgid "Save as BMP"
-msgstr ""
+msgstr "Mentés BMP formátumban"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:576
 msgid "Save Options"
-msgstr ""
+msgstr "Mentés beállításai"
 
 #: plug-ins/bmp/bmpwrite.c:584
 msgid "RLE encoded"
-msgstr ""
+msgstr "RLE kódolás"
 
 #: plug-ins/common/AlienMap.c:964
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Alien Map..."
 
 #: plug-ins/common/AlienMap.c:1162
 msgid "AlienMap: Transforming..."
-msgstr ""
+msgstr "AlienMap: Átalakítás..."
 
 #: plug-ins/common/AlienMap.c:1391
 msgid "AlienMap"
-msgstr ""
+msgstr "AlienMap"
 
 #: plug-ins/common/AlienMap.c:1442
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "Vörös csatorna intenzitásának megváltoztatása"
 
 #: plug-ins/common/AlienMap.c:1451
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "Zöld csatorna intenzitásának megváltoztatása"
 
 #: plug-ins/common/AlienMap.c:1460
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "Kék csatorna intenzitásának megváltoztatása"
 
 #: plug-ins/common/AlienMap.c:1477
 msgid "Use sine-function for red component."
-msgstr ""
+msgstr "Sinus függvény használata a vörös komponensnél."
 
 #: plug-ins/common/AlienMap.c:1479
 msgid "Use cosine-function for red component."
-msgstr ""
+msgstr "Cosinus használata a vörös komponensnél"
 
 #: plug-ins/common/AlienMap.c:1481
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Vörös csatorna: lineáris leképezés használata trigonometrikus függvények helyett"
 
 #: plug-ins/common/AlienMap.c:1500
 msgid "Use sine-function for green component."
-msgstr ""
+msgstr "Sinus függvény használata a zöld komponensnél"
 
 #: plug-ins/common/AlienMap.c:1502
 msgid "Use cosine-function for green component."
-msgstr ""
+msgstr "Cosinus függvény használata a zöld komponensnél"
 
 #: plug-ins/common/AlienMap.c:1504
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgstr "Zöld csatorna: lineáris leképezés használata trigonometrikus függvények helyett "
 
 #: plug-ins/common/AlienMap.c:1523
 msgid "Use sine-function for blue component."
-msgstr ""
+msgstr "Sinus függvény használata a kék komponensnél."
 
 #: plug-ins/common/AlienMap.c:1525
 msgid "Use cosine-function for blue component."
-msgstr ""
+msgstr "Cosinus függvény használata a kék komponensnél."
 
 #: plug-ins/common/AlienMap.c:1527
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr "Kék csatorna: Lineáris leképezés használata trigonometrikus függvények helyett"
 
 #: plug-ins/common/AlienMap.c:1657
 msgid "About AlienMap"
-msgstr ""
+msgstr "AlienMap névjegye"
 
 #: plug-ins/common/AlienMap2.c:988
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Alien Map 2..."
 
 #: plug-ins/common/AlienMap2.c:1161
 msgid "AlienMap2: Transforming..."
-msgstr ""
+msgstr "AlienMap2: Átalakítás..."
 
 #: plug-ins/common/AlienMap2.c:1383
 msgid "AlienMap2"
-msgstr ""
+msgstr "AlienMap2"
 
 #: plug-ins/common/AlienMap2.c:1432
 msgid "R/H-Frequency:"
-msgstr ""
+msgstr "V/Sz-frekvencia:"
 
 #: plug-ins/common/AlienMap2.c:1435
 msgid "Change frequency of the red/hue channel"
-msgstr ""
+msgstr "A Vörös/Színezet csatorna frekvenciájának módosítása"
 
 #: plug-ins/common/AlienMap2.c:1442
 msgid "R/H-Phaseshift:"
-msgstr ""
+msgstr "V/Sz-fáziseltolás"
 
 #: plug-ins/common/AlienMap2.c:1445
 msgid "Change angle of the red/hue channel"
-msgstr ""
+msgstr "A Vörös/Színezet csatorna szögének megváltoztatása"
 
 #: plug-ins/common/AlienMap2.c:1452
 msgid "G/S-Frequency:"
-msgstr ""
+msgstr "Z/T-frekvencia:"
 
 #: plug-ins/common/AlienMap2.c:1455
 msgid "Change frequency of the green/saturation channel"
-msgstr ""
+msgstr "A Zöld/Telítettség csatorna frekvenciájának megváltoztatása"
 
 #: plug-ins/common/AlienMap2.c:1462
 msgid "G/S-Phaseshift:"
-msgstr ""
+msgstr "Z/T-fáziseltolás:"
 
 #: plug-ins/common/AlienMap2.c:1465
 msgid "Change angle of the green/saturation channel"
-msgstr ""
+msgstr "A Zöld/Telítettség csatorna szögének megváltoztatása"
 
 #: plug-ins/common/AlienMap2.c:1472
 msgid "B/L-Frequency:"
-msgstr ""
+msgstr "Kék/Luminancia-frekvencia"
 
 #: plug-ins/common/AlienMap2.c:1475
 msgid "Change frequency of the blue/luminance channel"
@@ -1545,7 +1645,7 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1482
 msgid "B/L-Phaseshift:"
-msgstr ""
+msgstr "K/L-fáziseltolás:"
 
 #: plug-ins/common/AlienMap2.c:1485
 msgid "Change angle of the blue/luminance channel"
@@ -1556,31 +1656,31 @@ msgstr ""
 #: plug-ins/common/hot.c:617 plug-ins/common/waves.c:374
 #: plug-ins/rcm/rcm_dialog.c:475
 msgid "Mode"
-msgstr ""
+msgstr "Mód"
 
 #: plug-ins/common/AlienMap2.c:1497
 msgid "RGB Color Model"
-msgstr ""
+msgstr "RGB színmodell"
 
 #: plug-ins/common/AlienMap2.c:1498
 msgid "HSL Color Model"
-msgstr ""
+msgstr "HSL színmodel"
 
 #: plug-ins/common/AlienMap2.c:1510
 msgid "Modify Red/Hue Channel"
-msgstr ""
+msgstr "Vörös/Színezet csatorna módosítása"
 
 #: plug-ins/common/AlienMap2.c:1517
 msgid "Use function for red/hue component"
-msgstr ""
+msgstr "Függvény használata a vörös/színezet komponenshez"
 
 #: plug-ins/common/AlienMap2.c:1520
 msgid "Modify Green/Saturation Channel"
-msgstr ""
+msgstr "Zöld/Telítettség csatorna módosítása"
 
 #: plug-ins/common/AlienMap2.c:1528
 msgid "Use function for green/saturation component"
-msgstr ""
+msgstr "Függvény használata a zöld/telítettség komponenshez"
 
 #: plug-ins/common/AlienMap2.c:1531
 msgid "Modify Blue/Luminance Channel"
@@ -1592,12 +1692,12 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1671
 msgid "About AlienMap2"
-msgstr ""
+msgstr "AlienMap2 névjegye "
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
 msgid "Load KISS Palette"
-msgstr ""
+msgstr "KISS paletta betöltése"
 
 #: plug-ins/common/CEL.c:262
 #, c-format
@@ -1605,19 +1705,21 @@ msgid ""
 "%s\n"
 "is not present or is unreadable"
 msgstr ""
+"%s\n"
+"Nem található vagy nem olvasható"
 
 #: plug-ins/common/CEL.c:296
 msgid "CEL Can't create a new image"
-msgstr ""
+msgstr "CEL Új kép létrehozása sikertelen"
 
 #: plug-ins/common/CEL.c:370
 #, c-format
 msgid "Unsupported number of colors (%d)"
-msgstr ""
+msgstr "Nem támogatott színszám (%d)"
 
 #: plug-ins/common/CEL.c:492
 msgid "Only an indexed-alpha image can be saved in CEL format"
-msgstr ""
+msgstr "CEL formátumban csak indexelt alfa kép menthetõ"
 
 #: plug-ins/common/CEL.c:506
 #, c-format
@@ -1625,14 +1727,16 @@ msgid ""
 "CEL Couldn't write image to\n"
 "%s"
 msgstr ""
+"CEL A kép írása sikertelen\n"
+"a következõbe: %s"
 
 #: plug-ins/common/CML_explorer.c:131
 msgid "Keep image's values"
-msgstr "Keep image's values"
+msgstr "A kép értékeinek megtartása"
 
 #: plug-ins/common/CML_explorer.c:132
 msgid "Keep the first value"
-msgstr ""
+msgstr "Elsõ érték megtartása"
 
 #: plug-ins/common/CML_explorer.c:133
 msgid "Fill with parameter k"
@@ -1640,207 +1744,220 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:134
 msgid "k{x(1-x)}^p"
-msgstr ""
+msgstr "k{x(1-x)}^p"
 
 #: plug-ins/common/CML_explorer.c:135
 msgid "k{x(1-x)}^p stepped"
-msgstr ""
+msgstr "k{x(1-x)}^p lépcsõs"
 
 #: plug-ins/common/CML_explorer.c:136
 msgid "kx^p"
-msgstr ""
+msgstr "kx^p"
 
 #: plug-ins/common/CML_explorer.c:137
 msgid "kx^p stepped"
-msgstr ""
+msgstr "kx^p lépcsõs"
 
 #: plug-ins/common/CML_explorer.c:138
 msgid "k(1-x^p)"
-msgstr ""
+msgstr "k(1-x^p)"
 
 #: plug-ins/common/CML_explorer.c:139
 msgid "k(1-x^p) stepped"
-msgstr ""
+msgstr "k(1-x^p) lépcsõs"
 
 #: plug-ins/common/CML_explorer.c:140
 msgid "Delta function"
-msgstr ""
+msgstr "Delta függvény"
 
 #: plug-ins/common/CML_explorer.c:141
 msgid "Delta function stepped"
-msgstr ""
+msgstr "Deta függvény, lépcsõs"
 
 #: plug-ins/common/CML_explorer.c:142
 msgid "sin^p-based function"
-msgstr ""
+msgstr "sin^p-alapú függvény"
 
 #: plug-ins/common/CML_explorer.c:143
 msgid "sin^p, stepped"
-msgstr ""
+msgstr "sin^p, lépcsõs"
 
 #: plug-ins/common/CML_explorer.c:168
 msgid "Max (x, -)"
-msgstr ""
+msgstr "Max (x, -)"
 
 #: plug-ins/common/CML_explorer.c:169
 msgid "Max (x+d, -)"
-msgstr ""
+msgstr "Max (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:170
 msgid "Max (x-d, -)"
-msgstr ""
+msgstr "Max (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:171
 msgid "Min (x, -)"
-msgstr ""
+msgstr "Min (x, -)"
 
 #: plug-ins/common/CML_explorer.c:172
 msgid "Min (x+d, -)"
-msgstr ""
+msgstr "Min (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:173
 msgid "Min (x-d, -)"
-msgstr ""
+msgstr "Min (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:174
 msgid "Max (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:175
 msgid "Max (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:176
 msgid "Max (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:177
 msgid "Max (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:178
 msgid "Min (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Min (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:179
 msgid "Min (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:180
 msgid "Min (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Min (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:181
 msgid "Min (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1607
+#: plug-ins/common/CML_explorer.c:200
+#: plug-ins/common/sunras.c:1607
 #: plug-ins/print/gimp_main_window.c:1093
 msgid "Standard"
-msgstr ""
+msgstr "Szabványos"
 
 #: plug-ins/common/CML_explorer.c:201
 msgid "Use average value"
-msgstr ""
+msgstr "Átlagérték használata"
 
 #: plug-ins/common/CML_explorer.c:202
 msgid "Use reverse value"
-msgstr ""
+msgstr "Fordított érték használata"
 
 #: plug-ins/common/CML_explorer.c:203
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "Véletlen kitevõvel (0,10)"
 
 #: plug-ins/common/CML_explorer.c:204
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "Véletlen kitevõvel (0,1)"
 
 #: plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr ""
+msgstr "Fokozatosan változó kitevõvel (0,1)"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "Szorzás véletlen értékkel (0,1)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "Szorzás véletlen értékkel (0,2)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "Szorzás gradienssel (0,1)"
 
 #: plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
-msgstr ""
+msgstr "p-vel és véletlennel (0,1)"
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "All black"
-msgstr ""
+msgstr "Egész fekete"
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "All gray"
-msgstr ""
+msgstr "Egész szürke"
 
 #: plug-ins/common/CML_explorer.c:224
 msgid "All white"
-msgstr ""
+msgstr "Egész fehér"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "The first row of the image"
-msgstr ""
+msgstr "A kép elsõ sora"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
-msgstr ""
+msgstr "Folytonos átmenet"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr ""
+msgstr "Folytonos átmenet lyukak nélkül"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
-msgstr ""
+msgstr "Véletlen, csatornafüggetlen"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
-msgstr ""
+msgstr "Véletlen, osztott"
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
-msgstr ""
+msgstr "Véletlen ebbõl a kiindulóértékbõl"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Véletlen ebbõl a kiindulóértékbõl (megosztott)"
 
-#: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1282
-#: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
-#: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
-#: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
+#: plug-ins/common/CML_explorer.c:299
+#: plug-ins/common/CML_explorer.c:1282
+#: plug-ins/common/decompose.c:122
+#: plug-ins/common/lic.c:1058
+#: plug-ins/fp/fp_gtk.c:283
+#: plug-ins/fp/fp_gtk.c:415
+#: plug-ins/gap/gap_mov_dialog.c:272
+#: plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
-msgstr ""
+msgstr "Színezet"
 
-#: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1287
-#: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
-#: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
-#: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:513
+#: plug-ins/common/CML_explorer.c:300
+#: plug-ins/common/CML_explorer.c:1287
+#: plug-ins/common/decompose.c:123
+#: plug-ins/common/lic.c:1059
+#: plug-ins/fp/fp_gtk.c:287
+#: plug-ins/fp/fp_gtk.c:419
+#: plug-ins/fp/fp_gtk.c:483
+#: plug-ins/gap/gap_mov_dialog.c:273
+#: plug-ins/rcm/rcm_dialog.c:513
 msgid "Saturation"
-msgstr ""
+msgstr "Telítettség"
 
-#: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1292
-#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:291
-#: plug-ins/fp/fp_gtk.c:423 plug-ins/gap/gap_mov_dialog.c:275
+#: plug-ins/common/CML_explorer.c:301
+#: plug-ins/common/CML_explorer.c:1292
+#: plug-ins/common/decompose.c:124
+#: plug-ins/fp/fp_gtk.c:291
+#: plug-ins/fp/fp_gtk.c:423
+#: plug-ins/gap/gap_mov_dialog.c:275
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
-msgstr ""
+msgstr "Érték"
 
 #: plug-ins/common/CML_explorer.c:473
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/CML Böngészõ..."
 
 #: plug-ins/common/CML_explorer.c:767
 msgid "CML_explorer: evoluting..."
@@ -1852,23 +1969,23 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1240
 msgid "Random Seed"
-msgstr ""
+msgstr "Véletlenszám-generálás kiindulóértéke"
 
 #: plug-ins/common/CML_explorer.c:1250
 msgid "Fix Seed"
-msgstr ""
+msgstr "Rögzített kiindulóérték"
 
 #: plug-ins/common/CML_explorer.c:1260
 msgid "New Seed"
-msgstr ""
+msgstr "Új kiindulóérték"
 
 #: plug-ins/common/CML_explorer.c:1279
 msgid "Hue Settings"
-msgstr ""
+msgstr "Színezet beállításai"
 
 #: plug-ins/common/CML_explorer.c:1284
 msgid "Saturation Settings"
-msgstr ""
+msgstr "Telítettség beállításai"
 
 #: plug-ins/common/CML_explorer.c:1289
 msgid "Value (Gray Image) Settings"
@@ -1876,39 +1993,41 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1294
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Haladó beállításaok"
 
-#: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp_gtk.c:295
+#: plug-ins/common/CML_explorer.c:1296
+#: plug-ins/fp/fp_gtk.c:295
 msgid "Advanced"
-msgstr ""
+msgstr "Haladó"
 
 #: plug-ins/common/CML_explorer.c:1306
 msgid "Other Parameter Settings"
-msgstr ""
+msgstr "Egyéb paraméterek beállításai"
 
 #: plug-ins/common/CML_explorer.c:1315
 msgid "Channel Independed Parameters"
-msgstr ""
+msgstr "Csatorna-független paraméterek"
 
 #: plug-ins/common/CML_explorer.c:1366
 msgid "Initial Value:"
-msgstr ""
+msgstr "Kiinduló értékek:"
 
 #: plug-ins/common/CML_explorer.c:1370
 msgid "Zoom Scale:"
-msgstr ""
+msgstr "Nagyítás mértéke:"
 
 #: plug-ins/common/CML_explorer.c:1378
 msgid "Start Offset:"
-msgstr ""
+msgstr "Kezdõérték eltolása:"
 
 #: plug-ins/common/CML_explorer.c:1386
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr ""
+msgstr "Véletlenszám-generálás kiindulóértéke (csak a \"\""
 
-#: plug-ins/common/CML_explorer.c:1398 plug-ins/maze/maze_face.c:297
+#: plug-ins/common/CML_explorer.c:1398
+#: plug-ins/maze/maze_face.c:297
 msgid "Seed:"
-msgstr ""
+msgstr "Véletlenszám-generátor kiindulóértéke:"
 
 #: plug-ins/common/CML_explorer.c:1410
 msgid "Switch to \"From Seed\" with the last Seed"
@@ -1917,30 +2036,29 @@ msgstr ""
 #: plug-ins/common/CML_explorer.c:1421
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
-"The same seed produces the same image, if (1) the widths of images are same "
-"(this is the reason why image on drawable is different from preview), and "
-"(2) all mutation rates equal to zero."
+"The same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Others"
-msgstr ""
+msgstr "Egyebek"
 
 #: plug-ins/common/CML_explorer.c:1438
 msgid "Misc Operations"
-msgstr ""
+msgstr "Egyébb mûveletek"
 
 #: plug-ins/common/CML_explorer.c:1447
 msgid "Copy Settings"
-msgstr ""
+msgstr "Másolás beállításai"
 
 #: plug-ins/common/CML_explorer.c:1470
 msgid "Source Channel:"
-msgstr ""
+msgstr "Forráscsatorna:"
 
-#: plug-ins/common/CML_explorer.c:1486 plug-ins/common/CML_explorer.c:1541
+#: plug-ins/common/CML_explorer.c:1486
+#: plug-ins/common/CML_explorer.c:1541
 msgid "Destination Channel:"
-msgstr ""
+msgstr "Célcsatorna:"
 
 #: plug-ins/common/CML_explorer.c:1489
 msgid "Copy Parameters"
@@ -1950,9 +2068,10 @@ msgstr ""
 msgid "Selective Load Settings"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:1512 plug-ins/common/CML_explorer.c:1530
+#: plug-ins/common/CML_explorer.c:1512
+#: plug-ins/common/CML_explorer.c:1530
 msgid "NULL"
-msgstr ""
+msgstr "NULL"
 
 #: plug-ins/common/CML_explorer.c:1523
 msgid "Source Channel in File:"
@@ -2000,7 +2119,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1797
 msgid "Parameter k:"
-msgstr ""
+msgstr "k paraméter:"
 
 #: plug-ins/common/CML_explorer.c:1806
 msgid "Range Low:"
@@ -2028,24 +2147,25 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1929
 msgid "Graph of the current settings"
-msgstr ""
+msgstr "A jelenlegi beállítások grafikonja"
 
 #: plug-ins/common/CML_explorer.c:1943
 msgid "The Graph"
-msgstr ""
+msgstr "A grafikon"
 
 #: plug-ins/common/CML_explorer.c:2049
 msgid "Warning: the source and the destination are the same channel."
-msgstr ""
+msgstr "Figyelmeztetés: a forrás- és célcsatornák megegyeznek."
 
 #: plug-ins/common/CML_explorer.c:2117
 msgid "Save Parameters to"
-msgstr ""
+msgstr "Paraméterek mentése ide fájlba"
 
-#: plug-ins/common/CML_explorer.c:2189 plug-ins/common/CML_explorer.c:2391
+#: plug-ins/common/CML_explorer.c:2189
+#: plug-ins/common/CML_explorer.c:2391
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "Hiba: '%s' megnyitása sikertelen"
 
 #: plug-ins/common/CML_explorer.c:2230
 #, c-format
@@ -2053,10 +2173,12 @@ msgid ""
 "Parameters were Saved to\n"
 "\"%s\""
 msgstr ""
+"A paraméterek elmentve e következõ fájlba:\n"
+"'%s'"
 
 #: plug-ins/common/CML_explorer.c:2249
 msgid "CML File Operation Warning"
-msgstr ""
+msgstr "CML fájlmûvelet figyelmeztetés"
 
 #: plug-ins/common/CML_explorer.c:2269
 #, c-format
@@ -2064,10 +2186,12 @@ msgid ""
 "%s\n"
 "exists, Overwrite?"
 msgstr ""
+"%s\n"
+"létezik, felülírjam?"
 
 #: plug-ins/common/CML_explorer.c:2306
 msgid "Load Parameters from"
-msgstr ""
+msgstr "Paraméterek betöltése fájlból"
 
 #: plug-ins/common/CML_explorer.c:2308
 msgid "Selective Load from"
@@ -2075,42 +2199,42 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "Hiba: nem CML paraméterfájl"
 
 #: plug-ins/common/CML_explorer.c:2419
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "Figyelmeztetés: ez egy régi formátumfájl"
 
 #: plug-ins/common/CML_explorer.c:2421
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "Figyelmeztetés: Hmmmm, ez a paraméterfájl újabb CML_explorer-hez készült."
 
 #: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
-msgstr ""
+msgstr "Hiba: paraméterek betöltése sikertlen"
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:339
 msgid "Save as Text"
-msgstr ""
+msgstr "Mentés szövegként"
 
 #. file save type
 #: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:942
 #: plug-ins/common/sunras.c:1602
 msgid "Data Formatting"
-msgstr ""
+msgstr "Adatformázás"
 
 #: plug-ins/common/align_layers.c:152
 msgid "<Image>/Layers/Align Visible Layers..."
-msgstr ""
+msgstr "<Image>/Rétegek/Látható rétegek igazítása..."
 
 #: plug-ins/common/align_layers.c:187
 msgid "Align Visible Layers: there are too few layers."
-msgstr ""
+msgstr "Látható rétegek igazítása: túl kevés réteg van."
 
 #: plug-ins/common/align_layers.c:420
 msgid "Align Visible Layers"
-msgstr ""
+msgstr "Látható rétegek igazítása"
 
 #.
 #. *  Parameter settings
@@ -2145,87 +2269,91 @@ msgstr ""
 msgid "Parameter Settings"
 msgstr "Paraméterek beállítása"
 
-#: plug-ins/common/align_layers.c:454 plug-ins/common/align_layers.c:487
+#: plug-ins/common/align_layers.c:454
+#: plug-ins/common/align_layers.c:487
 msgid "Collect"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:456
 msgid "Fill (left to right)"
-msgstr ""
+msgstr "Kitöltés (balról jobbra)"
 
 #: plug-ins/common/align_layers.c:458
 msgid "Fill (right to left)"
-msgstr ""
+msgstr "Kitöltés (jobbról balra)"
 
-#: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
+#: plug-ins/common/align_layers.c:460
+#: plug-ins/common/align_layers.c:493
 #: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Rácsra ugrás"
 
 #: plug-ins/common/align_layers.c:465
 msgid "Horizontal Style:"
-msgstr ""
+msgstr "Vízszintes stílus:"
 
 #: plug-ins/common/align_layers.c:472
 msgid "Left Edge"
-msgstr ""
+msgstr "Bal szél"
 
-#: plug-ins/common/align_layers.c:473 plug-ins/common/align_layers.c:506
-#: plug-ins/gap/gap_mov_dialog.c:286 plug-ins/gflare/gflare.c:2864
+#: plug-ins/common/align_layers.c:473
+#: plug-ins/common/align_layers.c:506
+#: plug-ins/gap/gap_mov_dialog.c:286
+#: plug-ins/gflare/gflare.c:2864
 msgid "Center"
-msgstr ""
+msgstr "Közép"
 
 #: plug-ins/common/align_layers.c:474
 msgid "Right Edge"
-msgstr ""
+msgstr "Jobb szél"
 
 #: plug-ins/common/align_layers.c:478
 msgid "Horizontal Base:"
-msgstr ""
+msgstr "Vízszintes alap:"
 
 #: plug-ins/common/align_layers.c:489
 msgid "Fill (top to bottom)"
-msgstr ""
+msgstr "Kitöltés (fentrõl le)"
 
 #: plug-ins/common/align_layers.c:491
 msgid "Fill (bottom to top)"
-msgstr ""
+msgstr "Kitöltés (lentrõl fel)"
 
 #: plug-ins/common/align_layers.c:498
 msgid "Vertical Style:"
-msgstr ""
+msgstr "Függõleges stílus:"
 
 #: plug-ins/common/align_layers.c:505
 msgid "Top Edge"
-msgstr ""
+msgstr "Felsõ szél"
 
 #: plug-ins/common/align_layers.c:507
 msgid "Bottom Edge"
-msgstr ""
+msgstr "Alsó szél"
 
 #: plug-ins/common/align_layers.c:511
 msgid "Vertical Base:"
-msgstr ""
+msgstr "Függõleges alap:"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Ignore the Bottom Layer even if Visible"
-msgstr ""
+msgstr "A legalsó réteget figyelmen kívül hagyja, akkor is, ha láthtó"
 
 #: plug-ins/common/align_layers.c:526
 msgid "Use the (Invisible) Bottom Layer as the Base"
-msgstr ""
+msgstr "A legalsó (láthatatlan) réteg használata alapként"
 
 #: plug-ins/common/align_layers.c:536
 msgid "Grid Size:"
-msgstr ""
+msgstr "Rácsméret:"
 
 #: plug-ins/common/animationplay.c:264
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Animáció/Animáció lejátszása..."
 
 #: plug-ins/common/animationplay.c:660
 msgid "Animation Playback: "
-msgstr ""
+msgstr "Animáció lejátszása:"
 
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:667 plug-ins/common/plugindetails.c:1009
@@ -2239,144 +2367,155 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:142
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 #. The 'playback' half of the dialog
 #: plug-ins/common/animationplay.c:681 plug-ins/common/animationplay.c:684
 msgid "Playback: "
-msgstr ""
+msgstr "Lejátszás:"
 
 #: plug-ins/common/animationplay.c:714
 msgid "Play/Stop"
-msgstr ""
+msgstr "Lejátszás/Megállítás"
 
 #: plug-ins/common/animationplay.c:720
 msgid "Rewind"
-msgstr ""
+msgstr "Visszatekerés"
 
 #: plug-ins/common/animationplay.c:726
 msgid "Step"
-msgstr ""
+msgstr "Léptetés"
 
 #: plug-ins/common/animationplay.c:784
 msgid "Frame %v of %u"
-msgstr ""
+msgstr "%v/%u képkocka"
 
 #: plug-ins/common/animoptimize.c:162
 msgid "<Image>/Filters/Animation/Animation Optimize"
-msgstr ""
+msgstr "<Image>/Szûrõk/Animáció/Animáció optimalizálása"
 
 #: plug-ins/common/animoptimize.c:178
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
-msgstr ""
+msgstr "<Image>/Szûrõk/Animáció/Animáció Unoptimalizálása"
 
 #: plug-ins/common/animoptimize.c:278
 msgid "Optimizing Animation..."
-msgstr ""
+msgstr "Animáció optimalizálása..."
 
 #: plug-ins/common/animoptimize.c:280
 msgid "UnOptimizing Animation..."
-msgstr ""
+msgstr "Animáció unoptimalizálása..."
 
 #: plug-ins/common/animoptimize.c:309
-msgid "Not enough memory to allocate buffers for optimization.\n"
+msgid ""
+"Not enough memory to allocate buffers for optimization.\n"
+""
 msgstr ""
+"Nincs elég memória az optimalizáláshoz szükséges bufferek allokálásához.\n"
+""
 
 #: plug-ins/common/apply_lens.c:132
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Üveg effektusok/Lencsék alkalmazása..."
 
 #: plug-ins/common/apply_lens.c:196
 msgid "Applying lens..."
-msgstr ""
+msgstr "Lencsék alkalmazása..."
 
 #: plug-ins/common/apply_lens.c:387
 msgid "Lens Effect"
-msgstr ""
+msgstr "Lencse effektus"
 
 #: plug-ins/common/apply_lens.c:413
 msgid "Keep Original Surroundings"
-msgstr ""
+msgstr "Eredeti környezet megtartása"
 
 #: plug-ins/common/apply_lens.c:426
 msgid "Set Surroundings to Index 0"
-msgstr ""
+msgstr "Környezet index 0-ra állítása"
 
 #: plug-ins/common/apply_lens.c:427
 msgid "Set Surroundings to Background Color"
-msgstr ""
+msgstr "Környezet háttérszínre állítása"
 
 #: plug-ins/common/apply_lens.c:442
 msgid "Make Surroundings Transparent"
-msgstr ""
+msgstr "Környezet átlátszó"
 
 #: plug-ins/common/apply_lens.c:460
 msgid "Lens Refraction Index:"
-msgstr ""
+msgstr "Lencse törésmutatója:"
 
 #: plug-ins/common/autocrop.c:74
 msgid "<Image>/Image/Transforms/Autocrop"
-msgstr ""
+msgstr "<Image>/Kép/Átalakítások/Automatikus levágás"
 
 #: plug-ins/common/autocrop.c:119
 msgid "Cropping..."
-msgstr ""
+msgstr "Mértere vágás..."
 
 #: plug-ins/common/autostretch_hsv.c:91
 msgid "<Image>/Image/Colors/Auto/Stretch HSV"
-msgstr ""
+msgstr "<Image>/Kép/Színek/Automatikus/HSV feszítés"
 
 #: plug-ins/common/autostretch_hsv.c:124
 msgid "Auto-Stretching HSV..."
-msgstr ""
+msgstr "Automatikus HSV feszítés..."
 
 #: plug-ins/common/blinds.c:182
 msgid "<Image>/Filters/Distorts/Blinds..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Lamellák..."
 
 #: plug-ins/common/blinds.c:278
 msgid "Adding Blinds..."
-msgstr ""
+msgstr "Lamellák hozzáadása..."
 
 #. Get the preview image and store it also set has_alpha
 #: plug-ins/common/blinds.c:318
 msgid "Blinds"
-msgstr ""
+msgstr "Lamellák"
 
 #. attach labels
 #: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:770
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
-msgstr ""
+msgstr "Vízszintes"
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
-#: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
+#: plug-ins/common/blinds.c:374
+#: plug-ins/common/grid.c:771
+#: plug-ins/common/ripple.c:639
+#: plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
-msgstr ""
+msgstr "Függõleges"
 
-#: plug-ins/common/blinds.c:387 plug-ins/common/fractaltrace.c:772
-#: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2831
+#: plug-ins/common/blinds.c:387
+#: plug-ins/common/fractaltrace.c:772
+#: plug-ins/common/papertile.c:380
+#: plug-ins/gfig/gfig.c:2831
 #: plug-ins/gimpressionist/general.c:240
 msgid "Transparent"
-msgstr ""
+msgstr "Átlátszó"
 
 #: plug-ins/common/blinds.c:416
 msgid "Displacement:"
-msgstr ""
+msgstr "Távolság:"
 
 #: plug-ins/common/blinds.c:425
 msgid "Num Segments:"
-msgstr ""
+msgstr "Szakaszok száma:"
 
 #: plug-ins/common/blur.c:202
 msgid "<Image>/Filters/Blur/Blur..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Elmosás..."
 
-#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:359
-#: plug-ins/common/randomize.c:737 plug-ins/common/sinus.c:1811
-#: plug-ins/common/snoise.c:542 plug-ins/gflare/gflare.c:4102
+#: plug-ins/common/blur.c:648
+#: plug-ins/common/plasma.c:359
+#: plug-ins/common/randomize.c:737
+#: plug-ins/common/sinus.c:1811
+#: plug-ins/common/snoise.c:542
+#: plug-ins/gflare/gflare.c:4102
 msgid "Random Seed:"
 msgstr ""
 "Véletlenszám-generálás\n"
@@ -2384,75 +2523,78 @@ msgstr ""
 
 #: plug-ins/common/blur.c:655
 msgid "Randomization %:"
-msgstr ""
+msgstr "Véletleszerûség %-a:"
 
-#: plug-ins/common/blur.c:658 plug-ins/common/randomize.c:747
+#: plug-ins/common/blur.c:658
+#: plug-ins/common/randomize.c:747
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "A szûrendõ képpontok százaléka"
 
-#: plug-ins/common/blur.c:667 plug-ins/common/randomize.c:756
+#: plug-ins/common/blur.c:667
+#: plug-ins/common/randomize.c:756
 msgid "Repeat:"
-msgstr ""
+msgstr "Ismétlés:"
 
-#: plug-ins/common/blur.c:670 plug-ins/common/randomize.c:759
+#: plug-ins/common/blur.c:670
+#: plug-ins/common/randomize.c:759
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "Ennyiszer alkalmazd a szûrõt"
 
 #: plug-ins/common/borderaverage.c:105
 msgid "<Image>/Filters/Colors/Border Average..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Keretátlag"
 
 #: plug-ins/common/borderaverage.c:170
 msgid "Border Average..."
-msgstr ""
+msgstr "Keretátlag"
 
 #: plug-ins/common/borderaverage.c:388
 msgid "Borderaverage"
-msgstr ""
+msgstr "Keretátlag"
 
 #: plug-ins/common/borderaverage.c:409
 msgid "Border Size"
-msgstr ""
+msgstr "Keret mérete"
 
 #: plug-ins/common/borderaverage.c:418
 msgid "Thickness:"
-msgstr ""
+msgstr "Vastagsága:"
 
 #: plug-ins/common/borderaverage.c:440
 msgid "Bucket Size:"
-msgstr ""
+msgstr "Vödör mérete:"
 
 #: plug-ins/common/borderaverage.c:448
 msgid "1 (nonsense?)"
-msgstr ""
+msgstr "1 (értelmetlen?)"
 
 #: plug-ins/common/borderaverage.c:456
 msgid "256 (nonsense?)"
-msgstr ""
+msgstr "256 (értelmetlen?)"
 
 #: plug-ins/common/bumpmap.c:367
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/xxxRelief..."
 
 #: plug-ins/common/bumpmap.c:522
 msgid "Bump-mapping..."
-msgstr ""
+msgstr "Relief létrehozása..."
 
 #: plug-ins/common/bumpmap.c:935
 msgid "Map Type"
-msgstr ""
+msgstr "Leképezés típusa"
 
 #: plug-ins/common/bumpmap.c:939
 msgid "Linear Map"
-msgstr ""
+msgstr "Lineáris leképezés"
 
 #: plug-ins/common/bumpmap.c:940
 msgid "Spherical Map"
-msgstr ""
+msgstr "Szferikus leképezés"
 
 #: plug-ins/common/bumpmap.c:941
 msgid "Sinuosidal Map"
-msgstr ""
+msgstr "Sinusos leképezés"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:954
@@ -2473,82 +2615,93 @@ msgstr ""
 msgid "Bump Map:"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1024 plug-ins/common/emboss.c:571
+#: plug-ins/common/bumpmap.c:1024
+#: plug-ins/common/emboss.c:571
 msgid "Azimuth:"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1033 plug-ins/common/emboss.c:580
+#: plug-ins/common/bumpmap.c:1033
+#: plug-ins/common/emboss.c:580
 msgid "Elevation:"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1053 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1053
+#: plug-ins/gap/resize.c:197
 msgid "X Offset:"
-msgstr ""
+msgstr "X eltolás:"
 
-#: plug-ins/common/bumpmap.c:1063 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1063
+#: plug-ins/gap/resize.c:214
 msgid "Y Offset:"
-msgstr ""
+msgstr "Y eltolás:"
 
 #: plug-ins/common/bumpmap.c:1073
 msgid "Waterlevel:"
 msgstr ""
 
-#: plug-ins/common/bz2.c:268 plug-ins/common/bz2.c:355
-msgid "bz2: can't open bzip2ed file without a sensible extension\n"
-msgstr ""
+#: plug-ins/common/bz2.c:268
+#: plug-ins/common/bz2.c:355
+msgid ""
+"bz2: can't open bzip2ed file without a sensible extension\n"
+""
+msgstr "bz2: nem lehet megnyitni a b2zippelt fájlt, ha nincs értelmes kiterjesztése\n"
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
-msgstr ""
+msgstr "<Image>/Kép/Színek/Automatikus/xxxKontraszt nyújtása"
 
 #: plug-ins/common/c_astretch.c:121
 msgid "Auto-Stretching Contrast..."
-msgstr ""
+msgstr "Kontraszt automatikus nyújtása..."
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Sakktábla..."
 
 #: plug-ins/common/checkerboard.c:165
 msgid "Adding Checkerboard..."
-msgstr ""
+msgstr "Sakktábla hozzáadása..."
 
 #: plug-ins/common/checkerboard.c:344
 msgid "Checkerboard"
-msgstr ""
+msgstr "Sakktábla"
 
 #: plug-ins/common/checkerboard.c:370
 msgid "Psychobilly"
-msgstr ""
+msgstr "Hallucináció"
 
 #: plug-ins/common/checkerboard.c:384
 msgid "Check Size:"
-msgstr ""
+msgstr "Négyzetek mérete:"
 
 #: plug-ins/common/color_enhance.c:91
 msgid "<Image>/Image/Colors/Auto/Color Enhance"
-msgstr ""
+msgstr "<Image>/Kép/Színek/Automatikus/Színjavítás"
 
 #: plug-ins/common/color_enhance.c:124
 msgid "Color Enhance..."
-msgstr ""
+msgstr "Színjavítás..."
 
 #: plug-ins/common/colorify.c:154
 msgid "<Image>/Filters/Colors/Colorify..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Színezés..."
 
 #: plug-ins/common/colorify.c:222
 msgid "Colorifying..."
-msgstr ""
+msgstr "Színezés..."
 
 #: plug-ins/common/colorify.c:322
 msgid "Colorify"
-msgstr ""
+msgstr "Színezés"
 
-#: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:418
-#: plug-ins/common/ps.c:2705 plug-ins/common/xpm.c:439
-#: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/color.c:51
-#: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
+#: plug-ins/common/colorify.c:338
+#: plug-ins/common/colortoalpha.c:418
+#: plug-ins/common/ps.c:2705
+#: plug-ins/common/xpm.c:439
+#: plug-ins/gap/gap_mov_dialog.c:274
+#: plug-ins/gimpressionist/color.c:51
+#: plug-ins/gimpressionist/color.c:56
+#: plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Szín"
@@ -2559,33 +2712,39 @@ msgstr "Egyéni szín:"
 
 #: plug-ins/common/colorify.c:356
 msgid "Colorify Custom Color"
-msgstr ""
+msgstr "Egyéni szín színezése"
 
 #: plug-ins/common/colortoalpha.c:122
 msgid "<Image>/Filters/Colors/Color to Alpha..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Színbõl Alfa..."
 
 #: plug-ins/common/colortoalpha.c:402
 msgid "Color to Alpha"
-msgstr ""
+msgstr "Színbõl Alfa"
 
-#: plug-ins/common/colortoalpha.c:429 plug-ins/common/mapcolor.c:652
-#: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2112 plug-ins/gap/gap_lib.c:2291
-#: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
-#: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
+#: plug-ins/common/colortoalpha.c:429
+#: plug-ins/common/mapcolor.c:652
+#: plug-ins/gap/gap_decode_mpeg_main.c:653
+#: plug-ins/gap/gap_decode_xanim.c:224
+#: plug-ins/gap/gap_lib.c:2112
+#: plug-ins/gap/gap_lib.c:2291
+#: plug-ins/gap/gap_range_ops.c:253
+#: plug-ins/gap/gap_range_ops.c:602
+#: plug-ins/gfli/gfli.c:847
+#: plug-ins/gfli/gfli.c:916
 msgid "From:"
-msgstr ""
+msgstr "Ebbõl:"
 
 #: plug-ins/common/colortoalpha.c:434
 msgid "Color to Alpha Color Picker"
-msgstr ""
+msgstr "Színbõl Alfa színpipetta"
 
 #: plug-ins/common/colortoalpha.c:442
 msgid "to Alpha"
-msgstr ""
+msgstr "Alfára"
 
-#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
+#: plug-ins/common/compose.c:120
+#: plug-ins/common/decompose.c:113
 #: plug-ins/common/newsprint.c:1337
 msgid "RGB"
 msgstr "RGB"
@@ -2598,8 +2757,10 @@ msgstr ""
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:421
-#: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
+#: plug-ins/common/compose.c:127
+#: plug-ins/common/nlfilt.c:421
+#: plug-ins/common/noisify.c:574
+#: plug-ins/common/noisify.c:657
 msgid "Alpha:"
 msgstr "Alfa:"
 
@@ -2607,7 +2768,8 @@ msgstr "Alfa:"
 msgid "rgba-compose"
 msgstr ""
 
-#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:119
+#: plug-ins/common/compose.c:128
+#: plug-ins/common/decompose.c:119
 msgid "HSV"
 msgstr "HSV"
 
@@ -2623,39 +2785,48 @@ msgstr "Színezet:"
 msgid "Saturation:"
 msgstr "Telítettség:"
 
-#: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
+#: plug-ins/common/compose.c:130
+#: plug-ins/common/scatter_hsv.c:468
 #: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
 msgstr "Érték:"
 
 #: plug-ins/common/compose.c:131
 msgid "hsv-compose"
-msgstr ""
+msgstr "hsv-összevonás"
 
-#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:125
+#: plug-ins/common/compose.c:132
+#: plug-ins/common/decompose.c:125
 msgid "CMY"
 msgstr "CMY"
 
-#: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
-#: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
+#: plug-ins/common/compose.c:132
+#: plug-ins/common/compose.c:136
+#: plug-ins/fp/fp_gtk.c:23
+#: plug-ins/print/gimp_color_window.c:208
 msgid "Cyan:"
-msgstr "Cián:"
+msgstr "Encián:"
 
-#: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
-#: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
+#: plug-ins/common/compose.c:133
+#: plug-ins/common/compose.c:137
+#: plug-ins/fp/fp_gtk.c:25
+#: plug-ins/print/gimp_color_window.c:223
 msgid "Magenta:"
-msgstr ""
+msgstr "Bíbor:"
 
-#: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
-#: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
+#: plug-ins/common/compose.c:134
+#: plug-ins/common/compose.c:138
+#: plug-ins/fp/fp_gtk.c:24
+#: plug-ins/print/gimp_color_window.c:238
 msgid "Yellow:"
 msgstr "Sárga:"
 
 #: plug-ins/common/compose.c:135
 msgid "cmy-compose"
-msgstr ""
+msgstr "cmy-összevonás"
 
-#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:131
+#: plug-ins/common/compose.c:136
+#: plug-ins/common/decompose.c:131
 #: plug-ins/common/newsprint.c:1348
 msgid "CMYK"
 msgstr "CMYK"
@@ -2666,46 +2837,46 @@ msgstr "Fekete:"
 
 #: plug-ins/common/compose.c:139
 msgid "cmyk-compose"
-msgstr ""
+msgstr "cmyk-összevonás"
 
 #: plug-ins/common/compose.c:237
 msgid "<Image>/Image/Mode/Compose..."
-msgstr ""
+msgstr "<Image>/Kép/Mód/xxxÖsszevonás..."
 
 #: plug-ins/common/compose.c:297
 #, c-format
 msgid "compose: Could not get layers for image %d"
-msgstr ""
+msgstr "compose: A rétegek nem elérhetõk a %d képnél"
 
 #: plug-ins/common/compose.c:346
 msgid "Composing..."
-msgstr ""
+msgstr "Összevonás..."
 
 #: plug-ins/common/compose.c:414
 msgid "Compose: Drawables have different size"
-msgstr ""
+msgstr "compose: A rajzterületek mérete nem egyezik meg"
 
 #: plug-ins/common/compose.c:431
 msgid "Compose: Images have different size"
-msgstr ""
+msgstr "compose: A képek mérete nem egyezik meg"
 
 #: plug-ins/common/compose.c:445
 msgid "Compose: Error in getting layer IDs"
-msgstr ""
+msgstr "compose: hiba a rétegazonosítók olvasásáakor"
 
 #: plug-ins/common/compose.c:462
 #, c-format
 msgid "Compose: Image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "compose: A kép nem szürkeárnyalatos (bpp=%d)"
 
 #: plug-ins/common/compose.c:771
 msgid "Compose"
-msgstr ""
+msgstr "Összevonás"
 
 #. The left frame keeps the compose type toggles
 #: plug-ins/common/compose.c:794
 msgid "Compose Channels"
-msgstr ""
+msgstr "Csatornák összevonása"
 
 #. The right frame keeps the selection menues for images.
 #. Because the labels within this frame will change when a toggle
@@ -2715,21 +2886,25 @@ msgstr ""
 msgid "Channel Representations"
 msgstr ""
 
-#: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:383
+#: plug-ins/common/convmatrix.c:85
+#: plug-ins/common/newsprint.c:383
 #: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
 msgstr "Szürke"
 
-#: plug-ins/common/convmatrix.c:89 plug-ins/common/decompose.c:138
+#: plug-ins/common/convmatrix.c:89
+#: plug-ins/common/decompose.c:138
 msgid "Alpha"
 msgstr "Alfa"
 
 #: plug-ins/common/convmatrix.c:94
 msgid "Extend"
-msgstr ""
+msgstr "Kiterjeszt"
 
-#: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:404
-#: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:651
+#: plug-ins/common/convmatrix.c:95
+#: plug-ins/common/displace.c:404
+#: plug-ins/common/edge.c:690
+#: plug-ins/common/ripple.c:651
 #: plug-ins/common/warp.c:512
 msgid "Wrap"
 msgstr ""
@@ -2740,7 +2915,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:195
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Általános/xxxConvolution Mátrix..."
 
 #: plug-ins/common/convmatrix.c:229
 msgid ""
@@ -2758,75 +2933,79 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:877
 msgid "Matrix"
-msgstr ""
+msgstr "Mátrix"
 
 #: plug-ins/common/convmatrix.c:913
 msgid "Divisor:"
-msgstr ""
+msgstr "Osztó:"
 
-#: plug-ins/common/convmatrix.c:932 plug-ins/common/depthmerge.c:775
+#: plug-ins/common/convmatrix.c:932
+#: plug-ins/common/depthmerge.c:775
 msgid "Offset:"
-msgstr ""
+msgstr "Eltolás:"
 
-#: plug-ins/common/convmatrix.c:956 plug-ins/common/ps.c:2706
+#: plug-ins/common/convmatrix.c:956
+#: plug-ins/common/ps.c:2706
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikus"
 
 #: plug-ins/common/convmatrix.c:964
 msgid "Alpha-weighting"
-msgstr ""
+msgstr "Alfa súlyozás"
 
 #: plug-ins/common/convmatrix.c:979
 msgid "Border"
-msgstr ""
+msgstr "Keret"
 
 #: plug-ins/common/convmatrix.c:1004
 msgid "Channels"
-msgstr ""
+msgstr "Csatornák"
 
 #: plug-ins/common/csource.c:648
 msgid "Save as C-Source"
-msgstr ""
+msgstr "Mentés C forrásba"
 
 #: plug-ins/common/csource.c:680
 msgid "Prefixed Name:"
 msgstr ""
 
-#: plug-ins/common/csource.c:689 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1621 plug-ins/common/xbm.c:1202
+#: plug-ins/common/csource.c:689
+#: plug-ins/common/mail.c:529
+#: plug-ins/common/tiff.c:1621
+#: plug-ins/common/xbm.c:1202
 msgid "Comment:"
-msgstr ""
+msgstr "Megjegyzés:"
 
 #. Use Comment
 #.
 #: plug-ins/common/csource.c:696
 msgid "Save Comment to File"
-msgstr ""
+msgstr "Megjegyzés mentése fájlba"
 
 #. GLib types
 #.
 #: plug-ins/common/csource.c:707
 msgid "Use GLib Types (guint8*)"
-msgstr ""
+msgstr "GLib típusok használata (guint8*)"
 
 #. Use Macros
 #.
 #: plug-ins/common/csource.c:718
 msgid "Use Macros instead of Struct"
-msgstr ""
+msgstr "Makrók használata struct helyett"
 
 #. Use RLE
 #.
 #: plug-ins/common/csource.c:729
 msgid "Use 1 Byte Run-Length-Encoding"
-msgstr ""
+msgstr "1 bájtos RLE használata (Run-Length-Encoding)"
 
 #. Alpha
 #.
 #: plug-ins/common/csource.c:740
 msgid "Save Alpha Channel (RGBA/RGB)"
-msgstr ""
+msgstr "Alfa csatorna mentése (RGBA/RGB)"
 
 #. Opacity
 #. table col, row
@@ -2839,27 +3018,28 @@ msgstr ""
 
 #: plug-ins/common/cubism.c:163
 msgid "<Image>/Filters/Artistic/Cubism..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Mûvészi/Kubizmus..."
 
 #: plug-ins/common/cubism.c:276
 msgid "Cubistic Transformation"
-msgstr ""
+msgstr "Kubista átalakítás"
 
 #: plug-ins/common/cubism.c:298
 msgid "Cubism"
-msgstr ""
+msgstr "Kubizmus"
 
 #: plug-ins/common/cubism.c:327
 msgid "Use Background Color"
-msgstr ""
+msgstr "Háttérsuín használata"
 
-#: plug-ins/common/cubism.c:338 plug-ins/mosaic/mosaic.c:654
+#: plug-ins/common/cubism.c:338
+#: plug-ins/mosaic/mosaic.c:654
 msgid "Tile Size:"
-msgstr ""
+msgstr "Csempe méret:"
 
 #: plug-ins/common/cubism.c:348
 msgid "Tile Saturation:"
-msgstr ""
+msgstr "Csempe telítettsége:"
 
 #: plug-ins/common/curve_bend.c:351
 msgid "Upper"
@@ -2871,24 +3051,24 @@ msgstr "Alsó"
 
 #: plug-ins/common/curve_bend.c:358
 msgid "Smooth"
-msgstr ""
+msgstr "Síma"
 
 #: plug-ins/common/curve_bend.c:359
 msgid "Free"
-msgstr ""
+msgstr "Szabad"
 
 #: plug-ins/common/curve_bend.c:679
 msgid "<Image>/Filters/Distorts/CurveBend..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Görbítés..."
 
 #: plug-ins/common/curve_bend.c:813
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr ""
+msgstr "A görbítés csak rétegekre mûködik, csatornára és maszkra nem."
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1356
 msgid "Curve Bend"
-msgstr ""
+msgstr "Görbítés"
 
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
@@ -2905,7 +3085,7 @@ msgstr ""
 
 #: plug-ins/common/curve_bend.c:1367
 msgid "Swap"
-msgstr ""
+msgstr "Csere"
 
 #. The Load button
 #: plug-ins/common/curve_bend.c:1386
@@ -2951,122 +3131,137 @@ msgstr "Élsimítás"
 #. The wor_on_copy toggle
 #: plug-ins/common/curve_bend.c:1533
 msgid "Work on Copy"
-msgstr ""
+msgstr "Munka másolaton"
 
 #. filesel is already open
 #: plug-ins/common/curve_bend.c:2164
 msgid "Load Curve Points from file"
-msgstr ""
+msgstr "Görbe pontjai betöltése fájlból"
 
 #. filesel is already open
 #: plug-ins/common/curve_bend.c:2194
 msgid "Save Curve Points to file"
-msgstr ""
+msgstr "Görbe pontjai mentése fájlba"
 
 #: plug-ins/common/curve_bend.c:3331
 msgid "Curve Bend..."
-msgstr ""
+msgstr "Görbítés..."
 
-#: plug-ins/common/decompose.c:113 plug-ins/common/decompose.c:116
+#: plug-ins/common/decompose.c:113
+#: plug-ins/common/decompose.c:116
 msgid "red"
-msgstr "piros"
+msgstr "vörös"
 
-#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:114
+#: plug-ins/common/decompose.c:117
 msgid "green"
 msgstr "zöld"
 
-#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:115
+#: plug-ins/common/decompose.c:118
 msgid "blue"
 msgstr "kék"
 
-#: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
+#: plug-ins/common/decompose.c:119
+#: plug-ins/common/decompose.c:122
 msgid "hue"
-msgstr ""
+msgstr "színezet"
 
-#: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:123
+#: plug-ins/common/decompose.c:120
+#: plug-ins/common/decompose.c:123
 msgid "saturation"
-msgstr ""
+msgstr "telítettség"
 
-#: plug-ins/common/decompose.c:121 plug-ins/common/decompose.c:124
+#: plug-ins/common/decompose.c:121
+#: plug-ins/common/decompose.c:124
 msgid "value"
-msgstr ""
+msgstr "érték"
 
-#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
+#: plug-ins/common/decompose.c:125
+#: plug-ins/common/decompose.c:128
 msgid "cyan"
-msgstr ""
+msgstr "encián"
 
-#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
+#: plug-ins/common/decompose.c:126
+#: plug-ins/common/decompose.c:129
 msgid "magenta"
-msgstr ""
+msgstr "bíbor"
 
-#: plug-ins/common/decompose.c:127 plug-ins/common/decompose.c:130
+#: plug-ins/common/decompose.c:127
+#: plug-ins/common/decompose.c:130
 msgid "yellow"
-msgstr ""
+msgstr "sárga"
 
-#: plug-ins/common/decompose.c:128 plug-ins/common/newsprint.c:425
+#: plug-ins/common/decompose.c:128
+#: plug-ins/common/newsprint.c:425
 msgid "Cyan"
-msgstr ""
+msgstr "Encián"
 
-#: plug-ins/common/decompose.c:129 plug-ins/common/newsprint.c:433
+#: plug-ins/common/decompose.c:129
+#: plug-ins/common/newsprint.c:433
 msgid "Magenta"
-msgstr ""
+msgstr "Bíbor"
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/newsprint.c:441
+#: plug-ins/common/decompose.c:130
+#: plug-ins/common/newsprint.c:441
 msgid "Yellow"
-msgstr ""
+msgstr "Sárga"
 
-#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:135
+#: plug-ins/common/decompose.c:131
+#: plug-ins/common/decompose.c:135
 msgid "cyan_k"
-msgstr ""
+msgstr "encián_k"
 
-#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:136
+#: plug-ins/common/decompose.c:132
+#: plug-ins/common/decompose.c:136
 msgid "magenta_k"
-msgstr ""
+msgstr "bíbor_k"
 
-#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:137
 msgid "yellow_k"
-msgstr ""
+msgstr "sárga_k"
 
 #: plug-ins/common/decompose.c:134
 msgid "black"
-msgstr ""
+msgstr "fekete"
 
 #: plug-ins/common/decompose.c:135
 msgid "Cyan_K"
-msgstr ""
+msgstr "Encián_K"
 
 #: plug-ins/common/decompose.c:136
 msgid "Magenta_K"
-msgstr ""
+msgstr "Bíbor_K"
 
 #: plug-ins/common/decompose.c:137
 msgid "Yellow_K"
-msgstr ""
+msgstr "Sárga_K"
 
 #: plug-ins/common/decompose.c:138
 msgid "alpha"
-msgstr ""
+msgstr "alfa"
 
 #: plug-ins/common/decompose.c:206
 msgid "<Image>/Image/Mode/Decompose..."
-msgstr ""
+msgstr "<Image>/Kép/Mód/Felbontás..."
 
 #: plug-ins/common/decompose.c:286
 msgid "Decomposing..."
-msgstr ""
+msgstr "Felbontás folyamatban..."
 
 #: plug-ins/common/decompose.c:869
 msgid "Decompose"
-msgstr ""
+msgstr "Felbontás"
 
 #. parameter settings
 #: plug-ins/common/decompose.c:886
 msgid "Extract Channels:"
-msgstr ""
+msgstr "Csatornák kivonása:"
 
 #: plug-ins/common/deinterlace.c:92
 msgid "<Image>/Filters/Enhance/Deinterlace..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/xxxDeinterlace..."
 
 #: plug-ins/common/deinterlace.c:148
 msgid "Deinterlace..."
@@ -3086,7 +3281,7 @@ msgstr ""
 
 #: plug-ins/common/depthmerge.c:198
 msgid "<Image>/Filters/Combine/Depth Merge..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Kombinálás/xxxMélységi összefésülés"
 
 #: plug-ins/common/depthmerge.c:387
 msgid "Depth-merging..."
@@ -3098,19 +3293,20 @@ msgstr ""
 
 #: plug-ins/common/depthmerge.c:688
 msgid "Source 1:"
-msgstr ""
+msgstr "1. forrás:"
 
-#: plug-ins/common/depthmerge.c:705 plug-ins/common/depthmerge.c:739
+#: plug-ins/common/depthmerge.c:705
+#: plug-ins/common/depthmerge.c:739
 msgid "Depth Map:"
 msgstr ""
 
 #: plug-ins/common/depthmerge.c:722
 msgid "Source 2:"
-msgstr ""
+msgstr "2. forrás:"
 
 #: plug-ins/common/depthmerge.c:765
 msgid "Overlap:"
-msgstr ""
+msgstr "Átfedés:"
 
 #: plug-ins/common/depthmerge.c:785
 msgid "Scale 1:"
@@ -3122,7 +3318,7 @@ msgstr ""
 
 #: plug-ins/common/despeckle.c:182
 msgid "<Image>/Filters/Enhance/Despeckle..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/xxxDespeckle..."
 
 #. Source image region
 #. Destination image region
@@ -3163,32 +3359,33 @@ msgstr ""
 #.
 #: plug-ins/common/despeckle.c:702
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
-#: plug-ins/common/despeckle.c:711 plug-ins/gimpressionist/orientation.c:198
+#: plug-ins/common/despeckle.c:711
+#: plug-ins/gimpressionist/orientation.c:198
 #: plug-ins/gimpressionist/size.c:196
 msgid "Adaptive"
-msgstr ""
+msgstr "Adaptív"
 
 #: plug-ins/common/despeckle.c:720
 msgid "Recursive"
-msgstr ""
+msgstr "Rekurzív"
 
 #: plug-ins/common/despeckle.c:758
 msgid "Black Level:"
-msgstr ""
+msgstr "Fekete szint:"
 
 #: plug-ins/common/despeckle.c:771
 msgid "White Level:"
-msgstr ""
+msgstr "Fehér szint:"
 
 #: plug-ins/common/destripe.c:147
 msgid "<Image>/Filters/Enhance/Destripe..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/xxxCsíktalanítás..."
 
 #: plug-ins/common/destripe.c:345
 msgid "Destriping..."
-msgstr ""
+msgstr "Csíktalanítás..."
 
 #: plug-ins/common/destripe.c:545
 msgid "Destripe"
@@ -3196,7 +3393,7 @@ msgstr ""
 
 #: plug-ins/common/destripe.c:647
 msgid "Create Histogram"
-msgstr ""
+msgstr "Hisztogramm létrehozása"
 
 #. Widht Scale
 #. table col, row
@@ -3206,36 +3403,37 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1873 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:638
 msgid "Width:"
-msgstr ""
+msgstr "Szélesség:"
 
 #: plug-ins/common/diffraction.c:185
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/xxxDiffrakciós minták..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
-msgstr ""
+msgstr "Diffrakciós minták létrehozása..."
 
 #: plug-ins/common/diffraction.c:529
 msgid "Diffraction Patterns"
-msgstr ""
+msgstr "Diffrekciós minták"
 
 #: plug-ins/common/diffraction.c:626
 msgid "Frequencies"
-msgstr ""
+msgstr "Frekvenciók"
 
 #: plug-ins/common/diffraction.c:665
 msgid "Contours"
-msgstr ""
+msgstr "Körvonalak"
 
 #: plug-ins/common/diffraction.c:704
 msgid "Sharp edges"
-msgstr ""
+msgstr "Éles szélek"
 
-#: plug-ins/common/diffraction.c:717 plug-ins/flame/flame.c:1011
+#: plug-ins/common/diffraction.c:717
+#: plug-ins/flame/flame.c:1011
 #: plug-ins/print/gimp_color_window.c:178
 msgid "Brightness:"
-msgstr ""
+msgstr "Féynesség:"
 
 #: plug-ins/common/diffraction.c:726
 msgid "Scattering:"
@@ -3243,23 +3441,23 @@ msgstr ""
 
 #: plug-ins/common/diffraction.c:735
 msgid "Polatization:"
-msgstr ""
+msgstr "Polarizáció:"
 
 #: plug-ins/common/diffraction.c:743
 msgid "Other options"
-msgstr ""
+msgstr "Egyéb beállítások"
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Elmozdítás..."
 
 #: plug-ins/common/displace.c:254
 msgid "Displacing..."
-msgstr ""
+msgstr "Elmozdítás..."
 
 #: plug-ins/common/displace.c:293
 msgid "Displace"
-msgstr ""
+msgstr "Elmozdítás"
 
 #. The main table
 #: plug-ins/common/displace.c:310
@@ -3269,86 +3467,96 @@ msgstr ""
 #. X options
 #: plug-ins/common/displace.c:322
 msgid "X Displacement:"
-msgstr ""
+msgstr "X elmozdulás:"
 
 #. Y Options
 #: plug-ins/common/displace.c:357
 msgid "Y Displacement:"
-msgstr ""
+msgstr "Y elmozdulás:"
 
 #. =======================================================================
 #. Displacement Type
 #: plug-ins/common/displace.c:400 plug-ins/common/warp.c:502
 msgid "On Edges:"
-msgstr ""
+msgstr "A széleken:"
 
-#: plug-ins/common/displace.c:415 plug-ins/common/edge.c:699
-#: plug-ins/common/ripple.c:652 plug-ins/common/warp.c:523
+#: plug-ins/common/displace.c:415
+#: plug-ins/common/edge.c:699
+#: plug-ins/common/ripple.c:652
+#: plug-ins/common/warp.c:523
 #: plug-ins/common/waves.c:378
 msgid "Smear"
-msgstr ""
+msgstr "Elken"
 
-#: plug-ins/common/displace.c:426 plug-ins/common/edge.c:708
-#: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
-#: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:534
-#: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1107
+#: plug-ins/common/displace.c:426
+#: plug-ins/common/edge.c:708
+#: plug-ins/common/fractaltrace.c:774
+#: plug-ins/common/newsprint.c:449
+#: plug-ins/common/ripple.c:653
+#: plug-ins/common/warp.c:534
+#: plug-ins/fits/fits.c:1008
+#: plug-ins/flame/flame.c:1107
 #: plug-ins/gfig/gfig.c:3320
 msgid "Black"
-msgstr ""
+msgstr "Fekete"
 
 #: plug-ins/common/edge.c:168
 msgid "<Image>/Filters/Edge-Detect/Edge..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Szélek felismerése/Szélek..."
 
 #: plug-ins/common/edge.c:236
 msgid "Edge Detection..."
-msgstr ""
+msgstr "Szélek felismerése..."
 
 #: plug-ins/common/edge.c:645
 msgid "Edge Detection"
-msgstr ""
+msgstr "Szélek felismerése"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:821
+#: plug-ins/common/edge.c:675
+#: plug-ins/common/unsharp.c:821
 msgid "Amount:"
-msgstr ""
+msgstr "Mérték:"
 
 #: plug-ins/common/emboss.c:167
 msgid "<Image>/Filters/Distorts/Emboss..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/xxxEmbossálás..."
 
-#: plug-ins/common/emboss.c:414 plug-ins/common/emboss.c:517
+#: plug-ins/common/emboss.c:414
+#: plug-ins/common/emboss.c:517
 #: plug-ins/common/emboss.c:552
 msgid "Emboss"
 msgstr ""
 
 #: plug-ins/common/emboss.c:547
 msgid "Function"
-msgstr ""
+msgstr "Függvény"
 
 #: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
 msgstr ""
 
-#: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:607
-#: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
+#: plug-ins/common/emboss.c:759
+#: plug-ins/common/nlfilt.c:607
+#: plug-ins/common/sinus.c:2143
+#: plug-ins/common/waves.c:596
 msgid "Do Preview"
-msgstr ""
+msgstr "Elõnézet készítése"
 
 #: plug-ins/common/engrave.c:119
 msgid "<Image>/Filters/Distorts/Engrave..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Gravírozás..."
 
 #: plug-ins/common/engrave.c:191
 msgid "Engraving..."
-msgstr ""
+msgstr "Gravírozás folyamatban..."
 
 #: plug-ins/common/engrave.c:219
 msgid "Engrave"
-msgstr ""
+msgstr "Gravírozás"
 
 #: plug-ins/common/engrave.c:247
 msgid "Limit Line Width"
-msgstr ""
+msgstr "Határvonal szélessége:"
 
 #. Height Scale
 #. table col, row
@@ -3359,11 +3567,11 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:652
 msgid "Height:"
-msgstr ""
+msgstr "Magasság:"
 
 #: plug-ins/common/exchange.c:134
 msgid "<Image>/Filters/Colors/Map/Color Exchange..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Color Exchange..."
 
 #: plug-ins/common/exchange.c:236
 msgid "Color Exchange..."
@@ -3412,7 +3620,7 @@ msgstr ""
 
 #: plug-ins/common/film.c:253
 msgid "<Image>/Filters/Combine/Film..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Combine/Film..."
 
 #: plug-ins/common/film.c:342
 msgid "Composing Images..."
@@ -3439,7 +3647,8 @@ msgstr ""
 msgid "Add >>"
 msgstr ""
 
-#: plug-ins/common/film.c:1142 plug-ins/common/iwarp.c:1037
+#: plug-ins/common/film.c:1142
+#: plug-ins/common/iwarp.c:1037
 #: plug-ins/imagemap/imap_polygon.c:464
 msgid "Remove"
 msgstr ""
@@ -3459,8 +3668,10 @@ msgstr ""
 msgid "Select Film Color"
 msgstr ""
 
-#: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
-#: plug-ins/common/nova.c:500 plug-ins/gimpressionist/color.c:76
+#: plug-ins/common/film.c:1255
+#: plug-ins/common/film.c:1299
+#: plug-ins/common/nova.c:500
+#: plug-ins/gimpressionist/color.c:76
 msgid "Color:"
 msgstr ""
 
@@ -3533,7 +3744,7 @@ msgstr ""
 
 #: plug-ins/common/flarefx.c:218
 msgid "<Image>/Filters/Light Effects/FlareFX..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Fényhatások/FlareFX..."
 
 #: plug-ins/common/flarefx.c:291
 msgid "Render Flare..."
@@ -3555,9 +3766,10 @@ msgstr ""
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Fractal Trace..."
 
-#: plug-ins/common/fractaltrace.c:451 plug-ins/common/fractaltrace.c:720
+#: plug-ins/common/fractaltrace.c:451
+#: plug-ins/common/fractaltrace.c:720
 msgid "Fractal Trace"
 msgstr ""
 
@@ -3566,12 +3778,15 @@ msgstr ""
 msgid "Outside Type"
 msgstr ""
 
-#: plug-ins/common/fractaltrace.c:770 plug-ins/common/warp.c:432
+#: plug-ins/common/fractaltrace.c:770
+#: plug-ins/common/warp.c:432
 msgid "Warp"
 msgstr ""
 
-#: plug-ins/common/fractaltrace.c:776 plug-ins/fits/fits.c:1009
-#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
+#: plug-ins/common/fractaltrace.c:776
+#: plug-ins/fits/fits.c:1009
+#: plug-ins/gfig/gfig.c:2834
+#: plug-ins/gfig/gfig.c:3321
 msgid "White"
 msgstr ""
 
@@ -3581,26 +3796,30 @@ msgstr ""
 
 #: plug-ins/common/gauss_iir.c:184
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Gaussian Blur (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:257
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:307 plug-ins/common/gauss_iir.c:361
+#: plug-ins/common/gauss_iir.c:307
+#: plug-ins/common/gauss_iir.c:361
 #: plug-ins/common/gauss_iir.c:444
 msgid "IIR Gaussian Blur"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:387 plug-ins/common/gauss_rle.c:382
+#: plug-ins/common/gauss_iir.c:387
+#: plug-ins/common/gauss_rle.c:382
 msgid "Blur Horizontally"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:395 plug-ins/common/gauss_rle.c:390
+#: plug-ins/common/gauss_iir.c:395
+#: plug-ins/common/gauss_rle.c:390
 msgid "Blur Vertically"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:406 plug-ins/common/gauss_rle.c:401
+#: plug-ins/common/gauss_iir.c:406
+#: plug-ins/common/gauss_rle.c:401
 #: plug-ins/common/sel_gauss.c:270
 msgid "Blur Radius:"
 msgstr ""
@@ -3610,25 +3829,30 @@ msgstr ""
 msgid "Blur Radius"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:476 plug-ins/common/gauss_rle.c:471
-#: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
+#: plug-ins/common/gauss_iir.c:476
+#: plug-ins/common/gauss_rle.c:471
+#: plug-ins/common/jigsaw.c:2545
+#: plug-ins/common/spread.c:410
 msgid "Horizontal:"
 msgstr ""
 
-#: plug-ins/common/gauss_iir.c:480 plug-ins/common/gauss_rle.c:475
-#: plug-ins/common/jigsaw.c:2558 plug-ins/common/spread.c:414
+#: plug-ins/common/gauss_iir.c:480
+#: plug-ins/common/gauss_rle.c:475
+#: plug-ins/common/jigsaw.c:2558
+#: plug-ins/common/spread.c:414
 msgid "Vertical:"
 msgstr ""
 
 #: plug-ins/common/gauss_rle.c:179
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Gaussian Blur (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:251
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
 msgstr ""
 
-#: plug-ins/common/gauss_rle.c:302 plug-ins/common/gauss_rle.c:356
+#: plug-ins/common/gauss_rle.c:302
+#: plug-ins/common/gauss_rle.c:356
 #: plug-ins/common/gauss_rle.c:439
 msgid "RLE Gaussian Blur"
 msgstr ""
@@ -3638,16 +3862,20 @@ msgstr ""
 msgid "Error in GIMP brush file \"%s\"."
 msgstr ""
 
-#: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
+#: plug-ins/common/gbr.c:355
+#: plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
 msgid "Unnamed"
 msgstr ""
 
 #: plug-ins/common/gbr.c:485
-msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
+msgid ""
+"GIMP brushes are either GRAYSCALE or RGBA\n"
+""
 msgstr ""
 
-#: plug-ins/common/gbr.c:502 plug-ins/common/gih.c:1226
+#: plug-ins/common/gbr.c:502
+#: plug-ins/common/gih.c:1226
 #, c-format
 msgid "Unable to open %s"
 msgstr ""
@@ -3660,15 +3888,17 @@ msgstr ""
 msgid "Spacing:"
 msgstr ""
 
-#: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
-#: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:373
+#: plug-ins/common/gbr.c:599
+#: plug-ins/common/gih.c:892
+#: plug-ins/common/pat.c:478
+#: plug-ins/gimpressionist/presets.c:373
 #: plug-ins/imagemap/imap_settings.c:93
 msgid "Description:"
 msgstr ""
 
 #: plug-ins/common/gee.c:112
 msgid "<Image>/Filters/Toys/Gee-Slime"
-msgstr ""
+msgstr "<Image>/Szûrõk/Toys/Gee-Slime"
 
 #: plug-ins/common/gee.c:186
 msgid "GEE-SLIME"
@@ -3680,23 +3910,19 @@ msgid "** Thank you for choosing GIMP **"
 msgstr ""
 
 #: plug-ins/common/gee.c:209
-msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+msgid "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"
 msgstr ""
 
 #: plug-ins/common/gee_zoom.c:139
 msgid "<Image>/Filters/Toys/Gee-Zoom"
-msgstr ""
+msgstr "<Image>/Szûrõk/Toys/Gee-Zoom"
 
 #: plug-ins/common/gee_zoom.c:203
 msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 msgstr ""
 
 #: plug-ins/common/gee_zoom.c:226
-msgid ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+msgid "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"
 msgstr ""
 
 #: plug-ins/common/gicon.c:436
@@ -3711,17 +3937,21 @@ msgstr ""
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
+""
 msgstr ""
 
 #: plug-ins/common/gif.c:935
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
+""
 msgstr ""
 
 #: plug-ins/common/gif.c:953
 #, c-format
-msgid "GIF: can't open %s\n"
+msgid ""
+"GIF: can't open %s\n"
+""
 msgstr ""
 
 #: plug-ins/common/gif.c:1142
@@ -3790,11 +4020,15 @@ msgid "One Frame per Layer (Replace)"
 msgstr ""
 
 #: plug-ins/common/gif.c:2353
-msgid "GIF: error writing output file\n"
+msgid ""
+"GIF: error writing output file\n"
+""
 msgstr ""
 
 #: plug-ins/common/gif.c:2444
-msgid "GIF save: Your comment string is too long.\n"
+msgid ""
+"GIF save: Your comment string is too long.\n"
+""
 msgstr ""
 
 #: plug-ins/common/gih.c:312
@@ -3826,7 +4060,8 @@ msgstr ""
 msgid "Pixels"
 msgstr ""
 
-#: plug-ins/common/gih.c:946 plug-ins/common/newsprint.c:1274
+#: plug-ins/common/gih.c:946
+#: plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
 msgstr ""
 
@@ -3871,20 +4106,23 @@ msgstr ""
 msgid "Background (%dms)"
 msgstr ""
 
-#: plug-ins/common/gifload.c:899 plug-ins/common/iwarp.c:741
-#: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:302
+#: plug-ins/common/gifload.c:899
+#: plug-ins/common/iwarp.c:741
+#: plug-ins/common/iwarp.c:765
+#: plug-ins/common/mpeg.c:302
 #, c-format
 msgid "Frame %d"
 msgstr ""
 
-#: plug-ins/common/gifload.c:901 plug-ins/common/mpeg.c:299
+#: plug-ins/common/gifload.c:901
+#: plug-ins/common/mpeg.c:299
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr ""
 
 #: plug-ins/common/glasstile.c:138
 msgid "<Image>/Filters/Glass Effects/Glass Tile..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Glass Effects/Glass Tile..."
 
 #: plug-ins/common/glasstile.c:215
 msgid "Glass Tile..."
@@ -3898,13 +4136,14 @@ msgstr ""
 msgid "Tile Width:"
 msgstr ""
 
-#: plug-ins/common/glasstile.c:320 plug-ins/mosaic/mosaic.c:663
+#: plug-ins/common/glasstile.c:320
+#: plug-ins/mosaic/mosaic.c:663
 msgid "Tile Height:"
 msgstr ""
 
 #: plug-ins/common/gqbist.c:338
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Qbist..."
 
 #: plug-ins/common/gqbist.c:435
 msgid "Qbist..."
@@ -3924,7 +4163,7 @@ msgstr ""
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Gradient Map"
 
 #: plug-ins/common/gradmap.c:154
 msgid "Gradient Map..."
@@ -3932,14 +4171,16 @@ msgstr ""
 
 #: plug-ins/common/grid.c:158
 msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Grid..."
 
 #: plug-ins/common/grid.c:242
 msgid "Drawing Grid..."
 msgstr ""
 
-#: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
+#: plug-ins/common/grid.c:654
+#: plug-ins/gfig/gfig.c:3396
+#: plug-ins/imagemap/imap_menu.c:400
+#: plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr ""
@@ -3979,7 +4220,8 @@ msgstr ""
 msgid "GIMP Table Magic"
 msgstr ""
 
-#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
+#: plug-ins/common/gtm.c:400
+#: plug-ins/gfig/gfig.c:4075
 msgid "Warning"
 msgstr ""
 
@@ -4002,9 +4244,7 @@ msgid "Generate Full HTML Document"
 msgstr ""
 
 #: plug-ins/common/gtm.c:438
-msgid ""
-"If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
-"tags instead of just the table html."
+msgid "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html."
 msgstr ""
 
 #. HTML Table Creation Options
@@ -4017,9 +4257,7 @@ msgid "Use Cellspan"
 msgstr ""
 
 #: plug-ins/common/gtm.c:465
-msgid ""
-"If checked GTM will replace any rectangular sections of identically colored "
-"blocks with one large cell with ROWSPAN and COLSPAN values."
+msgid "If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
 
 #: plug-ins/common/gtm.c:470
@@ -4027,10 +4265,7 @@ msgid "Compress TD tags"
 msgstr ""
 
 #: plug-ins/common/gtm.c:478
-msgid ""
-"Checking this tag will cause GTM to leave no whitespace between the TD tags "
-"and the cellcontent.  This is only necessary for pixel level positioning "
-"control."
+msgid "Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control."
 msgstr ""
 
 #: plug-ins/common/gtm.c:484
@@ -4092,25 +4327,30 @@ msgstr ""
 
 #: plug-ins/common/guillotine.c:78
 msgid "<Image>/Image/Transforms/Guillotine"
-msgstr ""
+msgstr "<Image>/Kép/Átalakítások/Guillotine"
 
 #: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
 msgstr ""
 
 #: plug-ins/common/gz.c:321
-msgid "gz: no sensible extension, saving as gzip'd xcf\n"
+msgid ""
+"gz: no sensible extension, saving as gzip'd xcf\n"
+""
 msgstr ""
 
 #: plug-ins/common/gz.c:446
-msgid "gz: no sensible extension, attempting to load with file magic\n"
+msgid ""
+"gz: no sensible extension, attempting to load with file magic\n"
+""
 msgstr ""
 
 #: plug-ins/common/hot.c:234
 msgid "<Image>/Filters/Colors/Hot..."
 msgstr ""
 
-#: plug-ins/common/hot.c:384 plug-ins/common/hot.c:584
+#: plug-ins/common/hot.c:384
+#: plug-ins/common/hot.c:584
 msgid "Hot"
 msgstr ""
 
@@ -4130,13 +4370,14 @@ msgstr ""
 msgid "Reduce Saturation"
 msgstr ""
 
-#: plug-ins/common/hot.c:636 plug-ins/common/waves.c:379
+#: plug-ins/common/hot.c:636
+#: plug-ins/common/waves.c:379
 msgid "Blacken"
 msgstr ""
 
 #: plug-ins/common/illusion.c:117
 msgid "<Image>/Filters/Map/Illusion..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Illusion..."
 
 #: plug-ins/common/illusion.c:181
 msgid "Illusion..."
@@ -4152,22 +4393,25 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:255
 msgid "<Image>/Filters/Distorts/IWarp..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/IWarp..."
 
 #: plug-ins/common/iwarp.c:651
 msgid "Warping..."
 msgstr ""
 
-#: plug-ins/common/iwarp.c:746 plug-ins/common/iwarp.c:757
+#: plug-ins/common/iwarp.c:746
+#: plug-ins/common/iwarp.c:757
 #, c-format
 msgid "Warping Frame Nr %d ..."
 msgstr ""
 
-#: plug-ins/common/iwarp.c:758 plug-ins/common/iwarp.c:961
+#: plug-ins/common/iwarp.c:758
+#: plug-ins/common/iwarp.c:961
 msgid "Ping Pong"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:921 plug-ins/common/iwarp.c:973
+#: plug-ins/common/iwarp.c:921
+#: plug-ins/common/iwarp.c:973
 msgid "Animate"
 msgstr ""
 
@@ -4191,8 +4435,10 @@ msgstr ""
 msgid "Deform Mode"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1034 plug-ins/ifscompose/ifscompose.c:873
-#: plug-ins/ifscompose/ifscompose.c:1140 plug-ins/imagemap/imap_cmd_move.c:80
+#: plug-ins/common/iwarp.c:1034
+#: plug-ins/ifscompose/ifscompose.c:873
+#: plug-ins/ifscompose/ifscompose.c:1140
+#: plug-ins/imagemap/imap_cmd_move.c:80
 #: plug-ins/imagemap/imap_cmd_object_move.c:53
 msgid "Move"
 msgstr ""
@@ -4213,7 +4459,8 @@ msgstr ""
 msgid "Swirl CW"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1060 plug-ins/common/sinus.c:1989
+#: plug-ins/common/iwarp.c:1060
+#: plug-ins/common/sinus.c:1989
 msgid "Bilinear"
 msgstr ""
 
@@ -4221,7 +4468,8 @@ msgstr ""
 msgid "Adaptive Supersample"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1097 plug-ins/gflare/gflare.c:3012
+#: plug-ins/common/iwarp.c:1097
+#: plug-ins/gflare/gflare.c:3012
 msgid "Max Depth:"
 msgstr ""
 
@@ -4238,7 +4486,7 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:394
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Jigsaw..."
 
 #: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
@@ -4310,7 +4558,9 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:733
 #, c-format
-msgid "can't open \"%s\"\n"
+msgid ""
+"can't open \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/jpeg.c:893
@@ -4322,7 +4572,8 @@ msgstr ""
 msgid "Size: %lu bytes (%02.01f kB)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1526 plug-ins/common/jpeg.c:1633
+#: plug-ins/common/jpeg.c:1526
+#: plug-ins/common/jpeg.c:1633
 msgid "Size: unknown"
 msgstr ""
 
@@ -4339,11 +4590,13 @@ msgstr ""
 msgid "Preview (in image window)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
+#: plug-ins/common/jpeg.c:1653
+#: plug-ins/xjt/xjt.c:836
 msgid "Quality:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1675 plug-ins/xjt/xjt.c:845
+#: plug-ins/common/jpeg.c:1675
+#: plug-ins/xjt/xjt.c:845
 msgid "Smoothing:"
 msgstr ""
 
@@ -4355,7 +4608,8 @@ msgstr ""
 msgid "Restart frequency (rows):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
+#: plug-ins/common/jpeg.c:1739
+#: plug-ins/xjt/xjt.c:816
 msgid "Optimize"
 msgstr ""
 
@@ -4393,7 +4647,7 @@ msgstr ""
 
 #: plug-ins/common/laplace.c:91
 msgid "<Image>/Filters/Edge-Detect/Laplace"
-msgstr ""
+msgstr "<Image>/Szûrõk/Edge-Detect/Laplace"
 
 #: plug-ins/common/laplace.c:221
 msgid "Laplace..."
@@ -4403,7 +4657,8 @@ msgstr ""
 msgid "Cleanup..."
 msgstr ""
 
-#: plug-ins/common/lic.c:914 plug-ins/common/lic.c:1016
+#: plug-ins/common/lic.c:914
+#: plug-ins/common/lic.c:1016
 msgid "Van Gogh (LIC)"
 msgstr ""
 
@@ -4429,7 +4684,8 @@ msgstr ""
 msgid "Derivative"
 msgstr ""
 
-#: plug-ins/common/lic.c:1072 plug-ins/common/sinus.c:1984
+#: plug-ins/common/lic.c:1072
+#: plug-ins/common/sinus.c:1984
 msgid "Gradient"
 msgstr ""
 
@@ -4471,11 +4727,11 @@ msgstr ""
 
 #: plug-ins/common/lic.c:1220
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Van Gogh (LIC)..."
 
 #: plug-ins/common/mail.c:220
 msgid "<Image>/File/Mail Image..."
-msgstr ""
+msgstr "<Image>/File/Mail Image..."
 
 #: plug-ins/common/mail.c:462
 msgid "Send to Mail"
@@ -4493,7 +4749,8 @@ msgstr ""
 msgid "Subject:"
 msgstr ""
 
-#: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
+#: plug-ins/common/mail.c:541
+#: plug-ins/gfig/gfig.c:3749
 #: plug-ins/imagemap/imap_settings.c:79
 msgid "Filename:"
 msgstr ""
@@ -4512,7 +4769,9 @@ msgid "MIME"
 msgstr ""
 
 #: plug-ins/common/mail.c:692
-msgid "mail: some sort of error with the file extension or lack thereof \n"
+msgid ""
+"mail: some sort of error with the file extension or lack thereof \n"
+""
 msgstr ""
 
 #: plug-ins/common/mapcolor.c:139
@@ -4533,13 +4792,14 @@ msgstr ""
 
 #: plug-ins/common/mapcolor.c:346
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Adjust FG-BG"
 
 #: plug-ins/common/mapcolor.c:361
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Color Range Mapping..."
 
-#: plug-ins/common/mapcolor.c:406 plug-ins/common/mapcolor.c:746
+#: plug-ins/common/mapcolor.c:406
+#: plug-ins/common/mapcolor.c:746
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
@@ -4565,17 +4825,21 @@ msgstr ""
 msgid "Destination color range"
 msgstr ""
 
-#: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2120
-#: plug-ins/gap/gap_lib.c:2299 plug-ins/gap/gap_range_ops.c:260
-#: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
+#: plug-ins/common/mapcolor.c:652
+#: plug-ins/gap/gap_decode_mpeg_main.c:663
+#: plug-ins/gap/gap_decode_xanim.c:234
+#: plug-ins/gap/gap_lib.c:2120
+#: plug-ins/gap/gap_lib.c:2299
+#: plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/gap/gap_range_ops.c:610
+#: plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
 msgstr ""
 
 #: plug-ins/common/max_rgb.c:129
 msgid "<Image>/Filters/Colors/Max RGB..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Max RGB..."
 
 #: plug-ins/common/max_rgb.c:165
 msgid "Max RGB: Can only operate on RGB drawables."
@@ -4599,9 +4863,10 @@ msgstr ""
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Motion Blur..."
 
-#: plug-ins/common/mblur.c:622 plug-ins/common/unsharp.c:290
+#: plug-ins/common/mblur.c:622
+#: plug-ins/common/unsharp.c:290
 msgid "Blurring..."
 msgstr ""
 
@@ -4613,12 +4878,14 @@ msgstr ""
 msgid "Blur Type"
 msgstr ""
 
-#: plug-ins/common/mblur.c:785 plug-ins/gimpressionist/orientation.c:161
+#: plug-ins/common/mblur.c:785
+#: plug-ins/gimpressionist/orientation.c:161
 #: plug-ins/gimpressionist/size.c:160
 msgid "Radial"
 msgstr ""
 
-#: plug-ins/common/mblur.c:786 plug-ins/imagemap/imap_popup.c:141
+#: plug-ins/common/mblur.c:786
+#: plug-ins/imagemap/imap_popup.c:141
 msgid "Zoom"
 msgstr ""
 
@@ -4657,13 +4924,14 @@ msgstr ""
 msgid "PS Diamond"
 msgstr ""
 
-#: plug-ins/common/newsprint.c:462 plug-ins/common/newsprint.c:1359
+#: plug-ins/common/newsprint.c:462
+#: plug-ins/common/newsprint.c:1359
 msgid "Intensity"
 msgstr ""
 
 #: plug-ins/common/newsprint.c:566
 msgid "<Image>/Filters/Distorts/Newsprint..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Newsprint..."
 
 #: plug-ins/common/newsprint.c:666
 msgid "Newsprintifing..."
@@ -4718,9 +4986,10 @@ msgstr ""
 
 #: plug-ins/common/nlfilt.c:159
 msgid "<Image>/Filters/Enhance/NL Filter..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/NL Filter..."
 
-#: plug-ins/common/nlfilt.c:277 plug-ins/common/nlfilt.c:363
+#: plug-ins/common/nlfilt.c:277
+#: plug-ins/common/nlfilt.c:363
 msgid "NL Filter"
 msgstr ""
 
@@ -4742,7 +5011,7 @@ msgstr ""
 
 #: plug-ins/common/noisify.c:141
 msgid "<Image>/Filters/Noise/Noisify..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Noisify..."
 
 #: plug-ins/common/noisify.c:217
 msgid "Adding Noise..."
@@ -4756,7 +5025,8 @@ msgstr ""
 msgid "Independent"
 msgstr ""
 
-#: plug-ins/common/noisify.c:549 plug-ins/common/noisify.c:563
+#: plug-ins/common/noisify.c:549
+#: plug-ins/common/noisify.c:563
 msgid "Gray:"
 msgstr ""
 
@@ -4767,7 +5037,7 @@ msgstr ""
 
 #: plug-ins/common/normalize.c:89
 msgid "<Image>/Image/Colors/Auto/Normalize"
-msgstr ""
+msgstr "<Image>/Kép/Colors/Auto/Normalize"
 
 #: plug-ins/common/normalize.c:121
 msgid "Normalizing..."
@@ -4775,7 +5045,7 @@ msgstr ""
 
 #: plug-ins/common/nova.c:227
 msgid "<Image>/Filters/Light Effects/SuperNova..."
-msgstr ""
+msgstr "<Image>/Filters/Light Effects/SuperNova..."
 
 #: plug-ins/common/nova.c:308
 msgid "Rendering SuperNova..."
@@ -4793,7 +5063,8 @@ msgstr ""
 msgid "Spokes:"
 msgstr ""
 
-#: plug-ins/common/nova.c:528 plug-ins/common/sparkle.c:453
+#: plug-ins/common/nova.c:528
+#: plug-ins/common/sparkle.c:453
 msgid "Random Hue:"
 msgstr ""
 
@@ -4804,7 +5075,7 @@ msgstr ""
 
 #: plug-ins/common/oilify.c:119
 msgid "<Image>/Filters/Artistic/Oilify..."
-msgstr ""
+msgstr "<Image>/Filters/Artistic/Oilify..."
 
 #: plug-ins/common/oilify.c:194
 msgid "Oil Painting..."
@@ -4830,7 +5101,8 @@ msgstr ""
 msgid "Division"
 msgstr ""
 
-#: plug-ins/common/papertile.c:305 plug-ins/gimpressionist/size.c:120
+#: plug-ins/common/papertile.c:305
+#: plug-ins/gimpressionist/size.c:120
 #: plug-ins/gimpressionist/sizemap.c:451
 msgid "Size:"
 msgstr ""
@@ -4875,11 +5147,13 @@ msgstr ""
 msgid "Image"
 msgstr ""
 
-#: plug-ins/common/papertile.c:386 plug-ins/common/sparkle.c:527
+#: plug-ins/common/papertile.c:386
+#: plug-ins/common/sparkle.c:527
 msgid "Foreground Color"
 msgstr ""
 
-#: plug-ins/common/papertile.c:388 plug-ins/common/papertile.c:397
+#: plug-ins/common/papertile.c:388
+#: plug-ins/common/papertile.c:397
 #: plug-ins/common/sparkle.c:528
 msgid "Background Color"
 msgstr ""
@@ -4890,7 +5164,7 @@ msgstr ""
 
 #: plug-ins/common/papertile.c:839
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Paper Tile..."
 
 #: plug-ins/common/pat.c:450
 msgid "Save as Pattern"
@@ -4898,7 +5172,7 @@ msgstr ""
 
 #: plug-ins/common/pixelize.c:163
 msgid "<Image>/Filters/Blur/Pixelize..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Pixelize..."
 
 #: plug-ins/common/pixelize.c:238
 msgid "Pixelizing..."
@@ -4952,7 +5226,8 @@ msgstr ""
 msgid "Details <<"
 msgstr "Részletek <<"
 
-#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1120
+#: plug-ins/common/plugindetails.c:230
+#: plug-ins/common/plugindetails.c:1120
 msgid "Details >>"
 msgstr ""
 
@@ -5008,7 +5283,8 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1045 plug-ins/common/plugindetails.c:1073
+#: plug-ins/common/plugindetails.c:1045
+#: plug-ins/common/plugindetails.c:1073
 msgid "Ins Date"
 msgstr ""
 
@@ -5016,7 +5292,8 @@ msgstr ""
 msgid "Menu Path"
 msgstr ""
 
-#: plug-ins/common/plugindetails.c:1047 plug-ins/common/plugindetails.c:1074
+#: plug-ins/common/plugindetails.c:1047
+#: plug-ins/common/plugindetails.c:1074
 msgid "Image Types"
 msgstr ""
 
@@ -5105,9 +5382,12 @@ msgstr ""
 msgid "PNM: Can't open file %s."
 msgstr ""
 
-#: plug-ins/common/pnm.c:447 plug-ins/common/pnm.c:468
-#: plug-ins/common/pnm.c:475 plug-ins/common/pnm.c:484
-#: plug-ins/common/pnm.c:559 plug-ins/common/pnm.c:615
+#: plug-ins/common/pnm.c:447
+#: plug-ins/common/pnm.c:468
+#: plug-ins/common/pnm.c:475
+#: plug-ins/common/pnm.c:484
+#: plug-ins/common/pnm.c:559
+#: plug-ins/common/pnm.c:615
 msgid "PNM: Premature end of file."
 msgstr ""
 
@@ -5153,7 +5433,7 @@ msgstr ""
 
 #: plug-ins/common/polar.c:215
 msgid "<Image>/Filters/Distorts/Polar Coords..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Polar Coords..."
 
 #: plug-ins/common/polar.c:405
 msgid "Polarizing..."
@@ -5176,9 +5456,7 @@ msgid "Map Backwards"
 msgstr ""
 
 #: plug-ins/common/polar.c:1000
-msgid ""
-"If checked the mapping will begin at the right side, as opposed to beginning "
-"at the left."
+msgid "If checked the mapping will begin at the right side, as opposed to beginning at the left."
 msgstr ""
 
 #: plug-ins/common/polar.c:1004
@@ -5186,9 +5464,7 @@ msgid "Map from Top"
 msgstr ""
 
 #: plug-ins/common/polar.c:1012
-msgid ""
-"If unchecked the mapping will put the bottom row in the middle and the top "
-"row on the outside.  If checked it will be the opposite."
+msgid "If unchecked the mapping will put the bottom row in the middle and the top row on the outside.  If checked it will be the opposite."
 msgstr ""
 
 #: plug-ins/common/polar.c:1017
@@ -5196,9 +5472,7 @@ msgid "To Polar"
 msgstr ""
 
 #: plug-ins/common/polar.c:1025
-msgid ""
-"If unchecked the image will be circularly mapped onto a rectangle.  If "
-"checked the image will be mapped onto a circle."
+msgid "If unchecked the image will be circularly mapped onto a rectangle.  If checked the image will be mapped onto a circle."
 msgstr ""
 
 #: plug-ins/common/ps.c:873
@@ -5226,8 +5500,10 @@ msgstr ""
 msgid "PS: can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2191 plug-ins/common/ps.c:2317
-#: plug-ins/common/ps.c:2461 plug-ins/common/ps.c:2583
+#: plug-ins/common/ps.c:2191
+#: plug-ins/common/ps.c:2317
+#: plug-ins/common/ps.c:2461
+#: plug-ins/common/ps.c:2583
 msgid "write error occured"
 msgstr ""
 
@@ -5240,7 +5516,8 @@ msgstr ""
 msgid "Rendering"
 msgstr ""
 
-#: plug-ins/common/ps.c:2653 plug-ins/print/gimp_main_window.c:534
+#: plug-ins/common/ps.c:2653
+#: plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
 msgstr ""
 
@@ -5270,11 +5547,13 @@ msgstr ""
 msgid "Text Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2721 plug-ins/common/ps.c:2734
+#: plug-ins/common/ps.c:2721
+#: plug-ins/common/ps.c:2734
 msgid "Weak"
 msgstr ""
 
-#: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
+#: plug-ins/common/ps.c:2722
+#: plug-ins/common/ps.c:2735
 msgid "Strong"
 msgstr ""
 
@@ -5304,9 +5583,7 @@ msgid "Keep Aspect Ratio"
 msgstr ""
 
 #: plug-ins/common/ps.c:2872
-msgid ""
-"When toggled, the resulting image will be scaled to fit into the given size "
-"without changing the aspect ratio."
+msgid "When toggled, the resulting image will be scaled to fit into the given size without changing the aspect ratio."
 msgstr ""
 
 #. Unit
@@ -5314,7 +5591,8 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 
-#: plug-ins/common/ps.c:2887 plug-ins/print/gimp_main_window.c:360
+#: plug-ins/common/ps.c:2887
+#: plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
 msgstr ""
 
@@ -5374,15 +5652,15 @@ msgstr ""
 
 #: plug-ins/common/randomize.c:240
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Hurl..."
 
 #: plug-ins/common/randomize.c:252
 msgid "<Image>/Filters/Noise/Pick..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Pick..."
 
 #: plug-ins/common/randomize.c:264
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Slur..."
 
 #: plug-ins/common/randomize.c:744
 msgid "Randomization (%):"
@@ -5390,7 +5668,7 @@ msgstr ""
 
 #: plug-ins/common/ripple.c:156
 msgid "<Image>/Filters/Distorts/Ripple..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Ripple..."
 
 #: plug-ins/common/ripple.c:236
 msgid "Rippling..."
@@ -5422,33 +5700,34 @@ msgstr ""
 msgid "Period:"
 msgstr ""
 
-#: plug-ins/common/ripple.c:698 plug-ins/common/waves.c:411
+#: plug-ins/common/ripple.c:698
+#: plug-ins/common/waves.c:411
 msgid "Amplitude:"
 msgstr ""
 
 #: plug-ins/common/rotate.c:161
 msgid "<Image>/Layers/Rotate/90 degrees"
-msgstr ""
+msgstr "<Image>/Rétegek/Forgatás/90 fok"
 
 #: plug-ins/common/rotate.c:172
 msgid "<Image>/Layers/Rotate/180 degrees"
-msgstr ""
+msgstr "<Image>/Rétegek/Forgatás/180 fok"
 
 #: plug-ins/common/rotate.c:183
 msgid "<Image>/Layers/Rotate/270 degrees"
-msgstr ""
+msgstr "<Image>/Rétegek/Forgatás/270 fok"
 
 #: plug-ins/common/rotate.c:195
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
-msgstr ""
+msgstr "<Image>/Kép/Átalakítások/Forgatás/90 fok"
 
 #: plug-ins/common/rotate.c:206
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
-msgstr ""
+msgstr "<Image>/Kép/Átalakítások/Forgatás/180 fok"
 
 #: plug-ins/common/rotate.c:217
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
-msgstr ""
+msgstr "<Image>/Kép/Átalakítások/Forgatás/270 fok"
 
 #: plug-ins/common/rotate.c:526
 msgid "You can not rotate the whole image if there's a selection."
@@ -5468,7 +5747,7 @@ msgstr ""
 
 #: plug-ins/common/sample_colorize.c:306
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Leképezés/Sample Colorize..."
 
 #: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
@@ -5557,7 +5836,7 @@ msgstr ""
 
 #: plug-ins/common/scatter_hsv.c:143
 msgid "<Image>/Filters/Noise/Scatter HSV..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Scatter HSV..."
 
 #: plug-ins/common/scatter_hsv.c:230
 msgid "Scatter HSV: Scattering..."
@@ -5575,14 +5854,15 @@ msgstr ""
 msgid "Holdness:"
 msgstr ""
 
-#: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1076
+#: plug-ins/common/screenshot.c:137
+#: plug-ins/winsnap/winsnap.c:1076
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr ""
+msgstr "<Toolbox>/Fájl/Külsõ forrás/Képernyõkép..."
 
 #. main dialog
 #: plug-ins/common/screenshot.c:366
 msgid "Screen Shot"
-msgstr ""
+msgstr "Képernyõkép"
 
 #. single window
 #: plug-ins/common/screenshot.c:389 plug-ins/winsnap/winsnap.c:903
@@ -5591,30 +5871,33 @@ msgstr ""
 
 #: plug-ins/common/screenshot.c:397
 msgid "Single Window"
-msgstr ""
+msgstr "Egy ablakot"
 
 #: plug-ins/common/screenshot.c:411
 msgid "With Decorations"
-msgstr ""
+msgstr "Díszítésekkel"
 
 #. root window
 #: plug-ins/common/screenshot.c:427
 msgid "Whole Screen"
-msgstr ""
+msgstr "Egész képernyõt"
 
-#: plug-ins/common/screenshot.c:443 plug-ins/winsnap/winsnap.c:1011
+#: plug-ins/common/screenshot.c:443
+#: plug-ins/winsnap/winsnap.c:1011
 msgid "after"
-msgstr ""
+msgstr " "
 
-#: plug-ins/common/screenshot.c:455 plug-ins/winsnap/winsnap.c:1020
+#: plug-ins/common/screenshot.c:455
+#: plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
-msgstr ""
+msgstr "mp. várakozás után"
 
 #: plug-ins/common/sel_gauss.c:125
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Elmosás/Selective Gaussian Blur..."
 
-#: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
+#: plug-ins/common/sel_gauss.c:201
+#: plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
 msgstr ""
 
@@ -5628,7 +5911,7 @@ msgstr ""
 
 #: plug-ins/common/semiflatten.c:89
 msgid "<Image>/Filters/Colors/Semi-Flatten"
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Semi-Flatten"
 
 #: plug-ins/common/semiflatten.c:126
 msgid "Semi-Flatten..."
@@ -5636,7 +5919,7 @@ msgstr ""
 
 #: plug-ins/common/sharpen.c:167
 msgid "<Image>/Filters/Enhance/Sharpen..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/Sharpen..."
 
 #.
 #. * Let the user know what we're doing...
@@ -5656,7 +5939,7 @@ msgstr ""
 
 #: plug-ins/common/shift.c:131
 msgid "<Image>/Filters/Distorts/Shift..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Shift..."
 
 #: plug-ins/common/shift.c:206
 msgid "Shifting..."
@@ -5680,7 +5963,7 @@ msgstr ""
 
 #: plug-ins/common/sinus.c:1157
 msgid "<Image>/Filters/Render/Sinus..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Sinus..."
 
 #: plug-ins/common/sinus.c:1249
 msgid "Sinus: rendering..."
@@ -5779,7 +6062,7 @@ msgstr ""
 
 #: plug-ins/common/smooth_palette.c:84
 msgid "<Image>/Filters/Colors/Smooth Palette..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Smooth Palette..."
 
 #: plug-ins/common/smooth_palette.c:173
 msgid "Deriving smooth palette..."
@@ -5795,7 +6078,7 @@ msgstr ""
 
 #: plug-ins/common/snoise.c:187
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Felhõk/Solid Noise..."
 
 #: plug-ins/common/snoise.c:312
 msgid "Solid Noise..."
@@ -5830,7 +6113,7 @@ msgstr ""
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Edge-Detect/Sobel..."
 
 #: plug-ins/common/sobel.c:246
 msgid "Sobel Edge Detection"
@@ -5854,15 +6137,15 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:191
 msgid "<Image>/Filters/Light Effects/Sparkle..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Fényhatások/Szikra..."
 
 #: plug-ins/common/sparkle.c:295
 msgid "Sparkling..."
-msgstr ""
+msgstr "Szikrázás..."
 
 #: plug-ins/common/sparkle.c:344
 msgid "Sparkle"
-msgstr ""
+msgstr "Szikra"
 
 #: plug-ins/common/sparkle.c:382
 msgid "Luminosity Threshold:"
@@ -5970,7 +6253,7 @@ msgstr ""
 
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Zaj/Spread..."
 
 #: plug-ins/common/spread.c:212
 msgid "Spreading..."
@@ -5987,22 +6270,22 @@ msgstr ""
 
 #: plug-ins/common/struc.c:1156
 msgid "<Image>/Filters/Artistic/Apply Canvas..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Mûvészi/Apply Canvas..."
 
 #: plug-ins/common/struc.c:1242
 msgid "Applying Canvas..."
-msgstr ""
+msgstr "Vászon alkalmazása folyamatban..."
 
 #: plug-ins/common/struc.c:1276
 msgid "Apply Canvas"
-msgstr ""
+msgstr "Vászon alkalmazása"
 
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: plug-ins/common/struc.c:1304 plug-ins/common/wind.c:1089
 msgid "Direction"
-msgstr ""
+msgstr "Irány"
 
 #: plug-ins/common/struc.c:1308
 msgid "Top-Right"
@@ -6020,7 +6303,8 @@ msgstr ""
 msgid "Bottom-Right"
 msgstr ""
 
-#: plug-ins/common/sunras.c:389 plug-ins/fits/fits.c:354
+#: plug-ins/common/sunras.c:389
+#: plug-ins/fits/fits.c:354
 msgid "Can't open file for reading"
 msgstr ""
 
@@ -6052,22 +6336,29 @@ msgstr ""
 msgid "Can't operate on unknown image types"
 msgstr ""
 
-#: plug-ins/common/sunras.c:519 plug-ins/fits/fits.c:466
+#: plug-ins/common/sunras.c:519
+#: plug-ins/fits/fits.c:466
 msgid "Can't open file for writing"
 msgstr ""
 
-#: plug-ins/common/sunras.c:1039 plug-ins/common/sunras.c:1130
-#: plug-ins/common/sunras.c:1211 plug-ins/common/sunras.c:1306
-#: plug-ins/common/xwd.c:1273 plug-ins/common/xwd.c:1435
-#: plug-ins/common/xwd.c:1632 plug-ins/common/xwd.c:1883
+#: plug-ins/common/sunras.c:1039
+#: plug-ins/common/sunras.c:1130
+#: plug-ins/common/sunras.c:1211
+#: plug-ins/common/sunras.c:1306
+#: plug-ins/common/xwd.c:1273
+#: plug-ins/common/xwd.c:1435
+#: plug-ins/common/xwd.c:1632
+#: plug-ins/common/xwd.c:1883
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "Fájl vége olvasás közben"
 
-#: plug-ins/common/sunras.c:1461 plug-ins/common/sunras.c:1569
-#: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
+#: plug-ins/common/sunras.c:1461
+#: plug-ins/common/sunras.c:1569
+#: plug-ins/fits/fits.c:840
+#: plug-ins/fits/fits.c:964
 msgid "Write error occured"
-msgstr ""
+msgstr "Hiba íráskor"
 
 #: plug-ins/common/sunras.c:1585
 msgid "Save as SUNRAS"
@@ -6079,17 +6370,23 @@ msgstr ""
 
 #: plug-ins/common/tga.c:425
 #, c-format
-msgid "TGA: can't open \"%s\"\n"
+msgid ""
+"TGA: can't open \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/tga.c:435
 #, c-format
-msgid "TGA: Cannot read footer from \"%s\"\n"
+msgid ""
+"TGA: Cannot read footer from \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/tga.c:446
 #, c-format
-msgid "TGA: Cannot read extension from \"%s\"\n"
+msgid ""
+"TGA: Cannot read extension from \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/tga.c:1178
@@ -6108,7 +6405,7 @@ msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:104
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
-msgstr ""
+msgstr "<Image>/Kép/Alpha/Threshold Alpha..."
 
 #: plug-ins/common/threshold_alpha.c:147
 msgid "The layer preserves transparency."
@@ -6132,15 +6429,15 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:1580
 msgid "Save as TIFF"
-msgstr ""
+msgstr "mentés TIFF-be"
 
 #: plug-ins/common/tiff.c:1602
 msgid "Compression"
-msgstr ""
+msgstr "Tömörítés"
 
 #: plug-ins/common/tiff.c:1607
 msgid "LZW"
-msgstr ""
+msgstr "LZW"
 
 #: plug-ins/common/tiff.c:1608
 msgid "Pack Bits"
@@ -6152,13 +6449,14 @@ msgstr ""
 
 #: plug-ins/common/tiff.c:1610
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/common/tile.c:129
 msgid "<Image>/Filters/Map/Tile..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Tile..."
 
-#: plug-ins/common/tile.c:207 plug-ins/common/tileit.c:333
+#: plug-ins/common/tile.c:207
+#: plug-ins/common/tileit.c:333
 msgid "Tiling..."
 msgstr ""
 
@@ -6173,7 +6471,7 @@ msgstr ""
 
 #: plug-ins/common/tileit.c:235
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Small Tiles..."
 
 #. Get the preview image and store it also set has_alpha
 #. Start buildng the dialog up
@@ -6217,7 +6515,7 @@ msgstr ""
 
 #: plug-ins/common/tiler.c:73
 msgid "<Image>/Filters/Map/Make Seamless"
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Make Seamless"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
@@ -6225,19 +6523,20 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:73
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Mértékegység-szerkesztõ..."
 
-#: plug-ins/common/uniteditor.c:168 plug-ins/common/uniteditor.c:624
+#: plug-ins/common/uniteditor.c:168
+#: plug-ins/common/uniteditor.c:624
 msgid "New Unit"
-msgstr ""
+msgstr "Új mértékegység"
 
 #: plug-ins/common/uniteditor.c:196
 msgid "ID:"
-msgstr ""
+msgstr "ID:"
 
 #: plug-ins/common/uniteditor.c:208
 msgid "Factor:"
-msgstr ""
+msgstr "Szorzó:"
 
 #: plug-ins/common/uniteditor.c:219
 msgid "Digits:"
@@ -6249,19 +6548,19 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:245
 msgid "Abbreviation:"
-msgstr ""
+msgstr "Rövidítés:"
 
 #: plug-ins/common/uniteditor.c:258
 msgid "Singular:"
-msgstr ""
+msgstr "Egyesszám:"
 
 #: plug-ins/common/uniteditor.c:271
 msgid "Plural:"
-msgstr ""
+msgstr "Többesszám:"
 
 #: plug-ins/common/uniteditor.c:308
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "A mértékegység szorzója nem lehet nulla."
 
 #: plug-ins/common/uniteditor.c:318
 msgid "All text fields must contain a value."
@@ -6269,21 +6568,19 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:519
 msgid "Unit Editor"
-msgstr ""
+msgstr "Mértékegység-szerkesztõ"
 
-#: plug-ins/common/uniteditor.c:524 plug-ins/gimpressionist/presets.c:656
+#: plug-ins/common/uniteditor.c:524
+#: plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr ""
+msgstr "Frissítés"
 
 #: plug-ins/common/uniteditor.c:537
-msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
-"checked."
+msgid "A unit definition will only be saved before GIMP exits if this column is checked."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:539
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:541
@@ -6291,16 +6588,11 @@ msgid "How many units make up an inch."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:542
-msgid ""
-"This field is a hint for numerical input fields. It specifies how many "
-"decimal digits the input field should provide to get approximately the same "
-"accuracy as an \"inch\" input field with two decimal digits."
+msgid "This field is a hint for numerical input fields. It specifies how many decimal digits the input field should provide to get approximately the same accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:548
-msgid ""
-"The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
-"abbreviation if it doesn't have a symbol."
+msgid "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's abbreviation if it doesn't have a symbol."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:551
@@ -6317,15 +6609,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:570
 msgid "Saved"
-msgstr ""
+msgstr "Elmetve"
 
 #: plug-ins/common/uniteditor.c:571
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: plug-ins/common/uniteditor.c:572
 msgid "Factor"
-msgstr ""
+msgstr "Szorzó"
 
 #: plug-ins/common/uniteditor.c:573
 msgid "Digits"
@@ -6337,15 +6629,15 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:575
 msgid "Abbr."
-msgstr ""
+msgstr "Röv."
 
 #: plug-ins/common/uniteditor.c:576
 msgid "Singular"
-msgstr ""
+msgstr "Egyesszám"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Plural"
-msgstr ""
+msgstr "Többesszám"
 
 #: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
@@ -6369,7 +6661,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:655
 msgid "Save Unit"
-msgstr ""
+msgstr "Mértékegység mentése"
 
 #: plug-ins/common/uniteditor.c:662
 msgid "Save the currently selected unit before GIMP exits."
@@ -6377,7 +6669,7 @@ msgstr ""
 
 #: plug-ins/common/unsharp.c:186
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Javítás/Unsharp Mask..."
 
 #: plug-ins/common/unsharp.c:396
 msgid "Merging..."
@@ -6425,13 +6717,14 @@ msgstr ""
 
 #: plug-ins/common/video.c:1836
 msgid "<Image>/Filters/Distorts/Video..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Video..."
 
 #: plug-ins/common/video.c:1907
 msgid "Video/RGB..."
 msgstr ""
 
-#: plug-ins/common/video.c:2150 plug-ins/gap/gap_decode_mpeg_main.c:643
+#: plug-ins/common/video.c:2150
+#: plug-ins/gap/gap_decode_mpeg_main.c:643
 msgid "Video"
 msgstr ""
 
@@ -6444,13 +6737,14 @@ msgstr ""
 msgid "Additive"
 msgstr ""
 
-#: plug-ins/common/video.c:2196 plug-ins/rcm/rcm_dialog.c:122
+#: plug-ins/common/video.c:2196
+#: plug-ins/rcm/rcm_dialog.c:122
 msgid "Rotated"
 msgstr ""
 
 #: plug-ins/common/vinvert.c:91
 msgid "<Image>/Filters/Colors/Value Invert"
-msgstr ""
+msgstr "<Image>/Szûrõk/Színek/Value Invert"
 
 #: plug-ins/common/vpropagate.c:160
 msgid "More White (Larger Value)"
@@ -6486,7 +6780,7 @@ msgstr ""
 
 #: plug-ins/common/vpropagate.c:218
 msgid "<Image>/Filters/Distorts/Value Propagate..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Value Propagate..."
 
 #: plug-ins/common/vpropagate.c:365
 msgid "Value propagating..."
@@ -6539,7 +6833,7 @@ msgstr ""
 
 #: plug-ins/common/warp.c:278
 msgid "<Image>/Filters/Map/Warp..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Leképezés/Warp..."
 
 #: plug-ins/common/warp.c:455
 msgid "Main Options"
@@ -6549,7 +6843,8 @@ msgstr ""
 msgid "Step Size:"
 msgstr ""
 
-#: plug-ins/common/warp.c:479 plug-ins/ifscompose/ifscompose.c:1283
+#: plug-ins/common/warp.c:479
+#: plug-ins/ifscompose/ifscompose.c:1283
 msgid "Iterations:"
 msgstr ""
 
@@ -6637,7 +6932,7 @@ msgstr ""
 
 #: plug-ins/common/waves.c:158
 msgid "<Image>/Filters/Distorts/Waves..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Waves..."
 
 #: plug-ins/common/waves.c:344
 msgid "Waves"
@@ -6661,7 +6956,7 @@ msgstr ""
 
 #: plug-ins/common/whirlpinch.c:206
 msgid "<Image>/Filters/Distorts/Whirl and Pinch..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Whirl and Pinch..."
 
 #: plug-ins/common/whirlpinch.c:404
 msgid "Whirling and pinching..."
@@ -6681,19 +6976,19 @@ msgstr ""
 
 #: plug-ins/common/winclipboard.c:110
 msgid "<Image>/Edit/Copy to Clipboard"
-msgstr ""
+msgstr "<Image>/Edit/Copy to Clipboard"
 
 #: plug-ins/common/winclipboard.c:122
 msgid "<Image>/Edit/Paste from Clipboard"
-msgstr ""
+msgstr "<Image>/Edit/Paste from Clipboard"
 
 #: plug-ins/common/winclipboard.c:134
 msgid "<Toolbox>/File/Acquire/From Clipboard"
-msgstr ""
+msgstr "<Toolbox>/Fájl/Külsõ forrás/Vágólapról"
 
 #: plug-ins/common/winclipboard.c:309
 msgid "Copying ..."
-msgstr ""
+msgstr "Másolás folyamatban..."
 
 #. ??? gimp_convert_rgb(image_ID);
 #.
@@ -6707,7 +7002,7 @@ msgstr ""
 
 #: plug-ins/common/wind.c:205
 msgid "<Image>/Filters/Distorts/Wind..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Wind..."
 
 #: plug-ins/common/wind.c:417
 msgid "Rendering Blast..."
@@ -6721,16 +7016,17 @@ msgstr ""
 msgid "Wind Strength must be greater than 0."
 msgstr ""
 
-#: plug-ins/common/wind.c:1007 plug-ins/common/wind.c:1074
+#: plug-ins/common/wind.c:1007
+#: plug-ins/common/wind.c:1074
 msgid "Wind"
-msgstr ""
+msgstr "Szél"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
 #: plug-ins/common/wind.c:1071 plug-ins/maze/maze_face.c:302
 msgid "Style"
-msgstr ""
+msgstr "Stílus"
 
 #: plug-ins/common/wind.c:1075
 msgid "Blast"
@@ -6738,11 +7034,11 @@ msgstr ""
 
 #: plug-ins/common/wind.c:1092
 msgid "Left"
-msgstr ""
+msgstr "Bal"
 
 #: plug-ins/common/wind.c:1093
 msgid "Right"
-msgstr ""
+msgstr "Jobb"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -6761,13 +7057,14 @@ msgstr ""
 
 #: plug-ins/common/wind.c:1112
 msgid "Both"
-msgstr ""
+msgstr "Mindekettõ"
 
 #: plug-ins/common/wind.c:1142
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1155 plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/common/wind.c:1155
+#: plug-ins/gimpressionist/orientmap.c:565
 #: plug-ins/gimpressionist/sizemap.c:465
 msgid "Strength:"
 msgstr ""
@@ -6778,11 +7075,11 @@ msgstr ""
 
 #: plug-ins/common/winprint.c:189
 msgid "<Image>/File/Print"
-msgstr ""
+msgstr "<Image>/File/Print"
 
 #: plug-ins/common/winprint.c:201
 msgid "<Image>/File/Page Setup"
-msgstr ""
+msgstr "<Image>/File/Page Setup"
 
 #: plug-ins/common/winprint.c:303
 #, c-format
@@ -6797,7 +7094,8 @@ msgstr ""
 msgid "StartPage failed"
 msgstr ""
 
-#: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:270
+#: plug-ins/common/winprint.c:391
+#: plug-ins/print/print-image-gimp.c:270
 msgid "Printing..."
 msgstr ""
 
@@ -6811,9 +7109,7 @@ msgstr ""
 
 #: plug-ins/common/winprint.c:520
 #, c-format
-msgid ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
-"error = %d, y = %d"
+msgid "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, error = %d, y = %d"
 msgstr ""
 
 #: plug-ins/common/winprint.c:549
@@ -6854,24 +7150,34 @@ msgstr ""
 
 #: plug-ins/common/xbm.c:730
 #, c-format
-msgid "XBM: cannot open \"%s\"\n"
+msgid ""
+"XBM: cannot open \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/xbm.c:813
 #, c-format
-msgid "XBM: cannot read header (ftell == %ld)\n"
+msgid ""
+"XBM: cannot read header (ftell == %ld)\n"
+""
 msgstr ""
 
 #: plug-ins/common/xbm.c:819
-msgid "XBM: no image width specified\n"
+msgid ""
+"XBM: no image width specified\n"
+""
 msgstr ""
 
 #: plug-ins/common/xbm.c:825
-msgid "XBM: no image height specified\n"
+msgid ""
+"XBM: no image height specified\n"
+""
 msgstr ""
 
 #: plug-ins/common/xbm.c:831
-msgid "XBM: no image data type specified\n"
+msgid ""
+"XBM: no image data type specified\n"
+""
 msgstr ""
 
 #. The image is not black-and-white.
@@ -6892,7 +7198,9 @@ msgstr ""
 
 #: plug-ins/common/xbm.c:1004
 #, c-format
-msgid "XBM: cannot create \"%s\"\n"
+msgid ""
+"XBM: cannot create \"%s\"\n"
+""
 msgstr ""
 
 #: plug-ins/common/xbm.c:1145
@@ -6937,11 +7245,11 @@ msgstr ""
 
 #: plug-ins/common/xpm.c:795
 msgid "Save as XPM"
-msgstr ""
+msgstr "Mentés XPM-be"
 
 #: plug-ins/common/xpm.c:825
 msgid "Alpha Threshold:"
-msgstr ""
+msgstr "Alfa küszöb:"
 
 #: plug-ins/common/xwd.c:381
 msgid "can't open file for reading"
@@ -6965,6 +7273,7 @@ msgid ""
 "load_image (xwd): XWD-file %s has format %d, depth %d\n"
 "and bits per pixel %d.\n"
 "Currently this is not supported.\n"
+""
 msgstr ""
 
 #: plug-ins/common/xwd.c:508
@@ -6997,7 +7306,7 @@ msgstr ""
 
 #: plug-ins/common/zealouscrop.c:72
 msgid "<Image>/Image/Transforms/Zealous Crop"
-msgstr ""
+msgstr "<Image>/Image/Transforms/Zealous Crop"
 
 #: plug-ins/common/zealouscrop.c:118
 msgid "ZealousCropping(tm)..."
@@ -7005,7 +7314,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Adatbázis-böngészõ..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
@@ -7058,7 +7367,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:742
 msgid "DB Browser"
-msgstr ""
+msgstr "Adatbázis-böngészõ"
 
 #: plug-ins/fits/fits.c:362
 msgid "Error during open of FITS file"
@@ -7098,7 +7407,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:144
 msgid "<Image>/Filters/Render/Nature/Flame..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Nature/Flame..."
 
 #: plug-ins/flame/flame.c:225
 msgid "Drawing Flame..."
@@ -7113,7 +7422,8 @@ msgstr ""
 msgid "%s: Is not a regular file"
 msgstr ""
 
-#: plug-ins/flame/flame.c:626 plug-ins/flame/flame.c:972
+#: plug-ins/flame/flame.c:626
+#: plug-ins/flame/flame.c:972
 msgid "Edit Flame"
 msgstr ""
 
@@ -7137,7 +7447,8 @@ msgstr ""
 msgid "Same"
 msgstr ""
 
-#: plug-ins/flame/flame.c:720 plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/flame/flame.c:720
+#: plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
 msgstr ""
@@ -7150,7 +7461,8 @@ msgstr ""
 msgid "Horseshoe"
 msgstr ""
 
-#: plug-ins/flame/flame.c:726 plug-ins/gfig/gfig.c:3305
+#: plug-ins/flame/flame.c:726
+#: plug-ins/gfig/gfig.c:3305
 msgid "Polar"
 msgstr ""
 
@@ -7162,23 +7474,28 @@ msgstr ""
 msgid "Variation:"
 msgstr ""
 
-#: plug-ins/flame/flame.c:766 plug-ins/flame/flame.c:979
+#: plug-ins/flame/flame.c:766
+#: plug-ins/flame/flame.c:979
 msgid "Load Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:788 plug-ins/flame/flame.c:986
+#: plug-ins/flame/flame.c:788
+#: plug-ins/flame/flame.c:986
 msgid "Save Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:915 plug-ins/flame/flame.c:954
+#: plug-ins/flame/flame.c:915
+#: plug-ins/flame/flame.c:954
 msgid "Flame"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1024 plug-ins/print/gimp_color_window.c:193
+#: plug-ins/flame/flame.c:1024
+#: plug-ins/print/gimp_color_window.c:193
 msgid "Contrast:"
 msgstr ""
 
-#: plug-ins/flame/flame.c:1037 plug-ins/gimpressionist/brush.c:403
+#: plug-ins/flame/flame.c:1037
+#: plug-ins/gimpressionist/brush.c:403
 #: plug-ins/print/gimp_color_window.c:285
 msgid "Gamma:"
 msgstr ""
@@ -7213,7 +7530,7 @@ msgstr ""
 
 #: plug-ins/fp/fp.c:93
 msgid "<Image>/Image/Colors/Filter Pack..."
-msgstr ""
+msgstr "<Image>/Kép/Colors/Filter Pack..."
 
 #: plug-ins/fp/fp.c:128
 msgid "Convert the image to RGB first!"
@@ -7296,7 +7613,8 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: plug-ins/fp/fp_gtk.c:444 plug-ins/rcm/rcm_dialog.c:661
+#: plug-ins/fp/fp_gtk.c:444
+#: plug-ins/rcm/rcm_dialog.c:661
 msgid "Entire Image"
 msgstr ""
 
@@ -7377,7 +7695,8 @@ msgstr ""
 msgid "Press Button"
 msgstr ""
 
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
+#: plug-ins/gap/gap_arr_dialog.c:1042
+#: plug-ins/gfig/gfig.c:4005
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
 msgstr ""
@@ -7407,42 +7726,48 @@ msgid "Animated Filter apply (please wait)"
 msgstr ""
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:744
-#: plug-ins/gap/gap_filter_foreach.c:163 plug-ins/gap/gap_mod_layer.c:287
+#: plug-ins/gap/gap_filter_foreach.c:163
+#: plug-ins/gap/gap_mod_layer.c:287
 msgid "Animated Filter apply"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Image>/Video/Split Video to Frames"
-msgstr ""
+msgstr "<Image>/Video/Split Video to Frames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:103
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr ""
+msgstr "<Toolbox>/Kit./Mozgókép felbontása kockákra"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:179
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Image>/Mozgókép/Mozgókép felbontása képkockákra/MPEG1"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:191
 msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-msgstr ""
+msgstr "<Toolbox>/Kit./Split Video to Frames/MPEG1"
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:333 plug-ins/gap/gap_decode_xanim.c:337
+#: plug-ins/gap/gap_decode_mpeg_main.c:333
+#: plug-ins/gap/gap_decode_xanim.c:337
 #: plug-ins/gap/gap_range_ops.c:1240
 msgid "Overwrite Frame"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:335 plug-ins/gap/gap_decode_xanim.c:339
+#: plug-ins/gap/gap_decode_mpeg_main.c:335
+#: plug-ins/gap/gap_decode_xanim.c:339
 #: plug-ins/gap/gap_range_ops.c:1242
 msgid "Overwrite All"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1035 plug-ins/gap/gap_range_ops.c:1247
+#: plug-ins/gap/gap_decode_mpeg_main.c:343
+#: plug-ins/gap/gap_decode_xanim.c:347
+#: plug-ins/gap/gap_lib.c:1035
+#: plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:344 plug-ins/gap/gap_decode_xanim.c:348
+#: plug-ins/gap/gap_decode_mpeg_main.c:344
+#: plug-ins/gap/gap_decode_xanim.c:348
 msgid "File already exists"
 msgstr ""
 
@@ -7458,15 +7783,18 @@ msgid ""
 "Audiotracks in the videofile are ignored."
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:654 plug-ins/gap/gap_decode_xanim.c:225
+#: plug-ins/gap/gap_decode_mpeg_main.c:654
+#: plug-ins/gap/gap_decode_xanim.c:225
 msgid "Framenumber of 1st frame to extract"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:664 plug-ins/gap/gap_decode_xanim.c:235
+#: plug-ins/gap/gap_decode_mpeg_main.c:664
+#: plug-ins/gap/gap_decode_xanim.c:235
 msgid "Framenumber of last frame to extract"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:673 plug-ins/gap/gap_decode_xanim.c:244
+#: plug-ins/gap/gap_decode_mpeg_main.c:673
+#: plug-ins/gap/gap_decode_xanim.c:244
 msgid "Framenames:"
 msgstr ""
 
@@ -7476,12 +7804,14 @@ msgid ""
 "(framenumber and .xcf is added)"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:681 plug-ins/gap/gap_decode_xanim.c:283
+#: plug-ins/gap/gap_decode_mpeg_main.c:681
+#: plug-ins/gap/gap_decode_xanim.c:283
 #: plug-ins/imagemap/imap_toolbar.c:110
 msgid "Open"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:682 plug-ins/gap/gap_decode_xanim.c:284
+#: plug-ins/gap/gap_decode_mpeg_main.c:682
+#: plug-ins/gap/gap_decode_xanim.c:284
 msgid "Open the 1st one of the extracted frames"
 msgstr ""
 
@@ -7496,7 +7826,8 @@ msgstr ""
 msgid "Split MPEG1 Video to Frames"
 msgstr ""
 
-#: plug-ins/gap/gap_decode_mpeg_main.c:690 plug-ins/gap/gap_decode_xanim.c:298
+#: plug-ins/gap/gap_decode_mpeg_main.c:690
+#: plug-ins/gap/gap_decode_xanim.c:298
 #: plug-ins/gap/gap_range_ops.c:1462
 msgid "Select Frame Range"
 msgstr ""
@@ -7518,8 +7849,7 @@ msgid "    you can get xanim exporting edition at"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:146
-msgid ""
-"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
+msgid "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:150
@@ -7664,7 +7994,9 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1025
 #, c-format
-msgid "videofile %s not existent or empty\n"
+msgid ""
+"videofile %s not existent or empty\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:1078
@@ -7708,11 +8040,13 @@ msgstr ""
 msgid "Make backup of the image after each step"
 msgstr ""
 
-#: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
+#: plug-ins/gap/gap_filter_foreach.c:132
+#: plug-ins/gap/gap_mod_layer.c:262
 msgid "Continue"
 msgstr ""
 
-#: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
+#: plug-ins/gap/gap_filter_foreach.c:155
+#: plug-ins/gap/gap_mod_layer.c:281
 #, c-format
 msgid ""
 "2nd call of %s\n"
@@ -7734,33 +8068,35 @@ msgstr ""
 msgid "Select Filter for Animated apply"
 msgstr ""
 
-#: plug-ins/gap/gap_filter_foreach.c:553 plug-ins/gap/gap_mod_layer.c:664
+#: plug-ins/gap/gap_filter_foreach.c:553
+#: plug-ins/gap/gap_mod_layer.c:664
 msgid "Apply Constant"
 msgstr ""
 
-#: plug-ins/gap/gap_filter_foreach.c:554 plug-ins/gap/gap_mod_layer.c:665
+#: plug-ins/gap/gap_filter_foreach.c:554
+#: plug-ins/gap/gap_mod_layer.c:665
 msgid "Apply Varying"
 msgstr ""
 
 #: plug-ins/gap/gap_filter_main.c:106
 msgid "<Image>/Filters/Filter all Layers..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Filter all Layers..."
 
 #: plug-ins/gap/gap_frontends_main.c:128
 msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Image>/Video/Split Video to Frames/Any XANIM readable..."
 
 #: plug-ins/gap/gap_frontends_main.c:140
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Mozgókép felbontása kockákra/Bármilyen XANIM által olvasható..."
 
 #: plug-ins/gap/gap_frontends_main.c:152
 msgid "<Image>/Video/Encode/MPEG1..."
-msgstr ""
+msgstr "<Image>/Video/Encode/MPEG1..."
 
 #: plug-ins/gap/gap_frontends_main.c:165
 msgid "<Image>/Video/Encode/MPEG2..."
-msgstr ""
+msgstr "<Image>/Video/Encode/MPEG2..."
 
 #: plug-ins/gap/gap_lib.c:241
 msgid "GAP Message"
@@ -7795,10 +8131,14 @@ msgstr ""
 msgid "Save As Is"
 msgstr ""
 
-#: plug-ins/gap/gap_lib.c:1506 plug-ins/gap/gap_lib.c:1623
-#: plug-ins/gap/gap_lib.c:1702 plug-ins/gap/gap_lib.c:1709
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1799
-#: plug-ins/gap/gap_lib.c:1821 plug-ins/gap/gap_lib.c:2710
+#: plug-ins/gap/gap_lib.c:1506
+#: plug-ins/gap/gap_lib.c:1623
+#: plug-ins/gap/gap_lib.c:1702
+#: plug-ins/gap/gap_lib.c:1709
+#: plug-ins/gap/gap_lib.c:1716
+#: plug-ins/gap/gap_lib.c:1799
+#: plug-ins/gap/gap_lib.c:1821
+#: plug-ins/gap/gap_lib.c:2710
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr ""
@@ -7821,7 +8161,8 @@ msgstr ""
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr ""
 
-#: plug-ins/gap/gap_lib.c:1980 plug-ins/gap/gap_lib.c:2057
+#: plug-ins/gap/gap_lib.c:1980
+#: plug-ins/gap/gap_lib.c:2057
 #: plug-ins/gap/gap_lib.c:2245
 msgid "Number:"
 msgstr ""
@@ -7905,110 +8246,117 @@ msgid ""
 "Can't execute more than 1 Video Function\n"
 "on the same AnimFrame Image at the same time\n"
 "LOCK ID:%s\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
-msgstr ""
+msgstr "<Image>/Video/Goto/Next Frame"
 
 #: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Goto/Previous Frame"
-msgstr ""
+msgstr "<Image>/Video/Goto/Previous Frame"
 
 #: plug-ins/gap/gap_main.c:506
 msgid "<Image>/Video/Goto/First Frame"
-msgstr ""
+msgstr "<Image>/Video/Goto/First Frame"
 
 #: plug-ins/gap/gap_main.c:518
 msgid "<Image>/Video/Goto/Last Frame"
-msgstr ""
+msgstr "<Image>/Video/Goto/Last Frame"
 
 #: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr ""
+msgstr "<Image>/Video/Goto/Any Frame..."
 
 #: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Delete Frames..."
-msgstr ""
+msgstr "<Image>/Video/Delete Frames..."
 
 #: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr ""
+msgstr "<Image>/Video/Duplicate Frames..."
 
 #: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Exchange Frame..."
-msgstr ""
+msgstr "<Image>/Video/Exchange Frame..."
 
 #: plug-ins/gap/gap_main.c:578
 msgid "<Image>/Video/Move Path..."
-msgstr ""
+msgstr "<Image>/Video/Move Path..."
 
 #: plug-ins/gap/gap_main.c:649
 msgid "<Image>/Video/Frames to Image..."
-msgstr ""
+msgstr "<Image>/Video/Frames to Image..."
 
 #: plug-ins/gap/gap_main.c:661
 msgid "<Image>/Video/Frames Flatten..."
-msgstr ""
+msgstr "<Image>/Video/Frames Flatten..."
 
 #: plug-ins/gap/gap_main.c:673
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr ""
+msgstr "<Image>/Video/Frames LayerDel..."
 
 #: plug-ins/gap/gap_main.c:697
 msgid "<Image>/Video/Frames Convert..."
-msgstr ""
+msgstr "<Image>/Video/Frames Convert..."
 
 #: plug-ins/gap/gap_main.c:709
 msgid "<Image>/Video/Frames Resize..."
-msgstr ""
+msgstr "<Image>/Video/Frames Resize..."
 
 #: plug-ins/gap/gap_main.c:721
 msgid "<Image>/Video/Frames Crop..."
-msgstr ""
+msgstr "<Image>/Video/Frames Crop..."
 
 #: plug-ins/gap/gap_main.c:733
 msgid "<Image>/Video/Frames Scale..."
-msgstr ""
+msgstr "<Image>/Video/Frames Scale..."
 
 #: plug-ins/gap/gap_main.c:745
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr ""
+msgstr "<Image>/Video/Split Image to Frames..."
 
 #: plug-ins/gap/gap_main.c:758
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr ""
+msgstr "<Image>/Video/Framesequence Shift..."
 
 #: plug-ins/gap/gap_main.c:770
 msgid "<Image>/Video/Frames Modify..."
-msgstr ""
+msgstr "<Image>/Video/Frames Modify..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is equal to LayerName"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
+#: plug-ins/gap/gap_mod_layer.c:85
+#: plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is Start of LayerName"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
+#: plug-ins/gap/gap_mod_layer.c:86
+#: plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is End of Layername"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
+#: plug-ins/gap/gap_mod_layer.c:87
+#: plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is a Part of LayerName"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
+#: plug-ins/gap/gap_mod_layer.c:88
+#: plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is LayerstackNumber List"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
+#: plug-ins/gap/gap_mod_layer.c:89
+#: plug-ins/gap/gap_range_ops.c:579
 msgid "Pattern is REVERSE-stack List"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
+#: plug-ins/gap/gap_mod_layer.c:90
+#: plug-ins/gap/gap_range_ops.c:580
 msgid "All Visible (ignore Pattern)"
 msgstr ""
 
@@ -8103,32 +8451,41 @@ msgstr ""
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
+""
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
+#: plug-ins/gap/gap_mod_layer.c:157
+#: plug-ins/gap/gap_mpege.c:258
 #: plug-ins/gap/gap_range_ops.c:443
 msgid "From Frame:"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
-#: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
+#: plug-ins/gap/gap_mod_layer.c:158
+#: plug-ins/gap/gap_mpege.c:259
+#: plug-ins/gap/gap_range_ops.c:444
+#: plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
+#: plug-ins/gap/gap_mod_layer.c:165
+#: plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
-#: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
+#: plug-ins/gap/gap_mod_layer.c:166
+#: plug-ins/gap/gap_mpege.c:267
+#: plug-ins/gap/gap_range_ops.c:452
+#: plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
+#: plug-ins/gap/gap_mod_layer.c:174
+#: plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
+#: plug-ins/gap/gap_mod_layer.c:184
+#: plug-ins/gap/gap_range_ops.c:659
 msgid "Select Pattern:"
 msgstr ""
 
@@ -8140,15 +8497,18 @@ msgid ""
 "0,3-5"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
+#: plug-ins/gap/gap_mod_layer.c:192
+#: plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
+#: plug-ins/gap/gap_mod_layer.c:193
+#: plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
 msgstr ""
 
-#: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
+#: plug-ins/gap/gap_mod_layer.c:198
+#: plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
 msgstr ""
 
@@ -8206,8 +8566,10 @@ msgstr ""
 msgid "No selected Layer in start frame"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3319
-#: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
+#: plug-ins/gap/gap_mov_dialog.c:262
+#: plug-ins/gfig/gfig.c:3319
+#: plug-ins/gflare/gflare.c:594
+#: plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr ""
 
@@ -8219,7 +8581,8 @@ msgstr ""
 msgid "Multiply"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:596
+#: plug-ins/gap/gap_mov_dialog.c:266
+#: plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
 msgid "Overlay"
 msgstr ""
@@ -8228,11 +8591,13 @@ msgstr ""
 msgid "Difference"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:595
+#: plug-ins/gap/gap_mov_dialog.c:268
+#: plug-ins/gflare/gflare.c:595
 msgid "Addition"
 msgstr ""
 
-#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3138
+#: plug-ins/gap/gap_mov_dialog.c:269
+#: plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
 msgstr ""
 
@@ -8470,7 +8835,9 @@ msgid "Move Path Animated Preview"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:917
-msgid "Generate Animated Preview failed\n"
+msgid ""
+"Generate Animated Preview failed\n"
+""
 msgstr ""
 
 #. filesel is already open
@@ -8634,9 +9001,7 @@ msgid "Show Path"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2045
-msgid ""
-"Show Path Lines and enable pick/drag with left button or move with right "
-"button"
+msgid "Show Path Lines and enable pick/drag with left button or move with right button"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
@@ -8706,9 +9071,7 @@ msgid "Clear All Points"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2153
-msgid ""
-"Reset all Controlpoints to default Values but dont change the path (X/Y "
-"Values)"
+msgid "Reset all Controlpoints to default Values but dont change the path (X/Y Values)"
 msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2160
@@ -8955,6 +9318,7 @@ msgstr ""
 msgid ""
 "Generate parameterfile for mpeg_encode 1.5\n"
 "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:324
@@ -9024,7 +9388,8 @@ msgstr ""
 msgid "Gen MPEG_ENCODE Parameters"
 msgstr ""
 
-#: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
+#: plug-ins/gap/gap_mpege.c:376
+#: plug-ins/gap/gap_mpege.c:414
 msgid "Encode Values"
 msgstr ""
 
@@ -9032,6 +9397,7 @@ msgstr ""
 msgid ""
 "Generate parameterfile for mpeg2encode 1.2\n"
 "(MPEG-2 Video  Encoder.)\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:395
@@ -9123,7 +9489,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_navigator_dialog.c:463
 msgid "<Image>/Video/VCR Navigator..."
-msgstr ""
+msgstr "<Image>/Video/VCR Navigator..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:526
 msgid "Cant open two or more Video Navigator Windows."
@@ -9320,6 +9686,7 @@ msgid ""
 "\n"
 "Select destination fileformat by extension\n"
 "optionally convert imagetype\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:461
@@ -9332,7 +9699,8 @@ msgid ""
 "(0001.ext is added)"
 msgstr ""
 
-#: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
+#: plug-ins/gap/gap_range_ops.c:467
+#: plug-ins/gap/gap_split.c:235
 msgid "Extension:"
 msgstr ""
 
@@ -9352,7 +9720,8 @@ msgid ""
 "(most fileformats can't handle all types)"
 msgstr ""
 
-#: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
+#: plug-ins/gap/gap_range_ops.c:481
+#: plug-ins/gap/gap_split.c:246
 msgid "Flatten:"
 msgstr ""
 
@@ -9544,6 +9913,7 @@ msgid ""
 "%s\n"
 "%s\n"
 "(%s_0001.%s)\n"
+""
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:227
@@ -9567,9 +9937,7 @@ msgid "Start frame 0001 at Top Layer"
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:247
-msgid ""
-"Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
-"BG color."
+msgid "Remove Alpha Channel in resulting Frames. Transparent parts are filled with BG color."
 msgstr ""
 
 #: plug-ins/gap/gap_split.c:250
@@ -9625,7 +9993,8 @@ msgstr ""
 msgid "Selected char:"
 msgstr ""
 
-#: plug-ins/gdyntext/charmap_window.c:133 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:133
+#: plug-ins/imagemap/imap_polygon.c:452
 msgid "Insert"
 msgstr ""
 
@@ -9634,10 +10003,14 @@ msgid "Insert the selected char at the cursor position"
 msgstr ""
 
 #: plug-ins/gdyntext/font_selection.c:166
-#: plug-ins/gdyntext/font_selection.c:309 plug-ins/imagemap/imap_circle.c:265
-#: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
-#: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
+#: plug-ins/gdyntext/font_selection.c:309
+#: plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/imagemap/imap_circle.c:271
+#: plug-ins/imagemap/imap_circle.c:277
+#: plug-ins/imagemap/imap_grid.c:202
+#: plug-ins/imagemap/imap_grid.c:208
+#: plug-ins/imagemap/imap_polygon.c:437
+#: plug-ins/imagemap/imap_polygon.c:444
 #: plug-ins/imagemap/imap_rectangle.c:379
 #: plug-ins/imagemap/imap_rectangle.c:385
 #: plug-ins/imagemap/imap_rectangle.c:391
@@ -9651,15 +10024,14 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext.c:94
 msgid "<Image>/Filters/Render/Dynamic Text..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Dynamic Text..."
 
 #: plug-ins/gdyntext/gdyntext.c:231
-msgid ""
-" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
-"new layer creation."
+msgid " Current layer isn't a GDynText layer or it has no alpha channel. Forcing new layer creation."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:443
+#: plug-ins/gdyntext/gdyntext.c:313
+#: plug-ins/gdyntext/gdyntext.c:443
 msgid "GDynText Layer"
 msgstr ""
 
@@ -9675,7 +10047,8 @@ msgstr ""
 msgid "GDynText: About ..."
 msgstr ""
 
-#: plug-ins/gdyntext/gdyntext_ui.c:250 plug-ins/gflare/gflare.c:4737
+#: plug-ins/gdyntext/gdyntext_ui.c:250
+#: plug-ins/gflare/gflare.c:4737
 msgid "none"
 msgstr ""
 
@@ -9793,9 +10166,7 @@ msgid "Preview default text sample"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:583
-msgid ""
-"Holding the Shift key while pressing this button will force GDynText in "
-"changing the layer name as done in GIMP 1.0."
+msgid "Holding the Shift key while pressing this button will force GDynText in changing the layer name as done in GIMP 1.0."
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:863
@@ -9810,18 +10181,19 @@ msgstr ""
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
 #, c-format
-msgid "Error opening \"%s\"!\n"
+msgid ""
+"Error opening \"%s\"!\n"
+""
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntextcompat.c:119
 #, c-format
-msgid ""
-" WARNING: GDynText is too old! A newer version is required to handle this "
-"layer. Get it from %s"
+msgid " WARNING: GDynText is too old! A newer version is required to handle this layer. Get it from %s"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntextcompat.c:172
@@ -9889,7 +10261,8 @@ msgstr ""
 msgid "Anti-Clockwise"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
+#: plug-ins/gfig/gfig.c:1987
+#: plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/gimp_main_window.c:469
 msgid "Orientation:"
 msgstr ""
@@ -9974,8 +10347,10 @@ msgstr ""
 msgid "Delete an object"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2354 plug-ins/gfig/gfig.c:2789
-#: plug-ins/gfig/gfig.c:3997 plug-ins/gimpressionist/brush.c:353
+#: plug-ins/gfig/gfig.c:2354
+#: plug-ins/gfig/gfig.c:2789
+#: plug-ins/gfig/gfig.c:3997
+#: plug-ins/gimpressionist/brush.c:353
 #: plug-ins/gimpressionist/brush.c:358
 msgid "Brush"
 msgstr ""
@@ -9988,23 +10363,24 @@ msgstr ""
 msgid "Pencil"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
+#: plug-ins/gfig/gfig.c:2357
+#: plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2364
-msgid ""
-"Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to "
-"circles/ellipses if Approx. Circles/Ellipses toggle is set."
+msgid "Use the brush/pencil or the airbrush when drawing on the image. Pattern paints with currently selected brush with a pattern. Only applies to circles/ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:125
+#: plug-ins/gfig/gfig.c:2770
+#: plug-ins/rcm/rcm_dialog.c:125
 msgid "Original"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2771 plug-ins/gfig/gfig.c:3558
-#: plug-ins/gflare/gflare.c:3099 plug-ins/ifscompose/ifscompose.c:805
+#: plug-ins/gfig/gfig.c:2771
+#: plug-ins/gfig/gfig.c:3558
+#: plug-ins/gflare/gflare.c:3099
+#: plug-ins/ifscompose/ifscompose.c:805
 #: plug-ins/webbrowser/webbrowser.c:319
 msgid "New"
 msgstr ""
@@ -10032,23 +10408,20 @@ msgid "Selection+Fill"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2820
-msgid ""
-"Draw type. Either a brush or a selection. See brush page or selection page "
-"for more options"
+msgid "Draw type. Either a brush or a selection. See brush page or selection page for more options"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2824
 msgid "Using:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
+#: plug-ins/gfig/gfig.c:2833
+#: plug-ins/gfig/gfig.c:3184
 msgid "Foreground"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2839
-msgid ""
-"Layer background type. Copy causes previous layer to be copied before the "
-"draw is performed"
+msgid "Layer background type. Copy causes previous layer to be copied before the draw is performed"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2844
@@ -10076,9 +10449,7 @@ msgid "Approx. Circles/Ellipses"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2899
-msgid ""
-"Approx. circles & ellipses using lines. Allows the use of brush fading with "
-"these types of objects."
+msgid "Approx. circles & ellipses using lines. Allows the use of brush fading with these types of objects."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2975
@@ -10097,7 +10468,8 @@ msgstr ""
 msgid "No Options..."
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gfig/gfig.c:3137
+#: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
 msgstr ""
@@ -10160,8 +10532,10 @@ msgstr ""
 msgid "Reload Image"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:384
-#: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:60
+#: plug-ins/gfig/gfig.c:3304
+#: plug-ins/imagemap/imap_menu.c:384
+#: plug-ins/imagemap/imap_popup.c:132
+#: plug-ins/imagemap/imap_rectangle.c:60
 msgid "Rectangle"
 msgstr ""
 
@@ -10254,7 +10628,8 @@ msgstr ""
 msgid "Draw Name:"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3755 plug-ins/gfig/gfig.c:3761
+#: plug-ins/gfig/gfig.c:3755
+#: plug-ins/gfig/gfig.c:3761
 msgid "(none)"
 msgstr ""
 
@@ -10267,16 +10642,19 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3925 plug-ins/gfig/gfig.c:3992
+#: plug-ins/gfig/gfig.c:3925
+#: plug-ins/gfig/gfig.c:3992
 msgid "Paint"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:50
+#: plug-ins/gfig/gfig.c:3929
+#: plug-ins/imagemap/imap_cmd_clear.c:50
 #: plug-ins/imagemap/imap_menu.c:298
 msgid "Clear"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1205
+#: plug-ins/gfig/gfig.c:3931
+#: plug-ins/ifscompose/ifscompose.c:1205
 #: plug-ins/imagemap/imap_toolbar.c:120
 msgid "Undo"
 msgstr ""
@@ -10354,7 +10732,8 @@ msgstr ""
 msgid "Delete Gfig Drawing"
 msgstr ""
 
-#: plug-ins/gfig/gfig.c:5044 plug-ins/gfig/gfig.c:5084
+#: plug-ins/gfig/gfig.c:5044
+#: plug-ins/gfig/gfig.c:5084
 msgid "<NONE>"
 msgstr ""
 
@@ -10382,7 +10761,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:826
 msgid "<Image>/Filters/Light Effects/GFlare..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Fényhatások/GFlare..."
 
 #: plug-ins/gflare/gflare.c:942
 msgid "Gradient Flare..."
@@ -10412,7 +10791,9 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:1427
 #, c-format
-msgid "invalid formatted GFlare file: %s\n"
+msgid ""
+"invalid formatted GFlare file: %s\n"
+""
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:1541
@@ -10447,13 +10828,17 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2924 plug-ins/gflare/gflare.c:3763
-#: plug-ins/gflare/gflare.c:3873 plug-ins/gflare/gflare.c:4015
+#: plug-ins/gflare/gflare.c:2924
+#: plug-ins/gflare/gflare.c:3763
+#: plug-ins/gflare/gflare.c:3873
+#: plug-ins/gflare/gflare.c:4015
 msgid "Rotation:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:2936 plug-ins/gflare/gflare.c:3775
-#: plug-ins/gflare/gflare.c:3886 plug-ins/gflare/gflare.c:4028
+#: plug-ins/gflare/gflare.c:2936
+#: plug-ins/gflare/gflare.c:3775
+#: plug-ins/gflare/gflare.c:3886
+#: plug-ins/gflare/gflare.c:4028
 msgid "Hue Rotation:"
 msgstr ""
 
@@ -10533,7 +10918,8 @@ msgstr ""
 msgid "Glow Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3617 plug-ins/gflare/gflare.c:3647
+#: plug-ins/gflare/gflare.c:3617
+#: plug-ins/gflare/gflare.c:3647
 #: plug-ins/gflare/gflare.c:3677
 msgid "Paint Mode:"
 msgstr ""
@@ -10548,7 +10934,8 @@ msgstr ""
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
+#: plug-ins/gflare/gflare.c:3684
+#: plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "General"
@@ -10562,20 +10949,24 @@ msgstr ""
 msgid "Gradients"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3722 plug-ins/gflare/gflare.c:3832
+#: plug-ins/gflare/gflare.c:3722
+#: plug-ins/gflare/gflare.c:3832
 #: plug-ins/gflare/gflare.c:3974
 msgid "Radial Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3726 plug-ins/gflare/gflare.c:3836
+#: plug-ins/gflare/gflare.c:3726
+#: plug-ins/gflare/gflare.c:3836
 msgid "Angular Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3730 plug-ins/gflare/gflare.c:3840
+#: plug-ins/gflare/gflare.c:3730
+#: plug-ins/gflare/gflare.c:3840
 msgid "Angular Size Gradient:"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3751 plug-ins/gflare/gflare.c:3861
+#: plug-ins/gflare/gflare.c:3751
+#: plug-ins/gflare/gflare.c:3861
 #: plug-ins/gflare/gflare.c:4003
 msgid "Size (%):"
 msgstr ""
@@ -10611,13 +11002,17 @@ msgstr ""
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:60
-#: plug-ins/imagemap/imap_menu.c:387 plug-ins/imagemap/imap_popup.c:135
+#: plug-ins/gflare/gflare.c:4054
+#: plug-ins/imagemap/imap_circle.c:60
+#: plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/imagemap/imap_popup.c:135
 msgid "Circle"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4070 plug-ins/imagemap/imap_menu.c:389
-#: plug-ins/imagemap/imap_polygon.c:69 plug-ins/imagemap/imap_popup.c:138
+#: plug-ins/gflare/gflare.c:4070
+#: plug-ins/imagemap/imap_menu.c:389
+#: plug-ins/imagemap/imap_polygon.c:69
+#: plug-ins/imagemap/imap_popup.c:138
 msgid "Polygon"
 msgstr ""
 
@@ -10634,7 +11029,9 @@ msgstr ""
 msgid "More..."
 msgstr ""
 
-#: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:466 plug-ins/gfli/gfli.c:711
+#: plug-ins/gfli/gfli.c:427
+#: plug-ins/gfli/gfli.c:466
+#: plug-ins/gfli/gfli.c:711
 #, c-format
 msgid "FLI: Can't open \"%s\""
 msgstr ""
@@ -10657,7 +11054,9 @@ msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:184
-msgid "GIMPressionist: Can only save drawables!\n"
+msgid ""
+"GIMPressionist: Can only save drawables!\n"
+""
 msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:190
@@ -10680,7 +11079,8 @@ msgstr ""
 msgid "Aspect ratio:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:437 plug-ins/gimpressionist/paper.c:173
+#: plug-ins/gimpressionist/brush.c:437
+#: plug-ins/gimpressionist/paper.c:173
 msgid "Relief:"
 msgstr ""
 
@@ -10798,8 +11198,7 @@ msgid "Shadow depth:"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:313
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:319
@@ -10820,7 +11219,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Mûvészi/GIMPresszionista..."
 
 #: plug-ins/gimpressionist/gimp.c:294
 msgid "Painting..."
@@ -10833,6 +11232,7 @@ msgid ""
 "It is highly recommended to add\n"
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
+""
 msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
@@ -10868,7 +11268,8 @@ msgstr ""
 msgid "Angle span:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
+#: plug-ins/gimpressionist/size.c:95
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
@@ -10881,9 +11282,7 @@ msgid "How large an angle-span to use (360 = full circle)"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:137
-msgid ""
-"Let the value (brightness) of the region determine the direction of the "
-"stroke"
+msgid "Let the value (brightness) of the region determine the direction of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:141
@@ -10892,9 +11291,7 @@ msgid "Radius"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:147
-msgid ""
-"The distance from the center of the image determines the direction of the "
-"stroke"
+msgid "The distance from the center of the image determines the direction of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:157
@@ -10950,9 +11347,7 @@ msgid "Vectors"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:479
-msgid ""
-"The vector-field. Left-click to move selected vector, Right-click to point "
-"it towards mouse, Middle-click to add a new vector."
+msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:500
@@ -10970,7 +11365,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:536
 msgid "Add new vector"
-msgstr ""
+msgstr "Új vektor hozzáadása"
 
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
@@ -10979,7 +11374,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr ""
+msgstr "kijelölt vektor törlése"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
@@ -11004,17 +11399,17 @@ msgstr ""
 #: plug-ins/gimpressionist/orientmap.c:631
 #: plug-ins/gimpressionist/sizemap.c:490
 msgid "Apply and exit the editor"
-msgstr ""
+msgstr "Alkalmazás és kilépés a szerkesztõbõl"
 
 #: plug-ins/gimpressionist/orientmap.c:638
 #: plug-ins/gimpressionist/sizemap.c:497
 msgid "Apply, but stay inside the editor"
-msgstr ""
+msgstr "Alaklamazás és további szerkesztés"
 
 #: plug-ins/gimpressionist/orientmap.c:645
 #: plug-ins/gimpressionist/sizemap.c:504
 msgid "Cancel all changes and exit"
-msgstr ""
+msgstr "A változtatások elvetése és kilépés"
 
 #: plug-ins/gimpressionist/orientmap.c:653
 #: plug-ins/gimpressionist/sizemap.c:512
@@ -11040,12 +11435,11 @@ msgid "Voronoi"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:689
-msgid ""
-"Voronoi-mode makes only the vector closest to the given point have any "
-"influence"
+msgid "Voronoi-mode makes only the vector closest to the given point have any influence"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
+#: plug-ins/gimpressionist/paper.c:89
+#: plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
 msgstr ""
 
@@ -11120,7 +11514,8 @@ msgstr ""
 msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
+#: plug-ins/gimpressionist/presets.c:572
+#: plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
 msgstr ""
 
@@ -11155,10 +11550,13 @@ msgid ""
 "(or Brushes and Papers for that matter)\n"
 "feel free to send them to me <vidar@prosalg.no>\n"
 "for inclusion into the next release!\n"
+""
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
-#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/gimpressionist/preview.c:117
+#: plug-ins/gimpressionist/repaint.c:877
+#: plug-ins/gimpressionist/repaint.c:879
+#: plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
 msgstr ""
 
@@ -11191,13 +11589,11 @@ msgid "The largest brush to create"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:136
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:156
@@ -11233,9 +11629,7 @@ msgid "Smvectors"
 msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:379
-msgid ""
-"The smvector-field. Left-click to move selected smvector, Right-click to "
-"point it towards mouse, Middle-click to add a new smvector."
+msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:422
@@ -11263,32 +11657,17 @@ msgid "Change the strength of the selected smvector"
 msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:535
-msgid ""
-"Voronoi-mode makes only the smvector closest to the given point have any "
-"influence"
+msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
-msgid ""
-"<html><head><title>Document not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't find "
-"document</h3><tt>%s</tt></center><p><small>This either means that the help "
-"for this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
+msgid "<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></center><p><small>This either means that the help for this topic has not been written yet or that something is wrong with your installation. Please check carefully before you report this as a bug.</small></body></html>"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
-msgid ""
-"<html><head><title>Directory not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't change to "
-"directory</h3><tt>%s</tt><h3>while trying to "
-"access</h3><tt>%s</tt></center><p><small>This either means that the help for "
-"this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
+msgid "<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while trying to access</h3><tt>%s</tt></center><p><small>This either means that the help for this topic has not been written yet or that something is wrong with your installation. Please check carefully before you report this as a bug.</small></body></html>"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
@@ -11299,7 +11678,8 @@ msgstr ""
 msgid "Index"
 msgstr ""
 
-#: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
+#: plug-ins/helpbrowser/helpbrowser.c:419
+#: plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
 msgstr ""
@@ -11337,7 +11717,7 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:365
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Nature/IfsCompose..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:591
@@ -11396,11 +11776,13 @@ msgstr ""
 msgid "IfsCompose"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:882 plug-ins/ifscompose/ifscompose.c:1152
+#: plug-ins/ifscompose/ifscompose.c:882
+#: plug-ins/ifscompose/ifscompose.c:1152
 msgid "Rotate/Scale"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:891 plug-ins/ifscompose/ifscompose.c:1164
+#: plug-ins/ifscompose/ifscompose.c:891
+#: plug-ins/ifscompose/ifscompose.c:1164
 msgid "Stretch"
 msgstr ""
 
@@ -11408,7 +11790,8 @@ msgstr ""
 msgid "Render Options"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:925 plug-ins/print/gimp_main_window.c:452
+#: plug-ins/ifscompose/ifscompose.c:925
+#: plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
 msgstr ""
 
@@ -11434,7 +11817,8 @@ msgstr ""
 msgid "Recompute Center"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:1217 plug-ins/imagemap/imap_toolbar.c:123
+#: plug-ins/ifscompose/ifscompose.c:1217
+#: plug-ins/imagemap/imap_toolbar.c:123
 msgid "Redo"
 msgstr ""
 
@@ -11508,7 +11892,8 @@ msgid ""
 "image collection of \"thumbnails\", suitable for navigation bars."
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
+#: plug-ins/imagemap/imap_cmd_guides.c:164
+#: plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
 msgstr ""
 
@@ -11516,7 +11901,8 @@ msgstr ""
 msgid "Left Start at"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
+#: plug-ins/imagemap/imap_cmd_guides.c:174
+#: plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
 msgstr ""
 
@@ -11573,8 +11959,10 @@ msgstr ""
 msgid "Move Up"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_menu.c:290
-#: plug-ins/imagemap/imap_popup.c:153 plug-ins/imagemap/imap_toolbar.c:135
+#: plug-ins/imagemap/imap_cmd_paste.c:48
+#: plug-ins/imagemap/imap_menu.c:290
+#: plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_toolbar.c:135
 msgid "Paste"
 msgstr ""
 
@@ -11689,7 +12077,8 @@ msgstr ""
 msgid "Area #%d Settings"
 msgstr ""
 
-#: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
+#: plug-ins/imagemap/imap_file.c:50
+#: plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
 msgstr ""
 
@@ -11757,7 +12146,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_main.c:145
 msgid "<Image>/Filters/Web/ImageMap..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Web/ImageMap..."
 
 #: plug-ins/imagemap/imap_main.c:660
 msgid "Data changed"
@@ -11859,7 +12248,8 @@ msgstr ""
 msgid "Mapping"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
+#: plug-ins/imagemap/imap_menu.c:382
+#: plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
 msgstr ""
 
@@ -11871,7 +12261,8 @@ msgstr ""
 msgid "Goodies"
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:401 plug-ins/imagemap/imap_popup.c:149
+#: plug-ins/imagemap/imap_menu.c:401
+#: plug-ins/imagemap/imap_popup.c:149
 msgid "Grid Settings..."
 msgstr ""
 
@@ -11879,7 +12270,8 @@ msgstr ""
 msgid "Create Guides..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:410 plug-ins/maze/maze_face.c:193
+#: plug-ins/imagemap/imap_menu.c:410
+#: plug-ins/maze/maze_face.c:193
 msgid "Help"
 msgstr ""
 
@@ -12081,7 +12473,7 @@ msgstr ""
 
 #: plug-ins/maze/maze.c:161
 msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Maze..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
@@ -12092,7 +12484,8 @@ msgstr ""
 msgid "Width (Pixels):"
 msgstr ""
 
-#: plug-ins/maze/maze_face.c:232 plug-ins/maze/maze_face.c:248
+#: plug-ins/maze/maze_face.c:232
+#: plug-ins/maze/maze_face.c:248
 msgid "Pieces:"
 msgstr ""
 
@@ -12140,7 +12533,7 @@ msgstr ""
 
 #: plug-ins/mosaic/mosaic.c:325
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Megjelenítés/Minta/Mosaic..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:447
@@ -12202,12 +12595,14 @@ msgid "Color Variation:"
 msgstr ""
 
 #: plug-ins/mosaic/mosaic.c:2469
-msgid "Unable to add additional point.\n"
+msgid ""
+"Unable to add additional point.\n"
+""
 msgstr ""
 
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr ""
+msgstr "<Image>/Szûrõk/Torzítás/Pagecurl..."
 
 #: plug-ins/pagecurl/pagecurl.c:513
 msgid "Pagecurl Effect"
@@ -12365,7 +12760,8 @@ msgstr ""
 msgid "Scaling"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
+#: plug-ins/print/gimp_main_window.c:580
+#: plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
 msgstr ""
 
@@ -12423,7 +12819,8 @@ msgstr ""
 msgid "Printer:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:811 plug-ins/print/gimp_main_window.c:824
+#: plug-ins/print/gimp_main_window.c:811
+#: plug-ins/print/gimp_main_window.c:824
 msgid "Setup"
 msgstr ""
 
@@ -12466,31 +12863,34 @@ msgstr ""
 msgid "PPD File?"
 msgstr ""
 
-#: plug-ins/print/print.c:223 plug-ins/print/print.c:232
+#: plug-ins/print/print.c:223
+#: plug-ins/print/print.c:232
 msgid "<Image>/File/Print..."
-msgstr ""
+msgstr "<Image>/Fájl/Nyomtatás..."
 
 #: plug-ins/print/print.c:241
 msgid "<Image>/File/Print (Gtk)..."
-msgstr ""
+msgstr "<Image>/Fájl/Nyomtatás (Gtk)..."
 
 #: plug-ins/print/print.c:249
 msgid "<Image>/File/Print (Gimp)..."
-msgstr ""
+msgstr "<Image>/Fájl/Nyomtatás (Gimp)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
-msgstr ""
+msgstr "<Image>/Kép/Colors/Colormap Rotation..."
 
 #: plug-ins/rcm/rcm.c:281
 msgid "Rotating the colormap..."
 msgstr ""
 
-#: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
+#: plug-ins/rcm/rcm_callback.c:154
+#: plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to clockwise"
 msgstr ""
 
-#: plug-ins/rcm/rcm_callback.c:154 plug-ins/rcm/rcm_dialog.c:265
+#: plug-ins/rcm/rcm_callback.c:154
+#: plug-ins/rcm/rcm_dialog.c:265
 msgid "Switch to c/clockwise"
 msgstr ""
 
@@ -12571,7 +12971,7 @@ msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
-msgstr ""
+msgstr "<Image>/Select/To Path"
 
 #: plug-ins/sel2path/sel2path.c:207
 msgid "No selection to convert"
@@ -12622,7 +13022,7 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:513
 msgid "<Toolbox>/File/Acquire/TWAIN..."
-msgstr ""
+msgstr "<Toolbox>/Fájl/Külsõ forrás/TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:645
@@ -12631,7 +13031,7 @@ msgstr ""
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr ""
+msgstr "<Toolbox>/Kit./Webböngészõ/URL megnyitása..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
@@ -12716,7 +13116,8 @@ msgstr ""
 msgid "xjt: cannot operate on unknown image types"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:1638 plug-ins/xjt/xjt.c:3256
+#: plug-ins/xjt/xjt.c:1638
+#: plug-ins/xjt/xjt.c:3256
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr ""
@@ -12741,3 +13142,4 @@ msgstr ""
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr ""
+
