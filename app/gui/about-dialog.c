@@ -59,6 +59,7 @@ static gint  frame = 0;
 static gint  offset = 0;
 static gint  timer = 0;
 
+/* See the end of the list for how to add names with Non-ASCII characters */
 static gchar *scroll_text[] =
 {
   "Lauri Alanko",
@@ -90,7 +91,6 @@ static gchar *scroll_text[] =
   "Scott Goehring",
   "Heiko Goller",
   "Michael Hammel",
-  "Ville Hautam‰ki",
   "James Henstridge",
   "Christoph Hoegl",
   "Wolfgang Hofer",
@@ -98,8 +98,8 @@ static gchar *scroll_text[] =
   "Simon Janes",
   "Tim Janik",
   "Tuomas Kuosmanen",
-  "Peter Kirchgessner", 
-  "Karin Kylander"
+  "Peter Kirchgessner",
+  "Karin Kylander",
   "Olof S Kylander",
   "Nick Lamb",
   "Karl LaRocca",
@@ -131,7 +131,6 @@ static gchar *scroll_text[] =
   "Sven Neumann",
   "Stephen Robert Norris",
   "Erik Nygren",
-  "Tomas ÷gren",
   "Balazs Nagy",
   "Miles O'Neal",
   "Jay Painter",
@@ -142,7 +141,7 @@ static gchar *scroll_text[] =
   "James Robinson",
   "Mike Schaeffer",
   "Tracy Scott",
-  "Aaron Sherman"
+  "Aaron Sherman",
   "Manish Singh",
   "Nathan Summers",
   "Mike Sweet",
@@ -155,6 +154,13 @@ static gchar *scroll_text[] =
   "Kris Wehner",
   "Matthew Wilson",
   "Shirasaki Yasuhiro",
+#ifndef GDK_USE_UTF8_MBS
+  "Ville Hautam‰ki",
+  "Tomas ÷gren",
+#else  /* Win32 GDK uses UTF-8 */
+  "Ville Hautam√§ki",
+  "Tomas √ñgren",
+#endif
 };
 static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
 static gint scroll_text_widths[100] = { 0 };

@@ -1,3 +1,9 @@
+1999-10-31  Tor Lillqvist  <tml@iki.fi>
+
+	* app/about_dialog.c (scroll_text): Add a couple of missing commas
+	between names. Add UTF-8 versions of non-ASCII names for the new
+	UTF-8 based Win32 GDK.
+
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.c
