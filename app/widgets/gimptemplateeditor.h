@@ -23,7 +23,7 @@
 #define __GIMP_TEMPLATE_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include <gtk/gtkvbox.h>
 
 
 #define GIMP_TYPE_TEMPLATE_EDITOR            (gimp_template_editor_get_type ())
@@ -38,36 +38,36 @@ typedef struct _GimpTemplateEditorClass GimpTemplateEditorClass;
 
 struct _GimpTemplateEditor
 {
-  GimpEditor       parent_instance;
+  GtkVBox        parent_instance;
 
-  GimpTemplate    *template;
-  gulong           memsize;
+  GimpTemplate  *template;
+  gulong         memsize;
 
-  GimpContainer   *stock_id_container;
-  GimpContext     *stock_id_context;
+  GimpContainer *stock_id_container;
+  GimpContext   *stock_id_context;
 
-  GtkWidget       *aspect_button;
-  gboolean         block_aspect;
+  GtkWidget     *aspect_button;
+  gboolean       block_aspect;
 
-  GtkWidget       *size_se;
-  GtkWidget       *memsize_label;
-  GtkWidget       *resolution_se;
+  GtkWidget     *size_se;
+  GtkWidget     *memsize_label;
+  GtkWidget     *resolution_se;
 };
 
 struct _GimpTemplateEditorClass
 {
-  GimpEditorClass  parent_class;
+  GtkVBoxClass   parent_class;
 };
 
 
-GType          gimp_template_editor_get_type       (void) G_GNUC_CONST;
+GType          gimp_template_editor_get_type     (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_template_editor_new            (Gimp               *gimp,
-                                                    gboolean            edit_template);
+GtkWidget    * gimp_template_editor_new          (Gimp               *gimp,
+                                                  gboolean            edit_template);
 
-void           gimp_template_editor_set_template   (GimpTemplateEditor *editor,
-                                                    GimpTemplate       *template);
-GimpTemplate * gimp_template_editor_get_template   (GimpTemplateEditor *editor);
+void           gimp_template_editor_set_template (GimpTemplateEditor *editor,
+                                                  GimpTemplate       *template);
+GimpTemplate * gimp_template_editor_get_template (GimpTemplateEditor *editor);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

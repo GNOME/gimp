@@ -62,7 +62,7 @@ static void gimp_template_editor_icon_changed    (GimpContext        *context,
                                                   GimpTemplateEditor *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+static GtkVBoxClass *parent_class = NULL;
 
 
 GType
@@ -85,7 +85,7 @@ gimp_template_editor_get_type (void)
         (GInstanceInitFunc) gimp_template_editor_init,
       };
 
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
+      view_type = g_type_register_static (GTK_TYPE_VBOX,
                                           "GimpTemplateEditor",
                                           &view_info, 0);
     }

@@ -1,3 +1,13 @@
+2003-09-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h	
+	* app/widgets/gimpstrokeeditor.[ch]: added a (yet rudimentary)
+	widget to view/edit a GimpStrokeOption.
+
+	* app/widgets/gimptemplateeditor.[ch]: derive it directly from
+	GtkVBox; it doesn't need any GimpEditor functionality.
+
 2003-09-26  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb
@@ -31,8 +41,8 @@
 	* app/core/Makefile.am
 	* app/core/core-types.h: Changed accordingly.
 
-	* app/core/gimpitem.[ch]: Changed the Signature of
-	gimp_item_stroke to accept a GimpObject instead of a
+	* app/core/gimpitem.[ch]: Changed the signature of
+	gimp_item_stroke() to accept a GimpObject instead of a
 	GimpPaintInfo. This enables us to pass GimpStrokeOptions
 	to it. To be cleaned up for 2.2.
 
