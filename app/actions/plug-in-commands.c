@@ -64,11 +64,9 @@ plug_in_run_cmd_callback (GtkAction     *action,
   Gimp          *gimp;
   ProcRecord    *proc_rec;
   Argument      *args;
-  GimpDisplay   *gdisp    = NULL;
-  gint           gdisp_ID = -1;
+  gint           n_args = 0;
+  GimpDisplay   *gdisp  = NULL;
   gint           i;
-  gint           argc;
-  GimpImageType  drawable_type = GIMP_RGB_IMAGE;
 
   gimp = action_data_get_gimp (data);
   if (! gimp)
@@ -84,8 +82,8 @@ plug_in_run_cmd_callback (GtkAction     *action,
     args[i].arg_type = proc_rec->args[i].arg_type;
 
   /* initialize the first argument  */
-  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-  argc = 1;
+  args[n_args].value.pdb_int = GIMP_RUN_INTERACTIVE;
+  n_args++;
 
   switch (proc_rec->proc_type)
     {
@@ -94,20 +92,18 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
     case GIMP_PLUGIN:
     case GIMP_TEMPORARY:
-      if (proc_rec->num_args >= 2 &&
-          proc_rec->args[1].arg_type == GIMP_PDB_IMAGE)
+      if (proc_rec->num_args > n_args &&
+          proc_rec->args[n_args].arg_type == GIMP_PDB_IMAGE)
         {
           gdisp = action_data_get_display (data);
 
           if (gdisp)
             {
-              gdisp_ID = gimp_display_get_ID (gdisp);
+              args[n_args].value.pdb_int = gimp_image_get_ID (gdisp->gimage);
+              n_args++;
 
-              args[1].value.pdb_int = gimp_image_get_ID (gdisp->gimage);
-              argc++;
-
-              if (proc_rec->num_args >= 2 &&
-                  proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
+              if (proc_rec->num_args > n_args &&
+                  proc_rec->args[n_args].arg_type == GIMP_PDB_DRAWABLE)
                 {
                   GimpDrawable *drawable;
 
@@ -115,11 +111,9 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
                   if (drawable)
                     {
-                      drawable_type = gimp_drawable_type (drawable);
-
-                      args[2].value.pdb_int =
+                      args[n_args].value.pdb_int =
                         gimp_item_get_ID (GIMP_ITEM (drawable));
-                      argc++;
+                      n_args++;
                     }
                   else
                     {
@@ -140,12 +134,13 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   /* run the plug-in procedure */
   plug_in_run (gimp, gimp_get_user_context (gimp),
-               gdisp ? GIMP_PROGRESS (gdisp) : NULL,
-               proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
+               GIMP_PROGRESS (gdisp),
+               proc_rec, args, n_args, FALSE, TRUE,
+               gdisp ? gimp_display_get_ID (gdisp) : -1);
 
   /* remember only "standard" plug-ins */
   if (proc_rec->proc_type == GIMP_PLUGIN           &&
-      proc_rec->num_args >= 2                      &&
+      proc_rec->num_args >= 3                      &&
       proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
       proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
     {

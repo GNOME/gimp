@@ -1,3 +1,13 @@
+2005-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/plug-in-commands.c
+	* app/actions/vectors-commands.c: GIMP_PROGRESS(NULL) is perfectly
+	valid, no need to say gdisp ? GIMP_PROGRESS(gdisp) : NULL.
+
+	* app/actions/plug-in-commands.c (plug_in_run_cmd_callback):
+	remember the last plug-in if it has at least 3 args, not 2.
+	Cleaned up the whole function and removed cruft.
+
 2005-01-07  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-x86.h

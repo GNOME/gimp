@@ -339,7 +339,7 @@ vectors_selection_to_vectors_cmd_callback (GtkAction *action,
   args[2].value.pdb_int = -1;  /*  unused  */
 
   plug_in_run (gimage->gimp, action_data_get_context (data),
-               gdisp ? GIMP_PROGRESS (gdisp) : NULL,
+               GIMP_PROGRESS (gdisp),
                proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gimp_display_get_ID (gdisp) : 0);
 
