@@ -61,9 +61,10 @@ static void      run    (gchar    *name,
 			 gint     *nreturn_vals,
 			 GParam  **return_vals);
 
-static void      spread  (GDrawable * drawable);
+static void      spread (GDrawable *drawable);
 
-static gint      spread_dialog          (gint32     image_ID);
+static gint      spread_dialog          (gint32     image_ID,
+					 GDrawable *drawable);
 static void      spread_ok_callback     (GtkWidget *widget,
 				         gpointer   data);
 
@@ -168,7 +169,7 @@ run (gchar  *name,
       gimp_get_data ("plug_in_spread", &spvals);
 
       /*  First acquire information with a dialog  */
-      if (! spread_dialog (image_ID))
+      if (! spread_dialog (image_ID, drawable))
 	return;
       break;
 
@@ -352,7 +353,8 @@ spread (GDrawable *drawable)
 
 
 static gint
-spread_dialog (gint32 image_ID)
+spread_dialog (gint32     image_ID,
+	       GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -404,11 +406,11 @@ spread_dialog (gint32 image_ID)
 			       FALSE, NULL,
 
 			       _("Horizontal:"), spvals.spread_amount_x, xres,
-			       0, 200,
+			       0, MAX (drawable->width, drawable->height),
 			       0, 0,
 
 			       _("Vertical:"), spvals.spread_amount_y, yres,
-			       0, 200,
+			       0, MAX (drawable->width, drawable->height),
 			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
@@ -461,8 +463,8 @@ spread_pixel (GDrawable * drawable,
     {
       if ((x >> 6 != *col) || (y >> 6 != *row))
 	{
-	  *col = x / 64;
-	  *row = y / 64;
+	  *col = x >> 6;
+	  *row = y >> 6;
 	  if (tile)
 	    gimp_tile_unref (tile, FALSE);
 	  tile = gimp_drawable_get_tile (drawable, FALSE, *row, *col);

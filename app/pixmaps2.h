@@ -1035,3 +1035,163 @@ static char *path_tool_bits [] =
   "..a...................",
   "......................"
 };
+
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: by_color_select  */
+
+
+#define by_color_select_width 22
+#define by_color_select_height 22
+static char *by_color_select_bits [] = 
+{
+  "......................",
+  "......................",
+  "......................",
+  "...aaaaaaaaaaaaaaaa...",
+  "...ahhhhaeeeeadddda...",
+  "...ahhhahaeeeadddda...",
+  "...ahhhahaeeeadddda...",
+  "...ahhhahaeeeadddda...",
+  "...aaaaahaaaaaaaaaa...",
+  ".......ahaaaa.........",
+  "......aahbebea........",
+  ".....adahdgdgba.......",
+  ".....ahdhehehdda......",
+  ".....ahdhhhhhgda......",
+  ".....ahhhhhhhgea......",
+  ".....aehhhhhhgda......",
+  ".....adhhhhhheda......",
+  "......aehhhhhea.......",
+  "......adhhhhgda.......",
+  ".......ahhhhga........",
+  ".......ahhhhga........",
+  "......................"
+};
+
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: adjustment  */
+
+
+#define adjustment_width 22
+#define adjustment_height 22
+static char *adjustment_bits [] = 
+{
+  "......................",
+  "......................",
+  "..aaaaaaaaaaaaaaaaa...",
+  "..adddhhhhhhaddddddh..",
+  "..adeehgagggadeeeeeh..",
+  "..adeehahaggadeeeeeh..",
+  "..adeehahaaaadeeeeeh..",
+  "...hhhhahahhhhhhhhhh..",
+  ".......aha............",
+  ".......ahaaaa.........",
+  "......aahbebea........",
+  ".....adahdgdgba.......",
+  ".....ahdhehehdda......",
+  ".....ahdhhhhhgda......",
+  ".....ahhhhhhhgea......",
+  ".....aehhhhhhgda......",
+  ".....adhhhhhheda......",
+  "......aehhhhhea.......",
+  "......adhhhhgda.......",
+  ".......ahhhhga........",
+  ".......ahhhhga........",
+  "......................"
+};
+
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: curves  */
+
+
+#define curves_width 22
+#define curves_height 22
+static char *curves_bits [] = 
+{
+  "......................",
+  "...a..................",
+  "..aaa.................",
+  "..aaa.................",
+  "...a....a.....aa......",
+  "...a...aha....aaa.....",
+  "...a...aha...a..a.....",
+  "....a..aha...a...a....",
+  "....a..aha..a....a....",
+  ".....a.ahaaaa....a....",
+  "......aahbebea....a...",
+  ".....adahdgdgba...a...",
+  ".....ahdhehehdda..a...",
+  ".....ahdhhhhhgda..a...",
+  ".....ahhhhhhhgea..a...",
+  ".....aehhhhhhgda..a...",
+  ".....adhhhhhheda..a...",
+  "......aehhhhhea...a...",
+  "......adhhhhgda..aaa..",
+  ".......ahhhhga...aaa..",
+  ".......ahhhhga....a...",
+  "......................"
+};
+
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: levels  */
+
+
+#define levels_width 22
+#define levels_height 22
+static char *levels_bits [] = 
+{
+  "......................",
+  "......................",
+  "...........a..........",
+  "..a........a..a.......",
+  "..a.....a..a..a....a..",
+  "..a....aha.aa.a.a..a..",
+  "..aa.a.aha.aa.a.a..a..",
+  "..aa.a.aha.aa.a.a.aa..",
+  "..aa.a.aha.aa.aaa.aa..",
+  "..aa.aaahaaaaaaaa.aa..",
+  "..aaaaaahbebeaaaaaaa..",
+  "..aaaadahdgdgbaaaaaa..",
+  "..aaaahdhehehddaaaaa..",
+  ".....ahdhhhhhgda......",
+  ".....ahhhhhhhgea......",
+  ".....aehhhhhhgda......",
+  ".....adhhhhhheda......",
+  "......aehhhhhea.......",
+  "......adhhhhgda.......",
+  ".......ahhhhga........",
+  ".......ahhhhga........",
+  "......................"
+};
+
+/*  GIMP icon image format -- S. Kimball, P. Mattis  */
+/*  Image name: histogram  */
+
+
+#define histogram_width 22
+#define histogram_height 22
+static char *histogram_bits [] = 
+{
+  "......................",
+  "......................",
+  "...........a..........",
+  "...........a..........",
+  "..a........a..a.......",
+  "..a.....a..a..a....a..",
+  "..a.....a..a..a....a..",
+  "..a....aaa.aa.a.a..a..",
+  "..a....aaa.aa.a.a..a..",
+  "..aa.a.aaa.aa.a.a..a..",
+  "..aa.a.aaa.aa.a.a.aa..",
+  "..aa.a.aaa.aa.a.a.aa..",
+  "..aa.a.aaa.aa.aaa.aa..",
+  "..aa.aaaaaaaaaaaa.aa..",
+  "..aa.aaaaaaaaaaaa.aa..",
+  "..aaaaaaaaaaaaaaaaaa..",
+  "..aaaaaaaaaaaaaaaaaa..",
+  "..aaaaaaaaaaaaaaaaaa..",
+  "..aaaaaaaaaaaaaaaaaa..",
+  "..aaaaaaaaaaaaaaaaaa..",
+  "......................",
+  "......................"
+};

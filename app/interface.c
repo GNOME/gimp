@@ -317,21 +317,15 @@ create_color_area (GtkWidget *parent)
 static void
 create_tool_pixmaps (GtkWidget *parent)
 {
-  ToolType type;
   gint i;
 
   g_return_if_fail (parent != NULL);
 
   for (i = 0; i < num_tools; i++)
     {
-      type = i;
-
-      if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
-	type = ROTATE;
-
-      if (tool_info[type].icon_data)
+      if (tool_info[i].icon_data)
 	tool_info[i].icon_pixmap = create_pixmap (parent->window, NULL,
-						  tool_info[type].icon_data,
+						  tool_info[i].icon_data,
 						  22, 22);
       
       else
@@ -362,7 +356,8 @@ create_tools (GtkWidget *parent)
   i = 0;
   for (j = 0; j < num_tools; j++)
     {
-      if (tool_info[j].icon_data)
+      if (j <= LAST_TOOLBOX_TOOL &&
+	  j != SCALE && j!= SHEAR && j != PERSPECTIVE)
 	{
 	  tool_info[j].tool_widget = button = gtk_radio_button_new (group);
 	  gtk_container_set_border_width (GTK_CONTAINER (button), 0);

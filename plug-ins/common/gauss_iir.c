@@ -467,11 +467,11 @@ gauss_iir2_dialog (gint32     image_ID,
 			       FALSE, NULL,
 
 			       _("Horizontal:"), b2vals.horizontal, xres,
-			       0, MAX (drawable->width, drawable->height),
+			       0, 8 * MAX (drawable->width, drawable->height),
 			       0, 0,
 
 			       _("Vertical:"), b2vals.vertical, yres,
-			       0, MAX (drawable->width, drawable->height),
+			       0, 8 * MAX (drawable->width, drawable->height),
 			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
