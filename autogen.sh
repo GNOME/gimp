@@ -130,7 +130,7 @@ else
     echo
     echo "You must have intltool installed to compile $PROJECT."
     echo "Get the latest version from"
-    echo "ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/"
+    echo "ftp://ftp.gnome.org/pub/GNOME/sources/intltool/"
     DIE=1
 fi
 

@@ -1,3 +1,7 @@
+2002-09-25  Mel Boyce  <syngin@gimp.org>
+
+	* autogen.sh: Changed intltool URL so it's more correct.
+
 2002-09-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemfactory.[ch] (gimp_item_factory_create_item):
