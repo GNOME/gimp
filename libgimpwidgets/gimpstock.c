@@ -163,8 +163,14 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHANNELS,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PATHS,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CHANNEL,                  NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL_RED,              NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL_GREEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL_BLUE,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL_GRAY,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CHANNEL_ALPHA,            NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_SELECTION_ALL,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_SELECTION_NONE,           NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -276,8 +282,14 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_CHANNELS,                 stock_channels_24                 },
   { GIMP_STOCK_PATHS,                    stock_paths_22                    },
 
+  { GIMP_STOCK_IMAGE,                    stock_image_24                    },
   { GIMP_STOCK_LAYER,                    stock_layer_24                    },
   { GIMP_STOCK_CHANNEL,                  stock_channel_24                  },
+  { GIMP_STOCK_CHANNEL_RED,              stock_channel_red_24              },
+  { GIMP_STOCK_CHANNEL_GREEN,            stock_channel_green_24            },
+  { GIMP_STOCK_CHANNEL_BLUE,             stock_channel_blue_24             },
+  { GIMP_STOCK_CHANNEL_GRAY,             stock_channel_gray_24             },
+  { GIMP_STOCK_CHANNEL_ALPHA,            stock_channel_alpha_24            },
 
   { GIMP_STOCK_LINKED,                   stock_linked_20                   },
   { GIMP_STOCK_VISIBLE,                  stock_eye_20                      },
@@ -353,8 +365,14 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_CHANNELS,             stock_channels_16             },
   { GIMP_STOCK_PATHS,                stock_paths_16                },
 
+  { GIMP_STOCK_IMAGE,                stock_image_16                },
   { GIMP_STOCK_LAYER,                stock_layer_16                },
   { GIMP_STOCK_CHANNEL,              stock_channel_16              },
+  { GIMP_STOCK_CHANNEL_RED,          stock_channel_red_16          },
+  { GIMP_STOCK_CHANNEL_GREEN,        stock_channel_green_16        },
+  { GIMP_STOCK_CHANNEL_BLUE,         stock_channel_blue_16         },
+  { GIMP_STOCK_CHANNEL_GRAY,         stock_channel_gray_16         },
+  { GIMP_STOCK_CHANNEL_ALPHA,        stock_channel_alpha_16        },
 
   { GIMP_STOCK_LINKED,               stock_linked_12               },
   { GIMP_STOCK_VISIBLE,              stock_eye_12                  },

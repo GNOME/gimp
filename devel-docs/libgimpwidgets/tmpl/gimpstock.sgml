@@ -348,6 +348,14 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_IMAGE ##### -->
+<para>
+<inlinegraphic fileref="stock-image-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-image-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_LAYER ##### -->
 <para>
 <inlinegraphic fileref="stock-layer-24.png" format="png"></inlinegraphic>
@@ -360,6 +368,46 @@ size).
 <para>
 <inlinegraphic fileref="stock-channel-24.png" format="png"></inlinegraphic>
 <inlinegraphic fileref="stock-channel-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_RED ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-red-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-red-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_GREEN ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-green-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-green-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_BLUE ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-blue-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-blue-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_GRAY ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-gray-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-gray-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CHANNEL_ALPHA ##### -->
+<para>
+<inlinegraphic fileref="stock-channel-alpha-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-channel-alpha-16.png" format="png"></inlinegraphic>
 </para>
 
 

@@ -24,6 +24,11 @@ WILBER_VARIABLES = \
 
 STOCK_MENU_IMAGES = \
 	stock-channel-16.png			\
+	stock-channel-alpha-16.png		\
+	stock-channel-blue-16.png		\
+	stock-channel-gray-16.png		\
+	stock-channel-green-16.png		\
+	stock-channel-red-16.png		\
 	stock-channels-16.png			\
 	stock-convert-grayscale-16.png		\
 	stock-convert-indexed-16.png		\
@@ -31,6 +36,7 @@ STOCK_MENU_IMAGES = \
 	stock-default-colors-12.png		\
 	stock-device-status-16.png		\
 	stock-eye-12.png			\
+	stock-image-16.png			\
 	stock-images-16.png			\
 	stock-info-16.png			\
 	stock-invert-16.png			\
@@ -61,6 +67,11 @@ STOCK_MENU_IMAGES = \
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
 	stock-channel-24.png			\
+	stock-channel-alpha-24.png		\
+	stock-channel-blue-24.png		\
+	stock-channel-gray-24.png		\
+	stock-channel-green-24.png		\
+	stock-channel-red-24.png		\
 	stock-channels-24.png			\
 	stock-char-picker-22.png		\
 	stock-color-picker-black-18.png		\
@@ -82,6 +93,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-gravity-west-24.png		\
 	stock-hchain-24.png			\
 	stock-hchain-broken-24.png		\
+	stock-image-24.png			\
 	stock-images-24.png			\
 	stock-info-24.png			\
 	stock-layer-24.png			\

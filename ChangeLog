@@ -1,3 +1,23 @@
+2003-03-24  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-image-[16|24].png: new icons by Jimmac.
+
+	* themes/Default/images/stock-images-16.png: changed by Jimmac to
+	make it look different than the new image icon.
+
+	* themes/Default/images/stock-channel-red-[16|24].png
+	* themes/Default/images/stock-channel-green-[16|24].png
+	* themes/Default/images/stock-channel-blue-[16|24].png
+	* themes/Default/images/stock-channel-gray-[16|24].png
+	* themes/Default/images/stock-channel-alpha-[16|24].png: new icons
+	derived from the generic channel icon.
+
+	* themes/Default/images/stock-channel-[16|24].png: changed the
+	color so they look different than the new green channel icon.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
 2003-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
