@@ -165,6 +165,7 @@ void       gdisplay_expose_guide           (GDisplay *, Guide *);
 void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_flush_now              (GDisplay *);
+void       gdisplays_finish_draw           (void);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, int);
 Guide*     gdisplay_find_guide             (GDisplay *, int, int);

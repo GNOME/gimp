@@ -33,6 +33,7 @@
 #include "general.h"
 #include "interface.h"
 #include "menus.h"
+#include "dialog_handler.h"
 #include "session.h"
 #include "tools.h"
 

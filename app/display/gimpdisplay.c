@@ -382,7 +382,6 @@ idlerender_callback (gpointer data)
 	    {
 	      /* FINISHED */
 	      gdisp->idle_render.active = FALSE;
-/*              gdisplay_remove_override_cursor (gdisp);*/
 
 	      return 0;
 	    }
@@ -558,6 +557,25 @@ gdisplay_flush_now (GDisplay *gdisp)
 {
   /* Redraw NOW */
   gdisplay_flush_whenever (gdisp, TRUE);
+}
+
+/* Force all gdisplays to finish their idlerender projection */
+void gdisplays_finish_draw (void)
+{
+  GSList *list = display_list;
+  GDisplay* gdisp;
+
+  while (list)
+    {
+      gdisp = (GDisplay*) list->data;
+      
+      if (gdisp->idle_render.active)
+	{
+	  gtk_idle_remove (gdisp->idle_render.idleid);
+	  while (idlerender_callback(gdisp));
+	}
+      list = g_slist_next (list);
+    }
 }
 
 void

@@ -246,7 +246,7 @@ gimage_resize_invoker (Argument *args)
   int new_width, new_height;
   int offx, offy;
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors_until_idle();
 
   success = TRUE;
   if (success)
@@ -271,8 +271,6 @@ gimage_resize_invoker (Argument *args)
 
   if (success)
     gimage_resize (gimage, new_width, new_height, offx, offy);
-
-  gimp_remove_busy_cursors(NULL);
 
   return procedural_db_return_args (&gimage_resize_proc, success);
 }
@@ -3716,12 +3714,30 @@ duplicate (GImage *gimage)
   GimpDrawable *floating_sel_drawable = NULL;
   int count;
 
-  gimp_add_busy_cursors();
+
+  gimp_add_busy_cursors_until_idle();
 
   /*  Create a new image  */
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
   gimage_disable_undo (new_gimage);
 
+  /* Copy-on-write the projection tilemanager so we don't have
+     to reproject the new gimage - since if we do the duplicate
+     operation correctly, the projection for the new gimage is
+     identical to that of the source. */
+  new_gimage->proj_type = gimage->proj_type;
+  new_gimage->proj_bytes = gimage->proj_bytes;
+  new_gimage->proj_level = gimage->proj_level;
+  pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
+		     gimage->width, gimage->height, FALSE);
+  pixel_region_init (&destPR, gimp_image_projection (new_gimage), 0, 0,
+		     new_gimage->width, new_gimage->height, TRUE);
+  /* We don't want to copy a half-redrawn projection, so force
+     a flush. */
+  gdisplays_finish_draw();
+  copy_region(&srcPR, &destPR);
+
+  /*  Copy floating layer  */
   floating_layer = gimage_floating_sel (gimage);
   if (floating_layer)
     {
@@ -3845,8 +3861,6 @@ duplicate (GImage *gimage)
     }
 
   gimage_enable_undo (new_gimage);
-
-  gimp_remove_busy_cursors(NULL);
 
   return new_gimage;
 }

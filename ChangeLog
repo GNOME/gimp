@@ -1,3 +1,18 @@
+Sun Jan 17 22:42:26 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/gdisplay.c app/gdisplay.h app/gimage_cmds.c:
+	
+	An image's projection is now copy-on-write duplicated
+	upon duplication of the image.  This should save some
+	time and memory for 'duplicate'.
+
+	This needed a new function which is prototyped in gdisplay.h:
+	gdisplays_finish_draw() which completes all outstanding
+	idlerendered-projections (we don't want to c-o-w an
+	incomplete projection).
+
+	* app/interface.c: #include "dialog_handler.h"
+
 Sun Jan 17 20:36:45 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/gimage_cmds.c app/gimpimage.c app/layers_dialog.c
@@ -90,7 +105,7 @@ Mon Jan 11 22:02:10 GMT 1999 Adam D. Moss <adam@gimp.org>
 	The same optimization could be implemented in lots of other
 	places, but I'm going to bed.  Good night!
 
-	* app/gimage_cmds.c: #include <cursorutil.h>
+	* app/gimage_cmds.c: #include "cursorutil.h"
 
 Mon Jan 11 21:35:44 MET 1999 Sven Neumann <sven@gimp.org>
 
