@@ -148,7 +148,7 @@ run (const gchar      *name,
   gint               pwidth, pheight;
   INIT_I18N ();
 
-  gfig_context = g_new (GFigContex, 1);
+  gfig_context = g_new (GFigContext, 1);
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj = NULL;
   run_mode = param[0].data.d_int32;
