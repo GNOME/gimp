@@ -281,8 +281,7 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
 	{
 	  length = pattern->mask->height * pattern->mask->width *
 		   pattern->mask->bytes;
-	  mask_data = g_new (guint8, length);
-	  g_memmove (mask_data, temp_buf_data (pattern->mask), length);
+	  mask_data = g_memdup (temp_buf_data (pattern->mask), length);
 	}
     }
 

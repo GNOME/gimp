@@ -1417,7 +1417,7 @@ drawable_thumbnail_invoker (Gimp     *gimp,
   gint32 width = 0;
   gint32 height = 0;
   gint32 bpp = 0;
-  gint32 num_pixels = 0;
+  gint32 num_bytes = 0;
   guint8 *thumbnail_data = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1453,12 +1453,11 @@ drawable_thumbnail_invoker (Gimp     *gimp,
     
 	  if (buf)
 	    {
-	       num_pixels = buf->height * buf->width * buf->bytes;
-	       thumbnail_data = g_new (guint8, num_pixels);
-	       g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-	       width = buf->width;        
-	       height = buf->height;
-	       bpp = buf->bytes;
+	      num_bytes = buf->height * buf->width * buf->bytes;
+	      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+	      width = buf->width;        
+	      height = buf->height;
+	      bpp = buf->bytes;
 	    }
 	}
     }
@@ -1470,7 +1469,7 @@ drawable_thumbnail_invoker (Gimp     *gimp,
       return_args[1].value.pdb_int = width;
       return_args[2].value.pdb_int = height;
       return_args[3].value.pdb_int = bpp;
-      return_args[4].value.pdb_int = num_pixels;
+      return_args[4].value.pdb_int = num_bytes;
       return_args[5].value.pdb_pointer = thumbnail_data;
     }
 
@@ -1516,7 +1515,7 @@ static ProcArg drawable_thumbnail_outargs[] =
   {
     GIMP_PDB_INT32,
     "thumbnail_data_count",
-    "The number of pixels in thumbnail data"
+    "The number of bytes in thumbnail data"
   },
   {
     GIMP_PDB_INT8ARRAY,

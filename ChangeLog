@@ -1,3 +1,27 @@
+2003-06-17  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/brush-select.c (opacity_scale_update): update the
+	BrushSelect "object" when the brush opacity is changed.
+
+	* libgimp/gimpmenu.[ch]
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppatternmenu.c: raise selection dialogs when being
+	called again, marked strings for translation, added lots of const
+	qualifiers, cleaned up code.
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/patterns.pdb: use g_memdup() instead of
+	g_memmove().
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/patterns_cmds.c: regenerated.
+
 2003-06-16  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/gif.c: Attempt to use the palette colour

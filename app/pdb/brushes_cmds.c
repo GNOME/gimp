@@ -542,9 +542,8 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
     
       if (success)
 	{
-	  length = brush->mask->height * brush->mask->width;
-	  mask_data = g_new (guint8, length);
-	  g_memmove (mask_data, temp_buf_data (brush->mask), length);
+	  length    = brush->mask->height * brush->mask->width;
+	  mask_data = g_memdup (temp_buf_data (brush->mask), length);
 	}
     }
 

@@ -483,8 +483,8 @@ HELP
         { name => 'thumbnail_data', type => 'int8array',
 	  desc => 'The thumbnail data', init => 1, wrap => 1,
 	  array => { name => 'thumbnail_data_count',
-		     desc => 'The number of pixels in thumbnail data',
-		     alias => 'num_pixels', init => 1 } }
+		     desc => 'The number of bytes in thumbnail data',
+		     alias => 'num_bytes', init => 1 } }
     );
     $outargs[0]->{void_ret} = 1;
 
@@ -511,12 +511,11 @@ HELP
 
       if (buf)
         {
-           num_pixels = buf->height * buf->width * buf->bytes;
-           thumbnail_data = g_new (guint8, num_pixels);
-           g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-           width = buf->width;	
-           height = buf->height;
-           bpp = buf->bytes;
+          num_bytes = buf->height * buf->width * buf->bytes;
+          thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
+          width = buf->width;	
+          height = buf->height;
+          bpp = buf->bytes;
         }
     }
 }

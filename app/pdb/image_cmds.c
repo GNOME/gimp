@@ -2689,8 +2689,7 @@ image_thumbnail_invoker (Gimp     *gimp,
 	  if (buf)
 	    {
 	      num_bytes = buf->height * buf->width * buf->bytes;
-	      thumbnail_data = g_new (guint8, num_bytes);
-	      g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);
+	      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
 	      width = buf->width;        
 	      height = buf->height;
 	      bpp = buf->bytes;

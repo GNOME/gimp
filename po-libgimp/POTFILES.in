@@ -1,9 +1,13 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+libgimp/gimpbrushmenu.c
 libgimp/gimpexport.c
+libgimp/gimpfontmenu.c
+libgimp/gimpgradientmenu.c
 libgimp/gimpmenu.c
 libgimp/gimpmiscui.c
+libgimp/gimppatternmenu.c
 libgimp/gimpunit.c
 
 libgimpbase/gimputils.c

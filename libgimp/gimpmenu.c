@@ -46,7 +46,7 @@ struct _GimpBrushData
   gint      paint_mode;
   gint      width;
   gint      height;
-  gchar    *brush_mask_data;
+  guchar   *brush_mask_data;
   GimpRunBrushCallback callback;
   gboolean  closing;
   gpointer  data;
@@ -91,7 +91,7 @@ struct _GimpPatternData
   gint      width;
   gint      height;
   gint      bytes;
-  gchar    *pattern_mask_data;
+  guchar   *pattern_mask_data;
   GimpRunPatternCallback  callback;
   gboolean  closing;
   gpointer  data;
@@ -1057,17 +1057,14 @@ gen_temp_plugin_name (void)
   return result;
 }
 
-/* Can only be used in conjuction with gdk since we need to tie into the input 
- * selection mech.
- */
 gchar *
-gimp_interactive_selection_brush (gchar             *dialogname, 
-				  gchar             *brush_name,
-				  gdouble            opacity,
-				  gint               spacing,
-				  gint               paint_mode,
+gimp_interactive_selection_brush (const gchar          *title, 
+				  const gchar          *brush_name,
+				  gdouble               opacity,
+				  gint                  spacing,
+				  GimpLayerModeEffects  paint_mode,
 				  GimpRunBrushCallback  callback,
-				  gpointer           data)
+				  gpointer              data)
 {
   static GimpParamDef args[] =
   {
@@ -1109,7 +1106,7 @@ gimp_interactive_selection_brush (gchar             *dialogname,
     gimp_run_procedure ("gimp_brushes_popup",
 			&bnreturn_vals,
 			GIMP_PDB_STRING, pdbname,
-			GIMP_PDB_STRING, dialogname,
+			GIMP_PDB_STRING, title,
 			GIMP_PDB_STRING, brush_name,
 			GIMP_PDB_FLOAT,  opacity,
 			GIMP_PDB_INT32,  spacing,
@@ -1131,8 +1128,7 @@ gimp_interactive_selection_brush (gchar             *dialogname,
 
   /* Now add to hash table so we can find it again */
   if (gbrush_ht == NULL)
-    gbrush_ht = g_hash_table_new (g_str_hash,
-				  g_str_equal);
+    gbrush_ht = g_hash_table_new (g_str_hash, g_str_equal);
   
   bdata->callback = callback;
   bdata->data = data;
@@ -1142,8 +1138,8 @@ gimp_interactive_selection_brush (gchar             *dialogname,
 }
 
 gchar *
-gimp_interactive_selection_font (gchar               *dialogname, 
-                                 gchar               *font_name,
+gimp_interactive_selection_font (const gchar         *title, 
+                                 const gchar         *font_name,
                                  GimpRunFontCallback  callback,
                                  gpointer             data)
 {
@@ -1180,8 +1176,8 @@ gimp_interactive_selection_font (gchar               *dialogname,
     gimp_run_procedure ("gimp_fonts_popup",
                         &fnreturn_vals,
                         GIMP_PDB_STRING, pdbname,
-                        GIMP_PDB_STRING, dialogname,
-                        GIMP_PDB_STRING, font_name, /*name*/
+                        GIMP_PDB_STRING, title,
+                        GIMP_PDB_STRING, font_name,
                         GIMP_PDB_END);
 
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
@@ -1190,8 +1186,7 @@ gimp_interactive_selection_font (gchar               *dialogname,
 
   /* Now add to hash table so we can find it again */
   if (gfont_ht == NULL)
-    gfont_ht = g_hash_table_new (g_str_hash,
-                                 g_str_equal);
+    gfont_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   fdata->callback = callback;
   fdata->data = data;
@@ -1201,9 +1196,9 @@ gimp_interactive_selection_font (gchar               *dialogname,
 }
 
 gchar *
-gimp_interactive_selection_gradient (gchar                   *dialogname, 
-				     gchar                   *gradient_name,
-				     gint                     sample_sz,
+gimp_interactive_selection_gradient (const gchar             *title, 
+				     const gchar             *gradient_name,
+				     gint                     sample_size,
 				     GimpRunGradientCallback  callback,
 				     gpointer                 data)
 {
@@ -1242,9 +1237,9 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
     gimp_run_procedure ("gimp_gradients_popup",
 			&bnreturn_vals,
 			GIMP_PDB_STRING, pdbname,
-			GIMP_PDB_STRING, dialogname,
-			GIMP_PDB_STRING, gradient_name, /*name*/
-			GIMP_PDB_INT32,  sample_sz,     /* size of sample to be returned */ 
+			GIMP_PDB_STRING, title,
+			GIMP_PDB_STRING, gradient_name,
+			GIMP_PDB_INT32,  sample_size,
 			GIMP_PDB_END);
 
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
@@ -1253,8 +1248,7 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
 
   /* Now add to hash table so we can find it again */
   if (ggradient_ht == NULL)
-    ggradient_ht = g_hash_table_new (g_str_hash,
-				     g_str_equal);
+    ggradient_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   gdata->callback = callback;
   gdata->data = data;
@@ -1264,8 +1258,8 @@ gimp_interactive_selection_gradient (gchar                   *dialogname,
 }
 
 gchar *
-gimp_interactive_selection_pattern (gchar                  *dialogname, 
-				    gchar                  *pattern_name,
+gimp_interactive_selection_pattern (const gchar            *title,
+				    const gchar            *pattern_name,
 				    GimpRunPatternCallback  callback,
 				    gpointer                data)
 {
@@ -1306,9 +1300,9 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
   pdbreturn_vals =
     gimp_run_procedure("gimp_patterns_popup",
 		       &bnreturn_vals,
-		       GIMP_PDB_STRING,pdbname,
-		       GIMP_PDB_STRING,dialogname,
-		       GIMP_PDB_STRING,pattern_name,/*name*/
+		       GIMP_PDB_STRING, pdbname,
+		       GIMP_PDB_STRING, title,
+		       GIMP_PDB_STRING, pattern_name,
 		       GIMP_PDB_END);
 
   gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
@@ -1317,8 +1311,7 @@ gimp_interactive_selection_pattern (gchar                  *dialogname,
 
   /* Now add to hash table so we can find it again */
   if (gpattern_ht == NULL)
-    gpattern_ht = g_hash_table_new (g_str_hash,
-				    g_str_equal);
+    gpattern_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   pdata->callback = callback;
   pdata->data = data;

@@ -652,7 +652,7 @@ gimp_drawable_is_channel (gint32 drawable_ID)
  * @ret_width: The previews width.
  * @ret_height: The previews height.
  * @bpp: The previews bpp.
- * @thumbnail_data_count: The number of pixels in thumbnail data.
+ * @thumbnail_data_count: The number of bytes in thumbnail data.
  * @thumbnail_data: The thumbnail data.
  *
  * Get a thumbnail of a drawable.

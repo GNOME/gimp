@@ -380,6 +380,8 @@ opacity_scale_update (GtkAdjustment *adjustment,
   g_signal_handlers_unblock_by_func (bsp->context,
 				     brush_select_opacity_changed,
 				     bsp);
+
+  brush_select_change_callbacks (bsp, FALSE);
 }
 
 static void

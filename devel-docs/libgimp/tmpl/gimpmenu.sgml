@@ -87,7 +87,7 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dialogname: 
+@title: 
 @brush_name: 
 @opacity: 
 @spacing: 
@@ -95,6 +95,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@dialogname: 
 
 
 <!-- ##### FUNCTION gimp_brush_select_widget ##### -->
@@ -102,14 +104,18 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dname: 
-@ibrush: 
+@title: 
+@brush_name: 
 @opacity: 
 @spacing: 
 @paint_mode: 
-@cback: 
+@callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@cback: 
+@dname: 
+@ibrush: 
 
 
 <!-- ##### USER_FUNCTION GimpRunBrushCallback ##### -->
@@ -134,10 +140,12 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-@bname: 
+@brush_name: 
 @opacity: 
 @spacing: 
 @paint_mode: 
+<!-- # Unused Parameters # -->
+@bname: 
 
 
 <!-- ##### FUNCTION gimp_brush_select_widget_close_popup ##### -->
@@ -153,11 +161,13 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dialogtitle: 
+@title: 
 @font_name: 
 @callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@dialogtitle: 
 
 
 <!-- ##### FUNCTION gimp_font_select_widget ##### -->
@@ -165,11 +175,15 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dname: 
-@ifont: 
-@cback: 
+@title: 
+@font_name: 
+@callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@cback: 
+@dname: 
+@ifont: 
 
 
 <!-- ##### USER_FUNCTION GimpRunFontCallback ##### -->
@@ -188,6 +202,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
+@font_name: 
+<!-- # Unused Parameters # -->
 @fname: 
 
 
@@ -204,12 +220,15 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dialogtitle: 
+@title: 
 @gradient_name: 
-@sample_sz: 
+@sample_size: 
 @callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@dialogtitle: 
+@sample_sz: 
 
 
 <!-- ##### FUNCTION gimp_gradient_select_widget ##### -->
@@ -217,11 +236,16 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@gname: 
-@igradient: 
-@cback: 
+@title: 
+@gradient_name: 
+@callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@gradient: 
+@cback: 
+@gname: 
+@igradient: 
 
 
 <!-- ##### USER_FUNCTION GimpRunGradientCallback ##### -->
@@ -250,6 +274,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
+@gradient_name: 
+<!-- # Unused Parameters # -->
 @gname: 
 
 
@@ -258,11 +284,13 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dialogtitle: 
+@title: 
 @pattern_name: 
 @callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@dialogtitle: 
 
 
 <!-- ##### FUNCTION gimp_pattern_select_widget ##### -->
@@ -270,11 +298,15 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 </para>
 
-@dname: 
-@ipattern: 
-@cback: 
+@title: 
+@pattern_name: 
+@callback: 
 @data: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@cback: 
+@dname: 
+@ipattern: 
 
 
 <!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
@@ -305,6 +337,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
+@pattern_name: 
+<!-- # Unused Parameters # -->
 @pname: 
 
 
