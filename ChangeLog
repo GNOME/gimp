@@ -1,3 +1,8 @@
+2003-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/paint_funcs.c (blend_pixels): merged fix for bug #72879 from
+	HEAD branch.
+
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfig/gfig.c (gfig_save_callbk): merged fix for bug
