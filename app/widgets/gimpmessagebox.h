@@ -56,13 +56,13 @@ GType       gimp_message_box_get_type         (void) G_GNUC_CONST;
 GtkWidget * gimp_message_box_new              (const gchar    *stock_id);
 void        gimp_message_box_set_primary_text (GimpMessageBox *box,
                                                const gchar    *format,
-                                               ...);
+                                               ...) G_GNUC_PRINTF (2, 3);
 void        gimp_message_box_set_text         (GimpMessageBox *box,
                                                const gchar    *format,
-                                               ...);
+                                               ...) G_GNUC_PRINTF (2, 3);
 void        gimp_message_box_set_markup       (GimpMessageBox *box,
                                                const gchar    *format,
-                                               ...);
+                                               ...) G_GNUC_PRINTF (2, 3);
 gint        gimp_message_box_repeat           (GimpMessageBox *box);
 
 

@@ -41,7 +41,7 @@ void               gimp_config_writer_print        (GimpConfigWriter  *writer,
                                                     gint               len);
 void               gimp_config_writer_printf       (GimpConfigWriter  *writer,
                                                     const gchar       *format,
-                                                    ...);
+                                                    ...) G_GNUC_PRINTF (2, 3);
 void               gimp_config_writer_identifier   (GimpConfigWriter  *writer,
                                                     const gchar       *identifier);
 void               gimp_config_writer_string       (GimpConfigWriter  *writer,
