@@ -527,7 +527,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("To:"), 1.0, 0.5,
+			     _("Recipient:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),
@@ -539,7 +539,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("From:"), 1.0, 0.5,
+			     _("Sender:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
 		      GTK_SIGNAL_FUNC (mail_entry_callback),

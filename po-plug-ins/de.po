@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
-"POT-Creation-Date: 2000-04-16 14:17+0200\n"
-"PO-Revision-Date: 2000-04-16 14:27+02:00\n"
+"POT-Creation-Date: 2000-04-19 14:55+0200\n"
+"PO-Revision-Date: 2000-04-19 15:01+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "AlienMap"
 
 #: plug-ins/AlienMap/AlienMap.c:632 plug-ins/AlienMap2/AlienMap2.c:624
 #: plug-ins/FractalExplorer/Dialogs.c:298
-#: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:490
+#: plug-ins/FractalExplorer/Dialogs.c:1388 plug-ins/gdyntext/gdyntext_ui.c:605
 #: plug-ins/gfig/gfig.c:3382 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:287
 msgid "About"
@@ -76,7 +76,7 @@ msgstr "Über"
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
-#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1020
+#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1034
 #: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2550 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
@@ -100,7 +100,7 @@ msgstr "Über"
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:215
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:452
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:188 plug-ins/gdyntext/gdyntext_ui.c:503
+#: plug-ins/gdyntext/gdyntext_ui.c:198 plug-ins/gdyntext/gdyntext_ui.c:618
 #: plug-ins/gfig/gfig.c:4105 plug-ins/gfig/gfig.c:4450
 #: plug-ins/gfig/gfig.c:4533 plug-ins/gfig/gfig.c:4879
 #: plug-ins/gflare/gflare.c:2491 plug-ins/gflare/gflare.c:3501
@@ -158,7 +158,7 @@ msgstr "OK"
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
-#: plug-ins/common/png.c:1022 plug-ins/common/pnm.c:952
+#: plug-ins/common/png.c:1036 plug-ins/common/pnm.c:952
 #: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2552
 #: plug-ins/common/ps.c:2733 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
@@ -789,55 +789,59 @@ msgstr "FractalExplorer Farbverlauf"
 msgid "Fractals"
 msgstr "Fraktale"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1581
+#: plug-ins/FractalExplorer/Dialogs.c:1582 plug-ins/gfig/gfig.c:1492
 #, c-format
-msgid "Error opening '%.100s' could not save"
-msgstr "Fehler beim öffnen von '%.100s' konnte nicht gespeichert werden"
+msgid "Error opening: %s"
+msgstr "Fehler beim Öffnen von %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1594
+#: plug-ins/FractalExplorer/Dialogs.c:1584 plug-ins/gfig/gfig.c:1494
+msgid "Could not save."
+msgstr "Konnte Datei nicht sichern."
+
+#: plug-ins/FractalExplorer/Dialogs.c:1600
 msgid "Failed to write file\n"
 msgstr "Datei konnte nicht geschrieben werden\n"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1616
+#: plug-ins/FractalExplorer/Dialogs.c:1622
 msgid "Save: No filename given"
 msgstr "Sichern: Kein Dateiname angegeben"
 
 #. Can't save to directory
-#: plug-ins/FractalExplorer/Dialogs.c:1626
+#: plug-ins/FractalExplorer/Dialogs.c:1632
 msgid "Save: Can't save to a directory"
 msgstr "Sichern: Kann nicht als Verzeichnis gespeichert werden"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1675
+#: plug-ins/FractalExplorer/Dialogs.c:1681
 msgid "Load Fractal Parameters"
 msgstr "Lade Fraktalparameter"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1686
+#: plug-ins/FractalExplorer/Dialogs.c:1692
 msgid "Click here to load your file"
 msgstr "Hier klicken um Ihre Datei zu laden"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1692
+#: plug-ins/FractalExplorer/Dialogs.c:1698
 msgid "Click here to cancel load procedure"
 msgstr "Hier klicken um den Ladevorgang abzubrechen"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1710
+#: plug-ins/FractalExplorer/Dialogs.c:1716
 msgid "Save Fractal Parameters"
 msgstr "Sichere Fraktalparameter"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1722
+#: plug-ins/FractalExplorer/Dialogs.c:1728
 msgid "Click here to save your file"
 msgstr "Hier klicken um Ihre Datei zu speichern"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1729
+#: plug-ins/FractalExplorer/Dialogs.c:1735
 msgid "Click here to cancel save procedure"
 msgstr "Hier klicken um den Speichervorgang abzubrechen"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1992
+#: plug-ins/FractalExplorer/Dialogs.c:1998
 #: plug-ins/FractalExplorer/FractalExplorer.c:1264
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Datei '%s' ist keine FractalExplorer Datei"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1997
+#: plug-ins/FractalExplorer/Dialogs.c:2003
 #: plug-ins/FractalExplorer/FractalExplorer.c:1272
 #, c-format
 msgid ""
@@ -1339,7 +1343,7 @@ msgstr "Z-Koordinate des Objektes im XYZ-Raum"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2831
-#: plug-ins/gdyntext/gdyntext_ui.c:388
+#: plug-ins/gdyntext/gdyntext_ui.c:497
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1459,8 +1463,8 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/gbr.c:284 plug-ins/common/gifload.c:308
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:748
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:318
-#: plug-ins/common/pix.c:329 plug-ins/common/png.c:419
-#: plug-ins/common/png.c:421 plug-ins/common/pnm.c:416
+#: plug-ins/common/pix.c:329 plug-ins/common/png.c:423
+#: plug-ins/common/png.c:425 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:441
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
@@ -1507,7 +1511,7 @@ msgstr "%s: fehlerhafte Palette\n"
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
 #: plug-ins/common/pat.c:306 plug-ins/common/pcx.c:349
 #: plug-ins/common/pcx.c:355 plug-ins/common/pix.c:373
-#: plug-ins/common/png.c:560 plug-ins/common/pnm.c:504
+#: plug-ins/common/png.c:571 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:651 plug-ins/common/tile.c:264
@@ -1535,7 +1539,7 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/gtm.c:248 plug-ins/common/hrz.c:478
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:345
 #: plug-ins/common/pcx.c:564 plug-ins/common/pix.c:535
-#: plug-ins/common/png.c:737 plug-ins/common/png.c:739
+#: plug-ins/common/png.c:748 plug-ins/common/png.c:750
 #: plug-ins/common/pnm.c:788 plug-ins/common/ps.c:1002
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
 #: plug-ins/common/tiff.c:1225 plug-ins/common/xbm.c:959
@@ -2140,7 +2144,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/max_rgb.c:277 plug-ins/common/nlfilt.c:400
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
-#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1031
+#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1045
 #: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
@@ -2240,9 +2244,9 @@ msgstr "Animation abspielen: "
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:2852
-#: plug-ins/gdyntext/charmap_window.c:140 plug-ins/gdyntext/gdyntext_ui.c:518
+#: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:633
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
-#: plug-ins/helpbrowser/helpbrowser.c:790
+#: plug-ins/helpbrowser/helpbrowser.c:800
 #: plug-ins/ifscompose/ifscompose.c:1249 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:81
 msgid "Close"
@@ -2549,12 +2553,11 @@ msgstr "<Image>/Filter/Farben/Farbe zu Transparenz..."
 msgid "Color to Alpha"
 msgstr "Farbe zu Transparenz"
 
-#: plug-ins/common/colortoalpha.c:445 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:669 plug-ins/gap/gap_decode_mpeg_main.c:652
-#: plug-ins/gap/gap_decode_xanim.c:223 plug-ins/gap/gap_lib.c:2092
-#: plug-ins/gap/gap_lib.c:2271 plug-ins/gap/gap_range_ops.c:251
-#: plug-ins/gap/gap_range_ops.c:600 plug-ins/gfli/gfli.c:883
-#: plug-ins/gfli/gfli.c:952
+#: plug-ins/common/colortoalpha.c:445 plug-ins/common/mapcolor.c:669
+#: plug-ins/gap/gap_decode_mpeg_main.c:652 plug-ins/gap/gap_decode_xanim.c:223
+#: plug-ins/gap/gap_lib.c:2092 plug-ins/gap/gap_lib.c:2271
+#: plug-ins/gap/gap_range_ops.c:251 plug-ins/gap/gap_range_ops.c:600
+#: plug-ins/gfli/gfli.c:883 plug-ins/gfli/gfli.c:952
 msgid "From:"
 msgstr "Von:"
 
@@ -4448,13 +4451,13 @@ msgstr "<Image>/Datei/Verschicke Bild..."
 msgid "Send to Mail"
 msgstr "Als Mail senden"
 
-#: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:669
-#: plug-ins/gap/gap_decode_mpeg_main.c:662 plug-ins/gap/gap_decode_xanim.c:233
-#: plug-ins/gap/gap_lib.c:2100 plug-ins/gap/gap_lib.c:2279
-#: plug-ins/gap/gap_range_ops.c:258 plug-ins/gap/gap_range_ops.c:608
-#: plug-ins/gfli/gfli.c:892 plug-ins/gfli/gfli.c:961
-msgid "To:"
-msgstr "Bis:"
+#: plug-ins/common/mail.c:530
+msgid "Recipient:"
+msgstr "Empfänger:"
+
+#: plug-ins/common/mail.c:542
+msgid "Sender:"
+msgstr "Absender:"
 
 #: plug-ins/common/mail.c:554
 msgid "Subject:"
@@ -4535,6 +4538,14 @@ msgstr "Quell-Farbbereich"
 #: plug-ins/common/mapcolor.c:623
 msgid "Destination color range"
 msgstr "Ziel-Farbbereich"
+
+#: plug-ins/common/mapcolor.c:669 plug-ins/gap/gap_decode_mpeg_main.c:662
+#: plug-ins/gap/gap_decode_xanim.c:233 plug-ins/gap/gap_lib.c:2100
+#: plug-ins/gap/gap_lib.c:2279 plug-ins/gap/gap_range_ops.c:258
+#: plug-ins/gap/gap_range_ops.c:608 plug-ins/gfli/gfli.c:892
+#: plug-ins/gfli/gfli.c:961
+msgid "To:"
+msgstr "Bis:"
 
 #: plug-ins/common/max_rgb.c:114
 msgid "<Image>/Filters/Colors/Max RGB..."
@@ -5014,19 +5025,27 @@ msgstr ""
 "%s\n"
 "PNG fehler. Datei korrupt?"
 
-#: plug-ins/common/png.c:1015
+#. Aie! Unknown type
+#: plug-ins/common/png.c:517
+#, c-format
+msgid ""
+"%s\n"
+"PNG unknown color model"
+msgstr ""
+
+#: plug-ins/common/png.c:1029
 msgid "Save as PNG"
 msgstr "Als PNG sichern"
 
-#: plug-ins/common/png.c:1044
+#: plug-ins/common/png.c:1058
 msgid "Interlacing (Adam7)"
 msgstr "Interlacing (Adam7)"
 
-#: plug-ins/common/png.c:1053
+#: plug-ins/common/png.c:1067
 msgid "Skip Ancillary Chunks"
 msgstr "Untergeordnete Blöcke überspringen"
 
-#: plug-ins/common/png.c:1070
+#: plug-ins/common/png.c:1084
 msgid "Compression Level:"
 msgstr "Kompressionsgrad:"
 
@@ -5414,7 +5433,7 @@ msgstr "Ähnlich einfärben"
 #. gtk_container_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1384 plug-ins/common/tileit.c:583
 #: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/gdyntext/gdyntext_ui.c:525 plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gdyntext/gdyntext_ui.c:640 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:110
 msgid "Apply"
@@ -9573,32 +9592,32 @@ msgstr "Y-Faktor:"
 msgid "Constrain Ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: plug-ins/gdyntext/charmap.c:116
+#: plug-ins/gdyntext/charmap.c:120
 #, c-format
 msgid "Char: %c, %d, 0x%02x"
 msgstr "Zeichen: %c, %d, 0x%02x"
 
-#: plug-ins/gdyntext/charmap_window.c:120
+#: plug-ins/gdyntext/charmap_window.c:123
 msgid "Selected char:"
 msgstr "Ausgewähltes Zeichen:"
 
-#: plug-ins/gdyntext/charmap_window.c:134 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:137 plug-ins/imagemap/imap_polygon.c:452
 msgid "Insert"
 msgstr "Einfügen"
 
-#: plug-ins/gdyntext/charmap_window.c:137
+#: plug-ins/gdyntext/charmap_window.c:140
 msgid "Insert the selected char at the cursor position"
 msgstr "Ausgewähltes Zeichen an der Cursorposition einfügen"
 
-#: plug-ins/gdyntext/font_selection.c:140
+#: plug-ins/gdyntext/font_selection.c:138
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: plug-ins/gdyntext/font_selection.c:212
-#: plug-ins/gdyntext/font_selection.c:266
-#: plug-ins/gdyntext/font_selection.c:353
-#: plug-ins/gdyntext/font_selection.c:377 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/gdyntext/font_selection.c:210
+#: plug-ins/gdyntext/font_selection.c:264
+#: plug-ins/gdyntext/font_selection.c:351
+#: plug-ins/gdyntext/font_selection.c:375 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
 #: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
@@ -9609,26 +9628,26 @@ msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
 msgid "pixels"
 msgstr "Pixel"
 
-#: plug-ins/gdyntext/font_selection.c:213
-#: plug-ins/gdyntext/font_selection.c:353
+#: plug-ins/gdyntext/font_selection.c:211
+#: plug-ins/gdyntext/font_selection.c:351
 msgid "points"
 msgstr "Punkte"
 
-#: plug-ins/gdyntext/font_selection.c:313
+#: plug-ins/gdyntext/font_selection.c:311
 #, c-format
 msgid "Unknown font family \"%s\".\n"
 msgstr "Unbekannte Schriftfamilie: \"%s\".\n"
 
-#: plug-ins/gdyntext/font_selection.c:337
+#: plug-ins/gdyntext/font_selection.c:335
 #, c-format
 msgid "Unknown font style \"%s\" for family \"%s\".\n"
 msgstr "Unbekannte Schriftstil (\"%s\") für Familie \"%s\".\n"
 
-#: plug-ins/gdyntext/gdyntext.c:153
+#: plug-ins/gdyntext/gdyntext.c:157
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Filter/Render/Dynamischer Text..."
 
-#: plug-ins/gdyntext/gdyntext.c:303
+#: plug-ins/gdyntext/gdyntext.c:307
 msgid ""
 "Current layer isn't a GDynText layer or it has no alpha channel.\n"
 "  Forcing new layer creation.\n"
@@ -9636,11 +9655,11 @@ msgstr ""
 "Aktive Ebene ist keine GDynText-Ebene oder hat keinen Alpha-Kanal.\n"
 "Erzwinge die Erstellung einer neuen Ebene.\n"
 
-#: plug-ins/gdyntext/gdyntext.c:350
+#: plug-ins/gdyntext/gdyntext.c:354
 msgid "Upgrading old GDynText layer to "
 msgstr "Konvertiere alte GDynText-Ebene zu "
 
-#: plug-ins/gdyntext/gdyntext.c:353
+#: plug-ins/gdyntext/gdyntext.c:357
 msgid ""
 "WARNING: GDynText is too old!\n"
 "  You may loose some data by changing this text.\n"
@@ -9653,85 +9672,95 @@ msgstr ""
 "  Sie bekommen sie hier: "
 
 #. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:392 plug-ins/gdyntext/gdyntext.c:531
+#: plug-ins/gdyntext/gdyntext.c:396
 msgid "GDynText Layer "
 msgstr "GDynText-Ebene "
 
-#: plug-ins/gdyntext/gdyntext.c:429
+#: plug-ins/gdyntext/gdyntext.c:433
 msgid "GIMP Dynamic Text"
 msgstr "GIMP Dynamischer Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:121 plug-ins/gdyntext/gdyntext_ui.c:146
-#: plug-ins/gdyntext/gdyntext_ui.c:206 plug-ins/gdyntext/gdyntext_ui.c:835
-#: plug-ins/gdyntext/gdyntext_ui.c:886
-msgid "GDynText "
-msgstr "GDynText "
+#: plug-ins/gdyntext/gdyntext.c:535
+msgid "GDynText Layer"
+msgstr "GDynText Ebene"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:174
+#: plug-ins/gdyntext/gdyntext_ui.c:126
+msgid "GDynText Message Window"
+msgstr "GDynText Nachrichtenfenster"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:156
+msgid "About GDynText"
+msgstr "Über GDynText"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:184
 msgid "GIMP Dynamic Text "
 msgstr "GIMP Dynamischer Text "
 
-#: plug-ins/gdyntext/gdyntext_ui.c:294
+#: plug-ins/gdyntext/gdyntext_ui.c:218
+msgid "GDynText: Select Color"
+msgstr "GDynText: Farbe auswählen"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:318
 msgid "Toggle creation of a new layer"
 msgstr "Erstellung einer neuen Ebene"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:305
+#: plug-ins/gdyntext/gdyntext_ui.c:341
 msgid "Load text from file"
 msgstr "Text aus Datei laden"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:319
+#: plug-ins/gdyntext/gdyntext_ui.c:364
 msgid "Text color"
 msgstr "Textfarbe"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:328
+#: plug-ins/gdyntext/gdyntext_ui.c:382
 msgid "Toggle anti-aliased text"
 msgstr "Kantenglättung einschalten"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:339
+#: plug-ins/gdyntext/gdyntext_ui.c:405
 msgid "Left aligned text"
 msgstr "Linksbündiger Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:348
+#: plug-ins/gdyntext/gdyntext_ui.c:424
 msgid "Centered text"
 msgstr "Zentrierter Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:357
+#: plug-ins/gdyntext/gdyntext_ui.c:443
 msgid "Right aligned text"
 msgstr "Rechtsbündiger Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:366
+#: plug-ins/gdyntext/gdyntext_ui.c:462
 msgid "Toggle text font preview"
 msgstr "Text Font Vorschau"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:376
+#: plug-ins/gdyntext/gdyntext_ui.c:483
 msgid "Toggle CharMap window"
 msgstr "CharMap Fenster"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:384
+#: plug-ins/gdyntext/gdyntext_ui.c:493
 msgid "Set text rotation (degrees)"
 msgstr "Text Rotation einstellen (Grad)"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:398
+#: plug-ins/gdyntext/gdyntext_ui.c:507
 msgid "Set line spacing"
 msgstr "Setze Zeilenabstand"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:402
-msgid "Line spacing"
+#: plug-ins/gdyntext/gdyntext_ui.c:511
+msgid "Line Spacing"
 msgstr "Zeilenabstand"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:431
+#: plug-ins/gdyntext/gdyntext_ui.c:540
 msgid "Editable text sample"
 msgstr "Editierbares Text Beispiel"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:446
+#: plug-ins/gdyntext/gdyntext_ui.c:558
 msgid "Clear preview"
 msgstr "Vorschau löschen"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:452
+#: plug-ins/gdyntext/gdyntext_ui.c:567
 msgid "Preview default text sample"
 msgstr "Standard Text Beispiel Vorschau"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:514
+#: plug-ins/gdyntext/gdyntext_ui.c:629
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
@@ -9739,19 +9768,26 @@ msgstr ""
 "Wenn Sie die Shift-Taste gedrückt halten und diesen Button drücken, wird\n"
 "GDynText den Ebenennamen ändern, so wie es in GIMP 1.0 der Fall war."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:920
+#: plug-ins/gdyntext/gdyntext_ui.c:1035
+msgid "GDynText: CharMap"
+msgstr "GDynText: Zeichentabelle"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:1108
+msgid "GDynText: Load Text"
+msgstr "GDynText: Text laden"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:1154
 #, c-format
 msgid ""
-"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr ""
-"Warnung Datei \"%s\" ist grösser als die maximale erlaubte Text Länge (%d).\n"
+"Warning file \"%s\" is larger than the maximum allowed text length (%d)."
+msgstr "Warnung Datei \"%s\" ist größer als die maximale erlaubte Länge (%d)."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:928
+#: plug-ins/gdyntext/gdyntext_ui.c:1166
 #, c-format
-msgid "Error opening \"%s\"!\n"
-msgstr "Fehler beim Öffnen von \"%s\"!\n"
+msgid "Error opening \"%s\"!"
+msgstr "Fehler beim Öffnen von \"%s\"!"
 
-#: plug-ins/gdyntext/message_window.c:110
+#: plug-ins/gdyntext/message_window.c:113
 msgid "Dismiss"
 msgstr "Verwerfen"
 
@@ -9781,15 +9817,6 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:1092
 msgid "First Gfig"
 msgstr "Erste GFig"
-
-#: plug-ins/gfig/gfig.c:1492
-#, c-format
-msgid "Error opening: %s"
-msgstr "Fehler beim Öffnen von %s"
-
-#: plug-ins/gfig/gfig.c:1494
-msgid "Could not save."
-msgstr "Konnte Datei nicht sichern."
 
 #: plug-ins/gfig/gfig.c:1919
 msgid "Prev"
@@ -11313,7 +11340,7 @@ msgstr "Index"
 msgid "<Untitled>"
 msgstr "<Unbenannt>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:729
+#: plug-ins/helpbrowser/helpbrowser.c:739
 msgid ""
 "GIMP Help Browser Error.\n"
 "\n"
@@ -11323,15 +11350,15 @@ msgstr ""
 "\n"
 "Kann das HTML-Verzeichnis nicht finden."
 
-#: plug-ins/helpbrowser/helpbrowser.c:752
+#: plug-ins/helpbrowser/helpbrowser.c:762
 msgid "GIMP Help Browser"
 msgstr "GIMP Hilfe Browser"
 
-#: plug-ins/helpbrowser/helpbrowser.c:767
+#: plug-ins/helpbrowser/helpbrowser.c:777
 msgid "Back"
 msgstr "Rückwärts"
 
-#: plug-ins/helpbrowser/helpbrowser.c:776
+#: plug-ins/helpbrowser/helpbrowser.c:786
 msgid "Forward"
 msgstr "Vorwärts"
 
@@ -12974,3 +13001,6 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
+
+#~ msgid "Error opening '%.100s' could not save"
+#~ msgstr "Fehler beim öffnen von '%.100s' konnte nicht gespeichert werden"
