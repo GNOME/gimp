@@ -59,7 +59,8 @@
 
 typedef enum
 {
-  GIMP_DND_DATA_COLOR = 1,
+  GIMP_DND_DATA_NONE,
+  GIMP_DND_DATA_COLOR,
   GIMP_DND_DATA_LAYER,
   GIMP_DND_DATA_CHANNEL,
   GIMP_DND_DATA_LAYER_MASK,
@@ -686,221 +687,22 @@ gimp_dnd_get_viewable_icon (GtkWidget     *widget,
   return preview;
 }
 
-static const GtkTargetEntry layer_target_table[] =
+static GimpDndDataType
+gimp_dnd_data_type_get_by_gtk_type (GtkType  type)
 {
-  GIMP_TARGET_LAYER
-};
-static const guint layer_n_targets = (sizeof (layer_target_table) /
-				      sizeof (layer_target_table[0]));
-
-static const GtkTargetEntry channel_target_table[] =
-{
-  GIMP_TARGET_CHANNEL
-};
-static const guint channel_n_targets = (sizeof (channel_target_table) /
-					sizeof (layer_target_table[0]));
-
-static const GtkTargetEntry layer_mask_target_table[] =
-{
-  GIMP_TARGET_LAYER_MASK
-};
-static const guint layer_mask_n_targets = (sizeof (layer_mask_target_table) /
-					   sizeof (layer_mask_target_table[0]));
-
-static const GtkTargetEntry brush_target_table[] =
-{
-  GIMP_TARGET_BRUSH
-};
-static const guint brush_n_targets = (sizeof (brush_target_table) /
-				      sizeof (brush_target_table[0]));
-
-static const GtkTargetEntry pattern_target_table[] =
-{
-  GIMP_TARGET_PATTERN
-};
-static const guint pattern_n_targets = (sizeof (pattern_target_table) /
-					sizeof (pattern_target_table[0]));
-
-static const GtkTargetEntry gradient_target_table[] =
-{
-  GIMP_TARGET_GRADIENT
-};
-static const guint gradient_n_targets = (sizeof (gradient_target_table) /
-					 sizeof (gradient_target_table[0]));
-
-static const GtkTargetEntry palette_target_table[] =
-{
-  GIMP_TARGET_PALETTE
-};
-static const guint palette_n_targets = (sizeof (palette_target_table) /
-					sizeof (palette_target_table[0]));
-
-static const GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static const guint tool_n_targets = (sizeof (tool_target_table) /
-				     sizeof (tool_target_table[0]));
-
-
-void
-gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
-				  GdkModifierType  start_button_mask,
-				  GtkType          type,
-				  GdkDragAction    actions)
-{
-  const GtkTargetEntry *target_table = NULL;
-  guint                 n_targets    = 0;
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
-    {
-      target_table = layer_target_table;
-      n_targets    = layer_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      target_table = channel_target_table;
-      n_targets    = channel_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
-    {
-      target_table = layer_mask_target_table;
-      n_targets    = layer_mask_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
-    {
-      target_table = brush_target_table;
-      n_targets    = brush_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
-    {
-      target_table = pattern_target_table;
-      n_targets    = pattern_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
-    {
-      target_table = gradient_target_table;
-      n_targets    = gradient_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
-    {
-      target_table = palette_target_table;
-      n_targets    = palette_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
-    {
-      target_table = tool_target_table;
-      n_targets    = tool_n_targets;
-    }
-  else
-    {
-      g_warning ("%s(): unsupported GtkType \"%s\"",
-		 G_GNUC_FUNCTION, gtk_type_name (type));
-    }
-
-  if (target_table && n_targets)
-    {
-      gtk_drag_source_set (widget, start_button_mask,
-			   target_table,
-			   n_targets,
-			   actions);
-    }
-
-}
-
-void
-gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
-				GtkDestDefaults  flags,
-				GtkType          type,
-				GdkDragAction    actions)
-{
-  const GtkTargetEntry *target_table = NULL;
-  guint                 n_targets    = 0;
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
-    {
-      target_table = layer_target_table;
-      n_targets    = layer_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      target_table = channel_target_table;
-      n_targets    = channel_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
-    {
-      target_table = layer_mask_target_table;
-      n_targets    = layer_mask_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
-    {
-      target_table = brush_target_table;
-      n_targets    = brush_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
-    {
-      target_table = pattern_target_table;
-      n_targets    = pattern_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
-    {
-      target_table = gradient_target_table;
-      n_targets    = gradient_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
-    {
-      target_table = palette_target_table;
-      n_targets    = palette_n_targets;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
-    {
-      target_table = tool_target_table;
-      n_targets    = tool_n_targets;
-    }
-  else
-    {
-      g_warning ("%s(): unsupported GtkType \"%s\"",
-		 G_GNUC_FUNCTION, gtk_type_name (type));
-    }
-
-  if (target_table && n_targets)
-    {
-      gtk_drag_dest_set (widget, flags,
-			 target_table,
-			 n_targets,
-			 actions);
-    }
-}
-
-void
-gimp_dnd_viewable_source_set (GtkWidget               *widget,
-			      GtkType                  type,
-			      GimpDndDragViewableFunc  get_viewable_func,
-			      gpointer                 data)
-{
-  GimpDndDataType dnd_type;
-
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (get_viewable_func != NULL);
+  GimpDndDataType dnd_type = GIMP_DND_DATA_NONE;
 
   if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
     {
       dnd_type = GIMP_DND_DATA_LAYER;
     }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      dnd_type = GIMP_DND_DATA_CHANNEL;
-    }
   else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
     {
       dnd_type = GIMP_DND_DATA_LAYER_MASK;
+    }
+  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
+    {
+      dnd_type = GIMP_DND_DATA_CHANNEL;
     }
   else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
     {
@@ -926,8 +728,71 @@ gimp_dnd_viewable_source_set (GtkWidget               *widget,
     {
       g_warning ("%s(): unsupported GtkType \"%s\"",
 		 G_GNUC_FUNCTION, gtk_type_name (type));
-      return;
     }
+
+  return dnd_type;
+}
+
+void
+gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
+				  GdkModifierType  start_button_mask,
+				  GtkType          type,
+				  GdkDragAction    actions)
+{
+  GimpDndDataType dnd_type;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
+
+  gtk_drag_source_set (widget, start_button_mask,
+		       &dnd_data_defs[dnd_type].target_entry,
+		       1,
+		       actions);
+}
+
+void
+gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
+				GtkDestDefaults  flags,
+				GtkType          type,
+				GdkDragAction    actions)
+{
+  GimpDndDataType dnd_type;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
+
+  gtk_drag_dest_set (widget, flags,
+		     &dnd_data_defs[dnd_type].target_entry,
+		     1,
+		     actions);
+}
+
+void
+gimp_dnd_viewable_source_set (GtkWidget               *widget,
+			      GtkType                  type,
+			      GimpDndDragViewableFunc  get_viewable_func,
+			      gpointer                 data)
+{
+  GimpDndDataType dnd_type;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (get_viewable_func != NULL);
+
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
 
   gimp_dnd_data_source_set (dnd_type, widget,
 			    GTK_SIGNAL_FUNC (get_viewable_func),
@@ -943,44 +808,10 @@ gimp_dnd_viewable_source_unset (GtkWidget *widget,
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      dnd_type = GIMP_DND_DATA_CHANNEL;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER_MASK;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
-    {
-      dnd_type = GIMP_DND_DATA_BRUSH;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
-    {
-      dnd_type = GIMP_DND_DATA_PATTERN;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
-    {
-      dnd_type = GIMP_DND_DATA_GRADIENT;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
-    {
-      dnd_type = GIMP_DND_DATA_PALETTE;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
-    {
-      dnd_type = GIMP_DND_DATA_TOOL;
-    }
-  else
-    {
-      g_warning ("%s(): unsupported GtkType \"%s\"",
-		 G_GNUC_FUNCTION, gtk_type_name (type));
-      return;
-    }
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
 
   gimp_dnd_data_source_unset (widget);
 }
@@ -997,44 +828,10 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (set_viewable_func != NULL);
 
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      dnd_type = GIMP_DND_DATA_CHANNEL;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER_MASK;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
-    {
-      dnd_type = GIMP_DND_DATA_BRUSH;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
-    {
-      dnd_type = GIMP_DND_DATA_PATTERN;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
-    {
-      dnd_type = GIMP_DND_DATA_GRADIENT;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
-    {
-      dnd_type = GIMP_DND_DATA_PALETTE;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
-    {
-      dnd_type = GIMP_DND_DATA_TOOL;
-    }
-  else
-    {
-      g_warning ("%s(): unsupported GtkType \"%s\"",
-		 G_GNUC_FUNCTION, gtk_type_name (type));
-      return;
-    }
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
 
   gimp_dnd_data_dest_set (dnd_type, widget,
 			  GTK_SIGNAL_FUNC (set_viewable_func),
@@ -1047,44 +844,13 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
 {
   GimpDndDataType dnd_type;
 
-  if (gtk_type_is_a (type, GIMP_TYPE_LAYER))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_CHANNEL))
-    {
-      dnd_type = GIMP_DND_DATA_CHANNEL;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_LAYER_MASK))
-    {
-      dnd_type = GIMP_DND_DATA_LAYER_MASK;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_BRUSH))
-    {
-      dnd_type = GIMP_DND_DATA_BRUSH;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PATTERN))
-    {
-      dnd_type = GIMP_DND_DATA_PATTERN;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_GRADIENT))
-    {
-      dnd_type = GIMP_DND_DATA_GRADIENT;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_PALETTE))
-    {
-      dnd_type = GIMP_DND_DATA_PALETTE;
-    }
-  else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
-    {
-      dnd_type = GIMP_DND_DATA_TOOL;
-    }
-  else
-    {
-      g_warning ("%s(): unsupported GtkType \"%s\"",
-		 G_GNUC_FUNCTION, gtk_type_name (type));
-      return;
-    }
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  dnd_type = gimp_dnd_data_type_get_by_gtk_type (type);
+
+  if (dnd_type == GIMP_DND_DATA_NONE)
+    return;
 
   gimp_dnd_data_dest_unset (dnd_type, widget);
 }

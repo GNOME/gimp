@@ -244,7 +244,7 @@ qmask_activate (GtkWidget *widget,
 	{
 	  /* if selection */
 
-	  gmask = gimp_channel_copy (gimp_image_get_mask (gimg));
+	  gmask = gimp_channel_copy (gimp_image_get_mask (gimg), TRUE);
 	  gimp_image_add_channel (gimg, gmask, 0);
 	  gimp_channel_set_color (gmask, &color);
 	  gimp_object_set_name (GIMP_OBJECT (gmask), "Qmask");

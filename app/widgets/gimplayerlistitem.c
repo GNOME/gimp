@@ -35,6 +35,7 @@
 #include "gimplayerlistitem.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplayermask.h"
 #include "gimppreview.h"
 #include "gimpviewable.h"
 
@@ -55,8 +56,12 @@ static gboolean   gimp_layer_list_item_drag_drop    (GtkWidget         *widget,
                                                      gint               x,
                                                      gint               y,
                                                      guint              time);
+static void      gimp_layer_list_item_state_changed (GtkWidget         *widget,
+                                                     GtkStateType       old_state);
+
 static void       gimp_layer_list_item_mask_changed (GimpLayer         *layer,
                                                      GimpLayerListItem *layer_item);
+static void       gimp_layer_list_item_update_state (GtkWidget         *widget);
 
 
 static GimpDrawableListItemClass *parent_class = NULL;
@@ -103,6 +108,7 @@ gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
 
   widget_class->drag_motion     = gimp_layer_list_item_drag_motion;
   widget_class->drag_drop       = gimp_layer_list_item_drag_drop;
+  widget_class->state_changed   = gimp_layer_list_item_state_changed;
 
   list_item_class->set_viewable = gimp_layer_list_item_set_viewable;
 }
@@ -122,6 +128,9 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
 
   if (GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable)
     GIMP_LIST_ITEM_CLASS (parent_class)->set_viewable (list_item, viewable);
+
+  gimp_preview_set_size (GIMP_PREVIEW (list_item->preview),
+                         list_item->preview_size, 2);
 
   layer_item = GIMP_LAYER_LIST_ITEM (list_item);
   layer      = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
@@ -226,6 +235,16 @@ gimp_layer_list_item_drag_drop (GtkWidget      *widget,
 }
 
 static void
+gimp_layer_list_item_state_changed (GtkWidget    *widget,
+                                    GtkStateType  old_state)
+{
+  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
+    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, old_state);
+
+  gimp_layer_list_item_update_state (widget);
+}
+
+static void
 gimp_layer_list_item_mask_changed (GimpLayer         *layer,
                                    GimpLayerListItem *layer_item)
 {
@@ -239,18 +258,104 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
     {
       layer_item->mask_preview = gimp_preview_new (GIMP_VIEWABLE (mask),
                                                    list_item->preview_size,
-                                                   1, FALSE);
+                                                   2, FALSE);
       GIMP_PREVIEW (layer_item->mask_preview)->clickable = TRUE;
       gtk_box_pack_start (GTK_BOX (list_item->hbox), layer_item->mask_preview,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (list_item->hbox),
                              layer_item->mask_preview, 2);
       gtk_widget_show (layer_item->mask_preview);
+
+      gtk_signal_connect_object
+        (GTK_OBJECT (mask), "apply_changed",
+         GTK_SIGNAL_FUNC (gimp_layer_list_item_update_state),
+         GTK_OBJECT (layer_item));
+
+      gtk_signal_connect_object_while_alive
+        (GTK_OBJECT (mask), "edit_changed",
+         GTK_SIGNAL_FUNC (gimp_layer_list_item_update_state),
+         GTK_OBJECT (layer_item));
+
+      gtk_signal_connect_object_while_alive
+        (GTK_OBJECT (mask), "show_changed",
+         GTK_SIGNAL_FUNC (gimp_layer_list_item_update_state),
+         GTK_OBJECT (layer_item));
     }
   else if (! mask && layer_item->mask_preview)
     {
       gtk_widget_destroy (layer_item->mask_preview);
-
       layer_item->mask_preview = NULL;
+    }
+
+  gimp_layer_list_item_update_state (GTK_WIDGET (layer_item));
+}
+
+static void
+gimp_layer_list_item_update_state (GtkWidget *widget)
+{
+  GimpLayerListItem *layer_item;
+  GimpListItem      *list_item;
+  GimpLayer         *layer;
+  GimpLayerMask     *mask;
+  GimpPreview       *preview;
+  guchar             layer_color[3] = { 0, 0, 0 };
+  guchar             mask_color[3]  = { 0, 0, 0 };
+
+  layer_item = GIMP_LAYER_LIST_ITEM (widget);
+  list_item  = GIMP_LIST_ITEM (widget);
+  layer      = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
+  mask       = gimp_layer_get_mask (layer);
+
+  switch (widget->state)
+    {
+    case GTK_STATE_NORMAL:
+      break;
+
+    case GTK_STATE_SELECTED:
+      if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
+        {
+          layer_color[0] = 255;
+          layer_color[1] = 255;
+          layer_color[2] = 255;
+        }
+      else
+        {
+          mask_color[0] = 255;
+          mask_color[1] = 255;
+          mask_color[2] = 255;
+        }
+      break;
+
+    default:
+      g_print ("%s(): unhandled state\n", G_GNUC_FUNCTION);
+    }
+
+  preview = GIMP_PREVIEW (list_item->preview);
+
+  if (preview->border_color[0] != layer_color[0] ||
+      preview->border_color[1] != layer_color[1] ||
+      preview->border_color[2] != layer_color[2])
+    {
+      preview->border_color[0] = layer_color[0];
+      preview->border_color[1] = layer_color[1];
+      preview->border_color[2] = layer_color[2];
+
+      gimp_preview_render (preview);
+    }
+
+  if (mask)
+    {
+      preview = GIMP_PREVIEW (layer_item->mask_preview);
+
+      if (preview->border_color[0] != mask_color[0] ||
+          preview->border_color[1] != mask_color[1] ||
+          preview->border_color[2] != mask_color[2])
+        {
+          preview->border_color[0] = mask_color[0];
+          preview->border_color[1] = mask_color[1];
+          preview->border_color[2] = mask_color[2];
+
+          gimp_preview_render (preview);
+        }
     }
 }

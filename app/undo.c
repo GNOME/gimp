@@ -1708,12 +1708,6 @@ undo_pop_layer_mask (GimpImage *gimage,
   else
     {
       gimp_layer_add_mask (lmu->layer, lmu->mask, FALSE);
-
-      lmu->layer->apply_mask = lmu->apply_mask;
-      lmu->layer->edit_mask  = lmu->edit_mask;
-      lmu->layer->show_mask  = lmu->show_mask;
-
-      gimage_set_layer_mask_edit (gimage, lmu->layer, lmu->edit_mask);
     }
 
   return TRUE;

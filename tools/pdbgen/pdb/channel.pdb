@@ -191,7 +191,7 @@ HELP
 	  desc => 'The newly copied channel', alias => 'copy' }
     );
 
-    %invoke = ( code => 'success = (copy = gimp_channel_copy (channel)) != NULL;' );
+    %invoke = ( code => 'success = (copy = gimp_channel_copy (channel, TRUE)) != NULL;' );
 }
 
 sub channel_delete {

@@ -1076,7 +1076,7 @@ channels_dialog_duplicate_channel_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (active_channel);
+      new_channel = gimp_channel_copy (active_channel, TRUE);
       gimp_image_add_channel (gimage, new_channel, -1);
       gdisplays_flush ();
     }
@@ -1129,7 +1129,7 @@ channels_dialog_add_channel_to_sel_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
+      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
       gimp_channel_combine_mask (new_channel,
 				 active_channel,
 				 CHANNEL_OP_ADD, 
@@ -1153,7 +1153,7 @@ channels_dialog_sub_channel_from_sel_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-       new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
+       new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
        gimp_channel_combine_mask (new_channel,
 				  active_channel,
 				  CHANNEL_OP_SUB, 
@@ -1177,7 +1177,7 @@ channels_dialog_intersect_channel_with_sel_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
+      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage), TRUE);
       gimp_channel_combine_mask (new_channel,
 				 active_channel,
 				 CHANNEL_OP_INTERSECT, 
@@ -1675,7 +1675,7 @@ channel_widget_idle_drop_channel (gpointer data)
 
   cd = (ChannelDrop *) data;
 
-  gimp_image_position_channel (cd->gimage, cd->channel, cd->dest_index);
+  gimp_image_position_channel (cd->gimage, cd->channel, cd->dest_index, TRUE);
   gdisplays_flush ();
 
   g_free (cd);

@@ -525,7 +525,11 @@ drawable_view_new (gchar         *title,
 					  "active_channel_changed",
 					  gimp_image_get_channels,
 					  gimp_image_get_active_channel,
-					  gimp_image_set_active_channel);
+					  gimp_image_set_active_channel,
+					  gimp_image_position_channel,
+					  gimp_image_add_channel,
+					  gimp_image_remove_channel,
+					  gimp_channel_copy);
     }
   else
     {
@@ -534,7 +538,11 @@ drawable_view_new (gchar         *title,
 					  "active_layer_changed",
 					  gimp_image_get_layers,
 					  gimp_image_get_active_layer,
-					  gimp_image_set_active_layer);
+					  gimp_image_set_active_layer,
+					  gimp_image_position_layer,
+					  gimp_image_add_layer,
+					  gimp_image_remove_layer,
+					  gimp_layer_copy);
     }
 
   gtk_list_set_selection_mode (GTK_LIST (GIMP_CONTAINER_LIST_VIEW (view)->gtk_list),

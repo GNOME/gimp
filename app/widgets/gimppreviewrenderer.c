@@ -411,20 +411,22 @@ gimp_preview_new_full (GimpViewable *viewable,
 
 void
 gimp_preview_set_size (GimpPreview *preview,
-		       gint         preview_size)
+		       gint         preview_size,
+		       gint         border_width)
 {
   gint width, height;
 
   g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (preview_size > 0 && preview_size <= 256);
+  g_return_if_fail (border_width >= 0 && border_width <= 16);
 
   gimp_preview_get_size (preview, preview_size, &width, &height);
 
   gimp_preview_set_size_full (preview,
 			      width,
 			      height,
-			      preview->border_width);
+			      border_width);
 }
 
 void

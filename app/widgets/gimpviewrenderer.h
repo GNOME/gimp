@@ -95,7 +95,8 @@ GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gboolean       show_popup);
 
 void         gimp_preview_set_size         (GimpPreview   *preview,
-					    gint           size);
+					    gint           size,
+					    gint           border_width);
 void         gimp_preview_set_size_full    (GimpPreview   *preview,
 					    gint           width,
 					    gint           height,

@@ -27,14 +27,6 @@ GImage * gimage_new                  (gint               width,
 				      gint               height,
 				      GimpImageBaseType  base_type);
 
-void     gimage_set_layer_mask_apply (GImage            *gimage,
-				      GimpLayer         *layer);
-void     gimage_set_layer_mask_edit  (GImage            *gimage,
-				      GimpLayer         *layer,
-				      gboolean           edit);
-void     gimage_set_layer_mask_show  (GImage            *gimage,
-				      GimpLayer         *layer);
-
 
 extern guint32 next_guide_id;
 

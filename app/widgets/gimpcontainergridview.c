@@ -326,7 +326,7 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
 
       preview = GIMP_PREVIEW (child->widget);
 
-      gimp_preview_set_size (preview, view->preview_size);
+      gimp_preview_set_size (preview, view->preview_size, preview->border_width);
     }
 
   gtk_widget_queue_resize (grid_view->wrap_box);

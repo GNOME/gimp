@@ -90,7 +90,8 @@ GimpChannel   * gimp_channel_new               (GimpImage         *gimage,
 						gint               height,
 						const gchar       *name,
 						const GimpRGB     *color);
-GimpChannel   * gimp_channel_copy              (const GimpChannel *channel);
+GimpChannel   * gimp_channel_copy              (const GimpChannel *channel,
+                                                gboolean           dummy);
 
 gint            gimp_channel_get_opacity       (const GimpChannel *channel);
 void            gimp_channel_set_opacity       (GimpChannel       *channel,

@@ -23,10 +23,21 @@
 #include "gimpcontainerlistview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *gimage);
-typedef GimpDrawable  * (* GimpGetDrawableFunc)  (const GimpImage *gimage);
-typedef void            (* GimpSetDrawableFunc)  (GimpImage       *gimage,
-						  GimpDrawable    *drawable);
+typedef GimpContainer * (* GimpGetContainerFunc)    (const GimpImage *gimage);
+typedef GimpDrawable  * (* GimpGetDrawableFunc)     (const GimpImage *gimage);
+typedef void            (* GimpSetDrawableFunc)     (GimpImage       *gimage,
+						     GimpDrawable    *drawable);
+typedef void            (* GimpReorderDrawableFunc) (GimpImage       *gimage,
+						     GimpDrawable    *drawable,
+						     gint             new_index,
+						     gboolean         push_undo);
+typedef void            (* GimpAddDrawableFunc)     (GimpImage       *gimage,
+						     GimpDrawable    *drawable,
+						     gint             index);
+typedef void            (* GimpRemoveDrawableFunc)  (GimpImage       *gimage,
+						     GimpDrawable    *drawable);
+typedef GimpDrawable  * (* GimpCopyDrawableFunc)    (GimpDrawable    *drawable,
+						     gboolean         add_alpha);
 
 
 #define GIMP_TYPE_DRAWABLE_LIST_VIEW            (gimp_drawable_list_view_get_type ())
@@ -40,25 +51,29 @@ typedef struct _GimpDrawableListViewClass  GimpDrawableListViewClass;
 
 struct _GimpDrawableListView
 {
-  GimpContainerListView  parent_instance;
+  GimpContainerListView    parent_instance;
 
-  GimpImage             *gimage;
+  GimpImage               *gimage;
 
-  GtkType                drawable_type;
-  gchar                 *signal_name;
+  GtkType                  drawable_type;
+  gchar                   *signal_name;
 
-  GimpGetContainerFunc   get_container_func;
-  GimpGetDrawableFunc    get_drawable_func;
-  GimpSetDrawableFunc    set_drawable_func;
+  GimpGetContainerFunc     get_container_func;
+  GimpGetDrawableFunc      get_drawable_func;
+  GimpSetDrawableFunc      set_drawable_func;
+  GimpReorderDrawableFunc  reorder_drawable_func;
+  GimpAddDrawableFunc      add_drawable_func;
+  GimpRemoveDrawableFunc   remove_drawable_func;
+  GimpCopyDrawableFunc     copy_drawable_func;
 
-  GtkWidget             *button_box;
+  GtkWidget               *button_box;
 
-  GtkWidget             *new_button;
-  GtkWidget             *raise_button;
-  GtkWidget             *lower_button;
-  GtkWidget             *duplicate_button;
-  GtkWidget             *edit_button;
-  GtkWidget             *delete_button;
+  GtkWidget               *new_button;
+  GtkWidget               *raise_button;
+  GtkWidget               *lower_button;
+  GtkWidget               *duplicate_button;
+  GtkWidget               *edit_button;
+  GtkWidget               *delete_button;
 };
 
 struct _GimpDrawableListViewClass
@@ -69,12 +84,16 @@ struct _GimpDrawableListViewClass
 
 GtkType     gimp_drawable_list_view_get_type (void);
 
-GtkWidget * gimp_drawable_list_view_new      (GimpImage            *gimage,
-					      GtkType               drawable_type,
-					      const gchar          *signal_name,
-					      GimpGetContainerFunc  get_container_func,
-					      GimpGetDrawableFunc   get_drawable_func,
-					      GimpSetDrawableFunc   set_drawable_func);
+GtkWidget * gimp_drawable_list_view_new      (GimpImage               *gimage,
+					      GtkType                  drawable_type,
+					      const gchar             *signal_name,
+					      GimpGetContainerFunc     get_container_func,
+					      GimpGetDrawableFunc      get_drawable_func,
+					      GimpSetDrawableFunc      set_drawable_func,
+					      GimpReorderDrawableFunc  reorder_drawable_func,
+					      GimpAddDrawableFunc      add_drawable_func,
+					      GimpRemoveDrawableFunc   remove_drawable_func,
+					      GimpCopyDrawableFunc     copy_drawable_func);
 
 void       gimp_drawable_list_view_set_image (GimpDrawableListView *view,
 					      GimpImage            *gimage);

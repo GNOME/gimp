@@ -1727,7 +1727,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 			 TRUE);
 
       /*  If we're showing the layer mask instead of the layer...  */
-      if (layer->mask && layer->show_mask)
+      if (layer->mask && layer->mask->show_mask)
 	{
 	  pixel_region_init (&src2PR, 
 			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
@@ -1744,7 +1744,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
-	  if (layer->mask && layer->apply_mask)
+	  if (layer->mask && layer->mask->apply_mask)
 	    {
 	      pixel_region_init (&maskPR, 
 				 gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
@@ -3091,7 +3091,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 			 (x4 - x3), (y4 - y3), 
 			 FALSE);
 
-      if (layer->mask && layer->apply_mask)
+      if (layer->mask && layer->mask->apply_mask)
 	{
 	  pixel_region_init (&maskPR, 
 			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)), 
@@ -3336,7 +3336,7 @@ gimp_image_raise_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_channel (gimage, channel, index - 1);
+  return gimp_image_position_channel (gimage, channel, index - 1, TRUE);
 }
 
 gboolean
@@ -3359,13 +3359,14 @@ gimp_image_lower_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_channel (gimage, channel, index + 1);
+  return gimp_image_position_channel (gimage, channel, index + 1, TRUE);
 }
 
 gboolean
 gimp_image_position_channel (GimpImage   *gimage, 
 			     GimpChannel *channel,
-			     gint         new_index)
+			     gint         new_index,
+                             gboolean     push_undo /* FIXME unused */)
 {
   gint index;
   gint num_channels;
@@ -3383,11 +3384,7 @@ gimp_image_position_channel (GimpImage   *gimage,
 
   num_channels = gimp_container_num_children (gimage->channels);
 
-  if (new_index < 0)
-    new_index = 0;
-
-  if (new_index >= num_channels)
-    new_index = num_channels - 1;
+  new_index = CLAMP (new_index, 0, num_channels - 1);
 
   if (new_index == index)
     return TRUE;
@@ -3530,7 +3527,7 @@ gimp_image_active_drawable (const GimpImage *gimage)
 
       layer = gimage->active_layer;
 
-      if (layer->mask && layer->edit_mask)
+      if (layer->mask && layer->mask->edit_mask)
 	return GIMP_DRAWABLE (layer->mask);
       else
 	return GIMP_DRAWABLE (layer);
@@ -3941,7 +3938,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       src2PR.data      = temp_buf_data (layer_buf) + 
 	(y1 - y) * src2PR.rowstride + (x1 - x) * src2PR.bytes;
 
-      if (layer->mask && layer->apply_mask)
+      if (layer->mask && layer->mask->apply_mask)
 	{
 	  mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
 						w, h);

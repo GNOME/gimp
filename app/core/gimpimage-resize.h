@@ -367,7 +367,8 @@ gboolean        gimp_image_lower_channel         (GimpImage         *gimage,
 						  GimpChannel       *channel);
 gboolean        gimp_image_position_channel      (GimpImage         *gimage,
 						  GimpChannel       *channel,
-						  gint               position);
+						  gint               new_index,
+                                                  gboolean           push_undo);
 gboolean        gimp_image_add_channel           (GimpImage         *gimage,
 						  GimpChannel       *channel,
 						  gint               position);

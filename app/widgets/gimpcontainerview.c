@@ -240,6 +240,8 @@ gimp_container_view_set_container (GimpContainerView *view,
 
   if (view->container)
     {
+      gimp_container_view_select_item (view, NULL);
+
       gimp_container_view_clear_items (view);
 
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->container),

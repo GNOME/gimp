@@ -258,7 +258,8 @@ gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
         {
           gimp_image_position_channel (gimp_drawable_gimage (GIMP_DRAWABLE (src_viewable)),
                                        GIMP_CHANNEL (src_viewable),
-                                       dest_index);
+                                       dest_index,
+                                       TRUE);
           gdisplays_flush ();
         }
     }

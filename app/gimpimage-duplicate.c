@@ -648,7 +648,7 @@ duplicate (GimpImage *gimage)
     {
       channel = (GimpChannel *) list->data;
  
-      new_channel = gimp_channel_copy (channel);
+      new_channel = gimp_channel_copy (channel, TRUE);
 
       gimp_drawable_set_gimage (GIMP_DRAWABLE (new_channel), new_gimage);
 

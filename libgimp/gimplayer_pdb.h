@@ -70,15 +70,6 @@ gboolean             gimp_layer_set_visible        (gint32                layer_
 gboolean             gimp_layer_get_preserve_trans (gint32                layer_ID);
 gboolean             gimp_layer_set_preserve_trans (gint32                layer_ID,
 						    gboolean              preserve_trans);
-gboolean             gimp_layer_get_apply_mask     (gint32                layer_ID);
-gboolean             gimp_layer_set_apply_mask     (gint32                layer_ID,
-						    gboolean              apply_mask);
-gboolean             gimp_layer_get_show_mask      (gint32                layer_ID);
-gboolean             gimp_layer_set_show_mask      (gint32                layer_ID,
-						    gboolean              show_mask);
-gboolean             gimp_layer_get_edit_mask      (gint32                layer_ID);
-gboolean             gimp_layer_set_edit_mask      (gint32                layer_ID,
-						    gboolean              edit_mask);
 gdouble              gimp_layer_get_opacity        (gint32                layer_ID);
 gboolean             gimp_layer_set_opacity        (gint32                layer_ID,
 						    gdouble               opacity);

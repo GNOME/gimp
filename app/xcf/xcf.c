@@ -144,7 +144,10 @@ static gboolean        xcf_load_image_props   (XcfInfo     *info,
 					       GImage      *gimage);
 static gboolean        xcf_load_layer_props   (XcfInfo     *info,
 					       GImage      *gimage,
-					       GimpLayer   *layer);
+					       GimpLayer   *layer,
+                                               gboolean    *apply_mask,
+                                               gboolean    *edit_mask,
+                                               gboolean    *show_mask);
 static gboolean        xcf_load_channel_props (XcfInfo     *info,
 					       GImage      *gimage,
 					       GimpChannel *channel);
@@ -663,9 +666,20 @@ xcf_save_layer_props (XcfInfo   *info,
 		 gimp_drawable_get_visible (GIMP_DRAWABLE (layer)));
   xcf_save_prop (info, PROP_LINKED, layer->linked);
   xcf_save_prop (info, PROP_PRESERVE_TRANSPARENCY, layer->preserve_trans);
-  xcf_save_prop (info, PROP_APPLY_MASK, layer->apply_mask);
-  xcf_save_prop (info, PROP_EDIT_MASK, layer->edit_mask);
-  xcf_save_prop (info, PROP_SHOW_MASK, layer->show_mask);
+
+  if (layer->mask)
+    {
+      xcf_save_prop (info, PROP_APPLY_MASK, layer->mask->apply_mask);
+      xcf_save_prop (info, PROP_EDIT_MASK,  layer->mask->edit_mask);
+      xcf_save_prop (info, PROP_SHOW_MASK,  layer->mask->show_mask);
+    }
+  else
+    {
+      xcf_save_prop (info, PROP_APPLY_MASK, FALSE);
+      xcf_save_prop (info, PROP_EDIT_MASK,  FALSE);
+      xcf_save_prop (info, PROP_SHOW_MASK,  FALSE);
+    }
+
   xcf_save_prop (info, PROP_OFFSETS,
 		 GIMP_DRAWABLE (layer)->offset_x,
 		 GIMP_DRAWABLE (layer)->offset_y);
@@ -2046,7 +2060,10 @@ xcf_load_image_props (XcfInfo *info,
 static gboolean
 xcf_load_layer_props (XcfInfo   *info,
 		      GImage    *gimage,
-		      GimpLayer *layer)
+		      GimpLayer *layer,
+                      gboolean  *apply_mask,
+                      gboolean  *edit_mask,
+                      gboolean  *show_mask)
 {
   PropType prop_type;
   guint32  prop_size;
@@ -2086,13 +2103,13 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->preserve_trans, 1);
 	  break;
 	case PROP_APPLY_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->apply_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) apply_mask, 1);
 	  break;
 	case PROP_EDIT_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->edit_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) edit_mask, 1);
 	  break;
 	case PROP_SHOW_MASK:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->show_mask, 1);
+	  info->cp += xcf_read_int32 (info->fp, (guint32*) show_mask, 1);
 	  break;
 	case PROP_OFFSETS:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->offset_x, 1);
@@ -2282,7 +2299,8 @@ xcf_load_layer (XcfInfo *info,
     return NULL;
 
   /* read in the layer properties */
-  if (!xcf_load_layer_props (info, gimage, layer))
+  if (!xcf_load_layer_props (info, gimage, layer,
+                             &apply_mask, &edit_mask, &show_mask))
     goto error;
 
   /* read the hierarchy and layer mask offsets */
@@ -2307,15 +2325,11 @@ xcf_load_layer (XcfInfo *info,
       GIMP_DRAWABLE (layer_mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
       GIMP_DRAWABLE (layer_mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
-      apply_mask = layer->apply_mask;
-      edit_mask  = layer->edit_mask;
-      show_mask  = layer->show_mask;
-
       gimp_layer_add_mask (layer, layer_mask, FALSE);
 
-      layer->apply_mask = apply_mask;
-      layer->edit_mask  = edit_mask;
-      layer->show_mask  = show_mask;
+      layer->mask->apply_mask = apply_mask;
+      layer->mask->edit_mask  = edit_mask;
+      layer->mask->show_mask  = show_mask;
     }
 
   /* attach the floating selection... */
@@ -2329,7 +2343,7 @@ xcf_load_layer (XcfInfo *info,
 
   return layer;
 
-error:
+ error:
   gtk_object_unref (GTK_OBJECT (layer));
   return NULL;
 }

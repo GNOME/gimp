@@ -40,9 +40,6 @@ struct _GimpLayer
   gboolean          preserve_trans;   /*  preserve transparency          */
 
   GimpLayerMask    *mask;             /*  possible layer mask            */
-  gint              apply_mask;       /*  controls mask application      */
-  gboolean          edit_mask;        /*  edit mask or layer?            */
-  gboolean          show_mask;        /*  show mask or layer?            */
 
   gint              opacity;          /*  layer opacity                  */
   LayerModeEffects  mode;             /*  layer combination mode         */

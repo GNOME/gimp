@@ -472,46 +472,46 @@ HELP
 
 &layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 0, 1);
 
-&layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $help .= <<'HELP';
-If the value is non-zero, then the layer mask for this layer is currently being
-composited with the layer's alpha channel.
-HELP
-CODE1
-    $help .= <<'HELP';
-This controls whether the layer's mask is currently affecting the alpha
-channel. If there is no layer mask, this function will return an error.
-HELP
-CODE2
-
-&layer_accessors('show_mask', 'boolean', 'show mask', 0, 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $help .= <<'HELP';
-If the value is non-zero, then the layer mask for this layer is currently being
-shown instead of the layer.
-HELP
-CODE1
-    $help .= <<'HELP';
-This controls whether the layer or it's mask is visible. Non-zero values
-indicate that the mask should be visible. If the layer has no mask, then this
-function returns an error.
-HELP
-CODE2
-
-&layer_accessors('edit_mask', 'boolean', 'show mask', 0, 1,
-		 [ <<'CODE1', <<'CODE2' ]);
-    $help .= <<'HELP';
- If the value is non-zero, then the layer mask for this layer is currently
-active, and not the layer.
-HELP
-CODE1
-    $help .= <<'HELP';
-This controls whether the layer or it's mask is currently active for editing.
-If the specified layer has no layer mask, then this procedure will return an
-error.
-HELP
-CODE2
+#&layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 1,
+#		 [ <<'CODE1', <<'CODE2' ]);
+#    $help .= <<'HELP';
+#If the value is non-zero, then the layer mask for this layer is currently being
+#composited with the layer's alpha channel.
+#HELP
+#CODE1
+#    $help .= <<'HELP';
+#This controls whether the layer's mask is currently affecting the alpha
+#channel. If there is no layer mask, this function will return an error.
+#HELP
+#CODE2
+#
+#&layer_accessors('show_mask', 'boolean', 'show mask', 0, 1,
+#		 [ <<'CODE1', <<'CODE2' ]);
+#    $help .= <<'HELP';
+#If the value is non-zero, then the layer mask for this layer is currently being
+#shown instead of the layer.
+#HELP
+#CODE1
+#    $help .= <<'HELP';
+#This controls whether the layer or it's mask is visible. Non-zero values
+#indicate that the mask should be visible. If the layer has no mask, then this
+#function returns an error.
+#HELP
+#CODE2
+#
+#&layer_accessors('edit_mask', 'boolean', 'show mask', 0, 1,
+#		 [ <<'CODE1', <<'CODE2' ]);
+#    $help .= <<'HELP';
+# If the value is non-zero, then the layer mask for this layer is currently
+#active, and not the layer.
+#HELP
+#CODE1
+#    $help .= <<'HELP';
+#This controls whether the layer or it's mask is currently active for editing.
+#If the specified layer has no layer mask, then this procedure will return an
+#error.
+#HELP
+#CODE2
 
 &layer_accessors('opacity', '0 <= float <= 100', 'opacity', 0, 0,
 		 [ '$outargs[0]->{alias} =

@@ -1671,15 +1671,9 @@ layers_dialog_duplicate_layer_callback (GtkWidget *widget,
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
-  /*  Start a group undo  */
-  undo_push_group_start (gimage, LAYER_ADD_UNDO);
-
   active_layer = gimp_image_get_active_layer (gimage);
   new_layer = gimp_layer_copy (active_layer, TRUE);
   gimp_image_add_layer (gimage, new_layer, -1);
-
-  /*  End the group undo  */
-  undo_push_group_end (gimage);
 
   gdisplays_flush ();
 }
@@ -1772,7 +1766,7 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
   /*  Make sure there is a layer mask to apply  */
   if (layer && gimp_layer_get_mask (layer))
     {
-      gboolean flush = ! layer->apply_mask || layer->show_mask;
+      gboolean flush = ! layer->mask->apply_mask || layer->mask->show_mask;
 
       gimp_layer_apply_mask (layer, APPLY, TRUE);
 
@@ -1805,7 +1799,7 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
   /*  Make sure there is a layer mask to apply  */
   if (layer && gimp_layer_get_mask (layer))
     {
-      gboolean flush = layer->apply_mask || layer->show_mask;
+      gboolean flush = layer->mask->apply_mask || layer->mask->show_mask;
 
       gimp_layer_apply_mask (layer, DISCARD, TRUE);
 
@@ -2124,16 +2118,27 @@ layer_widget_create (GimpImage *gimage,
   layer_widget->width              = -1;
   layer_widget->height             = -1;
   layer_widget->layer_mask         = (gimp_layer_get_mask (layer) != NULL);
-  layer_widget->apply_mask         = layer->apply_mask;
-  layer_widget->edit_mask          = layer->edit_mask;
-  layer_widget->show_mask          = layer->show_mask;
+
+  if (layer->mask)
+    {
+      layer_widget->apply_mask     = layer->mask->apply_mask;
+      layer_widget->edit_mask      = layer->mask->edit_mask;
+      layer_widget->show_mask      = layer->mask->show_mask;
+    }
+  else
+    {
+      layer_widget->apply_mask     = FALSE;
+      layer_widget->edit_mask      = FALSE;
+      layer_widget->show_mask      = FALSE;
+    }
+
   layer_widget->visited            = TRUE;
   layer_widget->drop_type          = GIMP_DROP_NONE;
   layer_widget->layer_pixmap_valid = FALSE;
 
   if (gimp_layer_get_mask (layer))
     layer_widget->active_preview =
-      (layer->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
+      (layer->mask->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
   else
     layer_widget->active_preview = LAYER_PREVIEW;
 
@@ -2818,8 +2823,8 @@ layer_widget_preview_events (GtkWidget *widget,
 	{
 	  if (preview_type == MASK_PREVIEW)
 	    {
-	      gimage_set_layer_mask_apply (layer_widget->gimage,
-					   layer_widget->layer);
+	      gimp_layer_mask_set_apply (layer_widget->layer->mask,
+                                         ! layer_widget->layer->mask->apply_mask);
 	      gdisplays_flush ();
 	    }
 	}
@@ -2828,16 +2833,22 @@ layer_widget_preview_events (GtkWidget *widget,
 	{
 	  if (preview_type == MASK_PREVIEW)
 	    {
-	      gimage_set_layer_mask_show (layer_widget->gimage,
-					  layer_widget->layer);
+	      gimp_layer_mask_set_show (layer_widget->layer->mask,
+                                        ! layer_widget->layer->mask->show_mask);
 	      gdisplays_flush ();
 	    }
 	}
       else if (layer_widget->active_preview != preview_type)
 	{
-	  gimage_set_layer_mask_edit (layer_widget->gimage,
-				      layer_widget->layer,
-				      (preview_type == MASK_PREVIEW));
+	  if (preview_type == MASK_PREVIEW)
+	    {
+	      gimp_layer_mask_set_edit (layer_widget->layer->mask, TRUE);
+	    }
+          else if (layer_widget->layer->mask)
+            {
+	      gimp_layer_mask_set_edit (layer_widget->layer->mask, FALSE);
+            }
+
 	  gdisplays_flush ();
 	}
       break;
@@ -2987,9 +2998,9 @@ layer_widget_boundary_redraw (LayerWidget *layer_widget,
 	  gdk_gc_set_foreground (layersD->red_gc, &red);
 	}
 
-      if (layer_widget->layer->show_mask)
+      if (layer_widget->layer->mask->show_mask)
 	gc2 = layersD->green_gc;
-      else if (! layer_widget->layer->apply_mask)
+      else if (! layer_widget->layer->mask->apply_mask)
 	gc2 = layersD->red_gc;
     }
 
@@ -3460,21 +3471,21 @@ layer_widget_layer_flush (GtkWidget *widget,
       update_mask_preview = 
 	(! GIMP_DRAWABLE (gimp_layer_get_mask (layer))->preview_valid);
 
-      if (layer->apply_mask != layer_widget->apply_mask)
+      if (layer->mask->apply_mask != layer_widget->apply_mask)
 	{
-	  layer_widget->apply_mask = layer->apply_mask;
+	  layer_widget->apply_mask = layer->mask->apply_mask;
 	  update_mask_preview = TRUE;
 	}
-      if (layer->show_mask != layer_widget->show_mask)
+      if (layer->mask->show_mask != layer_widget->show_mask)
 	{
-	  layer_widget->show_mask = layer->show_mask;
+	  layer_widget->show_mask = layer->mask->show_mask;
 	  update_mask_preview = TRUE;
 	}
-      if (layer->edit_mask != layer_widget->edit_mask)
+      if (layer->mask->edit_mask != layer_widget->edit_mask)
 	{
-	  layer_widget->edit_mask = layer->edit_mask;
+	  layer_widget->edit_mask = layer->mask->edit_mask;
 
-	  if (layer->edit_mask == TRUE)
+	  if (layer->mask->edit_mask == TRUE)
 	    layer_widget->active_preview = MASK_PREVIEW;
 	  else
 	    layer_widget->active_preview = LAYER_PREVIEW;

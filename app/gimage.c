@@ -33,6 +33,7 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplayermask.h"
 #include "lc_dialog.h"
 #include "paint_funcs.h"
 #include "palette_import.h"
@@ -183,58 +184,4 @@ gimage_repaint_handler (GimpImage *gimage,
 			gint       h)
 {
   gdisplays_update_area (gimage, x, y, w, h);
-}
-
-  
-/* These really belong in the layer class */
-
-void
-gimage_set_layer_mask_apply (GimpImage *gimage, 
-			     GimpLayer *layer)
-{
-  gint off_x, off_y;
-
-  g_return_if_fail (gimage);
-  g_return_if_fail (layer);
-  
-  if (! layer->mask)
-    return;
-
-  layer->apply_mask = ! layer->apply_mask;
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-  gdisplays_update_area (gimage, off_x, off_y,
-			 gimp_drawable_width (GIMP_DRAWABLE (layer)), 
-			 gimp_drawable_height (GIMP_DRAWABLE (layer)));
-}
-
-void
-gimage_set_layer_mask_edit (GimpImage *gimage, 
-			    GimpLayer *layer, 
-			    gboolean   edit)
-{
-  /*  find the layer  */
-  if (!layer)
-    return;
-
-  if (layer->mask)
-    layer->edit_mask = edit;
-}
-
-void
-gimage_set_layer_mask_show (GimpImage *gimage, 
-			    GimpLayer *layer)
-{
-  gint off_x, off_y;
-
-  g_return_if_fail (gimage);
-  g_return_if_fail (layer);
-  
-  if (! layer->mask)
-    return;
-
-  layer->show_mask = ! layer->show_mask;
-  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
-  gdisplays_update_area (gimage, off_x, off_y,
-			 gimp_drawable_width (GIMP_DRAWABLE (layer)), 
-			 gimp_drawable_height (GIMP_DRAWABLE (layer)));
 }

@@ -63,7 +63,7 @@ SUBDIRS = 			\
 	sgi			\
 	sel2path		\
 	$(WEBBROWSER)		\
-	$(XJT)			\
+##	$(XJT)			\
 	plugin-helper		\
 	common
 

@@ -1,3 +1,77 @@
+2001-03-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimage.[ch]: removed the layer mask functions.
+
+	* app/gimpchannel.[ch]: added a boolean "dummy" parameter to
+	gimp_channel_copy() so it has the same signature as
+	gimp_layer_copy() and can be used by the GimpDrawableListView to
+	generically duplicate drawables.
+
+	* app/gimpcontainerview.c: call "select_item" with a NULL item
+	before changing the underlying GimpContainer so subclasses have
+	a chance to update (e.g. set button sensitivity).
+
+	* app/gimpdnd.c: folded all the GtkType comparing code into a
+	utility function (much more readable now).
+
+	* app/gimpdrawablelistview.[ch]: activated the "raise", "lower",
+	"duplicate" and "delete" buttons. I'm not really happy with all
+	those function pointers passed to the constructor (and the dummy
+	parameters I've added to some GimpChannel functions) -- OTOH the
+	generic view maybe worth the "gboolean dummy" cruft hanging around
+	in the channel class.
+
+	* app/gimplayer.[ch]: removed the "apply_mask", "edit_mask" and
+	"show_mask" booleans ...
+
+	* app/gimplayermask.[ch]: .. and added them here together with
+	proper accessors and "*_changed" signals.
+
+	This also makes the layer mask undo code much clearer as we don't
+	have to store the booleans separately.
+
+	* app/gimplayerlistitem.c: badly hacked to acheive the correct
+	indicator being drawn around the active drawable. This needs
+	a new GimpPreview function for setting the border color.
+
+	* app/gimplistitem.c: smaller horizontal spacing.
+
+	* app/gimppreview.[ch]: added the "border_width" parameter also to
+	gimp_preview_set_size() so we can modify all previews the same way
+	after creation.
+
+	* app/layers_dialog.c: no need to push an undo group around
+	the "duplicate layer" code. Was this an artefact or did I miss
+	something here ???
+
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/gimage_mask.c
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpdrawablelistitem.c
+	* app/gimpimage.[ch]
+	* app/qmask.c
+	* app/test_commands.c
+	* app/undo.c
+	* app/xcf.c
+	* app/pdb/channel_cmds.c
+	* tools/pdbgen/pdb/channel.pdb
+	* app/pdb/selection_cmds.c
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]
+	* tools/pdbgen/pdb/layer.pdb: commented out the layer mask accessors
+	from the perl code, so the functions temporarily disappeared all
+	over the place.
+
+	* plug-ins/Makefile.am: don't build XJT until the layer mask stuff
+	is back.
+
+	* pixmaps/eye.xpm: cropped it to it's minimal size.
+
 2001-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am

@@ -174,7 +174,13 @@ gimp_channel_new (GimpImage     *gimage,
 }
 
 GimpChannel *
-gimp_channel_copy (const GimpChannel *channel)
+gimp_channel_copy (const GimpChannel *channel,
+                   gboolean           dummy) /*  the dummy is for symmetry with
+                                              *  gimp_layer_copy() because
+                                              *  both functions are used as
+                                              *  function pointers in
+                                              *  GimpDrawableListView --Mitch
+                                              */
 {
   gchar       *channel_name;
   GimpChannel *new_channel;

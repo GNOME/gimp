@@ -289,7 +289,7 @@ gimp_container_list_view_reorder_item (GimpContainerView *view,
 	gtk_list_insert_items (GTK_LIST (list_view->gtk_list), list, new_index);
 
       if (selected)
-	gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
+	gimp_container_view_select_item (view, viewable);
 
       gtk_object_unref (GTK_OBJECT (list_item));
     }
@@ -319,7 +319,7 @@ gimp_container_list_view_select_item (GimpContainerView *view,
       adj = gtk_scrolled_window_get_vadjustment
 	(GTK_SCROLLED_WINDOW (list_view->scrolled_win));
 
-      item_height = list_item->allocation.height;
+      item_height = list_item->requisition.height;
 
       index = gimp_container_get_child_index (view->container,
 					      GIMP_OBJECT (viewable));
@@ -330,6 +330,10 @@ gimp_container_list_view_select_item (GimpContainerView *view,
 
       gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
 
+      gtk_signal_handler_unblock_by_func (GTK_OBJECT (list_view->gtk_list),
+					  gimp_container_list_view_item_selected,
+					  list_view);
+
       if (index * item_height < adj->value)
 	{
 	  gtk_adjustment_set_value (adj, index * item_height);
@@ -339,10 +343,6 @@ gimp_container_list_view_select_item (GimpContainerView *view,
 	  gtk_adjustment_set_value (adj,
 				    (index + 1) * item_height - adj->page_size);
 	}
-
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (list_view->gtk_list),
-					  gimp_container_list_view_item_selected,
-					  list_view);
     }
   else
     {
@@ -379,7 +379,7 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
 
       preview = GIMP_PREVIEW (GIMP_LIST_ITEM (list->data)->preview);
 
-      gimp_preview_set_size (preview, view->preview_size);
+      gimp_preview_set_size (preview, view->preview_size, preview->border_width);
     }
 
   gtk_widget_queue_resize (list_view->gtk_list);

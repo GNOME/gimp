@@ -138,9 +138,6 @@ gimp_layer_init (GimpLayer *layer)
   layer->preserve_trans = FALSE;
 
   layer->mask           = NULL;
-  layer->apply_mask     = FALSE;
-  layer->edit_mask      = FALSE;
-  layer->show_mask      = FALSE;
 
   layer->opacity        = 100;
   layer->mode           = NORMAL_MODE;
@@ -350,14 +347,10 @@ gimp_layer_copy (GimpLayer *layer,
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
     {
-      new_layer->mask       = gimp_layer_mask_copy (layer->mask);
+      new_layer->mask = gimp_layer_mask_copy (layer->mask);
 
       gtk_object_ref (GTK_OBJECT (new_layer->mask));
       gtk_object_sink (GTK_OBJECT (new_layer->mask));
-
-      new_layer->apply_mask = layer->apply_mask;
-      new_layer->edit_mask  = layer->edit_mask;
-      new_layer->show_mask  = layer->show_mask;
 
       gimp_layer_mask_set_layer (new_layer->mask, new_layer);
     }
@@ -501,11 +494,6 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
   gimp_layer_mask_set_layer (mask, layer);
 
-  /*  Set the application mode in the layer to "apply"  */
-  layer->apply_mask = TRUE;
-  layer->edit_mask  = TRUE;
-  layer->show_mask  = FALSE;
-
   drawable_update (GIMP_DRAWABLE (layer),
 		   0, 0,
 		   GIMP_DRAWABLE (layer)->width, 
@@ -514,12 +502,9 @@ gimp_layer_add_mask (GimpLayer     *layer,
   if (push_undo)
     {
       /*  Prepare a layer undo and push it  */
-      lmu = g_new (LayerMaskUndo, 1);
-      lmu->layer      = layer;
-      lmu->mask       = mask;
-      lmu->apply_mask = layer->apply_mask;
-      lmu->edit_mask  = layer->edit_mask;
-      lmu->show_mask  = layer->show_mask;
+      lmu        = g_new0 (LayerMaskUndo, 1);
+      lmu->layer = layer;
+      lmu->mask  = mask;
       undo_push_layer_mask (gimage, LAYER_MASK_ADD_UNDO, lmu);
     }
 
@@ -673,14 +658,11 @@ gimp_layer_apply_mask (GimpLayer     *layer,
       lmu->layer      = layer;
       lmu->mask       = layer->mask;
       lmu->mode       = mode;
-      lmu->apply_mask = layer->apply_mask;
-      lmu->edit_mask  = layer->edit_mask;
-      lmu->show_mask  = layer->show_mask;
     }
 
   /*  check if applying the mask changes the projection  */
-  if ((mode == APPLY   && (!layer->apply_mask || layer->show_mask)) ||
-      (mode == DISCARD && ( layer->apply_mask || layer->show_mask)))
+  if ((mode == APPLY   && (!layer->mask->apply_mask || layer->mask->show_mask)) ||
+      (mode == DISCARD && ( layer->mask->apply_mask || layer->mask->show_mask)))
     {
       view_changed = TRUE;
     }
@@ -713,10 +695,7 @@ gimp_layer_apply_mask (GimpLayer     *layer,
       GIMP_DRAWABLE (layer)->preview_valid = FALSE;
     }
 
-  layer->mask       = NULL;
-  layer->apply_mask = FALSE;
-  layer->edit_mask  = FALSE;
-  layer->show_mask  = FALSE;
+  layer->mask = NULL;
 
   if (push_undo)
     {

@@ -137,7 +137,7 @@ gimp_list_item_class_init (GimpListItemClass *klass)
 static void
 gimp_list_item_init (GimpListItem *list_item)
 {
-  list_item->hbox = gtk_hbox_new (FALSE, 8);
+  list_item->hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (list_item->hbox), 2);
   gtk_container_add (GTK_CONTAINER (list_item), list_item->hbox);
   gtk_widget_show (list_item->hbox);
