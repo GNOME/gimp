@@ -29,27 +29,30 @@ struct _GimpSessionInfo
   gint       y;
   gint       width;
   gint       height;
-
-  GtkWidget *widget;
-
-  /*  only valid while restoring and saving the session  */
-  gboolean   open;
+  gboolean   open;  /*  only valid while restoring and saving the session  */
 
   /*  dialog specific list of GimpSessionInfoAux  */
-  GList     *aux_info;  /*  dialog specific list of GimpSessionInfoAux  */
+  GList     *aux_info;
+
+  GtkWidget *widget;
 
   /*  only one of these is valid  */
   GimpDialogFactoryEntry *toplevel_entry;
   GimpDialogFactoryEntry *dockable_entry;
-  GList                  *books;  /*  GList of GimpSessionInfoBook  */
+
+  /*  list of GimpSessionInfoBook  */
+  GList     *books;
 };
 
 struct _GimpSessionInfoBook
 {
   gint       position;
-  GList     *dockables; /*  GList of GimpSessionInfoDockable  */
+  gint       current_page;
 
-  GtkWidget *widget; /*  only used while restoring the session  */
+  GtkWidget *widget;
+
+  /*  list of GimpSessionInfoDockable  */
+  GList     *dockables;
 };
 
 struct _GimpSessionInfoDockable
@@ -57,7 +60,6 @@ struct _GimpSessionInfoDockable
   gchar        *identifier;
   GimpTabStyle  tab_style;
   gint          preview_size;
-
 
   /*  dialog specific list of GimpSessionInfoAux  */
   GList        *aux_info;

@@ -51,6 +51,7 @@ enum
 
   SESSION_INFO_BOOK,
   SESSION_INFO_BOOK_POSITION,
+  SESSION_INFO_BOOK_CURRENT_PAGE,
   SESSION_INFO_DOCKABLE,
 
   SESSION_INFO_DOCKABLE_TAB_STYLE,
@@ -83,7 +84,7 @@ gimp_session_info_free (GimpSessionInfo *info)
 
   if (info->aux_info)
     {
-      g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
+      g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
       g_list_free (info->aux_info);
     }
 
@@ -121,7 +122,8 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable)
 
   if (dockable->aux_info)
     {
-      g_list_foreach (dockable->aux_info, (GFunc) g_free, NULL);
+      g_list_foreach (dockable->aux_info, (GFunc) gimp_session_info_aux_free,
+                      NULL);
       g_list_free (dockable->aux_info);
     }
 
@@ -244,6 +246,7 @@ gimp_session_info_save (GimpSessionInfo  *info,
           GimpDockbook *dockbook = books->data;
           GList        *children;
           GList        *pages;
+          gint          current_page;
 
           gimp_config_writer_open (writer, "book");
 
@@ -260,6 +263,12 @@ gimp_session_info_save (GimpSessionInfo  *info,
                 }
             }
 
+          current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+          gimp_config_writer_open (writer, "current-page");
+          gimp_config_writer_printf (writer, "%d", current_page);
+          gimp_config_writer_close (writer);
+
           children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
           for (pages = children; pages; pages = g_list_next (pages))
@@ -267,8 +276,7 @@ gimp_session_info_save (GimpSessionInfo  *info,
               GimpDockable           *dockable = pages->data;
               GimpDialogFactoryEntry *entry;
 
-              entry = g_object_get_data (G_OBJECT (dockable),
-                                         "gimp-dialog-factory-entry");
+              gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
               if (entry)
                 {
@@ -374,6 +382,8 @@ gimp_session_info_deserialize (GScanner *scanner,
 
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_BOOK, "position",
                               GINT_TO_POINTER (SESSION_INFO_BOOK_POSITION));
+  g_scanner_scope_add_symbol (scanner, SESSION_INFO_BOOK, "current-page",
+                              GINT_TO_POINTER (SESSION_INFO_BOOK_CURRENT_PAGE));
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_BOOK, "dockable",
                               GINT_TO_POINTER (SESSION_INFO_DOCKABLE));
 
@@ -506,6 +516,7 @@ gimp_session_info_deserialize (GScanner *scanner,
   g_scanner_scope_remove_symbol (scanner, SESSION_INFO_DOCK, "book");
 
   g_scanner_scope_remove_symbol (scanner, SESSION_INFO_BOOK, "position");
+  g_scanner_scope_remove_symbol (scanner, SESSION_INFO_BOOK, "current-page");
   g_scanner_scope_remove_symbol (scanner, SESSION_INFO_BOOK, "dockable");
 
   g_scanner_scope_remove_symbol (scanner, SESSION_INFO_DOCKABLE, "tab-style");
@@ -605,6 +616,14 @@ gimp_session_info_restore (GimpSessionInfo   *info,
 
               gimp_dockbook_add (GIMP_DOCKBOOK (dockbook),
                                  GIMP_DOCKABLE (dockable), -1);
+            }
+
+          if ((book_info->current_page > 0) &&
+              (book_info->current_page <
+               gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook))))
+            {
+              gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
+                                             book_info->current_page);
             }
         }
 
@@ -773,6 +792,12 @@ session_info_book_deserialize (GScanner        *scanner,
             case SESSION_INFO_BOOK_POSITION:
               token = G_TOKEN_INT;
               if (! gimp_scanner_parse_int (scanner, &book->position))
+                goto error;
+              break;
+
+            case SESSION_INFO_BOOK_CURRENT_PAGE:
+              token = G_TOKEN_INT;
+              if (! gimp_scanner_parse_int (scanner, &book->current_page))
                 goto error;
               break;
 

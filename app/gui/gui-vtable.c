@@ -128,7 +128,7 @@ static void
 gui_set_busy (Gimp *gimp)
 {
   gimp_displays_set_busy (gimp);
-  gimp_dialog_factories_idle ();
+  gimp_dialog_factories_set_busy ();
 
   gdk_flush ();
 }
@@ -137,7 +137,7 @@ static void
 gui_unset_busy (Gimp *gimp)
 {
   gimp_displays_unset_busy (gimp);
-  gimp_dialog_factories_unidle ();
+  gimp_dialog_factories_unset_busy ();
 
   gdk_flush ();
 }

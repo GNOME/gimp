@@ -1,3 +1,22 @@
+2003-10-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.[ch]: renamed
+	gimp_dialog_factories_idle() and _unidle() to
+	gimp_dialog_factories_set_busy() and _unset_busy().
+	Added utility function gimp_dialog_factory_set_widget_data() and
+	public API gimp_dialog_factory_from_widget() so we don't need to
+	g_object_[set|get]_data() with magic keys all over the place.
+
+	* app/widgets/gimpsessioninfo.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-menu.c
+	* app/gui/gui-vtable.c: changed accordingly.
+
+	* app/widgets/gimpsessioninfo.c: remember active page of all dock
+	notebooks in sessionrc.
+
+	* app/widgets/gimpsessioninfo.h: cleaned up the session info structs.
+
 2003-10-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/snoise.c: clamp x and y sizes to sane values.

@@ -229,7 +229,7 @@ dialogs_menu_update (GtkItemFactory *factory,
       return;
     }
 
-  entry = g_object_get_data (G_OBJECT (dockable), "gimp-dialog-factory-entry");
+  gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
   if (entry)
     {

@@ -71,6 +71,9 @@ static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 static void   gimp_dialog_factory_dispose             (GObject           *object);
 static void   gimp_dialog_factory_finalize            (GObject           *object);
 
+static void     gimp_dialog_factory_set_widget_data   (GtkWidget         *dialog,
+                                                       GimpDialogFactory *factory,
+                                                       GimpDialogFactoryEntry *entry);
 static gboolean gimp_dialog_factory_set_user_pos      (GtkWidget         *dialog,
                                                        GdkEventConfigure *cevent,
                                                        gpointer           data);
@@ -92,10 +95,10 @@ static void   gimp_dialog_factories_hide_foreach      (gconstpointer      key,
 static void   gimp_dialog_factories_show_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_idle_foreach      (gconstpointer      key,
+static void   gimp_dialog_factories_set_busy_foreach  (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factories_unidle_foreach    (gconstpointer      key,
+static void   gimp_dialog_factories_unset_busy_foreach(gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
 
@@ -456,10 +459,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
       if (dialog)
 	{
-	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory",
-                             factory);
-	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory-entry",
-                             entry);
+          gimp_dialog_factory_set_widget_data (dialog, factory, entry);
 
 	  /*  If we created a dock before, the newly created dialog is
 	   *  supposed to be a GimpDockable.
@@ -659,7 +659,7 @@ gimp_dialog_factory_dock_new (GimpDialogFactory *factory)
 
   if (dock)
     {
-      g_object_set_data (G_OBJECT (dock), "gimp-dialog-factory", factory);
+      gimp_dialog_factory_set_widget_data (dock, factory, NULL);
 
       gimp_dialog_factory_add_dialog (factory, dock);
     }
@@ -685,9 +685,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
       return;
     }
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog),
-                                      "gimp-dialog-factory");
-  entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
+  dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
@@ -857,9 +855,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   g_return_if_fail (GTK_IS_WIDGET (dialog));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (dialog));
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog),
-                                      "gimp-dialog-factory");
-  entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
+  dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
   if (dialog_factory || entry)
     {
@@ -884,10 +880,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
       return;
     }
 
-  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory",
-                     factory);
-  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory-entry",
-                     entry);
+  gimp_dialog_factory_set_widget_data (dialog, factory, entry);
 
   gimp_dialog_factory_add_dialog (factory, dialog);
 }
@@ -912,9 +905,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
 
   factory->open_dialogs = g_list_remove (factory->open_dialogs, dialog);
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog),
-                                      "gimp-dialog-factory");
-  entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
+  dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
   if (! (dialog_factory && (entry || GIMP_IS_DOCK (dialog))))
     {
@@ -1046,31 +1037,81 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory)
 }
 
 void
-gimp_dialog_factories_idle (void)
+gimp_dialog_factories_set_busy (void)
 {
   GimpDialogFactoryClass *factory_class;
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
-			(GHFunc) gimp_dialog_factories_idle_foreach,
+			(GHFunc) gimp_dialog_factories_set_busy_foreach,
 			NULL);
 }
 
 void
-gimp_dialog_factories_unidle (void)
+gimp_dialog_factories_unset_busy (void)
 {
   GimpDialogFactoryClass *factory_class;
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
   g_hash_table_foreach (factory_class->factories,
-			(GHFunc) gimp_dialog_factories_unidle_foreach,
+			(GHFunc) gimp_dialog_factories_unset_busy_foreach,
 			NULL);
 }
 
 
+static GQuark gimp_dialog_factory_key       = 0;
+static GQuark gimp_dialog_factory_entry_key = 0;
+
+GimpDialogFactory *
+gimp_dialog_factory_from_widget (GtkWidget               *dialog,
+                                 GimpDialogFactoryEntry **entry)
+{
+  g_return_val_if_fail (GTK_IS_WIDGET (dialog), NULL);
+
+  if (! gimp_dialog_factory_key)
+    {
+      gimp_dialog_factory_key =
+        g_quark_from_static_string ("gimp-dialog-factory");
+
+      gimp_dialog_factory_entry_key =
+        g_quark_from_static_string ("gimp-dialog-factory-entry");
+    }
+
+  if (entry)
+    *entry = g_object_get_qdata (G_OBJECT (dialog),
+                                 gimp_dialog_factory_entry_key);
+
+  return g_object_get_qdata (G_OBJECT (dialog), gimp_dialog_factory_key);
+}
+
+
 /*  private functions  */
+
+void
+gimp_dialog_factory_set_widget_data (GtkWidget               *dialog,
+                                     GimpDialogFactory       *factory,
+                                     GimpDialogFactoryEntry  *entry)
+{
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+
+  if (! gimp_dialog_factory_key)
+    {
+      gimp_dialog_factory_key =
+        g_quark_from_static_string ("gimp-dialog-factory");
+
+      gimp_dialog_factory_entry_key =
+        g_quark_from_static_string ("gimp-dialog-factory-entry");
+    }
+
+  g_object_set_qdata (G_OBJECT (dialog), gimp_dialog_factory_key, factory);
+
+  if (entry)
+    g_object_set_qdata (G_OBJECT (dialog), gimp_dialog_factory_entry_key,
+                        entry);
+}
 
 static gboolean
 gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
@@ -1094,7 +1135,6 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 {
   GimpDialogFactory      *dialog_factory;
   GimpDialogFactoryEntry *entry;
-  GimpSessionInfo        *session_info;
   GList                  *list;
 
   if (! g_list_find (factory->open_dialogs, dialog))
@@ -1103,9 +1143,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
       return FALSE;
     }
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog),
-                                      "gimp-dialog-factory");
-  entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
+  dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
   if (! dialog_factory || ! entry)
     {
@@ -1123,7 +1161,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
-      session_info = (GimpSessionInfo *) list->data;
+      GimpSessionInfo *session_info = list->data;
 
       if (session_info->widget == dialog)
         {
@@ -1200,6 +1238,9 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
     }
 }
 
+
+#define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"
+
 static void
 gimp_dialog_factories_hide_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
@@ -1225,7 +1266,7 @@ gimp_dialog_factories_hide_foreach (gconstpointer      key,
 	    }
 
 	  g_object_set_data (G_OBJECT (list->data),
-                             "gimp-dialog-visibility",
+                             GIMP_DIALOG_VISIBILITY_KEY,
                              GINT_TO_POINTER (visibility));
 	}
     }
@@ -1246,7 +1287,7 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
 
 	  visibility =
 	    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (list->data),
-                                                "gimp-dialog-visibility"));
+                                                GIMP_DIALOG_VISIBILITY_KEY));
 
 	  if (! GTK_WIDGET_VISIBLE (list->data) &&
 	      visibility == GIMP_DIALOG_VISIBILITY_VISIBLE)
@@ -1258,9 +1299,9 @@ gimp_dialog_factories_show_foreach (gconstpointer      key,
 }
 
 static void
-gimp_dialog_factories_idle_foreach (gconstpointer      key,
-				    GimpDialogFactory *factory,
-				    gpointer           data)
+gimp_dialog_factories_set_busy_foreach (gconstpointer      key,
+                                        GimpDialogFactory *factory,
+                                        gpointer           data)
 {
   GdkCursor *cursor;
   GList     *list;
@@ -1283,9 +1324,9 @@ gimp_dialog_factories_idle_foreach (gconstpointer      key,
 }
 
 static void
-gimp_dialog_factories_unidle_foreach (gconstpointer      key,
-				      GimpDialogFactory *factory,
-				      gpointer           data)
+gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
+                                          GimpDialogFactory *factory,
+                                          gpointer           data)
 {
   GList *list;
 
