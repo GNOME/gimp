@@ -32,6 +32,9 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
 
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+
 #include "vectors-actions.h"
 #include "vectors-commands.h"
 
@@ -174,6 +177,10 @@ vectors_actions_update (GimpActionGroup *group,
 
   if (GIMP_IS_ITEM_TREE_VIEW (data))
     gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    gimage = GIMP_DISPLAY_SHELL (data)->gdisp->gimage;
+  else if (GIMP_IS_DISPLAY (data))
+    gimage = GIMP_DISPLAY (data)->gimage;
 
   if (gimage)
     {

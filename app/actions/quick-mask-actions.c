@@ -51,11 +51,17 @@ static GimpActionEntry qmask_actions[] =
 
 static GimpToggleActionEntry qmask_toggle_actions[] =
 {
-  { "qmask-toggle", NULL,
+  { "qmask-active", NULL,
     N_("_QMask Active"), NULL, NULL,
     G_CALLBACK (qmask_toggle_cmd_callback),
     FALSE,
+    GIMP_HELP_QMASK_TOGGLE },
+
+  { "qmask-toggle", GIMP_STOCK_QMASK_ON,
+    N_("Toggle _QuickMask"), "<shift>Q", NULL,
+    G_CALLBACK (qmask_toggle_cmd_callback),
     GIMP_HELP_QMASK_TOGGLE }
+
 };
 
 static GimpRadioActionEntry qmask_invert_actions[] =
@@ -117,6 +123,7 @@ qmask_actions_update (GimpActionGroup *group,
 #define SET_COLOR(action,color) \
         gimp_action_group_set_action_color (group, action, (color), FALSE)
 
+  SET_ACTIVE ("qmask-active", gimage && gimage->qmask_state);
   SET_ACTIVE ("qmask-toggle", gimage && gimage->qmask_state);
 
   if (gimage && gimage->qmask_inverted)

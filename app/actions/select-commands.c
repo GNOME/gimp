@@ -30,7 +30,6 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-qmask.h"
 #include "core/gimpselection.h"
 
 #include "widgets/gimpdock.h"
@@ -297,17 +296,6 @@ select_save_cmd_callback (GtkAction *action,
   gimp_dialog_factory_dialog_raise (global_dock_factory,
                                     gtk_widget_get_screen (gdisp->shell),
                                     "gimp-channel-list", -1);
-}
-
-void
-select_toggle_quickmask_cmd_callback (GtkAction *action,
-                                      gpointer   data)
-{
-  GimpImage *gimage;
-  return_if_no_image (gimage, data);
-
-  gimp_image_set_qmask_state (gimage, !gimp_image_get_qmask_state (gimage));
-  gimp_image_flush (gimage);
 }
 
 

@@ -1,3 +1,23 @@
+2004-05-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/qmask-actions.c: renamed action "qmask-toggle" to
+	"qmask-active" and added new action "qmask-toggle" with a label
+	and shortcut suited for the "Select" menu.
+
+	* app/actions/select-actions.c: removed "select-toggle-qmask".
+
+	* app/actions/select-commands.[ch]: removed callback
+	select_toggle_quickmask_cmd_callback().
+
+	* app/actions/channels-actions.c (channels_actions_update)
+	* app/actions/vectors-actions.c (vectors_actions_update): handle
+	"data" being both GimpDisplay and GimpDisplayShell so the actions
+	can be used in the image menu.
+
+	* menus/image-menu.xml.in: s/select-toggle-qmask/qmask-toggle/.
+
+	* menus/qmask-menu.xml: s/qmask-toggle/qmask-active/.
+
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in
@@ -21,7 +41,7 @@
 
 	* menus/menus.xsl: allow inclusion of menuitems using XInclude.
 
-2004-05-02  Michael Natterer  <mitch@convergence.de>
+2004-05-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am
 	* app/actions/file-dialog-actions.[ch]: new files containing

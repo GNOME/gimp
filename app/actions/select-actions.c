@@ -97,11 +97,6 @@ static GimpActionEntry select_actions[] =
     G_CALLBACK (select_border_cmd_callback),
     GIMP_HELP_SELECTION_BORDER },
 
-  { "select-toggle-qmask", GIMP_STOCK_QMASK_ON,
-    N_("Toggle _QuickMask"), "<shift>Q", NULL,
-    G_CALLBACK (select_toggle_quickmask_cmd_callback),
-    GIMP_HELP_QMASK_TOGGLE },
-
   { "select-save", GIMP_STOCK_SELECTION_TO_CHANNEL,
     N_("Save to _Channel"), NULL, NULL,
     G_CALLBACK (select_save_cmd_callback),
@@ -185,8 +180,6 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-shrink",       lp && sel);
   SET_SENSITIVE ("select-grow",         lp && sel);
   SET_SENSITIVE ("select-border",       lp && sel);
-
-  SET_SENSITIVE ("select-toggle-qmask", gdisp);
 
   SET_SENSITIVE ("select-save",         sel && !fs);
   SET_SENSITIVE ("select-to-vectors",   sel && !fs);
