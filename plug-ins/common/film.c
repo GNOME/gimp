@@ -1103,7 +1103,7 @@ add_image_list (gboolean   add_box_flag,
   GtkTreeSelection *sel;
   gint              i;
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -1177,36 +1177,39 @@ static void
 create_selection_tab (GtkWidget *notebook,
 		      gint32     image_ID)
 {
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *toggle;
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *button;
-  GtkWidget *font_sel;
-  gint32    *image_id_list;
-  gint       nimages, j;
+  GtkSizeGroup *group;
+  GtkWidget    *vbox;
+  GtkWidget    *vbox2;
+  GtkWidget    *hbox;
+  GtkWidget    *table;
+  GtkWidget    *label;
+  GtkWidget    *frame;
+  GtkWidget    *toggle;
+  GtkWidget    *spinbutton;
+  GtkObject    *adj;
+  GtkWidget    *button;
+  GtkWidget    *font_sel;
+  gint32       *image_id_list;
+  gint          nimages, j;
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), hbox,
                             gtk_label_new_with_mnemonic (_("_Selection")));
   gtk_widget_show (hbox);
 
-  vbox2 = gtk_vbox_new (FALSE, 4);
+  vbox2 = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
+  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /* Film height/colour */
-  frame = gtk_frame_new (_("Film"));
+  frame = gimp_frame_new (_("Film"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1220,17 +1223,19 @@ create_selection_tab (GtkWidget *notebook,
                     &filmvals.keep_height);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Film height */
   spinbutton = gimp_spin_button_new (&adj, filmvals.film_height, 10,
 				     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Height:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("_Height:"), 0.0, 0.5,
+                                     spinbutton, 1, TRUE);
+  gtk_size_group_add_widget (group, label);
+  g_object_unref (group);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1249,36 +1254,37 @@ create_selection_tab (GtkWidget *notebook,
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
 				  &filmvals.film_color,
 				  GIMP_COLOR_AREA_FLAT);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Co_lor:"), 1.0, 0.5,
-			     button, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("Co_lor:"), 0.0, 0.5,
+                                     button, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
   /* Film numbering: Startindex/Font/colour */
-  frame = gtk_frame_new (_("Numbering"));
+  frame = gimp_frame_new (_("Numbering"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Startindex */
   spinbutton = gimp_spin_button_new (&adj, filmvals.number_start, 0,
-				     G_MAXINT, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Start _Index:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+				     GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                     _("Start _Index:"), 0.0, 0.5,
+                                     spinbutton, 1, TRUE);
+  gtk_size_group_add_widget (group, label);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1289,18 +1295,20 @@ create_selection_tab (GtkWidget *notebook,
                                           filmvals.number_fontf,
                                           film_font_select_callback,
                                           &filmvals);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Font:"), 1.0, 0.5,
-			     font_sel, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                     _("_Font:"), 0.0, 0.5,
+                                     font_sel, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   /* Numbering color */
   button = gimp_color_button_new (_("Select Number Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
 				  &filmvals.number_color,
 				  GIMP_COLOR_AREA_FLAT);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Co_lor:"), 1.0, 0.5,
-			     button, 1, TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                                     _("Co_lor:"), 0.0, 0.5,
+                                     button, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
@@ -1322,12 +1330,11 @@ create_selection_tab (GtkWidget *notebook,
 
 
   /*** The right frame keeps the image selection ***/
-  frame = gtk_frame_new (_("Image Selection"));
+  frame = gimp_frame_new (_("Image Selection"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   hbox = gtk_hbox_new (TRUE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   /* Get a list of all image names */
@@ -1348,24 +1355,24 @@ create_advanced_tab (GtkWidget *notebook)
   GtkWidget *table;
   GtkWidget *frame;
   GtkObject *adj;
-  GtkWidget *sep;
   GtkWidget *button;
   gint       row;
 
-  frame = gtk_frame_new (_("All Values are Fractions of the Film Height"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  frame = gimp_frame_new (_("All Values are Fractions of the Film Height"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
                             gtk_label_new_with_mnemonic (_("Ad_vanced")));
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (9, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  table = gtk_table_new (7, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1392,13 +1399,6 @@ create_advanced_tab (GtkWidget *notebook)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_space);
-
-  sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
-		    GTK_FILL, 0, 0, 2);
-  gtk_widget_show (sep);
-
-  row++;
 
   filmint.advanced_adj[2] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -1444,13 +1444,6 @@ create_advanced_tab (GtkWidget *notebook)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_space);
 
-  sep = gtk_hseparator_new ();
-  gtk_table_attach (GTK_TABLE (table), sep, 0, 3, row, row + 1,
-		    GTK_FILL, 0, 0, 2);
-  gtk_widget_show (sep);
-
-  row++;
-
   filmint.advanced_adj[6] = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			  _("_Number Height:"), 0, 0,
@@ -1494,8 +1487,8 @@ film_dialog (gint32 image_ID)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 

@@ -1,5 +1,10 @@
 2004-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/film.c
+	* plug-ins/common/fractaltrace.c: HIG-ified.
+
+2004-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_interpolate): make
 	sure that pressure never becomes negative. Fixes bug #123811;
 	thanks to Philip Lafleur for investigating this problem.

@@ -1,4 +1,4 @@
-/*******************************************************************************
+/******************************************************************************
 
   fractaltrace.c  -- This is a plug-in for the GIMP 1.0
 
@@ -19,13 +19,13 @@
   this program; if not, write to the Free Software Foundation, Inc.,
   59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
-*******************************************************************************/
+******************************************************************************/
 
 #define PLUG_IN_NAME     "plug_in_fractal_trace"
 #define PLUG_IN_VERSION  "v0.4 test version (Dec. 25 1997)"
 #define HELP_ID          "plug-in-fractal-trace"
 
-/******************************************************************************/
+/*****************************************************************************/
 
 #include "config.h"
 
@@ -726,7 +726,7 @@ dialog_outside_type_callback (GtkWidget *widget,
 
 /******************************************************************************/
 
-static gint
+static gboolean
 dialog_show (void)
 {
   GtkWidget *dialog;
@@ -735,7 +735,6 @@ dialog_show (void)
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *abox;
-  GtkWidget *pframe;
   GtkObject *adj;
   gboolean   run;
 
@@ -750,32 +749,27 @@ dialog_show (void)
 
 			    NULL);
 
-  mainbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
+  mainbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (mainbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), mainbox);
   gtk_widget_show (mainbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (mainbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  Preview  */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
   dialog_preview_init ();
-  gtk_container_add (GTK_CONTAINER (pframe), preview.preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview.preview);
   gtk_widget_show (preview.preview);
 
   /*  Settings  */
@@ -797,14 +791,13 @@ dialog_show (void)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  frame = gtk_frame_new (_("Mandelbrot Parameters"));
+  frame = gimp_frame_new (_("Mandelbrot Parameters"));
   gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
