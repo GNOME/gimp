@@ -162,9 +162,8 @@ msgid "FG to Transparent"
 msgstr "Edustaväristä läpinäkyvään"
 
 #: app/blend.c:308
-#, fuzzy
 msgid "Custom Gradient"
-msgstr "Kopioi väriliukuma"
+msgstr "Räätälöity väriliukuma"
 
 #: app/blend.c:312
 msgid "Blend:"
@@ -2401,7 +2400,6 @@ msgstr ""
 "-vipua\n"
 
 #: app/install.c:144
-#, fuzzy
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -2410,8 +2408,8 @@ msgid ""
 "here."
 msgstr ""
 "gimprc-tiedostoa käytetään henkilökohtaisten asetusten tallentamiseksi\n"
-"Lisäksi hakupolut sivelitmiä, paletteja, väriliukumia, kuvioita,\n"
-"liitännäisiä ja moduuleja varten voi myös asettaa siinä.\n"
+"Lisäksi siinä voi myös asettaa hakupolut sivelitmiä, paletteja,\n"
+"väriliukumia, kuvioita, liitännäisiä ja moduuleja varten."
 
 #: app/install.c:152
 msgid ""
@@ -2420,7 +2418,6 @@ msgid ""
 msgstr ""
 
 #: app/install.c:157
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -2433,10 +2430,9 @@ msgstr ""
 "jotka laajentavat sen toiminnallisuutta.\n"
 "Näitä ohjelmia etsitään ajonaikana ja tietoa niiden toiminnoista\n"
 "sekä niitten aikaleimat säilötään tässä tiedostossa.\n"
-"Tätä tiedostoa ei pidä muokata käsin.\n"
+"Tätä tiedostoa ei pidä muokata käsin."
 
 #: app/install.c:166
-#, fuzzy
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -2449,10 +2445,9 @@ msgstr ""
 "menurc-tiedostossa luetellaan näppäinkomennot jotta ne voidaan\n"
 "ottaa käyttöön seuraavallakin kerralla. Voit muokata tätä tiedostoa\n"
 "jos haluat, mutta on paljon helpompaa sitoa näppäinkomennot uudestaan\n"
-"GIMPissä. Poistamalla tämän tiedoston palautat oletusnäppäinkomennot.\n"
+"GIMPissä. Poistamalla tämän tiedoston palautat oletusnäppäinkomennot."
 
 #: app/install.c:175
-#, fuzzy
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -2460,10 +2455,9 @@ msgid ""
 msgstr ""
 "sessionrc-tiedostoon tallentuu dialogi-ikkunoiden sijainnit\n"
 "viime kerralla kun ajoit GIMPiä. Voi pyytää GIMPiä avaamaan dialogit\n"
-"uudelleen samaan paikkaan missä ne oli viimeksi.\n"
+"uudelleen samaan paikkaan missä ne oli viimeksi."
 
 #: app/install.c:181
-#, fuzzy
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -2475,10 +2469,9 @@ msgstr ""
 "Voit ottaa käyttöön GIMPissä lisää mittayksiköitä ja käyttää\n"
 "ne samaan tapaan kuin sisäänrakennettuja yksiköitä (tuumaa, millimetri,\n"
 "typografiset piste ja pica). Tämä tiedosto kirjoitetaan uusiksi joka\n"
-"kerta kun lopetat GIMPin\n"
+"kerta kun lopetat GIMPin."
 
 #: app/install.c:189
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined brushes.  The default gimprc file\n"
@@ -2488,10 +2481,9 @@ msgid ""
 msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi siveltimiä.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään siveltimiä\n"
-"tästä kansiosta järjestelmälaajuisen sivellinkansion lisäksi.\n"
+"tästä kansiosta järjestelmälaajuisen sivellinkansion lisäksi."
 
 #: app/install.c:197
-#, fuzzy
 msgid ""
 "This is a subdirectory which is used to store brushes\n"
 "that are created with the brush editor.  The default\n"
@@ -2500,10 +2492,9 @@ msgid ""
 msgstr ""
 "Tämä on kansio jonne tallentuu sivellinmuokkaimella luodut siveltiet.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään siveltimiä\n"
-"tästä kansiosta järjestelmälaajuisen sivellinkansion lisäksi.\n"
+"tästä kansiosta järjestelmälaajuisen sivellinkansion lisäksi."
 
 #: app/install.c:204
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gradients.  The default gimprc file\n"
@@ -2513,10 +2504,9 @@ msgid ""
 msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi väriliukumia.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään väriliukumia\n"
-"tästä kansiosta järjestelmälaajuisen väriliukumakansion lisäksi.\n"
+"tästä kansiosta järjestelmälaajuisen väriliukumakansion lisäksi."
 
 #: app/install.c:212
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined palettes.  The default gimprc file\n"
@@ -2531,10 +2521,9 @@ msgstr ""
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
 "paletteja vain tästä kansiosta, ei mistään järjestelmälaajuisesta\n"
 "kansiosta. Näin jotta paletteihin tekemäsi muutokset säilyisivät\n"
-"käyttökertojen välillä.\n"
+"käyttökertojen välillä."
 
 #: app/install.c:223
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined patterns.  The default gimprc file\n"
@@ -2544,10 +2533,9 @@ msgid ""
 msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi kuvioita.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
-"paletteja tästä kansiosta järjestelmälaajuisesn kuviokansion lisäksi.\n"
+"paletteja tästä kansiosta järjestelmälaajuisesn kuviokansion lisäksi."
 
 #: app/install.c:231
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user created, temporary, or otherwise non-system-\n"
@@ -2558,10 +2546,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa liitännäisohjelmia.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
 "liitännäisiä tästä kansiosta järjestelmälaajuisen liitännäiskansion\n"
-"lisäksi.\n"
+"lisäksi."
 
 #: app/install.c:239
-#, fuzzy
 msgid ""
 "This subdirectory can be used to store user created,\n"
 "temporary, or otherwise non-system-supported DLL\n"
@@ -2572,10 +2559,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa GIMPin lisämoduuleja.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
 "moduuleja tästä kansiosta järjestelmälaajuisen moduulikansion\n"
-"lisäksi.\n"
+"lisäksi."
 
 #: app/install.c:247
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to store user\n"
 "created and installed scripts.  The default gimprc file\n"
@@ -2585,10 +2571,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa script-fu skriptejä.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
 "skriptejä tästä kansiosta järjestelmälaajuisen skriptikansion\n"
-"lisäksi.\n"
+"lisäksi."
 
 #: app/install.c:254
-#, fuzzy
 msgid ""
 "This subdirectory is used by the GIMP to temporarily\n"
 "store undo buffers to reduce memory usage.  If GIMP is\n"
@@ -2600,7 +2585,7 @@ msgstr ""
 "muistikäytön säästämiseksi. Jos GIMPin suoritus pysähtyy virheeseen\n"
 "tähän kansioon voi jäädä tiedostoja joiden nimet ovat muotoa: gimp#.#.\n"
 "Näitä tiedostoja ei tarvitse säilyttää käyttäkertojen välillä, ja\n"
-"niitä voi poistaa ilman haittaa.\n"
+"niitä voi poistaa ilman haittaa."
 
 #: app/install.c:262
 msgid ""
@@ -2615,7 +2600,6 @@ msgid ""
 msgstr ""
 
 #: app/install.c:272
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined fractals to be used by the FractalExplorer\n"
@@ -2626,10 +2610,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi fraktaaliparametreja\n"
 "FractalExplorer-liitännäistä varten. Oletusarvoisesti gimprc-tiedosto\n"
 "ohjaa FractalExplorer-liitännäistä etsimään fraktaaliparametreja\n"
-"tästä kansiosta järjestelmälaajuisen kansion lisäksi.\n"
+"tästä kansiosta järjestelmälaajuisen kansion lisäksi."
 
 #: app/install.c:280
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined figures to be used by the GFig plug-in.\n"
@@ -2640,10 +2623,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi piirroksia\n"
 "gfig-liitännäistä varten. Oletusarvoisesti gimprc-tiedosto\n"
 "ohjaa gfig:iä etsimään piirroksia tästä kansiosta järjestelmälaajuisen\n"
-"piirroskansion lisäksi.\n"
+"piirroskansion lisäksi."
 
 #: app/install.c:288
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined gflares to be used by the GFlare plug-in.\n"
@@ -2654,10 +2636,9 @@ msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi \"flareja\"\n"
 "gflare-liitännäistä varten. Oletusarvoisesti gimprc-tiedosto\n"
 "ohjaa gflare-liitännäistä etsimään flareja tästä kansiosta\n"
-"järjestelmälaajuisen kansion lisäksi.\n"
+"järjestelmälaajuisen kansion lisäksi."
 
 #: app/install.c:296
-#, fuzzy
 msgid ""
 "This is a subdirectory which can be used to store\n"
 "user defined data to be used by the Gimpressionist\n"
@@ -2665,15 +2646,14 @@ msgid ""
 "in addition to the systemwide GIMP Gimpressionist\n"
 "installation when searching for data."
 msgstr ""
-"Tämä on kansio jonne voit tallentaa luomiasi \"flareja\"\n"
-"gflare-liitännäistä varten. Oletusarvoisesti gimprc-tiedosto\n"
-"ohjaa gflare-liitännäistä etsimään flareja tästä kansiosta\n"
-"järjestelmälaajuisen kansion lisäksi.\n"
+"Tämä on kansio jonne voit tallentaa asetuksia Gimpressionist-\n"
+"liitännäistä varten. Oletusarvoisesti gimprc-tiedosto\n"
+"ohjaa Gimpressionist-liitännäistä etsimään asetuksia tästä kansiosta\n"
+"järjestelmälaajuisen kansion lisäksi."
 
 #: app/install.c:525
-#, fuzzy
 msgid "GIMP User Installation"
-msgstr "GIMPin asennus"
+msgstr "GIMPin käyttäjäkohtainen asennus"
 
 #: app/install.c:530
 msgid "Continue"
@@ -2685,11 +2665,10 @@ msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr ""
 
 #: app/install.c:580
-#, fuzzy
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
-msgstr "GIMPin asennus"
+msgstr "Tervetualoa GIMPin käyttäjäkohtaiseen asennukseen"
 
 #: app/install.c:584
 msgid ""
@@ -2699,7 +2678,6 @@ msgid ""
 msgstr ""
 
 #: app/install.c:593
-#, fuzzy
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -2709,10 +2687,9 @@ msgstr ""
 "Tämä on vapaa ohjelma; voit levittää ja/tai muokata sitä GNU:n yleisen\n"
 "julkisen lisenssin sopimusehtojen mukaisesti sellaisina kun\n"
 "Free Software Foundation on ne julkaissut. Voit soveltaa\n"
-"lisenssin versiota 2 tai myöhempää.\n"
+"lisenssin versiota 2 tai myöhempää."
 
 #: app/install.c:598
-#, fuzzy
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -2722,10 +2699,9 @@ msgstr ""
 "Tämä ohjelma levitetään siinä toivossa, että siitä on hyötyä,\n"
 "mutta ILMAN MITÄÄN TAKUUTA; jopa ilman konkludenttista takuuta\n"
 "MYYNTIKELPOISUUTTA TAI SOVELTUMISESTA TIETTYYN ERITYISEEN TARKOITUKSEEN.\n"
-"Yksityiskohtien osalta katso GNU:n yleistä julkista lisenssiä.\n"
+"Yksityiskohtien osalta katso GNU:n yleistä julkista lisenssiä."
 
 #: app/install.c:603
-#, fuzzy
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -2735,25 +2711,22 @@ msgstr ""
 "Sinun olisi pitänyt saada kopion GNU:n yleisestä julkisesta lisenssistä\n"
 "tämän ohjelman mukana; jos et sitä saanut, niin lähetä kirje osoitteella\n"
 "Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, USA."
 
 #: app/install.c:609
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 
 #: app/install.c:636
-#, fuzzy
 msgid "Personal GIMP Directory"
-msgstr ""
-"Henkilökohtainen GIMP-asennus\n"
-"\n"
+msgstr "Henkilökohtainen GIMP-hakemisto"
 
 #: app/install.c:652
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a subdirectory named\n"
 "%s needs to be created."
-msgstr "Kunnollista GIMP-asennusta varten kansio nimeltä\n"
+msgstr "Kunnollista GIMP-asennusta varten kansio nimeltä %s pitää luoda."
 
 #: app/install.c:658
 msgid ""
@@ -2761,34 +2734,33 @@ msgid ""
 "Click on one of the files or subdirectories in the tree\n"
 "to get more information about the selected item."
 msgstr ""
+"Tässä kansiossa tulee olemaa joukko tärkeitä tiedostoja.\n"
+"Napsauta yhtä tiedostoa tai kansiota puussa niin\n"
+"saat lisää tietoa siitä."
 
 #: app/install.c:662
 msgid "Click \"Continue\" to create your personal GIMP directory."
-msgstr ""
+msgstr "Napsauta \"Jakta\" luodaksesi henkilökohtaisen GIMP-kansion."
 
 #: app/install.c:742
-#, fuzzy
 msgid "User Installation Log"
-msgstr ""
-"Käyttäjäkohtaisen asennuksen loki\n"
-"\n"
+msgstr "Henkilökohtaisen asennuksen loki"
 
 #: app/install.c:747
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "GIMPin virittely"
 
 #: app/install.c:750
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr ""
+msgstr "Parhaan mahdollisen suorituskyvyn saavuttamiseksi joitain asetuksia pitää säätää."
 
 #: app/install.c:757
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Napsauta \"Jatka\" jos hyväksyt ylläolevat asetukset."
 
 #: app/install.c:766
-#, fuzzy
 msgid "Monitor Resolution"
-msgstr "Hae näytön resoluutio"
+msgstr "Näytön resoluutio"
 
 #: app/install.c:769
 msgid ""
@@ -2801,26 +2773,18 @@ msgid "Click \"Continue\" to start The GIMP."
 msgstr ""
 
 #: app/install.c:785
-#, fuzzy
 msgid "Aborting Installation..."
-msgstr ""
-"Käyttäjäkohtaisen asennuksen loki\n"
-"\n"
+msgstr "Keskeytän asennusta..."
 
 #: app/install.c:859
-#, fuzzy
 msgid "does not exist.  Cannot install."
-msgstr " ei ole olemassa. Käyttäjäkohtaista asennusta ei voi tehdä.\n"
+msgstr "ei ole olemassa. Asennusta ei voi tehdä."
 
 #: app/install.c:871
-#, fuzzy
 msgid "has invalid permissions.  Cannot install."
-msgstr ""
-" on suojattu virheellisesti.\n"
-"Käyttäjäkohtaista asennusta ei voi tehdä."
+msgstr "on suojattu virheellisesti. Asennusta ei voi tehdä."
 
 #: app/install.c:909
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -2829,30 +2793,26 @@ msgstr ""
 "Huomasitko mitään virheilmoituksia\n"
 "konsoli-ikkunassa? Jos et, niin asennus\n"
 "onnistui! Muuten, poistu ja tutki mistä\n"
-"virheet mahtoivat johtua...\n"
+"virheet mahtoivat johtua..."
 
 #: app/install.c:969
-#, fuzzy
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
 "Otherwise, quit and investigate the possible reason..."
 msgstr ""
 "Huomasitko mitään virheilmoituksia\n"
-"konsoli-ikkunassa? Jos et, niin asennus\n"
+"ylläolevilla riveillä? Jos et, niin asennus\n"
 "onnistui! Muuten, poistu ja tutki mistä\n"
-"virheet mahtoivat johtua...\n"
+"virheet mahtoivat johtua..."
 
 #: app/install.c:983
 msgid "Click \"Continue\" to complete GIMP installation."
-msgstr ""
+msgstr "Napsauta \"Jatka\" GIMP-asennuksen loppuunsaattamiseksi."
 
 #: app/install.c:992
-#, fuzzy
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
-"\n"
-"Käyttäjäkohtainen asennus epäonnistui. Ota yhteys ylläpitoon.\n"
+msgstr "Asennus epäonnistui. Ota yhteys ylläpitoon."
 
 #: app/install.c:1017
 msgid ""
@@ -2860,10 +2820,13 @@ msgid ""
 "\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
+"GIMP käyttää osaa keskusmuistista kuvatiedolle, ns \"kuvavälimuisti\".\n"
+"Säädä sen kokoa niin että se mahtuu keskusmuistiin. Ota huomioon\n"
+"muitten ajossa olevien ohjelmien vaatima muistitila."
 
 #: app/install.c:1033 app/preferences_dialog.c:2102
 msgid "Tile Cache Size:"
-msgstr "Kuvatiilivälimuistin koko:"
+msgstr "Kuvavälimuistin koko:"
 
 #: app/install.c:1043
 msgid ""
@@ -2872,13 +2835,16 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
+"Kaikki kuva- ja perumisdata joka ei mahdu kuvavälimuistiin kirjoitetaan\n"
+"sivutustiedostoon. Tämän tiedoston tulee sijaita paikallisella\n"
+"tiedostojärjestelmällä jossa on tarpeeksi tilaa (useita satoja megoja).\n"
+"Unix-järjestelmässä sopiva paikka on /tmp tai /var/tmp -hakemisto."
 
 #: app/install.c:1053 app/preferences_dialog.c:2361
 msgid "Select Swap Dir"
 msgstr "Valitse sivutuskansio"
 
 #: app/install.c:1059
-#, fuzzy
 msgid "Swap Directory:"
 msgstr "Sivutuskansio:"
 
@@ -2889,18 +2855,17 @@ msgid ""
 msgstr ""
 
 #: app/install.c:1092
-#, fuzzy, c-format
+#, c-format
 msgid "Get Resolution from X-server (Currently %d x %d dpi)"
-msgstr "(Nyt %d x %d dpi)"
+msgstr "Hae tarkkuus X-palvelinohjelmasta (Nyt %d x %d dpi)"
 
 #: app/install.c:1109
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr ""
+msgstr "Vaihtoehtoisesti voit asettaa näytön resoluution käsin."
 
 #: app/install.c:1124
-#, fuzzy
 msgid "Monitor Resolution X:"
-msgstr "Hae näytön resoluutio"
+msgstr "Näytön resoluutio X:"
 
 #: app/interface.c:312
 msgid ""
@@ -3885,9 +3850,8 @@ msgid "/Dialogs/Display Filters..."
 msgstr "/Dialogit/Näyttösuotimet..."
 
 #: app/menus.c:499
-#, fuzzy
 msgid "/Dialogs/Undo History..."
-msgstr "/Näytä/Toimintohistoria..."
+msgstr "/Dialogit/Toimintohistoria..."
 
 #. <Image>/Filters
 #: app/menus.c:508
@@ -4721,13 +4685,12 @@ msgid "Maximum Image Size:"
 msgstr "Kuvan enimmäiskoko:"
 
 #: app/preferences_dialog.c:1623 app/preferences_dialog.c:1625
-#, fuzzy
 msgid "Default Comment"
-msgstr "Oletus"
+msgstr "Oletuskommentti"
 
 #: app/preferences_dialog.c:1633
 msgid "Comment Used for New Images"
-msgstr ""
+msgstr "Kommentti jota käytetään uusille kuville"
 
 #: app/preferences_dialog.c:1653 app/preferences_dialog.c:1655
 msgid "Display"
