@@ -39,7 +39,7 @@ G_BEGIN_DECLS
 #define GimpRunModeType                         GimpRunMode
 #define GimpExportReturnType                    GimpExportReturn
 
-#define gimp_use_xshm                           TRUE
+#define gimp_use_xshm()                         (TRUE)
 #define gimp_color_cube                         ((guchar *) { 6, 6, 4, 24 })
 
 #define gimp_blend                              gimp_edit_blend
