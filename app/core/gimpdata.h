@@ -91,7 +91,6 @@ void          gimp_data_set_filename     (GimpData     *data,
                                           const gchar  *filename,
                                           gboolean      writable);
 void          gimp_data_create_filename  (GimpData     *data,
-					  const gchar  *basename,
 					  const gchar  *dest_dir);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data,

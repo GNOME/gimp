@@ -275,7 +275,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
       GimpData *data = list->data;
 
       if (! data->filename)
-        gimp_data_create_filename (data, GIMP_OBJECT (data)->name, writable_dir);
+        gimp_data_create_filename (data, writable_dir);
 
       if (data->dirty && data->writable)
         {
@@ -486,7 +486,7 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
     return FALSE;
 
   if (! data->filename)
-    gimp_data_create_filename (data, GIMP_OBJECT (data)->name, writable_dir);
+    gimp_data_create_filename (data, writable_dir);
 
   g_free (writable_dir);
 

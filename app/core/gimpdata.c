@@ -330,28 +330,29 @@ gimp_data_set_filename (GimpData    *data,
 
 void
 gimp_data_create_filename (GimpData    *data,
-			   const gchar *basename,
 			   const gchar *dest_dir)
 {
+  gchar *safename;
   gchar *filename;
   gchar *fullpath;
-  gchar *safe_name;
   gint   i;
   gint   unum = 1;
 
   g_return_if_fail (GIMP_IS_DATA (data));
-  g_return_if_fail (basename != NULL);
   g_return_if_fail (dest_dir != NULL);
   g_return_if_fail (g_path_is_absolute (dest_dir));
 
-  safe_name = g_strdup (basename);
-  if (safe_name[0] == '.')
-    safe_name[0] = '-';
-  for (i = 0; safe_name[i]; i++)
-    if (safe_name[i] == G_DIR_SEPARATOR || g_ascii_isspace (safe_name[i]))
-      safe_name[i] = '-';
+  safename = g_filename_from_utf8 (gimp_object_get_name (GIMP_OBJECT (data)),
+                                                         -1, NULL, NULL, NULL);
 
-  filename = g_strconcat (safe_name, gimp_data_get_extension (data), NULL);
+  if (safename[0] == '.')
+    safename[0] = '-';
+
+  for (i = 0; safename[i]; i++)
+    if (safename[i] == G_DIR_SEPARATOR || g_ascii_isspace (safename[i]))
+      safename[i] = '-';
+
+  filename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
 
   fullpath = g_build_filename (dest_dir, filename, NULL);
 
@@ -362,7 +363,7 @@ gimp_data_create_filename (GimpData    *data,
       g_free (fullpath);
 
       filename = g_strdup_printf ("%s-%d%s",
-				  safe_name,
+				  safename,
                                   unum++,
 				  gimp_data_get_extension (data));
 
@@ -371,7 +372,7 @@ gimp_data_create_filename (GimpData    *data,
       g_free (filename);
     }
 
-  g_free (safe_name);
+  g_free (safename);
 
   gimp_data_set_filename (data, fullpath, TRUE);
 

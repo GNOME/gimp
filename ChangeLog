@@ -1,5 +1,13 @@
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdata.[ch] (gimp_data_create_filename): Removed the
+	basename parameter and use the object name instead. Convert it to
+	the filesystem encoding.
+
+	* app/core/gimpdatafactory.c: changed accordingly.
+
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist: applied patch from Shlomi Fish that
 	fixes a number of bugs in the gimpressionst plug-in (bug #145309).
 
