@@ -1236,7 +1236,7 @@
 2003-11-29  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.c: set the default window type hint for
-	dockables to Normal.
+	docks to Normal.
 
 	* plug-ins/sel2path/sel2path_adv_dialog.c: set the number of
 	digits to the same value for all spinbuttons.
