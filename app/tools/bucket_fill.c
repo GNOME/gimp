@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "brush_select.h"
 #include "bucket_fill.h"
@@ -60,7 +61,7 @@ struct _BucketOptions
 
   BucketFillMode  fill_mode;
   BucketFillMode  fill_mode_d;
-  ToolOptionsRadioButtons type_toggle[4];
+  GtkWidget      *fill_mode_w[3];
 };
 
 
@@ -97,7 +98,7 @@ bucket_options_reset (void)
 				options->sample_merged_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->fill_mode_d].widget), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
 }
 
 static BucketOptions *
@@ -110,7 +111,12 @@ bucket_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
   GtkWidget *frame;
-
+  gchar* fill_mode_label[3] = { _("FG Color Fill"), 
+				_("BG Color Fill"),
+				_("Pattern Fill") };
+  gint   fill_mode_value[3] = { FG_BUCKET_FILL, 
+				BG_BUCKET_FILL, 
+				PATTERN_BUCKET_FILL };
 
   /*  the new bucket fill tool options structure  */
   options = (BucketOptions *) g_malloc (sizeof (BucketOptions));
@@ -119,13 +125,6 @@ bucket_options_new (void)
 		      bucket_options_reset);
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold     = options->threshold_d     = 15.0;
-  options->type_toggle[0].label = _("FG Color Fill");
-  options->type_toggle[0].value = FG_BUCKET_FILL;
-  options->type_toggle[1].label = _("BG Color Fill");
-  options->type_toggle[1].value = BG_BUCKET_FILL;
-  options->type_toggle[2].label = _("Pattern Fill");
-  options->type_toggle[2].value = PATTERN_BUCKET_FILL;
-  options->type_toggle[3].label = NULL;
   options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
 
   /*  the main vbox  */
@@ -163,8 +162,13 @@ bucket_options_new (void)
   gtk_widget_show (options->sample_merged_w);
 
   /*  fill type  */
-  frame = tool_options_radio_buttons_new (_("Fill Type"), options->type_toggle, &options->fill_mode);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->fill_mode_d].widget), TRUE); 
+  frame = tool_options_radio_buttons_new (_("Fill Type"), 
+					  &options->fill_mode,
+					   options->fill_mode_w,
+					   fill_mode_label,
+					   fill_mode_value,
+					   3);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -286,19 +290,28 @@ bucket_fill_cursor_update (Tool           *tool,
 }
 
 static void
-bucket_fill_toggle_key_func (Tool        *tool,
+bucket_fill_modifier_key_func (Tool        *tool,
 			     GdkEventKey *kevent,
 			     gpointer     gdisp_ptr)
 {
-  switch (bucket_options->fill_mode)
+  switch (kevent->keyval)
     {
-    case FG_BUCKET_FILL:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->type_toggle[BG_BUCKET_FILL].widget), TRUE);
+    case GDK_Alt_L: case GDK_Alt_R:
       break;
-    case BG_BUCKET_FILL:
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->type_toggle[FG_BUCKET_FILL].widget), TRUE);
+    case GDK_Shift_L: case GDK_Shift_R:
+      switch (bucket_options->fill_mode)
+	{
+	case FG_BUCKET_FILL:
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[BG_BUCKET_FILL]), TRUE);
+	  break;
+	case BG_BUCKET_FILL:
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->fill_mode_w[FG_BUCKET_FILL]), TRUE);
+	  break;
+	default:
+	  break;
+	}
       break;
-    default:
+    case GDK_Control_L: case GDK_Control_R:
       break;
     }
 }
@@ -605,7 +618,7 @@ tools_new_bucket_fill (void)
   tool->button_release_func = bucket_fill_button_release;
   tool->motion_func = bucket_fill_motion;
   tool->arrow_keys_func = standard_arrow_keys_func;  
-  tool->toggle_key_func = bucket_fill_toggle_key_func;
+  tool->modifier_key_func = bucket_fill_modifier_key_func;
   tool->cursor_update_func = bucket_fill_cursor_update;
   tool->control_func = bucket_fill_control;
   tool->preserve = TRUE;

@@ -147,13 +147,17 @@ tool_options_radio_buttons_update (GtkWidget *widget,
 }
 
 GtkWidget*
-tool_options_radio_buttons_new (gchar* label,
-				ToolOptionsRadioButtons* radio_buttons,
-				gpointer toggle_val)
+tool_options_radio_buttons_new (gchar*      label,
+				gpointer    toggle_val,
+				GtkWidget*  button_widget[],
+				gchar*      button_label[],
+				gint        button_value[],
+				gint        num)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
   GSList *group = NULL;
+  gint i;
 
   frame = gtk_frame_new (label);
 
@@ -163,20 +167,18 @@ tool_options_radio_buttons_new (gchar* label,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  while (radio_buttons->label != NULL)
+  for (i=0; i<num; i++)
     {
-      radio_buttons->widget = gtk_radio_button_new_with_label (group,
-							       radio_buttons->label);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_buttons->widget));
-      gtk_box_pack_start (GTK_BOX (vbox), radio_buttons->widget, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (radio_buttons->widget), "toggled",
+      button_widget[i] = gtk_radio_button_new_with_label (group,
+							  button_label[i]);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button_widget[i]));
+      gtk_box_pack_start (GTK_BOX (vbox), button_widget[i], FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button_widget[i]), "toggled",
 			  (GtkSignalFunc) tool_options_radio_buttons_update,
 			  toggle_val);
-      gtk_object_set_data (GTK_OBJECT (radio_buttons->widget), "toggle_value",
-			   (gpointer)radio_buttons->value);
-      gtk_widget_show (radio_buttons->widget);
-      
-      radio_buttons++;
+      gtk_object_set_data (GTK_OBJECT (button_widget[i]), "toggle_value",
+			   (gpointer)button_value[i]);
+      gtk_widget_show (button_widget[i]);
     }
   gtk_widget_show (vbox);
 

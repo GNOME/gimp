@@ -189,7 +189,7 @@ tools_new_brightness_contrast ()
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
   tool->motion_func = brightness_contrast_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
   tool->preserve = FALSE;

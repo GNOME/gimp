@@ -605,7 +605,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_window_set_wmclass (GTK_WINDOW (gdisp->shell), "image_window", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (gdisp->shell), TRUE, TRUE, TRUE);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->shell), (gpointer) gdisp);
-  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
+  gtk_widget_set_events (gdisp->shell, GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_KEY_RELEASE_MASK);
   gtk_signal_connect (GTK_OBJECT (gdisp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (gdisplay_delete),
 		      gdisp);

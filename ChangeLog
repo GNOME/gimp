@@ -1,3 +1,23 @@
+Tue Apr 27 22:59:08 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* tool_options.c
+	* tool_options_ui.h: redid the tool_options_radio_buttons_new
+	function I introduced yesterday
+
+	* tools.c
+	* tools.h
+	* toolsF.h: decided that it makes more sense to have a 
+	modifier_key_func instead of a toggle_key_func. That way we can
+	catch all modifiers. Now if someone knows how to handle non-GDK 
+	cursors, please implement context-cursors for the selection tools.
+
+	* bucket_fill.c
+	* convolve.c
+	* crop.c
+	* flip_tool.c: adapted to use the new modifier_key_func
+
+	* all other tools: changed to use standard_modifier_key_func
+
 Tue Apr 27 20:58:14 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/tile_swap.c (tile_swap_exit1): close swap file before unlink.

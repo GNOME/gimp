@@ -370,7 +370,7 @@ tools_new_magnify (void)
   tool->button_press_func = magnify_button_press;
   tool->button_release_func = magnify_button_release;
   tool->motion_func = magnify_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = magnify_cursor_update;
   tool->control_func = magnify_control;
 

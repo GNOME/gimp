@@ -385,19 +385,18 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /*  Update the state based on modifiers being pressed  */
 	case GDK_Alt_L: case GDK_Alt_R:
 	  state |= GDK_MOD1_MASK;
-	  break;
 	case GDK_Shift_L: case GDK_Shift_R:
 	  state |= GDK_SHIFT_MASK;
+	case GDK_Control_L: case GDK_Control_R:
+	  state |= GDK_CONTROL_MASK;
+	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      (* active_tool->toggle_key_func) (active_tool, kevent, gdisp);
+	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      gdk_input_window_get_pointer (canvas->window, current_device, 
 					    &tx, &ty, NULL, NULL, NULL, NULL);
 	      return_val = TRUE;
 	    }
-	  break;
-	case GDK_Control_L: case GDK_Control_R:
-	  state |= GDK_CONTROL_MASK;
 	  break;
 	}
 
@@ -413,19 +412,18 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case GDK_Alt_L: case GDK_Alt_R:
 	  state &= ~GDK_MOD1_MASK;
-	  break;
 	case GDK_Shift_L: case GDK_Shift_R:
 	  kevent->state &= ~GDK_SHIFT_MASK;
+	case GDK_Control_L: case GDK_Control_R:
+	  kevent->state &= ~GDK_CONTROL_MASK;
+	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimage_is_empty (gdisp->gimage))
 	    {
-	      (* active_tool->toggle_key_func) (active_tool, kevent, gdisp);
+	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      gdk_input_window_get_pointer (canvas->window, current_device, 
 					    &tx, &ty, NULL, NULL, NULL, NULL);
 	      return_val = TRUE;
 	    }
-	  break;
-	case GDK_Control_L: case GDK_Control_R:
-	  kevent->state &= ~GDK_CONTROL_MASK;
 	  break;
 	}
 

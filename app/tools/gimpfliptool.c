@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
@@ -43,7 +44,7 @@ struct _FlipOptions
 
   ToolType     type;
   ToolType     type_d;
-  ToolOptionsRadioButtons type_toggle[3];
+  GtkWidget   *type_w[2];
 };
 
 static FlipOptions *flip_options = NULL;
@@ -56,7 +57,7 @@ flip_options_reset (void)
 {
   FlipOptions *options = flip_options;
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE); 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
 }
 
 static FlipOptions *
@@ -66,25 +67,27 @@ flip_options_new (void)
 
   GtkWidget *vbox;
   GtkWidget *frame;
-
+  gchar* type_label[2] = { _("Horizontal"), _("Vertical") };
+  gint   type_value[2] = { FLIP_HORZ, FLIP_VERT };
+ 
   /*  the new flip tool options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
   tool_options_init ((ToolOptions *) options,
 		     _("Flip Tool Options"),
 		     flip_options_reset);
-  options->type_toggle[0].label = _("Horizontal");
-  options->type_toggle[0].value = FLIP_HORZ;
-  options->type_toggle[1].label = _("Vertical");
-  options->type_toggle[1].value = FLIP_VERT;
-  options->type_toggle[2].label = NULL;
   options->type = options->type_d = FLIP_HORZ;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), options->type_toggle, &options->type);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE); 
+  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
+					  &options->type,
+					   options->type_w,
+					   type_label,
+					   type_value,
+					   2);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -92,16 +95,25 @@ flip_options_new (void)
 }
 
 static void
-flip_toggle_key_func (Tool        *tool,
+flip_modifier_key_func (Tool        *tool,
 		      GdkEventKey *kevent,
 		      gpointer     gdisp_ptr)
 {
-  if (flip_options->type == FLIP_HORZ)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_toggle[1].widget), TRUE);
-  else
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_toggle[0].widget), TRUE);
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      break;
+    case GDK_Shift_L: case GDK_Shift_R:
+      if (flip_options->type == FLIP_HORZ)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_VERT]), TRUE);
+      else
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (flip_options->type_w[FLIP_HORZ]), TRUE);
+      break;
+    case GDK_Control_L: case GDK_Control_R:
+      break;
+    }
 }
-
+  
 void *
 flip_tool_transform (Tool     *tool,
                      gpointer  gdisp_ptr,
@@ -172,7 +184,7 @@ tools_new_flip ()
   private = tool->private;
 
   private->trans_func   = flip_tool_transform;
-  tool->toggle_key_func = flip_toggle_key_func;
+  tool->modifier_key_func = flip_modifier_key_func;
   tool->cursor_update_func = flip_cursor_update;
   private->trans_info[FLIP_INFO] = -1.0;
 

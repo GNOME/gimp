@@ -40,16 +40,12 @@ void      tool_options_double_adjustment_update (GtkWidget *widget,
 						 gpointer   data);
 
 /*  a group of radio buttons with a frame around them   */
-typedef struct _ToolOptionsRadioButtons ToolOptionsRadioButtons;
-struct _ToolOptionsRadioButtons
-{
-  GtkWidget *widget;
-  gchar     *label;
-  int        value;
-};
-GtkWidget* tool_options_radio_buttons_new (gchar* label,
-					   ToolOptionsRadioButtons *radio_buttons,
-					   gpointer toggle_val);
+GtkWidget* tool_options_radio_buttons_new (gchar*      label,
+					   gpointer    toggle_val,
+					   GtkWidget*  button_widget[],
+					   gchar*      button_label[],
+					   gint        button_value[],
+					   gint        num);
 
 #endif /* __TOOL_OPTIONS_UI_H__ */
 

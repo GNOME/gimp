@@ -882,9 +882,9 @@ standard_arrow_keys_func (Tool        *tool,
 }
 
 void
-standard_toggle_key_func (Tool        *tool,
-			  GdkEventKey *kevent,
-			  gpointer     gdisp_ptr)
+standard_modifier_key_func (Tool        *tool,
+			    GdkEventKey *kevent,
+			    gpointer     gdisp_ptr)
 {
 }
 

@@ -86,7 +86,7 @@ struct _CropOptions
 
   CropType     type;
   CropType     type_d;
-  ToolOptionsRadioButtons type_toggle[3];
+  GtkWidget   *type_w[2];
 };
 
 
@@ -110,7 +110,7 @@ static void crop_motion             (Tool *, GdkEventMotion *, gpointer);
 static void crop_cursor_update      (Tool *, GdkEventMotion *, gpointer);
 static void crop_control            (Tool *, int, gpointer);
 static void crop_arrow_keys_func    (Tool *, GdkEventKey *, gpointer);
-static void crop_toggle_key_func    (Tool *, GdkEventKey *, gpointer);
+static void crop_modifier_key_func    (Tool *, GdkEventKey *, gpointer);
 
 /*  Crop helper functions   */
 static void crop_recalc             (Tool *, Crop *);
@@ -156,7 +156,7 @@ crop_options_reset (void)
 				options->layer_only_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->allow_enlarge_w),
 				options->allow_enlarge_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE); 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
 }
 
 static CropOptions *
@@ -165,7 +165,9 @@ crop_options_new (void)
   CropOptions *options;
   GtkWidget *vbox;
   GtkWidget *frame;
-
+  gchar* type_label[2] = { _("Crop"), _("Resize") };
+  gint   type_value[2] = { CROP_CROP, RESIZE_CROP };
+  
   /*  the new crop tool options structure  */
   options = (CropOptions *) g_malloc (sizeof (CropOptions));
   tool_options_init ((ToolOptions *) options,
@@ -173,12 +175,7 @@ crop_options_new (void)
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = TRUE;
-  options->type_toggle[0].label = _("Crop");
-  options->type_toggle[0].value = CROP_CROP;
-  options->type_toggle[1].label = _("Resize");
-  options->type_toggle[1].value = RESIZE_CROP;
-  options->type_toggle[2].label = NULL;
-  options->type        = options->type_d        = CROP_CROP;
+  options->type          = options->type_d          = CROP_CROP;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -207,8 +204,13 @@ crop_options_new (void)
   gtk_widget_show (options->allow_enlarge_w);
 
   /*  tool toggle  */
-  frame = tool_options_radio_buttons_new (_("Tool Toggle"), options->type_toggle, &options->type);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE); 
+  frame = tool_options_radio_buttons_new (_("Tool Toggle"), 
+					  &options->type,
+					   options->type_w,
+					   type_label,
+					   type_value,
+					   2);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -390,7 +392,6 @@ crop_motion (Tool           *tool,
   int curx, cury;
   int inc_x, inc_y;
   gchar size[STATUSBAR_SIZE];
-  int clamp;
   int min_x, min_y, max_x, max_y; 
   crop = (Crop *) tool->private;
   gdisp = (GDisplay *) gdisp_ptr;
@@ -414,22 +415,6 @@ crop_motion (Tool           *tool,
     return;
 
   draw_core_pause (crop->core, tool);
-
-  /* shall we clamp the coordinates to the image dimensions? */
-  if (crop_options->allow_enlarge)
-    {
-      if (mevent->state & GDK_MOD1_MASK)
-	clamp = TRUE;
-      else
-	clamp = FALSE;
-    }
-  else
-    {
-      if (mevent->state & GDK_MOD1_MASK)
-	clamp = FALSE;
-      else
-	clamp = TRUE;
-    }
   
   if (crop_options->layer_only)
     {
@@ -448,7 +433,7 @@ crop_motion (Tool           *tool,
   switch (crop->function)
     {
     case CREATING :
-      if (clamp)
+      if (!crop_options->allow_enlarge)
 	{
 	  x1 = BOUNDS (x1, min_x, max_x);
 	  y1 = BOUNDS (y1, min_y, max_y);
@@ -460,7 +445,7 @@ crop_motion (Tool           *tool,
     case RESIZING_LEFT :
       x1 = crop->tx1 + inc_x;
       y1 = crop->ty1 + inc_y;
-      if (clamp)
+      if (!crop_options->allow_enlarge)
 	{
 	  x1 = BOUNDS (x1, min_x, max_x);
 	  y1 = BOUNDS (y1, min_y, max_y);
@@ -474,7 +459,7 @@ crop_motion (Tool           *tool,
     case RESIZING_RIGHT :
       x2 = crop->tx2 + inc_x;
       y2 = crop->ty2 + inc_y;
-      if (clamp)
+      if (!crop_options->allow_enlarge)
 	{
 	  x2 = BOUNDS (x2, min_x, max_x);
 	  y2 = BOUNDS (y2, min_y, max_y);
@@ -486,7 +471,7 @@ crop_motion (Tool           *tool,
       break;
 
     case MOVING :
-      if (clamp)
+      if (!crop_options->allow_enlarge)
 	{
 	  inc_x = BOUNDS (inc_x, min_x - crop->tx1, max_x - crop->tx2);
 	  inc_y = BOUNDS (inc_y, min_y - crop->ty1, max_y - crop->ty2);
@@ -591,7 +576,6 @@ crop_arrow_keys_func (Tool        *tool,
   GDisplay * gdisp;
   Layer * layer;
   Crop * crop;
-  int clamp;
   int min_x, min_y, max_x, max_y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -618,22 +602,6 @@ crop_arrow_keys_func (Tool        *tool,
 
       draw_core_pause (crop->core, tool);
 
-      /* shall we clamp the coordinates to the image dimensions? */
-      if (crop_options->allow_enlarge)
-	{
-	  if (kevent->state & GDK_MOD1_MASK)
-	    clamp = TRUE;
-	  else
-	    clamp = FALSE;
-	}
-      else
-	{
-	  if (kevent->state & GDK_MOD1_MASK)
-	    clamp = FALSE;
-	  else
-	    clamp = TRUE;
-	}
-
       if (crop_options->layer_only)
 	{
 	  layer = (gdisp->gimage)->active_layer;
@@ -652,7 +620,7 @@ crop_arrow_keys_func (Tool        *tool,
 	{
 	  crop->tx2 = crop->tx2 + inc_x;
 	  crop->ty2 = crop->ty2 + inc_y;
-	  if (clamp)
+	  if (!crop_options->allow_enlarge)
 	    {
 	      crop->tx2 = BOUNDS (crop->tx2, min_x, max_x);
 	      crop->ty2 = BOUNDS (crop->ty2, min_y, max_y);
@@ -662,7 +630,7 @@ crop_arrow_keys_func (Tool        *tool,
 	}
       else
 	{
-	  if (clamp)
+	  if (!crop_options->allow_enlarge)
 	    {	  
 	      inc_x = BOUNDS (inc_x, -crop->tx1, gdisp->gimage->width - crop->tx2);
 	      inc_y = BOUNDS (inc_y, -crop->ty1, gdisp->gimage->height - crop->ty2);
@@ -679,20 +647,30 @@ crop_arrow_keys_func (Tool        *tool,
 }
 
 static void
-crop_toggle_key_func (Tool        *tool,
-		      GdkEventKey *kevent,
-		      gpointer     gdisp_ptr)
+crop_modifier_key_func (Tool        *tool,
+			GdkEventKey *kevent,
+			gpointer     gdisp_ptr)
 {
   GDisplay * gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-
+  
   if (tool->state == ACTIVE && tool->gdisp_ptr == gdisp_ptr)
     {
-      if (crop_options->type == CROP_CROP)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_toggle[RESIZE_CROP].widget), TRUE);
-      else
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_toggle[CROP_CROP].widget), TRUE);
+      switch (kevent->keyval)
+	{
+	case GDK_Alt_L: case GDK_Alt_R:
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->allow_enlarge_w), !crop_options->allow_enlarge);
+	  break;
+	case GDK_Shift_L: case GDK_Shift_R:
+	  if (crop_options->type == CROP_CROP)
+	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[RESIZE_CROP]), TRUE);
+	  else
+	    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_options->type_w[CROP_CROP]), TRUE);
+	  break;
+	case GDK_Control_L: case GDK_Control_R:
+	  break;
+	}
     }
 }
 
@@ -787,7 +765,7 @@ tools_new_crop ()
   tool->button_release_func = crop_button_release;
   tool->motion_func = crop_motion;
   tool->arrow_keys_func = crop_arrow_keys_func;
-  tool->toggle_key_func = crop_toggle_key_func;
+  tool->modifier_key_func = crop_modifier_key_func;
   tool->cursor_update_func = crop_cursor_update;
   tool->control_func = crop_control;
   tool->preserve = TRUE;  /* XXX Check me */

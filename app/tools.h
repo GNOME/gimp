@@ -68,7 +68,7 @@ struct _tool
   ButtonReleaseFunc  button_release_func;
   MotionFunc         motion_func;
   ArrowKeysFunc      arrow_keys_func;
-  ToggleKeyFunc      toggle_key_func;
+  ModifierKeyFunc    modifier_key_func;
   CursorUpdateFunc   cursor_update_func;
   ToolCtlFunc        control_func;
 };
@@ -122,7 +122,7 @@ void   active_tool_control       (int, void *);
 
 
 /*  Standard member functions  */
-void   standard_arrow_keys_func  (Tool *, GdkEventKey *, gpointer);
-void   standard_toggle_key_func  (Tool *, GdkEventKey *, gpointer);
+void   standard_arrow_keys_func   (Tool *, GdkEventKey *, gpointer);
+void   standard_modifier_key_func (Tool *, GdkEventKey *, gpointer);
 
 #endif  /*  __TOOLS_H__  */

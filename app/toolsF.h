@@ -72,7 +72,7 @@ typedef void (* ButtonPressFunc)       (Tool *, GdkEventButton *, gpointer);
 typedef void (* ButtonReleaseFunc)     (Tool *, GdkEventButton *, gpointer);
 typedef void (* MotionFunc)            (Tool *, GdkEventMotion *, gpointer);
 typedef void (* ArrowKeysFunc)         (Tool *, GdkEventKey *, gpointer);
-typedef void (* ToggleKeyFunc)         (Tool *, GdkEventKey *, gpointer);
+typedef void (* ModifierKeyFunc)       (Tool *, GdkEventKey *, gpointer);
 typedef void (* CursorUpdateFunc)      (Tool *, GdkEventMotion *, gpointer);
 typedef void (* ToolCtlFunc)           (Tool *, int, gpointer);
 
