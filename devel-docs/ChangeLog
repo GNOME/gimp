@@ -1,3 +1,7 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/tmpl/gimpgradient.sgml: s/gimpgradientedit/gimpgradient/
+
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt
