@@ -1,3 +1,8 @@
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimputils.sgml: updated.
+
 2004-11-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

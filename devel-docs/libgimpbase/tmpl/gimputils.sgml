@@ -73,36 +73,12 @@ Utilities of general interest
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_flags_get_first_desc ##### -->
-<para>
-
-</para>
-
-@flags_class: 
-@value: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_enum_get_value ##### -->
 <para>
 
 </para>
 
 @enum_type: 
-@value: 
-@value_name: 
-@value_nick: 
-@value_desc: 
-@value_help: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_flags_get_value ##### -->
-<para>
-
-</para>
-
-@flags_type: 
 @value: 
 @value_name: 
 @value_nick: 
@@ -128,6 +104,30 @@ Utilities of general interest
 
 @enum_class: 
 @enum_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_flags_get_first_desc ##### -->
+<para>
+
+</para>
+
+@flags_class: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_flags_get_first_value ##### -->
+<para>
+
+</para>
+
+@flags_type: 
+@value: 
+@value_name: 
+@value_nick: 
+@value_desc: 
+@value_help: 
 @Returns: 
 
 

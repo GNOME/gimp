@@ -186,11 +186,11 @@ gimp_utf8_strtrim
 gimp_escape_uline
 gimp_strip_uline
 gimp_enum_get_desc
-gimp_flags_get_first_desc
 gimp_enum_get_value
-gimp_flags_get_value
 gimp_enum_value_get_desc
 gimp_enum_value_get_help
+gimp_flags_get_first_desc
+gimp_flags_get_first_value
 gimp_flags_value_get_desc
 gimp_flags_value_get_help
 </SECTION>
