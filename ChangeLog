@@ -1,3 +1,9 @@
+2004-08-12  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/context-actions.c: changed the icons to indicate
+	what part of the context is affected by the action. Looks better
+	in the shortcut editor.
+
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/cartoon.c
