@@ -1,3 +1,11 @@
+2000-07-30  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* gimp_splash.ppm: oops, mitch thought that I thought that he thought
+	that I should commit this. But I thought that mitch thought that 
+	I thought that he thought that um.. forget it. Anyway, here is the 
+	lovely splash screen from the sunny Berlin GimpCon meeting. 
+	THE DEVELOPERS EXPOSED! HOT PIXX!!111 (It was a great meeting!)
+	
 2000-07-30  Sven Neumann  <sven@gimp.org>
 
 	* app/tools.c (tool_options_close_callback): use
