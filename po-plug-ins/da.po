@@ -4,6 +4,9 @@
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 #
+# Mapping == Afbildning; Color map == Farvetabel
+# Transforms == transformering
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
@@ -467,10 +470,8 @@ msgid "Realtime Preview"
 msgstr "Realtidsvisning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:358
-#, fuzzy
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
-"Wenn Sie diese Option aktivieren, wird die Vorschau automatisch aktualisiert"
+msgstr "Ved aktivering af denne funktion bliver forhåndsvisningen automatisk gentegnet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:361
 msgid "Redraw"
@@ -529,7 +530,7 @@ msgstr "XMIN:"
 #: plug-ins/FractalExplorer/Dialogs.c:440
 #, fuzzy
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Erste (minimal) x-Koordinate Abgrenzung ändern"
+msgstr "Ændr den første (minimal) X-koordinat Abgrenzung"
 
 #: plug-ins/FractalExplorer/Dialogs.c:448
 msgid "XMAX:"
@@ -538,7 +539,7 @@ msgstr "XMAX:"
 #: plug-ins/FractalExplorer/Dialogs.c:451
 #, fuzzy
 msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "Zweite (maximal) x-Koordinate Abgrenzung ändern"
+msgstr "Ændr den anden (maksimal) X-koordinat Abgrenzung"
 
 #: plug-ins/FractalExplorer/Dialogs.c:459
 msgid "YMIN:"
@@ -617,9 +618,8 @@ msgid "Reset"
 msgstr "Nulstil"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533
-#, fuzzy
 msgid "Reset parameters to default values"
-msgstr "Auf Standardwerte zurücksetzen"
+msgstr "Nulstil til standardværdier"
 
 #: plug-ins/FractalExplorer/Dialogs.c:536 plug-ins/common/CML_explorer.c:1220
 #: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2336
@@ -692,7 +692,7 @@ msgstr "Antal farver:"
 #: plug-ins/FractalExplorer/Dialogs.c:640
 #, fuzzy
 msgid "Change the number of colors in the mapping"
-msgstr "Anzahl der farven in der Abbildung ändern"
+msgstr "Ændr antal farver i afbildningen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:647
 msgid "Use loglog Smoothing"
@@ -746,8 +746,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Benyt lineare Abbildung anstelle trigonometrischer Funktion für diesen "
-"Farbkanal"
+"Benyt linær afbildning i stedet for enhver trigonometrischer funktion for
+"denne farvekanal"
 
 #: plug-ins/FractalExplorer/Dialogs.c:740
 #: plug-ins/FractalExplorer/Dialogs.c:781
@@ -763,8 +763,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Mit dieser Option werden höhere Farbwerte mit niedrigeren ausgetauscht og "
-"umgekehrt"
+"Ved aktivering af denne funktion höhere Farbwerte mit niedrigeren ausgetauscht og "
+"vice versa"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:835
@@ -781,7 +781,7 @@ msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
 msgstr ""
-"Erzeuge eine Farb-Tabelle mit den oben gemachten indstillinger "
+"Erzeuge eine Farb-tabel mit den oben gemachten indstillinger "
 "(Dichte/Funktion). Das Ergebnis er im Vorschaufenster sichtbar."
 
 #: plug-ins/FractalExplorer/Dialogs.c:867
@@ -2185,14 +2185,12 @@ msgid "Horizontal Base:"
 msgstr "Vandret base:"
 
 #: plug-ins/common/align_layers.c:489
-#, fuzzy
 msgid "Fill (top to bottom)"
-msgstr "Füllen (von oben nach unten)"
+msgstr "Fyld (fra top til bund)"
 
 #: plug-ins/common/align_layers.c:491
-#, fuzzy
 msgid "Fill (bottom to top)"
-msgstr "Füllen (von unten nach oben)"
+msgstr "Fyld (fra bund til top)"
 
 #: plug-ins/common/align_layers.c:498
 msgid "Vertical Style:"
@@ -2221,14 +2219,12 @@ msgid "Grid Size:"
 msgstr "Gitterstørrelse:"
 
 #: plug-ins/common/animationplay.c:266
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animation Playback..."
-msgstr "<Image>/Filter/Animation/Animation abspielen..."
+msgstr "<Image>/Filtre/Animation/Animations-afspilning..."
 
 #: plug-ins/common/animationplay.c:662
-#, fuzzy
 msgid "Animation Playback: "
-msgstr "Animation abspielen: "
+msgstr "Animations-afspilning: "
 
 #. if no buttons are specified use one CLOSE button per default
 #: plug-ins/common/animationplay.c:669 plug-ins/common/plugindetails.c:996
@@ -2275,14 +2271,12 @@ msgid "<Image>/Filters/Animation/Animation UnOptimize"
 msgstr "<Image>/Filter/Animation/Animation deoptimieren"
 
 #: plug-ins/common/animoptimize.c:270
-#, fuzzy
 msgid "Optimizing Animation..."
-msgstr "Optimiere Animation..."
+msgstr "Optimerer animation..."
 
 #: plug-ins/common/animoptimize.c:272
-#, fuzzy
 msgid "UnOptimizing Animation..."
-msgstr "Deoptimiere Animation..."
+msgstr "Deoptimerer animation..."
 
 #: plug-ins/common/animoptimize.c:301
 #, fuzzy
@@ -2318,14 +2312,13 @@ msgid "Make Surroundings Transparent"
 msgstr "Gør omgivelserne gennemsigtige"
 
 #: plug-ins/common/apply_lens.c:460
-#, fuzzy
 msgid "Lens Refraction Index:"
-msgstr "Brechungsindex der Linse:"
+msgstr "Linsens brydningsindeks:"
 
 #: plug-ins/common/autocrop.c:73
 #, fuzzy
 msgid "<Image>/Image/Transforms/Autocrop"
-msgstr "<Image>/Image/Transformationen/Automatisch Zuschneiden"
+msgstr "<Image>/Billede/Transformation/Automatisk Zuschneiden"
 
 #: plug-ins/common/autocrop.c:117
 msgid "Cropping..."
@@ -2482,7 +2475,7 @@ msgstr "Flise-bumpmap"
 
 #: plug-ins/common/bumpmap.c:1004
 msgid "Bump Map:"
-msgstr "Bump map:"
+msgstr "Bump-map:"
 
 #: plug-ins/common/bumpmap.c:1023 plug-ins/common/emboss.c:574
 msgid "Azimuth:"
@@ -2509,9 +2502,8 @@ msgid "bz2: can't open bzip2ed file without a sensible extension\n"
 msgstr "bz2: kan ikke åbne bzip2-fil uden et fornuftigt efternavn\n"
 
 #: plug-ins/common/c_astretch.c:88
-#, fuzzy
 msgid "<Image>/Image/Colors/Auto/Stretch Contrast"
-msgstr "<Image>/Bild/farven/Automatisch/Kontrastspreizung"
+msgstr "<Image>/Billede/Farver/Automatisk/Kontrastspredning"
 
 #: plug-ins/common/c_astretch.c:121
 #, fuzzy
@@ -2519,9 +2511,8 @@ msgid "Auto-Stretching Contrast..."
 msgstr "Automat. Kontrastspreizung..."
 
 #: plug-ins/common/checkerboard.c:102
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Filter/Render/Muster/Schachbrett..."
+msgstr "<Image>/Filtre/Renderer/Mønster/Skakbrædt..."
 
 #: plug-ins/common/checkerboard.c:165
 msgid "Adding Checkerboard..."
@@ -2658,7 +2649,7 @@ msgstr "Cyan:"
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
 #: plug-ins/fp/fp_gtk.c:25
 msgid "Magenta:"
-msgstr "Magentarød:"
+msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
 #: plug-ins/fp/fp_gtk.c:24
@@ -3314,14 +3305,12 @@ msgid "<Image>/Filters/Edge-Detect/Edge..."
 msgstr "<Image>/Filter/Kanten finden/Kante..."
 
 #: plug-ins/common/edge.c:236
-#, fuzzy
 msgid "Edge Detection..."
-msgstr "Kanten finden..."
+msgstr "Kantdetektering..."
 
 #: plug-ins/common/edge.c:645
-#, fuzzy
 msgid "Edge Detection"
-msgstr "Kanten finden"
+msgstr "Kantdetektering"
 
 #: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
 #: plug-ins/common/unsharp.c:820
@@ -3929,9 +3918,8 @@ msgid "Gradient Map..."
 msgstr "Abbilden mit Farbverlauf..."
 
 #: plug-ins/common/grid.c:138
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr "<Image>/Filter/Render/Muster/Gitter..."
+msgstr "<Image>/Filtre/Renderer/Mønster/Gitter..."
 
 #: plug-ins/common/grid.c:221
 msgid "Drawing Grid..."
@@ -3976,7 +3964,7 @@ msgstr "Skæringsfarve"
 
 #: plug-ins/common/gtm.c:370
 msgid "GIMP Table Magic"
-msgstr "GIMP Tabelkunster"
+msgstr "Gimp tabelkunster"
 
 #: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4083
 msgid "Warning"
@@ -3991,9 +3979,9 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
-"Sind Sie verrückt?\n"
+"Er du forrykt?\n"
 "\n"
-"Sie versuchen gerade eine\n"
+"Du forsøger gerade eine\n"
 "riesige HTML-Fil zu erzeugen,\n"
 "die wahrscheinlich Ihren Browser\n"
 "zum Absturz bringen wird."
@@ -4005,7 +3993,7 @@ msgstr "Alternativer for HTML-sider"
 
 #: plug-ins/common/gtm.c:430
 msgid "Generate Full HTML Document"
-msgstr "Lav et helt HTML dokument"
+msgstr "Generér helt HTML-dokument"
 
 #: plug-ins/common/gtm.c:438
 #, fuzzy
@@ -4035,9 +4023,8 @@ msgstr ""
 "eingefärbte Blöcke mit ROWSPAN og COLSPAN Werten."
 
 #: plug-ins/common/gtm.c:470
-#, fuzzy
 msgid "Compress TD tags"
-msgstr "Komprimiere TD tags"
+msgstr "Komprimér TD-tag"
 
 #: plug-ins/common/gtm.c:478
 #, fuzzy
@@ -4273,14 +4260,13 @@ msgid "IWarp"
 msgstr "IWarp"
 
 #: plug-ins/common/jigsaw.c:333
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr "<Image>/Filter/Render/Muster/Puzzle..."
+msgstr "<Image>/Filtre/Renderer/Mønster/Puslespil..."
 
 #: plug-ins/common/jigsaw.c:389
 #, fuzzy
 msgid "Assembling Jigsaw"
-msgstr "Bastle Jigsaw zusammen"
+msgstr "Bastle puslespil zusammen"
 
 #: plug-ins/common/jigsaw.c:2299
 msgid "Jigsaw"
@@ -4343,7 +4329,7 @@ msgstr "Jedes Teil hat runde Kanten"
 
 #: plug-ins/common/jigsaw.c:2421
 msgid "Disable Tooltips"
-msgstr "Slå værktøjtips fra"
+msgstr "Deaktivér værktøjtips"
 
 #: plug-ins/common/jigsaw.c:2429
 msgid "Toggle Tooltips on/off"
@@ -5061,9 +5047,8 @@ msgid "Internal GIMP procedure"
 msgstr "Interne GIMP Prozedur"
 
 #: plug-ins/common/plugindetails.c:46
-#, fuzzy
 msgid "GIMP Plug-In"
-msgstr "GIMP Plugin"
+msgstr "GIMP indstik"
 
 #: plug-ins/common/plugindetails.c:47
 msgid "GIMP Extension"
@@ -5593,34 +5578,28 @@ msgid "Amplitude:"
 msgstr "Amplitude:"
 
 #: plug-ins/common/rotate.c:168
-#, fuzzy
 msgid "<Image>/Layers/Rotate/90 degrees"
-msgstr "<Image>/Ebenen/Rotieren/90 Grad"
+msgstr "<Image>/Lag/Roteren/90 grader"
 
 #: plug-ins/common/rotate.c:179
-#, fuzzy
 msgid "<Image>/Layers/Rotate/180 degrees"
-msgstr "<Image>/Ebenen/Rotieren/180 Grad"
+msgstr "<Image>/Lag/Roteren/180 grader"
 
 #: plug-ins/common/rotate.c:190
-#, fuzzy
 msgid "<Image>/Layers/Rotate/270 degrees"
-msgstr "<Image>/Ebenen/Rotieren/270 Grad"
+msgstr "<Image>/Lag/Roteren/270 grader"
 
 #: plug-ins/common/rotate.c:202
-#, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/90 degrees"
-msgstr "<Image>/Bild/Transformationen/Rotieren/90 Grad"
+msgstr "<Image>/Billede/Transformering/Roteren/90 grader"
 
 #: plug-ins/common/rotate.c:213
-#, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/180 degrees"
-msgstr "<Image>/Bild/Transformationen/Rotieren/180 Grad"
+msgstr "<Image>/Billede/Transformering/Roteren/180 grader"
 
 #: plug-ins/common/rotate.c:224
-#, fuzzy
 msgid "<Image>/Image/Transforms/Rotate/270 degrees"
-msgstr "<Image>/Bild/Transformationen/Rotieren/270 Grad"
+msgstr "<Image>/Billede/Transformering/Roteren/270 grader"
 
 #: plug-ins/common/rotate.c:531
 #, fuzzy
