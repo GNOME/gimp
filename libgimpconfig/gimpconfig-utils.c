@@ -76,8 +76,35 @@ gimp_config_diff (GObject      *a,
           g_object_get_property (a, param_specs[i]->name, &a_value);
           g_object_get_property (b, param_specs[i]->name, &b_value);
 
-          if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
-            list = g_list_prepend (list, param_specs[i]);
+          if (G_IS_PARAM_SPEC_OBJECT (param_specs[i]) &&
+              (param_specs[i]->flags & GIMP_PARAM_AGGREGATE))
+            {
+              GObject *a_object = g_value_get_object (&a_value);
+              GObject *b_object = g_value_get_object (&b_value);
+
+              if (a_object && b_object &&
+                  G_TYPE_FROM_INSTANCE (a_object) ==
+                  G_TYPE_FROM_INSTANCE (b_object))
+                {
+                  GList *diff = gimp_config_diff (a_object, b_object, flags);
+
+                  if (diff)
+                    {
+                      g_list_free (diff);
+                      list = g_list_prepend (list, param_specs[i]);
+                    }
+                }
+              else
+                {
+                  list = g_list_prepend (list, param_specs[i]);
+                }
+            }
+          else
+            {
+
+              if (g_param_values_cmp (param_specs[i], &a_value, &b_value))
+                list = g_list_prepend (list, param_specs[i]);
+            }
 
           g_value_unset (&a_value);
           g_value_unset (&b_value);

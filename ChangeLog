@@ -1,5 +1,10 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.c (gimp_config_diff): make it handle
+	aggregate object properties by calling itself recursively.
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayout.c: pango_font_description_set_size()
 	takes points not pixels as the old code assumed.
 
