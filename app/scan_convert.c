@@ -90,14 +90,20 @@ convert_segment (ScanConverter *sc,
 		 int      y2)
 {
     int ydiff, y, tmp;
-    guint height;
+    gint width;
+    gint height;
     GSList **scanlines;
     float xinc, xstart;
 
-    x1 = CLAMP(x1,0,(int)(sc->width * sc->antialias)-1);
-    y1 = CLAMP(y1,0,(int)(sc->height * sc->antialias)-1);
-    x2 = CLAMP(x2,0,(int)(sc->width * sc->antialias)-1);
-    y2 = CLAMP(y2,0,(int)(sc->height * sc->antialias)-1);
+    /* pre-calculate invariant commonly used values */
+    width = sc->width * sc->antialias;
+    height = sc->height * sc->antialias;
+    scanlines = sc->scanlines;    
+
+    x1 = CLAMP (x1, 0, width - 1);
+    y1 = CLAMP (y1, 0, height - 1);
+    x2 = CLAMP (x2, 0, width - 1);
+    y2 = CLAMP (y2, 0, height - 1);
 
     if (y1 > y2)
     {
@@ -107,20 +113,14 @@ convert_segment (ScanConverter *sc,
 
     ydiff = (y2 - y1);
 
-    /* pre-calculate invariant commonly used values */
-    height = sc->height * sc->antialias;
-    scanlines = sc->scanlines;
-
     if (ydiff)
     {
 	xinc = (float) (x2 - x1) / (float) ydiff;
 	xstart = x1 + 0.5 * xinc;
 	for (y = y1 ; y < y2; y++)
 	{
-	    if (y >= 0 && y < height)
-		scanlines[y] = insert_into_sorted_list (scanlines[y],
-							ROUND (xstart));
-	    xstart += xinc;
+	  scanlines[y] = insert_into_sorted_list (scanlines[y], ROUND (xstart));
+	  xstart += xinc;
 	}
     }
     else
@@ -288,7 +288,7 @@ scan_converter_to_channel (ScanConverter *sc,
 	    list = g_slist_next (list);
 	    if (!list)
 	    {
-		g_message (_("Cannot properly scanline convert polygon!\n"));
+		g_message ("Cannot properly scanline convert polygon!\n");
 	    }
 	    else
 	    {

@@ -233,7 +233,7 @@ export_toggle_callback (GtkWidget *widget,
 }
 
 static gint
-export_dialog (GList *actions,
+export_dialog (GSList *actions,
 	       gchar  *format)
 {
   GtkWidget *frame;
@@ -241,7 +241,7 @@ export_dialog (GList *actions,
   GtkWidget *hbox;
   GtkWidget *hbbox;
   GtkWidget *label;
-  GList     *list;
+  GSList    *list;
   gchar     *text;
   ExportAction *action;
 
@@ -371,8 +371,8 @@ gimp_export_image (gint32 *image_ID_ptr,
 		   gchar  *format,
 		   gint    cap)  /* cap like capabilities */
 {
-  GList *actions = NULL;
-  GList *list;
+  GSList *actions = NULL;
+  GSList *list;
   GimpImageBaseType type;
   gint i;
   gint nlayers;
@@ -397,7 +397,7 @@ gimp_export_image (gint32 *image_ID_ptr,
 	{
 	  if ( !(cap & CAN_HANDLE_ALPHA) )
 	    {
-	      actions = g_list_append (actions, &export_action_flatten);
+	      actions = g_slist_prepend (actions, &export_action_flatten);
 	      added_flatten = TRUE;
 	      break;
 	    }
@@ -406,7 +406,7 @@ gimp_export_image (gint32 *image_ID_ptr,
 	{
 	  if (cap & NEEDS_ALPHA)
 	    {
-	      actions = g_list_append (actions, &export_action_add_alpha);
+	      actions = g_slist_prepend (actions, &export_action_add_alpha);
 	      break;
 	    }
 	}
@@ -416,10 +416,10 @@ gimp_export_image (gint32 *image_ID_ptr,
   /* check multiple layers */
   if (!added_flatten && nlayers > 1)
     {
-      if ( !(cap & CAN_HANDLE_LAYERS) && (cap & CAN_HANDLE_LAYERS_AS_ANIMATION))
-	actions = g_list_append (actions, &export_action_animate_or_merge);
-      else if (! (cap & CAN_HANDLE_LAYERS))
-	actions = g_list_append (actions, &export_action_merge);
+      if ((cap & CAN_HANDLE_LAYERS_AS_ANIMATION))
+	actions = g_slist_prepend (actions, &export_action_animate_or_merge);
+      else if ( !(cap & CAN_HANDLE_LAYERS))
+	actions = g_slist_prepend (actions, &export_action_merge);
     }
 
   /* check the image type */	  
@@ -430,39 +430,42 @@ gimp_export_image (gint32 *image_ID_ptr,
        if ( !(cap & CAN_HANDLE_RGB) )
 	{
 	  if ((cap & CAN_HANDLE_INDEXED) && (cap & CAN_HANDLE_GRAY))
-	    actions = g_list_append (actions, &export_action_convert_indexed_or_grayscale);
+	    actions = g_slist_prepend (actions, &export_action_convert_indexed_or_grayscale);
 	  else if (cap & CAN_HANDLE_INDEXED)
-	    actions = g_list_append (actions, &export_action_convert_indexed);
+	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
 	  else if (cap & CAN_HANDLE_GRAY)
-	    actions = g_list_append (actions, &export_action_convert_grayscale);
+	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
     case GIMP_GRAY:
       if ( !(cap & CAN_HANDLE_GRAY) )
 	{
 	  if ((cap & CAN_HANDLE_RGB) && (cap & CAN_HANDLE_INDEXED))
-	    actions = g_list_append (actions, &export_action_convert_rgb_or_indexed);
+	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_indexed);
 	  else if (cap & CAN_HANDLE_RGB)
-	    actions = g_list_append (actions, &export_action_convert_rgb);
+	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
 	  else if (cap & CAN_HANDLE_INDEXED)
-	    actions = g_list_append (actions, &export_action_convert_indexed);
+	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
 	}
       break;
     case GIMP_INDEXED:
        if ( !(cap & CAN_HANDLE_INDEXED) )
 	{
 	  if ((cap & CAN_HANDLE_RGB) && (cap & CAN_HANDLE_GRAY))
-	    actions = g_list_append (actions, &export_action_convert_rgb_or_grayscale);
+	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_grayscale);
 	  else if (cap & CAN_HANDLE_RGB)
-	    actions = g_list_append (actions, &export_action_convert_rgb);
+	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
 	  else if (cap & CAN_HANDLE_GRAY)
-	    actions = g_list_append (actions, &export_action_convert_grayscale);
+	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
     }
   
   if (actions)
-    dialog_return = export_dialog (actions, format);
+    {
+      actions = g_slist_reverse (actions);
+      dialog_return = export_dialog (actions, format);
+    }
   else
     dialog_return = EXPORT_IGNORE;
 
@@ -472,7 +475,7 @@ gimp_export_image (gint32 *image_ID_ptr,
       *drawable_ID_ptr = gimp_image_get_active_layer (*image_ID_ptr);
       gimp_image_undo_disable (*image_ID_ptr);
       for (list = actions; list; list = list->next)
-	{  
+	{
 	  action = (ExportAction*)(list->data);
 	  if (action->choice == 0 && action->default_action)  
 	    action->default_action (*image_ID_ptr, drawable_ID_ptr);

@@ -1,6 +1,17 @@
+Thu Oct 21 21:29:40 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpexport.c: handle CAN_HANDLE_LAYERS_AS_ANIMATIONS 
+	correctly
+	
+	* app/scan_convert.c: trivial optimizations
+
+	* app/nav_window.c: applied the patch from Shuji Narazaki that makes
+	the navigation window work with tablets. Fixed some rounding errors
+	and stopped the flicker.
+
 Thu Oct 21 14:35:05 MEST 1999  Sven Neumann <sven@gimp.org>
 
-	plug-ins/script-fu/script-fu-scripts.c: cleaned up the widget 
+	* plug-ins/script-fu/script-fu-scripts.c: cleaned up the widget 
 	destruction and inserted a few sanity checks. Unfortunately this
 	doesn't really solve our problems.
 

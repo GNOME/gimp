@@ -43,10 +43,12 @@
 
 #define MAX_BUF 256
 
-#define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
-                       GDK_BUTTON_PRESS_MASK | \
-                       GDK_KEY_PRESS_MASK | \
-                       GDK_KEY_RELEASE_MASK
+#define PREVIEW_MASK   GDK_EXPOSURE_MASK        | \
+                       GDK_BUTTON_PRESS_MASK    | \
+                       GDK_KEY_PRESS_MASK       | \
+                       GDK_KEY_RELEASE_MASK     | \
+		       GDK_POINTER_MOTION_MASK
+
                                                           
 /* Navigation preview sizes */
 #define NAV_PREVIEW_WIDTH  112
@@ -178,10 +180,10 @@ nav_window_disp_area (NavWinData *iwd,
   xratio = SCALEFACTOR_X(gdisp);
   yratio = SCALEFACTOR_Y(gdisp);
 
-  iwd->dispx = gdisp->offset_x*iwd->ratio/xratio;
-  iwd->dispy = gdisp->offset_y*iwd->ratio/yratio;
-  iwd->dispwidth = (gdisp->disp_width*iwd->ratio)/xratio;
-  iwd->dispheight = (gdisp->disp_height*iwd->ratio)/yratio;
+  iwd->dispx = gdisp->offset_x * iwd->ratio / xratio + 0.5;
+  iwd->dispy = gdisp->offset_y * iwd->ratio/yratio + 0.5;
+  iwd->dispwidth = (gdisp->disp_width * iwd->ratio) / xratio + 0.5;
+  iwd->dispheight = (gdisp->disp_height * iwd->ratio) / yratio + 0.5;
 
   newwidth = gimage->width;
   newheight = gimage->height;
@@ -189,12 +191,12 @@ nav_window_disp_area (NavWinData *iwd,
   if (!gdisp->dot_for_dot)
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      newwidth = ((gdouble)newwidth * unit_factor)/(gdisp->gimage->xresolution);
-      newheight = ((gdouble)newheight * unit_factor)/(gdisp->gimage->yresolution);
-      iwd->dispx = ((gdouble)iwd->dispx * unit_factor)/(gdisp->gimage->xresolution);
-      iwd->dispy = ((gdouble)iwd->dispy * unit_factor)/(gdisp->gimage->yresolution);
-      iwd->dispwidth = ((gdouble)iwd->dispwidth * unit_factor)/(gdisp->gimage->xresolution);
-      iwd->dispheight = ((gdouble)iwd->dispheight * unit_factor)/(gdisp->gimage->yresolution);
+      newwidth = (gdouble)newwidth * unit_factor / gdisp->gimage->xresolution + 0.5;
+      newheight = (gdouble)newheight * unit_factor / gdisp->gimage->yresolution + 0.5;
+      iwd->dispx = (gdouble)iwd->dispx * unit_factor / gdisp->gimage->xresolution + 0.5;
+      iwd->dispy = (gdouble)iwd->dispy * unit_factor / gdisp->gimage->yresolution + 0.5;
+      iwd->dispwidth = (gdouble)iwd->dispwidth * unit_factor / gdisp->gimage->xresolution + 0.5;
+      iwd->dispheight = (gdouble)iwd->dispheight * unit_factor / gdisp->gimage->yresolution + 0.5;
     }
 
   if((iwd->imagewidth > 0 && newwidth != iwd->imagewidth) ||
@@ -256,12 +258,12 @@ nav_window_draw_sqr (NavWinData *iwd,
   gdisp = (GDisplay *) iwd->gdisp_ptr;
 
   gdk_gc_set_function (iwd->gc, GDK_INVERT);
-  
+
   if(undraw)
     {
       /* first undraw from last co-ords */
       gdk_draw_rectangle (iwd->preview->window, iwd->gc, FALSE, 
-			  iwd->dispx,iwd->dispy, 
+			  iwd->dispx, iwd->dispy, 
 			  iwd->dispwidth-BORDER_PEN_WIDTH+1, 
 			  iwd->dispheight-BORDER_PEN_WIDTH+1);
     }
@@ -420,8 +422,8 @@ update_real_view (NavWinData *iwd,
   if (!gdisp->dot_for_dot)
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
-      xpnt = ((gdouble)xpnt * (gdisp->gimage->xresolution))/(unit_factor)+0.5;
-      ypnt = ((gdouble)ypnt * (gdisp->gimage->yresolution))/(unit_factor)+0.5;
+      xpnt = ((gdouble)xpnt * gdisp->gimage->xresolution) / unit_factor + 0.5;
+      ypnt = ((gdouble)ypnt * gdisp->gimage->yresolution) / unit_factor + 0.5;
     }
 
   xoffset = xpnt - gdisp->offset_x;
@@ -664,25 +666,8 @@ move_to_point (NavWinData *iwd,
 	       gint        tx,
 	       gint        ty)
 {
-  if(tx < 0)
-    {
-      tx = 0;
-    }
-  
-  if(tx > iwd->pwidth)
-    {
-      tx = iwd->pwidth;
-    }
-  
-  if(ty < 0)
-    {
-      ty = 0;
-    }
-  
-  if(ty > iwd->pheight)
-    {
-      ty = iwd->pwidth;
-    }
+  tx = CLAMP (tx, 0, iwd->pwidth);
+  ty = CLAMP (ty, 0, iwd->pheight);
   
   if((tx + iwd->dispwidth) >= iwd->pwidth)
     {
@@ -694,13 +679,16 @@ move_to_point (NavWinData *iwd,
       ty = iwd->pheight - iwd->dispheight;
     }
   
+  if (iwd->dispx == tx && iwd->dispy == ty)
+    return;
+
   /* Update the real display */
   update_real_view(iwd,tx,ty);
   
   nav_window_draw_sqr(iwd,
 		      TRUE,
-		      tx,ty,
-		      iwd->dispwidth,iwd->dispheight);
+		      tx, ty,
+		      iwd->dispwidth, iwd->dispheight);
   
 }
 
