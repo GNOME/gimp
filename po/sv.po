@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-12-03 12:26+0100\n"
-"PO-Revision-Date: 2002-12-03 12:28+0100\n"
+"POT-Creation-Date: 2002-12-04 17:21+0100\n"
+"PO-Revision-Date: 2002-12-04 17:25+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -314,8 +314,8 @@ msgstr "Ompositionering av lager"
 msgid "Layer Move"
 msgstr "Lagerflytt"
 
-#: app/undo.c:3640 app/gui/channels-commands.c:314
-#: app/gui/channels-commands.c:351
+#: app/undo.c:3640 app/gui/channels-commands.c:316
+#: app/gui/channels-commands.c:353
 msgid "New Channel"
 msgstr "Ny kanal"
 
@@ -653,7 +653,7 @@ msgid "Spiral (anticlockwise)"
 msgstr "Spiral (moturs)"
 
 #: app/core/core-enums.c:148 app/core/core-enums.c:168
-#: app/display/gimpdisplayshell.c:2398
+#: app/display/gimpdisplayshell.c:2404
 msgid "RGB"
 msgstr "RGB"
 
@@ -751,28 +751,28 @@ msgstr "Parasiter"
 
 #. initialize the list of gimp brushes
 #: app/core/gimp.c:674 app/gui/dialogs-constructors.c:372
-#: app/gui/dialogs-constructors.c:520 app/gui/preferences-dialog.c:1783
+#: app/gui/dialogs-constructors.c:520 app/gui/preferences-dialog.c:1786
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr "Penslar"
 
 #. initialize the list of gimp patterns
 #: app/core/gimp.c:678 app/gui/dialogs-constructors.c:393
-#: app/gui/dialogs-constructors.c:541 app/gui/preferences-dialog.c:1787
+#: app/gui/dialogs-constructors.c:541 app/gui/preferences-dialog.c:1790
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "Mönster"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:682 app/gui/dialogs-constructors.c:435
-#: app/gui/dialogs-constructors.c:583 app/gui/preferences-dialog.c:1791
+#: app/gui/dialogs-constructors.c:583 app/gui/preferences-dialog.c:1794
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp gradients
 #: app/core/gimp.c:686 app/gui/dialogs-constructors.c:414
-#: app/gui/dialogs-constructors.c:562 app/gui/preferences-dialog.c:1795
+#: app/gui/dialogs-constructors.c:562 app/gui/preferences-dialog.c:1798
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr "Färgskalor"
@@ -1412,78 +1412,78 @@ msgstr "Egen färg"
 msgid "Set Canvas Padding Color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:637
+#: app/display/gimpdisplayshell.c:639
 msgid "Set canvas padding color"
 msgstr "Ställ in färg på canvasutfyllnad"
 
-#: app/display/gimpdisplayshell.c:649
+#: app/display/gimpdisplayshell.c:651
 msgid "/From Theme"
 msgstr "/Från tema"
 
-#: app/display/gimpdisplayshell.c:652
+#: app/display/gimpdisplayshell.c:654
 msgid "/Light Check Color"
 msgstr "/Ljus rutfärg"
 
-#: app/display/gimpdisplayshell.c:655
+#: app/display/gimpdisplayshell.c:657
 msgid "/Dark Check Color"
 msgstr "/Mörk rutfärg"
 
-#: app/display/gimpdisplayshell.c:659
+#: app/display/gimpdisplayshell.c:663
 msgid "/Select Custom Color..."
 msgstr "/Välj egen färg..."
 
-#: app/display/gimpdisplayshell.c:662
+#: app/display/gimpdisplayshell.c:667
 msgid "/As in Preferences"
 msgstr "/Som i inställningarna"
 
-#: app/display/gimpdisplayshell.c:686
+#: app/display/gimpdisplayshell.c:692
 msgid "Toggle QuickMask"
 msgstr "Visa snabbmask"
 
-#: app/display/gimpdisplayshell.c:1125
+#: app/display/gimpdisplayshell.c:1131
 #, c-format
 msgid "Undo %s"
 msgstr "Ångra %s"
 
-#: app/display/gimpdisplayshell.c:1128
+#: app/display/gimpdisplayshell.c:1134
 #, c-format
 msgid "Redo %s"
 msgstr "Gör om %s"
 
-#: app/display/gimpdisplayshell.c:1130 app/pdb/internal_procs.c:181
+#: app/display/gimpdisplayshell.c:1136 app/pdb/internal_procs.c:181
 msgid "Undo"
 msgstr "Ångra"
 
-#: app/display/gimpdisplayshell.c:1131
+#: app/display/gimpdisplayshell.c:1137
 msgid "Redo"
 msgstr "Gör om"
 
-#: app/display/gimpdisplayshell.c:2398
+#: app/display/gimpdisplayshell.c:2404
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/display/gimpdisplayshell.c:2401
+#: app/display/gimpdisplayshell.c:2407
 msgid "grayscale-empty"
 msgstr "gråskala-tom"
 
-#: app/display/gimpdisplayshell.c:2401
+#: app/display/gimpdisplayshell.c:2407
 msgid "grayscale"
 msgstr "gråskala"
 
-#: app/display/gimpdisplayshell.c:2404
+#: app/display/gimpdisplayshell.c:2410
 msgid "indexed-empty"
 msgstr "indexerad-tom"
 
-#: app/display/gimpdisplayshell.c:2404
+#: app/display/gimpdisplayshell.c:2410
 msgid "indexed"
 msgstr "indexerad"
 
-#: app/display/gimpdisplayshell.c:2611
+#: app/display/gimpdisplayshell.c:2617
 #, c-format
 msgid "Close %s?"
 msgstr "Stänga %s?"
 
-#: app/display/gimpdisplayshell.c:2613
+#: app/display/gimpdisplayshell.c:2619
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1659,27 +1659,27 @@ msgstr "Tom kanalkopia"
 msgid "New Channel Color"
 msgstr "Ny kanalfärg"
 
-#: app/gui/channels-commands.c:316
+#: app/gui/channels-commands.c:318
 msgid "New Channel Options"
 msgstr "Alternativ för nya kanaler"
 
-#: app/gui/channels-commands.c:353 app/gui/channels-commands.c:500
+#: app/gui/channels-commands.c:355 app/gui/channels-commands.c:504
 msgid "Channel Name:"
 msgstr "Kanalnamn:"
 
-#: app/gui/channels-commands.c:358 app/gui/channels-commands.c:505
+#: app/gui/channels-commands.c:360 app/gui/channels-commands.c:509
 msgid "Fill Opacity:"
 msgstr "Fyllnadsopacitet:"
 
-#: app/gui/channels-commands.c:453
+#: app/gui/channels-commands.c:455
 msgid "Edit Channel Color"
 msgstr "Redigera kanalfärg"
 
-#: app/gui/channels-commands.c:461
+#: app/gui/channels-commands.c:465
 msgid "Channel Attributes"
 msgstr "Kanalattribut"
 
-#: app/gui/channels-commands.c:463
+#: app/gui/channels-commands.c:467
 msgid "Edit Channel Attributes"
 msgstr "Redigera kanalattribut"
 
@@ -1785,8 +1785,8 @@ msgstr "Förgrund: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Bakgrund: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:306 app/gui/preferences-dialog.c:1216
-#: app/gui/preferences-dialog.c:1219
+#: app/gui/dialogs-constructors.c:306 app/gui/preferences-dialog.c:1217
+#: app/gui/preferences-dialog.c:1220
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -2055,8 +2055,8 @@ msgstr ""
 msgid "Determine File Type:"
 msgstr "Bestäm filtyp:"
 
-#: app/gui/file-new-dialog.c:116 app/gui/preferences-dialog.c:979
-#: app/gui/preferences-dialog.c:982
+#: app/gui/file-new-dialog.c:116 app/gui/preferences-dialog.c:980
+#: app/gui/preferences-dialog.c:983
 msgid "New Image"
 msgstr "Ny bild"
 
@@ -2078,8 +2078,8 @@ msgstr "Bredd:"
 msgid "Height:"
 msgstr "Höjd:"
 
-#: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:1016
-#: app/gui/preferences-dialog.c:1029 app/gui/user-install-dialog.c:1239
+#: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:1017
+#: app/gui/preferences-dialog.c:1030 app/gui/user-install-dialog.c:1239
 msgid "Pixels"
 msgstr "Bildpunkter"
 
@@ -2427,8 +2427,8 @@ msgstr ""
 "Fel vid omskalning av bild: Både bredd och höjd måste vara större än 0."
 
 #. General
-#: app/gui/info-dialog.c:349 app/gui/preferences-dialog.c:1123
-#: app/gui/preferences-dialog.c:1190
+#: app/gui/info-dialog.c:349 app/gui/preferences-dialog.c:1124
+#: app/gui/preferences-dialog.c:1191
 msgid "General"
 msgstr "Generellt"
 
@@ -4230,7 +4230,7 @@ msgstr "Upprepa senaste"
 msgid "Re-Show Last"
 msgstr "Återvisa senaste"
 
-#: app/gui/preferences-dialog.c:319
+#: app/gui/preferences-dialog.c:320
 msgid ""
 "You will have to restart GIMP for\n"
 "the following changes to take effect:"
@@ -4238,506 +4238,505 @@ msgstr ""
 "Du måste starta om GIMP för att\n"
 "följande ändringar ska ha effekt:"
 
-#: app/gui/preferences-dialog.c:859
+#: app/gui/preferences-dialog.c:860
 msgid "Preferences"
 msgstr "Inställningar"
 
 #. Default Image Size and Unit
-#: app/gui/preferences-dialog.c:992
+#: app/gui/preferences-dialog.c:993
 msgid "Default Image Size and Unit"
 msgstr "Standardbildstorlek och -mått"
 
-#: app/gui/preferences-dialog.c:1012
+#: app/gui/preferences-dialog.c:1013
 msgid "Width"
 msgstr "Bredd"
 
-#: app/gui/preferences-dialog.c:1014
+#: app/gui/preferences-dialog.c:1015
 msgid "Height"
 msgstr "Höjd"
 
 #. Default Image Resolution and Resolution Unit
-#: app/gui/preferences-dialog.c:1022
+#: app/gui/preferences-dialog.c:1023
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standardbildstorlek och -måttenhet"
 
-#: app/gui/preferences-dialog.c:1044 app/gui/preferences-dialog.c:1604
+#: app/gui/preferences-dialog.c:1045 app/gui/preferences-dialog.c:1607
 #: app/gui/user-install-dialog.c:1252 app/tools/gimpfliptool.c:292
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: app/gui/preferences-dialog.c:1046 app/gui/preferences-dialog.c:1606
+#: app/gui/preferences-dialog.c:1047 app/gui/preferences-dialog.c:1609
 #: app/gui/user-install-dialog.c:1254 app/tools/gimpfliptool.c:296
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: app/gui/preferences-dialog.c:1048 app/gui/preferences-dialog.c:1608
+#: app/gui/preferences-dialog.c:1049 app/gui/preferences-dialog.c:1611
 #: app/gui/user-install-dialog.c:1256
 msgid "dpi"
 msgstr "punkter/tum"
 
-#: app/gui/preferences-dialog.c:1064
+#: app/gui/preferences-dialog.c:1065
 msgid "Default Image _Type:"
 msgstr "Standardbild_typ:"
 
-#: app/gui/preferences-dialog.c:1067
+#: app/gui/preferences-dialog.c:1068
 msgid "Maximum Image Size:"
 msgstr "Maximal bildstorlek:"
 
-#: app/gui/preferences-dialog.c:1076 app/gui/preferences-dialog.c:1079
+#: app/gui/preferences-dialog.c:1077 app/gui/preferences-dialog.c:1080
 msgid "Default Comment"
 msgstr "Standardkommentar"
 
 #. Comment
-#: app/gui/preferences-dialog.c:1086
+#: app/gui/preferences-dialog.c:1087
 msgid "Comment Used for New Images"
 msgstr "Kommentar som används för nya bilder"
 
-#: app/gui/preferences-dialog.c:1113 app/gui/preferences-dialog.c:1116
-#: app/pdb/internal_procs.c:130
+#: app/gui/preferences-dialog.c:1114 app/gui/preferences-dialog.c:1117
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: app/gui/preferences-dialog.c:1127
+#: app/gui/preferences-dialog.c:1128
 msgid "_Preview Size:"
 msgstr "_Förhandsvisningsstorlek:"
 
-#: app/gui/preferences-dialog.c:1130
+#: app/gui/preferences-dialog.c:1131
 msgid "_Navigation Preview Size:"
 msgstr "Förhandsvisningsstorlek för _navigering:"
 
-#: app/gui/preferences-dialog.c:1133
+#: app/gui/preferences-dialog.c:1134
 msgid "_Recent Documents List Size:"
 msgstr "_Storlek på listan över antal senast använda dokument:"
 
 #. Dialog Bahaviour
-#: app/gui/preferences-dialog.c:1137
+#: app/gui/preferences-dialog.c:1138
 msgid "Dialog Behavior"
 msgstr "Fönsterbeteende"
 
-#: app/gui/preferences-dialog.c:1140
+#: app/gui/preferences-dialog.c:1141
 msgid "_Info Window Per Display"
 msgstr "_Informationsfönster per display"
 
 #. Menus
-#: app/gui/preferences-dialog.c:1144
+#: app/gui/preferences-dialog.c:1145
 msgid "Menus"
 msgstr "Menyer"
 
-#: app/gui/preferences-dialog.c:1147
+#: app/gui/preferences-dialog.c:1148
 msgid "Disable _Tearoff Menus"
 msgstr "Inaktivera _löstagbara menyer"
 
 #. Window Positions
-#: app/gui/preferences-dialog.c:1151
+#: app/gui/preferences-dialog.c:1152
 msgid "Window Positions"
 msgstr "Fönsterpositioner"
 
-#: app/gui/preferences-dialog.c:1154
+#: app/gui/preferences-dialog.c:1155
 msgid "_Save Window Positions on Exit"
 msgstr "_Spara fönsterpositioner vid avslutning"
 
-#: app/gui/preferences-dialog.c:1157
+#: app/gui/preferences-dialog.c:1158
 msgid "R_estore Saved Window Positions on Start-up"
 msgstr "_Återställ sparade fönsterpositioner vid uppstart"
 
-#: app/gui/preferences-dialog.c:1165
+#: app/gui/preferences-dialog.c:1166
 msgid "Clear Saved Window Positions Now"
 msgstr "Töm sparade fönsterpositioner nu"
 
-#: app/gui/preferences-dialog.c:1180 app/gui/preferences-dialog.c:1183
+#: app/gui/preferences-dialog.c:1181 app/gui/preferences-dialog.c:1184
 msgid "Help System"
 msgstr "Hjälpsystem"
 
-#: app/gui/preferences-dialog.c:1193
+#: app/gui/preferences-dialog.c:1194
 msgid "Show Tool _Tips"
 msgstr "Visa verktygs_tips"
 
-#: app/gui/preferences-dialog.c:1196
+#: app/gui/preferences-dialog.c:1197
 msgid "Context Sensitive _Help with \"F1\""
 msgstr "Sammanhangskänslig _hjälp med \"F1\""
 
-#: app/gui/preferences-dialog.c:1199
+#: app/gui/preferences-dialog.c:1200
 msgid "Show Tips on _Startup"
 msgstr "Visa tips vid _uppstart"
 
 #. Help Browser
-#: app/gui/preferences-dialog.c:1203
+#: app/gui/preferences-dialog.c:1204
 msgid "Help Browser"
 msgstr "Hjälpläsare"
 
-#: app/gui/preferences-dialog.c:1207
+#: app/gui/preferences-dialog.c:1208
 msgid "Help _Browser to Use:"
 msgstr "Hjälp_läsare att använda:"
 
 #. Contiguous Regions
-#: app/gui/preferences-dialog.c:1226
+#: app/gui/preferences-dialog.c:1227
 msgid "Finding Contiguous Regions"
 msgstr "Hitta kontinuerliga ytor"
 
-#: app/gui/preferences-dialog.c:1231
+#: app/gui/preferences-dialog.c:1232
 msgid "Default _Threshold:"
 msgstr "Standard_tröskelvärde:"
 
 #. Scaling
-#: app/gui/preferences-dialog.c:1235
+#: app/gui/preferences-dialog.c:1236
 msgid "Scaling"
 msgstr "Skalning"
 
-#: app/gui/preferences-dialog.c:1239
+#: app/gui/preferences-dialog.c:1240
 msgid "Default _Interpolation:"
 msgstr "Standard_interpolation:"
 
-#: app/gui/preferences-dialog.c:1248 app/gui/preferences-dialog.c:1251
+#: app/gui/preferences-dialog.c:1249 app/gui/preferences-dialog.c:1252
 msgid "Input Devices"
 msgstr "Inmatningsenheter"
 
 #. Input Device Settings
-#: app/gui/preferences-dialog.c:1258
+#: app/gui/preferences-dialog.c:1259
 msgid "Input Device Settings"
 msgstr "Inställningar för inmatningsenheter"
 
-#: app/gui/preferences-dialog.c:1295
+#: app/gui/preferences-dialog.c:1296
 msgid "Save Input Device Settings on Exit"
 msgstr "Spara inställningar för inmatningsenheter vid avslutning"
 
-#: app/gui/preferences-dialog.c:1303
+#: app/gui/preferences-dialog.c:1304
 msgid "Save Input Device Settings Now"
 msgstr "Spara inställningar för inmatningsenheter nu"
 
-#: app/gui/preferences-dialog.c:1318 app/gui/preferences-dialog.c:1321
+#: app/gui/preferences-dialog.c:1319 app/gui/preferences-dialog.c:1322
 msgid "Image Windows"
 msgstr "Bildfönster"
 
 #. Appearance
-#: app/gui/preferences-dialog.c:1328
+#: app/gui/preferences-dialog.c:1329
 msgid "Appearance"
 msgstr "Utseende"
 
-#: app/gui/preferences-dialog.c:1331
+#: app/gui/preferences-dialog.c:1332
 msgid "Use \"_Dot for Dot\" by default"
 msgstr "Använd \"_punkt till punkt\" som standard"
 
-#: app/gui/preferences-dialog.c:1334
+#: app/gui/preferences-dialog.c:1335
 msgid "Resize Window on _Zoom"
 msgstr "Ändra storlek på fönstret vid _zoom"
 
-#: app/gui/preferences-dialog.c:1337
+#: app/gui/preferences-dialog.c:1338
 msgid "Resize Window on Image _Size Change"
 msgstr "Ändra storlek på fönstret vid ändring av bild_storlek"
 
-#: app/gui/preferences-dialog.c:1340
+#: app/gui/preferences-dialog.c:1341
 msgid "Show _Rulers"
 msgstr "Visa _linjaler"
 
-#: app/gui/preferences-dialog.c:1343
+#: app/gui/preferences-dialog.c:1344
 msgid "Show S_tatusbar"
 msgstr "Visa s_tatusrad"
 
-#: app/gui/preferences-dialog.c:1349
+#: app/gui/preferences-dialog.c:1350
 msgid "Marching _Ants Speed:"
 msgstr "Vandrande _myrors hastighet:"
 
 #. Canvas Padding Color
-#: app/gui/preferences-dialog.c:1353
+#: app/gui/preferences-dialog.c:1354
 msgid "Canvas Padding Color"
 msgstr "Färg på canvasutfyllnad"
 
-#: app/gui/preferences-dialog.c:1358
+#: app/gui/preferences-dialog.c:1359
 msgid "Padding Mode:"
 msgstr "Utfyllnadsläge:"
 
-#: app/gui/preferences-dialog.c:1361
+#: app/gui/preferences-dialog.c:1362
 msgid "Custom Color:"
 msgstr "Egen färg:"
 
-#: app/gui/preferences-dialog.c:1362
+#: app/gui/preferences-dialog.c:1363
 msgid "Select Custom Canvas Padding Color"
 msgstr "Välj egen färg på canvasutfyllnad"
 
 #. Pointer Movement Feedback
-#: app/gui/preferences-dialog.c:1366
+#: app/gui/preferences-dialog.c:1369
 msgid "Pointer Movement Feedback"
 msgstr "Markörförflyttning"
 
-#: app/gui/preferences-dialog.c:1370
+#: app/gui/preferences-dialog.c:1373
 msgid "Perfect-but-Slow _Pointer Tracking"
 msgstr "Följ _pekaren perfekt men långsammare"
 
-#: app/gui/preferences-dialog.c:1373
+#: app/gui/preferences-dialog.c:1376
 msgid "Enable Cursor _Updating"
 msgstr "Slå av markör_uppdatering"
 
-#: app/gui/preferences-dialog.c:1379
+#: app/gui/preferences-dialog.c:1382
 msgid "Cursor M_ode:"
 msgstr "Markör_läge:"
 
-#: app/gui/preferences-dialog.c:1388
+#: app/gui/preferences-dialog.c:1391
 msgid "Image Title & Statusbar Format"
 msgstr "Bildtitel och statusradsformat"
 
-#: app/gui/preferences-dialog.c:1391
+#: app/gui/preferences-dialog.c:1394
 msgid "Title & Status"
 msgstr "Titel och status"
 
-#: app/gui/preferences-dialog.c:1410
+#: app/gui/preferences-dialog.c:1413
 msgid "Custom"
 msgstr "Egen"
 
-#: app/gui/preferences-dialog.c:1411
+#: app/gui/preferences-dialog.c:1414
 msgid "Standard"
 msgstr "Standard"
 
-#: app/gui/preferences-dialog.c:1412
+#: app/gui/preferences-dialog.c:1415
 msgid "Show zoom percentage"
 msgstr "Visa zoomprocent"
 
-#: app/gui/preferences-dialog.c:1413
+#: app/gui/preferences-dialog.c:1416
 msgid "Show zoom ratio"
 msgstr "Visa zoomförhållande"
 
-#: app/gui/preferences-dialog.c:1414
+#: app/gui/preferences-dialog.c:1417
 msgid "Show reversed zoom ratio"
 msgstr "Visa omvänt zoomförhållande"
 
-#: app/gui/preferences-dialog.c:1415
+#: app/gui/preferences-dialog.c:1418
 msgid "Show memory usage"
 msgstr "Visa minnesanvändning"
 
-#: app/gui/preferences-dialog.c:1428
+#: app/gui/preferences-dialog.c:1431
 msgid "Image Title Format"
 msgstr "Bildtitelformat"
 
-#: app/gui/preferences-dialog.c:1433
+#: app/gui/preferences-dialog.c:1436
 msgid "Image Statusbar Format"
 msgstr "Bildstatusradsformat"
 
-#: app/gui/preferences-dialog.c:1518 app/gui/preferences-dialog.c:1521
+#: app/gui/preferences-dialog.c:1521 app/gui/preferences-dialog.c:1524
 msgid "Display"
 msgstr "Visning"
 
 #. Transparency
-#: app/gui/preferences-dialog.c:1528
+#: app/gui/preferences-dialog.c:1531
 msgid "Transparency"
 msgstr "Transparens"
 
-#: app/gui/preferences-dialog.c:1532
+#: app/gui/preferences-dialog.c:1535
 msgid "Transparency _Type:"
 msgstr "Transparens_typ:"
 
-#: app/gui/preferences-dialog.c:1535
+#: app/gui/preferences-dialog.c:1538
 msgid "Check _Size:"
 msgstr "Rut_storlek:"
 
 #. 8-Bit Displays
-#: app/gui/preferences-dialog.c:1539
+#: app/gui/preferences-dialog.c:1542
 msgid "8-Bit Displays"
 msgstr "8-bitars skärmar"
 
-#: app/gui/preferences-dialog.c:1547
+#: app/gui/preferences-dialog.c:1550
 msgid "Minimum Number of Colors:"
 msgstr "Minsta antal färger:"
 
-#: app/gui/preferences-dialog.c:1550
+#: app/gui/preferences-dialog.c:1553
 msgid "Install Colormap"
 msgstr "Använd egen färgkarta"
 
-#: app/gui/preferences-dialog.c:1553
+#: app/gui/preferences-dialog.c:1556
 msgid "Colormap Cycling"
 msgstr "Rotera färgkarta"
 
-#: app/gui/preferences-dialog.c:1562 app/gui/preferences-dialog.c:1565
+#: app/gui/preferences-dialog.c:1565 app/gui/preferences-dialog.c:1568
 msgid "Monitor"
 msgstr "Bildskärm"
 
-#: app/gui/preferences-dialog.c:1571
+#: app/gui/preferences-dialog.c:1574
 msgid "Get Monitor Resolution"
 msgstr "Hämta bildskärmsupplösning"
 
-#: app/gui/preferences-dialog.c:1580
+#: app/gui/preferences-dialog.c:1583
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(För tillfället %d × %d punkter/tum)"
 
-#: app/gui/preferences-dialog.c:1617
+#: app/gui/preferences-dialog.c:1620
 msgid "C_alibrate"
 msgstr "K_alibrera"
 
-#: app/gui/preferences-dialog.c:1631
+#: app/gui/preferences-dialog.c:1634
 msgid "From _Windowing System"
 msgstr "Från _fönstersystemet"
 
-#: app/gui/preferences-dialog.c:1656
+#: app/gui/preferences-dialog.c:1659
 msgid "_Manually"
 msgstr "_Manuellt"
 
-#: app/gui/preferences-dialog.c:1676 app/gui/preferences-dialog.c:1679
-#: app/gui/preferences-dialog.c:1811
+#: app/gui/preferences-dialog.c:1679 app/gui/preferences-dialog.c:1682
+#: app/gui/preferences-dialog.c:1814
 msgid "Environment"
 msgstr "Miljö"
 
 #. Resource Consumption
-#: app/gui/preferences-dialog.c:1686
+#: app/gui/preferences-dialog.c:1689
 msgid "Resource Consumption"
 msgstr "Resursanvändning"
 
-#: app/gui/preferences-dialog.c:1690
+#: app/gui/preferences-dialog.c:1693
 msgid "Conservative Memory Usage"
 msgstr "Konservativ minnesanvändning"
 
-#: app/gui/preferences-dialog.c:1700
+#: app/gui/preferences-dialog.c:1703
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/gui/preferences-dialog.c:1703 app/gui/user-install-dialog.c:1134
+#: app/gui/preferences-dialog.c:1706 app/gui/user-install-dialog.c:1134
 msgid "Tile Cache Size:"
 msgstr "Bildblockscachestorlek:"
 
-#: app/gui/preferences-dialog.c:1708
+#: app/gui/preferences-dialog.c:1711
 msgid "Number of Processors to Use:"
 msgstr "Antalet processorer att använda:"
 
 #. File Saving
-#: app/gui/preferences-dialog.c:1713
+#: app/gui/preferences-dialog.c:1716
 msgid "File Saving"
 msgstr "Filsparande"
 
-#: app/gui/preferences-dialog.c:1717
+#: app/gui/preferences-dialog.c:1720
 msgid "Only when Modified"
 msgstr "Endast om ändrad"
 
-#: app/gui/preferences-dialog.c:1718
+#: app/gui/preferences-dialog.c:1721
 msgid "Always"
 msgstr "Alltid"
 
-#: app/gui/preferences-dialog.c:1719
+#: app/gui/preferences-dialog.c:1722
 msgid "\"File -> Save\" Saves the Image:"
 msgstr "\"Arkiv -> Spara\" sparar bilden:"
 
-#: app/gui/preferences-dialog.c:1722
+#: app/gui/preferences-dialog.c:1725
 msgid "Size of Thumbnails Files:"
 msgstr "Storlek på miniatyrbildsfiler:"
 
-#: app/gui/preferences-dialog.c:1731 app/gui/preferences-dialog.c:1734
+#: app/gui/preferences-dialog.c:1734 app/gui/preferences-dialog.c:1737
 msgid "Folders"
 msgstr "Mappar"
 
-#: app/gui/preferences-dialog.c:1749
+#: app/gui/preferences-dialog.c:1752
 msgid "Temp Dir:"
 msgstr "Tempkatalog:"
 
-#: app/gui/preferences-dialog.c:1749
+#: app/gui/preferences-dialog.c:1752
 msgid "Select Temp Dir"
 msgstr "Välj tempkatalog"
 
-#: app/gui/preferences-dialog.c:1750
+#: app/gui/preferences-dialog.c:1753
 msgid "Swap Dir:"
 msgstr "Växlingskatalog:"
 
-#: app/gui/preferences-dialog.c:1750 app/gui/user-install-dialog.c:1155
+#: app/gui/preferences-dialog.c:1753 app/gui/user-install-dialog.c:1155
 msgid "Select Swap Dir"
 msgstr "Välj växlingskatalog"
 
-#: app/gui/preferences-dialog.c:1783
+#: app/gui/preferences-dialog.c:1786
 msgid "Brush Folders"
 msgstr "Penselmappar"
 
-#: app/gui/preferences-dialog.c:1785
+#: app/gui/preferences-dialog.c:1788
 msgid "Select Brush Folders"
 msgstr "Välj penselmappar"
 
-#: app/gui/preferences-dialog.c:1787
+#: app/gui/preferences-dialog.c:1790
 msgid "Pattern Folders"
 msgstr "Mönstermappar"
 
-#: app/gui/preferences-dialog.c:1789
+#: app/gui/preferences-dialog.c:1792
 msgid "Select Pattern Folders"
 msgstr "Välj mönstermappar"
 
-#: app/gui/preferences-dialog.c:1791
+#: app/gui/preferences-dialog.c:1794
 msgid "Palette Folders"
 msgstr "Palettmappar"
 
-#: app/gui/preferences-dialog.c:1793
+#: app/gui/preferences-dialog.c:1796
 msgid "Select Palette Folders"
 msgstr "Välj palettmappar"
 
-#: app/gui/preferences-dialog.c:1795
+#: app/gui/preferences-dialog.c:1798
 msgid "Gradient Folders"
 msgstr "Färgskalemappar"
 
-#: app/gui/preferences-dialog.c:1797
+#: app/gui/preferences-dialog.c:1800
 msgid "Select Gradient Folders"
 msgstr "Välj färgskalemappar"
 
-#: app/gui/preferences-dialog.c:1799
+#: app/gui/preferences-dialog.c:1802
 msgid "Plug-Ins"
 msgstr "Insticksmoduler"
 
-#: app/gui/preferences-dialog.c:1799
+#: app/gui/preferences-dialog.c:1802
 msgid "Plug-In Folders"
 msgstr "Mappar för insticksmodul"
 
-#: app/gui/preferences-dialog.c:1801
+#: app/gui/preferences-dialog.c:1804
 msgid "Select Plug-In Folders"
 msgstr "Välj mappar för insticksmodul"
 
-#: app/gui/preferences-dialog.c:1803
+#: app/gui/preferences-dialog.c:1806
 msgid "Tool Plug-Ins"
 msgstr "Verktygsinsticksmoduler"
 
-#: app/gui/preferences-dialog.c:1803
+#: app/gui/preferences-dialog.c:1806
 msgid "Tool Plug-In Folders"
 msgstr "Mappar för verktygsinsticksmoduler"
 
-#: app/gui/preferences-dialog.c:1805
+#: app/gui/preferences-dialog.c:1808
 msgid "Select Tool Plug-In Folders"
 msgstr "Välj mappar för verktygsinsticksmodul"
 
-#: app/gui/preferences-dialog.c:1807
+#: app/gui/preferences-dialog.c:1810
 msgid "Modules"
 msgstr "Moduler"
 
-#: app/gui/preferences-dialog.c:1807
+#: app/gui/preferences-dialog.c:1810
 msgid "Module Folders"
 msgstr "Modulmappar"
 
-#: app/gui/preferences-dialog.c:1809
+#: app/gui/preferences-dialog.c:1812
 msgid "Select Module Folders"
 msgstr "Välj modulmappar"
 
-#: app/gui/preferences-dialog.c:1811
+#: app/gui/preferences-dialog.c:1814
 msgid "Environment Folders"
 msgstr "Miljömappar"
 
-#: app/gui/preferences-dialog.c:1813
+#: app/gui/preferences-dialog.c:1816
 msgid "Select Environment Folders"
 msgstr "Välj miljömappar"
 
-#: app/gui/preferences-dialog.c:1815
+#: app/gui/preferences-dialog.c:1818
 msgid "Themes"
 msgstr "Teman"
 
-#: app/gui/preferences-dialog.c:1815
+#: app/gui/preferences-dialog.c:1818
 msgid "Theme Folders"
 msgstr "Temamappar"
 
-#: app/gui/preferences-dialog.c:1817
+#: app/gui/preferences-dialog.c:1820
 msgid "Select Theme Folders"
 msgstr "Välj temamappar"
 
-#: app/gui/qmask-commands.c:168
+#: app/gui/qmask-commands.c:169
 msgid "Edit Qmask Color"
 msgstr "Redigera snabbmaskfärg"
 
-#: app/gui/qmask-commands.c:176
+#: app/gui/qmask-commands.c:179
 msgid "Qmask Attributes"
 msgstr "Snabbmaskattribut"
 
-#: app/gui/qmask-commands.c:178
+#: app/gui/qmask-commands.c:181
 msgid "Edit QuickMask Attributes"
 msgstr "Redigera snabbmaskattribut"
 
-#: app/gui/qmask-commands.c:220
+#: app/gui/qmask-commands.c:223
 msgid "Mask Opacity:"
 msgstr "Maskopacitet:"
 
@@ -5507,8 +5506,8 @@ msgid "Convert"
 msgstr "Konvertera"
 
 #: app/pdb/internal_procs.c:94
-msgid "GimpDisplay procedures"
-msgstr "GimpDisplay-procedurer"
+msgid "Display procedures"
+msgstr "Visningsprocedurer"
 
 #: app/pdb/internal_procs.c:97
 msgid "Drawable procedures"
@@ -5545,6 +5544,10 @@ msgstr "Hjälpprocedurer"
 #: app/pdb/internal_procs.c:127
 msgid "Layer"
 msgstr "Lager"
+
+#: app/pdb/internal_procs.c:130
+msgid "Message procedures"
+msgstr "Meddelandeprocedurer"
 
 #: app/pdb/internal_procs.c:133
 msgid "Miscellaneous"
@@ -5595,8 +5598,8 @@ msgid "Text procedures"
 msgstr "Textprocedurer"
 
 #: app/pdb/internal_procs.c:178
-msgid "Tool procedures"
-msgstr "Verktygsprocedurer"
+msgid "Transform Tool procedures"
+msgstr "Transformeringsverktygsprocedurer"
 
 #: app/pdb/internal_procs.c:184
 msgid "Units"
@@ -7592,6 +7595,9 @@ msgstr "Beskär"
 #: libgimptool/gimptoolenums.c:15
 msgid "Resize"
 msgstr "Ändra storlek"
+
+#~ msgid "Tool procedures"
+#~ msgstr "Verktygsprocedurer"
 
 #~ msgid ""
 #~ "Unable to save '%s':\n"
