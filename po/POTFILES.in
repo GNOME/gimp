@@ -78,6 +78,7 @@ app/gui/resolution-calibrate-dialog.c
 app/gui/splash.c
 app/gui/tips-dialog.c
 app/gui/toolbox.c
+app/gui/tool-options-dialog.c
 
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
@@ -128,7 +129,6 @@ app/tools/gimpthresholdtool.c
 app/tools/paint_options.c
 app/tools/selection_options.c
 app/tools/tool_options.c
-app/tools/tool_options_dialog.c
 app/tools/tools.c
 app/tools/transform_options.c
 
