@@ -5634,18 +5634,15 @@ msgid "Grab"
 msgstr "Capturar"
 
 #: plug-ins/common/screenshot.c:392
-#, fuzzy
 msgid "Single Window"
-msgstr "Capturar uma única janela"
+msgstr "Janela Simples"
 
 #: plug-ins/common/screenshot.c:406
-#, fuzzy
 msgid "With Decorations"
-msgstr "Incluir decorações"
+msgstr "Incluir Decorações"
 
 #. root window
 #: plug-ins/common/screenshot.c:422
-#, fuzzy
 msgid "Whole Screen"
 msgstr "Capturar a tela inteira"
 
