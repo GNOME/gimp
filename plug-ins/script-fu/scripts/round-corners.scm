@@ -59,7 +59,10 @@
 		       img)))
 	 (pic-layer (car (gimp-image-get-active-drawable image))))
 
-  (gimp-image-undo-disable image)
+  (cond ((= work-on-copy TRUE)
+         (gimp-image-undo-disable image))
+        ((= work-on-copy FALSE)
+         (gimp-image-undo-group-start image)))
 
   ; add an alpha channel to the image
   (gimp-layer-add-alpha pic-layer)
@@ -109,7 +112,11 @@
 	    (gimp-image-lower-layer image bg-layer))))
 
 ; clean up after the script
-  (gimp-image-undo-enable image)
+  (cond ((= work-on-copy TRUE)
+         (gimp-image-undo-enable image))
+        ((= work-on-copy FALSE)
+         (gimp-image-undo-group-end image)))
+
   (if (= work-on-copy TRUE)
       (gimp-display-new image))
   (gimp-displays-flush)))
