@@ -18,7 +18,8 @@ AM_CPPFLAGS = \
 LDADD = \
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
 
 DEPS = \
 	$(top_builddir)/plug-ins/gpc/libgpc.a	\

@@ -15,7 +15,8 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
-	@LIBXDELTA_LIB@
+	@LIBXDELTA_LIB@				\
+	$(INTLLIBS)
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimp.la	

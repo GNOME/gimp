@@ -37,7 +37,8 @@ LDADD = \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
 	$(top_builddir)/libgimp/libgimpui.la			\
 	$(top_builddir)/libgimp/libgimp.la			\
-	$(GTK_LIBS)
+	$(GTK_LIBS)						\
+	$(INTLLIBS)
 
 DEPS = \
 	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\

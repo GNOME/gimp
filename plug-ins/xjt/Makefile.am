@@ -19,7 +19,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	@LIBJPEG_LIB@				\
-	-lc
+	$(INTLLIBS)
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimpui.la	\

@@ -17,7 +17,8 @@ AM_CPPFLAGS = \
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)				\
+	$(INTLLIBS)
 
 DEPS = \
 	$(top_builddir)/libgimp/libgimp.la	

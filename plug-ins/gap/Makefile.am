@@ -73,12 +73,13 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimp/libgimp.la			\
-	$(GTK_LIBS)
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
 
 DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la			\
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la
 
 gap_plugins_DEPENDENCIES = $(DEPS)

@@ -1,3 +1,7 @@
+Thu Jun 10 12:11:24 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* almost all the plug-in Makefiles: add $(INTLLIBS)
+
 Tue Jun  8 10:56:42 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/layers_dialog.c: Traverse the layers stack to know if there's 
