@@ -95,7 +95,7 @@ sub hbox_vbox_add_row {
 	$row_height = $h if $h > $row_height;
     }
     $row_width -= $gutter_x;
-    
+
     # Do the layout
     my $xpos = ($layout_width-$row_width)/2;
     for $i ($row_start_idx..$row_end_idx) {
@@ -131,10 +131,10 @@ sub hbox_vbox_create_layout {
 				   $row_start_idx, $row_end_idx,
 				   $ypos, $gutter_x));
 	    $total_width = $row_width if $row_width > $total_width;
-	    
+
 	    # Move to next row
 	    $ypos+= $gutter_y + $row_height;
-	    
+
 	    # Zero out various things
 	    $row_start_idx = $row_end_idx+1;
 	    $row_end_idx = $row_start_idx;
@@ -143,7 +143,7 @@ sub hbox_vbox_create_layout {
 		$row_width = $imgs->[$row_start_idx]->width;
 		$row_height = $imgs->[$row_start_idx]->height;
 		$xpos = 0;
-	    } 
+	    }
 	}
 	else {
 	    $row_width += $gutter_x + $w;
@@ -158,10 +158,10 @@ sub hbox_vbox_create_layout {
 			       $row_start_idx, $row_end_idx,
 			       $ypos, $gutter_x));
 	$total_width = $row_width if $row_width > $total_width;
-	
+
 	$ypos+= $row_height;
     }
-    
+
     $total_width = $layout_width;
     $total_height = $ypos + $pad_y;
     return ($total_width, $total_height, \@layout);
@@ -175,7 +175,7 @@ sub decoration_drop_shadow {
     my($layout) = shift;
     $shadow_xoffs = 7;
     $shadow_yoffs = 7;
-    
+
     # Put them on a row
     $tiled_img = gimp_image_new($total_width, $total_height, RGB);
     $tiled_drw = gimp_layer_new($tiled_img, $total_width, $total_height,
@@ -184,23 +184,23 @@ sub decoration_drop_shadow {
 				   RGB_IMAGE, "Shadow", 50, NORMAL_MODE);
     $tiled_background = gimp_layer_new($tiled_img, $total_width, $total_height,
 				       RGB_IMAGE, "Background", 100, NORMAL_MODE);
-    
+
     # Create masks
     $tiled_drw_msk = $tiled_drw->create_mask(1);
     $tiled_shadow_msk = $tiled_shadow->create_mask(1);
-    
+
     # Make sure respective images have alpha channels
     $tiled_drw->layer_add_alpha();
     $tiled_shadow->layer_add_alpha();
-    
+
     # Connect masks to respective layers
     $tiled_img->add_layer_mask($tiled_drw, $tiled_drw_msk);
     $tiled_img->add_layer_mask($tiled_shadow, $tiled_shadow_msk);
-    
+
     # Fill all the layers with some contents
-    gimp_palette_set_background([128,128,128]); 
+    gimp_palette_set_background([128,128,128]);
     $tiled_drw->fill(BG_IMAGE_FILL);
-    
+
     gimp_palette_set_background($bgcolor);
     $tiled_background->fill(BG_IMAGE_FILL);
     if ($bgpattern) {
@@ -211,15 +211,15 @@ sub decoration_drop_shadow {
     }
     gimp_palette_set_background([0, 0, 0]);  # Shadow color
     $tiled_shadow->fill(BG_IMAGE_FILL);
-    
+
     # Add all the layers to the image
     $tiled_img->add_layer($tiled_background,-1);
     $tiled_img->add_layer($tiled_shadow,-1);
     $tiled_img->add_layer($tiled_drw,-1);
     gimp_display_new($tiled_img);
-    
+
     my $xpos = 0;
-    
+
     # Set color for drawing in mask
     gimp_palette_set_background([255, 255, 255]);
     for $ly_idx (0..@$layout-1) {
@@ -231,23 +231,23 @@ sub decoration_drop_shadow {
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
 	$tiled_img->edit_paste($tiled_drw, 0)
 	    ->floating_sel_anchor;
-	
+
 	# why is the selection cleared?
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
 	$tiled_img->edit_fill($tiled_drw_msk);
-	
+
 	# why is the selection cleared?
 	$tiled_img->rect_select($xpos+$shadow_xoffs,
 				$ypos+$shadow_yoffs, $w, $h, 0, 0, 0);
 	$tiled_img->edit_fill($tiled_shadow_msk);
-	
+
 	$tiled_img->selection_none();
-	
+
     }
-    
+
     # Blur the shadow
     plug_in_gauss_rle(1, $tiled_img, $tiled_shadow_msk, 7, 1, 1);
-    
+
     # Apply the shadow mask
     $tiled_img->remove_layer_mask($tiled_shadow, APPLY);
 }
@@ -256,7 +256,7 @@ sub decoration_sunken_windows {
     my($layout) = shift;
     $shadow_xoffs = 7;
     $shadow_yoffs = 7;
-    
+
     # Create needed image and layers
     $tiled_img = gimp_image_new($total_width, $total_height, RGB);
     $tiled_drw = gimp_layer_new($tiled_img, $total_width, $total_height,
@@ -267,17 +267,17 @@ sub decoration_sunken_windows {
 				RGB_IMAGE, "Punch mask", 100, NORMAL_MODE);
     # Create masks
     $tiled_punch_mask = $tiled_punch_layer->create_mask(0);
-    
+
     # Make sure respective images have alpha channels
     $tiled_punch_layer->layer_add_alpha();
-    
+
     # Connect masks to respective layers
     $tiled_img->add_layer_mask($tiled_punch_layer, $tiled_punch_mask);
-    
+
     # Fill all the layers with some contents
-    gimp_palette_set_background([128,128,128]); 
+    gimp_palette_set_background([128,128,128]);
     $tiled_drw->fill(BG_IMAGE_FILL);
-    
+
     gimp_palette_set_background($bgcolor);
     $tiled_punch_layer->fill(BG_IMAGE_FILL);
     if ($bgpattern) {
@@ -288,15 +288,15 @@ sub decoration_sunken_windows {
     }
     gimp_palette_set_background([255, 255, 255]);  # Punch stencil
     $tiled_punch_stencil->fill(BG_IMAGE_FILL);
-    
+
     # Add all the layers to the image
     $tiled_img->add_layer($tiled_punch_stencil,-1);
     $tiled_img->add_layer($tiled_drw,-1);
     $tiled_img->add_layer($tiled_punch_layer,-1);
     gimp_display_new($tiled_img);
-    
+
     my $xpos = 0;
-    
+
     # Set color for drawing in mask
     gimp_palette_set_background([0, 0, 0]);
     for $ly_idx (0..@$layout-1) {
@@ -308,21 +308,21 @@ sub decoration_sunken_windows {
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
 	$tiled_img->edit_paste($tiled_drw, 0)
 	    ->floating_sel_anchor;
-	
+
 	# why is the selection cleared?
 	$bw = 3;
 	$tiled_img->rect_select($xpos-$bw,
 				$ypos-$bw, $w+2*$bw, $h+2*$bw, 0, 0, 0);
 	$tiled_img->edit_fill($tiled_punch_stencil);
-	
+
 	# why is the selection cleared?
 	$tiled_img->selection_none();
 	$tiled_img->rect_select($xpos, $ypos, $w, $h, 0, 0, 0);
 	$tiled_img->edit_fill($tiled_punch_mask);
-	
+
 	$tiled_img->selection_none();
     }
-    
+
     # Blur the punch stencil
     plug_in_gauss_rle(1, $tiled_img, $tiled_punch_stencil, 7, 1, 1);
 
@@ -358,13 +358,13 @@ sub net {
     }
 
     print "Done reading ", scalar(@imgs), " images\n";
-    
+
     # Now create a layout of the images. The layout algorithm
     # should really be parameterized.
     my ($total_width, $total_height, $layout) = hbox_vbox_create_layout(\@imgs);
 
     print "total_size = ($total_width $total_height)\n";
-    
+
     # This is an example decoration. Others will be created in the future
     if ($decoration eq "drop-shadow") {
 	decoration_drop_shadow($layout);
@@ -384,7 +384,7 @@ sub net {
 	for $idx (0..@filenames-1) {
 	    my ($img, $xpos, $ypos) = @{$layout->[$idx]};
 	    my($w,$h) = ($img->width, $img->height);
-	    
+
 	    printf INDEX "%s %.0f %.0f %.0f %.0f %s\n",
 	        $filenames[$idx], $xpos, $ypos, $xpos+$w, $ypos+$h, $descr;
 	}
@@ -415,22 +415,22 @@ Options:
     -index if        Create an index file mapping filename to bounding box
 	             coordinates in output image, where if is the name of
 		     the index file. The index file may e.g. be translated by
-		     a subsequent program into a html index file. 
+		     a subsequent program into a html index file.
     -layoutwidth lw  Set total width of layout. (Default $layout_width)
     -flatten         Flatten the final image.
     -bgcolor         Set bg color.
     -bgpattern       Set bg pattern. Overrides the bgcolor.
     -padx px         Extra space around all images in x-direction. (Default $pad_x)
     -pady py         Extra space around all images in y-direction. (Default $pad_y)
-    -gutterx gx      Space between images in x-direction. (Default $gutter_x) 
-    -gutterx gy      Space between images in y-direction. (Default $gutter_y) 
+    -gutterx gx      Space between images in x-direction. (Default $gutter_x)
+    -gutterx gy      Space between images in y-direction. (Default $gutter_y)
     -decoration alg  Choose algorithm for drawing the decoration in the layout.
 		     Known algorithms are:
 			   drop-shadow
 			   sunken-windows
 		     Default is 'drop_shadow'.
 __
-		     
+
     /^-max_height/  and do { $max_height = shift; next; };
     /^-index/       and do { $index_file = shift; next; };
     /^-layoutwidth/ and do { $layout_width = shift; next; };

@@ -12,18 +12,18 @@ use Gimp::Util;
 sub randint {
     my ($int) = @_;
     return int(rand()*$int +0.5);
-    }    
+    }
 
-register "random_blends", 
-         "Random Blends - take a guess.", 
+register "random_blends",
+         "Random Blends - take a guess.",
          "A random approach to art.  Just try it. It might be good.",
-         "Seth Burgess", 
-         "Seth Burgess <sjburges\@gimp.org>", 
+         "Seth Burgess",
+         "Seth Burgess <sjburges\@gimp.org>",
          "1999-03-18",
-         "<Image>/Filters/Render/Random Blends", 
-         "RGB*, GRAY*", 
-         [ 
-           [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]], 
+         "<Image>/Filters/Render/Random Blends",
+         "RGB*, GRAY*",
+         [
+           [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]],
             ],
          [],
          ['gimp-1.1'],
@@ -35,10 +35,10 @@ register "random_blends",
     ($sel,$x1,$y1,$x2,$y2) = $img->gimp_selection_bounds;
     srand();
 
-    @gradientlist = gimp_gradients_get_list();  
+    @gradientlist = gimp_gradients_get_list();
     for ($i=0; $i<=$numgradients; $i++) {
         gimp_gradients_set_active(@gradientlist[randint($#gradientlist)]);
-        $layer->gimp_blend(CUSTOM,  
+        $layer->gimp_blend(CUSTOM,
                            6,              # DIFFERENCE
 # I'd really like to alternate how many arguments in gradient type depending
 # on what version of gimp is being run.. Hints anyone? -sjb

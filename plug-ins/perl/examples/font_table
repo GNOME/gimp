@@ -101,7 +101,7 @@ sub font_table {
 		    \@rows, $col1_width, $col2_width, $test_text,
 		    \@fonts, $firstfont, $i);
     }
-    
+
   }
 
   return ();

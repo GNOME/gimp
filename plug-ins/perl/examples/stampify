@@ -5,7 +5,7 @@ use Gimp::Fu;
 
 #Gimp::set_trace(TRACE_ALL);
 
-register	"stampify", 
+register	"stampify",
 		"Makes an image look like a postage stamp.",
 		"This plug-in works from the active layer. Depending on the size of the image, perforations may look strange. Test alternatives!",
 		"Claes G Lindblad <claesg\@algonet.se>",
@@ -32,7 +32,7 @@ register	"stampify",
 		gimp_drawable_fill($layer1, 1);
 # create horisontal holes
 		gimp_selection_none($img2);
-		my $nholes = int (($nw + $gap) / ($diameter + $gap) + 0.5); 
+		my $nholes = int (($nw + $gap) / ($diameter + $gap) + 0.5);
 		$pos = 0;
 		for ($i = 0; $i<$nholes; $i++) {
 			gimp_ellipse_select($img2,
@@ -42,7 +42,7 @@ register	"stampify",
 			$pos = $pos + $diameter + $gap;
 		}
 # create vertical holes
-		my $nholes = int (($nh + $gap) / ($diameter + $gap) + 0.5); 
+		my $nholes = int (($nh + $gap) / ($diameter + $gap) + 0.5);
 		$pos = 0;
 		for ($i = 0; $i<$nholes; $i++) {
 			gimp_ellipse_select($img2,

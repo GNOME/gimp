@@ -101,16 +101,16 @@ sub check {
 sub read_pixels {
    my($drawable,$im)=@_;
    my $th = Gimp->tile_height;
-   
+
    Gimp->tile_cache_ntiles (1 + $drawable->width / Gimp->tile_width);
-   
+
    my $type = $drawable->type;
    my $format;
    $format = "RGB"  if $type == RGB_IMAGE;
    $format = "RGBA" if $type == RGBA_IMAGE;
    $format = "GRAY" if $type == GRAY_IMAGE;
    die "Indexed format and GRAYA not yet supported in GimpMagick!\n" unless $format;
-   
+
    my $temp = Gimp->temp_name('raw');
    open TEMP,">$temp\0" or die "unable to open temporary file '$temp' for writing\n";
    my ($empty,$x1,$y1,$x2,$y2) = $drawable->mask_bounds;
@@ -136,11 +136,11 @@ sub write_pixels {
    my($drawable,$im,$format)=@_;
    my $th = Gimp->tile_height;
    my $buf;
-   
+
    my $temp = Gimp->temp_name('raw');
 
    $im->Write("$format:$temp");
-   
+
    open TEMP,"<$temp\0" or die "unable to open temporary file '$temp' for writing\n";
    unlink $temp;
    my ($empty,$x1,$y1,$x2,$y2) = $drawable->mask_bounds;
@@ -151,7 +151,7 @@ sub write_pixels {
       $drawable->image->selection_none;
       ($x1,$y1,$x2,$y2)=(0,0,$im->get('width','height'));
    }
-   
+
    my $region = $drawable->get->pixel_rgn ($x1, $y1, $x2, $y2, 1, 1);
 
    Gimp->progress_init ("transferring image data");
@@ -206,7 +206,7 @@ sub gimp_magick {
    my $w = new Gtk::Dialog;
 
    $w->set_title ("GimpMagick! $VERSION");
-   
+
    my $b = new Gtk::Button "Apply";
    $b->signal_connect (clicked => sub { write_pixels ($drawable, $im, $format); main_quit Gtk });
    $w->action_area->add ($b);
@@ -260,7 +260,7 @@ sub gimp_magick {
    $w->vbox->add($execute);
 
    update_preview ($im, $preview);
-   
+
    $w->show_all;
    &$changed_command;
    main Gtk;
@@ -283,7 +283,7 @@ register "gimp_magick",
 
    Gimp::init_gtk;
    gimp_magick ($drawable);
-   
+
    $image;
 };
 

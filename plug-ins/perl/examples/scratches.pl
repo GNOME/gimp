@@ -40,12 +40,12 @@ register "scratches",
    my($image,$drawable,$anglex,$angley,$gamma,$length,$width)=@_;
 
    $image->undo_push_group_start;
-   
+
    my $layer1 = new_scratchlayer ($image, $length, $gamma, $anglex);
    my $layer2 = new_scratchlayer ($image, $length, $gamma, $angley);
-   
+
    $drawable->displace ($width, $width, 1, 1, $layer1, $layer2, WRAP);
-   
+
    $layer1->remove_layer;
    $layer2->remove_layer;
 

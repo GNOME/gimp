@@ -23,13 +23,13 @@ register "webify",
          ],
          sub {
    my($img,$drawable,$new,$alpha,$bg,$thresh,$colours,$autocrop)=@_;
-   
+
    $img = $img->channel_ops_duplicate if $new;
-   
+
    eval { $img->undo_group_start };
 
    $drawable = $img->flatten;
-   
+
    if ($alpha) {
       $drawable->add_alpha;
       $drawable->by_color_select($bg,$thresh,SELECTION_REPLACE,1,0,0,0);
@@ -37,9 +37,9 @@ register "webify",
    }
    Plugin->autocrop($drawable) if $autocrop;
    $img->convert_indexed (1, $colours) if $colours;
-   
+
    eval { $img->undo_group_end };
-   
+
    $new ? ($img->clean_all, $img) : undef;
 };
 

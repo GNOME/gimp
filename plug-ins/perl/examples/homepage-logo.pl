@@ -48,18 +48,18 @@ sub index_and_save($$) {
 
 sub write_logo {
   my($string,$active,$w,$h,$uc)=@_;
-  
+
   # create a new image
   my $img=gimp_image_new($w,$h,RGB);
-  
+
   # and a layer for it
   my $bg=gimp_layer_new($img,$w,$h,RGB_IMAGE,"Background",100,NORMAL_MODE);
-  
+
   gimp_image_add_layer($img,$bg,1);
-  
+
   set_fg($blend1);
   set_bg($blend2);
-  
+
   # blend the background
   gimp_blend($bg,FG_BG_HSV,NORMAL_MODE,LINEAR,100,0,
              REPEAT_NONE,0,0,0,
@@ -69,29 +69,29 @@ sub write_logo {
              REPEAT_NONE,0,0,0,
              $w,0,$w*0.92,0);
   gimp_selection_all($img);
-  
+
   set_fg($black);
-  
+
   my ($text,$tw,$th,$ta,$td) = text ($img, $string, 1, $font, $active ? $h*0.7 : $h*0.5);
-  
+
   gimp_layer_translate ($text,($w-$tw)/2,($h-$th+$td)/2);
-  
+
   my ($shadow) = gimp_layer_copy ($text, 0);
-  
+
   plug_in_gauss_rle ($text, 1, 1, 1) unless $active;
 
   gimp_image_add_layer ($img,$shadow,1);
-  
+
   gimp_shear ($shadow,1,HORIZONTAL,-$th);
   gimp_layer_scale ($shadow, $tw, $th*0.3, 1);
   gimp_layer_translate ($shadow, $th*0.1, $th*0.3);
   plug_in_gauss_rle ($shadow, 1, 1, 1);
-  
+
   gimp_hue_saturation($bg, ALL_HUES, 0, 0, $active ? 10 : -40);
-  
+
   plug_in_nova ($bg, $h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
   plug_in_nova ($bg, $w-$h*0.4, $h*0.5, '#f0a020', 5, 50) if $active;
-  
+
   # add an under construction sign
   if ($uc) {
     set_fg($active ? "#a00000" : "#000000");
@@ -99,9 +99,9 @@ sub write_logo {
     gimp_rotate ($uc,1,0.2);
     gimp_layer_translate ($uc,$w*0.84,($h-$th+$td)/2);
   }
-  
+
   index_and_save ($img, "/root/www/src/marc/images/${string}_".($active ? "on" : "off").".gif");
-  
+
   gimp_display_new ($img) if $example;
   gimp_image_delete($img) unless $example;
 }

@@ -9,7 +9,7 @@ use Gimp::Fu;
 # Oct 16th, 1998
 #
 # This script simply changes the current alpha channel to a given color
-# instead.  I'm writing it primarily for use with the displace plugin, 
+# instead.  I'm writing it primarily for use with the displace plugin,
 # but I imagine it'll have other uses.
 
 # TODO: Selection is currently ignored.  It'd be better if it remembered
@@ -47,8 +47,8 @@ sub restore_layers_state($@) {
 		$i++;
 		}
 	}
-	
-				
+
+
 
 sub alpha2col {
 	my ($img, $drawable, $color) = @_;
@@ -57,7 +57,7 @@ sub alpha2col {
 
 	my @layers = gimp_image_get_layers($img);
 
-# if there's not enough layers, abort.	
+# if there's not enough layers, abort.
 	if ($#layers < 0) {
 		gimp_message("You need at least 1 layer to perform alpha2color!");
 		print "Only ", scalar(@layers), " layers found!(", $layers[0],")\n";
@@ -75,11 +75,11 @@ sub alpha2col {
 	# print $target_layer, "\n";
 	foreach $eachlay (@layers) {
 		$eachlay->set_visible(0);
-		}		
+		}
 	$target_layer->set_visible(1);
 	gimp_palette_set_background($color);
 	$newlay = $target_layer->copy(1);
-	$img->add_layer($newlay, 0);	
+	$img->add_layer($newlay, 0);
 	$newlay->set_offsets(@offsets);
 	$target_layer->set_active_layer;
 
@@ -88,9 +88,9 @@ sub alpha2col {
 	$img->selection_none;
 
 	$foreground = gimp_image_merge_visible_layers($img,0);
-	
-	restore_layers_state($img, @layer_visibilities);	
-	
+
+	restore_layers_state($img, @layer_visibilities);
+
 	gimp_palette_set_background($oldcolor);
 	gimp_displays_flush();
 	return();
@@ -110,5 +110,5 @@ register
 	],
 	\&alpha2col;
 
-exit main;	
+exit main;
 

@@ -7,7 +7,7 @@ sub goldenmean {
 	my ($short, $type) = @_;
 
 	$long = int(($short * 1.618) + 0.5);
-	
+
 	$width = $short;
 	$height = $long;
 
@@ -26,7 +26,7 @@ sub goldenmean {
 	return $img;
 }
 
-register	"golden_mean", 
+register	"golden_mean",
 		"Creates a new image with a ratio according to the Golden Mean",
 		"Select shortest side and orientation and I will automagically calculate the long side. As a plug-in companion, see <Image>/Center Guide.",
 		"Claes G Lindblad <claesg\@algonet.se>",

@@ -34,7 +34,7 @@ sub Create_Image {
     my($Image,$Text_Layer,$Background_Layer,$Width,$Height);
 
     # Let's see if we can plug a little daemon in here.
-    
+
     $border = 10;
     $size = 100;
     $Background_Colour = $white;
@@ -43,10 +43,10 @@ sub Create_Image {
     # Create an image. We'll just set whatever size here because we want
     # to resize the image when we figure out how big the text is.
     $Image = gimp_image_new(256,256,RGB);
-    
+
     # Create a layer for the text.
     $Text_Layer = gimp_text($Image,-1,0,0,$text,$border,1,$size,PIXELS,"*",$font,"*","*","*","*");
-    
+
     # Do the fun stuff with the text.
     gimp_palette_set_background($Text_Colour);
     gimp_layer_set_preserve_trans($Text_Layer, TRUE);
@@ -55,37 +55,37 @@ sub Create_Image {
     # Now figure out the size of $Text_Layer.
     $Width = gimp_drawable_width($Text_Layer);
     $Height = gimp_drawable_height($Text_Layer);
-			  
+
     # Create a layer for the background based on the size of the text.
     $Background_Layer = gimp_layer_new($Image,$Width,$Height,RGB_IMAGE,"Background",100,NORMAL_MODE);
 
     # Resize the $Image based on size of text.
     gimp_image_resize($Image,$Width,$Height,0,0);
-    
+
     # Add the $Background_Layer to the image.
     gimp_image_add_layer($Image, $Background_Layer, 1);
-	     
+
     # Set the background colour and fill it in with that colour.
     gimp_palette_set_background($Background_Colour);
     gimp_drawable_fill($Background_Layer,BG_IMAGE_FILL);
-    
+
     #index_and_save ($Image, "/tmp/${text}_" . ".gif");
-  
+
     gimp_display_new ($Image) if $example;
-    
+
     #gimp_image_delete($Image) unless $example;
 
 }
 
 sub extension_create_images {
     #Get our list of strings that we want to make images with.
-    
+
     $Image_Directory = "/tmp";
-    
+
     $active = 0;
-    
+
     open(IMAGE_LIST, "/tmp/image_list");
-    
+
     while( <IMAGE_LIST> ) {
         chop;
         Create_Image (split(/\|/));

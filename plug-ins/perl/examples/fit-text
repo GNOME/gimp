@@ -17,20 +17,20 @@ sub growfont {
 	@fontdesc = split /-/, $fontname;
 	$fontdesc[8] += $plussize;
 	$outname = join "-", @fontdesc;
-	return $outname;		
-	} 
+	return $outname;
+	}
 
-register "fit_text", 
-         "Fit Text - fit text to a selection", 
+register "fit_text",
+         "Fit Text - fit text to a selection",
          "Have a rectangular selection, and select the font type and spacing.  It will fill the selection with text as closely as possible.  If no selection is made prior to running, it will fill the entire image.",
-         "Seth Burgess", 
-         "Seth Burgess <sjburges\@gimp.org>", 
+         "Seth Burgess",
+         "Seth Burgess <sjburges\@gimp.org>",
          "1999-03-21",
-         "<Image>/Filters/Render/Fit Text", 
-         "*", 
-         [ 
-           [PF_FONT, "font", "What font type to use - size will be ignored", $defaultfont], 
-           [PF_STRING, "string", "Text String to fill with", "Fit Text"], 
+         "<Image>/Filters/Render/Fit Text",
+         "*",
+         [
+           [PF_FONT, "font", "What font type to use - size will be ignored", $defaultfont],
+           [PF_STRING, "string", "Text String to fill with", "Fit Text"],
             ],
          [],
          ['gimp-1.1'],
@@ -39,34 +39,34 @@ register "fit_text",
     ($sel,$x1,$y1,$x2,$y2) = $img->gimp_selection_bounds;
     $width = $x2-$x1;
 	$height = $y2-$y1;
-	
+
 	@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 	$growsize = ($extents[0]<$width && $extents[1]<$height) ? 80 : -80;
 	if ($growsize > 0 ) {
 		 while ($extents[0]<$width && $extents[1]<$height) {
-				$xlfd = growfont($xlfd,$growsize); 	
+				$xlfd = growfont($xlfd,$growsize);
 				@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 				}
 		$xlfd = growfont($xlfd, -$growsize);
 		}
-	else { 
+	else {
 		 while ($extents[0]>$width || $extents[1]>$height) {
-				$xlfd = growfont($xlfd,$growsize); 	
+				$xlfd = growfont($xlfd,$growsize);
 				@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 				}
 		}
-	
+
 	while ($extents[0]<$width && $extents[1]<$height) {
-		$xlfd = growfont($xlfd,10); # precision for the last bit	
+		$xlfd = growfont($xlfd,10); # precision for the last bit
 		@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 		}
-	
+
 	 while ($extents[0]>$width || $extents[1]>$height) {
-			$xlfd = growfont($xlfd,-4); 	
+			$xlfd = growfont($xlfd,-4);
 			@extents=gimp_text_get_extents_fontname($string,xlfd_size($xlfd),$xlfd);
 			}
  	# print $xlfd, "\n";
-	
+
 	$tmplay = $layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
 	$width2=$tmplay->width;
 	$height2=$tmplay->height;
@@ -75,14 +75,14 @@ register "fit_text",
 #	print "$width2, $height2:$width, $height\n";
 	while ($width2<$width && $height2<$height) {
 		$tmplay->remove;
-		$xlfd = growfont($xlfd,4); 	
+		$xlfd = growfont($xlfd,4);
 		$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
 		$width2=$tmplay->width;
 		$height2=$tmplay->height;
 		}
 
 	$tmplay->remove;
-	$xlfd = growfont($xlfd,-2); 	
+	$xlfd = growfont($xlfd,-2);
 	$tmplay=$layer->text_fontname($x1,$y1,$string,0,1,xlfd_size($xlfd), $xlfd);
     return();
 };

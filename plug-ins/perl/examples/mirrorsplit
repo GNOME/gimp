@@ -3,7 +3,7 @@
 use Gimp qw( :auto );
 use Gimp::Fu;
 
-register	"mirror_split", 
+register	"mirror_split",
 		"Splits and mirrors half of the image, according to settings.",
 		"Just tick appropriate radio button.",
 		"Claes G Lindblad <claesg\@algonet.se>",

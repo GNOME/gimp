@@ -22,7 +22,7 @@ use Gimp qw(:auto);
 use Gimp::Fu;
 use Fcntl qw(O_RDWR O_CREAT O_TRUNC);
 use Gimp::Feature;
-BEGIN { eval "use DB_File"; 
+BEGIN { eval "use DB_File";
            $@ and Gimp::Feature::missing('Berkeley DB interface module') }
 # use strict;
 # use vars qw($DO_HSV $debug);
@@ -426,7 +426,7 @@ sub hue_dist {
   my $d = abs($h1-$h2);
   return($d>128?(256-$d):$d);
 }
-  
+
 # Gimp::Fu registration routine for placing this function into gimp's PDB
 register
   "image_tile",

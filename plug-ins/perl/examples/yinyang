@@ -134,7 +134,7 @@ yinyang
 
 B<yinyang> is a B<Gimp> plugin. It generates a Yin/Yang symbol, which
 is a Chinese symbol of duality. It takes as parameters (provided by the
-Gimp user interface) the width and height of the resulting image; 
+Gimp user interface) the width and height of the resulting image;
 a toggle to indicate if "eyes" should be inserted (see I<EYES>);
 a toggle to indicate if the eyes should be images that are
 loaded separately; the two filenames for the eyes and a toggle to

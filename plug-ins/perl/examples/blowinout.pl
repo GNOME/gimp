@@ -11,7 +11,7 @@ use Gimp::Fu;
 # Gimp::set_trace(TRACE_CALL);
 
 
-sub blowinout { 
+sub blowinout {
     my ($img, $drawable, $angle, $nsteps, $distance, $inmode, $arithmode) = @_;
     # bail out if $drawable isn't a layer
 #    print "Starting\n";
@@ -23,7 +23,7 @@ sub blowinout {
     #get the drawable dimensions
     my $xsize = gimp_drawable_width($drawable);
     my $ysize = gimp_drawable_height($drawable);
-    
+
     # Set background color to 128, for clearing dm
     gimp_palette_set_background([128,128,128]);
 
@@ -31,48 +31,48 @@ sub blowinout {
     my $dm = gimp_image_new($xsize, $ysize, 1);
     eval { $dm->undo_push_group_start };
     # It needs to have 2 layers
-    my $dmlayer = gimp_layer_new($dm, $xsize, $ysize, GRAY_IMAGE, "newlayer", 
+    my $dmlayer = gimp_layer_new($dm, $xsize, $ysize, GRAY_IMAGE, "newlayer",
         100, NORMAL_MODE);
     gimp_image_add_layer($dm, $dmlayer, 0);
-    
-    # Create the layers, one-by-one 
+
+    # Create the layers, one-by-one
     my $i = 1;
-    my $xdist = ($arithmode) ? 
-        $i * $distance / $nsteps * -cos($angle * 3.14159 / 180) : 
+    my $xdist = ($arithmode) ?
+        $i * $distance / $nsteps * -cos($angle * 3.14159 / 180) :
         $distance ** ($i/$nsteps) * -cos($angle * 3.14159 / 180);
-    my $ydist = ($arithmode) ? 
-        $i * $distance / $nsteps * sin($angle * 3.14159 / 180) : 
+    my $ydist = ($arithmode) ?
+        $i * $distance / $nsteps * sin($angle * 3.14159 / 180) :
         $distance ** ($i/$nsteps) * sin($angle * 3.14159 / 180);
     gimp_edit_clear($dmlayer);
     plug_in_noisify(1, $dm, $dmlayer, 0, 255, 255, 255, 0);
-    gimp_levels($dmlayer, 0, 0, 255, 1.0, 128, 255); 
+    gimp_levels($dmlayer, 0, 0, 255, 1.0, 128, 255);
     $drawable = gimp_layer_copy($drawable, 0);
     gimp_image_add_layer($img, $drawable, -1);
-    plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer, 
+    plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
         $dmlayer, 1);
-    if ( $inmode == 1 )  
+    if ( $inmode == 1 )
     {
         gimp_image_lower_layer($img, $drawable);
     };
     for ( $i = 2; $i <= $nsteps; $i++ ) {
-        $xdist = ($arithmode) ? 
-            $i * $distance / $nsteps * -cos($angle * 3.14159 / 180) : 
+        $xdist = ($arithmode) ?
+            $i * $distance / $nsteps * -cos($angle * 3.14159 / 180) :
             $distance ** ($i/$nsteps) * -cos($angle * 3.14159 / 180);
-        $ydist = ($arithmode) ? 
-            $i * $distance / $nsteps * sin($angle * 3.14159 / 180) : 
+        $ydist = ($arithmode) ?
+            $i * $distance / $nsteps * sin($angle * 3.14159 / 180) :
             $distance ** ($i/$nsteps) * sin($angle * 3.14159 / 180);
-        gimp_edit_clear($dmlayer); 
+        gimp_edit_clear($dmlayer);
         plug_in_noisify(1, $dm, $dmlayer, 0, 255, 255, 255, 0);
         gimp_levels($dmlayer, 0, 0, 255, 1.0, 128, 255);
         $drawable = gimp_layer_copy($drawable, 0);
         gimp_image_add_layer($img, $drawable, -1);
-        plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer, 
+        plug_in_displace(1, $img, $drawable, $xdist, $ydist, 1, 1, $dmlayer,
             $dmlayer, 1);
-        if ( $inmode == 1 )  
+        if ( $inmode == 1 )
         {
             gimp_image_lower_layer($img, $drawable);
         };
-    } 
+    }
 
     eval { $dm->undo_push_group_end };
 #    gimp_image_remove_layer($dm, $dmlayer);
@@ -80,7 +80,7 @@ sub blowinout {
     gimp_palette_set_background($oldbg);
     eval { $img->undo_push_group_end };
 #    gimp_displays_flush(); unneccessary (and dangerous ;)
-    
+
     (); # I like smileys ;)
 }
 

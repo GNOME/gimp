@@ -126,7 +126,7 @@ sub new_Entry {
    my $name = $_[2];
 
    $label->set_alignment (0, 0.5);
-   
+
    $hbox->pack_start ($label, 0, 0, 0);
    $hbox->pack_start ($name , 1, 1, 0);
 
@@ -139,9 +139,9 @@ sub new_Entry {
 sub create_main {
    my $b;
    my $t;
-   
+
    parse Gtk::Rc Gimp->gtkrc;
-   
+
    $t = new Gtk::Tooltips;
    my $w = new Gtk::Dialog;
 
@@ -149,14 +149,14 @@ sub create_main {
    $eX = $w->style->font->ascent + $w->style->font->descent + 10;
 
    $window = $w;
-   
+
    $w->set_title("Parasite Editor - version $VERSION alpha");
    $w->signal_connect("destroy",sub {main_quit Gtk});
-   
+
    $b = new Gtk::Button "Close";
    $w->action_area->add($b);
    $b->signal_connect("clicked",sub {main_quit Gtk});
-   
+
    my $v = new Gtk::VBox (0,5);
    $w->vbox->add ($v);
 
@@ -261,7 +261,7 @@ sub create_main {
          if $parasite ne "";
    });
    addcmd ("Delete", sub {$detach_func->($current,$parasite) if $parasite; refresh_names});
-   
+
    show_all $w;
 }
 
@@ -277,11 +277,11 @@ register "extension_parasite_editor",
          [],
          ['gimp-1.1'],
          sub {
- 
+
    Gimp::init_gtk;
    create_main;
    main Gtk;
-   
+
    ();
 };
 

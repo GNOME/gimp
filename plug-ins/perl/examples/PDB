@@ -201,7 +201,7 @@ sub complete_function {
 
 sub complete_type {
    my($type,$name,$desc)=@_;
-   
+
    if($type==PARAM_IMAGE) {
       set_clist(map(("$$_: ".$_->get_filename,$$_),Gimp->list_images));
    } elsif($type==PARAM_LAYER) {
@@ -233,14 +233,14 @@ sub complete_type {
 
 sub update_completion {
    my($idx,$pos,@words)=get_words;
-   
+
    return unless $idx ne $last_arg;
    eval { $argsvalid[$last_arg-1]->set('+') };
    $last_arg=$idx;
    eval { $argsvalid[$last_arg-1]->set('>') };
-   
+
    set_current_function $words[0];
-   
+
    if ($idx == 0) {
       complete_function($words[0]);
    } elsif ($idx>@args) {
@@ -253,10 +253,10 @@ sub update_completion {
 
 sub do_completion {
    update_completion;
-   
+
    my($idx,$pos,@words)=get_words;
    my($word)=$words[$idx];
-   
+
    $word=~s/[-_]/[-_]/g;
    my(@matches)=grep /$word/i,keys %completion;
    my $new;
@@ -334,7 +334,7 @@ sub inputline {
    $e->signal_connect("activate",\&execute_command);
    $e->set_usize($ex*40,0);
    $inputline=$e;
-   
+
    my $c = new Gtk::List;
    $clist = $c;
    $c->set_selection_mode(-single);
@@ -351,7 +351,7 @@ sub inputline {
       };
       do_idle;
    });
-   
+
    my $r = new Gtk::List;
    $rlist = $r;
    $r->set_selection_mode(-single);
@@ -361,52 +361,52 @@ sub inputline {
 sub create_main {
    my $b;
    my $t;
-   
+
    parse Gtk::Rc Gimp->gtkrc;
-   
+
    $t = new Gtk::Tooltips;
    my $w = new Gtk::Dialog;
    $window = $w;
    $w->realize;
    $ex = $w->style->font->string_width ('Mn')*0.5;
-   
+
    $w->set_title('PDB Explorer - the alpha version');
    $w->signal_connect("destroy",sub {main_quit Gtk});
-   
+
    $b = new Gtk::Button "Close";
    $w->action_area->add($b);
    $b->signal_connect("clicked",sub {main_quit Gtk});
-   
+
    my $h = new Gtk::HBox (0,5);
    $w->vbox->add ($h);
-   
+
    inputline;
-   
+
    $synopsis = new Gtk::Label "";
    $synopsis->set_justify(-left);
-   
+
    my $table = new Gtk::Table 3,4,0;
    $w->vbox->add($table);
-   
+
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
    $gtk_10 ? $cs->add ($clist) : $cs->add_with_viewport ($clist);
-   
+
    my $rs = new Gtk::ScrolledWindow undef,undef;
    $rs->set_policy(-automatic,-automatic);
    $gtk_10 ? $rs->add ($rlist) : $rs->add_with_viewport ($rlist);
    $rs->set_usize(0,200);
-   
+
    $result = new Gtk::Entry;
    $result->set_editable(0);
    $result->set_usize($ex*30,0);
-   
+
    $statusbar = new Gtk::Label;
 
    realize $window;
 
    $table->border_width(10);
-   
+
    $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
       $table->attach($synopsis ,1,2,0,1,{},{},0,0);
          #$table->attach(logo(),2,3,0,1,{},{},0,0);
@@ -423,9 +423,9 @@ sub create_main {
    $cinfo->border_width(10);
    $cinfo->add (new_cinfo);
    $w->vbox->add ($cinfo);
-   
+
    idle;
-   
+
    show_all $w;
 }
 
@@ -439,12 +439,12 @@ register "extension_pdb_explorer",
          "",
          [],
          sub {
-   
+
    Gimp::init_gtk;
    refresh;
    create_main;
    main Gtk;
-   
+
    ();
 };
 

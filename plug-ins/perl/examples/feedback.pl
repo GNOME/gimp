@@ -2,7 +2,7 @@
 
 # Revision 1.0: Released it
 #          1.1: Marc Lehman added undo capability! <pcg@goof.com>
-#          1.2: Added my email, and put it in "Noise" where it belongs 
+#          1.2: Added my email, and put it in "Noise" where it belongs
 #                <sjburges@gimp.org>
 
 
@@ -23,14 +23,14 @@ register "feedback",
          ],
          sub {
    my($img,$drawable,$offset,$repeat)=@_;
-   
+
    eval { $img->undo_push_group_start };
-   
-   for (; $repeat>0; $repeat--) { 
+
+   for (; $repeat>0; $repeat--) {
    	 $drawable = $img->flatten;
    	 $copylayer = $drawable->copy(1);
 	 $img->add_layer($copylayer,0);
-	 $copylayer->scale($img->width - $offset, $img->height - $offset, 0);	
+	 $copylayer->scale($img->width - $offset, $img->height - $offset, 0);
 	}
 	$img->flatten;
    eval { $img->undo_push_group_end };

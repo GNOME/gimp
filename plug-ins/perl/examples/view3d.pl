@@ -25,10 +25,10 @@ register
     ], [],
 sub {
     my ($img, $dwb, $polar, $lines, $smooth) = @_;
-   
+
     my $w = $dwb->width;
     my $h = $dwb->height;
-  
+
     my $gdwb = $dwb->get;
     my $regn = $gdwb->pixel_rgn (0, 0, $w, $h, 0, 0);
     my $rect = $regn->get_rect (0, 0, $w, $h);

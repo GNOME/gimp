@@ -32,7 +32,7 @@ use Gimp::Util;
 
 # Gimp::set_trace(TRACE_ALL);
 
-register 
+register
 	"terraltext",
 	"Make a cool text bumpmap thingy",
 	"Does a neat text render effect.  If you uncheck the box, it uses the current layer.  ".
@@ -42,12 +42,12 @@ register
 	"1999-03-15",
 	"<Image>/Filters/Render/Terral Text",
 	"RGB*,GRAY*",
-	[ 
+	[
 	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, ["solid noise" => 1, "current picture" => 0]],
 	  [ PF_FONT, "helvetica", "Font Name", "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1" ],
 	  [ PF_STRING, "text", "Enter your Text to be Terral-ified", "TerralText"],
 	  [ PF_SLIDER, "blur_amount", "Blur Amount", 10, [0,26,1]],
-	], 
+	],
         [],
         ['gimp-1.1'],
 sub {
@@ -55,8 +55,8 @@ sub {
 	$oldbg = gimp_palette_get_background();
 	$oldfg = gimp_palette_get_foreground();
 
-       
-	
+
+
 	if ($solidnoise) {
 		$pattern->plug_in_solid_noise(1,1,256*rand(), 1,2.5,2.5);
 	}
@@ -66,7 +66,7 @@ sub {
       # for now.
 
       # Hello, Seth.. look at this:
-	
+
 	$textlayer = $img->layer_new($img->width, $img->height, $img->layertype(1),
 		"TextLayer", 100, 0);
 	$img->add_layer($textlayer,1);
@@ -76,14 +76,14 @@ sub {
 
 	# Place centered Text - what a PITA!
 	@extents = text_get_extents_fontname($text, xlfd_size($font), $font);
-	$width = $extents[0]; 		
-	$height = $extents[1];  # there's other info in 2&3		
+	$width = $extents[0];
+	$height = $extents[1];  # there's other info in 2&3
 	$width_offset = ($img->width - $width)/2;
 	$height_offset = ($img->height - $height)/2;
-	$floating=$textlayer->text_fontname($width_offset, $height_offset, $text, 0,0,xlfd_size($font), $font);	
+	$floating=$textlayer->text_fontname($width_offset, $height_offset, $text, 0,0,xlfd_size($font), $font);
 	$floating->floating_sel_anchor;
-	
-	$textlayer->plug_in_gauss_iir($blur, 1,1); 
+
+	$textlayer->plug_in_gauss_iir($blur, 1,1);
 	$textlayer->invert();
 	$pattern->plug_in_bump_map($textlayer, 130.30, 40, 20, 0, 0, 0, 0, 1, 0, 0);
 
@@ -91,12 +91,12 @@ sub {
 		$pattern->add_alpha;
 		}
 	$mask = $pattern->create_mask(0);
-	$img->add_layer_mask($pattern, $mask); 	
-	
+	$img->add_layer_mask($pattern, $mask);
+
 	$textlayer->edit_copy();
 	$floater = $mask->edit_paste(0);
 	$floater->floating_sel_anchor;
-	
+
 	$mask->levels(0, 0, 113, 0.24, 0, 255);
 
 	palette_set_background($oldbg);

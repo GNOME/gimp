@@ -103,7 +103,7 @@ sub extension_perl_control_center {
 
       $w = new Gtk::Dialog;
       $w->set_title ('Perl Control Center');
-      
+
       $b = new Gtk::Button "View Perl Feature Status";
       $b->signal_connect(clicked => sub { gtkview_log $s,'Perl Feature Status',generate_status});
       $w->vbox->add($b);

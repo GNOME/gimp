@@ -9,16 +9,16 @@ use Gimp;
 # the extension that's called.
 sub plug_in_example_oo {
   my $img=new Image(300,200,RGB);
-  
+
   my $bg=new Layer($img,300,200,RGB_IMAGE,"Background",100,NORMAL_MODE);
-  
+
   Palette->set_background([200,200,100]);
-  
+
   $bg->fill(BG_IMAGE_FILL);
 #  Palette->set_background([200,100,200]);
 #  gimp_drawable_fill ($bg,BG_IMAGE_FILL);
   $img->add_layer($bg,1);
-  
+
   new Display($img);
 }
 

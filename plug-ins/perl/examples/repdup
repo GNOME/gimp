@@ -5,7 +5,7 @@ use Gimp::Fu;
 
 #Gimp::set_trace(TRACE_ALL);
 
-register	"repdup", 
+register	"repdup",
 		"Repeats and duplicates a selection.",
 		"Hopefully self-explanatory...",
 		"Claes G Lindblad <claesg\@algonet.se>",

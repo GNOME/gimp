@@ -3,7 +3,7 @@
 use Gimp qw( :auto );
 use Gimp::Fu;
 
-register	"center_guide", 
+register	"center_guide",
 		"Creates h- & v-guides at the center of the image.",
 		"Physical center = width/2 and height/2; Optical center = the Golden Mean.",
 		"Claes G Lindblad <claesg\@algonet.se>",

@@ -32,35 +32,35 @@ register "gimp_fu_example_script",			# fill in a function name
           [PF_GRADIENT	, "a_gradients"	, "An unused gradients"		],
          ],
          sub {
-   
+
    # now do sth. useful with the garbage we got ;)
    my($width,$height,$text,$font,$fg,$bg,$ignore,$brush,$pattern,$gradient)=@_;
-   
+
    # set tracing
    Gimp::set_trace(TRACE_ALL);
 
    my $img=new Image($width,$height,RGB);
-   
+
    # put an undo group around any modifications, so that
    # they can be undone in one step. The eval shields against
    # gimp-1.0, which does not have this function.
    eval { $img->undo_push_group_start };
-   
+
    my $l=new Layer($img,$width,$height,RGB,"Background",100,NORMAL_MODE);
    $l->add_layer(0);
 
    # now a few syntax examples
-   
+
    Palette->set_foreground($fg) unless $ignore;
    Palette->set_background($bg) unless $ignore;
-   
+
    fill $l BG_IMAGE_FILL;
 
    # the next function only works in gimp-1.1
    $text_layer=$img->text_fontname(-1,10,10,$text,5,1,xlfd_size($font),$font);
 
    gimp_palette_set_foreground("green");
-   
+
    # close the undo push group
    eval { $img->undo_push_group_end };
 

@@ -10,22 +10,22 @@ sub query {
 
 sub net {
   # simple benchmark ;)
-  
+
   $img=new Gimp::Image(600,300,RGB);
   # the is the same as $img = new Image(600,300,RGB)
-  
+
   $bg=$img->layer_new(30,20,RGB_IMAGE,"Background",100,NORMAL_MODE);
-  
+
   $bg->add_layer(1);
-  
+
   new Gimp::Display($img);
-  
+
   for $i (0..255) {
      Palette->set_background([$i,255-$i,$i]);
      $bg->edit_fill;
      Display->displays_flush ();
   }
-  
+
 #  Gimp::Net::server_quit;  # kill the gimp-perl-server-extension (ugly name)
 }
 

@@ -36,7 +36,7 @@ sub stamps {
 	return $img;
 }
 
-register	"stamps", 
+register	"stamps",
 		"Creates a rectangular image with stamp-like perforations.",
 		"Default values are not bad!",
 		"Claes G Lindblad <claesg\@algonet.se>",

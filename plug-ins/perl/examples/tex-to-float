@@ -53,7 +53,7 @@ sub tex_string_to_pgm {
     if (exist_in_tex_path($input_file)) {
 	$input .= "\\input $input_file\n";
     }
-    
+
     open(TEX, ">$fn_base.tex");
     print TEX "\\nopagenumbers\n"
 	    . "\\magnification\\magstep$magstep\n"
@@ -62,7 +62,7 @@ sub tex_string_to_pgm {
 	    . "$string\n"
             . "\\bye";
     close(TEX);
-    
+
     my $res = xec("tex $fn_base.tex < /dev/null");
     # Deal with errors...
 
@@ -77,7 +77,7 @@ sub tex_string_to_pgm {
     my $h = $bbox[3]-$bbox[1];
     $psoutput=~ s/^%%BoundingBox:.*$/%%BoundingBox: 0 0 $w $h/m;
     $psoutput=~ s/^1 0 bop/-$bbox[0] -$bbox[1] translate\n$&/m;
-    
+
     # Output to file in order not to have to use Open2.
     open(PS, ">$fn_base.ps");
     print PS $psoutput;
@@ -99,13 +99,13 @@ sub grey_file_to_float {
     # Setup
     my $save_bg = gimp_palette_get_background();
     gimp_undo_push_group_start($img1);
-    
+
     # Load the new img
     my $grey_img = gimp_file_load(RUN_NONINTERACTIVE, $fn, $fn);
-    
+
     # Get name of new layer
     my $grey_layer = gimp_image_get_active_layer($grey_img);
-    
+
     # Create an alpha layer and copy image to alpha layer
     gimp_layer_add_alpha($grey_layer);
     $grey_img->selection_all();
@@ -126,18 +126,18 @@ sub grey_file_to_float {
 
     print STDERR "Yohoo!\n";
     cleanup();
-    
+
     # Get rid of $grey_img
     gimp_image_delete($grey_img);
 
-    
+
     # Restore
     gimp_palette_set_background($save_bg);
     gimp_undo_push_group_end($img1);
-    
+
     # Update the display
     gimp_displays_flush();
-    
+
     return undef;
 }
 
@@ -153,9 +153,9 @@ sub tex_string_to_float {
 
     tex_string_to_pgm($text, $input_file, $text, $ppi, $magstep, $anti_aliasing,
 		      "$fn_base.pgm");
-    
+
     grey_file_to_float($img1, $drw1, "$fn_base.pgm");
-    
+
     return undef;
 }
 
@@ -163,7 +163,7 @@ sub tex_string_to_float {
 register "tex_string_to_float", "Turn a TeX-string into floating layer", "Takes a TeX string as input and creates a floating layer of the rendered string in the current layer in the foreground color.",
     "Dov Grobgeld <dov\@imagic.weizmann.ac.il>", "Dov Grobgeld",
     "1999-03-16",
-    "<Image>/Filters/Render/TeX String", 
+    "<Image>/Filters/Render/TeX String",
     "*",
     [
      [PF_STRING,  "input_file",     "TeX macro file to input"],

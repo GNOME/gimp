@@ -29,7 +29,7 @@ sub windify {
 	gimp_layer_set_mode($windlayercopy, 10); # Lighten Only
 	gimp_image_merge_visible_layers($out,0);
 
-# many thanks to Dov for this suggestion as a workaround to the 
+# many thanks to Dov for this suggestion as a workaround to the
 # gimp_image_merge_visible_layers bug
 
 	my $newlay = gimp_image_get_active_layer ($out);
@@ -40,7 +40,7 @@ sub windify {
 	gimp_image_delete ($out);
 	gimp_palette_set_background($oldbg);
 	gimp_displays_flush();
-	
+
 	undef;
 	}
 
