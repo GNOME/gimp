@@ -91,6 +91,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
 {
   GimpContext *context;
   GtkWidget   *image_view;
+  gchar       *tooltip;
 
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
@@ -109,9 +110,19 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
 
   gtk_widget_show (image_view);
 
-  gimp_help_set_help_data (image_view,
-                           _("The active image.\n"
-                             "Click to open the Image Dialog."), NULL);
+#ifdef GDK_WINDOWING_X11
+  tooltip = g_strdup_printf ("%s\n%s",
+                             _("The active image.\n"
+                               "Click to open the Image Dialog."),
+                             _("Drag to an XDS enabled file-manager to "
+                               "save the image."));
+#else
+  tooltip = g_strdup (_("The active image.\n"
+                        "Click to open the Image Dialog."));
+#endif
+
+  gimp_help_set_help_data (image_view, tooltip, NULL);
+  g_free (tooltip);
 
   g_signal_connect_object (context, "image_changed",
                            G_CALLBACK (gimp_view_set_viewable),
