@@ -852,8 +852,7 @@ tools_initialize (ToolType  tool_type,
    */
   if (active_tool->type == tool_type)
     {
-      gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
-			       "tool_changed", tool_type);
+      gimp_context_tool_changed (gimp_context_get_user ());
     }
   else
     {

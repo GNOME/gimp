@@ -392,9 +392,7 @@ transform_change_type (ToolType new_type)
       if (gimp_context_get_tool (gimp_context_get_user ()) != new_type)
 	gimp_context_set_tool (gimp_context_get_user (), new_type);
       else
-	gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
-				 "tool_changed",
-				 new_type);
+	gimp_context_tool_changed (gimp_context_get_user ());
     }
 }
 

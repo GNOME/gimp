@@ -1,5 +1,18 @@
 2000-02-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontext.[ch]: it's more intelligent to implement the
+	parent_context stuff with gtk_signal_connect_object() instead of
+	having internal callbacks for each context attribute.
+	Exported the existing gimp_context_*_changed() functions and
+	changed them to do nothing but emitting the signal.
+
+	* app/app_procs.c
+	* app/tools.c
+	* app/transform_tool.c: use gimp_context_tool_changed() instead of
+	gtk_signal_emit_by_name().
+
+2000-02-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/color_area.[ch]
 	* app/interface.c: pass masks for the "default" and "swap" pixmaps
 	to the color_area constructor and use them to create a clip mask

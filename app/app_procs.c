@@ -608,8 +608,7 @@ app_init (void)
       /*  EEK: force signal emission  */
       if (gimp_context_get_tool (gimp_context_get_user ()) == RECT_SELECT)
 	{
-	  gtk_signal_emit_by_name (GTK_OBJECT (gimp_context_get_user ()),
-				   "tool_changed", RECT_SELECT);
+	  gimp_context_tool_changed (gimp_context_get_user ());
 	}
       else
 	{
