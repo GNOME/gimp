@@ -1,3 +1,7 @@
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/Makefile.am (libappdialogs_a_SOURCES): added authors.h.
+
 2004-09-19  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimppaintoptions-gui.c: rearrange tool options as 

@@ -11,6 +11,7 @@ libappdialogs_a_SOURCES = \
 	\
 	about-dialog.c			\
 	about-dialog.h			\
+	authors.h			\
 	color-dialog.c			\
 	color-dialog.h			\
 	convert-dialog.c		\
