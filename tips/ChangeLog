@@ -1,3 +1,7 @@
+2004-04-07  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added eu.po (Basque).
+
 2004-04-06  Iñaki Larrañaga  <dooteo@euskalgnu.org>
 
 	* eu.po: Added Basque translation.
