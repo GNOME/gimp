@@ -1,3 +1,9 @@
+2004-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): if we
+	pick a layer to move and this layer has a mask which is being
+	edited (active), start moving the mask, not the layer.
+
 2004-03-04  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc-blurbs.h: marked new strings for translation.

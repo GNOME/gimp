@@ -331,8 +331,17 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  else
 	    {
               /*  Otherwise, init the edit selection  */
+
+              GimpLayerMask *layer_mask;
+
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
-	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
+
+              layer_mask = gimp_layer_get_mask (layer);
+
+              if (layer_mask && gimp_layer_mask_get_edit (layer_mask))
+                init_edit_selection (tool, gdisp, coords, EDIT_LAYER_MASK_TRANSLATE);
+              else
+                init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 	}
     }
