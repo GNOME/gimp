@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-19 17:30+0200\n"
-"PO-Revision-Date: 2003-09-29 17:54+0200\n"
+"PO-Revision-Date: 2003-09-29 18:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -5933,14 +5933,12 @@ msgid "Transparency"
 msgstr "Trasparenza"
 
 #: app/gui/preferences-dialog.c:1662
-#, fuzzy
 msgid "Transparency _Type:"
-msgstr "Tipo di trasparenza:"
+msgstr "_Tipo di trasparenza:"
 
 #: app/gui/preferences-dialog.c:1665
-#, fuzzy
 msgid "Check _Size:"
-msgstr "Dimensione scacchiera:"
+msgstr "Controllo _dimensione:"
 
 #. 8-Bit Displays
 #: app/gui/preferences-dialog.c:1669
@@ -5973,19 +5971,16 @@ msgid "(Currently %d x %d dpi)"
 msgstr "(Corrente %d x %d dpi"
 
 #: app/gui/preferences-dialog.c:1747
-#, fuzzy
 msgid "C_alibrate"
-msgstr "Calibratura"
+msgstr "C_alibratura"
 
 #: app/gui/preferences-dialog.c:1761
-#, fuzzy
 msgid "From _Windowing System"
-msgstr "Dal window system"
+msgstr "Dal sistema di _window"
 
 #: app/gui/preferences-dialog.c:1786
-#, fuzzy
 msgid "_Manually"
-msgstr "Manualmente:"
+msgstr "_Manualmente"
 
 #: app/gui/preferences-dialog.c:1806 app/gui/preferences-dialog.c:1809
 #: app/gui/preferences-dialog.c:1964
@@ -6002,13 +5997,12 @@ msgid "Conservative Memory Usage"
 msgstr "Utilizzo della memoria conservativa"
 
 #: app/gui/preferences-dialog.c:1830
-#, fuzzy
 msgid "Minimal Number of Undo Levels:"
-msgstr "Minimo numero di colori:"
+msgstr "Numero minimo di annullamenti:"
 
 #: app/gui/preferences-dialog.c:1833
 msgid "Maximum Undo Memory:"
-msgstr ""
+msgstr "Memoria max dedicata agli annullamenti:"
 
 #: app/gui/preferences-dialog.c:1836 app/gui/user-install-dialog.c:1240
 msgid "Tile Cache Size:"
@@ -6032,24 +6026,20 @@ msgid "Always"
 msgstr "Sempre"
 
 #: app/gui/preferences-dialog.c:1852
-#, fuzzy
 msgid "\"File -> Save\" Saves the Image:"
-msgstr "\"File > Salva\" Salva l'immagine:"
+msgstr "\"File -> Salva\" Salva l'immagine:"
 
 #: app/gui/preferences-dialog.c:1855
-#, fuzzy
 msgid "Size of Thumbnail Files:"
-msgstr "Prova a creare icone:"
+msgstr "Dimensione dei file miniature:"
 
 #: app/gui/preferences-dialog.c:1865
-#, fuzzy
 msgid "Rescan Font List"
-msgstr "Elenco caratteri"
+msgstr "Scansiona elenco caratteri"
 
 #: app/gui/preferences-dialog.c:1880 app/gui/preferences-dialog.c:1883
-#, fuzzy
 msgid "Folders"
-msgstr "/Filtri"
+msgstr "Cartelle"
 
 #: app/gui/preferences-dialog.c:1898
 msgid "Temp Dir:"
@@ -6061,151 +6051,127 @@ msgstr "Seleziona directory temporanea"
 
 #: app/gui/preferences-dialog.c:1899
 msgid "Swap Dir:"
-msgstr "Directory di swap"
+msgstr "Directory di swap:"
 
 #: app/gui/preferences-dialog.c:1899 app/gui/user-install-dialog.c:1262
 msgid "Select Swap Dir"
 msgstr "Selezionare directory di swap"
 
 #: app/gui/preferences-dialog.c:1932
-#, fuzzy
 msgid "Brush Folders"
-msgstr "Pennelli"
+msgstr "Cartelle pennelli"
 
 #: app/gui/preferences-dialog.c:1934
-#, fuzzy
 msgid "Select Brush Folders"
-msgstr "Seleziona directory dei pennelli"
+msgstr "Seleziona cartelle dei pennelli"
 
 #: app/gui/preferences-dialog.c:1936
-#, fuzzy
 msgid "Pattern Folders"
-msgstr "Riempimento pattern"
+msgstr "Cartelle riempimenti"
 
 #: app/gui/preferences-dialog.c:1938
-#, fuzzy
 msgid "Select Pattern Folders"
-msgstr "Seleziona directory dei pattern"
+msgstr "Seleziona cartelle dei riempimenti"
 
 #: app/gui/preferences-dialog.c:1940
-#, fuzzy
 msgid "Palette Folders"
-msgstr "Palette"
+msgstr "Cartelle delle palette"
 
 #: app/gui/preferences-dialog.c:1942
-#, fuzzy
 msgid "Select Palette Folders"
-msgstr "Seleziona directory delle palette"
+msgstr "Seleziona cartelle delle palette"
 
 #: app/gui/preferences-dialog.c:1944
-#, fuzzy
 msgid "Gradient Folders"
-msgstr "Gradienti"
+msgstr "Cartelle dei gradienti"
 
 #: app/gui/preferences-dialog.c:1946
-#, fuzzy
 msgid "Select Gradient Folders"
-msgstr "Seleziona directory dei gradienti"
+msgstr "Seleziona cartelle dei gradienti"
 
 #: app/gui/preferences-dialog.c:1948
-#, fuzzy
 msgid "Font Folders"
-msgstr "/Filtri"
+msgstr "Cartelle dei caratteri"
 
 #: app/gui/preferences-dialog.c:1950
-#, fuzzy
 msgid "Select Font Folders"
-msgstr "Seleziona directory dei gradienti"
+msgstr "Seleziona cartelle dei caratteri"
 
 #: app/gui/preferences-dialog.c:1952
 msgid "Plug-Ins"
 msgstr "Plug-in"
 
 #: app/gui/preferences-dialog.c:1952
-#, fuzzy
 msgid "Plug-In Folders"
-msgstr "Plug-in"
+msgstr "Cartelle dei plug-in"
 
 #: app/gui/preferences-dialog.c:1954
-#, fuzzy
 msgid "Select Plug-In Folders"
-msgstr "Seleziona la directory dei plug-in"
+msgstr "Seleziona cartelle dei plug-in"
 
 #: app/gui/preferences-dialog.c:1956
-#, fuzzy
 msgid "Scripts"
-msgstr "script\n"
+msgstr "Script"
 
 #: app/gui/preferences-dialog.c:1956
-#, fuzzy
 msgid "Script-Fu Folders"
-msgstr "/Script-Fu/Render"
+msgstr "Cartelle degli Script-Fu"
 
 #: app/gui/preferences-dialog.c:1958
-#, fuzzy
 msgid "Select Script-Fu Folders"
-msgstr "Seleziona directory dei pennelli"
+msgstr "Seleziona cartelle degli Script-Fu"
 
 #: app/gui/preferences-dialog.c:1960
 msgid "Modules"
 msgstr "Moduli"
 
 #: app/gui/preferences-dialog.c:1960
-#, fuzzy
 msgid "Module Folders"
-msgstr "Errori dei moduli"
+msgstr "Cartelle dei moduli"
 
 #: app/gui/preferences-dialog.c:1962
-#, fuzzy
 msgid "Select Module Folders"
-msgstr "Seleziona directory dei moduli"
+msgstr "Seleziona cartelle dei moduli"
 
 #: app/gui/preferences-dialog.c:1964
-#, fuzzy
 msgid "Environment Folders"
-msgstr "Ambiente"
+msgstr "Cartelle di ambiente"
 
 #: app/gui/preferences-dialog.c:1966
-#, fuzzy
 msgid "Select Environment Folders"
-msgstr "Seleziona directory dei gradienti"
+msgstr "Seleziona cartelle di ambiente"
 
 #: app/gui/preferences-dialog.c:1968
 msgid "Themes"
-msgstr ""
+msgstr "Temi"
 
 #: app/gui/preferences-dialog.c:1968
 msgid "Theme Folders"
-msgstr ""
+msgstr "Cartelle dei temi"
 
 #: app/gui/preferences-dialog.c:1970
-#, fuzzy
 msgid "Select Theme Folders"
-msgstr "Seleziona directory temporanea"
+msgstr "Seleziona cartelle dei temi"
 
 #: app/gui/qmask-commands.c:138
-#, fuzzy
 msgid "Edit Qmask Color"
-msgstr "Modifica attributi Qmask"
+msgstr "Modifica colore Qmask"
 
 #: app/gui/qmask-commands.c:148
-#, fuzzy
 msgid "Qmask Attributes"
-msgstr "Modifica attributi Qmask"
+msgstr "Attributi Qmask"
 
 #: app/gui/qmask-commands.c:150
-#, fuzzy
 msgid "Edit QuickMask Attributes"
 msgstr "Modifica attributi Qmask"
 
 #: app/gui/qmask-commands.c:192
 msgid "Mask Opacity:"
-msgstr "Opacità:"
+msgstr "Maschera opacità:"
 
 #: app/gui/qmask-menu.c:44
-#, fuzzy
 msgid "/_QMask Active"
-msgstr "Attivo"
+msgstr "/_QMask Attivo"
 
 #: app/gui/qmask-menu.c:51
 #, fuzzy
@@ -6213,13 +6179,12 @@ msgid "/Mask _Selected Areas"
 msgstr "/Maschera a selezione"
 
 #: app/gui/qmask-menu.c:55
-#, fuzzy
 msgid "/Mask _Unselected Areas"
-msgstr "/Maschera a selezione"
+msgstr "/Maschera aree non selezionate"
 
 #: app/gui/qmask-menu.c:62
 msgid "/_Configure Color and Opacity..."
-msgstr ""
+msgstr "/_Configura colore e opacità..."
 
 #: app/gui/resize-dialog.c:195
 #, fuzzy
@@ -6232,9 +6197,8 @@ msgid "Size"
 msgstr "Dimensione"
 
 #: app/gui/resize-dialog.c:203
-#, fuzzy
 msgid "Scale Image Options"
-msgstr "Scala immagine"
+msgstr "Opzioni scala immagine"
 
 #: app/gui/resize-dialog.c:205
 msgid "Pixel Dimensions"
