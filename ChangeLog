@@ -3,7 +3,8 @@
 	* autogen.sh: don't tell nonsense by printing "I am going to run
 	./configure with no arguments", because we always pass at least
 	--enable-maintainer-mode. Instead, simply always print all
-	arguments.
+	arguments. Also removed --copy from the calls to glib-gettextize
+	and intltoolize.
 
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 

@@ -262,8 +262,8 @@ $LIBTOOLIZE --force || exit $?
 $AUTOMAKE --add-missing || exit $?
 autoconf || exit $?
 
-glib-gettextize --copy --force || exit $?
-intltoolize --copy --force --automake || exit $?
+glib-gettextize --force || exit $?
+intltoolize --force --automake || exit $?
 
 
 cd $ORIGDIR
