@@ -165,7 +165,7 @@ query (void)
 			  "Eric L. Hernes",
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Emboss..."),
-			  "RGB",
+			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, 0,
 			  args, NULL);

@@ -1,3 +1,9 @@
+2000-08-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/emboss.c: install Emboss with image_type
+	RGB* since it seems to work well on layers with alpha channel
+	(despite the preview, but I think we can live with that).
+
 2000-08-08  Daniel Egger  <egger@suse.de>
 
 	* tools/pdbgen/pdb/convert.pdb:
