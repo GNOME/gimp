@@ -1,3 +1,7 @@
+2000-03-30  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: New file, same as in the other ../po* dirs.
+
 Thu Mar 30 21:29:16 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

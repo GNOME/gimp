@@ -1,0 +1,3 @@
+PACKAGE = gimp
+LOCALEDIR = /gimp/locale
+include ../../gtk+/po/makefile.cygwin
