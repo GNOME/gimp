@@ -19,9 +19,10 @@ bugs
   
 important issues
 
+  * gimp_blend && 15 doesn't work
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-  * Gimp::lock && unlock
+[DONE]  * Gimp::lock && unlock
 [DONE]  * do not special-case INT32 in convert_sv2gimp
   * substr 4th argument form for Net:: -> require 5.005!!!! DO IT!
   * use Gimp qw(GIMP_HOST=jfjf)???
