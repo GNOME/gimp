@@ -27,9 +27,10 @@
 
 #include "widgets/gimpdialogfactory.h"
 
+#include "menus/menus.h"
+
 #include "dialogs.h"
 #include "dialogs-constructors.h"
-#include "menus.h"
 
 
 GimpDialogFactory *global_dialog_factory  = NULL;

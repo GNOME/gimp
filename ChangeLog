@@ -1,3 +1,40 @@
+2004-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/menus/.cvsignore
+	* app/menus/Makefile.am
+	* app/menus/menus-types.h
+	* app/menus/menus.[ch]
+	* app/menus/file-open-menu.[ch]
+	* app/menus/file-save-menu.[ch]
+	* app/menus/image-menu.[ch]
+	* app/menus/plug-in-menus.[ch]
+	* app/menus/tool-options-menu.[ch]
+	* app/menus/toolbox-menu.[ch]: moved all menus files to their
+	own directory.
+
+	* app/gui/Makefile.am
+	* app/gui/menus.[ch]
+	* app/gui/file-open-menu.[ch]
+	* app/gui/file-save-menu.[ch]
+	* app/gui/image-menu.[ch]
+	* app/gui/plug-in-menus.[ch]
+	* app/gui/tool-options-menu.[ch]
+	* app/gui/toolbox-menu.[ch]: removed them here.
+
+	* app/actions/debug-commands.c
+	* app/actions/file-commands.c
+	* app/gui/brush-select.c
+	* app/gui/dialogs.c
+	* app/gui/font-select.c
+	* app/gui/gradient-select.c
+	* app/gui/gui-vtable.c
+	* app/gui/gui.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c: changed #includes accordingly.
+
 2004-05-05  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-new-dialog.c: use a normal GimpDialog instead of a

@@ -48,14 +48,15 @@
 
 #include "actions/plug-in-actions.h"
 
+#include "menus/menus.h"
+#include "menus/plug-in-menus.h"
+
 #include "brush-select.h"
 #include "dialogs.h"
 #include "font-select.h"
 #include "gradient-select.h"
-#include "menus.h"
 #include "palette-select.h"
 #include "pattern-select.h"
-#include "plug-in-menus.h"
 #include "themes.h"
 
 

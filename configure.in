@@ -1520,6 +1520,7 @@ app/core/Makefile
 app/display/Makefile
 app/file/Makefile
 app/gui/Makefile
+app/menus/Makefile
 app/paint/Makefile
 app/paint-funcs/Makefile
 app/composite/Makefile

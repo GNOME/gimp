@@ -58,25 +58,8 @@ dialogs_sources = \
 	user-install-dialog.c		\
 	user-install-dialog.h
 
-menus_sources = \
-	file-open-menu.c		\
-	file-open-menu.h		\
-	file-save-menu.c		\
-	file-save-menu.h		\
-	image-menu.c			\
-	image-menu.h			\
-	menus.c				\
-	menus.h				\
-	plug-in-menus.c			\
-	plug-in-menus.h			\
-	tool-options-menu.c		\
-	tool-options-menu.h		\
-	toolbox-menu.c			\
-	toolbox-menu.h
-
 libappgui_a_SOURCES = \
 	$(dialogs_sources)		\
-	$(menus_sources)		\
 	authors.h			\
 	color-history.c			\
 	color-history.h			\

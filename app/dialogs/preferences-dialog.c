@@ -47,7 +47,8 @@
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "menus.h"
+#include "menus/menus.h"
+
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 #include "themes.h"

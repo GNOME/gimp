@@ -31,8 +31,9 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
 
+#include "menus/menus.h"
+
 #include "debug-commands.h"
-#include "gui/menus.h"
 
 
 #ifdef ENABLE_DEBUG_MENU

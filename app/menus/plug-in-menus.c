@@ -24,7 +24,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gui-types.h"
+#include "menus-types.h"
 
 #include "core/gimp.h"
 

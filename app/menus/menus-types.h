@@ -16,12 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_OPTIONS_MENU_H__
-#define __TOOL_OPTIONS_MENU_H__
+#ifndef __MENUS_TYPES_H__
+#define __MENUS_TYPES_H__
 
 
-void   tool_options_menu_setup (GimpUIManager *manager,
-                                const gchar   *ui_path);
+#include "gui/gui-types.h"
 
 
-#endif /* __TOOL_OPTIONS_MENU_H__ */
+#endif /* __MENUS_TYPES_H__ */

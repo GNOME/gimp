@@ -39,9 +39,10 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "menus/menus.h"
+
 #include "dialogs-constructors.h"
 #include "gradient-select.h"
-#include "menus.h"
 
 #include "gimp-intl.h"
 

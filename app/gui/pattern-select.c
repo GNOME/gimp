@@ -40,7 +40,8 @@
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 
-#include "menus.h"
+#include "menus/menus.h"
+
 #include "pattern-select.h"
 
 #include "gimp-intl.h"

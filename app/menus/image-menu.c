@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "menus-types.h"
 
 #include "image-menu.h"
 #include "menus.h"

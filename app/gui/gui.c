@@ -58,11 +58,12 @@
 #include "actions/actions.h"
 #include "actions/dialogs-commands.h"
 
+#include "menus/menus.h"
+
 #include "color-history.h"
 #include "dialogs.h"
 #include "gui.h"
 #include "gui-vtable.h"
-#include "menus.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"

@@ -37,8 +37,9 @@
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimphelp-ids.h"
 
+#include "menus/menus.h"
+
 #include "dialogs-constructors.h"
-#include "menus.h"
 #include "font-select.h"
 
 #include "gimp-intl.h"

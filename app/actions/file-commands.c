@@ -45,11 +45,12 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "menus/menus.h"
+
 #include "gui/dialogs.h"
 #include "gui/file-new-dialog.h"
 #include "gui/file-open-dialog.h"
 #include "gui/file-save-dialog.h"
-#include "gui/menus.h"
 
 #include "actions.h"
 #include "file-commands.h"

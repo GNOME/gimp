@@ -41,9 +41,10 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-constructors.h"
 
+#include "menus/menus.h"
+
 #include "brush-select.h"
 #include "dialogs-constructors.h"
-#include "menus.h"
 
 #include "gimp-intl.h"
 
