@@ -159,9 +159,9 @@ GtkWidget*
 default_dialog_add_table(DefaultDialog_t *dialog, gint rows, gint cols)
 {
    GtkWidget *table = gtk_table_new(rows, cols, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), table);
    gtk_widget_show(table);
    return table;

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,13 +144,15 @@ make_tools(GtkWidget *window)
 					  NULL, _("Select"), 
                                           _("Select existing area"), 
 					  arrow_clicked, NULL);
+#ifdef _NOT_READY_YET_
    _tools.fuzzy_select = 
       make_toolbar_radio_icon(toolbar, GIMP_STOCK_TOOL_FUZZY_SELECT,
 			      _tools.arrow, _("Fuzzy Select"),
 			      _("Select contiguous regions"),
 			      fuzzy_select_clicked, NULL);
+#endif
    _tools.rectangle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_RECTANGLE, 
-					      _tools.fuzzy_select, 
+					      _tools.arrow, 
 					      _("Rectangle"), 
 					      _("Define Rectangle area"), 
 					      rectangle_clicked, NULL);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -426,9 +426,9 @@ create_tab(GtkWidget *notebook, gchar *label, gint rows, gint cols)
 
    table = gtk_table_new(rows, cols, FALSE);
    gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
    gtk_widget_show(table);
 
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, 
@@ -440,7 +440,7 @@ create_tab(GtkWidget *notebook, gchar *label, gint rows, gint cols)
 static void
 create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("_General"), 7, 2);
+   GtkWidget *table = create_tab(notebook, _("General"), 7, 2);
    GtkWidget *frame;
    GtkWidget *hbox;
 
@@ -481,7 +481,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 static void
 create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("_Menu"), 2, 2);
+   GtkWidget *table = create_tab(notebook, _("Menu"), 2, 2);
    GtkWidget *label;
 
    label = create_label_in_table(table, 0, 0, 
@@ -513,7 +513,7 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 static void
 create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("Co_lors"), 2, 3);
+   GtkWidget *table = create_tab(notebook, _("Colors"), 2, 3);
  
    create_label_in_table(table, 0, 0, _("Normal:"));
    data->normal_fg = create_color_field(data, table, 0, 1, 
@@ -571,8 +571,9 @@ create_preferences_dialog()
    create_general_tab(data, notebook);
    create_menu_tab(data, notebook);
    create_colors_tab(data, notebook);
+#ifdef _NOT_READY_YET_
    create_contiguous_regions_tab(data, notebook);
-
+#endif
    gtk_widget_show(notebook);
 
    return data;

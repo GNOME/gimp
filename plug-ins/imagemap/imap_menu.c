@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -359,10 +359,12 @@ make_mapping_menu(GtkWidget *menu_bar)
 
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
+#ifdef _NOT_READY_YET_
    _menu.fuzzy_select = make_radio_item(menu, group, 
 					_("Select contiguous region"),
 					menu_fuzzy_select, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.fuzzy_select));
+#endif
    _menu.rectangle = make_radio_item(menu, group, _("Rectangle"),
 				     menu_rectangle, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.rectangle));
