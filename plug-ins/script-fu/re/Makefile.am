@@ -2,7 +2,8 @@
 
 AM_CFLAGS = \
     -DUSE_INTERFACE=1 \
-    -I$(top_srcdir)
+    -I$(top_srcdir)   \
+    $(GIMP_CFLAGS)
 
 noinst_LIBRARIES = libre.a
 
