@@ -1,5 +1,9 @@
 2005-01-18  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/jpeg.c: fix up indentation.
+
+2005-01-18  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/jpeg.c: change comments to not refer to quality in
 	percent. #define a symbol for the exif marker instead of using a raw
 	magic number.

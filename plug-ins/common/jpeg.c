@@ -1653,14 +1653,14 @@ save_image (const gchar *filename,
 
   if (jsvals.save_exif || jsvals.save_thumbnail)
     {
-      guchar *exif_buf = NULL;
-      guint   exif_buf_len;
-      gdouble quality  = MIN (75.0, jsvals.quality);
+      guchar  *exif_buf = NULL;
+      guint    exif_buf_len;
+      gdouble  quality  = MIN (75.0, jsvals.quality);
 
       if ( (! jsvals.save_exif) || (! exif_data))
         exif_data = exif_data_new ();
 
-      /* avoid to save markers longer than 65533, gradually decrease
+      /* avoid saving markers longer than 65533, gradually decrease
        * quality in steps of 5 until exif_buf_len is lower than that.
        */
       for (exif_buf_len = 65535;
@@ -1672,14 +1672,14 @@ save_image (const gchar *filename,
                                                         quality,
                                                         &thumbnail_buffer);
 
-        exif_data->data = thumbnail_buffer;
-        exif_data->size = thumbnail_buffer_length;
+          exif_data->data = thumbnail_buffer;
+          exif_data->size = thumbnail_buffer_length;
 
-        if (exif_buf)
-          free (exif_buf);
+          if (exif_buf)
+            free (exif_buf);
 
-        exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      }
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        }
 
       if (exif_buf_len > 65533)
         {
@@ -1688,14 +1688,14 @@ save_image (const gchar *filename,
             thumbnail_buffer_length = create_thumbnail (image_ID, drawable_ID,
                                                         0.0,
                                                         &thumbnail_buffer);
-        exif_data->data = thumbnail_buffer;
-        exif_data->size = thumbnail_buffer_length;
+          exif_data->data = thumbnail_buffer;
+          exif_data->size = thumbnail_buffer_length;
 
-        if (exif_buf)
-          free (exif_buf);
+          if (exif_buf)
+            free (exif_buf);
 
-        exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      }
+          exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
+        }
 
       if (exif_buf_len > 65533)
         {
@@ -1707,7 +1707,7 @@ save_image (const gchar *filename,
             free (exif_buf);
 
           exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-      }
+        }
 
       jpeg_write_marker (&cinfo, MARKER_CODE_EXIF, exif_buf, exif_buf_len);
 
