@@ -1,3 +1,8 @@
+2004-03-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py: don't pass extra
+	parameters to undo group functions. Fixes #136524.
+
 2004-03-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mng.c (run): added missing call to INIT_I18N()
