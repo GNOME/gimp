@@ -1,3 +1,8 @@
+1999-12-18  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/gfig/gfig.c: Use g_get_home_dir(). Use
+	G_DIR_SEPARATOR. Fix a bug I introduced (for Win32) a week ago.
+
 1999-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/colormap_dialog.i.c: My last change caused a warning. Fixed now.

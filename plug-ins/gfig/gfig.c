@@ -79,7 +79,7 @@
 #endif
 
 #if defined (GTK_CHECK_VERSION) && GTK_CHECK_VERSION (1,3,0)
-#define gdk_root_parent gdk_parent_root
+#define gdk_root_parent (*gdk_parent_root)
 #endif
 
 #ifdef G_OS_WIN32
@@ -852,7 +852,7 @@ plug_in_parse_gfig_path()
   /* Set local path to contain temp_path, where (supposedly)
    * there may be working files.
    */
-  home = getenv ("HOME");
+  home = g_get_home_dir ();
 
   /* Search through all directories in the  path */
 
@@ -885,8 +885,8 @@ plug_in_parse_gfig_path()
 
       if (!err && S_ISDIR (filestat.st_mode))
 	{
-	  if (path[strlen (path) - 1] != '/')
-	    strcat (path, "/");
+	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
+	    strcat (path, G_DIR_SEPARATOR_S);
 
 #ifdef DEBUG
 	  printf("Added `%s' to gfig_path_list\n", path);
@@ -6251,10 +6251,9 @@ gfig_update_stat_labels()
   if(current_obj->filename)
     {
       gint slen;
-#ifndef __EMX__
-      gchar *hm = getenv("HOME");
-#else
-      gchar *hm = _fnslashify(g_strdup(getenv("HOME")));
+      gchar *hm = g_get_home_dir ();
+#ifdef __EMX__
+      hm = _fnslashify(hm);
 #endif
       gchar *dfn = g_strdup(current_obj->filename);
       
