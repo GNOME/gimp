@@ -17,6 +17,18 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub channel_arg () {{
+    name => 'channel',
+    type => 'channel',
+    desc => 'The channel'
+}}
+
+sub operation_arg () {{
+    name => 'operation',
+    type => 'enum ChannelOps',
+    desc => 'The selection operation: { %%desc%% }'
+}}
+
 sub coord_args {
     my ($name, $desc, $args) = @_;
     foreach (qw(x y)) {
@@ -313,10 +325,7 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = (
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel' }
-    );
+    @inargs = ( &channel_arg );
 
     %invoke = (
 	vars => [ 'GimpImage *gimage' ],
@@ -327,6 +336,44 @@ HELP
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
     gimage_mask_load (gimage, channel);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub selection_combine {
+    $blurb = 'Combines the specified channel with the selection mask.';
+
+    $help = <<'HELP';
+This procedure combines the specified channel into the selection
+mask. It essentially involves a transfer of the channel's content into
+the selection mask.  Therefore, the channel must have the same width
+and height of the image, or an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &channel_arg, &operation_arg );
+	       
+    %invoke = (
+	vars => [ 'GimpImage *gimage', 'Channel *new_channel' ],
+	code => <<'CODE'
+{
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+   
+  if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
+      gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+    {
+      new_channel = channel_copy (gimp_image_get_mask (gimage));
+      channel_combine_mask (new_channel,
+			    channel,
+			    operation, 
+			    0, 0);  /* off x/y */
+      gimage_mask_load (gimage, new_channel);
+      channel_delete (new_channel);
+    }
   else
     success = FALSE;
 }
@@ -363,7 +410,8 @@ HELP
 	    selection_translate selection_float selection_clear
 	    selection_invert selection_sharpen selection_all selection_none
 	    selection_feather selection_border selection_grow selection_shrink
-	    selection_layer_alpha selection_load selection_save);
+	    selection_layer_alpha selection_load selection_save
+	    selection_combine);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image mask';

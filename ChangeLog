@@ -1,3 +1,20 @@
+2001-01-29  Sven Neumann  <sven@gimp.org>
+
+	* AUTHORS
+	* app/authors.h
+	* app/pdb/channel_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/selection_cmds.c
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimpchannel_pdb.h
+	* libgimp/gimpselection_pdb.c
+	* libgimp/gimpselection_pdb.h
+	* tools/authorsgen/contributors
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/selection.pdb: applied a patch from Adam Spiers 
+	<adam@spiers.net> which adds two new PDB functions: selection_combine 
+	and channel_combine_masks.
+
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h: removed the "Layer" typedef.

@@ -49,6 +49,7 @@ static ProcRecord selection_shrink_proc;
 static ProcRecord selection_layer_alpha_proc;
 static ProcRecord selection_load_proc;
 static ProcRecord selection_save_proc;
+static ProcRecord selection_combine_proc;
 
 void
 register_selection_procs (void)
@@ -70,6 +71,7 @@ register_selection_procs (void)
   procedural_db_register (&selection_layer_alpha_proc);
   procedural_db_register (&selection_load_proc);
   procedural_db_register (&selection_save_proc);
+  procedural_db_register (&selection_combine_proc);
 }
 
 static Argument *
@@ -975,4 +977,73 @@ static ProcRecord selection_save_proc =
   1,
   selection_save_outargs,
   { { selection_save_invoker } }
+};
+
+static Argument *
+selection_combine_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Channel *channel;
+  gint32 operation;
+  GimpImage *gimage;
+  Channel *new_channel;
+
+  channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (channel == NULL)
+    success = FALSE;
+
+  operation = args[1].value.pdb_int;
+  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+    success = FALSE;
+
+  if (success)
+    {
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
+       
+      if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
+	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+	{
+	  new_channel = channel_copy (gimp_image_get_mask (gimage));
+	  channel_combine_mask (new_channel,
+				channel,
+				operation, 
+				0, 0);  /* off x/y */
+	  gimage_mask_load (gimage, new_channel);
+	  channel_delete (new_channel);
+	}
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&selection_combine_proc, success);
+}
+
+static ProcArg selection_combine_inargs[] =
+{
+  {
+    PDB_CHANNEL,
+    "channel",
+    "The channel"
+  },
+  {
+    PDB_INT32,
+    "operation",
+    "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
+  }
+};
+
+static ProcRecord selection_combine_proc =
+{
+  "gimp_selection_combine",
+  "Combines the specified channel with the selection mask.",
+  "This procedure combines the specified channel into the selection mask. It essentially involves a transfer of the channel's content into the selection mask. Therefore, the channel must have the same width and height of the image, or an error is returned.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  2,
+  selection_combine_inargs,
+  0,
+  NULL,
+  { { selection_combine_invoker } }
 };

@@ -31,33 +31,38 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gint32   _gimp_channel_new            (gint32    image_ID,
-				       gint      width,
-				       gint      height,
-				       gchar    *name,
-				       gdouble   opacity,
-				       GimpRGB  *color);
-gint32   gimp_channel_copy            (gint32    channel_ID);
-gboolean gimp_channel_delete          (gint32    channel_ID);
-gchar*   gimp_channel_get_name        (gint32    channel_ID);
-gboolean gimp_channel_set_name        (gint32    channel_ID,
-				       gchar    *name);
-gboolean gimp_channel_get_visible     (gint32    channel_ID);
-gboolean gimp_channel_set_visible     (gint32    channel_ID,
-				       gboolean  visible);
-gboolean gimp_channel_get_show_masked (gint32    channel_ID);
-gboolean gimp_channel_set_show_masked (gint32    channel_ID,
-				       gboolean  show_masked);
-gdouble  gimp_channel_get_opacity     (gint32    channel_ID);
-gboolean gimp_channel_set_opacity     (gint32    channel_ID,
-				       gdouble   opacity);
-gboolean gimp_channel_get_color       (gint32    channel_ID,
-				       GimpRGB  *color);
-gboolean gimp_channel_set_color       (gint32    channel_ID,
-				       GimpRGB  *color);
-gint     gimp_channel_get_tattoo      (gint32    channel_ID);
-gboolean gimp_channel_set_tattoo      (gint32    channel_ID,
-				       gint      tattoo);
+gint32   _gimp_channel_new            (gint32          image_ID,
+				       gint            width,
+				       gint            height,
+				       gchar          *name,
+				       gdouble         opacity,
+				       GimpRGB        *color);
+gint32   gimp_channel_copy            (gint32          channel_ID);
+gboolean gimp_channel_delete          (gint32          channel_ID);
+gboolean gimp_channel_combine_masks   (gint32          channel1_ID,
+				       gint32          channel2_ID,
+				       GimpChannelOps  operation,
+				       gint            offx,
+				       gint            offy);
+gchar*   gimp_channel_get_name        (gint32          channel_ID);
+gboolean gimp_channel_set_name        (gint32          channel_ID,
+				       gchar          *name);
+gboolean gimp_channel_get_visible     (gint32          channel_ID);
+gboolean gimp_channel_set_visible     (gint32          channel_ID,
+				       gboolean        visible);
+gboolean gimp_channel_get_show_masked (gint32          channel_ID);
+gboolean gimp_channel_set_show_masked (gint32          channel_ID,
+				       gboolean        show_masked);
+gdouble  gimp_channel_get_opacity     (gint32          channel_ID);
+gboolean gimp_channel_set_opacity     (gint32          channel_ID,
+				       gdouble         opacity);
+gboolean gimp_channel_get_color       (gint32          channel_ID,
+				       GimpRGB        *color);
+gboolean gimp_channel_set_color       (gint32          channel_ID,
+				       GimpRGB        *color);
+gint     gimp_channel_get_tattoo      (gint32          channel_ID);
+gboolean gimp_channel_set_tattoo      (gint32          channel_ID,
+				       gint            tattoo);
 
 
 #ifdef __cplusplus

@@ -156,6 +156,7 @@ static gchar *authors[] =
   "Aaron Sherman",
   "Manish Singh",
   "Daniel Skarda",
+  "Adam Spiers",
   "Nathan Summers",
   "Mike Sweet",
   "Yuri Syrota",

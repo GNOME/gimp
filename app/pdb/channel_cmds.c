@@ -35,6 +35,7 @@
 static ProcRecord channel_new_proc;
 static ProcRecord channel_copy_proc;
 static ProcRecord channel_delete_proc;
+static ProcRecord channel_combine_masks_proc;
 static ProcRecord channel_get_name_proc;
 static ProcRecord channel_set_name_proc;
 static ProcRecord channel_get_visible_proc;
@@ -54,6 +55,7 @@ register_channel_procs (void)
   procedural_db_register (&channel_new_proc);
   procedural_db_register (&channel_copy_proc);
   procedural_db_register (&channel_delete_proc);
+  procedural_db_register (&channel_combine_masks_proc);
   procedural_db_register (&channel_get_name_proc);
   procedural_db_register (&channel_set_name_proc);
   procedural_db_register (&channel_get_visible_proc);
@@ -275,6 +277,85 @@ static ProcRecord channel_delete_proc =
   0,
   NULL,
   { { channel_delete_invoker } }
+};
+
+static Argument *
+channel_combine_masks_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Channel *channel1;
+  Channel *channel2;
+  gint32 operation;
+  gint32 offx;
+  gint32 offy;
+
+  channel1 = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
+  if (channel1 == NULL)
+    success = FALSE;
+
+  channel2 = (GimpChannel *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
+  if (channel2 == NULL)
+    success = FALSE;
+
+  operation = args[2].value.pdb_int;
+  if (operation < CHANNEL_OP_ADD || operation > CHANNEL_OP_INTERSECT)
+    success = FALSE;
+
+  offx = args[3].value.pdb_int;
+
+  offy = args[4].value.pdb_int;
+
+  if (success)
+    {
+      channel_combine_mask (channel1, channel2, operation, offx, offy);
+    }
+
+  return procedural_db_return_args (&channel_combine_masks_proc, success);
+}
+
+static ProcArg channel_combine_masks_inargs[] =
+{
+  {
+    PDB_CHANNEL,
+    "channel1",
+    "The channel1"
+  },
+  {
+    PDB_CHANNEL,
+    "channel2",
+    "The channel2"
+  },
+  {
+    PDB_INT32,
+    "operation",
+    "The selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
+  },
+  {
+    PDB_INT32,
+    "offx",
+    "x offset between upper left corner of channels: (second - first)"
+  },
+  {
+    PDB_INT32,
+    "offy",
+    "y offset between upper left corner of channels: (second - first)"
+  }
+};
+
+static ProcRecord channel_combine_masks_proc =
+{
+  "gimp_channel_combine_masks",
+  "Combine two channel masks.",
+  "This procedure combines two channel masks. The result is stored in the first channel.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  5,
+  channel_combine_masks_inargs,
+  0,
+  NULL,
+  { { channel_combine_masks_invoker } }
 };
 
 static Argument *

@@ -611,3 +611,38 @@ gimp_selection_save (gint32 image_ID)
 
   return channel_ID;
 }
+
+/**
+ * gimp_selection_combine:
+ * @channel_ID: The channel.
+ * @operation: The selection operation.
+ *
+ * Combines the specified channel with the selection mask.
+ *
+ * This procedure combines the specified channel into the selection
+ * mask. It essentially involves a transfer of the channel's content
+ * into the selection mask. Therefore, the channel must have the same
+ * width and height of the image, or an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_selection_combine (gint32         channel_ID,
+			GimpChannelOps operation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_selection_combine",
+				    &nreturn_vals,
+				    GIMP_PDB_CHANNEL, channel_ID,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

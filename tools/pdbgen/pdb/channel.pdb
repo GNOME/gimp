@@ -23,6 +23,12 @@ sub channel_arg () {{
     desc => 'The channel'
 }}
 
+sub operation_arg () {{
+    name => 'operation',
+    type => 'enum ChannelOps',
+    desc => 'The selection operation: { %%desc%% }'
+}}
+
 sub channel_get_prop_proc {
     my ($prop, $type, $desc, $func) = @_;
 
@@ -207,6 +213,35 @@ HELP
     %invoke = ( code => 'channel_delete (channel);' );
 }
 
+sub channel_combine_masks {
+    $blurb = 'Combine two channel masks.';
+
+    $help = <<'HELP';
+This procedure combines two channel masks.  The result is stored
+in the first channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &channel_arg, &channel_arg, &operation_arg );
+	       
+    foreach my $i (0 .. 1) {
+	$inargs[$i]{$_} .= $i + 1 for qw(name desc);
+    }
+
+    foreach (qw(x y)) {
+        push @inargs, { name => "off$_", type => 'int32',
+                        desc => "$_ offset between upper left corner of
+                                 channels: (second - first)" }
+    }
+
+    %invoke = ( code => <<'CODE' );
+{
+  channel_combine_mask (channel1, channel2, operation, offx, offy);
+}
+CODE
+}
+
 &channel_accessors('name', 'string', 'name', 1);
 
 &channel_accessors('visible', 'boolean', 'visibility', 0,
@@ -245,7 +280,8 @@ CODE
 
 @headers = qw("channel.h");
 
-unshift @procs, qw(channel_new channel_copy channel_delete);
+unshift @procs, qw(channel_new channel_copy channel_delete
+		   channel_combine_masks);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';

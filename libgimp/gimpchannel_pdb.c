@@ -138,6 +138,48 @@ gimp_channel_delete (gint32 channel_ID)
 }
 
 /**
+ * gimp_channel_combine_masks:
+ * @channel1_ID: The channel1.
+ * @channel2_ID: The channel2.
+ * @operation: The selection operation.
+ * @offx: x offset between upper left corner of channels: (second - first).
+ * @offy: y offset between upper left corner of channels: (second - first).
+ *
+ * Combine two channel masks.
+ *
+ * This procedure combines two channel masks. The result is stored in
+ * the first channel.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_channel_combine_masks (gint32         channel1_ID,
+			    gint32         channel2_ID,
+			    GimpChannelOps operation,
+			    gint           offx,
+			    gint           offy)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_channel_combine_masks",
+				    &nreturn_vals,
+				    GIMP_PDB_CHANNEL, channel1_ID,
+				    GIMP_PDB_CHANNEL, channel2_ID,
+				    GIMP_PDB_INT32, operation,
+				    GIMP_PDB_INT32, offx,
+				    GIMP_PDB_INT32, offy,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_channel_get_name:
  * @channel_ID: The channel.
  *
