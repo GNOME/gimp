@@ -62,11 +62,11 @@ void
 gimp_documents_save (Gimp *gimp)
 {
   const gchar *header =
-    "# GIMP documents\n"
-    "#\n"
-    "# This file will be entirely rewritten every time you quit the gimp.\n";
+    "GIMP documents\n"
+    "\n"
+    "This file will be entirely rewritten every time you quit the gimp.";
   const gchar *footer =
-    "# end of documents\n";
+    "end of documents";
 
   gchar  *filename;
   GError *error = NULL;

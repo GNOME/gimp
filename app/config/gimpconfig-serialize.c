@@ -36,11 +36,14 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "config-types.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
+#include "gimpconfigwriter.h"
 
 
 static void  serialize_unknown_token (const gchar  *key,
@@ -51,14 +54,13 @@ static void  serialize_unknown_token (const gchar  *key,
 /**
  * gimp_config_serialize_properties:
  * @object: a #GObject. 
- * @fd: a file descriptor to write to.
+ * @writer: a #GimpConfigWriter.
  * 
- * This function writes all object properties to the file descriptor @fd.
+ * This function writes all object properties to the @writer.
  **/
 gboolean
-gimp_config_serialize_properties (GObject  *object,
-                                  gint      fd,
-                                  gint      indent_level)
+gimp_config_serialize_properties (GObject          *object,
+                                  GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -81,8 +83,7 @@ gimp_config_serialize_properties (GObject  *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (object, prop_spec,
-                                            fd, indent_level))
+      if (! gimp_config_serialize_property (object, prop_spec, writer))
         return FALSE;
     }
 
@@ -94,15 +95,14 @@ gimp_config_serialize_properties (GObject  *object,
 /**
  * gimp_config_serialize_changed_properties:
  * @object: a #GObject. 
- * @fd: a file descriptor to write to.
+ * @writer: a #GimpConfigWriter.
  * 
  * This function writes all object properties that have been changed from
- * their default values to the file descriptor @fd.
+ * their default values to the @writer.
  **/
 gboolean
-gimp_config_serialize_changed_properties (GObject *object,
-                                          gint     fd,
-                                          gint     indent_level)
+gimp_config_serialize_changed_properties (GObject          *object,
+                                          GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -131,8 +131,7 @@ gimp_config_serialize_changed_properties (GObject *object,
 
       if (! g_param_value_defaults (prop_spec, &value))
         {
-          if (! gimp_config_serialize_property (object, prop_spec,
-                                                fd, indent_level))
+          if (! gimp_config_serialize_property (object, prop_spec, writer))
             return FALSE;
         }
 
@@ -148,17 +147,16 @@ gimp_config_serialize_changed_properties (GObject *object,
  * gimp_config_serialize_properties_diff:
  * @object: a #GObject. 
  * @compare: a #GObject of the same type as @object. 
- * @fd: a file descriptor to write to.
+ * @writer: a #GimpConfigWriter.
  * 
  * This function compares @object and @compare and writes all
  * properties of @object that have different values than @compare to
- * the file descriptor @fd.
+ * the @writer.
  **/
 gboolean
-gimp_config_serialize_properties_diff (GObject *object,
-                                       GObject *compare,
-                                       gint     fd,
-                                       gint     indent_level)
+gimp_config_serialize_properties_diff (GObject          *object,
+                                       GObject          *compare,
+				       GimpConfigWriter *writer)
 {
   GObjectClass *klass;
   GList        *diff;
@@ -183,8 +181,7 @@ gimp_config_serialize_properties_diff (GObject *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (! gimp_config_serialize_property (object, prop_spec,
-                                            fd, indent_level))
+      if (! gimp_config_serialize_property (object, prop_spec, writer))
         return FALSE;
     }
 
@@ -195,24 +192,20 @@ gimp_config_serialize_properties_diff (GObject *object,
 
 
 gboolean
-gimp_config_serialize_property (GObject    *object,
-                                GParamSpec *param_spec,
-                                gint        fd,
-                                gint        indent_level)
+gimp_config_serialize_property (GObject          *object,
+                                GParamSpec       *param_spec,
+                                GimpConfigWriter *writer)
 {
   GTypeClass          *owner_class;
   GimpConfigInterface *config_iface;
   GimpConfigInterface *parent_iface = NULL;
-  GString             *str;
   GValue               value   = { 0, };
   gboolean             success = FALSE;
 
   if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
     return FALSE;
 
-  str = g_string_new (NULL);
-  gimp_config_string_indent (str, indent_level);
-  g_string_append_printf (str, "(%s ", param_spec->name);
+  gimp_config_writer_open (writer, param_spec->name);
 
   g_value_init (&value, param_spec->value_type);
   g_object_get_property (object, param_spec->name, &value);
@@ -249,7 +242,7 @@ gimp_config_serialize_property (GObject    *object,
                                         param_spec->param_id,
                                         (const GValue *) &value,
                                         param_spec,
-                                        str))
+                                        writer))
     {
       success = TRUE;
     }
@@ -273,47 +266,44 @@ gimp_config_serialize_property (GObject    *object,
             success = TRUE;
 
           if (gimp_config_iface)
-            {
-              g_string_append_c (str, '\n');
-              write (fd, str->str, str->len);
-              g_string_truncate (str, 0);
-
-              success = gimp_config_iface->serialize (prop_object,
-                                                      fd, indent_level + 1,
-                                                      NULL);
-
-              success = TRUE;
-            }
+	    success = gimp_config_iface->serialize (prop_object, writer, NULL);
         }
       else
         {
+	  GString *str = g_string_new (NULL);
+
           success = gimp_config_serialize_value (&value, str, TRUE);
-        }
+
+	  if (success)
+	    gimp_config_writer_print (writer, str->str, str->len);
+
+	  g_string_free (str, TRUE);
+	}
     }
 
   if (success)
     {
-      g_string_append (str, ")\n");
-      
-      if (write (fd, str->str, str->len) == -1)
-        success = FALSE;
+      gimp_config_writer_close (writer);
     }
-
-  if (! success)
+  else
     {
+      gimp_config_writer_revert (writer);
+
       /* don't warn for empty string properties */
       if (G_VALUE_HOLDS_STRING (&value))
-        success = TRUE;
+	{
+	  success = TRUE;
+	}
       else
-        g_warning ("couldn't serialize property %s::%s of type %s",
-                   g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                   param_spec->name, 
-                   g_type_name (param_spec->value_type));
+	{
+	  g_warning ("couldn't serialize property %s::%s of type %s",
+		     g_type_name (G_TYPE_FROM_INSTANCE (object)),
+		     param_spec->name, 
+		     g_type_name (param_spec->value_type));
+	}
     }
 
   g_value_unset (&value);
-
-  g_string_free (str, TRUE);
 
   return success;
 }
@@ -467,25 +457,21 @@ gimp_config_serialize_value (const GValue *value,
 /**
  * gimp_config_serialize_unknown_tokens:
  * @object: a #GObject.
- * @fd: a file descriptor to write to.
+ * @writer: a #GimpConfigWriter.
  * 
- * Writes all unknown tokens attached to #object to the file descriptor @fd.
- * See gimp_config_add_unknown_token().
+ * Writes all unknown tokens attached to #object to the @writer.  See
+ * gimp_config_add_unknown_token().
  **/
 gboolean
-gimp_config_serialize_unknown_tokens (GObject *object,
-                                      gint     fd,
-                                      gint     indent_level)
+gimp_config_serialize_unknown_tokens (GObject          *object,
+                                      GimpConfigWriter *writer)
 {
-  GString *str;
-
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
 
-  str = g_string_new (NULL);
+  gimp_config_writer_linefeed (writer);
+  gimp_config_foreach_unknown_token (object, serialize_unknown_token, writer);
 
-  gimp_config_foreach_unknown_token (object, serialize_unknown_token, str);
-
-  return (write (fd, str->str, str->len) != -1);
+  return TRUE;
 }
 
 
@@ -538,9 +524,14 @@ serialize_unknown_token (const gchar *key,
                          const gchar *value,
                          gpointer     data)
 {
-  gchar *escaped = g_strescape (value, NULL);
+  GimpConfigWriter *writer  = data;
+  gchar            *escaped;
 
-  g_string_append_printf ((GString *) data, "(%s \"%s\")\n", key, escaped);
+  escaped = g_strescape (value, NULL);
+
+  gimp_config_writer_open (writer, key);
+  gimp_config_writer_printf (writer, "\"%s\"", escaped);
+  gimp_config_writer_close (writer);
 
   g_free (escaped);
 }

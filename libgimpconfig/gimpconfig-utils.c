@@ -27,6 +27,8 @@
 
 #include "libgimpbase/gimpenv.h"
 
+#include "config-types.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-utils.h"
 

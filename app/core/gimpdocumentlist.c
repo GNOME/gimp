@@ -32,6 +32,7 @@
 #include "core-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "gimp.h"
@@ -39,16 +40,15 @@
 #include "gimpimagefile.h"
 
 
-static void     gimp_document_list_config_iface_init (gpointer  iface,
-                                                      gpointer  iface_data);
-static gboolean gimp_document_list_serialize         (GObject  *object,
-                                                      gint      fd,
-                                                      gint      indent_level,
-                                                      gpointer  data);
-static gboolean gimp_document_list_deserialize       (GObject  *object,
-                                                      GScanner *scanner,
-                                                      gint      nest_level,
-                                                      gpointer  data);
+static void     gimp_document_list_config_iface_init (gpointer    iface,
+                                                      gpointer    iface_data);
+static gboolean gimp_document_list_serialize   (GObject          *object,
+						GimpConfigWriter *writer,
+						gpointer          data);
+static gboolean gimp_document_list_deserialize (GObject          *object,
+						GScanner         *scanner,
+						gint              nest_level,
+						gpointer          data);
 
 
 static const gchar *document_symbol = "document";
@@ -103,29 +103,24 @@ gimp_document_list_config_iface_init (gpointer  iface,
 }
 
 static gboolean
-gimp_document_list_serialize (GObject *object,
-                              gint     fd,
-                              gint     indent_level,
-                              gpointer data)
+gimp_document_list_serialize (GObject          *object,
+                              GimpConfigWriter *writer,
+                              gpointer          data)
 {
-  GList   *list;
-  GString *str;
-
-  str = g_string_new (NULL);
+  GList *list;
 
   for (list = GIMP_LIST (object)->list; list; list = list->next)
     {
       gchar *escaped;
 
+      gimp_config_writer_open (writer, document_symbol);
+
       escaped = g_strescape (GIMP_OBJECT (list->data)->name, NULL);
-      g_string_printf (str, "(%s \"%s\")\n", document_symbol, escaped); 
+      gimp_config_writer_printf (writer, "\"%s\"", escaped); 
       g_free (escaped);
 
-      if (write (fd, str->str, str->len) == -1)
-        return FALSE;
+      gimp_config_writer_close (writer);
     }
-
-  g_string_free (str, TRUE);
 
   return TRUE;
 }

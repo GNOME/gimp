@@ -40,6 +40,7 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-deserialize.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 
@@ -100,8 +101,7 @@ static void       gimp_container_get_property    (GObject            *object,
 static gsize      gimp_container_get_memsize     (GimpObject         *object);
 
 static gboolean   gimp_container_serialize       (GObject            *object,
-                                                  gint                fd,
-                                                  gint                indent_level,
+                                                  GimpConfigWriter   *writer,
                                                   gpointer            data);
 static gboolean   gimp_container_deserialize     (GObject            *object,
                                                   GScanner           *scanner,
@@ -384,10 +384,9 @@ gimp_container_get_memsize (GimpObject *object)
 
 typedef struct
 {
-  gint     fd;
-  gint     indent_level;
-  gpointer data;
-  gboolean success;
+  GimpConfigWriter *writer;
+  gpointer          data;
+  gboolean          success;
 } SerializeData;
 
 static void
@@ -395,7 +394,6 @@ gimp_container_serialize_foreach (GObject       *object,
                                   SerializeData *serialize_data)
 {
   GimpConfigInterface *config_iface;
-  GString             *str;
   const gchar         *name;
 
   config_iface = GIMP_GET_CONFIG_INTERFACE (object);
@@ -406,12 +404,8 @@ gimp_container_serialize_foreach (GObject       *object,
   if (! serialize_data->success)
     return;
 
-  str = g_string_new (NULL);
-
-  gimp_config_string_indent (str, serialize_data->indent_level);
-
-  g_string_append_printf (str, "(%s ",
-                          g_type_name (G_TYPE_FROM_INSTANCE (object)));
+  gimp_config_writer_open (serialize_data->writer,
+			   g_type_name (G_TYPE_FROM_INSTANCE (object)));
 
   name = gimp_object_get_name (GIMP_OBJECT (object));
 
@@ -420,52 +414,33 @@ gimp_container_serialize_foreach (GObject       *object,
       gchar *escaped;
 
       escaped = g_strescape (name, NULL);
-      g_string_append_printf (str, "\"%s\"\n", escaped);
+      gimp_config_writer_printf (serialize_data->writer, "\"%s\"", escaped);
       g_free (escaped);
     }
   else
     {
-      g_string_append_printf (str, "NULL\n");
-    }
-
-  if (write (serialize_data->fd, str->str, str->len) == -1)
-    {
-      serialize_data->success = FALSE;
-      return;
+      gimp_config_writer_print (serialize_data->writer, "NULL", 4);
     }
 
   serialize_data->success = config_iface->serialize (object,
-                                                     serialize_data->fd,
-                                                     serialize_data->indent_level + 1,
+                                                     serialize_data->writer,
                                                      serialize_data->data);
-
-  if (! serialize_data->success)
-    return;
-
-  if (serialize_data->indent_level > 0)
-    g_string_assign (str, ")");
-  else
-    g_string_assign (str, ")\n");
-
-  if (write (serialize_data->fd, str->str, str->len) == -1)
-    serialize_data->success = FALSE;
+  gimp_config_writer_close (serialize_data->writer);
 }
 
 static gboolean
-gimp_container_serialize (GObject  *object,
-                          gint      fd,
-                          gint      indent_level,
-                          gpointer  data)
+gimp_container_serialize (GObject          *object,
+                          GimpConfigWriter *writer,
+                          gpointer          data)
 {
   GimpContainer *container;
   SerializeData  serialize_data;
 
   container = GIMP_CONTAINER (object);
 
-  serialize_data.fd           = fd;
-  serialize_data.indent_level = indent_level;
-  serialize_data.data         = data;
-  serialize_data.success      = TRUE;
+  serialize_data.writer  = writer;
+  serialize_data.data    = data;
+  serialize_data.success = TRUE;
 
   gimp_container_foreach (container,
                           (GFunc) gimp_container_serialize_foreach,

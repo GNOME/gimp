@@ -301,8 +301,8 @@ test_serialize_context_cmd_callback (GtkWidget *widget,
 
   if (! gimp_config_serialize (G_OBJECT (gimp_get_user_context (gimp)),
                                filename,
-                               "# test-context\n",
-                               "# end of test-context\n",
+                               "GIMP test-context",
+                               "end of test-context",
                                NULL,
                                &error))
     {

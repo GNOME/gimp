@@ -23,28 +23,25 @@
 #define __GIMP_CONFIG_SERIALIZE_H__
 
 
-gboolean  gimp_config_serialize_properties         (GObject      *object,
-                                                    gint          fd,
-                                                    gint          indent_level);
-gboolean  gimp_config_serialize_changed_properties (GObject      *object,
-                                                    gint          fd,
-                                                    gint          indent_level);
-gboolean  gimp_config_serialize_properties_diff    (GObject      *object,
-                                                    GObject      *compare,
-                                                    gint          fd,
-                                                    gint          indent_level);
-gboolean  gimp_config_serialize_unknown_tokens     (GObject      *object,
-                                                    gint          fd,
-                                                    gint          indent_level);
+gboolean  gimp_config_serialize_properties         (GObject          *object,
+						    GimpConfigWriter *writer);
+gboolean  gimp_config_serialize_changed_properties (GObject          *object,
+						    GimpConfigWriter *writer);
+gboolean  gimp_config_serialize_properties_diff    (GObject          *object,
+                                                    GObject          *compare,
+						    GimpConfigWriter *writer);
+gboolean  gimp_config_serialize_unknown_tokens     (GObject          *object,
+						    GimpConfigWriter *writer);
 
-gboolean  gimp_config_serialize_property           (GObject      *object,
-						    GParamSpec   *param_spec,
-                                                    gint          fd,
-                                                    gint          indent_level);
-gboolean  gimp_config_serialize_value              (const GValue *value,
-                                                    GString      *str,
-                                                    gboolean      escaped);
-void      gimp_config_serialize_comment            (GString      *str,
-						    const gchar  *comment);
+gboolean  gimp_config_serialize_property           (GObject          *object,
+						    GParamSpec       *param_spec,
+						    GimpConfigWriter *writer);
+
+gboolean  gimp_config_serialize_value              (const GValue     *value,
+                                                    GString          *str,
+                                                    gboolean          escaped);
+void      gimp_config_serialize_comment            (GString          *str,
+						    const gchar      *comment);
+
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

@@ -39,6 +39,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
+#include "config-types.h"
+
 #include "gimpconfig.h"
 #include "gimpscanner.h"
 

@@ -51,6 +51,7 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-types.h"
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "libgimp/gimpintl.h" 
@@ -86,21 +87,20 @@ static void       gimp_context_get_property   (GObject               *object,
                                                GParamSpec            *pspec);
 static gsize      gimp_context_get_memsize    (GimpObject            *object);
 
-static gboolean   gimp_context_serialize            (GObject      *object,
-                                                     gint          fd,
-                                                     gint          indent_level,
-                                                     gpointer      data);
-static gboolean   gimp_context_serialize_property   (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec,
-                                                     GString      *string);
-static gboolean   gimp_context_deserialize_property (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec,
-                                                     GScanner     *scanner,
-                                                     GTokenType   *expected);
+static gboolean   gimp_context_serialize            (GObject          *object,
+                                                     GimpConfigWriter *writer,
+                                                     gpointer          data);
+static gboolean   gimp_context_serialize_property   (GObject          *object,
+                                                     guint             property_id,
+                                                     const GValue     *value,
+                                                     GParamSpec       *pspec,
+                                                     GimpConfigWriter *writer);
+static gboolean   gimp_context_deserialize_property (GObject          *object,
+                                                     guint             property_id,
+                                                     GValue           *value,
+                                                     GParamSpec       *pspec,
+                                                     GScanner         *scanner,
+                                                     GTokenType       *expected);
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
@@ -978,20 +978,19 @@ gimp_context_get_memsize (GimpObject *object)
 }
 
 static gboolean
-gimp_context_serialize (GObject  *object,
-                        gint      fd,
-                        gint      indent_level,
-                        gpointer  data)
+gimp_context_serialize (GObject          *object,
+                        GimpConfigWriter *writer,
+                        gpointer          data)
 {
-  return gimp_config_serialize_changed_properties (object, fd, indent_level);
+  return gimp_config_serialize_changed_properties (object, writer);
 }
 
 static gboolean
-gimp_context_serialize_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec,
-                                 GString      *string)
+gimp_context_serialize_property (GObject          *object,
+                                 guint             property_id,
+                                 const GValue     *value,
+                                 GParamSpec       *pspec,
+                                 GimpConfigWriter *writer)
 {
   GimpContext *context;
   GimpObject  *serialize_obj;
@@ -1023,12 +1022,12 @@ gimp_context_serialize_property (GObject      *object,
       gchar *escaped;
 
       escaped = g_strescape (gimp_object_get_name (serialize_obj), NULL);
-      g_string_append_printf (string, "\"%s\"", escaped);
+      gimp_config_writer_printf (writer, "\"%s\"", escaped);
       g_free (escaped);
     }
   else
     {
-      g_string_append_printf (string, "NULL");
+      gimp_config_writer_print (writer, "NULL", 4);
     }
 
   return TRUE;

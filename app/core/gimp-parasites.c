@@ -115,11 +115,11 @@ void
 gimp_parasiterc_save (Gimp *gimp)
 {
   const gchar *header =
-    "# GIMP parasiterc\n"
-    "#\n"
-    "# This file will be entirely rewritten every time you quit the gimp.\n";
+    "GIMP parasiterc\n"
+    "\n"
+    "This file will be entirely rewritten every time you quit the gimp.";
   const gchar *footer =
-    "# end of parasiterc";
+    "end of parasiterc";
 
   gchar  *filename;
   GError *error = NULL;

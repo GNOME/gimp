@@ -217,8 +217,8 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
 
   retval = gimp_config_serialize (G_OBJECT (tool_options),
                                   filename,
-                                  "# tool options\n",
-                                  "# end tool options",
+                                  "GIMP tool options",
+                                  "end of tool options",
                                   NULL,
                                   error);
 

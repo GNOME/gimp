@@ -40,6 +40,7 @@
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
+#include "gimpconfigwriter.h"
 #include "gimprc.h"
 
 
@@ -52,15 +53,14 @@ typedef enum
 } DumpFormat;
 
 
-static gint    dump_gimprc          (DumpFormat   format,
-				     gint         fd);
-static void    dump_gimprc_system   (GObject     *rc,
-				     gint         fd);
-static void    dump_gimprc_manpage  (GObject     *rc,
-				     gint         fd);
-static gchar * dump_describe_param  (GParamSpec  *param_spec);
-static void    dump_with_linebreaks (gint         fd,
-				     const gchar *text);
+static gint    dump_gimprc          (DumpFormat        format);
+static void    dump_gimprc_system   (GObject          *rc,
+				     GimpConfigWriter *writer);
+static void    dump_gimprc_manpage  (GObject          *rc,
+				     GimpConfigWriter *writer);
+static gchar * dump_describe_param  (GParamSpec       *param_spec);
+static void    dump_with_linebreaks (gint              fd,
+				     const gchar      *text);
 
 
 int
@@ -102,14 +102,14 @@ main (int   argc,
 	}
     }
 
-  return dump_gimprc (format, 1);
+  return dump_gimprc (format);
 }
 
 static gint
-dump_gimprc (DumpFormat  format,
-	     gint        fd)
+dump_gimprc (DumpFormat format)
 {
-  GObject *rc;
+  GimpConfigWriter *writer;
+  GObject          *rc;
 
   if (format == DUMP_NONE)
     return EXIT_SUCCESS;
@@ -120,22 +120,29 @@ dump_gimprc (DumpFormat  format,
                      "module-load-inhibit", "foo",  /* for completeness */
                      NULL);
 
+  writer = gimp_config_writer_new_from_fd (1);
+
   switch (format)
     {
     case DUMP_DEFAULT:
-      g_print ("# Dump of the GIMP default configuration\n\n");
-      gimp_config_serialize_properties (rc, 1, 0);
+      gimp_config_writer_comment (writer,
+				  "Dump of the GIMP default configuration");
+      gimp_config_writer_linefeed (writer);
+
+      gimp_config_serialize_properties (rc, writer);
       g_print ("\n");
       break;
     case DUMP_COMMENT:
-      dump_gimprc_system (rc, fd);
+      dump_gimprc_system (rc, writer);
       break;
     case DUMP_MANPAGE:
-      dump_gimprc_manpage (rc, fd);
+      dump_gimprc_manpage (rc, writer);
       break;
     default:
       break;
     }
+
+  gimp_config_writer_finish (writer, NULL, NULL);
 
   g_object_unref (rc);
 
@@ -144,33 +151,31 @@ dump_gimprc (DumpFormat  format,
 
 
 static const gchar *system_gimprc_header =
-"# This is the system-wide gimprc file.  Any change made in this file\n"
-"# will affect all users of this system, provided that they are not\n"
-"# overriding the default values in their personal gimprc file.\n"
-"#\n"
-"# Lines that start with a '#' are comments. Blank lines are ignored.\n"
-"#\n"
-"# By default everything in this file is commented out. The file then\n"
-"# documents the default values and shows what changes are possible.\n" 
+"This is the system-wide gimprc file.  Any change made in this file "
+"will affect all users of this system, provided that they are not "
+"overriding the default values in their personal gimprc file.\n"
 "\n"
-"# The variable ${gimp_dir} is set to the value of the environment\n"
-"# variable GIMP_DIRECTORY or, if that is not set, the compiled-in\n"
-"# default value is used. If GIMP_DIRECTORY is not an absolute path,\n"
-"# it is interpreted relative to your home directory.\n"
-"\n";
+"Lines that start with a '#' are comments. Blank lines are ignored.\n"
+"\n"
+"By default everything in this file is commented out.  The file then "
+"documents the default values and shows what changes are possible.\n" 
+"\n"
+"The variable ${gimp_dir} is set to the value of the environment "
+"variable GIMP_DIRECTORY or, if that is not set, the compiled-in "
+"default value is used.  If GIMP_DIRECTORY is not an absolute path, "
+"it is interpreted relative to your home directory.";
 
 static void
-dump_gimprc_system (GObject *rc,
-		    gint     fd)
+dump_gimprc_system (GObject          *rc,
+		    GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GString       *str;
   guint          n_property_specs;
   guint          i;
 
-  str = g_string_new (system_gimprc_header);
-  write (fd, str->str, str->len);
+  gimp_config_writer_comment (writer, system_gimprc_header);
+  gimp_config_writer_linefeed (writer);
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -183,25 +188,23 @@ dump_gimprc_system (GObject *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_string_truncate (str, 0);
-
       comment = dump_describe_param (prop_spec);
       if (comment)
 	{
-	  gimp_config_serialize_comment (str, comment);
+	  gimp_config_writer_comment (writer, comment);
 	  g_free (comment);
-	  g_string_append (str, "#\n");
+
+	  write (writer->fd, "#\n", 2);
 	}
 
-      g_string_append (str, "# ");
-      write (fd, str->str, str->len);
+      /* kids, don't try this at home! */
+      write (writer->fd, "# ", 2);
 
-      if (gimp_config_serialize_property (rc, prop_spec, fd, 0))
-        write (fd, "\n", 1);
+      gimp_config_serialize_property (rc, prop_spec, writer);
+      gimp_config_writer_linefeed (writer);
     }
 
   g_free (property_specs);
-  g_string_free (str, TRUE);
 }
 
 
@@ -292,15 +295,15 @@ static const gchar *man_page_footer =
 
 
 static void
-dump_gimprc_manpage (GObject *rc,
-		     gint     fd)
+dump_gimprc_manpage (GObject          *rc,
+		     GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
 
-  write (fd, man_page_header, strlen (man_page_header));
+  write (writer->fd, man_page_header, strlen (man_page_header));
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -313,16 +316,16 @@ dump_gimprc_manpage (GObject *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      write (fd, ".TP\n", strlen (".TP\n"));
+      write (writer->fd, ".TP\n", strlen (".TP\n"));
 
-      if (gimp_config_serialize_property (rc, prop_spec, fd, 0))
+      if (gimp_config_serialize_property (rc, prop_spec, writer))
 	{
-	  write (fd, "\n", 1);
+	  write (writer->fd, "\n", 1);
 
 	  desc = dump_describe_param (prop_spec);
 
-	  dump_with_linebreaks (fd, desc);
-	  write (fd, "\n", 1);
+	  dump_with_linebreaks (writer->fd, desc);
+	  write (writer->fd, "\n", 1);
 
 	  g_free (desc);
         }
@@ -330,8 +333,8 @@ dump_gimprc_manpage (GObject *rc,
 
   g_free (property_specs);
 
-  write (fd, man_page_path,   strlen (man_page_path));
-  write (fd, man_page_footer, strlen (man_page_footer));
+  write (writer->fd, man_page_path,   strlen (man_page_path));
+  write (writer->fd, man_page_footer, strlen (man_page_footer));
 }
 
 

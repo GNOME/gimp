@@ -84,8 +84,8 @@ main (int   argc,
 
   if (! gimp_config_serialize (G_OBJECT (gimprc),
                                filename,
-                               "# foorc\n",
-                               "# end of foorc\n",
+                               "foorc",
+                               "end of foorc",
                                NULL, &error))
     {
       g_print ("%s\n", error->message);

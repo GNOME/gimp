@@ -34,6 +34,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
+#include "config-types.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"

@@ -1,3 +1,35 @@
+2003-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfigwriter.[ch]: new files featuring a simple
+	config file writer.
+
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig.[ch]: changed the serialize routines to
+	use a GimpConfigWriter instead of passing around a file descriptor
+	and the indentation level.
+
+	* app/config/config-types.h
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpconfig-utils.c
+	* app/config/gimprc.c
+	* app/config/gimpscanner.c
+	* app/config/test-config.c
+	* app/core/gimp-documents.c
+	* app/core/gimp-parasites.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdocumentlist.c
+	* app/core/gimpparasitelist.c
+	* app/gui/test-commands.c
+	* app/tools/tool_options.c
+	* app/widgets/gimpdevices.c: changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.c: documentation updates.
+
+	* app/core/gimpitem.c: removed a redundant type-check.
+
 2003-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/stock-channels-16.png

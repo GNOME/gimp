@@ -143,11 +143,7 @@ gimp_item_init (GimpItem *item)
 static void
 gimp_item_finalize (GObject *object)
 {
-  GimpItem *item;
-
-  g_return_if_fail (GIMP_IS_ITEM (object));
-
-  item = GIMP_ITEM (object);
+  GimpItem *item = GIMP_ITEM (object);
 
   if (item->gimage && item->gimage->gimp)
     {

@@ -19,6 +19,8 @@ libappconfig_a_SOURCES = \
 	gimpconfig-types.h		\
 	gimpconfig-utils.c		\
 	gimpconfig-utils.h		\
+	gimpconfigwriter.c		\
+	gimpconfigwriter.h		\
 	gimpbaseconfig.c		\
 	gimpbaseconfig.h		\
 	gimpcoreconfig.c		\

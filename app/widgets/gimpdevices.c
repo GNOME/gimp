@@ -172,8 +172,8 @@ gimp_devices_save (Gimp *gimp)
 
   if (! gimp_config_serialize (G_OBJECT (manager->device_info_list),
                                filename,
-                               "# GIMP devicerc\n",
-                               "# end devicerc",
+                               "GIMP devicerc",
+                               "end of devicerc",
                                NULL,
                                &error))
     {

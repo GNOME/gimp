@@ -21,28 +21,19 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
 #include <string.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <sys/stat.h>
-#include <sys/types.h>
 
 #include <glib-object.h>
 
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
 #include "libgimpcolor/gimpcolor.h"
+
+#include "config-types.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-utils.h"
+#include "gimpconfigwriter.h"
 #include "gimpscanner.h"
 
 #include "libgimp/gimpintl.h"
@@ -52,20 +43,19 @@
  * The GimpConfig serialization and deserialization interface.
  */
 
-static void  gimp_config_iface_init (GimpConfigInterface  *gimp_config_iface);
+static void      gimp_config_iface_init    (GimpConfigInterface  *gimp_config_iface);
 
-static gboolean  gimp_config_iface_serialize    (GObject  *object,
-                                                 gint      fd,
-                                                 gint      indent_level,
-                                                 gpointer  data);
-static gboolean  gimp_config_iface_deserialize  (GObject  *object,
-                                                 GScanner *scanner,
-                                                 gint      nest_level,
-                                                 gpointer  data);
-static GObject  *gimp_config_iface_duplicate    (GObject  *object);
-static gboolean  gimp_config_iface_equal        (GObject  *a,
-                                                 GObject  *b);
-static void      gimp_config_iface_reset        (GObject  *object);
+static gboolean  gimp_config_iface_serialize   (GObject          *object,
+						GimpConfigWriter *writer,
+						gpointer          data);
+static gboolean  gimp_config_iface_deserialize (GObject          *object,
+						GScanner         *scanner,
+						gint              nest_level,
+						gpointer          data);
+static GObject  *gimp_config_iface_duplicate   (GObject          *object);
+static gboolean  gimp_config_iface_equal       (GObject          *a,
+                                                GObject          *b);
+static void      gimp_config_iface_reset       (GObject          *object);
 
 
 GType
@@ -106,12 +96,11 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 }
 
 static gboolean
-gimp_config_iface_serialize (GObject  *object,
-                             gint      fd,
-                             gint      indent_level,
-                             gpointer  data)
+gimp_config_iface_serialize (GObject          *object,
+			     GimpConfigWriter *writer,
+                             gpointer          data)
 {
-  return gimp_config_serialize_properties (object, fd, indent_level);
+  return gimp_config_serialize_properties (object, writer);
 }
 
 static gboolean
@@ -185,8 +174,8 @@ gimp_config_iface_reset (GObject *object)
  * gimp_config_serialize:
  * @object: a #GObject that implements the #GimpConfigInterface.
  * @filename: the name of the file to write the configuration to.
- * @header: optional file header (should be a comment)
- * @footer: optional file footer (should be a comment)
+ * @header: optional file header (must be ASCII only)
+ * @footer: optional file footer (must be ASCII only)
  * @data: user data passed to the serialize implementation.
  * @error:
  * 
@@ -206,9 +195,7 @@ gimp_config_serialize (GObject      *object,
                        GError      **error)
 {
   GimpConfigInterface *gimp_config_iface;
-  gboolean             success = TRUE;
-  gchar               *tmpname;
-  gint                 fd;
+  GimpConfigWriter    *writer;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -218,78 +205,14 @@ gimp_config_serialize (GObject      *object,
 
   g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
 
-  tmpname = g_strconcat (filename, "XXXXXX", NULL);
-  
-  fd = g_mkstemp (tmpname);
+  writer = gimp_config_writer_new (filename, TRUE, header, error);
 
-  if (fd == -1)
-    {
-      g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, 
-                   _("Failed to create temporary file for '%s': %s"),
-                   filename, g_strerror (errno));
-      g_free (tmpname);
-      return FALSE;
-    }
+  if (!writer)
+    return FALSE;
 
-  if (header)
-    success = (write (fd, header, strlen (header)) != -1  &&
-               write (fd, "\n", 1)                 != -1);
+  gimp_config_iface->serialize (object, writer, data);
 
-  if (success)
-    success = gimp_config_iface->serialize (object, fd, 0, data);
-
-  if (success && footer)
-    success = (write (fd, "\n", 1)                 != -1  &&
-               write (fd, footer, strlen (footer)) != -1  &&
-               write (fd, "\n", 1)                 != -1);
-
-
-  if (close (fd) != 0)
-    success = FALSE;
-
-  if (! success)
-    {
-      gchar *msg;
-
-      if (g_file_test (filename, G_FILE_TEST_EXISTS))
-        {
-          msg = g_strdup_printf (_("Error when writing to temporary file for '%s': %s\n"
-                                   "The original file has not been touched."),
-                                 filename, g_strerror (errno));
-        }
-      else
-        {
-          msg = g_strdup_printf (_("Error when writing to temporary file for '%s': %s\n"
-                                   "No file has been created."),
-                                 filename, g_strerror (errno));
-        }
-
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, msg);
-
-      unlink (tmpname);
-    }
-
-#ifdef G_OS_WIN32
-  /* win32 rename can't overwrite */
-  if (success)
-    unlink (filename);
-#endif
-
-  if (success && rename (tmpname, filename) == -1)
-    {
-      g_set_error (error, 
-                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                   _("Failed to create file '%s': %s"),
-                   filename, g_strerror (errno));
-
-      unlink (tmpname);
-      success = FALSE;
-    }
-
-  g_free (tmpname);
-
-  return success;
+  return gimp_config_writer_finish (writer, footer, error);
 }
 
 /**

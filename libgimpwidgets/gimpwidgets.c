@@ -823,9 +823,6 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkTable.
  *
- * Note that if you pass a @tooltip or @help_data to this function you'll
- * have to initialize GIMP's help system with gimp_help_init() before using it.
- *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
 GtkObject *
@@ -879,9 +876,6 @@ gimp_scale_entry_new (GtkTable    *table,
  *
  * This function creates a #GtkLabel, a #GimpColorScale and a
  * #GtkSpinButton and attaches them to a 3-column #GtkTable.
- *
- * Note that if you pass a @tooltip or @help_data to this function you'll
- * have to initialize GIMP's help system with gimp_help_init() before using it.
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
@@ -955,15 +949,14 @@ gimp_random_seed_update (GtkWidget *widget,
  * gimp_random_seed_new:
  * @seed:       A pointer to the variable which stores the random seed.
  *
- * Note that this widget automatically sets tooltips with
- * gimp_help_set_help_data(), so you'll have to initialize GIMP's help
- * system with gimp_help_init() before using it.
+ * Creates a widget that allows the user to control how the random number
+ * generator is initialized.
  *
  * Returns: A #GtkHBox containing a #GtkSpinButton for the seed and
  *          a #GtkButton for setting a random seed.
  **/
 GtkWidget *
-gimp_random_seed_new (guint       *seed)
+gimp_random_seed_new (guint *seed)
 {
   GtkWidget *hbox;
   GtkWidget *spinbutton;

@@ -33,6 +33,7 @@
 #include "core-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "gimpmarshal.h"
@@ -54,18 +55,17 @@ static gsize    gimp_parasite_list_get_memsize       (GimpObject  *object);
 
 static void     gimp_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
-static gboolean gimp_parasite_list_serialize         (GObject     *list,
-                                                      gint         fd,
-                                                      gint         indent_level,
-                                                      gpointer     data);
-static gboolean gimp_parasite_list_deserialize       (GObject     *list,
-                                                      GScanner    *scanner,
-                                                      gint         nest_level,
-                                                      gpointer     data);
+static gboolean gimp_parasite_list_serialize    (GObject          *list,
+						 GimpConfigWriter *writer,
+						 gpointer          data);
+static gboolean gimp_parasite_list_deserialize  (GObject          *list,
+						 GScanner         *scanner,
+						 gint              nest_level,
+						 gpointer          data);
 
 static void     parasite_serialize           (const gchar      *key,
                                               GimpParasite     *parasite,
-                                              gint             *fd_ptr);
+                                              GimpConfigWriter *writer);
 static void     parasite_copy                (const gchar      *key,
                                               GimpParasite     *parasite,
                                               GimpParasiteList *list);
@@ -233,16 +233,16 @@ gimp_parasite_list_get_memsize (GimpObject *object)
 }
 
 static gboolean
-gimp_parasite_list_serialize (GObject  *list,
-                              gint      fd,
-                              gint      indent_level,
-                              gpointer  data)
+gimp_parasite_list_serialize (GObject          *list,
+                              GimpConfigWriter *writer,
+                              gpointer          data)
 {
   if (GIMP_PARASITE_LIST (list)->table)
     g_hash_table_foreach (GIMP_PARASITE_LIST (list)->table,
-                          (GHFunc) parasite_serialize, &fd);
+                          (GHFunc) parasite_serialize,
+			  writer);
 
-  return (fd != -1);
+  return TRUE;
 }
 
 static gboolean
@@ -444,25 +444,22 @@ gimp_parasite_list_find (GimpParasiteList *list,
 
 
 static void
-parasite_serialize (const gchar  *key,
-                    GimpParasite *parasite,
-                    gint         *fd_ptr)
+parasite_serialize (const gchar      *key,
+                    GimpParasite     *parasite,
+                    GimpConfigWriter *writer)
 {
   GString     *str;
   const gchar *data;
   guint32      len;
 
-  /* return if write failed earlier */
-  if (*fd_ptr == -1)
-    return;
-
   if (! gimp_parasite_is_persistent (parasite))
     return;
 
+  gimp_config_writer_open (writer, parasite_symbol);
+
   str = g_string_sized_new (64);
       
-  g_string_printf (str, "(%s \"%s\" %lu \"",
-                   parasite_symbol,
+  g_string_printf (str, "\"%s\" %lu \"",
                    gimp_parasite_name (parasite),
                    gimp_parasite_flags (parasite));
 
@@ -492,12 +489,12 @@ parasite_serialize (const gchar  *key,
         }
     }
 
-  g_string_append (str, "\")\n\n");
-
-  if (write (*fd_ptr, str->str, str->len) == -1)
-    *fd_ptr = -1;
+  gimp_config_writer_print (writer, str->str, str->len);
 
   g_string_free (str, TRUE);
+
+  gimp_config_writer_close (writer);
+  gimp_config_writer_linefeed (writer);
 }
 
 static void

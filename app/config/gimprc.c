@@ -57,34 +57,33 @@ enum
 };
 
 
-static void       gimp_rc_class_init        (GimpRcClass  *klass);
-static void       gimp_rc_config_iface_init (gpointer      iface,
-                                             gpointer      iface_data);
-static void       gimp_rc_init              (GimpRc       *rc);
-static void       gimp_rc_dispose           (GObject      *object);
-static void       gimp_rc_finalize          (GObject      *object);
-static void       gimp_rc_set_property      (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void       gimp_rc_get_property      (GObject      *object,
-                                             guint         property_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
-static gboolean   gimp_rc_serialize         (GObject      *object,
-                                             gint          fd,
-                                             gint          indent_level,
-                                             gpointer      data);
-static gboolean   gimp_rc_deserialize       (GObject      *object,
-                                             GScanner     *scanner,
-                                             gint          nest_level,
-                                             gpointer      data);
-static GObject  * gimp_rc_duplicate         (GObject      *object);
-static void       gimp_rc_load              (GimpRc       *rc);
-static gboolean   gimp_rc_idle_save         (GimpRc       *rc);
-static void       gimp_rc_notify            (GimpRc       *rc,
-                                             GParamSpec   *param,
-                                             gpointer      data);
+static void       gimp_rc_class_init        (GimpRcClass     *klass);
+static void       gimp_rc_config_iface_init (gpointer          iface,
+                                             gpointer          iface_data);
+static void       gimp_rc_init              (GimpRc           *rc);
+static void       gimp_rc_dispose           (GObject          *object);
+static void       gimp_rc_finalize          (GObject          *object);
+static void       gimp_rc_set_property      (GObject          *object,
+                                             guint             property_id,
+                                             const GValue     *value,
+                                             GParamSpec       *pspec);
+static void       gimp_rc_get_property      (GObject          *object,
+                                             guint             property_id,
+                                             GValue           *value,
+                                             GParamSpec       *pspec);
+static gboolean   gimp_rc_serialize         (GObject          *object,
+                                             GimpConfigWriter *writer,
+                                             gpointer          data);
+static gboolean   gimp_rc_deserialize       (GObject          *object,
+                                             GScanner         *scanner,
+                                             gint              nest_level,
+                                             gpointer          data);
+static GObject  * gimp_rc_duplicate         (GObject          *object);
+static void       gimp_rc_load              (GimpRc           *rc);
+static gboolean   gimp_rc_idle_save         (GimpRc           *rc);
+static void       gimp_rc_notify            (GimpRc           *rc,
+                                             GParamSpec       *param,
+                                             gpointer          data);
 
 
 static GObjectClass *parent_class = NULL;
@@ -282,27 +281,22 @@ gimp_rc_config_iface_init (gpointer  iface,
 }
 
 static gboolean
-gimp_rc_serialize (GObject *object,
-                   gint     fd,
-                   gint     indent_level,
-                   gpointer data)
+gimp_rc_serialize (GObject          *object,
+                   GimpConfigWriter *writer,
+                   gpointer          data)
 {
   if (data && GIMP_IS_RC (data))
     {
-      if (!gimp_config_serialize_properties_diff (object, G_OBJECT (data),
-                                                  fd, indent_level))
+      if (!gimp_config_serialize_properties_diff (object, G_OBJECT (data), writer))
         return FALSE;
     }
   else
     {
-      if (!gimp_config_serialize_properties (object, fd, indent_level))
+      if (!gimp_config_serialize_properties (object, writer))
         return FALSE;
     }
-
-  if (write (fd, "\n", 1) < 0)
-    return FALSE;
-
-  return gimp_config_serialize_unknown_tokens (object, fd, indent_level);
+      
+  return gimp_config_serialize_unknown_tokens (object, writer);
 }
 
 static gboolean
@@ -558,17 +552,16 @@ gimp_rc_save (GimpRc *rc)
   GError *error = NULL;
 
   const gchar *top = 
-    "# GIMP gimprc\n"
-    "#\n"
-    "# This is your personal gimprc file.  Any variable defined in this file\n"
-    "# takes precedence over the value defined in the system-wide gimprc:\n"
-    "#   ";
+    "GIMP gimprc\n"
+    "\n"
+    "This is your personal gimprc file.  Any variable defined in this file "
+    "takes precedence over the value defined in the system-wide gimprc: ";
   const gchar *bottom =
     "\n"
-    "# Most values can be set within The GIMP by changing some options in\n"
-    "# the Preferences dialog.\n";
+    "Most values can be set within The GIMP by changing some options in "
+    "the Preferences dialog.";
   const gchar *footer =
-    "# end of gimprc\n";
+    "end of gimprc";
 
   g_return_if_fail (GIMP_IS_RC (rc));
  
