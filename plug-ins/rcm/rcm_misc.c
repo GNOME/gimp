@@ -194,6 +194,7 @@ rcm_reduce_image (GimpDrawable *drawable,
 		  gint          LongerSize, 
 		  gint          Slctn)
 {
+  guint32 gimage;
   GimpPixelRgn srcPR, srcMask;
   ReducedImage *temp;
   guchar *tempRGB, *src_row, *tempmask, *src_mask_row;
@@ -204,7 +205,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   gdouble *tempHSV, H, S, V;
 
   bytes = drawable->bpp;  
-  temp = g_new (ReducedImage, 1);
+  temp = g_new0 (ReducedImage, 1);
 
   /* get bounds of image or selection */
 
@@ -225,20 +226,33 @@ rcm_reduce_image (GimpDrawable *drawable,
       break;  
 
     case SELECTION_IN_CONTEXT:
-      x1 = MAX(0, x1 - (x2-x1) / 2.0);
-      x2 = MIN(drawable->width, x2 + (x2-x1) / 2.0);
-      y1 = MAX(0, y1 - (y2-y1) / 2.0);
-      y2 = MIN(drawable->height, y2 + (y2-y1) / 2.0);
+      x1 = MAX (0, x1 - (x2-x1) / 2.0);
+      x2 = MIN (drawable->width, x2 + (x2-x1) / 2.0);
+      y1 = MAX (0, y1 - (y2-y1) / 2.0);
+      y2 = MIN (drawable->height, y2 + (y2-y1) / 2.0);
       break;  
 
     default:
       break; /* take selection dimensions */
   }
 
+  /* clamp to image size since this is the size of the mask */
+
+  gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
+  gimage = gimp_drawable_image (drawable->drawable_id);
+
+  x1 = CLAMP (x1, - offx, gimp_image_width (gimage) - offx);
+  x2 = CLAMP (x2, - offx, gimp_image_width (gimage) - offx);
+  y1 = CLAMP (y1, - offy, gimp_image_height (gimage) - offy);
+  y2 = CLAMP (y2, - offy, gimp_image_height (gimage) - offy);
+
   /* calculate size of preview */
   
   width  = x2 - x1;
   height = y2 - y1;
+
+  if (width < 1 || height < 1)
+    return temp;
 
   if (width > height)
   {
@@ -257,9 +271,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   tempHSV  = g_new (gdouble, RW * RH * bytes);
   tempmask = g_new (guchar, RW * RH);
 
-  gimp_pixel_rgn_init(&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-
-  gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&srcMask, mask, 
                        x1 + offx, y1 + offy, width, height, FALSE, FALSE);
 

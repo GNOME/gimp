@@ -489,7 +489,7 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
     return TRUE;
 
   uri       = gimp_object_get_name (GIMP_OBJECT (imagefile));
-  image_uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
   g_return_val_if_fail (uri && image_uri && ! strcmp (uri, image_uri), FALSE);
 
