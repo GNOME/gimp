@@ -433,8 +433,6 @@ gimp_SOURCES = \
 	unitrc.h		\
 	unit_cmds.c		\
 	wilber.h		\
-	vector2d.c		\
-	vector2d.h		\
 	xcf.c			\
 	xcf.h			\
 	xinput_airbrush.c	\

@@ -778,24 +778,25 @@ void
 paint_core_interpolate (PaintCore    *paint_core, 
 			GimpDrawable *drawable)
 {
-  double n;
-  vector2d delta;
+  gdouble n;
+  GimpVector2 delta;
 #ifdef GTK_HAVE_SIX_VALUATORS
-  double dpressure, dxtilt, dytilt, dwheel;
+  gdouble dpressure, dxtilt, dytilt, dwheel;
 #else /* !GTK_HAVE_SIX_VALUATORS */
-  double dpressure, dxtilt, dytilt;
+  gdouble dpressure, dxtilt, dytilt;
 #endif /* GTK_HAVE_SIX_VALUATORS */
   /*   double spacing; */
   /*   double lastscale, curscale; */
-  double left;
-  double t;
-  double initial;
-  double dist;
-  double total;
-  double pixel_dist;
-  double pixel_initial;
-  double xd, yd;
-  double mag;
+  gdouble left;
+  gdouble t;
+  gdouble initial;
+  gdouble dist;
+  gdouble total;
+  gdouble pixel_dist;
+  gdouble pixel_initial;
+  gdouble xd, yd;
+  gdouble mag;
+
   delta.x = paint_core->curx - paint_core->lastx;
   delta.y = paint_core->cury - paint_core->lasty;
   dpressure = paint_core->curpressure - paint_core->lastpressure;
@@ -814,17 +815,19 @@ paint_core_interpolate (PaintCore    *paint_core,
     return;
 
 /* calculate the distance traveled in the coordinate space of the brush */
-  mag = vector2d_magnitude (&(paint_core->brush->x_axis));
-  xd = vector2d_dot_product(&delta, &(paint_core->brush->x_axis)) / (mag*mag);
+  mag = gimp_vector2_length (&(paint_core->brush->x_axis));
+  xd  = gimp_vector2_inner_product (&delta,
+				    &(paint_core->brush->x_axis)) / (mag*mag);
 
-  mag = vector2d_magnitude (&(paint_core->brush->y_axis));
-  yd = vector2d_dot_product(&delta, &(paint_core->brush->y_axis)) / (mag*mag);
+  mag = gimp_vector2_length (&(paint_core->brush->y_axis));
+  yd  = gimp_vector2_inner_product (&delta,
+				    &(paint_core->brush->y_axis)) / (mag*mag);
 
   dist = 0.5 * sqrt (xd*xd + yd*yd); 
   total = dist + paint_core->distance;
   initial = paint_core->distance;
 
-  pixel_dist = vector2d_magnitude (&delta);
+  pixel_dist = gimp_vector2_length (&delta);
   pixel_initial = paint_core->pixel_dist;  
 
   /*  FIXME: need to adapt the spacing to the size  */
