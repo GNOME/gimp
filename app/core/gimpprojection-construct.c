@@ -169,7 +169,6 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview = NULL;
   gimage->parasites = parasite_list_new();
-  gimp_matrix_identity(gimage->transform);
   gimage->xresolution = default_xresolution;
   gimage->yresolution = default_yresolution;
   gimage->unit = default_units;

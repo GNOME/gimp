@@ -161,6 +161,79 @@ gimp_lut_process (GimpLut     *lut,
 }
 
 void
+gimp_lut_process_inline (GimpLut     *lut,
+			 PixelRegion *srcPR)
+{
+  int h, width, src_r_i;
+  unsigned char *src;
+  unsigned char *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
+
+  if (lut->nchannels > 0)
+    lut0 = lut->luts[0];
+  if (lut->nchannels > 1)
+    lut1 = lut->luts[1];
+  if (lut->nchannels > 2)
+    lut2 = lut->luts[2];
+  if (lut->nchannels > 3)
+    lut3 = lut->luts[3];
+
+  h = srcPR->h;
+  src  = srcPR->data;
+  width = srcPR->w;
+  src_r_i =  srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
+
+  if (src_r_i == 0)
+  {
+    width *= h;
+    h = 1;
+  }
+  while (h--)
+  {
+    switch (lut->nchannels)
+    {
+     case 1:
+       while (width--)
+       {
+	 *src = lut0[*src];
+	 src++;
+       }
+       break;
+     case 2:
+       while (width--)
+       {
+	 src[0] = lut0[src[0]];
+	 src[1] = lut1[src[1]];
+	 src  += 2;
+       }
+       break;
+     case 3:
+       while (width--)
+       {
+	 src[0] = lut0[src[0]];
+	 src[1] = lut1[src[1]];
+	 src[2] = lut2[src[2]];
+	 src  += 3;
+       }
+       break;
+     case 4:
+       while (width--)
+       {
+	 src[0] = lut0[src[0]];
+	 src[1] = lut1[src[1]];
+	 src[2] = lut2[src[2]];
+	 src[3] = lut3[src[3]];
+	 src  += 4;
+       }
+       break;
+     default:
+       fprintf(stderr, "gimplut: Error: nchannels = %d\n", lut->nchannels);
+    }
+    width = srcPR->w;
+    src  += src_r_i;
+  }
+}
+
+void
 gimp_lut_process_2 (PixelRegion *srcPR,
 		    PixelRegion *destPR,
 		    GimpLut     *lut)

@@ -24,6 +24,7 @@
 #include "invert.h"
 #include "gimage.h"
 #include "gimplut.h"
+#include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -58,18 +59,6 @@ image_invert (GImage *gimage)
 }
 
 
-static float
-invert_lut_func(void *unused,
-		int nchannels, int channel, float value)
-{
-  /* don't invert the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
-    return value;
-
-  return 1.0 - value;
-}
-
-
 /*  Inverter  */
 
 static void
@@ -79,10 +68,7 @@ invert (GimpDrawable *drawable)
   int x1, y1, x2, y2;
   GimpLut *lut;
 
-  lut = gimp_lut_new();
-
-  gimp_lut_setup_exact(lut, (GimpLutFunc) invert_lut_func,
-		       (void *) NULL, gimp_drawable_bytes(drawable));
+  lut = invert_lut_new(gimp_drawable_bytes(drawable));
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
@@ -97,8 +83,10 @@ invert (GimpDrawable *drawable)
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 
+/*  ------------------------------------------------------------------  */
+/*  ----------------- The invert procedure definition ----------------  */
+/*  ------------------------------------------------------------------  */
 
-/*  The invert procedure definition  */
 ProcArg invert_args[] =
 {
   { PDB_DRAWABLE,

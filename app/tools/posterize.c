@@ -34,6 +34,7 @@
 #include "interface.h"
 #include "posterize.h"
 #include "gimplut.h"
+#include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -84,29 +85,6 @@ static void               posterize_preview_update      (GtkWidget *, gpointer);
 static void               posterize_levels_text_update  (GtkWidget *, gpointer);
 static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
 
-static Argument * posterize_invoker (Argument *);
-
-
-/*  posterize machinery  */
-
-static float
-posterize_lut_func(PosterizeDialog *pd,
-		   int nchannels, int channel, float value)
-{
-  int levels;
-  /* don't posterize the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
-    return value;
-
-  if (pd->levels < 2)
-    levels = 2;
-  else
-    levels = pd->levels;
-
-  value = rint(value * (pd->levels - 1.0)) / (pd->levels - 1.0);
-
-  return value;
-}
 
 /*  by_color select action functions  */
 
@@ -343,8 +321,7 @@ posterize_preview (PosterizeDialog *pd)
   if (!pd->image_map)
     g_message (_("posterize_preview(): No image map"));
   active_tool->preserve = TRUE;
-  gimp_lut_setup_exact(pd->lut, (GimpLutFunc) posterize_lut_func,
-		       (void *) pd, gimp_drawable_bytes(pd->drawable));
+  posterize_lut_setup(pd->lut, pd->levels, gimp_drawable_bytes(pd->drawable));
   image_map_apply (pd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
 		   (void *) pd->lut);
   active_tool->preserve = FALSE;
@@ -365,8 +342,8 @@ posterize_ok_callback (GtkWidget *widget,
 
   if (!pd->preview)
   {
-    gimp_lut_setup_exact(pd->lut, (GimpLutFunc) posterize_lut_func,
-			 (void *) pd, gimp_drawable_bytes(pd->drawable));
+    posterize_lut_setup(pd->lut, pd->levels,
+			gimp_drawable_bytes(pd->drawable));
     image_map_apply (pd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
 		     (void *) pd->lut);
   }
@@ -444,100 +421,3 @@ posterize_levels_text_update (GtkWidget *w,
     }
 }
 
-
-/*  The posterize procedure definition  */
-ProcArg posterize_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "levels",
-    "levels of posterization: (2 <= levels <= 255)"
-  }
-};
-
-ProcRecord posterize_proc =
-{
-  "gimp_posterize",
-  "Posterize the specified drawable",
-  "This procedures reduces the number of shades allows in each intensity channel to the specified 'levels' parameter.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  2,
-  posterize_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { posterize_invoker } },
-};
-
-
-static Argument *
-posterize_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  PosterizeDialog pd;
-  GImage *gimage;
-  GimpDrawable *drawable;
-  int levels;
-  int int_value;
-  int x1, y1, x2, y2;
-
-  drawable = NULL;
-  levels = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-    
-  /*  levels  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value >= 2 && int_value < 256)
-	levels = int_value;
-      else
-	success = FALSE;
-    }
-
-  /*  arrange to modify the levels  */
-  if (success)
-    {
-      pd.levels = levels;
-      pd.lut = gimp_lut_new();
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      pixel_regions_process_parallel((p_func)gimp_lut_process, pd.lut, 
-				     2, &srcPR, &destPR);
-
-      gimp_lut_free(pd.lut);
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&posterize_proc, success);
-}

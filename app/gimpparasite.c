@@ -16,8 +16,12 @@
  */
 
 #include <glib.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "parasitelist.h"
 #include "gimpparasite.h"
+#include "libgimp/parasite.h"
+#include "libgimp/gimpenv.h"
 
 static ParasiteList *parasites = NULL;
 
@@ -26,6 +30,7 @@ gimp_init_parasites()
 {
   g_return_if_fail(parasites == NULL);
   parasites = parasite_list_new();
+  gimp_parasiterc_load();
 }
 
 void
@@ -64,5 +69,40 @@ gimp_parasite_list (gint *count)
   return list;
 }
 
+void
+gimp_parasiterc_save()
+{
+  FILE *fp;
+  guint32 num, version = 1;
+  if (!(fp = fopen(gimp_personal_rc_file ("#parasiterc.tmp"), "w")))
+    return;
+  version = GINT32_TO_BE(version);
+  fwrite(&version, 4, 1, fp);
 
+  parasite_list_save(parasites, fp);
 
+  fclose(fp);
+  if (rename(gimp_personal_rc_file ("#parasiterc.tmp"),
+	     gimp_personal_rc_file("parasiterc")) != 0)
+    unlink(gimp_personal_rc_file ("#parasiterc.tmp"));
+}
+
+void
+gimp_parasiterc_load()
+{
+  FILE *fp;
+  guint32 num, version;
+  if (!(fp = fopen(gimp_personal_rc_file ("parasiterc"), "r")))
+    return;
+  fread(&version, 4, 1, fp);
+  version = GINT32_FROM_BE(version);
+  if (version != 1)
+  {
+    fclose(fp);
+    return;
+  }
+
+  parasite_list_load(parasites, fp);
+
+  fclose(fp);
+}

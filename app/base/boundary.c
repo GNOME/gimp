@@ -83,6 +83,8 @@ find_empty_segs (PixelRegion  *maskPR,
   int val, last;
   int tilex;
   Tile *tile = NULL;
+  int endx, l_num_empty, dstep;
+
 
   data  = NULL;
   start = 0;
@@ -121,7 +123,9 @@ find_empty_segs (PixelRegion  *maskPR,
   empty_segs[(*num_empty)++] = 0;
   last = -1;
 
-  for (x = start; x < end; x++)
+  l_num_empty = *num_empty;
+
+  for (x = start; x < end;)
     {
       /*  Check to see if we must advance to next tile  */
       if ((x / TILE_WIDTH) != tilex)
@@ -132,22 +136,46 @@ find_empty_segs (PixelRegion  *maskPR,
 	  data = (unsigned char*)tile_data_pointer (tile, x % TILE_WIDTH, scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
 
 	  tilex = x / TILE_WIDTH;
+	  dstep = tile_bpp(tile);
+	}
+      endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
+      endx = MINIMUM(end, endx);
+      if (type == IgnoreBounds && (endx > x1 || x < x2))
+	for (; x < endx; x++)
+	{
+	  if (*data > HALF_WAY)
+	    if (x >= x1 && x < x2)
+	      val = -1;
+	    else
+	      val = 1;
+	  else
+	    val = -1;
+
+	  data += dstep;
+
+	  if (last != val)
+	    empty_segs[l_num_empty++] = x;
+
+	  last = val;
+	}
+      else
+	for (; x < endx; x++)
+	{
+	  if (*data > HALF_WAY)
+	    val = 1;
+	  else
+	    val = -1;
+
+	  data += dstep;
+
+	  if (last != val)
+	    empty_segs[l_num_empty++] = x;
+
+	  last = val;
 	}
 
-      empty_segs[*num_empty] = x;
-      val = (*data > HALF_WAY) ? 1 : -1;
-
-      /*  The IgnoreBounds case  */
-      if (val == 1 && type == IgnoreBounds)
-	if (x >= x1 && x < x2)
-	  val = -1;
-
-      if (last * val < 0)
-	(*num_empty)++;
-      last = val;
-
-      data += tile_bpp(tile);
     }
+  *num_empty = l_num_empty;
 
   if (last > 0)
     empty_segs[(*num_empty)++] = x;

@@ -10,7 +10,6 @@
 #include "layer.h"
 #include "parasitelistF.h"
 #include "pathsP.h"
-#include "libgimp/gimpmatrix.h"
 
 
 #define MAX_CHANNELS     4
@@ -64,10 +63,6 @@ struct _GimpImage
   ParasiteList *parasites;            /*  Plug-in parasite data        */
 
   PathsList *paths;                   /*  Paths data for this image    */
-
-  GimpMatrix transform;               /* a matrix describing all of the
-					 transformations this image
-					 has undergone */
 
   int visible [MAX_CHANNELS];         /*  visible channels             */
   int active  [MAX_CHANNELS];         /*  active channels              */

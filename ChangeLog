@@ -1,3 +1,55 @@
+1999-04-08  Jay Cox  <jaycox@earthlink.net>
+
+	* app/Makefile.am: build color_cmds, lut_funcs, and pixel_processor
+	* app/app_procs.c: feedback in the splash screen when loading
+ 	parasites.
+	* app/boundary.c: Optimized find_empty_segs.
+	
+	* app/brightness_contrast.[ch]
+	* app/levels.[ch]
+	* app/posterize.[ch]:
+ 	moved pdb and lut calculation code.  These files now contain only 
+	GUI functions.
+
+	* app/channel.c: Optimized channel_bounds (fewer compares, better
+ 	use of registers).  Use color_region instead of channel_*_segment
+ 	in channel_combine_rect.  Optimized channel_combine_ellipse by
+ 	skipping pixels inside of the ellipse.  Use
+ 	pixel_region_process_parallel in channel_combine_mask.  Use a
+ 	GimpLut in channel_invert, and channel_sharpen.
+
+	* app/invert.c
+	* app/equalize.c: moved the lut functions to lut_funcs.c
+	
+	* app/gimpdrawable.c, app/gimpdrawableP.h
+	* app/gimpimage.c, app/gimpimageP.h: removed unused gimpmatrix 
+	variables/includes.
+	
+	* app/gimplut.[ch]: added new function gimp_lut_process_inline
+ 	that operates on a single PixelRegion.
+
+	* app/gimpparasite.[ch]: new functions to save/load parasiterc
+	
+	* app/parasitelist.[ch]: new functions to save/load ParasiteLists
+ 	in/from files.
+	
+	* libgimp/parasite.[ch]: new functions to load/save parasites.
+	
+	* app/internal_procs.c: get some procs from new location in 
+	color_cmds.h.
+	
+	* app/pixel_region.[ch]: moved pixel_regions_process_parallel
+ 	related functions to a new file.
+
+	* app/color_cmds.[ch]: new files for PDB
+ 	definitions/implementations of color correction functions.
+
+	* app/lut_funcs.[ch]: new files to hold lut creation functions.
+
+	* app/pixel_processor.[ch]: new files that contain the
+ 	pixel_regions_process_parallel routines.  Added some new
+ 	capabilities that are currently unused.
+	
 Fri Apr  9 01:52:23 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/autocrop/autocrop.c: Fixed a Bad Bug(TM).

@@ -85,6 +85,7 @@
 
 #include "color_notebook.h"
 #include "color_select.h"
+#include "gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -535,15 +536,16 @@ app_init (void)
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
-  gimp_init_parasites ();  /*  initialize the parasite table */
 
-  app_init_update_status (_("Looking for data files"), _("Brushes"), 0.00);
+  app_init_update_status (_("Looking for data files"), _("Parasites"), 0.00);
+  gimp_init_parasites ();        /*  initialize  the global parasite table */
+  app_init_update_status (NULL, _("Brushes"), 0.20);
   brushes_init (no_data);         /*  initialize the list of gimp brushes  */
-  app_init_update_status (NULL, _("Patterns"), 0.25);
+  app_init_update_status (NULL, _("Patterns"), 0.40);
   patterns_init (no_data);        /*  initialize the list of gimp patterns  */
-  app_init_update_status (NULL, _("Palettes"), 0.50);
+  app_init_update_status (NULL, _("Palettes"), 0.60);
   palettes_init (no_data);        /*  initialize the list of gimp palettes  */
-  app_init_update_status (NULL, _("Gradients"), 0.75);
+  app_init_update_status (NULL, _("Gradients"), 0.80);
   gradients_init (no_data);       /*  initialize the list of gimp gradients  */
   app_init_update_status (NULL, NULL, 1.00);
 
@@ -635,6 +637,7 @@ app_exit_finish (void)
   menus_quit ();
   tile_swap_exit ();
   save_unitrc ();
+  gimp_parasiterc_save ();
 
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)

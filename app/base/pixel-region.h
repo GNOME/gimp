@@ -19,6 +19,7 @@
 #define __PIXEL_REGION_H__
 
 #include "tile_manager.h"
+#include "pixel_processor.h" /* this is temporary, */
 
 typedef struct _PixelRegion PixelRegion;
 
@@ -36,7 +37,6 @@ struct _PixelRegion
   int                process_count;  /*  used internally  */
 };
 
-typedef void (*p_func)(void);
 
 /*  PixelRegion functions  */
 void  pixel_region_init          (PixelRegion *, TileManager *, int, int, int, int, int);
@@ -48,8 +48,6 @@ void  pixel_region_set_row       (PixelRegion *, int, int, int, unsigned char *)
 void  pixel_region_get_col       (PixelRegion *, int, int, int, unsigned char *, int);
 void  pixel_region_set_col       (PixelRegion *, int, int, int, unsigned char *);
 void *pixel_regions_register     (int, ...);
-void  pixel_regions_process_parallel (p_func f, void *data, int num_regions,
-				      ...);
 void *pixel_regions_process      (void *);
 void  pixel_regions_process_stop (void *);
 

@@ -77,6 +77,8 @@ gimp_SOURCES = \
 	color_area.h		\
 	color_balance.c		\
 	color_balance.h		\
+	color_cmds.c		\
+	color_cmds.h		\
 	color_notebook.c	\
 	color_notebook.h	\
 	color_panel.c		\
@@ -245,6 +247,8 @@ gimp_SOURCES = \
 	layers_dialogP.h	\
 	levels.c		\
 	levels.h		\
+	lut_funcs.c		\
+	lut_funcs.h		\
 	magnify.c		\
 	magnify.h		\
 	main.c			\
@@ -288,6 +292,8 @@ gimp_SOURCES = \
 	pencil.h		\
 	perspective_tool.c	\
 	perspective_tool.h	\
+	pixel_processor.c	\
+	pixel_processor.h	\
 	pixel_region.c		\
 	pixel_region.h		\
 	pixmaps.h		\

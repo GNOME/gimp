@@ -49,6 +49,11 @@ void      gimp_lut_process     (GimpLut *lut,
 				PixelRegion *srcPR,
 				PixelRegion *destPR);
 
+/* gimp_lut_process_inline is like gimp_lut_process except it uses a
+   single PixelRegion as both the source and destination */
+void      gimp_lut_process_inline(GimpLut *lut,
+				  PixelRegion *src_destPR);
+
 /* gimp_lut_process_2 is the same as gimp_lut_process but the lut
    perameter is last instead of first.  this is necesary because
    pixel_region_process_paralell sends the user_data as the 1st

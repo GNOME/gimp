@@ -15,15 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __BRIGHTNESS_CONTRAST_H__
-#define __BRIGHTNESS_CONTRAST_H__
 
-#include "tools.h"
+#ifndef __COLOR_CMDS_H__
+#define __COLOR_CMDS_H__
 
-/*  by_color select functions  */
-Tool *        tools_new_brightness_contrast      (void);
-void          tools_free_brightness_contrast     (Tool *);
+#include "procedural_db.h"
 
-void          brightness_contrast_initialize     (GDisplay *);
+extern ProcRecord brightness_contrast_proc;
+extern ProcRecord levels_proc;
+extern ProcRecord posterize_proc;
 
-#endif  /*  __BRIGHTNESS_CONTRAST_H__  */
+#endif /* __COLOR_CMDS_H__ */

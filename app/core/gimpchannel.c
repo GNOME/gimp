@@ -36,6 +36,9 @@
 #include "channel_pvt.h"
 #include "tile.h"
 
+#include "gimplut.h"
+#include "lut_funcs.h"
+
 /*
 enum {
   LAST_SIGNAL
@@ -602,9 +605,9 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
   unsigned char * data;
   int x, y;
   int ex, ey;
-  int found;
   void *pr;
-
+  int tx1, tx2, ty1, ty2;
+  int minx, maxx;
   /*  if the mask's bounds have already been reliably calculated...  */
   if (mask->bounds_known)
     {
@@ -617,10 +620,10 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
     }
 
   /*  go through and calculate the bounds  */
-  *x1 = GIMP_DRAWABLE(mask)->width;
-  *y1 = GIMP_DRAWABLE(mask)->height;
-  *x2 = 0;
-  *y2 = 0;
+  tx1 = GIMP_DRAWABLE(mask)->width;
+  ty1 = GIMP_DRAWABLE(mask)->height;
+  tx2 = 0;
+  ty2 = 0;
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
   for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -630,36 +633,50 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
       ey = maskPR.y + maskPR.h;
       /* only check the pixels if this tile is not fully within the currently
 	 computed bounds */
-      if (maskPR.x < *x1 || ex > *x2 ||
-	  maskPR.y < *y1 || ey > *y2)
+      if (maskPR.x < tx1 || ex > tx2 ||
+	  maskPR.y < ty1 || ey > ty2)
         {
-	  for (y = maskPR.y; y < ey; y++)
+	  /* Check upper left and lower right corners to see if we can
+	     avoid checking the rest of the pixels in this tile */
+	  if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
+	  {
+	    if (maskPR.x < tx1)
+	      tx1 = maskPR.x;
+	    if (ex > tx2)
+	      tx2 = ex;
+	    if (maskPR.y < ty1)
+	      ty1 = maskPR.y;
+	    if (ey > ty2)
+	      ty2 = ey;
+	  }
+	  else
+	    for (y = maskPR.y; y < ey; y++)
 	    {
-	      found = FALSE;
 	      for (x = maskPR.x; x < ex; x++, data++)
 		if (*data)
-	          {
-		    if (x < *x1)
-		      *x1 = x;
-		    if (x > *x2)
-		      *x2 = x;
-		    found = TRUE;
-		  }
-	      if (found)
-	        {
-		  if (y < *y1)
-		    *y1 = y;
-		  if (y > *y2)
-		    *y2 = y;
-		}
+		{
+		  minx = x;
+		  maxx = x;
+		  for (; x < ex; x++, data++)
+		    if (*data)
+		      maxx = x;
+		  if (minx < tx1)
+		    tx1 = minx;
+		  if (maxx > tx2)
+		    tx2 = maxx;
+		  if (y < ty1)
+		    ty1 = y;
+		  if (y > ty2)
+		    ty2 = y;
+	      }
 	    }
 	}
     }
 
-  *x2 = BOUNDS (*x2 + 1, 0, GIMP_DRAWABLE(mask)->width);
-  *y2 = BOUNDS (*y2 + 1, 0, GIMP_DRAWABLE(mask)->height);
+  tx2 = BOUNDS (tx2 + 1, 0, GIMP_DRAWABLE(mask)->width);
+  ty2 = BOUNDS (ty2 + 1, 0, GIMP_DRAWABLE(mask)->height);
 
-  if (*x1 == GIMP_DRAWABLE(mask)->width && *y1 == GIMP_DRAWABLE(mask)->height)
+  if (tx1 == GIMP_DRAWABLE(mask)->width && ty1 == GIMP_DRAWABLE(mask)->height)
     {
       mask->empty = TRUE;
       mask->x1 = 0; mask->y1 = 0;
@@ -669,12 +686,17 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
   else
     {
       mask->empty = FALSE;
-      mask->x1 = *x1;
-      mask->y1 = *y1;
-      mask->x2 = *x2;
-      mask->y2 = *y2;
+      mask->x1 = tx1;
+      mask->y1 = ty1;
+      mask->x2 = tx2;
+      mask->y2 = ty2;
     }
   mask->bounds_known = TRUE;
+
+  *x1 = tx1;
+  *x2 = tx2;
+  *y1 = ty1;
+  *y2 = ty2;
 
   return (mask->empty) ? FALSE : TRUE;
 }
@@ -801,60 +823,30 @@ channel_sub_segment (Channel *mask, int x, int y, int width, int value)
 
 
 void
-channel_inter_segment (Channel *mask, int x, int y, int width, int value)
-{
-  PixelRegion maskPR;
-  unsigned char *data;
-  int val;
-  int x2;
-  void * pr;
-
-  /*  check horizontal extents...  */
-  x2 = x + width;
-  if (x2 < 0) x2 = 0;
-  if (x2 > GIMP_DRAWABLE(mask)->width) x2 = GIMP_DRAWABLE(mask)->width;
-  if (x < 0) x = 0;
-  if (x > GIMP_DRAWABLE(mask)->width) x = GIMP_DRAWABLE(mask)->width;
-  width = x2 - x;
-  if (!width) return;
-
-  if (y < 0 || y > GIMP_DRAWABLE(mask)->height)
-    return;
-
-  pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, x, y, width, 1, TRUE);
-  for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      data = maskPR.data;
-      width = maskPR.w;
-      while (width--)
-	{
-	  val = MINIMUM(*data, value);
-	  *data++ = val;
-	}
-    }
-}
-
-void
 channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 {
   int i;
+  int x2, y2;
+  PixelRegion maskPR;
+  unsigned char color;
+  y2 = y + h;
+  x2 = x + w;
 
-  for (i = y; i < y + h; i++)
-    {
-      if (i >= 0 && i < GIMP_DRAWABLE(mask)->height)
-	switch (op)
-	  {
-	  case ADD: case REPLACE:
-	    channel_add_segment (mask, x, i, w, 255);
-	    break;
-	  case SUB:
-	    channel_sub_segment (mask, x, i, w, 255);
-	    break;
-	  case INTERSECT:
-	    channel_inter_segment (mask, x, i, w, 255);
-	    break;
-	  }
-    }
+  x = BOUNDS (x, 0, GIMP_DRAWABLE(mask)->width);
+  y = BOUNDS (y, 0, GIMP_DRAWABLE(mask)->height);
+  x2 = BOUNDS (x2, 0, GIMP_DRAWABLE(mask)->width);
+  y2 = BOUNDS (y2, 0, GIMP_DRAWABLE(mask)->height);
+
+  if (x2 - x <= 0 || y2 - y <= 0)
+    return;
+
+  pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, x, y,
+		     x2 - x, y2 - y, TRUE);
+  if (op == ADD  || op == REPLACE)
+    color = 255;
+  else
+    color = 0;
+  color_region(&maskPR, &color);
 
   /*  Determine new boundary  */
   if (mask->bounds_known && (op == ADD) && !mask->empty)
@@ -933,9 +925,6 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		case SUB :
 		  channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
-		case INTERSECT:
-		  channel_inter_segment (mask, x1, i, (x2 - x1), 255);
-		  break;
 		}
 	    }
 	  /*  antialiasing  */
@@ -965,7 +954,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		    val = (int) (255 * (1 - (dist + 0.5)));
 		  else
 		    val = 0;
-
+		  
 		  if (last != val && last)
 		    {
 		      switch (op)
@@ -976,8 +965,6 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 			case SUB:
 			  channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
-			case INTERSECT:
-			  channel_inter_segment (mask, x0, i, j - x0, last);
 			}
 		    }
 
@@ -985,6 +972,10 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		    {
 		      x0 = j;
 		      last = val;
+		      /* because we are symetric accross the y axis we can
+			 skip ahead a bit if we are inside the ellipse*/
+		      if (val == 255 && j < cx)
+			j = cx + (cx - j) - 1;
 		    }
 		}
 
@@ -994,8 +985,6 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		    channel_add_segment (mask, x0, i, j - x0, last);
 		  else if (op == SUB)
 		    channel_sub_segment (mask, x0, i, j - x0, last);
-		  else if (op == INTERSECT)
-		    channel_inter_segment (mask, x0, i, j - x0, last);
 		}
 	    }
 
@@ -1032,18 +1021,81 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 }
 
 
+
+static void
+channel_combine_sub_region_add (void *unused,
+				PixelRegion *srcPR,
+				PixelRegion *destPR)
+{
+  unsigned char *src, *dest;
+  int x, y, val;
+  src = srcPR->data;
+  dest = destPR->data;
+  for (y = 0; y < srcPR->h; y++)
+  {
+    for (x = 0; x < srcPR->w; x++)
+    {
+      val = dest[x] + src[x];
+      if (val > 255)
+	dest[x] = 255;
+      else
+	dest[x] = val;
+    }
+    src += srcPR->rowstride;
+    dest += destPR->rowstride;
+  }
+}
+
+static void
+channel_combine_sub_region_sub (void *unused,
+				PixelRegion *srcPR,
+				PixelRegion *destPR)
+{
+  unsigned char *src, *dest;
+  int x, y;
+  src = srcPR->data;
+  dest = destPR->data;
+  for (y = 0; y < srcPR->h; y++)
+  {
+    for (x = 0; x < srcPR->w; x++)
+    {
+      if (src[x] > dest[x])
+	dest[x] = 0;
+      else
+	dest[x]-= src[x];
+    }
+    src += srcPR->rowstride;
+    dest += destPR->rowstride;
+  }
+}
+
+static void
+channel_combine_sub_region_intersect (void *unused,
+				      PixelRegion *srcPR,
+				      PixelRegion *destPR)
+{
+  unsigned char *src, *dest;
+  int x, y;
+  src = srcPR->data;
+  dest = destPR->data;
+  for (y = 0; y < srcPR->h; y++)
+  {
+    for (x = 0; x < srcPR->w; x++)
+    {
+      dest[x] = MINIMUM(dest[x], src[x]);
+    }
+    src += srcPR->rowstride;
+    dest += destPR->rowstride;
+  }
+}
+
 void
 channel_combine_mask (Channel *mask, Channel *add_on, int op,
 		      int off_x, int off_y)
 {
   PixelRegion srcPR, destPR;
-  unsigned char *src;
-  unsigned char *dest;
-  int val;
   int x1, y1, x2, y2;
-  int x, y;
   int w, h;
-  void * pr;
 
   x1 = BOUNDS (off_x, 0, GIMP_DRAWABLE(mask)->width);
   y1 = BOUNDS (off_y, 0, GIMP_DRAWABLE(mask)->height);
@@ -1056,39 +1108,25 @@ channel_combine_mask (Channel *mask, Channel *add_on, int op,
   pixel_region_init (&srcPR, GIMP_DRAWABLE(add_on)->tiles, (x1 - off_x), (y1 - off_y), w, h, FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, w, h, TRUE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      src = srcPR.data;
-      dest = destPR.data;
-
-      for (y = 0; y < srcPR.h; y++)
-	{
-	  for (x = 0; x < srcPR.w; x++)
-	    {
-	      switch (op)
-		{
-		case ADD: case REPLACE:
-		  val = dest[x] + src[x];
-		  if (val > 255) val = 255;
-		  break;
-		case SUB:
-		  val = dest[x] - src[x];
-		  if (val < 0) val = 0;
-		  break;
-		case INTERSECT:
-		  val = MINIMUM(dest[x], src[x]);
-		  break;
-		default:
-		  val = 0;
-		  break;
-		}
-	      dest[x] = val;
-	    }
-	  src += srcPR.rowstride;
-	  dest += destPR.rowstride;
-	}
-    }
-
+  switch (op)
+  {
+   case ADD: case REPLACE:
+     pixel_regions_process_parallel ((p_func)channel_combine_sub_region_add,
+				     NULL, 2, &srcPR, &destPR);
+     break;
+   case SUB:
+     pixel_regions_process_parallel ((p_func)channel_combine_sub_region_sub,
+				     NULL, 2, &srcPR, &destPR);
+     break;
+   case INTERSECT:
+     pixel_regions_process_parallel ((p_func)
+				     channel_combine_sub_region_intersect,
+				     NULL, 2, &srcPR, &destPR);
+     break;
+   default:
+     g_message("Error: unknown opperation type in channel_combine_mask\n");
+     break;
+  }
   mask->bounds_known = FALSE;
 }
 
@@ -1184,57 +1222,35 @@ void
 channel_invert (Channel *mask)
 {
   PixelRegion maskPR;
-  unsigned char *data;
-  int size;
-  void * pr;
+  GimpLut *lut;
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      /*  subtract each pixel in the mask from 255  */
-      data = maskPR.data;
-      size = maskPR.w * maskPR.h;
-      while (size --)
-	{
-	  *data = 255 - *data;
-	  data++;
-	}
-    }
+  
+  lut = invert_lut_new(1);
 
+  pixel_regions_process_parallel ((p_func)gimp_lut_process_inline,
+				  lut, 1, &maskPR);
+  gimp_lut_free(lut);
   mask->bounds_known = FALSE;
 }
-
 
 void
 channel_sharpen (Channel *mask)
 {
   PixelRegion maskPR;
-  unsigned char *data;
-  int size;
-  void * pr;
-
+  GimpLut *lut;
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      /*  if a pixel in the mask has a non-zero value, make it 255  */
-      data = maskPR.data;
-      size = maskPR.w * maskPR.h;
-      while (size--)
-	{
-	  if (*data > HALF_WAY)
-	    *data++ = 255;
-	  else
-	    *data++ = 0;
-	}
-    }
+  lut = threshold_lut_new(0.5, 1);
 
-  mask->bounds_known = FALSE;
+  pixel_regions_process_parallel ((p_func)gimp_lut_process_inline,
+				  lut, 1, &maskPR);
+  gimp_lut_free(lut);
 }
 
 

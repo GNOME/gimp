@@ -31,6 +31,7 @@
 #include "interface.h"
 #include "levels.h"
 #include "gimplut.h"
+#include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -141,61 +142,6 @@ static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, 
 
 static void       levels_histogram_range (HistogramWidget *, int, int,
 					  void *);
-static Argument * levels_invoker (Argument *);
-
-
-/*  levels machinery  */
-
-static float
-levels_lut_func(LevelsDialog *ld,
-		int nchannels, int channel, float value)
-{
-  double inten;
-  int j;
-
-  if (nchannels == 1)
-    j = 0;
-  else
-    j = channel + 1;
-  inten = value;
-  /* For color  images this runs through the loop with j = channel +1
-     the first time and j = 0 the second time */
-  /* For bw images this runs through the loop with j = 0 the first and
-     only time  */
-  for (; j >= 0; j -= (channel + 1))
-  {
-    /* don't apply the overall curve to the alpha channel */
-    if (j == 0 && (nchannels == 2 || nchannels == 4)
-	&& channel == nchannels -1)
-      return inten;
-
-    /*  determine input intensity  */
-    if (ld->high_input[j] != ld->low_input[j])
-      inten = (double) (255.0*inten - ld->low_input[j]) /
-	(double) (ld->high_input[j] - ld->low_input[j]);
-    else
-      inten = (double) (255.0*inten - ld->low_input[j]);
-
-    if (ld->gamma[j] != 0.0)
-      {
-	if (inten >= 0.0)
-	  inten =  pow ( inten, (1.0 / ld->gamma[j]));
-	else
-	  inten = -pow (-inten, (1.0 / ld->gamma[j]));
-      }
-
-  /*  determine the output intensity  */
-    if (ld->high_output[j] >= ld->low_output[j])
-      inten = (double) (inten * (ld->high_output[j] - ld->low_output[j]) +
-			ld->low_output[j]);
-    else if (ld->high_output[j] < ld->low_output[j])
-      inten = (double) (ld->low_output[j] - inten *
-			(ld->low_output[j] - ld->high_output[j]));
-
-    inten /= 255.0;
-  }
-  return inten;
-}
 
 static void
 levels_histogram_range (HistogramWidget *h,
@@ -715,8 +661,9 @@ levels_update (LevelsDialog *ld,
   /*  Recalculate the transfer arrays  */
   levels_calculate_transfers (ld);
   /* set up the lut */
-  gimp_lut_setup(ld->lut, (GimpLutFunc) levels_lut_func,
-		 (void *) ld, gimp_drawable_bytes(ld->drawable));
+  levels_lut_setup(ld->lut, ld->gamma, ld->low_input, ld->high_input,
+		   ld->low_output, ld->high_output,
+		   gimp_drawable_bytes(ld->drawable));
 
   if (update & LOW_INPUT)
     {
@@ -1005,8 +952,9 @@ levels_ok_callback (GtkWidget *widget,
 
   if (!ld->preview)
   {
-    gimp_lut_setup(ld->lut, (GimpLutFunc) levels_lut_func,
-		   (void *) ld, gimp_drawable_bytes(ld->drawable));
+    levels_lut_setup(ld->lut, ld->gamma, ld->low_input, ld->high_input,
+		     ld->low_output, ld->high_output,
+		     gimp_drawable_bytes(ld->drawable));
     image_map_apply (ld->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
 		     (void *) ld->lut);
   }
@@ -1359,204 +1307,3 @@ levels_output_da_events (GtkWidget    *widget,
 }
 
 
-/*  The levels procedure definition  */
-ProcArg levels_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "channel",
-    "the channel to modify: { VALUE (0), RED (1), GREEN (2), BLUE (3), GRAY (0) }"
-  },
-  { PDB_INT32,
-    "low_input",
-    "intensity of lowest input: (0 <= low_input <= 255)"
-  },
-  { PDB_INT32,
-    "high_input",
-    "intensity of highest input: (0 <= high_input <= 255)"
-  },
-  { PDB_FLOAT,
-    "gamma",
-    "gamma correction factor: (0.1 <= gamma <= 10)"
-  },
-  { PDB_INT32,
-    "low_output",
-    "intensity of lowest output: (0 <= low_input <= 255)"
-  },
-  { PDB_INT32,
-    "high_output",
-    "intensity of highest output: (0 <= high_input <= 255)"
-  }
-};
-
-ProcRecord levels_proc =
-{
-  "gimp_levels",
-  "Modifies intensity levels in the specified drawable",
-  "This tool allows intensity levels in the specified drawable to be remapped according to a set of parameters.  The low/high input levels specify an initial mapping from the source intensities.  The gamma value determines how intensities between the low and high input intensities are interpolated.  A gamma value of 1.0 results in a linear interpolation.  Higher gamma values result in more high-level intensities.  Lower gamma values result in more low-level intensities.  The low/high output levels constrain the final intensity mapping--that is, no final intensity will be lower than the low output level and no final intensity will be higher than the high output level.  This tool is only valid on RGB color and grayscale images.  It will not operate on indexed drawables.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  7,
-  levels_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { levels_invoker } },
-};
-
-
-static Argument *
-levels_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  LevelsDialog ld;
-  GimpDrawable *drawable;
-  int channel;
-  int low_input;
-  int high_input;
-  double gamma;
-  int low_output;
-  int high_output;
-  int int_value;
-  double fp_value;
-  int x1, y1, x2, y2;
-  int i;
-
-  drawable = NULL;
-  low_input   = 0;
-  high_input  = 0;
-  gamma       = 1.0;
-  low_output  = 0;
-  high_output = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)                                        
-        success = FALSE;
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-   
-  /*  channel  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (success)
-	{
-	  if (drawable_gray (drawable))
-	    {
-	      if (int_value != 0)
-		success = FALSE;
-	    }
-	  else if (drawable_color (drawable))
-	    {
-	      if (int_value < 0 || int_value > 3)
-		success = FALSE;
-	    }
-	  else
-	    success = FALSE;
-	}
-      channel = int_value;
-    }
-  /*  low input  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	low_input = int_value;
-      else
-	success = FALSE;
-    }
-  /*  high input  */
-  if (success)
-    {
-      int_value = args[3].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	high_input = int_value;
-      else
-	success = FALSE;
-    }
-  /*  gamma  */
-  if (success)
-    {
-      fp_value = args[4].value.pdb_float;
-      if (fp_value >= 0.1 && fp_value <= 10.0)
-	gamma = fp_value;
-      else
-	success = FALSE;
-    }
-  /*  low output  */
-  if (success)
-    {
-      int_value = args[5].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	low_output = int_value;
-      else
-	success = FALSE;
-    }
-  /*  high output  */
-  if (success)
-    {
-      int_value = args[6].value.pdb_int;
-      if (int_value >= 0 && int_value < 256)
-	high_output = int_value;
-      else
-	success = FALSE;
-    }
-
-  /*  arrange to modify the levels  */
-  if (success)
-    {
-      for (i = 0; i < 5; i++)
-	{
-	  ld.low_input[i] = 0;
-	  ld.gamma[i] = 1.0;
-	  ld.high_input[i] = 255;
-	  ld.low_output[i] = 0;
-	  ld.high_output[i] = 255;
-	}
-
-      ld.lut = gimp_lut_new();
-      ld.channel = channel;
-      ld.color = drawable_color (drawable);
-      ld.low_input[channel] = low_input;
-      ld.high_input[channel] = high_input;
-      ld.gamma[channel] = gamma;
-      ld.low_output[channel] = low_output;
-      ld.high_output[channel] = high_output;
-
-      /*  setup the lut  */
-      gimp_lut_setup(ld.lut, (GimpLutFunc) levels_lut_func,
-		     (void *) &ld, gimp_drawable_bytes(drawable));
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      pixel_regions_process_parallel((p_func)gimp_lut_process, ld.lut, 
-				     2, &srcPR, &destPR);
-
-      gimp_lut_free(ld.lut);
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&levels_proc, success);
-}

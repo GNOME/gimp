@@ -19,27 +19,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "appenv.h"
 #include "drawable.h"
 #include "equalize.h"
-#include "interface.h"
 #include "gimage.h"
 #include "gimplut.h"
+#include "lut_funcs.h"
 #include "gimphistogram.h"
 
 #include "libgimp/gimpintl.h"
 
-struct hist_lut_struct
-{
-  GimpHistogram *histogram;
-  int part[5][257];
-};
-
-static float      equalize_lut_func(struct hist_lut_struct *hlut, 
-				    int nchannels, int channel, float value);
 static void       equalize (GImage *, GimpDrawable *, int);
 static Argument * equalize_invoker (Argument *);
-static GimpLut  * eq_histogram_lut (GimpHistogram *hist, int bytes);
 
 
 void
@@ -87,7 +77,7 @@ equalize(gimage, drawable, mask_only)
 
 
   /* Build equalization LUT */
-  lut = eq_histogram_lut (hist, bytes);
+  lut = eq_histogram_lut_new (hist, bytes);
 
   /*  Apply the histogram  */
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -105,71 +95,10 @@ equalize(gimage, drawable, mask_only)
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
 
+/*  ------------------------------------------------------------------  */
+/*  --------------- The equalize procedure definition ----------------  */
+/*  ------------------------------------------------------------------  */
 
-/*****/
-
-static GimpLut *
-eq_histogram_lut (GimpHistogram *hist, int bytes)
-{
-  int    i, k, j;
-  struct hist_lut_struct hlut;
-  double pixels_per_value;
-  double desired;
-  GimpLut *lut;
-  double sum, dif;
-
-  /* Find partition points */
-  pixels_per_value = gimp_histogram_get_count(hist, 0, 255) / 256.0;
-
-  for (k = 0; k < bytes; k++)
-    {
-      /* First and last points in partition */
-      hlut.part[k][0]   = 0;
-      hlut.part[k][256] = 256;
-      
-      /* Find intermediate points */
-      j = 0;
-      sum = gimp_histogram_get_channel(hist, k, 0) + 
-	    gimp_histogram_get_channel(hist, k, 1);
-      for (i = 1; i < 256; i++)
-	{
-	  desired = i * pixels_per_value;
-	  while (sum <= desired)
-	  {
-	    j++;
-	    sum += gimp_histogram_get_channel(hist, k, j + 1);
-	  }
-
-	  /* Nearest sum */
-	  dif = sum - gimp_histogram_get_channel(hist, k, j);
-	  if ((sum - desired) > (dif / 2.0))
-	    hlut.part[k][i] = j;
-	  else
-	    hlut.part[k][i] = j + 1;
-	}
-    }
-
-  lut = gimp_lut_new();
-
-  gimp_lut_setup(lut, (GimpLutFunc) equalize_lut_func,
-		 (void *) &hlut, bytes);
-
-  return lut;
-}
-
-static float
-equalize_lut_func(struct hist_lut_struct *hlut, 
-		  int nchannels, int channel, float value)
-{
-  int i = 0, j;
-  j = (int)(value * 255.0 + 0.5);
-  while (hlut->part[channel][i + 1] <= j)
-    i++;
-  return i / 255.0;
-}
-
-
-/*  The equalize procedure definition  */
 ProcArg equalize_args[] =
 {
   { PDB_DRAWABLE,

@@ -25,5 +25,7 @@ void       gimp_attach_parasite (Parasite *p);
 void       gimp_detach_parasite (char *name);
 Parasite * gimp_find_parasite   (char *name);
 char **    gimp_parasite_list   (gint *count);
+void       gimp_parasiterc_save (void);
+void       gimp_parasiterc_load (void);
 
 #endif  /*  __GIMP_PARASITE_H__  */

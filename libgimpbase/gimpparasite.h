@@ -21,6 +21,7 @@
 #define _PARASITE_H_
 
 #include <glib.h>
+#include <stdio.h>
 #include <libgimp/parasiteF.h>
 
 #ifdef __cplusplus
@@ -36,7 +37,9 @@ extern "C" {
 #define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
 
 Parasite   *parasite_new      (const char *name, guint32 flags,
-			     guint32 size, const void *data);
+			       guint32 size, const void *data);
+Parasite   *parasite_load     (FILE *fp);
+int         parasite_save     (const Parasite *p, FILE *fp);
 void        parasite_free     (Parasite *parasite);
 
 Parasite   *parasite_copy     (const Parasite *parasite);

@@ -19,7 +19,6 @@
 #define __LEVELS_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
 /*  hue-saturation functions  */
 Tool *        tools_new_levels      (void);
@@ -27,8 +26,5 @@ void          tools_free_levels     (Tool *);
 
 void          levels_initialize     (GDisplay *);
 void          levels_free           (void);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord levels_proc;
 
 #endif  /*  __LEVELS_H__  */

@@ -640,7 +640,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->preview_valid = FALSE;
   drawable->parasites = parasite_list_new();
   drawable->tattoo = 0;
-  gimp_matrix_identity(drawable->transform);
 
   drawable->ID = global_drawable_ID++;
   if (gimp_drawable_table == NULL)

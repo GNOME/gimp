@@ -21,7 +21,6 @@
 #include "gimpobjectP.h"
 #include "gimpdrawable.h"
 #include "parasitelistF.h"
-#include "libgimp/gimpmatrix.h"
 
 struct _GimpDrawable
 {
@@ -42,10 +41,6 @@ struct _GimpDrawable
   int has_alpha;			/* drawable has alpha */
 
   ParasiteList *parasites;              /* Plug-in parasite data   */
-
-  GimpMatrix transform;                 /* a matrix describing all of the
-					   transformations this drawable
-					   has undergone */
 
   /*  Preview variables  */
   TempBuf *preview;			/* preview of the channel */

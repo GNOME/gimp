@@ -28,6 +28,7 @@
 #include "image_map.h"
 #include "interface.h"
 #include "gimplut.h"
+#include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -94,59 +95,6 @@ static void   brightness_contrast_contrast_text_update    (GtkWidget *, gpointer
 static void *brightness_contrast_options = NULL;
 static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
 
-static Argument * brightness_contrast_invoker  (Argument *);
-
-/*  brightness contrast machinery  */
-
-static float
-brightness_contrast_lut_func(BrightnessContrastDialog *bcd,
-			     int nchannels, int channel, float value)
-{
-  float nvalue;
-  double power;
-
-  /* return the original value for the alpha channel */
-  if ((nchannels == 2 || nchannels == 4) && channel == nchannels -1)
-    return value;
-
-  /* apply brightness */
-  if (bcd->brightness < 0)
-    value = value * (1.0 + bcd->brightness/255.0);
-  else
-    value = value + ((1.0 - value) * bcd->brightness/255.0);
-
-  /* apply contrast */
-  if (bcd->contrast < 0)
-  {
-    if (value > 0.5)
-      nvalue = 1.0 - value;
-    else
-      nvalue = value;
-    if (nvalue < 0.0)
-      nvalue = 0.0;
-    nvalue = 0.5 * pow (nvalue * 2.0 , (double) (127 + bcd->contrast) / 127.0);
-    if (value > 0.5)
-      value = 1.0 - nvalue;
-    else
-      value = nvalue;
-  }
-  else
-  {
-    if (value > 0.5)
-      nvalue = 1.0 - value;
-    else
-      nvalue = value;
-    if (nvalue < 0.0)
-      nvalue = 0.0;
-    power = (bcd->contrast == 127) ? 127 : 127.0 / (127 - bcd->contrast);
-    nvalue = 0.5 * pow (2.0 * nvalue, power);
-    if (value > 0.5)
-      value = 1.0 - nvalue;
-    else
-      value = nvalue;
-  }
-  return value;
-}
 
 
 /*  by_color select action functions  */
@@ -467,8 +415,9 @@ brightness_contrast_preview (BrightnessContrastDialog *bcd)
   if (!bcd->image_map)
     g_message (_("brightness_contrast_preview(): No image map"));
   active_tool->preserve = TRUE;
-  gimp_lut_setup(bcd->lut, (GimpLutFunc) brightness_contrast_lut_func,
-		 (void *) bcd, gimp_drawable_bytes(bcd->drawable));
+  brightness_contrast_lut_setup(bcd->lut, bcd->brightness / 255.0,
+				bcd->contrast / 127.0,
+				gimp_drawable_bytes(bcd->drawable));
   image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
 		   (void *) bcd->lut);
   active_tool->preserve = FALSE;
@@ -489,8 +438,9 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   if (!bcd->preview)
   {
-    gimp_lut_setup(bcd->lut, (GimpLutFunc) brightness_contrast_lut_func,
-		   (void *) bcd, gimp_drawable_bytes(bcd->drawable));
+    brightness_contrast_lut_setup(bcd->lut, bcd->brightness / 255.0,
+				  bcd->contrast / 127.0,
+				  gimp_drawable_bytes(bcd->drawable));
     image_map_apply (bcd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
 		     (void *) bcd->lut);
   }
@@ -632,119 +582,3 @@ brightness_contrast_contrast_text_update (GtkWidget *w,
 }
 
 
-/*  The brightness_contrast procedure definition  */
-ProcArg brightness_contrast_args[] =
-{
-  { PDB_DRAWABLE,
-    "drawable",
-    "the drawable"
-  },
-  { PDB_INT32,
-    "brightness",
-    "brightness adjustment: (-127 <= brightness <= 127)"
-  },
-  { PDB_INT32,
-    "contrast",
-    "constrast adjustment: (-127 <= contrast <= 127)"
-  }
-};
-
-ProcRecord brightness_contrast_proc =
-{
-  "gimp_brightness_contrast",
-  "Modify brightness/contrast in the specified drawable",
-  "This procedures allows the brightness and contrast of the specified drawable to be modified.  Both 'brightness' and 'contrast' parameters are defined between -127 and 127.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1997",
-  PDB_INTERNAL,
-
-  /*  Input arguments  */
-  3,
-  brightness_contrast_args,
-
-  /*  Output arguments  */
-  0,
-  NULL,
-
-  /*  Exec method  */
-  { { brightness_contrast_invoker } },
-};
-
-
-static Argument *
-brightness_contrast_invoker (Argument *args)
-{
-  PixelRegion srcPR, destPR;
-  int success = TRUE;
-  int int_value;
-  BrightnessContrastDialog bcd;
-  GImage *gimage;
-  int brightness;
-  int contrast;
-  int x1, y1, x2, y2;
-  GimpDrawable *drawable;
-
-  drawable    = NULL;
-  brightness  = 0;
-  contrast    = 0;
-
-  /*  the drawable  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL)
-	success = FALSE;
-      else
-        gimage = drawable_gimage (drawable);
-    }
-  /*  make sure the drawable is not indexed color  */
-  if (success)
-    success = ! drawable_indexed (drawable);
-
-  /*  brightness  */
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
-      if (int_value < -127 || int_value > 127)
-	success = FALSE;
-      else
-	brightness = int_value;
-    }
-  /*  contrast  */
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
-      if (int_value < -127 || int_value > 127)
-	success = FALSE;
-      else
-	contrast = int_value;
-    }
-
-  /*  arrange to modify the brightness/contrast  */
-  if (success)
-    {
-      bcd.brightness = brightness;
-      bcd.contrast = contrast;
-      bcd.lut = gimp_lut_new();
-
-      /*  The application should occur only within selection bounds  */
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-      pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      gimp_lut_setup(bcd.lut, (GimpLutFunc) brightness_contrast_lut_func,
-		     (void *) &bcd, gimp_drawable_bytes(drawable));
-
-      pixel_regions_process_parallel((p_func)gimp_lut_process, bcd.lut, 
-				     2, &srcPR, &destPR);
-
-      gimp_lut_free(bcd.lut);
-      drawable_merge_shadow (drawable, TRUE);
-      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
-    }
-
-  return procedural_db_return_args (&brightness_contrast_proc, success);
-}

@@ -19,15 +19,11 @@
 #define __POSTERIZE_H__
 
 #include "tools.h"
-#include "procedural_db.h"
 
 /*  by_color select functions  */
 Tool *        tools_new_posterize      (void);
 void          tools_free_posterize     (Tool *);
 
 void          posterize_initialize     (GDisplay *);
-
-/*  Procedure definition and marshalling function  */
-extern ProcRecord posterize_proc;
 
 #endif  /*  __POSTERIZE_H__  */
