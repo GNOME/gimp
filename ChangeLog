@@ -1,5 +1,9 @@
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpfileentry.c: removed useless #includes.
+
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-dialog-utils.c
 	* app/widgets/gimpfiledialog.c
 	* libgimpwidgets/gimpfileentry.[ch]: some irrelevant micro changes

@@ -22,13 +22,6 @@
 
 #include "config.h"
 
-#include <glib.h>         /* Needed here by Win32 gcc compilation */
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <string.h>
 
 #include <gtk/gtk.h>
