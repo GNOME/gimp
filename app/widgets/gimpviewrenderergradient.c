@@ -137,7 +137,6 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
   guchar                   *buf;
   gint                      x;
   gint                      y;
-  gint                      a;
   gdouble                   dx, cur_x;
   GimpRGB                   color;
 
@@ -167,34 +166,32 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 
   for (x = 0; x < renderer->width; x++)
     {
-      guchar r, g, b;
+      guchar r, g, b, a;
 
       gimp_gradient_get_color_at (gradient, cur_x, rendergrad->reverse, &color);
       cur_x += dx;
 
-      a = ((gint) (color.a * 255.0)) << 8;
-
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
+      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
 
       if (x & 0x4)
         {
-          *even++ = render_blend_dark_check[a | r];
-          *even++ = render_blend_dark_check[a | g];
-          *even++ = render_blend_dark_check[a | b];
+          *even++ = render_blend_dark_check[(a << 8) | r];
+          *even++ = render_blend_dark_check[(a << 8) | g];
+          *even++ = render_blend_dark_check[(a << 8) | b];
 
-          *odd++ = render_blend_light_check[a | r];
-          *odd++ = render_blend_light_check[a | g];
-          *odd++ = render_blend_light_check[a | b];
+          *odd++ = render_blend_light_check[(a << 8) | r];
+          *odd++ = render_blend_light_check[(a << 8) | g];
+          *odd++ = render_blend_light_check[(a << 8) | b];
         }
       else
         {
-          *even++ = render_blend_light_check[a | r];
-          *even++ = render_blend_light_check[a | g];
-          *even++ = render_blend_light_check[a | b];
+          *even++ = render_blend_light_check[(a << 8) | r];
+          *even++ = render_blend_light_check[(a << 8) | g];
+          *even++ = render_blend_light_check[(a << 8) | b];
 
-          *odd++ = render_blend_dark_check[a | r];
-          *odd++ = render_blend_dark_check[a | g];
-          *odd++ = render_blend_dark_check[a | b];
+          *odd++ = render_blend_dark_check[(a << 8) | r];
+          *odd++ = render_blend_dark_check[(a << 8) | g];
+          *odd++ = render_blend_dark_check[(a << 8) | b];
         }
     }
 
