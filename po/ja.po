@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2000-10-30 21:56-0800\n"
-"PO-Revision-Date: 2000-10-09 12:42+09:00\n"
+"POT-Creation-Date: 2000-11-05 10:44+0900\n"
+"PO-Revision-Date: 2000-11-05 10:45+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -63,45 +63,45 @@ msgstr "の提供は"
 msgid "GIMP Startup"
 msgstr "GIMP 起動中"
 
-#: app/app_procs.c:489 app/gimprc.c:452
+#: app/app_procs.c:490 app/app_procs.c:498 app/gimprc.c:452
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "読み込み中 \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:551
+#: app/app_procs.c:560
 msgid "Looking for data files"
 msgstr "データファイルを検索中"
 
-#: app/app_procs.c:551
+#: app/app_procs.c:560
 msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:553 app/internal_procs.c:71 app/preferences_dialog.c:2515
+#: app/app_procs.c:562 app/internal_procs.c:71 app/preferences_dialog.c:2515
 msgid "Brushes"
 msgstr "ブラシ"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:555 app/internal_procs.c:140 app/preferences_dialog.c:2523
+#: app/app_procs.c:564 app/internal_procs.c:140 app/preferences_dialog.c:2523
 msgid "Patterns"
 msgstr "パターン"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:557 app/preferences_dialog.c:2527
+#: app/app_procs.c:566 app/preferences_dialog.c:2527
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:559 app/internal_procs.c:104 app/preferences_dialog.c:2531
+#: app/app_procs.c:568 app/internal_procs.c:104 app/preferences_dialog.c:2531
 msgid "Gradients"
 msgstr "グラデーション"
 
-#: app/app_procs.c:749
+#: app/app_procs.c:758
 msgid "Really Quit?"
 msgstr "終了しますか?"
 
-#: app/app_procs.c:753
+#: app/app_procs.c:762
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -111,12 +111,12 @@ msgstr ""
 "\n"
 "GIMP を終了しますか?"
 
-#: app/app_procs.c:754
+#: app/app_procs.c:763
 msgid "Quit"
 msgstr "終了"
 
 #. the cancel button
-#: app/app_procs.c:754 app/brightness_contrast.c:224 app/channel_ops.c:93
+#: app/app_procs.c:763 app/brightness_contrast.c:224 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:280 app/color_notebook.c:126 app/convert.c:513
 #: app/curves.c:567 app/file_new_dialog.c:210 app/file_new_dialog.c:360
@@ -2853,7 +2853,7 @@ msgstr "ズームイン"
 msgid "Zoom out"
 msgstr "ズームアウト"
 
-#: app/main.c:286
+#: app/main.c:290
 msgid ""
 "\n"
 "Invalid option.\n"
@@ -2861,11 +2861,11 @@ msgstr ""
 "\n"
 "不正なオプション.\n"
 
-#: app/main.c:302
+#: app/main.c:306
 msgid "GIMP version"
 msgstr "GIMP バージョン"
 
-#: app/main.c:306
+#: app/main.c:310
 #, c-format
 msgid ""
 "\n"
@@ -2876,22 +2876,22 @@ msgstr ""
 "使用法: %s [オプション ...] [ファイル ...]\n"
 "\n"
 
-#: app/main.c:307
+#: app/main.c:311
 msgid "Options:\n"
 msgstr "オプション:\n"
 
-#: app/main.c:308
+#: app/main.c:312
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
 msgstr "  -b, --batch <コマンド>   バッチモードで起動。\n"
 
-#: app/main.c:309
+#: app/main.c:313
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
 "  -c, --console-messages   警告はダイアログでなく、コンソールに出力する。\n"
 
-#: app/main.c:310
+#: app/main.c:314
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
@@ -2899,65 +2899,65 @@ msgstr ""
 "  -d, --no-data            "
 "パターン、グラデーション、パレット、ブラシを読み込まない\n"
 
-#: app/main.c:311
+#: app/main.c:315
 msgid "  -i, --no-interface       Run without a user interface.\n"
 msgstr "  -i, --no-interface       ユーザーインターフェースなしで起動。\n"
 
-#: app/main.c:312
+#: app/main.c:316
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
 msgstr "  -g, --gimprc <gimprc>     指定した gimprc ファイルを使用する。\n"
 
-#: app/main.c:313
+#: app/main.c:317
 msgid "  -h, --help               Output this help.\n"
 msgstr "  -h, --help               このヘルプを表示。\n"
 
-#: app/main.c:314
+#: app/main.c:318
 msgid "  -r, --restore-session    Try to restore saved session.\n"
 msgstr "  -r, --restore-session    保存されたセッションを再現する。\n"
 
-#: app/main.c:315
+#: app/main.c:319
 msgid "  -s, --no-splash          Do not show the startup window.\n"
 msgstr "  -s, --no-splash          起動画面を表示しない。\n"
 
-#: app/main.c:316
+#: app/main.c:320
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 msgstr "  -S, --no-splash-image    起動画面に画像を表示しない。\n"
 
-#: app/main.c:317
+#: app/main.c:321
 msgid "  -v, --version            Output version information.\n"
 msgstr "  -v, --version            バージョン情報の表示。\n"
 
-#: app/main.c:318
+#: app/main.c:322
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                詳細起動メッセージを表示する。\n"
 
-#: app/main.c:319
+#: app/main.c:323
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
 "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
 
-#: app/main.c:320
+#: app/main.c:324
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                X 共有メモリ拡張機能を使用しない。\n"
 
-#: app/main.c:321
+#: app/main.c:325
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         "
 "致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする。\n"
 
-#: app/main.c:322
+#: app/main.c:326
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <display>      指定した X ディスプレイを使用する。\n"
 
-#: app/main.c:323
+#: app/main.c:327
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> 指定するシステム gimprc を使用する。\n"
 
-#: app/main.c:325
+#: app/main.c:329
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
@@ -2965,7 +2965,7 @@ msgstr ""
 "                           致命的なシグナルに対するデバッグモード指定.\n"
 "\n"
 
-#: app/main.c:342
+#: app/main.c:346
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(このコンソールウィンドウは10秒後に閉じます)\n"
 
@@ -6283,7 +6283,6 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "インストール失敗.  システム管理者とご相談ください."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
