@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
+"POT-Creation-Date: 2000-10-13 08:57+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -63,7 +63,7 @@ msgstr "Про"
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
-#: plug-ins/common/ps.c:2586 plug-ins/common/ps.c:2768
+#: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
@@ -144,8 +144,8 @@ msgstr "Гаразд"
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
-#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2588
-#: plug-ins/common/ps.c:2770 plug-ins/common/psp.c:430
+#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
+#: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:375
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
@@ -200,7 +200,7 @@ msgstr "В╕дм╕нити"
 #: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
 #: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:575
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
-#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2909
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
@@ -524,7 +524,7 @@ msgstr "Косинус"
 #: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2693 plug-ins/common/ps.c:2706
+#: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
@@ -564,8 +564,7 @@ msgstr "╤нверс╕я"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Б╕льш яскрав╕ кольори зам╕нювати на менш яскрав╕ та навпаки"
+msgstr "Б╕льш яскрав╕ кольори зам╕нювати на менш яскрав╕ та навпаки"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:754 plug-ins/common/AlienMap.c:1489
@@ -604,7 +603,8 @@ msgstr "Застосувати активний град╕╓нт до к╕нцевого зображення"
 
 #: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Створити в╕дображення кольор╕в використовуючи град╕╓нт з редактора град╕╓нт╕в"
+msgstr ""
+"Створити в╕дображення кольор╕в використовуючи град╕╓нт з редактора град╕╓нт╕в"
 
 #: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "FractalExplorer Gradient"
@@ -972,7 +972,8 @@ msgstr "Осв╕тлення:"
 
 #: plug-ins/Lighting/lighting_ui.c:754 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
-msgstr "Степ╕нь замальовування власним кольором там куди не потрапляють прям╕ промен╕"
+msgstr ""
+"Степ╕нь замальовування власним кольором там куди не потрапляють прям╕ промен╕"
 
 #: plug-ins/Lighting/lighting_ui.c:766 plug-ins/Lighting/lighting_ui.c:805
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
@@ -989,7 +990,8 @@ msgstr "Рефлекс╕я"
 
 #: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "П╕двищення значень змушу╓ об'╓кт в╕дбивати б╕льше св╕тла (зда╓ться св╕тл╕шим)"
+msgstr ""
+"П╕двищення значень змушу╓ об'╓кт в╕дбивати б╕льше св╕тла (зда╓ться св╕тл╕шим)"
 
 #: plug-ins/Lighting/lighting_ui.c:830 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
@@ -1217,7 +1219,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Позиц╕я об'╓кта по Z у простор╕ XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2871
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2900
 #: plug-ins/gdyntext/gdyntext_ui.c:470
 msgid "Rotation"
 msgstr "Обертання"
@@ -1426,7 +1428,7 @@ msgstr "Неможливо в╕дкрити %s"
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
-#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1002
+#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
 #: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
@@ -1952,9 +1954,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"Ф╕ксована база\" - це псевдон╕м.\n"
-"Однаков╕ бази створюють однаков╕ зображення, якщо (1) ширина зображень"
-"однакова (з ц╕╓╖ причини зображення ╕ його перегляд в╕др╕зняються) ╕ "
-"(2) швидкост╕ вс╕х мутац╕й дор╕внюють 0."
+"Однаков╕ бази створюють однаков╕ зображення, якщо (1) ширина "
+"зображеньоднакова (з ц╕╓╖ причини зображення ╕ його перегляд в╕др╕зняються) "
+"╕ (2) швидкост╕ вс╕х мутац╕й дор╕внюють 0."
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Others"
@@ -2034,7 +2036,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1797
 msgid "Parameter k:"
-msgstr ""
+msgstr "Параметр k:"
 
 #: plug-ins/common/CML_explorer.c:1806
 msgid "Range Low:"
@@ -2580,7 +2582,7 @@ msgid "Colorify"
 msgstr "Розмальовування"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
-#: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:745
@@ -2796,7 +2798,7 @@ msgstr "Д╕льник:"
 msgid "Offset:"
 msgstr "Зм╕щення:"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2679
+#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Автоматично"
@@ -3229,7 +3231,7 @@ msgstr "Створити г╕стограму"
 #. Widht Scale
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
-#: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
+#: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:625
@@ -3382,8 +3384,8 @@ msgstr "Обмеження ширини л╕н╕╖"
 #. Height Scale
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2644
-#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
+#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:639
@@ -5218,141 +5220,141 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: plug-ins/common/ps.c:874
+#: plug-ins/common/ps.c:875
 msgid "PS: can't open file for reading"
 msgstr "PS: не вдалося в╕дкрити файл на зчитування"
 
-#: plug-ins/common/ps.c:881
+#: plug-ins/common/ps.c:882
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "╤нтерпретац╕я та завантаження %s:"
 
-#: plug-ins/common/ps.c:889
+#: plug-ins/common/ps.c:890
 msgid "PS: can't interprete file"
 msgstr "PS: неможливо ╕нтерпретувати файл"
 
-#: plug-ins/common/ps.c:976
+#: plug-ins/common/ps.c:977
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Збереження PostScript не може обробляти зображення з альфа-каналами"
 
-#: plug-ins/common/ps.c:987
+#: plug-ins/common/ps.c:988
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: неможливо працювати з нев╕домими типами зображення"
 
-#: plug-ins/common/ps.c:996
+#: plug-ins/common/ps.c:997
 msgid "PS: can't open file for writing"
 msgstr "PS: не вдалося в╕дкрити файл на запис"
 
-#: plug-ins/common/ps.c:2164 plug-ins/common/ps.c:2290
-#: plug-ins/common/ps.c:2434 plug-ins/common/ps.c:2556
+#: plug-ins/common/ps.c:2193 plug-ins/common/ps.c:2319
+#: plug-ins/common/ps.c:2463 plug-ins/common/ps.c:2585
 msgid "write error occured"
 msgstr "сталася помилка запису"
 
-#: plug-ins/common/ps.c:2581
+#: plug-ins/common/ps.c:2610
 msgid "Load PostScript"
 msgstr "Завантажити PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2608 plug-ins/flame/flame.c:994
+#: plug-ins/common/ps.c:2637 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "В╕зуал╕зац╕я"
 
-#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:534
+#: plug-ins/common/ps.c:2655 plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
 msgstr "Розд╕льн╕сть:"
 
-#: plug-ins/common/ps.c:2654
+#: plug-ins/common/ps.c:2683
 msgid "Pages:"
 msgstr "Стор╕нки:"
 
-#: plug-ins/common/ps.c:2660
+#: plug-ins/common/ps.c:2689
 msgid "Try Bounding Box"
 msgstr ""
 
 #. Colouring
-#: plug-ins/common/ps.c:2672
+#: plug-ins/common/ps.c:2701
 msgid "Coloring"
 msgstr ""
 
-#: plug-ins/common/ps.c:2676
+#: plug-ins/common/ps.c:2705
 msgid "B/W"
 msgstr ""
 
 #. * Gray *
-#: plug-ins/common/ps.c:2677 plug-ins/rcm/rcm_dialog.c:394
+#: plug-ins/common/ps.c:2706 plug-ins/rcm/rcm_dialog.c:394
 msgid "Gray"
 msgstr ""
 
-#: plug-ins/common/ps.c:2689
+#: plug-ins/common/ps.c:2718
 msgid "Text Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2694 plug-ins/common/ps.c:2707
+#: plug-ins/common/ps.c:2723 plug-ins/common/ps.c:2736
 msgid "Weak"
 msgstr ""
 
-#: plug-ins/common/ps.c:2695 plug-ins/common/ps.c:2708
+#: plug-ins/common/ps.c:2724 plug-ins/common/ps.c:2737
 msgid "Strong"
 msgstr ""
 
-#: plug-ins/common/ps.c:2701
+#: plug-ins/common/ps.c:2730
 msgid "Graphic Antialiasing"
 msgstr ""
 
-#: plug-ins/common/ps.c:2763
+#: plug-ins/common/ps.c:2792
 msgid "Save as PostScript"
 msgstr "Зберегти як PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2793
+#: plug-ins/common/ps.c:2822
 msgid "Image Size"
 msgstr "Розм╕р зображення"
 
-#: plug-ins/common/ps.c:2829
+#: plug-ins/common/ps.c:2858
 msgid "X-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2838
+#: plug-ins/common/ps.c:2867
 msgid "Y-Offset:"
 msgstr ""
 
-#: plug-ins/common/ps.c:2844
+#: plug-ins/common/ps.c:2873
 msgid "Keep Aspect Ratio"
 msgstr ""
 
-#: plug-ins/common/ps.c:2845
+#: plug-ins/common/ps.c:2874
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: plug-ins/common/ps.c:2856
+#: plug-ins/common/ps.c:2885
 msgid "Unit"
 msgstr "Одиниця"
 
-#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:360
+#: plug-ins/common/ps.c:2889 plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
 msgstr "Дюйм"
 
-#: plug-ins/common/ps.c:2861
+#: plug-ins/common/ps.c:2890
 msgid "Millimeter"
 msgstr "М╕л╕метр"
 
 #. Format
-#: plug-ins/common/ps.c:2885
+#: plug-ins/common/ps.c:2914
 msgid "Output"
 msgstr "Вив╕д"
 
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2922
 msgid "PostScript Level 2"
 msgstr "PostScript Level 2"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2930
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: plug-ins/common/ps.c:2929
+#: plug-ins/common/ps.c:2958
 msgid "Preview Size:"
 msgstr "Розм╕р перегляду:"
 
@@ -6947,15 +6949,15 @@ msgstr "<Image>/Файл/Установки стор╕нки"
 #: plug-ins/common/winprint.c:303
 #, c-format
 msgid "PrintDlg failed: %d"
-msgstr ""
+msgstr "Зб╕й PrintDlg: %d"
 
 #: plug-ins/common/winprint.c:339
 msgid "Printer doesn't support bitmaps"
-msgstr ""
+msgstr "Принтер не п╕дтриму╓ б╕тов╕ мапи"
 
 #: plug-ins/common/winprint.c:382
 msgid "StartPage failed"
-msgstr ""
+msgstr "Зб╕й StartPage"
 
 #: plug-ins/common/winprint.c:391 plug-ins/print/print-image-gimp.c:270
 msgid "Printing..."
@@ -6963,11 +6965,11 @@ msgstr "Друкування..."
 
 #: plug-ins/common/winprint.c:423
 msgid "CreateDIBSection failed"
-msgstr ""
+msgstr "Зб╕й CreateDIBSection"
 
 #: plug-ins/common/winprint.c:457
 msgid "SetStretchBltMode failed (warning only)"
-msgstr ""
+msgstr "Зб╕й SetStretchBltMode (лише попередження)"
 
 #: plug-ins/common/winprint.c:520
 #, c-format
@@ -6975,19 +6977,21 @@ msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
 "error = %d, y = %d"
 msgstr ""
+"Зб╕й StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY), "
+"помилка = %d, y = %d"
 
 #: plug-ins/common/winprint.c:549
 msgid "EndPage failed"
-msgstr ""
+msgstr "Зб╕й EndPage"
 
 #: plug-ins/common/winprint.c:596
 #, c-format
 msgid "PageSetupDlg failed: %d"
-msgstr ""
+msgstr "Зб╕й PageSetupDlg: %d"
 
 #: plug-ins/common/wmf.c:926
 msgid "Load Windows Metafile"
-msgstr ""
+msgstr "Завантаження файл╕в у формат╕ Windows Metafile"
 
 #. Rendering
 #: plug-ins/common/wmf.c:943
@@ -6997,7 +7001,7 @@ msgstr "В╕зуал╕зац╕я %s"
 
 #: plug-ins/common/wmf.c:960
 msgid "Scale (log 2):"
-msgstr ""
+msgstr "Масштаб (log 2):"
 
 #: plug-ins/common/wmf.c:1334
 #, c-format
@@ -11191,15 +11195,15 @@ msgstr "╤нвертувати текстуру паперу"
 
 #: plug-ins/gimpressionist/paper.c:156
 msgid "Applies the paper as it is (without embossing it)"
-msgstr ""
+msgstr "Використовувати пап╕р як ╓ (без надання йому рель╓фу)"
 
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
+msgstr "Вказати масштаб текстури (у в╕дсотках в╕д початкового файлу)"
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
+msgstr "Вказати степ╕нь рель╓фност╕, що застосову╓ться до зображення (у в╕дсотках)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
@@ -11216,15 +11220,15 @@ msgstr "Випадково"
 
 #: plug-ins/gimpressionist/placement.c:93
 msgid "Place strokes randomly around the image"
-msgstr ""
+msgstr "Розм╕щувати мизки випадково навколо зображення"
 
 #: plug-ins/gimpressionist/placement.c:97
 msgid "Evenly distributed"
-msgstr ""
+msgstr "Р╕вном╕рно розпод╕лен╕"
 
 #: plug-ins/gimpressionist/placement.c:103
 msgid "The strokes are evenly distributed across the image"
-msgstr ""
+msgstr "Мазки р╕вном╕рно розпод╕ляються по зображенню"
 
 #: plug-ins/gimpressionist/placement.c:112
 msgid "Stroke density:"
@@ -11236,35 +11240,35 @@ msgstr "В╕дносна щ╕льн╕ть мазк╕в пензлем"
 
 #: plug-ins/gimpressionist/placement.c:125
 msgid "Centerize"
-msgstr "Центруванти"
+msgstr "Центрувати"
 
 #: plug-ins/gimpressionist/placement.c:129
 msgid "Focus the brush strokes around the center of the image"
-msgstr ""
+msgstr "Зосередити мазки навколо центру зображення"
 
 #: plug-ins/gimpressionist/presets.c:572 plug-ins/gimpressionist/presets.c:577
 msgid "Presets"
-msgstr ""
+msgstr "Параметри"
 
 #: plug-ins/gimpressionist/presets.c:596
 msgid "Save current"
-msgstr ""
+msgstr "Зберегти поточн╕"
 
 #: plug-ins/gimpressionist/presets.c:602
 msgid "Save the current settings to the specified file"
-msgstr ""
+msgstr "Зберегти поточн╕ параметри у вказаному файл╕"
 
 #: plug-ins/gimpressionist/presets.c:646
 msgid "Reads the selected Preset into memory"
-msgstr ""
+msgstr "Зчитати вибраний параметр в пам'ять"
 
 #: plug-ins/gimpressionist/presets.c:654
 msgid "Deletes the selected Preset"
-msgstr ""
+msgstr "Стерти вибраний параметр"
 
 #: plug-ins/gimpressionist/presets.c:662
 msgid "Reread the directory of Presets"
-msgstr ""
+msgstr "Перечитати каталог параметр╕в"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
@@ -11587,6 +11591,12 @@ msgid ""
 "\n"
 "  Released under the GNU General Public License  "
 msgstr ""
+"Доповнення \"Мапа зображення\" верс╕╖ 1.3\n"
+"\n"
+"Copyright © 1999 Maurits Rijk\n"
+"lpeek.mrijk@consunet.nl \n"
+"\n"
+"  Розповсюджу╓ться пна умовах GNU General Public License  "
 
 #: plug-ins/imagemap/imap_circle.c:261
 msgid "Center x:"
@@ -12635,11 +12645,7 @@ msgid "From"
 msgstr "З"
 
 #. spinbutton 2
-#: plug-ins/rcm/rcm_dialog.c:307
-msgid "to"
-msgstr "в"
-
-#: plug-ins/rcm/rcm_dialog.c:357
+#: plug-ins/rcm/rcm_dialog.c:307 plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
 msgstr "В"
 
@@ -12874,3 +12880,6 @@ msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Помилка: файл властивостей XJT %s порожн╕й"
+
+#~ msgid "to"
+#~ msgstr "в"
