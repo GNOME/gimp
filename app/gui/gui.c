@@ -28,8 +28,6 @@
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
-#include "tools/tool_options_dialog.h"
-
 #include "widgets/gimpdialogfactory.h"
 
 #include "brush-select.h"
@@ -49,6 +47,7 @@
 #include "palette-editor.h"
 #include "pattern-select.h"
 #include "session.h"
+#include "tool-options-dialog.h"
 #include "toolbox.h"
 
 #include "app_procs.h"

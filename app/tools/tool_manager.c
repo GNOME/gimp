@@ -30,16 +30,12 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
-#include "appenv.h"
-#include "context_manager.h"
-#include "dialog_handler.h"
-#include "gdisplay.h"
-#include "gimpui.h"
+/* FIXME: let the tool options dialog update itself */
+#include "gui/tool-options-dialog.h"
 
 #include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
-#include "tool_options_dialog.h"
 
 #include "gimpairbrushtool.h"
 #include "gimppaintbrushtool.h"
@@ -49,6 +45,12 @@
 #include "gimperasertool.h"
 #include "gimppenciltool.h"
 #include "gimpsmudgetool.h"
+
+#include "appenv.h"
+#include "context_manager.h"
+#include "dialog_handler.h"
+#include "gdisplay.h"
+#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 

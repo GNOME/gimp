@@ -37,6 +37,7 @@
 #include "tools/gimptool.h"
 #include "tools/paint_options.h"
 #include "tools/tool_manager.h"
+#include "tools/tools.h"
 
 #include "gui/brush-select.h"
 
@@ -49,8 +50,6 @@
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
                            GIMP_CONTEXT_PAINT_MODE_MASK
 
-/* HACK: provide prototype without tools/tools.h */ 
-extern void register_tools (void);
 
 /*
  *  the list of all images
@@ -261,7 +260,7 @@ context_manager_init (void)
   gimp_context_define_args (global_tool_context, PAINT_OPTIONS_MASK, FALSE);
 
   /* register internal tools */
-  register_tools ();
+  tools_init ();
 
   if (! global_paint_options && active_tool &&
       (tool_context = tool_manager_get_info_by_tool (active_tool)->context))

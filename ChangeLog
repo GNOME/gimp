@@ -1,5 +1,23 @@
 2001-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/Makefile.am
+	* app/tools/tool_options_dialog.[ch]: removed.
+	* app/tools/tools.h: new file
+
+	* app/gui/Makefile.am
+	* app/gui/tool-options-dialog.[ch]: added.
+
+	* app/tools/tools.c: renamed register_tools() to tools_init(), new
+	function tools_exit().
+
+	* app/app_procs.c
+	* app/context_manager.c
+	* app/tools/tool_manager.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/gui.c: changed accordingly.
+
+2001-05-25  Michael Natterer  <mitch@gimp.org>
+
 	All tools are back :)
 
 	* app/tools/Makefile.am

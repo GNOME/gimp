@@ -37,9 +37,7 @@
 
 #include "pdb/internal_procs.h"
 
-#include "tools/gimpcurvestool.h"
-#include "tools/gimphuesaturationtool.h"
-#include "tools/gimplevelstool.h"
+#include "tools/tools.h"
 
 #include "gui/color-notebook.h"
 #include "gui/file-open-dialog.h"
@@ -275,13 +273,12 @@ app_exit_finish (void)
   global_edit_free ();
   named_buffers_free ();
   context_manager_free ();
-  hue_saturation_free ();
-  curves_free ();
-  levels_free ();
   plug_in_kill ();
   procedural_db_free ();
   save_unitrc ();
   gimp_parasiterc_save ();
+
+  tools_exit ();
 
   if (! no_interface)
     {

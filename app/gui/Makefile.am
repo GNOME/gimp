@@ -79,6 +79,8 @@ libappgui_la_SOURCES = \
 	test-commands.h			\
 	tips-dialog.c			\
 	tips-dialog.h			\
+	tool-options-dialog.c		\
+	tool-options-dialog.h		\
 	toolbox.c			\
 	toolbox.h
 

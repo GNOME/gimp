@@ -3,6 +3,8 @@
 noinst_LTLIBRARIES = libapptools.la
 
 libapptools_la_SOURCES = \
+	tools.c				\
+	tools.h				\
 	tools-types.h			\
 	gimpairbrushtool.c		\
 	gimpairbrushtool.h		\
@@ -106,13 +108,10 @@ libapptools_la_SOURCES = \
 	selection_options.h		\
 	tool_options.c			\
 	tool_options.h			\
-	tool_options_dialog.c		\
-	tool_options_dialog.h		\
 	\
 	icons.h				\
 	tool_manager.c			\
 	tool_manager.h			\
-	tools.c				\
 	path_tool.h			\
 	path_tool.c			\
 	path_toolP.h

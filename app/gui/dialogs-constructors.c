@@ -47,7 +47,6 @@
 #include "widgets/gimppreview.h"
 
 #include "tools/tool_manager.h"
-#include "tools/tool_options_dialog.h"
 
 #include "about-dialog.h"
 #include "brush-editor.h"
@@ -68,6 +67,7 @@
 #include "pattern-select.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
+#include "tool-options-dialog.h"
 #include "toolbox.h"
 
 #include "context_manager.h"

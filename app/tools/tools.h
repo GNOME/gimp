@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis and others
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TOOL_OPTIONS_DIALOG_H__
-#define __TOOL_OPTIONS_DIALOG_H__
+#ifndef __TOOLS_H__
+#define __TOOLS_H__
 
 
-GtkWidget * tool_options_dialog_create (void);
-void        tool_options_dialog_free   (void);
-
-void        tool_options_dialog_add    (ToolOptions *tool_options);
+void   tools_init     (void);
+void   tools_exit     (void);
 
 
-#endif  /*  __TOOL_OPTIONS_DIALOG_H__  */
+#endif  /* __TOOLS_H__ */

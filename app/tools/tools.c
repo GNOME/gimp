@@ -66,19 +66,19 @@
 
 
 void
-register_tools (void)
+tools_init (void)
 {
   /*  register tools in reverse order  */
 
   /*  color tools  */
 
-  gimp_threshold_tool_register ();
   gimp_posterize_tool_register ();
-  gimp_levels_tool_register ();
-  gimp_hue_saturation_tool_register ();
   gimp_curves_tool_register ();
-  gimp_color_balance_tool_register ();
+  gimp_levels_tool_register ();
+  gimp_threshold_tool_register ();
   gimp_brightness_contrast_tool_register ();
+  gimp_hue_saturation_tool_register ();
+  gimp_color_balance_tool_register ();
 
   /*  paint tools  */
 
@@ -122,4 +122,12 @@ register_tools (void)
   gimp_free_select_tool_register ();
   gimp_ellipse_select_tool_register ();
   gimp_rect_select_tool_register ();
+}
+
+void
+tools_exit (void)
+{
+  hue_saturation_free ();
+  curves_free ();
+  levels_free ();
 }
