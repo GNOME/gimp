@@ -1,3 +1,11 @@
+2004-09-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated for the remaining Preview -> View changes
+	and the new app/dialogs/ module.
+
 2004-09-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

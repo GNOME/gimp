@@ -927,6 +927,41 @@
     </chapter>
   </part>
 
+  <part id="app-dialogs-part">
+    <title>Dialogs</title>
+
+    <chapter id="app-dialogs-glue">
+      <title>Initialization &amp; Glue Code</title>
+      <xi:include href="xml/dialogs.xml" />
+      <xi:include href="xml/dialogs-constructors.xml" />
+    </chapter>
+
+    <chapter id="app-dialogs-dialogs">
+      <title>Dialogs</title>
+      <xi:include href="xml/about-dialog.xml" />
+      <xi:include href="xml/color-dialog.xml" />
+      <xi:include href="xml/convert-dialog.xml" />
+      <xi:include href="xml/file-open-dialog.xml" />
+      <xi:include href="xml/file-open-location-dialog.xml" />
+      <xi:include href="xml/file-save-dialog.xml" />
+      <xi:include href="xml/grid-dialog.xml" />
+      <xi:include href="xml/image-new-dialog.xml" />
+      <xi:include href="xml/info-dialog.xml" />
+      <xi:include href="xml/info-window.xml" />
+      <xi:include href="xml/module-dialog.xml" />
+      <xi:include href="xml/offset-dialog.xml" />
+      <xi:include href="xml/palette-import-dialog.xml" />
+      <xi:include href="xml/preferences-dialog.xml" />
+      <xi:include href="xml/quit-dialog.xml" />
+      <xi:include href="xml/resize-dialog.xml" />
+      <xi:include href="xml/resolution-calibrate-dialog.xml" />
+      <xi:include href="xml/stroke-dialog.xml" />
+      <xi:include href="xml/tips-dialog.xml" />
+      <xi:include href="xml/tips-parser.xml" />
+      <xi:include href="xml/user-install-dialog.xml" />
+    </chapter>
+  </part>
+
   <part id="app-gui-part">
     <title>GUI</title>
 
@@ -934,38 +969,14 @@
       <title>Initialization &amp; Glue Code</title>
       <xi:include href="xml/gui.xml" />
       <xi:include href="xml/gui-vtable.xml" />
-      <xi:include href="xml/session.xml" />
-      <xi:include href="xml/themes.xml" />
     </chapter>
 
-    <chapter id="app-gui-dialogs">
-      <title>Dialogs</title>
-      <xi:include href="xml/dialogs.xml" />
-      <xi:include href="xml/dialogs-constructors.xml" />
-      <xi:include href="xml/about-dialog.xml" />
-      <xi:include href="xml/color-notebook.xml" />
+    <chapter id="app-gui-utils">
+      <title>Misc. Utilities</title>
       <xi:include href="xml/color-history.xml" />
-      <xi:include href="xml/convert-dialog.xml" />
-      <xi:include href="xml/file-new-dialog.xml" />
-      <xi:include href="xml/file-open-dialog.xml" />
-      <xi:include href="xml/file-open-location-dialog.xml" />
-      <xi:include href="xml/file-save-dialog.xml" />
-      <xi:include href="xml/file-dialog-utils.xml" />
-      <xi:include href="xml/grid-dialog.xml" />
-      <xi:include href="xml/info-dialog.xml" />
-      <xi:include href="xml/info-window.xml" />
-      <xi:include href="xml/module-browser.xml" />
-      <xi:include href="xml/offset-dialog.xml" />
-      <xi:include href="xml/palette-import-dialog.xml" />
-      <xi:include href="xml/preferences-dialog.xml" />
-      <xi:include href="xml/quit-dialog.xml" />
-      <xi:include href="xml/resize-dialog.xml" />
-      <xi:include href="xml/resolution-calibrate-dialog.xml" />
+      <xi:include href="xml/session.xml" />
       <xi:include href="xml/splash.xml" />
-      <xi:include href="xml/stroke-dialog.xml" />
-      <xi:include href="xml/tips-dialog.xml" />
-      <xi:include href="xml/tips-parser.xml" />
-      <xi:include href="xml/user-install-dialog.xml" />
+      <xi:include href="xml/themes.xml" />
     </chapter>
   </part>
 

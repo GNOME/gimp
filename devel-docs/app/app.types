@@ -155,7 +155,7 @@ gimp_message_box_get_type
 gimp_menu_factory_get_type
 gimp_move_options_get_type
 gimp_move_tool_get_type
-gimp_navigation_preview_get_type
+gimp_navigation_view_get_type
 gimp_navigation_editor_get_type
 gimp_object_get_type
 gimp_paint_core_get_type
@@ -172,6 +172,7 @@ gimp_pattern_factory_view_get_type
 gimp_pattern_get_type
 gimp_pattern_select_get_type
 gimp_pdb_dialog_get_type
+gimp_pdb_progress_get_type
 gimp_pencil_get_type
 gimp_pencil_options_get_type
 gimp_pencil_tool_get_type

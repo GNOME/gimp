@@ -1269,6 +1269,23 @@ PatternHeader
 </SECTION>
 
 <SECTION>
+<FILE>gimppdbprogress</FILE>
+<TITLE>GimpPdbProgress</TITLE>
+GimpPdbProgress
+gimp_pdb_progress_get_by_callback
+gimp_pdb_progresss_check_callback
+<SUBSECTION Standard>
+GimpPdbProgressClass
+GIMP_PDB_PROGRESS
+GIMP_IS_PDB_PROGRESS
+GIMP_TYPE_PDB_PROGRESS
+gimp_pdb_progress_get_type
+GIMP_PDB_PROGRESS_CLASS
+GIMP_IS_PDB_PROGRESS_CLASS
+GIMP_PDB_PROGRESS_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpprogress</FILE>
 <TITLE>GimpProgress</TITLE>
 GimpProgress
@@ -4803,20 +4820,20 @@ GIMP_UI_MANAGER_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpnavigationpreview</FILE>
-<TITLE>GimpNavigationPreview</TITLE>
-GimpNavigationPreview
-gimp_navigation_preview_set_marker
-gimp_navigation_preview_grab_pointer
+<FILE>gimpnavigationview</FILE>
+<TITLE>GimpNavigationView</TITLE>
+GimpNavigationView
+gimp_navigation_view_set_marker
+gimp_navigation_view_grab_pointer
 <SUBSECTION Standard>
-GimpNavigationPreviewClass
-GIMP_NAVIGATION_PREVIEW
-GIMP_IS_NAVIGATION_PREVIEW
-GIMP_TYPE_NAVIGATION_PREVIEW
-gimp_navigation_preview_get_type
-GIMP_NAVIGATION_PREVIEW_CLASS
-GIMP_IS_NAVIGATION_PREVIEW_CLASS
-GIMP_NAVIGATION_PREVIEW_GET_CLASS
+GimpNavigationViewClass
+GIMP_NAVIGATION_VIEW
+GIMP_IS_NAVIGATION_VIEW
+GIMP_TYPE_NAVIGATION_VIEW
+gimp_navigation_view_get_type
+GIMP_NAVIGATION_VIEW_CLASS
+GIMP_IS_NAVIGATION_VIEW_CLASS
+GIMP_NAVIGATION_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -5594,10 +5611,6 @@ units_init
 
 <SECTION>
 <FILE>base-enums</FILE>
-GIMP_TYPE_CHECK_SIZE
-GimpCheckSize
-GIMP_TYPE_CHECK_TYPE
-GimpCheckType
 GIMP_TYPE_CURVE_TYPE
 GimpCurveType
 GIMP_TYPE_HISTOGRAM_CHANNEL
@@ -5611,8 +5624,6 @@ GimpTransferMode
 GimpConvolutionType
 GimpHueRange
 <SUBSECTION Standard>
-gimp_check_size_get_type
-gimp_check_type_get_type
 gimp_curve_type_get_type
 gimp_histogram_channel_get_type
 gimp_interpolation_type_get_type
@@ -6175,8 +6186,8 @@ GIMP_TYPE_ORIENTATION_TYPE
 GimpOrientationType
 GIMP_TYPE_ROTATION_TYPE
 GimpRotationType
-GIMP_TYPE_PREVIEW_SIZE
-GimpPreviewSize
+GIMP_TYPE_VIEW_SIZE
+GimpViewSize
 GIMP_TYPE_REPEAT_MODE
 GimpRepeatMode
 GIMP_TYPE_SELECTION_CONTROL
@@ -6223,7 +6234,7 @@ gimp_icon_type_get_type
 gimp_join_style_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
-gimp_preview_size_get_type
+gimp_view_size_get_type
 gimp_repeat_mode_get_type
 gimp_selection_control_get_type
 gimp_stroke_style_get_type
@@ -6463,6 +6474,7 @@ gimp_image_qmask_invert
 <FILE>gimpimage-resize</FILE>
 <TITLE>GimpImage-resize</TITLE>
 gimp_image_resize
+gimp_image_resize_to_layers
 </SECTION>
 
 <SECTION>
@@ -6733,18 +6745,18 @@ color_history_get
 </SECTION>
 
 <SECTION>
-<FILE>color-notebook</FILE>
-ColorNotebook
-ColorNotebookState
-ColorNotebookCallback
-color_notebook_new
-color_notebook_free
-color_notebook_set_viewable
-color_notebook_set_title
-color_notebook_show
-color_notebook_hide
-color_notebook_set_color
-color_notebook_get_color
+<FILE>color-dialog</FILE>
+ColorDialog
+ColorDialogState
+ColorDialogCallback
+color_dialog_new
+color_dialog_free
+color_dialog_set_viewable
+color_dialog_set_title
+color_dialog_show
+color_dialog_hide
+color_dialog_set_color
+color_dialog_get_color
 </SECTION>
 
 <SECTION>
@@ -6754,12 +6766,16 @@ convert_dialog_new
 
 <SECTION>
 <FILE>dialogs-constructors</FILE>
-dialogs_file_new_new
+dialogs_image_new_new
+dialogs_file_open_new
+dialogs_file_open_location_new
+dialogs_file_save_new
 dialogs_preferences_get
-dialogs_module_browser_get
+dialogs_module_get
 dialogs_about_get
 dialogs_error_get
 dialogs_tips_get
+dialogs_quit_get
 dialogs_toolbox_get
 dialogs_dock_new
 dialogs_tool_options_get
@@ -6813,31 +6829,24 @@ dialogs_get_toolbox
 </SECTION>
 
 <SECTION>
-<FILE>file-dialog-utils</FILE>
-file_dialog_show
-file_dialog_hide
-</SECTION>
-
-<SECTION>
-<FILE>file-new-dialog</FILE>
-file_new_dialog_new
-file_new_dialog_set
+<FILE>image-new-dialog</FILE>
+image_new_dialog_new
+image_new_dialog_set
 </SECTION>
 
 <SECTION>
 <FILE>file-open-dialog</FILE>
-file_open_dialog_show
+file_open_dialog_new
 </SECTION>
 
 <SECTION>
 <FILE>file-open-location-dialog</FILE>
-file_open_location_dialog_show
+file_open_location_dialog_new
 </SECTION>
 
 <SECTION>
 <FILE>file-save-dialog</FILE>
-file_save_dialog_show
-file_save_a_copy_dialog_show
+file_save_dialog_new
 </SECTION>
 
 <SECTION>
@@ -6907,8 +6916,8 @@ info_window_follow_auto
 </SECTION>
 
 <SECTION>
-<FILE>module-browser</FILE>
-module_browser_new
+<FILE>module-dialog</FILE>
+module_dialog_new
 </SECTION>
 
 <SECTION>
@@ -7189,6 +7198,9 @@ plug_in_proc_def_get_sensitive
 plug_in_progress_start
 plug_in_progress_update
 plug_in_progress_end
+plug_in_progress_install
+plug_in_progress_uninstall
+plug_in_progress_cancel
 </SECTION>
 
 <SECTION>
@@ -7913,6 +7925,7 @@ context_background_red_cmd_callback
 context_background_green_cmd_callback
 context_background_blue_cmd_callback
 context_opacity_cmd_callback
+context_paint_mode_cmd_callback
 context_tool_select_cmd_callback
 context_brush_select_cmd_callback
 context_pattern_select_cmd_callback
@@ -8077,6 +8090,7 @@ image_new_cmd_callback
 image_new_from_image_cmd_callback
 image_convert_cmd_callback
 image_resize_cmd_callback
+image_resize_to_layers_cmd_callback
 image_scale_cmd_callback
 image_flip_cmd_callback
 image_rotate_cmd_callback
@@ -8183,7 +8197,7 @@ templates_edit_template_cmd_callback
 templates_delete_template_cmd_callback
 templates_new_template_dialog
 templates_edit_template_dialog
-templates_file_new_dialog
+templates_image_new_dialog
 </SECTION>
 
 <SECTION>

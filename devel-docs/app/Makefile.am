@@ -76,10 +76,10 @@ unused_symbols = \
 	-u $(SYMPREFIX)palette_import_dialog_show	\
 	-u $(SYMPREFIX)resize_dialog_new		\
 	-u $(SYMPREFIX)stroke_dialog_new		\
-	-u $(SYMPREFIX)file_open_dialog_show		\
-	-u $(SYMPREFIX)file_open_location_dialog_show	\
-	-u $(SYMPREFIX)file_save_dialog_show		\
-	-u $(SYMPREFIX)color_notebook_new
+	-u $(SYMPREFIX)file_open_dialog_new		\
+	-u $(SYMPREFIX)file_open_location_dialog_nw	\
+	-u $(SYMPREFIX)file_save_dialog_new		\
+	-u $(SYMPREFIX)color_dialog_new
 
 GTKDOC_LIBS = \
 	$(unused_symbols)						     \
@@ -89,6 +89,7 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/units.o					     \
         $(top_builddir)/app/config/libappconfig.a			     \
         $(top_builddir)/app/gui/libappgui.a				     \
+        $(top_builddir)/app/dialogs/libappdialogs.a			     \
         $(top_builddir)/app/menus/libappmenus.a				     \
 	$(top_builddir)/app/actions/libappactions.a			     \
         $(top_builddir)/app/display/libappdisplay.a			     \
