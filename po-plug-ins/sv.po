@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-14 20:40+0900\n"
+"POT-Creation-Date: 2004-07-17 15:31+0200\n"
 "PO-Revision-Date: 2004-07-14 20:44+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -431,9 +431,9 @@ msgstr "_Fraktaler"
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1361
-#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
+#: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
@@ -476,9 +476,9 @@ msgstr "Spara fraktalparametrar"
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:812
-#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
-#: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
+#: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
@@ -1203,7 +1203,7 @@ msgstr "Felaktig färgkarta"
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
 #: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
-#: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
+#: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
@@ -1241,7 +1241,7 @@ msgstr "Fel vid läsning av BMP-filhuvud från \"%s\""
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
-#: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
+#: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
@@ -1271,7 +1271,7 @@ msgstr "Kan inte arbeta med okända bildtyper."
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
 #: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
@@ -1282,16 +1282,16 @@ msgstr "Kan inte arbeta med okända bildtyper."
 msgid "Saving '%s'..."
 msgstr "Sparar \"%s\" ..."
 
-#: plug-ins/bmp/bmpwrite.c:554
+#: plug-ins/bmp/bmpwrite.c:555
 msgid "Save as BMP"
 msgstr "Spara som BMP"
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:564
+#: plug-ins/bmp/bmpwrite.c:565
 msgid "Save Options"
 msgstr "Sparningsalternativ"
 
-#: plug-ins/bmp/bmpwrite.c:572
+#: plug-ins/bmp/bmpwrite.c:573
 msgid "_RLE encoded"
 msgstr "_RLE-kodad"
 
@@ -3987,7 +3987,7 @@ msgstr "Spara som GIF"
 msgid "GIF Options"
 msgstr "GIF-inställningar"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1243
 msgid "Interlace"
 msgstr "Sammanflätning"
 
@@ -4925,100 +4925,108 @@ msgstr "Oskärpeinställningar"
 msgid "_Angle:"
 msgstr "_Vinkel:"
 
-#: plug-ins/common/mng.c:1195
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
+#: plug-ins/common/mng.c:442 plug-ins/common/png.c:1558
+msgid "Couldn't losslessly save transparency, saving opacity instead."
+msgstr ""
+"Kunde inte spara transparens utan informationsförlust; sparar opacitet "
+"istället."
+
+#: plug-ins/common/mng.c:1223
 msgid "Save as MNG"
 msgstr "Spara som MNG"
 
-#: plug-ins/common/mng.c:1208
+#: plug-ins/common/mng.c:1236
 msgid "MNG Options"
 msgstr "MNG-inställningar"
 
-#: plug-ins/common/mng.c:1227
+#: plug-ins/common/mng.c:1255
 msgid "Save Background Color"
 msgstr "Spara bakgrundsfärg"
 
-#: plug-ins/common/mng.c:1238
+#: plug-ins/common/mng.c:1266
 msgid "Save Gamma"
 msgstr "Spara gamma"
 
-#: plug-ins/common/mng.c:1248
+#: plug-ins/common/mng.c:1276
 msgid "Save Resolution"
 msgstr "Spara upplösning"
 
-#: plug-ins/common/mng.c:1259
+#: plug-ins/common/mng.c:1287
 msgid "Save Creation Time"
 msgstr "Spara skapad tid"
 
-#: plug-ins/common/mng.c:1284
+#: plug-ins/common/mng.c:1312
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1285
+#: plug-ins/common/mng.c:1313
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1294
+#: plug-ins/common/mng.c:1322
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1323
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta JNG"
 
-#: plug-ins/common/mng.c:1296
+#: plug-ins/common/mng.c:1324
 msgid "All PNG"
 msgstr "Alla PNG"
 
-#: plug-ins/common/mng.c:1297
+#: plug-ins/common/mng.c:1325
 msgid "All JNG"
 msgstr "Alla JNG"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1331
 msgid "Default Chunks Type:"
 msgstr "Standarddeltyp:"
 
-#: plug-ins/common/mng.c:1311
+#: plug-ins/common/mng.c:1339
 msgid "Combine"
 msgstr "Kombinera"
 
 # src/dialogs.c:575 src/menus.c:362
-#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1340 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Ersätt"
 
-#: plug-ins/common/mng.c:1317
+#: plug-ins/common/mng.c:1345
 msgid "Default Frame Disposal:"
 msgstr "Standard bildruteplacering"
 
-#: plug-ins/common/mng.c:1329
+#: plug-ins/common/mng.c:1357
 msgid "PNG Compression Level:"
 msgstr "PNG kompressionsnivå:"
 
-#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
+#: plug-ins/common/mng.c:1365 plug-ins/common/png.c:1705
 msgid "Choose a high compression level for small file size"
 msgstr "Välj en hög komprimeringsnivå för liten filstorlek"
 
-#: plug-ins/common/mng.c:1351
+#: plug-ins/common/mng.c:1379
 msgid "JPEG Compression Quality:"
 msgstr "JPEG komprimeringskvalitet:"
 
-#: plug-ins/common/mng.c:1368
+#: plug-ins/common/mng.c:1396
 msgid "JPEG Smoothing Factor:"
 msgstr "JPEG utjämningsfaktor:"
 
-#: plug-ins/common/mng.c:1378
+#: plug-ins/common/mng.c:1406
 msgid "Animated MNG Options"
 msgstr "Inställningar för animerad MNG"
 
-#: plug-ins/common/mng.c:1385
+#: plug-ins/common/mng.c:1413
 msgid "Loop"
 msgstr "Loop"
 
-#: plug-ins/common/mng.c:1399
+#: plug-ins/common/mng.c:1427
 msgid "Default Frame Delay:"
 msgstr "Standard bildrutepaus:"
 
-#: plug-ins/common/mng.c:1415
+#: plug-ins/common/mng.c:1443
 msgid "milliseconds"
 msgstr "millisekunder"
 
@@ -5584,91 +5592,83 @@ msgstr "Trädvy"
 msgid "Search:"
 msgstr "Sök:"
 
-#: plug-ins/common/png.c:650
+#: plug-ins/common/png.c:653
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid läsning av \"%s\". Trasig fil?"
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:784
+#: plug-ins/common/png.c:787
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-fil \"%s\"."
 
-#: plug-ins/common/png.c:839
+#: plug-ins/common/png.c:842
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 "PNG-filen anger ett offset som fick lagret att bli placerat utanför bilden."
 
-#: plug-ins/common/png.c:1156
+#: plug-ins/common/png.c:1159
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Fel vid sparande av \"%s\". Kunde inte spara bild."
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
-#: plug-ins/common/png.c:1540
-msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Kunde inte spara transparens utan informationsförlust; sparar opacitet "
-"istället."
-
-#: plug-ins/common/png.c:1566
+#: plug-ins/common/png.c:1588
 msgid "Save as PNG"
 msgstr "Spara som PNG"
 
-#: plug-ins/common/png.c:1570
+#: plug-ins/common/png.c:1592
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
 
-#: plug-ins/common/png.c:1571
+#: plug-ins/common/png.c:1593
 msgid "_Save Defaults"
 msgstr "_Spara standardvärden"
 
 #. parameter settings
-#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1606 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Inställningar"
 
-#: plug-ins/common/png.c:1597
+#: plug-ins/common/png.c:1619
 msgid "_Interlacing (Adam7)"
 msgstr "_Sammanflätning (Adam7)"
 
-#: plug-ins/common/png.c:1608
+#: plug-ins/common/png.c:1630
 msgid "Save _Background Color"
 msgstr "Spara _bakgrundsfärg"
 
-#: plug-ins/common/png.c:1616
+#: plug-ins/common/png.c:1638
 msgid "Save _Gamma"
 msgstr "Spara _gamma"
 
-#: plug-ins/common/png.c:1625
+#: plug-ins/common/png.c:1647
 msgid "Save Layer O_ffset"
 msgstr "Spara lager_offset"
 
-#: plug-ins/common/png.c:1634
+#: plug-ins/common/png.c:1656
 msgid "Save _Resolution"
 msgstr "Spara _upplösning"
 
-#: plug-ins/common/png.c:1643
+#: plug-ins/common/png.c:1665
 msgid "Save Creation _Time"
 msgstr "Spara skapad _tid"
 
-#: plug-ins/common/png.c:1651
+#: plug-ins/common/png.c:1673
 msgid "Save Comme_nt"
 msgstr "Spara _kommentar"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1688
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Spara färg_värden från genomskinsliga bildpunkter"
 
-#: plug-ins/common/png.c:1679
+#: plug-ins/common/png.c:1701
 msgid "Co_mpression Level:"
 msgstr "Ko_mpressionsnivå"
 
-#: plug-ins/common/png.c:1799
+#: plug-ins/common/png.c:1821
 msgid "Could not load PNG defaults"
 msgstr "Kunde inte läsa in standardvärden för PNG"
 

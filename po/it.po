@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2004-02-23 12:23+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -1645,7 +1645,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -2021,7 +2021,7 @@ msgstr "Abilita quickmask"
 msgid "Disable QuickMask"
 msgstr "Disabilita quickmask"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Impossibile annullare %s"
@@ -6261,7 +6261,7 @@ msgid "_Vertical:"
 msgstr "_Verticale:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
@@ -7478,7 +7478,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -7974,17 +7974,17 @@ msgstr "Salva curve"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Canale:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Tutti i canali"
 
@@ -8253,45 +8253,45 @@ msgstr "Salva livelli"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "I livelli per i livelli a colori indicizzati non sono modificabili."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Prendi il punto nero"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Prendi il punto grigio"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Prendi punto bianco"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Livelli di ingresso"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Livelli di uscita"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Leggi i livelli da file"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Salva i livelli all'uscita"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Regola livelli automaticamente"
 
@@ -8699,15 +8699,15 @@ msgstr "Aggiungi testo all'immagine"
 msgid "/Tools/Te_xt"
 msgstr "/Strumenti/Testo"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "Editor di testi di GIMP"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:18+0200\n"
+"POT-Creation-Date: 2004-07-17 15:32+0200\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -14,37 +14,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu 콘솔 모드는 상호작용 있는 호출만 허용합니다"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:184
 msgid "SIOD Output"
 msgstr "SIOD 출력"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:243
 msgid "Current Command"
 msgstr "현재 명령"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "찾아보기..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "SIOD 출력 파이프에 대한 스트림을 열 수 없습니다"
-
-#: plug-ins/script-fu/script-fu-console.c:588
-msgid "Unable to open the SIOD output pipe"
-msgstr "SIOD 출력 파이프를 열 수 없습니다"
-
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 상호작용 없는 호출만 허용합니다"
 
@@ -153,11 +145,11 @@ msgstr "<Toolbox>/확장/Script-Fu/Script-Fu 콘솔(_C)"
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/확장/Script-Fu/서버 시작(_S)..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "모든 가용한 스크립트 다시 읽기"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/확장/Script-Fu/스크립트 새로 고침(_R)"
 
@@ -2426,3 +2418,9 @@ msgstr "하일라이트 X 오프셋"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "하일라이트 Y 오프셋"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "SIOD 출력 파이프에 대한 스트림을 열 수 없습니다"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "SIOD 출력 파이프를 열 수 없습니다"

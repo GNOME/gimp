@@ -12,13 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-02 17:24+0300\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2004-07-02 20:46+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -1544,7 +1544,7 @@ msgstr "Kritinė klaida teptuko byloje %s: panašu, kad byla nepilna."
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nekorektiška UTF-8 eilutė teptukų byloje %s."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1909,7 +1909,7 @@ msgstr "Aktyvuota greita kaukė"
 msgid "Disable QuickMask"
 msgstr "Deaktyvuota greita kaukė"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Negaliu atšaukti %s"
@@ -2624,14 +2624,14 @@ msgstr "Vertė"
 #. we'd prefer just the names, please no email addresses.
 #: app/gui/about-dialog.c:54
 msgid "translator-credits"
-msgstr "Giedrius Naudžiūnas,\n"
+msgstr ""
+"Giedrius Naudžiūnas,\n"
 "Rimas Kudelis,\n"
 "Linas Vasiliauskas,\n"
 "Žygimantas Beručka,\n"
 "Mantas Kriaučiūnas,\n"
 "Eglė Kriaučiūnienė,\n"
 "Karina Gribanova."
-""
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
@@ -6210,7 +6210,7 @@ msgid "_Vertical:"
 msgstr "Vertikaliai:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Kontūras -> Pažymėjimas"
@@ -7460,7 +7460,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr "ĄąBbCcČčDdEeĘęĖėFfGgHhIiYyJjKkLlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Pridėti teksto sluoksnį"
 
@@ -8686,15 +8686,15 @@ msgstr "Rašyti tekstą paveikslėlyje"
 msgid "/Tools/Te_xt"
 msgstr "/Įrankiai/Te_kstas"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "GIMP teksto redaktorius"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10089,4 +10089,3 @@ msgstr "XCF klaida: nustatyta nepalaikoma XCF bylos versija %d"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Kurkit ir keiskit paveiklėlius ir fotografijas"
-

@@ -22,9 +22,10 @@ Bugs fixed in GIMP 2.0.3
 - allow to undo script 'Round Corners' (#146344)
 - implemented gimp-path-get-point-at-dist PDB function (#138754)
 - don't crash while loading JPEG files with corrupt EXIF data (#145212)
-- fixed loading of CMYK TIFF images on big-endian hardware (#147328)
+- fixed loading of CMYK TIFF images on big-endian hosts (#147328)
 - fixed palette handling in MNG plug-in (#139947)
 - fixed bug in Script-Fu console (#139200)
+- fixed corruption when saving RLE-encoded BMPs on big-endian hosts (#147759)
 
 
 Bugs fixed in GIMP 2.0.2

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2004-03-22 18:36+0200\n"
 "Last-Translator: Mikko Paananen\n"
 "Language-Team:\n"
@@ -1610,7 +1610,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Epäkelpo unicode merkkijono sivellintiedostossa '%s'."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1969,7 +1969,7 @@ msgstr ""
 msgid "Disable QuickMask"
 msgstr ""
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Toiminnon %s kumoaminen ei onnistu"
@@ -6176,7 +6176,7 @@ msgid "_Vertical:"
 msgstr "Pystysuuntaan:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Polku valinnaksi"
@@ -7376,7 +7376,7 @@ msgstr ""
 "Isoviisaria Aira siivosi.\n"
 "ABCabc XYZxyz åäöÅÄÖàášü€"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Lisää tekstitaso"
 
@@ -7869,17 +7869,17 @@ msgstr "Tallenna väritasoasetukset"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Indeksoitujen kuvien käyriä ei voi muokata"
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Kanava:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Nollaa kanava"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Kaikki kanavat"
 
@@ -8148,45 +8148,45 @@ msgstr "Tallenna väritasoasetukset"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Indeksoitujen kuvien väritasoja ei voi säätää"
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Valitse mustapiste"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Valitse harmaapiste"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Valitse valkopiste"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Ottotasot"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Antotasot"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Lataa tasot tiedostosta"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Tallenna tasot poistuessa"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Automaattinen"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Säädä tasoja automaattisesti"
 
@@ -8590,15 +8590,15 @@ msgstr "Lisää kuvaan tekstiä"
 msgid "/Tools/Te_xt"
 msgstr "/Työkalut/Teksti"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "Tekstieditori"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Vahvista tekstin muokkaus"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:18+0200\n"
+"POT-Creation-Date: 2004-07-17 15:32+0200\n"
 "PO-Revision-Date: 2004-04-14 17:54+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -14,37 +14,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Консольний режим Скрипт-Фу дозволяє лише інтерактивну роботу"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Консоль Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:184
 msgid "SIOD Output"
 msgstr "Вивід SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:243
 msgid "Current Command"
 msgstr "Поточна команда"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "Огляд..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Не вдається відкрити потік на каналі виводу SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:588
-msgid "Unable to open the SIOD output pipe"
-msgstr "Не вдається відкрити канал виводу SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим виконання Скрипт-Фу дозволяє лише не інтерактивну роботу"
 
@@ -153,11 +145,11 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/_Консоль Скрипт-Фу.
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Розш./Скрипт-Фу/_Сервер..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "Перечитати усі наявні сценарії"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Розш./Скрипт-Фу/_Оновити сценарії"
 
@@ -2443,3 +2435,9 @@ msgstr "Зсув відблисків по X"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Зсув відблисків по Y"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Не вдається відкрити потік на каналі виводу SIOD"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Не вдається відкрити канал виводу SIOD"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:58+0200\n"
+"POT-Creation-Date: 2004-07-17 15:31+0200\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
 "Language-Team: Yiddish <raphael@cs.uky.edu>\n"
@@ -55,7 +55,7 @@ msgstr ""
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
+#: plug-ins/common/channel_mixer.c:548 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
@@ -294,7 +294,7 @@ msgstr ""
 #. Redmode radio frame
 #. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
+#: plug-ins/common/channel_mixer.c:597 plug-ins/common/decompose.c:130
 msgid "Red"
 msgstr ""
 
@@ -357,14 +357,14 @@ msgstr ""
 #. Greenmode radio frame
 #. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
-#: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
+#: plug-ins/common/channel_mixer.c:598 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr ""
 
 #. Bluemode radio frame
 #. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
-#: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
+#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:136
 msgid "Blue"
 msgstr ""
 
@@ -402,18 +402,18 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
+#: plug-ins/common/channel_mixer.c:1216 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
-#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
+#: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1361
+#: plug-ins/common/mng.c:542 plug-ins/common/mng.c:874
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1174
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1795 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1804 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
@@ -448,13 +448,13 @@ msgstr ""
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
+#: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
-#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
+#: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:812
+#: plug-ins/common/mng.c:1043 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
-#: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
+#: plug-ins/common/png.c:670 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
@@ -1173,9 +1173,9 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
-#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:775
+#: plug-ins/common/hrz.c:339 plug-ins/common/jpeg.c:819
 #: plug-ins/common/pat.c:300 plug-ins/common/pcx.c:306
-#: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
+#: plug-ins/common/pix.c:339 plug-ins/common/png.c:677
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
 #: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
@@ -1211,9 +1211,9 @@ msgstr ""
 #: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
 #: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:933 plug-ins/common/pcx.c:333
+#: plug-ins/common/jpeg.c:979 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
-#: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
+#: plug-ins/common/png.c:804 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
 #: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
@@ -1241,12 +1241,12 @@ msgstr ""
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
-#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
+#: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1316
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1181
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1800
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1809
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
@@ -1254,16 +1254,16 @@ msgstr ""
 msgid "Saving '%s'..."
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:554
+#: plug-ins/bmp/bmpwrite.c:555
 msgid "Save as BMP"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:564
+#: plug-ins/bmp/bmpwrite.c:565
 msgid "Save Options"
 msgstr ""
 
-#: plug-ins/bmp/bmpwrite.c:572
+#: plug-ins/bmp/bmpwrite.c:573
 msgid "_RLE encoded"
 msgstr ""
 
@@ -1279,7 +1279,7 @@ msgstr ""
 msgid "AlienMap"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:624
+#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:622
 #: plug-ins/common/diffraction.c:505 plug-ins/common/diffraction.c:543
 #: plug-ins/common/diffraction.c:581 plug-ins/common/exchange.c:409
 #: plug-ins/common/noisify.c:366 plug-ins/common/noisify.c:373
@@ -1290,7 +1290,7 @@ msgstr "רױט"
 msgid "Change intensity of the red channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:636
+#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:634
 #: plug-ins/common/diffraction.c:514 plug-ins/common/diffraction.c:552
 #: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
@@ -1301,7 +1301,7 @@ msgstr "גרין"
 msgid "Change intensity of the green channel"
 msgstr ""
 
-#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:649
+#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:647
 #: plug-ins/common/diffraction.c:523 plug-ins/common/diffraction.c:561
 #: plug-ins/common/diffraction.c:599 plug-ins/common/exchange.c:497
 #: plug-ins/common/noisify.c:368 plug-ins/common/noisify.c:375
@@ -1323,7 +1323,7 @@ msgid "Cos_ine"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2103
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2112
 msgid "_None"
 msgstr ""
 
@@ -1884,7 +1884,7 @@ msgstr ""
 msgid "Save Parameters to"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
+#: plug-ins/common/CML_explorer.c:2191
 #, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr ""
@@ -1893,7 +1893,7 @@ msgstr ""
 msgid "CML File Operation Warning"
 msgstr ""
 
-#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
+#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -1991,7 +1991,7 @@ msgstr ""
 #: plug-ins/common/emboss.c:525 plug-ins/common/engrave.c:216
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
-#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1725
+#: plug-ins/common/illusion.c:416 plug-ins/common/jpeg.c:1781
 #: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:602 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
@@ -2452,41 +2452,46 @@ msgstr ""
 msgid "Compression ratio (approx.): %d to 1"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:226
+#: plug-ins/common/channel_mixer.c:224
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:530
+#: plug-ins/common/channel_mixer.c:528
 msgid "Channel Mixer"
 msgstr ""
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:566 plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:564 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:591
+#: plug-ins/common/channel_mixer.c:589
 msgid "O_utput Channel:"
 msgstr ""
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:660
+#: plug-ins/common/channel_mixer.c:658
 msgid "_Monochrome"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:672
+#: plug-ins/common/channel_mixer.c:670
 msgid "Preserve _Luminosity"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:1035
+#: plug-ins/common/channel_mixer.c:1014
 msgid "Load Channel Mixer Settings"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:1171
+#: plug-ins/common/channel_mixer.c:1152
 msgid "Save Channel Mixer Settings"
 msgstr ""
 
-#: plug-ins/common/channel_mixer.c:1264
+#: plug-ins/common/channel_mixer.c:1223
+#, c-format
+msgid "Parameters were saved to '%s'"
+msgstr ""
+
+#: plug-ins/common/channel_mixer.c:1242
 msgid "Channel Mixer File Operation Warning"
 msgstr ""
 
@@ -3933,7 +3938,7 @@ msgstr ""
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1243
 msgid "Interlace"
 msgstr ""
 
@@ -4534,85 +4539,89 @@ msgstr ""
 msgid "Export Preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:926
+#: plug-ins/common/jpeg.c:758
+msgid "EXIF data will be ignored."
+msgstr ""
+
+#: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1179
+#: plug-ins/common/jpeg.c:1235
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1613 plug-ins/common/jpeg.c:1715
+#: plug-ins/common/jpeg.c:1669 plug-ins/common/jpeg.c:1771
 msgid "Size: unknown"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1678
+#: plug-ins/common/jpeg.c:1734
 msgid "Save as JPEG"
 msgstr ""
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:253
+#: plug-ins/common/jpeg.c:1750 plug-ins/print/gimp_color_window.c:253
 msgid "Image Preview"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1702
+#: plug-ins/common/jpeg.c:1758
 msgid "Preview in image window"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
+#: plug-ins/common/jpeg.c:1791 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1758 plug-ins/xjt/xjt.c:897
+#: plug-ins/common/jpeg.c:1814 plug-ins/xjt/xjt.c:897
 msgid "Smoothing:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1786
+#: plug-ins/common/jpeg.c:1842
 msgid "Restart markers"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1795
+#: plug-ins/common/jpeg.c:1851
 msgid "Restart frequency (rows):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1824 plug-ins/xjt/xjt.c:866
+#: plug-ins/common/jpeg.c:1880 plug-ins/xjt/xjt.c:866
 msgid "Optimize"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1838
+#: plug-ins/common/jpeg.c:1894
 msgid "Progressive"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1857
+#: plug-ins/common/jpeg.c:1913
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1873
+#: plug-ins/common/jpeg.c:1929
 msgid "Save EXIF data"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1899
+#: plug-ins/common/jpeg.c:1955
 msgid "Subsampling:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1913
+#: plug-ins/common/jpeg.c:1969
 msgid "Fast Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1914
+#: plug-ins/common/jpeg.c:1970
 msgid "Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1915
+#: plug-ins/common/jpeg.c:1971
 msgid "Floating-Point"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1920
+#: plug-ins/common/jpeg.c:1976
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1924
+#: plug-ins/common/jpeg.c:1980
 msgid "Image comments"
 msgstr ""
 
@@ -4856,100 +4865,106 @@ msgstr ""
 msgid "_Angle:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1195
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
+#: plug-ins/common/mng.c:442 plug-ins/common/png.c:1558
+msgid "Couldn't losslessly save transparency, saving opacity instead."
+msgstr ""
+
+#: plug-ins/common/mng.c:1223
 msgid "Save as MNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1208
+#: plug-ins/common/mng.c:1236
 msgid "MNG Options"
 msgstr ""
 
-#: plug-ins/common/mng.c:1227
+#: plug-ins/common/mng.c:1255
 #, fuzzy
 msgid "Save Background Color"
 msgstr "הינטערגרונט"
 
-#: plug-ins/common/mng.c:1238
+#: plug-ins/common/mng.c:1266
 msgid "Save Gamma"
 msgstr ""
 
-#: plug-ins/common/mng.c:1248
+#: plug-ins/common/mng.c:1276
 msgid "Save Resolution"
 msgstr ""
 
-#: plug-ins/common/mng.c:1259
+#: plug-ins/common/mng.c:1287
 msgid "Save Creation Time"
 msgstr ""
 
-#: plug-ins/common/mng.c:1284
+#: plug-ins/common/mng.c:1312
 msgid "PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1285
+#: plug-ins/common/mng.c:1313
 msgid "JNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1294
+#: plug-ins/common/mng.c:1322
 msgid "PNG + Delta PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1323
 msgid "JNG + Delta PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1296
+#: plug-ins/common/mng.c:1324
 msgid "All PNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1297
+#: plug-ins/common/mng.c:1325
 msgid "All JNG"
 msgstr ""
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1331
 msgid "Default Chunks Type:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1311
+#: plug-ins/common/mng.c:1339
 msgid "Combine"
 msgstr ""
 
-#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1340 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr ""
 
-#: plug-ins/common/mng.c:1317
+#: plug-ins/common/mng.c:1345
 msgid "Default Frame Disposal:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1329
+#: plug-ins/common/mng.c:1357
 msgid "PNG Compression Level:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
+#: plug-ins/common/mng.c:1365 plug-ins/common/png.c:1705
 msgid "Choose a high compression level for small file size"
 msgstr ""
 
-#: plug-ins/common/mng.c:1351
+#: plug-ins/common/mng.c:1379
 msgid "JPEG Compression Quality:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1368
+#: plug-ins/common/mng.c:1396
 msgid "JPEG Smoothing Factor:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1378
+#: plug-ins/common/mng.c:1406
 msgid "Animated MNG Options"
 msgstr ""
 
-#: plug-ins/common/mng.c:1385
+#: plug-ins/common/mng.c:1413
 msgid "Loop"
 msgstr ""
 
-#: plug-ins/common/mng.c:1399
+#: plug-ins/common/mng.c:1427
 msgid "Default Frame Delay:"
 msgstr ""
 
-#: plug-ins/common/mng.c:1415
+#: plug-ins/common/mng.c:1443
 msgid "milliseconds"
 msgstr ""
 
@@ -5515,89 +5530,83 @@ msgstr ""
 msgid "Search:"
 msgstr ""
 
-#: plug-ins/common/png.c:650
+#: plug-ins/common/png.c:653
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr ""
 
 #. Aie! Unknown type
-#: plug-ins/common/png.c:784
+#: plug-ins/common/png.c:787
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr ""
 
-#: plug-ins/common/png.c:839
+#: plug-ins/common/png.c:842
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 
-#: plug-ins/common/png.c:1156
+#: plug-ins/common/png.c:1159
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
-#: plug-ins/common/png.c:1540
-msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-
-#: plug-ins/common/png.c:1566
+#: plug-ins/common/png.c:1588
 msgid "Save as PNG"
 msgstr ""
 
-#: plug-ins/common/png.c:1570
+#: plug-ins/common/png.c:1592
 msgid "_Load Defaults"
 msgstr ""
 
-#: plug-ins/common/png.c:1571
+#: plug-ins/common/png.c:1593
 msgid "_Save Defaults"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1606 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr ""
 
-#: plug-ins/common/png.c:1597
+#: plug-ins/common/png.c:1619
 msgid "_Interlacing (Adam7)"
 msgstr ""
 
-#: plug-ins/common/png.c:1608
+#: plug-ins/common/png.c:1630
 #, fuzzy
 msgid "Save _Background Color"
 msgstr "הינטערגרונט"
 
-#: plug-ins/common/png.c:1616
+#: plug-ins/common/png.c:1638
 msgid "Save _Gamma"
 msgstr ""
 
-#: plug-ins/common/png.c:1625
+#: plug-ins/common/png.c:1647
 msgid "Save Layer O_ffset"
 msgstr ""
 
-#: plug-ins/common/png.c:1634
+#: plug-ins/common/png.c:1656
 msgid "Save _Resolution"
 msgstr ""
 
-#: plug-ins/common/png.c:1643
+#: plug-ins/common/png.c:1665
 msgid "Save Creation _Time"
 msgstr ""
 
-#: plug-ins/common/png.c:1651
+#: plug-ins/common/png.c:1673
 msgid "Save Comme_nt"
 msgstr ""
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1688
 msgid "Save Color _Values From Transparent Pixels"
 msgstr ""
 
-#: plug-ins/common/png.c:1679
+#: plug-ins/common/png.c:1701
 msgid "Co_mpression Level:"
 msgstr ""
 
-#: plug-ins/common/png.c:1799
+#: plug-ins/common/png.c:1821
 msgid "Could not load PNG defaults"
 msgstr ""
 
@@ -6879,42 +6888,42 @@ msgid ""
 "this conversion."
 msgstr ""
 
-#: plug-ins/common/tiff.c:1936
+#: plug-ins/common/tiff.c:1945
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 
-#: plug-ins/common/tiff.c:2085
+#: plug-ins/common/tiff.c:2094
 msgid "Save as TIFF"
 msgstr ""
 
 #. compression
-#: plug-ins/common/tiff.c:2099
+#: plug-ins/common/tiff.c:2108
 msgid "Compression"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2104
+#: plug-ins/common/tiff.c:2113
 msgid "_LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2105
+#: plug-ins/common/tiff.c:2114
 msgid "_Pack Bits"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2106
+#: plug-ins/common/tiff.c:2115
 msgid "_Deflate"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2107
+#: plug-ins/common/tiff.c:2116
 msgid "_JPEG"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2116
+#: plug-ins/common/tiff.c:2125
 msgid "Save _color values from transparent pixels"
 msgstr ""
 
-#: plug-ins/common/tiff.c:2131 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2141 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:18+0200\n"
+"POT-Creation-Date: 2004-07-17 15:32+0200\n"
 "PO-Revision-Date: 2004-06-07 16:24-0300\n"
 "Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -16,37 +16,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "O modo de console do Script-Fu só é permitido para uso interativo"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:184
 msgid "SIOD Output"
 msgstr "Saída SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:243
 msgid "Current Command"
 msgstr "Comando atual"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "Procurar..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Não é possível abrir um stream no pipe de saída SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:588
-msgid "Unable to open the SIOD output pipe"
-msgstr "Impossível abrir o pipe de saída SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "O modo de avaliação Script-Fu permite apenas invocação não interativa"
 
@@ -155,11 +147,11 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Console de Script _Fu"
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Xtns/Script-Fu/_Iniciar Servidor..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "Ler novamente todos os scripts disponíveis"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/_Regenerar Scripts"
 
@@ -2453,3 +2445,9 @@ msgstr "Deslocamento X dos Brilhos"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Deslocamento Y dos Brilhos"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Não é possível abrir um stream no pipe de saída SIOD"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Impossível abrir o pipe de saída SIOD"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:18+0200\n"
+"POT-Creation-Date: 2004-07-17 15:32+0200\n"
 "PO-Revision-Date: 2003-01-26 17:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -14,37 +14,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konsollmodus tillater bare interaktiv kjøring"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsoll"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:184
 msgid "SIOD Output"
 msgstr "SIOD utskrift"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:243
 msgid "Current Command"
 msgstr "Aktiv kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "Bla gjennom..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
-
-#: plug-ins/script-fu/script-fu-console.c:588
-msgid "Unable to open the SIOD output pipe"
-msgstr "Kunne ikke åpne SIOD rør for utskrift"
-
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu evalueringsmodus tillater bare ikke-interaktiv kjøring"
 
@@ -155,11 +147,11 @@ msgstr "<Toolbox>/Utvidelser/Script-Fu/Konsoll..."
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Tjener..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "Gjenles alle tilgjengelige skript"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Utvidelser/Script-Fu/Gjenoppfrisk"
@@ -2556,6 +2548,12 @@ msgstr "X-avstand for utheving"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y-avstand for uthevelse"
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Kunne ikke åpne en strøm på SIOD utskriftsrøret"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Kunne ikke åpne SIOD rør for utskrift"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."

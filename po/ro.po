@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -1587,7 +1587,7 @@ msgstr "Fişierul de pensule al GIMP pare să fie trunchiat: \"%s\"."
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1989,7 +1989,7 @@ msgstr "Masca de selecţie"
 msgid "Disable QuickMask"
 msgstr ""
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nu pot reface %s"
@@ -6912,7 +6912,7 @@ msgid "_Vertical:"
 msgstr "Vertical:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Traseul -> Selecţie"
@@ -8300,7 +8300,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Strat de text"
@@ -8848,19 +8848,19 @@ msgstr "Salvează curbe"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Curbele la imaginile indexate nu pot fi ajustate."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 #, fuzzy
 msgid "Channel:"
 msgstr "Canal"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 #, fuzzy
 msgid "R_eset Channel"
 msgstr "Ridică canalul"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 #, fuzzy
 msgid "All Channels"
 msgstr "Canale"
@@ -9167,50 +9167,50 @@ msgstr "Salvează nivele"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Nivelele pentru imaginile indexate nu pot fi modificate."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 #, fuzzy
 msgid "Pick White Point"
 msgstr "Modifică punct"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 #, fuzzy
 msgid "Input Levels"
 msgstr "Nivele intrare:"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr ""
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 #, fuzzy
 msgid "Output Levels"
 msgstr "Nivele ieşire:"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr ""
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 #, fuzzy
 msgid "Save levels settings to file"
 msgstr "Salvează starea dispozitivului la ieşire"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 #, fuzzy
 msgid "_Auto"
 msgstr "Automat"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr ""
 
@@ -9671,16 +9671,16 @@ msgstr ""
 msgid "/Tools/Te_xt"
 msgstr "/Unelte/Cutia de scule"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Modificare paleta de culori"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-10 03:59+0200\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2004-07-10 16:50+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -295,7 +295,12 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Kon het wisselbestand niet openen. The Gimp heeft te weinig geheugenruimte maar kan het wisselbestand niet gebruiken. Mogelijkerwijze zijn nu delen van uw afbeelding beschadigd. Probeer uw werk op te slaan onder andere bestandsnamen, start the Gimp opnieuw op en controleer de lokatie van het wisselbestand in uw Voorkeuren."
+msgstr ""
+"Kon het wisselbestand niet openen. The Gimp heeft te weinig geheugenruimte "
+"maar kan het wisselbestand niet gebruiken. Mogelijkerwijze zijn nu delen van "
+"uw afbeelding beschadigd. Probeer uw werk op te slaan onder andere "
+"bestandsnamen, start the Gimp opnieuw op en controleer de lokatie van het "
+"wisselbestand in uw Voorkeuren."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -490,7 +495,12 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "Gereedschap als 'Vage selectie' en 'Vullen' vinden gebieden van aaneengesloten pixels op basis van een 'seed-fill' methode. Hierbij wordt vanuit de beginpixel in alle richtingen uitgewaaierd en gekeken wanneer het verschil in helderheid van de pixel met de beginpixel een drempelwaarde overschrijd. Deze waarde staat voor de standaard drempelwaarde."
+msgstr ""
+"Gereedschap als 'Vage selectie' en 'Vullen' vinden gebieden van "
+"aaneengesloten pixels op basis van een 'seed-fill' methode. Hierbij wordt "
+"vanuit de beginpixel in alle richtingen uitgewaaierd en gekeken wanneer het "
+"verschil in helderheid van de pixel met de beginpixel een drempelwaarde "
+"overschrijd. Deze waarde staat voor de standaard drempelwaarde."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -590,14 +600,20 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Stelt de horizontale beeldresolutie in op dots per inch.  Bij de waarde 0 wordt de X-server gedwongen informatie te geven voor zowel de horizontale als verticale resolutie."
+msgstr ""
+"Stelt de horizontale beeldresolutie in op dots per inch.  Bij de waarde 0 "
+"wordt de X-server gedwongen informatie te geven voor zowel de horizontale "
+"als verticale resolutie."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Stelt de verticale beeldresolutie in op dots per inch.  Bij de waarde 0 wordt de X-server gedwongen informatie te geven voor zowel de horizontale als verticale resolutie."
+msgstr ""
+"Stelt de verticale beeldresolutie in op dots per inch.  Bij de waarde 0 "
+"wordt de X-server gedwongen informatie te geven voor zowel de horizontale "
+"als verticale resolutie."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -6269,7 +6285,7 @@ msgid "_Vertical:"
 msgstr "Verticaal:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Pad naar selectie"
@@ -6864,7 +6880,11 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr "Dit programma is vrije software; u kunt het opnieuw distribueren en/of modificeren onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van deze licentie, of (naar uw believen) een latere versie."
+msgstr ""
+"Dit programma is vrije software; u kunt het opnieuw distribueren en/of "
+"modificeren onder de voorwaarden van de GNU General Public License zoals "
+"gepubliceerd door de Free Software Foundation; ofwel versie 2 van deze "
+"licentie, of (naar uw believen) een latere versie."
 
 # I do not like to translate legal language. Please contact the FSF for the correct translation.
 #: app/gui/user-install-dialog.c:773
@@ -6873,7 +6893,11 @@ msgid ""
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
-msgstr "Dit programma wordt gedistribueerd hopende dat het goed te gebruiken zal zijn, maar zonder enige garantie; zelfs zonder de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. Zie de GNU general Public License voor meer details."
+msgstr ""
+"Dit programma wordt gedistribueerd hopende dat het goed te gebruiken zal "
+"zijn, maar zonder enige garantie; zelfs zonder de impliciete garantie van "
+"verkoopbaarheid of geschiktheid voor een bepaald doel. Zie de GNU general "
+"Public License voor meer details."
 
 # I do not like to translate legal language. Please contact the FSF for the correct translation.
 #: app/gui/user-install-dialog.c:779
@@ -6882,9 +6906,13 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"U zou een kopie van de GNU General Public License, samen met dit programma, ontvangen moeten hebben; indien dat niet het geval is kunt u schrijven naar de Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
+"U zou een kopie van de GNU General Public License, samen met dit programma, "
+"ontvangen moeten hebben; indien dat niet het geval is kunt u schrijven naar "
+"de Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
+"02111-1307, USA.\n"
 "\n"
-"Aan de vertaling van deze tekst kunnen geen rechten worden ontleend. Hiervoor moet u de oorspronkelijke Engelse teksten gebruiken."
+"Aan de vertaling van deze tekst kunnen geen rechten worden ontleend. "
+"Hiervoor moet u de oorspronkelijke Engelse teksten gebruiken."
 
 #: app/gui/user-install-dialog.c:804
 msgid "Personal GIMP Folder"
@@ -7479,7 +7507,7 @@ msgstr ""
 "Voor de GIMP Pixelquiz moet\n"
 "je psyche een beetje afwijken."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Tekstlaag toevoegen"
 
@@ -8700,15 +8728,15 @@ msgstr "Tekst aan de afbeelding toevoegen"
 msgid "/Tools/Te_xt"
 msgstr "/Gereedschap/Tekst"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "GIMP-teksteditor"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Tekstbewerken bevestigen"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "

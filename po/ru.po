@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
+"POT-Creation-Date: 2004-07-17 15:30+0200\n"
 "PO-Revision-Date: 2004-06-24 00:11+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -42,7 +42,9 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr "Невозможно открыть тестовый файл подкачки. Чтобы избежать потерю данных, проверте расположение и права на файл подкачки в настройках. (сейчас \"%s\")."
+msgstr ""
+"Невозможно открыть тестовый файл подкачки. Чтобы избежать потерю данных, "
+"проверте расположение и права на файл подкачки в настройках. (сейчас \"%s\")."
 
 #: app/app_procs.c:281
 #, c-format
@@ -143,7 +145,8 @@ msgstr "  -s, --no-splash              Не показывать окно зап
 
 #: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr "  --session <name>        Использовать альтернативный файл sessionrc.\n"
+msgstr ""
+"  --session <name>        Использовать альтернативный файл sessionrc.\n"
 
 #: app/main.c:526
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -156,8 +159,10 @@ msgstr ""
 "gimprc.\n"
 
 #: app/main.c:528
-msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr "  --dump-gimprc        ПОказать файл gimprc с параметрами по умолчанию.\n"
+msgid ""
+"  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgstr ""
+"  --dump-gimprc        ПОказать файл gimprc с параметрами по умолчанию.\n"
 
 #: app/main.c:529
 msgid ""
@@ -168,7 +173,8 @@ msgstr ""
 "диалоговых окон.\n"
 
 #: app/main.c:530
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
@@ -296,7 +302,11 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Невозможно открыть файл подкачки. GIMP использовал всю доступную оперативную память и не может использовать файл подкачки. Ваше изображение может быть утеряно. Сохраните его, перезапустите GIMP и проверьте пути к файлу подкачки в настройках."
+msgstr ""
+"Невозможно открыть файл подкачки. GIMP использовал всю доступную оперативную "
+"память и не может использовать файл подкачки. Ваше изображение может быть "
+"утеряно. Сохраните его, перезапустите GIMP и проверьте пути к файлу подкачки "
+"в настройках."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -471,7 +481,9 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Это дистанция в пикселях, на которой срабатывает функция \"прилипания\" для сетки и направляющих."
+msgstr ""
+"Это дистанция в пикселях, на которой срабатывает функция \"прилипания\" для "
+"сетки и направляющих."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -491,7 +503,8 @@ msgstr ""
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr "От этой настройки зависит то, какой вид придаст оконный менеджер панелям."
+msgstr ""
+"От этой настройки зависит то, какой вид придаст оконный менеджер панелям."
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
@@ -538,7 +551,8 @@ msgstr ""
 "псевдоцветными изображениями."
 
 #: app/config/gimprc-blurbs.h:167
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Устанавливает уровень интерполяции, используемый при масштабировании и "
 "подобных изменениях."
@@ -577,14 +591,18 @@ msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Устанавливает горизонтальное разрешение монитора в точках на дюйм. При нулевом значении устанавливается системное значение."
+msgstr ""
+"Устанавливает горизонтальное разрешение монитора в точках на дюйм. При "
+"нулевом значении устанавливается системное значение."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
-msgstr "Устанавливает вертикальное разрешение монитора в точках на дюйм. При нулевом значении устанавливается системное значение."
+msgstr ""
+"Устанавливает вертикальное разрешение монитора в точках на дюйм. При нулевом "
+"значении устанавливается системное значение."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -649,7 +667,8 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Восстанавливать последнюю сохраненную позицию окон при каждом запуске."
 
 #: app/config/gimprc-blurbs.h:253
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Запомнить текущие инструменты, шаблоны, цвета и кисти."
 
 #: app/config/gimprc-blurbs.h:257
@@ -1608,7 +1627,7 @@ msgstr "Неисправимая ошибка разбора файла кист
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле кистей '%s'."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1632,7 +1651,8 @@ msgstr "Неисправимая ошибка разбора файла кист
 #: app/core/gimpbrushgenerated.c:401
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
+msgstr ""
+"Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
 
 #: app/core/gimpbrushpipe.c:380 app/core/gimpbrushpipe.c:400
 #: app/core/gimpbrushpipe.c:490
@@ -1769,7 +1789,8 @@ msgstr "%s копировать"
 #: app/core/gimpdatafactory.c:560
 #, c-format
 msgid "Trying legacy loader on file '%s' with unknown extension."
-msgstr "Попытка применить старый загрузчик к файлу '%s' с неизвестным расширением."
+msgstr ""
+"Попытка применить старый загрузчик к файлу '%s' с неизвестным расширением."
 
 #: app/core/gimpdatafactory.c:584
 #, c-format
@@ -1844,7 +1865,8 @@ msgstr "Неверное имя переменной в файле окруже�
 #: app/core/gimpgradient.c:361
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Неисправимая ошибка разбора файла градиента '%s': это не файл градиента GIMP."
+msgstr ""
+"Неисправимая ошибка разбора файла градиента '%s': это не файл градиента GIMP."
 
 #: app/core/gimpgradient.c:376
 #, c-format
@@ -1870,7 +1892,8 @@ msgid "The foreground color of the grid."
 msgstr "Цвет переднего плана сетки"
 
 #: app/core/gimpgrid.c:139
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr "Цвет фона сетки (для стиля \"Двойной пунктир\")"
 
 #: app/core/gimpgrid.c:145
@@ -1882,7 +1905,8 @@ msgid "Vertical spacing of grid lines."
 msgstr "Расстояние между вертикальными линиями"
 
 #: app/core/gimpgrid.c:159
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Смещение по горизонтали для первой линии сетки. Значение может быть "
 "отрицательным."
@@ -1959,7 +1983,8 @@ msgstr "Объединить видимые контуры"
 
 #: app/core/gimpimage-merge.c:574
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr "Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
+msgstr ""
+"Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable QuickMask"
@@ -1969,7 +1994,7 @@ msgstr "Включить быструю маску"
 msgid "Disable QuickMask"
 msgstr "Выключить быструю маску"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Невозможно отменить %s"
@@ -2201,7 +2226,8 @@ msgstr "%s маска"
 
 #: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
+msgstr ""
+"Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
 #: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2306,7 +2332,8 @@ msgstr ""
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Неисправимая ошибка разбора файла шаблона '%s': неизвестная версия формата %"
 "d."
@@ -2695,7 +2722,8 @@ msgid "Mode:"
 msgstr "Режим:"
 
 #: app/gui/brush-select.c:322
-msgid "Unable to run brush callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run brush callback. The corresponding plug-in may have crashed."
 msgstr "Не уалось вызвать кисть. ВОзможно, запрашиваемое дополнение рухнуло."
 
 #: app/gui/brushes-menu.c:45
@@ -3419,7 +3447,8 @@ msgid "/By Extension"
 msgstr "/По расширению"
 
 #: app/gui/font-select.c:234
-msgid "Unable to run font callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr "Не удалось вызвать шрифт. Возможно, запрашиваемое дополнение рухнуло."
 
 #: app/gui/fonts-menu.c:44
@@ -3552,7 +3581,8 @@ msgstr "/Загрузить цвет крайней правой точки из
 
 #: app/gui/gradient-editor-menu.c:123
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr "/Загрузить цвет крайней правой точки из/Соседних справа к крайней левой точке"
+msgstr ""
+"/Загрузить цвет крайней правой точки из/Соседних справа к крайней левой точке"
 
 #: app/gui/gradient-editor-menu.c:127
 msgid "/Load Right Color From/_Left Endpoint"
@@ -3691,8 +3721,10 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "Перераспределить направляющие в выделенном"
 
 #: app/gui/gradient-select.c:272
-msgid "Unable to run gradient callback. The corresponding plug-in may have crashed."
-msgstr "Не удалось запустить градиент. Возможно, запрашиваемое дополнение рухнуло."
+msgid ""
+"Unable to run gradient callback. The corresponding plug-in may have crashed."
+msgstr ""
+"Не удалось запустить градиент. Возможно, запрашиваемое дополнение рухнуло."
 
 #: app/gui/gradients-commands.c:73
 #, c-format
@@ -5340,8 +5372,10 @@ msgid "Preview"
 msgstr "Просмотр"
 
 #: app/gui/palette-select.c:250
-msgid "Unable to run palette callback. The corresponding plug-in may have crashed."
-msgstr "Не удалось вызвать палитру. Возможно, запрашиваемое дополнение рухнуло."
+msgid ""
+"Unable to run palette callback. The corresponding plug-in may have crashed."
+msgstr ""
+"Не удалось вызвать палитру. Возможно, запрашиваемое дополнение рухнуло."
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
@@ -5380,7 +5414,8 @@ msgid "/_Refresh Palettes"
 msgstr "/Обновить палитры"
 
 #: app/gui/pattern-select.c:252
-msgid "Unable to run pattern callback. The corresponding plug-in may have crashed."
+msgid ""
+"Unable to run pattern callback. The corresponding plug-in may have crashed."
 msgstr "Не удалось вызвать шаблон. Возможно, запрашиваемое дополнение рухнуло."
 
 #. disabled because they are useless now
@@ -6201,7 +6236,7 @@ msgid "_Vertical:"
 msgstr "Вертикальная:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Контур в выделенную область"
@@ -6886,7 +6921,8 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Нажмите \"Продолжить\", чтобы принять предложенные параметры."
 
 #: app/gui/user-install-dialog.c:958
-msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid ""
+"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Для лучшей производительности GIMP некоторые параметры могут быть "
 "изменены.</b>"
@@ -7191,7 +7227,8 @@ msgid "Threshold"
 msgstr "Порог"
 
 #: app/pdb/image_cmds.c:3660
-msgid "Image resolution is out of bounds, using the default resolution instead."
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Разрешение изображения вне допустимого,\n"
 "используется значение по умолчанию."
@@ -7439,7 +7476,7 @@ msgstr ""
 "В чащах юга жил-был цитрус.\n"
 "Да, но фальшивый экземпляръ!"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Добавить текстовый слой"
 
@@ -7932,17 +7969,17 @@ msgstr "Сохранить кривые"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Кривые для индексированных изображений не могут быть настроены."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Канал:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Восстановить канал"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Все каналы"
 
@@ -8210,45 +8247,45 @@ msgstr "Сохранить уровни"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Уровни для индексированных изображений не могут быть выровнены."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Выбор чёрной точки"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Выбор серой точки"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Выбор белой точки"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Уровни на входе:"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Гамма"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Уровни на выходе:"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Загрузить установки уровней из файла"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Сохранить установки уровней в файл"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "Авто"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Подобрать уровни автоматически"
 
@@ -8579,7 +8616,8 @@ msgid "/Tools/Paint Tools/_Smudge"
 msgstr "/Инструменты/Рисование/Палец"
 
 #: app/tools/gimptextoptions.c:146
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Инструктирование изменяет контуры символа, чтобы выдать более чёткие растры "
 "при маленьких размерах"
@@ -8656,15 +8694,15 @@ msgstr "Добавить текст к изображению"
 msgid "/Tools/Te_xt"
 msgstr "/Инструменты/Текст"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "Редактор текста GIMP"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Подтвердитте изменение текста"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -8672,7 +8710,8 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Вы выбрали текстовый слой, но он был изменен с помощью других инструментов. Редактирование слоя инструментом Текст приведет к потере этих изменений. \n"
+"Вы выбрали текстовый слой, но он был изменен с помощью других инструментов. "
+"Редактирование слоя инструментом Текст приведет к потере этих изменений. \n"
 "\n"
 "Вы можете продолжить редактировать этот слой или создать новый."
 
@@ -8880,7 +8919,8 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:1183
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr "Нажмите и потащите чтобы переместить элемент. (попробуйте нажать SHIFT)"
+msgstr ""
+"Нажмите и потащите чтобы переместить элемент. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
@@ -9200,7 +9240,8 @@ msgstr "Обновить"
 #: app/widgets/gimpdatafactoryview.c:408
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr "Вы уверены в том, что хотите удалить '%s' из списка изображений и с диска?"
+msgstr ""
+"Вы уверены в том, что хотите удалить '%s' из списка изображений и с диска?"
 
 #: app/widgets/gimpdatafactoryview.c:412
 msgid "Delete Data Object"
@@ -9498,7 +9539,8 @@ msgid "Auto"
 msgstr "Авто"
 
 #: app/widgets/gimpimagedock.c:222
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "При включении этой функции содержимое диалога меняется в соответствии с тем, "
 "какое изображение активно в данный момент."
@@ -9685,7 +9727,8 @@ msgstr "Удалить выбранный образец"
 
 #: app/widgets/gimptemplateview.c:388
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Вы уверены в том, что хотите удалить образец '%s' из списка и с диска?"
 
 #: app/widgets/gimptemplateview.c:392
@@ -9799,7 +9842,8 @@ msgstr "Сбросить параметры"
 
 #: app/widgets/gimptooloptionseditor.c:416
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "Действительно вернуться к настройкам по умолчанию для всех инструментов?"
+msgstr ""
+"Действительно вернуться к настройкам по умолчанию для всех инструментов?"
 
 #: app/widgets/gimpundoeditor.c:152
 msgid "Redo"
@@ -10555,4 +10599,3 @@ msgstr "Создание и редактирование изображений 
 
 #~ msgid "/Save Options to/new-separator"
 #~ msgstr "/Сохранить параметры как/новое"
-

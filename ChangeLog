@@ -1,3 +1,7 @@
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.0.3 release.
+
 2004-07-17  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/bmp/bmpwrite.c (WriteImage): Applied a patch from

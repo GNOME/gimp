@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-16 15:33+0200\n"
+"POT-Creation-Date: 2004-06-15 13:17+0200\n"
 "PO-Revision-Date: 2004-07-17 10:03+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -165,7 +165,8 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr ""
+"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -530,7 +531,8 @@ msgstr "_Véletlenszerűen"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
+msgstr ""
+"Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
