@@ -9,15 +9,15 @@ Copyright: GPL, LGPL
 Group: X11/Applications/Graphics
 URL: http://www.gimp.org/
 Source: ftp://ftp.gimp.org/pub/gimp/v0.99/v%{PACKAGE_VERSION}/gimp-%{PACKAGE_VERSION}.tar.gz
-Source1: gimp.wmconfig
-Source2: wilbur.xpm
-Source3: mini-wilbur.xpm
 BuildRoot: /tmp/gimp-root
 Obsoletes: gimp-data-min
 Requires: gtk+ >= 0.99.10 , glibc >= 2.0.7
 
 
 %changelog
+* Mon Apr 20 1998 Marc Ewing <marc@redhat.com>
+- include *.xpm and .wmconfig in CVS source
+
 * Thu Apr 16 1998 Marc Ewing <marc@redhat.com>
 - Handle builds using autogen.sh
 - SMP builds
@@ -126,9 +126,9 @@ make prefix=$RPM_BUILD_ROOT/usr install
 #make prefix=$RPM_BUILD_ROOT/usr install
 #gzip -9 $RPM_BUILD_ROOT/usr/info/*
 strip $RPM_BUILD_ROOT/usr/bin/gimp
-install $RPM_SOURCE_DIR/gimp.wmconfig $RPM_BUILD_ROOT/etc/X11/wmconfig/gimp
-install $RPM_SOURCE_DIR/wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/
-install $RPM_SOURCE_DIR/mini-wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/mini/
+install RPM/gimp.wmconfig $RPM_BUILD_ROOT/etc/X11/wmconfig/gimp
+install RPM/wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/
+install RPM/mini-wilbur.xpm $RPM_BUILD_ROOT/usr/share/icons/mini/
 
 %clean
 rm -rf $RPM_BUILD_ROOT

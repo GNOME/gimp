@@ -1,3 +1,7 @@
+1998-04-20  Marc Ewing  <marc@redhat.com>
+
+	* added RPM/* files and use them in gimp.spec
+
 Mon Apr 20 01:24:10 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/faxg3/g3.h
