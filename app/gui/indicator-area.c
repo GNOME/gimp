@@ -21,6 +21,7 @@
 #include "appenv.h"
 #include "gimpbrushlist.h"
 #include "gimpcontextpreview.h"
+#include "gimpdnd.h"
 #include "gradient.h"
 #include "gradient_header.h"
 #include "indicator_area.h"
@@ -37,11 +38,20 @@ static GtkWidget *brush_preview;
 static GtkWidget *pattern_preview;
 static GtkWidget *gradient_preview;
 
+/*  dnd stuff  */
+static GtkTargetEntry brush_area_target_table[] =
+{
+  GIMP_TARGET_BRUSH
+};
+static guint n_brush_area_targets = (sizeof (brush_area_target_table) /
+				     sizeof (brush_area_target_table[0]));
+static GtkTargetEntry pattern_area_target_table[] =
+{
+  GIMP_TARGET_PATTERN
+};
+static guint n_pattern_area_targets = (sizeof (pattern_area_target_table) /
+				       sizeof (pattern_area_target_table[0]));
 
-/* The _area_update () functions should be called _preview_update(),
-   but I've left the old function names in for now since they are
-   called from devices.c
- */
 
 void
 brush_area_update ()
@@ -67,6 +77,25 @@ brush_preview_clicked (GtkWidget *widget,
   return TRUE;
 }
 
+static void
+brush_preview_drag_drop (GtkWidget      *widget,
+			 GdkDragContext *context,
+			 gint            x,
+			 gint            y,
+			 guint           time,
+			 gpointer        data)
+{
+  GtkWidget *src;
+  GimpBrush *brush;
+ 
+  src = gtk_drag_get_source_widget (context);
+  if (!GIMP_IS_CONTEXT_PREVIEW (src) || !GIMP_CONTEXT_PREVIEW (src)->data)
+    return;
+  brush = GIMP_BRUSH (GIMP_CONTEXT_PREVIEW (src)->data);
+
+  select_brush (brush);
+}
+
 void
 pattern_area_update ()
 {
@@ -90,6 +119,25 @@ pattern_preview_clicked (GtkWidget *widget,
 {
   create_pattern_dialog(); 
   return TRUE;
+}
+
+static void
+pattern_preview_drag_drop (GtkWidget      *widget,
+			   GdkDragContext *context,
+			   gint            x,
+			   gint            y,
+			   guint           time,
+			   gpointer        data)
+{
+  GtkWidget *src;
+  GPattern  *pattern;
+ 
+  src = gtk_drag_get_source_widget (context);
+  if (!GIMP_IS_CONTEXT_PREVIEW (src) || !GIMP_CONTEXT_PREVIEW (src)->data)
+    return;
+  pattern = (GPattern *)(GIMP_CONTEXT_PREVIEW (src)->data);
+
+  select_pattern (pattern);
 }
 
 void
@@ -123,8 +171,17 @@ indicator_area_create ()
 			NULL);
   gtk_signal_connect (GTK_OBJECT (brush_preview), "clicked",
                      (GtkSignalFunc) brush_preview_clicked, NULL);
+  gtk_drag_dest_set (brush_preview,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     brush_area_target_table, n_brush_area_targets,
+		     GDK_ACTION_COPY);
+  gtk_signal_connect (GTK_OBJECT (brush_preview), "drag_drop",
+		      GTK_SIGNAL_FUNC (brush_preview_drag_drop),
+		      NULL);
   gtk_table_attach_defaults (GTK_TABLE(indicator_table), brush_preview,
-                            0, 1, 0, 1);
+			     0, 1, 0, 1);
                             
   pattern_preview = gimp_context_preview_new (GCP_PATTERN, 
 					      CELL_SIZE, CELL_SIZE, 
@@ -134,6 +191,15 @@ indicator_area_create ()
 			NULL);
   gtk_signal_connect (GTK_OBJECT (pattern_preview), "clicked",
                      (GtkSignalFunc) pattern_preview_clicked, NULL);
+  gtk_drag_dest_set (pattern_preview,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     pattern_area_target_table, n_pattern_area_targets,
+		     GDK_ACTION_COPY);
+  gtk_signal_connect (GTK_OBJECT (pattern_preview), "drag_drop",
+		      GTK_SIGNAL_FUNC (pattern_preview_drag_drop),
+		      NULL);
   gtk_table_attach_defaults (GTK_TABLE(indicator_table), pattern_preview,
 			     1, 2, 0, 1);
 

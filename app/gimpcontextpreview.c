@@ -99,7 +99,6 @@ static gboolean gimp_context_preview_data_matches_type    (GimpContextPreview *,
 							   gpointer);
 static void     gimp_context_preview_drag_begin           (GtkWidget *,  
 							   GdkDragContext *);
-
 static void     gimp_context_preview_draw_brush           (GimpContextPreview *);
 static void     gimp_context_preview_draw_brush_popup     (GimpContextPreview *);
 static void     gimp_context_preview_draw_brush_drag      (GimpContextPreview *);
@@ -234,7 +233,7 @@ gimp_context_preview_update (GimpContextPreview *gcp,
   if (!gcp->data && gcp->drag_source)  /* first call  */
     {
       gtk_drag_source_set (GTK_WIDGET (gcp),
-			   GDK_BUTTON1_MASK | GDK_BUTTON3_MASK,
+			   GDK_BUTTON1_MASK,
 			   context_preview_target_table[gcp->type], n_targets,
 			   GDK_ACTION_COPY);
     }
@@ -463,7 +462,6 @@ gimp_context_preview_drag_begin (GtkWidget      *widget,
     {
       gcp_drag_window = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_policy (GTK_WINDOW (gcp_drag_window), FALSE, FALSE, TRUE);
-      gtk_widget_realize (gcp_drag_window);
       gtk_signal_connect (GTK_OBJECT (gcp_drag_window), "destroy", 
 			  gtk_widget_destroyed, &gcp_drag_window);
 
@@ -472,6 +470,7 @@ gimp_context_preview_drag_begin (GtkWidget      *widget,
 			  gtk_widget_destroyed, &gcp_drag_preview);
       gtk_container_add (GTK_CONTAINER (gcp_drag_window), gcp_drag_preview);
       gtk_widget_show (gcp_drag_preview);
+      gtk_widget_realize (gcp_drag_window);
     }
 
   switch (gcp->type)
