@@ -1,3 +1,11 @@
+Wed Mar 31 00:33:28 EST 1999  Matt Wilson  <msw@gimp.org>
+
+	* commands.[ch]: changed callbacks invoked by ItemFactories to
+	the the correct parameters.  This fixes the following problems:
+	- tool election via hotkeys and right click menu selection
+	- reshow last filter repeating last filter
+	- possible new file dialog problems
+
 Mon Mar 29 11:33:38 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.0.3 release
@@ -75,7 +83,7 @@ Mon Mar 15 12:50:46 1999  Owen Taylor  <otaylor@redhat.com>
 
 Mon Mar 15 12:07:59 1999  Owen Taylor  <otaylor@redhat.com>
 
-	* app/menus.[ch] app/gimprc.c app/gradient.c (menus_quit): 
+	* app/menus.[ch] app/gimprc.c app/gradient.c (menus_quit):
 	Merge in menufactory => itemfactory changes from head
 
 Mon Mar 15 11:44:13 1999  Owen Taylor  <otaylor@redhat.com>

@@ -4,7 +4,9 @@
 
 #include "gtk/gtk.h"
 
-void file_new_cmd_callback (GtkWidget *, gpointer);
+void file_new_cmd_callback (GtkWidget           *widget,
+			    gpointer             callback_data,
+			    guint                callback_action);
 void file_open_cmd_callback (GtkWidget *, gpointer);
 void file_save_cmd_callback (GtkWidget *, gpointer);
 void file_save_as_cmd_callback (GtkWidget *, gpointer);
@@ -80,8 +82,12 @@ void layers_mask_select_cmd_callback (GtkWidget *, gpointer);
 void layers_add_alpha_channel_cmd_callback (GtkWidget *, gpointer);
 void tools_default_colors_cmd_callback (GtkWidget *, gpointer);
 void tools_swap_colors_cmd_callback (GtkWidget *, gpointer);
-void tools_select_cmd_callback (GtkWidget *, gpointer);
-void filters_repeat_cmd_callback (GtkWidget *, gpointer);
+void tools_select_cmd_callback (GtkWidget           *widget,
+				gpointer             callback_data,
+				guint                callback_action);
+void filters_repeat_cmd_callback (GtkWidget           *widget,
+				  gpointer             callback_data,
+				  guint                callback_action);
 void dialogs_brushes_cmd_callback (GtkWidget *, gpointer);
 void dialogs_patterns_cmd_callback (GtkWidget *, gpointer);
 void dialogs_palette_cmd_callback (GtkWidget *, gpointer);
