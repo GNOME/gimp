@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-10-16 11:48-0700\n"
+"POT-Creation-Date: 2000-10-18 13:21+0300\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -6291,18 +6291,14 @@ msgid "Installation failed.  Contact system administrator."
 msgstr "╤нсталяц╕я не вдалась.  Зверн╕ться до системного адм╕н╕стратора."
 
 #: app/user_install.c:1094
-#, fuzzy
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP використову╓ обмежену к╕льк╕сть пам'ят╕ для збер╕гання даних "
-"зображення\n"
-"так званий \"Tile Cache\". Ви мусите п╕д╕брати в╕дведений йому розм╕р "
-"пам'ят╕.\n"
-"Обм╕ркуйте к╕льк╕сть пам'ят╕, що використову╓ться ╕ншими запущеними "
-"процесами."
+"GIMP використову╓ обмежену к╕льк╕сть пам'ят╕ для збер╕гання даних зображення,\n"
+"так званий \"Tile Cache\". Ви мусите п╕д╕брати в╕дведений йому розм╕р пам'ят╕.\n"
+"Обм╕ркуйте к╕льк╕сть пам'ят╕, що використову╓ться ╕ншими запущеними процесами."
 
 #: app/user_install.c:1119
 msgid ""
