@@ -39,6 +39,7 @@ struct _PlugInProcDef
   GSList          *prefixes_list;
   GSList          *magics_list;
   time_t           mtime;
+  gboolean	   installed_during_init;
 };
 
 
