@@ -1,5 +1,13 @@
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpbycolorselecttool.c (gimp_by_color_select_tool_init)
+	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_init):
+	don't call gimp_tool_control_set_preserve (tool->control, FALSE)
+	because these tools don't cashe any image state and don't care
+	about the image changing under their feet.
+
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_reconnect):
 	emit "reconnect" *before* emitting scale and scroll events so
 	listeners (the navigation view) can switch to the new image at the

@@ -134,10 +134,6 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
 static void
 gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 {
-  GimpTool *tool = GIMP_TOOL (by_color_select);
-
-  gimp_tool_control_set_preserve (tool->control, FALSE);
-
   by_color_select->x = 0;
   by_color_select->y = 0;
 }

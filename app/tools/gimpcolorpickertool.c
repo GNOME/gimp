@@ -154,9 +154,9 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 static void
 gimp_color_picker_tool_init (GimpColorPickerTool *tool)
 {
-  GIMP_COLOR_TOOL (tool)->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_tool_control_set_preserve (GIMP_TOOL (tool)->control, FALSE);
+  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
 }
 
 static GObject *
