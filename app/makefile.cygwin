@@ -137,14 +137,13 @@ gimp_OBJECTS = \
 	gimpbrushgenerated.o	\
 	gimpbrushlist.o		\
 	gimpbrushpipe.o		\
-	gimpbrushpreview.o	\
 	gimpcontext.o		\
+	gimpcontextpreview.o	\
 	gimpdnd.o		\
 	gimphistogram.o		\
 	gimplist.o		\
 	gimplut.o		\
 	gimpparasite.o		\
-	gimppatternpreview.o	\
 	gimpprogress.o		\
 	gimprc.o		\
 	gimprc_cmds.o		\

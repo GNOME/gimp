@@ -15,6 +15,10 @@
  * - (Probably more. ;-)
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
@@ -33,6 +37,7 @@
 #endif
 
 /* Tor Lillqvist used these, but they're not defined on my system? -Vidar */
+/* They are in GIMP's config.h. --tml */
 #ifndef SRAND_FUNC
 #define SRAND_FUNC srand
 #endif

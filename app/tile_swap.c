@@ -19,6 +19,13 @@
 #include <io.h>
 #endif
 
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+#ifndef _O_TEMPORARY
+#define _O_TEMPORARY 0
+#endif
+
 #include "libgimp/gimpintl.h"
 
 #define MAX_OPEN_SWAP_FILES  16
@@ -371,11 +378,8 @@ tile_swap_open (SwapFile *swap_file)
       nopen_swap_files -= 1;
     }
 
-#ifndef NATIVE_WIN32
-  swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
-#else
-  swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR|_O_BINARY, _S_IREAD|_S_IWRITE);
-#endif
+  swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR|_O_BINARY|_O_TEMPORARY, _S_IREAD|_S_IWRITE);
+
   if (swap_file->fd == -1)
     {
       g_message (_("unable to open swap file...BAD THINGS WILL HAPPEN SOON"));

@@ -1,3 +1,12 @@
+1999-09-01  Tor Lillqvist  <tml@iki.fi>
+
+	* app/tile_swap.c (tile_swap_open): Use _O_TEMPORARY. Removed
+	#ifdef, instead define the Win32-only _O_BINARY and _O_TEMPORARY
+	as zero if not defined.
+
+	* plug-ins/common/spheredesigner.c: Include config.h (#if
+	HAVE_CONFIG_H). RAND_FUNC and SRAND_FUNC are defined in that.
+
 Tue Aug 31 20:21:34 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/libgck/gck/Makefile.am: use libgck_la_LIBADD to get
