@@ -2448,7 +2448,7 @@ msgstr ""
 "\t\tsession en session. Vous pouvez éditer ce fichier à la main\n"
 "\t\tsi vous le désirez, mais il est bien plus facile de définir\n"
 "\t\tles touches depuis Gimp. Effacer ce fichier redonne les\n"
-"\t\traccourcis clavier par défaut."
+"\t\traccourcis clavier par défaut.\n"
 
 #: app/install.c:163
 msgid ""
