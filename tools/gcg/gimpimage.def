@@ -2,14 +2,14 @@
 
 module g {
 	header <glib.h> {
-		type int;
+		@int int;
 	};
 	
 };
 
 module Gtk {
 	header <gtk/gtktypeutils.h> {
-		type Type;
+		@int Type;
 	};
 };
 
@@ -27,9 +27,9 @@ module Gimp{
 	
 	header <gimpimage.h> {
 		class Image;
-		type ImageType;
-		type ChannelType;
-		type BaseType;
+		enum ImageType;
+		enum ChannelType;
+		enum BaseType;
 	};
 	enum ImageType{
 		rgb, rgba, gray, graya, indexed, indexeda

@@ -1,3 +1,8 @@
+1998-10-24  Lauri Alanko  <la@iki.fi>
+
+	* Redid the backend. It takes more time and memory now, but should 
+	  be a bit more flexible, and type safe.
+
 1998-10-22  Lauri Alanko  <la@iki.fi>
 
 	* A bit more method generation

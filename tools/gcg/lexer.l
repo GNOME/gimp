@@ -28,12 +28,22 @@ direct return T_DIRECT;
 type return T_TYPE;
 attribute return T_ATTRIBUTE;
 module return T_MODULE;
-enum return T_ENUM;
-flags return T_FLAGS;
 import return T_IMPORT;
 header return T_HEADER;
 opaque return T_OPAQUE;
+
 void return T_VOID;
+enum return T_ENUM;
+lags return T_FLAGS;
+@int return T_INT;
+real return T_DOUBLE;
+boxed return T_BOXED;
+
+
+{ident} {
+	yylval.id=g_quark_to_string(g_quark_from_string(yytext));
+	return T_IDENT;
+}
 
 {comment} {
 }
@@ -41,16 +51,10 @@ void return T_VOID;
 {ws} {
 }
 
-{ident} {
-	yylval.id=g_quark_to_string(g_quark_from_string(yytext));
-	return T_IDENT;
-}
-
 {header} {
 	yylval.id=g_quark_to_string(g_quark_from_string(yytext));
 	return T_HEADERNAME;
 }
-
 
 {string} {
 	yylval.str=g_string_new(yytext);

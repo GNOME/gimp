@@ -3,75 +3,65 @@
 
 #include "gcg.h"
 #include <stdio.h>
+#include "pnode.h"
+
 typedef gconstpointer PBool;
 extern const PBool ptrue;
 extern const PBool pfalse;
 
-typedef enum{
-	VAR_STATIC,
-	VAR_PUBLIC,
-	VAR_PROTECTED
-} VarProt;
+typedef struct{
+	PRoot* type_hdr;
+	PRoot* func_hdr;
+	PRoot* prot_hdr;
+	PRoot* src;
+	PRoot* pvt_hdr;
+}OutCtx;
 
-typedef struct _File File;
-File* file_new(const gchar* filename);
-void file_flush(File* f);
-void file_add_dep(File* f, Id header);
-
-extern File* type_hdr;
-extern File* func_hdr;
-extern File* prot_hdr;
-extern File* pub_import_hdr;
-extern File* prot_import_hdr;
-extern File* source;
-extern File* source_head; /* "private header", so to say */
-
-void pr(File* s, const gchar* f, ...);
-void prv(File* s, const gchar* f, va_list args);
-void pr_nil(File* s, ...);
-void pr_c(File* s, gchar c);
-void pr_low(File* s, const gchar* str);
-void pr_up(File* s, const gchar* str);
-
-extern const gconstpointer no_data;
-
-void pr_list_foreach(File* s, GSList* l, void (*f)(), gpointer arg);
-
-
-typedef enum{
-	PARAMS_FIRST = 1<<0,
-	PARAMS_NAMES = 1<<1,
-	PARAMS_TYPES = 1<<2,
-	PARAMS_DOCS = 1<<3
+typedef struct{
+	gboolean first : 1;
+	gboolean names : 1;
+	gboolean types : 1;
+	/* gboolean docs : 1; */
 } ParamOptions;
 
-void pr_params(File* s, GSList* args, ParamOptions* opt);
-void pr_primtype(File* s, PrimType* t);
-void pr_type(File* s, Type* t);
-void pr_self_type(File* s, ObjectDef* c, PBool const_self);
-void pr_varname(File* s, PrimType* t, Id name);
-void pr_internal_varname(File* s, PrimType* t, Id name);
-void pr_object_member(File* s, Member* m);
-void pr_object_body(File* s, ObjectDef* c);
-void pr_object_decl(File* s, ObjectDef* c);
-void pr_class_member(File* s, Member* m);
-void pr_class_body(File* s, ObjectDef* c);
-void pr_class_decl(File* s, ObjectDef* c);
-void pr_prototype(File* s, PrimType* type, Id funcname,
+PNode* p_params(GSList* args, ParamOptions* opt);
+PNode* p_primtype(PrimType* t);
+PNode* p_type(Type* t);
+PNode* p_self_type(ObjectDef* c, PBool const_self);
+PNode* p_varname(PrimType* t, Id name);
+PNode* p_internal_varname(PrimType* t, Id name);
+PNode* p_object_member(Member* m);
+PNode* p_object_body(ObjectDef* c);
+PNode* p_object_decl(ObjectDef* c);
+PNode* p_class_member(Member* m);
+PNode* p_class_body(ObjectDef* c);
+PNode* p_class_decl(ObjectDef* c);
+PNode* p_prototype(PrimType* type, Id funcname,
 		  GSList* params, Type* rettype, gboolean internal);
-void output_func(PrimType* type, Id funcname, GSList* params, Type* rettype,
-		 File* hdr, ObjectDef* self, gboolean self_const,
-		 gboolean internal, const gchar* body, ...);
-void output_var(Def* d, Type* t, Id varname, File* hdr, gboolean internal);
 
-void output_def(Def* d);
-     
 
-void pr_macro_name(File* s, PrimType* t, Id mid, Id post);
-void pr_class_macros(File* s, ObjectDef* c );
-void pr_get_type(File* s, ObjectDef* c);
-void pr_gtype(File* s, Type* t);
-void pr_guard_name(File* s, const gchar* c);
-void pr_guard_start(File* s, const gchar *c);
-void pr_guard_end(File* s, const gchar *c);
+PNode* p_macro_name(PrimType* t, Id mid, Id post);
+PNode* p_class_macros(ObjectDef* c );
+PNode* p_get_type(ObjectDef* c);
+PNode* p_gtype(Type* t);
+PNode* p_guard_name(const gchar* c);
+PNode* p_guard_start(const gchar *c);
+PNode* p_guard_end(const gchar *c);
+
+PNode* p_c_ident(Id id);
+PNode* p_c_macro(Id id);
+
+  
+void output_func(OutCtx* out, PrimType* type, Id funcname, GSList* params,
+		 Type* rettype, Visibility scope, ObjectDef* self,
+		 gboolean self_const, gboolean internal, PNode* body);
+
+void output_var(OutCtx* out, Def* d, Type* t, Id varname, Visibility scope,
+		gboolean internal);
+
+void output_def(OutCtx* out, Def* d);
+void output_object(OutCtx* out, ObjectDef* d);
+void output_enum(OutCtx* out, EnumDef* d);
+void output_flags(OutCtx* out, FlagsDef* d);
+
 #endif

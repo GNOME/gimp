@@ -9,7 +9,7 @@
 	GString* str;
 	TypeName typename;
 	PrimType* primtype;
-	MethodProtection methprot;
+	Visibility methprot;
 	DataProtection dataprot;
 	MemberKind kind;
 	Def* def;
@@ -19,6 +19,7 @@
 	EmitDef emit_def;
 	gboolean bool;
 	Type type;
+	GtkFundamentalType fund_type;
 };
 
 %token T_MODULE
@@ -54,17 +55,22 @@
 %token T_IMPORT
 %token T_OPAQUE
 %token T_VOID
-
+%token T_INT
+%token T_DOUBLE
+%token T_BOXED
 
 %token<id> T_IDENT
 %token<id> T_HEADERNAME
 %token<str> T_STRING
 
+%type<id> ident
+%type<fund_type> fundtype
 %type<type> type
 %type<type> typeorvoid
 %type<type> semitype
 %type<typename> typename
 %type<primtype> primtype
+%type<primtype> parent
 %type<list> paramlist
 %type<list> idlist
 %type<kind> kinddef
@@ -75,7 +81,6 @@
 %type<def> enumdef
 %type<def> classdef
 %type<def> def
-%type<primtype> object_type
 %type<list> paramtail
 %type<param> param
 %type<str> docstring
@@ -91,11 +96,11 @@ start_symbol: deffile ;
 
 deffile: /* empty */ | deffile import | deffile modulescope;
 
-import: T_IMPORT T_IDENT T_END {
+import: T_IMPORT ident T_END {
 	imports=g_slist_prepend(imports, (gpointer)($2));
 }
 
-modulescope: T_MODULE T_IDENT T_OPEN_B {
+modulescope: T_MODULE ident T_OPEN_B {
 	current_module=$2;
 } modulebody T_CLOSE_B {
 	current_module=NULL;
@@ -113,16 +118,33 @@ headerdef: T_HEADER T_HEADERNAME T_OPEN_B {
 
 decllist: /* empty */ | decllist decl;
 
-decl: simpledecl | classdecl | opaquedecl | protclassdecl;
+decl: simpledecl ;/* | classdecl | opaquedecl | protclassdecl;*/
 
-simpledecl: T_TYPE typename T_END {
+fundtype: T_INT {
+	$$ = GTK_TYPE_INT;
+} | T_DOUBLE {
+	$$ = GTK_TYPE_DOUBLE;
+} | T_BOXED {
+	$$ = GTK_TYPE_BOXED;
+} | T_CLASS {
+	$$ = GTK_TYPE_OBJECT;
+} | T_ENUM {
+	$$ = GTK_TYPE_ENUM;
+} | T_FLAGS {
+	$$ = GTK_TYPE_FLAGS;
+}
+
+simpledecl: fundtype typename T_END {
 	PrimType* t=g_new(PrimType, 1);
+	g_assert(!get_decl($2.module, $2.type));
 	t->name = $2;
-	t->kind=TYPE_TRANSPARENT;
-	t->decl_header = t->def_header = current_header;
+	t->kind = $1;
+	t->decl_header = current_header;
+	t->def_header = NULL;
 	put_decl(t);
 };
 
+/*
 protclassdecl: T_PROTECTED T_CLASS typename T_END {
 	PrimType* t;
 	t=get_decl($3.module, $3.type);
@@ -130,24 +152,10 @@ protclassdecl: T_PROTECTED T_CLASS typename T_END {
 		t=g_new(PrimType, 1);
 		t->name=$3;
 		t->kind=TYPE_CLASS;
-		t->decl_header=NULL;
+		t->decl_header=current_header;
 	}
 	g_assert(t->kind==TYPE_CLASS);
 	t->def_header=current_header;
-	put_decl(t);
-}
-
-classdecl: T_CLASS typename T_END {
-	PrimType* t;
-	t=get_decl($2.module, $2.type);
-	if(!t){
-		t=g_new(PrimType, 1);
-		t->name=$2;
-		t->kind=TYPE_CLASS;
-		t->def_header=NULL;
-	}
-	g_assert(t->kind==TYPE_CLASS);
-	t->decl_header=current_header;
 	put_decl(t);
 }
 
@@ -160,7 +168,7 @@ opaquedecl: T_OPAQUE typename T_END {
 	g_assert(!get_decl($2.module, $2.type));
 	put_decl(t);
 };
-
+*/
 
 semitype: const_def primtype {
 	$$.is_const = $1;
@@ -178,6 +186,8 @@ type: semitype | semitype T_NOTNULLPTR {
 	$$.notnull = TRUE;
 }
 
+ident: T_IDENT;
+
 typeorvoid: type | T_VOID {
 	$$.prim = NULL;
 	$$.indirection = 0;
@@ -190,18 +200,13 @@ primtype: typename {
 	g_assert($$);
 };
 
-typename: T_IDENT T_SCOPE T_IDENT {
+typename: ident T_SCOPE ident {
 	$$.module=$1;
 	$$.type=$3;
-} | T_IDENT {
+} | ident {
 	g_assert(current_module);
 	$$.module=current_module;
 	$$.type=$1;
-};
-
-object_type: primtype {
-	$$=$1;
-	g_assert($$->kind==TYPE_CLASS);
 };
 
 paramlist: /* empty */ {
@@ -216,7 +221,7 @@ paramtail: /* empty */ {
 	$$ = g_slist_prepend($3, $2);
 };
 
-param: type T_IDENT docstring {
+param: type ident docstring {
 	$$=g_new(Param, 1);
 	$$->method=current_method;
 	$$->doc=$3;
@@ -235,9 +240,9 @@ kinddef: T_ABSTRACT {
 };
 
 methprot: T_PROTECTED{
-	$$ = METH_PROTECTED;
+	$$ = VIS_PROTECTED;
 } | T_PUBLIC {
-	$$ = METH_PUBLIC;
+	$$ = VIS_PUBLIC;
 };
 
 dataprot: /* empty */ {
@@ -263,9 +268,9 @@ docstring: T_STRING {
 };
 
 
-idlist: T_IDENT {
+idlist: ident {
 	$$ = g_slist_prepend(NULL, (gpointer)($1));
-} | idlist T_COMMA T_IDENT {
+} | idlist T_COMMA ident {
 	$$ = g_slist_append($1, (gpointer)($3));
 };
 
@@ -273,44 +278,49 @@ def: classdef | enumdef | flagsdef;
 
 enumdef: T_ENUM primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 	EnumDef* d=g_new(EnumDef, 1);
-	g_assert($2->kind==TYPE_TRANSPARENT);
+	g_assert($2->kind==GTK_TYPE_ENUM);
 	d->alternatives = $4;
 	$$=DEF(d);
-	$$->klass=&enum_class;
 	$$->type=$2;
 	$$->doc=$6;
 };
 
 flagsdef: T_FLAGS primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 	FlagsDef* d=g_new(FlagsDef, 1);
-	g_assert($2->kind==TYPE_TRANSPARENT);
+	g_assert($2->kind==GTK_TYPE_ENUM);
 	d->flags = $4;
 	$$=DEF(d);
-	$$->klass=&flags_class;
 	$$->type=$2;
 	$$->doc=$6;
 };
 
-classdef: T_CLASS object_type T_INHERITANCE object_type docstring T_OPEN_B {
+parent: /* empty */{
+	$$=NULL;
+} | T_INHERITANCE primtype{
+	$$=$2;
+}
+
+classdef: T_CLASS primtype parent docstring T_OPEN_B {
+	g_assert($2->kind==GTK_TYPE_OBJECT);
+	g_assert(!$3 || $3->kind==GTK_TYPE_OBJECT);
 	current_class=g_new(ObjectDef, 1);
 } classbody T_CLOSE_B T_END {
 	Type t={FALSE, 1, TRUE, $2};
 	current_class->self_type[0]=t;
 	t.is_const=TRUE;
 	current_class->self_type[1]=t;
-	current_class->parent = $4;
-	current_class->members = $8;
+	current_class->parent = $3;
+	current_class->members = $7;
 	$$=DEF(current_class);
 	current_class=NULL;
-	$$->klass=&object_class;
 	$$->type = $2;
-	$$->doc = $5;
+	$$->doc = $4;
 };
 
 member_def: data_member_def | method_def;
 
 
-data_member_def: dataprot kinddef type T_IDENT emitdef docstring T_END {
+data_member_def: dataprot kinddef type ident emitdef docstring T_END {
 	DataMember* m = g_new(DataMember, 1);
 	m->prot = $1;
 	m->type = $3;
@@ -322,7 +332,7 @@ data_member_def: dataprot kinddef type T_IDENT emitdef docstring T_END {
 	$$->doc = $6;
 };
 
-method_def: methprot kinddef typeorvoid T_IDENT T_OPEN_P {
+method_def: methprot kinddef typeorvoid ident T_OPEN_P {
 	current_method = g_new(Method, 1);
 } paramlist T_CLOSE_P const_def emitdef docstring T_END {
 	current_method->prot = $1;
@@ -357,10 +367,8 @@ classbody: /* empty */ {
 GHashTable* type_hash;
 GHashTable* class_hash;
 
+ gboolean in_ident;
 
 int yyerror (char* s){
 	g_error ("Parser error: %s", s);
 }
-
-
-

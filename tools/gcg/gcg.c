@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <unistd.h>
-#include "output.h"
+#include "p_output.h"
 
 GHashTable* decl_hash;
 GHashTable* def_hash;
@@ -12,6 +12,7 @@ Method* current_method;
 ObjectDef* current_class;
 Id current_header;
 GSList* imports;
+Type* type_gtk_type;
 
 Id func_hdr_name;
 Id type_hdr_name;
@@ -64,12 +65,16 @@ gboolean type_name_cmp(gconstpointer a, gconstpointer b){
 	return (t1->type == t2->type) && (t1->module == t2->module);
 }
 
-void output_type(TypeName* t, Def* def, gpointer foo){
-	def->klass->output(def);
+void output_cb(gpointer typename, gpointer def, gpointer ctx){
+	(void)typename; /* Shut off warnings */
+	output_def(ctx, def);
 }
 
 int main(int argc, char* argv[]){
 	/*	target=stdout;*/
+	OutCtx ctx;
+	
+	FILE* f;
 	
 	decl_hash=g_hash_table_new(type_name_hash, type_name_cmp);
 	def_hash=g_hash_table_new(type_name_hash, type_name_cmp);
@@ -84,17 +89,22 @@ int main(int argc, char* argv[]){
 	type_gtk_type->notnull=FALSE;
 	type_gtk_type->prim=get_decl(GET_ID("Gtk"), GET_ID("Type"));
 	g_assert(type_gtk_type->prim);
-	func_hdr=file_new(func_hdr_name);
-	type_hdr=file_new(type_hdr_name);
-	prot_hdr=file_new(prot_hdr_name);
-	source=file_new(source_name);
-	source_head=file_sub(source);
-	g_hash_table_foreach(def_hash, output_type, NULL);
-	file_flush(func_hdr);
-	file_flush(type_hdr);
-	file_flush(source_head);
-	/*	file_flush(source);*/
-	file_flush(prot_hdr);
+	ctx.type_hdr=pr_new();
+	ctx.func_hdr=pr_new();
+	ctx.prot_hdr=pr_new();
+	ctx.pvt_hdr=pr_new();
+	ctx.src=pr_new();
+	
+	g_hash_table_foreach(def_hash, output_cb, &ctx);
+	f=fopen(type_hdr_name, "w+");
+	pr_write(ctx.type_hdr, f);
+	f=fopen(source_name, "w+");
+	pr_write(ctx.pvt_hdr, f);
+	pr_write(ctx.src, f);
+	f=fopen(func_hdr_name, "w+");
+	pr_write(ctx.func_hdr, f);
+	f=fopen(prot_hdr_name, "w+");
+	pr_write(ctx.prot_hdr, f);
 	return 0;
 }
 

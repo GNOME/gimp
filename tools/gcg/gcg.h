@@ -1,6 +1,9 @@
 #ifndef __GCG_H__
 #define __GCG_H__
 #include <glib.h>
+#include <gtk/gtktypeutils.h>
+
+extern gboolean in_ident;
 
 typedef const gchar* Id;
 
@@ -22,22 +25,14 @@ typedef struct _MemberClass MemberClass;
 typedef struct _DefClass DefClass;
 typedef struct _Param Param;
 
-
 struct _TypeName {
         Id module;
 	Id type;
 };
 
-typedef enum {
-	TYPE_CLASS,
-	TYPE_OPAQUE,
-	TYPE_TRANSPARENT
-} TypeKind;
-
-
 struct _PrimType {
 	TypeName name;
-	TypeKind kind;
+	GtkFundamentalType kind;
 	Id decl_header;
 	Id def_header;
 };
@@ -54,7 +49,6 @@ struct _DefClass {
 };
 
 struct _Def {
-	DefClass *klass;
 	PrimType *type;
 	GString* doc;
 };
@@ -91,9 +85,10 @@ typedef enum {
 } MemberKind;
 
 typedef enum {
-	METH_PUBLIC,
-	METH_PROTECTED
-} MethodProtection;
+	VIS_PUBLIC,
+	VIS_PROTECTED,
+	VIS_PRIVATE
+} Visibility;
 
 typedef enum {
 	DATA_READWRITE,
@@ -132,7 +127,7 @@ struct _DataMember {
 
 struct _Method {
 	Member member;
-	MethodProtection prot;
+	Visibility prot;
 	GSList* params; /* list of Param* */
 	gboolean self_const;
 	Type ret_type;

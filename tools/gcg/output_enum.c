@@ -1,60 +1,51 @@
 #include "output.h"
 
-void pr_enum_member(File* s, Id id, PrimType* t){
-	pr(s,
-	   "\t%3,\n",
-	   pr_macro_name, t, NULL, id);
+PNode* p_enum_member(Id id, PrimType* t){
+	return p_fmt("\t~,\n",
+		     p_macro_name(t, NULL, id));
 }
 
-void pr_enum_decl(File* s, EnumDef* e){
+PNode* p_enum_decl(EnumDef* e){
 	PrimType* t=DEF(e)->type;
-	pr(s,
-	   "typedef enum {\n"
-	   "%3"
-	   "} %1;\n"
-	   "const %1 %3 = %3;\n",
-	   pr_list_foreach, e->alternatives, pr_enum_member, t,
-	   pr_primtype, t,
-	   pr_primtype, t,
-	   pr_macro_name, t, NULL, "LAST",
-	   pr_macro_name, t, NULL, g_slist_last(e->alternatives)->data);
+	return p_fmt("typedef enum {\n"
+		     "~"
+		     "\t~ = ~\n"
+		     "} ~;\n",
+		     p_for(e->alternatives, p_enum_member, t),
+		     p_macro_name(t, NULL, "LAST"),
+		     p_macro_name(t, NULL,
+				   g_slist_last(e->alternatives)->data),
+		     p_primtype(t));
 }
 
-void pr_enum_value(File* s, Id i, PrimType* t){
-	pr(s,
-	   "\t\t{%3,\n"
-	   "\t\t\"%3\",\n"
-	   "\t\t\"%s\"},\n",
-	   pr_macro_name, t, NULL, i,
-	   pr_macro_name, t, NULL, i,
-	   i);
+PNode* p_enum_value(Id i, PrimType* t){
+	return p_fmt("\t\t{~,\n"
+		     "\t\t\"~\",\n"
+		     "\t\t\"~\"},\n",
+		     p_macro_name(t, NULL, i),
+		     p_macro_name(t, NULL, i),
+		     p_str(i));
 }
 
-void output_enum_type_init(EnumDef* e){
+void output_enum_type_init(OutCtx* out, EnumDef* e){
 	PrimType* t=DEF(e)->type;
-	output_func(t, "init_type", NULL, type_gtk_type, type_hdr, NULL,
+	output_func(out, t, "init_type", NULL, type_gtk_type, TRUE, NULL,
 		    FALSE, TRUE,
-		    "\tstatic GtkEnumValue values[%d] = {\n"
-		    "%3"
-		    "\t\t{0, NULL, NULL}\n"
-		    "\t};\n"
-		    "\t%2 = gtk_type_register_enum (\"%1\", values);\n"
-		    "\treturn %2;\n",
-		    g_slist_length(e->alternatives)+1,
-		    pr_list_foreach, e->alternatives, pr_enum_value, t,
-		    pr_internal_varname, t, "type",
-		    pr_primtype, t,
-		    pr_internal_varname, t, "type");
+		    p_fmt("\tstatic GtkEnumValue values[~] = {\n"
+			  "~"
+			  "\t\t{0, NULL, NULL}\n"
+			  "\t};\n"
+			  "\t%2 = gtk_type_register_enum (\"%1\", values);\n"
+			  "\treturn %2;\n",
+			  p_prf("%d", g_slist_length(e->alternatives)+1),
+			  p_for(e->alternatives, p_enum_value, t),
+			  p_internal_varname(t, "type"),
+			  p_primtype(t),
+			  p_internal_varname(t, "type")));
 }
 	   
-void output_enum(EnumDef* e){
-	output_def(DEF(e));
-	output_enum_type_init(e);
-	pr_enum_decl(type_hdr, e);
+void output_enum(OutCtx* out, EnumDef* e){
+	output_enum_type_init(out, e);
+	pr_add(out->type_hdr, p_enum_decl(e));
 }
 
-DefClass enum_class={
-	output_enum
-};
-
-	

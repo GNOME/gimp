@@ -26,9 +26,8 @@ gcg_SOURCES = \
 	parser.c \
 	lexer.c \
 	output.c \
-	output_basic.c \
+	pnode.c \
 	db.c \
-	output_type.c \
 	output_enum.c \
 	output_flags.c \
 	output_object.c \
