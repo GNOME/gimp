@@ -1,3 +1,11 @@
+Fri Jan 30 13:47:57 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* app/gradient.c: Applied patch from Wolfgang Hofer
+	<hof@ws6310.gud.siemens.at> to let the user load the segment
+	endpoint color from the current foreground color.  It also makes
+	the preview un-resizable, which is not a complete fix for the
+	preview resizing bug.
+
 Fri Jan 30 11:48:04 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* More plugin non-interactive fixes:

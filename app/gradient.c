@@ -20,6 +20,11 @@
  */
 
 
+/* hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping 
+ *                                   preview widgetsize constant.
+ * hof: Hofer Wolfgang, 1997.10.17   Added "Load From FG color"
+ */
+
 /* Release date: 1997/06/02
  *
  * - Added the following procedural_db calls:
@@ -332,14 +337,14 @@ typedef struct {
 		double r, g, b, a;
 	} saved_colors[GRAD_NUM_COLORS];
 
-	GtkWidget *left_load_color_boxes[GRAD_NUM_COLORS + 2];
-	GtkWidget *left_load_labels[GRAD_NUM_COLORS + 2];
+	GtkWidget *left_load_color_boxes[GRAD_NUM_COLORS + 3];
+	GtkWidget *left_load_labels[GRAD_NUM_COLORS + 3];
 
 	GtkWidget *left_save_color_boxes[GRAD_NUM_COLORS];
 	GtkWidget *left_save_labels[GRAD_NUM_COLORS];
 
-	GtkWidget *right_load_color_boxes[GRAD_NUM_COLORS + 2];
-	GtkWidget *right_load_labels[GRAD_NUM_COLORS + 2];
+	GtkWidget *right_load_color_boxes[GRAD_NUM_COLORS + 3];
+	GtkWidget *right_load_labels[GRAD_NUM_COLORS + 3];
 
 	GtkWidget *right_save_color_boxes[GRAD_NUM_COLORS];
 	GtkWidget *right_save_labels[GRAD_NUM_COLORS];
@@ -359,7 +364,7 @@ typedef struct {
 /***** Local functions *****/
 
 /* Gradient editor functions */
-
+static void       ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a);
 static void       ed_update_editor(int flags);
 
 static GtkWidget *ed_create_button(gchar *label, double xalign, double yalign,
@@ -439,7 +444,8 @@ static void       cpopup_render_color_box(GtkPreview *preview, double r, double 
 static GtkWidget *cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 					  char *label1, char *label2, GtkSignalFunc callback,
 					  gchar accel_key_0, guint8 accel_mods_0,
-					  gchar accel_key_1, guint8 accel_mods_1);
+					  gchar accel_key_1, guint8 accel_mods_1,
+					  gchar accel_key_2, guint8 accel_mods_2);
 static GtkWidget *cpopup_create_save_menu(GtkWidget **color_boxes, GtkWidget **labels, GtkSignalFunc callback);
 static void       cpopup_update_saved_color(int n, double r, double g, double b, double a);
 static void       cpopup_load_left_callback(GtkWidget *widget, gpointer data);
@@ -1036,6 +1042,22 @@ grad_free_gradient_editor(void)
 
 /*****/
 
+void
+ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a)
+{
+	unsigned char r, g, b;
+	
+ 	palette_get_foreground (&r, &g, &b);
+ 	
+ 	*fg_r = (double) r / 255.0;
+ 	*fg_g = (double) g / 255.0;
+ 	*fg_b = (double) b / 255.0;
+	*fg_a = 1.0;                 /* opacity 100 % */
+} /* ed_fetch_foreground */
+
+
+/*****/
+
 static void
 ed_update_editor(int flags)
 {
@@ -1157,7 +1179,7 @@ ed_initialize_saved_colors(void)
 {
 	int i;
 
-	for (i = 0; i < (GRAD_NUM_COLORS + 2); i++) {
+	for (i = 0; i < (GRAD_NUM_COLORS + 3); i++) {
 		g_editor->left_load_color_boxes[i] = NULL;
 		g_editor->left_load_labels[i]      = NULL;
 
@@ -1881,6 +1903,17 @@ prev_update(int recalculate)
 
 	width   = g_editor->preview->allocation.width;
 	height  = g_editor->preview->allocation.height;
+
+	/* hof: do not change preview size on Window resize.
+	 *      The original code allows expansion of the preview
+	 *      on window resize events. But once expanded, there is no way to shrink
+	 *      the window back to the original size.
+	 *  A full Bugfix should change the preview size according to the users     
+	 *  window resize actions.   
+	 */
+		width   = GRAD_PREVIEW_WIDTH;
+		height  = GRAD_PREVIEW_HEIGHT;
+
 	pwidth  = GTK_PREVIEW(g_editor->preview)->buffer_width;
 	pheight = GTK_PREVIEW(g_editor->preview)->buffer_height;
 
@@ -2815,7 +2848,8 @@ cpopup_create_main_menu(void)
 								    (GtkSignalFunc)
 								    cpopup_load_left_callback,
 								    'L', GDK_CONTROL_MASK,
-								    'L', GDK_MOD1_MASK);
+								    'L', GDK_MOD1_MASK,
+								    'F', GDK_CONTROL_MASK);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), g_editor->control_left_load_popup);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
@@ -2852,7 +2886,8 @@ cpopup_create_main_menu(void)
 								     (GtkSignalFunc)
 								     cpopup_load_right_callback,
 								    'R', GDK_CONTROL_MASK,
-								    'R', GDK_MOD1_MASK);
+								    'R', GDK_MOD1_MASK,
+								    'F', GDK_MOD1_MASK);
 	gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem), g_editor->control_right_load_popup);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
@@ -3019,6 +3054,8 @@ cpopup_adjust_menus(void)
 {
 	grad_segment_t *seg;
 	int             i;
+	double          fg_r, fg_g, fg_b;
+	double          fg_a;
 
 	/* Render main menu color boxes */
 
@@ -3070,6 +3107,22 @@ cpopup_adjust_menus(void)
 				g_editor->control_sel_l->b0,
 				g_editor->control_sel_l->a0);
 
+	/* Render Foreground color boxes */
+
+	ed_fetch_foreground(&fg_r, &fg_g, &fg_b, &fg_a);
+
+	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_load_color_boxes[2]),
+				fg_r,
+				fg_g,
+				fg_b,
+				fg_a);
+
+	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_load_color_boxes[2]),
+				fg_r,
+				fg_g,
+				fg_b,
+				fg_a);
+	
 	/* Render saved color boxes */
 
 	for (i = 0; i < GRAD_NUM_COLORS; i++)
@@ -3365,7 +3418,8 @@ static GtkWidget *
 cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 			char *label1, char *label2, GtkSignalFunc callback,
 			gchar accel_key_0, guint8 accel_mods_0,
-			gchar accel_key_1, guint8 accel_mods_1)
+			gchar accel_key_1, guint8 accel_mods_1,
+			gchar accel_key_2, guint8 accel_mods_2)
 {
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
@@ -3379,8 +3433,8 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 
 	/* Create items */
 
-	for (i = 0; i < (GRAD_NUM_COLORS + 2); i++) {
-		if (i == 2) {
+	for (i = 0; i < (GRAD_NUM_COLORS + 3); i++) {
+		if (i == 3) {
 			/* Insert separator between "to fetch" and "saved" colors */
 
 			menuitem = gtk_menu_item_new();
@@ -3405,6 +3459,11 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 							       accel_key_1, accel_mods_1);
 				break;
 
+			case 2:
+				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
+							       accel_key_2, accel_mods_2);
+				break;
+
 			default:
 				break;
 		} /* switch */
@@ -3414,6 +3473,7 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 
 	gtk_label_set(GTK_LABEL(labels[0]), label1);
 	gtk_label_set(GTK_LABEL(labels[1]), label2);
+	gtk_label_set(GTK_LABEL(labels[2]), "FG color");
 
 	return menu;
 } /* cpopup_create_load_menu */
@@ -3449,20 +3509,20 @@ cpopup_update_saved_color(int n, double r, double g, double b, double a)
 {
 	char str[256];
 
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_load_color_boxes[n + 2]),
+	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_load_color_boxes[n + 3]),
 				r, g, b, a);
 	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_save_color_boxes[n]),
 				r, g, b, a);
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_load_color_boxes[n + 2]),
+	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_load_color_boxes[n + 3]),
 				r, g, b, a);
 	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_save_color_boxes[n]),
 				r, g, b, a);
 
 	sprintf(str, "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)", r, g, b, a);
 
-	gtk_label_set(GTK_LABEL(g_editor->left_load_labels[n + 2]), str);
+	gtk_label_set(GTK_LABEL(g_editor->left_load_labels[n + 3]), str);
 	gtk_label_set(GTK_LABEL(g_editor->left_save_labels[n]), str);
-	gtk_label_set(GTK_LABEL(g_editor->right_load_labels[n + 2]), str);
+	gtk_label_set(GTK_LABEL(g_editor->right_load_labels[n + 3]), str);
 	gtk_label_set(GTK_LABEL(g_editor->right_save_labels[n]), str);
 
 	g_editor->saved_colors[n].r = r;
@@ -3478,6 +3538,8 @@ static void
 cpopup_load_left_callback(GtkWidget *widget, gpointer data)
 {
 	grad_segment_t *seg;
+	double          fg_r, fg_g, fg_b;
+	double          fg_a;
 
 	switch ((long) data) {
 		case 0: /* Fetch from left neighbor's right endpoint */
@@ -3506,11 +3568,24 @@ cpopup_load_left_callback(GtkWidget *widget, gpointer data)
 					       TRUE, TRUE);
 			break;
 
+		case 2: /* Fetch from FG color */
+	                ed_fetch_foreground(&fg_r, &fg_g, &fg_b, &fg_a);
+			cpopup_blend_endpoints(fg_r,
+					       fg_g,
+					       fg_b,
+					       fg_a,
+					       g_editor->control_sel_r->r1,
+					       g_editor->control_sel_r->g1,
+					       g_editor->control_sel_r->b1,
+					       g_editor->control_sel_r->a1,
+					       TRUE, TRUE);
+			break;
+
 		default: /* Load a color */
-			cpopup_blend_endpoints(g_editor->saved_colors[(long) data - 2].r,
-					       g_editor->saved_colors[(long) data - 2].g,
-					       g_editor->saved_colors[(long) data - 2].b,
-					       g_editor->saved_colors[(long) data - 2].a,
+			cpopup_blend_endpoints(g_editor->saved_colors[(long) data - 3].r,
+					       g_editor->saved_colors[(long) data - 3].g,
+					       g_editor->saved_colors[(long) data - 3].b,
+					       g_editor->saved_colors[(long) data - 3].a,
 					       g_editor->control_sel_r->r1,
 					       g_editor->control_sel_r->g1,
 					       g_editor->control_sel_r->b1,
@@ -3542,6 +3617,8 @@ static void
 cpopup_load_right_callback(GtkWidget *widget, gpointer data)
 {
 	grad_segment_t *seg;
+	double          fg_r, fg_g, fg_b;
+	double          fg_a;
 
 	switch ((long) data) {
 		case 0: /* Fetch from right neighbor's left endpoint */
@@ -3570,15 +3647,28 @@ cpopup_load_right_callback(GtkWidget *widget, gpointer data)
 					       TRUE, TRUE);
 			break;
 
+		case 2: /* Fetch from FG color */
+	                ed_fetch_foreground(&fg_r, &fg_g, &fg_b, &fg_a);
+			cpopup_blend_endpoints(g_editor->control_sel_l->r0,
+					       g_editor->control_sel_l->g0,
+					       g_editor->control_sel_l->b0,
+					       g_editor->control_sel_l->a0,
+					       fg_r,
+					       fg_g,
+					       fg_b,
+					       fg_a,
+					       TRUE, TRUE);
+			break;
+
 		default: /* Load a color */
 			cpopup_blend_endpoints(g_editor->control_sel_l->r0,
 					       g_editor->control_sel_l->g0,
 					       g_editor->control_sel_l->b0,
 					       g_editor->control_sel_l->a0,
-					       g_editor->saved_colors[(long) data - 2].r,
-					       g_editor->saved_colors[(long) data - 2].g,
-					       g_editor->saved_colors[(long) data - 2].b,
-					       g_editor->saved_colors[(long) data - 2].a,
+					       g_editor->saved_colors[(long) data - 3].r,
+					       g_editor->saved_colors[(long) data - 3].g,
+					       g_editor->saved_colors[(long) data - 3].b,
+					       g_editor->saved_colors[(long) data - 3].a,
 					       TRUE, TRUE);
 			break;
 	} /* switch */
