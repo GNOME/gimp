@@ -38,4 +38,3 @@ gcg_SOURCES = \
 	parser.h
 
 gcg_DEPENDS = parser.h
-
