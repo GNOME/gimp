@@ -1,3 +1,10 @@
+2003-05-20  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/wmf.c (load_image): Remove the message to send
+	files with unhandled opcodes to me. I'm really not interested in
+	getting them currently... (BTW, the wmf plug-in really should be
+	rewritten to use libwmf.)
+
 2003-05-22  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/imagemap/Makefile.am (EXTRA_DIST): added missing lex
@@ -52,13 +59,13 @@
 	* plug-ins/script-fu/scripts/alien-glow-button.scm
 	* plug-ins/script-fu/scripts/beveled-button.scm
 	* plug-ins/script-fu/scripts/beveled-pattern-button.scm: 
-	Applied patch from Tor Lilliqvist <tml@iki.fi> which
+	Applied patch from Tor Lillqvist <tml@iki.fi> which
 	fixes the same problem as that reported in bug #77572.
 
 2003-05-16  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/script-fu/scripts/pupi-button.scm: Applied
-	patch from Tor Lilliqvist <tml@iki.fi> to fix bug #77572.
+	patch from Tor Lillqvist <tml@iki.fi> to fix bug #77572.
 
 2003-05-16  Dave Neary  <bolsh@gimp.org>
 
