@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2001-04-05 16:29+0300\n"
+"POT-Creation-Date: 2001-04-17 09:38+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -8928,11 +8928,11 @@ msgstr "Завантажити контрольн╕ точки з файлу"
 
 #: plug-ins/gap/gap_mov_dialog.c:2205
 msgid "Save Points"
-msgstr ""
+msgstr "Зберегти точки"
 
 #: plug-ins/gap/gap_mov_dialog.c:2213
 msgid "Save Controlpoints to file"
-msgstr ""
+msgstr "Зберегти контрольн╕ точки у файл╕"
 
 #: plug-ins/gap/gap_mov_dialog.c:2673
 msgid ""
@@ -11512,11 +11512,13 @@ msgstr "Найб╕льший пензель, що створю╓ться"
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
+"Нехай значення (яскрав╕сть) д╕лянки визнача╓ розм╕р мазка"
 
 #: plug-ins/gimpressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
+"В╕дстань в╕д центру зображення визнача╓ розм╕р мазка"
 
 #: plug-ins/gimpressionist/size.c:156
 msgid "Selects a random size for each stroke"
