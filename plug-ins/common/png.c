@@ -59,7 +59,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION  "1.2 - 2 April 2000"
+#define PLUG_IN_VERSION  "1.2.1 - 2 April 2000"
 #define SCALE_WIDTH      125
 
 #define DEFAULT_GAMMA    2.20
@@ -858,7 +858,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
   };
 
 
-  if (info->valid | PNG_INFO_tRNS) {
+  if (info->valid & PNG_INFO_tRNS) {
     /* It's not really a VERY evil hack, right? -- ruth */
     png_set_tRNS(pp, info, (png_bytep) "\0", 1, NULL);
   }
@@ -901,11 +901,19 @@ save_image (gchar  *filename,	        /* I - File to save to */
 	num = end - begin;
 	
 	gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin, drawable->width, num);
-        if (info->valid | PNG_INFO_tRNS) {
+        if (info->valid & PNG_INFO_tRNS) {
           for (i = 0; i < num; ++i) {
 	    fixed= pixels[i];
             for (k = 0; k < drawable->width; ++k) {
               fixed[k] = (fixed[k*2+1] > 127) ? fixed[k*2] + 1 : 0;
+            }
+          }
+       /* Forgot this case before, what if there are too many colors? */
+        } else if (info->valid & PNG_INFO_PLTE && bpp == 2) {
+          for (i = 0; i < num; ++i) {
+	    fixed= pixels[i];
+            for (k = 0; k < drawable->width; ++k) {
+              fixed[k] = fixed[k*2];
             }
           }
         }
