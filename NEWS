@@ -47,6 +47,15 @@ Bugs fixed in GIMP 2.0pre2
 - 121966: Fix SuperNova plug-in (David Odin)
 - 110610: Allow user to choose file formats even if the current image type is 
   not supported by them (Pedro Gimeno)
+- 131980: Fix crash in crop tool (David Odin, Sven Neumann)
+- 131030: Allow saving data without pre-multiplying by alpha channel in tiff 
+  plug-in (Pablo d'Angelo, Dave Neary)
+- 125864: Guides behave correctly when spacing is set to 1px (Henrik Brix 
+  Andersen)
+- 131721: Fix handling of alpha channels across undo steps (Mitch Natterer)
+- 128025: Fix behaviour when there is a floating selection (Mitch Natterer)
+- 131076: Make fuzzy select tool respect alpha channel in indexed mode (Mitch
+  Natterer)
 
 Other contributions:
   David Odin, Manish Singh, Simon Budig, Mitch Natterer, Sven Neumann, Tor 
