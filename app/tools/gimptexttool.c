@@ -55,12 +55,15 @@
 
 #include "edit_selection.h"
 #include "text_tool.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 #include "tool_options.h"
 
 #include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 #define FOUNDRY      0
@@ -77,15 +80,6 @@
 #define ENCODING    13
 
 /*  the text tool structures  */
-
-typedef struct _TextTool TextTool;
-
-struct _TextTool
-{
-  gint      click_x;
-  gint      click_y;
-  GDisplay *gdisp;
-};
 
 typedef struct _TextOptions TextOptions;
 
@@ -107,53 +101,146 @@ struct _TextOptions
 };
 
 
-static void   text_button_press           (Tool           *tool,
-					   GdkEventButton *bevent,
-					   GDisplay       *gdisp);
-static void   text_button_release         (Tool           *tool,
-					   GdkEventButton *bevent,
-					   GDisplay       *gdisp);
-static void   text_cursor_update          (Tool           *tool,
-					   GdkEventMotion *mevent,
-					   GDisplay       *gdisp);
-static void   text_control                (Tool           *tool,
-					   ToolAction      tool_action,
-					   GDisplay       *gdisp);
+static void   gimp_text_tool_class_init      (GimpTextToolClass *klass);
+static void   gimp_text_tool_init            (GimpTextTool      *tool);
 
-static void   text_dialog_create          (void);
-static void   text_dialog_ok_callback     (GtkWidget      *widget,
-					   gpointer        data);
-static void   text_dialog_cancel_callback (GtkWidget      *widget,
-					   gpointer        data);
-static gint   text_dialog_delete_callback (GtkWidget      *widget,
-					   GdkEvent       *event,
-					   gpointer        data);
+static void   gimp_text_tool_destroy         (GtkObject      *object);
 
-static void   text_init_render            (TextTool      *text_tool);
-static void   text_gdk_image_to_region    (GdkImage      *image,
-					   gint           ,
-					   PixelRegion   *);
-static void   text_size_multiply          (gchar        **fontname,
-					   gint           size);
-static void   text_set_resolution         (gchar        **fontname,
-					   gdouble        xres,
-					   gdouble        yres);
+static void   text_tool_control              (GimpTool       *tool,
+					      ToolAction      tool_action,
+					      GDisplay       *gdisp);
+static void   text_tool_button_press         (GimpTool       *tool,
+					      GdkEventButton *bevent,
+					      GDisplay       *gdisp);
+static void   text_tool_button_release       (GimpTool       *tool,
+					      GdkEventButton *bevent,
+					      GDisplay       *gdisp);
+static void   text_tool_cursor_update        (GimpTool       *tool,
+					      GdkEventMotion *mevent,
+					      GDisplay       *gdisp);
 
+static TextOptions * text_tool_options_new   (void);
+static void          text_tool_options_reset (void);
 
-/*  the text tool options  */
-static TextOptions *text_options = NULL;
+static void   text_dialog_create             (void);
+static void   text_dialog_ok_callback        (GtkWidget      *widget,
+					      gpointer        data);
+static void   text_dialog_cancel_callback    (GtkWidget      *widget,
+					      gpointer        data);
+static gint   text_dialog_delete_callback    (GtkWidget      *widget,
+					      GdkEvent       *event,
+					      gpointer        data);
+
+static void   text_init_render               (GimpTextTool  *text_tool);
+static void   text_gdk_image_to_region       (GdkImage      *image,
+					      gint           ,
+					      PixelRegion   *);
+static void   text_size_multiply             (gchar        **fontname,
+					      gint           size);
+static void   text_set_resolution            (gchar        **fontname,
+					      gdouble        xres,
+					      gdouble        yres);
+
 
 /*  local variables  */
-static TextTool  *the_text_tool   = NULL;
-static GtkWidget *text_tool_shell = NULL;
+
+static TextOptions   *text_tool_options = NULL;
+static GtkWidget     *text_tool_shell   = NULL;
+
+static GimpToolClass *parent_class      = NULL;
 
 
 /*  functions  */
 
-static void
-text_options_reset (void)
+void
+gimp_text_tool_register (void)
 {
-  TextOptions *options = text_options;
+  tool_manager_register_tool (GIMP_TYPE_TEXT_TOOL,
+			      "gimp:text_tool",
+			      _("Text Tool"),
+			      _("Add text to the image"),
+			      N_("/Tools/Text"), "T",
+			      NULL, "tools/text.html",
+			      (const gchar **) text_bits);
+}
+
+GtkType
+gimp_text_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+	"GimpTextTool",
+	sizeof (GimpTextTool),
+	sizeof (GimpTextToolClass),
+	(GtkClassInitFunc) gimp_text_tool_class_init,
+	(GtkObjectInitFunc) gimp_text_tool_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+	(GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_text_tool_class_init (GimpTextToolClass *klass)
+{
+  GtkObjectClass *object_class;
+  GimpToolClass  *tool_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+
+  object_class->destroy = gimp_text_tool_destroy;
+
+  tool_class->control        = text_tool_control;
+  tool_class->button_press   = text_tool_button_press;
+  tool_class->button_release = text_tool_button_release;
+  tool_class->cursor_update  = text_tool_cursor_update;
+}
+
+static void
+gimp_text_tool_init (GimpTextTool *text_tool)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (text_tool);
+ 
+  /*  The tool options  */
+  if (! text_tool_options)
+    {
+      text_tool_options = text_tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_TEXT_TOOL,
+					  (ToolOptions *) text_tool_options);
+    }
+
+  tool->scroll_lock = TRUE;  /* Disallow scrolling */
+}
+
+static void
+gimp_text_tool_destroy (GtkObject *object)
+{
+  if (text_tool_shell)
+    gimp_dialog_hide (text_tool_shell);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+text_tool_options_reset (void)
+{
+  TextOptions *options = text_tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				options->antialias_d);
@@ -164,7 +251,7 @@ text_options_reset (void)
 }
 
 static TextOptions *
-text_options_new (void)
+text_tool_options_new (void)
 {
   TextOptions *options;
 
@@ -174,11 +261,11 @@ text_options_new (void)
   GtkWidget *spinbutton;
   GtkWidget *sep;
 
-  /*  the new text tool options structure  */
-  options = g_new (TextOptions, 1);
+  options = g_new0 (TextOptions, 1);
+
   tool_options_init ((ToolOptions *) options,
-		     _("Text Tool"),
-		     text_options_reset);
+		     text_tool_options_reset);
+
   options->antialias   = options->antialias_d   = TRUE;
   options->border      = options->border_d      = 0;
   options->use_dyntext = options->use_dyntext_d = FALSE;
@@ -251,44 +338,6 @@ text_options_new (void)
   return options;
 }
 
-Tool*
-tools_new_text (void)
-{
-  Tool * tool;
-
-  /*  The tool options  */
-  if (! text_options)
-    {
-      text_options = text_options_new ();
-      tools_register (TEXT, (ToolOptions *) text_options);
-    }
-
-  /*  the new text tool structure  */
-  tool = tools_new_tool (TEXT);
-  the_text_tool = g_new (TextTool, 1);
-
-  tool->scroll_lock = TRUE;  /* Disallow scrolling */
-
-  tool->private = (void *) the_text_tool;
-
-  tool->button_press_func   = text_button_press;
-  tool->button_release_func = text_button_release;
-  tool->cursor_update_func  = text_cursor_update;
-  tool->control_func        = text_control;
-
-  return tool;
-}
-
-void
-tools_free_text (Tool *tool)
-{
-  g_free (tool->private);
-  the_text_tool = NULL;
-
-  if (text_tool_shell)
-    gimp_dialog_hide (text_tool_shell);
-}
-
 static void
 text_call_gdyntext (GDisplay *gdisp)
 {
@@ -317,14 +366,38 @@ text_call_gdyntext (GDisplay *gdisp)
 }
 
 static void
-text_button_press (Tool           *tool,
-		   GdkEventButton *bevent,
-		   GDisplay       *gdisp)
+text_tool_control (GimpTool   *tool,
+		   ToolAction  action,
+		   GDisplay   *gdisp)
 {
-  GimpLayer *layer;
-  TextTool  *text_tool;
+  switch (action)
+    {
+    case PAUSE:
+      break;
 
-  text_tool        = tool->private;
+    case RESUME:
+      break;
+
+    case HALT:
+      if (text_tool_shell)
+	gimp_dialog_hide (text_tool_shell);
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
+text_tool_button_press (GimpTool       *tool,
+			GdkEventButton *bevent,
+			GDisplay       *gdisp)
+{
+  GimpTextTool *text_tool;
+  GimpLayer    *layer;
+
+  text_tool = GIMP_TEXT_TOOL (tool);
+
   text_tool->gdisp = gdisp;
 
   tool->state = ACTIVE;
@@ -340,11 +413,14 @@ text_button_press (Tool           *tool,
     /*  If there is a floating selection, and this aint it, use the move tool  */
     if (gimp_layer_is_floating_sel (layer))
       {
+#warning FIXME (edit_selection)
+#if 0
 	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
+#endif
 	return;
       }
 
-  if (text_options->use_dyntext)
+  if (text_tool_options->use_dyntext)
     {
       text_call_gdyntext (gdisp);
       return;
@@ -353,22 +429,22 @@ text_button_press (Tool           *tool,
   if (! text_tool_shell)
     text_dialog_create ();
 
-  if (!GTK_WIDGET_VISIBLE (text_tool_shell))
+  if (! GTK_WIDGET_VISIBLE (text_tool_shell))
     gtk_widget_show (text_tool_shell);
 }
 
 static void
-text_button_release (Tool           *tool,
-		     GdkEventButton *bevent,
-		     GDisplay       *gdisp)
+text_tool_button_release (GimpTool       *tool,
+			  GdkEventButton *bevent,
+			  GDisplay       *gdisp)
 {
   tool->state = INACTIVE;
 }
 
 static void
-text_cursor_update (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    GDisplay       *gdisp)
+text_tool_cursor_update (GimpTool       *tool,
+			 GdkEventMotion *mevent,
+			 GDisplay       *gdisp)
 {
   GimpLayer *layer;
   gint       x, y;
@@ -394,33 +470,10 @@ text_cursor_update (Tool           *tool,
 }
 
 static void
-text_control (Tool       *tool,
-	      ToolAction  action,
-	      GDisplay   *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      if (text_tool_shell)
-	gimp_dialog_hide (text_tool_shell);
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
 text_dialog_create (void)
 {
-  /* Create the shell */
   text_tool_shell = gtk_font_selection_dialog_new (_("Text Tool"));
+
   gtk_window_set_wmclass (GTK_WINDOW (text_tool_shell), "text_tool", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (text_tool_shell), FALSE, TRUE, FALSE);
   gtk_window_set_position (GTK_WINDOW (text_tool_shell), GTK_WIN_POS_MOUSE);
@@ -428,18 +481,18 @@ text_dialog_create (void)
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (text_tool_shell), "delete_event",
 		      GTK_SIGNAL_FUNC (text_dialog_delete_callback),
-		      NULL);
+		      text_tool_shell);
 
   /* ok and cancel buttons */
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
 				  (text_tool_shell)->ok_button), "clicked",
 		      GTK_SIGNAL_FUNC (text_dialog_ok_callback),
-		      NULL);
+		      text_tool_shell);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FONT_SELECTION_DIALOG
 				  (text_tool_shell)->cancel_button), "clicked",
 		      GTK_SIGNAL_FUNC (text_dialog_cancel_callback),
-		      NULL);
+		      text_tool_shell);
 
   /* Show the shell */
   gtk_widget_show (text_tool_shell);
@@ -449,10 +502,12 @@ static void
 text_dialog_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  gimp_dialog_hide (text_tool_shell);
+  gimp_dialog_hide (data);
 
-  if (the_text_tool)
-    text_init_render (the_text_tool);
+  if (active_tool && GIMP_IS_TEXT_TOOL (active_tool))
+    {
+      text_init_render (GIMP_TEXT_TOOL (active_tool));
+    }
 }
 
 static gint
@@ -461,7 +516,7 @@ text_dialog_delete_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   text_dialog_cancel_callback (widget, data);
-  
+
   return TRUE;
 }
 
@@ -469,20 +524,21 @@ static void
 text_dialog_cancel_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  gimp_dialog_hide (text_tool_shell);
+  gimp_dialog_hide (GTK_WIDGET (data));
 }
 
 static void
-text_init_render (TextTool *text_tool)
+text_init_render (GimpTextTool *text_tool)
 {
   GDisplay *gdisp;
   gchar    *fontname;
   gchar    *text;
-  gboolean  antialias = text_options->antialias;
+  gboolean  antialias = text_tool_options->antialias;
 
   fontname = gtk_font_selection_dialog_get_font_name
     (GTK_FONT_SELECTION_DIALOG (text_tool_shell));
-  if (!fontname)
+
+  if (! fontname)
     return;
 
   gdisp = text_tool->gdisp;
@@ -516,7 +572,7 @@ text_init_render (TextTool *text_tool)
 
   text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
-	       fontname, text, text_options->border, antialias);
+	       fontname, text, text_tool_options->border, antialias);
 
   gdisplays_flush ();
 
@@ -745,11 +801,13 @@ text_render (GimpImage    *gimage,
       /* create the GdkImage */
       image = gdk_image_get (pixmap, 0, 0, pixmap_width, pixmap_height);
 
-      if (!image)
-	gimp_fatal_error ("text_render(): Sanity check failed: could not get gdk image");
+      if (! image)
+	gimp_fatal_error ("%s(): Sanity check failed: could not get gdk image",
+			  G_GNUC_FUNCTION);
 
       if (image->depth != 1)
-	gimp_fatal_error ("text_render(): Sanity check failed: image should have 1 bit per pixel");
+	gimp_fatal_error ("%s(): Sanity check failed: image should have 1 bit per pixel",
+			  G_GNUC_FUNCTION);
 
       /* convert the GdkImage bitmap to a region */
       text_gdk_image_to_region (image, antialias, &maskPR);

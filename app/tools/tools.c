@@ -59,6 +59,7 @@ register_tools (void)
   gimp_color_picker_register ();
   gimp_measure_tool_register ();
   gimp_move_tool_register ();
+  gimp_text_tool_register ();
 
 /*
   procedural_db_register (&airbrush_proc);

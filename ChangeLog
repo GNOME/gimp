@@ -1,5 +1,16 @@
 2001-02-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/pixmaps2.h: commented out "text_width" and "text_height"
+
+	* app/tools/Makefile.am
+	* app/tools/text_tool.[ch]: "It was really dead, Jim!"
+
+	* app/tools/tool.c: removed STUBs
+
+	* app/tools/tools.c: register it.
+
+2001-02-24  Michael Natterer  <mitch@gimp.org>
+
 	* TODO.xml: updated.
 
 	* app/appenums.h

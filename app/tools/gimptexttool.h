@@ -16,8 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __TEXT_TOOL_H__
-#define __TEXT_TOOL_H__
+#ifndef __GIMP_TEXT_TOOL_H__
+#define __GIMP_TEXT_TOOL_H__
+
+
+#include "tool.h"
 
 
 #define SUPERSAMPLE  3
@@ -29,8 +32,35 @@ typedef enum
 } SizeType;
 
 
-Tool      * tools_new_text   (void);
-void        tools_free_text  (Tool         *tool);
+#define GIMP_TYPE_TEXT_TOOL            (gimp_text_tool_get_type ())
+#define GIMP_TEXT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TEXT_TOOL, GimpTextTool))
+#define GIMP_IS_TEXT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TEXT_TOOL))
+#define GIMP_TEXT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_TOOL, GimpTextToolClass))
+#define GIMP_IS_TEXT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_TOOL))
+
+typedef struct _GimpTextTool GimpTextTool;
+typedef struct _GimpTextToolClass GimpTextToolClass;
+
+struct _GimpTextTool
+{
+  GimpTool  parent_instance;
+
+  gint      click_x;
+  gint      click_y;
+
+  GDisplay *gdisp;
+};
+
+struct _GimpTextToolClass
+{
+  GimpToolClass  parent_class;
+};
+
+
+GtkType     gimp_text_tool_get_type (void);
+
+void        gimp_text_tool_register (void);
+
 
 gboolean    text_get_extents (gchar        *fontname,
 			      gchar        *text,
@@ -49,4 +79,4 @@ GimpLayer * text_render      (GimpImage    *gimage,
 			      gint          antialias);
 
 
-#endif /* __TEXT_TOOL_H__ */
+#endif /* __GIMP_TEXT_TOOL_H__ */

@@ -819,9 +819,10 @@ static char *skew_bits [] =
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: text  */
 
-
+/* FIXME name clash in text_tool.c
 #define text_width 22
 #define text_height 22
+*/
 static char *text_bits [] =
 {
   "......................",

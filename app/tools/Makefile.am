@@ -90,8 +90,8 @@ libapptools_la_SOURCES = \
 ##	shear_tool.h		\
 ##	smudge.c		\
 ##	smudge.h		\
-##	text_tool.c		\
-##	text_tool.h		\
+	text_tool.c		\
+	text_tool.h		\
 ##	threshold.c		\
 ##	threshold.h		\
 	tool.c			\
