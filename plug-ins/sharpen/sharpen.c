@@ -1,8 +1,7 @@
 /*
  * "$Id$"
  *
- *   Despeckle (adaptive median) filter for The GIMP -- an image manipulation
- *   program
+ *   Sharpen filters for The GIMP -- an image manipulation program
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
@@ -25,8 +24,8 @@
  *   main()                      - Main entry - just call gimp_main()...
  *   query()                     - Respond to a plug-in query...
  *   run()                       - Run the filter...
- *   despeckle()                 - Despeckle an image using a median filter.
- *   despeckle_dialog()          -  Popup a dialog window for the filter box size...
+ *   sharpen()                   - Sharpen an image using a median filter.
+ *   sharpen_dialog()            - Popup a dialog window for the filter box size...
  *   preview_init()              - Initialize the preview window...
  *   preview_scroll_callback()   - Update the preview when a scrollbar is moved.
  *   preview_update()            - Update the preview window.
@@ -34,8 +33,6 @@
  *   dialog_create_ivalue()      - Create an integer value control...
  *   dialog_iscale_update()      - Update the value field using the scale.
  *   dialog_ientry_update()      - Update the value field using the text entry.
- *   dialog_adaptive_callback()  - Update the filter type...
- *   dialog_recursive_callback() - Update the filter type...
  *   dialog_ok_callback()        - Start the filter...
  *   dialog_cancel_callback()    - Cancel the filter...
  *   dialog_close_callback()     - Exit the filter dialog application.
@@ -43,7 +40,7 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.10  1998/04/24 02:18:39  yosh
+ *   Revision 1.4  1998/04/24 02:18:49  yosh
  *   * Added sharpen to stable dist
  *
  *   * updated sgi and despeckle plugins
@@ -60,70 +57,36 @@
  *
  *   -Yosh
  *
- *   Revision 1.17  1998/04/23  14:39:47  mike
- *   Updated preview code to handle images with alpha (preview now shows checker
- *   pattern).
- *   Added call to gtk_window_set_wmclass() to make sure the GIMP icon is used
- *   by default.
+ *   Revision 1.10  1998/04/23  14:39:47  mike
+ *   Whoops - wasn't copying the preview image over for RGB mode...
  *
- *   Revision 1.16  1998/01/22  14:35:03  mike
- *   Added black & white level controls.
- *   Fixed bug in despeckle code that caused the borders to darken.
+ *   Revision 1.9  1998/04/23  13:56:02  mike
+ *   Updated preview to do checkerboard pattern for transparency (thanks Yosh!)
+ *   Added gtk_window_set_wmclass() call to make sure this plug-in gets to use
+ *   the standard GIMP icon if none is otherwise created...
  *
- *   Revision 1.15  1998/01/21  21:33:47  mike
- *   Fixed malloc buffer overflow bug - wasn't realloc'ing buffers
- *   when the filter radius changed.
+ *   Revision 1.8  1998/04/22  16:25:45  mike
+ *   Fixed RGBA preview problems...
  *
- *   Revision 1.14  1997/11/14  17:17:59  mike
+ *   Revision 1.7  1998/03/12  18:48:52  mike
+ *   Fixed pixel errors around the edge of the bounding rectangle - the
+ *   original pixels weren't being written back to the image...
+ *
+ *   Revision 1.6  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
  *
- *   Revision 1.13  1997/11/12  15:53:34  mike
- *   Added <string.h> header file for Digital UNIX...
- *
- *   Revision 1.12  1997/10/17  13:56:54  mike
+ *   Revision 1.5  1997/10/17  13:56:54  mike
  *   Updated author/contact information.
  *
- *   Revision 1.11  1997/06/12  16:58:11  mike
- *   Optimized final despeckle - now grab gimp_tile_height() rows at a time
- *   for faster filtering.
+ *   Revision 1.4  1997/09/29  17:16:29  mike
+ *   To average 8 numbers you do *not* divide by 9!  This caused the brightening
+ *   problem when sharpening was "turned up".
  *
- *   Revision 1.10  1997/06/08  23:30:29  mike
- *   Improved the preview update speed significantly by loading the entire
- *   source (preview) image first.
+ *   Revision 1.2  1997/06/08  22:27:35  mike
+ *   Updated sharpen code for hard-coded 3x3 convolution matrix.
  *
- *   Revision 1.9  1997/06/08  16:48:21  mike
- *   Renamed "adaptive" argument to "type" (filter type).
- *
- *   Revision 1.8  1997/06/08  12:45:09  mike
- *   Added recursive filter option.
- *   Cleaned up UI.
- *
- *   Revision 1.7  1997/06/08  04:27:19  mike
- *   Updated documentation.
- *   Moved plug-in back to original location in menu tree.
- *
- *   Revision 1.6  1997/06/08  04:24:56  mike
- *   Added filter type argument & control.
- *
- *   Revision 1.5  1997/06/08  04:12:36  mike
- *   Added preview window.
- *
- *   Revision 1.4  1997/06/08  02:18:22  mike
- *   Updated to adjust the despeckling radius based upon the window's
- *   histogram.  This improves filter quality significantly as surface
- *   details are preserved and not blurred...
- *
- *   Revision 1.3  1997/06/07  01:29:47  mike
- *   Added some minor optimizations.
- *   Updated version to 1.01.
- *   Fixed minor bug in dialog_ientry_update() - was using gdouble instead
- *   of gint for new_value...
- *
- *   Revision 1.2  1997/06/07  01:03:07  mike
- *   Updated docos, changed maximum radius to 20.
- *
- *   Revision 1.1  1997/06/07  00:01:15  mike
- *   Initial Revision.
+ *   Revision 1.1  1997/06/08  16:46:07  mike
+ *   Initial revision
  */
 
 #include <stdio.h>
@@ -136,27 +99,27 @@
 
 
 /*
+ * Macros...
+ */
+
+#define MIN(a,b)		(((a) < (b)) ? (a) : (b))
+#define MAX(a,b)		(((a) > (b)) ? (a) : (b))
+
+
+/*
  * Constants...
  */
 
-#define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.3 - 23 April 1998"
+#define PLUG_IN_NAME		"plug_in_sharpen"
+#define PLUG_IN_VERSION		"1.2 - 23 April 1998"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
-#define MAX_RADIUS		20
 
 #define CHECK_SIZE		8
 #define CHECK_DARK		85
 #define CHECK_LIGHT		170
 
-#define FILTER_ADAPTIVE		0x01
-#define FILTER_RECURSIVE	0x02
-
-#define despeckle_radius	(despeckle_vals[0])	/* Radius of filter */
-#define filter_type		(despeckle_vals[1])	/* Type of filter */
-#define black_level		(despeckle_vals[2])	/* Black level */
-#define white_level		(despeckle_vals[3])	/* White level */
 
 /*
  * Local functions...
@@ -164,13 +127,11 @@
 
 static void	query(void);
 static void	run(char *, int, GParam *, int *, GParam **);
-static void	despeckle(void);
-static gint	despeckle_dialog(void);
+static void	sharpen(void);
+static gint	sharpen_dialog(void);
 static void	dialog_create_ivalue(char *, GtkTable *, int, gint *, int, int);
 static void	dialog_iscale_update(GtkAdjustment *, gint *);
 static void	dialog_ientry_update(GtkWidget *, gint *);
-static void	dialog_adaptive_callback(GtkWidget *, gpointer);
-static void	dialog_recursive_callback(GtkWidget *, gpointer);
 static void	dialog_ok_callback(GtkWidget *, gpointer);
 static void	dialog_cancel_callback(GtkWidget *, gpointer);
 static void	dialog_close_callback(GtkWidget *, gpointer);
@@ -200,9 +161,9 @@ int		preview_width,		/* Width of preview widget */
 		preview_y1,		/* Upper-left Y of preview */
 		preview_x2,		/* Lower-right X of preview */
 		preview_y2;		/* Lower-right Y of preview */
-guchar		*preview_src = NULL,	/* Source pixel rows */
-		*preview_dst,		/* Destination pixel row */
-		*preview_sort;		/* Pixel value sort array */
+guchar		*preview_src,		/* Source pixel image */
+		*preview_dst,		/* Destination pixel image */
+		*preview_image;		/* Preview RGB image */
 GtkObject	*hscroll_data,		/* Horizontal scrollbar data */
 		*vscroll_data;		/* Vertical scrollbar data */
 
@@ -214,8 +175,8 @@ int		sel_x1,			/* Selection bounds */
 int		sel_width,		/* Selection width */
 		sel_height;		/* Selection height */
 int		img_bpp;		/* Bytes-per-pixel in image */
+int		sharpen_percent = 10;	/* Percent of sharpening */
 gint		run_filter = FALSE;	/* True if we should run the filter */
-int		despeckle_vals[4] = { 3, FILTER_ADAPTIVE, 7, 248 };
 
 
 /*
@@ -242,10 +203,7 @@ query(void)
     { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
     { PARAM_IMAGE,	"image",	"Input image" },
     { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
-    { PARAM_INT32,	"radius",	"Filter box radius (default = 3)" },
-    { PARAM_INT32,	"type",		"Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
-    { PARAM_INT32,	"black",	"Black level (0 to 255)" },
-    { PARAM_INT32,	"white",	"White level (0 to 255)" }
+    { PARAM_INT32,	"percent",	"Percent sharpening (default = 10)" }
   };
   static GParamDef	*return_vals = NULL;
   static int		nargs        = sizeof(args) / sizeof(args[0]),
@@ -253,12 +211,12 @@ query(void)
 
 
   gimp_install_procedure(PLUG_IN_NAME,
-      "Despeckle filter, typically used to \'despeckle\' a photographic image.",
-      "This plug-in selectively performs a median or adaptive box filter on an image.",
+      "Sharpen filter, typically used to \'sharpen\' a photographic image.",
+      "This plug-in selectively performs a convolution filter on an image.",
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Despeckle", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Sharpen", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 
@@ -317,13 +275,13 @@ run(char   *name,		/* I - Name of filter program. */
         * Possibly retrieve data...
         */
 
-        gimp_get_data(PLUG_IN_NAME, &despeckle_radius);
+        gimp_get_data(PLUG_IN_NAME, &sharpen_percent);
 
        /*
         * Get information from the dialog...
         */
 
-	if (!despeckle_dialog())
+	if (!sharpen_dialog())
           return;
         break;
 
@@ -332,36 +290,10 @@ run(char   *name,		/* I - Name of filter program. */
         * Make sure all the arguments are present...
         */
 
-        if (nparams < 4 || nparams > 7)
+        if (nparams != 4)
 	  status = STATUS_CALLING_ERROR;
-	else if (nparams == 4)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = FILTER_ADAPTIVE;
-	  black_level      = 7;
-	  white_level      = 248;
-	}
-	else if (nparams == 5)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = 7;
-	  white_level      = 248;
-	}
-	else if (nparams == 6)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = param[5].data.d_int32;
-	  white_level      = 248;
-	}
 	else
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = param[5].data.d_int32;
-	  white_level      = param[6].data.d_int32;
-	};
+	  sharpen_percent = param[3].data.d_int32;
         break;
 
     case RUN_WITH_LAST_VALS :
@@ -369,16 +301,16 @@ run(char   *name,		/* I - Name of filter program. */
         * Possibly retrieve data...
         */
 
-	gimp_get_data(PLUG_IN_NAME, despeckle_vals);
+	gimp_get_data(PLUG_IN_NAME, &sharpen_percent);
 	break;
 
     default :
         status = STATUS_CALLING_ERROR;
         break;;
-  };
+  }
 
  /*
-  * Despeckle the image...
+  * Sharpen the image...
   */
 
   if (status == STATUS_SUCCESS)
@@ -397,7 +329,7 @@ run(char   *name,		/* I - Name of filter program. */
       * Run!
       */
 
-      despeckle();
+      sharpen();
 
      /*
       * If run mode is interactive, flush displays...
@@ -411,11 +343,11 @@ run(char   *name,		/* I - Name of filter program. */
       */
 
       if (run_mode == RUN_INTERACTIVE)
-        gimp_set_data(PLUG_IN_NAME, despeckle_vals, sizeof(despeckle_vals));
+        gimp_set_data(PLUG_IN_NAME, &sharpen_percent, sizeof(sharpen_percent));
     }
     else
       status = STATUS_EXECUTION_ERROR;
-  };
+  }
 
  /*
   * Reset the current run status...
@@ -432,50 +364,32 @@ run(char   *name,		/* I - Name of filter program. */
 
 
 /*
- * 'despeckle()' - Despeckle an image using a median filter.
- *
- * A median filter basically collects pixel values in a region around the
- * target pixel, sorts them, and uses the median value. This code uses a
- * circular row buffer to improve performance.
- *
- * The adaptive filter is based on the median filter but analizes the histogram
- * of the region around the target pixel and adjusts the despeckle radius
- * accordingly.
+ * 'sharpen()' - Sharpen an image using a convolution filter.
  */
 
 static void
-despeckle(void)
+sharpen(void)
 {
   GPixelRgn	src_rgn,	/* Source image region */
 		dst_rgn;	/* Destination image region */
-  guchar	**src_rows,	/* Source pixel rows */
+  guchar	*src_rows[4],	/* Source pixel rows */
 		*dst_row,	/* Destination pixel row */
-		*src_ptr,	/* Source pixel pointer */
-		*sort,		/* Pixel value sort array */
-		*sort_ptr;	/* Current sort value */
-  int		sort_count,	/* Number of soft values */
-		i, j, t, d,	/* Looping vars */
+		*dst_ptr,	/* Current destination pixel */
+		*src_filters[3];/* Source pixels, ordered for filter */
+  int		i,		/* Looping vars */
 		x, y,		/* Current location in image */
+		xmax,		/* Maximum filtered X coordinate */
 		row,		/* Current row in src_rows */
-		rowcount,	/* Number of rows loaded */
-		lasty,		/* Last row loaded in src_rows */
 		trow,		/* Looping var */
-		startrow,	/* Starting row for loop */
-		endrow,		/* Ending row for loop */
-		max_row,	/* Maximum number of filled src_rows */
-		size,		/* Width/height of the filter box */
-		width,		/* Byte width of the image */
-		xmin, xmax, tx,	/* Looping vars */
-		radius,		/* Current radius */
-		hist0,		/* Histogram count for 0 values */
-		hist255;	/* Histogram count for 255 values */
-
+		count,		/* Current number of filled src_rows */
+		width;		/* Byte width of the image */
+  int		fact;		/* Scaling for convolution matrix */
 
  /*
   * Let the user know what we're doing...
   */
 
-  gimp_progress_init("Despeckling...");
+  gimp_progress_init("Sharpening...");
 
  /*
   * Setup for filter...
@@ -484,170 +398,125 @@ despeckle(void)
   gimp_pixel_rgn_init(&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
   gimp_pixel_rgn_init(&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  size     = despeckle_radius * 2 + 1;
-  max_row  = 2 * gimp_tile_height();
-  width    = sel_width * img_bpp;
+  fact = 100 - sharpen_percent;
+  if (fact < 1)
+    fact = 1;
 
-  src_rows    = g_malloc(max_row * sizeof(guchar *));
-  src_rows[0] = g_malloc(max_row * width * sizeof(guchar));
+  width = sel_width * img_bpp;
+  xmax  = width - img_bpp;
 
-  for (row = 1; row < max_row; row ++)
-    src_rows[row] = src_rows[0] + row * width;
+  for (row = 0; row < 4; row ++)
+    src_rows[row] = g_malloc(width * sizeof(guchar));
 
   dst_row = g_malloc(width * sizeof(guchar));
-  sort    = g_malloc(size * size * sizeof(guchar));
 
  /*
-  * Pre-load the first "size" rows for the filter...
+  * Pre-load the first row for the filter...
   */
 
-  if (sel_height < gimp_tile_height())
-    rowcount = sel_height;
-  else
-    rowcount = gimp_tile_height();
-
-  gimp_pixel_rgn_get_rect(&src_rgn, src_rows[0], sel_x1, sel_y1, sel_width,
-                          rowcount);
-
-  row   = rowcount;
-  lasty = sel_y1 + rowcount;
+  gimp_pixel_rgn_get_row(&src_rgn, src_rows[0], sel_x1, sel_y1, sel_width);
+  row   = 1;
+  count = 1;
 
  /*
-  * Despeckle...
+  * Sharpen...
   */
 
-  for (y = sel_y1 ; y < sel_y2; y ++)
+  for (y = sel_y1; y < sel_y2; y ++)
   {
-    if ((y + despeckle_radius) >= lasty &&
-        lasty < sel_y2)
-    {
-     /*
-      * Load the next block of rows...
-      */
-
-      rowcount -= gimp_tile_height();
-      if ((i = sel_y2 - lasty) > gimp_tile_height())
-        i = gimp_tile_height();
-
-      gimp_pixel_rgn_get_rect(&src_rgn, src_rows[row], sel_x1, lasty, sel_width, i);
-
-      rowcount += i;
-      lasty    += i;
-      row      = (row + i) % max_row;
-    };
-
    /*
-    * Now find the median pixels and save the results...
+    * Load the next pixel row...
     */
 
-    radius = despeckle_radius;
-
-    memcpy(dst_row, src_rows[(row + y - lasty + max_row) % max_row], width);
-
-    if (y >= (sel_y1 + radius) && y < (sel_y2 - radius))
+    if ((y + 1) < sel_y2)
     {
-      for (x = 0; x < width; x ++)
+     /*
+      * Check to see if our src_rows[] array is overflowing yet...
+      */
+
+      if (count >= 3)
+        count --;
+
+     /*
+      * Grab the next row...
+      */
+
+      gimp_pixel_rgn_get_row(&src_rgn, src_rows[row], sel_x1, y + 1, sel_width);
+
+      count ++;
+      row = (row + 1) & 3;
+    }
+    else
+    {
+     /*
+      * No more pixels at the bottom...  Drop the oldest samples...
+      */
+   
+      count --;
+    }
+
+   /*
+    * Now sharpen pixels and save the results...
+    */
+
+    if (count == 3)
+    {
+      for (i = 0, trow = (row + 1) & 3;
+           i < 3;
+           i ++, trow = (trow + 1) & 3)
+	src_filters[i] = src_rows[trow];
+
+     /*
+      * Copy first and last pixels...
+      */
+
+      memcpy(dst_row, src_filters[1] + 0, img_bpp);
+      memcpy(dst_row + xmax, src_filters[1] + xmax, img_bpp);
+
+     /*
+      * Sharpen row...
+      */
+
+      for (x = img_bpp, dst_ptr = dst_row + img_bpp;
+           x < xmax;
+           x ++, dst_ptr ++)
       {
-	hist0   = 0;
-	hist255 = 0;
-	xmin    = x - radius * img_bpp;
-	xmax    = x + (radius + 1) * img_bpp;
+	i = (100 * src_filters[1][x] -
+             (src_filters[0][x - img_bpp] + src_filters[0][x] +
+              src_filters[0][x + img_bpp] + src_filters[1][x - img_bpp] +
+              src_filters[1][x + img_bpp] + src_filters[2][x - img_bpp] +
+              src_filters[2][x] + src_filters[2][x + img_bpp]) *
+             sharpen_percent / 8) / fact;
 
-	if (xmin < 0)
-          xmin = x % img_bpp;
+	if (i < 0)
+          *dst_ptr = 0;
+	else if (i > 255)
+          *dst_ptr = 255;
+	else
+          *dst_ptr = i;
+      }
 
-	if (xmax > width)
-          xmax = width;
+     /*
+      * Set the row...
+      */
 
-	startrow = (row + y - lasty - radius + max_row) % max_row;
-	endrow   = (row + y - lasty + radius + 1 + max_row) % max_row;
-
-	for (sort_ptr = sort, trow = startrow;
-             trow != endrow;
-             trow = (trow + 1) % max_row)
-          for (tx = xmin, src_ptr = src_rows[trow] + xmin;
-               tx < xmax;
-               tx += img_bpp, src_ptr += img_bpp)
-          {
-            if ((*sort_ptr = *src_ptr) <= black_level)
-              hist0 ++;
-            else if (*sort_ptr >= white_level)
-              hist255 ++;
-
-            if (*sort_ptr < white_level)
-              sort_ptr ++;
-          };
-
-       /*
-	* Shell sort the color values...
-	*/
-
-	sort_count = sort_ptr - sort;
-
-        if (sort_count > 1)
-        {
-	  for (d = sort_count / 2; d > 0; d = d / 2)
-	    for (i = d; i < sort_count; i ++)
-	      for (j = i - d, sort_ptr = sort + j;
-		   j >= 0 && sort_ptr[0] > sort_ptr[d];
-		   j -= d, sort_ptr -= d)
-	      {
-		t           = sort_ptr[0];
-		sort_ptr[0] = sort_ptr[d];
-		sort_ptr[d] = t;
-	      };
-
-	 /*
-	  * Assign the median value...
-	  */
-
-	  t = sort_count / 2;
-
-	  if (sort_count & 1)
-            dst_row[x] = (sort[t] + sort[t + 1]) / 2;
-	  else
-            dst_row[x] = sort[t];
-
-	 /*
-	  * Save the change to the source image too if the user wants the
-	  * recursive method...
-	  */
-
-	  if (filter_type & FILTER_RECURSIVE)
-            src_rows[(row + y - lasty + max_row) % max_row][x] = dst_row[x];
-        };
-
-       /*
-	* Check the histogram and adjust the radius accordingly...
-	*/
-
-	if (filter_type & FILTER_ADAPTIVE)
-	{
-	  if (hist0 >= radius || hist255 >= radius)
-	  {
-            if (radius < despeckle_radius)
-              radius ++;
-	  }
-	  else if (radius > 1)
-            radius --;
-	};
-      };
-    };
-
-    gimp_pixel_rgn_set_row(&dst_rgn, dst_row, sel_x1, y, sel_width);
+      gimp_pixel_rgn_set_row(&dst_rgn, dst_row, sel_x1, y, sel_width);
+    }
+    else if (count == 2)
+      gimp_pixel_rgn_set_row(&dst_rgn, src_rows[(row + 3) & 3], sel_x1, y, sel_width);
 
     if ((y & 15) == 0)
       gimp_progress_update((double)(y - sel_y1) / (double)sel_height);
-  };
+  }
 
  /*
   * OK, we're done.  Free all memory used...
   */
 
-  g_free(src_rows[0]);
-  g_free(src_rows);
+  for (row = 0; row < 4; row ++)
+    g_free(src_rows[row]);
+
   g_free(dst_row);
-  g_free(sort);
 
  /*
   * Update the screen...
@@ -660,16 +529,15 @@ despeckle(void)
 
 
 /*
- * 'despeckle_dialog()' - Popup a dialog window for the filter box size...
+ * 'sharpen_dialog()' - Popup a dialog window for the filter box size...
  */
 
 static gint
-despeckle_dialog(void)
+sharpen_dialog(void)
 {
   GtkWidget	*dialog,	/* Dialog window */
 		*table,		/* Table "container" for controls */
 		*ptable,	/* Preview table */
-		*ftable,	/* Filter table */
 		*frame,		/* Frame for preview */
 		*scrollbar,	/* Horizontal + vertical scroller */
 		*button;	/* OK/Cancel buttons */
@@ -684,14 +552,11 @@ despeckle_dialog(void)
 
   argc    = 1;
   argv    = g_new(gchar *, 1);
-  argv[0] = g_strdup("despeckle");
+  argv[0] = g_strdup("sharpen");
 
   gtk_init(&argc, &argv);
   gtk_rc_parse(gimp_gtkrc());
   gdk_set_use_xshm(gimp_use_xshm());
-
-  signal(SIGBUS, SIG_DFL);
-  signal(SIGSEGV, SIG_DFL);
   gtk_preview_set_gamma(gimp_gamma());
   gtk_preview_set_install_cmap(gimp_install_cmap());
   color_cube = gimp_color_cube();
@@ -705,8 +570,8 @@ despeckle_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Despeckle " PLUG_IN_VERSION);
-  gtk_window_set_wmclass(GTK_WINDOW(dialog), "despeckle", "Gimp");
+  gtk_window_set_title(GTK_WINDOW(dialog), "Sharpen");
+  gtk_window_set_wmclass(GTK_WINDOW(dialog), "sharpen", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -717,7 +582,7 @@ despeckle_dialog(void)
   * Top-level table for dialog...
   */
 
-  table = gtk_table_new(5, 3, FALSE);
+  table = gtk_table_new(3, 3, FALSE);
   gtk_container_border_width(GTK_CONTAINER(table), 6);
   gtk_table_set_row_spacings(GTK_TABLE(table), 4);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
@@ -729,7 +594,7 @@ despeckle_dialog(void)
 
   ptable = gtk_table_new(2, 2, FALSE);
   gtk_container_border_width(GTK_CONTAINER(ptable), 0);
-  gtk_table_attach(GTK_TABLE(table), ptable, 0, 2, 0, 1, 0, 0, 0, 0);
+  gtk_table_attach(GTK_TABLE(table), ptable, 0, 3, 0, 1, 0, 0, 0, 0);
   gtk_widget_show(ptable);
 
   frame = gtk_frame_new(NULL);
@@ -771,57 +636,11 @@ despeckle_dialog(void)
 
   preview_init();
 
-  preview_x1 = sel_x1;
-  preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
-
  /*
-  * Filter type controls...
+  * Sharpness control...
   */
 
-  ftable = gtk_table_new(6, 1, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(ftable), 4);
-  gtk_table_attach(GTK_TABLE(table), ftable, 2, 3, 0, 1, 0, 0, 0, 0);
-  gtk_widget_show(ftable);
-
-  button = gtk_check_button_new_with_label("Adaptive");
-  gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-		     (GtkSignalFunc)dialog_adaptive_callback,
-		     NULL);
-  gtk_widget_show(button);
-
-  button = gtk_check_button_new_with_label("Recursive");
-  gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 1, 2,
-		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button),
-                              (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-		     (GtkSignalFunc)dialog_recursive_callback,
-		     NULL);
-  gtk_widget_show(button);
-
- /*
-  * Box size (radius) control...
-  */
-
-  dialog_create_ivalue("Radius", GTK_TABLE(table), 2, &despeckle_radius, 1, MAX_RADIUS);
-
- /*
-  * Black level control...
-  */
-
-  dialog_create_ivalue("Black Level", GTK_TABLE(table), 3, &black_level, 0, 256);
-
- /*
-  * White level control...
-  */
-
-  dialog_create_ivalue("White Level", GTK_TABLE(table), 4, &white_level, 0, 256);
+  dialog_create_ivalue("Sharpness", GTK_TABLE(table), 2, &sharpen_percent, 1, 99);
 
  /*
   * OK, cancel buttons...
@@ -878,27 +697,22 @@ despeckle_dialog(void)
 static void
 preview_init(void)
 {
-  int	size,		/* Size of filter box */
-	width;		/* Byte width of the image */
-
+  int	width;		/* Byte width of the image */
 
  /*
   * Setup for preview filter...
   */
 
-  size  = despeckle_radius * 2 + 1;
   width = preview_width * img_bpp;
 
-  if (preview_src != NULL)
-  {
-    g_free(preview_src);
-    g_free(preview_dst);
-    g_free(preview_sort);
-  };
+  preview_src   = g_malloc(width * preview_height * sizeof(guchar));
+  preview_dst   = g_malloc(width * preview_height * sizeof(guchar));
+  preview_image = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
 
-  preview_src  = g_malloc(width * preview_height * sizeof(guchar *));
-  preview_dst  = g_malloc(width * sizeof(guchar));
-  preview_sort = g_malloc(size * size * sizeof(guchar));
+  preview_x1 = sel_x1;
+  preview_y1 = sel_y1;
+  preview_x2 = preview_x1 + preview_width;
+  preview_y2 = preview_y1 + preview_height;
 }
 
 
@@ -926,22 +740,15 @@ static void
 preview_update(void)
 {
   GPixelRgn	src_rgn;	/* Source image region */
-  guchar	*sort_ptr,	/* Current preview_sort value */
-		*src_ptr,	/* Current source pixel */
-		*dst_ptr;	/* Current destination pixel */
-  int		sort_count,	/* Number of soft values */
-		i, j, t, d,	/* Looping vars */
+  guchar	*src_ptr,	/* Current source pixel */
+		*dst_ptr,	/* Current destination pixel */
+		*image_ptr;	/* Current image pixel */
+  guchar	check;		/* Current check mark pixel */
+  int		i,		/* Looping vars */
 		x, y,		/* Current location in image */
-		size,		/* Width/height of the filter box */
+		xmax,		/* Maximum X coordinate */
 		width,		/* Byte width of the image */
-		xmin, xmax, tx,	/* Looping vars */
-		radius,		/* Current radius */
-		hist0,		/* Histogram count for 0 values */
-		hist255;	/* Histogram count for 255 values */
-  guchar	check,		/* Checkerboard pattern */
-		rgb[PREVIEW_SIZE * PREVIEW_SIZE * 3],
-				/* Output image */
-		*rgb_ptr;	/* Pixel pointer for output */
+		fact;		/* Scaling for convolution matrix */
 
 
  /*
@@ -950,137 +757,82 @@ preview_update(void)
 
   gimp_pixel_rgn_init(&src_rgn, drawable, preview_x1, preview_y1, preview_width, preview_height, FALSE, FALSE);
 
- /*
-  * Pre-load the preview rectangle...
-  */
+  fact = 100 - sharpen_percent;
+  if (fact < 1)
+    fact = 1;
 
-  size  = despeckle_radius * 2 + 1;
   width = preview_width * img_bpp;
+  xmax  = width - img_bpp;
+
+ /*
+  * Pre-load the first row for the filter...
+  */
 
   gimp_pixel_rgn_get_rect(&src_rgn, preview_src, preview_x1, preview_y1,
                           preview_width, preview_height);
 
  /*
-  * Despeckle...
+  * Sharpen...
   */
 
-  for (y = 0; y < preview_height; y ++)
+  memcpy(preview_dst, preview_src, width);
+  memcpy(preview_dst + width * (preview_height - 1),
+         preview_src + width * (preview_height - 1),
+         width);
+
+  for (y = 1, src_ptr = preview_src + width, dst_ptr = preview_dst + width;
+       y < (preview_height - 1);
+       y ++, src_ptr += width, dst_ptr += width)
   {
    /*
-    * Now find the median pixels and save the results...
+    * Now sharpen pixels and save the results...
     */
 
-    radius = despeckle_radius;
+    memcpy(dst_ptr, src_ptr, img_bpp);
+    memcpy(dst_ptr + width - img_bpp, src_ptr + width - img_bpp, img_bpp);
 
-    memcpy(preview_dst, preview_src + y * width, width);
-
-    if (y >= radius && y < (preview_height - radius))
+    for (x = img_bpp; x < xmax; x ++)
     {
-      for (x = 0, dst_ptr = preview_dst; x < width; x ++, dst_ptr ++)
-      {
-	hist0   = 0;
-	hist255 = 0;
-	xmin    = x - radius * img_bpp;
-	xmax    = x + (radius + 1) * img_bpp;
+      i = (100 * src_ptr[x] -
+           (src_ptr[x - width - img_bpp] + src_ptr[x - width] +
+            src_ptr[x - width + img_bpp] + src_ptr[x - img_bpp] +
+            src_ptr[x + img_bpp] + src_ptr[x + width - img_bpp] +
+            src_ptr[x + width] + src_ptr[x + width + img_bpp]) *
+           sharpen_percent / 8) / fact;
 
-	if (xmin < 0)
-          xmin = x % img_bpp;
+      if (i < 0)
+        dst_ptr[x] = 0;
+      else if (i > 255)
+        dst_ptr[x] = 255;
+      else
+        dst_ptr[x] = i;
+    }
+  }
 
-	if (xmax > width)
-          xmax = width;
+ /*
+  * Fill the preview image buffer...
+  */
 
-	for (i = -radius, sort_ptr = preview_sort,
-	         src_ptr = preview_src + width * (y - radius);
-             i <= radius;
-             i ++, src_ptr += width)
-          for (tx = xmin; tx < xmax; tx += img_bpp)
-          {
-            if ((*sort_ptr = src_ptr[tx]) <= black_level)
-              hist0 ++;
-            else if (*sort_ptr >= white_level)
-              hist255 ++;
+  switch (img_bpp)
+  {
+    case 1 :
+        for (x = preview_width * preview_height, dst_ptr = preview_dst,
+                 image_ptr = preview_image;
+             x > 0;
+             x --, dst_ptr ++, image_ptr += 3)
+          image_ptr[0] = image_ptr[1] = image_ptr[2] = *dst_ptr;
+        break;
 
-            if (*sort_ptr < white_level)
-              sort_ptr ++;
-          };
-
-       /*
-	* Shell preview_sort the color values...
-	*/
-
-	sort_count = sort_ptr - preview_sort;
-
-        if (sort_count > 1)
-        {
-	  for (d = sort_count / 2; d > 0; d = d / 2)
-	    for (i = d; i < sort_count; i ++)
-	      for (j = i - d, sort_ptr = preview_sort + j;
-		   j >= 0 && sort_ptr[0] > sort_ptr[d];
-		   j -= d, sort_ptr -= d)
-	      {
-		t           = sort_ptr[0];
-		sort_ptr[0] = sort_ptr[d];
-		sort_ptr[d] = t;
-	      };
-
-	 /*
-	  * Assign the median value...
-	  */
-
-	  t = sort_count / 2;
-
-	  if (sort_count & 1)
-            *dst_ptr = (preview_sort[t] + preview_sort[t + 1]) / 2;
-	  else
-            *dst_ptr = preview_sort[t];
-
-	 /*
-	  * Save the change to the source image too if the user wants the
-	  * recursive method...
-	  */
-
-	  if (filter_type & FILTER_RECURSIVE)
-            preview_src[y * width + x] = *dst_ptr;
-        };
-
-       /*
-	* Check the histogram and adjust the radius accordingly...
-	*/
-
-	if (filter_type & FILTER_ADAPTIVE)
-	{
-	  if (hist0 >= radius || hist255 >= radius)
-	  {
-            if (radius < despeckle_radius)
-              radius ++;
-	  }
-	  else if (radius > 1)
-            radius --;
-	};
-      };
-    };
-
-   /*
-    * Draw this row...
-    */
-
-    rgb_ptr = rgb + y * preview_width * 3;
-
-    switch (img_bpp)
-    {
-      case 1 :
-          for (x = preview_width, dst_ptr = preview_dst;
-               x > 0;
-               x --, dst_ptr ++, rgb_ptr += 3)
-            rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
-          break;
-
-      case 2 :
-	  for (x = preview_width, dst_ptr = preview_dst;
+    case 2 :
+        for (y = preview_height, dst_ptr = preview_dst,
+                 image_ptr = preview_image;
+             y > 0;
+             y --)
+	  for (x = preview_width;
 	       x > 0;
-	       x --, dst_ptr += 2, rgb_ptr += 3)
+	       x --, dst_ptr += 2, image_ptr += 3)
 	    if (dst_ptr[1] == 255)
-	      rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
+	      image_ptr[0] = image_ptr[1] = image_ptr[2] = *dst_ptr;
 	    else
 	    {
               if ((y & CHECK_SIZE) ^ (x & CHECK_SIZE))
@@ -1089,26 +841,30 @@ preview_update(void)
                 check = CHECK_DARK;
 
               if (dst_ptr[1] == 0)
-                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
+                image_ptr[0] = image_ptr[1] = image_ptr[2] = check;
               else
-                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] =
+                image_ptr[0] = image_ptr[1] = image_ptr[2] =
                     check + ((dst_ptr[0] - check) * dst_ptr[1]) / 255;
-	    };
-          break;
+	    }
+        break;
 
-      case 3 :
-          memcpy(rgb_ptr, dst_ptr, preview_width * 3);
-          break;
+    case 3 :
+        memcpy(preview_image, preview_dst, preview_width * preview_height * 3);
+        break;
 
-      case 4 :
-	  for (x = preview_width, dst_ptr = preview_dst;
+    case 4 :
+        for (y = preview_height, dst_ptr = preview_dst,
+                 image_ptr = preview_image;
+             y > 0;
+             y --)
+	  for (x = preview_width;
 	       x > 0;
-	       x --, dst_ptr += 4, rgb_ptr += 3)
+	       x --, dst_ptr += 4, image_ptr += 3)
 	    if (dst_ptr[3] == 255)
 	    {
-	      rgb_ptr[0] = dst_ptr[0];
-	      rgb_ptr[1] = dst_ptr[1];
-	      rgb_ptr[2] = dst_ptr[2];
+	      image_ptr[0] = dst_ptr[0];
+	      image_ptr[1] = dst_ptr[1];
+	      image_ptr[2] = dst_ptr[2];
 	    }
 	    else
 	    {
@@ -1118,26 +874,26 @@ preview_update(void)
                 check = CHECK_DARK;
 
               if (dst_ptr[3] == 0)
-                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
+                image_ptr[0] = image_ptr[1] = image_ptr[2] = check;
               else
               {
-                rgb_ptr[0] = check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
-                rgb_ptr[1] = check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
-                rgb_ptr[2] = check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
-              };
-	    };
-          break;
-    };
-  };
+                image_ptr[0] = check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
+                image_ptr[1] = check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
+                image_ptr[2] = check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
+              }
+	    }
+        break;
+  }
 
  /*
-  * Update the screen...
+  * Draw the preview image on the screen...
   */
 
-  for (y = 0, rgb_ptr = rgb;
+  for (y = 0, image_ptr = preview_image;
        y < preview_height;
-       y ++, rgb_ptr += preview_width * 3)
-    gtk_preview_draw_row(GTK_PREVIEW(preview), rgb_ptr, 0, y, preview_width);
+       y ++, image_ptr += preview_width * 3)
+    gtk_preview_draw_row(GTK_PREVIEW(preview), image_ptr, 0, y,
+  	                 preview_width);
 
   gtk_widget_draw(preview, NULL);
   gdk_flush();
@@ -1153,7 +909,7 @@ preview_exit(void)
 {
   g_free(preview_src);
   g_free(preview_dst);
-  g_free(preview_sort);
+  g_free(preview_image);
 }
 
 
@@ -1243,11 +999,8 @@ dialog_iscale_update(GtkAdjustment *adjustment,	/* I - New value */
     gtk_entry_set_text(GTK_ENTRY(entry), buf);
     gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
 
-    if (value == &despeckle_radius)
-      preview_init();
-
     preview_update();
-  };
+  }
 }
 
 
@@ -1277,46 +1030,9 @@ dialog_ientry_update(GtkWidget *widget,	/* I - Entry widget */
 
       gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
 
-      if (value == &despeckle_radius)
-	preview_init();
-
       preview_update();
-    };
-  };
-}
-
-
-/*
- * 'dialog_adaptive_callback()' - Update the filter type...
- */
-
-static void
-dialog_adaptive_callback(GtkWidget *widget,	/* I - Toggle button */
-                         gpointer  data)	/* I - Data */
-{
-  if (GTK_TOGGLE_BUTTON(widget)->active)
-    filter_type |= FILTER_ADAPTIVE;
-  else
-    filter_type &= ~FILTER_ADAPTIVE;
-
-  preview_update();
-}
-
-
-/*
- * 'dialog_recursive_callback()' - Update the filter type...
- */
-
-static void
-dialog_recursive_callback(GtkWidget *widget,	/* I - Toggle button */
-                          gpointer  data)	/* I - Data */
-{
-  if (GTK_TOGGLE_BUTTON(widget)->active)
-    filter_type |= FILTER_RECURSIVE;
-  else
-    filter_type &= ~FILTER_RECURSIVE;
-
-  preview_update();
+    }
+  }
 }
 
 

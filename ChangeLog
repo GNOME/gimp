@@ -1,3 +1,20 @@
+Thu Apr 23 19:08:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Added sharpen to stable dist
+
+	* updated sgi and despeckle plugins
+
+	* plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta
+	versions prior to this is not-supported.
+
+	* plug-in/gfig/gfig.c: spelling corrections :)
+
+	* app/fileops.c: applied gimp-gord-980420-0, fixes stale save
+	procs in the file dialog
+
+	* app/text_tool.c: applied gimp-egger-980420-0, text tool
+	optimization
+
 Thu Apr 23 21:27:23 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gimage.c: set srcPR2.[xy] to srcPR1.[xy] in

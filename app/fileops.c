@@ -297,8 +297,6 @@ static GSList *save_procs = NULL;
 
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
-static PlugInProcDef *last_load_file_proc = NULL;
-static PlugInProcDef *last_save_file_proc = NULL;
 
 static int image_ID = 0;
 
@@ -518,9 +516,6 @@ file_open_callback (GtkWidget *w,
 			open_options, FALSE, FALSE, 5);
     }
 
-  load_file_proc = last_load_file_proc;
-  last_load_file_proc = NULL;
-
   gtk_widget_show (open_options);
 
   file_dialog_show (fileload);
@@ -622,9 +617,6 @@ file_save_as_callback (GtkWidget *w,
       file_update_menus (save_procs, INDEXED_IMAGE);
       break;
     }
-
-  save_file_proc = last_save_file_proc;
-  last_save_file_proc = NULL;
 
   gtk_widget_show (save_options);
 

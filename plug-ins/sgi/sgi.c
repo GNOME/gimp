@@ -3,7 +3,7 @@
  *
  *   SGI image file plug-in for the GIMP.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -34,59 +34,25 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/04/13 05:43:38  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *   Revision 1.8  1998/04/24 02:18:44  yosh
+ *   * Added sharpen to stable dist
+ *
+ *   * updated sgi and despeckle plugins
+ *
+ *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
+ *   to this is not-supported.
+ *
+ *   * plug-in/gfig/gfig.c: spelling corrections :)
+ *
+ *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
+ *   file dialog
+ *
+ *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
  *
  *   -Yosh
  *
- *   Revision 1.6  1998/04/11 05:07:49  yosh
- *   * app/app_procs.c: fixed up idle handler for file open (look like testgtk
- *   idle demo)
- *
- *   * app/colomaps.c: fixup for visual test and use of gdk_color_alloc for some
- *   fixed colors (from Owen Taylor)
- *
- *   * app/errors.h
- *   * app/errors.c
- *   * app/main.c
- *   * libgimp/gimp.c: redid the signal handlers so we only get a debug prompt on
- *   SIGSEGV, SIGBUS, and SIGFPE.
- *
- *   * applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning fixups)
- *
- *   * applied gimp-monnaux-980409-0 for configurable plugin path for multiarch
- *   setups
- *
- *   -Yosh
- *
- *   Revision 1.5  1998/04/07 03:41:18  yosh
- *   configure.in: fix for $srcdir != $builddir for data. Tightened check for
- *   random() and add -lucb on systems that need it. Fix for xdelta.h check. Find
- *   xemacs as well as emacs. Properly define settings for print plugin.
- *
- *   app/Makefile.am: ditch -DNDEBUG, since nothing uses it
- *
- *   flame: properly handle random() and friends
- *
- *   pnm: workaround for systems with old sprintfs
- *
- *   print, sgi: fold back in portability fixes
- *
- *   threshold_alpha: properly get params in non-interactive mode
- *
- *   bmp: updated and merged in
- *
- *   -Yosh
- *
- *   Revision 1.4  1998/04/01 22:14:50  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
- *
- *
- *   --Sven
+ *   Revision 1.4  1998/04/23  17:40:49  mike
+ *   Updated to support 16-bit <unsigned> image data.
  *
  *   Revision 1.3  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
@@ -114,7 +80,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.0.4 - 14 November 1997"
+#define PLUG_IN_VERSION		"1.1 - 23 April 1998"
 
 
 /*
@@ -194,7 +160,7 @@ query(void)
       "Loads files in SGI image file format",
       "This plug-in loads SGI image files.",
       "Michael Sweet <mike@easysw.com>",
-      "Michael Sweet <mike@easysw.com>",
+      "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
       "<Load>/SGI", NULL, PROC_PLUG_IN, nload_args, nload_return_vals,
       load_args, load_return_vals);
@@ -203,12 +169,12 @@ query(void)
       "Saves files in SGI image file format",
       "This plug-in saves SGI image files.",
       "Michael Sweet <mike@easysw.com>",
-      "Michael Sweet <mike@easysw.com>",
+      "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
       "<Save>/SGI", "RGB*,GRAY*", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
-  gimp_register_magic_load_handler("file_sgi_load", "rgb,bw,sgi", "", "0,short,474");
-  gimp_register_save_handler("file_sgi_save", "rgb,bw,sgi", "");
+  gimp_register_magic_load_handler("file_sgi_load", "rgb,bw,sgi,icon", "", "0,short,474");
+  gimp_register_save_handler("file_sgi_save", "rgb,bw,sgi,icon", "");
 }
 
 
@@ -341,7 +307,7 @@ load_image(char *filename)	/* I - File to load */
   guchar	**pixels,	/* Pixel rows */
 		*pixel,		/* Pixel data */
 		*pptr;		/* Current pixel */
-  short		**rows;		/* SGI image data */
+  unsigned short **rows;	/* SGI image data */
   char		progress[255];	/* Title for progress display... */
 
 
@@ -427,8 +393,8 @@ load_image(char *filename)	/* I - File to load */
   for (i = 0; i < tile_height; i ++)
     pixels[i] = pixel + sgip->xsize * sgip->zsize * i;
 
-  rows    = g_new(short *, sgip->zsize);
-  rows[0] = g_new(short, sgip->xsize * sgip->zsize);
+  rows    = g_new(unsigned short *, sgip->zsize);
+  rows[0] = g_new(unsigned short, sgip->xsize * sgip->zsize);
 
   for (i = 1; i < sgip->zsize; i ++)
     rows[i] = rows[0] + i * sgip->xsize;
@@ -467,12 +433,12 @@ load_image(char *filename)	/* I - File to load */
     else
     {
      /*
-      * 16-bit (signed) pixels...
+      * 16-bit (unsigned) pixels...
       */
 
       for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
 	for (i = 0; i < sgip->zsize; i ++, pptr ++)
-	  *pptr = (unsigned)(rows[i][x] + 32768) >> 8;
+	  *pptr = rows[i][x] >> 8;
     }
   }
 
@@ -516,6 +482,8 @@ save_image(char   *filename,	/* I - File to save to */
   int		i, j,		/* Looping var */
 		x,		/* Current X coordinate */
 		y,		/* Current Y coordinate */
+		image_type,	/* Type of image */
+		layer_type,	/* Type of drawable/layer */
 		tile_height,	/* Height of tile in GIMP */
 		count,		/* Count of rows to put in image */
 		zsize;		/* Number of channels in file */
@@ -525,7 +493,7 @@ save_image(char   *filename,	/* I - File to save to */
   guchar	**pixels,	/* Pixel rows */
 		*pixel,		/* Pixel data */
 		*pptr;		/* Current pixel */
-  short		**rows;		/* SGI image data */
+  unsigned short **rows;	/* SGI image data */
   char		progress[255];	/* Title for progress display... */
 
 
@@ -584,8 +552,8 @@ save_image(char   *filename,	/* I - File to save to */
   for (i = 0; i < tile_height; i ++)
     pixels[i]= pixel + drawable->width * zsize * i;
 
-  rows    = g_new(short *, sgip->zsize);
-  rows[0] = g_new(short, sgip->xsize * sgip->zsize);
+  rows    = g_new(unsigned short *, sgip->zsize);
+  rows[0] = g_new(unsigned short, sgip->xsize * sgip->zsize);
 
   for (i = 1; i < sgip->zsize; i ++)
     rows[i] = rows[0] + i * sgip->xsize;
@@ -697,7 +665,7 @@ save_dialog(void)
 		{
 		  "No Compression",
 		  "RLE Compression",
-		  "Advanced RLE\n(Not supported by SGI)"
+		  "Aggressive RLE\n(Not supported by SGI)"
 		};
 
 
@@ -720,7 +688,8 @@ save_dialog(void)
   */
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "SGI Options");
+  gtk_window_set_title(GTK_WINDOW(dlg), "SGI - " PLUG_IN_VERSION);
+  gtk_window_set_wmclass(GTK_WINDOW(dlg), "sgi", "Gimp");
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
                      (GtkSignalFunc)save_close_callback, NULL);

@@ -3,7 +3,7 @@
  *
  *   SGI image file format library routines.
  *
- *   Copyright 1997 Michael Sweet (mike@easysw.com)
+ *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *
  *   This program is free software; you can redistribute it and/or modify it
  *   under the terms of the GNU General Public License as published by the Free
@@ -24,6 +24,7 @@
  *   sgiClose()    - Close an SGI image file.
  *   sgiGetRow()   - Get a row of image data from a file.
  *   sgiOpen()     - Open an SGI image file for reading or writing.
+ *   sgiOpenFile() - Open an SGI image file for reading or writing.
  *   sgiPutRow()   - Put a row of image data to a file.
  *   getlong()     - Get a 32-bit big-endian integer.
  *   getshort()    - Get a 16-bit big-endian integer.
@@ -37,40 +38,28 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.5  1998/04/13 05:43:40  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *   Revision 1.6  1998/04/24 02:18:46  yosh
+ *   * Added sharpen to stable dist
+ *
+ *   * updated sgi and despeckle plugins
+ *
+ *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
+ *   to this is not-supported.
+ *
+ *   * plug-in/gfig/gfig.c: spelling corrections :)
+ *
+ *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
+ *   file dialog
+ *
+ *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
  *
  *   -Yosh
  *
- *   Revision 1.4  1998/04/11 05:07:50  yosh
- *   * app/app_procs.c: fixed up idle handler for file open (look like testgtk
- *   idle demo)
+ *   Revision 1.5  1998/04/23  17:40:49  mike
+ *   Updated to support 16-bit <unsigned> image data.
  *
- *   * app/colomaps.c: fixup for visual test and use of gdk_color_alloc for some
- *   fixed colors (from Owen Taylor)
- *
- *   * app/errors.h
- *   * app/errors.c
- *   * app/main.c
- *   * libgimp/gimp.c: redid the signal handlers so we only get a debug prompt on
- *   SIGSEGV, SIGBUS, and SIGFPE.
- *
- *   * applied gimp-jbuhler-980408-0 and gimp-joke-980409-0 (warning fixups)
- *
- *   * applied gimp-monnaux-980409-0 for configurable plugin path for multiarch
- *   setups
- *
- *   -Yosh
- *
- *   Revision 1.3  1998/04/01 22:14:53  neo
- *   Added checks for print spoolers to configure.in as suggested by Michael
- *   Sweet. The print plug-in still needs some changes to Makefile.am to make
- *   make use of this.
- *
- *   Updated print and sgi plug-ins to version on the registry.
- *
- *
- *   --Sven
+ *   Revision 1.4  1998/02/05  17:10:58  mike
+ *   Added sgiOpenFile() function for opening an existing file pointer.
  *
  *   Revision 1.3  1997/07/02  16:40:16  mike
  *   sgiOpen() wasn't opening files with "rb" or "wb+".  This caused problems
@@ -96,11 +85,11 @@
 static int	getlong(FILE *);
 static int	getshort(FILE *);
 static int	putlong(long, FILE *);
-static int	putshort(short, FILE *);
-static int	read_rle8(FILE *, short *, int);
-static int	read_rle16(FILE *, short *, int);
-static int	write_rle8(FILE *, short *, int);
-static int	write_rle16(FILE *, short *, int);
+static int	putshort(unsigned short, FILE *);
+static int	read_rle8(FILE *, unsigned short *, int);
+static int	read_rle16(FILE *, unsigned short *, int);
+static int	write_rle8(FILE *, unsigned short *, int);
+static int	write_rle16(FILE *, unsigned short *, int);
 
 
 /*
@@ -165,10 +154,10 @@ sgiClose(sgi_t *sgip)	/* I - SGI image */
  */
 
 int
-sgiGetRow(sgi_t *sgip,	/* I - SGI image */
-          short *row,	/* O - Row to read */
-          int   y,	/* I - Line to read */
-          int   z)	/* I - Channel to read */
+sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
+          unsigned short *row,	/* O - Row to read */
+          int            y,	/* I - Line to read */
+          int            z)	/* I - Channel to read */
 {
   int	x;		/* X coordinate */
   long	offset;		/* File offset */
@@ -233,6 +222,38 @@ sgiOpen(char *filename,	/* I - File to open */
         int  ysize,	/* I - Height of image in pixels */
         int  zsize)	/* I - Number of channels */
 {
+  sgi_t	*sgip;		/* New SGI image file */
+  FILE	*file;		/* Image file pointer */
+
+
+  if (mode == SGI_READ)
+    file = fopen(filename, "rb");
+  else
+    file = fopen(filename, "wb+");
+
+  if (file == NULL)
+    return (NULL);
+
+  if ((sgip = sgiOpenFile(file, mode, comp, bpp, xsize, ysize, zsize)) == NULL)
+    fclose(file);
+
+  return (sgip);
+}
+
+
+/*
+ * 'sgiOpenFile()' - Open an SGI image file for reading or writing.
+ */
+
+sgi_t *
+sgiOpenFile(FILE *file,	/* I - File to open */
+            int  mode,	/* I - Open mode (SGI_READ or SGI_WRITE) */
+            int  comp,	/* I - Type of compression */
+            int  bpp,	/* I - Bytes per pixel */
+            int  xsize,	/* I - Width of image in pixels */
+            int  ysize,	/* I - Height of image in pixels */
+            int  zsize)	/* I - Number of channels */
+{
   int	i, j;		/* Looping var */
   char	name[80];	/* Name of file in image header */
   short	magic;		/* Magic number */
@@ -242,27 +263,16 @@ sgiOpen(char *filename,	/* I - File to open */
   if ((sgip = calloc(sizeof(sgi_t), 1)) == NULL)
     return (NULL);
 
+  sgip->file = file;
+
   switch (mode)
   {
     case SGI_READ :
-        if (filename == NULL)
-        {
-          free(sgip);
-          return (NULL);
-        }
-
-        if ((sgip->file = fopen(filename, "rb")) == NULL)
-        {
-          free(sgip);
-          return (NULL);
-        }
-
         sgip->mode = SGI_READ;
 
         magic = getshort(sgip->file);
         if (magic != SGI_MAGIC)
         {
-          fclose(sgip->file);
           free(sgip);
           return (NULL);
         }
@@ -296,18 +306,11 @@ sgiOpen(char *filename,	/* I - File to open */
         break;
 
     case SGI_WRITE :
-	if (filename == NULL ||
-	    xsize < 1 ||
+	if (xsize < 1 ||
 	    ysize < 1 ||
 	    zsize < 1 ||
 	    bpp < 1 || bpp > 2 ||
 	    comp < SGI_COMP_NONE || comp > SGI_COMP_ARLE)
-        {
-          free(sgip);
-          return (NULL);
-        }
-
-        if ((sgip->file = fopen(filename, "wb+")) == NULL)
         {
           free(sgip);
           return (NULL);
@@ -335,10 +338,6 @@ sgiOpen(char *filename,	/* I - File to open */
         putlong(0, sgip->file);		/* Reserved */
 
         memset(name, 0, sizeof(name));
-        if (strrchr(filename, '/') == NULL)
-          strncpy(name, filename, sizeof(name) - 1);
-        else
-          strncpy(name, strrchr(filename, '/') + 1, sizeof(name) - 1);
         fwrite(name, sizeof(name), 1, sgip->file);
 
         for (i = 0; i < 102; i ++)
@@ -365,7 +364,7 @@ sgiOpen(char *filename,	/* I - File to open */
               break;
 
           case SGI_COMP_ARLE : /* Aggressive RLE */
-              sgip->arle_row    = calloc(xsize, sizeof(short));
+              sgip->arle_row    = (unsigned short *)calloc(xsize, sizeof(unsigned short));
               sgip->arle_offset = 0;
 
           case SGI_COMP_RLE : /* Run-Length Encoding */
@@ -404,10 +403,10 @@ sgiOpen(char *filename,	/* I - File to open */
  */
 
 int
-sgiPutRow(sgi_t *sgip,	/* I - SGI image */
-          short *row,	/* I - Row to write */
-          int   y,	/* I - Line to write */
-          int   z)	/* I - Channel to write */
+sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
+          unsigned short *row,	/* I - Row to write */
+          int            y,	/* I - Line to write */
+          int            z)	/* I - Channel to write */
 {
   int	x;		/* X coordinate */
   long	offset;		/* File offset */
@@ -602,8 +601,8 @@ putlong(long n,		/* I - Long to write */
  */
 
 static int
-putshort(short n,	/* I - Short to write */
-         FILE  *fp)	/* I - File to write to */
+putshort(unsigned short n,	/* I - Short to write */
+         FILE           *fp)	/* I - File to write to */
 {
   if (putc(n >> 8, fp) == EOF)
     return (EOF);
@@ -619,9 +618,9 @@ putshort(short n,	/* I - Short to write */
  */
 
 static int
-read_rle8(FILE  *fp,	/* I - File to read from */
-          short *row,	/* O - Data */
-          int   xsize)	/* I - Width of data in pixels */
+read_rle8(FILE           *fp,	/* I - File to read from */
+          unsigned short *row,	/* O - Data */
+          int            xsize)	/* I - Width of data in pixels */
 {
   int	i,		/* Looping var */
 	ch,		/* Current character */
@@ -664,9 +663,9 @@ read_rle8(FILE  *fp,	/* I - File to read from */
  */
 
 static int
-read_rle16(FILE  *fp,	/* I - File to read from */
-           short *row,	/* O - Data */
-           int   xsize)	/* I - Width of data in pixels */
+read_rle16(FILE           *fp,	/* I - File to read from */
+           unsigned short *row,	/* O - Data */
+           int            xsize)/* I - Width of data in pixels */
 {
   int	i,		/* Looping var */
 	ch,		/* Current character */
@@ -709,16 +708,16 @@ read_rle16(FILE  *fp,	/* I - File to read from */
  */
 
 static int
-write_rle8(FILE  *fp,	/* I - File to write to */
-           short *row,	/* I - Data */
-           int   xsize)	/* I - Width of data in pixels */
+write_rle8(FILE           *fp,	/* I - File to write to */
+           unsigned short *row,	/* I - Data */
+           int            xsize)/* I - Width of data in pixels */
 {
-  int	length,
-	count,
-	i,
-	x;
-  short	*start,
-	repeat;
+  int			length,	/* Length of output line */
+			count,	/* Number of repeated/non-repeated pixels */
+			i,	/* Looping var */
+			x;	/* Looping var */
+  unsigned short	*start,	/* Start of sequence */
+			repeat;	/* Repeated pixel */
 
 
   for (x = xsize, length = 0; x > 0;)
@@ -801,16 +800,16 @@ write_rle8(FILE  *fp,	/* I - File to write to */
  */
 
 static int
-write_rle16(FILE  *fp,	/* I - File to write to */
-            short *row,	/* I - Data */
-            int   xsize)/* I - Width of data in pixels */
+write_rle16(FILE           *fp,	/* I - File to write to */
+            unsigned short *row,/* I - Data */
+            int            xsize)/* I - Width of data in pixels */
 {
-  int	length,
-	count,
-	i,
-	x;
-  short	*start,
-	repeat;
+  int			length,	/* Length of output line */
+			count,	/* Number of repeated/non-repeated pixels */
+			i,	/* Looping var */
+			x;	/* Looping var */
+  unsigned short	*start,	/* Start of sequence */
+			repeat;	/* Repeated pixel */
 
 
   for (x = xsize, length = 0; x > 0;)

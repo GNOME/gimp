@@ -377,7 +377,7 @@ text_control (Tool     *tool,
     case RESUME :
       break;
     case HALT :
-      if (the_text_tool->shell != NULL && GTK_WIDGET_VISIBLE (the_text_tool->shell))
+      if (the_text_tool->shell && GTK_WIDGET_VISIBLE (the_text_tool->shell))
 	gtk_widget_hide (the_text_tool->shell);
       break;
     }
@@ -1051,7 +1051,7 @@ text_validate_combo (TextTool *text_tool,
       if (text_tool->foundry != best_combo[0])
 	{
 	  text_tool->foundry = best_combo[0];
-	  if (which != 0)
+	  if (which)
 	    gtk_option_menu_set_history (GTK_OPTION_MENU (text_tool->option_menus[0]), text_tool->foundry);
 	}
       if (text_tool->weight != best_combo[1])
@@ -1694,12 +1694,12 @@ text_gdk_image_to_region (GdkImage    *image,
 	      {
 		pixel = gdk_image_get_pixel (image, j, i);
 		if (pixel == black_pixel)
-		  value += 255;
+		  value ++;
 	      }
-	  value = value / scale2;
 
 	  /*  store the alpha value in the data  */
-	  *data++ = (unsigned char) value;
+	  *data++= (unsigned char) ((value * 255) / scale2);
+
 	}
     }
 }
@@ -1735,7 +1735,7 @@ text_render (GImage *gimage,
   void * pr;
 
   /*  determine the layer type  */
-  if (drawable != NULL)
+  if (drawable)
     layer_type = drawable_type_with_alpha (drawable);
   else
     layer_type = gimage_base_type_with_alpha (gimage);
@@ -2418,7 +2418,7 @@ text_tool_invoker_ext (Argument *args)
     {
       int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable != NULL && gimage != drawable_gimage (drawable))
+      if (drawable && gimage != drawable_gimage (drawable))
 	success = FALSE;
     }
   /*  x, y coordinates  */

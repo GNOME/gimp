@@ -39,10 +39,6 @@
 #include "xdelta.h"
 #include "X11/xpm.h"
 
-#ifdef XDELTA_OLD_PREFIX
-#include <zlib.h>
-#endif
-
 #define PREVIEW_MAX_DIM 64
 
 static void   query      (void);
@@ -265,11 +261,7 @@ get_name_ver_and_xd (gchar* filename0,
       if (valid_file (filename))
 	*xd = xd_open_write (filename);
       else
-#ifdef XDELTA_OLD_PREFIX
-	*xd = xd_create (filename, Z_DEFAULT_COMPRESSION);
-#else
 	*xd = xd_create (filename);
-#endif
     }
   else
     *xd = xd_open_write (filename); /* !! it's write so it can update preview segments */

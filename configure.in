@@ -545,6 +545,7 @@ plug-ins/MapObject/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/screenshot/Makefile
+plug-ins/sharpen/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

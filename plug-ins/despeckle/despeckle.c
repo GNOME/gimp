@@ -42,59 +42,29 @@
  *
  * Revision History:
  *
- *   
- *   Revison ? 1998/03/16 adrian
- *   changed MIN, MAX to DESPECKLE_MIN, DESPECKLE_MAX   
- *   since some compilers dont like max/min   
- *   being defined twice.
- *
- *   -Adrian
- *
  *   $Log$
- *   Revision 1.9  1998/04/13 05:41:41  yosh
- *   Have fun recompiling gimp everyone. It's the great FSF address change!
+ *   Revision 1.10  1998/04/24 02:18:39  yosh
+ *   * Added sharpen to stable dist
+ *
+ *   * updated sgi and despeckle plugins
+ *
+ *   * plug-ins/xd/xd.c: works with xdelta 0.18. The use of xdelta versions prior
+ *   to this is not-supported.
+ *
+ *   * plug-in/gfig/gfig.c: spelling corrections :)
+ *
+ *   * app/fileops.c: applied gimp-gord-980420-0, fixes stale save procs in the
+ *   file dialog
+ *
+ *   * app/text_tool.c: applied gimp-egger-980420-0, text tool optimization
  *
  *   -Yosh
  *
- *   Revision 1.8  1998/03/26 02:08:17  yosh
- *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
- *   optional library tests in configure.
- *
- *   * applied gimp-jbuhler-980321-0, fixes more warnings in plug-ins
- *
- *   -Yosh
- *
- *   Revision 1.7  1998/03/16 23:02:25  adrian
- *   Mon Mar 16 17:50:56 EST 1998 Adrian Likins <adrian@gimp.org>
- *
- *           * plugins/illusion/illusion.c:
- *           * plugins/papertile/papertile.c:
- *           * plugins/fractaltrace/fractaltrace.c:
- *           * plugins/flame/flame.c: Changed MAIN(); to MAIN()
- *
- *           *gimprc_user: added a commented out (install-colormap)
- *           option
- *
- *           *app/install.c: comsetic update to show info about .gimp/scripts
- *
- *           *plugins/sparkle/sparckle.c:
- *           *plugins/despeckle/despeckle.c: made a local MIN/MAX instead
- *           of redefing the normal one (causes problems on some compilers)
- *
- *   -adrian
- *
- *   Revision 1.6  1998/03/16 06:33:44  yosh
- *   configure saves CFLAGS properly
- *   all plugins should parse gtkrc now
- *
- *   -Yosh
- *
- *   Revision 1.5  1998/01/25 09:29:23  yosh
- *   Plugin updates
- *   Properly generated aa Makefile (still not built by default)
- *   Sven's no args script patch
- *
- *   -Yosh
+ *   Revision 1.17  1998/04/23  14:39:47  mike
+ *   Updated preview code to handle images with alpha (preview now shows checker
+ *   pattern).
+ *   Added call to gtk_window_set_wmclass() to make sure the GIMP icon is used
+ *   by default.
  *
  *   Revision 1.16  1998/01/22  14:35:03  mike
  *   Added black & white level controls.
@@ -166,23 +136,19 @@
 
 
 /*
- * Macros...
- */
-
-#define DESPECKLE_MIN(a,b)		(((a) < (b)) ? (a) : (b))
-#define DESPECKLE_MAX(a,b)		(((a) > (b)) ? (a) : (b))
-
-
-/*
  * Constants...
  */
 
 #define PLUG_IN_NAME		"plug_in_despeckle"
-#define PLUG_IN_VERSION		"1.2 - 22 January 1998"
+#define PLUG_IN_VERSION		"1.3 - 23 April 1998"
 #define PREVIEW_SIZE		128
 #define SCALE_WIDTH		64
 #define ENTRY_WIDTH		64
 #define MAX_RADIUS		20
+
+#define CHECK_SIZE		8
+#define CHECK_DARK		85
+#define CHECK_LIGHT		170
 
 #define FILTER_ADAPTIVE		0x01
 #define FILTER_RECURSIVE	0x02
@@ -290,7 +256,7 @@ query(void)
       "Despeckle filter, typically used to \'despeckle\' a photographic image.",
       "This plug-in selectively performs a median or adaptive box filter on an image.",
       "Michael Sweet <mike@easysw.com>",
-      "Michael Sweet <mike@easysw.com>",
+      "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
       "<Image>/Filters/Enhance/Despeckle", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
@@ -740,6 +706,7 @@ despeckle_dialog(void)
 
   dialog = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(dialog), "Despeckle " PLUG_IN_VERSION);
+  gtk_window_set_wmclass(GTK_WINDOW(dialog), "despeckle", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -770,8 +737,8 @@ despeckle_dialog(void)
   gtk_table_attach(GTK_TABLE(ptable), frame, 0, 1, 0, 1, 0, 0, 0, 0);
   gtk_widget_show(frame);
 
-  preview_width  = DESPECKLE_MIN(sel_width, PREVIEW_SIZE);
-  preview_height = DESPECKLE_MIN(sel_height, PREVIEW_SIZE);
+  preview_width  = MIN(sel_width, PREVIEW_SIZE);
+  preview_height = MIN(sel_height, PREVIEW_SIZE);
 
   preview = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_preview_size(GTK_PREVIEW(preview), preview_width, preview_height);
@@ -779,8 +746,8 @@ despeckle_dialog(void)
   gtk_widget_show(preview);
 
   hscroll_data = gtk_adjustment_new(0, 0, sel_width - 1, 1.0,
-				    DESPECKLE_MIN(preview_width, sel_width),
-				    DESPECKLE_MIN(preview_width, sel_width));
+				    MIN(preview_width, sel_width),
+				    MIN(preview_width, sel_width));
 
   gtk_signal_connect(hscroll_data, "value_changed",
 		     (GtkSignalFunc)preview_scroll_callback, NULL);
@@ -791,8 +758,8 @@ despeckle_dialog(void)
   gtk_widget_show(scrollbar);
 
   vscroll_data = gtk_adjustment_new(0, 0, sel_height - 1, 1.0,
-				    DESPECKLE_MIN(preview_height, sel_height),
-				    DESPECKLE_MIN(preview_height, sel_height));
+				    MIN(preview_height, sel_height),
+				    MIN(preview_height, sel_height));
 
   gtk_signal_connect(vscroll_data, "value_changed",
 		     (GtkSignalFunc)preview_scroll_callback, NULL);
@@ -806,8 +773,8 @@ despeckle_dialog(void)
 
   preview_x1 = sel_x1;
   preview_y1 = sel_y1;
-  preview_x2 = preview_x1 + DESPECKLE_MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + DESPECKLE_MIN(preview_height, sel_height);
+  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
+  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
 
  /*
   * Filter type controls...
@@ -944,8 +911,8 @@ preview_scroll_callback(void)
 {
   preview_x1 = sel_x1 + GTK_ADJUSTMENT(hscroll_data)->value;
   preview_y1 = sel_y1 + GTK_ADJUSTMENT(vscroll_data)->value;
-  preview_x2 = preview_x1 + DESPECKLE_MIN(preview_width, sel_width);
-  preview_y2 = preview_y1 + DESPECKLE_MIN(preview_height, sel_height);
+  preview_x2 = preview_x1 + MIN(preview_width, sel_width);
+  preview_y2 = preview_y1 + MIN(preview_height, sel_height);
 
   preview_update();
 }
@@ -971,7 +938,9 @@ preview_update(void)
 		radius,		/* Current radius */
 		hist0,		/* Histogram count for 0 values */
 		hist255;	/* Histogram count for 255 values */
-  guchar	rgb[PREVIEW_SIZE * 3],	/* Output image */
+  guchar	check,		/* Checkerboard pattern */
+		rgb[PREVIEW_SIZE * PREVIEW_SIZE * 3],
+				/* Output image */
 		*rgb_ptr;	/* Pixel pointer for output */
 
 
@@ -1095,37 +1064,80 @@ preview_update(void)
     * Draw this row...
     */
 
+    rgb_ptr = rgb + y * preview_width * 3;
+
     switch (img_bpp)
     {
       case 1 :
-      case 2 :
-          for (x = 0, dst_ptr = preview_dst, rgb_ptr = rgb;
-               x < preview_width;
-               x ++, dst_ptr += img_bpp, rgb_ptr += 3)
+          for (x = preview_width, dst_ptr = preview_dst;
+               x > 0;
+               x --, dst_ptr ++, rgb_ptr += 3)
             rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
+          break;
 
-  	  gtk_preview_draw_row(GTK_PREVIEW(preview), rgb, 0, y, preview_width);
+      case 2 :
+	  for (x = preview_width, dst_ptr = preview_dst;
+	       x > 0;
+	       x --, dst_ptr += 2, rgb_ptr += 3)
+	    if (dst_ptr[1] == 255)
+	      rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
+	    else
+	    {
+              if ((y & CHECK_SIZE) ^ (x & CHECK_SIZE))
+                check = CHECK_LIGHT;
+              else
+                check = CHECK_DARK;
+
+              if (dst_ptr[1] == 0)
+                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
+              else
+                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] =
+                    check + ((dst_ptr[0] - check) * dst_ptr[1]) / 255;
+	    };
           break;
 
       case 3 :
-  	  gtk_preview_draw_row(GTK_PREVIEW(preview), preview_dst, 0, y,
-  	                       preview_width);
+          memcpy(rgb_ptr, dst_ptr, preview_width * 3);
           break;
 
       case 4 :
-          for (x = 0, dst_ptr = preview_dst, rgb_ptr = rgb;
-               x < preview_width;
-               x ++, dst_ptr += 4, rgb_ptr += 3)
-          {
-            rgb_ptr[0] = dst_ptr[0];
-            rgb_ptr[1] = dst_ptr[1];
-            rgb_ptr[2] = dst_ptr[2];
-          };
+	  for (x = preview_width, dst_ptr = preview_dst;
+	       x > 0;
+	       x --, dst_ptr += 4, rgb_ptr += 3)
+	    if (dst_ptr[3] == 255)
+	    {
+	      rgb_ptr[0] = dst_ptr[0];
+	      rgb_ptr[1] = dst_ptr[1];
+	      rgb_ptr[2] = dst_ptr[2];
+	    }
+	    else
+	    {
+              if ((y & CHECK_SIZE) ^ (x & CHECK_SIZE))
+                check = CHECK_LIGHT;
+              else
+                check = CHECK_DARK;
 
-  	  gtk_preview_draw_row(GTK_PREVIEW(preview), rgb, 0, y, preview_width);
+              if (dst_ptr[3] == 0)
+                rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
+              else
+              {
+                rgb_ptr[0] = check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
+                rgb_ptr[1] = check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
+                rgb_ptr[2] = check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
+              };
+	    };
           break;
     };
   };
+
+ /*
+  * Update the screen...
+  */
+
+  for (y = 0, rgb_ptr = rgb;
+       y < preview_height;
+       y ++, rgb_ptr += preview_width * 3)
+    gtk_preview_draw_row(GTK_PREVIEW(preview), rgb_ptr, 0, y, preview_width);
 
   gtk_widget_draw(preview, NULL);
   gdk_flush();

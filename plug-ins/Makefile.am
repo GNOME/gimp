@@ -103,6 +103,7 @@ SUBDIRS = 			\
 	screenshot		\
 	semiflatten		\
 	sgi			\
+	sharpen			\
 	shift			\
 	sinus			\
 	smooth_palette		\

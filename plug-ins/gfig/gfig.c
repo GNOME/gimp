@@ -888,7 +888,7 @@ plug_in_parse_gfig_path()
 
 /*
   Translate SPACE to "\\040", etc.
-  Tkane from gflare plugin
+  Taken from gflare plugin
  */
 void
 gfig_name_encode (gchar *dest, gchar *src)
@@ -1207,7 +1207,7 @@ gfig_load (gchar *filename, gchar *name)
   if(strncmp(GFIG_HEADER,load_buf,strlen(load_buf)))
     {
       gchar err[256];
-      sprintf(err,"File '%s' Not a gfig file",gfig->filename);
+      sprintf(err,"File '%s' is not a gfig file",gfig->filename);
       create_warn_dialog(err);
       return(NULL);
     }
@@ -2285,7 +2285,7 @@ bezier_dialog (void)
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&bezier_closed);
-  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Close curve on compeletion",NULL);
+  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Close curve on completion",NULL);
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),bezier_closed);
   gtk_widget_show(toggle);
   gtk_box_pack_start(GTK_BOX(vbox),toggle, TRUE, TRUE, 0);
@@ -2940,7 +2940,7 @@ paint_menu_callback (GtkWidget *widget, gpointer data)
     {
 #ifdef DEBUG
       printf("layer type set to %s\n",
-	     ((DRAWONLAYERS)gtk_object_get_user_data (GTK_OBJECT (widget)) == SINGLE_LAYER)?"SINGLE_LAYER":"MULIT_LAYER");
+	     ((DRAWONLAYERS)gtk_object_get_user_data (GTK_OBJECT (widget)) == SINGLE_LAYER)?"SINGLE_LAYER":"MULTI_LAYER");
 #endif /* DEBUG */
       selvals.onlayers = (DRAWONLAYERS)gtk_object_get_user_data (GTK_OBJECT (widget));
       /* Type only meaningful if creating new layers */
@@ -3223,7 +3223,7 @@ paint_page()
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gfig_toggle_update,
 		      (gpointer)&selvals.approxcircles);
-  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Approx. circles & ellipses using lines. Alows the use of brush fading with these types of objects.",NULL); 
+  gtk_tooltips_set_tip(gfig_tooltips,toggle,"Approx. circles & ellipses using lines. Allows the use of brush fading with these types of objects.",NULL); 
   gtk_widget_show(toggle);
 
   return(vbox);
@@ -4879,7 +4879,7 @@ done_warn_dialog (GtkWidget *w,gint count)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  label = gtk_label_new("Unsaved Gifg objects continue with exiting?");
+  label = gtk_label_new("Unsaved Gfig objects - continue with exiting?");
   gtk_misc_set_padding (GTK_MISC (label), 10, 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
@@ -8304,7 +8304,7 @@ d_load_circle(FILE *from)
 	  new_obj->points->next = edge_pnt;
 	}
     }
-  g_warning("[%d] No enought points for circle",line_no);
+  g_warning("[%d] Not enough points for circle",line_no);
   return(NULL);
 }
 
@@ -8657,7 +8657,7 @@ d_load_ellipse(FILE *from)
 	  new_obj->points->next = edge_pnt;
 	}
     }
-  g_warning("[%d] No enought points for ellipse",line_no);
+  g_warning("[%d] Not enough points for ellipse",line_no);
   return(NULL);
 }
 
@@ -9943,7 +9943,7 @@ line_definition(double x1, double y1, double x2, double y2, double *lgrad, doubl
   if(grad1 == 0.0)
     {
 #ifdef DEBUG
-      printf("Infiite grad....\n");
+      printf("Infinite grad....\n");
 #endif /* DEBUG */
       return;
     }
@@ -10205,7 +10205,7 @@ d_load_arc(FILE *from)
 	  d_pnt_add_line(new_obj,xpnt,ypnt,-1);
 	}
     }
-  g_warning("[%d] No enought points for arc",line_no);
+  g_warning("[%d] Not enough points for arc",line_no);
   return(NULL);
 }
 
