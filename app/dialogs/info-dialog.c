@@ -139,6 +139,7 @@ info_dialog_add_label (InfoDialog *idialog,
   g_return_val_if_fail (idialog != NULL, NULL);
 
   label = gtk_label_new (text_ptr);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   info_dialog_field_new (idialog, INFO_LABEL, title, label, NULL,

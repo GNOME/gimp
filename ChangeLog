@@ -1,3 +1,8 @@
+2003-01-20  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/info-dialog.c (info_dialog_add_label): made labels in
+	the info dialog selectable as suggested in #103991.
+
 2003-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-progress.[ch]: renamed plug_in_progress_init()
