@@ -1,19 +1,20 @@
 # Lithuanian translation of GIMP.
-# Copyright (C) 2001-2004 Free Software Foundation, Inc.
+# Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001-2004.
 # Egle Girinaite <egle@akl.lt>, 2001-2004.
 # Karina Gribanova <buratina@delfi.lt>, 2001-2002.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
-# Žygimantas Beručka <uid0@akl.lt>, 2004.
+# Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
+# Giedrius Naudžiūnas <gimp@projektas.lt>, 2004-2005.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.0\n"
+"Project-Id-Version: GIMP 2.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2004-03-16 19:49+0200\n"
-"Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
+"POT-Creation-Date: 2005-01-01 04:22+0200\n"
+"PO-Revision-Date: 2005-01-01 04:25+0200\n"
+"Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,9 +46,7 @@ msgstr ""
 #: app/app_procs.c:348 app/core/gimppalette-import.c:441
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr ""
-"%s atidarymas nepavyko.\n"
-"%s"
+msgstr "Nepavyko atidaryti „%s“: %s"
 
 #: app/batch.c:84 app/batch.c:101
 #, c-format
@@ -75,7 +74,7 @@ msgid ""
 "Invalid option \"%s\"\n"
 msgstr ""
 "\n"
-"Blogas parametras \"%s\".\n"
+"Blogas parametras „%s“.\n"
 
 #: app/main.c:501
 msgid "GIMP version"
@@ -242,18 +241,16 @@ msgid "Colormap Editor"
 msgstr "Gama"
 
 #: app/actions/actions.c:105 app/pdb/internal_procs.c:101
-#, fuzzy
 msgid "Context"
-msgstr "/Pagalba/Kontekstinė pagalba"
+msgstr "Kontekstas"
 
 #: app/actions/actions.c:108
 msgid "Debug"
 msgstr ""
 
 #: app/actions/actions.c:111
-#, fuzzy
 msgid "Dialogs"
-msgstr "/_Dialogai"
+msgstr "Dialogai"
 
 #: app/actions/actions.c:114
 #, fuzzy
@@ -278,9 +275,8 @@ msgid "Error Console"
 msgstr "GIMP klaidų terminalas"
 
 #: app/actions/actions.c:129
-#, fuzzy
 msgid "File"
-msgstr "/_Byla"
+msgstr "Byla"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:132 app/core/gimp.c:872 app/dialogs/dialogs.c:146
@@ -299,9 +295,8 @@ msgid "Gradients"
 msgstr "Perėjimai"
 
 #: app/actions/actions.c:141
-#, fuzzy
 msgid "Help"
-msgstr "/_Pagalba"
+msgstr "Pagalba"
 
 #: app/actions/actions.c:144 app/pdb/internal_procs.c:149
 #: app/tools/tools-enums.c:176
@@ -342,9 +337,8 @@ msgid "QuickMask"
 msgstr "Greita kaukė"
 
 #: app/actions/actions.c:168
-#, fuzzy
 msgid "Select"
-msgstr "/Pažymėti"
+msgstr "Pažymėti"
 
 #. initialize the template list
 #: app/actions/actions.c:171 app/core/gimp.c:880 app/dialogs/dialogs.c:154
@@ -352,7 +346,6 @@ msgid "Templates"
 msgstr "Šablonai"
 
 #: app/actions/actions.c:174
-#, fuzzy
 msgid "Text Editor"
 msgstr "GIMP teksto redaktorius"
 
@@ -372,72 +365,60 @@ msgid "Paths"
 msgstr "Kontūrai"
 
 #: app/actions/actions.c:186
-#, fuzzy
 msgid "View"
-msgstr "/_Vaizdas"
+msgstr "Vaizdas"
 
 #: app/actions/brushes-actions.c:43
 msgid "Brushes Menu"
 msgstr "Teptukų meniu"
 
 #: app/actions/brushes-actions.c:47
-#, fuzzy
 msgid "_New Brush"
-msgstr "/Naujas teptukas"
+msgstr "_Naujas teptukas"
 
 #: app/actions/brushes-actions.c:48
-#, fuzzy
 msgid "New brush"
-msgstr "/Naujas teptukas"
+msgstr "Naujas teptukas"
 
 #: app/actions/brushes-actions.c:53
-#, fuzzy
 msgid "D_uplicate Brush"
-msgstr "/Padaryti teptuko kopiją"
+msgstr "Padaryti teptuko kopiją"
 
 #: app/actions/brushes-actions.c:54
-#, fuzzy
 msgid "Duplicate brush"
-msgstr "/Padaryti teptuko kopiją"
+msgstr "Padaryti teptuko kopiją"
 
 #: app/actions/brushes-actions.c:59
-#, fuzzy
 msgid "_Delete Brush"
-msgstr "/Pašalinti teptuką"
+msgstr "_Pašalinti teptuką"
 
 #: app/actions/brushes-actions.c:60
-#, fuzzy
 msgid "Delete brush"
-msgstr "/Pašalinti teptuką"
+msgstr "Pašalinti teptuką"
 
 #: app/actions/brushes-actions.c:65
-#, fuzzy
 msgid "_Refresh Brushes"
-msgstr "/Atnaujinti teptukus"
+msgstr "_Atnaujinti teptukus"
 
 #: app/actions/brushes-actions.c:66
-#, fuzzy
 msgid "Refresh brushes"
-msgstr "/Atnaujinti teptukus"
+msgstr "Atnaujinti teptukus"
 
 #: app/actions/brushes-actions.c:74
-#, fuzzy
 msgid "_Edit Brush..."
-msgstr "/Keisti teptuko savybes..."
+msgstr "_Keisti teptuko savybes..."
 
 #: app/actions/brushes-actions.c:75
-#, fuzzy
 msgid "Edit brush"
-msgstr "/Keisti teptuko savybes..."
+msgstr "Keisti teptuko savybes..."
 
 #: app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
 msgstr "Buferių meniu"
 
 #: app/actions/buffers-actions.c:46
-#, fuzzy
 msgid "_Paste Buffer"
-msgstr "/Įdėti buferį"
+msgstr "_Įdėti buferį"
 
 #: app/actions/buffers-actions.c:47
 #, fuzzy
@@ -445,7 +426,6 @@ msgid "Paste the selected buffer"
 msgstr "Perkelti pažymėtą filtrą aukštyn"
 
 #: app/actions/buffers-actions.c:52
-#, fuzzy
 msgid "Paste Buffer _Into"
 msgstr "Įdėti buferį į"
 
@@ -455,7 +435,6 @@ msgid "Paste the selected buffer into the selection"
 msgstr "Pasukti sluoksnį arba pažymėjimą"
 
 #: app/actions/buffers-actions.c:58
-#, fuzzy
 msgid "Paste Buffer as _New"
 msgstr "Įdėti buferį kaip naują"
 
@@ -465,9 +444,8 @@ msgid "Paste the selected buffer as new image"
 msgstr "Atstatyti pasirinktą filtro nustatymus į įprastas vertes"
 
 #: app/actions/buffers-actions.c:64
-#, fuzzy
 msgid "_Delete Buffer"
-msgstr "/Ištrinti buferį"
+msgstr "_Ištrinti buferį"
 
 #: app/actions/buffers-actions.c:65
 #, fuzzy
@@ -479,109 +457,89 @@ msgid "Channels Menu"
 msgstr "Kanalų meniu"
 
 #: app/actions/channels-actions.c:48
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "/Keisti kanalo savybes..."
+msgstr "_Keisti kanalo savybes..."
 
 #: app/actions/channels-actions.c:49
-#, fuzzy
 msgid "Edit channel attributes"
 msgstr "Keisti kanalo savybes"
 
 #: app/actions/channels-actions.c:54
-#, fuzzy
 msgid "_New Channel..."
-msgstr "/Naujas kanalas..."
+msgstr "Naujas kanalas..."
 
 #: app/actions/channels-actions.c:55
-#, fuzzy
 msgid "New channel..."
-msgstr "/Naujas kanalas..."
+msgstr "Naujas kanalas..."
 
 #: app/actions/channels-actions.c:60
-#, fuzzy
 msgid "_New Channel"
-msgstr "Naujas kanalas"
+msgstr "_Naujas kanalas"
 
 #: app/actions/channels-actions.c:61
 msgid "New channel with last values"
 msgstr ""
 
 #: app/actions/channels-actions.c:66
-#, fuzzy
 msgid "D_uplicate Channel"
-msgstr "/Padaryti kanalo kopiją"
+msgstr "Padaryti kanalo kopiją"
 
 #: app/actions/channels-actions.c:67
-#, fuzzy
 msgid "Duplicate channel"
 msgstr "Padaryti kanalo kopiją"
 
 #: app/actions/channels-actions.c:72
-#, fuzzy
 msgid "_Delete Channel"
-msgstr "/Ištrinti kanalą"
+msgstr "_Ištrinti kanalą"
 
 #: app/actions/channels-actions.c:73 app/core/core-enums.c:1088
-#, fuzzy
 msgid "Delete channel"
 msgstr "Ištrinti kanalą"
 
 #: app/actions/channels-actions.c:78
-#, fuzzy
 msgid "_Raise Channel"
-msgstr "/Pakelti kanalą"
+msgstr "_Pakelti kanalą"
 
 #: app/actions/channels-actions.c:79
-#, fuzzy
 msgid "Raise channel"
 msgstr "Pakelti kanalą"
 
 #: app/actions/channels-actions.c:84
-#, fuzzy
 msgid "Raise Channel to _Top"
 msgstr "Pakelti kanalą į viršų"
 
 #: app/actions/channels-actions.c:85
-#, fuzzy
 msgid "Raise channel to top"
 msgstr "Pakelti kanalą į viršų"
 
 #: app/actions/channels-actions.c:90
-#, fuzzy
 msgid "_Lower Channel"
-msgstr "/Nuleisti kanalą"
+msgstr "_Nuleisti kanalą"
 
 #: app/actions/channels-actions.c:91
-#, fuzzy
 msgid "Lower channel"
 msgstr "Nuleisti kanalą"
 
 #: app/actions/channels-actions.c:96
-#, fuzzy
 msgid "Lower Channel to _Bottom"
 msgstr "Nuleisti kanalą į apačią"
 
 #: app/actions/channels-actions.c:97
-#, fuzzy
 msgid "Lower channel to bottom"
 msgstr "Nuleisti kanalą į apačią"
 
 #: app/actions/channels-actions.c:105
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "/Pakeisti kanalą pažymėjimu"
+msgstr "Pakeisti kanalą pažymėjimu"
 
 #: app/actions/channels-actions.c:106
-#, fuzzy
 msgid "Channel to selection"
 msgstr "Pakeisti kanalą pažymėjimu"
 
 #: app/actions/channels-actions.c:111 app/actions/layers-actions.c:226
 #: app/actions/vectors-actions.c:173
-#, fuzzy
 msgid "_Add to Selection"
-msgstr "/Pridėti prie pažymėjimo"
+msgstr "_Pridėti prie pažymėjimo"
 
 #: app/actions/channels-actions.c:112 app/actions/vectors-actions.c:174
 msgid "Add"
@@ -589,9 +547,8 @@ msgstr ""
 
 #: app/actions/channels-actions.c:117 app/actions/layers-actions.c:231
 #: app/actions/layers-actions.c:254 app/actions/vectors-actions.c:179
-#, fuzzy
 msgid "_Subtract from Selection"
-msgstr "/Atimti iš pažymėjimo"
+msgstr "_Atimti iš pažymėjimo"
 
 #: app/actions/channels-actions.c:118 app/actions/vectors-actions.c:180
 #: app/widgets/gimpwidgets-constructors.c:69
@@ -601,9 +558,8 @@ msgstr "Atimti"
 
 #: app/actions/channels-actions.c:123 app/actions/layers-actions.c:236
 #: app/actions/layers-actions.c:259 app/actions/vectors-actions.c:185
-#, fuzzy
 msgid "_Intersect with Selection"
-msgstr "/Sankirta su pažymėjimu"
+msgstr "_Sankirta su pažymėjimu"
 
 #: app/actions/channels-actions.c:124 app/actions/vectors-actions.c:186
 #, fuzzy
@@ -643,7 +599,7 @@ msgstr "Nauja kanalo spalva"
 #: app/actions/channels-commands.c:246
 #, c-format
 msgid "%s Channel Copy"
-msgstr "%s kanalo kopija"
+msgstr "%s Kanalo kopija"
 
 #: app/actions/channels-commands.c:311 app/core/gimpselection.c:595
 #: app/pdb/selection_cmds.c:921 app/pdb/selection_cmds.c:1045
@@ -657,35 +613,29 @@ msgstr "Gama"
 
 #: app/actions/colormap-editor-actions.c:47
 #: app/actions/palette-editor-actions.c:47
-#, fuzzy
 msgid "_Edit Color..."
-msgstr "/Keisti spalvą..."
+msgstr "_Keisti spalvą..."
 
 #: app/actions/colormap-editor-actions.c:48
 #: app/actions/palette-editor-actions.c:48
-#, fuzzy
 msgid "Edit color"
 msgstr "Keisti spalvą"
 
 #: app/actions/colormap-editor-actions.c:56
-#, fuzzy
 msgid "_Add Color from FG"
-msgstr "/Pridėti spalvą iš priekinio plano"
+msgstr "_Pridėti spalvą iš priekinio plano"
 
 #: app/actions/colormap-editor-actions.c:57
-#, fuzzy
 msgid "Add color from FG"
-msgstr "/Pridėti spalvą iš priekinio plano"
+msgstr "Pridėti spalvą iš priekinio plano"
 
 #: app/actions/colormap-editor-actions.c:62
-#, fuzzy
 msgid "_Add Color from BG"
-msgstr "/Pridėti spalvą iš fono"
+msgstr "_Pridėti spalvą iš fono"
 
 #: app/actions/colormap-editor-actions.c:63
-#, fuzzy
 msgid "Add color from BG"
-msgstr "/Pridėti spalvą iš fono"
+msgstr "_Pridėti spalvą iš fono"
 
 #: app/actions/colormap-editor-commands.c:70
 #, fuzzy, c-format
@@ -698,20 +648,17 @@ msgid "Edit Colormap Entry"
 msgstr "Keisti spalvų paletę elementas"
 
 #: app/actions/context-actions.c:46
-#, fuzzy
 msgid "_Context"
-msgstr "/Pagalba/Kontekstinė pagalba"
+msgstr "_Kontekstinė pagalba"
 
 #: app/actions/context-actions.c:47 app/actions/layers-actions.c:53
 #: app/actions/plug-in-actions.c:64
-#, fuzzy
 msgid "_Colors"
-msgstr "Spalva"
+msgstr "_Spalvos"
 
 #: app/actions/context-actions.c:48 app/actions/layers-actions.c:59
-#, fuzzy
 msgid "_Opacity"
-msgstr "Nepermatomumas"
+msgstr "_Nepermatomumas"
 
 #: app/actions/context-actions.c:49
 #, fuzzy
@@ -719,25 +666,21 @@ msgid "Paint _Mode"
 msgstr "Keitimo režimas"
 
 #: app/actions/context-actions.c:50
-#, fuzzy
 msgid "_Tool"
-msgstr "/Įrankiai"
+msgstr "_Įrankis"
 
 #: app/actions/context-actions.c:51 app/dialogs/preferences-dialog.c:1627
-#, fuzzy
 msgid "_Brush"
-msgstr "Teptukas:"
+msgstr "_Teptukas:"
 
 #: app/actions/context-actions.c:52 app/actions/plug-in-actions.c:78
 #: app/dialogs/preferences-dialog.c:1630
-#, fuzzy
 msgid "_Pattern"
-msgstr "Raštai"
+msgstr "_Raštas"
 
 #: app/actions/context-actions.c:53
-#, fuzzy
 msgid "_Palette"
-msgstr "Paletė"
+msgstr "_Paletė"
 
 #: app/actions/context-actions.c:54 app/dialogs/palette-import-dialog.c:219
 #: app/dialogs/preferences-dialog.c:1633
@@ -745,9 +688,8 @@ msgid "_Gradient"
 msgstr "_Perėjimas"
 
 #: app/actions/context-actions.c:55
-#, fuzzy
 msgid "_Font"
-msgstr "Šri_ftas:"
+msgstr "_Šriftas"
 
 #  Brush shape widget
 #: app/actions/context-actions.c:57
@@ -776,19 +718,16 @@ msgid "_Aspect"
 msgstr "Perspektyvos"
 
 #: app/actions/context-actions.c:62
-#, fuzzy
 msgid "A_ngle"
-msgstr "Kampas:"
+msgstr "Kampas"
 
 #: app/actions/context-actions.c:65
-#, fuzzy
 msgid "_Default Colors"
-msgstr "/Įrankiai/Įprastosios spalvos"
+msgstr "_Įprastosios spalvos"
 
 #: app/actions/context-actions.c:70
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "/Įrankiai/Sukeisti spalvas"
+msgstr "Sukeisti spalvas"
 
 #: app/actions/data-commands.c:79 app/core/gimpimage.c:1283
 #: app/core/gimppalette-import.c:219 app/core/gimppalette.c:523
@@ -798,9 +737,8 @@ msgid "Untitled"
 msgstr "Bevardis"
 
 #: app/actions/data-commands.c:149
-#, fuzzy
 msgid "Delete Object"
-msgstr "Ištrinti duomenų objektą"
+msgstr "Ištrinti objektą"
 
 #: app/actions/data-commands.c:167
 #, c-format
@@ -808,58 +746,48 @@ msgid "Are you sure you want to delete '%s' from the list and from disk?"
 msgstr "Ar tikrai norite ištrinti %s iš sąrašo ir disko?"
 
 #: app/actions/dialogs-actions.c:38
-#, fuzzy
 msgid "_Dialogs"
-msgstr "/_Dialogai"
+msgstr "_Dialogai"
 
 #: app/actions/dialogs-actions.c:39
-#, fuzzy
 msgid "Create New Doc_k"
-msgstr "/Byla/Dialogai/Sukurti naują langą"
+msgstr "Sukurti naują langą"
 
 #: app/actions/dialogs-actions.c:42
-#, fuzzy
 msgid "_Layers, Channels & Paths"
-msgstr "/Dialogai/Sukurti naują langą/Sluoksniai, kanalai ir kontūrai"
+msgstr "_Sluoksniai, kanalai ir kontūrai"
 
 #: app/actions/dialogs-actions.c:47
-#, fuzzy
 msgid "_Brushes, Patterns & Gradients"
-msgstr "/Dialogai/Sukurti naują langą/Teptukai, raštai ir perėjimai"
+msgstr "_Teptukai, raštai ir perėjimai"
 
 #: app/actions/dialogs-actions.c:52
 msgid "_Misc. Stuff"
 msgstr ""
 
 #: app/actions/dialogs-actions.c:57
-#, fuzzy
 msgid "Tool_box"
 msgstr "Įrankių dėžės meniu"
 
 #: app/actions/dialogs-actions.c:65
-#, fuzzy
 msgid "Tool _Options"
 msgstr "Įrankių savybės"
 
 #: app/actions/dialogs-actions.c:70
-#, fuzzy
 msgid "_Device Status"
 msgstr "Įrenginio būsena"
 
 #: app/actions/dialogs-actions.c:75
-#, fuzzy
 msgid "_Layers"
-msgstr "Sluoksniai"
+msgstr "_Sluoksniai"
 
 #: app/actions/dialogs-actions.c:80
-#, fuzzy
 msgid "_Channels"
-msgstr "Kanalai"
+msgstr "_Kanalai"
 
 #: app/actions/dialogs-actions.c:85 app/tools/gimpvectortool.c:162
-#, fuzzy
 msgid "_Paths"
-msgstr "Kontūrai"
+msgstr "_Kontūrai"
 
 #: app/actions/dialogs-actions.c:90
 #, fuzzy
@@ -868,237 +796,192 @@ msgstr "Gama"
 
 #  The shell and main vbox
 #: app/actions/dialogs-actions.c:95
-#, fuzzy
 msgid "Histogra_m"
 msgstr "Histograma"
 
 #: app/actions/dialogs-actions.c:100
-#, fuzzy
 msgid "_Selection Editor"
-msgstr "Pažymėjimo savybių nustatymas"
+msgstr "_Pažymėjimo savybių nustatymas"
 
 #: app/actions/dialogs-actions.c:105
-#, fuzzy
 msgid "Na_vigation"
 msgstr "Navigacija"
 
 #: app/actions/dialogs-actions.c:110
-#, fuzzy
 msgid "Undo _History"
 msgstr "Atšaukimų istorija"
 
 #: app/actions/dialogs-actions.c:115
-#, fuzzy
 msgid "Colo_rs"
-msgstr "Spalva"
+msgstr "Spalvos"
 
 #: app/actions/dialogs-actions.c:120
-#, fuzzy
 msgid "_Brushes"
-msgstr "Teptukai"
+msgstr "_Teptukai"
 
 #: app/actions/dialogs-actions.c:125
-#, fuzzy
 msgid "P_atterns"
 msgstr "Raštai"
 
 #: app/actions/dialogs-actions.c:130
-#, fuzzy
 msgid "_Gradients"
-msgstr "_Perėjimas"
+msgstr "_Perėjimai"
 
 #: app/actions/dialogs-actions.c:135
-#, fuzzy
 msgid "Pal_ettes"
 msgstr "Paletės"
 
 #: app/actions/dialogs-actions.c:140
-#, fuzzy
 msgid "_Fonts"
-msgstr "Šriftai"
+msgstr "_Šriftai"
 
 #: app/actions/dialogs-actions.c:145
-#, fuzzy
 msgid "B_uffers"
 msgstr "Buferiai"
 
 #: app/actions/dialogs-actions.c:150
-#, fuzzy
 msgid "_Images"
-msgstr "Paveikslėliai"
+msgstr "_Paveikslėliai"
 
 #: app/actions/dialogs-actions.c:155
-#, fuzzy
 msgid "Document Histor_y"
 msgstr "Dokumentų istorija"
 
 #: app/actions/dialogs-actions.c:160
-#, fuzzy
 msgid "_Templates"
-msgstr "Šablonai"
+msgstr "_Šablonai"
 
 #: app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "T_ools"
 msgstr "Įrankinė"
 
 #: app/actions/dialogs-actions.c:170
-#, fuzzy
 msgid "Error Co_nsole"
 msgstr "GIMP klaidų terminalas"
 
 #: app/actions/dialogs-actions.c:180
-#, fuzzy
 msgid "_Preferences"
-msgstr "Nustatymai"
+msgstr "_Nustatymai"
 
 #: app/actions/dialogs-actions.c:185
-#, fuzzy
 msgid "_Module Manager"
-msgstr "Modulių tvarkyklė"
+msgstr "_Modulių tvarkyklė"
 
 #: app/actions/dialogs-actions.c:190
-#, fuzzy
 msgid "_Tip of the Day"
-msgstr "/Pagalba/Dienos patarimas"
+msgstr "_Dienos patarimas"
 
 #: app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "_About"
-msgstr "_Automatinis"
+msgstr "_Apie"
 
 #: app/actions/dockable-actions.c:49
 msgid "Dialogs Menu"
 msgstr "Dialogų meniu"
 
 #: app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "_Add Tab"
-msgstr "/Pridėti kortelę"
+msgstr "_Pridėti kortelę"
 
 #: app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Preview Size"
-msgstr "/Peržiūros dydis"
+msgstr "_Peržiūros dydis"
 
 #: app/actions/dockable-actions.c:55
-#, fuzzy
 msgid "_Tab Style"
-msgstr "/Skirsnio stilius"
+msgstr "_Skirsnio stilius"
 
 #: app/actions/dockable-actions.c:58
-#, fuzzy
 msgid "_Close Tab"
-msgstr "/Uždaryti kortelę"
+msgstr "_Uždaryti kortelę"
 
 #: app/actions/dockable-actions.c:63
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "/Atkabinti kortelę"
+msgstr "_Atkabinti kortelę"
 
 #: app/actions/dockable-actions.c:68
-#, fuzzy
 msgid "M_ove to Screen..."
-msgstr "/Perkelti į darbalaukį..."
+msgstr "_Perkelti į ekraną..."
 
 #: app/actions/dockable-actions.c:76
-#, fuzzy
 msgid "_Show Image Selection"
-msgstr "Rodyti p_ažymėjimą"
+msgstr "_Rodyti p_ažymėjimą"
 
 #: app/actions/dockable-actions.c:82
-#, fuzzy
 msgid "Auto _Follow Active Image"
-msgstr "/Automatiškai sekti aktyvų paveikslėlį"
+msgstr "Automatiškai sekti aktyvų paveikslėlį"
 
 #: app/actions/dockable-actions.c:101
-#, fuzzy
 msgid "_Tiny"
-msgstr "Mažytis"
+msgstr "_Mažytis"
 
 #: app/actions/dockable-actions.c:102
-#, fuzzy
 msgid "E_xtra Small"
-msgstr "Labai mažas"
+msgstr "_Labai mažas"
 
 #: app/actions/dockable-actions.c:103
-#, fuzzy
 msgid "_Small"
-msgstr "Mažas"
+msgstr "_Mažas"
 
 #: app/actions/dockable-actions.c:104
-#, fuzzy
 msgid "_Medium"
-msgstr "Vidutinis"
+msgstr "_Vidutinis"
 
 #: app/actions/dockable-actions.c:105
-#, fuzzy
 msgid "_Large"
-msgstr "Didelis"
+msgstr "_Didelis"
 
 #: app/actions/dockable-actions.c:106
-#, fuzzy
 msgid "Ex_tra Large"
 msgstr "Labai didelis"
 
 #: app/actions/dockable-actions.c:107
-#, fuzzy
 msgid "_Huge"
-msgstr "Didžiulis"
+msgstr "_Didžiulis"
 
 #: app/actions/dockable-actions.c:108
-#, fuzzy
 msgid "_Enormous"
-msgstr "Milžiniškas"
+msgstr "_Milžiniškas"
 
 #: app/actions/dockable-actions.c:109
-#, fuzzy
 msgid "_Gigantic"
-msgstr "Milžiniškas"
+msgstr "_Gigantiškas"
 
 #: app/actions/dockable-actions.c:114
-#, fuzzy
 msgid "_Icon"
-msgstr "_Ikona:"
+msgstr "_Ikona"
 
 #: app/actions/dockable-actions.c:115
-#, fuzzy
 msgid "Current _Status"
-msgstr "Dabartinė būsena:"
+msgstr "Dabartinė bū_sena"
 
 #: app/actions/dockable-actions.c:116
-#, fuzzy
 msgid "_Text"
-msgstr "Tekstas"
+msgstr "_Tekstas"
 
 #: app/actions/dockable-actions.c:117
-#, fuzzy
 msgid "I_con & Text"
 msgstr "Ikona ir tekstas"
 
 #: app/actions/dockable-actions.c:118
-#, fuzzy
 msgid "St_atus & Text"
 msgstr "Būsena ir tekstas"
 
 #: app/actions/dockable-actions.c:127
-#, fuzzy
 msgid "View as _List"
-msgstr "/Matyti kaip _sąrašą"
+msgstr "Matyti kaip _sąrašą"
 
 #: app/actions/dockable-actions.c:132
-#, fuzzy
 msgid "View as _Grid"
-msgstr "/Matyti kaip _groteles"
+msgstr "Matyti kaip _groteles"
 
 #: app/actions/documents-actions.c:42
 msgid "Documents Menu"
 msgstr "Dokumentų meniu"
 
 #: app/actions/documents-actions.c:46
-#, fuzzy
 msgid "_Open Image"
-msgstr "/Atidaryti paveikslėlį"
+msgstr "_Atidaryti paveikslėlį"
 
 #: app/actions/documents-actions.c:47
 #, fuzzy
@@ -1106,62 +989,52 @@ msgid "Open the selected entry"
 msgstr "Pašalinti pažymėtą elementą"
 
 #: app/actions/documents-actions.c:52
-#, fuzzy
 msgid "_Raise or Open Image"
-msgstr "/_Pakelti ar atidaryti paveikslėlį"
+msgstr "_Pakelti ar atidaryti paveikslėlį"
 
 #: app/actions/documents-actions.c:53
 msgid "Raise window if already open"
-msgstr ""
+msgstr "Jeigu langas atidarytas, tai iškeltį jį"
 
 #: app/actions/documents-actions.c:58
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "/Bylos atidarymo _dialogas"
+msgstr "Bylos atidarymo _dialogas"
 
 #: app/actions/documents-actions.c:59
-#, fuzzy
 msgid "Open image dialog"
-msgstr "Atidaryti paveikslėlį"
+msgstr "Atidaryti paveikslėlio dialogą"
 
 #: app/actions/documents-actions.c:64
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "/Pašalinti _elementą"
+msgstr "Pašalinti _elementą"
 
 #: app/actions/documents-actions.c:65
-#, fuzzy
 msgid "Remove the selected entry"
 msgstr "Pašalinti pažymėtą elementą"
 
 #: app/actions/documents-actions.c:70
-#, fuzzy
 msgid "Recreate _Preview"
-msgstr "/Perkurti _peržiūrą"
+msgstr "Perkurti _peržiūrą"
 
 #: app/actions/documents-actions.c:71
-#, fuzzy
 msgid "Recreate preview"
-msgstr "/Perkurti _peržiūrą"
+msgstr "Perkurti _peržiūrą"
 
 #: app/actions/documents-actions.c:76
-#, fuzzy
 msgid "Reload _all Previews"
-msgstr "/Perkrauti _visas peržiūras"
+msgstr "Perkrauti _visas peržiūras"
 
 #: app/actions/documents-actions.c:77
-#, fuzzy
 msgid "Reload all previews"
-msgstr "/Perkrauti _visas peržiūras"
+msgstr "Perkrauti _visas peržiūras"
 
 #: app/actions/documents-actions.c:82
 msgid "Remove Dangling E_ntries"
-msgstr ""
+msgstr "Naikinti pasenusius įrašus"
 
 #: app/actions/documents-actions.c:83
-#, fuzzy
 msgid "Remove dangling entries"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Naikinti pasenusius įrašus"
 
 #: app/actions/documents-commands.c:251 app/actions/file-commands.c:163
 #: app/dialogs/file-open-dialog.c:198 app/dialogs/file-open-dialog.c:249
@@ -1179,28 +1052,24 @@ msgstr ""
 "%s"
 
 #: app/actions/drawable-actions.c:45
-#, fuzzy
 msgid "_Desaturate"
-msgstr "Nusordrinti"
+msgstr "_Nusodrinti"
 
 #: app/actions/drawable-actions.c:50
-#, fuzzy
 msgid "_Equalize"
-msgstr "Išlyginti"
+msgstr "_Išlyginti"
 
 #: app/actions/drawable-actions.c:55
-#, fuzzy
 msgid "In_vert"
-msgstr "Inversija"
+msgstr "Invertuoti"
 
 #: app/actions/drawable-actions.c:60
 msgid "_White Balance"
 msgstr ""
 
 #: app/actions/drawable-actions.c:65
-#, fuzzy
 msgid "_Offset..."
-msgstr "Poslinkis"
+msgstr "_Poslinkis"
 
 #: app/actions/drawable-actions.c:73 app/actions/vectors-actions.c:153
 #, fuzzy
@@ -1208,37 +1077,29 @@ msgid "_Linked"
 msgstr "Linija"
 
 #: app/actions/drawable-actions.c:79 app/actions/vectors-actions.c:147
-#, fuzzy
 msgid "_Visible"
-msgstr "/_Byla"
+msgstr "_Matomas"
 
 #: app/actions/drawable-actions.c:88 app/actions/image-actions.c:141
-#, fuzzy
 msgid "Flip _Horizontally"
-msgstr "Horizontaliai:"
+msgstr "Apversti _horizontaliai"
 
 #: app/actions/drawable-actions.c:93 app/actions/image-actions.c:146
-#, fuzzy
 msgid "Flip _Vertically"
-msgstr "Vertikaliai:"
+msgstr "Apversti _vertikaliai"
 
 #. please use the degree symbol in the translation
 #: app/actions/drawable-actions.c:101 app/actions/image-actions.c:155
-#, fuzzy
 msgid "Rotate 90 degrees _CW"
-msgstr ""
-"/Sluoksniai/Transformacijos/Pasukimas 90 laipsnių pagal laikrodžio rodyklę"
+msgstr "Pasukimas 90 laipsnių pagal laikrodžio rodyklę"
 
 #: app/actions/drawable-actions.c:106 app/actions/image-actions.c:160
-#, fuzzy
 msgid "Rotate _180 degrees"
-msgstr "/Paveikslėlis/Transformacijos/Pasukimas 180 laipsnių"
+msgstr "Pasukimas 180 laipsnių"
 
 #: app/actions/drawable-actions.c:111 app/actions/image-actions.c:165
-#, fuzzy
 msgid "Rotate 90 degrees CC_W"
-msgstr ""
-"/Paveikslėlis/Transformacijos/Pasukimas 90 laipsnių prieš laikrodžio rodyklę"
+msgstr "Pasukimas 90 laipsnių prieš laikrodžio rodyklę"
 
 #: app/actions/drawable-commands.c:58
 msgid "Desaturate operates only on RGB color layers."
@@ -1253,23 +1114,20 @@ msgid "Invert does not operate on indexed layers."
 msgstr "Inversijos negalima taikyti indeksuotiems sluoksniams."
 
 #: app/actions/drawable-commands.c:114
-#, fuzzy
 msgid "White Balance operates only on RGB color layers."
-msgstr "Spalvų balansas veikia tik RGB spalvų sluoksniuose."
+msgstr "Baltas balansas veikia tik RGB spalvų sluoksniuose."
 
 #: app/actions/edit-actions.c:61
-#, fuzzy
 msgid "_Edit"
-msgstr "/_Keisti"
+msgstr "_Keisti"
 
 #: app/actions/edit-actions.c:62
-#, fuzzy
 msgid "_Buffer"
-msgstr "Buferiai"
+msgstr "_Buferis"
 
 #: app/actions/edit-actions.c:65 app/actions/edit-actions.c:230
 msgid "_Undo"
-msgstr "Atšaukti"
+msgstr "_Atšaukti"
 
 #: app/actions/edit-actions.c:66 app/dialogs/dialogs.c:183
 #: app/pdb/internal_procs.c:209
@@ -1278,52 +1136,44 @@ msgstr "Atšaukti"
 
 #: app/actions/edit-actions.c:71 app/actions/edit-actions.c:231
 msgid "_Redo"
-msgstr "Grąžinti"
+msgstr "_Grąžinti"
 
 #: app/actions/edit-actions.c:72
 msgid "Redo"
 msgstr "Gražinti"
 
 #: app/actions/edit-actions.c:77
-#, fuzzy
 msgid "_Clear Undo History"
-msgstr "Atšaukimų istorija"
+msgstr "_Išvalyti atšaukimų istoriją"
 
 #: app/actions/edit-actions.c:78
-#, fuzzy
 msgid "Clear undo history..."
-msgstr "Atšaukimų istorija"
+msgstr "Išvalyti atšaukimų istoriją"
 
 #: app/actions/edit-actions.c:83
-#, fuzzy
 msgid "Cu_t"
-msgstr "Iškirpti"
+msgstr "_Iškirpti"
 
 #: app/actions/edit-actions.c:88
-#, fuzzy
 msgid "_Copy"
-msgstr "Apkarpyti"
+msgstr "_Kopijuoti"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "/_Byla"
+msgstr "Kopijuoti _matomą"
 
 #: app/actions/edit-actions.c:98
-#, fuzzy
 msgid "_Paste"
-msgstr "Įdėti"
+msgstr "Į_dėti"
 
 #: app/actions/edit-actions.c:103
-#, fuzzy
 msgid "Paste _Into"
-msgstr "Įdėti į"
+msgstr "Įdėt_i į vidų"
 
 #: app/actions/edit-actions.c:108
-#, fuzzy
 msgid "Paste as _New"
-msgstr "Įdėti kaip naują"
+msgstr "Įdėti kaip _naują"
 
 #: app/actions/edit-actions.c:113
 #, fuzzy
@@ -1336,48 +1186,42 @@ msgid "_Copy Named..."
 msgstr "Kopijuoti·į vardinį buferį"
 
 #: app/actions/edit-actions.c:123
-#, fuzzy
 msgid "_Paste Named..."
-msgstr "/Keisti/Bufferis/Įdėti iš buferio vardu..."
+msgstr "Į_dėti iš buferio vardu..."
 
 #: app/actions/edit-actions.c:128
-#, fuzzy
 msgid "Cl_ear"
-msgstr "Išvalyti"
+msgstr "Iš_valyti"
 
 #: app/actions/edit-actions.c:136
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "Užpildyti priekinio plano spalva"
+msgstr "Užpildyti _priekinio plano spalva"
 
 #: app/actions/edit-actions.c:141
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "Užpildyti fono spalva"
+msgstr "Užpildyti _fono spalva"
 
 #: app/actions/edit-actions.c:146
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "Užpildyti raštu"
+msgstr "Užpildyti _raštu"
 
 #: app/actions/edit-actions.c:214
 #, c-format
 msgid "_Undo %s"
-msgstr "Atšaukti %s"
+msgstr "_Atšaukti %s"
 
 #: app/actions/edit-actions.c:219
 #, c-format
 msgid "_Redo %s"
-msgstr "Grąžinti %s"
+msgstr "_Grąžinti %s"
 
 #: app/actions/edit-commands.c:104
-#, fuzzy
 msgid "Clear Undo History"
-msgstr "Atšaukimų istorija"
+msgstr "Išvalyti atšaukimų istoriją"
 
 #: app/actions/edit-commands.c:122
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "Tikrai išvalyti paveikslėlio atšaukimų istoriją"
 
 #: app/actions/edit-commands.c:210
 msgid "Cut Named"
@@ -1389,7 +1233,7 @@ msgstr "Įveskite vardą šiam buferiui"
 
 #: app/actions/edit-commands.c:230
 msgid "Copy Named"
-msgstr "Kopijuoti·į vardinį buferį"
+msgstr "Kopijuoti į vardinį buferį"
 
 #: app/actions/edit-commands.c:337
 #, fuzzy
@@ -1411,37 +1255,31 @@ msgstr ""
 
 #: app/actions/error-console-actions.c:40
 msgid "Error Console Menu"
-msgstr "Klaidų terminalo meniu"
+msgstr "Klaidų konsolės meniu"
 
 #: app/actions/error-console-actions.c:44
-#, fuzzy
 msgid "_Clear Errors"
-msgstr "/Iš_valyti klaidas"
+msgstr "_Išvalyti klaidas"
 
 #: app/actions/error-console-actions.c:45
-#, fuzzy
 msgid "Clear errors"
 msgstr "Išvalyti klaidas"
 
 #: app/actions/error-console-actions.c:53
-#, fuzzy
 msgid "Save _All Errors to File..."
-msgstr "/Įrašyti visas klaidas į bylą..."
+msgstr "Įrašyti _visas klaidas į bylą..."
 
 #: app/actions/error-console-actions.c:54
-#, fuzzy
 msgid "Save all errors"
-msgstr "Išvalyti klaidas"
+msgstr "Išsaugoti visas klaidas"
 
 #: app/actions/error-console-actions.c:59
-#, fuzzy
 msgid "Save _Selection to File..."
-msgstr "/Įrašyti pažymėjimą į bylą..."
+msgstr "Įrašyti _pažymėjimą į bylą..."
 
 #: app/actions/error-console-actions.c:60
-#, fuzzy
 msgid "Save selection"
-msgstr "Perkelti pažymėjimą"
+msgstr "Išsaugoti pažymėjimą"
 
 #: app/actions/error-console-commands.c:69
 msgid "Cannot save. Nothing is selected."
@@ -1459,66 +1297,54 @@ msgid ""
 msgstr "Klaida įrašant bylą %s: %s"
 
 #: app/actions/file-actions.c:61
-#, fuzzy
 msgid "_File"
-msgstr "/_Byla"
+msgstr "_Byla"
 
 #: app/actions/file-actions.c:62
-#, fuzzy
 msgid "Open _Recent"
-msgstr "/Byla/Atidaryti paskutinius"
+msgstr "Atidaryti _paskutinius"
 
 #: app/actions/file-actions.c:63
-#, fuzzy
 msgid "_Acquire"
-msgstr "/Byla/Įkelti"
+msgstr "Į_kelti"
 
 #: app/actions/file-actions.c:66 app/actions/file-actions.c:71
-#, fuzzy
 msgid "_Open..."
-msgstr "/Byla/Averti..."
+msgstr "_Atidaryti..."
 
 #: app/actions/file-actions.c:76
-#, fuzzy
 msgid "Op_en as Layer..."
-msgstr "/Naujas sluoksnis..."
+msgstr "Ati_daryti kaip sluoksnį..."
 
 #: app/actions/file-actions.c:81
-#, fuzzy
 msgid "Open _Location..."
-msgstr "Vieta:"
+msgstr "Atidaryti _vietą..."
 
 #: app/actions/file-actions.c:86
-#, fuzzy
 msgid "_Save"
-msgstr "Išsaugoti"
+msgstr "Iš_saugoti"
 
 #: app/actions/file-actions.c:91
-#, fuzzy
 msgid "Save _as..."
-msgstr "/Byla/Išsaugoti kaip..."
+msgstr "Išsaugoti kaip..."
 
 #: app/actions/file-actions.c:96
-#, fuzzy
 msgid "Save a Cop_y..."
-msgstr "/Byla/Išsaugoti kopiją kaip..."
+msgstr "Išsaugoti kaip k_opiją..."
 
 #: app/actions/file-actions.c:101
-#, fuzzy
 msgid "Save as _Template..."
-msgstr "/Byla/Išsaugoti šabloną kaip..."
+msgstr "Išsaugoti kaip ša_bloną..."
 
 #: app/actions/file-actions.c:106
-#, fuzzy
 msgid "Re_vert..."
-msgstr "Atstatyti"
+msgstr "Sug_rąžinti..."
 
 #: app/actions/file-actions.c:111
-#, fuzzy
 msgid "_Quit"
-msgstr "/Byla/Baigti darbą"
+msgstr "_Baigti darbą"
 
-#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:249
+#: app/actions/file-commands.c:208 app/dialogs/file-save-dialog.c:252
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1574,9 +1400,8 @@ msgstr ""
 "nebus išsaugoti)"
 
 #: app/actions/file-commands.c:372
-#, fuzzy
 msgid "Open Image as Layer"
-msgstr "Atidaryti paveikslėlį"
+msgstr "Atidaryti paveikslėlį kaip sluoksnį"
 
 #: app/actions/file-commands.c:377 app/dialogs/file-open-dialog.c:74
 msgid "Open Image"
@@ -1587,13 +1412,14 @@ msgid "(Unnamed Template)"
 msgstr "(Šablonas be pavadinimo)"
 
 #: app/actions/file-commands.c:493
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Atstatymas nepavyko.\n"
+"Atstatymas į „%s“ nepavyko:\n"
+"\n"
 "%s"
 
 #: app/actions/fonts-actions.c:44
@@ -1601,12 +1427,10 @@ msgid "Fonts Menu"
 msgstr "Šriftų meniu"
 
 #: app/actions/fonts-actions.c:48
-#, fuzzy
 msgid "_Rescan Font List"
-msgstr "/_Perskanuoti šriftų sąrašą"
+msgstr "_Perskanuoti šriftų sąrašą"
 
 #: app/actions/fonts-actions.c:49
-#, fuzzy
 msgid "Rescan font list"
 msgstr "Perskanuoti šriftų sąrašą"
 
@@ -1630,9 +1454,8 @@ msgid "Load Right Color Fr_om"
 msgstr "Dešiniojo kaimyno kairysis galinis taškas"
 
 #: app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgid "Sa_ve Right Color To"
-msgstr "/Išsaugoti dešinę spalvą į"
+msgstr "Iš_saugoti dešinę spalvą į"
 
 #: app/actions/gradient-editor-actions.c:63
 #, fuzzy
@@ -1666,15 +1489,13 @@ msgstr "Dešiniojo galinio taško spalva"
 
 #: app/actions/gradient-editor-actions.c:153
 #: app/actions/gradient-editor-actions.c:201
-#, fuzzy
 msgid "_FG Color"
-msgstr "Priekinio plano/Fono spalva"
+msgstr "_Priekinio plano spalva"
 
 #: app/actions/gradient-editor-actions.c:158
 #: app/actions/gradient-editor-actions.c:206
-#, fuzzy
 msgid "_BG Color"
-msgstr "Priekinio plano/Fono spalva"
+msgstr "_Fono spalva"
 
 #: app/actions/gradient-editor-actions.c:191
 #, fuzzy
@@ -1687,46 +1508,39 @@ msgid "_Left Endpoint"
 msgstr "Kariojo galinio taško spalva"
 
 #: app/actions/gradient-editor-actions.c:245
-#, fuzzy
 msgid "_Linear"
-msgstr "Tiesinis"
+msgstr "_Linijinis"
 
 #: app/actions/gradient-editor-actions.c:250
-#, fuzzy
 msgid "_Curved"
-msgstr "Kreivės"
+msgstr "_Kreivės"
 
 #: app/actions/gradient-editor-actions.c:255
 msgid "_Sinusoidal"
 msgstr ""
 
 #: app/actions/gradient-editor-actions.c:260
-#, fuzzy
 msgid "Spherical (i_ncreasing)"
-msgstr "/Perėjimo funkcija/Sferinė (didėjanti)"
+msgstr "Sferinė (didėjanti)"
 
 #: app/actions/gradient-editor-actions.c:265
-#, fuzzy
 msgid "Spherical (_decreasing)"
-msgstr "/Perėjimo funkcija/Sferinė (mažėjantis)"
+msgstr "Sferinė (mažėjantis)"
 
 #: app/actions/gradient-editor-actions.c:270
 #: app/actions/gradient-editor-actions.c:293
 msgid "(Varies)"
-msgstr ""
+msgstr "(kinta)"
 
 #: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:123
-#, fuzzy
 msgid "_RGB"
-msgstr "RGB"
+msgstr "_RGB"
 
 #: app/actions/gradient-editor-actions.c:283
-#, fuzzy
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (spalva prieš laikrodžio rodyklę)"
 
 #: app/actions/gradient-editor-actions.c:288
-#, fuzzy
 msgid "HSV (clockwise _hue)"
 msgstr "FG į BG (HSV spalva pagal laikrodžio rodyklę)"
 
@@ -1786,7 +1600,7 @@ msgstr "Padalinti segmentą tolygiai..."
 
 #: app/actions/gradient-editor-actions.c:602
 msgid "_Delete Segment"
-msgstr "Ištrinti segmentą"
+msgstr "Iš_trinti segmentą"
 
 # Nesu tikra.
 #: app/actions/gradient-editor-actions.c:604
@@ -1796,7 +1610,6 @@ msgstr "Atnaujinti segmento vidurio taško vietą"
 
 # Nesu tikra.
 #: app/actions/gradient-editor-actions.c:606
-#, fuzzy
 msgid "Re-distribute _Handles in Segment"
 msgstr "Pakeisti veiksmo tipą segmente"
 
@@ -1836,7 +1649,6 @@ msgstr "Atnaujinti vidurio taškų vietas pažymėjime"
 
 # Nesu tikra.
 #: app/actions/gradient-editor-actions.c:628
-#, fuzzy
 msgid "Re-distribute _Handles in Selection"
 msgstr "Pakeisti veiksmo tipą pažymėjime"
 
@@ -1929,64 +1741,52 @@ msgid "Gradients Menu"
 msgstr "Perėjimų meniu"
 
 #: app/actions/gradients-actions.c:48
-#, fuzzy
 msgid "_New Gradient"
-msgstr "/Naujas perėjimas"
+msgstr "_Naujas perėjimas"
 
 #: app/actions/gradients-actions.c:49
-#, fuzzy
 msgid "New gradient"
-msgstr "/Naujas perėjimas"
+msgstr "Naujas perėjimas"
 
 #: app/actions/gradients-actions.c:54
-#, fuzzy
 msgid "D_uplicate Gradient"
-msgstr "/Padaryti perėjimo kopiją"
+msgstr "Padaryti perėjimo kopiją"
 
 #: app/actions/gradients-actions.c:55
-#, fuzzy
 msgid "Duplicate gradient"
-msgstr "/Padaryti perėjimo kopiją"
+msgstr "Padaryti perėjimo kopiją"
 
 #: app/actions/gradients-actions.c:60
-#, fuzzy
 msgid "Save as _POV-Ray..."
-msgstr "Išsaugoti kaip POV-Ray"
+msgstr "Išsaugoti kaip _POV-Ray..."
 
 #: app/actions/gradients-actions.c:61
-#, fuzzy
 msgid "Save gradient as POV-Ray"
-msgstr "Išsaugoti '%s' kaip POV-Ray"
+msgstr "Išsaugoti kaip POV-Ray"
 
 #: app/actions/gradients-actions.c:66
-#, fuzzy
 msgid "_Delete Gradient..."
-msgstr "/Trinti perėjimą..."
+msgstr "_Trinti perėjimą..."
 
 #: app/actions/gradients-actions.c:67
-#, fuzzy
 msgid "Delete gradient"
-msgstr "/Trinti perėjimą..."
+msgstr "Trinti perėjimą..."
 
 #: app/actions/gradients-actions.c:72
-#, fuzzy
 msgid "_Refresh Gradients"
-msgstr "/Atnaujinti perėjimus"
+msgstr "_Atnaujinti perėjimus"
 
 #: app/actions/gradients-actions.c:73
-#, fuzzy
 msgid "Refresh gradients"
-msgstr "/Atnaujinti perėjimus"
+msgstr "Atnaujinti perėjimus"
 
 #: app/actions/gradients-actions.c:81
-#, fuzzy
 msgid "_Edit Gradient..."
-msgstr "/Keistii perėjimą..."
+msgstr "_Keistii perėjimą..."
 
 #: app/actions/gradients-actions.c:82
-#, fuzzy
 msgid "Edit gradient"
-msgstr "/Keistii perėjimą..."
+msgstr "Keistii perėjimą..."
 
 #: app/actions/gradients-commands.c:65
 #, c-format
@@ -1994,14 +1794,12 @@ msgid "Save '%s' as POV-Ray"
 msgstr "Išsaugoti '%s' kaip POV-Ray"
 
 #: app/actions/help-actions.c:38 app/actions/help-actions.c:41
-#, fuzzy
 msgid "_Help"
-msgstr "/_Pagalba"
+msgstr "_Pagalba"
 
 #: app/actions/help-actions.c:46
-#, fuzzy
 msgid "_Context Help"
-msgstr "/Pagalba/Kontekstinė pagalba"
+msgstr "_Kontekstinė pagalba"
 
 #: app/actions/image-actions.c:47
 msgid "Toolbox Menu"
@@ -2012,24 +1810,20 @@ msgid "Image Menu"
 msgstr "Paveikslėlio meniu"
 
 #: app/actions/image-actions.c:58
-#, fuzzy
 msgid "_Xtns"
-msgstr "/_Išpl."
+msgstr "_Išpl."
 
 #: app/actions/image-actions.c:59
-#, fuzzy
 msgid "_Image"
-msgstr "/Paveikslėlis"
+msgstr "_Paveikslėlis"
 
 #: app/actions/image-actions.c:60
-#, fuzzy
 msgid "_Mode"
-msgstr "Režimas"
+msgstr "_Režimas"
 
 #: app/actions/image-actions.c:61 app/actions/layers-actions.c:57
-#, fuzzy
 msgid "_Transform"
-msgstr "Transformuoti"
+msgstr "_Transformuoti"
 
 #: app/actions/image-actions.c:62
 #, fuzzy
@@ -2037,12 +1831,10 @@ msgid "_Guides"
 msgstr "Pagalbinė linija"
 
 #: app/actions/image-actions.c:65 app/actions/image-actions.c:70
-#, fuzzy
 msgid "_New..."
-msgstr "/_Naujas kelias..."
+msgstr "_Nauja..."
 
 #: app/actions/image-actions.c:75
-#, fuzzy
 msgid "Can_vas Size..."
 msgstr "Paveikslėlio dydis"
 
@@ -2051,49 +1843,40 @@ msgid "F_it Canvas to Layers"
 msgstr ""
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 msgid "_Print Size..."
-msgstr "Spausdinimo dydis:"
+msgstr "_Spausdinimo dydis..."
 
 #: app/actions/image-actions.c:90
-#, fuzzy
 msgid "_Scale Image..."
-msgstr "Keisti paveikslėlio dydį"
+msgstr "_Keisti paveikslėlio dydį"
 
 #: app/actions/image-actions.c:95
-#, fuzzy
 msgid "_Crop Image"
-msgstr "Apkirpti paveikslėlį"
+msgstr "_Apkirpti paveikslėlį"
 
 #: app/actions/image-actions.c:100
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Padaryti kopiją"
+msgstr "_Padaryti kopiją"
 
 #: app/actions/image-actions.c:105
-#, fuzzy
 msgid "Merge Visible _Layers..."
-msgstr "/Sujungti _matomus sluoksnius..."
+msgstr "Sujungti _matomus sluoksnius..."
 
 #: app/actions/image-actions.c:110 app/actions/layers-actions.c:138
-#, fuzzy
 msgid "_Flatten Image"
-msgstr "/Su_jungti paveikslėlio sluoksnius"
+msgstr "_Su_jungti paveikslėlio sluoksnius"
 
 #: app/actions/image-actions.c:115
-#, fuzzy
 msgid "Configure G_rid..."
 msgstr "Tinklelio Konfigūravimas"
 
 #: app/actions/image-actions.c:128
-#, fuzzy
 msgid "_Grayscale"
 msgstr "Pilkumo atspalviai"
 
 #: app/actions/image-actions.c:133
-#, fuzzy
 msgid "_Indexed..."
-msgstr "Indeksuota"
+msgstr "_Indeksuota..."
 
 #: app/actions/image-commands.c:192
 msgid "Set Image Canvas Size"
@@ -2116,7 +1899,7 @@ msgstr "Apsukamas..."
 #: app/pdb/drawable_transform_cmds.c:1193 app/pdb/transform_tools_cmds.c:339
 #: app/tools/gimprotatetool.c:159
 msgid "Rotating..."
-msgstr "Suka..."
+msgstr "Sukama..."
 
 #: app/actions/image-commands.c:332 app/actions/layers-commands.c:535
 #, fuzzy
@@ -2124,9 +1907,8 @@ msgid "Cannot crop because the current selection is empty."
 msgstr "Neina iškirpti/kopijuoti, kadangi pasirinktas regionas tuščias "
 
 #: app/actions/image-commands.c:484
-#, fuzzy
 msgid "Change Print Size"
-msgstr "Spausdinimo dydis:"
+msgstr "Keisti spausdinimo dydį"
 
 #: app/actions/image-commands.c:508 app/core/gimpimage-scale.c:71
 #: app/dialogs/image-scale-dialog.c:91
@@ -2145,27 +1927,24 @@ msgid "Images Menu"
 msgstr "Paveikslėlių meniu"
 
 #: app/actions/images-actions.c:47
-#, fuzzy
 msgid "_Raise Views"
-msgstr "/_Pakelti vaizdus"
+msgstr "_Pakelti vaizdus"
 
 #: app/actions/images-actions.c:48
 msgid "Raise this image's displays"
 msgstr ""
 
 #: app/actions/images-actions.c:53 app/actions/view-actions.c:68
-#, fuzzy
 msgid "_New View"
-msgstr "/Naujas vaizdas"
+msgstr "_Naujas vaizdas"
 
 #: app/actions/images-actions.c:54
 msgid "Create a new display for this image"
 msgstr "Sukurti naują paveikslėlio langą"
 
 #: app/actions/images-actions.c:59
-#, fuzzy
 msgid "_Delete Image"
-msgstr "/Ištrinti paveikslėlį"
+msgstr "_Ištrinti paveikslėlį"
 
 #: app/actions/images-actions.c:60
 msgid "Delete this image"
@@ -2176,255 +1955,206 @@ msgid "Layers Menu"
 msgstr "Sluoksnių meniu"
 
 #: app/actions/layers-actions.c:51
-#, fuzzy
 msgid "_Layer"
-msgstr "/Sluoksniai"
+msgstr "_Sluoksniai"
 
 #: app/actions/layers-actions.c:52
-#, fuzzy
 msgid "Stac_k"
-msgstr "/Sluoksniai/Dėklas"
+msgstr "Dėklas"
 
 #: app/actions/layers-actions.c:54 app/tools/gimplevelstool.c:665
 msgid "_Auto"
 msgstr "_Automatinis"
 
 #: app/actions/layers-actions.c:55
-#, fuzzy
 msgid "_Mask"
-msgstr "_Pagrindinis"
+msgstr "_Kaukė"
 
 #: app/actions/layers-actions.c:56
-#, fuzzy
 msgid "Tr_ansparency"
-msgstr "Skaidrumas"
+msgstr "Permatomumas"
 
 #: app/actions/layers-actions.c:58
-#, fuzzy
 msgid "_Properties"
-msgstr "Perspektyvos"
+msgstr "_Savybės"
 
 #: app/actions/layers-actions.c:60
-#, fuzzy
 msgid "Layer _Mode"
-msgstr "Sluoksnio režimas"
+msgstr "Sluoksnio _režimas"
 
 #: app/actions/layers-actions.c:63
-#, fuzzy
 msgid "Te_xt Tool"
-msgstr "/Teksto įrankiai"
+msgstr "Te_ksto įrankiai"
 
 #: app/actions/layers-actions.c:68
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "/Keisti sluoksnio savybes..."
+msgstr "_Keisti sluoksnio savybes..."
 
 #: app/actions/layers-actions.c:69
-#, fuzzy
 msgid "Edit layer attributes"
 msgstr "Keisti sluoksnio parametrus"
 
 #: app/actions/layers-actions.c:74
-#, fuzzy
 msgid "_New Layer..."
-msgstr "/Naujas sluoksnis..."
+msgstr "_Naujas sluoksnis..."
 
 #: app/actions/layers-actions.c:75
-#, fuzzy
 msgid "New layer..."
-msgstr "/Naujas sluoksnis..."
+msgstr "_Naujas sluoksnis..."
 
 #: app/actions/layers-actions.c:80
-#, fuzzy
 msgid "_New Layer"
-msgstr "Naujas sluoksnis"
+msgstr "_Naujas sluoksnis"
 
 #: app/actions/layers-actions.c:81
 msgid "New layer with last values"
-msgstr ""
+msgstr "Naujas sluoksnis su paskutinėmis reikšmėmis"
 
 #: app/actions/layers-actions.c:86
-#, fuzzy
 msgid "D_uplicate Layer"
-msgstr "/Padaryti sluoksnio kopiją"
+msgstr "Padaryti sluoksnio kopiją"
 
 #: app/actions/layers-actions.c:87
-#, fuzzy
 msgid "Duplicate layer"
 msgstr "Padaryti sluoksnio kopiją"
 
 #: app/actions/layers-actions.c:92
-#, fuzzy
 msgid "_Delete Layer"
-msgstr "/Ištrinti sluoksnį"
+msgstr "_Ištrinti sluoksnį"
 
 #: app/actions/layers-actions.c:93 app/core/core-enums.c:1078
-#, fuzzy
 msgid "Delete layer"
 msgstr "Ištrinti sluoksnį"
 
 #: app/actions/layers-actions.c:98
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "/Pakelti sluoksnį"
+msgstr "_Pakelti sluoksnį"
 
 #: app/actions/layers-actions.c:99
-#, fuzzy
 msgid "Raise layer"
 msgstr "Pakelti sluoksnį"
 
 #: app/actions/layers-actions.c:104
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "/Perkelti sluoksnį iki viršaus"
+msgstr "Perkelti sluoksnį iki _viršaus"
 
 #: app/actions/layers-actions.c:105
-#, fuzzy
 msgid "Raise layer to top"
 msgstr "Pakelti sluoksnį iki viršaus"
 
 #: app/actions/layers-actions.c:110
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "/Nuleisti sluoksnį"
+msgstr "_Nuleisti sluoksnį"
 
 #: app/actions/layers-actions.c:111
-#, fuzzy
 msgid "Lower layer"
 msgstr "Nuleisti sluoksnį"
 
 #: app/actions/layers-actions.c:116
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "/Nuleisti sluoksnį iki apačios"
+msgstr "Nuleisti sluoksnį iki _apačios"
 
 #: app/actions/layers-actions.c:117
-#, fuzzy
 msgid "Lower layer to bottom"
 msgstr "Nuleisti sluoksnį iki apačios"
 
 #: app/actions/layers-actions.c:122
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "/Pritvirtinti sluoksnį"
+msgstr "_Pritvirtinti sluoksnį"
 
 #: app/actions/layers-actions.c:123
-#, fuzzy
 msgid "Anchor floating layer"
 msgstr "Pritvirtinti plaukiojantį sluoksnį"
 
 #: app/actions/layers-actions.c:128
-#, fuzzy
 msgid "Merge Do_wn"
-msgstr "/Sujungti su žemiau esančiu"
+msgstr "Sujungti su žemiau esančiu"
 
 #: app/actions/layers-actions.c:133
-#, fuzzy
 msgid "Merge _Visible Layers..."
-msgstr "/Sujungti _matomus sluoksnius..."
+msgstr "Sujungti _matomus sluoksnius..."
 
 #: app/actions/layers-actions.c:143
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "/Atsisakyti tekstinės informacijos"
+msgstr "_Atsisakyti tekstinės informacijos"
 
 #: app/actions/layers-actions.c:148
-#, fuzzy
 msgid "Layer B_oundary Size..."
-msgstr "/Sluoksnio ribų dydis..."
+msgstr "Sluoksnio ribų dydis..."
 
 #: app/actions/layers-actions.c:153
-#, fuzzy
 msgid "Layer to _Image Size"
-msgstr "/Prilyginti sluoksnio dydį paveikslėlio dydžiui"
+msgstr "Prilyginti sluoksnio dydį paveikslėlio dydžiui"
 
 #: app/actions/layers-actions.c:158
-#, fuzzy
 msgid "_Scale Layer..."
-msgstr "/Keisti sluoksnio dydį..."
+msgstr "_Keisti sluoksnio dydį..."
 
 #: app/actions/layers-actions.c:163
-#, fuzzy
 msgid "Cr_op Layer"
 msgstr "Apkarpyti sluoksnį"
 
 #: app/actions/layers-actions.c:168
-#, fuzzy
 msgid "Add La_yer Mask..."
-msgstr "/Pridėti sluoksnio kaukę..."
+msgstr "Pridėti sluoksnio kaukę..."
 
 #: app/actions/layers-actions.c:173
-#, fuzzy
 msgid "Add Alpha C_hannel"
-msgstr "/Pridėti alfa _kanalą"
+msgstr "Pridėti alfa _kanalą"
 
 #: app/actions/layers-actions.c:181
-#, fuzzy
 msgid "Keep Transparency"
 msgstr "Išlaikyti permatomumą"
 
 #: app/actions/layers-actions.c:187
-#, fuzzy
 msgid "Edit Layer Mask"
 msgstr "Pridėti sluoksnio kaukę"
 
 #: app/actions/layers-actions.c:193
-#, fuzzy
 msgid "Show Layer Mask"
-msgstr "Perkelti sluoksnio kaukę"
+msgstr "Rodyti sluoksnio kaukę"
 
 #: app/actions/layers-actions.c:199
-#, fuzzy
 msgid "Disable Layer Mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
 #: app/actions/layers-actions.c:208
-#, fuzzy
 msgid "Apply Layer _Mask"
-msgstr "/Pritaikyti sluoksnio kaukę"
+msgstr "Pritaikyti sluoksnio kaukę"
 
 #: app/actions/layers-actions.c:213
-#, fuzzy
 msgid "Delete Layer Mas_k"
-msgstr "/Ištrinti sluoksnio kaukę"
+msgstr "Ištrinti sluoksnio kaukę"
 
 #: app/actions/layers-actions.c:221
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "/Pritaikyti kaukę pažymėjimui"
+msgstr "_Pritaikyti kaukę pažymėjimui"
 
 #: app/actions/layers-actions.c:244
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "/Alfa į _pažymėjimą"
+msgstr "Alfa į _pažymėjimą"
 
 #: app/actions/layers-actions.c:249
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "/Pridėti prie pažymėjimo"
+msgstr "Pridėti prie pažymėjimo"
 
 #: app/actions/layers-actions.c:267
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "/Sluoksniai/Dėklas/Pažymėti viršutinį sluoksnį"
+msgstr "Pažymėti viršutinį sluoksnį"
 
 #: app/actions/layers-actions.c:272
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "/Sluoksniai/Dėklas/Pažymėti apatinį sluoksnį"
+msgstr "Pažymėti apatinį sluoksnį"
 
 #: app/actions/layers-actions.c:277
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "/Sluoksniai/Dėklas/Pažymėti praeitą sluoksnį"
+msgstr "Pažymėti praeitą sluoksnį"
 
 #: app/actions/layers-actions.c:282
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "/Sluoksniai/Dėklas/Pažymėti kitą sluoksnį"
+msgstr "Pažymėti kitą sluoksnį"
 
 #: app/actions/layers-actions.c:290
-#, fuzzy
 msgid "Set Opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
@@ -2459,9 +2189,8 @@ msgid "Crop Layer"
 msgstr "Apkarpyti sluoksnį"
 
 #: app/actions/layers-commands.c:683
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Sluoksniai/Kaukę paversti pažymėjimu"
+msgstr "Kaukę paversti pažymėjimu"
 
 #: app/actions/layers-commands.c:904 app/core/gimplayer.c:1066
 #: app/dialogs/layer-add-mask-dialog.c:62
@@ -2477,44 +2206,36 @@ msgid "Palette Editor Menu"
 msgstr "Palečių redaktoriaus meniu"
 
 #: app/actions/palette-editor-actions.c:53
-#, fuzzy
 msgid "_Delete Color"
-msgstr "/Iš_trinti spalvą"
+msgstr "_Ištrinti spalvą"
 
 #: app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgid "Delete color"
 msgstr "Ištrinti spalvą"
 
 #: app/actions/palette-editor-actions.c:62
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "/Nauja spalva iš _priekinio plano"
+msgstr "Nauja spalva iš _priekinio plano"
 
 #: app/actions/palette-editor-actions.c:63
-#, fuzzy
 msgid "New color from FG"
-msgstr "/Nauja spalva iš _priekinio plano"
+msgstr "Nauja spalva iš _priekinio plano"
 
 #: app/actions/palette-editor-actions.c:68
-#, fuzzy
 msgid "New Color from _BG"
-msgstr "/Nauja spalva iš _fono"
+msgstr "Nauja spalva iš _fono"
 
 #: app/actions/palette-editor-actions.c:69
-#, fuzzy
 msgid "New color from BG"
-msgstr "/Nauja spalva iš _fono"
+msgstr "Nauja spalva iš _fono"
 
 #: app/actions/palette-editor-actions.c:77 app/actions/view-actions.c:215
-#, fuzzy
 msgid "Zoom _In"
-msgstr "/Pa_didinti"
+msgstr "Pa_didinti"
 
 #: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:209
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "/Su_mažinti"
+msgstr "Su_mažinti"
 
 #: app/actions/palette-editor-actions.c:89
 #, fuzzy
@@ -2534,81 +2255,66 @@ msgid "Palettes Menu"
 msgstr "Palečių meniu"
 
 #: app/actions/palettes-actions.c:48
-#, fuzzy
 msgid "_New Palette"
-msgstr "/_Nauja paletė"
+msgstr "_Nauja paletė"
 
 #: app/actions/palettes-actions.c:49
-#, fuzzy
 msgid "New palette"
-msgstr "/_Nauja paletė"
+msgstr "_Nauja paletė"
 
 #: app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "/_Importuoti paletę..."
+msgstr "_Importuoti paletę..."
 
 #: app/actions/palettes-actions.c:55
-#, fuzzy
 msgid "Import palette"
 msgstr "Importuoti paletę"
 
 #: app/actions/palettes-actions.c:60
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "/Padar_yti paletės kopiją"
+msgstr "Padar_yti paletės kopiją"
 
 #: app/actions/palettes-actions.c:61
-#, fuzzy
 msgid "Duplicate palette"
-msgstr "/Padar_yti paletės kopiją"
+msgstr "Padar_yti paletės kopiją"
 
 #: app/actions/palettes-actions.c:66
-#, fuzzy
 msgid "_Merge Palettes..."
-msgstr "/Su_jungti paletes"
+msgstr "_Su_jungti paletes"
 
 #: app/actions/palettes-actions.c:67
-#, fuzzy
 msgid "Merge palettes"
 msgstr "Sujungti paletes"
 
 #: app/actions/palettes-actions.c:72
-#, fuzzy
 msgid "_Delete Palette"
-msgstr "/Iš_trinti paletę"
+msgstr "_Iš_trinti paletę"
 
 #: app/actions/palettes-actions.c:73
-#, fuzzy
 msgid "Delete palette"
-msgstr "/Iš_trinti paletę"
+msgstr "Iš_trinti paletę"
 
 #: app/actions/palettes-actions.c:78
-#, fuzzy
 msgid "_Refresh Palettes"
-msgstr "/_Atnaujinti paletes"
+msgstr "_Atnaujinti paletes"
 
 #: app/actions/palettes-actions.c:79
-#, fuzzy
 msgid "Refresh palettes"
-msgstr "/_Atnaujinti paletes"
+msgstr "Atnaujinti paletes"
 
 #: app/actions/palettes-actions.c:87
-#, fuzzy
 msgid "_Edit Palette..."
-msgstr "/K_eisti paletę..."
+msgstr "_K_eisti paletę..."
 
 #: app/actions/palettes-actions.c:88
-#, fuzzy
 msgid "Edit palette"
-msgstr "/K_eisti paletę..."
+msgstr "K_eisti paletę"
 
 #: app/actions/palettes-commands.c:72
 msgid "Merge Palette"
 msgstr "Sujungti paletes"
 
 #: app/actions/palettes-commands.c:76
-#, fuzzy
 msgid "Enter a name for the merged palette"
 msgstr "Įveskite vardą sujungtai·paletei"
 
@@ -2617,83 +2323,68 @@ msgid "Patterns Menu"
 msgstr "Raštų meniu"
 
 #: app/actions/patterns-actions.c:47
-#, fuzzy
 msgid "_New Pattern"
-msgstr "/_Naujas raštas"
+msgstr "_Naujas raštas"
 
 #: app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "New pattern"
-msgstr "/_Naujas raštas"
+msgstr "Naujas raštas"
 
 #: app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "/Padar_yti rašto kopiją"
+msgstr "Padar_yti rašto kopiją"
 
 #: app/actions/patterns-actions.c:54
-#, fuzzy
 msgid "Duplicate pattern"
-msgstr "/Padar_yti rašto kopiją"
+msgstr "Padar_yti rašto kopiją"
 
 #: app/actions/patterns-actions.c:59
-#, fuzzy
 msgid "_Delete Pattern..."
-msgstr "/Iš_trinti raštą..."
+msgstr "_Iš_trinti raštą..."
 
 #: app/actions/patterns-actions.c:60
-#, fuzzy
 msgid "Delete pattern"
-msgstr "/Iš_trinti raštą..."
+msgstr "Iš_trinti raštą"
 
 #: app/actions/patterns-actions.c:65
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "/_Atnaujinti raštus"
+msgstr "_Atnaujinti raštus"
 
 #: app/actions/patterns-actions.c:66
-#, fuzzy
 msgid "Refresh patterns"
-msgstr "/_Atnaujinti raštus"
+msgstr "Atnaujinti raštus"
 
 #: app/actions/patterns-actions.c:74
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/K_eisti raštus..."
+msgstr "K_eisti raštus..."
 
 #: app/actions/patterns-actions.c:75
-#, fuzzy
 msgid "Edit pattern"
-msgstr "/K_eisti raštus..."
+msgstr "K_eisti raštus"
 
 #: app/actions/plug-in-actions.c:62
-#, fuzzy
 msgid "Filte_rs"
-msgstr "/Filtrai"
+msgstr "Filtrai"
 
 #: app/actions/plug-in-actions.c:63
-#, fuzzy
 msgid "_Blur"
-msgstr "Sulieti"
+msgstr "_Sulieti"
 
 #: app/actions/plug-in-actions.c:65
 msgid "Ma_p"
 msgstr ""
 
 #: app/actions/plug-in-actions.c:66
-#, fuzzy
 msgid "_Noise"
-msgstr "Nieko"
+msgstr "_Triukšmas"
 
 #: app/actions/plug-in-actions.c:67
-#, fuzzy
 msgid "Edge-De_tect"
-msgstr "/Filtrai/Kampų aptikimas"
+msgstr "Kampų aptikimas"
 
 #: app/actions/plug-in-actions.c:68
-#, fuzzy
 msgid "En_hance"
-msgstr "/Filtrai/Pagerinimas"
+msgstr "_Pagerinimas"
 
 #: app/actions/plug-in-actions.c:69
 #, fuzzy
@@ -2701,82 +2392,72 @@ msgid "_Generic"
 msgstr "Centras"
 
 #: app/actions/plug-in-actions.c:70
-#, fuzzy
 msgid "Gla_ss Effects"
-msgstr "/Filtrai/Stiklo efektai"
+msgstr "_Stiklo efektai"
 
 #: app/actions/plug-in-actions.c:71
-#, fuzzy
 msgid "_Light Effects"
-msgstr "/Filtrai/Šviesos efektai"
+msgstr "_Šviesos efektai"
 
 #: app/actions/plug-in-actions.c:72
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filtrai/Iškraipymai"
+msgstr "_Iškraipymai"
 
 #: app/actions/plug-in-actions.c:73
-#, fuzzy
 msgid "_Artistic"
-msgstr "/Filtrai/Meniški"
+msgstr "_Meniški"
 
 #: app/actions/plug-in-actions.c:74
-#, fuzzy
 msgid "_Map"
-msgstr "_M"
+msgstr "_Žemėlapis"
 
 #: app/actions/plug-in-actions.c:75
-#, fuzzy
 msgid "_Render"
-msgstr "Centras"
+msgstr "_Perteikimas"
 
 #: app/actions/plug-in-actions.c:76
 msgid "_Clouds"
-msgstr ""
+msgstr "_Debesys"
 
 #: app/actions/plug-in-actions.c:77
-#, fuzzy
 msgid "_Nature"
-msgstr "Pavadinimas:"
+msgstr "_Gamta"
 
 #: app/actions/plug-in-actions.c:79
 msgid "_Web"
-msgstr ""
+msgstr "_Tinklas"
 
 #: app/actions/plug-in-actions.c:80
-#, fuzzy
 msgid "An_imation"
-msgstr "/Filtrai/Animacija"
+msgstr "Animacija"
 
 #: app/actions/plug-in-actions.c:81
-#, fuzzy
 msgid "C_ombine"
-msgstr "/Filtrai/Sujungimas"
+msgstr "Sujungimas"
 
 #: app/actions/plug-in-actions.c:82
-#, fuzzy
 msgid "To_ys"
-msgstr "Įrankinė"
+msgstr "Pramogos"
 
 #: app/actions/plug-in-actions.c:85
 #, fuzzy
 msgid "Reset all Filters..."
 msgstr "/Dialogai/Įrankių savybės..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:363
 msgid "Repeat Last"
 msgstr "Pakartoti paskutinį"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:365
 msgid "Re-Show Last"
 msgstr "Vėl parodyti paskutinį"
 
-#: app/actions/plug-in-actions.c:344
+#: app/actions/plug-in-actions.c:349
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Kart_oti %s"
 
-#: app/actions/plug-in-actions.c:345
+#: app/actions/plug-in-actions.c:350
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Par_odyti iš naujo %s"
@@ -2792,14 +2473,12 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "Atstatyti pasirinktą filtro nustatymus į įprastas vertes"
 
 #: app/actions/qmask-actions.c:42
-#, fuzzy
 msgid "Quick Mask Menu"
-msgstr "GreitosKaukės meniu"
+msgstr "Greitos Kaukės meniu"
 
 #: app/actions/qmask-actions.c:46
-#, fuzzy
 msgid "_Configure Color and Opacity..."
-msgstr "/Konfigūruoti spalvas ir nepermatomumą..."
+msgstr "_Konfigūruoti spalvas ir nepermatomumą..."
 
 #: app/actions/qmask-actions.c:54
 #, fuzzy
@@ -2807,14 +2486,12 @@ msgid "_Quick Mask Active"
 msgstr "Redaguoti greitos·kaukės parametrus"
 
 #: app/actions/qmask-actions.c:60
-#, fuzzy
 msgid "Toggle _Quick Mask"
-msgstr "Aktyvuota greita kaukė"
+msgstr "Perjungti _greitą kaukę"
 
 #: app/actions/qmask-actions.c:70
-#, fuzzy
 msgid "Mask _Selected Areas"
-msgstr "/Maskuoti pažymėtą sritį"
+msgstr "Maskuoti pažymėtą sritį"
 
 #: app/actions/qmask-actions.c:75
 #, fuzzy
@@ -2822,19 +2499,16 @@ msgid "Mask _Unselected Areas"
 msgstr "/Pakeisti kaukę pažymėjimu"
 
 #: app/actions/qmask-commands.c:106
-#, fuzzy
 msgid "Quick Mask Attributes"
 msgstr "Keisti greitos kaukės parametrus"
 
 #: app/actions/qmask-commands.c:109
-#, fuzzy
 msgid "Edit Quick Mask Attributes"
 msgstr "Keisti greitos kaukės parametrus"
 
 #: app/actions/qmask-commands.c:111
-#, fuzzy
 msgid "Edit Quick Mask Color"
-msgstr "Keisti greitos kaukės parametrus"
+msgstr "Keisti greitos kaukės spalvą"
 
 #: app/actions/qmask-commands.c:112
 msgid "Mask Opacity:"
@@ -2846,36 +2520,30 @@ msgid "Selection Editor Menu"
 msgstr "Pažymėjimo savybių nustatymas"
 
 #: app/actions/select-actions.c:47
-#, fuzzy
 msgid "_Select"
-msgstr "/Pažymėti"
+msgstr "_Pažymėti"
 
 #: app/actions/select-actions.c:50
 msgid "_All"
 msgstr ""
 
 #: app/actions/select-actions.c:51
-#, fuzzy
 msgid "Select all"
 msgstr "Pažymėti viską"
 
 #: app/actions/select-actions.c:56
-#, fuzzy
 msgid "_None"
-msgstr "Nieko"
+msgstr "_Nieko"
 
 #: app/actions/select-actions.c:57
-#, fuzzy
 msgid "Select none"
 msgstr "Nepažymėti nieko"
 
 #: app/actions/select-actions.c:62
-#, fuzzy
 msgid "_Invert"
-msgstr "Inversija"
+msgstr "_Invertuoti"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
 msgid "Invert selection"
 msgstr "Invertuoti pažymėjimą"
 
@@ -2890,49 +2558,40 @@ msgid "Fea_ther..."
 msgstr "/Pažymėti/Išlieti ribas..."
 
 #: app/actions/select-actions.c:78
-#, fuzzy
 msgid "_Sharpen"
-msgstr "Paaštrinti"
+msgstr "_Paaštrinti"
 
 #: app/actions/select-actions.c:83
-#, fuzzy
 msgid "S_hrink..."
-msgstr "Transformuojama..."
+msgstr "Sumažinti..."
 
 #: app/actions/select-actions.c:88
-#, fuzzy
 msgid "_Grow..."
-msgstr "/Pažymėti/Padidinti..."
+msgstr "_Padidinti..."
 
 #: app/actions/select-actions.c:93
-#, fuzzy
 msgid "Bo_rder..."
-msgstr "/Pažymėti/Rėmas..."
+msgstr "Rėmas..."
 
 #: app/actions/select-actions.c:98
-#, fuzzy
 msgid "Save to _Channel"
-msgstr "/Pažymėti/Išsaugoti į kanalą"
+msgstr "Išsaugoti į kanalą"
 
 #: app/actions/select-actions.c:99
-#, fuzzy
 msgid "Save selection to channel"
 msgstr "Išsaugoti pažymėjimą į kanalą"
 
 #: app/actions/select-actions.c:104
-#, fuzzy
 msgid "_Stroke Selection..."
-msgstr "Sumažinti pažymėjimą"
+msgstr "_Sumažinti pažymėjimą..."
 
 #: app/actions/select-actions.c:105
-#, fuzzy
 msgid "Stroke selection..."
-msgstr "Sumažinti pažymėjimą"
+msgstr "Sumažinti pažymėjimą..."
 
 #: app/actions/select-actions.c:110
-#, fuzzy
 msgid "_Stroke Selection"
-msgstr "Sumažinti pažymėjimą"
+msgstr "_Sumažinti pažymėjimą"
 
 #: app/actions/select-actions.c:111
 #, fuzzy
@@ -3005,36 +2664,32 @@ msgid "Create a new image from the selected template"
 msgstr "Sukurti naują paveikslėlį iš pažymėto šablono"
 
 #: app/actions/templates-actions.c:52
-#, fuzzy
 msgid "_New Template..."
-msgstr "/Naujas šablonas..."
+msgstr "_Naujas šablonas..."
 
 #: app/actions/templates-actions.c:53
 msgid "Create a new template"
 msgstr "Sukurti naują šabloną"
 
 #: app/actions/templates-actions.c:58
-#, fuzzy
 msgid "D_uplicate Template..."
-msgstr "/Padaryti šablono kopiją"
+msgstr "Padar_yti šablono kopiją..."
 
 #: app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
 msgstr "Dublikuoti pasirinką šabloną"
 
 #: app/actions/templates-actions.c:64
-#, fuzzy
 msgid "_Edit Template..."
-msgstr "/Keisti šabloną"
+msgstr "_Keisti šabloną..."
 
 #: app/actions/templates-actions.c:65
 msgid "Edit the selected template"
 msgstr "Keisti pažymėtą šabloną"
 
 #: app/actions/templates-actions.c:70
-#, fuzzy
 msgid "_Delete Template"
-msgstr "/Ištrinti šabloną"
+msgstr "_Ištrinti šabloną"
 
 #: app/actions/templates-actions.c:71
 msgid "Delete the selected template"
@@ -3063,12 +2718,10 @@ msgid ""
 msgstr "Tikrai norite išrinti šabloną '%s' iš sąrašo ir iš disko?"
 
 #: app/actions/text-editor-actions.c:44
-#, fuzzy
 msgid "Open"
-msgstr "/Byla/Averti..."
+msgstr "Atidaryti..."
 
 #: app/actions/text-editor-actions.c:45
-#, fuzzy
 msgid "Load text from file"
 msgstr "Įkrauti tekstą iš bylos"
 
@@ -3077,7 +2730,6 @@ msgid "Clear"
 msgstr "Išvalyti"
 
 #: app/actions/text-editor-actions.c:51
-#, fuzzy
 msgid "Clear all text"
 msgstr "Išvalyti visą Tekstą"
 
@@ -3086,7 +2738,6 @@ msgid "LTR"
 msgstr ""
 
 #: app/actions/text-editor-actions.c:60 app/text/text-enums.c:51
-#, fuzzy
 msgid "From left to right"
 msgstr "Iš kairės į dešinę"
 
@@ -3095,7 +2746,6 @@ msgid "RTL"
 msgstr ""
 
 #: app/actions/text-editor-actions.c:66 app/text/text-enums.c:52
-#, fuzzy
 msgid "From right to left"
 msgstr "Iš dešinės į kairę"
 
@@ -3118,14 +2768,12 @@ msgid "Tool Options Menu"
 msgstr "Įrankių nustatymų meniu"
 
 #: app/actions/tool-options-actions.c:60
-#, fuzzy
 msgid "_Save Options to"
-msgstr "Išsaugotos savybės"
+msgstr "_Išsaugotos savybės į"
 
 #: app/actions/tool-options-actions.c:64
-#, fuzzy
 msgid "_Restore Options from"
-msgstr "Užkrauti nustatymus iš..."
+msgstr "_Užkrauti nustatymus iš..."
 
 #: app/actions/tool-options-actions.c:68
 #, fuzzy
@@ -3133,9 +2781,8 @@ msgid "Re_name Saved Options"
 msgstr "Įrankių savybės"
 
 #: app/actions/tool-options-actions.c:72
-#, fuzzy
 msgid "_Delete Saved Options"
-msgstr "Ištrinti išsaugotus nustatymus..."
+msgstr "_Ištrinti išsaugotus nustatymus..."
 
 #: app/actions/tool-options-actions.c:76
 #, fuzzy
@@ -3196,34 +2843,28 @@ msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 
 #: app/actions/tools-actions.c:47
-#, fuzzy
 msgid "Tools Menu"
 msgstr "Įrankių dėžės meniu"
 
 #: app/actions/tools-actions.c:50
-#, fuzzy
 msgid "_Tools"
-msgstr "/Įrankiai"
+msgstr "_Įrankiai"
 
 #: app/actions/tools-actions.c:51
-#, fuzzy
 msgid "_Selection Tools"
-msgstr "/Įrankiai/Žymėjimo įrankiai"
+msgstr "_Žymėjimo įrankiai"
 
 #: app/actions/tools-actions.c:52
-#, fuzzy
 msgid "_Paint Tools"
-msgstr "Piešimo įrankis:"
+msgstr "_Piešimo įrankiai"
 
 #: app/actions/tools-actions.c:53
-#, fuzzy
 msgid "_Transform Tools"
-msgstr "/Įrankiai/Transformavimo įrankiai"
+msgstr "_Transformavimo įrankiai"
 
 #: app/actions/tools-actions.c:54
-#, fuzzy
 msgid "_Color Tools"
-msgstr "/Įrankiai/Spalvų įrankiai"
+msgstr "_Spalvų įrankiai"
 
 #: app/actions/tools-actions.c:57
 #, fuzzy
@@ -3235,14 +2876,12 @@ msgid "Reset tool order and visibility"
 msgstr ""
 
 #: app/actions/tools-actions.c:66
-#, fuzzy
 msgid "_Show in Toolbox"
-msgstr "Rodyti pa_tarimus"
+msgstr "_Rodyti įrankių dėžėje"
 
 #: app/actions/tools-actions.c:75
-#, fuzzy
 msgid "_By Color"
-msgstr "RGB spalva"
+msgstr "_Pagal spalvą"
 
 #: app/actions/tools-actions.c:80
 #, fuzzy
@@ -3254,34 +2893,28 @@ msgid "Paths Menu"
 msgstr "Kelių meniu"
 
 #: app/actions/vectors-actions.c:48
-#, fuzzy
 msgid "Path _Tool"
-msgstr "/Kontūrų įrankiai"
+msgstr "Kon_tūrų įrankis"
 
 #: app/actions/vectors-actions.c:53
-#, fuzzy
 msgid "_Edit Path Attributes..."
-msgstr "/K_eisti kelio savybes..."
+msgstr "K_eisti kelio savybes..."
 
 #: app/actions/vectors-actions.c:54
-#, fuzzy
 msgid "Edit path attributes"
-msgstr "Keisti kontūro savybes"
+msgstr "Keisti kelio savybes"
 
 #: app/actions/vectors-actions.c:59
-#, fuzzy
 msgid "_New Path..."
-msgstr "/_Naujas kelias..."
+msgstr "_Naujas kelias..."
 
 #: app/actions/vectors-actions.c:60
-#, fuzzy
 msgid "New path..."
-msgstr "/_Naujas kelias..."
+msgstr "Naujas kelias..."
 
 #: app/actions/vectors-actions.c:65
-#, fuzzy
 msgid "_New Path"
-msgstr "Naujas kontūras"
+msgstr "_Naujas kontūras"
 
 #: app/actions/vectors-actions.c:66
 #, fuzzy
@@ -3289,57 +2922,46 @@ msgid "New path with last values"
 msgstr "Nauja kanalo spalva"
 
 #: app/actions/vectors-actions.c:71
-#, fuzzy
 msgid "D_uplicate Path"
-msgstr "/Pa_daryti kelio kopiją"
+msgstr "Pa_daryti kelio kopiją"
 
 #: app/actions/vectors-actions.c:72
-#, fuzzy
 msgid "Duplicate path"
 msgstr "Padaryti kontūro kopiją"
 
 #: app/actions/vectors-actions.c:77
-#, fuzzy
 msgid "_Delete Path"
-msgstr "/_Ištrinti kelią"
+msgstr "_Ištrinti kelią"
 
 #: app/actions/vectors-actions.c:78
-#, fuzzy
 msgid "Delete path"
 msgstr "Ištrinti kontūrą"
 
 #: app/actions/vectors-actions.c:83
-#, fuzzy
 msgid "Merge _Visible Paths"
-msgstr "/Sujungti mat_omus kelius"
+msgstr "Sujungti mat_omus kelius"
 
 #: app/actions/vectors-actions.c:88
-#, fuzzy
 msgid "_Raise Path"
-msgstr "/Pak_elti kelią"
+msgstr "Pak_elti kelią"
 
 #: app/actions/vectors-actions.c:89
-#, fuzzy
 msgid "Raise path"
 msgstr "Pakelti kontūrą"
 
 #: app/actions/vectors-actions.c:94
-#, fuzzy
 msgid "Raise Path to _Top"
 msgstr "Pakelti kelią iki viršaus"
 
 #: app/actions/vectors-actions.c:95
-#, fuzzy
 msgid "Raise path to top"
 msgstr "Pakelti kelią iki viršaus"
 
 #: app/actions/vectors-actions.c:100
-#, fuzzy
 msgid "_Lower Path"
-msgstr "/Nuleisti ke_lią"
+msgstr "Nuleisti ke_lią"
 
 #: app/actions/vectors-actions.c:101
-#, fuzzy
 msgid "Lower path"
 msgstr "Nuleisti kontūrą"
 
@@ -3354,17 +2976,14 @@ msgid "Lower path to bottom"
 msgstr "Nuleisti sluoksnį iki apačios"
 
 #: app/actions/vectors-actions.c:112
-#, fuzzy
 msgid "Stro_ke Path..."
-msgstr "/Apvesti _kelią..."
+msgstr "Apvesti _kelią..."
 
 #: app/actions/vectors-actions.c:113
-#, fuzzy
 msgid "Stroke path..."
-msgstr "/Apvesti _kelią..."
+msgstr "Apvesti _kelią..."
 
 #: app/actions/vectors-actions.c:118
-#, fuzzy
 msgid "Stro_ke Path"
 msgstr "Apvesti kontūrą"
 
@@ -3373,34 +2992,28 @@ msgid "Stroke path with last values"
 msgstr ""
 
 #: app/actions/vectors-actions.c:124
-#, fuzzy
 msgid "Co_py Path"
-msgstr "/Ko_pijuoti kelią"
+msgstr "Ko_pijuoti kelią"
 
 #: app/actions/vectors-actions.c:129
-#, fuzzy
 msgid "Paste Pat_h"
-msgstr "/Įdėti ke_lią"
+msgstr "Įdėti ke_lią"
 
 #: app/actions/vectors-actions.c:134
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "/I_mportuoti kontūrą..."
+msgstr "I_mportuoti kontūrą..."
 
 #: app/actions/vectors-actions.c:139
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "/E_ksportuoti kontūrą..."
+msgstr "E_ksportuoti kontūrą..."
 
 #: app/actions/vectors-actions.c:162
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "/Kelias į pažymėtą sritį"
+msgstr "Kelias į pažymėtą sritį"
 
 #: app/actions/vectors-actions.c:163 app/tools/gimpvectortool.c:1893
-#, fuzzy
 msgid "Path to selection"
-msgstr "Kontūras -> Pažymėjimas"
+msgstr "Kontūrą į pažymėjimą"
 
 #: app/actions/vectors-actions.c:168
 #, fuzzy
@@ -3418,9 +3031,8 @@ msgid "Selection to path"
 msgstr "/Pažymėta sritis į k_ontūrą"
 
 #: app/actions/vectors-actions.c:200
-#, fuzzy
 msgid "To _Path"
-msgstr "Perkelti kontūrą"
+msgstr "Į Kontūrą"
 
 #: app/actions/vectors-actions.c:205
 #, fuzzy
@@ -3461,14 +3073,12 @@ msgid "Stroke Path"
 msgstr "Apvesti kontūrą"
 
 #: app/actions/view-actions.c:63
-#, fuzzy
 msgid "_View"
-msgstr "/_Vaizdas"
+msgstr "_Vaizdas"
 
 #: app/actions/view-actions.c:64
-#, fuzzy
 msgid "_Zoom"
-msgstr "Didinimas 1:1"
+msgstr "_Didinimas"
 
 #: app/actions/view-actions.c:65
 #, fuzzy
@@ -3476,9 +3086,8 @@ msgid "_Padding Color"
 msgstr "Papildomas perėjimas"
 
 #: app/actions/view-actions.c:73
-#, fuzzy
 msgid "_Close"
-msgstr "Klonavimas"
+msgstr "_Uždaryti"
 
 #: app/actions/view-actions.c:78
 #, fuzzy
@@ -3501,19 +3110,16 @@ msgid "Fit image to window"
 msgstr "Sutalpinti į langą"
 
 #: app/actions/view-actions.c:90
-#, fuzzy
 msgid "_Info Window"
-msgstr "Informacijos langas"
+msgstr "_Informacijos langas"
 
 #: app/actions/view-actions.c:95
-#, fuzzy
 msgid "Na_vigation Window"
-msgstr "/Vaizdas/Navigacijos langas"
+msgstr "Navigacijos langas"
 
 #: app/actions/view-actions.c:100
-#, fuzzy
 msgid "Display _Filters..."
-msgstr "/Dialogai/Rodyti filtrus..."
+msgstr "Rodyti filtrus..."
 
 #: app/actions/view-actions.c:105
 #, fuzzy
@@ -3531,14 +3137,12 @@ msgid "Move to Screen..."
 msgstr "/Perkelti į darbalaukį..."
 
 #: app/actions/view-actions.c:119
-#, fuzzy
 msgid "_Dot for Dot"
-msgstr "/Vaizdas/Taškas į tašką"
+msgstr "_Taškas į tašką"
 
 #: app/actions/view-actions.c:125
-#, fuzzy
 msgid "Show _Selection"
-msgstr "Rodyti p_ažymėjimą"
+msgstr "Rodyti pažymėjimą"
 
 #: app/actions/view-actions.c:131
 msgid "Show _Layer Boundary"
@@ -3549,28 +3153,24 @@ msgid "Show _Guides"
 msgstr "Rodyti pa_galbines linijas"
 
 #: app/actions/view-actions.c:143
-#, fuzzy
 msgid "Sn_ap to Guides"
-msgstr "/Vaizdas/Kibti prie pagalbinių linijų"
+msgstr "Kibti prie pagalbinių linijų"
 
 #: app/actions/view-actions.c:149
-#, fuzzy
 msgid "S_how Grid"
 msgstr "Rodyti _tinklelį"
 
 #: app/actions/view-actions.c:155
-#, fuzzy
 msgid "Sna_p to Grid"
-msgstr "/Vaizdas/Kibti prie tinklelio"
+msgstr "Kibti prie tinklelio"
 
 #: app/actions/view-actions.c:161
 msgid "Show _Menubar"
 msgstr "Rodyti _meniu juostą"
 
 #: app/actions/view-actions.c:167
-#, fuzzy
 msgid "Show R_ulers"
-msgstr "_Rodyti liniuotes"
+msgstr "Rodyti liniuotes"
 
 #: app/actions/view-actions.c:173
 msgid "Show Scroll_bars"
@@ -3581,98 +3181,82 @@ msgid "Show S_tatusbar"
 msgstr "Rodyti bū_senos juostą"
 
 #: app/actions/view-actions.c:185
-#, fuzzy
 msgid "Fullscr_een"
-msgstr "/Vaizdas/Per visą ekraną"
+msgstr "Per visą ekraną"
 
 #: app/actions/view-actions.c:234
-#, fuzzy
 msgid "16:1  (1600%)"
-msgstr "/Vaizdas/Mastelis/16:1"
+msgstr "16:1 (1600%)"
 
 #: app/actions/view-actions.c:239
-#, fuzzy
 msgid "8:1  (800%)"
-msgstr "/Vaizdas/Mastelis/8:1"
+msgstr "8:1  (800%)"
 
 #: app/actions/view-actions.c:244
-#, fuzzy
 msgid "4:1  (400%)"
-msgstr "/Vaizdas/Mastelis/4:1"
+msgstr "4:1  (400%)"
 
 #: app/actions/view-actions.c:249
-#, fuzzy
 msgid "2:1  (200%)"
-msgstr "/Vaizdas/Mastelis/2:1"
+msgstr "2:1  (200%)"
 
 #: app/actions/view-actions.c:254
-#, fuzzy
 msgid "1:1  (100%)"
-msgstr "/Vaizdas/Mastelis/1:1"
+msgstr "1:1  (100%)"
 
 #: app/actions/view-actions.c:255
 msgid "Zoom 1:1"
 msgstr "Didinimas 1:1"
 
 #: app/actions/view-actions.c:260
-#, fuzzy
 msgid "1:2  (50%)"
-msgstr "/Vaizdas/Mastelis/1:2"
+msgstr "1:2  (50%)"
 
 #: app/actions/view-actions.c:265
-#, fuzzy
 msgid "1:4  (25%)"
-msgstr "/Vaizdas/Mastelis/1:2"
+msgstr "1:4  (25%)"
 
 #: app/actions/view-actions.c:270
-#, fuzzy
 msgid "1:8  (12.5%)"
-msgstr "/Vaizdas/Mastelis/1:1"
+msgstr "1:8  (12.5%)"
 
 #: app/actions/view-actions.c:275
-#, fuzzy
 msgid "1:16  (6.25%)"
-msgstr "/Vaizdas/Mastelis/1:16"
+msgstr "1:16  (6.25%)"
 
 #: app/actions/view-actions.c:280
-#, fuzzy
 msgid "O_ther..."
-msgstr "/Pažymėti/Išlieti ribas..."
+msgstr "Kitas..."
 
 #: app/actions/view-actions.c:288
-#, fuzzy
 msgid "From _Theme"
-msgstr "/Iš _temos"
+msgstr "Iš _temos"
 
 #: app/actions/view-actions.c:293
-#, fuzzy
 msgid "_Light Check Color"
-msgstr "Šviesių tonų patikrinimas"
+msgstr "_Šviesių tonų patikrinimas"
 
 #: app/actions/view-actions.c:298
-#, fuzzy
 msgid "_Dark Check Color"
-msgstr "Tamsių tonų patikrinimas"
+msgstr "_Tamsių tonų patikrinimas"
 
 #: app/actions/view-actions.c:303
-#, fuzzy
 msgid "Select _Custom Color..."
-msgstr "/Pasirinkti _kitą spalvą..."
+msgstr "Pasirinkti _kitą spalvą..."
 
 #: app/actions/view-actions.c:308
-#, fuzzy
 msgid "As in _Preferences"
-msgstr "/Kaip _nustatymuose"
+msgstr "Kaip _nustatymuose"
 
 #: app/actions/view-actions.c:592
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "Kitas (%d:%d) ..."
+msgstr "Kitas (%s) ..."
 
 #: app/actions/view-actions.c:601
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "Didinimas (%d:%d)"
+msgstr "_Didinimas (%s)"
 
 #: app/actions/view-commands.c:572
 #, fuzzy
@@ -3861,6 +3445,9 @@ msgstr "Nagrinėjamas \"%s\"\n"
 msgid "Saving '%s'\n"
 msgstr "Įrašinėjama %s\n"
 
+#  Not all strings defined here are used in the user interface
+#  *  (the preferences dialog mainly) and only those that are should
+#  *  be marked for translation.
 #. Not all strings defined here are used in the user interface
 #. *  (the preferences dialog mainly) and only those that are should
 #. *  be marked for translation.
@@ -3887,7 +3474,6 @@ msgid "Ask for confirmation before closing an image without saving."
 msgstr "Prašomas patvirtinimas prieš uždarant neišsaugotą paveikslėlį."
 
 #: app/config/gimprc-blurbs.h:33
-#, fuzzy
 msgid "Sets the pixel format of cursors the GIMP will use."
 msgstr "Nustato GIMP naudojamą žymeklio tipą."
 
@@ -4313,17 +3899,14 @@ msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Klaida įrašant %s"
 
 #: app/core/core-enums.c:27
-#, fuzzy
 msgid "_White (full opacity)"
-msgstr "Balta (visiškas nepermatomumas)"
+msgstr "_Balta (visiškas nepermatomumas)"
 
 #: app/core/core-enums.c:28
-#, fuzzy
 msgid "_Black (full transparency)"
-msgstr "Juoda (visiškas permatomumas)"
+msgstr "_Juoda (visiškas permatomumas)"
 
 #: app/core/core-enums.c:29
-#, fuzzy
 msgid "Layer's _alpha channel"
 msgstr "Sluoksnio alfa kanalas"
 
@@ -4350,27 +3933,22 @@ msgid "FG to BG (HSV)"
 msgstr "Iš priekinio plano spalvos į fono spalvą (HSV)"
 
 #: app/core/core-enums.c:63
-#, fuzzy
 msgid "FG to transparent"
 msgstr "Iš priekinio plano spalvos į skaidrią"
 
 #: app/core/core-enums.c:64
-#, fuzzy
 msgid "Custom gradient"
 msgstr "Papildomas perėjimas"
 
 #: app/core/core-enums.c:92
-#, fuzzy
 msgid "FG color fill"
 msgstr "Pirmo plano spalvotas užpildymas"
 
 #: app/core/core-enums.c:93
-#, fuzzy
 msgid "BG color fill"
 msgstr "Fono spalvotas užpildymas"
 
 #: app/core/core-enums.c:94
-#, fuzzy
 msgid "Pattern fill"
 msgstr "Užpildymas raštu"
 
@@ -4429,33 +4007,30 @@ msgid "Use web-optimized palette"
 msgstr "Naudoti internetui tinkamą paletę"
 
 #: app/core/core-enums.c:253
-#, fuzzy
 msgid "Use black and white (1-bit) palette"
-msgstr "Naudoti juodą/baltą (1 bito) paletę"
+msgstr "Naudoti juodą ir baltą (1 bito) paletę"
 
 #: app/core/core-enums.c:254
-#, fuzzy
 msgid "Use custom palette"
-msgstr "Naudoti papildomą paletę:"
+msgstr "Naudoti papildomą paletę"
 
 #: app/core/core-enums.c:329
-#, fuzzy
 msgid "Foreground color"
-msgstr "Priekinio plano spalva:"
+msgstr "Priekinio plano spalva"
 
 #: app/core/core-enums.c:330
-#, fuzzy
 msgid "Background color"
-msgstr "Fono spalva:"
+msgstr "Fono spalva"
 
 #: app/core/core-enums.c:331
 msgid "White"
 msgstr "Baltas"
 
+#  Transparency
 #. Transparency
 #: app/core/core-enums.c:332 app/dialogs/preferences-dialog.c:1918
 msgid "Transparency"
-msgstr "Skaidrumas"
+msgstr "Skaidrus"
 
 #: app/core/core-enums.c:333 app/core/core-enums.c:470
 #: app/pdb/internal_procs.c:179
@@ -4463,7 +4038,6 @@ msgid "Pattern"
 msgstr "Raštai"
 
 #: app/core/core-enums.c:371
-#, fuzzy
 msgid "Bi-linear"
 msgstr "Tiesinis dvikryptis"
 
@@ -4477,37 +4051,30 @@ msgid "Square"
 msgstr "Kvadratas"
 
 #: app/core/core-enums.c:374
-#, fuzzy
 msgid "Conical (sym)"
 msgstr "Kūginis (simetriškas)"
 
 #: app/core/core-enums.c:375
-#, fuzzy
 msgid "Conical (asym)"
 msgstr "Kūginis (nesimetriškas)"
 
 #: app/core/core-enums.c:376
-#, fuzzy
 msgid "Shaped (angular)"
 msgstr "Forma (kampas)"
 
 #: app/core/core-enums.c:377
-#, fuzzy
 msgid "Shaped (spherical)"
 msgstr "Forma (sfera)"
 
 #: app/core/core-enums.c:378
-#, fuzzy
 msgid "Shaped (dimpled)"
 msgstr "Forma (įdubęs)"
 
 #: app/core/core-enums.c:379
-#, fuzzy
 msgid "Spiral (cw)"
 msgstr "Spiralinis (pagal laikrodžio rodyklę)"
 
 #: app/core/core-enums.c:380
-#, fuzzy
 msgid "Spiral (ccw)"
 msgstr "Spiralinis (pagal laikrodžio rodyklę)"
 
@@ -4524,7 +4091,6 @@ msgid "Dashed"
 msgstr "Punktyras"
 
 #: app/core/core-enums.c:413
-#, fuzzy
 msgid "Double dashed"
 msgstr "Dvigubas punktyras"
 
@@ -4567,32 +4133,26 @@ msgid "Line"
 msgstr "Linija"
 
 #: app/core/core-enums.c:568
-#, fuzzy
 msgid "Long dashes"
 msgstr "Ilgi brūkšneliai"
 
 #: app/core/core-enums.c:569
-#, fuzzy
 msgid "Medium dashes"
 msgstr "Viduiniai brūkšneliai"
 
 #: app/core/core-enums.c:570
-#, fuzzy
 msgid "Short dashes"
 msgstr "Trumpi brūkšneliai"
 
 #: app/core/core-enums.c:571
-#, fuzzy
 msgid "Sparse dots"
 msgstr "Reti taškeliai"
 
 #: app/core/core-enums.c:572
-#, fuzzy
 msgid "Normal dots"
 msgstr "Normalūs taškeliai"
 
 #: app/core/core-enums.c:573
-#, fuzzy
 msgid "Dense dots"
 msgstr "Tankūs taškeliai"
 
@@ -4601,12 +4161,10 @@ msgid "Stipples"
 msgstr ""
 
 #: app/core/core-enums.c:575
-#, fuzzy
 msgid "Dash dot..."
 msgstr "Brūkšnelis taškelis..."
 
 #: app/core/core-enums.c:576
-#, fuzzy
 msgid "Dash dot dot..."
 msgstr "Brūkšnelis taškelis taškelis..."
 
@@ -4648,7 +4206,6 @@ msgid "Tiny"
 msgstr "Mažytis"
 
 #: app/core/core-enums.c:731
-#, fuzzy
 msgid "Very small"
 msgstr "Labai mažas"
 
@@ -4665,7 +4222,6 @@ msgid "Large"
 msgstr "Didelis"
 
 #: app/core/core-enums.c:735
-#, fuzzy
 msgid "Very large"
 msgstr "Labai didelis"
 
@@ -4682,12 +4238,10 @@ msgid "Gigantic"
 msgstr "Milžiniškas"
 
 #: app/core/core-enums.c:767
-#, fuzzy
 msgid "Sawtooth wave"
 msgstr "Pjūklinė banga"
 
 #: app/core/core-enums.c:768
-#, fuzzy
 msgid "Triangular wave"
 msgstr "Trikampė banga"
 
@@ -4705,12 +4259,10 @@ msgid "Large (256x256)"
 msgstr "Didelis (256x256)"
 
 #: app/core/core-enums.c:859
-#, fuzzy
 msgid "Forward (traditional)"
 msgstr "Pimyn (Tradicinis)"
 
 #: app/core/core-enums.c:860
-#, fuzzy
 msgid "Backward (corrective)"
 msgstr "Atgal (Taisomasis)"
 
@@ -4719,12 +4271,10 @@ msgid "<<invalid>>"
 msgstr "<<neteisingas>>"
 
 #: app/core/core-enums.c:1029
-#, fuzzy
 msgid "Scale image"
 msgstr "Keisti paveikslėlio dydį"
 
 #: app/core/core-enums.c:1030
-#, fuzzy
 msgid "Resize image"
 msgstr "Keisti paveikslėlio dydį"
 
@@ -4734,32 +4284,26 @@ msgid "Flip image"
 msgstr "Apsukti paveikslėlį"
 
 #: app/core/core-enums.c:1032
-#, fuzzy
 msgid "Rotate image"
 msgstr "Pasukti paveikslėlį"
 
 #: app/core/core-enums.c:1033
-#, fuzzy
 msgid "Crop image"
 msgstr "Apkirpti paveikslėlį"
 
 #: app/core/core-enums.c:1034
-#, fuzzy
 msgid "Convert image"
 msgstr "Konvertuoti paveikslėlį"
 
 #: app/core/core-enums.c:1035
-#, fuzzy
 msgid "Merge layers"
 msgstr "Sujungti sluoksnius"
 
 #: app/core/core-enums.c:1036
-#, fuzzy
 msgid "Merge vectors"
 msgstr "Sujungti vektorius"
 
 #: app/core/core-enums.c:1037 app/core/gimpchannel.c:383
-#, fuzzy
 msgid "Quick Mask"
 msgstr "Greita kaukė"
 
@@ -4779,7 +4323,6 @@ msgid "Drawable mod"
 msgstr "Piešinio procedūros"
 
 #: app/core/core-enums.c:1042 app/core/core-enums.c:1072
-#, fuzzy
 msgid "Selection mask"
 msgstr "Pažymėjimo kaukė"
 
@@ -4814,17 +4357,14 @@ msgid "Resize item"
 msgstr "Keisti paveikslėlio dydį"
 
 #: app/core/core-enums.c:1049 app/core/core-enums.c:1079
-#, fuzzy
 msgid "Add layer mask"
 msgstr "Pridėti sluoksnio kaukę"
 
 #: app/core/core-enums.c:1050
-#, fuzzy
 msgid "Apply layer mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
 #: app/core/core-enums.c:1051
-#, fuzzy
 msgid "Floating selection to layer"
 msgstr "Plaukiojantis pažymėjimas"
 
@@ -4886,12 +4426,10 @@ msgid "Plug-In"
 msgstr "Priedai"
 
 #: app/core/core-enums.c:1064
-#, fuzzy
 msgid "Image type"
 msgstr "Paveikslėlio tipas"
 
 #: app/core/core-enums.c:1065
-#, fuzzy
 msgid "Image size"
 msgstr "Paveikslėlio dydis"
 
@@ -4906,7 +4444,6 @@ msgid "Change indexed palette"
 msgstr "Pakeisti indeksuotą paletę"
 
 #: app/core/core-enums.c:1073
-#, fuzzy
 msgid "Rename item"
 msgstr "Pervadinti elementą"
 
@@ -4916,12 +4453,10 @@ msgid "Set item linked"
 msgstr "Saugojimo savybės"
 
 #: app/core/core-enums.c:1077
-#, fuzzy
 msgid "New layer"
 msgstr "Naujas sluoksnis"
 
 #: app/core/core-enums.c:1080
-#, fuzzy
 msgid "Delete layer mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
@@ -4931,12 +4466,10 @@ msgid "Reposition layer"
 msgstr "Teksto sluoksnis"
 
 #: app/core/core-enums.c:1082
-#, fuzzy
 msgid "Set layer mode"
 msgstr "Nustatyti sluoksnio režimą"
 
 #: app/core/core-enums.c:1083
-#, fuzzy
 msgid "Set layer opacity"
 msgstr "Nustatyti sluoksnio nepermatomumą"
 
@@ -4951,7 +4484,6 @@ msgid "Text modified"
 msgstr "Tik kai padaryti pakeitimai"
 
 #: app/core/core-enums.c:1087
-#, fuzzy
 msgid "New channel"
 msgstr "Naujas kanalas"
 
@@ -4961,17 +4493,14 @@ msgid "Reposition channel"
 msgstr "Perkelti kanalą"
 
 #: app/core/core-enums.c:1090
-#, fuzzy
 msgid "Channel color"
 msgstr "Kanalo spalva"
 
 #: app/core/core-enums.c:1091
-#, fuzzy
 msgid "New vectors"
 msgstr "Nauji vektoriai"
 
 #: app/core/core-enums.c:1092
-#, fuzzy
 msgid "Delete vectors"
 msgstr "Ištrinti vektorius"
 
@@ -4986,7 +4515,6 @@ msgid "Reposition vectors"
 msgstr "Perdėstyti vektorius"
 
 #: app/core/core-enums.c:1095
-#, fuzzy
 msgid "FS to layer"
 msgstr "FS sluoksniui"
 
@@ -5055,6 +4583,7 @@ msgstr "Procedūrinė duomenų bazė"
 msgid "Plug-In Environment"
 msgstr "Įskiepių aplinka"
 
+#  initialize  the global parasite table
 #. initialize  the global parasite table
 #: app/core/gimp.c:852
 msgid "Looking for data files"
@@ -5318,7 +4847,7 @@ msgstr "Užpildyti raštu negalima."
 
 #: app/core/gimpdrawable-bucket-fill.c:272 app/tools/gimpbucketfilltool.c:91
 msgid "Bucket Fill"
-msgstr "Užpildymas \"iš kibirėlio\""
+msgstr "Užpildymas"
 
 #: app/core/gimpdrawable-desaturate.c:98
 msgid "Desaturate"
@@ -5573,7 +5102,6 @@ msgid "Remove Layer"
 msgstr "Pašalinti sluoksnį"
 
 #: app/core/gimpimage.c:2816
-#, fuzzy
 msgid "Layer cannot be raised higher."
 msgstr "Sluoksnio aukščiau pakelti negalima."
 
@@ -5631,7 +5159,6 @@ msgid "Raise Channel"
 msgstr "Pakelti kanalą"
 
 #: app/core/gimpimage.c:3104
-#, fuzzy
 msgid "Channel is already on top."
 msgstr "Sluoksnis jau viršuje."
 
@@ -5648,7 +5175,6 @@ msgid "Lower Channel"
 msgstr "Nuleisti kanalą"
 
 #: app/core/gimpimage.c:3151
-#, fuzzy
 msgid "Channel is already on the bottom."
 msgstr "Sluoksnis jau yra apačioje"
 
@@ -5673,7 +5199,6 @@ msgid "Raise Path"
 msgstr "Pakelti kontūrą"
 
 #: app/core/gimpimage.c:3342
-#, fuzzy
 msgid "Path is already on top."
 msgstr "Sluoksnis jau viršuje."
 
@@ -5690,9 +5215,8 @@ msgid "Lower Path"
 msgstr "Nuleisti kontūrą"
 
 #: app/core/gimpimage.c:3389
-#, fuzzy
 msgid "Path is already on the bottom."
-msgstr "Sluoksnis jau yra apačioje"
+msgstr "Sluoksnis jau yra apačioje."
 
 #: app/core/gimpimage.c:3394
 msgid "Lower Path to Bottom"
@@ -5790,9 +5314,8 @@ msgstr ""
 "pažymėjimo kadangi jis priklauso sluoksnio kaukei ar kanalui"
 
 #: app/core/gimplayer-floating-sel.c:215
-#, fuzzy
 msgid "Floating Selection to Layer"
-msgstr "Plaukiojantis pažymėjimas"
+msgstr "Plaukiojantis pažymėjimas į sluosnį"
 
 #: app/core/gimplayer.c:250 app/pdb/internal_procs.c:152
 msgid "Layer"
@@ -6099,10 +5622,12 @@ msgstr "Vertė"
 #: app/dialogs/about-dialog.c:54
 msgid "translator-credits"
 msgstr ""
+"Giedrius Naudžiūnas <gimp@projektas.lt>,\n"
+"Žygimantas Beručka <uid0@akl.lt>,\n"
+"Linas Vasiliauskas <linasv@centras.lt>,\n"
 "Mantas Kriaučiūnas <mantas@akl.lt>\n"
 "Eglė Kriaučiūnienė <egle@akl.lt>\n"
-"Karina Gribanova <buratina@delfi.lt>\n"
-"Linas Vasiliauskas <linasv@centras.lt>"
+"Karina Gribanova <buratina@delfi.lt>"
 
 #: app/dialogs/about-dialog.c:59
 msgid "Contributions by"
@@ -6235,22 +5760,21 @@ msgstr "Vieta:"
 msgid "Enter location (URI):"
 msgstr "Interpoliacijos tipas:"
 
-#: app/dialogs/file-save-dialog.c:160
-#, fuzzy
+#: app/dialogs/file-save-dialog.c:163
 msgid "File exists"
-msgstr "Byla jau egzistuoja!"
+msgstr "Byla jau egzistuoja"
 
-#: app/dialogs/file-save-dialog.c:165
+#: app/dialogs/file-save-dialog.c:168
 #, fuzzy
 msgid "_Replace"
 msgstr "Padauginti"
 
-#: app/dialogs/file-save-dialog.c:175
+#: app/dialogs/file-save-dialog.c:178
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: app/dialogs/file-save-dialog.c:180
+#: app/dialogs/file-save-dialog.c:183
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 
@@ -6291,9 +5815,8 @@ msgid "Create a New Image"
 msgstr "Sukurti naują paveikslėlį"
 
 #: app/dialogs/image-new-dialog.c:130 app/dialogs/preferences-dialog.c:1313
-#, fuzzy
 msgid "_Template:"
-msgstr "Šablonai"
+msgstr "_Šablonai"
 
 #: app/dialogs/image-new-dialog.c:265
 msgid "Confirm Image Size"
@@ -6370,9 +5893,8 @@ msgid "Direct Color"
 msgstr "Tiesioginė spalva"
 
 #: app/dialogs/info-window.c:131
-#, fuzzy
 msgid "Cursor"
-msgstr "Kreivės"
+msgstr "Kursorius"
 
 #: app/dialogs/info-window.c:141 app/dialogs/preferences-dialog.c:1932
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
@@ -6388,14 +5910,12 @@ msgid "n/a"
 msgstr "nėra"
 
 #: app/dialogs/info-window.c:154 app/dialogs/info-window.c:176
-#, fuzzy
 msgid "X"
-msgstr "X:"
+msgstr "X"
 
 #: app/dialogs/info-window.c:160 app/dialogs/info-window.c:182
-#, fuzzy
 msgid "Y"
-msgstr "_Y"
+msgstr "Y"
 
 #: app/dialogs/info-window.c:163 app/pdb/internal_procs.c:212
 msgid "Units"
@@ -6427,7 +5947,6 @@ msgid "Pixel dimensions:"
 msgstr "Taškelio matmenys:"
 
 #: app/dialogs/info-window.c:296
-#, fuzzy
 msgid "Print size:"
 msgstr "Spausdinimo dydis:"
 
@@ -6441,7 +5960,6 @@ msgid "Scale ratio:"
 msgstr "Dydžio keitimo santykis:"
 
 #: app/dialogs/info-window.c:302
-#, fuzzy
 msgid "Number of layers:"
 msgstr "Sluoksnių skaičius:"
 
@@ -6451,7 +5969,6 @@ msgid "Size in memory:"
 msgstr "Išnaudota atmintis"
 
 #: app/dialogs/info-window.c:306
-#, fuzzy
 msgid "Display type:"
 msgstr "Displėjaus tipas:"
 
@@ -6698,7 +6215,6 @@ msgid "Import Options"
 msgstr "Importavimo nustatymai"
 
 #: app/dialogs/palette-import-dialog.c:317
-#, fuzzy
 msgid "New import"
 msgstr "Naujas importavimas"
 
@@ -6707,7 +6223,6 @@ msgid "Palette _Name:"
 msgstr "Paletės pavadi_nimas:"
 
 #: app/dialogs/palette-import-dialog.c:325
-#, fuzzy
 msgid "N_umber of colors:"
 msgstr "Spal_vų skaičius:"
 
@@ -6758,42 +6273,34 @@ msgid ""
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1082
-#, fuzzy
 msgid "Show _menubar"
 msgstr "Rodyti _meniu juostą"
 
 #: app/dialogs/preferences-dialog.c:1085
-#, fuzzy
 msgid "Show _rulers"
-msgstr "_Rodyti liniuotes"
+msgstr "Rodyti liniuotes"
 
 #: app/dialogs/preferences-dialog.c:1088
-#, fuzzy
 msgid "Show scroll_bars"
 msgstr "Rodyti slin_kties juostas"
 
 #: app/dialogs/preferences-dialog.c:1091
-#, fuzzy
 msgid "Show s_tatusbar"
 msgstr "Rodyti bū_senos juostą"
 
 #: app/dialogs/preferences-dialog.c:1099
-#, fuzzy
 msgid "Show s_election"
 msgstr "Rodyti p_ažymėjimą"
 
 #: app/dialogs/preferences-dialog.c:1102
-#, fuzzy
 msgid "Show _layer boundary"
 msgstr "Rodyti s_luoksnių ribas"
 
 #: app/dialogs/preferences-dialog.c:1105
-#, fuzzy
 msgid "Show _guides"
 msgstr "Rodyti pa_galbines linijas"
 
 #: app/dialogs/preferences-dialog.c:1108
-#, fuzzy
 msgid "Show gri_d"
 msgstr "Rodyti _tinklelį"
 
@@ -6842,9 +6349,8 @@ msgid "Previews"
 msgstr "Peržiūra"
 
 #: app/dialogs/preferences-dialog.c:1371
-#, fuzzy
 msgid "_Enable layer & channel previews"
-msgstr "Į_jungti sluoksnių ir kanalų peržiūras"
+msgstr "_Įjungti sluoksnių ir kanalų peržiūras"
 
 #: app/dialogs/preferences-dialog.c:1377
 #, fuzzy
@@ -6866,29 +6372,24 @@ msgid "Show menu _mnemonics (access keys)"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1391
-#, fuzzy
 msgid "Use _dynamic keyboard shortcuts"
 msgstr "Naudoti dinamines _klavišų kombinacijas"
 
 #: app/dialogs/preferences-dialog.c:1395
-#, fuzzy
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Klavišų kombinacijos"
+msgstr "Keisti klavišų kombinacijas..."
 
 #: app/dialogs/preferences-dialog.c:1402
-#, fuzzy
 msgid "_Save keyboard shortcuts on exit"
-msgstr "Išsaugoti sparčiuosius klavišus išeinant"
+msgstr "_Išsaugoti sparčiuosius klavišus išeinant"
 
 #: app/dialogs/preferences-dialog.c:1406
-#, fuzzy
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Išsaugoti klavišų kombinacijas dabar"
 
 #: app/dialogs/preferences-dialog.c:1413
-#, fuzzy
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "Ištrinti išsaugotus sparčiuosius klavišus dabar"
+msgstr "_Ištrinti išsaugotus sparčiuosius klavišus dabar"
 
 #: app/dialogs/preferences-dialog.c:1428 app/dialogs/preferences-dialog.c:1431
 #: app/dialogs/preferences-dialog.c:1467
@@ -6908,17 +6409,14 @@ msgid "Help System"
 msgstr "Pagalbos sistema"
 
 #: app/dialogs/preferences-dialog.c:1546
-#, fuzzy
 msgid "Show tool _tips"
 msgstr "Rodyti pa_tarimus"
 
 #: app/dialogs/preferences-dialog.c:1549
-#, fuzzy
 msgid "Show help _buttons"
-msgstr "Rodyti p_ažymėjimą"
+msgstr "Rodyti pagalbos mygtukus"
 
 #: app/dialogs/preferences-dialog.c:1552
-#, fuzzy
 msgid "Show tips on _startup"
 msgstr "Rodyti patarimu_s paleidimo metu"
 
@@ -6928,7 +6426,6 @@ msgid "Help Browser"
 msgstr "Pagalbos naršyklė"
 
 #: app/dialogs/preferences-dialog.c:1560
-#, fuzzy
 msgid "H_elp browser to use:"
 msgstr "Naudojama pagal_bos naršyklė:"
 
@@ -6937,14 +6434,12 @@ msgid "Web Browser"
 msgstr "Interneto naršyklė"
 
 #: app/dialogs/preferences-dialog.c:1569
-#, fuzzy
 msgid "Select web browser"
-msgstr "Pasirinkite interneto naršyklė"
+msgstr "Pasirinkite interneto naršyklę"
 
 #: app/dialogs/preferences-dialog.c:1572
-#, fuzzy
 msgid "_Web browser to use:"
-msgstr "Naudojama interneto naršyklė:"
+msgstr "_Naudojama interneto naršyklė:"
 
 #. Snapping Distance
 #: app/dialogs/preferences-dialog.c:1597
@@ -6973,19 +6468,18 @@ msgid "Scaling"
 msgstr "Didinimas"
 
 #: app/dialogs/preferences-dialog.c:1619
-#, fuzzy
 msgid "Default _interpolation:"
 msgstr "Iprastasis _interpoliacijos tipas:"
 
+#  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
 #: app/dialogs/preferences-dialog.c:1623
 msgid "Paint Options Shared Between Tools"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1636
-#, fuzzy
 msgid "Move Tool"
-msgstr "Perkelti:"
+msgstr "Perkėlimo įrankis"
 
 #: app/dialogs/preferences-dialog.c:1640
 #, fuzzy
@@ -6993,7 +6487,6 @@ msgid "Change current layer or path"
 msgstr "Tik aktyvus sluoksnis"
 
 #: app/dialogs/preferences-dialog.c:1653 app/dialogs/preferences-dialog.c:1656
-#, fuzzy
 msgid "Toolbox"
 msgstr "Įrankių dėžės meniu"
 
@@ -7062,7 +6555,6 @@ msgid "Mouse Cursors"
 msgstr ""
 
 #: app/dialogs/preferences-dialog.c:1733
-#, fuzzy
 msgid "Show _brush outline"
 msgstr "Rodyti teptuko kontūrus"
 
@@ -7114,9 +6606,8 @@ msgid "Show zoom ratio"
 msgstr "Rodyti dydžio keitimo santykį"
 
 #: app/dialogs/preferences-dialog.c:1808
-#, fuzzy
 msgid "Show image size"
-msgstr "/Rodyti paveikslėlio meniu"
+msgstr "Rodyti paveikslėlio dydį"
 
 #: app/dialogs/preferences-dialog.c:1809
 msgid "Show memory usage"
@@ -7135,7 +6626,6 @@ msgid "Display"
 msgstr "Vaizdavimas"
 
 #: app/dialogs/preferences-dialog.c:1922
-#, fuzzy
 msgid "Transparency _type:"
 msgstr "Skaidrumo _tipas:"
 
@@ -7158,9 +6648,8 @@ msgid "_Manually"
 msgstr "Ra_nkiniu būdu"
 
 #: app/dialogs/preferences-dialog.c:2008
-#, fuzzy
 msgid "C_alibrate..."
-msgstr "K_alibruoti"
+msgstr "K_alibruoti..."
 
 #: app/dialogs/preferences-dialog.c:2028 app/dialogs/preferences-dialog.c:2031
 msgid "Input Devices"
@@ -7231,19 +6720,16 @@ msgid "Window Positions"
 msgstr "Lango vieta"
 
 #: app/dialogs/preferences-dialog.c:2152
-#, fuzzy
 msgid "_Save window positions on exit"
-msgstr "Iš_saugoti langų pozicijas išeinant"
+msgstr "_Išsaugoti langų pozicijas išeinant"
 
 #: app/dialogs/preferences-dialog.c:2156
-#, fuzzy
 msgid "Save Window Positions _Now"
 msgstr "Išsaugoti lango vietą dabar"
 
 #: app/dialogs/preferences-dialog.c:2163
-#, fuzzy
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "Išsaugoti lango vietą baigiant"
+msgstr "_Išsaugoti lango vietą baigiant"
 
 #: app/dialogs/preferences-dialog.c:2178 app/dialogs/preferences-dialog.c:2181
 #: app/dialogs/preferences-dialog.c:2329
@@ -7255,12 +6741,10 @@ msgid "Resource Consumption"
 msgstr "Resursų naudojimas"
 
 #: app/dialogs/preferences-dialog.c:2199
-#, fuzzy
 msgid "Minimal number of _undo levels:"
-msgstr "Nimimalus atšaukimų skaičius:"
+msgstr "Mažiausias atšaukimų skaičius:"
 
 #: app/dialogs/preferences-dialog.c:2202
-#, fuzzy
 msgid "Maximum undo _memory:"
 msgstr "Maksimali atšaukimų atmintis:"
 
@@ -7270,7 +6754,6 @@ msgid "Tile cache _size:"
 msgstr "Tile Cache dydis:"
 
 #: app/dialogs/preferences-dialog.c:2208
-#, fuzzy
 msgid "Maximum _new image size:"
 msgstr "Maksimalus naujo paveikslėlio dydis:"
 
@@ -7294,11 +6777,11 @@ msgstr "Bylos peržiūros dydis:"
 msgid "Maximum _filesize for thumbnailing:"
 msgstr ""
 
+#  File Saving
 #. File Saving
 #: app/dialogs/preferences-dialog.c:2231
-#, fuzzy
 msgid "Saving Images"
-msgstr "Išsaugoti paveikslėlį"
+msgstr "Išsaugomi paveikslėliai"
 
 #: app/dialogs/preferences-dialog.c:2234
 #, fuzzy
@@ -7310,14 +6793,12 @@ msgid "Folders"
 msgstr "Katalogai"
 
 #: app/dialogs/preferences-dialog.c:2263
-#, fuzzy
 msgid "Temp folder:"
 msgstr "Laikinas katalogas:"
 
 #: app/dialogs/preferences-dialog.c:2263
-#, fuzzy
 msgid "Select Temp Folder"
-msgstr "Pasirinkite temų katalogą"
+msgstr "Pasirinkite laikiną katalogą"
 
 #: app/dialogs/preferences-dialog.c:2264
 #: app/dialogs/user-install-dialog.c:1403
@@ -7419,20 +6900,18 @@ msgid "Select Theme Folders"
 msgstr "Pasirinkite temų katalogą"
 
 #: app/dialogs/print-size-dialog.c:128
-#, fuzzy
 msgid "Print Size"
-msgstr "Spausdinimo dydis:"
+msgstr "Spausdinimo dydis"
 
+#  the image size labels
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
 #: app/widgets/gimptemplateeditor.c:236
-#, fuzzy
 msgid "_Width:"
-msgstr "Plotis:"
+msgstr "_Plotis:"
 
 #: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:225
 #: app/widgets/gimptemplateeditor.c:243
-#, fuzzy
 msgid "H_eight:"
 msgstr "Aukštis:"
 
@@ -7456,9 +6935,8 @@ msgid "pixels/%a"
 msgstr "Taškeliai/%a"
 
 #: app/dialogs/quit-dialog.c:84
-#, fuzzy
 msgid "Quit The GIMP"
-msgstr "Baigti darbą su GIMP?"
+msgstr "Baigti darbą su GIMP"
 
 #: app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
@@ -7484,9 +6962,8 @@ msgid "Canvas Size"
 msgstr "Paveikslėlio dydis"
 
 #: app/dialogs/resize-dialog.c:126 app/dialogs/scale-dialog.c:107
-#, fuzzy
 msgid "Layer Size"
-msgstr "Pažymėti sluoksnį"
+msgstr "Sluoksnio dydis"
 
 #: app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -7516,7 +6993,6 @@ msgid "Quality"
 msgstr "/Byla/Baigti darbą"
 
 #: app/dialogs/scale-dialog.c:178
-#, fuzzy
 msgid "I_nterpolation:"
 msgstr "Interpoliacijos tipas:"
 
@@ -7560,12 +7036,10 @@ msgid "Show tip next time GIMP starts"
 msgstr "Rodyti patarimą startuojant GIMP'ui"
 
 #: app/dialogs/tips-dialog.c:219
-#, fuzzy
 msgid "_Previous tip"
 msgstr "Ankstesnis patarimas"
 
 #: app/dialogs/tips-dialog.c:228
-#, fuzzy
 msgid "_Next tip"
 msgstr "Kitas patarimas"
 
@@ -8021,9 +7495,8 @@ msgid "Import Paths from SVG"
 msgstr "Importuoti kelią iš SVG"
 
 #: app/dialogs/vectors-import-dialog.c:83
-#, fuzzy
 msgid "All Files (*.*)"
-msgstr "Filtrai"
+msgstr "Visos Bylos (*.*)"
 
 #: app/dialogs/vectors-import-dialog.c:88
 msgid "Scalable SVG image (*.svg)"
@@ -8039,17 +7512,14 @@ msgid "_Scale imported paths to fit image"
 msgstr ""
 
 #: app/dialogs/vectors-options-dialog.c:113
-#, fuzzy
 msgid "Path Name:"
-msgstr "Kontūro pavadinimas"
+msgstr "Kontūro pavadinimas:"
 
 #: app/display/display-enums.c:24
-#, fuzzy
 msgid "Tool icon"
 msgstr "Įrankių ženkliukai"
 
 #: app/display/display-enums.c:25
-#, fuzzy
 msgid "Tool icon with crosshair"
 msgstr "Įrankių ženkliukai su kryželiu"
 
@@ -8058,22 +7528,18 @@ msgid "Crosshair only"
 msgstr "Tik kryželis"
 
 #: app/display/display-enums.c:55
-#, fuzzy
 msgid "From theme"
 msgstr "Iš temos"
 
 #: app/display/display-enums.c:56
-#, fuzzy
 msgid "Light check color"
 msgstr "Šviesių tonų patikrinimas"
 
 #: app/display/display-enums.c:57
-#, fuzzy
 msgid "Dark check color"
 msgstr "Tamsių tonų patikrinimas"
 
 #: app/display/display-enums.c:58
-#, fuzzy
 msgid "Custom color"
 msgstr "Pasirinkta spalva"
 
@@ -8088,9 +7554,9 @@ msgstr "Aktyvuota greita kaukė"
 
 #: app/display/gimpdisplayshell-close.c:122
 #: app/display/gimpdisplayshell-close.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Close %s"
-msgstr "Uždaryt %s?"
+msgstr "Uždaryti %s"
 
 #: app/display/gimpdisplayshell-close.c:131
 msgid "Do_n't save"
@@ -8162,9 +7628,8 @@ msgid "Zoom Ratio:"
 msgstr "Didinimo koeficientas:"
 
 #: app/display/gimpdisplayshell-scale.c:601
-#, fuzzy
 msgid "Zoom:"
-msgstr "Didinimas 1:1"
+msgstr "Didinimas:"
 
 #: app/display/gimpdisplayshell-title.c:234
 msgid "RGB-empty"
@@ -8205,9 +7670,8 @@ msgid "%d layers"
 msgstr "%d sluoksnių"
 
 #: app/display/gimpstatusbar.c:142
-#, fuzzy
 msgid "Shadow type"
-msgstr "Šešėliai"
+msgstr "Šešėlio tipas"
 
 #: app/display/gimpstatusbar.c:143
 msgid "Style of bevel around the statusbar text"
@@ -8427,9 +7891,8 @@ msgid "Internal Procedures"
 msgstr "Vidinės procedūros"
 
 #: app/pdb/internal_procs.c:86
-#, fuzzy
 msgid "Brush"
-msgstr "Teptukas:"
+msgstr "Teptukas"
 
 #: app/pdb/internal_procs.c:89
 msgid "Brush UI"
@@ -8479,9 +7942,8 @@ msgid "Gimprc procedures"
 msgstr "Gimprc procedūros"
 
 #: app/pdb/internal_procs.c:134
-#, fuzzy
 msgid "Gradient"
-msgstr "Perėjimas:"
+msgstr "Perėjimas"
 
 #: app/pdb/internal_procs.c:137
 msgid "Gradient UI"
@@ -8693,24 +8155,20 @@ msgid "Text Layer"
 msgstr "Teksto sluoksnis"
 
 #: app/text/gimptextlayer.c:171
-#, fuzzy
 msgid "Rename Text Layer"
-msgstr "Pervadinti sluoksnį"
+msgstr "Pervadinti tekstinį sluoksnį"
 
 #: app/text/gimptextlayer.c:172
-#, fuzzy
 msgid "Move Text Layer"
-msgstr "Pasukti teksto sluoksnį"
+msgstr "Perkelti teksto sluoksnį"
 
 #: app/text/gimptextlayer.c:173
-#, fuzzy
 msgid "Scale Text Layer"
-msgstr "Keisti sluoksnio dydį"
+msgstr "Keisti tekstinio sluoksnio dydį"
 
 #: app/text/gimptextlayer.c:174
-#, fuzzy
 msgid "Resize Text Layer"
-msgstr "Keisti sluoksnio dydį"
+msgstr "Keisti tekstinio sluoksnio dydį"
 
 #: app/text/gimptextlayer.c:175
 msgid "Flip Text Layer"
@@ -8721,9 +8179,8 @@ msgid "Rotate Text Layer"
 msgstr "Pasukti teksto sluoksnį"
 
 #: app/text/gimptextlayer.c:177
-#, fuzzy
 msgid "Transform Text Layer"
-msgstr "Transformuoti sluoksnį"
+msgstr "Transformuoti tekstinį sluoksnį"
 
 #: app/text/gimptextlayer.c:531
 msgid "Discard Text Information"
@@ -8753,12 +8210,10 @@ msgid "Pick only"
 msgstr "Tik pasirinkti"
 
 #: app/tools/tools-enums.c:26
-#, fuzzy
 msgid "Set foreground color"
 msgstr "Nustatyti priekinio plano spalvą"
 
 #: app/tools/tools-enums.c:27
-#, fuzzy
 msgid "Set background color"
 msgstr "Nustatyti fono splavą"
 
@@ -8771,12 +8226,10 @@ msgid "Resize"
 msgstr "Pakeisti dydį"
 
 #: app/tools/tools-enums.c:83
-#, fuzzy
 msgid "Free select"
 msgstr "Laisvas pažymėjimas"
 
 #: app/tools/tools-enums.c:84
-#, fuzzy
 msgid "Fixed size"
 msgstr "Fiksuotas dydis"
 
@@ -8789,17 +8242,14 @@ msgstr ""
 "Pakrypimas plokštumos atžvilgiu"
 
 #: app/tools/tools-enums.c:113
-#, fuzzy
 msgid "Transform layer"
 msgstr "Transformuoti sluoksnį"
 
 #: app/tools/tools-enums.c:114
-#, fuzzy
 msgid "Transform selection"
 msgstr "Transformuoti pažymėjimą"
 
 #: app/tools/tools-enums.c:115
-#, fuzzy
 msgid "Transform path"
 msgstr "Transformuoti kontūrą"
 
@@ -8826,7 +8276,6 @@ msgid "Number of grid lines"
 msgstr "Pagalbinių linijų skaičius"
 
 #: app/tools/tools-enums.c:205
-#, fuzzy
 msgid "Grid line spacing"
 msgstr "Tarpai tarp pagalbinių linijų"
 
@@ -8839,9 +8288,8 @@ msgid "Airbrush with variable pressure"
 msgstr "Kintamo spaudimo purkštuvas"
 
 #: app/tools/gimpairbrushtool.c:57
-#, fuzzy
 msgid "_Airbrush"
-msgstr "Dažų purkštuvas"
+msgstr "_Dažų purkštuvas"
 
 #: app/tools/gimpairbrushtool.c:123 app/tools/gimpconvolvetool.c:211
 #: app/tools/gimpsmudgetool.c:123
@@ -8901,9 +8349,8 @@ msgid "Adjust brightness and contrast"
 msgstr "Nustatyti šviesumą ir kontrastą"
 
 #: app/tools/gimpbrightnesscontrasttool.c:87
-#, fuzzy
 msgid "B_rightness-Contrast..."
-msgstr "Šviesumas-Kontrastas"
+msgstr "Šviesumas-Kontrastas..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
@@ -8976,9 +8423,8 @@ msgid "Fill with a color or pattern"
 msgstr "Užpildyti spalva arba raštu"
 
 #: app/tools/gimpbucketfilltool.c:93
-#, fuzzy
 msgid "_Bucket Fill"
-msgstr "Užpildymas \"iš kibirėlio\""
+msgstr "_Užpildymas"
 
 #: app/tools/gimpbycolorselecttool.c:82
 msgid "Select By Color"
@@ -8989,18 +8435,16 @@ msgid "Select regions by color"
 msgstr "Pažymėti sritis pagal spalvą"
 
 #: app/tools/gimpbycolorselecttool.c:84
-#, fuzzy
 msgid "_By Color Select"
-msgstr "Pažymėti sluoksnį"
+msgstr "_Žymėjimas pagal spalvą"
 
 #: app/tools/gimpclonetool.c:90
 msgid "Paint using Patterns or Image Regions"
 msgstr "Piešti naudojant raštus arba paveikslėlio sritis"
 
 #: app/tools/gimpclonetool.c:91
-#, fuzzy
 msgid "_Clone"
-msgstr "Klonavimas"
+msgstr "_Klonavimas"
 
 #: app/tools/gimpclonetool.c:266
 msgid "Source"
@@ -9015,9 +8459,8 @@ msgid "Adjust color balance"
 msgstr "Nustatyti spalvų balansą"
 
 #: app/tools/gimpcolorbalancetool.c:98
-#, fuzzy
 msgid "Color _Balance..."
-msgstr "Spalvų balansas"
+msgstr "Spalvos balansas..."
 
 #: app/tools/gimpcolorbalancetool.c:149
 msgid "Adjust Color Balance"
@@ -9063,7 +8506,6 @@ msgid "Colorize the image"
 msgstr "Spalvinti paveikslėlįį"
 
 #: app/tools/gimpcolorizetool.c:98
-#, fuzzy
 msgid "Colori_ze..."
 msgstr "Spalvinti"
 
@@ -9122,7 +8564,6 @@ msgid "Pick colors from the image"
 msgstr "Išrinkti dažų spalvą iš paveikslėlio"
 
 #: app/tools/gimpcolorpickertool.c:101
-#, fuzzy
 msgid "C_olor Picker"
 msgstr "Spalvų pipetė"
 
@@ -9136,7 +8577,6 @@ msgid "Blur or Sharpen"
 msgstr "Sulieti arba paaštrinti"
 
 #: app/tools/gimpconvolvetool.c:72
-#, fuzzy
 msgid "Con_volve"
 msgstr "Suliejimas ir paaštrinimas"
 
@@ -9182,9 +8622,8 @@ msgid "Crop or Resize an image"
 msgstr "Iškirpti paveikslėlio fragmentą arba pakeisti dydį"
 
 #: app/tools/gimpcroptool.c:166
-#, fuzzy
 msgid "_Crop & Resize"
-msgstr "Apkarpymas ir dydžio keitimas"
+msgstr "_Apkarpymas ir dydžio keitimas"
 
 #. initialize the statusbar display
 #: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:983
@@ -9217,7 +8656,6 @@ msgid "From selection"
 msgstr "Nuo pažymėjimo"
 
 #: app/tools/gimpcroptool.c:1090
-#, fuzzy
 msgid "Auto shrink"
 msgstr "Automatinis sumažinimas"
 
@@ -9226,9 +8664,8 @@ msgid "Adjust color curves"
 msgstr "Nustatyti spalvų kreives"
 
 #: app/tools/gimpcurvestool.c:143
-#, fuzzy
 msgid "_Curves..."
-msgstr "Kreivės"
+msgstr "_Kreivės"
 
 #: app/tools/gimpcurvestool.c:202
 msgid "Adjust Color Curves"
@@ -9283,7 +8720,6 @@ msgid "Dodge or Burn strokes"
 msgstr "Blukinti arba ryškinti"
 
 #: app/tools/gimpdodgeburntool.c:72
-#, fuzzy
 msgid "Dod_geBurn"
 msgstr "Blukinimas ir ryškinimas"
 
@@ -9316,18 +8752,16 @@ msgid "Select elliptical regions"
 msgstr "Pažymėti elipsinius plotus"
 
 #: app/tools/gimpellipseselecttool.c:73
-#, fuzzy
 msgid "_Ellipse Select"
-msgstr "Elipsinis pažymėjimas"
+msgstr "_Elipsinis pažymėjimas"
 
 #: app/tools/gimperasertool.c:71
 msgid "Erase to background or transparency"
 msgstr "Ištrinti arba padaryti permatomesnį"
 
 #: app/tools/gimperasertool.c:72
-#, fuzzy
 msgid "_Eraser"
-msgstr "Trintukas"
+msgstr "_Trintukas"
 
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:185
@@ -9351,7 +8785,6 @@ msgid "Flip the layer or selection"
 msgstr "Sluoksnio ar pažymėjimo atspindys"
 
 #: app/tools/gimpfliptool.c:84
-#, fuzzy
 msgid "_Flip"
 msgstr "Veidrodinis vaizdas"
 
@@ -9360,9 +8793,8 @@ msgid "Select hand-drawn regions"
 msgstr "Laisvas sričių pažymėjimas"
 
 #: app/tools/gimpfreeselecttool.c:98
-#, fuzzy
 msgid "_Free Select"
-msgstr "Laisvas pažymėjimas"
+msgstr "_Laisvas pažymėjimas"
 
 #: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
@@ -9383,12 +8815,10 @@ msgid "Adjust hue and saturation"
 msgstr "Nustatyti atspalvį ir sodrumą"
 
 #: app/tools/gimphuesaturationtool.c:112
-#, fuzzy
 msgid "Hue-_Saturation..."
 msgstr "Atspalvis-Sodrumas"
 
 #: app/tools/gimphuesaturationtool.c:166
-#, fuzzy
 msgid "Adjust hue / lightness / saturation"
 msgstr "Reguliuoti atspalvį / šviesumą / sodrumą"
 
@@ -9438,7 +8868,6 @@ msgid "Modify Selected Color"
 msgstr "Redaguoti pasirinktą spalvą"
 
 #: app/tools/gimphuesaturationtool.c:405
-#, fuzzy
 msgid "R_eset color"
 msgstr "_Atstatyti spalvą"
 
@@ -9499,7 +8928,6 @@ msgid "Draw in ink"
 msgstr "Piešti plunksna"
 
 #: app/tools/gimpinktool.c:64
-#, fuzzy
 msgid "In_k"
 msgstr "Plunksna"
 
@@ -9512,18 +8940,16 @@ msgid "Select shapes from image"
 msgstr "Pasirinkti linijas iš paveikslėlio"
 
 #: app/tools/gimpiscissorstool.c:279
-#, fuzzy
 msgid "Intelligent _Scissors"
-msgstr "/Įrankiai/Žymėjimo įrankiai/Prot_ingos žirklės"
+msgstr "Prot_ingos žirklės"
 
 #: app/tools/gimplevelstool.c:161
 msgid "Adjust color levels"
 msgstr "Nustatyti spalvų lygius"
 
 #: app/tools/gimplevelstool.c:162
-#, fuzzy
 msgid "_Levels..."
-msgstr "Lygiai"
+msgstr "_Lygiai..."
 
 #: app/tools/gimplevelstool.c:220
 msgid "Adjust Color Levels"
@@ -9615,9 +9041,8 @@ msgid "Measure distances and angles"
 msgstr "Matuoti atstumus ir kampus"
 
 #: app/tools/gimpmeasuretool.c:120
-#, fuzzy
 msgid "_Measure"
-msgstr "Matuoti"
+msgstr "_Matuoti"
 
 #: app/tools/gimpmeasuretool.c:264
 msgid "Add Guides"
@@ -9662,9 +9087,8 @@ msgid "Move layers & selections"
 msgstr "Paslinkti sluoksnį/pažymėjimą"
 
 #: app/tools/gimpmovetool.c:118
-#, fuzzy
 msgid "_Move"
-msgstr "Perkelti"
+msgstr "_Perkelti"
 
 #: app/tools/gimpmovetool.c:298 app/tools/gimpmovetool.c:576
 #, fuzzy
@@ -9753,7 +9177,6 @@ msgid "Paint hard edged pixels"
 msgstr "Piešti aštrių kampų taškus"
 
 #: app/tools/gimppenciltool.c:53
-#, fuzzy
 msgid "Pe_ncil"
 msgstr "Pieštukas"
 
@@ -9766,9 +9189,8 @@ msgid "Change perspective of the layer or selection"
 msgstr "Keisti sluoksnio arba pažymėjimo perspektyvą"
 
 #: app/tools/gimpperspectivetool.c:83
-#, fuzzy
 msgid "_Perspective"
-msgstr "Perspektyvos"
+msgstr "_Perspektyva"
 
 #: app/tools/gimpperspectivetool.c:140
 msgid "Perspective Transform Information"
@@ -9808,9 +9230,8 @@ msgid "Select rectangular regions"
 msgstr "Pažymėti stačiakampius plotus"
 
 #: app/tools/gimprectselecttool.c:98
-#, fuzzy
 msgid "_Rect Select"
-msgstr "Keturkampis pažymėjimas"
+msgstr "_Keturkampis pažymėjimas"
 
 #: app/tools/gimprectselecttool.c:224
 msgid "Selection: ADD"
@@ -9837,9 +9258,8 @@ msgid "Rotate the layer or selection"
 msgstr "Pasukti sluoksnį arba pažymėjimą"
 
 #: app/tools/gimprotatetool.c:99
-#, fuzzy
 msgid "_Rotate"
-msgstr "Pasukimas"
+msgstr "_Pasukimas"
 
 #: app/tools/gimprotatetool.c:158
 msgid "Rotation Information"
@@ -9863,9 +9283,8 @@ msgid "Scale the layer or selection"
 msgstr "Sluoksnio arba pažymėjimo mastelis"
 
 #: app/tools/gimpscaletool.c:93
-#, fuzzy
 msgid "_Scale"
-msgstr "Mastelis"
+msgstr "_Mastelis"
 
 #: app/tools/gimpscaletool.c:152
 #, fuzzy
@@ -9952,9 +9371,8 @@ msgid "Shear the layer or selection"
 msgstr "Sluoksnio arba pažymėjimo šlyties deformacija"
 
 #: app/tools/gimpsheartool.c:100
-#, fuzzy
 msgid "S_hear"
-msgstr "Kirpti"
+msgstr "Šlytis"
 
 #: app/tools/gimpsheartool.c:157
 msgid "Shearing Information"
@@ -9975,9 +9393,8 @@ msgid "Smudge image"
 msgstr "Ištepti paveikslėlį"
 
 #: app/tools/gimpsmudgetool.c:56
-#, fuzzy
 msgid "_Smudge"
-msgstr "Ištepimas"
+msgstr "_Ištepimas"
 
 #: app/tools/gimptextoptions.c:146
 msgid ""
@@ -9999,12 +9416,10 @@ msgid "Modify line spacing"
 msgstr "Keisti tarpą tarp eilučių"
 
 #: app/tools/gimptextoptions.c:419
-#, fuzzy
 msgid "Font:"
-msgstr "Šri_ftas:"
+msgstr "Šriftas:"
 
 #: app/tools/gimptextoptions.c:431
-#, fuzzy
 msgid "Hinting"
 msgstr "Dalinu"
 
@@ -10038,7 +9453,6 @@ msgstr ""
 "eilučių:"
 
 #: app/tools/gimptextoptions.c:478
-#, fuzzy
 msgid "Create path from text"
 msgstr "Iš teksto sukurti kelią"
 
@@ -10047,7 +9461,6 @@ msgid "Add text to the image"
 msgstr "Rašyti tekstą paveikslėlyje"
 
 #: app/tools/gimptexttool.c:144
-#, fuzzy
 msgid "Te_xt"
 msgstr "Tekstas"
 
@@ -10105,9 +9518,8 @@ msgid "Clip result"
 msgstr ""
 
 #: app/tools/gimptransformoptions.c:367
-#, fuzzy
 msgid "Preview:"
-msgstr "Peržiūra"
+msgstr "Peržiūra:"
 
 #. the constraints frame
 #: app/tools/gimptransformoptions.c:413
@@ -10380,9 +9792,8 @@ msgid "Shortcut"
 msgstr "Klavišų kombinacijos"
 
 #: app/widgets/gimpactionview.c:339
-#, fuzzy
 msgid "Name"
-msgstr "Pavadinimas:"
+msgstr "Pavadinimas"
 
 #: app/widgets/gimpactionview.c:479 app/widgets/gimpactionview.c:672
 msgid "Changing shortcut failed."
@@ -10452,13 +9863,12 @@ msgid "Reorder Channel"
 msgstr "Perkelti kanalą"
 
 #: app/widgets/gimpchanneltreeview.c:261
-#, fuzzy
 msgid "Empty Channel"
-msgstr "Tuščia kanalo kopija"
+msgstr "Tuščias kanalas"
 
 #: app/widgets/gimpclipboard.c:283
 msgid "Clipboard"
-msgstr ""
+msgstr "Iškarpinė"
 
 #: app/widgets/gimpcolordialog.c:169
 msgid "Add the current color to the color history"
@@ -10560,9 +9970,8 @@ msgid "Alpha:"
 msgstr "Alfa:"
 
 #: app/widgets/gimpcolormapeditor.c:247
-#, fuzzy
 msgid "Color index:"
-msgstr "Spalvų indeksas:"
+msgstr "Spalvos indeksas:"
 
 #: app/widgets/gimpcolormapeditor.c:258
 #, fuzzy
@@ -10586,7 +9995,6 @@ msgid "Enable this controller"
 msgstr ""
 
 #: app/widgets/gimpcontrollereditor.c:236
-#, fuzzy
 msgid "Name:"
 msgstr "Pavadinimas:"
 
@@ -10907,14 +10315,12 @@ msgid "Background: %d, %d, %d"
 msgstr "Fonas: %d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "/Uždaryti kortelę"
+msgstr "Uždaryti visas korteles?"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "/Uždaryti kortelę"
+msgstr "Uždaryti visas korteles"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
@@ -10955,9 +10361,8 @@ msgid "By Extension"
 msgstr "/Pagal plėtinį"
 
 #: app/widgets/gimpfiledialog.c:496
-#, fuzzy
 msgid "All Files"
-msgstr "Filtrai"
+msgstr "Visos Bylos"
 
 #: app/widgets/gimpfiledialog.c:635
 #, fuzzy, c-format
@@ -10965,9 +10370,8 @@ msgid "Select File _Type (%s)"
 msgstr "Užpildymo tipas  %s"
 
 #: app/widgets/gimpfileprocview.c:234
-#, fuzzy
 msgid "File Type"
-msgstr "Užpildymo tipas"
+msgstr "Bylos tipas"
 
 #: app/widgets/gimpfileprocview.c:253
 #, fuzzy
@@ -11069,19 +10473,16 @@ msgid "Change grid foreground color"
 msgstr "Pakeisti grotelių priekinio plano spavą"
 
 #: app/widgets/gimpgrideditor.c:228
-#, fuzzy
 msgid "_Foreground color:"
-msgstr "Priekinio plano spalva:"
+msgstr "_Priekinio plano spalva:"
 
 #: app/widgets/gimpgrideditor.c:232
-#, fuzzy
 msgid "Change grid background color"
 msgstr "Pakeisti grotelių fono spalvą"
 
 #: app/widgets/gimpgrideditor.c:237
-#, fuzzy
 msgid "_Background color:"
-msgstr "Fono spalva:"
+msgstr "_Fono spalva:"
 
 #: app/widgets/gimpgrideditor.c:242
 #, fuzzy
@@ -11122,7 +10523,6 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "Nepavyko paleisti GIMP pagalbos naršyklės."
 
 #: app/widgets/gimphelp.c:240
-#, fuzzy
 msgid "Use _web browser instead"
 msgstr "Vietoj to naudoti web naršyklę"
 
@@ -11177,9 +10577,8 @@ msgid "Keep transparency"
 msgstr "Išlaikyti permatomumą"
 
 #: app/widgets/gimplayertreeview.c:848
-#, fuzzy
 msgid "Empty Layer"
-msgstr "Tuščias teksto sluoksnis"
+msgstr "Tuščias sluoksnis"
 
 #: app/widgets/gimpmessagebox.c:460
 #, c-format
@@ -11234,9 +10633,8 @@ msgid "Line Width:"
 msgstr "Sluoksnio plotis:"
 
 #: app/widgets/gimpstrokeeditor.c:209
-#, fuzzy
 msgid "_Line Style"
-msgstr "Linijos stilius:"
+msgstr "_Linijos stilius"
 
 #: app/widgets/gimpstrokeeditor.c:228
 #, fuzzy
@@ -11326,7 +10724,6 @@ msgid "Thumbnail %d of %d"
 msgstr "Peržiūra  %d iš %d"
 
 #: app/widgets/gimpthumbbox.c:730 app/widgets/gimpthumbbox.c:740
-#, fuzzy
 msgid "Creating Preview ..."
 msgstr "Kraunama peržiūra..."
 
@@ -11457,7 +10854,6 @@ msgid "Behind"
 msgstr "Už"
 
 #: app/widgets/gimpwidgets-constructors.c:53
-#, fuzzy
 msgid "Color erase"
 msgstr "Ištrinti spalvą"
 
@@ -11516,13 +10912,11 @@ msgstr "Pridėjimas"
 
 #: app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
-#, fuzzy
 msgid "Darken only"
 msgstr "Tik patamsinti"
 
 #: app/widgets/gimpwidgets-constructors.c:71
 #: app/widgets/gimpwidgets-constructors.c:104
-#, fuzzy
 msgid "Lighten only"
 msgstr "Tik pašviesinti"
 
@@ -11562,7 +10956,6 @@ msgid "Landscape"
 msgstr "Kraštovaizdis"
 
 #: app/widgets/widgets-enums.c:113
-#, fuzzy
 msgid "Pixel values"
 msgstr "Taškelių vertės"
 
@@ -11583,12 +10976,10 @@ msgid "Fancy"
 msgstr ""
 
 #: app/widgets/widgets-enums.c:199
-#, fuzzy
 msgid "GIMP help browser"
-msgstr "Pagalbos naršyklė"
+msgstr "GIMP pagalbos naršyklė"
 
 #: app/widgets/widgets-enums.c:200
-#, fuzzy
 msgid "Web browser"
 msgstr "Interneto naršyklė"
 
@@ -11601,46 +10992,38 @@ msgid "Icon"
 msgstr "Ikona"
 
 #: app/widgets/widgets-enums.c:262
-#, fuzzy
 msgid "Current status"
-msgstr "Dabartinė būsena:"
+msgstr "Dabartinė būsena"
 
 #: app/widgets/widgets-enums.c:264
 msgid "Description"
 msgstr "Aprašymas"
 
 #: app/widgets/widgets-enums.c:265
-#, fuzzy
 msgid "Icon & text"
 msgstr "Ikona ir tekstas"
 
 #: app/widgets/widgets-enums.c:266
-#, fuzzy
 msgid "Icon & desc"
 msgstr "Ikona ir aprašymas"
 
 #: app/widgets/widgets-enums.c:267
-#, fuzzy
 msgid "Status & text"
 msgstr "Būsena ir tekstas"
 
 #: app/widgets/widgets-enums.c:268
-#, fuzzy
 msgid "Status & desc"
 msgstr "Buklė ir aprašymas"
 
 #: app/widgets/widgets-enums.c:295
-#, fuzzy
 msgid "View as list"
 msgstr "Rodyti kaip sąrašą"
 
 #: app/widgets/widgets-enums.c:296
-#, fuzzy
 msgid "View as grid"
 msgstr "Matyti kaip groteles"
 
 #: app/widgets/widgets-enums.c:324
-#, fuzzy
 msgid "Normal window"
 msgstr "Įprastas langas"
 
@@ -11684,9 +11067,8 @@ msgid "Could not seek in XCF file: %s"
 msgstr "Nepavyko surasti XCF byloje: %s"
 
 #: app/xcf/xcf.c:86 app/xcf/xcf.c:143
-#, fuzzy
 msgid "GIMP XCF image"
-msgstr "GIMP pranešimas"
+msgstr "GIMP XCF paveikslėlis"
 
 #: app/xcf/xcf.c:282
 #, c-format
@@ -11708,1463 +11090,3 @@ msgstr "Paletės savybių nustatymas"
 #~ msgstr ""
 #~ "Nustatytas dydis /\n"
 #~ "Pakrypimas plokštumos atžvilgiu"
-
-#~ msgid "Y:"
-#~ msgstr "Y:"
-
-#~ msgid "Transformations do not work on layers that contain layer masks."
-#~ msgstr ""
-#~ "Transformacijos neveikia sluoksniams, kuriuose yra sluoksnių kaukės."
-
-#~ msgid "Resize Error: Both width and height must be greater than zero."
-#~ msgstr "Dydžio keitimo klaida: plotis ir aukštis turi būti didesni už nulį."
-
-#~ msgid "Scale Error: Both width and height must be greater than zero."
-#~ msgstr "Didžio keitimo klaida: Plotis ir ilgis turi būti didesnis už nulį."
-
-#~ msgid "C_enter"
-#~ msgstr "Centras"
-
-#~ msgid "Indexed Palette Menu"
-#~ msgstr "Indeksuotų panelių meniu"
-
-#, fuzzy
-#~ msgid "Inde_xed Palette"
-#~ msgstr "Indeksuota paletė"
-
-#, fuzzy
-#~ msgid "_Undo History"
-#~ msgstr "Atšaukimų istorija"
-
-#, fuzzy
-#~ msgid "Brus_hes"
-#~ msgstr "Teptukai"
-
-#, fuzzy
-#~ msgid "Show Image _Menu"
-#~ msgstr "/Rodyti paveikslėlio meniu"
-
-#, fuzzy
-#~ msgid "Buffer"
-#~ msgstr "Buferiai"
-
-#~ msgid "Layer _Name"
-#~ msgstr "Sluoksnio pavadinimas:"
-
-#~ msgid "Set Indexed Palette"
-#~ msgstr "Nustatyti indeksuotą paletę"
-
-#, fuzzy
-#~ msgid "Change Indexed Palette Entry"
-#~ msgstr "Indeksuota paletė"
-
-#~ msgid "Add Color to Indexed Palette"
-#~ msgstr "Pridėti spavą į indeksuota paletę"
-
-#~ msgid "No preview available"
-#~ msgstr "Nėra peržiūros"
-
-#~ msgid "Indexed Palette"
-#~ msgstr "Indeksuota paletė"
-
-#, fuzzy
-#~ msgid "Scale Layer Options"
-#~ msgstr "Naujo sluoksnio savybės"
-
-#, fuzzy
-#~ msgid "Scale Image Options"
-#~ msgstr "Keisti paveikslėlio dydį"
-
-#~ msgid "Pixel Dimensions"
-#~ msgstr "Taškelio matmenys"
-
-#~ msgid "Layer Boundary Size"
-#~ msgstr "Sluoksnio ribų dydis"
-
-#, fuzzy
-#~ msgid "New width:"
-#~ msgstr "Naujas plotis:"
-
-#, fuzzy
-#~ msgid "New height:"
-#~ msgstr "Aukštis:"
-
-#, fuzzy
-#~ msgid "X ratio:"
-#~ msgstr "Santykis X:"
-
-#, fuzzy
-#~ msgid "Y ratio:"
-#~ msgstr "Santykis X:"
-
-#~ msgid "Print Size & Display Unit"
-#~ msgstr "Dydis spausdinimui ir raiška"
-
-#, fuzzy
-#~ msgid "X resolution:"
-#~ msgstr "Raiška:"
-
-#, fuzzy
-#~ msgid "Y resolution:"
-#~ msgstr "Raiška:"
-
-#, fuzzy
-#~ msgid "Stroke Options"
-#~ msgstr "Saugojimo savybės"
-
-#~ msgid "_Size:"
-#~ msgstr "Dydi_s:"
-
-#, fuzzy
-#~ msgid ""
-#~ "New Channel\n"
-#~ "%s New Channel Dialog"
-#~ msgstr "Nauja kanalo spalva"
-
-#~ msgid "Delete Channel"
-#~ msgstr "Ištrinti kanalą"
-
-#, fuzzy
-#~ msgid ""
-#~ "Channel to selection\n"
-#~ "%s  Add\n"
-#~ "%s  Subtract\n"
-#~ "%s  Intersect"
-#~ msgstr ""
-#~ "Kanalą peversti pažymėjimu\n"
-#~ "%s  Pridėti\n"
-#~ "%s  Atimti\n"
-#~ "%s%s%s  Sankirta"
-
-#, fuzzy
-#~ msgid "He_x triplet:"
-#~ msgstr "Šešioliktainis trejetas:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Add color from FG\n"
-#~ "%s  from BG"
-#~ msgstr ""
-#~ "Pridėti spalvą iš priekinio plano\n"
-#~ "%s iš fono"
-
-#, fuzzy
-#~ msgid "Edit Indexed Color"
-#~ msgstr "Indeksuota spalva"
-
-#, fuzzy
-#~ msgid "Edit indexed image palette color"
-#~ msgstr "Indeksuota paletė"
-
-#~ msgid ""
-#~ "Open the selected entry\n"
-#~ "%s  Raise window if already open\n"
-#~ "%s  Open image dialog"
-#~ msgstr ""
-#~ "Atidaryti pasirinktą elementą\n"
-#~ "%s Pakelti langą jei jau atidarytas\n"
-#~ "%s Atidaryti paveikslėlio dialogą"
-
-#, fuzzy
-#~ msgid ""
-#~ "Save all errors\n"
-#~ "%s  Save selection"
-#~ msgstr "Paslinkti sluoksnį/pažymėjimą"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "%s  To Top"
-#~ msgstr ""
-#~ "%s\n"
-#~ "%s  į viršų"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "%s  To Bottom"
-#~ msgstr ""
-#~ "%s\n"
-#~ "%s  į apačią"
-
-#~ msgid "Delete Layer"
-#~ msgstr "Ištrinti sluoksnį"
-
-#, fuzzy
-#~ msgid ""
-#~ "New color from FG\n"
-#~ "%s  from BG"
-#~ msgstr ""
-#~ "Pridėti spalvą iš priekinio plano\n"
-#~ "%s iš fono"
-
-#, fuzzy
-#~ msgid ""
-#~ "Selection to path\n"
-#~ "%s  Advanced options"
-#~ msgstr ""
-#~ "Pažymėjimas į kelią\n"
-#~ "%s  Sudėtingesni nustatymai"
-
-#~ msgid ""
-#~ "Selection to Path\n"
-#~ "%s  Advanced Options"
-#~ msgstr ""
-#~ "Pažymėjimas į kelią\n"
-#~ "%s  Sudėtingesni nustatymai"
-
-#, fuzzy
-#~ msgid ""
-#~ "You are trying to create an image with a size of %s.\n"
-#~ "\n"
-#~ "Choose OK to create this image anyway.\n"
-#~ "Choose Cancel if you did not intend to create such a large image.\n"
-#~ "\n"
-#~ "To prevent this dialog from appearing, increase the \"Maximum Image Size"
-#~ "\" setting (currently %s) in the Preferences dialog."
-#~ msgstr ""
-#~ "Jūs bandote sukurti paveikslėlį, kurio pradinis dydis bus %s.\n"
-#~ "\n"
-#~ "Pasirinkite OK jei vistiek norite sukurti šį paveikslėlį.\n"
-#~ "Pasirinkite Atšaukti jei jūs nenorėjote sukurti tokio didelio "
-#~ "paveikslėlio.\n"
-#~ "\n"
-#~ "Kad daugiau nematytumėte šio dialogo, padidinkite \"Maksimalus "
-#~ "paveikslėlio dydis\" nustatymą\n"
-#~ "(dabar %s) nuostatų dialoge."
-
-#~ msgid "Image exceeds maximum image size"
-#~ msgstr "Paveikslėlis viršija maksimalų leistiną dydį"
-
-#~ msgid "Layer Too Small"
-#~ msgstr "Sluoksnis per mažas"
-
-#, fuzzy
-#~ msgid "Positioned color dithering"
-#~ msgstr "Nustatytas spalvų suliejimas"
-
-#~ msgid "General Palette Options"
-#~ msgstr "Pagrindinės paletės savybės"
-
-#, fuzzy
-#~ msgid "Dithering Options"
-#~ msgstr "Maišymo savybės"
-
-#~ msgid "[ Warning ]"
-#~ msgstr "[ Įspėjimas ]"
-
-#~ msgid ""
-#~ "You are attempting to convert an image with an alpha channel to indexed "
-#~ "colors.\n"
-#~ "Do not generate a palette of more than 255 colors if you intend to create "
-#~ "a transparent or animated GIF file."
-#~ msgstr ""
-#~ "Jūs bandote konvertuoti paveikslėlį su alfa sluoksniais iš RGB/Pilkumo "
-#~ "atspalvių į indeksuotą.\n"
-#~ "Jūs neturėtumėte generuoti paletės iš daugiau nei 255 spavų, jei ketinate "
-#~ "sukurti permatomą arba animuotą GIF paveikslėlį"
-
-#~ msgid ""
-#~ "You are trying to create an image with an initial size of %s.\n"
-#~ "\n"
-#~ "Choose OK to create this image anyway.\n"
-#~ "Choose Cancel if you did not intend to create such a large image.\n"
-#~ "\n"
-#~ "To prevent this dialog from appearing, increase the \"Maximum Image Size"
-#~ "\" setting (currently %s) in the Preferences dialog."
-#~ msgstr ""
-#~ "Jūs bandote sukurti paveikslėlį, kurio pradinis dydis bus %s.\n"
-#~ "\n"
-#~ "Pasirinkite OK, jei vis tiek norite sukurti šį paveikslėlį.\n"
-#~ "Pasirinkite Atšaukti, jei nenorėjote sukurti tokio didelio paveikslėlio.\n"
-#~ "\n"
-#~ "Kad daugiau nematytumėte šio dialogo, padidinkite \"Maksimalus "
-#~ "paveikslėlio dydis\" nustatymą\n"
-#~ "(dabar %s) nuostatų dialoge."
-
-#~ msgid "Extended"
-#~ msgstr "Išplėstinis"
-
-#~ msgid "File Saving"
-#~ msgstr "Bylų išsaugojimas"
-
-#~ msgid "Pattern:"
-#~ msgstr "Raštai:"
-
-#~ msgid "Density:"
-#~ msgstr "Tankis:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Could not find the GIMP Help Browser procedure. It probably was not "
-#~ "compiled because you don't have GtkHtml2 installed."
-#~ msgstr ""
-#~ "Nepavyko·rasti·GIMP·pagalbos·naršyklės procedūros.\n"
-#~ "Greičiausiai ji nebuvo įkompiliuota, nes jūs neturi įsidiegęs GtkXmHTML."
-
-#~ msgid "Could not start GIMP Help Browser"
-#~ msgstr "Nepavyko paleisti GIMP pagalbos naršyklės"
-
-#~ msgid "Internal"
-#~ msgstr "Vidinė"
-
-#~ msgid "Black"
-#~ msgstr "Juodas"
-
-#~ msgid "Move Floating Layer"
-#~ msgstr "Perkelti plaukiojantį sluoksnį"
-
-#, fuzzy
-#~ msgid "Changes were made to '%s'."
-#~ msgstr ""
-#~ "Padaryta pakeitimų byloje %s.\n"
-#~ "Vis tiek uždaryti?"
-
-#~ msgid "Select Custom Palette"
-#~ msgstr "Išsirinkti papildomą paletę"
-
-#~ msgid "Light Checks"
-#~ msgstr "Šviesių tonų patikrinimas"
-
-#~ msgid "Mid-Tone Checks"
-#~ msgstr "Pustonių patikrinimas"
-
-#~ msgid "Dark Checks"
-#~ msgstr "Tamsių tonų patikrinimas"
-
-#~ msgid "White Only"
-#~ msgstr "Tik balta"
-
-#~ msgid "Gray Only"
-#~ msgstr "Tik pilka"
-
-#~ msgid "Black Only"
-#~ msgstr "Tik juoda"
-
-#~ msgid "Configure input devices"
-#~ msgstr "Konfigūruoti įvesties įrenginius"
-
-#~ msgid ""
-#~ "WARNING:\n"
-#~ "Too many open message dialogs.\n"
-#~ "Messages are redirected to stderr."
-#~ msgstr ""
-#~ "PERSPĖJIMAS:\n"
-#~ "Atidaryta per daug pranešimų dialogų.\n"
-#~ "Pranešimai peradresuojami į stderr."
-
-#, fuzzy
-#~ msgid "RGB color"
-#~ msgstr "RGB spalva"
-
-#, fuzzy
-#~ msgid "Indexed color"
-#~ msgstr "Indeksuota spalva"
-
-#, fuzzy
-#~ msgid "RGB-alpha"
-#~ msgstr "RGB Alfa"
-
-#, fuzzy
-#~ msgid "Grayscale-alpha"
-#~ msgstr "Pilkumo atspalviai - Alfa"
-
-#, fuzzy
-#~ msgid "Indexed-alpha"
-#~ msgstr "Indeksuota-Alfa"
-
-#~ msgid "Clear Saved Window Positions Now"
-#~ msgstr "Ištrinti išsaugotą lango vietą dabar"
-
-#, fuzzy
-#~ msgid "Automatic"
-#~ msgstr "/Automatinis"
-
-#, fuzzy
-#~ msgid "File Open Menu"
-#~ msgstr "Atidarymo meniu"
-
-#, fuzzy
-#~ msgid "File Save Menu"
-#~ msgstr "Išsaugojimo meniu"
-
-#, fuzzy
-#~ msgid "Foreground Color"
-#~ msgstr "Priekinio plano spalva:"
-
-#~ msgid ""
-#~ "File '%s' exists.\n"
-#~ "Overwrite it?"
-#~ msgstr "Byla %s jau egzistuoja. Užrašyti?"
-
-#, fuzzy
-#~ msgid ""
-#~ "Some images have unsaved changes.\n"
-#~ "\n"
-#~ "Really quit The GIMP?"
-#~ msgstr ""
-#~ "Kai kurios bylos neišsaugotos.\n"
-#~ "\n"
-#~ "Tikrai baigti darbą su GIMP?"
-
-#~ msgid "Pointer Movement Feedback"
-#~ msgstr "Žymeklio judejimo atsakomoji reakcija"
-
-#~ msgid "Select Temp Dir"
-#~ msgstr "Pasirinkite laikiną·katalogą"
-
-#, fuzzy
-#~ msgid "Swap dir:"
-#~ msgstr "Swap katalogas:"
-
-#~ msgid "Select Swap Dir"
-#~ msgstr "Nurodykite Swap katalogą"
-
-#, fuzzy
-#~ msgid "Don't show grid"
-#~ msgstr "Nerodyti tinklelio"
-
-#~ msgid "Determine File _Type:"
-#~ msgstr "Nustatyti bylos tipą:"
-
-#, fuzzy
-#~ msgid "Zoom to _Fit Window"
-#~ msgstr "Sutalpinti į langą"
-
-#~ msgid "Show S_election"
-#~ msgstr "Rodyti p_ažymėjimą"
-
-#, fuzzy
-#~ msgid "_Undo History Preview Size:"
-#~ msgstr "_Navigatoriaus peržiūros dydis:"
-
-#~ msgid "Dialog Behavior"
-#~ msgstr "Dialogų elgesys"
-
-#~ msgid "Menus"
-#~ msgstr "Meniu"
-
-#~ msgid "Enable _Tearoff Menus"
-#~ msgstr "Įjungti a_tplėšiamus meniu"
-
-#, fuzzy
-#~ msgid "Open _Recent Menu Size:"
-#~ msgstr "Dabartinių dokumentų sąrašų dydis:"
-
-#~ msgid "Context Sensitive _Help with \"F1\""
-#~ msgstr "Jautri kontekstinė _pagalba su \"F1\""
-
-#~ msgid "Perfect-but-Slow _Pointer Tracking"
-#~ msgstr "Puiki (bet lėta) žymeklio eiga "
-
-#~ msgid "Enable Cursor _Updating"
-#~ msgstr "Įjungti kursoriaus atna_ujinimą"
-
-#  8-Bit Displays
-# 8 bitų ekranai/li0
-#~ msgid "8-Bit Displays"
-#~ msgstr "8-Bit ekranai"
-
-#~ msgid "Minimum Number of Colors:"
-#~ msgstr "Mažiausias spalvų skaičius:"
-
-#~ msgid "Install Colormap"
-#~ msgstr "Įdiegiamas spalvynas"
-
-#~ msgid "Monitor Resolution"
-#~ msgstr "Monitoriaus skiriamoji geba"
-
-#~ msgid "Monitor"
-#~ msgstr "Vaizduoklis"
-
-#~ msgid "(Currently %d x %d dpi)"
-#~ msgstr "(Dabar %d x %d dpi)"
-
-#~ msgid "From _Windowing System"
-#~ msgstr "Iš _langų sistemos"
-
-#~ msgid "Conservative Memory Usage"
-#~ msgstr "Sumažintas atminties naudojimas"
-
-#~ msgid "Only when Modified"
-#~ msgstr "Tik kai padaryti pakeitimai"
-
-#~ msgid "Always"
-#~ msgstr "Visada"
-
-#~ msgid "\"File -> Save\" Saves the Image:"
-#~ msgstr "\"Byla ->Išsaugoti\" išsaugo paveikslėlį:"
-
-#~ msgid "Session Management"
-#~ msgstr "Sesijos valdymas"
-
-#~ msgid "Session"
-#~ msgstr "Sesija"
-
-#~ msgid "Click \"Continue\" to start The GIMP."
-#~ msgstr "Spausk \"Tęsti\", kad paleistum GIMP"
-
-#~ msgid ""
-#~ "<b>To display images in their natural size, GIMP needs to know your "
-#~ "monitor resolution.</b>"
-#~ msgstr ""
-#~ "<b>Kad paveikslėliai būtų rodomi natūralaus dydžio, GIMP privalo žinoti "
-#~ "jūsų monitoriaus skiriamą gebą.</b>"
-
-#~ msgid ""
-#~ "GIMP can obtain this information from the windowing system.  However, "
-#~ "usually this does not give useful values."
-#~ msgstr ""
-#~ "GIMP gali gauti šią informaciją iš grafinės aplinkos (langų sistemos).\n"
-#~ "Deja, dažniausiai tai neduoda naudingų reikšmių."
-
-#~ msgid "Alternatively, you can set the monitor resolution manually."
-#~ msgstr ""
-#~ "Kita vertus, Jūs galite nustatyti monitoriaus skiriamają gebą rankiniu "
-#~ "būdu."
-
-#~ msgid ""
-#~ "You can also press the \"Calibrate\" button to open a window which lets "
-#~ "you determine your monitor resolution interactively."
-#~ msgstr ""
-#~ "Jūs taip pat galite paspausti mygtuką \"Kalibruoti\", kad atidarytumėte "
-#~ "langą, kuris padės jums tiesiogiai nustatyti monitoriaus skiriamąją gebą."
-
-#~ msgid "Calibrate"
-#~ msgstr "Kalibruoti"
-
-#~ msgid "/Tools/Selection Tools/Fu_zzy Select"
-#~ msgstr "/Įrankiai/Žymėjimo įrankiai/Artimos spalvos paž_ymėjimas"
-
-#~ msgid "Threshold Range:"
-#~ msgstr "Slenksčio ribos:"
-
-#~ msgid "Intensity Range:"
-#~ msgstr "Intensyvumo sritis:"
-
-#~ msgid "Transparent"
-#~ msgstr "Skaidrus"
-
-#~ msgid "Spiral (anticlockwise)"
-#~ msgstr "Spiralinis (prieš laikrodžio rodyklę)"
-
-#, fuzzy
-#~ msgid "Paste Transform"
-#~ msgstr "Transformuoti"
-
-#~ msgid "/Add Tab/Tool _Options"
-#~ msgstr "/Pridėti kortelę/Įrankių savybės"
-
-#~ msgid "/Add Tab/_Device Status"
-#~ msgstr "/Pridėti kortelę/Įrenginio būsena"
-
-#~ msgid "/Add Tab/_Layers"
-#~ msgstr "/Pridėti kortelę/Sluoksniai"
-
-#~ msgid "/Add Tab/_Channels"
-#~ msgstr "/Pridėti kortelę/Kanalai"
-
-#~ msgid "/Add Tab/_Paths"
-#~ msgstr "/Pridėti kortelę/Kontūrai"
-
-#~ msgid "/Add Tab/Inde_xed Palette"
-#~ msgstr "/Pridėti kortelę/Indeksuota paletė..."
-
-#~ msgid "/Add Tab/Histogra_m"
-#~ msgstr "/Pridėti kortelę/Histograma"
-
-#~ msgid "/Add Tab/_Selection Editor"
-#~ msgstr "/Pridėti kortelę/Pažymėjimo savybių nustatymas"
-
-#~ msgid "/Add Tab/Na_vigation"
-#~ msgstr "/Pridėti kortelę/Navigacija"
-
-#~ msgid "/Add Tab/_Undo History"
-#~ msgstr "/Pridėti kortelę/Atšaukimų istorija"
-
-#~ msgid "/Add Tab/Colo_rs"
-#~ msgstr "/Pridėti kortelę/Spalvos"
-
-#~ msgid "/Add Tab/Brus_hes"
-#~ msgstr "/Pridėti kortelę/Teptukai"
-
-#~ msgid "/Add Tab/P_atterns"
-#~ msgstr "/Pridėti kortelę/Raštai"
-
-#~ msgid "/Add Tab/_Gradients"
-#~ msgstr "/Pridėti kortelę/Perėjimai"
-
-#~ msgid "/Add Tab/Pal_ettes"
-#~ msgstr "/Pridėti kortelę/Paletės"
-
-#~ msgid "/Add Tab/_Fonts"
-#~ msgstr "/Pridėti kortelę/Šriftai"
-
-#~ msgid "/Add Tab/_Buffers"
-#~ msgstr "/Pridėti kortelę/Buferiai"
-
-#~ msgid "/Add Tab/_Images"
-#~ msgstr "/Pridėti kortelę/Paveikslėlis"
-
-#~ msgid "/Add Tab/Document Histor_y"
-#~ msgstr "/Pridėti kortelę/Dokumentų istorija"
-
-#~ msgid "/Add Tab/_Templates"
-#~ msgstr "/Pridėti kortelę/Šablonai"
-
-#~ msgid "/Add Tab/T_ools"
-#~ msgstr "/Pridėti kortelę/Įrankiai"
-
-#~ msgid "/Add Tab/Error Co_nsole"
-#~ msgstr "/Pridėti kortelę/Klaidų terminalas"
-
-#~ msgid "/Preview Size/_Tiny"
-#~ msgstr "/Peržiūros dydis/Mažytis"
-
-#~ msgid "/Preview Size/E_xtra Small"
-#~ msgstr "/Peržiūros dydis/Labai mažas"
-
-#~ msgid "/Preview Size/_Small"
-#~ msgstr "/Peržiūros dydis/Mažas"
-
-#~ msgid "/Preview Size/_Medium"
-#~ msgstr "/Peržiūros dydis/Vidutinis"
-
-#~ msgid "/Preview Size/_Large"
-#~ msgstr "/Peržiūros dydis/Didelis"
-
-#~ msgid "/Preview Size/Ex_tra Large"
-#~ msgstr "/Peržiūros dydis/Labai didelis"
-
-#~ msgid "/Preview Size/_Huge"
-#~ msgstr "/Peržiūros dydis/Milžiniškas"
-
-#~ msgid "/Preview Size/_Enormous"
-#~ msgstr "/Peržiūros dydis/Didžiulis"
-
-#~ msgid "/Preview Size/_Gigantic"
-#~ msgstr "/Peržiūros dydis/Gigantiškas"
-
-#~ msgid "/Tab Style/_Icon"
-#~ msgstr "/Kortelių stilius/_Ikona"
-
-#~ msgid "/Tab Style/Current _Status"
-#~ msgstr "/Įrankiai/Dabartinė būsena"
-
-#~ msgid "/Tab Style/_Text"
-#~ msgstr "/Kortelės stilius/Tekstas"
-
-#~ msgid "/Tab Style/I_con & Text"
-#~ msgstr "/Kortelių stilius/I_kona ir tekstas"
-
-#~ msgid "/Tab Style/St_atus & Text"
-#~ msgstr "/Kortelių stilius/_Būklė ir tekstas"
-
-#~ msgid "From _Template:"
-#~ msgstr "Iš ša_blono"
-
-#, fuzzy
-#~ msgid "/Load Left Color From/_Right Endpoint"
-#~ msgstr "Kairiojo kaimyno dešinysis galinis taškas"
-
-#, fuzzy
-#~ msgid "/Load Left Color From/_FG Color"
-#~ msgstr "Kairiojo kaimyno dešinysis galinis taškas"
-
-#, fuzzy
-#~ msgid "/Load Left Color From/_BG Color"
-#~ msgstr "Kairiojo kaimyno dešinysis galinis taškas"
-
-#, fuzzy
-#~ msgid "/Load Right Color From/_Left Endpoint"
-#~ msgstr "Dešiniojo kaimyno kairysis galinis taškas"
-
-#, fuzzy
-#~ msgid "/Load Right Color From/_FG Color"
-#~ msgstr "Dešiniojo kaimyno kairysis galinis taškas"
-
-#, fuzzy
-#~ msgid "/Load Right Color From/_BG Color"
-#~ msgstr "Dešiniojo kaimyno kairysis galinis taškas"
-
-#~ msgid "/blendingfunction/_Linear"
-#~ msgstr "/Perėjimo funkcija/Tiesinė"
-
-#~ msgid "/blendingfunction/_Curved"
-#~ msgstr "/Perėjimo funkcija/Netiesinė"
-
-#~ msgid "/blendingfunction/_Sinusodial"
-#~ msgstr "/Perėjimo funkcija/Sinusoidinė"
-
-#~ msgid "/blendingfunction/(Varies)"
-#~ msgstr "/Perėjimo funkcija/Įvairi"
-
-#~ msgid "/coloringtype/_RGB"
-#~ msgstr "/spavotumo tipas/RGB"
-
-#, fuzzy
-#~ msgid "/coloringtype/HSV (clockwise _hue)"
-#~ msgstr "HSV (spalva pagal laikrodžio rodyklę)"
-
-#~ msgid "/coloringtype/(Varies)"
-#~ msgstr "/spavotumo tipas/(Įvairūs)"
-
-#~ msgid "Final, Anchored Layer should be:"
-#~ msgstr "Galutinis, prijungtas sluoksnis turėtų būti:"
-
-#~ msgid "/File/_New..."
-#~ msgstr "/Byla/Nauja..."
-
-#~ msgid "/File/Open Recent/(None)"
-#~ msgstr "/Byla/Atidaryti paskutinius/(Tuščia)"
-
-#, fuzzy
-#~ msgid "/File/Open Recent/Document _History"
-#~ msgstr "/Byla/Dialogai/Dokumentų rodyklė..."
-
-#~ msgid "/File/_Save"
-#~ msgstr "/Byla/Išsaugoti"
-
-#~ msgid "/File/Re_vert"
-#~ msgstr "/Byla/Sugrąžinti"
-
-#~ msgid "/File/_Close"
-#~ msgstr "/Byla/Uždaryti"
-
-#~ msgid "/Edit/_Undo"
-#~ msgstr "/Keisti/Atšaukti"
-
-#~ msgid "/Edit/_Redo"
-#~ msgstr "/Keisti/Grąžinti"
-
-#~ msgid "/Edit/Undo _History"
-#~ msgstr "/Keisti/Atšaukimų istorija"
-
-#~ msgid "/Edit/Cu_t"
-#~ msgstr "/Keisti/Iškirpti"
-
-#~ msgid "/Edit/_Copy"
-#~ msgstr "/Keisti/Kopijuoti"
-
-#~ msgid "/Edit/_Paste"
-#~ msgstr "/Keisti/Įdėti"
-
-#~ msgid "/Edit/Paste _Into"
-#~ msgstr "/Keisti/Įdėti į"
-
-#~ msgid "/Edit/Paste as _New"
-#~ msgstr "/Keisti/Įdėti kaip naują"
-
-#~ msgid "/Edit/_Buffer"
-#~ msgstr "/Keisti/Buferis"
-
-#~ msgid "/Edit/Buffer/Cu_t Named..."
-#~ msgstr "/Keisti/Buferis/Iškirpti į buferį vardu..."
-
-#~ msgid "/Edit/Buffer/_Copy Named..."
-#~ msgstr "/Keisti/Bufferis/Kopijuoti į buferį vardu..."
-
-#~ msgid "/Edit/Cl_ear"
-#~ msgstr "/Keisti/Išvalyti"
-
-#~ msgid "/Edit/Fill with _FG Color"
-#~ msgstr "/Keisti/Užpildyti priekinio plano spalva"
-
-#~ msgid "/Edit/Fill with B_G Color"
-#~ msgstr "/Keisti/Užpildyti fono spalva"
-
-#~ msgid "/Edit/Fill with P_attern"
-#~ msgstr "/Keisti/Užpildyti raštu"
-
-#, fuzzy
-#~ msgid "/Edit/_Stroke Selection..."
-#~ msgstr "/Pridėti prie pažymėjimo"
-
-#, fuzzy
-#~ msgid "/Edit/St_roke Path..."
-#~ msgstr "/Keisti/Apvesti"
-
-#~ msgid "/Select/_All"
-#~ msgstr "/Pažymėti/Viską"
-
-#~ msgid "/Select/_None"
-#~ msgstr "/Pažymėti/Nieko"
-
-#~ msgid "/Select/_Invert"
-#~ msgstr "/Pažymėti/Invertuoti"
-
-#~ msgid "/Select/_Float"
-#~ msgstr "/Pažymėti/Plaukiojantis pažymėjimas"
-
-#~ msgid "/Select/_By Color"
-#~ msgstr "/Pažymėti/Pagal spalvą"
-
-#~ msgid "/Select/_Sharpen"
-#~ msgstr "/Pažymėti/Paaštrinti"
-
-#, fuzzy
-#~ msgid "/Select/S_hrink..."
-#~ msgstr "/Pažymėti/Sumažinti..."
-
-#~ msgid "/Select/To _Path"
-#~ msgstr "/Pažymėti/Į kontūrą"
-
-#~ msgid "/View/_New View"
-#~ msgstr "/Vaizdas/Naujas vaizdas"
-
-#~ msgid "/View/_Zoom"
-#~ msgstr "/Vaizdas/Padidinti"
-
-#~ msgid "/View/Zoom/Zoom _Out"
-#~ msgstr "/Vaizdas/Sumažinti"
-
-#~ msgid "/View/Zoom/Zoom _In"
-#~ msgstr "/Vaizdas/Padidinti"
-
-#~ msgid "/View/_Info Window"
-#~ msgstr "/Vaizdas/Informacijos langas"
-
-#~ msgid "/View/Show _Selection"
-#~ msgstr "/Vaizdas/Rodyti pažymėjimą"
-
-#~ msgid "/View/Show _Layer Boundary"
-#~ msgstr "/Vaizdas/Rodyti sluoksnių ribas"
-
-#~ msgid "/View/Show _Guides"
-#~ msgstr "/Vaizdas/Rodyti pagalbines linijas"
-
-#~ msgid "/View/S_how Grid"
-#~ msgstr "/Vaizdas/Rodyti tinklelį"
-
-#~ msgid "/View/Show _Menubar"
-#~ msgstr "/Vaizdas/Rodyti meniu juostą"
-
-#~ msgid "/View/Show R_ulers"
-#~ msgstr "/Vaizdas/Rodyti liniuotes"
-
-#~ msgid "/View/Show Scroll_bars"
-#~ msgstr "/Vaizdas/Rodyti slinkties juostas"
-
-#~ msgid "/View/Show S_tatusbar"
-#~ msgstr "/Vaizdas/Rodyti būsenos juostą"
-
-#, fuzzy
-#~ msgid "/View/Shrink _Wrap"
-#~ msgstr "/Vaizdas/"
-
-#~ msgid "/View/Move to Screen..."
-#~ msgstr "/Vaizdas/Perkleti į darbalaukį..."
-
-#~ msgid "/Image/_Mode"
-#~ msgstr "/Paveikslėlis/Režimas"
-
-#~ msgid "/Image/Mode/_RGB"
-#~ msgstr "/Paveikslėlis/Režimas/RGB"
-
-#~ msgid "/Image/Mode/_Grayscale"
-#~ msgstr "/Paveikslėlis/Režimas/Pilkumo atspalviai"
-
-#~ msgid "/Image/Mode/_Indexed..."
-#~ msgstr "/Paveikslėlis/Režimas/Indeksuotas"
-
-#~ msgid "/Image/_Transform"
-#~ msgstr "/Paveikslėlis/Transformacijos"
-
-#~ msgid "/Image/Transform/Flip _Horizontally"
-#~ msgstr "/Paveikslėlis/Transformacijos/Atspindys horizontaliai"
-
-#~ msgid "/Image/Transform/Flip _Vertically"
-#~ msgstr "/Paveikslėlis/Transformacijos/Atspindys vertikaliai"
-
-#~ msgid "/Image/Transform/Rotate 90 degrees _CW"
-#~ msgstr ""
-#~ "/Paveikslėlis/Transformacijos/Pasukimas 90 laipsnių pagal laikrodžio "
-#~ "rodyklę"
-
-#~ msgid "/Image/Can_vas Size..."
-#~ msgstr "/Paveikslėlis/Paveikslėlio dydis..."
-
-#~ msgid "/Image/_Scale Image..."
-#~ msgstr "/Paveikslėlis/Keisti dydį..."
-
-#~ msgid "/Image/_Crop Image"
-#~ msgstr "/Paveikslėlis/Apkarpyti paveikslėlį"
-
-#~ msgid "/Image/_Duplicate"
-#~ msgstr "/Paveikslėlis/Sukurti kopiją"
-
-#~ msgid "/Image/Merge Visible _Layers..."
-#~ msgstr "/Sujungti matomus sluoksnius..."
-
-#~ msgid "/Image/_Flatten Image"
-#~ msgstr "/Paveikslėlis/Sujungti paveikslėlio sluoksnius"
-
-#~ msgid "/Image/Configure G_rid..."
-#~ msgstr "/Paveikslėlis/Konfigūruoti tinklelį..."
-
-#~ msgid "/Layer/_New Layer..."
-#~ msgstr "/Sluoksniai/Naujas sluoksnis..."
-
-#~ msgid "/Layer/Du_plicate Layer"
-#~ msgstr "/Sluoksniai/Padaryti sluoksnio kopiją"
-
-#~ msgid "/Layer/Anchor _Layer"
-#~ msgstr "/Sluoksniai/Pritvirtinti sluoksnį"
-
-#~ msgid "/Layer/Me_rge Down"
-#~ msgstr "/Sluoksniai/Sujungti su žemiau esančiu"
-
-#~ msgid "/Layer/_Delete Layer"
-#~ msgstr "/Sluoksniai/Ištrinti sluoksnį"
-
-#~ msgid "/Layer/Discard _Text Information"
-#~ msgstr "/Sluoksniai/Panaikinti teksto informaciją"
-
-#~ msgid "/Layer/Stack/_Raise Layer"
-#~ msgstr "/Sluoksniai/Dėklas/Pakelti sluoksnį"
-
-#~ msgid "/Layer/Stack/_Lower Layer"
-#~ msgstr "/Sluoksniai/Dėklas/Žemesnis sluoksnis"
-
-#~ msgid "/Layer/Stack/Layer to T_op"
-#~ msgstr "/Sluoksniai/Dėklas/Pakelti sluoksnį iki viršaus"
-
-#~ msgid "/Layer/Stack/Layer to Botto_m"
-#~ msgstr "/Sluoksniai/Dėklas/Nuleisti sluoksnį iki apačios"
-
-#~ msgid "/Layer/_Colors"
-#~ msgstr "/Sluoksniai/Spalvos"
-
-#~ msgid "/Layer/Colors/Color _Balance..."
-#~ msgstr "/Sluoksniai/Spalvos/Spalvų balansas..."
-
-#~ msgid "/Layer/Colors/Hue-_Saturation..."
-#~ msgstr "/Sluoksniai/Spalvos/Atspalvis-Sodrumas..."
-
-#~ msgid "/Layer/Colors/Colori_ze..."
-#~ msgstr "/Sluoksniai/Spalvos/Spalvinti..."
-
-#~ msgid "/Layer/Colors/B_rightness-Contrast..."
-#~ msgstr "/Sluoksniai/Spalvos/Ryškumas-Kontrastas..."
-
-#~ msgid "/Layer/Colors/_Threshold..."
-#~ msgstr "/Sluoksniai/Spalvos/Slenkstis..."
-
-#~ msgid "/Layer/Colors/_Levels..."
-#~ msgstr "/Sluoksniai/Spalvos/Lygiai..."
-
-#~ msgid "/Layer/Colors/_Curves..."
-#~ msgstr "/Sluoksniai/Spalvos/Kreivės..."
-
-#~ msgid "/Layer/Colors/_Desaturate"
-#~ msgstr "/Sluoksniai/Spalvos/Nusodrinti"
-
-#~ msgid "/Layer/Colors/In_vert"
-#~ msgstr "/Sluoksniai/Spalvos/Invertuoti"
-
-#~ msgid "/Layer/Colors/_Auto"
-#~ msgstr "/Paveikslėlis/Spalvos/Auto"
-
-#, fuzzy
-#~ msgid "/Layer/Colors/Auto/_Equalize"
-#~ msgstr "/Paveikslėlis/Spalvos/Auto/Išlyginti"
-
-#~ msgid "/Layer/Colors/_Histogram"
-#~ msgstr "/Sluoksniai/Spalvos/Histograma"
-
-#~ msgid "/Layer/_Mask"
-#~ msgstr "/Sluoksniai/Kaukė"
-
-#~ msgid "/Layer/Mask/_Add Layer Mask..."
-#~ msgstr "/Sluoksniai/Kaukė/Pridėti sluoksnio kaukę"
-
-#~ msgid "/Layer/Mask/A_pply Layer Mask"
-#~ msgstr "/Sluoksniai/Kaukė/Pritaikyti sluoksnio kaukę"
-
-#~ msgid "/Layer/Mask/_Delete Layer Mask"
-#~ msgstr "/Sluoksniai/Kaukė/Ištrinti sluoksnio kaukę"
-
-#~ msgid "/Layer/Mask/_Mask to Selection"
-#~ msgstr "/Sluoksniai/Kaukė/Kaukę paversti pažymėjimu"
-
-#~ msgid "/Layer/Mask/_Add to Selection"
-#~ msgstr "/Sluoksniai/Kaukė/Pridėti prie pažymėjimo"
-
-#~ msgid "/Layer/Mask/_Subtract from Selection"
-#~ msgstr "/Sluoksniai/Kaukė/Atimti iš pažymėjimo"
-
-#, fuzzy
-#~ msgid "/Layer/Mask/_Intersect with Selection"
-#~ msgstr "/Sankirta su pažymėjimu"
-
-#~ msgid "/Layer/Tr_ansparency"
-#~ msgstr "/Sluoksniai/Permatomumas"
-
-#~ msgid "/Layer/Transparency/_Add Alpha Channel"
-#~ msgstr "/Sluoksniai/Permatomumas/Pridėti alfa kanalą"
-
-#~ msgid "/Layer/Transparency/Al_pha to Selection"
-#~ msgstr "/Sluoksniai/Permatomumas/Alfa kanalą paversti pažymėjimu"
-
-#~ msgid "/Layer/Transparency/A_dd to Selection"
-#~ msgstr "/Sluoksniai/Permatomumas/Pridėti prie pažymėjimo"
-
-#~ msgid "/Layer/Transparency/_Subtract from Selection"
-#~ msgstr "/Sluoksniai/Permatomumas/Atimti iš pažymėjimo"
-
-#~ msgid "/Layer/Transparency/_Intersect with Selection"
-#~ msgstr "/Sluoksniai/Permatomumas/Susikirtimas su pažymėjimu"
-
-#~ msgid "/Layer/_Transform"
-#~ msgstr "/Sluoksniai/Transformuoti"
-
-#~ msgid "/Layer/Transform/Flip _Horizontally"
-#~ msgstr "/Sluoksniai/Transformacijos/Atspindys horizontaliai"
-
-#~ msgid "/Layer/Transform/Flip _Vertically"
-#~ msgstr "/Sluoksniai/Transformacijos/Atspindys vertikaliai"
-
-#~ msgid "/Layer/Transform/Rotate 90 degrees CC_W"
-#~ msgstr ""
-#~ "/Sluoksniai/Transformacijos/Pasukimas 90 laipsnių prieš laikrodžio rodyklę"
-
-#~ msgid "/Layer/Transform/Rotate _180 degrees"
-#~ msgstr "/Sluoksniai/Transformacijos/Pasukimas 180 laipsnių kampu"
-
-#~ msgid "/Layer/Transform/_Offset..."
-#~ msgstr "/Sluoksniai/Transformacijos/Poslinkis..."
-
-#~ msgid "/Layer/Layer _Boundary Size..."
-#~ msgstr "/Sluoksniai/Sluoksnio ribų dydis..."
-
-#~ msgid "/Layer/Layer to _Image Size"
-#~ msgstr "/Sluoksniai/Sluoksnio dydį prilyginti paveikslėlio dydžiui"
-
-#~ msgid "/Layer/_Scale Layer..."
-#~ msgstr "/Sluoksniai/Keisti sluoksnio dydį..."
-
-#~ msgid "/Layer/Cr_op Layer"
-#~ msgstr "/Sluoksniai/Apkarpyti sluoksnį"
-
-#~ msgid "/Tools/Tool_box"
-#~ msgstr "/Įrankiai/Įrankinė"
-
-#~ msgid "/Tools/_Paint Tools"
-#~ msgstr "/Įrankiai/Dažymo įrankiai"
-
-#~ msgid "/Dialogs/Create New Dock/_Misc. Stuff"
-#~ msgstr "/Dialogai/Sukurti naują langą/Įvairūs įrankiai"
-
-#~ msgid "/Dialogs/Tool _Options"
-#~ msgstr "/Dialogai/Įrankių savybės"
-
-#~ msgid "/Dialogs/_Device Status"
-#~ msgstr "/Dialogai/Įrenginio būsena"
-
-#~ msgid "/Dialogs/_Layers"
-#~ msgstr "/Dialogai/Sluoksniai"
-
-#~ msgid "/Dialogs/_Channels"
-#~ msgstr "/Dialogai/Kanalai"
-
-#~ msgid "/Dialogs/_Paths"
-#~ msgstr "/Dialogai/Kontūrai"
-
-#~ msgid "/Dialogs/Inde_xed Palette"
-#~ msgstr "/Dialogai/Indeksuota paletė"
-
-#~ msgid "/Dialogs/Histogra_m"
-#~ msgstr "/Dialogai/Histograma"
-
-#~ msgid "/Dialogs/_Selection Editor"
-#~ msgstr "/Dialogai/Žymėjimo parametrų nustaymai"
-
-#~ msgid "/Dialogs/Na_vigation"
-#~ msgstr "/Dialogai/Navigacija"
-
-#~ msgid "/Dialogs/_Undo History"
-#~ msgstr "/Dialogai/Atšaukimų istorija"
-
-#~ msgid "/Dialogs/Colo_rs"
-#~ msgstr "/Dialogai/Spalvos"
-
-#~ msgid "/Dialogs/Brus_hes"
-#~ msgstr "/Dialogai/Teptukai"
-
-#~ msgid "/Dialogs/P_atterns"
-#~ msgstr "/Dialogai/Raštai"
-
-#~ msgid "/Dialogs/_Gradients"
-#~ msgstr "/Dialogai/Perėjimai"
-
-#~ msgid "/Dialogs/Pal_ettes"
-#~ msgstr "/Dialogai/Paletės"
-
-#~ msgid "/Dialogs/_Fonts"
-#~ msgstr "/Dialogai/Šriftai"
-
-#~ msgid "/Dialogs/_Buffers"
-#~ msgstr "/Dialogai/Buferiai"
-
-#~ msgid "/Dialogs/_Images"
-#~ msgstr "/Dialogai/Paveikslėliai"
-
-#~ msgid "/Dialogs/Document Histor_y"
-#~ msgstr "/Dialogai/Dokumentų istorija"
-
-#~ msgid "/Dialogs/_Templates"
-#~ msgstr "/Dialogai/Šablonai"
-
-#~ msgid "/Dialogs/T_ools"
-#~ msgstr "/Dialogai/Įrankiai"
-
-#~ msgid "/Dialogs/Error Co_nsole"
-#~ msgstr "/Dialogai/Klaidų terminalas"
-
-#~ msgid "/Filters/Repeat Last"
-#~ msgstr "/Filtrai/Pakartoti paskutinį"
-
-#~ msgid "/Filters/Re-Show Last"
-#~ msgstr "/Filtrai/Parodyti paskutinį"
-
-#~ msgid "/Filters/_Blur"
-#~ msgstr "/Filtrai/Suliejimas"
-
-#~ msgid "/Filters/_Colors"
-#~ msgstr "/Filtrai/Spalvos"
-
-#~ msgid "/Filters/Colors/Ma_p"
-#~ msgstr "/Filtrai/Spalvos/Žemėla_pis"
-
-#~ msgid "/Filters/_Noise"
-#~ msgstr "/Filtrai/Triukšmas"
-
-#~ msgid "/Filters/_Generic"
-#~ msgstr "/Filtrai/Bendri"
-
-#~ msgid "/Filters/_Map"
-#~ msgstr "/Filtrai/Žemėlapis"
-
-#~ msgid "/Filters/_Render"
-#~ msgstr "/Filtrai/Perteikimas"
-
-#~ msgid "/Filters/Render/_Clouds"
-#~ msgstr "/Filtrai/Perteikimas/Debesys"
-
-#~ msgid "/Filters/Render/_Nature"
-#~ msgstr "/Filtrai/Perteikimas/Gamta"
-
-#~ msgid "/Filters/Render/_Pattern"
-#~ msgstr "/Filtrai/Perteikimas/Raštas"
-
-#~ msgid "/Filters/_Web"
-#~ msgstr "/Filtrai/Tinklas"
-
-#~ msgid "/Filters/To_ys"
-#~ msgstr "/Filtrai/Pramogos"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "Tuščia sluoksnio kopija"
-
-#~ msgid "Offset _X:"
-#~ msgstr "Poslinkis _X:"
-
-#~ msgid "Show reversed zoom ratio"
-#~ msgstr "Rodyti apverstą dydžio keitimo santykį"
-
-#, fuzzy
-#~ msgid "Window Type Hints"
-#~ msgstr "Lango vieta"
-
-#~ msgid "Qmask Attributes"
-#~ msgstr "Greitos kaukės parametrai"
-
-#~ msgid "Resolution X:"
-#~ msgstr "Raiška X:"
-
-#~ msgid "Stroke"
-#~ msgstr "Apvesti"
-
-#, fuzzy
-#~ msgid "/Save Options to/_New Entry..."
-#~ msgstr "/Iš_saugoti nustatymus į/_Naujas įrašas..."
-
-#, fuzzy
-#~ msgid "/Restore Options from/(None)"
-#~ msgstr "Užkrauti nustatymus iš..."
-
-#, fuzzy
-#~ msgid "/Rename Saved Options/(None)"
-#~ msgstr "Įrankių savybės"
-
-#, fuzzy
-#~ msgid "/Delete Saved Options/(None)"
-#~ msgstr "Ištrinti išsaugotus nustatymus..."
-
-#~ msgid "/File/_Preferences"
-#~ msgstr "/Byla/Nuostatos"
-
-#~ msgid "/File/_Dialogs"
-#~ msgstr "/Byla/Dialogai"
-
-#~ msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths"
-#~ msgstr "/Byla/Dialogai/Sukurti naują langą/Sluoksniai, kanalai ir kontūrai"
-
-#~ msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-#~ msgstr "/Byla/Dialogai/Sukurti naują langą/Teptukai, raštai ir perėjimai"
-
-#~ msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
-#~ msgstr "/Byla/Dialogai/Sukurti naują langą/Įvairūs įrankiai"
-
-#~ msgid "/File/Dialogs/Tool _Options"
-#~ msgstr "/Byla/Dialogai/Įrankių savybės"
-
-#~ msgid "/File/Dialogs/_Device Status"
-#~ msgstr "/Byla/Dialogai/Įrenginio būsena"
-
-#~ msgid "/File/Dialogs/_Layers"
-#~ msgstr "/Byla/Dialogai/Sluoksniai"
-
-#~ msgid "/File/Dialogs/_Channels"
-#~ msgstr "/Byla/Dialogai/Kanalai"
-
-#~ msgid "/File/Dialogs/_Paths"
-#~ msgstr "/Byla/Dialogai/Keliai"
-
-#~ msgid "/File/Dialogs/Inde_xed Palette"
-#~ msgstr "/Byla/Dialogai/Indeksuota paletė"
-
-#~ msgid "/File/Dialogs/Histogra_m"
-#~ msgstr "/Byla/Dialogai/Histograma"
-
-#~ msgid "/File/Dialogs/_Selection Editor"
-#~ msgstr "/Byla/Dialogai/Pažymėjimo savybių nustatymas"
-
-#~ msgid "/File/Dialogs/Na_vigation"
-#~ msgstr "/Byla/Dialogai/Navigacija"
-
-#~ msgid "/File/Dialogs/_Undo History"
-#~ msgstr "/Byla/Dialogai/Atšaukimų istorija"
-
-#~ msgid "/File/Dialogs/Colo_rs"
-#~ msgstr "/Byla/Dialogai/Spalvos"
-
-#~ msgid "/File/Dialogs/Brus_hes"
-#~ msgstr "/Byla/Dialogai/Teptukai"
-
-#~ msgid "/File/Dialogs/P_atterns"
-#~ msgstr "/Byla/Dialogai/Raštai"
-
-#~ msgid "/File/Dialogs/_Gradients"
-#~ msgstr "/Byla/Dialogai/Perėjimai"
-
-#~ msgid "/File/Dialogs/Pal_ettes"
-#~ msgstr "/Byla/Dialogai/Paletės"
-
-#~ msgid "/File/Dialogs/_Fonts"
-#~ msgstr "/Byla/Dialogai/Šriftai"
-
-#~ msgid "/File/Dialogs/_Buffers"
-#~ msgstr "/Byla/Dialogai/Buferiai"
-
-#~ msgid "/File/Dialogs/_Images"
-#~ msgstr "/Byla/Dialogai/Paveikslėliai"
-
-#~ msgid "/File/Dialogs/Document Histor_y"
-#~ msgstr "/Byla/Dialogai/Dokumentų istorija"
-
-#~ msgid "/File/Dialogs/_Templates"
-#~ msgstr "/Byla/Dialogai/Šablonai"
-
-#~ msgid "/File/Dialogs/T_ools"
-#~ msgstr "/Byla/Dialogai/Įrankiai"
-
-#~ msgid "/File/Dialogs/Error Co_nsole"
-#~ msgstr "/Byla/Dialogai/Klaidų terminalas"
-
-#~ msgid "/File/D_ebug"
-#~ msgstr "/Byla/Derintuvė"
-
-#~ msgid "/Xtns/_Module Manager"
-#~ msgstr "/Išpl./Modulių naršyklė"
-
-#~ msgid "/Help/_Help"
-#~ msgstr "/Pagalba/Pagalba"
-
-#~ msgid "/Help/_About"
-#~ msgstr "/Pagalba/Apie"
-
-#~ msgid "Aborting Installation..."
-#~ msgstr "Nutraukiamas įdiegimas..."
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "Tuščio vektoriaus kopija"
-
-#~ msgid "/Tools/Paint Tools/_Airbrush"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Purkštuv_as"
-
-#~ msgid "/Tools/Paint Tools/Blen_d"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Perė_jimas"
-
-#~ msgid "/Tools/Color Tools/B_rightness-Contrast..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/_Ryškumas-Kontrastas..."
-
-#~ msgid "/Tools/Paint Tools/_Bucket Fill"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/_Užpildymas"
-
-#~ msgid "/Tools/Selection Tools/_By Color Select"
-#~ msgstr "/Įrankiai/Žymėjimo įrankiai/Žymėjimas pa_gal spalvą"
-
-#~ msgid "/Tools/Paint Tools/_Clone"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/_Klonuoti"
-
-#~ msgid "/Tools/Color Tools/Color _Balance..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/Spalvų _balansas..."
-
-#~ msgid "/Tools/Color Tools/Colori_ze..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/Spal_vinimas.."
-
-#~ msgid "/Tools/C_olor Picker"
-#~ msgstr "/Įrankiai/Sp_alvų pipetė"
-
-#, fuzzy
-#~ msgid "/Tools/Paint Tools/Con_volve"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Sulieti-Paaštrinti"
-
-#~ msgid "/Tools/Transform Tools/_Crop & Resize"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/Iš_kirpimas ir dydžio keitimas"
-
-#~ msgid "/Tools/Color Tools/_Curves..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/_Kreivės..."
-
-#, fuzzy
-#~ msgid "/Tools/Paint Tools/Dod_geBurn"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Blukinti-Ryškinti"
-
-#~ msgid "/Tools/Selection Tools/_Ellipse Select"
-#~ msgstr "/Įrankiai/Žymėjimo įrankiai/_Elipsinis pažymėjimas"
-
-#~ msgid "/Tools/Paint Tools/_Eraser"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Tr_intukas"
-
-#~ msgid "/Tools/Transform Tools/_Flip"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/_Apsukti"
-
-#~ msgid "/Tools/Selection Tools/_Free Select"
-#~ msgstr "/Įrankiai/Žymėjimo įrankiai/_Laisvas pažymėjimas"
-
-#~ msgid "/Tools/Color Tools/Hue-_Saturation..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/Atspalvis-_sodrumas..."
-
-#~ msgid "/Tools/Paint Tools/In_k"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Plun_ksna"
-
-#~ msgid "/Tools/Color Tools/_Levels..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/_Lygiai..."
-
-#~ msgid "Allow Window Resizing"
-#~ msgstr "Leisti langų dydžio keitimą"
-
-#~ msgid "/Tools/M_agnify"
-#~ msgstr "/Įrankiai/_Didinti"
-
-#~ msgid "/Tools/_Measure"
-#~ msgstr "/Įrankiai/_Matuoti"
-
-#~ msgid "/Tools/Transform Tools/_Move"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/P_oslinkis"
-
-#~ msgid "/Tools/Paint Tools/_Paintbrush"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Te_ptukas"
-
-#~ msgid "/Tools/Paint Tools/Pe_ncil"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Pieš_tukas"
-
-#~ msgid "/Tools/Transform Tools/_Perspective"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/_Perspektyva"
-
-#, fuzzy
-#~ msgid "/Tools/Color Tools/_Posterize..."
-#~ msgstr "/Paveikslėlis/Spalvos/Posterize..."
-
-#~ msgid "/Tools/Selection Tools/_Rect Select"
-#~ msgstr "/Įrankiai/Žymėjimo įrankiai/Ketu_rkampis pažymėjimas"
-
-#~ msgid "/Tools/Transform Tools/_Rotate"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/P_asukimas"
-
-#~ msgid "/Tools/Transform Tools/_Scale"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/Ma_stelis"
-
-#~ msgid "/Tools/Transform Tools/S_hear"
-#~ msgstr "/Įrankiai/Transformavimo įrankiai/Š_lytis"
-
-#~ msgid "/Tools/Paint Tools/_Smudge"
-#~ msgstr "/Įrankiai/Dažymo įrankiai/Ište_pti"
-
-#~ msgid "/Tools/Te_xt"
-#~ msgstr "/Įrankiai/Te_kstas"
-
-#~ msgid "/Tools/Color Tools/_Threshold..."
-#~ msgstr "/Įrankiai/Spalvų įrankiai/Slenks_tis..."
-
-#~ msgid "/Tools/_Paths"
-#~ msgstr "/Įrankiai/Kontūrai"
-
-#~ msgid "Delete"
-#~ msgstr "Ištrinti"
-
-#~ msgid "FG"
-#~ msgstr "Priekinis planas"
-
-#~ msgid "BG"
-#~ msgstr "Fonas"
-
-#~ msgid "Edit Foreground Color"
-#~ msgstr "Keistii priekinio plano spalvą"
-
-#~ msgid "New"
-#~ msgstr "Nauja"
-
-#~ msgid "Refresh"
-#~ msgstr "Atnaujinti"
-
-#~ msgid "Stroke _Width:"
-#~ msgstr "Apibraukimo _storis:"
-
-#~ msgid "Style"
-#~ msgstr "Stilius"
-
-#~ msgid "Image Comment"
-#~ msgstr "Paveikslėlio komentaras"
-
-#~ msgid "%s Options"
-#~ msgstr "Nustatymai: %s "
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr ""
-#~ "  -S, --no-splash-image    Nedėti paveikslėlio į paleidimo (startup) "
-#~ "langą.\n"
-
-#~ msgid "Channel Mod"
-#~ msgstr "Kanalo režimas"
-
-#~ msgid "Could not open"
-#~ msgstr "Nepavyksta atidaryti"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/Vaizdas/Mastelis/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/Vaizdas/Mastelis/1:8"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "Keisti tarpą tarp raidžių"
-
-#~ msgid "Modify Curves for Channel:"
-#~ msgstr "Koreguoti kreives kanalui:"
-
-#~ msgid "Modify Levels for Channel:"
-#~ msgstr "Keisti lygius kanalui:"
-
-#~ msgid "@GIMP_VISIBLE_NAME@"
-#~ msgstr "Gimp piešimo programa"
