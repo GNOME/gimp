@@ -369,6 +369,8 @@ analyze (GimpDrawable *drawable)
         gimp_progress_update ((gdouble) y / (gdouble) (y2 - y1));
     }
 
+  gimp_progress_update (1.0);
+
   /* clean up */
   g_free (src_row);
   g_free (sel);
@@ -540,13 +542,13 @@ histogram (guchar  r,
 static void
 doDialog (void)
 {
-  struct stat  st;
   GtkWidget   *dialog;
   GtkWidget   *frame;
   GtkWidget   *xframe;
   GtkWidget   *table;
   GtkWidget   *preview;
-  gsize        filesize = 0;
+  gchar       *memsize;
+  struct stat  st;
 
   gimp_ui_init ("ccanalyze", TRUE);
 
@@ -555,19 +557,20 @@ doDialog (void)
                             NULL, 0,
                             gimp_standard_help_func, "filters/ccanalyze.html",
 
-                            GTK_STOCK_OK, GTK_RESPONSE_OK,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                             NULL);
 
   /* set up frame */
   frame = gtk_frame_new (_("Results"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
                       TRUE, TRUE, 0);
 
   table = gtk_table_new (12, 1, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   xframe = gtk_frame_new (NULL);
@@ -584,25 +587,29 @@ doDialog (void)
   fillPreview (preview);
 
   /* output results */
-  doLabel (table, _("Image dimensions: %dx%d"), width, height);
-  doLabel (table, _("Uncompressed size in bytes: %d"), width * height * bpp);
+  doLabel (table, _("Image dimensions: %d x %d"), width, height);
 
   if (uniques == 0)
-    doLabel (table, _("No colors (?)"));
+    doLabel (table, _("No colors"));
   else if (uniques == 1)
     doLabel (table, _("Only one unique color"));
   else
     doLabel (table, _("Number of unique colors: %d"), uniques);
 
+  memsize = gimp_memsize_to_string (width * height * bpp);
+  doLabel (table, _("Uncompressed size: %s"), memsize);
+  g_free (memsize);
+
   if (filename && !stat (filename, &st) && !gimp_image_is_dirty (imageID))
     {
+      gchar *memsize = gimp_memsize_to_string (st.st_size);
+
       doLabel (table, _("Filename: %s"), filename);
-
-      filesize = st.st_size;
-
-      doLabel (table, _("Compressed size in bytes: %u"), filesize);
+      doLabel (table, _("Compressed size: %s"), memsize);
       doLabel (table, _("Compression ratio (approx.): %d to 1"),
-                      (gint) RINT ((gdouble) (width * height * bpp) / filesize));
+                      (gint) RINT ((gdouble) (width * height * bpp) / st.st_size));
+
+      g_free (memsize);
     }
 
   /* show stuff */

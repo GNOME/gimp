@@ -1,5 +1,10 @@
 2003-12-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/ccanalyze.c: use gimp_memsize_to_string() to
+	display the memory and file size of the image. Minor cleanups.
+
+2003-12-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/CML_explorer.c
 	* plug-ins/common/channel_mixer.c: use g_file_test() instead of stat().
 
