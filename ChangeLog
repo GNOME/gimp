@@ -1,5 +1,12 @@
 2002-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig.c: fixed error messages.
+
+	* plug-ins/common/ps.c: applied a patch from Raphael Quinet that
+	fixes bug #81606 (special-case recent Illustrator EPS brain damage).
+
+2002-05-14  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/stock-wilber-eek-64.png: tweaked so the
 	shadow isn't cut off at the image border. We could still need a
 	better icon.

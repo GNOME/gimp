@@ -1297,20 +1297,27 @@ ps_open (gchar            *filename,
       is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
 
       if (!is_pdf)  /* Check for EPSF */
-      {char *adobe, *epsf;
-       int ds = 0;
-       static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
+      {
+        char *adobe, *epsf;
+        int ds = 0;
+        static unsigned char doseps[5] = { 0xc5, 0xd0, 0xd3, 0xc6, 0 };
 
         hdr[sizeof(hdr)-1] = '\0';
         adobe = strstr (hdr, "PS-Adobe-");
         epsf = strstr (hdr, "EPSF-");
+
         if ((adobe != NULL) && (epsf != NULL))
           ds = epsf - adobe;
+
         *is_epsf = ((ds >= 11) && (ds <= 15));
 
-        /* Check DOS EPS binary file */
+        /* Check DOS EPS binary file (bug #75667) */
         if ((!*is_epsf) && (strncmp (hdr, (char *)doseps, 4) == 0))
-          *is_epsf = 1;
+          *is_epsf = TRUE;
+
+ 	/* special case for Illustrator brain damage (bug #81606) */
+        if ((!*is_epsf) && strstr (hdr, "%%Creator: Adobe Illustrator(R) 8.0"))
+          *is_epsf = TRUE;
       }
       fclose (fd_popen);
     }

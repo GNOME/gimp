@@ -211,7 +211,7 @@ gimp_config_serialize (GObject      *object,
     {
       g_set_error (error, 
                    GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_FILE, 
-                   _("Failed to open file '%s' to '%s': %s"),
+                   _("Failed to rename temporary file '%s' to '%s': %s"),
                    tmpname, filename, g_strerror (errno));
       
       unlink (tmpname);
@@ -270,14 +270,14 @@ gimp_config_deserialize (GObject      *object,
 
   scanner = g_scanner_new (NULL);
 
-  scanner->user_data = error;
+  g_scanner_input_file (scanner, fd);
+
+  scanner->user_data   = error;
   scanner->msg_handler = gimp_config_scanner_message;
+  scanner->input_name  = filename;
 
   scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
   scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
-
-  g_scanner_input_file (scanner, fd);
-  scanner->input_name = filename;
 
   success = gimp_config_iface->deserialize (object, scanner);
 
