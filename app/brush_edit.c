@@ -25,8 +25,9 @@
 #include "math.h"
 
 
-static void
-brush_edit_close_callback (GtkWidget *w, void *data);
+static void brush_edit_close_callback (GtkWidget *w, void *data);
+static gint brush_edit_preview_resize (GtkWidget *widget, GdkEvent *event, 
+				       BrushEditGeneratedWindow *begw);
 
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
@@ -98,7 +99,8 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
   gchar *src, *buf;
 
   brush_edit_clear_preview (begw);
-
+  if (brush == NULL)
+    return TRUE;
   scale = MAX(ceil(brush->mask->width/(float)begw->preview->requisition.width),
 	      ceil(brush->mask->height/(float)begw->preview->requisition.height));
 
@@ -113,11 +115,8 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
 
   for (y = ystart; y < yend; y++)
   {
-    /*  Invert the mask for display.  We're doing this because
-     *  a value of 255 in the  mask means it is full intensity.
-     *  However, it makes more sense for full intensity to show
-     *  up as black in this brush preview window...
-       */
+    /*  Invert the mask for display.
+     */
     for (x = 0; x < width; x++)
       buf[x] = 255 - src[x*scale];
     gtk_preview_draw_row (GTK_PREVIEW (begw->preview), (guchar *)buf, xo, y,
@@ -125,6 +124,14 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
     src += brush->mask->width*scale;
   }
   g_free(buf);
+  if (begw->scale != scale)
+  {
+    char str[255];
+    begw->scale = scale;
+    g_snprintf(str, 200, "%d:1", scale);
+    gtk_label_set(GTK_LABEL(begw->scale_label), str);
+    gtk_widget_draw(begw->scale_label, NULL);
+  }
   gtk_widget_draw(begw->preview, NULL);
   return TRUE;
 }
@@ -142,7 +149,10 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
   }
   brush = GIMP_BRUSH_GENERATED(gbrush);
   if (begw->brush)
+  {
     gtk_signal_disconnect_by_data(GTK_OBJECT(begw->brush), begw);
+    gtk_object_unref(GTK_OBJECT(begw->brush));
+  }
   if (begw)
   {
     gtk_signal_connect(GTK_OBJECT (brush), "dirty",
@@ -158,6 +168,7 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
     gtk_adjustment_set_value(GTK_ADJUSTMENT(begw->aspect_ratio_data),
 			     gimp_brush_generated_get_aspect_ratio(brush));
     begw->brush = brush;
+    gtk_object_ref(GTK_OBJECT(begw->brush));
     brush_edit_brush_dirty_callback(GIMP_BRUSH(brush), begw);
   }
 }
@@ -175,7 +186,6 @@ brush_edit_generated_new ()
 
   begw = g_malloc (sizeof (BrushEditGeneratedWindow));
   begw->brush = NULL;
-  begw->redraw = TRUE;
 
   begw->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (begw->shell), "generatedbrusheditor",
@@ -201,12 +211,20 @@ brush_edit_generated_new ()
   gtk_box_pack_start (GTK_BOX (vbox), begw->frame, TRUE, TRUE, 0);
 
   begw->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
-  gtk_preview_size (GTK_PREVIEW (begw->preview), 100, 100);
+  gtk_preview_size (GTK_PREVIEW (begw->preview), 125, 100);
+  gtk_signal_connect_after (GTK_OBJECT(begw->frame), "size_allocate",
+		       (GtkSignalFunc) brush_edit_preview_resize,
+		       begw);
   gtk_container_add (GTK_CONTAINER (begw->frame), begw->preview);
 
   gtk_widget_show(begw->preview);
   gtk_widget_show(begw->frame);
 
+  /* table for sliders/labels */
+  begw->scale_label = gtk_label_new ("-1:1");
+  gtk_box_pack_start (GTK_BOX (vbox), begw->scale_label, FALSE, FALSE, 0);
+  begw->scale = -1;
+  gtk_widget_show(begw->scale_label);
   /* table for sliders/labels */
   table = gtk_table_new(2, 4, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -290,6 +308,21 @@ brush_edit_generated_new ()
   return begw;
 }
 
+static gint 
+brush_edit_preview_resize (GtkWidget *widget, 
+			   GdkEvent *event, 
+			   BrushEditGeneratedWindow *begw)
+{
+   gtk_preview_size (GTK_PREVIEW (begw->preview),
+		     widget->allocation.width - 4,
+		     widget->allocation.height - 4);
+   
+   /*  update the display  */   
+   if (begw->brush)
+     brush_edit_brush_dirty_callback(GIMP_BRUSH(begw->brush), begw);
+   return FALSE;
+}
+ 
 static void
 brush_edit_close_callback (GtkWidget *w, void *data)
 {

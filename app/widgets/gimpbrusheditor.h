@@ -28,17 +28,16 @@ typedef struct _BrushEditGeneratedWindow
   GtkWidget *shell;
   GtkWidget *frame;
   GtkWidget *preview;
+  GtkWidget *scale_label;
   GtkWidget *options_box;
   GtkAdjustment *radius_data;
   GtkAdjustment *hardness_data;
   GtkAdjustment *angle_data;
   GtkAdjustment *aspect_ratio_data;
-  int width, height;
-  int cell_width, cell_height;
-  int redraw;
   /*  Brush preview  */
   GtkWidget *brush_preview;
   GimpBrushGenerated *brush;
+  int scale;
 } BrushEditGeneratedWindow;
 
 void brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,

@@ -20,9 +20,9 @@
 
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
-#include "gimpbrushlist.h"
 #include "paint_core.h"
 #include <math.h>
+#include <stdio.h>
 
 #define OVERSAMPLING 5
 
@@ -96,12 +96,87 @@ GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
  /* render brush mask */
   gimp_brush_generated_generate(brush);
 
-/* add brush to brush list */
-/* FIXME: Get rid of this */
-  gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
-  select_brush(GIMP_BRUSH(brush));
+  return brush;
+}
+
+GimpBrushGenerated *
+gimp_brush_generated_load (char *file_name)
+{
+  GimpBrushGenerated *brush;
+  FILE *fp;
+  char string[256];
+  float fl;
+  float version;
+  if ((fp = fopen(file_name, "r")) == NULL)
+    return NULL;
+
+/* make sure the file we are reading is the right type */
+  fscanf(fp, "%8s", string);
+  g_return_val_if_fail(strcmp(string, "GIMP-VBR") == 0, NULL);
+/* make sure we are reading a compatible version */
+  fscanf(fp, "%f", &version);
+  g_return_val_if_fail(version < 2.0, NULL);
+
+/* create new brush */
+  brush = GIMP_BRUSH_GENERATED(gimp_type_new(gimp_brush_generated_get_type()));
+  GIMP_BRUSH(brush)->filename = g_strdup (file_name);
+  gimp_brush_generated_freeze(brush);
+
+/* read name */
+  fscanf(fp, "%255s", string);
+  GIMP_BRUSH(brush)->name = g_strdup (string);
+/* read brush spacing */
+  fscanf(fp, "%f", &fl);
+  GIMP_BRUSH(brush)->spacing = fl;
+/* read brush radius */
+  fscanf(fp, "%f", &fl);
+  gimp_brush_generated_set_radius(brush, fl);
+/* read brush hardness */
+  fscanf(fp, "%f", &fl);
+  gimp_brush_generated_set_hardness(brush, fl);
+/* read brush aspect_ratio */
+  fscanf(fp, "%f", &fl);
+  gimp_brush_generated_set_aspect_ratio(brush, fl);
+/* read brush angle */
+  fscanf(fp, "%f", &fl);
+  gimp_brush_generated_set_angle(brush, fl);
+
+  fclose(fp);
+
+  gimp_brush_generated_thaw(brush);
 
   return brush;
+}
+
+void
+gimp_brush_generated_save (GimpBrushGenerated *brush, 
+			  char *file_name)
+{
+/* WARNING: untested function */
+  FILE *fp;
+  if ((fp = fopen(file_name, "w")) == NULL)
+  {
+    g_warning("Unable to save file %s", file_name);
+    return;
+  }
+/* write magic header */
+  fprintf(fp, "GIMP-VBR\n");
+/* write version */
+  fprintf(fp, "1.0\n");
+/* write name */
+  fprintf(fp, "%s", GIMP_BRUSH(brush)->name);
+/* write brush spacing */
+  fprintf(fp, "%f", (float)GIMP_BRUSH(brush)->spacing);
+/* write brush radius */
+  fprintf(fp, "%f", brush->radius);
+/* write brush hardness */
+  fprintf(fp, "%f", brush->hardness);
+/* write brush aspect_ratio */
+  fprintf(fp, "%f", brush->aspect_ratio);
+/* write brush angle */
+  fprintf(fp, "%f", brush->angle);
+
+  fclose(fp);
 }
 
 void

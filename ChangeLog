@@ -1,3 +1,12 @@
+Thu Jul 16 04:38:19 PDT 1998 Jay Cox  <jaycox@earthlink.net>
+
+	* brush_edit.[ch]: added a zoom indicator on the preview
+
+        * gimpbrushgenerated.[ch] gimpbrushlist.c: added support
+	for loading generated brushes.
+
+	* data/brushes/round01.vbr: a sample generated brush
+
 Wed Jul 15 22:06:32 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
 	* Cursor location in statusbar

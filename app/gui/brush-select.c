@@ -857,15 +857,18 @@ edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
     }
   }
   else
-    g_message("We are all out of brush editors today, please try again tomorrow\n");
+    g_message("We are all fresh out of brush editors today,\n"
+	      "please write your own or try back tomorrow\n");
   return TRUE;
 }
 
 static gint
 new_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
-  gimp_brush_list_add(brush_list,
-		      GIMP_BRUSH(gimp_brush_generated_new(10, .5, 0.0, 1.0)));
+  GimpBrushGenerated *brush;
+  brush = gimp_brush_generated_new(10, .5, 0.0, 1.0);
+  gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+  select_brush(GIMP_BRUSH(brush));
   return TRUE;
 }
 

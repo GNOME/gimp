@@ -196,11 +196,6 @@ gimp_brush_load(GimpBrush *brush, char *filename)
 		 fp)) <	 header.width * header.height)
        g_message ("GIMP brush file appears to be truncated.");
      break;
-   case 3:
-     fprintf(stderr, "loading generated brush\n");
-     fprintf(stderr, "currently unimplemeted expect a crash to occur any second\n");
-     fprintf(stderr, "finished loading generated brush\n");
-     break;
    default:
      g_message ("Unknown brush format version #%d in \"%s\"\n",
 		header.version, filename);
@@ -215,9 +210,6 @@ gimp_brush_load(GimpBrush *brush, char *filename)
   /*  Swap the brush to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (brush->mask);
-
-  /*  TODO: get rid of this call */
-  gimp_brush_list_add(brush_list, brush);
 
   /* Check if the current brush is the default one */
 /* lets see if it works with out this for now */

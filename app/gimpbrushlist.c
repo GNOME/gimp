@@ -64,6 +64,7 @@ static gint   brush_compare_func     (gconstpointer, gconstpointer);
 
 static void gimp_brush_list_recalc_indexes(GimpBrushList *brush_list);
 static void gimp_brush_list_uniquefy_names(GimpBrushList *brush_list);
+static void brush_load                    (char *filename);
 
 /* class functions */
 static GimpObjectClass* parent_class;
@@ -183,11 +184,24 @@ brushes_init (int no_data)
   if (brush_path == NULL || (no_data))
     create_default_brush ();
   else
-    datafiles_read_directories (brush_path,
-				(datafile_loader_t)gimp_brush_new, 0);
+    datafiles_read_directories (brush_path,(datafile_loader_t)brush_load, 0);
 
   gimp_brush_list_recalc_indexes(brush_list);
   gimp_brush_list_uniquefy_names(brush_list);
+}
+
+static void
+brush_load(char *filename)
+{
+  if (strcmp(&filename[strlen(filename) - 4], ".gbr") == 0)
+  {
+    gimp_brush_list_add(brush_list, gimp_brush_new(filename));
+  }
+  else if (strcmp(&filename[strlen(filename) - 4], ".vbr") == 0)
+  {
+    gimp_brush_list_add(brush_list,
+			GIMP_BRUSH(gimp_brush_generated_load(filename)));
+  }
 }
 
 static gint

@@ -54,6 +54,10 @@ guint gimp_brush_generated_get_type (void);
 GimpBrushGenerated *gimp_brush_generated_new(float radius, float hardness,
 					     float angle, float aspect_ratio);
 
+GimpBrushGenerated *gimp_brush_generated_load (char *file_name);
+
+void gimp_brush_generated_save            (GimpBrushGenerated *brush,
+					   char *file_name);
 void gimp_brush_generated_freeze          (GimpBrushGenerated *brush);
 void gimp_brush_generated_thaw            (GimpBrushGenerated *brush);
 
