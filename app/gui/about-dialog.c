@@ -50,7 +50,7 @@ static gchar *translators[] =
 {
   N_("Translation by"),
   /* Translators: insert your names here, separated by newline */
-  /* we'd prefer just the names, please no email adresses.     */
+  /* we'd prefer just the names, please no email addresses.    */
   N_("translator-credits"),
 };
 

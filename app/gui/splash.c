@@ -33,10 +33,10 @@
 
 #define DEFAULT_WIDTH 300
 
-static GtkWidget *win_initstatus = NULL;
-static GtkWidget *label1         = NULL;
-static GtkWidget *label2         = NULL;
-static GtkWidget *progress       = NULL;
+static GtkWidget *splash   = NULL;
+static GtkWidget *label1   = NULL;
+static GtkWidget *label2   = NULL;
+static GtkWidget *progress = NULL;
 
 
 static void  splash_map (void);
@@ -51,27 +51,29 @@ splash_create (gboolean show_image)
   GtkWidget *vbox;
   GdkPixbuf *pixbuf = NULL;
 
-  win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
-                            GDK_WINDOW_TYPE_HINT_SPLASHSCREEN);
+  splash = g_object_new (GTK_TYPE_WINDOW,
+                         "type",            GTK_WINDOW_TOPLEVEL,
+                         "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
+                         "title",           _("GIMP Startup"),
+                          "window_position", GTK_WIN_POS_CENTER,
+                         "resizable",       FALSE,
+                         NULL);
 
-  gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
-  gtk_window_set_role (GTK_WINDOW (win_initstatus), "gimp-startup");
-  gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
-  gtk_window_set_resizable (GTK_WINDOW (win_initstatus), FALSE);
+  gtk_window_set_role (GTK_WINDOW (splash), "gimp-startup");
 
-  g_signal_connect_swapped (win_initstatus, "delete_event",
-                            G_CALLBACK (exit), GINT_TO_POINTER (0));
+  g_signal_connect_swapped (splash, "delete_event",
+                            G_CALLBACK (exit),
+                            GINT_TO_POINTER (0));
 
   /* we don't want the splash screen to send the startup notification */
   gtk_window_set_auto_startup_notification (FALSE);
-  g_signal_connect (win_initstatus, "map",
+  g_signal_connect (splash, "map",
                     G_CALLBACK (splash_map),
                     NULL);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (win_initstatus), frame);
+  gtk_container_add (GTK_CONTAINER (splash), frame);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 4);
@@ -104,7 +106,7 @@ splash_create (gboolean show_image)
         }
     }
 
-  if (!pixbuf)
+  if (! pixbuf)
     {
       GtkWidget *line;
 
@@ -120,7 +122,7 @@ splash_create (gboolean show_image)
       gtk_box_pack_start_defaults (GTK_BOX (vbox), line);
       gtk_widget_show (line);
 
-      gtk_widget_set_size_request (win_initstatus, DEFAULT_WIDTH, -1);
+      gtk_widget_set_size_request (splash, DEFAULT_WIDTH, -1);
     }
 
   label1 = gtk_label_new ("");
@@ -135,16 +137,16 @@ splash_create (gboolean show_image)
   gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
   gtk_widget_show (progress);
 
-  gtk_widget_show (win_initstatus);
+  gtk_widget_show (splash);
 }
 
 void
 splash_destroy (void)
 {
-  if (win_initstatus)
+  if (splash)
     {
-      gtk_widget_destroy (win_initstatus);
-      win_initstatus = NULL;
+      gtk_widget_destroy (splash);
+      splash = NULL;
     }
 }
 
@@ -153,7 +155,7 @@ splash_update (const gchar *text1,
 	       const gchar *text2,
 	       gdouble      percentage)
 {
-  if (!win_initstatus)
+  if (! splash)
     return;
 
   if (text1)
