@@ -81,6 +81,10 @@ static void  compose_rgba (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_hsv  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_cmy  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_cmyk (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470 (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709 (guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470f(guchar **src, gint *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709f(guchar **src, gint *incr, gint numpix, guchar *dst);
 
 static gint      compose_dialog (gchar    *compose_type,
                                  gint32    drawable_ID);
@@ -120,23 +124,43 @@ static COMPOSE_DSC compose_dsc[] =
   { N_("RGB"), 3, { N_("Red:"),
 		    N_("Green:"),
 		    N_("Blue:"),
-		    CHNL_NA }, N_("rgb-compose"),  compose_rgb },
+		    CHNL_NA }, "rgb-compose",  compose_rgb },
   { N_("RGBA"), 4, { N_("Red:"),
                      N_("Green:"),
                      N_("Blue:"),
-                     N_("Alpha:") }, N_("rgba-compose"),  compose_rgba },
+                     N_("Alpha:") }, "rgba-compose",  compose_rgba },
   { N_("HSV"),  3, { N_("Hue:"),
                      N_("Saturation:"),
                      N_("Value:"),
-                     CHNL_NA }, N_("hsv-compose"),  compose_hsv },
+                     CHNL_NA }, "hsv-compose",  compose_hsv },
   { N_("CMY"),  3, { N_("Cyan:"),
                      N_("Magenta:"),
                      N_("Yellow:"),
-                     CHNL_NA }, N_("cmy-compose"),  compose_cmy },
+                     CHNL_NA }, "cmy-compose",  compose_cmy },
   { N_("CMYK"), 4, { N_("Cyan:"),
                      N_("Magenta:"),
                      N_("Yellow:"),
-                     N_("Black:") }, N_("cmyk-compose"), compose_cmyk }
+                     N_("Black:") }, "cmyk-compose", compose_cmyk },
+  { "YCbCr_ITU_R470", 
+               3, { N_("Luma_y470:"),
+                    N_("Blueness_cb470:"),
+                    N_("Redness_cr470:"),
+                    CHNL_NA }, "ycbcr470-compose",  compose_ycbcr470 },
+  { "YCbCr_ITU_R709", 
+               3, { N_("Luma_y709:"),
+                    N_("Blueness_cb709:"),
+                    N_("Redness_cr709:"),
+                    CHNL_NA }, "ycbcr709-compose",  compose_ycbcr709 },
+  { "YCbCr_ITU_R470_256", 
+               3, { N_("Luma_y470f:"),
+                    N_("Blueness_cb470f:"),
+                    N_("Redness_cr470f:"),
+                    CHNL_NA }, "ycbcr470F-compose",  compose_ycbcr470f },
+  { "YCbCr_ITU_R709_256", 
+               3, { N_("Luma_y709f:"),
+                    N_("Blueness_cb709f:"),
+                    N_("Redness_cr709f:"),
+                    CHNL_NA }, "ycbcr709F-compose",  compose_ycbcr709f },
 };
 
 #define MAX_COMPOSE_TYPES (G_N_ELEMENTS (compose_dsc))
@@ -293,7 +317,7 @@ run (gchar      *name,
           layer_list = gimp_image_get_layers (param[1].data.d_int32, &nlayers);
           if ((layer_list == NULL) || (nlayers <= 0))
             {
-              g_message (_("compose: Could not get layers for image %d"),
+              g_message (_("Compose: Could not get layers for image %d"),
                          (gint) param[1].data.d_int32);
               return;
             }
@@ -735,6 +759,164 @@ compose_cmyk (guchar **src,
       magenta_src += magenta_incr;
       yellow_src += yellow_incr;
       black_src += black_incr;
+    }
+}
+
+/* these are here so the code is more readable and we can use 
+   the standart values instead of some scaled and rounded fixpoint values */
+#define FIX(a) ((int)((a)*256.0*256.0 + 0.5))
+#define FIXY(a) ((int)((a)*256.0*256.0*255.0/219.0 + 0.5))
+#define FIXC(a) ((int)((a)*256.0*256.0*255.0/224.0 + 0.5))
+
+
+static void
+compose_ycbcr470 (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
+{
+  register guchar *y_src = src[0];
+  register guchar *cb_src = src[1];
+  register guchar *cr_src = src[2];
+  register guchar *rgb_dst = dst;
+  register gint count = numpix;
+  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  
+  while (count-- > 0)
+    {
+      int r,g,b,y,cb,cr;
+      y = *y_src  - 16;  
+      cb= *cb_src - 128; 
+      cr= *cr_src - 128;
+      y_src  += y_incr;
+      cb_src += cb_incr;
+      cr_src += cr_incr;
+      
+      r = (FIXY(1.0)*y                   + FIXC(1.4022)*cr + FIX(0.5))>>16;
+      g = (FIXY(1.0)*y - FIXC(0.3456)*cb - FIXC(0.7145)*cr + FIX(0.5))>>16;
+      b = (FIXY(1.0)*y + FIXC(1.7710)*cb                   + FIX(0.5))>>16;
+      
+      if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
+      if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
+      if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
+
+      *(rgb_dst++) = r;
+      *(rgb_dst++) = g;
+      *(rgb_dst++) = b;
+    }
+}
+
+
+static void
+compose_ycbcr709 (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
+{
+  register guchar *y_src = src[0];
+  register guchar *cb_src = src[1];
+  register guchar *cr_src = src[2];
+  register guchar *rgb_dst = dst;
+  register gint count = numpix;
+  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  
+  while (count-- > 0)
+    {
+      int r,g,b,y,cb,cr;
+      y = *y_src  - 16;  
+      cb= *cb_src - 128; 
+      cr= *cr_src - 128;
+      y_src  += y_incr;
+      cb_src += cb_incr;
+      cr_src += cr_incr;
+      
+      r = (FIXY(1.0)*y                   + FIXC(1.5748)*cr + FIX(0.5))>>16;
+      g = (FIXY(1.0)*y - FIXC(0.1873)*cb - FIXC(0.4681)*cr + FIX(0.5))>>16;
+      b = (FIXY(1.0)*y + FIXC(1.8556)*cb                   + FIX(0.5))>>16;
+      
+      if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
+      if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
+      if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
+
+      *(rgb_dst++) = r;
+      *(rgb_dst++) = g;
+      *(rgb_dst++) = b;
+    }
+}
+
+
+static void
+compose_ycbcr470f (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
+{
+  register guchar *y_src = src[0];
+  register guchar *cb_src = src[1];
+  register guchar *cr_src = src[2];
+  register guchar *rgb_dst = dst;
+  register gint count = numpix;
+  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  
+  while (count-- > 0)
+    {
+      int r,g,b,y,cb,cr;
+      y = *y_src;  
+      cb= *cb_src - 128; 
+      cr= *cr_src - 128;
+      y_src  += y_incr;
+      cb_src += cb_incr;
+      cr_src += cr_incr;
+      
+      r = (FIX(1.0)*y                  + FIX(1.4022)*cr + FIX(0.5))>>16;
+      g = (FIX(1.0)*y - FIX(0.3456)*cb - FIX(0.7145)*cr + FIX(0.5))>>16;
+      b = (FIX(1.0)*y + FIX(1.7710)*cb                  + FIX(0.5))>>16;
+      
+      if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
+      if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
+      if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
+
+      *(rgb_dst++) = r;
+      *(rgb_dst++) = g;
+      *(rgb_dst++) = b;
+    }
+}
+
+
+static void
+compose_ycbcr709f (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
+{
+  register guchar *y_src = src[0];
+  register guchar *cb_src = src[1];
+  register guchar *cr_src = src[2];
+  register guchar *rgb_dst = dst;
+  register gint count = numpix;
+  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  
+  while (count-- > 0)
+    {
+      int r,g,b,y,cb,cr;
+      y = *y_src;  
+      cb= *cb_src - 128; 
+      cr= *cr_src - 128;
+      y_src  += y_incr;
+      cb_src += cb_incr;
+      cr_src += cr_incr;
+      
+      r = (FIX(1.0)*y                   + FIX(1.5748)*cr + FIX(0.5))>>16;
+      g = (FIX(1.0)*y - FIX(0.1873)*cb  - FIX(0.4681)*cr + FIX(0.5))>>16;
+      b = (FIX(1.0)*y + FIX(1.8556)*cb                   + FIX(0.5))>>16;
+      
+      if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
+      if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
+      if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
+
+      *(rgb_dst++) = r;
+      *(rgb_dst++) = g;
+      *(rgb_dst++) = b;
     }
 }
 

@@ -88,6 +88,10 @@ static void extract_cmyk     (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_cyank    (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_magentak (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_yellowk  (guchar *src, gint bpp, gint numpix, guchar **dst);
+static void extract_ycbcr470 (guchar *src, gint bpp, gint numpix, guchar **dst);
+static void extract_ycbcr709 (guchar *src, gint bpp, gint numpix, guchar **dst);
+static void extract_ycbcr470f(guchar *src, gint bpp, gint numpix, guchar **dst);
+static void extract_ycbcr709f(guchar *src, gint bpp, gint numpix, guchar **dst);
 
 static gint decompose_dialog      (void);
 static void decompose_ok_callback (GtkWidget *widget,
@@ -140,7 +144,23 @@ static EXTRACT extract[] =
   { N_("Cyan_K"),     FALSE, 1, { N_("cyan_k") }, extract_cyank },
   { N_("Magenta_K"),  FALSE, 1, { N_("magenta_k") }, extract_magentak },
   { N_("Yellow_K"),   FALSE, 1, { N_("yellow_k") }, extract_yellowk },
-  { N_("Alpha"),      TRUE,  1, { N_("alpha") }, extract_alpha }
+  { N_("Alpha"),      TRUE,  1, { N_("alpha") }, extract_alpha },
+  { "YCbCr_ITU_R470",        
+                      TRUE,  3, { N_("luma_y470"),
+				  N_("blueness_cb470"),
+				  N_("redness_cr470") }, extract_ycbcr470 },
+  { "YCbCr_ITU_R709",        
+                      TRUE,  3, { N_("luma_y709"),
+				  N_("blueness_cb709"),
+				  N_("redness_cr709") }, extract_ycbcr709 },
+  { "YCbCr_ITU_R470_256",        
+                      TRUE,  3, { N_("luma_y470f"),
+				  N_("blueness_cb470f"),
+				  N_("redness_cr470f") }, extract_ycbcr470f },
+  { "YCbCr_ITU_R709_256",        
+                      TRUE,  3, { N_("luma_y709f"),
+				  N_("blueness_cb709f"),
+				  N_("redness_cr709f") }, extract_ycbcr709f },
 };
 
 /* Number of types of extractions */
@@ -281,7 +301,7 @@ run (gchar      *name,
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
   if ((drawable_type != GIMP_RGB_IMAGE) && (drawable_type != GIMP_RGBA_IMAGE))
     {
-      g_message ("decompose: Can only work on RGB*_IMAGE");
+      g_message ("Decompose: Can only work on RGB images.");
       status = GIMP_PDB_CALLING_ERROR;
     }
   if (status == GIMP_PDB_SUCCESS)
@@ -351,14 +371,14 @@ decompose (gint32  image_ID,
   drawable_src = gimp_drawable_get (drawable_ID);
   if (drawable_src->bpp < 3)
     {
-      g_message ("decompose: not an RGB image");
+      g_message ("Decompose: Not an RGB image.");
       return (-1);
     }
   if ((extract[extract_idx].extract_fun == extract_alpha || 
        extract[extract_idx].extract_fun == extract_rgba) &&
       (!gimp_drawable_has_alpha (drawable_ID)))
     {
-      g_message ("decompose: No alpha channel available");
+      g_message ("Decompose: No alpha channel available.");
       return (-1);
     }
   
@@ -887,6 +907,126 @@ extract_yellowk (guchar  *src,
 	*yellow_dst -= k;
       yellow_dst++;
       
+      rgb_src += offset;
+    }
+}
+
+/* these are here so the code is more readable and we can use 
+   the standart values instead of some scaled and rounded fixpoint values */
+#define FIX(a) ((int)((a)*256.0*256.0 + 0.5))
+#define FIXY(a) ((int)((a)*256.0*256.0*219.0/255.0 + 0.5))
+#define FIXC(a) ((int)((a)*256.0*256.0*224.0/255.0 + 0.5))
+
+static void
+extract_ycbcr470 (guchar  *src, 
+	     gint     bpp, 
+	     gint     numpix,
+	     guchar **dst)
+{
+  register guchar *rgb_src = src;
+  register guchar *y_dst  = dst[0];
+  register guchar *cb_dst = dst[1];
+  register guchar *cr_dst = dst[2];
+  register gint count = numpix, offset = bpp-3;
+
+  while (count-- > 0)
+    {
+      register int r, g, b;
+      r= *(rgb_src++);
+      g= *(rgb_src++);
+      b= *(rgb_src++);
+      *(y_dst++)  = ( FIXY(0.2989)*r + FIXY(0.5866)*g + FIXY(0.1145)*b + FIX( 16.5))>>16;
+      *(cb_dst++) = (-FIXC(0.1688)*r - FIXC(0.3312)*g + FIXC(0.5000)*b + FIX(128.5))>>16;
+      *(cr_dst++) = ( FIXC(0.5000)*r - FIXC(0.4184)*g - FIXC(0.0816)*b + FIX(128.5))>>16;
+
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_ycbcr709 (guchar  *src, 
+	     gint     bpp, 
+	     gint     numpix,
+	     guchar **dst)
+{
+  register guchar *rgb_src = src;
+  register guchar *y_dst  = dst[0];
+  register guchar *cb_dst = dst[1];
+  register guchar *cr_dst = dst[2];
+  register gint count = numpix, offset = bpp-3;
+
+  while (count-- > 0)
+    {
+      register int r, g, b;
+      r= *(rgb_src++);
+      g= *(rgb_src++);
+      b= *(rgb_src++);
+      *(y_dst++)  = ( FIXY(0.2126)*r + FIXY(0.7152)*g + FIXY(0.0722)*b + FIX( 16.5))>>16;
+      *(cb_dst++) = (-FIXC(0.1150)*r - FIXC(0.3860)*g + FIXC(0.5000)*b + FIX(128.5))>>16;
+      *(cr_dst++) = ( FIXC(0.5000)*r - FIXC(0.4540)*g - FIXC(0.0460)*b + FIX(128.5))>>16;
+
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_ycbcr470f (guchar  *src, 
+	     gint     bpp, 
+	     gint     numpix,
+	     guchar **dst)
+{
+  register guchar *rgb_src = src;
+  register guchar *y_dst  = dst[0];
+  register guchar *cb_dst = dst[1];
+  register guchar *cr_dst = dst[2];
+  register gint count = numpix, offset = bpp-3;
+
+  while (count-- > 0)
+    {
+      register int r, g, b, cb, cr;
+      r= *(rgb_src++);
+      g= *(rgb_src++);
+      b= *(rgb_src++);
+      *(y_dst++ ) = ( FIX(0.2989)*r + FIX(0.5866)*g + FIX(0.1145)*b + FIX(  0.5))>>16;
+      cb          = (-FIX(0.1688)*r - FIX(0.3312)*g + FIX(0.5000)*b + FIX(128.5))>>16;
+      cr          = ( FIX(0.5000)*r - FIX(0.4184)*g - FIX(0.0816)*b + FIX(128.5))>>16;
+      if(cb>255) cb=255;
+      if(cr>255) cr=255;
+      *(cb_dst++) = cb;
+      *(cr_dst++) = cr;
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_ycbcr709f (guchar  *src, 
+	     gint     bpp, 
+	     gint     numpix,
+	     guchar **dst)
+{
+  register guchar *rgb_src = src;
+  register guchar *y_dst  = dst[0];
+  register guchar *cb_dst = dst[1];
+  register guchar *cr_dst = dst[2];
+  register gint count = numpix, offset = bpp-3;
+
+  while (count-- > 0)
+    {
+      register int r, g, b, cb, cr;
+      r= *(rgb_src++);
+      g= *(rgb_src++);
+      b= *(rgb_src++);
+      *(y_dst++)  = ( FIX(0.2126)*r + FIX(0.7152)*g + FIX(0.0722)*b + FIX(  0.5))>>16;
+      cb          = (-FIX(0.1150)*r - FIX(0.3860)*g + FIX(0.5000)*b + FIX(128.5))>>16;
+      cr          = ( FIX(0.5000)*r - FIX(0.4540)*g - FIX(0.0460)*b + FIX(128.5))>>16;
+      if(cb>255) cb=255;
+      if(cr>255) cr=255;
+      *(cb_dst++) = cb;
+      *(cr_dst++) = cr;
+
       rgb_src += offset;
     }
 }

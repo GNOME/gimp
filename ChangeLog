@@ -1,3 +1,10 @@
+2002-10-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/compose.c
+	* plug-ins/common/decompose.c: applied a patch from
+	Michael Niedermayer <michaelni@gmx.at> that adds support for
+	YCbCr (de)composition (#96448).
+
 2002-10-23  Michael Natterer  <mitch@gimp.org>
 
 	Moved generic datafile loading to LibGimpBase:
