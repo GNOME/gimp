@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp.PLUGINS\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-23 16:11+0100\n"
-"PO-Revision-Date: 2004-02-25 14:02+0300\n"
-"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
+"PO-Revision-Date: 2004-03-24 20:31+0300\n"
+"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -621,8 +621,7 @@ msgstr "Прозрачный фон"
 
 #: plug-ins/Lighting/lighting_ui.c:378
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Сделать результирующее изображение прозрачным с нулевой высотой рельефа"
+msgstr "Сделать результирующее изображение прозрачным с нулевой высотой рельефа"
 
 #: plug-ins/Lighting/lighting_ui.c:381
 msgid "Cre_ate New Image"
@@ -660,8 +659,7 @@ msgstr "Порог:"
 
 #: plug-ins/Lighting/lighting_ui.c:445 plug-ins/MapObject/mapobject_ui.c:656
 msgid "Stop when pixel differences are smaller than this value"
-msgstr ""
-"Останавливаться когда различие между пикселами меньше, чем это значение"
+msgstr "Останавливаться когда различие между пикселами меньше, чем это значение"
 
 #: plug-ins/Lighting/lighting_ui.c:487 plug-ins/MapObject/mapobject_ui.c:682
 msgid "Light Settings"
@@ -781,8 +779,7 @@ msgstr "Окружение:"
 
 #: plug-ins/Lighting/lighting_ui.c:717 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Степень окрашивания собственным цветом там куда не попадают прямые лучи"
+msgstr "Степень окрашивания собственным цветом там куда не попадают прямые лучи"
 
 #: plug-ins/Lighting/lighting_ui.c:729
 msgid "_Diffuse:"
@@ -802,8 +799,7 @@ msgstr "Рассеяние:"
 
 #: plug-ins/Lighting/lighting_ui.c:792 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Повышение значений делает объект отражающим больше света (кажется светлее)"
+msgstr "Повышение значений делает объект отражающим больше света (кажется светлее)"
 
 #: plug-ins/Lighting/lighting_ui.c:804
 msgid "_Specular:"
@@ -1380,8 +1376,7 @@ msgid "Use cosine-function for green component."
 msgstr "Использовать косинусоидальную функцию для зеленого компонента."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Канал зелёного: используется линейное отображение вместо любой "
 "тригонометрической функции"
@@ -1395,8 +1390,7 @@ msgid "Use cosine-function for blue component."
 msgstr "Использовать косинусоидальную функцию для синего компонента."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Канал синего: используется линейное отображение вместо любой "
 "тригонометрической функции"
@@ -2931,13 +2925,11 @@ msgstr "<Image>/Фильтры/Искажения/Изгиб кривой..."
 #: plug-ins/common/curve_bend.c:709
 #, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"\"Изгиб кривой\" действует только на слоях (а был вызван на канале или маске)"
+msgstr "\"Изгиб кривой\" действует только на слоях (а был вызван на канале или маске)"
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Невозможно выполнить действия с изображением неизвестного типа"
+msgstr "Невозможно выполнить действия с пустым выделением"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3917,8 +3909,7 @@ msgstr "Масштаб: Дополнение ранее извесное как 
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Устаревшее создание Adam D. Moss /adam@gimp.org / adam@foxbox.org/ 1998-2000"
+msgstr "Устаревшее создание Adam D. Moss /adam@gimp.org / adam@foxbox.org/ 1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3943,8 +3934,7 @@ msgstr ""
 "7-битном ASCII. Комментарий не сохранён."
 
 #: plug-ins/common/gif.c:971
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Невозможно сохранить изображение в формате RGB. Преобразуйте его в "
 "индексированный формат или в градации серого."
@@ -6018,13 +6008,11 @@ msgstr "Амплитуда:"
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
-msgstr ""
-"Вы не может повернуть все изображение, если в нем есть выделенная область."
+msgstr "Вы не может повернуть все изображение, если в нем есть выделенная область."
 
 #: plug-ins/common/rotate.c:428
 msgid "You can not rotate the whole image if there's a floating selection."
-msgstr ""
-"Вы не можете повернуть все изображение, если в нем есть плавающее выделение."
+msgstr "Вы не можете повернуть все изображение, если в нем есть плавающее выделение."
 
 #: plug-ins/common/rotate.c:439
 msgid "Sorry, channels and masks can not be rotated."
@@ -6901,8 +6889,7 @@ msgid "Import _Paths"
 msgstr "Импорт _Контуров"
 
 #: plug-ins/common/svg.c:852
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Импортировать элементы контура из SVG, так чтобы они могли быть использованы "
 "инструментом \"Контур\""
@@ -7120,8 +7107,7 @@ msgid "ID"
 msgstr "Идентификатор"
 
 #: plug-ins/common/uniteditor.c:85
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Строка, которая будет использоваться для идентификации единицы в "
 "конфигурационном файле GIMP."
@@ -8854,8 +8840,7 @@ msgstr "Показать кадр линии"
 
 #: plug-ins/gfig/gfig-bezier.c:559
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
-"Нарисовать линию между контрольными точками. Только при создании кривой"
+msgstr "Нарисовать линию между контрольными точками. Только при создании кривой"
 
 #: plug-ins/gfig/gfig-dobject.c:423
 msgid "Hey where has the object gone ?"
@@ -9352,10 +9337,8 @@ msgid "Shadow depth:"
 msgstr "Глубина тени:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Глубина падающей тени, определяет как далеко от объекта она должна быть"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr "Глубина падающей тени, определяет как далеко от объекта она должна быть"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9366,7 +9349,6 @@ msgid "How much to blur the drop shadow"
 msgstr "Как сильно размывается отбрасываемая тень"
 
 #: plug-ins/gimpressionist/general.c:210
-#, fuzzy
 msgid "Deviation threshold:"
 msgstr "Предел отклонения:"
 
@@ -9482,8 +9464,7 @@ msgstr "Адаптивное"
 
 #: plug-ins/gimpressionist/orientation.c:179
 msgid "The direction that matches the original image the closest is selected"
-msgstr ""
-"Выбирается наиболее совпадающее с оригинальным изображением направление"
+msgstr "Выбирается наиболее совпадающее с оригинальным изображением направление"
 
 #: plug-ins/gimpressionist/orientation.c:187
 #: plug-ins/gimpressionist/size.c:166
@@ -9761,13 +9742,11 @@ msgid "The largest brush to create"
 msgstr "Наибольшая создаваемая кисть"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Размер мазка будет определяться яркостью области"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Размер мазка будет определяться расстоянием от центра изображения"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -9869,7 +9848,7 @@ msgid "Help ID '%s' unknown"
 msgstr "Неизвестный ID в системе помощи - '%s'"
 
 #: plug-ins/help/domain.c:414
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
@@ -10008,49 +9987,40 @@ msgid "Relative Probability:"
 msgstr "Относительная вероятность:"
 
 #: plug-ins/ifscompose/ifscompose.c:1191
-#, fuzzy
 msgid "/Move"
-msgstr "Переместить"
+msgstr "/Переместить"
 
 #: plug-ins/ifscompose/ifscompose.c:1193
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "Вращение/Масштаб"
+msgstr "/Вращение\\/Масштаб"
 
 #: plug-ins/ifscompose/ifscompose.c:1195
-#, fuzzy
 msgid "/Stretch"
-msgstr "Растянуть"
+msgstr "/Растянуть"
 
 #: plug-ins/ifscompose/ifscompose.c:1198
-#, fuzzy
 msgid "/New"
-msgstr "Новый"
+msgstr "/Новый"
 
 #: plug-ins/ifscompose/ifscompose.c:1200
-#, fuzzy
 msgid "/Delete"
-msgstr "Удалить"
+msgstr "/Удалить"
 
 #: plug-ins/ifscompose/ifscompose.c:1202
-#, fuzzy
 msgid "/Undo"
-msgstr "Откат"
+msgstr "/Откат"
 
 #: plug-ins/ifscompose/ifscompose.c:1204
-#, fuzzy
 msgid "/Redo"
-msgstr "Возврат"
+msgstr "/Возврат"
 
 #: plug-ins/ifscompose/ifscompose.c:1206
-#, fuzzy
 msgid "/Select All"
-msgstr "Выделить все"
+msgstr "/Выделить все"
 
 #: plug-ins/ifscompose/ifscompose.c:1208
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "Пересчитать центр"
+msgstr "/Пересчитать центр"
 
 #: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
@@ -10381,8 +10351,7 @@ msgstr "Относительная ссылка"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr ""
-"Название/ID целевого кадра: (необязательно - используется только для кадров)"
+msgstr "Название/ID целевого кадра: (необязательно - используется только для кадров)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "ALT te_xt: (optional)"
@@ -10610,9 +10579,8 @@ msgid "About ImageMap..."
 msgstr "О дополнении \"Карта изображения\"..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "Удалить Град.вспышку"
+msgstr "/Удалить область"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -10856,8 +10824,7 @@ msgstr "Создание лабиринта с использованием ал
 
 #: plug-ins/maze/algorithms.c:463
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
-"Конструирование рассеченного лабиринта с использованием алгоритма Prim..."
+msgstr "Конструирование рассеченного лабиринта с использованием алгоритма Prim..."
 
 #: plug-ins/maze/maze.c:157
 #, c-format
@@ -11580,8 +11547,7 @@ msgid "Adjust Output..."
 msgstr "Подстройка вывода..."
 
 #: plug-ins/print/gimp_main_window.c:1470
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr "Подстройка цветогого баланса, яркости, контрастности, насыщенности"
 
 #: plug-ins/print/print.c:164
@@ -12045,3 +12011,4 @@ msgstr "Ошибка: файл свойств XJT '%s' пуст"
 
 #~ msgid "Your comment string is too long."
 #~ msgstr "Слишком длинная строка комментария."
+
