@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.4\n"
-"POT-Creation-Date: 2002-08-24 14:50+0200\n"
+"POT-Creation-Date: 2002-08-26 22:03+0200\n"
 "PO-Revision-Date: 2002-08-24 14:52+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -13563,25 +13563,8 @@ msgid "No selection to convert"
 msgstr "Keine Auswahl vorhanden"
 
 #: plug-ins/sel2path/sel2path.c:331
-msgid "Sel2Path Advanced Settings"
-msgstr "Sel2Path Erweiterte Einstellungen"
-
-#: plug-ins/sel2path/sel2path.c:540
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr "print_spline: strange degree (%d)"
-
-#: plug-ins/sel2path/sel2path.c:549
-msgid "selection_to_path"
-msgstr "Auswahl zu Pfad"
-
-#: plug-ins/sel2path/sel2path.c:577
-msgid "gimp_image_get_selection failed"
-msgstr "gimp_image_get_selection schlug fehl"
-
-#: plug-ins/sel2path/sel2path.c:585
-msgid "Internal error. Selection bpp > 1"
-msgstr "Interner Fehler. Auswahl bpp > 1"
+msgid "Selection To Path Advanced Settings"
+msgstr "Auswahl in Pfad - Erweiterte Einstellungen"
 
 #: plug-ins/sgi/sgi.c:635
 msgid "Save as SGI"
