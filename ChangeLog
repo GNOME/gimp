@@ -1,3 +1,8 @@
+2004-11-21  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/addborder.scm: first resize the
+	image, then add the border layer and then fill it
+
 2004-11-20  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c: Need to call gettext in
