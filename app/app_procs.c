@@ -277,7 +277,13 @@ app_exit_finish (void)
   exit (0);
 }
 
-/* gimprc debugging code, to be removed */
+
+/****************************************
+ * gimprc debugging code, to be removed *
+ ****************************************/
+
+#include "config/gimpconfig-serialize.h"
+
 static void
 gimprc_notify_callback (GObject    *object,
 			GParamSpec *pspec)
