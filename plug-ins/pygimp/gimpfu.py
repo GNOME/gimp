@@ -347,7 +347,7 @@ def _interact(func_name, start_params):
     class RadioEntry(gtk.Frame):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
             gtk.Frame.__init__(self)
-            box = gtk.HBox(gtk.FALSE, 5)
+            box = gtk.VBox(gtk.FALSE, 5)
             self.add(box)
             box.show()
             button = None
