@@ -58,18 +58,15 @@ static WmfLoadVals load_vals =
 };
 
 
-static void      query           (void);
-static void      run             (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *param,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
-static gint32    load_image     (const gchar       *filename,
-                                 GimpRunMode        runmode,
-                                 gboolean           preview);
+static void      query          (void);
+static void      run            (const gchar       *name,
+                                 gint               nparams,
+                                 const GimpParam   *param,
+                                 gint              *nreturn_vals,
+                                 GimpParam        **return_vals);
+static gint32    load_image     (const gchar       *filename);
 static gboolean  load_wmf_size  (const gchar       *filename,
-                                 WmfLoadVals       *vals,
-                                 GError           **error);
+                                 WmfLoadVals       *vals);
 static gboolean  load_dialog    (const gchar       *filename);
 static guchar   *wmf_get_pixbuf (const gchar       *filename,
                                  gint              *width,
@@ -189,7 +186,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
+          image_ID = load_image (param[1].data.d_string);
 
           if (image_ID != -1)
             {
@@ -218,9 +215,8 @@ static GtkWidget *size_label = NULL;
 
 /*  This function retrieves the pixel size from a WMF file. */
 static gboolean
-load_wmf_size (const gchar  *filename,
-                WmfLoadVals  *vals,
-                GError      **error)
+load_wmf_size (const gchar *filename,
+               WmfLoadVals *vals)
 {
   /* the bits we need to decode the WMF via libwmf2's GD layer  */
   wmf_error_t     err;
@@ -231,11 +227,8 @@ load_wmf_size (const gchar  *filename,
   wmfD_Rect       bbox;
   gint            width;
   gint            height;
-  gdouble         resolution_x;
-  gdouble         resolution_y;
   gboolean        success = TRUE;
 
-  resolution_x = resolution_y = 72.0;
   width = height = -1;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -256,7 +249,8 @@ load_wmf_size (const gchar  *filename,
   if (err != wmf_E_None)
     success = FALSE;
 
-  err = wmf_display_size (API, &width, &height, resolution_x, resolution_y);
+  err = wmf_display_size (API, &width, &height,
+                          vals->resolution, vals->resolution);
   if (err != wmf_E_None || width <= 0 || height <= 0)
     success = FALSE;
 
@@ -348,7 +342,7 @@ load_dialog_resolution_callback (GimpSizeEntry *res,
 
   load_vals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
 
-  if (!load_wmf_size (filename, &vals, NULL))
+  if (!load_wmf_size (filename, &vals))
     return;
 
   wmf_width  = vals.width;
@@ -465,7 +459,7 @@ load_dialog (const gchar *filename)
   /*  query the initial size after the size label is created  */
   vals.resolution = load_vals.resolution;
 
-  load_wmf_size (filename, &vals, NULL);
+  load_wmf_size (filename, &vals);
 
   wmf_width  = vals.width;
   wmf_height = vals.height;
@@ -694,10 +688,7 @@ wmf_get_pixbuf (const gchar *filename,
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
-  gdouble         resolution_x;
-  gdouble         resolution_y;
 
-  resolution_x = resolution_y = 72.0;
   *width = *height = -1;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -718,13 +709,14 @@ wmf_get_pixbuf (const gchar *filename,
   if (err != wmf_E_None)
     goto _wmf_error;
 
-  err = wmf_display_size (API, width, height, resolution_x, resolution_y);
+  err = wmf_display_size (API, width, height,
+                          WMF_DEFAULT_RESOLUTION, WMF_DEFAULT_RESOLUTION);
   if (err != wmf_E_None || *width <= 0 || *height <= 0)
     goto _wmf_error;
 
-  ddata->bbox          = bbox;
-  ddata->width         = *width;
-  ddata->height        = *height;
+  ddata->bbox   = bbox;
+  ddata->width  = *width;
+  ddata->height = *height;
 
   err = wmf_play (API, 0, &bbox);
   if (err != wmf_E_None)
@@ -766,10 +758,7 @@ wmf_load_file (const gchar *filename,
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
-  gdouble         resolution_x;
-  gdouble         resolution_y;
 
-  resolution_x = resolution_y = 72.0;
   *width = *height = -1;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
@@ -790,16 +779,21 @@ wmf_load_file (const gchar *filename,
   if (err != wmf_E_None)
     goto _wmf_error;
 
-  err = wmf_display_size (API, width, height, resolution_x, resolution_y);
+  err = wmf_display_size (API,
+                          width, height,
+                          load_vals.resolution, load_vals.resolution);
   if (err != wmf_E_None || *width <= 0 || *height <= 0)
     goto _wmf_error;
 
-  *width  = load_vals.width;
-  *height = load_vals.height;
+  if (load_vals.width > 0 && load_vals.height > 0)
+    {
+      *width  = load_vals.width;
+      *height = load_vals.height;
+    }
 
-  ddata->bbox          = bbox;
-  ddata->width         = *width;
-  ddata->height        = *height;
+  ddata->bbox   = bbox;
+  ddata->width  = *width;
+  ddata->height = *height;
 
   err = wmf_play (API, 0, &bbox);
   if (err != wmf_E_None)
@@ -830,9 +824,7 @@ wmf_load_file (const gchar *filename,
  * 'load_image()' - Load a WMF image into a new image window.
  */
 static gint32
-load_image (const gchar *filename,
-	    GimpRunMode  runmode,
-	    gboolean     preview)
+load_image (const gchar *filename)
 {
   gint32        image;
   gint32	layer;
