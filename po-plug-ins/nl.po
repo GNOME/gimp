@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:19+0100\n"
-"PO-Revision-Date: 2004-08-18 01:05+0200\n"
+"POT-Creation-Date: 2004-11-21 11:06+0100\n"
+"PO-Revision-Date: 2004-11-21 20:30+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -453,9 +453,8 @@ msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "'%s' is aangetast. Regel %d optiesectie incorrect"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:261
-#, fuzzy
 msgid "_Fractal Explorer..."
-msgstr "Voeg FractalExplorer-pad toe"
+msgstr "_Fractal Explorer..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:392
 msgid "Rendering Fractal..."
@@ -528,10 +527,10 @@ msgstr "Voeg FractalExplorer-pad toe"
 msgid "Lighting Effects..."
 msgstr "Lichteffecten..."
 
+# belichtingseffecten/lichteffecten
 #: plug-ins/Lighting/lighting_main.c:197
-#, fuzzy
 msgid "_Lighting Effects..."
-msgstr "Lichteffecten..."
+msgstr "_Lichteffecten..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:261
@@ -539,7 +538,6 @@ msgid "General Options"
 msgstr "Algemene opties"
 
 #: plug-ins/Lighting/lighting_ui.c:269
-#, fuzzy
 msgid "T_ransparent background"
 msgstr "T_ransparante achtergrond"
 
@@ -549,7 +547,6 @@ msgid "Make destination image transparent where bump height is zero"
 msgstr "Maak doelafbeelding transparant waar bumphoogte is nul"
 
 #: plug-ins/Lighting/lighting_ui.c:282
-#, fuzzy
 msgid "Cre_ate new image"
 msgstr "Nieuwe afbeelding _aanmaken"
 
@@ -558,7 +555,6 @@ msgid "Create a new image when applying filter"
 msgstr "Maak een nieuwe afbeelding bij toepassen filter"
 
 #: plug-ins/Lighting/lighting_ui.c:294
-#, fuzzy
 msgid "High _Quality preview"
 msgstr "_Vooruitblik hoge kwaliteit"
 
@@ -571,34 +567,28 @@ msgid "Light Settings"
 msgstr "Lichtinstellingen"
 
 #: plug-ins/Lighting/lighting_ui.c:344
-#, fuzzy
 msgid "Light 1"
-msgstr "Licht"
+msgstr "Licht 1"
 
 #: plug-ins/Lighting/lighting_ui.c:345
-#, fuzzy
 msgid "Light 2"
-msgstr "Licht"
+msgstr "Licht 2"
 
 #: plug-ins/Lighting/lighting_ui.c:346
-#, fuzzy
 msgid "Light 3"
-msgstr "Licht"
+msgstr "Licht 3"
 
 #: plug-ins/Lighting/lighting_ui.c:347
-#, fuzzy
 msgid "Light 4"
-msgstr "Licht"
+msgstr "Licht 4"
 
 #: plug-ins/Lighting/lighting_ui.c:348
-#, fuzzy
 msgid "Light 5"
-msgstr "Licht"
+msgstr "Licht 5"
 
 #: plug-ins/Lighting/lighting_ui.c:349
-#, fuzzy
 msgid "Light 6"
-msgstr "Licht"
+msgstr "Licht 6"
 
 #. row labels
 #: plug-ins/Lighting/lighting_ui.c:358 plug-ins/common/spheredesigner.c:2624
@@ -622,23 +612,20 @@ msgid "Type of light source to apply"
 msgstr "Type van toe te passen lichtbron"
 
 #: plug-ins/Lighting/lighting_ui.c:388 plug-ins/MapObject/mapobject_ui.c:679
-#, fuzzy
 msgid "Select lightsource color"
-msgstr "Kies lichtbronkleur"
+msgstr "Lichtbronkleur kiezen"
 
 #: plug-ins/Lighting/lighting_ui.c:400 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Set light source color"
-msgstr "Stel lichtbronkleur in"
+msgstr "Lichtbronkleur instellen"
 
 #: plug-ins/Lighting/lighting_ui.c:408
-#, fuzzy
 msgid "_Intensity:"
-msgstr "Intensiteit"
+msgstr "_Intensiteit"
 
 #: plug-ins/Lighting/lighting_ui.c:414
-#, fuzzy
 msgid "Light intensity"
-msgstr "Oorspronkelijke intensiteit"
+msgstr "Lichtintensiteit"
 
 #: plug-ins/Lighting/lighting_ui.c:417 plug-ins/MapObject/mapobject_ui.c:694
 #: plug-ins/MapObject/mapobject_ui.c:1021
@@ -721,53 +708,50 @@ msgstr "Z:"
 msgid "Light source Z direction in XYZ space"
 msgstr "Z-richting van lichtbron in XYZ-ruimte"
 
-# What does 'Ins' mean?
 #: plug-ins/Lighting/lighting_ui.c:502
-#, fuzzy
 msgid "I_solate"
-msgstr "Datum"
+msgstr "I_soleren"
 
 #: plug-ins/Lighting/lighting_ui.c:512
 #, fuzzy
 msgid "Lighting preset:"
 msgstr "Lichteffecten"
 
+# Tekstuureigenschappen<
 #: plug-ins/Lighting/lighting_ui.c:558
-#, fuzzy
 msgid "Material properties"
-msgstr "Tekstuureigenschappen"
+msgstr "Materiaaleigenschappen"
 
 #: plug-ins/Lighting/lighting_ui.c:576
-#, fuzzy
 msgid "_Glowing:"
-msgstr "Vloeiend"
+msgstr "_Gloeiend:"
 
 #: plug-ins/Lighting/lighting_ui.c:592 plug-ins/MapObject/mapobject_ui.c:859
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 "Hoeveelheid van originele kleur die te zien is waar geen direct licht valt"
 
+# helder/helderheid
 #: plug-ins/Lighting/lighting_ui.c:605
-#, fuzzy
 msgid "_Bright:"
-msgstr "Helderheid:"
+msgstr "_Helderheid:"
 
 #: plug-ins/Lighting/lighting_ui.c:621 plug-ins/MapObject/mapobject_ui.c:888
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensiteit van originele kleur wanneer verlicht"
 
 #: plug-ins/Lighting/lighting_ui.c:634
-#, fuzzy
 msgid "_Shiny:"
-msgstr "_Sinus"
+msgstr "G_lanzend"
 
 #: plug-ins/Lighting/lighting_ui.c:650 plug-ins/MapObject/mapobject_ui.c:960
 msgid "Controls how intense the highlights will be"
 msgstr "Bepaalt hoe intens de hoge lichten zullen zijn"
 
+# gepolijst/opgepoetst
 #: plug-ins/Lighting/lighting_ui.c:662
 msgid "_Polished:"
-msgstr ""
+msgstr "_Opgepoetst"
 
 #: plug-ins/Lighting/lighting_ui.c:678 plug-ins/MapObject/mapobject_ui.c:989
 msgid "Higher values makes the highlights more focused"
@@ -776,7 +760,7 @@ msgstr "Hogere waarden maken de hoge lichten meer gefocust."
 #. Metallic
 #: plug-ins/Lighting/lighting_ui.c:687
 msgid "_Metallic"
-msgstr ""
+msgstr "_Metaalachtig"
 
 #: plug-ins/Lighting/lighting_ui.c:723
 #, fuzzy
@@ -1212,11 +1196,11 @@ msgstr "Draadmodel van object in vooruitblik in- of uitschakelen"
 
 #: plug-ins/bmp/bmp.c:120 plug-ins/bmp/bmp.c:139
 msgid "Windows BMP image"
-msgstr ""
+msgstr "Windows BMP-image"
 
 #: plug-ins/bmp/bmpread.c:86
 msgid "Bad colormap"
-msgstr "Slechte kleurenkaart"
+msgstr "Foutieve kleurenkaart"
 
 #. Set up progress display
 #. put up a progress bar
@@ -1456,13 +1440,12 @@ msgid "_RGB color model"
 msgstr "_RGB-kleurmodel"
 
 #: plug-ins/common/AlienMap2.c:517
-#, fuzzy
 msgid "_HSL color model"
 msgstr "_HSL-kleurmodel"
 
 #: plug-ins/common/CEL.c:112 plug-ins/common/CEL.c:130
 msgid "KISS CEL"
-msgstr ""
+msgstr "KISS CEL"
 
 #: plug-ins/common/CEL.c:191
 msgid "Load KISS Palette"
@@ -1698,31 +1681,27 @@ msgstr "(Geen)"
 
 # What is 'to evolute'
 #: plug-ins/common/CML_explorer.c:470
-#, fuzzy
 msgid "CML _Explorer..."
-msgstr "CML_verkenner: bezig met ontwikkelen..."
+msgstr "CML-_verkenner..."
 
 # What is 'to evolute'
 #: plug-ins/common/CML_explorer.c:760
 msgid "CML_explorer: evoluting..."
-msgstr "CML_verkenner: bezig met ontwikkelen..."
+msgstr "CML-_verkenner: bezig met ontwikkelen..."
 
 #: plug-ins/common/CML_explorer.c:1186
 msgid "Coupled-Map-Lattice Explorer"
 msgstr "Coupled-Map-Lattice-verkenner"
 
 #: plug-ins/common/CML_explorer.c:1225
-#, fuzzy
 msgid "New seed"
 msgstr "Nieuwe beginwaarde"
 
 #: plug-ins/common/CML_explorer.c:1236
-#, fuzzy
 msgid "Fix seed"
 msgstr "Vaste beginwaarde"
 
 #: plug-ins/common/CML_explorer.c:1247
-#, fuzzy
 msgid "Random seed"
 msgstr "Willekeurige beginwaarde"
 
@@ -1748,29 +1727,27 @@ msgstr "_Geavanceerd"
 
 # What is 'independed'?
 #: plug-ins/common/CML_explorer.c:1316
-#, fuzzy
 msgid "Channel Independent Parameters"
 msgstr "Kanaalonafhankelijke parameters"
 
+# beginwaarde/initiele waarde/aanvankelijke waarde
+# beginwaarde wordt al voor seed value gebruikt
 #: plug-ins/common/CML_explorer.c:1338
-#, fuzzy
 msgid "Initial value:"
-msgstr "Aanvankelijke waarde:"
+msgstr "Initiële waarde:"
 
 # What does 'scale' mean in this context?
 #: plug-ins/common/CML_explorer.c:1344
-#, fuzzy
 msgid "Zoom scale:"
-msgstr "Zoomschaal:"
+msgstr "Zoomwaarde:"
 
 #: plug-ins/common/CML_explorer.c:1353
-#, fuzzy
 msgid "Start offset:"
-msgstr "Begin verspringing:"
+msgstr "Beginverschuiving:"
 
 #: plug-ins/common/CML_explorer.c:1362
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Beginwaarde van willekeurige (alleen voor \"met beginwaarde\"-modi"
+msgstr "Beginwaarde van willekeurig (alleen voor \"met beginwaarde\"-modi)"
 
 #: plug-ins/common/CML_explorer.c:1373 plug-ins/maze/maze_face.c:277
 msgid "Seed:"
@@ -1803,17 +1780,14 @@ msgid "Copy Settings"
 msgstr "Instellingen kopiëren"
 
 #: plug-ins/common/CML_explorer.c:1440
-#, fuzzy
 msgid "Source channel:"
 msgstr "Bronkanaal:"
 
 #: plug-ins/common/CML_explorer.c:1455 plug-ins/common/CML_explorer.c:1503
-#, fuzzy
 msgid "Destination channel:"
 msgstr "Doelkanaal:"
 
 #: plug-ins/common/CML_explorer.c:1459
-#, fuzzy
 msgid "Copy parameters"
 msgstr "Parameters kopiëren"
 
@@ -1822,7 +1796,6 @@ msgid "Selective Load Settings"
 msgstr "Selectieve laadinstellingen"
 
 #: plug-ins/common/CML_explorer.c:1488
-#, fuzzy
 msgid "Source channel in file:"
 msgstr "Bronkanaal in bestand:"
 
@@ -1831,7 +1804,6 @@ msgid "_Misc Ops."
 msgstr "_Versch. Bew."
 
 #: plug-ins/common/CML_explorer.c:1558
-#, fuzzy
 msgid "Function type:"
 msgstr "Functietype:"
 
@@ -1845,9 +1817,8 @@ msgid "Misc arrange:"
 msgstr "Verschillende arrangementen:"
 
 #: plug-ins/common/CML_explorer.c:1592
-#, fuzzy
 msgid "Use cyclic range"
-msgstr "Gebruik cyclisch bereik"
+msgstr "Cyclisch bereik gebruiken"
 
 #: plug-ins/common/CML_explorer.c:1602
 #, fuzzy
@@ -1865,7 +1836,6 @@ msgid "Diffusion dist.:"
 msgstr "Diffusie-afstand:"
 
 #: plug-ins/common/CML_explorer.c:1629
-#, fuzzy
 msgid "# of subranges:"
 msgstr "Aantal deelbereiken:"
 
@@ -1879,19 +1849,16 @@ msgid "Parameter k:"
 msgstr "Parameter k:"
 
 #: plug-ins/common/CML_explorer.c:1656
-#, fuzzy
 msgid "Range low:"
 msgstr "Bereik laag:"
 
 #: plug-ins/common/CML_explorer.c:1665
-#, fuzzy
 msgid "Range high:"
 msgstr "Bereik hoog:"
 
 #: plug-ins/common/CML_explorer.c:1677
-#, fuzzy
 msgid "Plot a graph of the settings"
-msgstr "Plot de grafiek van de instellingen"
+msgstr "Maak een grafiek van de instellingen"
 
 #: plug-ins/common/CML_explorer.c:1722
 #, fuzzy
@@ -1968,7 +1935,7 @@ msgstr "Fout: laden parameters is mislukt"
 
 #: plug-ins/common/aa.c:94
 msgid "ASCII art"
-msgstr ""
+msgstr "ASCII art"
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:345
@@ -2012,14 +1979,12 @@ msgid "Snap to grid"
 msgstr "Magnetisch raster"
 
 #: plug-ins/common/align_layers.c:429
-#, fuzzy
 msgid "_Horizontal style:"
 msgstr "_Horizontale stijl:"
 
 #: plug-ins/common/align_layers.c:433
-#, fuzzy
 msgid "Left edge"
-msgstr "Linkerrand"
+msgstr "Linker rand"
 
 #: plug-ins/common/align_layers.c:434 plug-ins/common/align_layers.c:464
 #: plug-ins/gflare/gflare.c:2641
@@ -2027,12 +1992,10 @@ msgid "Center"
 msgstr "Midden"
 
 #: plug-ins/common/align_layers.c:435
-#, fuzzy
 msgid "Right edge"
-msgstr "Rechterrand"
+msgstr "Rechter rand"
 
 #: plug-ins/common/align_layers.c:444
-#, fuzzy
 msgid "Ho_rizontal base:"
 msgstr "Ho_rizontale basis:"
 
@@ -2045,29 +2008,24 @@ msgid "Fill (bottom to top)"
 msgstr "Vullen (beneden naar boven)"
 
 #: plug-ins/common/align_layers.c:460
-#, fuzzy
 msgid "_Vertical style:"
 msgstr "_Verticale stijl:"
 
 #: plug-ins/common/align_layers.c:463
-#, fuzzy
 msgid "Top edge"
-msgstr "Toprand"
+msgstr "Bovenrand"
 
 #: plug-ins/common/align_layers.c:465
-#, fuzzy
 msgid "Bottom edge"
-msgstr "Bodemrand"
+msgstr "Onderrand"
 
 #: plug-ins/common/align_layers.c:474
-#, fuzzy
 msgid "Ver_tical base:"
 msgstr "Ver_ticale basis:"
 
 #: plug-ins/common/align_layers.c:478
-#, fuzzy
 msgid "_Grid size:"
-msgstr "Raster_grootte:"
+msgstr "_Rastergrootte:"
 
 #: plug-ins/common/align_layers.c:487
 #, fuzzy
@@ -2075,22 +2033,18 @@ msgid "_Ignore the bottom layer even if visible"
 msgstr "_Negeer onderste laag, zelfs als hij zichtbaar is"
 
 #: plug-ins/common/align_layers.c:497
-#, fuzzy
 msgid "_Use the (invisible) bottom layer as the base"
-msgstr "_Gebruik de (onzichtbare) onderste laag als de basis"
+msgstr "_Gebruik de (onzichtbare) onderste laag als basis"
 
 #: plug-ins/common/animationplay.c:181
-#, fuzzy
 msgid "_Playback..."
-msgstr "Afspelen:"
+msgstr "_Afspelen..."
 
 #: plug-ins/common/animationplay.c:413
-#, fuzzy
 msgid "Animation Playback:"
 msgstr "Animatie afspelen:"
 
 #: plug-ins/common/animationplay.c:431
-#, fuzzy
 msgid "Playback:"
 msgstr "Afspelen:"
 
@@ -2113,12 +2067,11 @@ msgstr "Frame %d uit %d"
 
 #: plug-ins/common/animoptimize.c:140
 msgid "Optimize (for _GIF)"
-msgstr ""
+msgstr "Optimaliseren (voor _GIF)"
 
 #: plug-ins/common/animoptimize.c:158
-#, fuzzy
 msgid "_Optimize (Difference)"
-msgstr "<Image>/Filters/Animatie/Optimaliseren (verschil)"
+msgstr "_Optimaliseren (verschil)"
 
 #: plug-ins/common/animoptimize.c:175
 #, fuzzy
@@ -2151,9 +2104,8 @@ msgid "Optimizing Animation..."
 msgstr "Bezig met optimaliseren animatie..."
 
 #: plug-ins/common/apply_lens.c:112
-#, fuzzy
 msgid "Apply _Lens..."
-msgstr "Bezig met toepassen lens..."
+msgstr ""
 
 #: plug-ins/common/apply_lens.c:179
 msgid "Applying lens..."
@@ -2217,9 +2169,8 @@ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: plug-ins/common/blinds.c:124
-#, fuzzy
 msgid "_Blinds..."
-msgstr "Rolgordijnen"
+msgstr "_Rolgordijnen..."
 
 #: plug-ins/common/blinds.c:191
 msgid "Adding Blinds..."
@@ -2254,23 +2205,20 @@ msgid "_Displacement:"
 msgstr "_Verplaatsing:"
 
 #: plug-ins/common/blinds.c:315
-#, fuzzy
 msgid "_Number of segments:"
 msgstr "_Aantal segmenten:"
 
 #: plug-ins/common/blur.c:147
-#, fuzzy
 msgid "_Blur"
-msgstr "Vervagen"
+msgstr "_Vervagen"
 
 #: plug-ins/common/blur.c:191 plug-ins/common/unsharp.c:380
 msgid "Blurring..."
 msgstr "Vervagen..."
 
 #: plug-ins/common/borderaverage.c:101
-#, fuzzy
 msgid "_Border Average..."
-msgstr "Randgemiddelde..."
+msgstr "_Randgemiddelde..."
 
 #: plug-ins/common/borderaverage.c:168
 msgid "Border Average..."
@@ -2289,7 +2237,6 @@ msgid "_Thickness:"
 msgstr "_Dikte:"
 
 #: plug-ins/common/borderaverage.c:413
-#, fuzzy
 msgid "_Bucket size:"
 msgstr "_Emmergrootte:"
 
@@ -2315,15 +2262,13 @@ msgid "_Bump map:"
 msgstr "_Bumpmap:"
 
 #: plug-ins/common/bumpmap.c:908
-#, fuzzy
 msgid "_Map type:"
-msgstr "Projectietype"
+msgstr "_Projectietype"
 
 #. Compensate darkening
 #: plug-ins/common/bumpmap.c:913
-#, fuzzy
 msgid "Co_mpensate for darkening"
-msgstr "Co_mpenseer voor verdonkering"
+msgstr "Co_mpenseren voor donker worden"
 
 # How to translate 'bumpmap'?
 #. Invert bumpmap
@@ -2348,9 +2293,8 @@ msgid "_Elevation:"
 msgstr "_Verhoging:"
 
 #: plug-ins/common/bumpmap.c:994 plug-ins/common/postscript.c:3137
-#, fuzzy
 msgid "_X offset:"
-msgstr "_X-verspringing:"
+msgstr "Verschuiving _X:"
 
 #: plug-ins/common/bumpmap.c:997 plug-ins/common/bumpmap.c:1011
 msgid ""
@@ -2359,9 +2303,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/bumpmap.c:1008 plug-ins/common/postscript.c:3146
-#, fuzzy
 msgid "_Y offset:"
-msgstr "_Y-verspringing:"
+msgstr "Verschuiving _Y:"
 
 #: plug-ins/common/bumpmap.c:1022
 msgid "_Waterlevel:"
@@ -2394,24 +2337,20 @@ msgid "Cannot operate on indexed color images."
 msgstr "Kan niet op geïndexeerde kleurenafbeeldingen werken"
 
 #: plug-ins/common/cartoon.c:807
-#, fuzzy
 msgid "Cartoon"
-msgstr "Tabeltitel"
+msgstr "Striptekening"
 
 #: plug-ins/common/cartoon.c:837 plug-ins/common/photocopy.c:867
-#, fuzzy
 msgid "_Mask radius:"
-msgstr "Maskergrootte:"
+msgstr "_Maskergrootte:"
 
 #: plug-ins/common/cartoon.c:851
-#, fuzzy
 msgid "_Percent black:"
-msgstr "Procent"
+msgstr "_Percentage zwart:"
 
 #: plug-ins/common/ccanalyze.c:110
-#, fuzzy
 msgid "Colorcube A_nalysis..."
-msgstr "Kleurkubusanalyse..."
+msgstr "Kleurkubusa_nalyse..."
 
 #: plug-ins/common/ccanalyze.c:200
 msgid "Colorcube Analysis..."
@@ -2462,18 +2401,16 @@ msgid "Compression ratio (approx.): %d to 1"
 msgstr "Compressieratio (circa): %d tot 1"
 
 #: plug-ins/common/channel_mixer.c:197
-#, fuzzy
 msgid "Channel Mi_xer..."
-msgstr "Kanaalmixer"
+msgstr "Kanaalmi_xer..."
 
 #: plug-ins/common/channel_mixer.c:485
 msgid "Channel Mixer"
 msgstr "Kanaalmixer"
 
 #: plug-ins/common/channel_mixer.c:514
-#, fuzzy
 msgid "O_utput channel:"
-msgstr "Uitvoerkanaal:"
+msgstr "_Uitvoerkanaal:"
 
 #: plug-ins/common/channel_mixer.c:568 plug-ins/common/diffraction.c:498
 #: plug-ins/common/diffraction.c:536 plug-ins/common/diffraction.c:574
@@ -2524,9 +2461,10 @@ msgstr "Waarschuwing bestandsoperatie kanaalmixer"
 msgid "_Checkerboard..."
 msgstr "Schaakbord"
 
+# Bezig met genereren...<
 #: plug-ins/common/checkerboard.c:161
 msgid "Adding Checkerboard..."
-msgstr "Bezig met genereren..."
+msgstr "Schaakbord genereren..."
 
 #: plug-ins/common/checkerboard.c:310
 msgid "Checkerboard"
@@ -2774,11 +2712,11 @@ msgstr "Kanaalrepresentaties"
 
 #: plug-ins/common/compressor.c:153
 msgid "gzip archive"
-msgstr ""
+msgstr "gzip-archief"
 
 #: plug-ins/common/compressor.c:174
 msgid "bzip archive"
-msgstr ""
+msgstr "bzip-archief"
 
 #: plug-ins/common/compressor.c:367
 msgid "No sensible extension, saving as compressed XCF."
@@ -3408,7 +3346,7 @@ msgstr "Ontstrepen"
 #: plug-ins/common/tile.c:417 plug-ins/imagemap/imap_cmd_guides.c:167
 #: plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
-msgstr "Breedte:"
+msgstr "_Breedte:"
 
 #: plug-ins/common/destripe.c:480
 #, fuzzy
@@ -3417,7 +3355,7 @@ msgstr "Histogram maken"
 
 #: plug-ins/common/dicom.c:134
 msgid "DICOM image"
-msgstr ""
+msgstr "DICOM-afbeelding"
 
 #: plug-ins/common/dicom.c:159
 msgid "Digital Imaging and Communications in Medicine image"
@@ -3429,9 +3367,8 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' is niet een DICOM-bestand"
 
 #: plug-ins/common/diffraction.c:177
-#, fuzzy
 msgid "_Diffraction Patterns..."
-msgstr "Diffractiepatronen"
+msgstr "_Diffractiepatronen..."
 
 #: plug-ins/common/diffraction.c:334
 msgid "Creating diffraction pattern..."
@@ -3442,42 +3379,38 @@ msgid "Diffraction Patterns"
 msgstr "Diffractiepatronen"
 
 #: plug-ins/common/diffraction.c:524
-#, fuzzy
 msgid "Frequencies"
 msgstr "Frequenties"
 
 #: plug-ins/common/diffraction.c:562
-#, fuzzy
 msgid "Contours"
 msgstr "Contouren"
 
 #: plug-ins/common/diffraction.c:600
-#, fuzzy
 msgid "Sharp edges"
 msgstr "Scherpe randen"
 
 #: plug-ins/common/diffraction.c:612 plug-ins/common/softglow.c:673
 #: plug-ins/flame/flame.c:1037
 msgid "_Brightness:"
-msgstr "Helderheid:"
+msgstr "_Helderheid:"
 
 #: plug-ins/common/diffraction.c:621
 msgid "Sc_attering:"
-msgstr "Spreiding:"
+msgstr "S_preiding:"
 
 #: plug-ins/common/diffraction.c:630
 msgid "Po_larization:"
 msgstr "Po_larisatie:"
 
+# overige/andere
 #: plug-ins/common/diffraction.c:638
-#, fuzzy
 msgid "Other options"
 msgstr "Andere opties"
 
 #: plug-ins/common/displace.c:154
-#, fuzzy
 msgid "_Displace..."
-msgstr "Bezig te verplaatsen..."
+msgstr "_Verplaatsen..."
 
 #: plug-ins/common/displace.c:228
 msgid "Displacing..."
@@ -3489,15 +3422,13 @@ msgstr "Verplaatsen"
 
 #. X options
 #: plug-ins/common/displace.c:297
-#, fuzzy
 msgid "_X displacement:"
-msgstr "X-verplaatsing:"
+msgstr "_X-verplaatsing:"
 
 #. Y Options
 #: plug-ins/common/displace.c:344
-#, fuzzy
 msgid "_Y displacement:"
-msgstr "Y-verplaatsing:"
+msgstr "_Y-verplaatsing:"
 
 #: plug-ins/common/displace.c:390
 msgid "On Edges:"
@@ -3506,13 +3437,13 @@ msgstr "Op randen:"
 #: plug-ins/common/displace.c:396 plug-ins/common/edge.c:729
 #: plug-ins/common/ripple.c:561 plug-ins/common/waves.c:274
 msgid "_Smear"
-msgstr "Smeren"
+msgstr "_Smeren"
 
 #: plug-ins/common/displace.c:398 plug-ins/common/edge.c:742
 #: plug-ins/common/fractaltrace.c:735 plug-ins/common/newsprint.c:408
 #: plug-ins/common/ripple.c:562
 msgid "_Black"
-msgstr "Zwart"
+msgstr "_Zwart"
 
 #: plug-ins/common/dog.c:138
 #, fuzzy
@@ -3530,28 +3461,24 @@ msgid "Smoothing parameters"
 msgstr "X-verloop gladmaken..."
 
 #: plug-ins/common/dog.c:307
-#, fuzzy
 msgid "_Radius 1:"
-msgstr "Radius:"
+msgstr "_Straal 1:"
 
 #: plug-ins/common/dog.c:311
-#, fuzzy
 msgid "R_adius 2:"
-msgstr "R_adius:"
+msgstr "_Straal 2:"
 
 #: plug-ins/common/dog.c:323 plug-ins/common/normalize.c:88
-#, fuzzy
 msgid "_Normalize"
-msgstr "Normaal"
+msgstr "_Normaliseren"
 
 #: plug-ins/common/dog.c:334 plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "Inverse"
 
 #: plug-ins/common/edge.c:162
-#, fuzzy
 msgid "_Edge..."
-msgstr "Bewerken..."
+msgstr "_Rand..."
 
 #: plug-ins/common/edge.c:234
 msgid "Edge Detection..."
@@ -3562,12 +3489,10 @@ msgid "Edge Detection"
 msgstr "Randen vinden"
 
 #: plug-ins/common/edge.c:675
-#, fuzzy
 msgid "Sobel"
 msgstr "Sobel"
 
 #: plug-ins/common/edge.c:676
-#, fuzzy
 msgid "Prewitt"
 msgstr "Prewitt"
 
@@ -3576,35 +3501,29 @@ msgid "Gradient"
 msgstr "Verloop"
 
 #: plug-ins/common/edge.c:678
-#, fuzzy
 msgid "Roberts"
 msgstr "Roberts"
 
 #: plug-ins/common/edge.c:679
-#, fuzzy
 msgid "Differential"
 msgstr "Differentieel"
 
 #: plug-ins/common/edge.c:680
-#, fuzzy
 msgid "Laplace"
 msgstr "Laplace"
 
 #  compression
 #: plug-ins/common/edge.c:689
-#, fuzzy
 msgid "_Algorithm:"
-msgstr "Algoritme"
+msgstr "_Algoritme:"
 
 #: plug-ins/common/edge.c:697
-#, fuzzy
 msgid "A_mount:"
-msgstr "Hoeveelheid:"
+msgstr "_Hoeveelheid:"
 
 #: plug-ins/common/emboss.c:133
-#, fuzzy
 msgid "_Emboss..."
-msgstr "Reliëf"
+msgstr "_Reliëf..."
 
 #: plug-ins/common/emboss.c:374 plug-ins/common/emboss.c:439
 msgid "Emboss"
@@ -3617,20 +3536,19 @@ msgstr "Functie"
 # What is the Dutch translation for bumpmap?
 #: plug-ins/common/emboss.c:464
 msgid "_Bumpmap"
-msgstr "Bumpmap"
+msgstr "_Bumpmap"
 
 #: plug-ins/common/emboss.c:465
 msgid "_Emboss"
-msgstr "Reliëf"
+msgstr "_Reliëf"
 
 #: plug-ins/common/emboss.c:497
 msgid "E_levation:"
 msgstr "Verhoging:"
 
 #: plug-ins/common/engrave.c:108
-#, fuzzy
 msgid "En_grave..."
-msgstr "Bezig met graveren..."
+msgstr "_Graveren..."
 
 #: plug-ins/common/engrave.c:181
 msgid "Engraving..."
@@ -3647,13 +3565,13 @@ msgstr "Graveren"
 #: plug-ins/imagemap/imap_cmd_guides.c:177
 #: plug-ins/imagemap/imap_rectangle.c:410
 msgid "_Height:"
-msgstr "Hoogte:"
+msgstr "_Hoogte:"
 
 #: plug-ins/common/engrave.c:249
-#, fuzzy
 msgid "_Limit line width"
-msgstr "Beperk lijnbreedte"
+msgstr "_Lijnbreedte beperken"
 
+# uitwisseling/verwisseling
 #: plug-ins/common/exchange.c:133
 #, fuzzy
 msgid "_Color Exchange..."
@@ -3710,9 +3628,8 @@ msgid "Lock _thresholds"
 msgstr "Gekoppelde drempels"
 
 #: plug-ins/common/film.c:240
-#, fuzzy
 msgid "_Film..."
-msgstr "Film"
+msgstr "_Film..."
 
 #: plug-ins/common/film.c:325
 msgid "Composing Images..."
@@ -3762,7 +3679,7 @@ msgstr "Selecteer filmkleur"
 #: plug-ins/common/film.c:1229 plug-ins/common/film.c:1280
 #: plug-ins/common/nova.c:346
 msgid "Co_lor:"
-msgstr "Kleur:"
+msgstr "_Kleur:"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1238
@@ -3770,13 +3687,12 @@ msgid "Numbering"
 msgstr "Nummering"
 
 #: plug-ins/common/film.c:1256
-#, fuzzy
 msgid "Start _index:"
-msgstr "Begin index:"
+msgstr "Begin_index:"
 
 #: plug-ins/common/film.c:1270
 msgid "_Font:"
-msgstr "Font:"
+msgstr "_Font:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1275
@@ -3784,14 +3700,12 @@ msgid "Select Number Color"
 msgstr "Selecteer nummerkleur"
 
 #: plug-ins/common/film.c:1290
-#, fuzzy
 msgid "At _bottom"
-msgstr "Onderaan"
+msgstr "_Onderaan"
 
 #: plug-ins/common/film.c:1291
-#, fuzzy
 msgid "At _top"
-msgstr "Bovenaan"
+msgstr "_Bovenaan"
 
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1304
@@ -3804,12 +3718,11 @@ msgstr "Alle waarden zijn breuken van de filmhoogte"
 
 #: plug-ins/common/film.c:1335
 msgid "Ad_vanced"
-msgstr "Geavanceerd"
+msgstr "Gea_vanceerd"
 
 #: plug-ins/common/film.c:1354
-#, fuzzy
 msgid "Image _height:"
-msgstr "Afbeeldingshoogte:"
+msgstr "Afbeeldings_hoogte:"
 
 #: plug-ins/common/film.c:1365
 #, fuzzy
@@ -3842,10 +3755,10 @@ msgid "_Number height:"
 msgstr "Nummerhoogte:"
 
 # What is the Dutch translation of 'lens flare'?
+# Schittering
 #: plug-ins/common/flarefx.c:196
-#, fuzzy
 msgid "_FlareFX..."
-msgstr "FlareFX"
+msgstr "_FlareFX"
 
 # What is the Dutch translation of 'lens flare'?
 #: plug-ins/common/flarefx.c:271
@@ -3864,9 +3777,8 @@ msgid "Center of Flare Effect"
 msgstr "Middelpunt van FlareFX"
 
 #: plug-ins/common/flarefx.c:777
-#, fuzzy
 msgid "_Show cursor"
-msgstr "Toon cursor"
+msgstr "_Cursor tonen"
 
 #: plug-ins/common/fp.c:224
 msgid "Darker:"
@@ -4065,19 +3977,16 @@ msgid "Y_2:"
 msgstr "Y2:"
 
 #: plug-ins/common/gauss.c:157
-#, fuzzy
 msgid "_Gaussian Blur..."
-msgstr "RLE Gaussiaans vervagen"
+msgstr "_Gaussiaans vervagen..."
 
 #: plug-ins/common/gauss.c:407
-#, fuzzy
 msgid "Gaussian Blur..."
-msgstr "RLE Gaussiaans vervagen"
+msgstr "Gaussiaans vervagen..."
 
 #: plug-ins/common/gauss.c:460
-#, fuzzy
 msgid "Gaussian Blur"
-msgstr "IIR Gaussiaans vervagen"
+msgstr "Gaussiaans vervagen"
 
 #. parameter settings
 #: plug-ins/common/gauss.c:483
@@ -4087,30 +3996,28 @@ msgstr "Vervagingsradius"
 #: plug-ins/common/gauss.c:497 plug-ins/common/jigsaw.c:2456
 #: plug-ins/common/spread.c:378
 msgid "_Horizontal:"
-msgstr "Horizontaal:"
+msgstr "_Horizontaal:"
 
 #: plug-ins/common/gauss.c:501 plug-ins/common/jigsaw.c:2473
 #: plug-ins/common/spread.c:382
 msgid "_Vertical:"
-msgstr "Verticaal:"
+msgstr "_Verticaal:"
 
 #: plug-ins/common/gauss.c:524
-#, fuzzy
 msgid "Blur Method"
-msgstr "Vervagingstype"
+msgstr "Vervagingsmethode"
 
 #: plug-ins/common/gauss.c:528
 msgid "_IIR"
-msgstr ""
+msgstr "_IIR"
 
 #: plug-ins/common/gauss.c:529
-#, fuzzy
 msgid "_RLE"
-msgstr "RLE"
+msgstr "_RLE"
 
 #: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:151
 msgid "GIMP brush"
-msgstr ""
+msgstr "GIMP penseel"
 
 #: plug-ins/common/gbr.c:369 plug-ins/common/gbr.c:381
 msgid "Unsupported brush format"
@@ -4158,17 +4065,14 @@ msgid "GEE-SLIME"
 msgstr "GEE-SLIME"
 
 #: plug-ins/common/gee.c:158 plug-ins/common/gee_zoom.c:191
-#, fuzzy
 msgid "Thank you for choosing GIMP"
-msgstr "** Bedankt dat u voor GIMP kiest **"
+msgstr "Bedankt dat u voor GIMP kiest"
 
 #: plug-ins/common/gee.c:166
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Een niet zo waardeloze creatie van Adam D. Moss / adam@gimp.org / "
-"adam@foxbox.org / 1998-2000"
+msgstr "Een minder verouderde creatie van Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gee_zoom.c:124
 #, fuzzy
@@ -4183,14 +4087,11 @@ msgstr ""
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Een waardeloze creatie van Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+msgstr "Een verouderde creatie van Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gif.c:402 plug-ins/common/gifload.c:143
-#, fuzzy
 msgid "GIF image"
-msgstr "Afbeelding"
+msgstr "GIF-afbeelding"
 
 #: plug-ins/common/gif.c:687
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4265,9 +4166,8 @@ msgid "_Interlace"
 msgstr "Interlace"
 
 #: plug-ins/common/gif.c:1291
-#, fuzzy
 msgid "_GIF comment:"
-msgstr "GIF-commentaar:"
+msgstr "_GIF-commentaar:"
 
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1353
@@ -4275,9 +4175,8 @@ msgid "Animated GIF Options"
 msgstr "Opties voor geannimeerde GIFs"
 
 #: plug-ins/common/gif.c:1359
-#, fuzzy
 msgid "_Loop forever"
-msgstr "Blijf afspelen"
+msgstr "_Blijven afspelen"
 
 #: plug-ins/common/gif.c:1372
 #, fuzzy
@@ -4294,12 +4193,10 @@ msgid "Frame disposal where unspecified: "
 msgstr "Frameovergang waar niet aangegeven"
 
 #: plug-ins/common/gif.c:1399
-#, fuzzy
 msgid "I don't care"
 msgstr "Maakt niet uit"
 
 #: plug-ins/common/gif.c:1401
-#, fuzzy
 msgid "Cumulative layers (combine)"
 msgstr "Cumulatieve lagen (combineren)"
 
@@ -4353,7 +4250,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:205 plug-ins/common/gih.c:226
 msgid "GIMP brush (animated)"
-msgstr ""
+msgstr "GIMP-penseel (bewegend)"
 
 #: plug-ins/common/gih.c:319
 #, c-format
@@ -4377,7 +4274,6 @@ msgid "Save as Brush Pipe"
 msgstr "Opslaan als penseelpijp"
 
 #: plug-ins/common/gih.c:888
-#, fuzzy
 msgid "Spacing (percent):"
 msgstr "Tussenruimte (procent):"
 
@@ -4386,12 +4282,10 @@ msgid "Pixels"
 msgstr "pixels"
 
 #: plug-ins/common/gih.c:960
-#, fuzzy
 msgid "Cell size:"
 msgstr "Celgrootte:"
 
 #: plug-ins/common/gih.c:972
-#, fuzzy
 msgid "Number of cells:"
 msgstr "Aantal cellen:"
 
@@ -4400,9 +4294,8 @@ msgid " Rows of "
 msgstr " rijen van "
 
 #: plug-ins/common/gih.c:1009
-#, fuzzy
 msgid " Columns on each layer"
-msgstr " kolommen op elke laag"
+msgstr " Kolommen op elke laag"
 
 #: plug-ins/common/gih.c:1013
 msgid " (Width Mismatch!) "
@@ -4448,9 +4341,8 @@ msgid "Tile _height:"
 msgstr "Tegelhoogte:"
 
 #: plug-ins/common/gqbist.c:415
-#, fuzzy
 msgid "_Qbist..."
-msgstr "Qbist..."
+msgstr "_Qbist..."
 
 #: plug-ins/common/gqbist.c:514
 msgid "Qbist ..."
@@ -4479,10 +4371,10 @@ msgstr "Verloopprojectie..."
 msgid "Gradient Map..."
 msgstr "Verloopprojectie..."
 
+# raster/hulplijnen
 #: plug-ins/common/grid.c:149
-#, fuzzy
 msgid "_Grid..."
-msgstr "Hulplijnen..."
+msgstr "_Raster..."
 
 #: plug-ins/common/grid.c:242
 msgid "Drawing Grid..."
@@ -4533,9 +4425,8 @@ msgid "Intersection Color"
 msgstr "Snijpuntskleur"
 
 #: plug-ins/common/gtm.c:154
-#, fuzzy
 msgid "HTML table"
-msgstr "Marmer"
+msgstr "HTML-tabel"
 
 #: plug-ins/common/gtm.c:399
 msgid "GIMP Table Magic"
@@ -4619,9 +4510,8 @@ msgid "The text for the table caption."
 msgstr "De tekst voor de tabeltitel."
 
 #: plug-ins/common/gtm.c:538
-#, fuzzy
 msgid "C_ell content:"
-msgstr "Celinhoud:"
+msgstr "C_elinhoud:"
 
 #: plug-ins/common/gtm.c:542
 msgid "The text to go into each cell."
@@ -4651,27 +4541,24 @@ msgstr ""
 "De hoogte voor elke tabelcel. Kan een aantal pixels of een percentage zijn."
 
 #: plug-ins/common/gtm.c:609
-#, fuzzy
 msgid "Cell-_padding:"
-msgstr "Celopvulling:"
+msgstr "Cel_opvulling:"
 
 #: plug-ins/common/gtm.c:613
 msgid "The amount of cellpadding."
 msgstr "De hoeveel opvulling voor een cel (padding)."
 
 #: plug-ins/common/gtm.c:622
-#, fuzzy
 msgid "Cell-_spacing:"
-msgstr "Celtussenruimte:"
+msgstr "Cel_tussenruimte:"
 
 #: plug-ins/common/gtm.c:626
 msgid "The amount of cellspacing."
 msgstr "De hoeveelheid ruimte (spacing) tussen cellen."
 
 #: plug-ins/common/guillotine.c:72
-#, fuzzy
 msgid "_Guillotine"
-msgstr "Guillotine..."
+msgstr "_Guillotine..."
 
 #: plug-ins/common/guillotine.c:104
 msgid "Guillotine..."
@@ -4682,9 +4569,8 @@ msgid "C source code header"
 msgstr ""
 
 #: plug-ins/common/hot.c:217
-#, fuzzy
 msgid "_Hot..."
-msgstr "Heet..."
+msgstr "_Heet..."
 
 #: plug-ins/common/hot.c:379
 msgid "Hot..."
@@ -4696,9 +4582,8 @@ msgid "Hot"
 msgstr "Hot"
 
 #: plug-ins/common/hot.c:600
-#, fuzzy
 msgid "Create _New layer"
-msgstr "Maak nieuwe laag aan"
+msgstr "_Nieuwe laag aanmaken"
 
 #: plug-ins/common/hot.c:609
 msgid "Action"
@@ -4714,12 +4599,11 @@ msgstr "Verminder verzadiging"
 
 #: plug-ins/common/hot.c:615 plug-ins/common/waves.c:275
 msgid "_Blacken"
-msgstr "Zwartmaken"
+msgstr "_Zwart maken"
 
 #: plug-ins/common/illusion.c:101
-#, fuzzy
 msgid "_Illusion..."
-msgstr "Illusie..."
+msgstr "_Illusie..."
 
 #: plug-ins/common/illusion.c:173
 msgid "Illusion..."
@@ -4757,7 +4641,6 @@ msgid "Warping Frame No. %d..."
 msgstr "Frame nr. %d verwringen (bezig)"
 
 #: plug-ins/common/iwarp.c:804
-#, fuzzy
 msgid "Ping pong"
 msgstr "Ping-pong"
 
@@ -4821,7 +4704,7 @@ msgstr "Vervormingsmate:"
 
 #: plug-ins/common/iwarp.c:1075
 msgid "_Bilinear"
-msgstr "Bilineair"
+msgstr "_Bilineair"
 
 #: plug-ins/common/iwarp.c:1089
 #, fuzzy
@@ -4914,9 +4797,8 @@ msgid "Each piece has curved sides"
 msgstr "Elke stukje heeft gekromde randen"
 
 #: plug-ins/common/jpeg.c:369 plug-ins/common/jpeg.c:407
-#, fuzzy
 msgid "JPEG image"
-msgstr "JPEG-vooruitblik"
+msgstr "JPEG-afbeelding"
 
 #: plug-ins/common/jpeg.c:514
 msgid "Export Preview"
@@ -4931,23 +4813,21 @@ msgid "JPEG preview"
 msgstr "JPEG-vooruitblik"
 
 #: plug-ins/common/jpeg.c:1353
-#, fuzzy, c-format
+#, c-format
 msgid "File size: %02.01f kB"
-msgstr "Grootte: %ld bytes (%02.01f kB)"
+msgstr "Bestandsgrootte: %02.01f kB"
 
 #: plug-ins/common/jpeg.c:1800 plug-ins/common/jpeg.c:1901
-#, fuzzy
 msgid "File size: unknown"
-msgstr "Grootte: onbekend"
+msgstr "Bestandsgrootte: onbekend"
 
 #: plug-ins/common/jpeg.c:1866
 msgid "Save as JPEG"
 msgstr "Opslaan als JPEG"
 
 #: plug-ins/common/jpeg.c:1887
-#, fuzzy
 msgid "_Quality:"
-msgstr "Kwaliteit:"
+msgstr "_Kwaliteit:"
 
 #: plug-ins/common/jpeg.c:1891
 #, fuzzy
@@ -5008,7 +4888,7 @@ msgstr "Subsampling:"
 #. DCT method
 #: plug-ins/common/jpeg.c:2097
 msgid "DCT method:"
-msgstr ""
+msgstr "DCT methode:"
 
 #: plug-ins/common/jpeg.c:2103
 msgid "Fast Integer"
@@ -5404,7 +5284,7 @@ msgstr "Opties voor geanimeerde MNG's"
 
 #: plug-ins/common/mng.c:1492
 msgid "Loop"
-msgstr "Herhaal"
+msgstr "Herhalen"
 
 #: plug-ins/common/mng.c:1506
 #, fuzzy
@@ -5417,9 +5297,8 @@ msgid "MNG animation"
 msgstr "MNG-opties"
 
 #: plug-ins/common/mosaic.c:309
-#, fuzzy
 msgid "_Mosaic..."
-msgstr "Mozaiek"
+msgstr "_Mozaiek..."
 
 #. progress bar for gradient finding
 #: plug-ins/common/mosaic.c:435
@@ -5508,14 +5387,12 @@ msgid "Unable to add additional point.\n"
 msgstr "Kan geen extra punt toevoegen.\n"
 
 #: plug-ins/common/neon.c:135
-#, fuzzy
 msgid "_Neon..."
-msgstr "Openen..."
+msgstr "_Neon..."
 
 #: plug-ins/common/neon.c:204
-#, fuzzy
 msgid "Neon..."
-msgstr "Openen..."
+msgstr "Neon..."
 
 #: plug-ins/common/neon.c:698
 #, fuzzy
@@ -5571,9 +5448,8 @@ msgid "Intensity"
 msgstr "Intensiteit"
 
 #: plug-ins/common/newsprint.c:537
-#, fuzzy
 msgid "Newsprin_t..."
-msgstr "Krantendruk..."
+msgstr "_Krantendruk..."
 
 #: plug-ins/common/newsprint.c:638
 msgid "Newsprint..."
@@ -5602,9 +5478,8 @@ msgid "O_utput LPI:"
 msgstr "Uitvoer-LPI:"
 
 #: plug-ins/common/newsprint.c:1289
-#, fuzzy
 msgid "C_ell size:"
-msgstr "Celgrootte:"
+msgstr "C_elgrootte:"
 
 #. screen settings
 #: plug-ins/common/newsprint.c:1302 plug-ins/gflare/gflare.c:562
@@ -5654,9 +5529,8 @@ msgid "O_versample:"
 msgstr "Oversample:"
 
 #: plug-ins/common/nlfilt.c:126
-#, fuzzy
 msgid "_NL Filter..."
-msgstr "NL-filter..."
+msgstr "_NL-filter..."
 
 #: plug-ins/common/nlfilt.c:954
 msgid "NL Filter..."
@@ -5671,14 +5545,12 @@ msgid "Filter"
 msgstr "Filter"
 
 #: plug-ins/common/nlfilt.c:1042
-#, fuzzy
 msgid "_Alpha trimmed mean"
-msgstr "Alphagesnoeid gemiddelde"
+msgstr "_Alphagesnoeid gemiddelde"
 
 #: plug-ins/common/nlfilt.c:1044
-#, fuzzy
 msgid "Op_timal estimation"
-msgstr "Optimale schatting"
+msgstr "Op_timale schatting"
 
 #: plug-ins/common/nlfilt.c:1046
 #, fuzzy
@@ -5687,7 +5559,7 @@ msgstr "Randversterking"
 
 #: plug-ins/common/nlfilt.c:1071
 msgid "A_lpha:"
-msgstr "Alpha:"
+msgstr "A_lpha:"
 
 #: plug-ins/common/noisify.c:157
 #, fuzzy
@@ -5731,9 +5603,8 @@ msgid "Normalizing..."
 msgstr "Bezig met normalizeren..."
 
 #: plug-ins/common/nova.c:179
-#, fuzzy
 msgid "Su_perNova..."
-msgstr "SuperNova"
+msgstr "Su_perNova"
 
 #: plug-ins/common/nova.c:262
 msgid "Rendering SuperNova..."
@@ -5749,7 +5620,7 @@ msgstr "Kleurenkiezer SuperNova"
 
 #: plug-ins/common/nova.c:371
 msgid "_Spokes:"
-msgstr "Spaken:"
+msgstr "_Spaken:"
 
 # What is the Dutch translation for Hue?
 #: plug-ins/common/nova.c:386
@@ -5780,9 +5651,8 @@ msgid "Oilify"
 msgstr "Olieverf"
 
 #: plug-ins/common/oilify.c:504
-#, fuzzy
 msgid "_Mask size:"
-msgstr "Maskergrootte:"
+msgstr "_Maskergrootte:"
 
 #: plug-ins/common/oilify.c:515
 #, fuzzy
@@ -5823,7 +5693,7 @@ msgstr "Beweging"
 
 #: plug-ins/common/papertile.c:337
 msgid "_Max (%):"
-msgstr "Max (%):"
+msgstr "_Max (%):"
 
 #: plug-ins/common/papertile.c:343
 #, fuzzy
@@ -5875,9 +5745,8 @@ msgid "_Paper Tile..."
 msgstr "Bezig met papieren tegel..."
 
 #: plug-ins/common/pat.c:104 plug-ins/common/pat.c:126
-#, fuzzy
 msgid "GIMP pattern"
-msgstr "Patroon"
+msgstr "GIMP-patroon"
 
 #: plug-ins/common/pat.c:343
 #, c-format
@@ -5908,31 +5777,28 @@ msgstr "Ongebruikelijke PCX-soort, ik geef op"
 
 #: plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
-msgstr ""
+msgstr "_Fotokopie..."
 
 #: plug-ins/common/photocopy.c:837
-#, fuzzy
 msgid "Photocopy"
-msgstr "Foto"
+msgstr "Fotokopie"
 
 #: plug-ins/common/photocopy.c:881 plug-ins/common/sharpen.c:513
 #: plug-ins/common/softglow.c:687
 msgid "_Sharpness:"
-msgstr "Scherpte:"
+msgstr "_Scherpte:"
 
 #: plug-ins/common/photocopy.c:895
-#, fuzzy
 msgid "Percent _black:"
-msgstr "Procent"
+msgstr "Procent _zwart:"
 
 #: plug-ins/common/photocopy.c:909
-#, fuzzy
 msgid "Percent _white:"
-msgstr "Procent"
+msgstr "Procent _wit:"
 
 #: plug-ins/common/pix.c:141 plug-ins/common/pix.c:158
 msgid "Alias|Wavefront PIX image"
-msgstr ""
+msgstr "Alias|Wavefront PIX afbeelding"
 
 #: plug-ins/common/pixelize.c:173
 #, fuzzy
@@ -5956,9 +5822,8 @@ msgid "Pixel _Height:"
 msgstr "Pixelhoogte:"
 
 #: plug-ins/common/plasma.c:185
-#, fuzzy
 msgid "_Plasma..."
-msgstr "Bezig met toepassen plasma..."
+msgstr "_Plasma..."
 
 #: plug-ins/common/plasma.c:268
 msgid "Plasma..."
@@ -5969,18 +5834,17 @@ msgid "Plasma"
 msgstr "Plasma"
 
 #: plug-ins/common/plasma.c:334
-#, fuzzy
 msgid "Random _seed:"
-msgstr "Willekeurige beginwaarde:"
+msgstr "_Willekeurige beginwaarde:"
 
 #: plug-ins/common/plasma.c:345
 msgid "T_urbulence:"
-msgstr "Turbulentie:"
+msgstr "T_urbulentie:"
 
 #: plug-ins/common/png.c:249 plug-ins/common/png.c:266
 #: plug-ins/common/png.c:281 plug-ins/common/png.c:295
 msgid "PNG image"
-msgstr ""
+msgstr "PNG-afbeelding"
 
 #: plug-ins/common/png.c:657
 #, c-format
@@ -6012,18 +5876,16 @@ msgid "Save as PNG"
 msgstr "Opslaan als PNG"
 
 #: plug-ins/common/png.c:1595
-#, fuzzy
 msgid "_Load defaults"
-msgstr "Standaardwaarden laden"
+msgstr "Standaardwaarden _laden"
 
 #: plug-ins/common/png.c:1596
-#, fuzzy
 msgid "_Save defaults"
-msgstr "Standaardwaarden opslaan"
+msgstr "Standaardwaarden op_slaan"
 
 #: plug-ins/common/png.c:1617
 msgid "_Interlacing (Adam7)"
-msgstr "Interlacing (Adam7)"
+msgstr "_Interlacing (Adam7)"
 
 #: plug-ins/common/png.c:1628
 msgid "Save _background color"
@@ -6031,7 +5893,7 @@ msgstr "Achtergrondkleur opslaan"
 
 #: plug-ins/common/png.c:1636
 msgid "Save _gamma"
-msgstr "Gamma opslaan"
+msgstr "_Gamma opslaan"
 
 #: plug-ins/common/png.c:1645
 #, fuzzy
@@ -6047,9 +5909,8 @@ msgid "Save creation _time"
 msgstr "Creatiedatum opslaan"
 
 #: plug-ins/common/png.c:1671
-#, fuzzy
 msgid "Save comme_nt"
-msgstr "Opmerking opslaan"
+msgstr "O_pmerking opslaan"
 
 #: plug-ins/common/png.c:1686
 #, fuzzy
@@ -6057,22 +5918,20 @@ msgid "Save color _values from transparent pixels"
 msgstr "Kleurwaarden van transparante pixels opslaan"
 
 #: plug-ins/common/png.c:1699
-#, fuzzy
 msgid "Co_mpression level:"
-msgstr "Compressieniveau:"
+msgstr "Co_mpressieniveau:"
 
 #: plug-ins/common/png.c:1819
 msgid "Could not load PNG defaults"
 msgstr "Kon PNG-standaardwaarden niet laden"
 
 #: plug-ins/common/pnm.c:228
-#, fuzzy
 msgid "PNM Image"
-msgstr "Afbeelding"
+msgstr "PNM-afbeelding"
 
 #: plug-ins/common/pnm.c:248
 msgid "PNM image"
-msgstr ""
+msgstr "PNM-afbeelding"
 
 #: plug-ins/common/pnm.c:428 plug-ins/common/pnm.c:449
 #: plug-ins/common/pnm.c:456 plug-ins/common/pnm.c:465
@@ -6120,7 +5979,7 @@ msgstr "Gegevens formatteren"
 
 #: plug-ins/common/pnm.c:926
 msgid "Raw"
-msgstr "Onveranderd (raw)"
+msgstr "Raw"
 
 #: plug-ins/common/pnm.c:927
 msgid "Ascii"
@@ -6128,7 +5987,7 @@ msgstr "ASCII"
 
 #: plug-ins/common/polar.c:170
 msgid "P_olar Coords..."
-msgstr ""
+msgstr "P_ool-coördinaten..."
 
 #: plug-ins/common/polar.c:357
 msgid "Polarizing..."
@@ -6185,9 +6044,8 @@ msgstr ""
 "Indien geselecteerd zal de afbeelding naar een cirkel worden geprojecteerd."
 
 #: plug-ins/common/postscript.c:576 plug-ins/common/postscript.c:662
-#, fuzzy
 msgid "PostScript document"
-msgstr "PostScript Niveau 2"
+msgstr "PostScript document"
 
 #: plug-ins/common/postscript.c:595 plug-ins/common/postscript.c:677
 #, fuzzy
@@ -6196,7 +6054,7 @@ msgstr "Encapsulated PostScript"
 
 #: plug-ins/common/postscript.c:614
 msgid "PDF document"
-msgstr ""
+msgstr "PDF-document"
 
 #: plug-ins/common/postscript.c:1005
 #, c-format
@@ -6303,10 +6161,10 @@ msgid "Image Size"
 msgstr "Afbeeldingsgrootte"
 
 # What is the Dutch translation of 'aspect ratio'?
+# vormverhouding/verhouding
 #: plug-ins/common/postscript.c:3152
-#, fuzzy
 msgid "_Keep aspect ratio"
-msgstr "Behoud aspectratio"
+msgstr "_Vaste verhouding"
 
 # What is the Dutch translation of 'aspect ratio'?
 #: plug-ins/common/postscript.c:3158
@@ -6324,11 +6182,11 @@ msgstr "Eenheid"
 
 #: plug-ins/common/postscript.c:3171
 msgid "_Inch"
-msgstr "Duim"
+msgstr "_Inch"
 
 #: plug-ins/common/postscript.c:3172
 msgid "_Millimeter"
-msgstr "Millimeter"
+msgstr "_Millimeter"
 
 #. Format
 #: plug-ins/common/postscript.c:3198
@@ -6336,22 +6194,20 @@ msgid "Output"
 msgstr "Uitvoer"
 
 #: plug-ins/common/postscript.c:3204
-#, fuzzy
 msgid "_PostScript level 2"
-msgstr "PostScript Niveau 2"
+msgstr "_PostScript niveau 2"
 
 #: plug-ins/common/postscript.c:3213
 msgid "_Encapsulated PostScript"
-msgstr "Encapsulated PostScript"
+msgstr "_Encapsulated PostScript"
 
 #: plug-ins/common/postscript.c:3222
 msgid "P_review"
 msgstr "Vooruitblik"
 
 #: plug-ins/common/postscript.c:3243
-#, fuzzy
 msgid "Preview _size:"
-msgstr "Vooruitblikgrootte:"
+msgstr "Vooruitblik_grootte:"
 
 #: plug-ins/common/psd.c:489
 msgid "Invalid UTF-8 string in PSD file"
@@ -6359,7 +6215,7 @@ msgstr "Ongeldige UTF-8-tekenreeks in PSD-bestand"
 
 #: plug-ins/common/psd_save.c:181
 msgid "Photoshop image"
-msgstr ""
+msgstr "Photoshop-afbeelding"
 
 #: plug-ins/common/psd_save.c:1564
 #, c-format
@@ -6377,7 +6233,7 @@ msgstr ""
 
 #: plug-ins/common/psp.c:362
 msgid "Paint Shop Pro image"
-msgstr ""
+msgstr "Paint Shop Pro afbeelding"
 
 #: plug-ins/common/psp.c:402
 msgid "Save as PSP"
@@ -6409,9 +6265,8 @@ msgid "Random Slur 1.7"
 msgstr "Willekeurig krabbelen 1.7"
 
 #: plug-ins/common/randomize.c:244
-#, fuzzy
 msgid "_Hurl..."
-msgstr "Help..."
+msgstr ""
 
 #: plug-ins/common/randomize.c:256
 msgid "_Pick..."
@@ -6423,7 +6278,6 @@ msgid "_Slur..."
 msgstr "Broncode..."
 
 #: plug-ins/common/randomize.c:741 plug-ins/common/snoise.c:614
-#, fuzzy
 msgid "_Random seed:"
 msgstr "_Willekeurige beginwaarde:"
 
@@ -6453,36 +6307,33 @@ msgid "Raw Image Loader"
 msgstr ""
 
 #: plug-ins/common/raw.c:943
-#, fuzzy
 msgid "Image"
 msgstr "Afbeelding"
 
+# gelaagd RGB
 #: plug-ins/common/raw.c:955
 msgid "Planar RGB"
-msgstr ""
+msgstr "Planair RGB"
 
 #: plug-ins/common/raw.c:956
-#, fuzzy
 msgid "Indexed"
-msgstr "Index"
+msgstr "Met index"
 
 #: plug-ins/common/raw.c:961
-#, fuzzy
 msgid "Image _Type:"
-msgstr "Afbeeldingstype:"
+msgstr "Afbeeldings_type:"
 
 #: plug-ins/common/raw.c:1011
-#, fuzzy
 msgid "Palette"
-msgstr "Cirkelpalet"
+msgstr "Palet"
 
 #: plug-ins/common/raw.c:1021 plug-ins/common/raw.c:1109
 msgid "R, G, B (normal)"
-msgstr ""
+msgstr "R, G, B (normaal)"
 
 #: plug-ins/common/raw.c:1022 plug-ins/common/raw.c:1111
 msgid "B, G, R, X (bmp style)"
-msgstr ""
+msgstr "B, G, R, X (bmp-stijl)"
 
 #: plug-ins/common/raw.c:1027
 #, fuzzy
@@ -6490,9 +6341,8 @@ msgid "_Palette Type:"
 msgstr "RGB-patroontype"
 
 #: plug-ins/common/raw.c:1038
-#, fuzzy
 msgid "Off_set:"
-msgstr "Verspringing:"
+msgstr "Ver_schuiving::"
 
 #: plug-ins/common/raw.c:1050
 #, fuzzy
@@ -6515,13 +6365,12 @@ msgid "RGB Save Type"
 msgstr "RGB-patroontype"
 
 #: plug-ins/common/raw.c:1099
-#, fuzzy
 msgid "Standard (R,G,B)"
-msgstr "Standaard"
+msgstr "Standaard (R,G,B)"
 
 #: plug-ins/common/raw.c:1100
 msgid "Planar (RRR,GGG,BBB)"
-msgstr ""
+msgstr "Planair (RRR,GGG,BBB)"
 
 #: plug-ins/common/raw.c:1105
 #, fuzzy
@@ -6549,27 +6398,26 @@ msgstr "Randversterking"
 
 #: plug-ins/common/retinex.c:310
 msgid "Level"
-msgstr ""
+msgstr "Niveau"
 
 #: plug-ins/common/retinex.c:314
 #, fuzzy
 msgid "_Uniform"
 msgstr "Eenheidseditor"
 
+# Onderste<
 #: plug-ins/common/retinex.c:316
-#, fuzzy
 msgid "_Low"
-msgstr "Onderste"
+msgstr "_Laag"
 
+# Bovenste
 #: plug-ins/common/retinex.c:318
-#, fuzzy
 msgid "_High"
-msgstr "Hoogte"
+msgstr "_Hoog"
 
 #: plug-ins/common/retinex.c:343
-#, fuzzy
 msgid "_Scale:"
-msgstr "Schaal:"
+msgstr "_Schaal:"
 
 #: plug-ins/common/retinex.c:358
 #, fuzzy
@@ -6578,7 +6426,7 @@ msgstr "Verdeling:"
 
 #: plug-ins/common/retinex.c:373
 msgid "_Dynamic:"
-msgstr ""
+msgstr "_Dynamisch:"
 
 #: plug-ins/common/retinex.c:647
 #, fuzzy
@@ -6691,16 +6539,14 @@ msgstr "Uit verloop"
 #. check button
 #: plug-ins/common/sample_colorize.c:1387
 #: plug-ins/common/sample_colorize.c:1414
-#, fuzzy
 msgid "Show selection"
-msgstr "Toon selectie"
+msgstr "Selectie tonen"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1398
 #: plug-ins/common/sample_colorize.c:1425
-#, fuzzy
 msgid "Show color"
-msgstr "Toon kleur"
+msgstr "Kleur tonen"
 
 #: plug-ins/common/sample_colorize.c:1538
 #, fuzzy
@@ -8557,7 +8403,7 @@ msgstr "PageSetupDlg mislukte: %d"
 
 #: plug-ins/common/wmf.c:131
 msgid "Microsoft WMF file"
-msgstr ""
+msgstr "Microsoft WMF-bestand"
 
 #: plug-ins/common/wmf.c:336
 #, fuzzy
@@ -8584,7 +8430,7 @@ msgstr "WMF gerenderd"
 
 #: plug-ins/common/xbm.c:169 plug-ins/common/xbm.c:187
 msgid "X BitMap image"
-msgstr ""
+msgstr "X BitMap afbeelding"
 
 #: plug-ins/common/xbm.c:241
 msgid "Created with The GIMP"
@@ -8701,7 +8547,7 @@ msgstr "Extensie van maskerbestand:"
 
 #: plug-ins/common/xpm.c:170 plug-ins/common/xpm.c:195
 msgid "X PixMap image"
-msgstr ""
+msgstr "X PixMap afbeelding"
 
 #: plug-ins/common/xpm.c:354
 #, c-format
@@ -8775,7 +8621,7 @@ msgstr "Niets te snijden."
 #: plug-ins/dbbrowser/gimpprocbrowser.c:128
 #: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Procedure-verkenner"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:132
 #: plug-ins/dbbrowser/gimpprocbrowser.c:146
@@ -8926,11 +8772,11 @@ msgstr "Boomweergave"
 
 #: plug-ins/dbbrowser/procedure-browser.c:89
 msgid "Procedure _Browser"
-msgstr ""
+msgstr "Procedure-_verkenner"
 
 #: plug-ins/faxg3/faxg3.c:100
 msgid "G3 fax image"
-msgstr ""
+msgstr "G3 fax afbeelding"
 
 #: plug-ins/fits/fits.c:159 plug-ins/fits/fits.c:178
 msgid "Flexible Image Transport System"
@@ -9425,9 +9271,8 @@ msgid "Star Number of Points"
 msgstr "Ster - aantal punten"
 
 #: plug-ins/gfig/gfig.c:132
-#, fuzzy
 msgid "_Gfig..."
-msgstr "GFig"
+msgstr "_Gfig..."
 
 #: plug-ins/gfig/gfig.c:731
 msgid ""
@@ -9706,7 +9551,7 @@ msgstr "Tweede flakkeringen"
 
 #: plug-ins/gfli/gfli.c:158 plug-ins/gfli/gfli.c:178
 msgid "AutoDesk FLIC animation"
-msgstr ""
+msgstr "AutoDesk FLIC animatie"
 
 #: plug-ins/gfli/gfli.c:527
 #, c-format
@@ -11275,7 +11120,7 @@ msgstr "Bewerken"
 
 #: plug-ins/imagemap/imap_selection.c:423
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: plug-ins/imagemap/imap_selection.c:452
 msgid "ALT Text"
@@ -12333,15 +12178,15 @@ msgstr ""
 
 #: plug-ins/twain/twain.c:313
 msgid "TWAIN (Dump)..."
-msgstr ""
+msgstr "TWAIN (Dump)..."
 
 #: plug-ins/twain/twain.c:332
 msgid "TWAIN (Read)..."
-msgstr ""
+msgstr "TWAIN (Lezen)..."
 
 #: plug-ins/twain/twain.c:352
 msgid "_TWAIN..."
-msgstr ""
+msgstr "_TWAIN..."
 
 #  Initialize our progress dialog
 #. Initialize our progress dialog
