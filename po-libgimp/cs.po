@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
 "POT-Creation-Date: 2000-02-14 11:19+0100\n"
-"PO-Revision-Date: 2000-03-06 11:25+01:00\n"
+"PO-Revision-Date: 2000-03-08 15:30+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -151,7 +151,7 @@ msgstr "pixel"
 
 #: libgimp/gimpunit.c:47
 msgid "pixels"
-msgstr "pixely"
+msgstr "pixelù"
 
 #. standard units
 #: libgimp/gimpunit.c:50
@@ -177,7 +177,7 @@ msgstr "bod"
 
 #: libgimp/gimpunit.c:54
 msgid "points"
-msgstr "body"
+msgstr "bodù"
 
 #: libgimp/gimpunit.c:55
 msgid "pica"
@@ -185,7 +185,7 @@ msgstr "pika"
 
 #: libgimp/gimpunit.c:55
 msgid "picas"
-msgstr "piky"
+msgstr "pik"
 
 #: libgimp/gimpunit.c:62
 msgid "percent"
