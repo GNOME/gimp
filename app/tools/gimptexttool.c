@@ -671,10 +671,15 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
     }
   else
     {
+      gchar *str;
+
+      str = gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor));
+
       g_object_set (text_tool->proxy,
-                    "text",
-                    gimp_text_editor_get_text (GIMP_TEXT_EDITOR (text_tool->editor)),
+                    "text", str,
                     NULL);
+
+      g_free (str);
 
       text = gimp_config_duplicate (GIMP_CONFIG (text_tool->proxy));
     }

@@ -1,5 +1,10 @@
 2004-07-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_create_layer): plugged
+	a tiny memory leak.
+
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-undo.c: resurrected some bit-rotting debug
 	code. Might become useful one day.
 
