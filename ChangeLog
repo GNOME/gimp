@@ -1,5 +1,12 @@
 2003-03-21  Sven Neumann  <sven@gimp.org>
 
+	* widgets/gimpdockbook.c: renamed "tab_size" style property to
+	"tab_icon_size" for consistency.
+
+	* etc/gtkrc_user: changed accordingly.
+
+2003-03-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/mosaic/mosaic_logo.h
 	* plug-ins/mosaic/mosaic.c: converted the logo to pixbuf inline data
 	and replaced the GtkPreview with a GtkImage.

@@ -27,7 +27,7 @@ style "gimp-small-style"
   GimpImageDock::menu_preview_size = small-toolbar
   GimpToolbox::tool_icon_size      = menu
   GimpDockbook::tab_border         = 0
-  GimpDockbook::tab_size           = menu
+  GimpDockbook::tab_icon_size      = menu
   GimpDockable::content_border     = 1
   GimpDockable::content_spacing    = 1
   GimpEditor::content_spacing      = 1
@@ -35,7 +35,10 @@ style "gimp-small-style"
   GimpEditor::button_icon_size     = menu
 }
 
-# Example keybinding remapping F2 -> help
+# class "GtkWidget" style   "gimp-small-style"
+
+
+# Example keybinding to remap Help to F2
 
 binding "gimp-help-binding"
 {
@@ -47,7 +50,6 @@ binding "gimp-help-binding"
   bind "<ctrl>KP_F2"  { "show-help" (tooltip)    }
 }
 
-# class "GtkWidget" style   "gimp-small-style"
 # class "GtkWidget" binding "gimp-help-binding"
 
 
