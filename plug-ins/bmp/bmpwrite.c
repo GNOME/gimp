@@ -7,6 +7,26 @@
 
 /* Alexander.Schulz@stud.uni-karlsruhe.de			 */
 
+/* 
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * ----------------------------------------------------------------------------
+ */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -15,7 +35,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-
+ 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include "bmp.h"
@@ -39,18 +59,15 @@ static BMPSaveInterface gsint =
 int encoded = 0;
 
 
-static gint   save_dialog ();
-static void   save_close_callback  (GtkWidget *widget,
-                                    gpointer   data);
-static void   save_ok_callback     (GtkWidget *widget,
-                                    gpointer   data);
-static void   save_toggle_update   (GtkWidget *widget,
-                                    gpointer   data);
+static gint  save_dialog          (void);
+static void  save_close_callback  (GtkWidget *widget, gpointer data);
+static void  save_ok_callback     (GtkWidget *widget, gpointer data);
+static void  save_toggle_update   (GtkWidget *widget, gpointer data);
 
 gint
-WriteBMP (filename,image,drawable_ID)
-     char *filename;
-     gint32 image,drawable_ID;
+WriteBMP (char   *filename,
+	  gint32  image,
+	  gint32  drawable_ID)
 {
   FILE *outfile;
   int Red[MAXCOLORS];
@@ -127,13 +144,14 @@ WriteBMP (filename,image,drawable_ID)
     }
 
   /* Perhaps someone wants RLE encoded Bitmaps */
-
     encoded = 0;
-    if (((BitsPerPixel==8) || (BitsPerPixel==4)) && interactive_bmp) {if (! save_dialog ()) {return -1;}}
-
-  
-  /* Let's take some file */
-  
+    if ((BitsPerPixel == 8 || BitsPerPixel == 4) && interactive_bmp)
+      {
+	if (! save_dialog ())
+	  return -1;
+      }
+    
+  /* Let's take some file */  
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
@@ -181,10 +199,35 @@ WriteBMP (filename,image,drawable_ID)
   else if (BitsPerPixel==4) Bitmap_Head.biCompr=2;
   else Bitmap_Head.biCompr=0;
   Bitmap_Head.biSizeIm=SpZeile*rows;
-  Bitmap_Head.biXPels=1;
-  Bitmap_Head.biYPels=1;
-  if (BitsPerPixel<24) Bitmap_Head.biClrUsed=colors;
-  else Bitmap_Head.biClrUsed=0;
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  {
+    double xresolution;
+    double yresolution;
+    gimp_image_get_resolution (image, &xresolution, &yresolution);
+
+    if (xresolution > 1e-5 && yresolution > 1e-5) {
+	/*
+	 * xresolution and yresolution are in dots per inch.
+	 * the BMP spec says that biXPels and biYPels are in
+	 * pixels per meter as long ints (actually, "DWORDS"),
+	 * so...
+	 *    n dots    inch     100 cm   m dots
+	 *    ------ * ------- * ------ = ------
+	 *     inch    2.54 cm     m       inch
+	 */
+        Bitmap_Head.biXPels = (long int) xresolution * 100.0 / 2.54;
+        Bitmap_Head.biYPels = (long int) yresolution * 100.0 / 2.54;
+      }
+  }
+#else /* GIMP_HAVE_RESOLUTION_INFO */
+  Bitmap_Head.biXPels = 1;
+  Bitmap_Head.biYPels = 1;
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
+  if (BitsPerPixel<24) 
+    Bitmap_Head.biClrUsed=colors;
+  else 
+    Bitmap_Head.biClrUsed=0;
+
   Bitmap_Head.biClrImp=Bitmap_Head.biClrUsed;
   
 #ifdef DEBUG
@@ -230,8 +273,12 @@ WriteBMP (filename,image,drawable_ID)
   return TRUE;
 }
 
-void WriteColorMap(FILE *f, int red[MAXCOLORS], int green[MAXCOLORS], 
-                            int blue[MAXCOLORS], int size)
+void 
+WriteColorMap (FILE *f, 
+	       int   red[MAXCOLORS], 
+	       int   green[MAXCOLORS],
+	       int   blue[MAXCOLORS], 
+	       int   size)
 {
   char trgb[4];
   int i;
@@ -247,14 +294,20 @@ void WriteColorMap(FILE *f, int red[MAXCOLORS], int green[MAXCOLORS],
     }
 }
 
-void WriteImage(f, src, width, height, encoded, channels, bpp, spzeile, MapSize)
-  FILE *f;
-  guchar *src;
-  int width,height,encoded,channels,bpp,spzeile,MapSize;
+void 
+WriteImage (FILE   *f, 
+	    guchar *src, 
+	    int     width, 
+	    int     height,
+	    int     encoded, 
+	    int     channels, 
+	    int     bpp, 
+	    int     spzeile, 
+	    int     MapSize)
 {
   guchar buf[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0};
   guchar puffer[8];
-  guchar *temp,v,g;
+  guchar *temp,v;
   guchar *Zeile,*ketten;
   int xpos,ypos,i,j,rowstride,laenge,thiswidth;
   int breite, n, k;
@@ -432,11 +485,10 @@ save_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *button;
+  GtkWidget *hbbox;
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
-  gchar **argv;
-  gint argc;
   
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), _("Save as BMP"));
@@ -446,30 +498,37 @@ save_dialog ()
                       NULL);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) save_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) save_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Save Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("RLE encoded"));

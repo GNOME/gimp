@@ -2,6 +2,26 @@
 /*		except OS2 bitmaps (wrong colors)        */
 /* Alexander.Schulz@stud.uni-karlsruhe.de                */
 
+/* 
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * ----------------------------------------------------------------------------
+ */
+
 #include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +31,9 @@
 #include "bmp.h"
 #include "libgimp/stdplugins-intl.h"
 
-gint32 ReadBMP (name)
-     char *name;
+
+gint32 
+ReadBMP (char *name)
 {
   FILE *fd;
   char *temp_buf;
@@ -20,6 +41,7 @@ gint32 ReadBMP (name)
   int ColormapSize, SpeicherZeile, Maps, Grey;
   unsigned char ColorMap[256][3];
   guchar puffer[50];
+  gint32 image_ID;
   
   if (interactive_bmp)
     {
@@ -141,18 +163,50 @@ gint32 ReadBMP (name)
 #endif
 
   /* Get the Image and return the ID or -1 on error*/
+  image_ID = ReadImage (fd, 
+			Bitmap_Head.biWidth, 
+			Bitmap_Head.biHeight, 
+			ColorMap, 
+			Bitmap_Head.biClrUsed, 
+			Bitmap_Head.biBitCnt, 
+			Bitmap_Head.biCompr, 
+			SpeicherZeile, 
+			Grey);
+  
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  {
+    /* quick hack by the muppet, scott@asofyet.org, 19 dec 1999 */
+    double xresolution;
+    double yresolution;
 
-  return(ReadImage(fd, Bitmap_Head.biWidth, Bitmap_Head.biHeight, ColorMap, 
-      Bitmap_Head.biClrUsed, Bitmap_Head.biBitCnt, Bitmap_Head.biCompr, SpeicherZeile, Grey));
+    /*
+     * xresolution and yresolution are in dots per inch.
+     * the BMP spec says that biXPels and biYPels are in
+     * pixels per meter as long ints (actually, "DWORDS").
+     * this means we've lost some accuracy in the numbers.
+     * typically, the dots per inch settings on BMPs will
+     * be integer numbers of dots per inch, which is freaky
+     * because they're stored in the BMP as metric.  *sigh*
+     * so, we'll round this off, even though the gimp wants
+     * a floating point number...
+     */
+    #define LROUND(x)   ((long int)((x)+0.5))
+    xresolution = LROUND((Bitmap_Head.biXPels * 2.54 / 100.0));
+    yresolution = LROUND((Bitmap_Head.biYPels * 2.54 / 100.0));
+    #undef LROUND
+    gimp_image_set_resolution (image_ID, xresolution, yresolution);
+  }
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
+  return (image_ID);
 }
 
-gint ReadColorMap (fd, buffer, number, size, grey)
-     FILE *fd;
-     int number;
-     unsigned char buffer[256][3];
-     int size;
-     int *grey;
+gint 
+ReadColorMap (FILE          *fd, 
+	      unsigned char  buffer[256][3], 
+	      int            number, 
+	      int            size, 
+	      int           *grey)
 {
   int i;
   unsigned char rgb[4];
@@ -183,11 +237,16 @@ gint ReadColorMap (fd, buffer, number, size, grey)
   return(0);
 }
 
-Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
-     FILE *fd;
-     int len, height;
-     unsigned char cmap[256][3];
-     int ncols, bpp, compression, spzeile, grey;
+Image 
+ReadImage (FILE          *fd, 
+	   int            len, 
+	   int            height, 
+	   unsigned char  cmap[256][3], 
+	   int            ncols, 
+	   int            bpp, 
+	   int            compression, 
+	   int            spzeile, 
+	   int            grey)
 {
   char *name_buf;
   unsigned char v,wieviel;
@@ -372,6 +431,6 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
   gimp_drawable_flush(drawable);
   gimp_drawable_detach(drawable);
   g_free(dest);
-  return(image);
-  
+
+  return (image);  
 }

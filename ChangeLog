@@ -1,3 +1,11 @@
+Sun Dec 19 13:16:51 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.c
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: 
+	Applied a patch from  muppet <scott@asofyet.org> that adds resolution
+	support for the BMP plug-in. Did some code cleanup while I was on it.
+
 Sat Dec 18 20:40:44 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_about.c

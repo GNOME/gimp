@@ -23,6 +23,7 @@
 /*                       16 and 32 bit images     */
 /*            28.11.1998 Bug in RLE-read-padding  */
 /*                       fixed.                   */
+/*            19.12.1999 Resolution support added */
 
 /* 
  * The GIMP -- an image manipulation program
@@ -89,9 +90,9 @@ query ()
 {
   static GParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_STRING,   "filename",     "The name of the file to load" },
+    { PARAM_STRING,   "raw_filename", "The name entered" },
   };
   static GParamDef load_return_vals[] =
   {
@@ -102,11 +103,11 @@ query ()
 
   static GParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name entered" },
+    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",        "Input image" },
+    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
+    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
+    { PARAM_STRING,   "raw_filename", "The name entered" },
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
   
@@ -135,7 +136,7 @@ query ()
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_bmp_load", "bmp", "", "0,string,BM");
-  gimp_register_save_handler ("file_bmp_save", "bmp", "");
+  gimp_register_save_handler       ("file_bmp_save", "bmp", "");
 }
 
 static void
@@ -180,7 +181,7 @@ run (char    *name,
           break;
         }
 
-      image_ID = ReadBMP(param[1].data.d_string);
+      image_ID = ReadBMP (param[1].data.d_string);
 
       if (image_ID != -1)
         {
@@ -254,17 +255,21 @@ run (char    *name,
     }
 }
 
-gint32 ToL(guchar *puffer)
+gint32 
+ToL (guchar *puffer)
 {
-  return(puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
+  return (puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
 }
 
-gint16 ToS(guchar *puffer)
+gint16 
+ToS (guchar *puffer)
 {
-  return(puffer[0] | puffer[1]<<8);
+  return (puffer[0] | puffer[1]<<8);
 }
 
-void FromL(gint32 wert, guchar *bopuffer)
+void 
+FromL (gint32  wert, 
+       guchar *bopuffer)
 {
   bopuffer[0]=(wert & 0x000000ff)>>0x00;
   bopuffer[1]=(wert & 0x0000ff00)>>0x08;
@@ -272,7 +277,9 @@ void FromL(gint32 wert, guchar *bopuffer)
   bopuffer[3]=(wert & 0xff000000)>>0x18;
 }
 
-void  FromS(gint16 wert, guchar *bopuffer)
+void  
+FromS (gint16  wert, 
+       guchar *bopuffer)
 {
   bopuffer[0]=(wert & 0x00ff)>>0x00;
   bopuffer[1]=(wert & 0xff00)>>0x08;
