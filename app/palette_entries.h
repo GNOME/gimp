@@ -32,9 +32,9 @@ struct _PaletteEntries
 
 struct _PaletteEntry
 {
-  guchar  color[3];
-  gchar  *name;
-  gint    position;
+  GimpRGB  color;
+  gchar   *name;
+  gint     position;
 };
 
 extern GSList * palette_entries_list;

@@ -39,6 +39,9 @@
 #include "gdisplay_color.h"
 #endif /* DISPLAY_FILTERS */
 
+#include "libgimp/gimpintl.h"
+
+
 typedef enum
 {
   FORE_AREA,
@@ -273,7 +276,8 @@ color_area_draw (void)
 }
 
 static void
-color_area_select_callback (const GimpRGB      *color,
+color_area_select_callback (ColorNotebook      *color_notebook,
+			    const GimpRGB      *color,
 			    ColorNotebookState  state,
 			    gpointer            client_data)
 {
@@ -323,7 +327,8 @@ color_area_edit (void)
 
   if (! color_notebook)
     {
-      color_notebook = color_notebook_new ((const GimpRGB *) &color,
+      color_notebook = color_notebook_new (_("Color Selection"),
+					   (const GimpRGB *) &color,
 					   color_area_select_callback,
 					   NULL, TRUE, FALSE);
       color_notebook_active = TRUE;

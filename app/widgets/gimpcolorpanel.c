@@ -44,7 +44,8 @@ static void   gimp_color_panel_destroy         (GtkObject           *object);
 static void   gimp_color_panel_color_changed   (GimpColorButton     *button);
 static void   gimp_color_panel_clicked         (GtkButton           *button);
 
-static void   gimp_color_panel_select_callback (const GimpRGB       *color,
+static void   gimp_color_panel_select_callback (ColorNotebook       *notebook,
+						const GimpRGB       *color,
 						ColorNotebookState   state,
 						gpointer             data);
 
@@ -88,7 +89,7 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
   button_class       = (GtkButtonClass *) klass;
   color_button_class = (GimpColorButtonClass *) klass;
   
-  parent_class = gtk_type_class (gimp_color_button_get_type ());
+  parent_class = gtk_type_class (GIMP_TYPE_COLOR_BUTTON);
 
   object_class->destroy             = gimp_color_panel_destroy;
   button_class->clicked             = gimp_color_panel_clicked;
@@ -124,7 +125,8 @@ gimp_color_panel_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_color_panel_new (const GimpRGB     *color,
+gimp_color_panel_new (const gchar       *title,
+		      const GimpRGB     *color,
 		      GimpColorAreaType  type,
 		      gint               width,
 		      gint               height)
@@ -133,12 +135,14 @@ gimp_color_panel_new (const GimpRGB     *color,
 
   g_return_val_if_fail (color != NULL, NULL);
 
-  panel = gtk_type_new (gimp_color_panel_get_type ());
+  panel = gtk_type_new (GIMP_TYPE_COLOR_PANEL);
+
+  GIMP_COLOR_BUTTON (panel)->title = g_strdup (title);
 
   gimp_color_button_set_type (GIMP_COLOR_BUTTON (panel), type);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
   gtk_widget_set_usize (GTK_WIDGET (panel), width, height);
- 
+
   return GTK_WIDGET (panel);
 }
 
@@ -170,7 +174,8 @@ gimp_color_panel_clicked (GtkButton *button)
   if (! panel->color_notebook)
     {
       panel->color_notebook =
-	color_notebook_new ((const GimpRGB *) &color,
+	color_notebook_new (GIMP_COLOR_BUTTON (button)->title,
+			    (const GimpRGB *) &color,
 			    gimp_color_panel_select_callback,
 			    panel,
 			    FALSE,
@@ -189,7 +194,8 @@ gimp_color_panel_clicked (GtkButton *button)
 }
 
 static void
-gimp_color_panel_select_callback (const GimpRGB      *color,
+gimp_color_panel_select_callback (ColorNotebook      *notebook,
+				  const GimpRGB      *color,
 				  ColorNotebookState  state,
 				  gpointer            data)
 {

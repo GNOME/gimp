@@ -62,6 +62,7 @@
 #include "apptypes.h"
 
 #include "appenv.h"
+#include "color_notebook.h"
 #include "cursorutil.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -437,47 +438,25 @@ static void      cpopup_load_right_callback       (GtkWidget       *widget,
 static void      cpopup_save_right_callback       (GtkWidget       *widget,
 						   gpointer         data);
 
-static void      cpopup_set_color_selection_color (GtkColorSelection *cs,
-						   GimpRGB           *color);
-static void      cpopup_get_color_selection_color (GtkColorSelection *cs,
-						   GimpRGB           *color);
-
 static grad_segment_t * cpopup_save_selection     (void);
 static void             cpopup_free_selection     (grad_segment_t  *seg);
 static void             cpopup_replace_selection  (grad_segment_t  *replace_seg);
 
 /* ----- */
 
-static void   cpopup_create_color_dialog          (gchar           *title,
-						   GimpRGB         *color,
-						   GtkSignalFunc    color_changed_callback,
-						   GtkSignalFunc    ok_callback,
-						   GtkSignalFunc    cancel_callback,
-						   GtkSignalFunc    delete_callback);
+static void   cpopup_set_left_color_callback      (GtkWidget          *widget,
+						   gpointer            data);
+static void   cpopup_set_right_color_callback     (GtkWidget          *widget,
+						   gpointer            data);
 
-static void   cpopup_set_left_color_callback      (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_left_color_changed           (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_left_color_dialog_ok         (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_left_color_dialog_cancel     (GtkWidget       *widget,
-						   gpointer         data);
-static gint   cpopup_left_color_dialog_delete     (GtkWidget       *widget,
-						   GdkEvent        *event,
-						   gpointer         data);
-
-static void   cpopup_set_right_color_callback     (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_right_color_changed          (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_right_color_dialog_ok        (GtkWidget       *widget,
-						   gpointer         data);
-static void   cpopup_right_color_dialog_cancel    (GtkWidget       *widget,
-						   gpointer         data);
-static gint   cpopup_right_color_dialog_delete    (GtkWidget       *widget,
-						   GdkEvent        *event,
-						   gpointer         data);
+static void   cpopup_left_color_changed           (ColorNotebook      *cnb,
+						   const GimpRGB      *color,
+						   ColorNotebookState  state,
+						   gpointer            data);
+static void   cpopup_right_color_changed          (ColorNotebook      *cnb,
+						   const GimpRGB      *color,
+						   ColorNotebookState  state,
+						   gpointer            data);
 
 /* ----- */
 
@@ -4244,33 +4223,6 @@ cpopup_save_right_callback (GtkWidget *widget,
 
 /*****/
 
-static void
-cpopup_set_color_selection_color (GtkColorSelection *cs,
-				  GimpRGB           *color)
-{
-  gdouble col[4];
-
-  col[0] = color->r;
-  col[1] = color->g;
-  col[2] = color->b;
-  col[3] = color->a;
-
-  gtk_color_selection_set_color (cs, col);
-}
-
-static void
-cpopup_get_color_selection_color (GtkColorSelection *cs,
-				  GimpRGB           *color)
-{
-  gdouble col[4];
-
-  gtk_color_selection_get_color (cs, col);
-
-  gimp_rgba_set (color, col[0], col[1], col[2], col[3]);
-}
-
-/*****/
-
 static grad_segment_t *
 cpopup_save_selection (void)
 {
@@ -4356,128 +4308,21 @@ cpopup_replace_selection (grad_segment_t *replace_seg)
 /***** Color dialogs for left and right endpoint *****/
 
 static void
-cpopup_create_color_dialog (gchar         *title,
-			    GimpRGB       *color,
-			    GtkSignalFunc  color_changed_callback,
-			    GtkSignalFunc  ok_callback,
-			    GtkSignalFunc  cancel_callback,
-			    GtkSignalFunc  delete_callback)
-{
-  GtkWidget               *window;
-  GtkColorSelection       *cs;
-  GtkColorSelectionDialog *csd;
-
-  window = gtk_color_selection_dialog_new (title);
-  gtk_container_set_border_width (GTK_CONTAINER (window), 2);
-  gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (window)->help_button);
-
-  gimp_help_connect_help_accel (window, gimp_standard_help_func,
-				"dialogs/gradient_editor/gradient_editor.html");
-
-  csd = GTK_COLOR_SELECTION_DIALOG (window);
-  cs  = GTK_COLOR_SELECTION (csd->colorsel);
-
-  gtk_color_selection_set_opacity (cs, TRUE);
-  gtk_color_selection_set_update_policy (cs,
-					 g_editor->instant_update ?
-					 GTK_UPDATE_CONTINUOUS :
-					 GTK_UPDATE_DELAYED);
-
-  /* FIXME: this is a hack; we set the color twice so that the
-   * color selector remembers it as its "old" color, too
-   */
-  cpopup_set_color_selection_color (cs, color);
-  cpopup_set_color_selection_color (cs, color);
-
-  gtk_signal_connect (GTK_OBJECT (csd), "delete_event",
-		     delete_callback, window);
-
-  gtk_signal_connect (GTK_OBJECT (cs), "color_changed",
-		     color_changed_callback, window);
-
-  gtk_signal_connect (GTK_OBJECT (csd->ok_button), "clicked",
-		      ok_callback, window);
-
-  gtk_signal_connect (GTK_OBJECT (csd->cancel_button), "clicked",
-		      cancel_callback, window);
-
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
-  gtk_widget_show (window);
-}
-
-/*****/
-
-static void
 cpopup_set_left_color_callback (GtkWidget *widget,
 				gpointer   data)
 {
   g_editor->left_saved_dirty    = curr_gradient->dirty;
   g_editor->left_saved_segments = cpopup_save_selection ();
 
-  cpopup_create_color_dialog (_("Left endpoint's color"),
-			      &g_editor->control_sel_l->left_color,
-			      (GtkSignalFunc) cpopup_left_color_changed,
-			      (GtkSignalFunc) cpopup_left_color_dialog_ok,
-			      (GtkSignalFunc) cpopup_left_color_dialog_cancel,
-			      (GtkSignalFunc) cpopup_left_color_dialog_delete);
+  color_notebook_new (_("Left Endpoint Color"),
+		      &g_editor->control_sel_l->left_color,
+		      (GtkSignalFunc) cpopup_left_color_changed,
+		      NULL,
+		      g_editor->instant_update,
+		      TRUE);
 
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
 }
-
-static void
-cpopup_left_color_changed (GtkWidget *widget,
-			   gpointer   data)
-{
-  GtkColorSelection *cs;
-  GimpRGB            color;
-
-  cs = GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (data)->colorsel);
-
-  cpopup_get_color_selection_color (cs, &color);
-
-  cpopup_blend_endpoints (&color,
-			  &g_editor->control_sel_r->right_color,
-			  TRUE, TRUE);
-
-  ed_update_editor (GRAD_UPDATE_GRADIENT);
-}
-
-static void
-cpopup_left_color_dialog_ok (GtkWidget *widget,
-			     gpointer   data)
-{
-  cpopup_left_color_changed (widget, data);
-
-  curr_gradient->dirty = TRUE;
-  cpopup_free_selection(g_editor->left_saved_segments);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (g_editor->shell, TRUE);
-}
-
-static void
-cpopup_left_color_dialog_cancel (GtkWidget *widget,
-				 gpointer   data)
-{
-  curr_gradient->dirty = g_editor->left_saved_dirty;
-  cpopup_replace_selection (g_editor->left_saved_segments);
-  ed_update_editor (GRAD_UPDATE_GRADIENT);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (g_editor->shell, TRUE);
-}
-
-static int
-cpopup_left_color_dialog_delete (GtkWidget *widget,
-				 GdkEvent  *event,
-				 gpointer   data)
-{
-  cpopup_left_color_dialog_cancel (widget, data);
-
-  return TRUE;
-}
-
-/*****/
 
 static void
 cpopup_set_right_color_callback (GtkWidget *widget,
@@ -4486,67 +4331,87 @@ cpopup_set_right_color_callback (GtkWidget *widget,
   g_editor->right_saved_dirty    = curr_gradient->dirty;
   g_editor->right_saved_segments = cpopup_save_selection ();
 
-  cpopup_create_color_dialog (_("Right endpoint's color"),
-			      &g_editor->control_sel_r->right_color,
-			      (GtkSignalFunc) cpopup_right_color_changed,
-			      (GtkSignalFunc) cpopup_right_color_dialog_ok,
-			      (GtkSignalFunc) cpopup_right_color_dialog_cancel,
-			      (GtkSignalFunc) cpopup_right_color_dialog_delete);
+  color_notebook_new (_("Right Endpoint Color"),
+		      &g_editor->control_sel_l->right_color,
+		      (GtkSignalFunc) cpopup_right_color_changed,
+		      NULL,
+		      g_editor->instant_update,
+		      TRUE);
 
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
 }
 
 static void
-cpopup_right_color_changed (GtkWidget *widget,
-			    gpointer   data)
+cpopup_left_color_changed (ColorNotebook      *cnb,
+			   const GimpRGB      *color,
+			   ColorNotebookState  state,
+			   gpointer            data)
 {
-  GtkColorSelection *cs;
-  GimpRGB            color;
+  switch (state)
+    {
+    case COLOR_NOTEBOOK_OK:
+      cpopup_blend_endpoints ((GimpRGB *) color,
+			      &g_editor->control_sel_r->right_color,
+			      TRUE, TRUE);
+      cpopup_free_selection (g_editor->left_saved_segments);
+      curr_gradient->dirty = TRUE;
+      color_notebook_free (cnb);
+      gtk_widget_set_sensitive (g_editor->shell, TRUE);
+      break;
 
-  cs = GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (data)->colorsel);
+    case COLOR_NOTEBOOK_UPDATE:
+      cpopup_blend_endpoints ((GimpRGB *) color,
+			      &g_editor->control_sel_r->right_color,
+			      TRUE, TRUE);
+      curr_gradient->dirty = TRUE;
+      break;
 
-  cpopup_get_color_selection_color (cs, &color);
-
-  cpopup_blend_endpoints (&g_editor->control_sel_l->left_color,
-			  &color,
-			  TRUE, TRUE);
+    case COLOR_NOTEBOOK_CANCEL:
+      cpopup_replace_selection (g_editor->left_saved_segments);
+      ed_update_editor (GRAD_UPDATE_GRADIENT);
+      curr_gradient->dirty = g_editor->left_saved_dirty;
+      color_notebook_free (cnb);
+      gtk_widget_set_sensitive (g_editor->shell, TRUE);
+      break;
+    }
 
   ed_update_editor (GRAD_UPDATE_GRADIENT);
 }
 
 static void
-cpopup_right_color_dialog_ok (GtkWidget *widget,
-			      gpointer   data)
+cpopup_right_color_changed (ColorNotebook      *cnb,
+			    const GimpRGB      *color,
+			    ColorNotebookState  state,
+			    gpointer            data)
 {
-  cpopup_right_color_changed (widget, data);
+  switch (state)
+    {
+    case COLOR_NOTEBOOK_UPDATE:
+      cpopup_blend_endpoints (&g_editor->control_sel_r->left_color,
+			      (GimpRGB *) color,
+			      TRUE, TRUE);
+      curr_gradient->dirty = TRUE;
+      break;
 
-  curr_gradient->dirty = TRUE;
-  cpopup_free_selection (g_editor->right_saved_segments);
+    case COLOR_NOTEBOOK_OK:
+      cpopup_blend_endpoints (&g_editor->control_sel_r->left_color,
+			      (GimpRGB *) color,
+			      TRUE, TRUE);
+      cpopup_free_selection (g_editor->right_saved_segments);
+      curr_gradient->dirty = TRUE;
+      color_notebook_free (cnb);
+      gtk_widget_set_sensitive (g_editor->shell, TRUE);
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (g_editor->shell, TRUE);
-}
+    case COLOR_NOTEBOOK_CANCEL:
+      cpopup_replace_selection (g_editor->right_saved_segments);
+      curr_gradient->dirty = g_editor->right_saved_dirty;
+      color_notebook_free (cnb);
+      gtk_widget_set_sensitive (g_editor->shell, TRUE);
+      break;
+    }
 
-static void
-cpopup_right_color_dialog_cancel (GtkWidget *widget,
-				  gpointer   data)
-{
-  curr_gradient->dirty = g_editor->right_saved_dirty;
-  cpopup_replace_selection (g_editor->right_saved_segments);
   ed_update_editor (GRAD_UPDATE_GRADIENT);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (g_editor->shell, TRUE);
-}
-
-static int
-cpopup_right_color_dialog_delete (GtkWidget *widget,
-				  GdkEvent  *event,
-				  gpointer   data)
-{
-  cpopup_right_color_dialog_cancel (widget, data);
-
-  return TRUE;
 }
 
 /***** Blending menu *****/

@@ -2547,7 +2547,8 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   /*  the new options structure  */
   options = g_new (NewChannelOptions, 1);
   options->gimage      = gimage;
-  options->color_panel = gimp_color_panel_new (&channel_color,
+  options->color_panel = gimp_color_panel_new (_("New Channel Color"),
+					       &channel_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
   
@@ -2701,7 +2702,8 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
 
   channel_color = channel_widget->channel->color;
 
-  options->color_panel = gimp_color_panel_new (&channel_color,
+  options->color_panel = gimp_color_panel_new (_("Edit Channel Color"),
+					       &channel_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS,
 					       48, 64);
 

@@ -15,6 +15,7 @@ app/channel.c
 app/channel_ops.c
 app/channels_dialog.c
 app/clone.c
+app/color_area.c
 app/color_balance.c
 app/color_notebook.c
 app/color_picker.c

@@ -38,7 +38,8 @@ struct _GimpColorPanelClass
 };
 
 GtkType     gimp_color_panel_get_type  (void);
-GtkWidget * gimp_color_panel_new       (const GimpRGB     *color,
+GtkWidget * gimp_color_panel_new       (const gchar       *title,
+					const GimpRGB     *color,
 					GimpColorAreaType  type,
 					gint               width,
 					gint               height);

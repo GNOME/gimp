@@ -273,13 +273,12 @@ edit_qmask_channel_query (GDisplay * gdisp)
   GtkWidget        *opacity_scale;
   GtkObject        *opacity_scale_data;
 
-  /* channel = gimp_image_get_channel_by_name (gdisp->gimage, "Qmask"); */
-
   /*  the new options structure  */
   options = g_new0 (EditQmaskOptions, 1);
 
   options->gimage      = gdisp->gimage;
-  options->color_panel = gimp_color_panel_new (&options->gimage->qmask_color,
+  options->color_panel = gimp_color_panel_new (_("Edit Qmask Color"),
+					       &options->gimage->qmask_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS, 
 					       48, 64);
 

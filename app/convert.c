@@ -2960,9 +2960,10 @@ webpal_pass1 (QuantizeObj *quantobj)
 static void
 custompal_pass1 (QuantizeObj *quantobj)
 {
-  int i;
-  GSList *list;
+  gint          i;
+  GSList       *list;
   PaletteEntry *entry;
+  guchar        r, g, b;
 
   /* fprintf(stderr, "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
 			 theCustomPalette->name, theCustomPalette->filename); */
@@ -2972,9 +2973,12 @@ custompal_pass1 (QuantizeObj *quantobj)
        i++,list=g_slist_next(list))
     {
       entry = (PaletteEntry *) list->data;
-      quantobj->cmap[i].red = entry->color[0];
-      quantobj->cmap[i].green = entry->color[1];
-      quantobj->cmap[i].blue = entry->color[2];
+
+      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+
+      quantobj->cmap[i].red   = (gint) r;
+      quantobj->cmap[i].green = (gint) g;
+      quantobj->cmap[i].blue  = (gint) b;
     }
   quantobj -> actual_number_of_colors = i;
 }

@@ -31,13 +31,21 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  List of active dialogs  */
+/*  local function prototypes  */
+
+static gint   palette_select_button_press   (GtkWidget      *widget,
+					     GdkEventButton *bevent,
+					     gpointer        data);
+static void   palette_select_close_callback (GtkWidget      *widget,
+					     gpointer        data);
+static void   palette_select_edit_callback  (GtkWidget      *widget,
+					     gpointer        data);
+
+
+/*  list of active dialogs  */
+
 static GSList *active_dialogs = NULL;
 
-/*  local function prototypes  */
-static gint   palette_select_button_press   (GtkWidget *, GdkEventButton *, gpointer);
-static void   palette_select_close_callback (GtkWidget *, gpointer);
-static void   palette_select_edit_callback  (GtkWidget *, gpointer);
 
 /*  public functions  */
 
@@ -146,9 +154,9 @@ void
 palette_select_clist_insert_all (PaletteEntries *p_entries)
 {
   PaletteEntries *chk_entries;
-  PaletteSelect *psp; 
-  GSList *list;
-  gint pos = 0;
+  PaletteSelect  *psp; 
+  GSList         *list;
+  gint            pos = 0;
 
   for (list = palette_entries_list; list; list = g_slist_next (list))
     {
@@ -178,10 +186,10 @@ void
 palette_select_set_text_all (PaletteEntries *entries)
 {
   PaletteEntries *p_entries = NULL;
-  PaletteSelect *psp; 
-  GSList *list;
-  gchar *num_buf;
-  gint pos = 0;
+  PaletteSelect  *psp; 
+  GSList         *list;
+  gchar          *num_buf;
+  gint            pos = 0;
 
   for (list = palette_entries_list; list;  list = g_slist_next (list))
     {
@@ -209,10 +217,10 @@ palette_select_set_text_all (PaletteEntries *entries)
 }
 
 void
-palette_select_refresh_all ()
+palette_select_refresh_all (void)
 {
   PaletteSelect *psp; 
-  GSList *list;
+  GSList        *list;
 
   for (list = active_dialogs; list; list = g_slist_next (list))
     {
@@ -251,8 +259,10 @@ palette_select_edit_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   PaletteEntries *p_entries = NULL;
-  PaletteSelect *psp = (PaletteSelect *) data;
-  GList *sel_list;
+  PaletteSelect  *psp;
+  GList          *sel_list;
+
+  psp = (PaletteSelect *) data;
 
   sel_list = GTK_CLIST (psp->clist)->selection;
 

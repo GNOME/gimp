@@ -1,3 +1,28 @@
+2001-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/color_notebook.[ch]: added a "title" parameter to the
+	constructor. Pass a pointer to the ColorNotebook to the callback.
+	Added a _get_color() function.
+
+	* app/color_panel.[ch]: added a "title" parameter which is used
+	for the notebook.
+
+	* app/channels_dialog.c
+	* app/color_area.c
+	* app/colormap_dialog.c
+	* app/convert.c
+	* app/palette_select.c
+	* app/qmask.c: changed the calls to color_notebook_new(),
+	color_panel_new() and the ColorNotebook callbacks.
+
+	* app/gradient.c: use a ColorNotebook instead of GtkColorSelection.
+
+	* app/palette.c
+	* app/palette_entries.h: use GimpRGB to store the color in the
+	PaletteEntry.
+
+	* po/POTFILES.in: added app/color_area.c
+
 2001-01-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/gradient.[ch]: made gradient_get_color_at() use GimpRGB.

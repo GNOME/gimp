@@ -87,7 +87,8 @@ static void   ipal_edit_callback         (GtkWidget          *widget,
 					  gpointer            data);
 static void   ipal_close_callback        (GtkWidget          *widget,
 					  gpointer            data);
-static void   ipal_select_callback       (const GimpRGB      *color,
+static void   ipal_select_callback       (ColorNotebook      *color_notebook,
+					  const GimpRGB      *color,
 					  ColorNotebookState  state,
 					  gpointer            data);
 
@@ -931,7 +932,8 @@ ipal_edit_callback (GtkWidget *widget,
   if (! ipal->color_notebook)
     {
       ipal->color_notebook
-	= color_notebook_new ((const GimpRGB *) &color,
+	= color_notebook_new (_("Edit Indexed Color"),
+			      (const GimpRGB *) &color,
 			      ipal_select_callback, ipal, FALSE, FALSE);
     }
   else
@@ -953,7 +955,8 @@ ipal_close_callback (GtkWidget *widget,
 }
 
 static void
-ipal_select_callback (const GimpRGB      *color,
+ipal_select_callback (ColorNotebook      *color_notebook,
+		      const GimpRGB      *color,
 		      ColorNotebookState  state,
 		      gpointer            data)
 {
