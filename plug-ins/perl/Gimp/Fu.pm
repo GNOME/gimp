@@ -128,21 +128,27 @@ sub import {
 # the old value of the trace flag
 my $old_trace;
 
-sub _default {
-   my $d = shift;
-   my @a = @_;
-   if (ref $d) {
-     @a[0..$#$d] = @{$d};
-   } elsif (defined $d) {
-     $a[0] = $d;
-   }
-   @a;
-}
-
 sub wrap_text {
    my $x=$_[0];
    $x=~s/(\G.{$_[1]}\S*)\s+/$1\n/g;
    $x;
+}
+
+sub _new_adjustment {
+   my @adj = eval { @{$_[1]} };
+
+   $adj[2]||=($adj[1]-$adj[0])*0.01;
+   $adj[3]||=($adj[1]-$adj[0])*0.01;
+   $adj[4]||=0;
+   
+   new Gtk::Adjustment $_[0],@adj;
+}
+
+# find a suitable value for the "digits" value
+sub _find_digits {
+   my $adj = shift;
+   my $digits = log($adj->step_increment || 1)/log(0.1);
+   $digits>0 ? int $digits+0.9 : 0;
 }
 
 sub interact($$$@) {
@@ -241,15 +247,17 @@ sub interact($$$@) {
            $a->signal_connect("clicked", sub { show $fs });
            
         } elsif($type == PF_SPINNER) {
-           my $adj = new Gtk::Adjustment $value,_default($extra,0,99,1,5,5);
+           my $adj = _new_adjustment ($value,$extra);
            $a=new Gtk::SpinButton $adj,1,0;
+           $a->set_digits (_find_digits $adj);
            $a->set_usize (120,0);
            push(@setvals,sub{$adj->set_value($_[0])});
            push(@getvals,sub{$adj->get_value});
            
         } elsif($type == PF_SLIDER) {
-           my $adj = new Gtk::Adjustment $value,_default($extra,0,99,1,1,5);
+           my $adj = _new_adjustment ($value,$extra);
            $a=new Gtk::HScale $adj;
+           $a->set_digits (_find_digits $adj);
            $a->set_usize (120,0);
            push(@setvals,sub{$adj->set_value($_[0])});
            push(@getvals,sub{$adj->get_value});

@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
-#require 5.005;
+require 5.005;
 
 # Copyright Marc Lehmann <pcg@goof.com>
 #
-# This is distributed under the GPL.
+# This is distributed under the GPL (see COPYING.GNU for details).
 
 =cut
 
@@ -114,7 +114,7 @@ my $tok;	# current token
 
 # parses a new token [ws, tok, ws]
 sub get() {
-   my $ws1,$ws1,$ctok;
+   my($ws1,$ctk,$ws2);
    # could be wrapped into one regex
    $ws1 = $stream=~s/^((?:\s*(?:(;[^\n]*\n))?)*)// ? $1 : die;
    $ctk = $stream=~s/^(\(
@@ -190,7 +190,7 @@ sub toks2scheme {
    }
    while(@_) {
       my @toks = shift;
-      my ($ws1,$t,$ws1)=$toks[0]
+      my ($unused,$t,$ws1)=$toks[0]
    }
    
 }
@@ -249,7 +249,7 @@ sub dofile {
 *isa = \&UNIVERSAL::isa;
 
 sub usage {
-   print STDERR "Script-Fu to Script-Fu Translater 1.1\n";
+   print STDERR "Script-Fu to Script-Fu Translater 1.1.1\n";
    print STDERR "Usage: $0 [-d] [-t translation] file.scm ...\n";
    print STDERR "available translations are: @{[keys %translation]}\n";
    exit(1);

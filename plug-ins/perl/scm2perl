@@ -12,6 +12,8 @@
 # too many parens
 # comments(!)
 
+# This is distributed under the GPL (see COPYING.GNU for details).
+
 =cut
 
 =head1 NAME
