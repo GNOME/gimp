@@ -223,10 +223,7 @@ directory.
 By default, `make install' will install the package's files in
 /usr/local/bin, /usr/local/lib, /usr/local/man, etc.  You can specify
 an installation prefix other than /usr/local by giving `configure' the
-option `--prefix=PATH'.  Alternately, you can do so by changing the
-`prefix' variable in the Makefile that `configure' creates (the
-Makefile in the top-level directory, if the package contains
-subdirectories).
+option `--prefix=PATH'.
 
 You can specify separate installation prefixes for machine-specific
 files and machine-independent files.  If you give `configure' the
