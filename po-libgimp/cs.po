@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-21 11:15+0200\n"
-"PO-Revision-Date: 2004-10-21 16:49+0200\n"
+"POT-Creation-Date: 2004-10-27 11:11+0200\n"
+"PO-Revision-Date: 2004-10-27 13:42+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -206,71 +206,71 @@ msgstr "Výběr vzorku"
 msgid "percent"
 msgstr "procenta"
 
-#: libgimpbase/gimpbaseenums.c:15
+#: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr "Malé"
 
-#: libgimpbase/gimpbaseenums.c:16
+#: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr "Střední"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr "Velké"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr "Jen bílá"
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr "Jen šedá"
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:62
 msgid "Black Only"
 msgstr "Jen černá"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr "Barva RGB"
 
-#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
 msgstr "Stupně šedi"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr "Indexovaná barva"
 
-#: libgimpbase/gimpbaseenums.c:84
+#: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:85
+#: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: libgimpbase/gimpbaseenums.c:87
+#: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr "Stupně šedi-alfa"
 
-#: libgimpbase/gimpbaseenums.c:88
+#: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr "Indexovaná"
 
-#: libgimpbase/gimpbaseenums.c:89
+#: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr "Indexovaná-alfa"
 
@@ -365,6 +365,11 @@ msgstr "Nenačteno"
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nemohu vytvořit adresář miniatur '%s'."
+
+#: libgimpthumb/gimpthumbnail.c:917
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Nemohu vytvořit miniaturu %s: %s"
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -539,6 +544,10 @@ msgstr "_Obnovit"
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Viditelný"
+
+#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+msgid "_Stroke"
+msgstr ""
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
