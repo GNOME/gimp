@@ -462,7 +462,10 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
   if (! pixbuf)
     return NULL;
 
-  name = g_strdup (gdk_pixbuf_get_option (pixbuf, "tEXt::Comment"));
+  name = g_strdup (gdk_pixbuf_get_option (pixbuf, "tEXt::Title"));
+
+  if (! name)
+    name = g_strdup (gdk_pixbuf_get_option (pixbuf, "tEXt::Comment"));
 
   if (! name)
     {

@@ -1,5 +1,10 @@
 2004-06-03  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppattern.c (gimp_pattern_load_pixbuf): if a Title is
+	set, use that as the pattern name.
+
+2004-06-03  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdatafactory.c (gimp_data_factory_load_data):
 	removed commented-out message.
 
