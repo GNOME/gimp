@@ -18,7 +18,7 @@ sub fire {
    $drawable->wind($threshold, 1, $strength, 0, 1);
    $drawable->layer_rot90;
    $drawable->gauss_rle(($w**2+*$h**2)**0.5*0.003+1,1,1);
-   $drawable->desaturate if $drawable->color;
+   $drawable->desaturate if $drawable->is_rgb;
    $drawable->ripple($w*0.05,$w*0.002,0,2,1,1,0);
    $drawable->ripple($h*0.05,$h*0.002,1,2,1,1,0);
    $drawable->displace($w*0.05,$w*0.05,1,1,$drawable,$drawable,BLACK) if $displace;

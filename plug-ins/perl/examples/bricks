@@ -1,0 +1,146 @@
+#!/usr/bin/perl
+
+# [10/27/1999] v0.0.1 First version. 
+ 
+# (c) Copyright by Tels www.bloodgate.com 1999.
+
+# generate a brick texture for using in 3d games
+
+# params: brick width/height, brick pattern, random light skew, border color
+
+use Gimp ':auto';
+use Gimp::Fu;
+use Gimp::Util;
+
+sub do_bricks {
+    my ($pattern,$pattern2,$bp,$clr,$bw,$brickx,$bricky,$imgw,$imgh,$skew) = @_;
+    my ($image, $layer, $state, $layerpat);
+  
+    $state = get_state(); # get fgcolor, etc
+    $imgw = abs($imgw); $imgw = 256 if (($imgw < 32) || ($imgw > 4096));
+    $imgh = abs($imgh); $imgh = 256 if (($imgh < 32) || ($imgh > 4096));
+    #print "Creating texture $imgw"."x$imgh\n";
+    $image = gimp_image_new($imgw,$imgh,RGB);
+    # make background
+    gimp_patterns_set_pattern($pattern);
+    $layerpat = gimp_image_add_new_layer($image,0,0,0);
+    gimp_selection_all($image);
+    gimp_bucket_fill($layerpat,2,0,100,0,0,1,1);
+    
+    # make border lines
+    gimp_palette_set_foreground ("#ffffff"); 
+    $layer = gimp_image_add_new_layer($image,0,0,0);
+    gimp_drawable_fill($layer,3);
+    my $w = 1; my $h = 1; my $j = 0; my $wo = 0;
+    my $brickw = ($imgw / $brickx); my $brickh = ($imgh / $bricky);
+    gimp_undo_push_group_start($image);
+    while ($h < $imgh)
+      {
+      gimp_rect_select($image,0,$h,$imgw,$bw,2,0,0);
+      gimp_bucket_fill($layer,0,0,100,0,0,0,0);
+      $w = 1;
+      $wo = 0; $wo = ($brickw / 2) if ($j == 1);
+      while ($w < $imgw)
+        {
+        gimp_rect_select($image,$w+$wo,$h,$bw,$brickh+1,2,0,0);
+        gimp_bucket_fill($layer,0,0,100,0,0,1,1);
+#        print "$h $w\n";
+        $w += $brickw;
+        }
+      $j = 1 - $j;
+      $h += $brickh;
+      }
+    gimp_undo_push_group_end($image);
+    # make a copy of it for bump mapping
+    gimp_selection_all($image);
+    $layer->edit_copy(); 
+    $border = gimp_image_add_new_layer($image,0,0,0);
+    #print "$border\n";
+    $border->edit_paste(0);
+    gimp_floating_sel_anchor(gimp_image_floating_selection($image));
+    gimp_selection_none($image);
+    # somebody seems to have changed the parameter for the following 3 lines
+    # omy office machine use the old variant, at home I need the new :(
+    plug_in_gauss_iir (1,$border,1,1,1);
+    plug_in_gauss_iir (1,$layer,2,1,1);
+    plug_in_bump_map (1,$layerpat,$layer,280,40,2,0,0,0,0,1,0,1);
+    #plug_in_gauss_iir (1,$image,$border,1,1,1);
+    #plug_in_gauss_iir (1,$image,$layer,2,1,1);
+    #plug_in_bump_map (1,$image,$layerpat,$layer,257,40,3,0,0,0,0,1,0,1);
+    # overlay border lines and random skew bricks
+    gimp_undo_push_group_start($image);
+    $h = 0; $j = 0; $wo = 0;
+    while ($h < $imgh)
+      {
+      $w = 0; $wo = 0; $wo = ($brickw / 2) if ($j == 1);
+      while ($w < $imgw)
+        {
+        $r = int(rand ($skew) - ($skew / 1));
+        if ($r != 0)
+          {
+          gimp_palette_set_foreground ("#ffffff") if ($r > 0); 
+          gimp_palette_set_foreground ("#000000") if ($r < 0); 
+          gimp_rect_select($image,$w+$wo+$bp,$h+$bp,$brickw,$brickh,2,0,0);
+          gimp_bucket_fill($layerpat,0,0,4*abs($r),0,0,1,1);
+          # halves
+          if (($j == 1) && ($w+$wo+$brickw > $imgw))
+            {
+            gimp_rect_select($image,0,$h+$bp,$brickw/2,$brickh,2,0,0);
+            gimp_bucket_fill($layerpat,0,0,4*abs($r),0,0,1,1);
+            }
+          }
+        $w += $brickw;
+        }
+      $j = 1 - $j;
+      $h += $brickh;
+      }
+    gimp_undo_push_group_end($image);
+    gimp_palette_set_background ($clr);
+    $layerb = gimp_image_add_new_layer($image,1,BG_IMAGE_FILL,0);
+    gimp_selection_all($image);
+    if ($bp ne "") 
+      {
+      gimp_patterns_set_pattern($bp);
+      gimp_bucket_fill($layerb,2,0,100,0,0,1,1); 
+      }
+    $border->edit_copy();
+    gimp_layer_add_alpha($layerb);
+    $mask = gimp_layer_create_mask($layerb,0);
+    $mask->edit_paste(0);
+    gimp_floating_sel_anchor(gimp_image_floating_selection($image));
+    gimp_image_add_layer_mask($image,$layerb,$mask);
+    gimp_selection_none($image);
+    gimp_image_remove_layer ($border); gimp_layer_delete ($border);
+    gimp_image_remove_layer ($layer); gimp_layer_delete ($layer);
+    gimp_image_remove_layer_mask ($image,$layerb,0);
+    gimp_channel_ops_offset ($layerpat,1,0,-1,-1);
+    gimp_channel_ops_offset ($layerb,1,0,-1,-1);
+    set_state($state); # restore color etc 
+    $image;
+}
+
+register
+        "do_bricks", 
+        "Generate brick texture",
+        "Try it out", 
+        "Tels", 
+        "http://bloodgate.com", 
+        "10/26/1999a",
+        "<Toolbox>/Xtns/Render/Bricks", 
+        "*",
+        [ 
+         [PF_PATTERN,  "background", "Brick pattern", "Leather"],
+         [PF_STRING,  "highlight", "Second brick pattern for some highlightin (unused)", "unused yet"],
+         [PF_STRING,  "borderpattern", "Border pattern (empty for none)", ""],
+         [PF_COLOR,   "color", "Border color", "#dfdfdf"],
+         [PF_SPINNER,  "borderwidth", "Border width", 1, [0,1000,1]],
+         [PF_STRING,  "brickx", "Bricks in X", 8],
+         [PF_STRING,  "bricky", "Bricks in Y", 16],
+         [PF_STRING,  "imagew", "Width of image", 256],
+         [PF_STRING,  "imageh", "Height of image", 256],
+         [PF_STRING,  "skew", "Random darken/lighten factor (0..20)", 0]
+        ],
+        \&do_bricks;
+
+exit main();
+

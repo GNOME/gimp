@@ -24,6 +24,7 @@ olof
 
 bugs
 
+  * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
   * installation & Feature system (?)
