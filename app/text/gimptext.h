@@ -34,27 +34,28 @@ typedef struct _GimpTextClass  GimpTextClass;
 
 struct _GimpText
 {
-  GObject            parent_instance;
+  GObject                parent_instance;
 
-  gchar             *text;
-  gchar             *font;
-  gdouble            font_size;
-  GimpUnit           font_size_unit;
-  GimpRGB            color;
-  GimpTextAlignment  alignment;
-  gdouble            letter_spacing;
-  gdouble            line_spacing;
-  gint               fixed_width;
-  gint               fixed_height;
-  GimpGravityType    gravity;
+  gchar                 *text;
+  gchar                 *font;
+  gdouble                font_size;
+  GimpUnit               font_size_unit;
+  GimpRGB                color;
+  GimpTextJustification  justify;
+  gdouble                indent;
+  gdouble                line_spacing;
+  gdouble                letter_spacing;
+  gint                   fixed_width;
+  gint                   fixed_height;
+  GimpGravityType        gravity;
 
   /* for historical reasons, don't use */
-  gint               border;
+  gint                   border;
 };
 
 struct _GimpTextClass
 {
-  GObjectClass       parent_class;
+  GObjectClass           parent_class;
 };
 
 

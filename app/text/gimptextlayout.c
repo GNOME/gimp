@@ -141,6 +141,7 @@ gimp_text_layout_new (GimpText  *text,
   GimpTextLayout       *layout;
   PangoContext         *context;
   PangoFontDescription *font_desc;
+  PangoAlignment        alignment = PANGO_ALIGN_LEFT;
   gint                  size;
 
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -187,7 +188,33 @@ gimp_text_layout_new (GimpText  *text,
   pango_font_description_free (font_desc);
 
   pango_layout_set_text (layout->layout, text->text, -1);
-  pango_layout_set_alignment (layout->layout, text->alignment);
+
+  switch (text->justify)
+    {
+    case GIMP_TEXT_JUSTIFY_LEFT:
+      alignment = PANGO_ALIGN_LEFT;
+      break;
+    case GIMP_TEXT_JUSTIFY_RIGHT:
+      alignment = PANGO_ALIGN_RIGHT;
+      break;
+    case GIMP_TEXT_JUSTIFY_CENTER:
+      alignment = PANGO_ALIGN_CENTER;
+      break;
+    case GIMP_TEXT_JUSTIFY_FILL:
+      /* FIXME: This just doesn't work to do this */
+      alignment = PANGO_ALIGN_LEFT;
+      pango_layout_set_justify (layout->layout, TRUE);
+      break;
+    }
+
+  pango_layout_set_alignment (layout->layout, alignment);
+
+  pango_layout_set_width (layout->layout,
+			  text->fixed_width > 0 ? 
+			  text->fixed_width * PANGO_SCALE : -1);
+
+  pango_layout_set_indent (layout->layout, text->indent * PANGO_SCALE);
+  pango_layout_set_spacing (layout->layout, text->line_spacing * PANGO_SCALE);
 
   gimp_text_layout_position (layout);
 

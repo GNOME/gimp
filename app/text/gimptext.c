@@ -41,9 +41,10 @@ enum
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
   PROP_COLOR,
-  PROP_ALIGNMENT,
-  PROP_LETTER_SPACING,
+  PROP_JUSTIFICATION,
+  PROP_INDENTATION,
   PROP_LINE_SPACING,
+  PROP_LETTER_SPACING,
   PROP_FIXED_WIDTH,
   PROP_FIXED_HEIGHT,
   PROP_GRAVITY,
@@ -138,19 +139,23 @@ gimp_text_class_init (GimpTextClass *klass)
 				  "color", NULL,
 				  &black,
 				  0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGNMENT,
-                                "alignment", NULL,
-                                 GIMP_TYPE_TEXT_ALIGNMENT,
-                                 GIMP_TEXT_ALIGNMENT_LEFT,
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
+                                "justify", NULL,
+                                 GIMP_TYPE_TEXT_JUSTIFICATION,
+                                 GIMP_TEXT_JUSTIFY_LEFT,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
+				   "indent", NULL,
+				   -8192.0, 8192.0, 0.0,
+				   0);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
+				   "line-spacing", NULL,
+				   -8192.0, 8192.0, 0.0,
+				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing", NULL,
                                     0.0, 64.0, 1.0,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-				   "line-spacing", NULL,
-                                   0.0, 64.0, 1.0,
-                                   0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
                                 "fixed-width", NULL,
                                 0, GIMP_MAX_IMAGE_SIZE, 0,
@@ -216,14 +221,17 @@ gimp_text_get_property (GObject      *object,
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
       break;
-    case PROP_ALIGNMENT:
-      g_value_set_enum (value, text->alignment);
+    case PROP_JUSTIFICATION:
+      g_value_set_enum (value, text->justify);
       break;
-    case PROP_LETTER_SPACING:
-      g_value_set_double (value, text->letter_spacing);
+    case PROP_INDENTATION:
+      g_value_set_double (value, text->indent);
       break;
     case PROP_LINE_SPACING:
       g_value_set_double (value, text->line_spacing);
+      break;
+    case PROP_LETTER_SPACING:
+      g_value_set_double (value, text->letter_spacing);
       break;
     case PROP_FIXED_WIDTH:
       g_value_set_int (value, text->fixed_width);
@@ -269,14 +277,17 @@ gimp_text_set_property (GObject      *object,
       color = g_value_get_boxed (value);
       text->color = *color;
       break;
-    case PROP_ALIGNMENT:
-      text->alignment = g_value_get_enum (value);
+    case PROP_JUSTIFICATION:
+      text->justify = g_value_get_enum (value);
       break;
-    case PROP_LETTER_SPACING:
-      text->letter_spacing = g_value_get_double (value);
+    case PROP_INDENTATION:
+      text->indent = g_value_get_double (value);
       break;
     case PROP_LINE_SPACING:
       text->line_spacing = g_value_get_double (value);
+      break;
+    case PROP_LETTER_SPACING:
+      text->letter_spacing = g_value_get_double (value);
       break;
     case PROP_FIXED_WIDTH:
       text->fixed_width = g_value_get_int (value);

@@ -1,5 +1,14 @@
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/text/text-enums.[ch]
+	* app/text/gimptext.[ch]: replaced GimpTextAlignment with
+	GimpTextJustification. Added indentation property.
+
+	* app/text/gimptextlayout.c: implemented text justification,
+	indentation and line spacing as far as supported by Pango.
+
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c
 	* app/tools/gimptexttool.c: fixed includes.
 

@@ -20,17 +20,17 @@
 #define __TEXT_ENUMS_H__
 
 
-#define GIMP_TYPE_TEXT_ALIGNMENT (gimp_text_alignment_get_type ())
+#define GIMP_TYPE_TEXT_JUSTIFICATION (gimp_text_justification_get_type ())
 
-GType gimp_text_alignment_get_type (void) G_GNUC_CONST;
+GType gimp_text_justification_get_type (void) G_GNUC_CONST;
 
-/* this enum must match the values of the PangoAlignment enum */
 typedef enum
 {
-  GIMP_TEXT_ALIGNMENT_LEFT,    /*< desc="Left Aligned"  >*/
-  GIMP_TEXT_ALIGNMENT_CENTER,  /*< desc="Centered"      >*/
-  GIMP_TEXT_ALIGNMENT_RIGHT    /*< desc="Right Aligned" >*/
-} GimpTextAlignment;
+  GIMP_TEXT_JUSTIFY_LEFT,    /*< desc="Left Justified"  >*/
+  GIMP_TEXT_JUSTIFY_RIGHT,   /*< desc="Right Justified" >*/
+  GIMP_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
+  GIMP_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
+} GimpTextJustification;
 
 
 #endif /* __TEXT_ENUMS_H__ */
