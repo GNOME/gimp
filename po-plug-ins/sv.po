@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-07-22 00:17+0200\n"
-"PO-Revision-Date: 2002-07-22 00:18+0200\n"
+"POT-Creation-Date: 2002-07-24 02:03+0200\n"
+"PO-Revision-Date: 2002-07-24 02:03+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2330,9 +2330,8 @@ msgid "_Thickness:"
 msgstr "_Tjocklek:"
 
 #: plug-ins/common/borderaverage.c:425
-#, fuzzy
 msgid "_Bucket Size:"
-msgstr "Y-storlek:"
+msgstr "_Hinkstorlek:"
 
 #: plug-ins/common/borderaverage.c:433
 msgid "1 (nonsense?)"
@@ -2367,7 +2366,6 @@ msgid "_Spherical Map"
 msgstr "_Sfärisk karta"
 
 #: plug-ins/common/bumpmap.c:954
-#, fuzzy
 msgid "S_inuosidal Map"
 msgstr "S_inusformad karta"
 
@@ -2660,9 +2658,8 @@ msgstr "U_töka"
 # ?
 #: plug-ins/common/convmatrix.c:95 plug-ins/common/displace.c:409
 #: plug-ins/common/edge.c:690 plug-ins/common/ripple.c:656
-#, fuzzy
 msgid "_Wrap"
-msgstr "Wrap"
+msgstr "_Wrap"
 
 #: plug-ins/common/convmatrix.c:96
 msgid "Cro_p"
@@ -2780,12 +2777,10 @@ msgid "_Use Background Color"
 msgstr "_Använd Bakgrundsfärg"
 
 #: plug-ins/common/cubism.c:357
-#, fuzzy
 msgid "_Tile Size:"
 msgstr "_Platt-storlek:"
 
 #: plug-ins/common/cubism.c:367
-#, fuzzy
 msgid "T_ile Saturation:"
 msgstr "P_latt-mättnad"
 
@@ -9291,7 +9286,7 @@ msgstr "<Namnlös>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:585
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "GIMP hjälpläsare"
 
 #: plug-ins/helpbrowser/helpbrowser.c:898
 #, c-format
@@ -9304,7 +9299,7 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:366
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Natur/IfsKomponera..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:592
@@ -9328,7 +9323,7 @@ msgstr "Enkelt"
 
 #: plug-ins/ifscompose/ifscompose.c:660
 msgid "IfsCompose: Target"
-msgstr ""
+msgstr "IfsKomponera: Mål"
 
 #: plug-ins/ifscompose/ifscompose.c:666
 msgid "Scale Hue by:"
@@ -9345,23 +9340,23 @@ msgstr "Fullständig"
 
 #: plug-ins/ifscompose/ifscompose.c:705
 msgid "IfsCompose: Red"
-msgstr ""
+msgstr "IfsKomponera: Röd"
 
 #: plug-ins/ifscompose/ifscompose.c:712
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsKomponera: Grön"
 
 #: plug-ins/ifscompose/ifscompose.c:719
 msgid "IfsCompose: Blue"
-msgstr ""
+msgstr "IfsKomponera: Blå"
 
 #: plug-ins/ifscompose/ifscompose.c:726
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsKomponera: Svart"
 
 #: plug-ins/ifscompose/ifscompose.c:788
 msgid "IfsCompose"
-msgstr ""
+msgstr "IfsKomponera"
 
 #: plug-ins/ifscompose/ifscompose.c:867 plug-ins/ifscompose/ifscompose.c:1134
 #: plug-ins/imagemap/imap_cmd_move.c:87
@@ -9378,7 +9373,6 @@ msgid "Stretch"
 msgstr "Sträck ut"
 
 #: plug-ins/ifscompose/ifscompose.c:905
-#, fuzzy
 msgid "Render Options"
 msgstr "Renderingsinställningar"
 
@@ -9420,7 +9414,7 @@ msgstr "Gör om"
 #: plug-ins/ifscompose/ifscompose.c:1244
 #, fuzzy
 msgid "IfsCompose Options"
-msgstr "GIF-inställningar"
+msgstr "IfsKomponera-inställningar"
 
 #: plug-ins/ifscompose/ifscompose.c:1264
 msgid "Max. Memory:"
@@ -9447,7 +9441,7 @@ msgstr "Kopierar IFS till bild (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:47
 msgid "Imagemap plug-in 2.0"
-msgstr ""
+msgstr "Bildkarta insticksmodul 2.0"
 
 #: plug-ins/imagemap/imap_about.c:49
 msgid "Copyright(c) 1999 by Maurits Rijk"
@@ -9526,11 +9520,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:173
 msgid "_Left Start at:"
-msgstr ""
+msgstr "_Vänster börjar vid:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:183
 msgid "_Top Start at:"
-msgstr ""
+msgstr "_Topp börjar vid:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:188
 msgid "_Horz. Spacing"
@@ -9546,7 +9540,7 @@ msgstr "_Vert. mellanrum:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:206
 msgid "No. _Down"
-msgstr "Antal nedåt"
+msgstr "Antal _nedåt"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:214
 msgid "Base _URL:"
@@ -9625,7 +9619,6 @@ msgid "Unselect All"
 msgstr "Avmarkera alla"
 
 #: plug-ins/imagemap/imap_default_dialog.c:143
-#, fuzzy
 msgid "Help..."
 msgstr "Hjälp..."
 
@@ -9667,7 +9660,7 @@ msgstr "e-_post"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "_URL to activate when this area is clicked: (required)"
-msgstr ""
+msgstr "_Url att aktivera när området klickas på: (obligatorisk)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:236
 msgid "Select HTML file"
@@ -9683,7 +9676,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
 msgid "ALT te_xt: (optional)"
-msgstr ""
+msgstr "ALT te_xt: (frivillig)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:257
 msgid "_Link"
@@ -9707,78 +9700,73 @@ msgid "Area Settings"
 msgstr "Inställningar"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:478
-#, fuzzy, c-format
+#, c-format
 msgid "Area #%d Settings"
-msgstr "Inställningar"
+msgstr "Område #%d inställningar"
 
 #: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:75
 msgid "Error opening file"
-msgstr ""
+msgstr "Fel vid öppnande av fil"
 
 #: plug-ins/imagemap/imap_file.c:62
 msgid "Load Imagemap"
-msgstr ""
+msgstr "Läs in bildkarta"
 
 #: plug-ins/imagemap/imap_file.c:85
 msgid "File exists!"
-msgstr ""
+msgstr "Filen finns!"
 
 #: plug-ins/imagemap/imap_file.c:90
 msgid ""
 "File already exists.\n"
 "  Do you really want to overwrite?  "
 msgstr ""
+"Filen finns redan. \n"
+"  Vill du verkligen skriva över den?  "
 
 #: plug-ins/imagemap/imap_file.c:122
 msgid "Save Imagemap"
-msgstr ""
+msgstr "Spara bildkarta"
 
 #: plug-ins/imagemap/imap_file.c:146
 msgid "Error"
 msgstr "Fel"
 
 #: plug-ins/imagemap/imap_grid.c:199
-#, fuzzy
 msgid "Grid Settings"
-msgstr "Inställningar"
+msgstr "Rutnätsinställningar"
 
 #: plug-ins/imagemap/imap_grid.c:210
-#, fuzzy
 msgid "_Snap-To Grid Enabled"
-msgstr "Fäst vid rutnät"
+msgstr "_Fäst vid rutnät aktiverat"
 
 #: plug-ins/imagemap/imap_grid.c:216
 msgid "Grid Visibility and Type"
 msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:223
-#, fuzzy
 msgid "_Hidden"
-msgstr "Gömd"
+msgstr "_Gömd"
 
 #: plug-ins/imagemap/imap_grid.c:231
-#, fuzzy
 msgid "_Lines"
-msgstr "Linjer"
+msgstr "_Linjer"
 
 #: plug-ins/imagemap/imap_grid.c:240
-#, fuzzy
 msgid "C_rosses"
-msgstr "Stäng"
+msgstr "K_ors"
 
 #: plug-ins/imagemap/imap_grid.c:248
 msgid "Grid Granularity"
 msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:256
-#, fuzzy
 msgid "_Width"
-msgstr "Bredd:"
+msgstr "_Bredd"
 
 #: plug-ins/imagemap/imap_grid.c:262
-#, fuzzy
 msgid "_Height"
-msgstr "Höjd:"
+msgstr "_Höjd"
 
 #: plug-ins/imagemap/imap_grid.c:276
 msgid "Grid Offset"
@@ -9786,98 +9774,98 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_grid.c:284
 msgid "pixels from l_eft"
-msgstr ""
+msgstr "Bildpunkter från _vänster"
 
 #: plug-ins/imagemap/imap_grid.c:289
 msgid "pixels from _top"
-msgstr ""
+msgstr "Bildpunkter från _toppen"
 
 #: plug-ins/imagemap/imap_grid.c:300
-#, fuzzy
 msgid "_Preview"
-msgstr "Förhandsgranska"
+msgstr "_Förhandsgranska"
 
 #: plug-ins/imagemap/imap_main.c:151
 msgid "<Image>/Filters/Web/ImageMap..."
-msgstr ""
+msgstr "<Image>/Filter/Webb/Bildkarta..."
 
 #: plug-ins/imagemap/imap_main.c:668
 msgid "Data changed"
-msgstr ""
+msgstr "Data är ändrat"
 
 #: plug-ins/imagemap/imap_main.c:672
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
 msgstr ""
+"En del data är ändrat. \n"
+"Vill du verkligen överge dina ändringar?"
 
 #: plug-ins/imagemap/imap_main.c:881
 #, c-format
 msgid "File \"%s\" saved."
-msgstr ""
+msgstr "Fil \"%s\" sparad."
 
 #: plug-ins/imagemap/imap_main.c:885
 msgid "Couldn't save file:"
-msgstr ""
+msgstr "Kunde inte spara filen:"
 
 #: plug-ins/imagemap/imap_main.c:910
 msgid "Image size changed"
-msgstr ""
+msgstr "Bildstorlek ändrad"
 
 #: plug-ins/imagemap/imap_main.c:914
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
 msgstr ""
+"Bildstorleken är ändrad.\n"
+"Ändra områdesstorlekarna?"
 
 #: plug-ins/imagemap/imap_main.c:945
 msgid "Couldn't read file:"
-msgstr ""
+msgstr "Kunde inte läsa in fil:"
 
 #: plug-ins/imagemap/imap_main.c:991
 #, c-format
 msgid "URL: %s"
-msgstr ""
+msgstr "URL: %s"
 
 #: plug-ins/imagemap/imap_menu.c:220
-#, fuzzy
 msgid "_File"
-msgstr "Fil"
+msgstr "_Fil"
 
 # src/menus.c:302
 #: plug-ins/imagemap/imap_menu.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Ångra"
+msgstr "_Ångra %s"
 
 # src/menus.c:306
 #: plug-ins/imagemap/imap_menu.c:264
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "Gör om"
+msgstr "_Gör om %s"
 
 #: plug-ins/imagemap/imap_menu.c:307
-#, fuzzy
 msgid "Select _All"
-msgstr "Markera allt"
+msgstr "Markera _allt"
 
 #: plug-ins/imagemap/imap_menu.c:314
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "Redigera områdesinformation..."
 
 #: plug-ins/imagemap/imap_menu.c:326
-#, fuzzy
 msgid "_View"
-msgstr "Vy"
+msgstr "_Vy"
 
 #: plug-ins/imagemap/imap_menu.c:330
 #, fuzzy
 msgid "Area List"
-msgstr "Inställningar"
+msgstr "Områdeslista"
 
 #: plug-ins/imagemap/imap_menu.c:334
 msgid "Source..."
-msgstr ""
+msgstr "Källa..."
 
 #: plug-ins/imagemap/imap_menu.c:342 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
@@ -9885,12 +9873,11 @@ msgstr "Gråtoner"
 
 #: plug-ins/imagemap/imap_menu.c:360
 msgid "Zoom To"
-msgstr ""
+msgstr "Zooma till"
 
 #: plug-ins/imagemap/imap_menu.c:390
-#, fuzzy
 msgid "_Mapping"
-msgstr "Koppling"
+msgstr "_Koppling"
 
 #: plug-ins/imagemap/imap_menu.c:393 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
@@ -9898,60 +9885,52 @@ msgstr "Pil"
 
 #: plug-ins/imagemap/imap_menu.c:410
 msgid "_Goodies"
-msgstr ""
+msgstr "_Godsaker"
 
 #: plug-ins/imagemap/imap_menu.c:412 plug-ins/imagemap/imap_popup.c:154
-#, fuzzy
 msgid "Grid Settings..."
-msgstr "Inställningar"
+msgstr "Rutnätsinställingar..."
 
 #: plug-ins/imagemap/imap_menu.c:414
 msgid "Create Guides..."
-msgstr ""
+msgstr "Skapa hjälplinjer..."
 
 #: plug-ins/imagemap/imap_menu.c:421
-#, fuzzy
 msgid "_Help"
-msgstr "Hjälp"
+msgstr "_Hjälp"
 
 #: plug-ins/imagemap/imap_menu.c:424
-#, fuzzy
 msgid "About ImageMap..."
-msgstr "Om..."
+msgstr "Om Bildkarta..."
 
 #: plug-ins/imagemap/imap_polygon.c:77
-#, fuzzy
 msgid "_Polygon"
-msgstr "Polygon"
+msgstr "_Polygon"
 
 #: plug-ins/imagemap/imap_polygon.c:399
 msgid "x (pixels)"
-msgstr ""
+msgstr "x (bildpunkter)"
 
 #: plug-ins/imagemap/imap_polygon.c:399
 msgid "y (pixels)"
-msgstr ""
+msgstr "y (bildpunkter)"
 
 # src/menus.c:293
 #: plug-ins/imagemap/imap_polygon.c:456
-#, fuzzy
 msgid "_Update"
-msgstr "Uppdatera"
+msgstr "_Uppdatera"
 
 #: plug-ins/imagemap/imap_polygon.c:462
-#, fuzzy
 msgid "_Insert"
-msgstr "Lägg till"
+msgstr "_Lägg till"
 
 #: plug-ins/imagemap/imap_polygon.c:468
-#, fuzzy
 msgid "A_ppend"
-msgstr "Lägg till"
+msgstr "Lägg till i _slutet"
 
 #: plug-ins/imagemap/imap_polygon.c:474
-#, fuzzy
 msgid "_Remove"
-msgstr "Ta bort"
+msgstr "_Ta bort"
 
 #: plug-ins/imagemap/imap_popup.c:133
 msgid "Tools"
@@ -9963,11 +9942,11 @@ msgstr "Zooma"
 
 #: plug-ins/imagemap/imap_popup.c:156
 msgid "Guides..."
-msgstr ""
+msgstr "Hjälplinjer..."
 
 #: plug-ins/imagemap/imap_preferences.c:213
 msgid "Couldn't save resource file:"
-msgstr ""
+msgstr "Kunde inte spara resursfil:"
 
 #: plug-ins/imagemap/imap_preferences.c:365
 msgid "Select Color"
@@ -9975,19 +9954,19 @@ msgstr "Välj färg"
 
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "Default Map Type"
-msgstr ""
+msgstr "Standardkarttyp"
 
 #: plug-ins/imagemap/imap_preferences.c:461
 msgid "_Prompt for area info"
-msgstr ""
+msgstr "_Fråga efter områdesinfo"
 
 #: plug-ins/imagemap/imap_preferences.c:463
 msgid "_Require default URL"
-msgstr ""
+msgstr "_Kräv standard-URL"
 
 #: plug-ins/imagemap/imap_preferences.c:465
 msgid "Show area _handles"
-msgstr ""
+msgstr "Visa områdeshandtag"
 
 #: plug-ins/imagemap/imap_preferences.c:467
 msgid "_Keep NCSA circles true"
@@ -10002,55 +9981,51 @@ msgid "_Use double-sized grab handles"
 msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:475
-#, fuzzy
 msgid "_General"
-msgstr "Allmänt"
+msgstr "_Allmänt"
 
 #: plug-ins/imagemap/imap_preferences.c:497
 msgid "Number of Undo _levels (1 - 99):"
-msgstr ""
+msgstr "Antal ångra_nivåer (1 - 99):"
 
 #: plug-ins/imagemap/imap_preferences.c:502
 #, fuzzy
 msgid "Number of MRU _entries (1 - 16):"
-msgstr "magenta"
+msgstr "Antal MRU-_poster (1 - 16):"
 
 #: plug-ins/imagemap/imap_preferences.c:505
-#, fuzzy
 msgid "_Menu"
-msgstr "Meny"
+msgstr "_Meny"
 
 #: plug-ins/imagemap/imap_preferences.c:541
 msgid "Normal:"
-msgstr ""
+msgstr "Normal:"
 
 #: plug-ins/imagemap/imap_preferences.c:547
 msgid "Selected:"
-msgstr ""
+msgstr "Vald:"
 
 #: plug-ins/imagemap/imap_preferences.c:575
 msgid "General Preferences"
-msgstr ""
+msgstr "Allmänna inställningar"
 
 #: plug-ins/imagemap/imap_rectangle.c:66
-#, fuzzy
 msgid "_Rectangle"
-msgstr "Rektangel"
+msgstr "_Rektangel"
 
 #: plug-ins/imagemap/imap_rectangle.c:387
 msgid "Upper left _x:"
-msgstr ""
+msgstr "Övre vänstra _x:"
 
 #: plug-ins/imagemap/imap_rectangle.c:394
 msgid "Upper left _y:"
-msgstr ""
+msgstr "Övre högra _y:"
 
 #: plug-ins/imagemap/imap_selection.c:347
 msgid "URL"
 msgstr "URL"
 
 #: plug-ins/imagemap/imap_selection.c:347
-#, fuzzy
 msgid "Target"
 msgstr "Mål"
 
@@ -10061,40 +10036,35 @@ msgstr "Kommentar"
 
 #: plug-ins/imagemap/imap_settings.c:94
 msgid "Settings for this Mapfile"
-msgstr ""
+msgstr "Inställningar för den här kartfilen"
 
 #: plug-ins/imagemap/imap_settings.c:108
-#, fuzzy
 msgid "Image name:"
-msgstr "magenta"
+msgstr "Bildnamn:"
 
 #: plug-ins/imagemap/imap_settings.c:109
 msgid "Select Image File"
-msgstr ""
+msgstr "Välj bildfil"
 
 #: plug-ins/imagemap/imap_settings.c:113
-#, fuzzy
 msgid "_Title:"
-msgstr "Titel:"
+msgstr "_Titel:"
 
 #: plug-ins/imagemap/imap_settings.c:115
-#, fuzzy
 msgid "Aut_hor:"
-msgstr "Författare:"
+msgstr "För_fattare:"
 
 #: plug-ins/imagemap/imap_settings.c:117
-#, fuzzy
 msgid "Default _URL:"
-msgstr "Standard"
+msgstr "Standard-_URL_"
 
 #: plug-ins/imagemap/imap_settings.c:119
-#, fuzzy
 msgid "_Description:"
-msgstr "Beskrivning:"
+msgstr "_Beskrivning:"
 
 #: plug-ins/imagemap/imap_settings.c:134
 msgid "Map file format"
-msgstr ""
+msgstr "Kartfilformat"
 
 #: plug-ins/imagemap/imap_source.c:70
 msgid "View Source"
@@ -10120,47 +10090,47 @@ msgstr "Zooma ut"
 
 #: plug-ins/imagemap/imap_toolbar.c:147
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Redigera kartinfo"
 
 #: plug-ins/imagemap/imap_tools.c:130
 msgid "Select existing area"
-msgstr ""
+msgstr "Välj befintligt område"
 
 #: plug-ins/imagemap/imap_tools.c:134
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Definiera rektangelområde"
 
 #: plug-ins/imagemap/imap_tools.c:138
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Definiera cirkulärt/ovalt område"
 
 #: plug-ins/imagemap/imap_tools.c:142
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Definiera polygonområde"
 
 #: plug-ins/imagemap/imap_tools.c:147
 msgid "Edit selected area info"
-msgstr ""
+msgstr "Redigera info för valt område"
 
 #: plug-ins/imagemap/imap_tools.c:152
 msgid "Delete selected area"
-msgstr ""
+msgstr "Ta bort valt område"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Skapar labyrint med Prims algoritm..."
 
 #: plug-ins/maze/algorithms.c:458
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Skapar upprepningsbar labyrint med Prims algoritm..."
 
 #: plug-ins/maze/maze.c:160
 msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr ""
+msgstr "<Image>/Filter/Rendera/Mönster/Labyrint..."
 
 #: plug-ins/maze/maze.c:407
 msgid "Drawing Maze..."
-msgstr ""
+msgstr "Ritar labyrint..."
 
 #: plug-ins/maze/maze_face.c:194
 msgid "Help"
@@ -10169,63 +10139,64 @@ msgstr "Hjälp"
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:222
 msgid "Width (Pixels):"
-msgstr ""
+msgstr "Bredd (bildpunkter):"
 
 #: plug-ins/maze/maze_face.c:234 plug-ins/maze/maze_face.c:250
 msgid "Pieces:"
-msgstr ""
+msgstr "Delar:"
 
 #: plug-ins/maze/maze_face.c:239
 msgid "Height (Pixels):"
-msgstr ""
+msgstr "Höjd (bildpunkter):"
 
 #: plug-ins/maze/maze_face.c:262
 msgid "Multiple (57):"
-msgstr ""
+msgstr "Multiplikator (57):"
 
 #: plug-ins/maze/maze_face.c:275
 msgid "Offset (1):"
-msgstr ""
+msgstr "Offset (1):"
 
 #: plug-ins/maze/maze_face.c:306
 msgid "Depth First"
-msgstr ""
+msgstr "Djupet först"
 
 #: plug-ins/maze/maze_face.c:313
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Prims algoritm"
 
 #: plug-ins/maze/maze_face.c:332
 #, c-format
 msgid "Selection is %dx%d"
-msgstr ""
+msgstr "Urvalet är %dx%d"
 
 #: plug-ins/maze/maze_face.c:439
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"Urvalsstorleken är inte jämn.\n"
+"Upprepningsbar labyrint kommer inte fungera bra."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:608
-#, fuzzy, c-format
+#, c-format
 msgid "Opening %s"
-msgstr "Sparar %s:"
+msgstr "Öppnar %s:"
 
 #: plug-ins/maze/maze_face.c:619
 #, c-format
 msgid "See %s"
-msgstr ""
+msgstr "Se %s"
 
 #: plug-ins/mosaic/mosaic.c:332
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Mosaic..."
-msgstr "<Image>/Filter/Färger/Karta/Rymdkarta..."
+msgstr "<Image>/Filter/Störningar/Mosaik..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:457
 msgid "Finding Edges..."
-msgstr ""
+msgstr "Hittar kanter..."
 
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:521
@@ -10234,12 +10205,12 @@ msgstr ""
 
 #: plug-ins/mosaic/mosaic.c:550
 msgid "Mosaic"
-msgstr ""
+msgstr "Mosaik"
 
 #: plug-ins/mosaic/mosaic.c:619
 #, fuzzy
 msgid "Co_lor Averaging"
-msgstr "Ingen färgdithering"
+msgstr "Fä_rgmedelvärdar"
 
 #: plug-ins/mosaic/mosaic.c:629
 msgid "Allo_w Tile splitting"
@@ -10247,11 +10218,11 @@ msgstr ""
 
 #: plug-ins/mosaic/mosaic.c:639
 msgid "_Pitted Surfaces"
-msgstr ""
+msgstr "_Gropiga ytor"
 
 #: plug-ins/mosaic/mosaic.c:649
 msgid "_FG/BG Lighting"
-msgstr ""
+msgstr "_FG/BG ljussättning"
 
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:664
@@ -10259,17 +10230,16 @@ msgid "Tiling Primitives"
 msgstr ""
 
 #: plug-ins/mosaic/mosaic.c:668
-#, fuzzy
 msgid "_Squares"
-msgstr "Kvadrat"
+msgstr "_Kvadrater"
 
 #: plug-ins/mosaic/mosaic.c:670
 msgid "He_xagons"
-msgstr ""
+msgstr "He_xagoner"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Oc_tagons & Squares"
-msgstr ""
+msgstr "O_ktagoner & kvadrater"
 
 #: plug-ins/mosaic/mosaic.c:693
 #, fuzzy
@@ -10287,74 +10257,73 @@ msgid "Tile _Neatness:"
 msgstr "Brickhöjd:"
 
 #: plug-ins/mosaic/mosaic.c:730
-#, fuzzy
 msgid "Light _Direction:"
-msgstr "Riktning"
+msgstr "Ljus_riktning"
 
 #: plug-ins/mosaic/mosaic.c:739
-#, fuzzy
 msgid "Color _Variation:"
-msgstr "Mättnad"
+msgstr "Färg_variation:"
 
 #: plug-ins/mosaic/mosaic.c:2508
 msgid "Unable to add additional point.\n"
-msgstr ""
+msgstr "Kan inte lägga till ännu en punkt.\n"
 
 #: plug-ins/pagecurl/pagecurl.c:219
 msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr ""
+msgstr "<Image>/Filter/Störningar/Sidkrusning..."
 
 #: plug-ins/pagecurl/pagecurl.c:505
 msgid "Pagecurl Effect"
-msgstr ""
+msgstr "Sidkrusningseffekt"
 
 #: plug-ins/pagecurl/pagecurl.c:527
 #, fuzzy
 msgid "Curl Location"
-msgstr "Mättnad"
+msgstr "Krusningens placering"
 
 #: plug-ins/pagecurl/pagecurl.c:552
 msgid "Upper Left"
-msgstr ""
+msgstr "Uppe till vänster"
 
 #: plug-ins/pagecurl/pagecurl.c:553
 msgid "Upper Right"
-msgstr ""
+msgstr "Uppe till höger"
 
 #: plug-ins/pagecurl/pagecurl.c:554
 msgid "Lower Left"
-msgstr ""
+msgstr "Nere till vänster"
 
 #: plug-ins/pagecurl/pagecurl.c:555
 msgid "Lower Right"
-msgstr ""
+msgstr "Nere till höger"
 
 #: plug-ins/pagecurl/pagecurl.c:585
 msgid "Curl Orientation"
-msgstr ""
+msgstr "Krusningens riktning"
 
 #: plug-ins/pagecurl/pagecurl.c:624
 msgid "Shade under Curl"
-msgstr ""
+msgstr "Skugga under krusning"
 
 #: plug-ins/pagecurl/pagecurl.c:635
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
+"Använd nuvarande färgskala istället\n"
+"för förgrunds/bakgrunds-färg"
 
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Curl Opacity"
-msgstr ""
+msgstr "Krusningens genomskinlighet"
 
 #: plug-ins/pagecurl/pagecurl.c:778
-#, fuzzy
 msgid "Curl Layer"
-msgstr "Mättnad"
+msgstr "Lager för krusning"
 
 #: plug-ins/pagecurl/pagecurl.c:1015
 msgid "Page Curl..."
-msgstr ""
+msgstr "Sidkrusning..."
 
 #: plug-ins/print/gimp_color_window.c:184
 msgid "Print Color Adjust"
@@ -10370,9 +10339,8 @@ msgid "Close"
 msgstr "Stäng"
 
 #: plug-ins/print/gimp_color_window.c:221
-#, fuzzy
 msgid "Image preview"
-msgstr "magenta"
+msgstr "Förhandsgranska bild"
 
 #: plug-ins/print/gimp_color_window.c:231
 msgid "Brightness:"
@@ -10383,27 +10351,28 @@ msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
+"Ställ in utsskriftens ljusstyrka.\n"
+"0 är helt svart, 2 är helt vitt"
 
 #: plug-ins/print/gimp_color_window.c:251
 msgid "Contrast:"
 msgstr "Kontrast:"
 
 #: plug-ins/print/gimp_color_window.c:259
-#, fuzzy
 msgid "Set the contrast of the print"
-msgstr "Rita grafen över inställningarna"
+msgstr "Ställ in utskriftens kontrast"
 
 #: plug-ins/print/gimp_color_window.c:278
 msgid "Adjust the cyan balance of the print"
-msgstr ""
+msgstr "Justera mängden cyan för utskriften"
 
 #: plug-ins/print/gimp_color_window.c:297
 msgid "Adjust the magenta balance of the print"
-msgstr ""
+msgstr "Justera mängden magenta för utskriften"
 
 #: plug-ins/print/gimp_color_window.c:316
 msgid "Adjust the yellow balance of the print"
-msgstr ""
+msgstr "Justera mängden gult för utskriften"
 
 #: plug-ins/print/gimp_color_window.c:335
 msgid ""
@@ -10430,7 +10399,6 @@ msgid ""
 msgstr ""
 
 #: plug-ins/print/gimp_color_window.c:394
-#, fuzzy
 msgid "Dither Algorithm:"
 msgstr "Färgutjämningsalgoritm:"
 
@@ -10453,7 +10421,6 @@ msgid "%s -- Print v%s"
 msgstr "%s -- Utskrift v%s"
 
 #: plug-ins/print/gimp_main_window.c:364
-#, fuzzy
 msgid ""
 "Save\n"
 "Settings"
@@ -10462,7 +10429,6 @@ msgstr ""
 "inställningar"
 
 #: plug-ins/print/gimp_main_window.c:367
-#, fuzzy
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -10508,15 +10474,15 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:513
 msgid "Distance from the left of the paper to the image"
-msgstr ""
+msgstr "Avstånd från vänstra papperskanten till bilden"
 
 #: plug-ins/print/gimp_main_window.c:526
 msgid "Distance from the top of the paper to the image"
-msgstr ""
+msgstr "Avstånd från övre papperskanten till bilden"
 
 #: plug-ins/print/gimp_main_window.c:539
 msgid "Distance from the left of the paper to the right of the image"
-msgstr ""
+msgstr "Avstånd från vänstra papperskanten till bildens högrerkant"
 
 #: plug-ins/print/gimp_main_window.c:549
 msgid "Right Border:"
@@ -10524,14 +10490,13 @@ msgstr "Högerkant:"
 
 #: plug-ins/print/gimp_main_window.c:553
 msgid "Distance from the right of the paper to the image"
-msgstr ""
+msgstr "Avstånd från högra papperskanten till bilden"
 
 #: plug-ins/print/gimp_main_window.c:567
 msgid "Distance from the top of the paper to the bottom of the image"
-msgstr ""
+msgstr "Avstånd från övre papperskanten till bildens nederkant"
 
 #: plug-ins/print/gimp_main_window.c:577
-#, fuzzy
 msgid "Bottom Border:"
 msgstr "Nederkant:"
 
@@ -10544,13 +10509,12 @@ msgid "Center:"
 msgstr "Mittpunkt:"
 
 #: plug-ins/print/gimp_main_window.c:602
-#, fuzzy
 msgid "Vertically"
 msgstr "Vertikalt"
 
 #: plug-ins/print/gimp_main_window.c:607
 msgid "Center the image vertically on the paper"
-msgstr ""
+msgstr "Centrera bilden vertikalt på papperet"
 
 # src/dialogs.c:502 src/dialogs.c:600
 #: plug-ins/print/gimp_main_window.c:613
@@ -10559,33 +10523,30 @@ msgstr "Både och"
 
 #: plug-ins/print/gimp_main_window.c:618
 msgid "Center the image on the paper"
-msgstr ""
+msgstr "Centrera bilden på papperet"
 
 #: plug-ins/print/gimp_main_window.c:625
-#, fuzzy
 msgid "Horizontally"
-msgstr "Vågrät"
+msgstr "Vågrätt"
 
 #: plug-ins/print/gimp_main_window.c:630
 msgid "Center the image horizontally on the paper"
-msgstr ""
+msgstr "Centrera bilden horisontellt på papperet"
 
 #: plug-ins/print/gimp_main_window.c:646
-#, fuzzy
 msgid "Setup Printer"
-msgstr "Skrivare:"
+msgstr "Ställ in skrivare"
 
 #.
 #. * Printer driver option menu.
 #.
 #: plug-ins/print/gimp_main_window.c:675 plug-ins/print/gimp_main_window.c:934
-#, fuzzy
 msgid "Printer Model:"
 msgstr "Skrivarmodell:"
 
 #: plug-ins/print/gimp_main_window.c:687
 msgid "Select your printer model"
-msgstr ""
+msgstr "Välj din skrivarmodell"
 
 #.
 #. * PPD file.
@@ -10635,26 +10596,24 @@ msgid "PPD File?"
 msgstr "PPD-fil?"
 
 #: plug-ins/print/gimp_main_window.c:816
-#, fuzzy
 msgid "Define New Printer"
-msgstr "Ta bort punkt"
+msgstr "Skapa ny skrivare"
 
 #: plug-ins/print/gimp_main_window.c:838 plug-ins/print/gimp_main_window.c:929
-#, fuzzy
 msgid "Printer Name:"
-msgstr "Skrivare:"
+msgstr "Skrivarnamn:"
 
 #: plug-ins/print/gimp_main_window.c:842
 msgid "Enter the name you wish to give this logical printer"
-msgstr ""
+msgstr "Ange namnet du vill tilldela till den logiska skrivaren"
 
 #: plug-ins/print/gimp_main_window.c:854
 msgid "About Gimp-Print "
-msgstr ""
+msgstr "Om Gimp-Print "
 
 #: plug-ins/print/gimp_main_window.c:864
 msgid "Gimp-Print Version "
-msgstr ""
+msgstr "Gimp-Print version "
 
 #: plug-ins/print/gimp_main_window.c:864
 msgid ""
@@ -10679,9 +10638,26 @@ msgid ""
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
+"\n"
+"\n"
+"Copyright © 1997-2001 Michael Sweet, Robert Krawitz,\n"
+"Och resten av Gimp-Print utvecklingsteamet.\n"
+"\n"
+"Besök gärna vår webbsite på http://gimp-print.sourceforge.net.\n"
+"\n"
+"Detta program är fri programvara. Du kan distribuera det och/eller\n"
+"modifiera det under villkoren i GNU General Public License, publicerad\n"
+"av Free Software Foundation, antingen version 2 eller (om du så vill)\n"
+"någon senare version.\n"
+"Detta program distribueras i hopp om att det ska vara användbart,\n"
+"men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti\n"
+"om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL.\n"
+"Se GNU General Public License för ytterligare information.\n"
+"Du bör ha fått en kopia av GNU General Public License tillsammans\n"
+"med detta program. Om inte, skriv till Free Software Foundation,\n"
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
 #: plug-ins/print/gimp_main_window.c:912
-#, fuzzy
 msgid "Printer Settings"
 msgstr "Skrivarinställningar"
 
@@ -10695,9 +10671,8 @@ msgstr ""
 #. * Setup printer button
 #.
 #: plug-ins/print/gimp_main_window.c:945
-#, fuzzy
 msgid "Setup Printer..."
-msgstr " interlaced"
+msgstr "Ställ in skrivare..."
 
 #: plug-ins/print/gimp_main_window.c:947
 msgid ""
@@ -10709,9 +10684,8 @@ msgstr ""
 #. * New printer button
 #.
 #: plug-ins/print/gimp_main_window.c:962
-#, fuzzy
 msgid "New Printer..."
-msgstr " interlaced"
+msgstr "Ny skrivare..."
 
 #: plug-ins/print/gimp_main_window.c:964
 msgid ""
@@ -10721,7 +10695,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:985
 msgid "Size of paper that you wish to print to"
-msgstr ""
+msgstr "Pappersstorlek du vill skriva ut på"
 
 #: plug-ins/print/gimp_main_window.c:988
 msgid "Media Size:"
@@ -10734,11 +10708,11 @@ msgstr "Storlekar"
 
 #: plug-ins/print/gimp_main_window.c:1011
 msgid "Width of the paper that you wish to print to"
-msgstr ""
+msgstr "Bredd på papperet du vill skriva ut på"
 
 #: plug-ins/print/gimp_main_window.c:1028
 msgid "Height of the paper that you wish to print to"
-msgstr ""
+msgstr "Längd på papperet du vill skriva ut på"
 
 #: plug-ins/print/gimp_main_window.c:1044
 msgid "Type of media you're printing to"
@@ -10758,31 +10732,31 @@ msgstr "Mediakälla:"
 
 #: plug-ins/print/gimp_main_window.c:1076
 msgid "Type of ink in the printer"
-msgstr ""
+msgstr "Bläcksort i skrivaren"
 
 #: plug-ins/print/gimp_main_window.c:1079
-#, fuzzy
 msgid "Ink Type:"
-msgstr "Bläcktyp:"
+msgstr "Bläcksort:"
 
 #: plug-ins/print/gimp_main_window.c:1092
 msgid "Resolution and quality of the print"
-msgstr ""
+msgstr "Upplösning och kvalitet på utskriften"
 
 #: plug-ins/print/gimp_main_window.c:1131
 msgid "Scaling:"
 msgstr "Skalning:"
 
 #: plug-ins/print/gimp_main_window.c:1137
-#, fuzzy
 msgid "Set the scale (size) of the image"
-msgstr "Första raden i bilden"
+msgstr "Sätt skalan (storleken) på bilden"
 
 #: plug-ins/print/gimp_main_window.c:1170
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
+"Välj om skalan mäts i procent av pappersstorleken eller i antal punkter per "
+"tum vid utskriften"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid "Percent"
@@ -10815,11 +10789,11 @@ msgstr "Enheter:"
 
 #: plug-ins/print/gimp_main_window.c:1258
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "Sätt måttenheten för utskrifter"
 
 #: plug-ins/print/gimp_main_window.c:1268
 msgid "Set the base unit of measurement to inches"
-msgstr ""
+msgstr "Sätt måttenheten till tum"
 
 #: plug-ins/print/gimp_main_window.c:1274
 msgid "cm"
@@ -10827,7 +10801,7 @@ msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:1280
 msgid "Set the base unit of measurement to centimetres"
-msgstr ""
+msgstr "Sätt måttenheten till centimeter"
 
 #.
 #. * The "image size" button
@@ -10837,10 +10811,12 @@ msgid ""
 "Use Original\n"
 "Image Size"
 msgstr ""
+"Använd ursprunglig\n"
+"bildstorlek"
 
 #: plug-ins/print/gimp_main_window.c:1296
 msgid "Set the print size to the size of the image"
-msgstr ""
+msgstr "Sätt utskriftsstorleken till bildens storlek"
 
 #: plug-ins/print/gimp_main_window.c:1319
 #, fuzzy
@@ -10848,9 +10824,8 @@ msgid "Image / Output Settings"
 msgstr "Inställningar"
 
 #: plug-ins/print/gimp_main_window.c:1332
-#, fuzzy
 msgid "Image Type:"
-msgstr "magenta"
+msgstr "Bildtyp:"
 
 #: plug-ins/print/gimp_main_window.c:1337
 msgid "Optimize the output for the type of image being printed"
@@ -10862,7 +10837,7 @@ msgstr "Linjegrafik"
 
 #: plug-ins/print/gimp_main_window.c:1348
 msgid "Fastest and brightest color for text and line art"
-msgstr ""
+msgstr "Snabbast, och med ljusaste färg för text och linjegrafik"
 
 #: plug-ins/print/gimp_main_window.c:1355
 msgid "Solid Colors"
@@ -10870,7 +10845,7 @@ msgstr "Enstaka färger"
 
 #: plug-ins/print/gimp_main_window.c:1362
 msgid "Best for images dominated by regions of solid color"
-msgstr ""
+msgstr "Bästa val för bilder med stora områden med enstaka färger"
 
 #: plug-ins/print/gimp_main_window.c:1370
 msgid "Photograph"
@@ -10881,6 +10856,8 @@ msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
 msgstr ""
+"Långsammast, men noggrannast och med mjukaste färg för mjukt graderade "
+"bilder och fotografier"
 
 #: plug-ins/print/gimp_main_window.c:1404
 msgid "Output Type:"
@@ -10888,7 +10865,7 @@ msgstr "Utdatatyp:"
 
 #: plug-ins/print/gimp_main_window.c:1409
 msgid "Select the desired output type"
-msgstr ""
+msgstr "Välj den önskade utskriftstypen"
 
 #: plug-ins/print/gimp_main_window.c:1418
 #, fuzzy
@@ -10897,23 +10874,22 @@ msgstr "Färgläge"
 
 #: plug-ins/print/gimp_main_window.c:1430
 msgid "Print in shades of gray using black ink"
-msgstr ""
+msgstr "Skriv ut i gråskala med svart bläck"
 
 #: plug-ins/print/gimp_main_window.c:1437
-#, fuzzy
 msgid "Black and White"
-msgstr "Svart & Vit"
+msgstr "Svart och vitt"
 
 #: plug-ins/print/gimp_main_window.c:1444
 msgid "Print in black and white (no color, and no shades of gray)"
-msgstr ""
+msgstr "Skriv ut i svart och vitt (ingen färg och inga gråskalor)"
 
 #.
 #. *  Color adjust button
 #.
 #: plug-ins/print/gimp_main_window.c:1455
 msgid "Adjust Output..."
-msgstr ""
+msgstr "Justera utskrift..."
 
 #: plug-ins/print/gimp_main_window.c:1462
 msgid ""
@@ -10932,27 +10908,27 @@ msgstr "Fil"
 #: plug-ins/rcm/rcm.c:113
 #, fuzzy
 msgid "<Image>/Layer/Colors/Colormap Rotation..."
-msgstr "<Image>/Filter/Färger/Karta/Rymdkarta..."
+msgstr "<Image>/Filter/Färger/Rotera färgkarta..."
 
 #: plug-ins/rcm/rcm.c:276
 msgid "Rotating the colormap..."
-msgstr ""
+msgstr "Roterar färgkartan..."
 
 #: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 msgid "Switch to clockwise"
-msgstr ""
+msgstr "Byt till medurs"
 
 #: plug-ins/rcm/rcm_callback.c:162 plug-ins/rcm/rcm_dialog.c:277
 msgid "Switch to c/clockwise"
-msgstr ""
+msgstr "Byt till moturs"
 
 #: plug-ins/rcm/rcm_dialog.c:127
 msgid "Rotated"
-msgstr ""
+msgstr "Roterad"
 
 #: plug-ins/rcm/rcm_dialog.c:286
 msgid "Change order of arrows"
-msgstr ""
+msgstr "Byt ordning på pilarna"
 
 #: plug-ins/rcm/rcm_dialog.c:293
 msgid "Select all"
@@ -10990,38 +10966,36 @@ msgstr "Enheter"
 #. Misc: Used unit selection: 3 radio buttons
 #: plug-ins/rcm/rcm_dialog.c:636
 msgid "Radians"
-msgstr ""
+msgstr "Radianer"
 
 #: plug-ins/rcm/rcm_dialog.c:648
 msgid "Radians/Pi"
-msgstr ""
+msgstr "Radianer/pi"
 
 #: plug-ins/rcm/rcm_dialog.c:660
-#, fuzzy
 msgid "Degrees"
-msgstr "grön"
+msgstr "Grader"
 
 #: plug-ins/rcm/rcm_dialog.c:682
 msgid "Continuous update"
-msgstr ""
+msgstr "Ständig uppdatering"
 
 #: plug-ins/rcm/rcm_dialog.c:696
 msgid "Area:"
-msgstr ""
+msgstr "Område:"
 
 #: plug-ins/rcm/rcm_dialog.c:703
-#, fuzzy
 msgid "Entire Layer"
-msgstr "Mättnad"
+msgstr "Hela lagret"
 
 #: plug-ins/rcm/rcm_dialog.c:721
 msgid "Context"
-msgstr ""
+msgstr "Kontext"
 
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:774
 msgid "Colormap Rotation"
-msgstr ""
+msgstr "Rotera färgkarta"
 
 #: plug-ins/rcm/rcm_dialog.c:826
 msgid "Main"
@@ -11034,22 +11008,20 @@ msgstr "Diverse"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/sel2path/pxl-outline.c:83
-#, fuzzy
 msgid "Selection to Path..."
-msgstr "Val"
+msgstr "Val till slinga..."
 
 #: plug-ins/sel2path/sel2path.c:155
 msgid "<Image>/Select/To Path"
-msgstr ""
+msgstr "<Image>/Välj/Till slinga"
 
 #: plug-ins/sel2path/sel2path.c:202
 msgid "No selection to convert"
-msgstr ""
+msgstr "Inget val att konvertera"
 
 #: plug-ins/sel2path/sel2path.c:327
-#, fuzzy
 msgid "Sel2Path Advanced Settings"
-msgstr "Inställningar"
+msgstr "Sel2Path avancerade inställningar"
 
 #: plug-ins/sel2path/sel2path.c:537
 #, c-format
@@ -11069,9 +11041,8 @@ msgid "Internal error. Selection bpp > 1"
 msgstr ""
 
 #: plug-ins/sgi/sgi.c:630
-#, fuzzy
 msgid "Save as SGI"
-msgstr "Spara som GIF"
+msgstr "Spara som SGI"
 
 #: plug-ins/sgi/sgi.c:647
 msgid "Compression Type"
@@ -11082,7 +11053,6 @@ msgid "No Compression"
 msgstr "Ingen komprimering"
 
 #: plug-ins/sgi/sgi.c:654
-#, fuzzy
 msgid "RLE Compression"
 msgstr "RLE-komprimering"
 
@@ -11091,19 +11061,21 @@ msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
 msgstr ""
+"Aggressiv RLE\n"
+"(stöds inte av SGI)"
 
 #: plug-ins/twain/twain.c:535
 msgid "<Toolbox>/File/Acquire/TWAIN..."
-msgstr ""
+msgstr "<Toolbox>/Arkiv/Inhämta/TWAIN..."
 
 #. Initialize our progress dialog
 #: plug-ins/twain/twain.c:667
 msgid "Transferring TWAIN data"
-msgstr ""
+msgstr "Överför TWAIN-data"
 
 #: plug-ins/webbrowser/webbrowser.c:140
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Webbläsare/Öppna URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:273
 msgid "Open URL"
@@ -11123,39 +11095,39 @@ msgstr "Ström"
 
 #: plug-ins/winsnap/winsnap.c:946
 msgid "Grab a single window"
-msgstr ""
+msgstr "Fånga ett fönster"
 
 #: plug-ins/winsnap/winsnap.c:957
 msgid "Include decorations"
-msgstr ""
+msgstr "Ta med fönsterkanten"
 
 #: plug-ins/winsnap/winsnap.c:993
 msgid "Grab the whole screen"
-msgstr ""
+msgstr "Fånga hela skärmbilden"
 
 #: plug-ins/winsnap/winsnap.c:1222
 msgid "No data captured"
-msgstr ""
+msgstr "Inga data fångade"
 
 #: plug-ins/xjt/xjt.c:661
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr ""
+msgstr "XJT-fil innehåller okänt lagerläge %d"
 
 #: plug-ins/xjt/xjt.c:691
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
-msgstr ""
+msgstr "Varning: lagerläge %d, som inte stöds, sparad till XJT"
 
 #: plug-ins/xjt/xjt.c:707
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr ""
+msgstr "XJT-fil innehåller okänd slingtyp %d"
 
 #: plug-ins/xjt/xjt.c:723
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
-msgstr ""
+msgstr "Varning: slingväg %d, som inte stöds, sparad till XJT"
 
 #: plug-ins/xjt/xjt.c:743
 #, c-format
@@ -11168,14 +11140,12 @@ msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
 
 #: plug-ins/xjt/xjt.c:785
-#, fuzzy
 msgid "Save as XJT"
-msgstr "Spara som GIF"
+msgstr "Spara som XJT"
 
 #: plug-ins/xjt/xjt.c:823
-#, fuzzy
 msgid "Clear Transparent"
-msgstr "Transparent"
+msgstr "Rensa transparent"
 
 #: plug-ins/xjt/xjt.c:1219
 #, fuzzy, c-format
@@ -11184,7 +11154,7 @@ msgstr "GIF: kan ej öppna %s\n"
 
 #: plug-ins/xjt/xjt.c:1620
 msgid "xjt: cannot operate on indexed color images"
-msgstr ""
+msgstr "xjt: kan inte arbeta med indexerade färgbilder"
 
 #: plug-ins/xjt/xjt.c:1624
 msgid "xjt: cannot operate on unknown image types"
@@ -11193,12 +11163,12 @@ msgstr "xjt: Kan inte arbeta med okända bildtyper"
 #: plug-ins/xjt/xjt.c:1639 plug-ins/xjt/xjt.c:3257
 #, c-format
 msgid "Can't create working dir: %s"
-msgstr ""
+msgstr "Kan inte skapa arbetskatalog: %s"
 
 #: plug-ins/xjt/xjt.c:1648
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open: %s"
-msgstr "GIF: kan ej öppna %s\n"
+msgstr "Kan ej öppna: %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2469 plug-ins/xjt/xjt.c:2476
@@ -11219,9 +11189,8 @@ msgstr ""
 #~ msgid "Repeat:"
 #~ msgstr "Upprepa:"
 
-#, fuzzy
 #~ msgid "Check _Size:"
-#~ msgstr "Rutstorlek:"
+#~ msgstr "Rut_storlek:"
 
 #~ msgid "Horizontal:"
 #~ msgstr "Horisontellt:"
@@ -11268,9 +11237,8 @@ msgstr ""
 #~ msgid "Reset to Defaults"
 #~ msgstr "Återställ till satndardvärden"
 
-#, fuzzy
 #~ msgid "Contents"
-#~ msgstr "GIF-kommentar: "
+#~ msgstr "Innehåll"
 
 #~ msgid "Index"
 #~ msgstr "Index"
@@ -11278,9 +11246,8 @@ msgstr ""
 #~ msgid "Print"
 #~ msgstr "Skriv ut"
 
-#, fuzzy
 #~ msgid "Set Image Scale"
-#~ msgstr "magenta"
+#~ msgstr "Ange bildskala"
 
 #~ msgid "Monochrome"
 #~ msgstr "Enfärgad"
@@ -11294,9 +11261,8 @@ msgstr ""
 #~ msgid "File already exists"
 #~ msgstr "Filen finns redan"
 
-#, fuzzy
 #~ msgid "Framenames:"
-#~ msgstr "magenta"
+#~ msgstr "Bildrutenamn:"
 
 # src/sidebar.c:115
 #~ msgid "Format"
@@ -11305,21 +11271,17 @@ msgstr ""
 #~ msgid "Continue"
 #~ msgstr "Fortsätt"
 
-#, fuzzy
 #~ msgid "Save As Is"
-#~ msgstr "Spara som GIF"
+#~ msgstr "Spara som den är"
 
-#, fuzzy
 #~ msgid "Number:"
 #~ msgstr "Nummer:"
 
-#, fuzzy
 #~ msgid "N times:"
-#~ msgstr "Värde:"
+#~ msgstr "N gånger:"
 
-#, fuzzy
 #~ msgid "To Frame:"
-#~ msgstr "magenta"
+#~ msgstr "Till bildruta:"
 
 # src/dialogs.c:485
 #~ msgid "Case sensitive"
@@ -11382,13 +11344,11 @@ msgstr ""
 #~ msgid "Show Path"
 #~ msgstr "Visa slinga"
 
-#, fuzzy
 #~ msgid "First Point"
-#~ msgstr "Snabba heltal"
+#~ msgstr "Första punkten"
 
-#, fuzzy
 #~ msgid "Last Point"
-#~ msgstr "Snabba heltal"
+#~ msgstr "Sista punkten"
 
 #, fuzzy
 #~ msgid "Rotate Follow"
@@ -11397,20 +11357,17 @@ msgstr ""
 #~ msgid "Pattern:"
 #~ msgstr "Mönster:"
 
-#, fuzzy
 #~ msgid "Paste after"
-#~ msgstr "Mättnad"
+#~ msgstr "Klistra in efter"
 
-#, fuzzy
 #~ msgid "Paste replace"
-#~ msgstr "Interlace"
+#~ msgstr "Ersätt klistra in"
 
 #~ msgid "New Width:"
 #~ msgstr "Ny bredd:"
 
-#, fuzzy
 #~ msgid "New Height:"
-#~ msgstr "magenta"
+#~ msgstr "Ny höjd:"
 
 #~ msgid "Use Black/White (1-Bit) Palette"
 #~ msgstr "Använd svart/vit (1-bit) palett"
@@ -11424,21 +11381,17 @@ msgstr ""
 #~ msgid "Positioned Color Dithering"
 #~ msgstr "Dithering per färgposition"
 
-#, fuzzy
 #~ msgid "Dither Options"
 #~ msgstr "Ditheralternativ"
 
-#, fuzzy
 #~ msgid "Enable transparency"
-#~ msgstr "Transparent"
+#~ msgstr "Använd transparens"
 
-#, fuzzy
 #~ msgid "Palette and Dither Settings"
-#~ msgstr "Parameterinställningar"
+#~ msgstr "Palett och ditherinställningar"
 
-#, fuzzy
 #~ msgid "Keep Type"
-#~ msgstr "magenta"
+#~ msgstr "Behåll typ"
 
 #~ msgid "Convert to RGB"
 #~ msgstr "Konvertera till RGB"
@@ -11446,17 +11399,14 @@ msgstr ""
 #~ msgid "Extension:"
 #~ msgstr "Ändelse:"
 
-#, fuzzy
 #~ msgid "Imagetype:"
-#~ msgstr "magenta"
+#~ msgstr "Bildtyp:"
 
-#, fuzzy
 #~ msgid "Flatten:"
-#~ msgstr "Mättnad"
+#~ msgstr "Platta ut:"
 
-#, fuzzy
 #~ msgid "Convert Settings"
-#~ msgstr "Inställningar"
+#~ msgstr "Konvertera inställningar"
 
 #~ msgid "Clipped to image"
 #~ msgstr "Klippt efter bilden"
@@ -11464,13 +11414,11 @@ msgstr ""
 #~ msgid "Clipped to bottom layer"
 #~ msgstr "Klippt efter understa lagret"
 
-#, fuzzy
 #~ msgid "Inverse Order:"
-#~ msgstr "Interlace"
+#~ msgstr "Omvänd ordning:"
 
-#, fuzzy
 #~ msgid "Split Settings"
-#~ msgstr "Inställningar"
+#~ msgstr "Delade inställningar"
 
 #~ msgid "Scale"
 #~ msgstr "Skala"
@@ -11478,22 +11426,21 @@ msgstr ""
 #~ msgid "Resize"
 #~ msgstr "Ändra storlek"
 
-#, fuzzy
 #~ msgid "center"
-#~ msgstr "centrerad"
+#~ msgstr "centrum"
 
 #~ msgid "Text color"
 #~ msgstr "Textfärg"
 
-#, fuzzy
 #~ msgid ""
 #~ "Line\n"
 #~ "Spacing"
-#~ msgstr "Sparar %s:"
+#~ msgstr ""
+#~ "Rad\n"
+#~ "avstånd"
 
-#, fuzzy
 #~ msgid "Error opening \"%s\"!\n"
-#~ msgstr "Sparar %s:"
+#~ msgstr "Fel vid öppnande av \"%s\"!\n"
 
 # Osäker!
 #~ msgid "Dismiss"
