@@ -1,5 +1,11 @@
 2002-06-12  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.[ch]: applied a patch from Henning
+	Makholm <henning@makholm.net> that vastly improves drawing of thin
+	lines. See bug #69773 for a detailed description.
+
+2002-06-12  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-swap.c: use off_t to handle file offsets (#74478).
 
 2002-06-12  Sven Neumann  <sven@gimp.org>

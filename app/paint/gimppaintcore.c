@@ -327,6 +327,10 @@ gimp_paint_core_paint (GimpPaintCore      *core,
                                                  &core->last_coords,
                                                  &core->cur_coords);
         }
+
+      /* Save coordinates for gimp_paint_core_interpolate() */
+      core->last_paint.x = core->cur_coords.x;
+      core->last_paint.y = core->cur_coords.y;
     }
 
   GIMP_PAINT_CORE_GET_CLASS (core)->paint (core,
@@ -402,11 +406,15 @@ gimp_paint_core_start (GimpPaintCore *core,
                                          1);
 
   /*  Get the initial undo extents  */
-  core->x1         = core->x2 = core->cur_coords.x;
-  core->y1         = core->y2 = core->cur_coords.y;
-  core->distance   = 0.0;
-  core->pixel_dist = 0.0;
 
+  core->x1           = core->x2 = core->cur_coords.x;
+  core->y1           = core->y2 = core->cur_coords.y;
+  core->distance     = 0.0;
+  core->pixel_dist   = 0.0;
+
+  core->last_paint.x = -1e6;
+  core->last_paint.y = -1e6;
+  
   return TRUE;
 }
 
@@ -527,17 +535,37 @@ gimp_paint_core_constrain (GimpPaintCore *core)
   core->cur_coords.y = core->last_coords.y + dy;
 }
 
+/**
+ * gimp_avoid_exact_integer
+ * @x: points to a gdouble
+ *
+ * Adjusts *x such that it is not too close to an integer. This is used
+ * for decision algorithms that would be vulnerable to rounding glitches
+ * if exact integers were input.
+ *
+ * Side effects: Changes the value of *x
+ **/
+static void
+gimp_avoid_exact_integer (gdouble *x)
+{
+  gdouble integral   = floor (*x);
+  gdouble fractional = *x - integral;
+
+  if (fractional < EPSILON)
+    *x = integral + EPSILON;
+  else if (fractional > (1-EPSILON))
+    *x = integral + (1-EPSILON);
+}
+
 void
 gimp_paint_core_interpolate (GimpPaintCore    *core,
 			     GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options)
 {
   GimpCoords  delta;
-  /*   double spacing; */
-  /*   double lastscale, curscale; */
-  gdouble     n;
-  gdouble     left;
-  gdouble     t;
+  gint        n, num_points;
+  gdouble     t0, dt, tn;
+  gdouble     st_factor, st_offset;
   gdouble     initial;
   gdouble     dist;
   gdouble     total;
@@ -550,6 +578,11 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (paint_options != NULL);
 
+  gimp_avoid_exact_integer (&core->last_coords.x);
+  gimp_avoid_exact_integer (&core->last_coords.y);
+  gimp_avoid_exact_integer (&core->cur_coords.x);
+  gimp_avoid_exact_integer (&core->cur_coords.y);
+  
   delta.x        = core->cur_coords.x        - core->last_coords.x;
   delta.y        = core->cur_coords.y        - core->last_coords.y;
   delta.pressure = core->cur_coords.pressure - core->last_coords.pressure;
@@ -587,36 +620,163 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256); */
   /*   spacing = gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
 
-  while (core->distance < total)
+  /*  Compute spacing parameters such that a brush position will be
+   *  made each time the line crosses the *center* of a pixel row or
+   *  column, according to whether the line is mostly horizontal or
+   *  mostly vertical. The term "stripe" will mean "column" if the
+   *  line is horizontalish; "row" if the line is verticalish.
+   *
+   *  We start by deriving coefficients for a new parameter 's':
+   *      s = t * st_factor + st_offset
+   *  such that the "nice" brush positions are the ones with *integer*
+   *  s values. (Actually the value of s will be 1/2 less than the nice
+   *  brush position's x or y coordinate - note that st_factor may
+   *  be negative!)
+   */
+  
+  if (delta.x*delta.x > delta.y*delta.y)
+    {
+      st_factor = delta.x;
+      st_offset = core->last_coords.x - 0.5;
+    }
+  else
+    {
+      st_factor = delta.y;
+      st_offset = core->last_coords.y - 0.5;
+    }
+  
+  if (fabs (st_factor) > dist / core->spacing)
+    {
+      /*  The stripe principle leads to brush positions that are spaced
+       *  *closer* than the official brush spacing. Use the official
+       *  spacing instead. This is the common case when the brush spacing
+       *  is large.
+       *  The net effect is then to put a lower bound on the spacing, but
+       *  one that varies with the slope of the line. This is suppose to
+       *  make thin lines (say, with a 1x1 brush) prettier while leaving
+       *  lines with larger brush spacing as they used to look in 1.2.x.
+       */
+      dt = core->spacing / dist;
+      n = (gint) (initial / core->spacing + 1.0 + EPSILON);
+      t0 = (n * core->spacing - initial) / dist;
+      num_points = 1 + (gint) floor ((1 + EPSILON - t0) / dt);
+    }
+  else if (fabs (st_factor) < EPSILON)
+    {
+      /* Hm, we've hardly moved at all. Don't draw anything, but reset the
+       * old coordinates and hope we've gone longer the next time.
+       */
+      core->cur_coords.x = core->last_coords.x;
+      core->cur_coords.y = core->last_coords.y;
+      /* ... but go along with the current pressure, tilt and wheel */
+      return;
+    }
+  else
+    {
+      gint direction = st_factor > 0 ? 1 : -1;
+      gint x, y;
+      gint s0, sn;
+
+      /*  Choose the first and last stripe to paint.
+       *    FIRST PRIORITY is to avoid gaps painting with a 1x1 aliasing
+       *  brush when a horizontalish line segment follows a verticalish
+       *  one or vice versa - no matter what the angle between the two
+       *  lines is. This will also limit the local thinning that a 1x1
+       *  subsampled brush may suffer in the same situation.
+       *    SECOND PRIORITY is to avoid making free-hand drawings
+       *  unpleasantly fat by plotting redundant points.
+       *    These are achieved by the following rules, but it is a little
+       *  tricky to see just why. Do not change this algorithm unless you
+       *  are sure you know what you're doing!
+       */
+      
+      /*  Basic case: round the beginning and ending point to nearest
+       *  stripe center.
+       */
+      s0 = (gint) floor (st_offset + 0.5);
+      sn = (gint) floor (st_offset + st_factor + 0.5);
+
+      t0 = (s0 - st_offset) / st_factor;
+      tn = (sn - st_offset) / st_factor;
+      
+      x = (gint) floor (core->last_coords.x + t0 * delta.x);
+      y = (gint) floor (core->last_coords.y + t0 * delta.y);
+      if (t0 < 0.0 && !( x == (gint) floor (core->last_coords.x) &&
+                         y == (gint) floor (core->last_coords.y) ))
+        {
+          /*  Exception A: If the first stripe's brush position is
+           *  EXTRApolated into a different pixel square than the
+           *  ideal starting point, dont't plot it.
+           */
+          s0 += direction;
+        }
+      else if (x == (gint) floor (core->last_paint.x) &&
+               y == (gint) floor (core->last_paint.y))
+        {
+          /*  Exception B: If first stripe's brush position is within the
+           *  same pixel square as the last plot of the previous line,
+           *  don't plot it either.
+           */
+          s0 += direction;
+        }
+
+      x = (gint) floor (core->last_coords.x + tn * delta.x);
+      y = (gint) floor (core->last_coords.y + tn * delta.y);
+      if (tn > 1.0 && !( x == (gint) floor( core->cur_coords.x ) &&
+                         y == (gint) floor( core->cur_coords.y ) ))
+        {
+          /*  Exception C: If the last stripe's brush position is
+           *  EXTRApolated into a different pixel square than the
+           *  ideal ending point, don't plot it.
+           */
+          sn -= direction;
+        }
+
+      t0 = (s0 - st_offset) / st_factor;
+      tn = (sn - st_offset) / st_factor;
+      dt         =     direction * 1.0 / st_factor;
+      num_points = 1 + direction * (sn - s0);
+
+      if (num_points >= 1)
+        {
+          /*  Hack the reported total distance such that it looks to the
+           *  next line as if the the last pixel plotted were at an integer
+           *  multiple of the brush spacing. This helps prevent artifacts
+           *  for connected lines when the brush spacing is such that some
+           *  slopes will use the stripe regime and other slopes will use
+           *  the nominal brush spacing.
+           */
+
+          if (tn < 1)
+            total = initial + tn * dist;
+
+          total = core->spacing * (gint) (total / core->spacing + 0.5);
+          total += (1.0 - tn) * dist;
+        }
+    }
+
+  for (n = 0; n < num_points; n++)
     {
       GimpBrush *current_brush;
+      gdouble    t = t0 + n*dt;
 
-      n    = (gint) (core->distance / core->spacing + 1.0 + EPSILON);
-      left = n * core->spacing - core->distance;
+      core->cur_coords.x        = core->last_coords.x        + t * delta.x;
+      core->cur_coords.y        = core->last_coords.y        + t * delta.y;
+      core->cur_coords.pressure = core->last_coords.pressure + t * delta.pressure;
+      core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta.xtilt;
+      core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta.ytilt;
+      core->cur_coords.wheel    = core->last_coords.wheel    + t * delta.wheel;
 
-      core->distance += left;
+      core->distance            = initial                    + t * dist;
+      core->pixel_dist          = pixel_initial              + t * pixel_dist;
 
-      if (core->distance <= (total + EPSILON))
-	{
-	  t = (core->distance - initial) / dist;
+      /*  save the current brush  */
+      current_brush = core->brush;
 
-	  core->cur_coords.x        = core->last_coords.x        + t * delta.x;
-	  core->cur_coords.y        = core->last_coords.y        + t * delta.y;
-	  core->cur_coords.pressure = core->last_coords.pressure + t * delta.pressure;
-	  core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta.xtilt;
-	  core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta.ytilt;
-	  core->cur_coords.wheel    = core->last_coords.wheel    + t * delta.wheel;
+      gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
 
-	  core->pixel_dist = pixel_initial + t * pixel_dist;
-
-	  /*  save the current brush  */
-	  current_brush = core->brush;
-
-	  gimp_paint_core_paint (core, drawable, paint_options, MOTION_PAINT);
-
-	  /*  restore the current brush pointer  */
-          core->brush = current_brush;
-	}
+      /*  restore the current brush pointer  */
+      core->brush = current_brush;
     }
 
   core->cur_coords.x        = core->last_coords.x        + delta.x;

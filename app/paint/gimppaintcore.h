@@ -77,6 +77,8 @@ struct _GimpPaintCore
   GimpCoords          cur_coords;    /*  current coords                   */
   GimpCoords          last_coords;   /*  last coords                      */
 
+  GimpVector2         last_paint;    /*  last point that was painted      */
+  
   gdouble             distance;      /*  distance traveled by brush       */
   gdouble             pixel_dist;    /*  distance in pixels               */
   gdouble             spacing;       /*  spacing                          */
