@@ -1,3 +1,7 @@
+2003-11-11  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* POTFILES.in: added new files for translation.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added new DICOM plug-in.
