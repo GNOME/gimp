@@ -246,6 +246,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   GObject   *config;
   GtkWidget *table;
   GtkWidget *vbox;
+  GtkWidget *brush_vbox;
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *brush;
@@ -356,14 +357,14 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  brush_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (brush_vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), brush_vbox);
+  gtk_widget_show (brush_vbox);
 
   frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (brush_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   brush = brush_widget_new (GIMP_INK_OPTIONS (tool_options));
