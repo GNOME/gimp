@@ -1,3 +1,10 @@
+2004-01-16  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/tiff.c: Apply a (modified) patch from Pablo 
+	d'Angelo to enable saving of a non-premultiplied alpha channel
+	and provide an UI to use it (a checkbox and extra PDB 
+	procedure). Fixes bug #131030.
+
 2004-01-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcroptool.c (crop_recalc): do a proper fix for bug

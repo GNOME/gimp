@@ -15,6 +15,8 @@
  * peter@kirchgessner.net -- 29 Oct 2002
  * Progress bar only when run interactive
  * Added support for layer offsets - pablo.dangelo@web.de -- 7 Jan 2004
+ * Honor EXTRASAMPLES tag while loading images with alphachannel
+ * pablo.dangelo@web.de -- 16 Jan 2004
  */
 
 /*
@@ -42,6 +44,8 @@
 
 #include <tiffio.h>
 
+#include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -52,6 +56,7 @@ typedef struct
 {
   gint      compression;
   gint      fillorder;
+  gboolean  save_transp_pixels;
 } TiffSaveVals;
 
 typedef struct
@@ -154,7 +159,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 static TiffSaveVals tsvals =
 {
   COMPRESSION_NONE,    /*  compression  */
+  FALSE,               /*  alpha handling */
 };
+
 
 static gchar       *image_comment = NULL;
 static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
@@ -176,14 +183,23 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
+#define COMMON_SAVE_ARGS \
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },\
+    { GIMP_PDB_IMAGE, "image", "Input image" },\
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },\
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },\
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },\
+    { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+
+  static GimpParamDef save_args_old[] =
+  {
+    COMMON_SAVE_ARGS
+  };
+
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
-    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
-    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+    COMMON_SAVE_ARGS,
+    { GIMP_PDB_INT32, "save_transp_pixels", "Keep the color data masked by an alpha channel intact" }
   };
 
   gimp_install_procedure ("file_tiff_load",
@@ -200,6 +216,20 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_tiff_save",
+                          "saves files in the tiff file format",
+                          "Saves files in the Tagged Image File Format.  "
+			  "The value for the saved comment is taken "
+			  "from the 'gimp-comment' parasite.",
+                          "Spencer Kimball & Peter Mattis",
+                          "Spencer Kimball & Peter Mattis",
+                          "1995-1996,2000-2003",
+                          "<Save>/Tiff",
+			  "RGB*, GRAY*, INDEXED",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args_old), 0,
+                          save_args_old, NULL);
+
+  gimp_install_procedure ("file_tiff_save2",
                           "saves files in the tiff file format",
                           "Saves files in the Tagged Image File Format.  "
 			  "The value for the saved comment is taken "
@@ -262,8 +292,10 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_tiff_save") == 0)
+  else if (strcmp (name, "file_tiff_save") == 0 
+           || strcmp (name, "file_tiff_save2") == 0 )
     {
+      /* Plug-in is either file_tiff_save or file_tiff_save2 */
       image = orig_image = param[1].data.d_int32;
       drawable = param[2].data.d_int32;
 
@@ -307,6 +339,8 @@ run (const gchar      *name,
 	    {
 	      tsvals.compression =
 		((TiffSaveVals *) parasite->data)->compression;
+	      tsvals.save_transp_pixels =
+		((TiffSaveVals *) parasite->data)->save_transp_pixels;
 	    }
 	  gimp_parasite_free (parasite);
 
@@ -317,7 +351,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6)
+	  if (nparams != 6 || nparams != 7)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	    }
@@ -332,6 +366,11 @@ run (const gchar      *name,
 		case 4: tsvals.compression = COMPRESSION_JPEG;  break;
 		default: status = GIMP_PDB_CALLING_ERROR; break;
 		}
+
+              if (nparams == 7)
+                tsvals.save_transp_pixels = param[6].data.d_int32;
+              else
+                tsvals.save_transp_pixels = FALSE;
 	    }
 	  break;
 
@@ -344,6 +383,8 @@ run (const gchar      *name,
 	    {
 	      tsvals.compression =
 		((TiffSaveVals *) parasite->data)->compression;
+	      tsvals.save_transp_pixels =
+		((TiffSaveVals *) parasite->data)->save_transp_pixels;
 	    }
 	  gimp_parasite_free (parasite);
 	  break;
@@ -494,6 +535,23 @@ load_image (const gchar *filename)
       if (extra > 0 && (extra_types[0] == EXTRASAMPLE_ASSOCALPHA))
         {
           alpha = TRUE;
+          tsvals.save_transp_pixels = FALSE;
+          --extra;
+        }
+      else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNASSALPHA))
+        {
+          alpha = TRUE;
+          tsvals.save_transp_pixels = TRUE;
+          --extra;
+        }
+      else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
+        {
+          /* assuming unassociated alpha if unspecified */
+          g_message ("alpha channel type not defined for file %s. "
+                     "Assuming alpha is not premultiplied",
+                     filename);
+          alpha = TRUE;
+          tsvals.save_transp_pixels = TRUE;
           --extra;
         }
       else
@@ -679,6 +737,7 @@ load_image (const gchar *filename)
         layer_offset_x_pixel = ROUND(layer_offset_x * xres);
         layer_offset_y_pixel = ROUND(layer_offset_y * yres);
       }
+
 
       /* Install colormap for INDEXED images only */
       if (image_type == GIMP_INDEXED)
@@ -1051,16 +1110,24 @@ read_16bit (guchar       *source,
             case PHOTOMETRIC_MINISBLACK:
               if (alpha)
                 {
-                  gray_val  = *source; source += 2;
-                  alpha_val = *source; source += 2;
-                  gray_val  = MIN (gray_val, alpha_val);
-
-                  if (alpha_val)
-                    *dest++ = gray_val * 255 / alpha_val;
+                  if (tsvals.save_transp_pixels)
+                    {
+                      *dest++ = *source; source += 2;
+                      *dest++ = *source; source += 2;
+                    }
                   else
-                    *dest++ = 0;
+                    {
+                      gray_val  = *source; source += 2;
+                      alpha_val = *source; source += 2;
+                      gray_val  = MIN (gray_val, alpha_val);
 
-                  *dest++ = alpha_val;
+                      if (alpha_val)
+                        *dest++ = gray_val * 255 / alpha_val;
+                      else
+                        *dest++ = 0;
+
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1071,16 +1138,24 @@ read_16bit (guchar       *source,
             case PHOTOMETRIC_MINISWHITE:
               if (alpha)
                 {
-                  gray_val  = *source; source += 2;
-                  alpha_val = *source; source += 2;
-                  gray_val  = MIN (gray_val, alpha_val);
-
-                  if (alpha_val)
-                    *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
-                  else
-                    *dest++ = 0;
-
-                  *dest++ = alpha_val;
+                  if (tsvals.save_transp_pixels) 
+                    {
+                      *dest++ = *source; source += 2;
+                      *dest++ = *source; source += 2;
+                    }
+                  else 
+                    {
+                      gray_val  = *source; source += 2;
+                      alpha_val = *source; source += 2;
+                      gray_val  = MIN (gray_val, alpha_val);
+                      
+                      if (alpha_val)
+                        *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
+                      else
+                        *dest++ = 0;
+                      
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1096,26 +1171,36 @@ read_16bit (guchar       *source,
             case PHOTOMETRIC_RGB:
               if (alpha)
                 {
-                  red_val   = *source; source += 2;
-                  green_val = *source; source += 2;
-                  blue_val  = *source; source += 2;
-                  alpha_val = *source; source += 2;
-                  red_val   = MIN (red_val,   alpha_val);
-                  green_val = MIN (green_val, alpha_val);
-                  blue_val  = MIN (blue_val,  alpha_val);
-                  if (alpha_val)
+                  if (tsvals.save_transp_pixels)
                     {
-                      *dest++ = (red_val   * 255) / alpha_val;
-                      *dest++ = (green_val * 255) / alpha_val;
-                      *dest++ = (blue_val  * 255) / alpha_val;
+                      *dest++ = *source; source += 2;
+                      *dest++ = *source; source += 2;
+                      *dest++ = *source; source += 2;
+                      *dest++ = *source; source += 2;
                     }
                   else
                     {
-                      *dest++ = 0;
-                      *dest++ = 0;
-                      *dest++ = 0;
+                      red_val   = *source; source += 2;
+                      green_val = *source; source += 2;
+                      blue_val  = *source; source += 2;
+                      alpha_val = *source; source += 2;
+                      red_val   = MIN (red_val,   alpha_val);
+                      green_val = MIN (green_val, alpha_val);
+                      blue_val  = MIN (blue_val,  alpha_val);
+                      if (alpha_val)
+                        {
+                          *dest++ = (red_val   * 255) / alpha_val;
+                          *dest++ = (green_val * 255) / alpha_val;
+                          *dest++ = (blue_val  * 255) / alpha_val;
+                        }
+                      else
+                        {
+                          *dest++ = 0;
+                          *dest++ = 0;
+                          *dest++ = 0;
+                        }
+                      *dest++ = alpha_val;
                     }
-                  *dest++ = alpha_val;
                 }
               else
                 {
@@ -1193,14 +1278,22 @@ read_8bit (guchar       *source,
             case PHOTOMETRIC_MINISBLACK:
               if (alpha)
                 {
-                  gray_val= *source++;
-                  alpha_val= *source++;
-                  gray_val= MIN(gray_val, alpha_val);
-                  if (alpha_val)
-                    *dest++ = gray_val * 255 / alpha_val;
+                  if (tsvals.save_transp_pixels)
+                    {
+                      *dest++ = *source; source++;
+                      *dest++ = *source; source++;
+                    }
                   else
-                    *dest++ = 0;
-                  *dest++ = alpha_val;
+                    {
+                      gray_val= *source++;
+                      alpha_val= *source++;
+                      gray_val= MIN(gray_val, alpha_val);
+                      if (alpha_val)
+                        *dest++ = gray_val * 255 / alpha_val;
+                      else
+                        *dest++ = 0;
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1211,15 +1304,23 @@ read_8bit (guchar       *source,
             case PHOTOMETRIC_MINISWHITE:
               if (alpha)
                 {
-                  gray_val  = *source++;
-                  alpha_val = *source++;
-                  gray_val  = MIN (gray_val, alpha_val);
-
-                  if (alpha_val)
-                    *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
+                  if (tsvals.save_transp_pixels)
+                    {
+                      *dest++ = *source; source++;
+                      *dest++ = *source; source++;
+                    }
                   else
-                    *dest++ = 0;
-                  *dest++ = alpha_val;
+                    {
+                      gray_val  = *source++;
+                      alpha_val = *source++;
+                      gray_val  = MIN (gray_val, alpha_val);
+
+                      if (alpha_val)
+                        *dest++ = ((alpha_val - gray_val) * 255) / alpha_val;
+                      else
+                        *dest++ = 0;
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1236,27 +1337,37 @@ read_8bit (guchar       *source,
             case PHOTOMETRIC_RGB:
               if (alpha)
                 {
-                  red_val   = *source++;
-                  green_val = *source++;
-                  blue_val  = *source++;
-                  alpha_val = *source++;
-                  red_val   = MIN (red_val, alpha_val);
-                  blue_val  = MIN (blue_val, alpha_val);
-                  green_val = MIN (green_val, alpha_val);
-
-                  if (alpha_val)
+                  if (tsvals.save_transp_pixels)
                     {
-                      *dest++ = (red_val   * 255) / alpha_val;
-                      *dest++ = (green_val * 255) / alpha_val;
-                      *dest++ = (blue_val  * 255) / alpha_val;
+                      *dest++ = *source; source++;
+                      *dest++ = *source; source++;
+                      *dest++ = *source; source++;
+                      *dest++ = *source; source++;
                     }
                   else
                     {
-                      *dest++ = 0;
-                      *dest++ = 0;
-                      *dest++ = 0;
+                      red_val   = *source++;
+                      green_val = *source++;
+                      blue_val  = *source++;
+                      alpha_val = *source++;
+                      red_val   = MIN (red_val, alpha_val);
+                      blue_val  = MIN (blue_val, alpha_val);
+                      green_val = MIN (green_val, alpha_val);
+
+                      if (alpha_val)
+                        {
+                          *dest++ = (red_val   * 255) / alpha_val;
+                          *dest++ = (green_val * 255) / alpha_val;
+                          *dest++ = (blue_val  * 255) / alpha_val;
+                        }
+                      else
+                        {
+                          *dest++ = 0;
+                          *dest++ = 0;
+                          *dest++ = 0;
+                        }
+                      *dest++ = alpha_val;
                     }
-                  *dest++ = alpha_val;
                 }
               else
                 {
@@ -1349,14 +1460,22 @@ read_default (guchar       *source,
               if (alpha)
                 {
                   NEXTSAMPLE (alpha_val);
-                  gray_val= MIN (gray_val, alpha_val);
-
-                  if (alpha_val)
-                    *dest++ = (gray_val * 65025) / (alpha_val * maxval);
+                  if (tsvals.save_transp_pixels)
+                    {
+                      *dest++ = (gray_val * 255) / maxval;
+                      *dest++ = alpha_val;
+                    }
                   else
-                    *dest++ = 0;
+                    {
+                      gray_val= MIN (gray_val, alpha_val);
 
-                  *dest++ = alpha_val;
+                      if (alpha_val)
+                        *dest++ = (gray_val * 65025) / (alpha_val * maxval);
+                      else
+                        *dest++ = 0;
+
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1369,14 +1488,23 @@ read_default (guchar       *source,
               if (alpha)
                 {
                   NEXTSAMPLE (alpha_val);
-                  gray_val= MIN (gray_val, alpha_val);
-
-                  if (alpha_val)
-                    *dest++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
+                  if (tsvals.save_transp_pixels)
+                    {
+                      *dest++ = ((maxval - gray_val) * 255) / maxval;
+                      *dest++ = alpha_val;
+                    }
                   else
-                    *dest++ = 0;
+                    {
+                      gray_val= MIN (gray_val, alpha_val);
+                     
+                      if (alpha_val)
+                        *dest++ = ((maxval - gray_val) * 65025) / (alpha_val * maxval);
+                      else
+                        *dest++ = 0;
 
-                  *dest++ = alpha_val;
+                      *dest++ = alpha_val;
+                    }
+
                 }
               else
                 {
@@ -1397,24 +1525,34 @@ read_default (guchar       *source,
               if (alpha)
                 {
                   NEXTSAMPLE (alpha_val);
-                  red_val   = MIN (red_val, alpha_val);
-                  blue_val  = MIN (blue_val, alpha_val);
-                  green_val = MIN (green_val, alpha_val);
-
-                  if (alpha_val)
+                  if (tsvals.save_transp_pixels)
                     {
-                      *dest++ = (red_val   * 255) / alpha_val;
-                      *dest++ = (green_val * 255) / alpha_val;
-                      *dest++ = (blue_val  * 255) / alpha_val;
+                      *dest++ = red_val;
+                      *dest++ = green_val;
+                      *dest++ = blue_val;
+                      *dest++ = alpha_val;
                     }
                   else
                     {
-                      *dest++ = 0;
-                      *dest++ = 0;
-                      *dest++ = 0;
-                    }
+                      red_val   = MIN (red_val, alpha_val);
+                      blue_val  = MIN (blue_val, alpha_val);
+                      green_val = MIN (green_val, alpha_val);
 
-                  *dest++ = alpha_val;
+                      if (alpha_val)
+                        {
+                          *dest++ = (red_val   * 255) / alpha_val;
+                          *dest++ = (green_val * 255) / alpha_val;
+                          *dest++ = (blue_val  * 255) / alpha_val;
+                        }
+                      else
+                        {
+                          *dest++ = 0;
+                          *dest++ = 0;
+                          *dest++ = 0;
+                        }
+                      
+                      *dest++ = alpha_val;
+                    }
                 }
               else
                 {
@@ -1671,7 +1809,7 @@ save_image (const gchar *filename,
     }
   if (alpha)
     {
-      extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
+      extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
     }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
@@ -1798,9 +1936,17 @@ save_image (const gchar *filename,
 	    case GIMP_GRAYA_IMAGE:
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
-		  /* pre-multiply gray by alpha */
-		  data[col + 0] = (t[col + 0] * t[col + 1]) / 255;
-		  data[col + 1] = t[col + 1];  /* alpha channel */
+                  if (tsvals.save_transp_pixels)
+                    {
+                      data[col + 0] = t[col + 0];
+                    }
+                  else
+                    {
+                      /* pre-multiply gray by alpha */
+                      data[col + 0] = (t[col + 0] * t[col + 1]) / 255;
+                    }
+
+                  data[col + 1] = t[col + 1];  /* alpha channel */
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
@@ -1810,11 +1956,21 @@ save_image (const gchar *filename,
 	    case GIMP_RGBA_IMAGE:
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
-		  /* pre-multiply rgb by alpha */
-		  data[col+0] = t[col + 0] * t[col + 3] / 255;
-		  data[col+1] = t[col + 1] * t[col + 3] / 255;
-		  data[col+2] = t[col + 2] * t[col + 3] / 255;
-		  data[col+3] = t[col + 3];  /* alpha channel */
+                  if (tsvals.save_transp_pixels)
+                    {
+                      data[col+0] = t[col + 0];
+                      data[col+1] = t[col + 1];
+                      data[col+2] = t[col + 2];
+                    }
+                  else
+                    {
+                      /* pre-multiply rgb by alpha */
+                      data[col+0] = t[col + 0] * t[col + 3] / 255;
+                      data[col+1] = t[col + 1] * t[col + 3] / 255;
+                      data[col+2] = t[col + 2] * t[col + 3] / 255;
+                    }
+
+                  data[col+3] = t[col + 3];  /* alpha channel */
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
@@ -1851,6 +2007,7 @@ save_dialog (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
+  GtkWidget *toggle;
   gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as TIFF"), "tiff",
@@ -1881,6 +2038,18 @@ save_dialog (void)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  /* Keep colors behind alpha mask */
+  toggle = gtk_check_button_new_with_mnemonic 
+    ( _("Save _color values from transparent pixels"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals.save_transp_pixels);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.save_transp_pixels);
 
   /* comment entry */
   hbox = gtk_hbox_new (FALSE, 4);
