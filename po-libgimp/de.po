@@ -1,15 +1,15 @@
-# This is the German catalog for the standard GIMP Plugins.
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Felix Natter <fnatter@gmx.net>, 1999, 2000.
-# Daniel Egger <Daniel.Egger@rz.fh-muenchen.de>, 2000.
+# This is the German catalog for the libgimp.
+# Copyright (C) 1999,2000 Free Software Foundation, Inc.
+#
+# Daniel Egger <Daniel.Egger@suse.de>, 2000.
 # Sven Neumann <sven@gimp.org>, 2000.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 2000-01-27 23:47+0100\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2000-02-07 12:12+0100\n"
+"PO-Revision-Date: 2000-02-07 12:02+0100\n"
+"Last-Translator: Daniel Egger <Daniel.Egger@suse.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -209,3 +209,25 @@ msgstr "Einheit"
 #: libgimp/gimpunitmenu.c:517
 msgid "Factor"
 msgstr "Faktor"
+
+#: libgimp/gimpwidgets.c:554
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+"Wenn der \"Zeit\"-Knopf nicht aktiviert ist, nimm diesen Wert für den "
+"Zufallsgenerator - dies ermgöglicht es \"zufällige\" Funktionen zu "
+"wiederholen"
+
+#: libgimp/gimpwidgets.c:559
+msgid "Time"
+msgstr "Zeit"
+
+#: libgimp/gimpwidgets.c:571
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+"Speise Zufallsgenerator mit der aktuellen Zeit - dies garantiert eine "
+"vernünftige Wahrscheinlichkeit"
+

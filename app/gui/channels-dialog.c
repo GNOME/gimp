@@ -1806,7 +1806,7 @@ channel_widget_button_events (GtkWidget *widget,
   gint visible;
   gint width, height;
 
-  static gboolean button_down = FALSE;
+  gboolean button_down = FALSE;
   static GtkWidget *click_widget = NULL;
   static gint old_state;
   static gint exclusive;

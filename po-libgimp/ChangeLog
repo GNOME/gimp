@@ -1,3 +1,11 @@
+Thu Feb 7 12:13:01 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
+
+	(applied by pcg@goof.com)
+
+	* POTFILES.in: Added missing libgimp files.
+
+	* de.po: Updated.
+
 Sat Feb 12 17:44:18 CET 2000  Sven Neumann <sven@gimp.org>
 
         * it.po: Updates from Daniele Medri <madrid@linux.it>

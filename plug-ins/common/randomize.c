@@ -333,7 +333,6 @@ run (gchar   *name,
 	   *  parameters have legitimate values.
 	   */
 	case RUN_NONINTERACTIVE:
-	  INIT_I18N();
 	  if (nparams != 7)
 	    {
 	      status = STATUS_CALLING_ERROR;
@@ -359,7 +358,6 @@ run (gchar   *name,
 	   *  If we're running with the last set of values, get those values.
 	   */
 	case RUN_WITH_LAST_VALS:
-	  INIT_I18N ();
 	  gimp_get_data (PLUG_IN_NAME[rndm_type - 1], &pivals);
 	  break;
 	  /*
@@ -380,7 +378,7 @@ run (gchar   *name,
 	    case RNDM_SLUR: rndm_type_str = "slur"; break;
             }
 	  sprintf (prog_label, "%s (%s)", gettext(RNDM_VERSION[rndm_type - 1]),
-		   rndm_type_str);
+		   gettext(rndm_type_str));
 	  gimp_progress_init(prog_label);
 	  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
 	  /*

@@ -1,3 +1,8 @@
+Sun Feb 13 01:09:42 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * po/gimp.pot, plug-ins/perl/po/gimp-perl.pot: Removed from CVS.
+
+
 Thu Feb 10 17:40:13 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 
 	(applied by pcg@goof.com)

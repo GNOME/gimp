@@ -2748,7 +2748,6 @@ gimp_image_remove_layer (GimpImage *gimage,
 			 Layer     *layer)
 {
   LayerUndo *lu;
-  gint off_x, off_y;
 
   if (layer)
     {
@@ -2771,17 +2770,10 @@ gimp_image_remove_layer (GimpImage *gimage,
       if (gimage->active_layer == layer)
 	{
 	  if (gimage->layers)
-	    gimage->active_layer = (Layer *) gimage->layer_stack->data;
+	    gimage_set_active_layer (gimage, gimage->layer_stack->data);
 	  else
 	    gimage->active_layer = NULL;
 	}
-
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[REPAINT],
-		       off_x, off_y,
-		       drawable_width  (GIMP_DRAWABLE (layer)),
-		       drawable_height (GIMP_DRAWABLE (layer)));
 
       /* Send out REMOVED signal from layer */
       layer_removed (layer, gimage);
@@ -2793,6 +2785,7 @@ gimp_image_remove_layer (GimpImage *gimage,
 
       /*  invalidate the composite preview  */
       gimp_image_invalidate_preview (gimage);
+      gdisplays_update_full(gimage);
 
       return NULL;
     }
