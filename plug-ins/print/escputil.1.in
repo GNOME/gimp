@@ -1,16 +1,16 @@
 .TH ESCPUTIL 1 @GIMP_PRINT_RELEASE_DATE@ "Version @GIMP_PRINT_VERSION@" "GIMP Manual Pages"
 .SH NAME
-escputil - tune Epson printers
+escputil - maintain Epson Stylus inkjet printers
 .SH SYNOPSIS
 .B escputil [\-P printer \| \-r device] [\-m model] [\-u]
 [\-c \| \-n | \-a \| \-i] [\-q]
 
 .SH DESCRIPTION
 .PP
-\fIescputil\fP is part of the gimp-print package. 
-It does things with your Epson printer.
-.PP
-Please fill in more info here.
+\fIescputil\fP is a command line utility to perform various
+maintenance tasks on Epson Stylus inkjet printers.  These tasks
+include head alignment, head cleaning, nozzle check, printer
+identification, and retrieval of ink level from the printer.
 
 .SH OPTIONS
 .l 
@@ -22,21 +22,25 @@ Default is the default system printer.
 .TP 8
 .B \-r, \-\-raw-device \fI<device>\fP
 Specify the name of the device to write to directly
-rather than going through a printer queue.
+rather than going through a printer queue. You must use this (rather
+than specifying a printer) when retrieving ink levels or identifying
+the printer, or if you wish to perform head alignment without
+specifying the printer model.
 .TP 8
-.B \-c, \-\-clean-head    
-Clean the print head.
+.B \-c, \-\-clean-head
+Clean the print head.  This can also be performed from the printer
+front panel.
 .TP 8
 .B \-n, \-\-nozzle-check
-Print a nozzle test pattern.
-Dirty or clogged nozzles will show as gaps in the
-pattern.  If you see any gaps, you should run a
-head cleaning pass.
+Print a nozzle test pattern.  Dirty or clogged nozzles will show as
+gaps in the pattern.  If you see any gaps, you should run a
+head cleaning pass or two.
 .TP 8
 .B \-a, \-\-align-head
-Align the print head.  CAUTION: Misuse of this
-utility may result in poor print quality and/or
-damage to the printer.
+Align the print head.  CAUTION: Misuse of this utility may result in
+poor print quality and/or damage to the printer.  You must either
+specify the printer model with the \-m option, or use the raw printer
+device to allow escputil to detect the printer model.
 .TP 8
 .B \-i, \-\-ink-level     
 Obtain the ink level from the printer.  This requires
@@ -70,15 +74,31 @@ any later version.
 .SH OTHER INFO
 
 The canonical place to find GIMP info is at http://www.gimp.org/.
-The homepage of the gimp-print project from which this utility was 
+The homepage of the gimp-print project from which this utility was
 contributed is located at http://gimp-print.sourceforge.net/. 
 
 .SH AUTHORS
 Robert Krawitz.
 
 .SH BUGS
-This manpage sucks. Fix it if you can.
+
+.PP
+USB-connected printers sometimes fail to identify or return ink
+levels.  You may have to repeat the command.  This is probably a
+timing issue in escputil, not a flaw in the printer.
+
+.PP
+Anything requiring bidirectional communication with the printer
+(identify, ink levels, or head alignment without specifying the
+printer model) requires read/write access to the printer port (for
+example /dev/lp0).  This may require these operations to be performed
+as root.
+
+.PP
+If the printer is performing self-test or head cleaning on power
+up, the identify and ink level commands will time out, although the
+printer successfully receives the command.  The command will need to
+be reissued when the printer is quiescent.
 
 .SH "SEE ALSO"
 .BR gimp (1)
-

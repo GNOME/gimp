@@ -1,3 +1,8 @@
+2000-10-31  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/escputil.1.in: Robert L Krawitz <rlk@alum.mit.edu>
+	filled the empty spaces.
+	
 Mon Oct 30 22:55:32 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.29 release (1.2final)

@@ -80,6 +80,7 @@ static gchar *authors[] =
   "Peter Kirchgessner",
   "Philipp Klaus",
   "David Koblas",
+  "Robert L Krawitz",
   "Tuomas Kuosmanen",
   "Karin Kylander",
   "Olof S Kylander",
