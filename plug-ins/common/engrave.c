@@ -47,28 +47,28 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gboolean  engrave_dialog (GimpDrawable        *drawable);
+static gboolean  engrave_dialog (GimpDrawable *drawable);
 
-static void      engrave        (GimpDrawable        *drawable,
-                                 GimpDrawablePreview *preview);
+static void      engrave        (GimpDrawable *drawable,
+                                 GimpPreview  *preview);
 
 #if 0
-static void      engrave_large  (GimpDrawable        *drawable,
-                                 gint                 height,
-                                 gboolean             limit,
-                                 GimpDrawablePreview *preview);
+static void      engrave_large  (GimpDrawable *drawable,
+                                 gint          height,
+                                 gboolean      limit,
+                                 GimpPreview  *preview);
 #endif
 
-static void      engrave_small  (GimpDrawable        *drawable,
-                                 gint                 height,
-                                 gboolean             limit,
-                                 gint                 tile_width,
-                                 GimpDrawablePreview *preview);
+static void      engrave_small  (GimpDrawable *drawable,
+                                 gint          height,
+                                 gboolean      limit,
+                                 gint          tile_width,
+                                 GimpPreview  *preview);
 
-static void      engrave_sub    (gint                 height,
-                                 gboolean             limit,
-                                 gint                 bpp,
-                                 gint                 color_n);
+static void      engrave_sub    (gint          height,
+                                 gboolean      limit,
+                                 gint          bpp,
+                                 gint          color_n);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -271,8 +271,8 @@ engrave_dialog (GimpDrawable *drawable)
 /*  Engrave interface functions  */
 
 static void
-engrave (GimpDrawable        *drawable,
-         GimpDrawablePreview *preview)
+engrave (GimpDrawable *drawable,
+         GimpPreview  *preview)
 {
   gint     tile_width;
   gint     height;
@@ -293,10 +293,10 @@ engrave (GimpDrawable        *drawable,
 
 #if 0
 static void
-engrave_large (GimpDrawable        *drawable,
-               gint                 height,
-               gboolean             limit,
-               GimpDrawablePreview *preview)
+engrave_large (GimpDrawable *drawable,
+               gint          height,
+               gboolean      limit,
+               GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   guchar       *src_row, *dest_row;
@@ -393,12 +393,12 @@ engrave_large (GimpDrawable        *drawable,
         }
     }
 
-  g_free(average);
+  g_free (average);
 
   /*  update the engraved region  */
-  gimp_drawable_flush(drawable);
-  gimp_drawable_merge_shadow(drawable->drawable_id, TRUE);
-  gimp_drawable_update(drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_flush( drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 #endif
 
@@ -412,11 +412,11 @@ typedef struct
 PixelArea area;
 
 static void
-engrave_small (GimpDrawable        *drawable,
-               gint                 line_height,
-               gboolean             limit,
-               gint                 tile_width,
-               GimpDrawablePreview *preview)
+engrave_small (GimpDrawable *drawable,
+               gint          line_height,
+               gboolean      limit,
+               gint          tile_width,
+               GimpPreview  *preview)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint         bpp, color_n;
@@ -434,8 +434,8 @@ engrave_small (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -490,7 +490,8 @@ engrave_small (GimpDrawable        *drawable,
   /*  update the engraved region  */
   if (preview)
     {
-      gimp_drawable_preview_draw_region (preview, &dest_rgn);
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &dest_rgn);
     }
   else
     {

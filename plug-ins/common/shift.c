@@ -59,8 +59,8 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      shift                 (GimpDrawable        *drawable,
-                                        GimpDrawablePreview *preview);
+static void      shift                 (GimpDrawable *drawable,
+                                        GimpPreview  *preview);
 
 static gboolean  shift_dialog          (gint32        image_ID,
                                         GimpDrawable *drawable);
@@ -217,8 +217,8 @@ run (const gchar      *name,
 }
 
 static void
-shift (GimpDrawable        *drawable,
-       GimpDrawablePreview *preview)
+shift (GimpDrawable *drawable,
+       GimpPreview  *preview)
 {
   GimpPixelRgn      dest_rgn;
   gpointer          pr;
@@ -241,8 +241,8 @@ shift (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
     }
   else
     {
@@ -330,7 +330,8 @@ shift (GimpDrawable        *drawable,
 }
 
 static gboolean
-shift_dialog (gint32 image_ID, GimpDrawable *drawable)
+shift_dialog (gint32        image_ID,
+              GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;

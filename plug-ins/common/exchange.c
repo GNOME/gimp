@@ -69,14 +69,15 @@ static void     run   (const gchar      *name,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals);
 
-static void     exchange              (GimpDrawable        *drawable,
-                                       GimpDrawablePreview *preview);
+static void     exchange              (GimpDrawable  *drawable,
+                                       GimpPreview   *preview);
 
-static gboolean exchange_dialog       (GimpDrawable        *preview);
-static void     color_button_callback (GtkWidget           *widget,
-                                       gpointer             data);
-static void     scale_callback        (GtkAdjustment       *adj,
-                                       gpointer             data);
+static gboolean exchange_dialog       (GimpDrawable  *preview);
+static void     color_button_callback (GtkWidget     *widget,
+                                       gpointer       data);
+static void     scale_callback        (GtkAdjustment *adj,
+                                       gpointer       data);
+
 
 /* some global variables */
 static myParams xargs =
@@ -643,8 +644,8 @@ scale_callback (GtkAdjustment *adj,
 
 /* do the exchanging */
 static void
-exchange (GimpDrawable        *drawable,
-          GimpDrawablePreview *preview)
+exchange (GimpDrawable *drawable,
+          GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
   guchar        min_red,  min_green,  min_blue;
@@ -661,8 +662,8 @@ exchange (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -765,7 +766,8 @@ exchange (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_region (preview, &destPR);
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &destPR);
     }
   else
     {

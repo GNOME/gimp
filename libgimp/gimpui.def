@@ -1,5 +1,4 @@
 EXPORTS
-	gimp_aspect_preview_draw_buffer
 	gimp_aspect_preview_get_type
 	gimp_aspect_preview_new
 	gimp_brush_select_widget_close
@@ -10,7 +9,6 @@ EXPORTS
 	gimp_drawable_combo_box_new
 	gimp_drawable_get_thumbnail
 	gimp_drawable_menu_new
-	gimp_drawable_preview_draw_buffer
 	gimp_drawable_preview_draw_region
 	gimp_drawable_preview_get_drawable
 	gimp_drawable_preview_get_type

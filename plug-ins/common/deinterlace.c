@@ -53,10 +53,10 @@ static void      run    (const gchar      *name,
                          GimpParam       **return_vals);
 
 
-static void      deinterlace        (GimpDrawable        *drawable,
-                                     GimpDrawablePreview *preview);
+static void      deinterlace        (GimpDrawable *drawable,
+                                     GimpPreview  *preview);
 
-static gboolean  deinterlace_dialog (GimpDrawable        *drawable);
+static gboolean  deinterlace_dialog (GimpDrawable *drawable);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -181,8 +181,8 @@ run (const gchar      *name,
 }
 
 static void
-deinterlace (GimpDrawable        *drawable,
-             GimpDrawablePreview *preview)
+deinterlace (GimpDrawable *drawable,
+             GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height;
@@ -199,8 +199,9 @@ deinterlace (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+
       dest_buffer = dest  = g_new (guchar, width * height * bytes);
     }
   else
@@ -283,7 +284,7 @@ deinterlace (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (preview, dest_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, dest_buffer, width * bytes);
       dest = dest_buffer;
     }
   else

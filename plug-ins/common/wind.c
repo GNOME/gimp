@@ -77,34 +77,34 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gint dialog_box       (GimpDrawable       *drawable);
+static gint dialog_box       (GimpDrawable *drawable);
 
-static gint render_effect    (GimpDrawable        *drawable,
-                              GimpDrawablePreview *preview);
-static void render_wind      (GimpDrawable        *drawable,
-                              gint                 threshold,
-                              gint                 strength,
-                              direction_t          direction,
-                              edge_t               edge,
-                              GimpDrawablePreview *preview);
-static void render_blast     (GimpDrawable        *drawable,
-                              gint                 threshold,
-                              gint                 strength,
-                              direction_t          direction,
-                              edge_t               edge,
-                              GimpDrawablePreview *preview);
-static gint render_blast_row (guchar              *buffer,
-                              gint                 bytes,
-                              gint                 lpi,
-                              gint                 threshold,
-                              gint                 strength,
-                              edge_t               edge);
-static void render_wind_row  (guchar              *sb,
-                              gint                 bytes,
-                              gint                 lpi,
-                              gint                 threshold,
-                              gint                 strength,
-                              edge_t               edge);
+static gint render_effect    (GimpDrawable *drawable,
+                              GimpPreview  *preview);
+static void render_wind      (GimpDrawable *drawable,
+                              gint          threshold,
+                              gint          strength,
+                              direction_t   direction,
+                              edge_t        edge,
+                              GimpPreview  *preview);
+static void render_blast     (GimpDrawable *drawable,
+                              gint          threshold,
+                              gint          strength,
+                              direction_t   direction,
+                              edge_t        edge,
+                              GimpPreview  *preview);
+static gint render_blast_row (guchar       *buffer,
+                              gint          bytes,
+                              gint          lpi,
+                              gint          threshold,
+                              gint          strength,
+                              edge_t        edge);
+static void render_wind_row  (guchar       *sb,
+                              gint          bytes,
+                              gint          lpi,
+                              gint          threshold,
+                              gint          strength,
+                              edge_t        edge);
 
 static void get_derivative         (guchar   *pixel_R1,
                                     guchar   *pixel_R2,
@@ -266,8 +266,8 @@ run (const gchar      *name,
 }
 
 static gint
-render_effect (GimpDrawable        *drawable,
-               GimpDrawablePreview *preview)
+render_effect (GimpDrawable *drawable,
+               GimpPreview  *preview)
 {
   if (config.alg == RENDER_WIND)
     {
@@ -283,12 +283,12 @@ render_effect (GimpDrawable        *drawable,
 }
 
 static void
-render_blast (GimpDrawable        *drawable,
-              gint                 threshold,
-              gint                 strength,
-              direction_t          direction,
-              edge_t               edge,
-              GimpDrawablePreview *preview)
+render_blast (GimpDrawable *drawable,
+              gint          threshold,
+              gint          strength,
+              direction_t   direction,
+              edge_t        edge,
+              GimpPreview  *preview)
 {
   gint          x1, x2, y1, y2;
   gint          width;
@@ -303,8 +303,8 @@ render_blast (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -392,8 +392,7 @@ render_blast (GimpDrawable        *drawable,
   /*  update the region  */
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (preview,
-                                         preview_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else
@@ -405,12 +404,12 @@ render_blast (GimpDrawable        *drawable,
 }
 
 static void
-render_wind (GimpDrawable        *drawable,
-             gint                 threshold,
-             gint                 strength,
-             direction_t          direction,
-             edge_t               edge,
-             GimpDrawablePreview *preview)
+render_wind (GimpDrawable *drawable,
+             gint          threshold,
+             gint          strength,
+             direction_t   direction,
+             edge_t        edge,
+             GimpPreview  *preview)
 {
   GimpPixelRgn  src_region, dest_region;
   gint          width;
@@ -427,8 +426,8 @@ render_wind (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -483,8 +482,7 @@ render_wind (GimpDrawable        *drawable,
   /*  update the region  */
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (preview,
-                                         preview_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

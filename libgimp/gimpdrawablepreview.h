@@ -59,9 +59,6 @@ GtkWidget    * gimp_drawable_preview_new          (GimpDrawable        *drawable
                                                    gboolean            *toggle);
 GimpDrawable * gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview);
 
-void           gimp_drawable_preview_draw_buffer  (GimpDrawablePreview *preview,
-                                                   const guchar        *buffer,
-                                                   gint                 rowstride);
 void           gimp_drawable_preview_draw_region  (GimpDrawablePreview *preview,
                                                    const GimpPixelRgn  *region);
 

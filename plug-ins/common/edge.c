@@ -93,15 +93,15 @@ typedef struct
  */
 
 static void       query               (void);
-static void       run                 (const gchar         *name,
-                                       gint                 nparams,
-                                       const GimpParam     *param,
-                                       gint                *nreturn_vals,
-                                       GimpParam          **return_vals);
+static void       run                 (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
-static void       edge                (GimpDrawable        *drawable);
-static gboolean   edge_dialog         (GimpDrawable        *drawable);
-static void       edge_preview_update (GimpDrawablePreview *preview);
+static void       edge                (GimpDrawable     *drawable);
+static gboolean   edge_dialog         (GimpDrawable     *drawable);
+static void       edge_preview_update (GimpPreview      *preview);
 
 static gint edge_detect  (const guchar *data);
 static gint prewitt      (const guchar *data);
@@ -770,12 +770,13 @@ edge_dialog (GimpDrawable *drawable)
 }
 
 static void
-edge_preview_update (GimpDrawablePreview *preview)
+edge_preview_update (GimpPreview *preview)
 {
   /* drawable */
-  glong    bytes;
-  gint     alpha;
-  gboolean has_alpha;
+  GimpDrawable *drawable;
+  glong         bytes;
+  gint          alpha;
+  gboolean      has_alpha;
 
   /* preview */
   guchar       *src           = NULL; /* Buffer to hold source image */
@@ -791,20 +792,22 @@ edge_preview_update (GimpDrawablePreview *preview)
   gint x, y;
 
   /* Get drawable info */
-  bytes  = gimp_drawable_bpp (preview->drawable->drawable_id);
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
+  bytes  = gimp_drawable_bpp (drawable->drawable_id);
   alpha  = bytes;
-  has_alpha = gimp_drawable_has_alpha (preview->drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   if (has_alpha)
     alpha--;
 
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &width, &height);
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, preview->drawable,
+  gimp_pixel_rgn_init (&srcPR, drawable,
                        x1, y1, width, height, FALSE, FALSE);
   src = g_new (guchar, width * height * bytes);
   render_buffer = g_new (guchar, width * height * bytes);
@@ -842,7 +845,7 @@ edge_preview_update (GimpDrawablePreview *preview)
   /*
    * Draw the preview image on the screen...
    */
-  gimp_drawable_preview_draw_buffer (preview, render_buffer, width * bytes);
+  gimp_preview_draw_buffer (preview, render_buffer, width * bytes);
 
   g_free (render_buffer);
   g_free (src);

@@ -53,11 +53,11 @@ static void     run   (const gchar      *name,
                        GimpParam       **returm_vals);
 
 static void     compute_luts   (void);
-static void     sharpen        (GimpDrawable        *drawable);
+static void     sharpen        (GimpDrawable *drawable);
 
-static gboolean sharpen_dialog (GimpDrawable        *drawable);
+static gboolean sharpen_dialog (GimpDrawable *drawable);
 
-static void     preview_update (GimpDrawablePreview *preview);
+static void     preview_update (GimpPreview  *preview);
 
 typedef gint32 intneg;
 typedef gint32 intpos;
@@ -533,12 +533,13 @@ sharpen_dialog (GimpDrawable *drawable)
 }
 
 static void
-preview_update (GimpDrawablePreview *preview)
+preview_update (GimpPreview *preview)
 {
+  GimpDrawable *drawable;
   GimpPixelRgn  src_rgn;        /* Source image region */
-  guchar        *src_ptr;       /* Current source pixel */
-  guchar        *dst_ptr;       /* Current destination pixel */
-  intneg        *neg_ptr;       /* Current negative pixel */
+  guchar       *src_ptr;        /* Current source pixel */
+  guchar       *dst_ptr;        /* Current destination pixel */
+  intneg       *neg_ptr;        /* Current negative pixel */
   gint          i;              /* Looping var */
   gint          y;              /* Current location in image */
   gint          width;          /* Byte width of the image */
@@ -554,18 +555,20 @@ preview_update (GimpDrawablePreview *preview)
 
   compute_luts();
 
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview),
-                         &preview_width, &preview_height);
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &preview_width, &preview_height);
 
-  img_bpp = gimp_drawable_bpp (preview->drawable->drawable_id);
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
+
+  img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
 
   preview_src = g_new (guchar, preview_width * preview_height * img_bpp);
   preview_neg = g_new (intneg, preview_width * preview_height * img_bpp);
   preview_dst = g_new (guchar, preview_width * preview_height * img_bpp);
 
-  gimp_pixel_rgn_init (&src_rgn, GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+  gimp_pixel_rgn_init (&src_rgn, drawable,
                        x1, y1, preview_width, preview_height,
                        FALSE, FALSE);
 
@@ -620,8 +623,7 @@ preview_update (GimpDrawablePreview *preview)
     (*filter)(preview_width, src_ptr, dst_ptr, neg_ptr - width,
               neg_ptr, neg_ptr + width);
 
-  gimp_drawable_preview_draw_buffer (preview,
-                                     preview_dst, preview_width * img_bpp);
+  gimp_preview_draw_buffer (preview, preview_dst, preview_width * img_bpp);
 
   g_free (preview_src);
   g_free (preview_neg);

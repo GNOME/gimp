@@ -743,24 +743,6 @@ gimp_drawable_get_thumbnail
 <TITLE>GimpAspectPreview</TITLE>
 GimpAspectPreview
 gimp_aspect_preview_new
-gimp_aspect_preview_draw_buffer
-<SUBSECTION Standard>
-GimpAspectPreviewClass
-GIMP_ASPECT_PREVIEW
-GIMP_IS_ASPECT_PREVIEW
-GIMP_TYPE_ASPECT_PREVIEW
-gimp_aspect_preview_get_type
-GIMP_ASPECT_PREVIEW_CLASS
-GIMP_IS_ASPECT_PREVIEW_CLASS
-GIMP_ASPECT_PREVIEW_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpaspectpreview</FILE>
-<TITLE>GimpAspectPreview</TITLE>
-GimpAspectPreview
-gimp_aspect_preview_new
-gimp_aspect_preview_draw_buffer
 <SUBSECTION Standard>
 GimpAspectPreviewClass
 GIMP_ASPECT_PREVIEW
@@ -778,7 +760,6 @@ GIMP_ASPECT_PREVIEW_GET_CLASS
 GimpDrawablePreview
 gimp_drawable_preview_new
 gimp_drawable_preview_get_drawable
-gimp_drawable_preview_draw_buffer
 gimp_drawable_preview_draw_region
 <SUBSECTION Standard>
 GimpDrawablePreviewClass

@@ -553,7 +553,7 @@ static void
 update_preview (GtkWidget *preview,
                 GtkWidget *size)
 {
-  gauss (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+  gauss (gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview)),
          gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0),
          gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1),
          bvals.method,
@@ -1042,8 +1042,8 @@ gauss (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
-                                         preview_buffer2, width * bytes);
+      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
+                                preview_buffer2, width * bytes);
       g_free (preview_buffer1);
       g_free (preview_buffer2);
     }

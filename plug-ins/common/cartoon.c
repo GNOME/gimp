@@ -57,14 +57,14 @@ static void      run    (const gchar       *name,
                          gint              *nreturn_vals,
                          GimpParam        **return_vals);
 
-static void      cartoon        (GimpDrawable        *drawable,
-                                 GimpDrawablePreview *preview);
-static gboolean  cartoon_dialog (GimpDrawable        *drawable);
+static void      cartoon        (GimpDrawable *drawable,
+                                 GimpPreview  *preview);
+static gboolean  cartoon_dialog (GimpDrawable *drawable);
 
-static gdouble   compute_ramp   (guchar              *dest1,
-                                 guchar              *dest2,
-                                 gint                 length,
-                                 gdouble              pct_black);
+static gdouble   compute_ramp   (guchar       *dest1,
+                                 guchar       *dest2,
+                                 gint          length,
+                                 gdouble       pct_black);
 
 /*
  * Gaussian blur helper functions
@@ -251,8 +251,8 @@ run (const gchar      *name,
  *   pixel intensity *= intensity mult
  */
 static void
-cartoon (GimpDrawable        *drawable,
-         GimpDrawablePreview *preview)
+cartoon (GimpDrawable *drawable,
+         GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
@@ -290,7 +290,7 @@ cartoon (GimpDrawable        *drawable,
   if (preview)
     {
       gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_size (preview, &width, &height);
     }
   else
     {
@@ -301,7 +301,7 @@ cartoon (GimpDrawable        *drawable,
     }
 
   bytes     = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   val_p1 = g_new (gdouble, MAX (width, height) * bytes);
   val_p2 = g_new (gdouble, MAX (width, height) * bytes);
@@ -586,8 +586,7 @@ cartoon (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (preview,
-                                         preview_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

@@ -62,15 +62,15 @@ static void      run    (const gchar       *name,
                          gint              *nreturn_vals,
                          GimpParam        **return_vals);
 
-static void      photocopy        (GimpDrawable        *drawable,
-                                   GimpDrawablePreview *preview);
-static gboolean  photocopy_dialog (GimpDrawable        *drawable);
+static void      photocopy        (GimpDrawable *drawable,
+                                   GimpPreview  *preview);
+static gboolean  photocopy_dialog (GimpDrawable *drawable);
 
-static gdouble   compute_ramp   (guchar                *dest1,
-                                 guchar                *dest2,
-                                 gint                   length,
-                                 gdouble                pct_black,
-                                 gint                   under_threshold);
+static gdouble   compute_ramp     (guchar       *dest1,
+                                   guchar       *dest2,
+                                   gint          length,
+                                   gdouble       pct_black,
+                                   gint          under_threshold);
 
 /*
  * Gaussian blur helper functions
@@ -266,8 +266,8 @@ run (const gchar      *name,
  *   pixel intensity = white
  */
 static void
-photocopy (GimpDrawable        *drawable,
-           GimpDrawablePreview *preview)
+photocopy (GimpDrawable *drawable,
+           GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
@@ -304,8 +304,8 @@ photocopy (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
     }
   else
     {
@@ -601,7 +601,8 @@ photocopy (GimpDrawable        *drawable,
 
       if (preview)
         {
-          gimp_drawable_preview_draw_region (preview, &dest_rgn);
+          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                             &dest_rgn);
         }
       else
         {

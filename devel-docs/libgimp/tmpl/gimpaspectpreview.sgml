@@ -9,12 +9,10 @@ GimpAspectPreview
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### STRUCT GimpAspectPreview ##### -->
 <para>
@@ -30,15 +28,5 @@ GimpAspectPreview
 @drawable: 
 @toggle: 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_aspect_preview_draw_buffer ##### -->
-<para>
-
-</para>
-
-@preview: 
-@buffer: 
-@rowstride: 
 
 

@@ -75,10 +75,10 @@ static void      dog                  (GimpDrawable *drawable,
                                        gdouble       outer,
                                        gboolean      show_progress);
 
-static void      preview_update_preview  (GimpDrawablePreview *preview,
-                                          GimpDrawable        *drawable);
-static void      change_radius_callback  (GtkWidget *widget,
-                                          gpointer   data);
+static void      preview_update_preview  (GimpPreview  *preview,
+                                          GimpDrawable *drawable);
+static void      change_radius_callback  (GtkWidget    *widget,
+                                          gpointer      data);
 
 
 
@@ -908,8 +908,8 @@ run_length_encode (guchar *src,
 }
 
 static void
-preview_update_preview (GimpDrawablePreview *preview,
-                        GimpDrawable        *drawable)
+preview_update_preview (GimpPreview  *preview,
+                        GimpDrawable *drawable)
 {
   gint          x1, y1;
   gint          width, height;
@@ -923,8 +923,8 @@ preview_update_preview (GimpDrawablePreview *preview,
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
 
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &width, &height);
 
   buffer = g_new (guchar, width * height * bpp);
 
@@ -955,7 +955,7 @@ preview_update_preview (GimpDrawablePreview *preview,
   gimp_pixel_rgn_get_rect (&preview_rgn, buffer,
                            0, 0, width, height);
 
-  gimp_drawable_preview_draw_buffer (preview, buffer, width * bpp);
+  gimp_preview_draw_buffer (preview, buffer, width * bpp);
 
   gimp_image_delete (image_id);
   g_free (buffer);

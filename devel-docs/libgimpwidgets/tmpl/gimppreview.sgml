@@ -95,6 +95,16 @@ GimpPreview
 @preview: 
 
 
+<!-- ##### FUNCTION gimp_preview_draw_buffer ##### -->
+<para>
+
+</para>
+
+@preview: 
+@buffer: 
+@rowstride: 
+
+
 <!-- ##### FUNCTION gimp_preview_invalidate ##### -->
 <para>
 

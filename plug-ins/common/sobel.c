@@ -453,8 +453,7 @@ sobel (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
-                                         preview_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

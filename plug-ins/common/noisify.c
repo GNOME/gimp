@@ -71,12 +71,12 @@ static void     run          (const gchar      *name,
                               GimpParam       **return_vals);
 
 
-static void     noisify_func (const guchar        *src,
-                              guchar              *dest,
-                              gint                 bpp,
-                              gpointer             data);
+static void     noisify_func (const guchar     *src,
+                              guchar           *dest,
+                              gint              bpp,
+                              gpointer          data);
 
-static void     noisify      (GimpDrawablePreview *preview);
+static void     noisify      (GimpPreview      *preview);
 
 
 static gdouble  gauss                            (GRand *gr);
@@ -272,25 +272,29 @@ noisify_func (const guchar *src,
 }
 
 static void
-noisify (GimpDrawablePreview *preview)
+noisify (GimpPreview *preview)
 {
-  guchar       *src, *dst;
+  GimpDrawable *drawable;
   GimpPixelRgn  src_rgn;
+  guchar       *src, *dst;
   gint          i;
   gint          x1, y1;
   gint          width, height;
   gint          bpp;
   GRand        *gr = g_rand_new ();
 
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
-  bpp = preview->drawable->bpp;
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &width, &height);
+
+  bpp = drawable->bpp;
 
   src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * bpp);
 
-  gimp_pixel_rgn_init (&src_rgn, preview->drawable,
+  gimp_pixel_rgn_init (&src_rgn, drawable,
                        x1, y1, width, height,
                        FALSE, FALSE);
   gimp_pixel_rgn_get_rect (&src_rgn, src, x1, y1, width, height);
@@ -298,7 +302,7 @@ noisify (GimpDrawablePreview *preview)
   for (i = 0; i < width * height; i++)
     noisify_func (src + i * bpp, dst + i * bpp, bpp, gr);
 
-  gimp_drawable_preview_draw_buffer (preview, dst, width * bpp);
+  gimp_preview_draw_buffer (preview, dst, width * bpp);
 
   g_free (src);
   g_free (dst);

@@ -109,23 +109,23 @@ static void        run   (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static void        solid_noise               (GimpDrawable      *drawable,
-                                              GimpAspectPreview *preview);
+static void        solid_noise               (GimpDrawable *drawable,
+                                              GimpPreview  *preview);
 static void        solid_noise_init          (void);
-static gdouble     plain_noise               (gdouble            x,
-                                              gdouble            y,
-                                              guint              s);
-static gdouble     noise                     (gdouble            x,
-                                              gdouble            y);
+static gdouble     plain_noise               (gdouble       x,
+                                              gdouble       y,
+                                              guint         s);
+static gdouble     noise                     (gdouble       x,
+                                              gdouble       y);
 
-static gboolean    solid_noise_dialog        (GimpDrawable      *drawable);
-static void        solid_noise_draw_one_tile (GimpPixelRgn      *rgn,
-                                              gdouble            width,
-                                              gdouble            height,
-                                              gint               xoffset,
-                                              gint               yoffset,
-                                              gint               chns,
-                                              gboolean           has_alpha);
+static gboolean    solid_noise_dialog        (GimpDrawable *drawable);
+static void        solid_noise_draw_one_tile (GimpPixelRgn *rgn,
+                                              gdouble       width,
+                                              gdouble       height,
+                                              gint          xoffset,
+                                              gint          yoffset,
+                                              gint          chns,
+                                              gboolean      has_alpha);
 
 
 /*---- Variables ----*/
@@ -302,8 +302,8 @@ run (const gchar      *name,
 
 
 static void
-solid_noise (GimpDrawable      *drawable,
-             GimpAspectPreview *preview)
+solid_noise (GimpDrawable *drawable,
+             GimpPreview  *preview)
 {
   GimpPixelRgn  dest_rgn;
   gint          bytes;
@@ -318,7 +318,7 @@ solid_noise (GimpDrawable      *drawable,
   if (preview)
     {
       x1 = y1 = 0;
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_size (preview, &width, &height);
       x2 = width;
       y2 = height;
     }
@@ -385,7 +385,7 @@ solid_noise (GimpDrawable      *drawable,
   /*  Update the drawable  */
   if (preview)
     {
-      gimp_aspect_preview_draw_buffer (preview, dest_rgn.data, rowstride);
+      gimp_preview_draw_buffer (preview, dest_rgn.data, rowstride);
       g_free (dest_rgn.data);
     }
   else

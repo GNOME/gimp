@@ -58,10 +58,10 @@ static void      run    (const gchar      *name,
 static void      neon                (GimpDrawable *drawable,
                                       gdouble       radius,
                                       gdouble       amount,
-                                      GtkWidget    *preview);
+                                      GimpPreview  *preview);
 
 static gboolean  neon_dialog         (GimpDrawable *drawable);
-static void      neon_preview_update (GtkWidget    *preview);
+static void      neon_preview_update (GimpPreview  *preview);
 
 /*
  * Gaussian operator helper functions
@@ -236,7 +236,7 @@ static void
 neon (GimpDrawable *drawable,
       gdouble       radius,
       gdouble       amount,
-      GtkWidget    *preview)
+      GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          width, height;
@@ -261,8 +261,8 @@ neon (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
       x2 = x1 + width;
       y2 = y1 + height;
     }
@@ -465,8 +465,7 @@ neon (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
-                                         preview_buffer2, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer2, width * bytes);
       g_free (preview_buffer1);
       g_free (preview_buffer2);
     }
@@ -750,7 +749,7 @@ neon_dialog (GimpDrawable *drawable)
 }
 
 static void
-neon_preview_update (GtkWidget *preview)
+neon_preview_update (GimpPreview *preview)
 {
   neon (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
         evals.radius,

@@ -54,13 +54,11 @@ struct _GimpAspectPreviewClass
 };
 
 
-GType      gimp_aspect_preview_get_type     (void) G_GNUC_CONST;
-GtkWidget *gimp_aspect_preview_new          (GimpDrawable      *drawable,
-                                             gboolean          *toggle);
+GType       gimp_aspect_preview_get_type (void) G_GNUC_CONST;
 
-void       gimp_aspect_preview_draw_buffer  (GimpAspectPreview *preview,
-                                             const guchar      *buffer,
-                                             gint               rowstride);
+GtkWidget * gimp_aspect_preview_new      (GimpDrawable *drawable,
+                                          gboolean     *toggle);
+
 
 G_END_DECLS
 

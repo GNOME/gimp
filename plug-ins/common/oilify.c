@@ -59,14 +59,14 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      oilify             (GimpDrawable        *drawable,
-                                     GimpDrawablePreview *preview);
-static void      oilify_rgb         (GimpDrawable        *drawable,
-                                     GimpDrawablePreview *preview);
-static void      oilify_intensity   (GimpDrawable        *drawable,
-                                     GimpDrawablePreview *preview);
+static void      oilify             (GimpDrawable *drawable,
+                                     GimpPreview  *preview);
+static void      oilify_rgb         (GimpDrawable *drawable,
+                                     GimpPreview  *preview);
+static void      oilify_intensity   (GimpDrawable *drawable,
+                                     GimpPreview  *preview);
 
-static gboolean  oilify_dialog      (GimpDrawable        *drawable);
+static gboolean  oilify_dialog      (GimpDrawable *drawable);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -215,8 +215,8 @@ run (const gchar      *name,
  * at (x,y).
  */
 static void
-oilify_rgb (GimpDrawable        *drawable,
-            GimpDrawablePreview *preview)
+oilify_rgb (GimpDrawable *drawable,
+            GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          bytes;
@@ -235,8 +235,8 @@ oilify_rgb (GimpDrawable        *drawable,
   /*  get the selection bounds  */
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -336,8 +336,8 @@ oilify_rgb (GimpDrawable        *drawable,
  * at (x,y). Histogram is based on intensity.
  */
 static void
-oilify_intensity (GimpDrawable        *drawable,
-                  GimpDrawablePreview *preview)
+oilify_intensity (GimpDrawable *drawable,
+                  GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gint          bytes;
@@ -356,8 +356,8 @@ oilify_intensity (GimpDrawable        *drawable,
   /*  get the selection bounds  */
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -450,8 +450,8 @@ oilify_intensity (GimpDrawable        *drawable,
 }
 
 static void
-oilify (GimpDrawable        *drawable,
-        GimpDrawablePreview *preview)
+oilify (GimpDrawable *drawable,
+        GimpPreview  *preview)
 {
   if (gimp_drawable_is_rgb (drawable->drawable_id) &&
       (ovals.mode == MODE_INTEN))

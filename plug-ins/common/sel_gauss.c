@@ -49,17 +49,18 @@ typedef struct
 /* Declare local functions.
  */
 static void      query            (void);
-static void      run              (const gchar          *name,
-                                   gint                  nparams,
-                                   const GimpParam      *param,
-                                   gint                 *nreturn_vals,
-                                   GimpParam           **return_vals);
+static void      run              (const gchar      *name,
+                                   gint              nparams,
+                                   const GimpParam  *param,
+                                   gint             *nreturn_vals,
+                                   GimpParam       **return_vals);
 
-static void      sel_gauss        (GimpDrawable         *drawable,
-                                   gdouble               radius,
-                                   gint                  maxdelta);
-static gboolean  sel_gauss_dialog (GimpDrawable         *drawable);
-static void      preview_update   (GimpDrawablePreview  *preview);
+static void      sel_gauss        (GimpDrawable     *drawable,
+                                   gdouble           radius,
+                                   gint              maxdelta);
+static gboolean  sel_gauss_dialog (GimpDrawable     *drawable);
+static void      preview_update   (GimpPreview      *preview);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -449,9 +450,9 @@ sel_gauss (GimpDrawable *drawable,
 }
 
 static void
-preview_update (GimpDrawablePreview *preview)
+preview_update (GimpPreview *preview)
 {
-  GimpDrawable  *drawable = gimp_drawable_preview_get_drawable (preview);
+  GimpDrawable  *drawable;
   glong          bytes;
   gint           x1, y1;
   guchar        *render_buffer;  /* Buffer to hold rendered image */
@@ -466,13 +467,15 @@ preview_update (GimpDrawablePreview *preview)
   gdouble       radius;
 
   /* Get drawable info */
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
   bytes = drawable->bpp;
 
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_preview_get_size (preview, &width, &height);
 
   /* initialize pixel regions */
   gimp_pixel_rgn_init (&srcPR, drawable,
@@ -508,7 +511,7 @@ preview_update (GimpDrawablePreview *preview)
   /*
    * Draw the preview image on the screen...
    */
-  gimp_drawable_preview_draw_buffer (preview, render_buffer, width * bytes);
+  gimp_preview_draw_buffer (preview, render_buffer, width * bytes);
 
   g_free (render_buffer);
 }

@@ -33,12 +33,16 @@
 
 #include "gimpaspectpreview.h"
 
-static void  gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass);
-static void  gimp_aspect_preview_init       (GimpAspectPreview      *preview);
 
-static void  gimp_aspect_preview_style_set  (GtkWidget              *widget,
-                                             GtkStyle               *prev_style);
-static void  gimp_aspect_preview_draw       (GimpPreview            *preview);
+static void  gimp_aspect_preview_class_init  (GimpAspectPreviewClass *klass);
+static void  gimp_aspect_preview_init        (GimpAspectPreview      *preview);
+
+static void  gimp_aspect_preview_style_set   (GtkWidget              *widget,
+                                              GtkStyle               *prev_style);
+static void  gimp_aspect_preview_draw        (GimpPreview            *preview);
+static void  gimp_aspect_preview_draw_buffer (GimpPreview            *preview,
+                                              const guchar           *buffer,
+                                              gint                    rowstride);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -79,8 +83,10 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->style_set = gimp_aspect_preview_style_set;
-  preview_class->draw     = gimp_aspect_preview_draw;
+  widget_class->style_set    = gimp_aspect_preview_style_set;
+
+  preview_class->draw        = gimp_aspect_preview_draw;
+  preview_class->draw_buffer = gimp_aspect_preview_draw_buffer;
 }
 
 static void
@@ -96,9 +102,10 @@ static void
 gimp_aspect_preview_style_set (GtkWidget *widget,
                                GtkStyle  *prev_style)
 {
-  GimpAspectPreview *preview = GIMP_ASPECT_PREVIEW (widget);
-  gint               size;
-  gint               width, height;
+  GimpPreview  *preview  = GIMP_PREVIEW (widget);
+  GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
+  gint          size;
+  gint          width, height;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -106,22 +113,51 @@ gimp_aspect_preview_style_set (GtkWidget *widget,
   gtk_widget_style_get (widget,
                         "size", &size,
                         NULL);
-  width  = gimp_drawable_width  (preview->drawable->drawable_id);
-  height = gimp_drawable_height (preview->drawable->drawable_id);
+  width  = gimp_drawable_width  (drawable->drawable_id);
+  height = gimp_drawable_height (drawable->drawable_id);
 
   if (width > height)
     {
-      GIMP_PREVIEW (preview)->width = MIN (width, size);
-      GIMP_PREVIEW (preview)->height = (height * GIMP_PREVIEW (preview)->width) / width;
+      preview->width  = MIN (width, size);
+      preview->height = (height * preview->width) / width;
     }
   else
     {
-      GIMP_PREVIEW (preview)->height = MIN (height, size);
-      GIMP_PREVIEW (preview)->width = (width * GIMP_PREVIEW (preview)->height) / height;
+      preview->height = MIN (height, size);
+      preview->width  = (width * preview->height) / height;
     }
-  gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
-                               GIMP_PREVIEW (preview)->width,
-                               GIMP_PREVIEW (preview)->height);
+
+  gtk_widget_set_size_request (preview->area,
+                               preview->width, preview->height);
+}
+
+
+static void
+gimp_aspect_preview_draw (GimpPreview *preview)
+{
+  g_return_if_fail (GIMP_IS_ASPECT_PREVIEW (preview));
+
+  gimp_preview_area_fill (GIMP_PREVIEW_AREA (preview->area),
+                          0, 0,
+                          preview->width,
+                          preview->height,
+                          0, 0, 0);
+}
+
+static void
+gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
+                                 const guchar *buffer,
+                                 gint          rowstride)
+{
+  GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
+
+  if (drawable)
+    gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
+                            0, 0,
+                            preview->width, preview->height,
+                            gimp_drawable_type (drawable->drawable_id),
+                            buffer,
+                            rowstride);
 }
 
 GtkWidget *
@@ -140,46 +176,8 @@ gimp_aspect_preview_new (GimpDrawable *drawable,
   gimp_preview_set_bounds (GIMP_PREVIEW (preview), 0, 0, width, height);
 
   g_object_set (GIMP_PREVIEW (preview)->frame,
-                "ratio", (gdouble)width / (gdouble)height,
+                "ratio", (gdouble) width / (gdouble) height,
                 NULL);
 
   return GTK_WIDGET (preview);
 }
-
-static void
-gimp_aspect_preview_draw (GimpPreview *preview)
-{
-  g_return_if_fail (GIMP_IS_ASPECT_PREVIEW (preview));
-
-  gimp_preview_area_fill (GIMP_PREVIEW_AREA (preview->area),
-                          0, 0,
-                          preview->width,
-                          preview->height,
-                          0, 0, 0);
-}
-
-/**
- * gimp_aspect_preview_draw_buffer:
- * @preview:   a #GimpAspectPreview widget
- * @buffer:
- * @rowstride:
- *
- * Since: GIMP 2.2
- **/
-void
-gimp_aspect_preview_draw_buffer (GimpAspectPreview *preview,
-                                 const guchar      *buffer,
-                                 gint               rowstride)
-{
-  g_return_if_fail (GIMP_IS_ASPECT_PREVIEW (preview));
-  g_return_if_fail (buffer != NULL);
-
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (GIMP_PREVIEW (preview)->area),
-                          0, 0,
-                          GIMP_PREVIEW (preview)->width,
-                          GIMP_PREVIEW (preview)->height,
-                          gimp_drawable_type (preview->drawable->drawable_id),
-                          buffer,
-                          rowstride);
-}
-

@@ -1097,9 +1097,9 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static gboolean  struc_dialog (GimpDrawable        *drawable);
-static void      strucpi      (GimpDrawable        *drawable,
-                               GimpDrawablePreview *preview);
+static gboolean  struc_dialog (GimpDrawable *drawable);
+static void      strucpi      (GimpDrawable *drawable,
+                               GimpPreview  *preview);
 
 
 /* --- Variables --- */
@@ -1337,8 +1337,8 @@ struc_dialog (GimpDrawable *drawable)
 
 /* Filter function */
 static void
-strucpi (GimpDrawable        *drawable,
-         GimpDrawablePreview *preview)
+strucpi (GimpDrawable *drawable,
+         GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height;
@@ -1353,8 +1353,8 @@ strucpi (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
 
       x2 = x1 + width;
       y2 = y1 + height;
@@ -1390,7 +1390,8 @@ strucpi (GimpDrawable        *drawable,
     }
   else
     {
-      gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&destPR,
+                           drawable, x1, y1, width, height, TRUE, TRUE);
     }
 
   mult = (gfloat) svals.depth * 0.25;
@@ -1494,8 +1495,7 @@ strucpi (GimpDrawable        *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw_buffer (preview,
-                                         preview_buffer, width * bytes);
+      gimp_preview_draw_buffer (preview, preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

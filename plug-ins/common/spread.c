@@ -288,25 +288,28 @@ static void
 spread_preview_update (GimpPreview *preview,
                        GtkWidget   *size)
 {
-  GimpDrawablePreview *drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
-  SpreadParam_t        param;
-  gint                 x, y, bpp;
-  guchar              *buffer, *dest;
-  gint                 x_off, y_off;
-  gint                 width, height;
+  GimpDrawable   *drawable;
+  SpreadParam_t   param;
+  gint            x, y, bpp;
+  guchar         *buffer, *dest;
+  gint            x_off, y_off;
+  gint            width, height;
 
-  param.pft      = gimp_pixel_fetcher_new (drawable_preview->drawable, FALSE);
+  drawable =
+    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
+
+  param.pft      = gimp_pixel_fetcher_new (drawable, FALSE);
   param.gr       = g_rand_new ();
   param.x_amount = (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size),
                                                 0) + 1) / 2;
   param.y_amount = (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size),
                                                 1) + 1) / 2;
-  param.width    = drawable_preview->drawable->width;
-  param.height   = drawable_preview->drawable->height;
+  param.width    = drawable->width;
+  param.height   = drawable->height;
 
   gimp_preview_get_size (preview, &width, &height);
 
-  bpp = drawable_preview->drawable->bpp;
+  bpp = drawable->bpp;
   dest = buffer = g_new (guchar, width * height * bpp);
 
   gimp_preview_get_position (preview, &x_off, &y_off);
@@ -318,7 +321,7 @@ spread_preview_update (GimpPreview *preview,
         dest += bpp;
       }
 
-  gimp_drawable_preview_draw_buffer (drawable_preview, buffer, width * bpp);
+  gimp_preview_draw_buffer (preview, buffer, width * bpp);
 
   g_free (buffer);
   g_rand_free (param.gr);

@@ -145,6 +145,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 
   klass->draw                     = NULL;
   klass->draw_thumb               = NULL;
+  klass->draw_buffer              = NULL;
   klass->set_cursor               = gimp_preview_set_cursor;
 
   g_object_class_install_property (object_class,
@@ -591,6 +592,29 @@ gimp_preview_draw (GimpPreview *preview)
 
   if (class->draw)
     class->draw (preview);
+}
+
+/*
+ * gimp_preview_draw_buffer:
+ * @preview:   a #GimpPreview widget
+ * @buffer:    a pixel buffer the size of the preview
+ * @rowstride: the @buffer's rowstride
+ *
+ * Calls the GimpPreview::draw_buffer method. GimpPreview itself
+ * doesn't implement this method so the behaviour is determined by the
+ * derived class implementing this method.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_draw_buffer (GimpPreview  *preview,
+                          const guchar *buffer,
+                          gint          rowstride)
+{
+  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
+
+  if (class->draw_buffer)
+    class->draw_buffer (preview, buffer, rowstride);
 }
 
 /*
