@@ -1,3 +1,9 @@
+2004-07-12  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.s: don't use gtk_main() / gtk_main_quit() but run
+	our own main-loop like we already used to do when being run
+	non-interactively.
+
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.c

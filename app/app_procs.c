@@ -30,7 +30,7 @@
 #include <unistd.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -293,30 +293,22 @@ app_run (const gchar         *full_prog_name,
         }
     }
 
+  if (! no_interface)
+    gui_post_init (gimp);
+
   batch_run (gimp, batch_cmds);
 
-  if (no_interface)
-    loop = g_main_loop_new (NULL, FALSE);
-  else
-    loop = NULL;
+  loop = g_main_loop_new (NULL, FALSE);
 
   g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (app_exit_after_callback),
                           loop);
 
-  if (loop)
-    {
-      gimp_threads_leave (gimp);
-      g_main_loop_run (loop);
-      gimp_threads_enter (gimp);
+  gimp_threads_leave (gimp);
+  g_main_loop_run (loop);
+  gimp_threads_enter (gimp);
 
-      g_main_loop_unref (loop);
-    }
-  else
-    {
-      gui_post_init (gimp);
-      gtk_main ();
-    }
+  g_main_loop_unref (loop);
 
   g_object_unref (gimp);
   base_exit ();
@@ -350,11 +342,7 @@ app_exit_after_callback (Gimp      *gimp,
    */
 
 #ifdef GIMP_UNSTABLE
-  if (loop)
-    g_main_loop_quit (loop);
-  else
-    gtk_main_quit ();
-
+  g_main_loop_quit (loop);
 #else
   exit (EXIT_SUCCESS);
 #endif
