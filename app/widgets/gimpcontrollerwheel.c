@@ -29,6 +29,7 @@
 #include "widgets-types.h"
 
 #include "gimpcontrollerwheel.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -203,6 +204,7 @@ gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
   object_class->constructor         = gimp_controller_wheel_constructor;
 
   controller_class->name            = _("Mouse Wheel");
+  controller_class->help_id         = GIMP_HELP_CONTROLLER_WHEEL;
 
   controller_class->get_n_events    = gimp_controller_wheel_get_n_events;
   controller_class->get_event_name  = gimp_controller_wheel_get_event_name;
@@ -223,7 +225,10 @@ gimp_controller_wheel_constructor (GType                  type,
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  g_object_set (object, "name", _("Main Mouse Wheel"), NULL);
+  g_object_set (object,
+                "name",  _("Mouse Wheel Events"),
+                "state", _("Ready"),
+                NULL);
 
   return object;
 }

@@ -20,6 +20,10 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#ifndef GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#error GimpController is unstable API under construction
+#endif
+
 #ifndef __GIMP_CONTROLLER_H__
 #define __GIMP_CONTROLLER_H__
 
@@ -85,6 +89,7 @@ struct _GimpController
   GObject   parent_instance;
 
   gchar    *name;
+  gchar    *state;
 };
 
 struct _GimpControllerClass
@@ -92,6 +97,7 @@ struct _GimpControllerClass
   GObjectClass  parent_class;
 
   const gchar  *name;
+  const gchar  *help_domain;
   const gchar  *help_id;
 
   /*  virtual functions  */

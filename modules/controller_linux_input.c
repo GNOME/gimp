@@ -35,6 +35,7 @@
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -215,13 +216,15 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_string ("device",
-                                                        _("Device:"), NULL,
+                                                        _("Device:"),
+                                                        _("The name of the device to read Linux Input events from."),
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
                                                         GIMP_MODULE_PARAM_SERIALIZE));
 
-  controller_class->name            = _("Linux Input Events");
+  controller_class->name            = _("Linux Input");
+  controller_class->help_id         = "gimp-controller-linux-input";
 
   controller_class->get_n_events    = linux_input_get_n_events;
   controller_class->get_event_name  = linux_input_get_event_name;
@@ -344,9 +347,12 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
   controller->device = g_strdup (device);
 
+  g_object_set (controller, "name", _("Linux Input Events"), NULL);
+
   if (controller->device && strlen (controller->device))
     {
-      gint fd;
+      gchar *state;
+      gint   fd;
 
       fd = open (controller->device, O_RDONLY);
 
@@ -361,13 +367,10 @@ linux_input_set_device (ControllerLinuxInput *controller,
             {
               g_object_set (controller, "name", name, NULL);
             }
-          else
-            {
-              gchar *name = g_strdup_printf (_("Reading from %s"),
-                                             controller->device);
-              g_object_set (controller, "name", name, NULL);
-              g_free (name);
-            }
+
+          state = g_strdup_printf (_("Reading from %s"), controller->device);
+          g_object_set (controller, "state", state, NULL);
+          g_free (state);
 
           controller->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (controller->io, TRUE);
@@ -381,15 +384,15 @@ linux_input_set_device (ControllerLinuxInput *controller,
         }
       else
         {
-          gchar *name = g_strdup_printf (_("Device not available: %s"),
-                                         g_strerror (errno));
-          g_object_set (controller, "name", name, NULL);
-          g_free (name);
+          state = g_strdup_printf (_("Device not available: %s"),
+                                   g_strerror (errno));
+          g_object_set (controller, "state", state, NULL);
+          g_free (state);
         }
     }
   else
     {
-      g_object_set (controller, "name", _("No device configured"), NULL);
+      g_object_set (controller, "state", _("No device configured"), NULL);
     }
 
   return FALSE;
@@ -424,16 +427,16 @@ linux_input_read_event (GIOChannel   *io,
 
       if (error)
         {
-          gchar *name = g_strdup_printf (_("Device not available: %s"),
-                                         error->message);
-          g_object_set (input, "name", name, NULL);
-          g_free (name);
+          gchar *state = g_strdup_printf (_("Device not available: %s"),
+                                          error->message);
+          g_object_set (input, "state", state, NULL);
+          g_free (state);
 
           g_clear_error (&error);
         }
       else
         {
-          g_object_set (input, "name", _("End of file"), NULL);
+          g_object_set (input, "state", _("End of file"), NULL);
         }
       return FALSE;
       break;

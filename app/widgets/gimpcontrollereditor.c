@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "widgets-types.h"
@@ -220,7 +222,7 @@ gimp_controller_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (1, 2, FALSE);
+  table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -232,6 +234,12 @@ gimp_controller_editor_constructor (GType                  type,
                              _("Name:"), 0.0, 0.5,
                              gimp_prop_label_new (G_OBJECT (controller),
                                                   "name"),
+                             1, TRUE);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("State:"), 0.0, 0.5,
+                             gimp_prop_label_new (G_OBJECT (controller),
+                                                  "state"),
                              1, TRUE);
 
   property_specs =

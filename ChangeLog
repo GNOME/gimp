@@ -1,3 +1,39 @@
+2004-11-24  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcontroller.[ch]: guarded the whole header
+	with GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION because it's no
+	fixed API yet. Added a "state" property bacause "name" was abused
+	as the controller's state. Added "help_domain" to the controller
+	class.
+
+	* libgimpwidgets/gimpwidgets.h: don't include gimpcontroller.h
+
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: set the "name" property to the name
+	retrieved from the device, or to a default string if no name is
+	available. Store the status in the "state" property. Added and
+	changed some strings, but it's better to have the controller
+	strings untranslated than to have no tooltips at all or misleading
+	labels.
+
+	* app/widgets/gimpcontrollerkeyboard.c
+	* app/widgets/gimpcontrollerwheel.c: set default strings for both.
+
+	* app/widgets/gimpcontrollereditor.c: added a GUI for the "state"
+	property.
+
+	* app/widgets/gimpcontrollerkeyboard.h
+	* app/widgets/gimpcontrollerwheel.h
+	* app/widgets/gimpcontrollerinfo.c
+	* app/widgets/gimpcontrollers.c: #define
+	GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION (just as in all files
+	above).
+
+	* app/widgets/gimphelp-ids.h: added the IDs of all controller
+	modules and also of all other modules. The defines are not
+	actually used, but this file is the canonical place to collect all
+	the core's help IDs.
+
 2004-11-23  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-templates.[ch]

@@ -22,6 +22,8 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "widgets-types.h"

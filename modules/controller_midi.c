@@ -37,6 +37,7 @@
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -158,7 +159,7 @@ struct _GAlsaSource
 static const GimpModuleInfo midi_info =
 {
   GIMP_MODULE_ABI_VERSION,
-  N_("Midi event controller"),
+  N_("MIDI event controller"),
   "Michael Natterer <mitch@gimp.org>",
   "v0.1",
   "(c) 2004, released under the GPL",
@@ -219,6 +220,7 @@ midi_class_init (ControllerMidiClass *klass)
 {
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
+  gchar               *blurb;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -226,14 +228,24 @@ midi_class_init (ControllerMidiClass *klass)
   object_class->get_property       = midi_get_property;
   object_class->set_property       = midi_set_property;
 
+  blurb = g_strconcat (_("The name of the device to read MIDI events from."),
+#ifdef HAVE_ALSA
+                       "\n",
+                       _("Enter 'alsa' to use the ALSA sequencer."),
+#endif
+                       NULL);
+
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_string ("device",
                                                         _("Device:"),
-                                                        _("The name of the device to read MIDI events from."),
+                                                        blurb,
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
                                                         GIMP_MODULE_PARAM_SERIALIZE));
+
+  g_free (blurb);
+
   g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_int ("channel",
                                                      _("Channel:"),
@@ -243,7 +255,8 @@ midi_class_init (ControllerMidiClass *klass)
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_MODULE_PARAM_SERIALIZE));
 
-  controller_class->name            = _("Midi Events");
+  controller_class->name            = _("MIDI");
+  controller_class->help_id         = "gimp-controller-midi";
 
   controller_class->get_n_events    = midi_get_n_events;
   controller_class->get_event_name  = midi_get_event_name;
@@ -418,6 +431,8 @@ midi_set_device (ControllerMidi *midi,
 
   midi->device = g_strdup (device);
 
+  g_object_set (midi, "name", _("MIDI Events"), NULL);
+
   if (midi->device && strlen (midi->device))
     {
       gint fd;
@@ -426,7 +441,8 @@ midi_set_device (ControllerMidi *midi,
       if (! g_ascii_strcasecmp (midi->device, "alsa"))
         {
           GAlsaSource *event_source;
-          gchar       *alsa, *name;
+          gchar       *alsa;
+          gchar       *state;
           gint         ret;
 
           ret = snd_seq_open (&midi->sequencer, "default",
@@ -443,10 +459,10 @@ midi_set_device (ControllerMidi *midi,
 
           if (ret < 0)
             {
-              name = g_strdup_printf (_("Device not available: %s"),
-                                      snd_strerror (ret));
-              g_object_set (midi, "name", name, NULL);
-              g_free (name);
+              state = g_strdup_printf (_("Device not available: %s"),
+                                       snd_strerror (ret));
+              g_object_set (midi, "state", state, NULL);
+              g_free (state);
 
               if (midi->sequencer)
                 {
@@ -461,10 +477,14 @@ midi_set_device (ControllerMidi *midi,
           alsa = g_strdup_printf ("ALSA (%d:%d)",
                                   snd_seq_client_id (midi->sequencer),
                                   ret);
-          name = g_strdup_printf (_("Reading from %s"), alsa);
-          g_object_set (midi, "name", name, NULL);
-          g_free (name);
+          state = g_strdup_printf (_("Reading from %s"), alsa);
           g_free (alsa);
+
+          g_object_set (midi,
+                        "name",  snd_seq_name (midi->sequencer),
+                        "state", state,
+                        NULL);
+          g_free (state);
 
           event_source = (GAlsaSource *) g_source_new (&alsa_source_funcs,
                                                        sizeof (GAlsaSource));
@@ -483,9 +503,9 @@ midi_set_device (ControllerMidi *midi,
 
       if (fd >= 0)
         {
-          gchar *name = g_strdup_printf (_("Reading from %s"), midi->device);
-          g_object_set (midi, "name", name, NULL);
-          g_free (name);
+          gchar *state = g_strdup_printf (_("Reading from %s"), midi->device);
+          g_object_set (midi, "state", state, NULL);
+          g_free (state);
 
           midi->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (midi->io, TRUE);
@@ -500,15 +520,15 @@ midi_set_device (ControllerMidi *midi,
         }
       else
         {
-          gchar *name = g_strdup_printf (_("Device not available: %s"),
-                                         g_strerror (errno));
-          g_object_set (midi, "name", name, NULL);
-          g_free (name);
+          gchar *state = g_strdup_printf (_("Device not available: %s"),
+                                          g_strerror (errno));
+          g_object_set (midi, "state", state, NULL);
+          g_free (state);
         }
     }
   else
     {
-      g_object_set (midi, "name", _("No device configured"), NULL);
+      g_object_set (midi, "state", _("No device configured"), NULL);
     }
 
   return FALSE;
@@ -571,16 +591,16 @@ midi_read_event (GIOChannel   *io,
 
       if (error)
         {
-          gchar *name = g_strdup_printf (_("Device not available: %s"),
-                                         error->message);
-          g_object_set (midi, "name", name, NULL);
-          g_free (name);
+          gchar *state = g_strdup_printf (_("Device not available: %s"),
+                                          error->message);
+          g_object_set (midi, "state", state, NULL);
+          g_free (state);
 
           g_clear_error (&error);
         }
       else
         {
-          g_object_set (midi, "name", _("End of file"), NULL);
+          g_object_set (midi, "state", _("End of file"), NULL);
         }
       return FALSE;
       break;

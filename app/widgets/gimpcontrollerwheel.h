@@ -24,6 +24,7 @@
 #define __GIMP_CONTROLLER_WHEEL_H__
 
 
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 

@@ -30,6 +30,7 @@
 #include "widgets-types.h"
 
 #include "gimpcontrollerkeyboard.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -204,6 +205,7 @@ gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
   object_class->constructor         = gimp_controller_keyboard_constructor;
 
   controller_class->name            = _("Keyboard");
+  controller_class->help_id         = GIMP_HELP_CONTROLLER_KEYBOARD;
 
   controller_class->get_n_events    = gimp_controller_keyboard_get_n_events;
   controller_class->get_event_name  = gimp_controller_keyboard_get_event_name;
@@ -224,7 +226,10 @@ gimp_controller_keyboard_constructor (GType                  type,
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  g_object_set (object, "name", _("Main Keyboard"), NULL);
+  g_object_set (object,
+                "name",  _("Keyboard Events"),
+                "state", _("Ready"),
+                NULL);
 
   return object;
 }

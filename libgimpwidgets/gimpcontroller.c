@@ -28,14 +28,16 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpcontroller.h"
 #include "gimpwidgetsmarshal.h"
 
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "gimpcontroller.h"
 
 enum
 {
   PROP_0,
-  PROP_NAME
+  PROP_NAME,
+  PROP_STATE
 };
 
 enum
@@ -121,6 +123,12 @@ gimp_controller_class_init (GimpControllerClass *klass)
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_STATE,
+                                   g_param_spec_string ("state", NULL, NULL,
+                                                        "Unknown",
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
   controller_signals[EVENT] =
     g_signal_new ("event",
                   G_TYPE_FROM_CLASS (klass),
@@ -132,6 +140,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
                   G_TYPE_POINTER);
 
   klass->name           = "Unnamed";
+  klass->help_domain    = NULL;
   klass->help_id        = NULL;
 
   klass->get_n_events   = NULL;
@@ -154,6 +163,11 @@ gimp_controller_set_property (GObject      *object,
         g_free (controller->name);
       controller->name = g_value_dup_string (value);
       break;
+    case PROP_STATE:
+      if (controller->state)
+        g_free (controller->state);
+      controller->state = g_value_dup_string (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -172,6 +186,9 @@ gimp_controller_get_property (GObject    *object,
     {
     case PROP_NAME:
       g_value_set_string (value, controller->name);
+      break;
+    case PROP_STATE:
+      g_value_set_string (value, controller->state);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

@@ -20,10 +20,11 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONTROLLER_WHELL_H__
+#ifndef __GIMP_CONTROLLER_KEYBOARD_H__
 #define __GIMP_CONTROLLER_KEYBOARD_H__
 
 
+#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 

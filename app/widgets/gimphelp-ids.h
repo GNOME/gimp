@@ -432,5 +432,20 @@
 #define GIMP_HELP_HELP                            "gimp-help"
 #define GIMP_HELP_HELP_CONTEXT                    "gimp-help-context"
 
+#define GIMP_HELP_COLORDISPLAY_COLORBLIND         "gimp-colordisplay-colorblind"
+#define GIMP_HELP_COLORDISPLAY_CONTRAST           "gimp-colordisplay-contrast"
+#define GIMP_HELP_COLORDISPLAY_GAMMA              "gimp-colordisplay-gamma"
+#define GIMP_HELP_COLORDISPLAY_GIMP               "gimp-colordisplay-gimp"
+#define GIMP_HELP_COLORDISPLAY_PROOF              "gimp-colordisplay-proof"
+
+#define GIMP_HELP_COLORSELECTOR_CMYK              "gimp-colorselector-cmyk"
+#define GIMP_HELP_COLORSELECTOR_TRIANGLE          "gimp-colorselector-triangle"
+#define GIMP_HELP_COLORSELECTOR_WATER             "gimp-colorselector-water"
+
+#define GIMP_HELP_CONTROLLER_KEYBOARD             "gimp-controller-keyboard"
+#define GIMP_HELP_CONTROLLER_LINUX_INPUT          "gimp-controller-linux-input"
+#define GIMP_HELP_CONTROLLER_MIDI                 "gimp-controller-midi"
+#define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
+
 
 #endif /* __GIMP_HELP_IDS_H__ */
