@@ -10,8 +10,11 @@
 	are created when GIMP is quit.
 
 	* app/core/gimp-templates.c
-	* app/core/gimp-units.c
-	* app/gui/session.c
+	* app/core/gimp-units.c	
+	* app/gui/session.c: load sessionrc, templaterc and unitrc from
+	the systemwide config directory. That way you can restore the
+	default setup by removing the respective files from your personal
+	gimp directory.
 
 2003-11-04  Ville Pätsi  <drc@gimp.org>
 
