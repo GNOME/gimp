@@ -3173,6 +3173,13 @@ plug_in_image_types_parse (char *image_types)
 	      types |= PLUG_IN_INDEXED_IMAGE;
 	      image_types += 7;
 	    }
+	  else if (strncmp (image_types, "*", 1) == 0)
+	    {
+	      types |= PLUG_IN_RGB_IMAGE | PLUG_IN_RGBA_IMAGE
+	             | PLUG_IN_GRAY_IMAGE | PLUG_IN_GRAYA_IMAGE
+	             | PLUG_IN_INDEXED_IMAGE | PLUG_IN_INDEXEDA_IMAGE;
+	      image_types += 1;
+	    }
 	  else
 	    {
 	      while (*image_types &&

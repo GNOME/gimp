@@ -1,3 +1,8 @@
+Sun Nov 21 22:13:59 CET 1999  Marc Lehmann <pcg@goof.com>
+
+	* app/plug_in.c: image_type=="*" enables all (known)
+        image types.
+
 Sun Nov 21 02:14:28 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* app/convert.c: Removed unused debugging output.
@@ -5,7 +10,6 @@ Sun Nov 21 02:14:28 CET 1999  Marc Lehmann <pcg@goof.com>
 Sat Nov 20 23:31:19 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c
-
 
 	Forgot to clear the timer_id flag after the timer
 	has fired.
