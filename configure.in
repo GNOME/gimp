@@ -86,8 +86,6 @@ if eval "test x$GCC = xyes"; then
   fi
 fi
 
-CFLAGS="$CFLAGS -pipe"
-
 gimp_save_CPPFLAGS="$CPPFLAGS"
 gimp_save_LDFLAGS="$LDFLAGS"
 gimp_save_LIBS="$LIBS"
