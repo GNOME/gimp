@@ -2,25 +2,16 @@ Please add things to this file when the need to do them is
 discovered. Explanations of why or how this would be useful are
 even better. Insight into possible ways to implement are even better
 than that.
+
+This is really intended to be a list of stuff thats potentially bolted
+onto the current codebase (i.e. gimp 1.3), rather than in gimp 2.0.
+
 ===================================================================
-
-Add Unsharp Mask to the distribution.  The filter is just way too basic
-to leave out.
-
 
 For the pixmap/hose stuff:
 
-	a loader/saver plugin for the hose types
-	(tml has a gpb saver, and a .tub loader...getting close)
-
 	add a "pipe edit" option to the brush dialog so we can
 	call up a hose editor (to reorder images, scale them, etc)
-
-	"selection to brush" and as part of that, some general
-	TileManager->TempBuf functions. 
-
-	Load pipes as xcf maybe? would need above functiosn first
-	
 
 A few GUI things suggestions...
 
@@ -144,68 +135,26 @@ Redesign of the Blend Tool dialog? (it's rather large...)
 	(Text should be redone entirely, with a native T1/TTF
 	interpreter.  Using X to render text is cheap but nasty. --sg)
 
-	Done via a perl script hack -sjb
-
-a complete groundup rewrite of iscissors: 
-
-	Isciissors in theory are very useful. 1.0 iscissors basically
-	dont work though. It has also been mentioned that the gui from
-	.54 was much better.
-
-	(austin has some of 0.54 ported.  If intrested, mail sjburges@gimp.org
-	or yosh@gimp.org for sources, as austin is on an extended leave)
+	Done via a perl script hack, but would be nicer in core/extension 
+	-sjb
 
 progress bars on long proccesses:
-
-	Xcf loading/saving, transforms, complicated blend's etc. The
-	user gets no feedback about what is going on. This is bad.
-
-	(Maybe run core image ops from the idle loop?  We already do
-	this for curves et al. --sg)
-
-	We have some of this in place thanks to Aspirin and Austin now.
-	--Yosh
 
 	Currently, long-term ops like blend run from a recursive event
 	loop, not the idle loop like they should.  This should be cleaned up a
 	little. -- Austin.
-
-status bars on image window: 
-
-	(maybe swallow plug-in progress bars, show current x,y, file
-	type, etc...) 
-	
-	This is mostly done.
-
-	- optionally show that information in the toolbar ?
-	- probably dragable to the toolbar and vice versa
-	(still being debated what belongs in there -SJB)
 
 "open into layer" and new image from cut buffer stuff should perhaps
 be in core?:
 
 	This would be "Paste into New" and/or "Copy to New". Should be
 	simple. Theres a script to do this, but the functionailty is
-	so simple it perhaps would eb best to do in core.
-
-drag & drop for layers:
-
-	(both in the dialog, and from image to image).  Changing
-	postion of layers now is quite a pain. The onyl choices are to
-	raise by one, and lower by one. It would be much nicer to be
-	able to click & drag a layer to its new spot in the stack.
-
-	Done, by Michael Natterer 8/22/99
-
-Handle Out of Space Better!
-
-	Also should handle out-of-space on swap device better.
-	(Couldn't be much worse.) --sg
+	so simple it perhaps would be best to do in core.
 
 Automagically guess whats a good tilecache size:
 
-	Not sure how to do this. maybe offer suggestions in the
-	preference dialog or install.
+	Not sure how to do this. Suggestions are offered in the
+	install.
 
 BETTER FONT SUPPORT! 
 
@@ -219,6 +168,8 @@ BETTER FONT SUPPORT!
 
 	(There's a good argument for making all text operations run
 	thru an extension. --sg)
+
+	See gimp-freetype for exciting work on going around X!
 
 ability to get an exact count of the total number of colors in the
 image:
@@ -237,10 +188,8 @@ indexed/color reducing to arbitrary number of colors:
 
 Folding box for the toolbar:
 
-	So you can have it be 9x3 like now, or 1x27, or
-	whatever... gyve has rough outlines of a widget to do this...
-	(belive msw is working on this)
-
+	Done, but a bit buggy on some boxes still?
+	
 optimize transform_core (special cases, fft stuff?, optimizations only
 raph understands, etc...)
 
@@ -258,24 +207,6 @@ active brushes:
 	Maybe really want to define new tool types, rather than new brush
 	types.
 
-*pixmap brushes:
-
-	Should be simple. maybe need a new format that would include
-	data/mask (probabaly just use a xcf). Once its loaded in as a
-	tempbuf, a few tweaks in the paint tools ought to handle
-	it. Should it be a new tool?  jsut a new brush type for old
-	paint to ls?
-
-	Just about done: Adrian Likins 8/23/99
-
-*Quickmask/paintable selections:
-
-	Any ideas on the best way to do the ui? The fundamentals of
-	beng able to do this are already there. Just need a good way to
-	present it.
-
-	Done: Seth Burgess	
-
 let pdb stuff register under the layers_dialog menu:
 
 	Lots of potential in scripts to do layer/channel manip.  Might
@@ -285,31 +216,18 @@ some sort of mdi for dialogs so you could tab them together or
 pull them apart:
 
 	Would be nice to be able to pile all the dialogs into one big
-	notebook.  (think msw is working on this)
+	notebook.  
 
 make color picker able to choose from any color on the screen. 
 
-	This sounds really simple. Any ideas?
-
-dodge/burn/sponge/smudge tools:
-
-	several people have commented on the need for this. Anyone
-	know how to do it well?
-
-	Maybe integrate iwarp stuff into 'convolve' tool (or into a separate
-	one)? Iwarp gui could be put into the tool options dialog 
-	-tigert
-
-	Calvin has committed dodge/burn/smudge stuff recently (5/July/1999).
+	This sounds really simple. Any idea how to actually do it?
 
 big cad style cross-hairs cursor:
 	guides come close, but we probabaly dont wont somethign like
 	that again.
 
-more info available to the user in general (current brush, etc)
-
-some sort of image locking:
-	 so we don't munge images by doing >1 ops on them at once.
+some sort of image/drawable locking:
+	so we don't munge images by doing >1 ops on them at once.
 	For plugins in particular, may also simplifie some of the tool
 	redesign.
 
@@ -319,17 +237,11 @@ Suggestion from Ville Hautamaki (CW):
 	very conveint to say "load all the wood patterns",
 	or even just "set 1" etc.
 
-Probably have a "Preview" button too that performs the transformation 
+Have a "Preview" button too that performs the transformation 
 without interpolation:
 	As it stands, transforms can be very slow and feedback to the
-	user is smalld. A preiview would save much time and maek the action
+	user is small. A preiview would save much time and make the action
 	more accururate.
-
-Selections should always be bezierifyable.
-	Um, not sure about this one.  Selections can be a mask, in which case 
-	the bezeirifying of it makes little sense to me..
-	
-	I'll admit it'd be nice for "normal" selections. -sjb
 
 Selections should be transformable:
 	(e.g. rotate an elliptical selection; the selection, not it's
@@ -340,18 +252,18 @@ Selections should be transformable:
 	
 Have a possibility to add a text as selection:
 	If selections would be editable as described above, we'd 
-	then have editable vector-text. Is this possibel with type1 fonts?
+	then have editable vector-text. 
 
-option to create New Indexed image (with the choice of pattern foo) ?
+	See the bezier option in gimp-freetype!
+
+Option to create New Indexed image (with the choice of pattern foo) ?
 
 Integrate gimp-16 stuff?
-	Eventually will happen.
+	Probably won't happen, though some good ideas we could steal 
+	have come out of that - in particular, a clone tool that lets
+	you rotate before writing to destination is a nifty idea.
+	
 	see http://film.gimp.org/
-
-Better use of wm hints.
-
-	Not sure where the line between dialogs and windows
-	lies, but it's something to look into. 
 
 Make file load/save errors not worthy of existence.
 
@@ -359,21 +271,10 @@ Make file load/save errors not worthy of existence.
 	up in weird places, at weird times, and are often
 	basically useless. This is bad.
 
-Image pager/explorer
-
-	Basically similar in idea to a pager on a virtual desktop
-	wm, except a large image is the pager. Pop up a small preview 
-	of the image, with a higlighted rectangle indicaing the currently
-	viewable area. User can then move around in the preview and the
-	highlighted area becomes the on screen viewable part. May
-	also be useful in file loading, where one could see a preview of a
-	large image and then jsut select a subset toa ctually load into
-	mem.
-
 Code to set built in icons or icon path?
 
-	Is this the wm's job or soemthing internal?
-
+	Is this the wm's job or soemthing internal?  Could be nice for
+	plug-ins to register an icon for internal use.
 
 Action/active/Procedural Layers
 
@@ -392,31 +293,15 @@ generic preview code in libgimp for use by plugins
 
 	"All" plugins might be too extreme.  Some plugins (autostretch 
 	contrast) have little need for an interface, and exist IMHO 
-	better w/o one..
-
-Undo groups
-
-	basically for snapshots for the UNDO stack instead of realying on
-	everything to be recorded. Particualr useful in scripts.
+	better w/o one.  Also, there are different needs for previews
+	depending on the plug-in type, so a set of preview widgets
+	would be a better solution.
 
 named undo
 	Each pushing of an undo operation should include a textual
 	string for human consumption.  That way, the "undo" menu
-	option can list exactly what will be undone.  Also allows
-	meaningful undo history display, so you can undo multiple
-	levels in one go.
-
-undo history
-	The "type" argument to the undo_push_* functions isn't really
-	used for anything.  We could use it to do the named undos
-	described above, and allow a "history" window to list the
-	undo-able actions.  Clicking on the relevant line would
-	roll-back to that point.  -- austin.
-
-gradient map layer
-
-	map values from current gradient to value/intensity
-	(good for a plugin I think)
+	option can list exactly what will be undone.  Its sorta there,
+	but could be more specific.
 
 tools
 
