@@ -739,7 +739,8 @@ static void
 upsample (guchar *dest,
 	  guchar *src,
 	  guint   width,
-	  guint   bytes)
+	  guint   bytes,
+	  guint8  alphaBits)
 {
   gint x;
 
@@ -754,7 +755,16 @@ upsample (guchar *dest,
       dest[2] =  ((src[0] << 3) & 0xf8);
       dest[2] += (dest[2] >> 5);
 
-      dest += 3;
+      switch (alphaBits)
+        {
+        case 1:
+	  dest[3] = (src[1] & 0x80)? 0: 255;
+	  dest += 4;
+          break;
+        default:
+	  dest += 3;
+        }
+
       src += bytes;
     }
 }
@@ -818,7 +828,7 @@ read_line (FILE         *fp,
     {
       if (info->bpp == 16 || info->bpp == 15)
 	{
-	  upsample (row, buffer, info->width, info->bytes);
+	  upsample (row, buffer, info->width, info->bytes, info->alphaBits);
 	}
       else
 	{
@@ -894,7 +904,7 @@ ReadImage (FILE     *fp,
           else if (info->colorMapSize == 24)
             bgr2rgb(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 0);
           else if (info->colorMapSize == 16 || info->colorMapSize == 15)
-            upsample(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes);
+            upsample(gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, info->alphaBits);
 
         }
       else
