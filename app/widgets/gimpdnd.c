@@ -62,6 +62,14 @@
 #define DRAG_PREVIEW_SIZE 32
 #define DRAG_ICON_OFFSET  -8
 
+/* #define DEBUG_DND */
+
+#ifdef DEBUG_DND
+#define D(stmnt) stmnt
+#else
+#define D(stmnt)
+#endif
+
 
 typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget *widget,
 					     GCallback  get_data_func,
@@ -643,7 +651,7 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
   gpointer     get_data_data = NULL;
   GimpDndType  data_type;
 
-  g_print ("\ngimp_dnd_data_drag_handle(%d)\n", info);
+  D (g_print ("\ngimp_dnd_data_drag_handle(%d)\n", info));
 
   for (data_type = GIMP_DND_TYPE_NONE + 1;
        data_type <= GIMP_DND_TYPE_LAST;
@@ -657,8 +665,8 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
           guchar *vals;
           gint    length;
 
-          g_print ("gimp_dnd_data_drag_handle(%s)\n",
-                   dnd_data->target_entry.target);
+          D (g_print ("gimp_dnd_data_drag_handle(%s)\n",
+                      dnd_data->target_entry.target));
 
           if (dnd_data->get_data_func_name)
             get_data_func = g_object_get_data (G_OBJECT (widget),
@@ -705,7 +713,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
 {
   GimpDndType data_type;
 
-  g_print ("\ngimp_dnd_data_drop_handle(%d)\n", info);
+  D (g_print ("\ngimp_dnd_data_drop_handle(%d)\n", info));
 
   if (selection_data->length <= 0)
     {
@@ -724,8 +732,8 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
           GCallback set_data_func = NULL;
           gpointer  set_data_data = NULL;
 
-          g_print ("gimp_dnd_data_drop_handle(%s)\n",
-                   dnd_data->target_entry.target);
+          D (g_print ("gimp_dnd_data_drop_handle(%s)\n",
+                      dnd_data->target_entry.target));
 
           if (dnd_data->set_data_func_name)
             set_data_func = g_object_get_data (G_OBJECT (widget),
@@ -1013,7 +1021,7 @@ gimp_dnd_set_file_data (GtkWidget *widget,
 
   buffer = (gchar *) vals;
 
-  g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer);
+  D (g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer));
 
   {
     gchar name_buffer[1024];
@@ -1201,8 +1209,8 @@ gimp_dnd_open_files (GtkWidget *widget,
       if (!dnd_crap)
         continue;
 
-      g_print ("gimp_dnd_open_files: trying to convert \"%s\" to an uri...\n",
-               dnd_crap);
+      D (g_print ("gimp_dnd_open_files: trying to convert "
+                  \"%s\" to an uri.\n", dnd_crap));
 
       filename = g_filename_from_uri (dnd_crap, NULL, NULL);
 
@@ -1270,8 +1278,8 @@ gimp_dnd_open_files (GtkWidget *widget,
             }
         }
 
-      g_print ("gimp_dnd_open_files: ...trying to open resulting uri \"%s\"\n",
-               uri);
+      D (g_print ("gimp_dnd_open_files: ...trying to open "
+                  "resulting uri \"%s\"\n", uri));
 
       {
         GimpImage         *gimage;

@@ -1,3 +1,8 @@
+2004-03-10  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpdnd.c: Disabled debug output and made it
+	conditional with DEBUG_DND.
+
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint-funcs/paint-funcs.h
