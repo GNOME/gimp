@@ -126,9 +126,9 @@ poke (GimpPixelRgn *dest_rgn,
 }
 
 static gint
-peekmap (guchar *image,
-         gint    x,
-         gint    y)
+peekmap (const guchar *image,
+         gint          x,
+         gint          y)
 {
   while (x < 0)
     x += effect_width;
@@ -155,11 +155,11 @@ peekmap (guchar *image,
 /***************************************************/
 
 static gint
-gradx (guchar *image,
-       gint    x,
-       gint    y)
+gradx (const guchar *image,
+       gint          x,
+       gint          y)
 {
-  gint val=0;
+  gint val = 0;
 
   val = val +     peekmap (image, x-1, y-1);
   val = val -     peekmap (image, x+1, y-1);
@@ -174,9 +174,9 @@ gradx (guchar *image,
 }
 
 static gint
-grady (guchar *image,
-       gint    x,
-       gint    y)
+grady (const guchar *image,
+       gint          x,
+       gint          y)
 {
   gint val = 0;
 
@@ -414,16 +414,16 @@ static guchar*
 rgb_to_hsl (GimpDrawable     *drawable,
             LICEffectChannel  effect_channel)
 {
-  guchar *themap, data[4];
-  gint x, y;
-  GimpRGB color;
-  GimpHSL color_hsl;
-  gdouble val;
-  glong maxc, index = 0;
-  GimpPixelRgn region;
-  GRand *gr;
+  guchar       *themap, data[4];
+  gint          x, y;
+  GimpRGB       color;
+  GimpHSL       color_hsl;
+  gdouble       val = 0.0;
+  glong         maxc, index = 0;
+  GimpPixelRgn  region;
+  GRand        *gr;
 
-  gr = g_rand_new();
+  gr = g_rand_new ();
 
   maxc = drawable->width * drawable->height;
 
@@ -443,17 +443,17 @@ rgb_to_hsl (GimpDrawable     *drawable,
           gimp_rgb_to_hsl (&color, &color_hsl);
 
           switch (effect_channel)
-          {
+            {
             case LIC_HUE:
-                val = color_hsl.h * 255;
-                break;
+              val = color_hsl.h * 255;
+              break;
             case LIC_SATURATION:
-                val = color_hsl.s * 255;
-                break;
+              val = color_hsl.s * 255;
+              break;
             case LIC_BRIGHTNESS:
-                val = color_hsl.l * 255;
-                break;
-          }
+              val = color_hsl.l * 255;
+              break;
+            }
 
           /* add some random to avoid unstructured areas. */
           val += g_rand_double_range (gr, -1.0, 1.0);
@@ -470,7 +470,7 @@ rgb_to_hsl (GimpDrawable     *drawable,
 
 static void
 compute_lic (GimpDrawable *drawable,
-             guchar       *scalarfield,
+             const guchar *scalarfield,
              gboolean      rotate)
 {
   gint xcount, ycount;
@@ -537,7 +537,7 @@ static void
 compute_image (GimpDrawable *drawable)
 {
   GimpDrawable *effect;
-  guchar       *scalarfield;
+  guchar       *scalarfield = NULL;
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
@@ -593,22 +593,12 @@ compute_image (GimpDrawable *drawable)
 /* Below is only UI stuff */
 /**************************/
 
-static gint
-effect_image_constrain (gint32         image_id,
-                        gint32   drawable_id,
-                        gpointer data)
+static gboolean
+effect_image_constrain (gint32    image_id,
+                        gint32    drawable_id,
+                        gpointer  data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
   return gimp_drawable_is_rgb (drawable_id);
-}
-
-static void
-effect_image_callback (gint32   id,
-                       gpointer data)
-{
-  licvals.effect_image_id = id;
 }
 
 static gboolean
@@ -620,8 +610,7 @@ create_main_dialog (void)
   GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *option_menu;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkObject *scale_data;
   gint       row;
   gboolean   run;
@@ -698,15 +687,14 @@ create_main_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  option_menu = gtk_option_menu_new ();
-  menu = gimp_drawable_menu_new (effect_image_constrain,
-                                 effect_image_callback,
-                                 NULL,
-                                 licvals.effect_image_id);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  combo = gimp_drawable_combo_box_new (effect_image_constrain, NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              licvals.effect_image_id,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &licvals.effect_image_id);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Effect Image:"), 1.0, 0.5,
-                             option_menu, 2, TRUE);
+                             _("_Effect Image:"), 1.0, 0.5, combo, 2, TRUE);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);

@@ -1400,11 +1400,9 @@ p_smp_dialog (void)
   gtk_widget_show (label);
 
   combo = gimp_layer_combo_box_new (p_smp_constrain, NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), g_values.dst_id);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (p_smp_dest_combo_callback),
-                    NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), g_values.dst_id,
+                              G_CALLBACK (p_smp_dest_combo_callback),
+                              NULL);
 
   gtk_table_attach (GTK_TABLE (table), combo, 1, 2, l_ty, l_ty + 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
@@ -1430,12 +1428,9 @@ p_smp_dialog (void)
                               GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
                               -1);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 g_values.sample_id);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (p_smp_sample_combo_callback),
-                    NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), g_values.sample_id,
+                              G_CALLBACK (p_smp_sample_combo_callback),
+                              NULL);
 
   gtk_table_attach (GTK_TABLE (table), combo, 4, 5, l_ty, l_ty + 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);

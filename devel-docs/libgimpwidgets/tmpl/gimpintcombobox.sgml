@@ -90,3 +90,15 @@ GimpIntComboBox
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_int_combo_box_connect ##### -->
+<para>
+
+</para>
+
+@combo_box: 
+@value: 
+@callback: 
+@data: 
+@Returns: 
+
+

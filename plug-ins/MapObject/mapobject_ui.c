@@ -1136,12 +1136,10 @@ create_box_page (void)
       GtkWidget *combo;
 
       combo = gimp_drawable_combo_box_new (box_constrain, NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                     mapvals.boxmap_id[i]);
-
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &mapvals.boxmap_id[i]);
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  mapvals.boxmap_id[i],
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &mapvals.boxmap_id[i]);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 gettext (labels[i]), 1.0, 0.5,
@@ -1229,12 +1227,10 @@ create_cylinder_page (void)
       GtkWidget *combo;
 
       combo = gimp_drawable_combo_box_new (cylinder_constrain, NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                     mapvals.cylindermap_id[i]);
-
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &mapvals.cylindermap_id[i]);
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  mapvals.cylindermap_id[i],
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &mapvals.cylindermap_id[i]);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 gettext (labels[i]), 1.0, 0.5,

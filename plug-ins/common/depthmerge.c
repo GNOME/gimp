@@ -95,11 +95,11 @@ typedef struct _DepthMerge
   DepthMergeInterface *interface;
   DepthMergeParams     params;
 
-  GimpDrawable           *resultDrawable;
-  GimpDrawable           *source1Drawable;
-  GimpDrawable           *source2Drawable;
-  GimpDrawable           *depthMap1Drawable;
-  GimpDrawable           *depthMap2Drawable;
+  GimpDrawable        *resultDrawable;
+  GimpDrawable        *source1Drawable;
+  GimpDrawable        *source2Drawable;
+  GimpDrawable        *depthMap1Drawable;
+  GimpDrawable        *depthMap2Drawable;
   gint                 selectionX0;
   gint                 selectionY0;
   gint                 selectionX1;
@@ -119,21 +119,21 @@ void   DepthMerge_executeRegion          (DepthMerge *dm,
                                           guchar *depthMap1Row,
                                           guchar *depthMap2Row,
                                           guchar *resultRow,
-					  gint length);
+					  gint    length);
 gint32 DepthMerge_dialog                 (DepthMerge *dm);
 void   DepthMerge_buildPreviewSourceImage(DepthMerge *dm);
 void   DepthMerge_updatePreview          (DepthMerge *dm);
 
 
-gint constraintResultSizeAndResultColorOrGray(gint32 imageId,
-					      gint32 drawableId, gpointer data);
-gint constraintResultSizeAndGray(gint32 imageId,
-				 gint32 drawableId, gpointer data);
+static gboolean  dm_constraint (gint32    imageId,
+                                gint32    drawableId,
+                                gpointer  data);
 
-void dialogSource1ChangedCallback   (gint32 id, gpointer data);
-void dialogSource2ChangedCallback   (gint32 id, gpointer data);
-void dialogDepthMap1ChangedCallback (gint32 id, gpointer data);
-void dialogDepthMap2ChangedCallback (gint32 id, gpointer data);
+static void dialogSource1ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
+static void dialogSource2ChangedCallback   (GtkWidget *widget, DepthMerge *dm);
+static void dialogDepthMap1ChangedCallback (GtkWidget *widget, DepthMerge *dm);
+static void dialogDepthMap2ChangedCallback (GtkWidget *widget, DepthMerge *dm);
+
 void dialogValueScaleUpdateCallback (GtkAdjustment *adjustment, gpointer data);
 void dialogValueEntryUpdateCallback (GtkWidget *widget, gpointer data);
 
@@ -624,9 +624,8 @@ DepthMerge_dialog (DepthMerge *dm)
   GtkWidget *topTable;
   GtkWidget *previewFrame;
   GtkWidget *sourceTable;
-  GtkWidget *tempLabel;
-  GtkWidget *tempOptionMenu;
-  GtkWidget *tempMenu;
+  GtkWidget *label;
+  GtkWidget *combo;
   GtkWidget *numericParameterTable;
   GtkObject *adj;
   gboolean   run;
@@ -679,73 +678,65 @@ DepthMerge_dialog (DepthMerge *dm)
 		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (sourceTable);
 
-  tempLabel = gtk_label_new (_("Source 1:"));
-  gtk_misc_set_alignment (GTK_MISC (tempLabel), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), tempLabel, 0, 1, 0, 1,
+  label = gtk_label_new (_("Source 1:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (sourceTable), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (tempLabel);
+  gtk_widget_show (label);
 
-  tempOptionMenu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (sourceTable), tempOptionMenu, 1, 2, 0, 1,
+  combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source1,
+                              G_CALLBACK (dialogSource1ChangedCallback),
+                              dm);
+
+  gtk_table_attach (GTK_TABLE (sourceTable), combo, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (tempOptionMenu);
-  tempMenu = gimp_drawable_menu_new (constraintResultSizeAndResultColorOrGray,
-				     dialogSource1ChangedCallback,
-				     dm,
-				     dm->params.source1);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (tempOptionMenu), tempMenu);
-  gtk_widget_show (tempOptionMenu);
+  gtk_widget_show (combo);
 
-  tempLabel = gtk_label_new(_("Depth Map:"));
-  gtk_misc_set_alignment(GTK_MISC(tempLabel), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), tempLabel, 2, 3, 0, 1,
+  label = gtk_label_new(_("Depth Map:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (sourceTable), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (tempLabel);
+  gtk_widget_show (label);
 
-  tempOptionMenu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (sourceTable), tempOptionMenu, 3, 4, 0, 1,
+  combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap1,
+                              G_CALLBACK (dialogDepthMap1ChangedCallback),
+                              dm);
+
+  gtk_table_attach (GTK_TABLE (sourceTable), combo, 3, 4, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (tempOptionMenu);
-  tempMenu = gimp_drawable_menu_new (constraintResultSizeAndResultColorOrGray,
-				     dialogDepthMap1ChangedCallback,
-				     dm,
-				     dm->params.depthMap1);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (tempOptionMenu), tempMenu);
-  gtk_widget_show (tempOptionMenu);
+  gtk_widget_show (combo);
 
-  tempLabel = gtk_label_new (_("Source 2:"));
-  gtk_misc_set_alignment (GTK_MISC (tempLabel), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), tempLabel, 0, 1, 1, 2,
+  label = gtk_label_new (_("Source 2:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (sourceTable), label, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (tempLabel);
+  gtk_widget_show (label);
 
-  tempOptionMenu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (sourceTable), tempOptionMenu, 1, 2, 1, 2,
+  combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source2,
+                              G_CALLBACK (dialogSource2ChangedCallback),
+                              dm);
+
+  gtk_table_attach (GTK_TABLE (sourceTable), combo, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (tempOptionMenu);
-  tempMenu = gimp_drawable_menu_new (constraintResultSizeAndResultColorOrGray,
-				     dialogSource2ChangedCallback,
-				     dm,
-				     dm->params.source2);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (tempOptionMenu), tempMenu);
-  gtk_widget_show (tempOptionMenu);
+  gtk_widget_show (combo);
 
-  tempLabel = gtk_label_new (_("Depth Map:"));
-  gtk_misc_set_alignment(GTK_MISC(tempLabel), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (sourceTable), tempLabel, 2, 3, 1, 2,
+  label = gtk_label_new (_("Depth Map:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (sourceTable), label, 2, 3, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (tempLabel);
+  gtk_widget_show (label);
 
-  tempOptionMenu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (sourceTable), tempOptionMenu, 3, 4, 1, 2,
+  combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap2,
+                              G_CALLBACK (dialogDepthMap2ChangedCallback),
+                              dm);
+
+  gtk_table_attach (GTK_TABLE (sourceTable), combo, 3, 4, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (tempOptionMenu);
-  tempMenu = gimp_drawable_menu_new (constraintResultSizeAndResultColorOrGray,
-				     dialogDepthMap2ChangedCallback,
-				     dm,
-				     dm->params.depthMap2);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (tempOptionMenu), tempMenu);
-  gtk_widget_show (tempOptionMenu);
+  gtk_widget_show (combo);
 
   /* Numeric parameters */
   numericParameterTable = gtk_table_new(4, 3, FALSE);
@@ -928,10 +919,10 @@ DepthMerge_updatePreview (DepthMerge *dm)
 
 /* ----- Callbacks ----- */
 
-gint
-constraintResultSizeAndResultColorOrGray (gint32   imageId,
-					  gint32   drawableId,
-					  gpointer data)
+static gboolean
+dm_constraint (gint32   imageId,
+               gint32   drawableId,
+               gpointer data)
 {
   DepthMerge *dm = (DepthMerge *)data;
 
@@ -945,32 +936,19 @@ constraintResultSizeAndResultColorOrGray (gint32   imageId,
 	   gimp_drawable_is_gray (drawableId))));
 }
 
-gint
-constraintResultSizeAndGray (gint32   imageId,
-			     gint32   drawableId,
-			     gpointer data)
+static void
+dialogSource1ChangedCallback (GtkWidget  *widget,
+			      DepthMerge *dm)
 {
-  DepthMerge *dm = (DepthMerge *)data;
-
-  return((drawableId == -1) ||
-         ((gimp_drawable_width (drawableId) ==
-	   gimp_drawable_width (dm->params.result)) &&
-	  (gimp_drawable_height (drawableId) ==
-	   gimp_drawable_height (dm->params.result)) &&
-	  (gimp_drawable_is_gray (drawableId))));
-}
-
-void
-dialogSource1ChangedCallback (gint32   id,
-			      gpointer data)
-{
-  DepthMerge *dm = (DepthMerge *)data;
-
-  if (dm->source1Drawable != NULL)
+  if (dm->source1Drawable)
     gimp_drawable_detach (dm->source1Drawable);
-  dm->params.source1 = id;
-  dm->source1Drawable = (dm->params.source1 == -1) ? NULL :
-    gimp_drawable_get (dm->params.source1);
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &dm->params.source1);
+
+  dm->source1Drawable = ((dm->params.source1 == -1) ?
+                         NULL :
+                         gimp_drawable_get (dm->params.source1));
 
   util_fillReducedBuffer (dm->interface->previewSource1,
 			  dm->interface->previewWidth,
@@ -983,17 +961,19 @@ dialogSource1ChangedCallback (gint32   id,
   DepthMerge_updatePreview (dm);
 }
 
-void
-dialogSource2ChangedCallback (gint32   id,
-			      gpointer data)
+static void
+dialogSource2ChangedCallback (GtkWidget  *widget,
+			      DepthMerge *dm)
 {
-  DepthMerge *dm = (DepthMerge *)data;
-
-  if (dm->source2Drawable != NULL)
+  if (dm->source2Drawable)
     gimp_drawable_detach (dm->source2Drawable);
-  dm->params.source2 = id;
-  dm->source2Drawable = (dm->params.source2   == -1) ? NULL :
-    gimp_drawable_get (dm->params.source2);
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &dm->params.source2);
+
+  dm->source2Drawable = ((dm->params.source2 == -1) ?
+                         NULL :
+                         gimp_drawable_get (dm->params.source2));
 
   util_fillReducedBuffer (dm->interface->previewSource2,
 			  dm->interface->previewWidth,
@@ -1006,17 +986,19 @@ dialogSource2ChangedCallback (gint32   id,
   DepthMerge_updatePreview (dm);
 }
 
-void
-dialogDepthMap1ChangedCallback (gint32   id,
-				gpointer data)
+static void
+dialogDepthMap1ChangedCallback (GtkWidget  *widget,
+                                DepthMerge *dm)
 {
-  DepthMerge *dm = (DepthMerge *)data;
+  if (dm->depthMap1Drawable)
+    gimp_drawable_detach (dm->depthMap1Drawable);
 
-  if (dm->depthMap1Drawable != NULL)
-    gimp_drawable_detach(dm->depthMap1Drawable);
-  dm->params.depthMap1 = id;
-  dm->depthMap1Drawable = (dm->params.depthMap1 == -1) ? NULL :
-    gimp_drawable_get (dm->params.depthMap1);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &dm->params.depthMap1);
+
+  dm->depthMap1Drawable = ((dm->params.depthMap1 == -1) ?
+                           NULL :
+                           gimp_drawable_get (dm->params.depthMap1));
 
   util_fillReducedBuffer (dm->interface->previewDepthMap1,
 			  dm->interface->previewWidth,
@@ -1029,17 +1011,19 @@ dialogDepthMap1ChangedCallback (gint32   id,
   DepthMerge_updatePreview (dm);
 }
 
-void
-dialogDepthMap2ChangedCallback (gint32   id,
-				gpointer data)
+static void
+dialogDepthMap2ChangedCallback (GtkWidget  *widget,
+                                DepthMerge *dm)
 {
-  DepthMerge *dm = (DepthMerge *)data;
+  if (dm->depthMap2Drawable)
+    gimp_drawable_detach (dm->depthMap2Drawable);
 
-  if (dm->depthMap2Drawable != NULL)
-    gimp_drawable_detach(dm->depthMap2Drawable);
-  dm->params.depthMap2 = id;
-  dm->depthMap2Drawable = (dm->params.depthMap2 == -1) ? NULL :
-    gimp_drawable_get (dm->params.depthMap2);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &dm->params.depthMap2);
+
+  dm->depthMap1Drawable = ((dm->params.depthMap2 == -1) ?
+                           NULL :
+                           gimp_drawable_get (dm->params.depthMap2));
 
   util_fillReducedBuffer (dm->interface->previewDepthMap2,
 			  dm->interface->previewWidth,

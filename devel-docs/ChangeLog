@@ -1,5 +1,10 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpintcombobox.sgml: updated.
+
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-docs.sgml
 	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpdrawablecombobox.sgml

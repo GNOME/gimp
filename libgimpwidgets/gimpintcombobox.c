@@ -349,3 +349,43 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
 
   return FALSE;
 }
+
+/**
+ * gimp_int_combo_box_connect:
+ * @combo_box: a #GimpIntComboBox
+ * @value:     the value to set
+ * @callback:  a callback to connect to the @combo_box's "changed" signal
+ * @data:      a pointer passed as data to g_signal_connect()
+ *
+ * A convenience function that sets the inital @value of a
+ * #GimpIntComboBox and connects @callback to the "changed"
+ * signal.
+ *
+ * This function also calls the @callback once after setting the
+ * initial @value. This is often convenient when working with combo
+ * boxes that select a default active item (like for example
+ * gimp_drawable_combo_box_new). If you pass an invalid initial
+ * @value, the @callback will be called with the default item active.
+ *
+ * Return value: the signal handler ID as returned by g_signal_connect()
+ *
+ * Since: GIMP 2.2
+ **/
+gulong
+gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
+                            gint             value,
+                            GCallback        callback,
+                            gpointer         data)
+{
+  gulong handler = 0;
+
+  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), 0);
+
+  if (callback)
+    handler = g_signal_connect (combo_box, "changed", callback, data);
+
+  if (! gimp_int_combo_box_set_active (combo_box, value))
+    g_signal_emit_by_name (combo_box, "changed", NULL);
+
+  return handler;
+}

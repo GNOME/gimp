@@ -1,3 +1,27 @@
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablecombobox.c 
+	* libgimp/gimpimagecombobox.c
+	* libgimp/gimpmenu.c: changed the label for the empty menu from
+	"None" to "Empty" since that's what GTK+ uses.
+
+	* libgimpwidgets/gimpintcombobox.[ch]: added convenience function
+	gimp_int_combo_box_connect().
+	
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/compose.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/warp.c: ported to GimpDrawableComboBox.
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/sample_colorize.c: use
+	gimp_int_combo_box_connect(). This restores the correct behaviour
+	of setting the drawable_ID to the first drawable from the list if
+	it's invalid.
+
 2004-04-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

@@ -189,6 +189,7 @@ gimp_int_combo_box_prepend
 gimp_int_combo_box_append
 gimp_int_combo_box_set_active
 gimp_int_combo_box_get_active
+gimp_int_combo_box_connect
 <SUBSECTION Standard>
 GimpIntComboBoxClass
 GIMP_INT_COMBO_BOX

@@ -144,7 +144,7 @@ static void      warp        (GimpDrawable  *drawable,
 			      GimpDrawable **map_x_p,
 			      GimpDrawable **map_y_p);
 
-static gint      warp_dialog (GimpDrawable *drawable);
+static gboolean  warp_dialog (GimpDrawable *drawable);
 static GimpTile *warp_pixel  (GimpDrawable *drawable,
 			      GimpTile     *tile,
 			      gint          width,
@@ -159,18 +159,9 @@ static GimpTile *warp_pixel  (GimpDrawable *drawable,
 			      gint         *col,
 			      guchar       *pixel);
 
-static gint      warp_map_constrain       (gint32     image_id,
+static gboolean  warp_map_constrain       (gint32     image_id,
 					   gint32     drawable_id,
 					   gpointer   data);
-static void      warp_map_callback        (gint32     id,
-					   gpointer   data);
-static void      warp_map_mag_callback    (gint32     id,
-					   gpointer   data);
-static void      warp_map_grad_callback   (gint32     id,
-					   gpointer   data);
-static void      warp_map_vector_callback (gint32     id,
-					   gpointer   data);
-
 static gdouble   warp_map_mag_give_value  (guchar    *pt,
 					   gint       alpha,
 					   gint       bytes);
@@ -373,7 +364,7 @@ run (const gchar      *name,
     gimp_displays_flush ();
 }
 
-static int
+static gboolean
 warp_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
@@ -386,14 +377,7 @@ warp_dialog (GimpDrawable *drawable)
   GtkWidget *otable;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *option_menu;
-  GtkWidget *option_menu_mag;
-  GtkWidget *option_menu_grad;
-  GtkWidget *option_menu_vector;
-  GtkWidget *menu;
-  GtkWidget *magmenu;
-  GtkWidget *gradmenu;
-  GtkWidget *vectormenu;
+  GtkWidget *combo;
   GSList    *group = NULL;
   gboolean   run;
 
@@ -448,13 +432,14 @@ warp_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu, 2, 3, 1, 2,
+  combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.warp_map,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.warp_map);
+
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  menu = gimp_drawable_menu_new (warp_map_constrain, warp_map_callback,
-				 drawable, dvals.warp_map);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_widget_show (option_menu);
+  gtk_widget_show (combo);
 
   /* ======================================================================= */
 
@@ -579,13 +564,14 @@ warp_dialog (GimpDrawable *drawable)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  option_menu_mag = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu_mag, 2, 3, 1, 2,
+  combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.mag_map,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.mag_map);
+
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  magmenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_mag_callback,
-				    drawable, dvals.mag_map);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_mag), magmenu);
-  gtk_widget_show (option_menu_mag);
+  gtk_widget_show (combo);
 
   /*  Magnitude Usage  */
   toggle_hbox = gtk_hbox_new (FALSE, 4);
@@ -631,16 +617,16 @@ warp_dialog (GimpDrawable *drawable)
 
   /* ---------  Gradient map menu ----------------  */
 
-  option_menu_grad = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (otable), option_menu_grad, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gradmenu = gimp_drawable_menu_new (warp_map_constrain, warp_map_grad_callback,
-				 drawable, dvals.grad_map);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_grad), gradmenu);
-  gimp_help_set_help_data (option_menu_grad,
-			   _("Gradient map selection menu"), NULL);
+  combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.grad_map,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.grad_map);
 
-  gtk_widget_show (option_menu_grad);
+  gtk_table_attach (GTK_TABLE (otable), combo, 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+
+  gimp_help_set_help_data (combo, _("Gradient map selection menu"), NULL);
 
   /* ---------------------------------------------- */
 
@@ -666,18 +652,18 @@ warp_dialog (GimpDrawable *drawable)
                     &dvals.vector_angle);
 
   /* ---------  Vector map menu ----------------  */
-  option_menu_vector = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (otable), option_menu_vector, 2, 3, 1, 2,
+  combo = gimp_drawable_combo_box_new (warp_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.vector_map,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.vector_map);
+
+  gtk_table_attach (GTK_TABLE (otable), combo, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  vectormenu = gimp_drawable_menu_new (warp_map_constrain,
-				       warp_map_vector_callback,
-				       drawable, dvals.vector_map);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu_vector), vectormenu);
-  gimp_help_set_help_data (option_menu_vector,
+  gtk_widget_show (combo);
+
+  gimp_help_set_help_data (combo,
 			   _("Fixed-direction-vector map selection menu"),
 			   NULL);
-
-  gtk_widget_show (option_menu_vector);
 
   gtk_widget_show (otable);
   gtk_widget_show (frame);
@@ -1619,46 +1605,13 @@ warp_pixel (GimpDrawable *drawable,
 
 /*  Warp interface functions  */
 
-static gint
+static gboolean
 warp_map_constrain (gint32     image_id,
 		    gint32     drawable_id,
 		    gpointer   data)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = data;
 
-  drawable = (GimpDrawable *) data;
-
-  if (drawable_id == -1)
-    return TRUE;
-
-  return (gimp_drawable_width (drawable_id) == drawable->width &&
+  return (gimp_drawable_width (drawable_id)  == drawable->width &&
 	  gimp_drawable_height (drawable_id) == drawable->height);
-}
-
-static void
-warp_map_callback (gint32   id,
-		   gpointer data)
-{
-  dvals.warp_map = id;
-}
-
-static void
-warp_map_mag_callback (gint32   id,
-		       gpointer data)
-{
-  dvals.mag_map = id;
-}
-
-static void
-warp_map_grad_callback (gint32   id,
-			gpointer data)
-{
-  dvals.grad_map = id;
-}
-
-static void
-warp_map_vector_callback (gint32   id,
-			  gpointer data)
-{
-  dvals.vector_map = id;
 }

@@ -46,7 +46,7 @@ static GtkWidget * gimp_menu_add_item      (GtkWidget          *menu,
                                             const gchar        *image_name,
                                             const gchar        *drawable_name,
                                             gint32              any_ID);
-static GtkWidget * gimp_menu_add_none      (GtkWidget          *menu);
+static GtkWidget * gimp_menu_add_empty     (GtkWidget          *menu);
 static GtkWidget * gimp_menu_make_preview  (gint32              any_ID,
                                             gboolean            is_image,
                                             gint                width,
@@ -102,7 +102,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
       }
 
   if (k == 0)
-    gimp_menu_add_none (menu);
+    gimp_menu_add_empty (menu);
 
   (* callback) (image, data);
 
@@ -170,7 +170,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   g_free (images);
 
   if (k == 0)
-    gimp_menu_add_none (menu);
+    gimp_menu_add_empty (menu);
 
   (* callback) (layer, data);
 
@@ -238,7 +238,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   g_free (images);
 
   if (k == 0)
-    gimp_menu_add_none (menu);
+    gimp_menu_add_empty (menu);
 
   (* callback) (channel, data);
 
@@ -327,7 +327,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
   g_free (images);
 
   if (k == 0)
-    gimp_menu_add_none (menu);
+    gimp_menu_add_empty (menu);
 
   (* callback) (drawable, data);
 
@@ -400,11 +400,11 @@ gimp_menu_add_item (GtkWidget   *menu,
 }
 
 static GtkWidget *
-gimp_menu_add_none (GtkWidget *menu)
+gimp_menu_add_empty (GtkWidget *menu)
 {
   GtkWidget *menuitem;
 
-  menuitem = gtk_menu_item_new_with_label (_("(None)"));
+  menuitem = gtk_menu_item_new_with_label (_("(Empty)"));
   gtk_widget_set_sensitive (menuitem, FALSE);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);

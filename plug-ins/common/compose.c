@@ -51,9 +51,9 @@ static void      run    (const gchar      *name,
 			 gint             *nreturn_vals,
 			 GimpParam       **return_vals);
 
-static gint32    compose (const gchar *compose_type,
-                          gint32      *compose_ID,
-                          gboolean     compose_by_drawable);
+static gint32    compose          (const gchar    *compose_type,
+                                   gint32         *compose_ID,
+                                   gboolean        compose_by_drawable);
 
 static gint32    create_new_image (const gchar    *filename,
 				   guint           width,
@@ -90,9 +90,6 @@ static gboolean  compose_dialog (const gchar *compose_type,
 static gboolean  check_gray     (gint32    image_id,
 				 gint32    drawable_id,
 				 gpointer  data);
-
-static void      image_menu_callback (gint32     id,
-                                      gpointer   data);
 
 static void      compose_type_toggle_update  (GtkWidget *widget,
                                               gpointer   data);
@@ -1067,7 +1064,6 @@ compose_dialog (const gchar *compose_type,
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *image;
-  GtkWidget *image_option_menu, *image_menu;
   GSList    *group;
   gint       j, compose_idx;
   gboolean   run;
@@ -1130,6 +1126,7 @@ compose_dialog (const gchar *compose_type,
 
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     {
+      GtkWidget   *combo;
       const gchar *text;
 
       image = gtk_image_new_from_stock (compose_dsc[compose_idx].channel_icon[j],
@@ -1149,17 +1146,18 @@ compose_dialog (const gchar *compose_type,
       gtk_widget_show (label);
 
       composeint.select_ID[j] = drawable_ID;
-      composeint.channel_menu[j] = image_option_menu = gtk_option_menu_new ();
-      image_menu = gimp_drawable_menu_new (check_gray,
-                                           image_menu_callback,
-					   &(composeint.select_ID[j]),
-					   composeint.select_ID[j]);
-      gtk_table_attach (GTK_TABLE (table), image_option_menu, 2, 3, j, j+1,
-			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-      gtk_widget_show (image_option_menu);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (image_option_menu),
-                                image_menu);
+      combo = gimp_drawable_combo_box_new (check_gray, NULL);
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  composeint.select_ID[j],
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &composeint.select_ID[j]);
+
+      gtk_table_attach (GTK_TABLE (table), combo, 2, 3, j, j+1,
+			GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_widget_show (combo);
+
+      composeint.channel_menu[j] = combo;
     }
 
   /* Set sensitivity of last menu */
@@ -1224,18 +1222,9 @@ check_gray (gint32   image_id,
 
 {
   return ((gimp_image_base_type (image_id) == GIMP_GRAY) &&
-	  (gimp_image_width (image_id) == composeint.width) &&
+	  (gimp_image_width  (image_id) == composeint.width) &&
 	  (gimp_image_height (image_id) == composeint.height));
 }
-
-
-static void
-image_menu_callback (gint32   id,
-                     gpointer data)
-{
-  *(gint32 *) data = id;
-}
-
 
 static void
 compose_type_toggle_update (GtkWidget *widget,

@@ -86,12 +86,8 @@ static void      run    (const gchar      *name,
 static void      displace        (GimpDrawable *drawable);
 static gint      displace_dialog (GimpDrawable *drawable);
 
-static gint      displace_map_constrain    (gint32     image_id,
+static gboolean  displace_map_constrain    (gint32     image_id,
 					    gint32     drawable_id,
-					    gpointer   data);
-static void      displace_map_x_callback   (gint32     id,
-					    gpointer   data);
-static void      displace_map_y_callback   (gint32     id,
 					    gpointer   data);
 static gdouble   displace_map_give_value   (guchar    *ptr,
 					    gint       alpha,
@@ -256,8 +252,7 @@ displace_dialog (GimpDrawable *drawable)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-  GtkWidget *option_menu;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *sep;
   GSList    *group = NULL;
   gboolean   run;
@@ -310,16 +305,17 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
-  option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_x_callback,
-				 drawable, dvals.displace_map_x);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.displace_map_x,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.displace_map_x);
 
-  gtk_widget_set_sensitive (option_menu, dvals.do_x);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", option_menu);
-  gtk_widget_show (option_menu);
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 0, 1,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+
+  gtk_widget_set_sensitive (combo, dvals.do_x);
+  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
 
   /*  Y Options  */
   toggle = gtk_check_button_new_with_mnemonic (_("_Y Displacement:"));
@@ -347,16 +343,17 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
-  option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), option_menu, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  menu = gimp_drawable_menu_new (displace_map_constrain, displace_map_y_callback,
-				 drawable, dvals.displace_map_y);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dvals.displace_map_y,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &dvals.displace_map_y);
 
-  gtk_widget_set_sensitive (option_menu, dvals.do_y);
-  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", option_menu);
-  gtk_widget_show (option_menu);
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (combo);
+
+  gtk_widget_set_sensitive (combo, dvals.do_y);
+  g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
 
   /*  Displacement Type  */
   sep = gtk_hseparator_new ();
@@ -644,32 +641,13 @@ displace_map_give_value (guchar *pt,
 
 /*  Displace interface functions  */
 
-static gint
+static gboolean
 displace_map_constrain (gint32   image_id,
 			gint32   drawable_id,
 			gpointer data)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable = data;
 
-  drawable = (GimpDrawable *) data;
-
-  if (drawable_id == -1)
-    return TRUE;
-
-  return (gimp_drawable_width (drawable_id) == drawable->width &&
+  return (gimp_drawable_width (drawable_id)  == drawable->width &&
 	  gimp_drawable_height (drawable_id) == drawable->height);
-}
-
-static void
-displace_map_x_callback (gint32   id,
-			 gpointer data)
-{
-  dvals.displace_map_x = id;
-}
-
-static void
-displace_map_y_callback (gint32   id,
-			 gpointer data)
-{
-  dvals.displace_map_y = id;
 }

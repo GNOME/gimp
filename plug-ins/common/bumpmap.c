@@ -257,7 +257,7 @@ static void dialog_tiled_callback       (GtkWidget *widget, gpointer data);
 static void dialog_map_type_callback    (GtkWidget *widget, gpointer data);
 static gint dialog_constrain            (gint32 image_id, gint32 drawable_id,
                                          gpointer data);
-static void dialog_bumpmap_callback     (gint32 id, gpointer data);
+static void dialog_bumpmap_callback     (GtkWidget *widget, gpointer data);
 static void dialog_dscale_update        (GtkAdjustment *adjustment,
                                          gdouble *value);
 static void dialog_iscale_update_normal (GtkAdjustment *adjustment, gint *value);
@@ -862,8 +862,7 @@ bumpmap_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *table;
   GtkWidget *right_vbox;
-  GtkWidget *option_menu;
-  GtkWidget *menu;
+  GtkWidget *combo;
   GtkWidget *button;
   GtkObject *adj;
   gint       i;
@@ -1023,15 +1022,13 @@ bumpmap_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  option_menu = gtk_option_menu_new ();
-  menu = gimp_drawable_menu_new (dialog_constrain,
-                                 dialog_bumpmap_callback,
-                                 NULL,
-                                 bmvals.bumpmap_id);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
+  combo = gimp_drawable_combo_box_new (dialog_constrain, NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), bmvals.bumpmap_id,
+                              G_CALLBACK (dialog_bumpmap_callback),
+                              NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Bump Map:"), 1.0, 0.5,
-                             option_menu, 2, TRUE);
+                             _("_Bump Map:"), 1.0, 0.5, combo, 2, TRUE);
 
   sep = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (vbox), sep, FALSE, FALSE, 0);
@@ -1782,31 +1779,33 @@ dialog_map_type_callback (GtkWidget *widget,
     }
 }
 
-static gint
+static gboolean
 dialog_constrain (gint32   image_id,
                   gint32   drawable_id,
                   gpointer data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
   return (gimp_drawable_is_rgb (drawable_id) ||
           gimp_drawable_is_gray (drawable_id));
 }
 
 static void
-dialog_bumpmap_callback (gint32   id,
-                         gpointer data)
+dialog_bumpmap_callback (GtkWidget *widget,
+                         gpointer   data)
 {
-  if (bmvals.bumpmap_id == id)
+  gint  value;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
+
+  if (bmvals.bumpmap_id == value)
     {
       dialog_new_bumpmap (FALSE);
     }
   else
     {
-      bmvals.bumpmap_id = id;
+      bmvals.bumpmap_id = value;
       dialog_new_bumpmap (TRUE);
     }
+
   dialog_update_preview ();
 }
 

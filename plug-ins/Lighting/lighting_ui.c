@@ -898,12 +898,9 @@ create_bump_page (void)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
   combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 mapvals.bumpmap_id);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &mapvals.bumpmap_id);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &mapvals.bumpmap_id);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
@@ -989,12 +986,9 @@ create_environment_page (void)
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
   combo = gimp_drawable_combo_box_new (envmap_constrain, NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 mapvals.envmap_id);
-
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (envmap_combo_callback),
-                    NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
+                              G_CALLBACK (envmap_combo_callback),
+                              NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("En_vironment Image:"), 1.0, 0.5,
