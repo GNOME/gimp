@@ -1,9 +1,9 @@
 2000-12-03  Sven Neumann  <sven@gimp.org>
 
-	* app/gimpimage.c: do not set the layer mode of the bottom layer to
-	NORMAL_MODE if it is DISSOLVE_MODE since the latter does not work
-	on the projection with the lower layer but on the layers alpha
-	channel. Fixes bug #7829.
+	* app/gimpimage.c: when merging layers, do not set the layer mode 
+	of the bottom layer to NORMAL_MODE if it is DISSOLVE_MODE since the 
+	latter does not work on the projection with the lower layer but on 
+	the layers alpha channel. Fixes bug #7829.
 
 2000-12-03  Michael Natterer  <mitch@gimp.org>
 
