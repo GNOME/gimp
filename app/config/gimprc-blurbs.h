@@ -206,7 +206,9 @@ N_("When enabled, the X server is queried for the mouse's current position " \
 "Sets the pluginrc search path."
 
 #define LAYER_PREVIEWS_BLURB \
-N_("Sets whether GIMP should create previews of layers and channels.")
+N_("Sets whether GIMP should create previews of layers and channels. " \
+   "Previews in the layers and channels dialog are nice to have but they " \
+   "can slow things down when working with large images.")
 
 #define LAYER_PREVIEW_SIZE_BLURB \
 N_("Sets the default preview size for layers and channels.")
@@ -280,7 +282,8 @@ N_("Sets the temporary storage directory. Files will appear here " \
 "Sets the theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \
-N_("Sets the size of the thumbnail saved with each image.")
+N_("Sets the size of the thumbnail saved with each image. Note that GIMP " \
+   "can not save thumbnails if layer previews are disabled.")
 
 #define TILE_CACHE_SIZE_BLURB \
 N_("The tile cache is used to make sure the GIMP doesn't thrash " \

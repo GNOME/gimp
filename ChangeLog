@@ -1,3 +1,7 @@
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc-blurbs.h: improved a few blurbs.
+
 2003-03-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/Makefile.am
