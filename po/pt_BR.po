@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-07 19:53+0200\n"
-"PO-Revision-Date: 2004-06-07 12:05-0300\n"
+"POT-Creation-Date: 2004-06-07 23:57+0200\n"
+"PO-Revision-Date: 2004-06-07 15:59-0300\n"
 "Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -304,6 +304,11 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Impossível abrir arquivo de troca (swap). O Gimp ficou sem memória e não "
+"pode utilizar o arquivo de troca. Algumas partes da sua imagem podem estar "
+"corrompidas. Tente salvar o seu trabalho usando um nome de arquivo "
+"diferente, reinicie o Gimp, e verifique a localização do seu diretório de "
+"troca nas Preferências."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -485,7 +490,6 @@ msgstr ""
 "objeto sendo posicionado."
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -598,6 +602,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Ajusta a resolução horizontal do monitor, em pontos por polegada. Se "
+"ajustada para 0, força uma requisição ao servidor X  para a informação de  "
+"resoluções vertical e horizontal."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -605,6 +612,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Ajusta a resolução vertical do monitor, em pontos por polegada. Se ajustada "
+"para 0, força uma requisição ao servidor X  para a informação de  resoluções "
+"vertical e horizontal."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -2454,7 +2464,6 @@ msgstr ""
 "modo ponto por ponto."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
 msgstr "A resolução horizontal da imagem."
 
@@ -3642,9 +3651,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/funçãodemesclagem/_Curva"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
-msgstr "/funçãodemesclagem/Senoidal"
+msgstr "/funçãodemesclagem/_Senoidal"
 
 #: app/gui/gradient-editor-menu.c:183
 msgid "/blendingfunction/Spherical (i_ncreasing)"
@@ -5753,7 +5761,6 @@ msgid "Fit to Window"
 msgstr "Caber na Janela"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "Zoom Inicial:"
 
@@ -8136,7 +8143,6 @@ msgstr "Matiz-Saturação funciona somente com camadas em formato RGB"
 
 # traduzindo Master para Todos: serve no contexto.
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
 msgstr "_Todos"
 

@@ -1,18 +1,20 @@
+# translation of gimp-script-fu.gimp-2-0.po to Brazilian Portuguese
 # Mensagens em português do Brazil pt_BR para o  GIMP.
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: script-fu\n"
+"Project-Id-Version: gimp-script-fu.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2003-02-20 04:00-0300\n"
-"Last-Translator: João Sebastião de Oliveira Bueno <gwidion@mpc.com.br>\n"
-"Language-Team: GNOME-BR <gnome-l10n-br@listas.cipsga.org.br>\n"
+"POT-Creation-Date: 2004-06-07 23:58+0200\n"
+"PO-Revision-Date: 2004-06-07 16:24-0300\n"
+"Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
+"Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -805,7 +807,7 @@ msgstr "Frente-Fundo-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-Transparent"
-msgstr "Frent-Transparente"
+msgstr "Frente-Transparente"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
@@ -876,11 +878,11 @@ msgstr "Largura da Corona"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr "Evanescer"
+msgstr "Esvanescer"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
-msgstr "Largura para Evanescer"
+msgstr "Largura para Esvanescer"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
@@ -1262,7 +1264,7 @@ msgstr "Linhas/Colunas"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
-msgstr "<Image>/Script-Fu/Seleção/E_vanescer Contorno..."
+msgstr "<Image>/Script-Fu/Seleção/Es_vanecer Contorno..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
@@ -1281,12 +1283,12 @@ msgstr "Limpar Área Não Selecionada da Máscara"
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade From %"
-msgstr "Evanescer de %"
+msgstr "Esvanecer de %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade To   %"
-msgstr "Evanescer para %"
+msgstr "Esvanecer para %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
@@ -1392,12 +1394,18 @@ msgid "Shadow Weight (%)"
 msgstr "Quantidade de Sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/_Cabeçalho Grande..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/_Cabeçalho "
+"Grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/Cabeçalho _Pequeno..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/Cabeçalho "
+"_Pequeno..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1439,25 +1447,33 @@ msgstr "Cor da Sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/Rót_ulo de Sub-botão..."
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/Rót_ulo de Sub-"
+"botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/Rótulo de Sub-sub-botão..."
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/Rótulo de Sub-sub-"
+"botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/Rótulos Gerais..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/Rótulos Gerais..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org/Rótulo de Botão..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Xtns/Script-Fu/Temas para Web/Gimp.Org Clássico/Rótulo de Botão..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1669,7 +1685,7 @@ msgstr "<Image>/Script-Fu/Renderizar/_Lava..."
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
-msgstr "Roughness"
+msgstr "Granularidade"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
@@ -1886,7 +1902,7 @@ msgstr "Cor de Cima (Ativa)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Padrões/Render Map..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Padrões/Renderizar Mapa..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -2087,7 +2103,7 @@ msgstr "Degradê: Repetir Dente de Serra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr "Degradê: Repetir Triângular"
+msgstr "Degradê: Repetir Triangular"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
@@ -2119,7 +2135,7 @@ msgstr "Lápis"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
-msgstr "Pentagono"
+msgstr "Pentágono"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
@@ -2437,112 +2453,3 @@ msgstr "Deslocamento X dos Brilhos"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Deslocamento Y dos Brilhos"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Texturas/Swirly (tileable)..."
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/FAQ do desenvolvedor"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/Bugs do Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/Manual do Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/News do Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/Tutoriais do Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Documentação"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Download"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Art Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/GTK"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Links"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Lista de endereços"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/Recursos"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/GIMP.ORG/GIMP"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/Gimp-Savvy.com"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/Compreendendo o Gimp"
-
-#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Toolbox>/Xtns/Navegador da Web/FAQ do usuário"
-
-#~ msgid "Border"
-#~ msgstr "Borda"
-
-#~ msgid "Fonts"
-#~ msgstr "Fontes"
-
-#~ msgid ""
-#~ "Burn-In: Need two layers in total!\n"
-#~ "        A foreground text layer with transparency\n"
-#~ "        and a background layer."
-#~ msgstr ""
-#~ "Burn-In: São necessárias duas camadas no total!\n"
-#~ "        Uma camada frontal de texto com transparência\n"
-#~ "        e uma camada de fundo."
-
-#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Image>/Script-Fu/Renderizar/Sistema de grade..."
-
-#~ msgid "Grids X"
-#~ msgstr "Grades X"
-
-#~ msgid "Grids Y"
-#~ msgstr "Grades Y"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Padrões/Trochoid..."
-
-#~ msgid "Base Radius (pixels)"
-#~ msgstr "Raio da Base (pixels)"
-
-#~ msgid "Erase before Draw"
-#~ msgstr "Apagar antes de desenhar"
-
-#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-#~ msgstr "Raio caneta / Raio círculo [0.0:1.0]"
-
-#~ msgid "Wheel Radius (hypo < 0 < epi)"
-#~ msgstr "Raio da roda  (hipo < 0 < epi)"
-
-#~ msgid ""
-#~ "At least one font you've choosen is invalid.\n"
-#~ "Please check your settings.\n"
-#~ msgstr ""
-#~ "Pelo menos uma fonte escolhida não é válida.\n"
-#~ "Favor verificar suas configurações.\n"
-
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animadores/Seleção para AnimImage..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Filtro de animação para todas as cópias"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Preencher com cor de fundo"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Número de Cópias"
