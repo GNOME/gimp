@@ -120,7 +120,7 @@ query (void)
 			  "Seth Burgess <sjburges@gimp.org>",
 			  "7th Aug 1999",
 			  N_("<Image>/Filters/Colors/Color to Alpha..."),
-			  "RGBA",
+			  "RGB*",
 			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
@@ -184,9 +184,13 @@ run (gchar   *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /*  Make sure that the drawable is indexed or RGB color  */
+      /*  Add alpha if not present */
+      gimp_layer_add_alpha (drawable->id);
+      drawable = gimp_drawable_get (drawable->id);
+
+      /*  Make sure that the drawable is RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) && 
-          gimp_drawable_has_alpha(drawable->id))
+	  gimp_drawable_is_layer (drawable->id))  
 	{
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init ("Removing color...");
