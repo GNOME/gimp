@@ -29,6 +29,12 @@
 #include "gimptext-bitmap.h"
 
 
+/* for compatibility with older freetype versions */
+#ifndef FT_LOAD_TARGET_MONO
+#define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
+#endif
+
+
 void
 gimp_text_render_bitmap (PangoFont  *font,
 			 PangoGlyph  glyph,
@@ -53,13 +59,13 @@ gimp_text_render_bitmap (PangoFont  *font,
   x_start = MAX (0, - (x + face->glyph->bitmap_left));
   x_limit = MIN (face->glyph->bitmap.width,
 		 bitmap->width - (x + face->glyph->bitmap_left));
-  
+
   y_start = MAX (0,  - (y - face->glyph->bitmap_top));
   y_limit = MIN (face->glyph->bitmap.rows,
 		 bitmap->rows - (y - face->glyph->bitmap_top));
 
   src = face->glyph->bitmap.buffer + y_start * face->glyph->bitmap.pitch;
-  
+
   dest = bitmap->buffer +
     (y_start + y - face->glyph->bitmap_top) * bitmap->pitch +
     x_start + x + face->glyph->bitmap_left;

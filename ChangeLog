@@ -1,3 +1,10 @@
+2003-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-bitmap.c
+	* app/text/gimptextlayout-render.c: define FT_LOAD_TARGET_MONO to
+	FT_LOAD_MONOCHROME if it is undefined. This avoids a dependency on
+	recent versions of Freetype (bug #118066).
+
 2003-07-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpgradient.[ch]: added "gboolean reverse" to

@@ -37,6 +37,12 @@
 #include "gimptextlayout-render.h"
 
 
+/* for compatibility with older freetype versions */
+#ifndef FT_LOAD_TARGET_MONO
+#define FT_LOAD_TARGET_MONO  FT_LOAD_MONOCHROME
+#endif
+
+
 /*  This file duplicates quite a lot of code from pangoft2.c.
  *  At some point all this should be folded back into Pango.
  */
@@ -44,14 +50,14 @@
 static void  gimp_text_layout_render_line    (GimpTextLayout     *layout,
 					      PangoLayoutLine    *line,
 					      GimpTextRenderFunc  render_func,
-					      gint                x, 
+					      gint                x,
 					      gint                y,
 					      gpointer            render_data);
 static void  gimp_text_layout_render_glyphs  (GimpTextLayout     *layout,
 					      PangoFont          *font,
 					      PangoGlyphString   *glyphs,
 					      GimpTextRenderFunc  render_func,
-					      gint                x, 
+					      gint                x,
 					      gint                y,
 					      gpointer            render_data);
 static gint  gimp_text_layout_render_flags   (GimpTextLayout     *layout);
@@ -78,12 +84,12 @@ gimp_text_layout_render (GimpTextLayout     *layout,
       PangoRectangle   rect;
       PangoLayoutLine *line;
       gint             baseline;
-      
+
       line = pango_layout_iter_get_line (iter);
-      
+
       pango_layout_iter_get_line_extents (iter, NULL, &rect);
       baseline = pango_layout_iter_get_baseline (iter);
-      
+
       gimp_text_layout_render_line (layout, line,
 				    render_func,
 				    x + PANGO_PIXELS (rect.x),
@@ -93,11 +99,11 @@ gimp_text_layout_render (GimpTextLayout     *layout,
   while (pango_layout_iter_next_line (iter));
 }
 
-static void 
+static void
 gimp_text_layout_render_line (GimpTextLayout     *layout,
 			      PangoLayoutLine    *line,
 			      GimpTextRenderFunc  render_func,
-			      gint                x, 
+			      gint                x,
 			      gint                y,
 			      gpointer            render_data)
 {
@@ -121,12 +127,12 @@ gimp_text_layout_render_line (GimpTextLayout     *layout,
     }
 }
 
-static void 
+static void
 gimp_text_layout_render_glyphs (GimpTextLayout     *layout,
 				PangoFont          *font,
 				PangoGlyphString   *glyphs,
 				GimpTextRenderFunc  render_func,
-				gint                x, 
+				gint                x,
 				gint                y,
 				gpointer            render_data)
 {
