@@ -48,7 +48,8 @@ EXTRA_DIST = \
 	user_install.bat	\
 	ps-menurc		\
 	gimprc.win32		\
-	config.h.win32
+	config.h.win32		\
+	po/po2tbl.sed.in
 
 gimpdata_DATA = \
 	gimp_logo.ppm		\

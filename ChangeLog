@@ -1,3 +1,7 @@
+2001-11-13  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (EXTRA_DIST): added po/po2tbl.sed.in
+
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
 	* modules/Makefile.am: added colorsel_water.c to EXTRA_DIST.
