@@ -1646,6 +1646,7 @@ save_image (const gchar *filename,
    * Pass TRUE unless you are very sure of what you're doing.
    */
   jpeg_start_compress (&cinfo, TRUE);
+
 #ifdef HAVE_EXIF
 
   /* Create the thumbnail JPEG in a buffer */
