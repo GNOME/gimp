@@ -1,3 +1,30 @@
+Tue Feb 15 23:27:42 GMT 2000 Andy Thomas <alt@gimp.org>
+
+	 * gimp/app/gimpdrawable.c
+	 * gimp/app/channel.c
+	 * gimp/app/layer.c
+	 * gimp/app/channel.h
+	 * gimp/app/layer.h
+	 * gimp/app/gimpimage.c
+	 * gimp/app/gimpimage.h
+	 * gimp/app/gimpdrawable.h
+	 * gimp/tools/pdbgen/pdb/paths.pdb
+	 * gimp/tools/pdbgen/pdb/layer.pdb
+	 * gimp/tools/pdbgen/pdb/channel.pdb
+	 * gimp/tools/pdbgen/pdb/gimage.pdb
+	 * gimp/app/channel_cmds.c
+	 * gimp/app/gimage_cmds.c
+	 * gimp/app/internal_procs.c
+	 * gimp/app/layer_cmds.c
+	 * gimp/app/paths_cmds.c
+
+	New gimp_*_set_tattoo procedures. This allows save/load plugins 
+        to save/restore tattoo states of layers, channels and paths. Note the
+	internal tattoo state can also be set, however rigorous checks are
+	performed to make sure that the internal tattoo states of layer,
+	channels and paths are consistent and that the new state value is
+	newval > MAX(MAX(layertattoo),MAX(channeltattoo),MAX(pathtattoo)).
+
 Tue Feb 15 13:14:31 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c: 

@@ -1337,6 +1337,70 @@ CODE
     );
 }
 
+sub image_get_tattoo_state {
+    $blurb = 'Returns the tattoo state associated with the image.';
+
+    $help = <<'HELP';
+This procedure returns the tattoo state of the image. Use only by 
+save/load plugins that wish to preserve an images tattoo state. Using this 
+function at other times will produce unexpected results.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '2000';
+
+    @inargs = ( &std_image_arg );
+
+    @outargs = (
+	{ name => 'tattoo', type => 'int32',
+	  desc => 'The tattoo state associated with the image', init => 1  }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+tattoo = gimp_image_get_tattoo_state(gimage);
+}
+CODE
+    );
+}
+
+sub image_set_tattoo_state {
+    $blurb = 'Set the tattoo state associated with the image.';
+
+    $help = <<'HELP';
+This procedure sets the tattoo state of the image. Use only by 
+save/load plugins that wish to preserve an images tattoo state. Using this 
+function at other times will produce unexpected results. A full check of 
+uniqueness of states in layers, channels and paths will be performed by this
+procedure and a execution failure will be returned if this fails. A failure 
+will also be returned if the new tattoo state value is less than the maximum
+tattoo value from all of the tattoos from the paths,layers and channels. After
+the image data has been loaded and all the tattoos have been set then this is 
+the last procedure that should be called. If effectively does a status check 
+on the tattoo values that have been set to make sure that all is OK.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '2000';
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo', type => 'int32',
+	  desc => 'The new tattoo state of the image'
+	}
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+	success = gimp_image_set_tattoo_state(gimage,tattoo);
+}
+CODE
+    );
+}
+
+
 @headers = qw(<string.h> "gimage.h" "libgimp/gimplimits.h");
 
 $extra{app}->{code} = <<'CODE';
@@ -1364,7 +1428,8 @@ unshift @procs, qw(image_list image_new image_resize image_scale image_delete
 		   image_set_cmap image_undo_is_enabled image_undo_enable
 		   image_undo_disable image_undo_freeze image_undo_thaw
 		   image_clean_all image_floating_selection
-		   image_floating_sel_attached_to image_thumbnail);
+		   image_floating_sel_attached_to image_thumbnail
+		   image_set_tattoo_state image_get_tattoo_state);
 %exports = (app => [@procs],
 	    lib => [@procs[0..4,6..11,14,16..24,26..35,37..$#procs]]);
 

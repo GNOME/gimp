@@ -542,6 +542,14 @@ gimp_drawable_get_tattoo (const GimpDrawable *drawable)
   return drawable->tattoo;
 }
 
+void
+gimp_drawable_set_tattoo(GimpDrawable *drawable, Tattoo val)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  drawable->tattoo = val;
+}
+
 gboolean
 gimp_drawable_is_rgb (GimpDrawable *drawable)
 {

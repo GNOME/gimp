@@ -422,6 +422,58 @@ CODE
     );
 }
 
+sub path_set_tattoo {
+    $blurb = 'Sets the tattoo associated with the name path.';
+
+    $help = <<'HELP';
+This procedure sets the tattoo associated with the specified path.  A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'pathname', type => 'string',
+	  desc => 'the name of the path whose tattoo should be set',
+	  alias => 'pname' },
+        { name => 'tattovalue', type => 'int32',
+	  desc => 'The tattoo associated with the name path. Only values returned from \'path_get_tattoo\' should be used here', init => 1  }
+    );
+
+    %invoke = (
+	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	code => <<'CODE'
+{
+  /* Get the path with the given name */
+  plist = gimage->paths;
+      
+  if (plist && plist->bz_paths)
+    {
+      GSList *pl = plist->bz_paths;
+
+      while (pl)
+	{
+	  pptr = pl->data;
+
+	  if (!strcmp (pname, pptr->name->str))
+	    break; /* Found the path */
+
+	  pl = pl->next;
+	  pptr = NULL;
+	}
+
+      if (pl && pptr)
+	pptr->tattoo = tattovalue ;
+      else
+	success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 
 sub get_path_by_tattoo {
     $blurb = 'Return the name of the path with the given tattoo.';
@@ -716,7 +768,7 @@ CODE
 @procs = qw(path_list path_get_points path_get_current path_set_current
 	    path_set_points path_stroke_current path_get_point_at_dist
 	    path_get_tattoo get_path_by_tattoo path_delete path_get_locked
-	    path_set_locked);
+	    path_set_locked path_set_tattoo);
 %exports = (app => [@procs]);
 
 $desc = 'Paths';

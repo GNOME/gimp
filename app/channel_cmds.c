@@ -39,6 +39,7 @@ static ProcRecord channel_set_opacity_proc;
 static ProcRecord channel_get_color_proc;
 static ProcRecord channel_set_color_proc;
 static ProcRecord channel_get_tattoo_proc;
+static ProcRecord channel_set_tattoo_proc;
 
 void
 register_channel_procs (void)
@@ -57,6 +58,7 @@ register_channel_procs (void)
   procedural_db_register (&channel_get_color_proc);
   procedural_db_register (&channel_set_color_proc);
   procedural_db_register (&channel_get_tattoo_proc);
+  procedural_db_register (&channel_set_tattoo_proc);
 }
 
 static Argument *
@@ -828,8 +830,8 @@ static ProcArg channel_get_tattoo_outargs[] =
 static ProcRecord channel_get_tattoo_proc =
 {
   "gimp_channel_get_tattoo",
-  "Returns the tattoo associated with the specified channel.",
-  "This procedure returns the tattoo associated with the specified channel. A tattoo is a unique and permanent identifier attached to a channel that can be used to uniquely identify a channel within an image even between sessions",
+  "Get the tattoo of the specified channel.",
+  "This procedure returns the specified channel's tattoo. A tattoo is a unique and permanent identifier attached to a channel that can be used to uniquely identify a channel within an image even between sessions.",
   "Jay Cox",
   "Jay Cox",
   "1998",
@@ -839,4 +841,55 @@ static ProcRecord channel_get_tattoo_proc =
   1,
   channel_get_tattoo_outargs,
   { { channel_get_tattoo_invoker } }
+};
+
+static Argument *
+channel_set_tattoo_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Channel *channel;
+  gint32 tattoo;
+
+  channel = channel_get_ID (args[0].value.pdb_int);
+  if (channel == NULL)
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+  if (tattoo == 0)
+    success = FALSE;
+
+  if (success)
+    channel_set_tattoo (channel, tattoo);
+
+  return procedural_db_return_args (&channel_set_tattoo_proc, success);
+}
+
+static ProcArg channel_set_tattoo_inargs[] =
+{
+  {
+    PDB_CHANNEL,
+    "channel",
+    "The channel"
+  },
+  {
+    PDB_INT32,
+    "tattoo",
+    "The new channel tattoo"
+  }
+};
+
+static ProcRecord channel_set_tattoo_proc =
+{
+  "gimp_channel_set_tattoo",
+  "Set the tattoo of the specified channel.",
+  "This procedure sets the specified channel's tattoo. A tattoo is a unique and permanent identifier attached to a channel that can be used to uniquely identify a channel within an image even between sessions.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+  2,
+  channel_set_tattoo_inargs,
+  0,
+  NULL,
+  { { channel_set_tattoo_invoker } }
 };

@@ -72,6 +72,8 @@ static ProcRecord image_clean_all_proc;
 static ProcRecord image_floating_selection_proc;
 static ProcRecord image_floating_sel_attached_to_proc;
 static ProcRecord image_thumbnail_proc;
+static ProcRecord image_set_tattoo_state_proc;
+static ProcRecord image_get_tattoo_state_proc;
 static ProcRecord image_width_proc;
 static ProcRecord image_height_proc;
 static ProcRecord image_get_active_layer_proc;
@@ -133,6 +135,8 @@ register_gimage_procs (void)
   procedural_db_register (&image_floating_selection_proc);
   procedural_db_register (&image_floating_sel_attached_to_proc);
   procedural_db_register (&image_thumbnail_proc);
+  procedural_db_register (&image_set_tattoo_state_proc);
+  procedural_db_register (&image_get_tattoo_state_proc);
   procedural_db_register (&image_width_proc);
   procedural_db_register (&image_height_proc);
   procedural_db_register (&image_get_active_layer_proc);
@@ -2489,6 +2493,116 @@ static ProcRecord image_thumbnail_proc =
   5,
   image_thumbnail_outargs,
   { { image_thumbnail_invoker } }
+};
+
+static Argument *
+image_set_tattoo_state_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 tattoo;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+
+  if (success)
+    {
+	    success = gimp_image_set_tattoo_state(gimage,tattoo);
+    }
+
+  return procedural_db_return_args (&image_set_tattoo_state_proc, success);
+}
+
+static ProcArg image_set_tattoo_state_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_INT32,
+    "tattoo",
+    "The new tattoo state of the image"
+  }
+};
+
+static ProcRecord image_set_tattoo_state_proc =
+{
+  "gimp_image_set_tattoo_state",
+  "Set the tattoo state associated with the image.",
+  "This procedure sets the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results. A full check of uniqueness of states in layers, channels and paths will be performed by this procedure and a execution failure will be returned if this fails. A failure will also be returned if the new tattoo state value is less than the maximum tattoo value from all of the tattoos from the paths,layers and channels.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "2000",
+  PDB_INTERNAL,
+  2,
+  image_set_tattoo_state_inargs,
+  0,
+  NULL,
+  { { image_set_tattoo_state_invoker } }
+};
+
+static Argument *
+image_get_tattoo_state_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 tattoo = 0;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+    tattoo = gimp_image_get_tattoo_state(gimage);
+    }
+
+  return_args = procedural_db_return_args (&image_get_tattoo_state_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = tattoo;
+
+  return return_args;
+}
+
+static ProcArg image_get_tattoo_state_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_tattoo_state_outargs[] =
+{
+  {
+    PDB_INT32,
+    "tattoo",
+    "The tattoo state associated with the image"
+  }
+};
+
+static ProcRecord image_get_tattoo_state_proc =
+{
+  "gimp_image_get_tattoo_state",
+  "Returns the tattoo state associated with the image.",
+  "This procedure returns the tattoo state of the image. Use only by save/load plugins that wish to preserve an images tattoo state. Using this function at other times will produce unexpected results.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "2000",
+  PDB_INTERNAL,
+  1,
+  image_get_tattoo_state_inargs,
+  1,
+  image_get_tattoo_state_outargs,
+  { { image_get_tattoo_state_invoker } }
 };
 
 static Argument *

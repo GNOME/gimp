@@ -58,6 +58,7 @@ static ProcRecord layer_set_mode_proc;
 static ProcRecord layer_get_linked_proc;
 static ProcRecord layer_set_linked_proc;
 static ProcRecord layer_get_tattoo_proc;
+static ProcRecord layer_set_tattoo_proc;
 
 void
 register_layer_procs (void)
@@ -92,6 +93,7 @@ register_layer_procs (void)
   procedural_db_register (&layer_get_linked_proc);
   procedural_db_register (&layer_set_linked_proc);
   procedural_db_register (&layer_get_tattoo_proc);
+  procedural_db_register (&layer_set_tattoo_proc);
 }
 
 static Argument *
@@ -1862,8 +1864,8 @@ static ProcArg layer_get_tattoo_outargs[] =
 static ProcRecord layer_get_tattoo_proc =
 {
   "gimp_layer_get_tattoo",
-  "Returns the tattoo associated with the specified layer.",
-  "This procedure returns the tattoo associated with the specified layer. A tattoo is a unique and permanent identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
+  "Get the tattoo of the specified layer.",
+  "This procedure returns the specified layer's tattoo. A tattoo is a unique and permanent identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
   "Jay Cox",
   "Jay Cox",
   "1998",
@@ -1873,4 +1875,55 @@ static ProcRecord layer_get_tattoo_proc =
   1,
   layer_get_tattoo_outargs,
   { { layer_get_tattoo_invoker } }
+};
+
+static Argument *
+layer_set_tattoo_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 tattoo;
+
+  layer = layer_get_ID (args[0].value.pdb_int);
+  if (layer == NULL)
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+  if (tattoo == 0)
+    success = FALSE;
+
+  if (success)
+    layer_set_tattoo (layer, tattoo);
+
+  return procedural_db_return_args (&layer_set_tattoo_proc, success);
+}
+
+static ProcArg layer_set_tattoo_inargs[] =
+{
+  {
+    PDB_LAYER,
+    "layer",
+    "The layer"
+  },
+  {
+    PDB_INT32,
+    "tattoo",
+    "The new layer tattoo"
+  }
+};
+
+static ProcRecord layer_set_tattoo_proc =
+{
+  "gimp_layer_set_tattoo",
+  "Set the tattoo of the specified layer.",
+  "This procedure sets the specified layer's tattoo. A tattoo is a unique and permanent identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+  2,
+  layer_set_tattoo_inargs,
+  0,
+  NULL,
+  { { layer_set_tattoo_invoker } }
 };

@@ -1169,6 +1169,96 @@ gimp_image_get_new_tattoo (GimpImage *image)
   return (image->tattoo_state);
 }
 
+Tattoo
+gimp_image_get_tattoo_state(GimpImage *image)
+{
+  return (image->tattoo_state);
+}
+
+int 
+gimp_image_set_tattoo_state(GimpImage *gimage, Tattoo val)
+{
+  Layer *layer;
+  GSList *layers = gimage->layers;
+  int retval = TRUE;
+  Channel *channel;
+  GSList *channels = gimage->channels;
+  Tattoo maxval = 0;
+  PATHP pptr = NULL;
+  PathsList *plist;
+
+  while (layers)
+    {
+      Tattoo ltattoo;
+      layer = (Layer *) layers->data;
+      
+      ltattoo = layer_get_tattoo (layer);
+      if(ltattoo > maxval)
+	maxval = ltattoo;
+      if(gimp_image_get_channel_by_tattoo(gimage,ltattoo) != NULL)
+	{
+	  retval = FALSE; /* Oopps duplicated tattoo in channel */
+	}
+
+      /* Now check path an't got this tattoo */
+      if(paths_get_path_by_tattoo(gimage,ltattoo) != NULL)
+	{
+	  retval = FALSE; /* Oopps duplicated tattoo in layer */
+	}
+      
+      layers = g_slist_next (layers);
+    }
+
+  /* Now check that the paths channel tattoos don't overlap */
+  while (channels)
+    {
+      Tattoo ctattoo;
+      channel = (Channel *) channels->data;
+      
+      ctattoo = channel_get_tattoo (channel);
+      if(ctattoo > maxval)
+	maxval = ctattoo;
+      /* Now check path an't got this tattoo */
+      if(paths_get_path_by_tattoo(gimage,ctattoo) != NULL)
+	{
+	  retval = FALSE; /* Oopps duplicated tattoo in layer */
+	}
+
+      channels = g_slist_next (channels);
+    }
+
+  /* Find the max tatto value in the paths */
+
+  plist = gimage->paths;
+      
+  if (plist && plist->bz_paths)
+    {
+      GSList *pl = plist->bz_paths;
+      Tattoo ptattoo;
+
+      while (pl)
+	{
+	  pptr = pl->data;
+
+	  ptattoo = paths_get_tattoo (pptr);
+	  
+	  if(ptattoo > maxval)
+	    maxval = ptattoo;
+	  
+	  pl = pl->next;
+	}
+    }
+
+  if(val <= maxval)
+    retval = FALSE;
+
+  /* Must check the state is valid */
+  if(retval == TRUE)
+    gimage->tattoo_state = val;
+
+  return retval;
+}
+
 void
 gimp_image_colormap_changed (GimpImage *image, 
 			     gint       col)

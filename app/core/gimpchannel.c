@@ -590,6 +590,12 @@ channel_get_tattoo (const Channel *channel)
   return (gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel)));
 }
 
+void
+channel_set_tattoo (const Channel *channel, Tattoo val)
+{
+  gimp_drawable_set_tattoo(GIMP_DRAWABLE (channel),val);
+}
+
 /******************************/
 /*  selection mask functions  */
 /******************************/

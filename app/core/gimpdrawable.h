@@ -77,6 +77,7 @@ Parasite *       gimp_drawable_parasite_find      (const GimpDrawable *,
 gchar **         gimp_drawable_parasite_list      (GimpDrawable *drawable,
                                                    gint *count);
 Tattoo           gimp_drawable_get_tattoo         (const GimpDrawable *);
+void             gimp_drawable_set_tattoo         (GimpDrawable *, Tattoo);
 
 GimpDrawable *   gimp_drawable_get_ID             (gint);
 void		 gimp_drawable_deallocate         (GimpDrawable *);

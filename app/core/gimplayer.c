@@ -1291,6 +1291,13 @@ layer_get_tattoo (const Layer *layer)
 }
 
 void
+layer_set_tattoo (const Layer *layer , Tattoo val)
+{
+  gimp_drawable_set_tattoo(GIMP_DRAWABLE (layer),val);
+}
+
+
+void
 layer_invalidate_previews (GimpImage* gimage)
 {
   GSList * tmp;

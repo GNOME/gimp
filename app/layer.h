@@ -121,6 +121,7 @@ TempBuf *       layer_mask_preview    (Layer *, gint, gint);
 
 void            layer_invalidate_previews (GimpImage *);
 Tattoo          layer_get_tattoo          (const Layer *);
+void            layer_set_tattoo          (const Layer *, Tattoo);
 
 #define drawable_layer      GIMP_IS_LAYER
 #define drawable_layer_mask GIMP_IS_LAYER_MASK

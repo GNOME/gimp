@@ -213,18 +213,14 @@ CODE
 
 &channel_accessors('tattoo', 'tattoo', 'tattoo', 1,
 		   <<'CODE');
-    $blurb = 'Returns the tattoo associated with the specified channel.';
-
-    $help = <<'HELP';
-This procedure returns the tattoo associated with the specified channel. A
-tattoo is a unique and permanent identifier attached to a channel that can be
-used to uniquely identify a channel within an image even between sessions
+    $help .= <<'HELP';
+A tattoo is a unique and permanent identifier attached to a channel that can be
+used to uniquely identify a channel within an image even between sessions.
 HELP
 
     $author = $copyright = 'Jay Cox';
     $date = '1998';
 CODE
-$#procs--;
 
 @headers = qw("channel.h" "channel_pvt.h");
 

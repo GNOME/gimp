@@ -529,18 +529,14 @@ CODE
 
 &layer_accessors('tattoo', 'tattoo', 'tattoo', 1, 0,
 		 <<'CODE');
-    $blurb = 'Returns the tattoo associated with the specified layer.';
-
-    $help = <<'HELP';
-This procedure returns the tattoo associated with the specified layer. A tattoo
-is a unique and permanent identifier attached to a layer that can be used to
-uniquely identify a layer within an image even between sessions
+    $help .= <<'HELP';
+A tattoo is a unique and permanent identifier attached to a 
+layer that can be used to uniquely identify a layer within an image even between sessions
 HELP
 
     $author = $copyright = 'Jay Cox';
     $date = '1998';
 CODE
-$#procs--;
 
 @headers = qw("layer.h" "layer_pvt.h");
 

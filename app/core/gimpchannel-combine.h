@@ -100,6 +100,7 @@ TempBuf *       channel_preview             (Channel *, gint, gint);
 
 void            channel_invalidate_previews (GimpImage*);
 Tattoo          channel_get_tattoo          (const Channel *);
+void            channel_set_tattoo          (const Channel *,Tattoo);
 
 /* selection mask functions  */
 
