@@ -1,3 +1,10 @@
+2001-04-06  Stanislav Brabec  <utx@penguin.cz> 
+
+        On request of Martin Weber <martweb@gmx.net>:
+        * plugins/common/tga.c: Fixed bug #52728 - problem in loading
+        compressed and uncompressed 15 bit tga, compressed 16 bit tga
+        files and removed a false warning for 32 bit tga files.
+
 2001-04-02  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am
