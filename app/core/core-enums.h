@@ -222,15 +222,15 @@ GType gimp_preview_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PREVIEW_SIZE_TINY        = 16,   /*< desc="Tiny"        >*/
-  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,   /*< desc="Very Small"  >*/
-  GIMP_PREVIEW_SIZE_SMALL       = 32,   /*< desc="Small"       >*/
-  GIMP_PREVIEW_SIZE_MEDIUM      = 48,   /*< desc="Medium"      >*/
-  GIMP_PREVIEW_SIZE_LARGE       = 64,   /*< desc="Large"       >*/
-  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 96,   /*< desc="Very Large"  >*/
-  GIMP_PREVIEW_SIZE_HUGE        = 128,  /*< desc="Huge"        >*/
-  GIMP_PREVIEW_SIZE_ENORMOUS    = 192,  /*< desc="Enormous"    >*/
-  GIMP_PREVIEW_SIZE_GIGANTIC    = 256   /*< desc="Gigantic"    >*/
+  GIMP_PREVIEW_SIZE_TINY        = 12,   /*< desc="Tiny"        >*/
+  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 16,   /*< desc="Very Small"  >*/
+  GIMP_PREVIEW_SIZE_SMALL       = 24,   /*< desc="Small"       >*/
+  GIMP_PREVIEW_SIZE_MEDIUM      = 32,   /*< desc="Medium"      >*/
+  GIMP_PREVIEW_SIZE_LARGE       = 48,   /*< desc="Large"       >*/
+  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 64,   /*< desc="Very Large"  >*/
+  GIMP_PREVIEW_SIZE_HUGE        = 96,   /*< desc="Huge"        >*/
+  GIMP_PREVIEW_SIZE_ENORMOUS    = 128,  /*< desc="Enormous"    >*/
+  GIMP_PREVIEW_SIZE_GIGANTIC    = 192   /*< desc="Gigantic"    >*/
 } GimpPreviewSize;
 
 

@@ -263,7 +263,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
                                  "layer-preview-size", LAYER_PREVIEW_SIZE_BLURB,
                                  GIMP_TYPE_PREVIEW_SIZE,
-                                 GIMP_PREVIEW_SIZE_SMALL,
+                                 GIMP_PREVIEW_SIZE_MEDIUM,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_THUMBNAIL_SIZE,
                                  "thumbnail-size", THUMBNAIL_SIZE_BLURB,

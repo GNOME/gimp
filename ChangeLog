@@ -1,3 +1,11 @@
+2003-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h: made the GimpPreviewSize enum values a
+	little bit smaller. What used to be small is now called medium.
+
+	* app/config/gimpcoreconfig.c
+	* app/gui/dialogs.c: changed accordingly.
+
 2003-03-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/Makefile.am
