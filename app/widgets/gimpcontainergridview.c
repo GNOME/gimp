@@ -43,6 +43,9 @@
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
 static void     gimp_container_grid_view_init         (GimpContainerGridView      *panel);
 
+static gboolean gimp_container_grid_view_focus        (GtkWidget              *widget,
+                                                       GtkDirectionType        direction);
+
 static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gint                    index);
@@ -112,10 +115,14 @@ static void
 gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 {
   GimpContainerViewClass *container_view_class;
+  GtkWidgetClass         *widget_class;
 
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  
+  widget_class         = GTK_WIDGET_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  widget_class->focus                    = gimp_container_grid_view_focus;
 
   container_view_class->insert_item      = gimp_container_grid_view_insert_item;
   container_view_class->remove_item      = gimp_container_grid_view_remove_item;
@@ -164,7 +171,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
      gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
                                           (view->scrolled_win)));
 
-  GTK_WIDGET_SET_FLAGS (grid_view->wrap_box->parent, GTK_CAN_FOCUS);
+  GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
 }
 
 GtkWidget *
@@ -204,6 +211,61 @@ gimp_container_grid_view_new (GimpContainer *container,
     gimp_container_view_set_context (view, context);
 
   return GTK_WIDGET (grid_view);
+}
+
+static gboolean
+gimp_container_grid_view_focus (GtkWidget        *widget,
+                                GtkDirectionType  direction)
+{
+  GimpContainerGridView *grid_view;
+  GimpContainer         *container;
+  GimpPreview           *preview;
+  GimpViewable          *item;
+  gint                   index;
+
+  if (GTK_WIDGET_CAN_FOCUS (widget) && !GTK_WIDGET_HAS_FOCUS (widget))
+    {
+      gtk_widget_grab_focus (GTK_WIDGET (widget));
+      return TRUE;
+    }
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (widget);
+  
+  preview = g_object_get_data (G_OBJECT (grid_view), "last_selected_item");
+  if (!preview)
+    return FALSE;
+
+  container = GIMP_CONTAINER_VIEW (widget)->container;
+
+  index = gimp_container_get_child_index (container,
+                                          GIMP_OBJECT (preview->viewable));
+
+  switch (direction)
+    {
+    case GTK_DIR_TAB_FORWARD:
+    case GTK_DIR_TAB_BACKWARD:
+      return FALSE;
+
+    case GTK_DIR_UP:
+      index -= grid_view->columns;
+      break;
+    case GTK_DIR_DOWN:
+      index += grid_view->columns;
+      break;
+    case GTK_DIR_LEFT:
+      index--;
+      break;
+    case GTK_DIR_RIGHT:
+      index++;
+      break;
+    }
+
+  item = (GimpViewable *) gimp_container_get_child_by_index (container, index);
+
+  if (item)
+    gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (widget), item);
+
+  return TRUE;
 }
 
 static gpointer
@@ -333,6 +395,9 @@ gimp_container_grid_view_item_selected (GtkWidget       *widget,
                                         GdkModifierType  state,
 					gpointer         data)
 {
+  if (GTK_WIDGET_CAN_FOCUS (data) && !GTK_WIDGET_HAS_FOCUS (data))
+    gtk_widget_grab_focus (GTK_WIDGET (data));
+  
   gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
 				     GIMP_PREVIEW (widget)->viewable);
 }

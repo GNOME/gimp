@@ -1,3 +1,8 @@
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainergridview.c: implemented GtkWidget::focus.
+	Makes grid views keyboard-navigatable and fixes bug #95120.
+
 2003-03-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerview.[ch]: added the scrolled_win
