@@ -57,17 +57,17 @@
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	  /* init_proc  */
+  NULL,   /* init_proc  */
   NULL,   /* quit_proc  */
   query,  /* query_proc */
-  run,	  /* run_proc   */
+  run,    /* run_proc   */
 };
 
 enum
@@ -135,30 +135,30 @@ typedef struct
 
 typedef struct
 {
-  gshort  	numcol;
-  gdouble 	pos[MAXCOLPERGRADIENT];
-  GimpVector4	color[MAXCOLPERGRADIENT];
+  gshort        numcol;
+  gdouble       pos[MAXCOLPERGRADIENT];
+  GimpVector4   color[MAXCOLPERGRADIENT];
 } gradient;
 
 typedef struct
 {
-  gint     	majtype;
-  gint     	type;
-  gulong   	flags;
+  gint          majtype;
+  gint          type;
+  gulong        flags;
   GimpVector4   color1, color2;
-  gradient 	gradient;
+  gradient      gradient;
   GimpVector4   ambient, diffuse;
-  gdouble  	oscale;
-  GimpVector4	scale, translate, rotate;
-  image    	image;
+  gdouble       oscale;
+  GimpVector4   scale, translate, rotate;
+  image         image;
   GimpVector4   reflection;
   GimpVector4   refraction;
   GimpVector4   transparent;
-  gdouble  	ior;
+  gdouble       ior;
   GimpVector4   phongcolor;
-  gdouble  	phongsize;
-  gdouble  	amount;
-  gdouble  	exp;
+  gdouble       phongsize;
+  gdouble       amount;
+  gdouble       exp;
   GimpVector4   turbulence;
 } texture;
 
@@ -188,43 +188,43 @@ typedef struct
 
 typedef struct
 {
-  common	com;
-  GimpVector4	a;
-  gdouble	b, r;
+  common        com;
+  GimpVector4   a;
+  gdouble       b, r;
 } disc;
 
 typedef struct
 {
-  common	com;
-  GimpVector4	a;
-  gdouble	r;
+  common        com;
+  GimpVector4   a;
+  gdouble       r;
 } sphere;
 
 typedef struct
 {
-  common 	com;
-  GimpVector4 	a, b, c;
+  common        com;
+  GimpVector4   a, b, c;
 } cylinder;
 
 typedef struct
 {
-  common  	com;
-  GimpVector4  	a;
-  gdouble 	b;
+  common        com;
+  GimpVector4   a;
+  gdouble       b;
 } plane;
 
 typedef struct
 {
-  common 	com;
-  GimpVector4 	color;
-  GimpVector4 	a;
+  common        com;
+  GimpVector4   color;
+  GimpVector4   a;
 } light;
 
 typedef struct
 {
-  GimpVector4  	v1, v2;
-  gshort  	inside;
-  gdouble 	ior;
+  GimpVector4   v1, v2;
+  gshort        inside;
+  gdouble       ior;
 } ray;
 
 typedef union
@@ -310,7 +310,7 @@ static void    fileselect    (GtkFileChooserAction  action,
 static gint    traceray      (ray                  *r,
                               GimpVector4          *col,
                               gint                  level,
-			      gdouble               imp);
+                              gdouble               imp);
 static gdouble turbulence    (gdouble              *point,
                               gdouble               lofreq,
                               gdouble               hifreq);
@@ -355,15 +355,15 @@ init (void)
   for (i = 0; i < B; i++)
     {
       do
-	{		      /* Choose uniformly in a cube */
-	  for (j = 0; j < 3; j++)
-	    v[j] = g_rand_double_range (gr, -1, 1);
-	  s = DOT (v, v);
-	}
-      while (s > 1.0);	      /* If not in sphere try again */
+        {                     /* Choose uniformly in a cube */
+          for (j = 0; j < 3; j++)
+            v[j] = g_rand_double_range (gr, -1, 1);
+          s = DOT (v, v);
+        }
+      while (s > 1.0);        /* If not in sphere try again */
       s = sqrt (s);
       for (j = 0; j < 3; j++) /* Else normalize */
-	g[i][j] = v[j] / s;
+        g[i][j] = v[j] / s;
     }
 
 /* Create a pseudorandom permutation of [1..B] */
@@ -383,8 +383,9 @@ init (void)
     {
       p[B + i] = p[i];
       for (j = 0; j < 3; j++)
-	g[B + i][j] = g[i][j];
+        g[B + i][j] = g[i][j];
     }
+  g_rand_free (gr);
 }
 
 #define setup(i,b0,b1,r0,r1) \
@@ -443,7 +444,7 @@ noise3 (gdouble * vec)
   v = at (rx1, ry1, rz0);
   b = lerp (sx, u, v);
 
-  c = lerp (sy, a, b);		/* interpolate in y at lo x */
+  c = lerp (sy, a, b);          /* interpolate in y at lo x */
 
   q = g[b00 + bz1];
   u = at (rx0, ry0, rz1);
@@ -457,9 +458,9 @@ noise3 (gdouble * vec)
   v = at (rx1, ry1, rz1);
   b = lerp (sx, u, v);
 
-  d = lerp (sy, a, b);		/* interpolate in y at hi x */
+  d = lerp (sy, a, b);          /* interpolate in y at hi x */
 
-  return 1.5 * lerp (sz, c, d);	/* interpolate in z */
+  return 1.5 * lerp (sz, c, d); /* interpolate in z */
 }
 
 static double
@@ -479,7 +480,7 @@ turbulence (gdouble * point, gdouble lofreq, gdouble hifreq)
       p[1] *= 2.;
       p[2] *= 2.;
     }
-  return t - 0.3;		/* readjust to make mean value = 0.0 */
+  return t - 0.3;               /* readjust to make mean value = 0.0 */
 }
 
 struct camera_t camera;
@@ -763,15 +764,15 @@ checksphere (ray * r, sphere * sphere)
       solmin = -linear / quadratic;
 
       if (solmin > tolerance)
-	{
-	  return solmin;
-	  /*
-	   *hits = solmin;
-	   return 1;
-	   */
-	}
+        {
+          return solmin;
+          /*
+           *hits = solmin;
+           return 1;
+           */
+        }
       else
-	return 0.0;
+        return 0.0;
     }
   discriminant = linear * linear - 4.0 * quadratic * constant;
   if (discriminant < 0.0)
@@ -941,21 +942,21 @@ gradcolor (GimpVector4 *col, gradient *t, gdouble val)
   for (i = 0; i < t->numcol; i++)
     {
       if (t->pos[i] == val)
-	{
-	  *col = t->color[i];
-	  return;
-	}
+        {
+          *col = t->color[i];
+          return;
+        }
       if (t->pos[i] > val)
-	{
-	  d = (val - t->pos[i - 1]) / (t->pos[i] - t->pos[i - 1]);
-	  vcopy (&tmpcol, &t->color[i]);
-	  vmul (&tmpcol, d);
-	  vcopy (col, &tmpcol);
-	  vcopy (&tmpcol, &t->color[i - 1]);
-	  vmul (&tmpcol, 1.0 - d);
-	  vadd (col, &tmpcol);
-	  return;
-	}
+        {
+          d = (val - t->pos[i - 1]) / (t->pos[i] - t->pos[i - 1]);
+          vcopy (&tmpcol, &t->color[i]);
+          vmul (&tmpcol, d);
+          vcopy (col, &tmpcol);
+          vcopy (&tmpcol, &t->color[i - 1]);
+          vmul (&tmpcol, 1.0 - d);
+          vadd (col, &tmpcol);
+          return;
+        }
     }
   fprintf (stderr, "Error in gradient!\n");
   vset (col, 0, 1, 0);
@@ -1122,53 +1123,53 @@ objcolor (GimpVector4 *col, GimpVector4 *p, common *obj)
       t = &obj->texture[i];
 
       if (world.quality < 1)
-	{
-	  vadd (col, &t->color1);
-	  continue;
-	}
+        {
+          vadd (col, &t->color1);
+          continue;
+        }
 
       vset (&tmpcol, 0, 0, 0);
       switch (t->type)
-	{
-	case SOLID:
-	  vcopy (&tmpcol, &t->color1);
-	  break;
-	case CHECKER:
-	  checker (p, &tmpcol, t);
-	  break;
-	case MARBLE:
-	  marble (p, &tmpcol, t);
-	  break;
-	case LIZARD:
-	  lizard (p, &tmpcol, t);
-	  break;
-	case PERLIN:
-	  perlin (p, &tmpcol, t);
-	  break;
-	case WOOD:
-	  wood (p, &tmpcol, t);
-	  break;
-	case SPIRAL:
-	  spiral (p, &tmpcol, t);
-	  break;
-	case SPOTS:
-	  spots (p, &tmpcol, t);
-	  break;
-	case IMAGE:
-	  imagepixel (p, &tmpcol, t);
-	  break;
-	case PHONG:
-	case REFRACTION:
-	case REFLECTION:
-	case TRANSPARENT:
-	case SMOKE:
-	  /* Silently ignore non-color textures */
-	  continue;
-	  break;
-	default:
-	  fprintf (stderr, "Warning: unknown texture %d\n", t->type);
-	  break;
-	}
+        {
+        case SOLID:
+          vcopy (&tmpcol, &t->color1);
+          break;
+        case CHECKER:
+          checker (p, &tmpcol, t);
+          break;
+        case MARBLE:
+          marble (p, &tmpcol, t);
+          break;
+        case LIZARD:
+          lizard (p, &tmpcol, t);
+          break;
+        case PERLIN:
+          perlin (p, &tmpcol, t);
+          break;
+        case WOOD:
+          wood (p, &tmpcol, t);
+          break;
+        case SPIRAL:
+          spiral (p, &tmpcol, t);
+          break;
+        case SPOTS:
+          spots (p, &tmpcol, t);
+          break;
+        case IMAGE:
+          imagepixel (p, &tmpcol, t);
+          break;
+        case PHONG:
+        case REFRACTION:
+        case REFLECTION:
+        case TRANSPARENT:
+        case SMOKE:
+          /* Silently ignore non-color textures */
+          continue;
+          break;
+        default:
+          fprintf (stderr, "Warning: unknown texture %d\n", t->type);
+          break;
+        }
       vmul (&tmpcol, t->amount);
       vadd (col, &tmpcol);
     }
@@ -1199,7 +1200,7 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
       vsub (res, p);
       break;
     case CYLINDER:
-      vset (res, 1, 1, 1);	/* fixme */
+      vset (res, 1, 1, 1);      /* fixme */
       break;
     default:
       fprintf (stderr, "objnormal(): Unsupported object type!?\n");
@@ -1217,9 +1218,9 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
 
       vset (&nres, 0, 0, 0);
       for (k = 0; k < 6; k++)
-	{
-	  vcopy (&q[k], p);
-	}
+        {
+          vcopy (&q[k], p);
+        }
       q[0].x += nstep;
       q[1].x -= nstep;
       q[2].y += nstep;
@@ -1228,48 +1229,48 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
       q[5].z -= nstep;
 
       switch (t->type)
-	{
-	case MARBLE:
-	  for (k = 0; k < 6; k++)
-	    marble (&q[k], &tmpcol[k], t);
-	  break;
-	case LIZARD:
-	  for (k = 0; k < 6; k++)
-	    lizard (&q[k], &tmpcol[k], t);
-	  break;
-	case PERLIN:
-	  for (k = 0; k < 6; k++)
-	    perlin (&q[k], &tmpcol[k], t);
-	  break;
-	case WOOD:
-	  for (k = 0; k < 6; k++)
-	    wood (&q[k], &tmpcol[k], t);
-	  break;
-	case SPIRAL:
-	  for (k = 0; k < 6; k++)
-	    spiral (&q[k], &tmpcol[k], t);
-	  break;
-	case SPOTS:
-	  for (k = 0; k < 6; k++)
-	    spots (&q[k], &tmpcol[k], t);
-	  break;
-	case IMAGE:
-	  for (k = 0; k < 6; k++)
-	    imagepixel (&q[k], &tmpcol[k], t);
-	  break;
-	case CHECKER:
-	case SOLID:
-	case PHONG:
-	case REFRACTION:
-	case REFLECTION:
-	case TRANSPARENT:
-	case SMOKE:
-	  continue;
-	  break;
-	default:
-	  fprintf (stderr, "Warning: unknown texture %d\n", t->type);
-	  break;
-	}
+        {
+        case MARBLE:
+          for (k = 0; k < 6; k++)
+            marble (&q[k], &tmpcol[k], t);
+          break;
+        case LIZARD:
+          for (k = 0; k < 6; k++)
+            lizard (&q[k], &tmpcol[k], t);
+          break;
+        case PERLIN:
+          for (k = 0; k < 6; k++)
+            perlin (&q[k], &tmpcol[k], t);
+          break;
+        case WOOD:
+          for (k = 0; k < 6; k++)
+            wood (&q[k], &tmpcol[k], t);
+          break;
+        case SPIRAL:
+          for (k = 0; k < 6; k++)
+            spiral (&q[k], &tmpcol[k], t);
+          break;
+        case SPOTS:
+          for (k = 0; k < 6; k++)
+            spots (&q[k], &tmpcol[k], t);
+          break;
+        case IMAGE:
+          for (k = 0; k < 6; k++)
+            imagepixel (&q[k], &tmpcol[k], t);
+          break;
+        case CHECKER:
+        case SOLID:
+        case PHONG:
+        case REFRACTION:
+        case REFLECTION:
+        case TRANSPARENT:
+        case SMOKE:
+          continue;
+          break;
+        default:
+          fprintf (stderr, "Warning: unknown texture %d\n", t->type);
+          break;
+        }
 
       nres.x = tmpcol[0].x - tmpcol[1].x;
       nres.y = tmpcol[2].x - tmpcol[3].x;
@@ -1316,15 +1317,15 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
   for (i = 0; i < obj->numtexture; i++)
     {
       if (obj->texture[i].type == PHONG)
-	continue;
+        continue;
       if (obj->texture[i].type == REFLECTION)
-	continue;
+        continue;
       if (obj->texture[i].type == REFRACTION)
-	continue;
+        continue;
       if (obj->texture[i].type == TRANSPARENT)
-	continue;
+        continue;
       if (obj->texture[i].type == SMOKE)
-	continue;
+        continue;
       vcopy (&lcol, &pcol);
       vvmul (&lcol, &obj->texture[i].ambient);
       vadd (col, &lcol);
@@ -1348,26 +1349,26 @@ calclight (GimpVector4 * col, GimpVector4 * point, common * obj)
       b = vdot (&r.v1, &norm);
 
       if (b < 0.0)
-	continue;
+        continue;
 
       for (j = 0; j < obj->numtexture; j++)
-	{
-	  if (obj->texture[j].type == PHONG)
-	    continue;
-	  if (obj->texture[j].type == REFLECTION)
-	    continue;
-	  if (obj->texture[j].type == REFRACTION)
-	    continue;
-	  if (obj->texture[j].type == TRANSPARENT)
-	    continue;
-	  if (obj->texture[j].type == SMOKE)
-	    continue;
-	  vcopy (&lcol, &pcol);
-	  vvmul (&lcol, &world.light[i].color);
-	  vvmul (&lcol, &obj->texture[j].diffuse);
-	  vmul (&lcol, b);
-	  vadd (col, &lcol);
-	}
+        {
+          if (obj->texture[j].type == PHONG)
+            continue;
+          if (obj->texture[j].type == REFLECTION)
+            continue;
+          if (obj->texture[j].type == REFRACTION)
+            continue;
+          if (obj->texture[j].type == TRANSPARENT)
+            continue;
+          if (obj->texture[j].type == SMOKE)
+            continue;
+          vcopy (&lcol, &pcol);
+          vvmul (&lcol, &world.light[i].color);
+          vvmul (&lcol, &obj->texture[j].diffuse);
+          vmul (&lcol, b);
+          vadd (col, &lcol);
+        }
     }
   col->w = a;
 }
@@ -1401,9 +1402,9 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
 
       o = traceray (&r, NULL, -1, 1.0);
       if (o)
-	{
-	  continue;
-	}
+        {
+          continue;
+        }
 
       /* OK, light is visible */
 
@@ -1412,21 +1413,21 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
       b = -vdot (&r.v1, &norm);
 
       for (j = 0; j < obj->numtexture; j++)
-	{
-	  if (obj->texture[j].type != PHONG)
-	    continue;
+        {
+          if (obj->texture[j].type != PHONG)
+            continue;
 
-	  ps = obj->texture[j].phongsize;
+          ps = obj->texture[j].phongsize;
 
-	  if (b < (1 - ps))
-	    continue;
-	  ps = (b - (1 - ps)) / ps;
+          if (b < (1 - ps))
+            continue;
+          ps = (b - (1 - ps)) / ps;
 
-	  vcopy (&lcol, &obj->texture[j].phongcolor);
-	  vvmul (&lcol, &world.light[i].color);
-	  vmul (&lcol, ps);
-	  vadd (col, &lcol);
-	}
+          vcopy (&lcol, &obj->texture[j].phongcolor);
+          vvmul (&lcol, &world.light[i].color);
+          vmul (&lcol, ps);
+          vadd (col, &lcol);
+        }
     }
 }
 
@@ -1450,43 +1451,43 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
     {
       obj = (common *) & world.obj[i];
       switch (obj->type)
-	{
-	case TRIANGLE:
-	  t = checktri (r, (triangle *) & world.obj[i]);
-	  break;
-	case DISC:
-	  t = checkdisc (r, (disc *) & world.obj[i]);
-	  break;
-	case PLANE:
-	  t = checkplane (r, (plane *) & world.obj[i]);
-	  break;
-	case SPHERE:
-	  t = checksphere (r, (sphere *) & world.obj[i]);
-	  break;
-	case CYLINDER:
-	  t = checkcylinder (r, (cylinder *) & world.obj[i]);
-	  break;
-	default:
-	  fprintf (stderr, "Illegal object!!\n");
-	  exit (0);
-	}
+        {
+        case TRIANGLE:
+          t = checktri (r, (triangle *) & world.obj[i]);
+          break;
+        case DISC:
+          t = checkdisc (r, (disc *) & world.obj[i]);
+          break;
+        case PLANE:
+          t = checkplane (r, (plane *) & world.obj[i]);
+          break;
+        case SPHERE:
+          t = checksphere (r, (sphere *) & world.obj[i]);
+          break;
+        case CYLINDER:
+          t = checkcylinder (r, (cylinder *) & world.obj[i]);
+          break;
+        default:
+          fprintf (stderr, "Illegal object!!\n");
+          exit (0);
+        }
       if (t <= 0.0)
-	continue;
+        continue;
 
       if (!(obj->flags & NOSHADOW) && (level == -1))
-	{
-	  return i + 1;
-	}
+        {
+          return i + 1;
+        }
 
       hits++;
       if ((!bobj) || (t < min))
-	{
+        {
 
-	  min = t;
-	  b = i;
-	  type = obj->type;
-	  bobj = obj;
-	}
+          min = t;
+          b = i;
+          type = obj->type;
+          bobj = obj;
+        }
     }
   if (level == -1)
     return 0;
@@ -1500,189 +1501,189 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
       calclight (col, &p, bobj);
 
       if (world.flags & SMARTAMBIENT)
-	{
-	  gdouble ambient = 0.3 * exp (-min / world.smartambient);
-	  GimpVector4 lcol;
-	  objcolor (&lcol, &p, bobj);
-	  vmul (&lcol, ambient);
-	  vadd (col, &lcol);
-	}
+        {
+          gdouble ambient = 0.3 * exp (-min / world.smartambient);
+          GimpVector4 lcol;
+          objcolor (&lcol, &p, bobj);
+          vmul (&lcol, ambient);
+          vadd (col, &lcol);
+        }
 
       for (i = 0; i < bobj->numtexture; i++)
-	{
+        {
 
-	  if ((world.quality >= 4)
-	      && ((bobj->texture[i].type == REFLECTION)
-		  || (bobj->texture[i].type == PHONG)))
-	    {
+          if ((world.quality >= 4)
+              && ((bobj->texture[i].type == REFLECTION)
+                  || (bobj->texture[i].type == PHONG)))
+            {
 
-	      GimpVector4 refcol, norm, ocol;
-	      ray ref;
+              GimpVector4 refcol, norm, ocol;
+              ray ref;
 
-	      objcolor (&ocol, &p, bobj);
+              objcolor (&ocol, &p, bobj);
 
-	      vcopy (&ref.v1, &p);
-	      vcopy (&ref.v2, &r->v1);
-	      ref.inside = r->inside;
-	      ref.ior = r->ior;
+              vcopy (&ref.v1, &p);
+              vcopy (&ref.v2, &r->v1);
+              ref.inside = r->inside;
+              ref.ior = r->ior;
 
-	      vmix (&ref.v1, &ref.v1, &ref.v2, 0.9999);	/* push it a tad */
+              vmix (&ref.v1, &ref.v1, &ref.v2, 0.9999); /* push it a tad */
 
-	      vsub (&ref.v2, &p);
-	      objnormal (&norm, bobj, &p);
-	      vnorm (&norm, 1.0);
-	      vrotate (&norm, 180.0, &ref.v2);
+              vsub (&ref.v2, &p);
+              objnormal (&norm, bobj, &p);
+              vnorm (&norm, 1.0);
+              vrotate (&norm, 180.0, &ref.v2);
 
-	      vmul (&norm, -0.0001);	/* push it a tad */
-	      vadd (&ref.v1, &norm);
+              vmul (&norm, -0.0001);    /* push it a tad */
+              vadd (&ref.v1, &norm);
 
-	      vnorm (&ref.v2, 1.0);
-	      vadd (&ref.v2, &p);
+              vnorm (&ref.v2, 1.0);
+              vadd (&ref.v2, &p);
 
-	      if ((world.quality >= 5)
-		  && (bobj->texture[i].type == REFLECTION))
-		{
-		  traceray (&ref, &refcol, level - 1,
-			    imp * vmax (&bobj->texture[i].reflection));
-		  vvmul (&refcol, &bobj->texture[i].reflection);
-		  refcol.w = ocol.w;
-		  vadd (col, &refcol);
-		}
-	      if (bobj->texture[i].type == PHONG)
-		{
-		  vcset (&refcol, 0, 0, 0, 0);
-		  calcphong (bobj, &ref, &refcol);
-		  refcol.w = ocol.w;
-		  vadd (col, &refcol);
-		}
+              if ((world.quality >= 5)
+                  && (bobj->texture[i].type == REFLECTION))
+                {
+                  traceray (&ref, &refcol, level - 1,
+                            imp * vmax (&bobj->texture[i].reflection));
+                  vvmul (&refcol, &bobj->texture[i].reflection);
+                  refcol.w = ocol.w;
+                  vadd (col, &refcol);
+                }
+              if (bobj->texture[i].type == PHONG)
+                {
+                  vcset (&refcol, 0, 0, 0, 0);
+                  calcphong (bobj, &ref, &refcol);
+                  refcol.w = ocol.w;
+                  vadd (col, &refcol);
+                }
 
-	    }
+            }
 
-	  if ((world.quality >= 5) && (col->w < 1.0))
-	    {
-	      GimpVector4 refcol;
-	      ray ref;
+          if ((world.quality >= 5) && (col->w < 1.0))
+            {
+              GimpVector4 refcol;
+              ray ref;
 
-	      vcopy (&ref.v1, &p);
-	      vcopy (&ref.v2, &p);
-	      vsub (&ref.v2, &r->v1);
-	      vnorm (&ref.v2, 1.0);
-	      vadd (&ref.v2, &p);
+              vcopy (&ref.v1, &p);
+              vcopy (&ref.v2, &p);
+              vsub (&ref.v2, &r->v1);
+              vnorm (&ref.v2, 1.0);
+              vadd (&ref.v2, &p);
 
-	      vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);	/* push it a tad */
-	      traceray (&ref, &refcol, level - 1, imp * (1.0 - col->w));
-	      vmul (&refcol, (1.0 - col->w));
-	      vadd (col, &refcol);
-	    }
+              vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);  /* push it a tad */
+              traceray (&ref, &refcol, level - 1, imp * (1.0 - col->w));
+              vmul (&refcol, (1.0 - col->w));
+              vadd (col, &refcol);
+            }
 
-	  if ((world.quality >= 5) && (bobj->texture[i].type == TRANSPARENT))
-	    {
-	      GimpVector4 refcol;
-	      ray ref;
+          if ((world.quality >= 5) && (bobj->texture[i].type == TRANSPARENT))
+            {
+              GimpVector4 refcol;
+              ray ref;
 
-	      vcopy (&ref.v1, &p);
-	      vcopy (&ref.v2, &p);
-	      vsub (&ref.v2, &r->v1);
-	      vnorm (&ref.v2, 1.0);
-	      vadd (&ref.v2, &p);
+              vcopy (&ref.v1, &p);
+              vcopy (&ref.v2, &p);
+              vsub (&ref.v2, &r->v1);
+              vnorm (&ref.v2, 1.0);
+              vadd (&ref.v2, &p);
 
-	      vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);	/* push it a tad */
+              vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);  /* push it a tad */
 
-	      traceray (&ref, &refcol, level - 1,
-			imp * vmax (&bobj->texture[i].transparent));
-	      vvmul (&refcol, &bobj->texture[i].transparent);
+              traceray (&ref, &refcol, level - 1,
+                        imp * vmax (&bobj->texture[i].transparent));
+              vvmul (&refcol, &bobj->texture[i].transparent);
 
-	      vadd (col, &refcol);
-	    }
+              vadd (col, &refcol);
+            }
 
-	  if ((world.quality >= 5) && (bobj->texture[i].type == SMOKE))
-	    {
-	      GimpVector4 smcol, raydir, norm;
-	      double tran;
-	      ray ref;
+          if ((world.quality >= 5) && (bobj->texture[i].type == SMOKE))
+            {
+              GimpVector4 smcol, raydir, norm;
+              double tran;
+              ray ref;
 
-	      vcopy (&ref.v1, &p);
-	      vcopy (&ref.v2, &p);
-	      vsub (&ref.v2, &r->v1);
-	      vnorm (&ref.v2, 1.0);
-	      vadd (&ref.v2, &p);
+              vcopy (&ref.v1, &p);
+              vcopy (&ref.v2, &p);
+              vsub (&ref.v2, &r->v1);
+              vnorm (&ref.v2, 1.0);
+              vadd (&ref.v2, &p);
 
-	      objnormal (&norm, bobj, &p);
-	      vcopy (&raydir, &r->v2);
-	      vsub (&raydir, &r->v1);
-	      vnorm (&raydir, 1.0);
-	      tran = vdot (&norm, &raydir);
-	      if (tran < 0.0)
-		continue;
-	      tran *= tran;
-	      vcopy (&smcol, &bobj->texture[i].color1);
-	      vmul (&smcol, tran);
-	      vadd (col, &smcol);
-	    }
+              objnormal (&norm, bobj, &p);
+              vcopy (&raydir, &r->v2);
+              vsub (&raydir, &r->v1);
+              vnorm (&raydir, 1.0);
+              tran = vdot (&norm, &raydir);
+              if (tran < 0.0)
+                continue;
+              tran *= tran;
+              vcopy (&smcol, &bobj->texture[i].color1);
+              vmul (&smcol, tran);
+              vadd (col, &smcol);
+            }
 
-	  if ((world.quality >= 5) && (bobj->texture[i].type == REFRACTION))
-	    {
-	      GimpVector4 refcol, norm, tmpv;
-	      ray ref;
-	      double c1, c2, n1, n2, n;
+          if ((world.quality >= 5) && (bobj->texture[i].type == REFRACTION))
+            {
+              GimpVector4 refcol, norm, tmpv;
+              ray ref;
+              double c1, c2, n1, n2, n;
 
-	      vcopy (&ref.v1, &p);
-	      vcopy (&ref.v2, &p);
-	      vsub (&ref.v2, &r->v1);
-	      vadd (&ref.v2, &r->v2);
+              vcopy (&ref.v1, &p);
+              vcopy (&ref.v2, &p);
+              vsub (&ref.v2, &r->v1);
+              vadd (&ref.v2, &r->v2);
 
-	      vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);	/* push it a tad */
+              vmix (&ref.v1, &ref.v1, &ref.v2, 0.999);  /* push it a tad */
 
-	      vsub (&ref.v2, &p);
-	      objnormal (&norm, bobj, &p);
+              vsub (&ref.v2, &p);
+              objnormal (&norm, bobj, &p);
 
-	      if (r->inside == b)
-		{
-		  ref.inside = -1;
-		  ref.ior = 1.0;
-		}
-	      else
-		{
-		  ref.inside = b;
-		  ref.ior = bobj->texture[i].ior;
-		}
+              if (r->inside == b)
+                {
+                  ref.inside = -1;
+                  ref.ior = 1.0;
+                }
+              else
+                {
+                  ref.inside = b;
+                  ref.ior = bobj->texture[i].ior;
+                }
 
-	      c1 = vdot (&norm, &ref.v2);
+              c1 = vdot (&norm, &ref.v2);
 
-	      if (ref.inside < 0)
-		c1 = -c1;
+              if (ref.inside < 0)
+                c1 = -c1;
 
-	      n1 = r->ior;	/* IOR of current media  */
-	      n2 = ref.ior;	/* IOR of new media  */
-	      n = n1 / n2;
-	      c2 = 1.0 - n * n * (1.0 - c1 * c1);
+              n1 = r->ior;      /* IOR of current media  */
+              n2 = ref.ior;     /* IOR of new media  */
+              n = n1 / n2;
+              c2 = 1.0 - n * n * (1.0 - c1 * c1);
 
-	      if (c2 < 0.0)
-		{
-		  /* FIXME: Internal reflection should occur */
-		  c2 = sqrt (-c2);
+              if (c2 < 0.0)
+                {
+                  /* FIXME: Internal reflection should occur */
+                  c2 = sqrt (-c2);
 
-		}
-	      else
-		{
-		  c2 = sqrt (c2);
-		}
+                }
+              else
+                {
+                  c2 = sqrt (c2);
+                }
 
-	      vmul (&ref.v2, n);
-	      vcopy (&tmpv, &norm);
-	      vmul (&tmpv, n * c1 - c2);
-	      vadd (&ref.v2, &tmpv);
+              vmul (&ref.v2, n);
+              vcopy (&tmpv, &norm);
+              vmul (&tmpv, n * c1 - c2);
+              vadd (&ref.v2, &tmpv);
 
-	      vnorm (&ref.v2, 1.0);
-	      vadd (&ref.v2, &p);
+              vnorm (&ref.v2, 1.0);
+              vadd (&ref.v2, &p);
 
-	      traceray (&ref, &refcol, level - 1,
-			imp * vmax (&bobj->texture[i].refraction));
+              traceray (&ref, &refcol, level - 1,
+                        imp * vmax (&bobj->texture[i].refraction));
 
-	      vvmul (&refcol, &bobj->texture[i].refraction);
-	      vadd (col, &refcol);
-	    }
-	}
+              vvmul (&refcol, &bobj->texture[i].refraction);
+              vadd (col, &refcol);
+            }
+        }
     }
   else
     {
@@ -1695,19 +1696,19 @@ traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
     {
       GimpVector4 tmpcol;
       if (world.atmos[i].type == FOG)
-	{
-	  gdouble v, pt[3];
-	  pt[0] = p.x;
-	  pt[1] = p.y;
-	  pt[2] = p.z;
-	  if ((v = world.atmos[i].turbulence) > 0.0)
-	    v = turbulence (pt, 1, 256) * world.atmos[i].turbulence;
-	  v = exp (-(min + v) / world.atmos[i].density);
-	  vmul (col, v);
-	  vcopy (&tmpcol, &world.atmos[i].color);
-	  vmul (&tmpcol, 1.0 - v);
-	  vadd (col, &tmpcol);
-	}
+        {
+          gdouble v, pt[3];
+          pt[0] = p.x;
+          pt[1] = p.y;
+          pt[2] = p.z;
+          if ((v = world.atmos[i].turbulence) > 0.0)
+            v = turbulence (pt, 1, 256) * world.atmos[i].turbulence;
+          v = exp (-(min + v) / world.atmos[i].density);
+          vmul (col, v);
+          vcopy (&tmpcol, &world.atmos[i].color);
+          vmul (&tmpcol, 1.0 - v);
+          vadd (col, &tmpcol);
+        }
     }
 
   return hits;
@@ -1749,14 +1750,14 @@ mklabel (texture * t)
       strcat (tmps, " / ");
       l = textures;
       while (l->s)
-	{
-	  if (t->type == l->n)
-	    {
-	      strcat (tmps, gettext (l->s));
-	      break;
-	    }
-	  l++;
-	}
+        {
+          if (t->type == l->n)
+            {
+              strcat (tmps, gettext (l->s));
+              break;
+            }
+          l++;
+        }
     }
   return tmps;
 }
@@ -1831,7 +1832,7 @@ setvals (texture * t)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (poszscale), t->translate.z);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (turbulencescale),
-			    t->turbulence.x);
+                            t->turbulence.x);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (expscale), t->exp);
 
   drawcolor1 (NULL);
@@ -1841,11 +1842,11 @@ setvals (texture * t)
   while (l->s)
     {
       if (l->n == t->type)
-	{
+        {
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (texturemenu),
                                          l->index);
-	  break;
-	}
+          break;
+        }
       l++;
     }
 
@@ -1926,15 +1927,15 @@ rebuildlist (void)
   for (n = 0; n < s.com.numtexture; n++)
     {
       if (s.com.numtexture && (s.com.texture[n].majtype < 0))
-	{
-	  gint i;
+        {
+          gint i;
 
-	  for (i = n; i < s.com.numtexture - 1; i++)
-	    s.com.texture[i] = s.com.texture[i + 1];
+          for (i = n; i < s.com.numtexture - 1; i++)
+            s.com.texture[i] = s.com.texture[i + 1];
 
-	  s.com.numtexture--;
-	  n--;
-	}
+          s.com.numtexture--;
+          n--;
+        }
     }
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (texturelist));
@@ -1995,54 +1996,54 @@ loadit (const gchar * fn)
     {
 
       if (!fgets (line, 1023, f))
-	break;
+        break;
 
       i = s.com.numtexture;
       t = &s.com.texture[i];
       setdefaults (t);
 
       if (sscanf (line, "%d %d %s", &t->majtype, &t->type, end) != 3)
-	t->color1.x = g_ascii_strtod (end, &end);
+        t->color1.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color1.y = g_ascii_strtod (end, &end);
+        t->color1.y = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color1.z = g_ascii_strtod (end, &end);
+        t->color1.z = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color1.w = g_ascii_strtod (end, &end);
+        t->color1.w = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color2.x = g_ascii_strtod (end, &end);
+        t->color2.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color2.y = g_ascii_strtod (end, &end);
+        t->color2.y = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color2.z = g_ascii_strtod (end, &end);
+        t->color2.z = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->color2.w = g_ascii_strtod (end, &end);
+        t->color2.w = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->oscale = g_ascii_strtod (end, &end);
+        t->oscale = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->turbulence.x = g_ascii_strtod (end, &end);
+        t->turbulence.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->amount = g_ascii_strtod (end, &end);
+        t->amount = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->exp = g_ascii_strtod (end, &end);
+        t->exp = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->scale.x = g_ascii_strtod (end, &end);
+        t->scale.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->scale.y = g_ascii_strtod (end, &end);
+        t->scale.y = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->scale.z = g_ascii_strtod (end, &end);
+        t->scale.z = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->rotate.x = g_ascii_strtod (end, &end);
+        t->rotate.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->rotate.y = g_ascii_strtod (end, &end);
+        t->rotate.y = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->rotate.z = g_ascii_strtod (end, &end);
+        t->rotate.z = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->translate.x = g_ascii_strtod (end, &end);
+        t->translate.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->translate.y = g_ascii_strtod (end, &end);
+        t->translate.y = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
-	t->translate.z = g_ascii_strtod (end, &end);
+        t->translate.z = g_ascii_strtod (end, &end);
 
       s.com.numtexture++;
     }
@@ -2094,7 +2095,7 @@ saveit (const gchar *fn)
       texture *t = &s.com.texture[i];
 
       if (t->majtype < 0)
-	continue;
+        continue;
 
       fprintf (f, "%d %d", t->majtype, t->type);
       fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color1.x));
@@ -2179,16 +2180,16 @@ fileselect (GtkFileChooserAction  action,
                                      NULL);
 
       gimp_help_connect (windows[action], gimp_standard_help_func,
-			 "plug-in-spheredesigner", NULL);
+                         "plug-in-spheredesigner", NULL);
 
       g_signal_connect (windows[action], "destroy",
-			G_CALLBACK (gtk_widget_destroyed),
+                        G_CALLBACK (gtk_widget_destroyed),
                         &windows[action]);
       g_signal_connect (windows[action], "delete_event",
-			G_CALLBACK (gtk_true),
+                        G_CALLBACK (gtk_true),
                         NULL);
       g_signal_connect (windows[action], "response",
-			G_CALLBACK (handlers[action]),
+                        G_CALLBACK (handlers[action]),
                         NULL);
     }
 
@@ -2221,35 +2222,35 @@ initworld (void)
       common *d = &world.obj[0].com;
       texture *t = &c->texture[i];
       if ((t->amount <= 0.0) || (t->majtype < 0))
-	continue;
+        continue;
       if (t->majtype == 0)
-	{			/* Normal texture */
-	  if (t->type == PHONG)
-	    {
-	      t->phongcolor = t->color1;
-	      t->phongsize = t->oscale / 25.0;
-	    }
-	  d->texture[d->numtexture] = *t;
-	  vmul (&d->texture[d->numtexture].scale,
-		d->texture[d->numtexture].oscale);
-	  d->numtexture++;
-	}
+        {                       /* Normal texture */
+          if (t->type == PHONG)
+            {
+              t->phongcolor = t->color1;
+              t->phongsize = t->oscale / 25.0;
+            }
+          d->texture[d->numtexture] = *t;
+          vmul (&d->texture[d->numtexture].scale,
+                d->texture[d->numtexture].oscale);
+          d->numtexture++;
+        }
       else if (t->majtype == 1)
-	{			/* Bumpmap */
-	  d->normal[d->numnormal] = *t;
-	  vmul (&d->normal[d->numnormal].scale,
-		d->texture[d->numnormal].oscale);
-	  d->numnormal++;
-	}
+        {                       /* Bumpmap */
+          d->normal[d->numnormal] = *t;
+          vmul (&d->normal[d->numnormal].scale,
+                d->texture[d->numnormal].oscale);
+          d->numnormal++;
+        }
       else if (t->majtype == 2)
-	{			/* Lightsource */
-	  light l;
-	  vcopy (&l.a, &t->translate);
-	  vcopy (&l.color, &t->color1);
-	  vmul (&l.color, t->amount);
-	  world.light[world.numlight] = l;
-	  world.numlight++;
-	}
+        {                       /* Lightsource */
+          light l;
+          vcopy (&l.a, &t->translate);
+          vcopy (&l.color, &t->color1);
+          vmul (&l.color, t->amount);
+          world.light[world.numlight] = l;
+          world.numlight++;
+        }
     }
 
   world.quality = 5;
@@ -2267,17 +2268,17 @@ drawit (void)
 
 static gboolean
 expose_event (GtkWidget      *widget,
-	      GdkEventExpose *event)
+              GdkEventExpose *event)
 {
   guchar *data = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
 
   gdk_draw_rgb_image_dithalign (widget->window,
-				widget->style->white_gc,
-				event->area.x, event->area.y,
-				event->area.width, event->area.height,
-				GDK_RGB_DITHER_MAX,
-				data, PREVIEWSIZE * 3,
-				- event->area.x, - event->area.y);
+                                widget->style->white_gc,
+                                event->area.x, event->area.y,
+                                event->area.width, event->area.height,
+                                GDK_RGB_DITHER_MAX,
+                                data, PREVIEWSIZE * 3,
+                                - event->area.x, - event->area.y);
 
   return TRUE;
 }
@@ -2366,7 +2367,7 @@ getscales (GtkWidget *widget,
 
 static void
 color1_changed (GimpColorButton *button,
-		gpointer         data)
+                gpointer         data)
 {
   texture *t = currenttexture ();
   if (t)
@@ -2377,7 +2378,7 @@ color1_changed (GimpColorButton *button,
 
 static void
 color2_changed (GimpColorButton *button,
-		gpointer         data)
+                gpointer         data)
 {
   texture *t = currenttexture ();
   if (t)
@@ -2403,7 +2404,7 @@ drawcolor1 (GtkWidget *w)
     return;
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (w),
-			       (const GimpRGB *) &t->color1);
+                               (const GimpRGB *) &t->color1);
 }
 
 static void
@@ -2423,7 +2424,7 @@ drawcolor2 (GtkWidget *w)
     return;
 
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (w),
-			       (const GimpRGB *) &t->color2);
+                               (const GimpRGB *) &t->color2);
 }
 
 static gboolean do_run = FALSE;
@@ -2487,8 +2488,8 @@ makewindow (void)
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
                             NULL, 0,
-			    gimp_standard_help_func,
-			    "plug-in-spheredesigner",
+                            gimp_standard_help_func,
+                            "plug-in-spheredesigner",
 
                             GIMP_STOCK_RESET, RESPONSE_RESET,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -2510,7 +2511,7 @@ makewindow (void)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (frame);
 
   drawarea = gtk_drawing_area_new ();
@@ -2519,24 +2520,24 @@ makewindow (void)
   gtk_widget_show (drawarea);
 
   g_signal_connect (drawarea, "expose_event",
-		    G_CALLBACK (expose_event), NULL);
+                    G_CALLBACK (expose_event), NULL);
 
   button = gtk_button_new_with_mnemonic (_("Update _Preview"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-		    G_CALLBACK (restartrender), NULL);
+                    G_CALLBACK (restartrender), NULL);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
-				       GTK_SHADOW_IN);
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
   gtk_table_attach (GTK_TABLE (table), scrolled, 1, 2, 0, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (scrolled);
 
   list_store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
@@ -2546,7 +2547,7 @@ makewindow (void)
   texturelist = GTK_TREE_VIEW (list);
 
   g_signal_connect (gtk_tree_view_get_selection (texturelist), "changed",
-		    G_CALLBACK (selectitem),
+                    G_CALLBACK (selectitem),
                     NULL);
 
   gtk_widget_set_size_request (list, -1, 150);
@@ -2561,30 +2562,30 @@ makewindow (void)
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_NEW);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (addtexture), NULL);
+                            G_CALLBACK (addtexture), NULL);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_DUPLICATE);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (duptexture), NULL);
+                            G_CALLBACK (duptexture), NULL);
   gtk_widget_show (button);
 
   button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
-			    G_CALLBACK (deltexture), NULL);
+                            G_CALLBACK (deltexture), NULL);
   gtk_widget_show (button);
 
   hbox = gtk_hbox_new (TRUE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
@@ -2605,7 +2606,7 @@ makewindow (void)
 
   frame = gimp_frame_new (_("Texture Properties"));
   gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (6, 4, FALSE);
@@ -2616,240 +2617,240 @@ makewindow (void)
 
   label = gtk_label_new (_("Type:"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Texture:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   label = gtk_label_new (_("Colors:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
   button = gimp_color_button_new (_("Color Selection Dialog"),
-				  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-				  GIMP_COLOR_AREA_FLAT);
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
+                                  GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
   gtk_widget_show (button);
   drawcolor1 (button);
 
   g_signal_connect (button, "color_changed",
-		    G_CALLBACK (color1_changed),
-		    NULL);
+                    G_CALLBACK (color1_changed),
+                    NULL);
 
   button = gimp_color_button_new (_("Color Selection Dialog"),
-				  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-				  GIMP_COLOR_AREA_FLAT);
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
+                                  GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
   gtk_widget_show (button);
   drawcolor2 (button);
 
   g_signal_connect (button, "color_changed",
-		    G_CALLBACK (color2_changed),
-		    NULL);
+                    G_CALLBACK (color2_changed),
+                    NULL);
 
   label = gtk_label_new (_("Scale:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (scalescale =
-		     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+                    (scalescale =
+                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 1, 2, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   g_signal_connect (scalescale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Turbulence:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _turbulencescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (turbulencescale =
-		     gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+                    (turbulencescale =
+                     gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_turbulencescale, 100, -1);
   gtk_widget_show (_turbulencescale);
   gtk_table_attach (GTK_TABLE (table), _turbulencescale, 1, 2, 4, 5,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_turbulencescale), 2);
   g_signal_connect (turbulencescale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Scale X:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (scalexscale =
-		     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+                    (scalexscale =
+                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (scalexscale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Scale Y:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (scaleyscale =
-		     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+                    (scaleyscale =
+                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (scaleyscale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Scale Z:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (scalezscale =
-		     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+                    (scalezscale =
+                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (scalezscale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
 
   label = gtk_label_new (_("Rotate X:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (rotxscale =
-		     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+                    (rotxscale =
+                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 3, 4,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (rotxscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Rotate Y:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 4, 5,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (rotyscale =
-		     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+                    (rotyscale =
+                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 4, 5,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (rotyscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Rotate Z:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 5, 6,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _rotscale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (rotzscale =
-		     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+                    (rotzscale =
+                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_rotscale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
   gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 5, 6,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (rotzscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Pos X:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (posxscale =
-		     gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+                    (posxscale =
+                     gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (posxscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Pos Y:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (posyscale =
-		     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+                    (posyscale =
+                     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (posyscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Pos Z:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 5, 6, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _scalescale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (poszscale =
-		     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+                    (poszscale =
+                     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
   gtk_widget_set_size_request (_scalescale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
   gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 2, 3,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (poszscale, "value_changed", G_CALLBACK (getscales), NULL);
 
   typemenu = gimp_int_combo_box_new (_("Texture"), 0,
@@ -2861,7 +2862,7 @@ makewindow (void)
                               NULL);
 
   gtk_table_attach (GTK_TABLE (table), typemenu, 1, 2, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
   gtk_widget_show (typemenu);
 
   texturemenu = gimp_int_combo_box_new (NULL, 0);
@@ -2881,41 +2882,41 @@ makewindow (void)
                               NULL);
 
   gtk_table_attach (GTK_TABLE (table), texturemenu, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_widget_show (texturemenu);
 
   label = gtk_label_new (_("Amount:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _amountscale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (amountscale =
-		     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
+                    (amountscale =
+                     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_size_request (_amountscale, 100, -1);
   gtk_widget_show (_amountscale);
   gtk_table_attach (GTK_TABLE (table), _amountscale, 1, 2, 5, 6,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_amountscale), 2);
   g_signal_connect (amountscale, "value_changed",
-		    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales), NULL);
 
   label = gtk_label_new (_("Exp:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
 
   _expscale =
     gtk_hscale_new (GTK_ADJUSTMENT
-		    (expscale =
-		     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
+                    (expscale =
+                     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
   gtk_widget_set_size_request (_expscale, 100, -1);
   gtk_widget_show (_expscale);
   gtk_table_attach (GTK_TABLE (table), _expscale, 1, 2, 6, 7,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_scale_set_digits (GTK_SCALE (_expscale), 2);
   g_signal_connect (expscale, "value_changed", G_CALLBACK (getscales), NULL);
 
@@ -2959,64 +2960,64 @@ render (void)
     {
 
       if (running == 2)
-	{
-	  running = 1;
-	  initworld ();
-	}
+        {
+          running = 1;
+          initworld ();
+        }
       if (world.obj[0].com.numtexture == 0)
-	break;
+        break;
 
       for (y = 0; y < ty; y++)
-	{
-	  dest_row = img + y * PREVIEWSIZE * 3;
+        {
+          dest_row = img + y * PREVIEWSIZE * 3;
 
-	  for (x = 0; x < tx; x++)
-	    {
-	      gint g, gridsize = 16;
+          for (x = 0; x < tx; x++)
+            {
+              gint g, gridsize = 16;
 
-	      g = ((x / gridsize + y / gridsize) % 2) * 60 + 100;
+              g = ((x / gridsize + y / gridsize) % 2) * 60 + 100;
 
-	      r.v1.x = r.v2.x = 8.5 * (x / (float) (tx - 1) - 0.5);
-	      r.v1.y = r.v2.y = 8.5 * (y / (float) (ty - 1) - 0.5);
+              r.v1.x = r.v2.x = 8.5 * (x / (float) (tx - 1) - 0.5);
+              r.v1.y = r.v2.y = 8.5 * (y / (float) (ty - 1) - 0.5);
 
-	      p = x * bpp;
+              p = x * bpp;
 
-	      hit = traceray (&r, &col, 10, 1.0);
+              hit = traceray (&r, &col, 10, 1.0);
 
-	      if (col.w < 0.0)
-		col.w = 0.0;
-	      else if (col.w > 1.0)
-		col.w = 1.0;
+              if (col.w < 0.0)
+                col.w = 0.0;
+              else if (col.w > 1.0)
+                col.w = 1.0;
 
-	      dest_row[p + 0] =
-		pixelval (255 * col.x) * col.w + g * (1.0 - col.w);
-	      dest_row[p + 1] =
-		pixelval (255 * col.y) * col.w + g * (1.0 - col.w);
-	      dest_row[p + 2] =
-		pixelval (255 * col.z) * col.w + g * (1.0 - col.w);
+              dest_row[p + 0] =
+                pixelval (255 * col.x) * col.w + g * (1.0 - col.w);
+              dest_row[p + 1] =
+                pixelval (255 * col.y) * col.w + g * (1.0 - col.w);
+              dest_row[p + 2] =
+                pixelval (255 * col.z) * col.w + g * (1.0 - col.w);
 
-	      if (running != 1)
-		{
-		  break;
-		}
-	    }
+              if (running != 1)
+                {
+                  break;
+                }
+            }
 
 #if CONTINOUS_UPDATE
-	  drawit ();
+          drawit ();
 
-	  while (gtk_events_pending ())
-	    gtk_main_iteration ();
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
 #endif
 
-	  if (running != 1)
-	    {
-	      break;
-	    }
-	}
+          if (running != 1)
+            {
+              break;
+            }
+        }
       if (running == 1)
-	break;
+        break;
       if (running == -1)
-	break;
+        break;
     }
 
   running = 0;
@@ -3037,7 +3038,7 @@ realrender (GimpDrawable *drawable)
   guchar       *buffer, *ibuffer;
 
   if (running > 0)
-    return;			/* Fixme: abort preview-render instead! */
+    return;                     /* Fixme: abort preview-render instead! */
 
   initworld ();
 
@@ -3045,13 +3046,13 @@ realrender (GimpDrawable *drawable)
   r.v2.z = 0.0;
 
   gimp_pixel_rgn_init (&pr, drawable, 0, 0,
-		       gimp_drawable_width (drawable->drawable_id),
-		       gimp_drawable_height (drawable->drawable_id), FALSE,
-		       FALSE);
+                       gimp_drawable_width (drawable->drawable_id),
+                       gimp_drawable_height (drawable->drawable_id), FALSE,
+                       FALSE);
   gimp_pixel_rgn_init (&dpr, drawable, 0, 0,
-		       gimp_drawable_width (drawable->drawable_id),
-		       gimp_drawable_height (drawable->drawable_id), TRUE,
-		       TRUE);
+                       gimp_drawable_width (drawable->drawable_id),
+                       gimp_drawable_height (drawable->drawable_id), TRUE,
+                       TRUE);
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bpp = gimp_drawable_bpp (drawable->drawable_id);
   buffer = g_malloc ((x2 - x1) * 4);
@@ -3066,29 +3067,29 @@ realrender (GimpDrawable *drawable)
     {
       dest = buffer;
       for (x = 0; x < tx; x++)
-	{
-	  r.v1.x = r.v2.x = 8.1 * (x / (float) (tx - 1) - 0.5);
-	  r.v1.y = r.v2.y = 8.1 * (y / (float) (ty - 1) - 0.5);
+        {
+          r.v1.x = r.v2.x = 8.1 * (x / (float) (tx - 1) - 0.5);
+          r.v1.y = r.v2.y = 8.1 * (y / (float) (ty - 1) - 0.5);
 
-	  traceray (&r, &rcol, 10, 1.0);
-	  dest[0] = pixelval (255 * rcol.x);
-	  dest[1] = pixelval (255 * rcol.y);
-	  dest[2] = pixelval (255 * rcol.z);
-	  dest[3] = pixelval (255 * rcol.w);
-	  dest += 4;
-	}
+          traceray (&r, &rcol, 10, 1.0);
+          dest[0] = pixelval (255 * rcol.x);
+          dest[1] = pixelval (255 * rcol.y);
+          dest[2] = pixelval (255 * rcol.z);
+          dest[3] = pixelval (255 * rcol.w);
+          dest += 4;
+        }
       gimp_pixel_rgn_get_row (&pr, ibuffer, x1, y1 + y, x2 - x1);
       for (x = 0; x < (x2 - x1); x++)
-	{
-	  gint   k, dx = x * 4, sx = x * bpp;
-	  gfloat a     = buffer[dx + 3] / 255.0;
+        {
+          gint   k, dx = x * 4, sx = x * bpp;
+          gfloat a     = buffer[dx + 3] / 255.0;
 
-	  for (k = 0; k < bpp; k++)
-	    {
-	      ibuffer[sx + k] =
-		buffer[dx + k] * a + ibuffer[sx + k] * (1.0 - a);
-	    }
-	}
+          for (k = 0; k < bpp; k++)
+            {
+              ibuffer[sx + k] =
+                buffer[dx + k] * a + ibuffer[sx + k] * (1.0 - a);
+            }
+        }
       gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, x2 - x1);
       gimp_progress_update ((gdouble) y / (gdouble) ty);
     }
@@ -3110,16 +3111,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_spheredesigner",
-			  "Renders textures spheres",
-			  "This plugin can be used to create textured and/or "
-			  "bumpmapped spheres, and uses a small lightweight "
-			  "raytracer to perform the task with good quality",
-			  "Vidar Madsen",
-			  "Vidar Madsen",
-			  "1999",
-			  N_("Sphere _Designer..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
+                          "Renders textures spheres",
+                          "This plugin can be used to create textured and/or "
+                          "bumpmapped spheres, and uses a small lightweight "
+                          "raytracer to perform the task with good quality",
+                          "Vidar Madsen",
+                          "Vidar Madsen",
+                          "1999",
+                          N_("Sphere _Designer..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
@@ -3177,19 +3178,19 @@ run (const gchar      *name,
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_NAME, &s);
       if (!sphere_main (drawable))
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
     case GIMP_RUN_WITH_LAST_VALS:
       s.com.numtexture = 0;
       gimp_get_data (PLUG_IN_NAME, &s);
       if (s.com.numtexture == 0)
-	{
-	  gimp_drawable_detach (drawable);
-	  return;
-	}
+        {
+          gimp_drawable_detach (drawable);
+          return;
+        }
       break;
     case GIMP_RUN_NONINTERACTIVE:
     default:

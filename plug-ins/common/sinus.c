@@ -111,7 +111,7 @@ typedef struct
 } mwPreview;
 
 static gboolean          drawable_is_grayscale = FALSE;
-static mwPreview 	*thePreview;
+static mwPreview        *thePreview;
 static GimpDrawable     *drawable;
 
 /*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
@@ -128,10 +128,10 @@ static mwPreview * mw_preview_build_virgin (GimpDrawable *drw);
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 static void sinus (void);
 
 static gdouble linear   (gdouble v);
@@ -146,12 +146,12 @@ static void assign_block_3 (guchar *dest, gdouble grey, params *p);
 static void assign_block_2 (guchar *dest, gdouble grey, params *p);
 static void assign_block_1 (guchar *dest, gdouble grey, params *p);
 static void compute_block_x (guchar *dest_row,
-			     guint rowstride,
-			     gint x0, gint y0, gint w, gint h,
-			     gint bpp,
-			     void (*assign)(guchar *dest, gdouble grey,
-					    params *p),
-			     params *p);
+                             guint rowstride,
+                             gint x0, gint y0, gint w, gint h,
+                             gint bpp,
+                             void (*assign)(guchar *dest, gdouble grey,
+                                            params *p),
+                             params *p);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -188,16 +188,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_sinus",
-			  "Generates a texture with sinus functions",
-			  "FIX ME: sinus help",
-			  "Xavier Bouchoux",
-			  "Xavier Bouchoux",
-			  "1997",
-			  N_("_Sinus..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Generates a texture with sinus functions",
+                          "FIX ME: sinus help",
+                          "Xavier Bouchoux",
+                          "Xavier Bouchoux",
+                          "1997",
+                          N_("_Sinus..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_sinus",
                              N_("<Image>/Filters/Render/Pattern"));
@@ -243,28 +243,28 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 17)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  svals.scalex       = param[3].data.d_float;
-	  svals.scaley       = param[4].data.d_float;
-	  svals.cmplx        = param[5].data.d_float;
-	  svals.seed         = param[6].data.d_int32;
-	  svals.tiling       = param[7].data.d_int32;
-	  svals.perturbation = param[8].data.d_int32;
-	  svals.colors       = param[9].data.d_int32;
-	  svals.col1         = param[10].data.d_color;
-	  svals.col2         = param[11].data.d_color;
-	  gimp_rgb_set_alpha (&svals.col1, param[12].data.d_float);
-	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
-	  svals.colorization = param[14].data.d_int32;
-	  svals.blend_power  = param[15].data.d_float;
+        {
+          svals.scalex       = param[3].data.d_float;
+          svals.scaley       = param[4].data.d_float;
+          svals.cmplx        = param[5].data.d_float;
+          svals.seed         = param[6].data.d_int32;
+          svals.tiling       = param[7].data.d_int32;
+          svals.perturbation = param[8].data.d_int32;
+          svals.colors       = param[9].data.d_int32;
+          svals.col1         = param[10].data.d_color;
+          svals.col2         = param[11].data.d_color;
+          gimp_rgb_set_alpha (&svals.col1, param[12].data.d_float);
+          gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
+          svals.colorization = param[14].data.d_int32;
+          svals.blend_power  = param[15].data.d_float;
 
           if (svals.random_seed)
             svals.seed = g_random_int ();
-	}
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -292,7 +292,7 @@ run (const gchar      *name,
       sinus ();
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -386,18 +386,18 @@ prepare_coef (params *p)
   else
     {
       switch (svals.colors)
-	{
-	case USE_COLORS:
-	  break;
-	case B_W:
-	  gimp_rgb_set (&color1, 1.0, 1.0, 1.0);
-	  gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
-	  break;
-	case USE_FG_BG:
-	  gimp_palette_get_background (&color1);
-	  gimp_palette_get_foreground (&color2);
-	  break;
-	}
+        {
+        case USE_COLORS:
+          break;
+        case B_W:
+          gimp_rgb_set (&color1, 1.0, 1.0, 1.0);
+          gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
+          break;
+        case USE_FG_BG:
+          gimp_palette_get_background (&color1);
+          gimp_palette_get_foreground (&color2);
+          break;
+        }
     }
 
   gimp_rgba_get_uchar (&color1, &p->r, &p->g, &p->b, &p->a);
@@ -407,6 +407,8 @@ prepare_coef (params *p)
   p->dg = color2.g * 255.0;
   p->db = color2.b * 255.0;
   p->da = color2.a * 255.0;
+
+  g_rand_free (gr);
 }
 
 static void
@@ -428,7 +430,7 @@ sinus (void)
   bytes = drawable->bpp;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, x2 - x1, y2 - y1, TRUE,TRUE);
+                       x1, y1, x2 - x1, y2 - y1, TRUE,TRUE);
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
 
@@ -437,28 +439,28 @@ sinus (void)
        pr = gimp_pixel_rgns_process (pr))
     {
       switch (bytes)
-	{
-	case 4:
-	  compute_block_x (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
-			   4, assign_block_4, &p);
-	  break;
-	case 3:
-	  compute_block_x (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
-			   3, assign_block_3, &p);
-	  break;
-	case 2:
-	  compute_block_x (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
-			   2, assign_block_2, &p);
-	  break;
-	case 1:
-	  compute_block_x (dest_rgn.data, dest_rgn.rowstride,
-			   dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
-			   1, assign_block_1, &p);
-	  break;
-	}
+        {
+        case 4:
+          compute_block_x (dest_rgn.data, dest_rgn.rowstride,
+                           dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+                           4, assign_block_4, &p);
+          break;
+        case 3:
+          compute_block_x (dest_rgn.data, dest_rgn.rowstride,
+                           dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+                           3, assign_block_3, &p);
+          break;
+        case 2:
+          compute_block_x (dest_rgn.data, dest_rgn.rowstride,
+                           dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+                           2, assign_block_2, &p);
+          break;
+        case 1:
+          compute_block_x (dest_rgn.data, dest_rgn.rowstride,
+                           dest_rgn.x, dest_rgn.y, dest_rgn.w, dest_rgn.h,
+                           1, assign_block_1, &p);
+          break;
+        }
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
@@ -523,10 +525,10 @@ assign_block_1 (guchar *dest, gdouble grey, params *p)
 
 static void
 compute_block_x (guchar *dest_row, guint rowstride,
-		 gint x0, gint y0, gint w, gint h,
-		 gint bpp,
-		 void (*assign)(guchar *dest, gdouble grey, params *p),
-		 params *p)
+                 gint x0, gint y0, gint w, gint h,
+                 gint bpp,
+                 void (*assign)(guchar *dest, gdouble grey, params *p),
+                 params *p)
 {
   gint     i, j;
   gdouble  x, y, grey;
@@ -540,27 +542,27 @@ compute_block_x (guchar *dest_row, guint rowstride,
       y= ((gdouble) j) / p->height;
       dest = dest_row;
       for (i = x0; i < x0 + w; i++)
-	{
-	  gdouble c;
+        {
+          gdouble c;
 
-	  x = ((gdouble) i) / p->width;
+          x = ((gdouble) i) / p->width;
 
-	  c = 0.5 * sin(p->c31 * x + p->c32 * y + p->c33);
+          c = 0.5 * sin(p->c31 * x + p->c32 * y + p->c33);
 
-	  grey = sin(p->c11 * x + p->c12 * y + p->c13) * (0.5 + 0.5 * c) +
-	    sin(p->c21 * x + p->c22 * y + p->c23) * (0.5 - 0.5 * c);
-	  grey = pow(p->blend(svals.cmplx * (0.5 + 0.5 * grey)), pow_exp);
+          grey = sin(p->c11 * x + p->c12 * y + p->c13) * (0.5 + 0.5 * c) +
+            sin(p->c21 * x + p->c22 * y + p->c23) * (0.5 - 0.5 * c);
+          grey = pow(p->blend(svals.cmplx * (0.5 + 0.5 * grey)), pow_exp);
 
-	  assign (dest, grey, p);
-	  dest += bpp;
-	}
+          assign (dest, grey, p);
+          dest += bpp;
+        }
       dest_row += rowstride;
     }
 }
 
 static void
 alpha_scale_cb (GtkAdjustment *adj,
-		gpointer       data)
+                gpointer       data)
 {
   GimpColorButton *color_button;
   GimpRGB          color;
@@ -577,7 +579,7 @@ alpha_scale_cb (GtkAdjustment *adj,
 
 static void
 alpha_scale_update (GtkWidget *color_button,
-		    gpointer   data)
+                    gpointer   data)
 {
   GtkAdjustment *adj;
   GimpRGB        color;
@@ -592,7 +594,7 @@ alpha_scale_update (GtkWidget *color_button,
 
 static void
 sinus_toggle_button_update (GtkWidget *widget,
-			    gpointer   data)
+                            gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
   sinus_do_preview (NULL);
@@ -600,7 +602,7 @@ sinus_toggle_button_update (GtkWidget *widget,
 
 static void
 sinus_radio_button_update (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   gimp_radio_button_update (widget, data);
   sinus_do_preview (NULL);
@@ -608,7 +610,7 @@ sinus_radio_button_update (GtkWidget *widget,
 
 static void
 sinus_double_adjustment_update (GtkAdjustment *adjustment,
-				gpointer       data)
+                                gpointer       data)
 {
   gimp_double_adjustment_update (adjustment, data);
   sinus_do_preview (NULL);
@@ -616,7 +618,7 @@ sinus_double_adjustment_update (GtkAdjustment *adjustment,
 
 static void
 sinus_random_update (GObject   *unused,
-		     gpointer   data)
+                     gpointer   data)
 {
   sinus_do_preview (NULL);
 }
@@ -651,7 +653,7 @@ sinus_dialog (void)
   /* ============================== */
   dlg = gimp_dialog_new (_("Sinus"), "sinus",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-sinus",
+                         gimp_standard_help_func, "plug-in-sinus",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -661,7 +663,7 @@ sinus_dialog (void)
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   /* Create preview */
@@ -695,28 +697,28 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER(frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_X Scale:"), 140, 8,
-			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_X Scale:"), 140, 8,
+                              svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.scalex);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Y Scale:"), 140, 8,
-			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Y Scale:"), 140, 8,
+                              svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.scaley);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Co_mplexity:"), 140, 8,
-			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("Co_mplexity:"), 140, 8,
+                              svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.cmplx);
@@ -736,13 +738,13 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   hbox = gimp_random_seed_new (&svals.seed, &svals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("R_andom seed:"), 1.0, 0.5,
-				     hbox, 1, TRUE);
+                                     _("R_andom seed:"), 1.0, 0.5,
+                                     hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-				 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
+                                 GIMP_RANDOM_SEED_SPINBUTTON (hbox));
 
   g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (hbox),
-		    "value_changed", G_CALLBACK (sinus_random_update), NULL);
+                    "value_changed", G_CALLBACK (sinus_random_update), NULL);
   gtk_widget_show (table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Force tiling?"));
@@ -794,17 +796,17 @@ sinus_dialog (void)
   else
     {
       frame = gimp_int_radio_group_new (TRUE, _("Colors"),
-				        G_CALLBACK (sinus_radio_button_update),
-				        &svals.colors, svals.colors,
+                                        G_CALLBACK (sinus_radio_button_update),
+                                        &svals.colors, svals.colors,
 
-				        _("Bl_ack & white"),
-				        B_W, NULL,
-				        _("_Foreground & background"),
-				        USE_FG_BG, NULL,
-				        _("C_hoose here:"),
-				        USE_COLORS, NULL,
+                                        _("Bl_ack & white"),
+                                        B_W, NULL,
+                                        _("_Foreground & background"),
+                                        USE_FG_BG, NULL,
+                                        _("C_hoose here:"),
+                                        USE_COLORS, NULL,
 
-				        NULL);
+                                        NULL);
 
       gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
@@ -815,8 +817,8 @@ sinus_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
       push_col1 = gimp_color_button_new (_("First color"), 32, 32,
-					 &svals.col1,
-					 GIMP_COLOR_AREA_SMALL_CHECKS);
+                                         &svals.col1,
+                                         GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
 
@@ -825,8 +827,8 @@ sinus_dialog (void)
                         &svals.col1);
 
       push_col2 = gimp_color_button_new (_("Second color"), 32, 32,
-					 &svals.col2,
-					 GIMP_COLOR_AREA_SMALL_CHECKS);
+                                         &svals.col2,
+                                         GIMP_COLOR_AREA_SMALL_CHECKS);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
 
@@ -842,7 +844,7 @@ sinus_dialog (void)
   gtk_widget_show (frame);
 
   gtk_widget_set_sensitive (frame,
-			    gimp_drawable_has_alpha (drawable->drawable_id));
+                            gimp_drawable_has_alpha (drawable->drawable_id));
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -850,10 +852,10 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("F_irst Color:"), 0, 0,
-			      svals.col1.a, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("F_irst Color:"), 0, 0,
+                              svals.col1.a, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (alpha_scale_cb),
@@ -865,10 +867,10 @@ sinus_dialog (void)
                       adj);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("S_econd Color:"), 0, 0,
-			      svals.col2.a, 0.0, 1.0, 0.01, 0.1, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("S_econd Color:"), 0, 0,
+                              svals.col2.a, 0.0, 1.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (alpha_scale_cb),
@@ -901,13 +903,13 @@ sinus_dialog (void)
   frame =
     gimp_int_radio_group_new (TRUE, _("Gradient"),
                               G_CALLBACK (sinus_radio_button_update),
-			      &svals.colorization, svals.colorization,
+                              &svals.colorization, svals.colorization,
 
-			      _("L_inear"),     LINEAR,   NULL,
-			      _("Bili_near"),   BILINEAR, NULL,
-			      _("Sin_usoidal"), SINUS,    NULL,
+                              _("L_inear"),     LINEAR,   NULL,
+                              _("Bili_near"),   BILINEAR, NULL,
+                              _("Sin_usoidal"), SINUS,    NULL,
 
-			      NULL);
+                              NULL);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -917,10 +919,10 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (vbox), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Exponent:"), 0, 0,
-			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Exponent:"), 0, 0,
+                              svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (sinus_double_adjustment_update),
                     &svals.blend_power);
@@ -962,7 +964,7 @@ sinus_do_preview (GtkWidget *widget)
 
   rowsize = thePreview->width * thePreview->bpp;
   savbuf = buf = g_new (guchar,
-			thePreview->width*thePreview->height*thePreview->bpp);
+                        thePreview->width*thePreview->height*thePreview->bpp);
 
   p.height = thePreview->height;
   p.width = thePreview->width;
@@ -971,17 +973,17 @@ sinus_do_preview (GtkWidget *widget)
 
   if (thePreview->bpp == 3)
     compute_block_x (buf, rowsize, 0, 0, thePreview->width, thePreview->height,
-		     3, assign_block_3, &p);
+                     3, assign_block_3, &p);
   else if (thePreview->bpp == 1)
     {
       compute_block_x (buf, rowsize, 0, 0, thePreview->width,
-		       thePreview->height, 1, assign_block_1, &p);
+                       thePreview->height, 1, assign_block_1, &p);
     }
 
   for (y = 0; y < thePreview->height; y++)
     {
       gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    buf, 0, y, thePreview->width);
+                            buf, 0, y, thePreview->width);
       buf += rowsize;
     }
   g_free (savbuf);

@@ -99,18 +99,18 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_shift",
-			  "Shift the contents of the specified drawable",
-			  "Shifts the pixels of the specified drawable. "
+                          "Shift the contents of the specified drawable",
+                          "Shifts the pixels of the specified drawable. "
                           "Each row will be displaced a random value of pixels.",
-			  "Spencer Kimball and Peter Mattis, ported by Brian "
+                          "Spencer Kimball and Peter Mattis, ported by Brian "
                           "Degenhardt and Federico Mena Quintero",
-			  "Brian Degenhardt",
-			  "1997",
-			  N_("_Shift..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Brian Degenhardt",
+                          "1997",
+                          N_("_Shift..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_shift",
                              N_("<Image>/Filters/Distorts"));
@@ -151,23 +151,23 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! shift_dialog (image_ID))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  shvals.shift_amount = param[3].data.d_int32;
+        {
+          shvals.shift_amount = param[3].data.d_int32;
           shvals.orientation = (param[4].data.d_int32) ? HORIZONTAL : VERTICAL;
 
-	  if (shvals.shift_amount < 0 || shvals.shift_amount > 200)
-	    status = GIMP_PDB_CALLING_ERROR;
-	}
+          if (shvals.shift_amount < 0 || shvals.shift_amount > 200)
+            status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -183,28 +183,28 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Shifting..."));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Shifting..."));
 
-	  /*  set the tile cache size  */
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          /*  set the tile cache size  */
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  /*  run the shift effect  */
-	  shift (drawable);
+          /*  run the shift effect  */
+          shift (drawable);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_shift", &shvals, sizeof (ShiftValues));
-	}
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_shift", &shvals, sizeof (ShiftValues));
+        }
       else
-	{
-	  /* gimp_message ("shift: cannot operate on indexed color images"); */
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("shift: cannot operate on indexed color images"); */
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -225,8 +225,8 @@ shift (GimpDrawable *drawable)
   gint              x1, y1, x2, y2;
   gint              x, y;
   gint              progress, max_progress;
-  gint 	            amount;
-  gint 	            xdist, ydist;
+  gint              amount;
+  gint              xdist, ydist;
   GRand            *gr;
 
   gr = g_rand_new ();
@@ -254,7 +254,7 @@ shift (GimpDrawable *drawable)
   */
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+                       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -263,32 +263,32 @@ shift (GimpDrawable *drawable)
 
       if (shvals.orientation == VERTICAL)
         {
-	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
-	      dest = destline;
-	      ydist = g_rand_int_range (gr, -(amount + 1) / 2.0,
-					(amount + 1) / 2.0 );
-	      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
+              dest = destline;
+              ydist = g_rand_int_range (gr, -(amount + 1) / 2.0,
+                                        (amount + 1) / 2.0 );
+              for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
                 {
-		  gimp_pixel_fetcher_get_pixel (pft, x, y + ydist, dest);
-		  dest += dest_rgn.rowstride;
+                  gimp_pixel_fetcher_get_pixel (pft, x, y + ydist, dest);
+                  dest += dest_rgn.rowstride;
                 }
-	      destline += bytes;
+              destline += bytes;
             }
         }
       else
         {
-	  for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
+          for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
             {
-	      dest = destline;
-	      xdist = g_rand_int_range (gr, -(amount + 1) / 2.0,
-					(amount + 1) / 2.0);
-	      for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+              dest = destline;
+              xdist = g_rand_int_range (gr, -(amount + 1) / 2.0,
+                                        (amount + 1) / 2.0);
+              for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
                 {
-		  gimp_pixel_fetcher_get_pixel (pft, x + xdist, y, dest);
-		  dest += bytes;
+                  gimp_pixel_fetcher_get_pixel (pft, x + xdist, y, dest);
+                  dest += bytes;
                 }
-	      destline += dest_rgn.rowstride;
+              destline += dest_rgn.rowstride;
             }
         }
       progress += dest_rgn.w * dest_rgn.h;
@@ -301,6 +301,8 @@ shift (GimpDrawable *drawable)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+
+  g_rand_free (gr);
 }
 
 
@@ -320,7 +322,7 @@ shift_dialog (gint32 image_ID)
 
   dlg = gimp_dialog_new (_("Shift"), "shift",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-shift",
+                         gimp_standard_help_func, "plug-in-shift",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -354,13 +356,13 @@ shift_dialog (gint32 image_ID)
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
-					 1.0, 200.0);
+                                         1.0, 200.0);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
-			      (gdouble) shvals.shift_amount);
+                              (gdouble) shvals.shift_amount);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
-				_("Shift _amount:"), 1, 0, 0.0);
+                                _("Shift _amount:"), 1, 0, 0.0);
 
   g_signal_connect (size_entry, "value_changed",
                     G_CALLBACK (shift_amount_callback),
@@ -382,5 +384,5 @@ shift_amount_callback (GtkWidget *widget,
                        gpointer   data)
 {
   shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget),
-						    0);
+                                                    0);
 }

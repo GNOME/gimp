@@ -1,3 +1,15 @@
+2004-07-28  DindinX  <david.odin@cpe.fr>
+
+	* plug-ins/common/shift.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/spheredesigner.c: added missing calls to
+	g_rand_free (), remove tabs while I was at it.
+
+	* plug-ins/common/smooth_palette.c: minor cleanup
+
+	* plug-ins/common/spread.c: removed tabs.
+
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.h: added still unused flags type

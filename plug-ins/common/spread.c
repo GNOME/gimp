@@ -88,20 +88,20 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_spread",
-			  "Spread the contents of the specified drawable",
-			  "Spreads the pixels of the specified drawable.  "
-			  "Pixels are randomly moved to another location whose "
-			  "distance varies from the original by the horizontal "
-			  "and vertical spread amounts ",
-			  "Spencer Kimball and Peter Mattis, ported by Brian "
-			  "Degenhardt and Federico Mena Quintero",
-			  "Federico Mena Quintero and Brian Degenhardt",
-			  "1997",
-			  N_("Sp_read..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Spread the contents of the specified drawable",
+                          "Spreads the pixels of the specified drawable.  "
+                          "Pixels are randomly moved to another location whose "
+                          "distance varies from the original by the horizontal "
+                          "and vertical spread amounts ",
+                          "Spencer Kimball and Peter Mattis, ported by Brian "
+                          "Degenhardt and Federico Mena Quintero",
+                          "Federico Mena Quintero and Brian Degenhardt",
+                          "1997",
+                          N_("Sp_read..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_spread",
                              N_("<Image>/Filters/Noise"));
@@ -141,25 +141,25 @@ run (const gchar      *name,
 
       /*  First acquire information with a dialog  */
       if (! spread_dialog (image_ID, drawable))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  spvals.spread_amount_x= param[3].data.d_float;
+        {
+          spvals.spread_amount_x= param[3].data.d_float;
           spvals.spread_amount_y = param[4].data.d_float;
         }
 
       if ((status == GIMP_PDB_SUCCESS) &&
-	  (spvals.spread_amount_x < 0 || spvals.spread_amount_x > 200) &&
+          (spvals.spread_amount_x < 0 || spvals.spread_amount_x > 200) &&
           (spvals.spread_amount_y < 0 || spvals.spread_amount_y > 200))
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -175,28 +175,28 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Spreading..."));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Spreading..."));
 
-	  /*  set the tile cache size  */
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          /*  set the tile cache size  */
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  /*  run the spread effect  */
-	  spread (drawable);
+          /*  run the spread effect  */
+          spread (drawable);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_spread", &spvals, sizeof (SpreadValues));
-	}
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_spread", &spvals, sizeof (SpreadValues));
+        }
       else
-	{
-	  /* gimp_message ("spread: cannot operate on indexed color images"); */
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("spread: cannot operate on indexed color images"); */
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -205,12 +205,12 @@ run (const gchar      *name,
 }
 
 typedef struct {
-  GimpPixelFetcher	*pft;
-  GRand   		*gr;
-  gint  		 x_amount;
-  gint		 	 y_amount;
-  gint 			 width;
-  gint			 height;
+  GimpPixelFetcher      *pft;
+  GRand                 *gr;
+  gint                   x_amount;
+  gint                   y_amount;
+  gint                   width;
+  gint                   height;
 } SpreadParam_t;
 
 /* Spread the image.  This is done by going through every pixel
@@ -230,10 +230,10 @@ typedef struct {
 
 static void
 spread_func (gint x, 
-	     gint y, 
-	     guchar *dest, 
-	     gint bpp, 
-	     gpointer data)
+             gint y, 
+             guchar *dest, 
+             gint bpp, 
+             gpointer data)
 {
   SpreadParam_t *param = (SpreadParam_t*) data;
   gdouble  angle;
@@ -242,11 +242,11 @@ spread_func (gint x,
 
   /* get random angle, x distance, and y distance */
   xdist = (param->x_amount > 0 
-	   ? g_rand_int_range (param->gr, -param->x_amount, param->x_amount) 
-	   : 0);
+           ? g_rand_int_range (param->gr, -param->x_amount, param->x_amount) 
+           : 0);
   ydist = (param->y_amount > 0 
-	   ? g_rand_int_range (param->gr, -param->y_amount, param->y_amount) 
-	   : 0);
+           ? g_rand_int_range (param->gr, -param->y_amount, param->y_amount) 
+           : 0);
   angle = g_rand_double_range (param->gr, -G_PI, G_PI);
 
   xi = x + floor (sin (angle) * xdist);
@@ -285,7 +285,7 @@ spread (GimpDrawable *drawable)
 
 static gboolean
 spread_dialog (gint32        image_ID,
-	       GimpDrawable *drawable)
+               GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -299,7 +299,7 @@ spread_dialog (gint32        image_ID,
 
   dlg = gimp_dialog_new (_("Spread"), "spread",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-spread",
+                         gimp_standard_help_func, "plug-in-spread",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -317,18 +317,18 @@ spread_dialog (gint32        image_ID,
 
   /* sizeentries */
   size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, -1,
-			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			       spvals.spread_amount_x == spvals.spread_amount_y,
-			       FALSE,
+                               spvals.spread_amount_x == spvals.spread_amount_y,
+                               FALSE,
 
-			       _("_Horizontal:"), spvals.spread_amount_x, xres,
-			       0, MAX (drawable->width, drawable->height),
-			       0, 0,
+                               _("_Horizontal:"), spvals.spread_amount_x, xres,
+                               0, MAX (drawable->width, drawable->height),
+                               0, 0,
 
-			       _("_Vertical:"), spvals.spread_amount_y, yres,
-			       0, MAX (drawable->width, drawable->height),
-			       0, 0);
+                               _("_Vertical:"), spvals.spread_amount_y, yres,
+                               0, MAX (drawable->width, drawable->height),
+                               0, 0);
   gtk_container_add (GTK_CONTAINER (frame), size);
   gtk_widget_show (size);
 

@@ -180,17 +180,17 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_solid_noise",
-			  "Creates a grayscale noise texture",
-			  "Generates 2D textures using Perlin's classic "
+                          "Creates a grayscale noise texture",
+                          "Generates 2D textures using Perlin's classic "
                           "solid noise function.",
-			  "Marcelo de Gomensoro Malheiros",
-			  "Marcelo de Gomensoro Malheiros",
-			  "May 2004, v1.04",
-			  N_("_Solid Noise..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Marcelo de Gomensoro Malheiros",
+                          "Marcelo de Gomensoro Malheiros",
+                          "May 2004, v1.04",
+                          N_("_Solid Noise..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_solid_noise",
                              N_("<Image>/Filters/Render/Clouds"));
@@ -233,27 +233,27 @@ run (const gchar      *name,
 
       /*  Get information from the dialog  */
       if (!solid_noise_dialog ())
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Test number of arguments  */
       if (nparams != 9)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  snvals.tilable   = param[3].data.d_int32;
-	  snvals.turbulent = param[4].data.d_int32;
-	  snvals.seed      = param[5].data.d_int32;
-	  snvals.detail    = param[6].data.d_int32;
-	  snvals.xsize     = param[7].data.d_float;
-	  snvals.ysize     = param[8].data.d_float;
+        {
+          snvals.tilable   = param[3].data.d_int32;
+          snvals.turbulent = param[4].data.d_int32;
+          snvals.seed      = param[5].data.d_int32;
+          snvals.detail    = param[6].data.d_int32;
+          snvals.xsize     = param[7].data.d_float;
+          snvals.ysize     = param[8].data.d_float;
 
           if (snvals.random_seed)
             snvals.seed = g_random_int ();
-	}
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -275,7 +275,7 @@ run (const gchar      *name,
     {
       /*  Set the tile cache size  */
       gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-			      gimp_tile_width ());
+                              gimp_tile_width ());
 
       /*  Run!  */
       solid_noise (drawable);
@@ -493,24 +493,26 @@ solid_noise_init (void)
   for (i = 0; i < TABLE_SIZE; i++)
     {
       do
-	{
-	  grad_tab[i].x = g_rand_double_range (gr, -1, 1);
-	  grad_tab[i].y = g_rand_double_range (gr, -1, 1);
-	  m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
-	}
+        {
+          grad_tab[i].x = g_rand_double_range (gr, -1, 1);
+          grad_tab[i].y = g_rand_double_range (gr, -1, 1);
+          m = grad_tab[i].x * grad_tab[i].x + grad_tab[i].y * grad_tab[i].y;
+        }
       while (m == 0.0 || m > 1.0);
 
       m = 1.0 / sqrt(m);
       grad_tab[i].x *= m;
       grad_tab[i].y *= m;
     }
+
+  g_rand_free (gr);
 }
 
 
 static gdouble
 plain_noise (gdouble x,
-	     gdouble y,
-	     guint   s)
+             gdouble y,
+             guint   s)
 {
   GimpVector2 v;
   gint        a, b, i, j, n;
@@ -525,13 +527,13 @@ plain_noise (gdouble x,
   for (i = 0; i < 2; i++)
     for (j = 0; j < 2; j++)
       {
-	if (snvals.tilable)
-	  n = perm_tab[(((a + i) % (xclip * s)) + perm_tab[((b + j) % (yclip * s)) % TABLE_SIZE]) % TABLE_SIZE];
-	else
-	  n = perm_tab[(a + i + perm_tab[(b + j) % TABLE_SIZE]) % TABLE_SIZE];
-	v.x = x - a - i;
-	v.y = y - b - j;
-	sum += WEIGHT(v.x) * WEIGHT(v.y) * (grad_tab[n].x * v.x + grad_tab[n].y * v.y);
+        if (snvals.tilable)
+          n = perm_tab[(((a + i) % (xclip * s)) + perm_tab[((b + j) % (yclip * s)) % TABLE_SIZE]) % TABLE_SIZE];
+        else
+          n = perm_tab[(a + i + perm_tab[(b + j) % TABLE_SIZE]) % TABLE_SIZE];
+        v.x = x - a - i;
+        v.y = y - b - j;
+        sum += WEIGHT(v.x) * WEIGHT(v.y) * (grad_tab[n].x * v.x + grad_tab[n].y * v.y);
       }
 
   return sum / s;
@@ -554,9 +556,9 @@ noise (gdouble x,
   for (i = 0; i <= snvals.detail; i++)
     {
       if (snvals.turbulent)
-	sum += fabs (plain_noise (x, y, s));
+        sum += fabs (plain_noise (x, y, s));
       else
-	sum += plain_noise (x, y, s);
+        sum += plain_noise (x, y, s);
       s <<= 1;
     }
 
@@ -604,7 +606,7 @@ solid_noise_dialog (void)
   /*  Dialog initialization  */
   dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-solid-noise",
+                         gimp_standard_help_func, "plug-in-solid-noise",
 
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -634,10 +636,10 @@ solid_noise_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&snvals.seed, &snvals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random seed:"), 1.0, 0.5,
-				     seed_hbox, 1, TRUE);
+                                     _("_Random seed:"), 1.0, 0.5,
+                                     seed_hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
+                                 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed_hbox),
                            "value_changed",
                             G_CALLBACK (solid_noise),
@@ -645,10 +647,10 @@ solid_noise_dialog (void)
 
   /*  Detail  */
   spinbutton = gimp_spin_button_new (&adj, snvals.detail,
-				     1, 15, 1, 3, 0, 1, 0);
+                                     1, 15, 1, 3, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Detail:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             _("_Detail:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &snvals.detail);
@@ -686,10 +688,10 @@ solid_noise_dialog (void)
 
   /*  X Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_X size:"), SCALE_WIDTH, 0,
-			      snvals.xsize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_X size:"), SCALE_WIDTH, 0,
+                              snvals.xsize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.xsize);
@@ -699,10 +701,10 @@ solid_noise_dialog (void)
 
   /*  Y Size  */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("_Y size:"), SCALE_WIDTH, 0,
-			      snvals.ysize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Y size:"), SCALE_WIDTH, 0,
+                              snvals.ysize, SIZE_MIN, SIZE_MAX, 0.1, 1.0, 1,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.ysize);
