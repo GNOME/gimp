@@ -19,7 +19,6 @@
   <part id="app-glue-part">
     <title>Application Glue</title>
     <xi:include href="xml/app_procs.xml"/>
-    <xi:include href="xml/appenv.xml"/>
     <xi:include href="xml/batch.xml"/>
     <xi:include href="xml/errors.xml"/>
     <xi:include href="xml/gimp-intl.xml"/>

@@ -4323,13 +4323,6 @@ app_init
 </SECTION>
 
 <SECTION>
-<FILE>appenv</FILE>
-use_debug_handler
-stack_trace_mode
-prog_name
-</SECTION>
-
-<SECTION>
 <FILE>batch</FILE>
 batch_init
 </SECTION>
