@@ -25,7 +25,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -43,7 +42,7 @@ static void run    (gchar      *name,
 		    gint       *nreturn_vals,
 		    GimpParam **return_vals);
 
-static gboolean   dialog (void);
+static gboolean   dialog (GimpDrawable *drawable);
 
 static gint32 doit   (GimpDrawable *drawable,
 		      gint32       *layer_id);
@@ -57,6 +56,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 static gboolean run_flag = FALSE;
+static GtkWidget *sizeentry;
 
 MAIN ()
 
@@ -131,12 +131,14 @@ run (gchar      *name,
   values[1].type          = GIMP_PDB_IMAGE;
   values[2].type          = GIMP_PDB_LAYER;
 
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data ("plug_in_smooth_palette", &config);
-      if (! dialog ())
+      if (! dialog (drawable))
 	return;
       break;
 
@@ -172,7 +174,6 @@ run (gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
       if (gimp_drawable_is_rgb (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Deriving smooth palette..."));
@@ -392,17 +393,25 @@ ok_callback (GtkWidget *widget,
 {
   run_flag = TRUE;
 
+  config.width =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0);
+
+  config.height =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1);
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static gboolean
-dialog (void)
+dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  guint32    image_id;
+  GimpUnit   unit;
+  gdouble    xres, yres;
 
   gimp_ui_init ("smooth_palette", FALSE);
 
@@ -428,35 +437,29 @@ dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  image_id = gimp_drawable_image (drawable->drawable_id);
+  unit = gimp_image_get_unit (image_id);
+  gimp_image_get_resolution (image_id, &xres, &yres);
 
+  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 6,
+				    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+				    FALSE, FALSE,
 
-  spinbutton = gimp_spin_button_new (&adj, config.width,
-				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Width:"), 1.0, 0.5,
-			     spinbutton, 1, FALSE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &config.width);
-
-  spinbutton = gimp_spin_button_new (&adj, config.height,
-				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Height:"), 1.0, 0.5,
-			     spinbutton, 1, FALSE);
-  g_signal_connect (G_OBJECT (adj), "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &config.height);
+				    _("_Width:"),
+				    config.width, xres,
+				    2, GIMP_MAX_IMAGE_SIZE,
+				    2, GIMP_MAX_IMAGE_SIZE,
+                                         
+				    _("_Height:"),
+				    config.height, yres,
+				    1, GIMP_MAX_IMAGE_SIZE,
+				    1, GIMP_MAX_IMAGE_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), sizeentry);
+  gtk_widget_show (sizeentry);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
 			     _("_Search Depth:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (G_OBJECT (adj), "value_changed",

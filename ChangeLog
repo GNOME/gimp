@@ -1,3 +1,11 @@
+2002-12-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/smooth_palette.c (dialog): fix for #82490 (Smooth 
+	Palette: use standard GIMP size entry) and #101902 (Smooth Palette 
+	crashes on 1x1 image). Minimum width for Smooth Palette is set to
+	2, since in the code g_rand_int_range (gr, 0, width - 2) is used.
+	Allowing a width of 1 results in an assertion in g_rand_int_range.
+	
 2002-12-26  Tor Lillqvist  <tml@iki.fi>
 
 	* app/Makefile.am: On Win32, create export file gimp.exp.
