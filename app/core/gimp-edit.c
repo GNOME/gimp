@@ -47,10 +47,13 @@
 
 /*  local function protypes  */
 
-static gboolean gimp_edit_fill_internal (GimpImage    *gimage,
-                                         GimpDrawable *drawable,
-                                         GimpFillType  fill_type,
-                                         const gchar  *undo_desc);
+static const GimpBuffer * gimp_edit_extract       (GimpImage    *gimage,
+                                                   GimpDrawable *drawable,
+                                                   gboolean      cut_pixels);
+static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
+                                                   GimpDrawable *drawable,
+                                                   GimpFillType  fill_type,
+                                                   const gchar  *undo_desc);
 
 
 /*  public functions  */
@@ -59,116 +62,20 @@ const GimpBuffer *
 gimp_edit_cut (GimpImage    *gimage,
 	       GimpDrawable *drawable)
 {
-  TileManager *tiles;
-  gboolean     empty;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  /*  Start a group undo  */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_CUT,
-                               _("Cut"));
-
-  /*  See if the gimage mask is empty  */
-  empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
-
-  /*  Next, cut the mask portion from the gimage  */
-  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                  drawable, TRUE, FALSE, TRUE);
-
-  if (tiles)
-    gimage->gimp->have_current_cut_buffer = TRUE;
-
-  /*  Only crop if the gimage mask wasn't empty  */
-  if (tiles && ! empty)
-    {
-      TileManager *crop;
-
-      crop = tile_manager_crop (tiles, 0);
-
-      if (crop != tiles)
-	{
-	  tile_manager_unref (tiles);
-	  tiles = crop;
-	}
-    }
-
-  /*  end the group undo  */
-  gimp_image_undo_group_end (gimage);
-
-  if (tiles)
-    {
-      /*  Free the old global edit buffer  */
-      if (gimage->gimp->global_buffer)
-	g_object_unref (gimage->gimp->global_buffer);
-
-      /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = gimp_buffer_new (tiles,
-                                                     "Global Buffer",
-                                                     FALSE);
-
-      return gimage->gimp->global_buffer;
-    }
-
-  return NULL;
+  return gimp_edit_extract (gimage, drawable, TRUE);
 }
 
 const GimpBuffer *
 gimp_edit_copy (GimpImage    *gimage,
 		GimpDrawable *drawable)
 {
-  TileManager *tiles;
-  gboolean     empty;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  /*  Start a group undo  */
-  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_COPY,
-                               _("Copy"));
-
-  /*  See if the gimage mask is empty  */
-  empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
-
-  /*  First, copy the masked portion of the gimage  */
-  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                  drawable, FALSE, FALSE, TRUE);
-
-  if (tiles)
-    gimage->gimp->have_current_cut_buffer = TRUE;
-
-  /*  Only crop if the gimage mask wasn't empty  */
-  if (tiles && ! empty)
-    {
-      TileManager *crop;
-
-      crop = tile_manager_crop (tiles, 0);
-
-      if (crop != tiles)
-	{
-	  tile_manager_unref (tiles);
-	  tiles = crop;
-	}
-    }
-
-  /*  end the group undo  */
-  gimp_image_undo_group_end (gimage);
-
-  if (tiles)
-    {
-      /*  Free the old global edit buffer  */
-      if (gimage->gimp->global_buffer)
-	g_object_unref (gimage->gimp->global_buffer);
-
-      /*  Set the global edit buffer  */
-      gimage->gimp->global_buffer = gimp_buffer_new (tiles,
-                                                     "Global Buffer",
-                                                     FALSE);
-
-      return gimage->gimp->global_buffer;
-    }
-
-  return NULL;
+  return gimp_edit_extract (gimage, drawable, FALSE);
 }
 
 GimpLayer *
@@ -199,7 +106,6 @@ gimp_edit_paste (GimpImage    *gimage,
                                      type,
                                      _("Pasted Layer"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-
 
   if (! layer)
     return NULL;
@@ -233,15 +139,10 @@ gimp_edit_paste (GimpImage    *gimage,
     gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
 
   /*  if there's a drawable, add a new floating selection  */
-  if (drawable != NULL)
-    {
-      floating_sel_attach (layer, drawable);
-    }
+  if (drawable)
+    floating_sel_attach (layer, drawable);
   else
-    {
-      gimp_item_set_image (GIMP_ITEM (layer), gimage);
-      gimp_image_add_layer (gimage, layer, 0);
-    }
+    gimp_image_add_layer (gimage, layer, 0);
 
   /*  end the group undo  */
   gimp_image_undo_group_end (gimage);
@@ -280,13 +181,11 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   if (layer)
     {
-      gimp_item_set_image (GIMP_ITEM (layer), gimage);
       gimp_image_add_layer (gimage, layer, 0);
 
       gimp_image_undo_enable (gimage);
 
       gimp_create_display (gimp, gimage, 0x0101);
-
       g_object_unref (gimage);
 
       return gimage;
@@ -350,6 +249,58 @@ gimp_edit_fill (GimpImage    *gimage,
 
 
 /*  private functions  */
+
+const GimpBuffer *
+gimp_edit_extract (GimpImage    *gimage,
+                   GimpDrawable *drawable,
+                   gboolean      cut_pixels)
+{
+  TileManager *tiles;
+  gboolean     empty;
+
+  /*  See if the gimage mask is empty  */
+  empty = gimp_channel_is_empty (gimp_image_get_mask (gimage));
+
+  if (cut_pixels)
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
+
+  /*  Cut/copy the mask portion from the gimage  */
+  tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
+                                  drawable, cut_pixels, FALSE, TRUE);
+
+  if (cut_pixels)
+    gimp_image_undo_group_end (gimage);
+
+  if (tiles)
+    {
+      /*  Only crop if the gimage mask wasn't empty  */
+      if (! empty)
+        {
+          TileManager *crop;
+
+          crop = tile_manager_crop (tiles, 0);
+
+          if (crop != tiles)
+            {
+              tile_manager_unref (tiles);
+              tiles = crop;
+            }
+        }
+
+      /*  Set the global edit buffer  */
+      if (gimage->gimp->global_buffer)
+	g_object_unref (gimage->gimp->global_buffer);
+
+      gimage->gimp->global_buffer = gimp_buffer_new (tiles, "Global Buffer",
+                                                     FALSE);
+
+      gimage->gimp->have_current_cut_buffer = TRUE;
+
+      return gimage->gimp->global_buffer;
+    }
+
+  return NULL;
+}
 
 static gboolean
 gimp_edit_fill_internal (GimpImage    *gimage,

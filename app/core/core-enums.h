@@ -415,7 +415,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_FS_ANCHOR,          /*< desc="Anchor Floating Selection"   >*/
   GIMP_UNDO_GROUP_EDIT_PASTE,         /*< desc="Paste"                       >*/
   GIMP_UNDO_GROUP_EDIT_CUT,           /*< desc="Cut"                         >*/
-  GIMP_UNDO_GROUP_EDIT_COPY,          /*< desc="Copy"                        >*/
   GIMP_UNDO_GROUP_TEXT,               /*< desc="Text"                        >*/
   GIMP_UNDO_GROUP_TRANSFORM,          /*< desc="Transform"                   >*/
   GIMP_UNDO_GROUP_PAINT,              /*< desc="Paint"                       >*/

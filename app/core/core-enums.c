@@ -576,7 +576,6 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_FS_ANCHOR, N_("Anchor Floating Selection"), "group-fs-anchor" },
   { GIMP_UNDO_GROUP_EDIT_PASTE, N_("Paste"), "group-edit-paste" },
   { GIMP_UNDO_GROUP_EDIT_CUT, N_("Cut"), "group-edit-cut" },
-  { GIMP_UNDO_GROUP_EDIT_COPY, N_("Copy"), "group-edit-copy" },
   { GIMP_UNDO_GROUP_TEXT, N_("Text"), "group-text" },
   { GIMP_UNDO_GROUP_TRANSFORM, N_("Transform"), "group-transform" },
   { GIMP_UNDO_GROUP_PAINT, N_("Paint"), "group-paint" },

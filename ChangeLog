@@ -1,5 +1,21 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: removed enum value
+	GIMP_UNDO_GROUP_EDIT_COPY (I have no idea why we used to push an
+	undo group around "Copy"...).
+
+	* app/core/gimp-edit.c (gimp_edit_extract): new utility function
+	which does everything needed for cut and copy and does not push an
+	undo group for copy.
+
+	(gimp_edit_cut,copy): removed lots of duplicated code and call
+	gimp_edit_extract().
+
+	(gimp_edit_paste,paste_as_new): no need to call
+	gimp_item_set_image() on newly created layers.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer-floating-sel.c (floating_sel_attach): changed
 	absolutely unclear comment.
 
