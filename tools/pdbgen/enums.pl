@@ -75,6 +75,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_CHANNEL => '4',
 		       GIMP_ALPHA_CHANNEL => '5' }
 	},
+    GimpCloneType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
+	  mapping => { GIMP_IMAGE_CLONE => '0',
+		       GIMP_PATTERN_CLONE => '1' }
+	},
+    GimpDodgeBurnType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
+	  mapping => { GIMP_DODGE => '0',
+		       GIMP_BURN => '1' }
+	},
     GimpGradientType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -140,6 +154,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_INTERPOLATION_LINEAR => '1',
 		       GIMP_INTERPOLATION_CUBIC => '2',
 		       GIMP_INTERPOLATION_LANCZOS => '3' }
+	},
+    GimpPaintApplicationMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
+	  mapping => { GIMP_PAINT_CONSTANT => '0',
+		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
     GimpRepeatMode =>
 	{ contig => 1,
@@ -443,33 +464,12 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_PIXELS => '0',
 		       GIMP_POINTS => '1' }
 	},
-    GimpCloneType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
-	  mapping => { GIMP_IMAGE_CLONE => '0',
-		       GIMP_PATTERN_CLONE => '1' }
-	},
-    GimpDodgeBurnType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
-	  mapping => { GIMP_DODGE => '0',
-		       GIMP_BURN => '1' }
-	},
     GimpConvolveType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',
 	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
 	  mapping => { GIMP_BLUR_CONVOLVE => '0',
 		       GIMP_SHARPEN_CONVOLVE => '1' }
-	},
-    GimpPaintApplicationMode =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_PAINT_CONSTANT GIMP_PAINT_INCREMENTAL) ],
-	  mapping => { GIMP_PAINT_CONSTANT => '0',
-		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
     GimpBrushApplicationMode =>
 	{ contig => 1,
@@ -480,7 +480,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpRunMode =>
 	{ contig => 1,
-	  header => 'plug-in/plug-in-types.h',
+	  header => 'plug-in/plug-in-enums.h',
 	  symbols => [ qw(GIMP_RUN_INTERACTIVE GIMP_RUN_NONINTERACTIVE
 			  GIMP_RUN_WITH_LAST_VALS) ],
 	  mapping => { GIMP_RUN_INTERACTIVE => '0',

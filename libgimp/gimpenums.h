@@ -36,17 +36,6 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
-#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
-
-GType gimp_clone_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_IMAGE_CLONE,
-  GIMP_PATTERN_CLONE
-} GimpCloneType;
-
-
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
 GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
@@ -95,17 +84,6 @@ typedef enum
   GIMP_BLUR_CONVOLVE,
   GIMP_SHARPEN_CONVOLVE
 } GimpConvolveType;
-
-
-#define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
-
-GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_DODGE,
-  GIMP_BURN
-} GimpDodgeBurnType;
 
 
 #define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
@@ -255,17 +233,6 @@ typedef enum
   GIMP_ORIENTATION_VERTICAL,
   GIMP_ORIENTATION_UNKNOWN
 } GimpOrientationType;
-
-
-#define GIMP_TYPE_PAINT_APPLICATION_MODE (gimp_paint_application_mode_get_type ())
-
-GType gimp_paint_application_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PAINT_CONSTANT,
-  GIMP_PAINT_INCREMENTAL
-} GimpPaintApplicationMode;
 
 
 #define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())

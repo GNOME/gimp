@@ -121,6 +121,28 @@ typedef enum  /*< pdb-skip >*/
 } GimpCheckType;
 
 
+#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
+
+GType gimp_clone_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_IMAGE_CLONE,   /*< desc="Image source"   >*/
+  GIMP_PATTERN_CLONE  /*< desc="Pattern source" >*/
+} GimpCloneType;
+
+
+#define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
+
+GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DODGE,  /*< desc="Dodge" >*/
+  GIMP_BURN    /*< desc="Burn"  >*/
+} GimpDodgeBurnType;
+
+
 #define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
 
 GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
@@ -191,6 +213,17 @@ typedef enum
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"          >*/
   GIMP_INTERPOLATION_LANCZOS /*< desc="Lanczos (Best)" >*/
 } GimpInterpolationType;
+
+
+#define GIMP_TYPE_PAINT_APPLICATION_MODE (gimp_paint_application_mode_get_type ())
+
+GType gimp_paint_application_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PAINT_CONSTANT,    /*< desc="Constant"    >*/
+  GIMP_PAINT_INCREMENTAL  /*< desc="Incremental" >*/
+} GimpPaintApplicationMode;
 
 
 #define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())

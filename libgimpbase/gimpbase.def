@@ -10,10 +10,12 @@ EXPORTS
 	gimp_check_size_get_type
 	gimp_check_type_get_type
 	gimp_checks_get_shades
+	gimp_clone_type_get_type
 	gimp_data_directory
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
 	gimp_directory
+	gimp_dodge_burn_type_get_type
 	gimp_enum_get_desc
 	gimp_enum_get_value
 	gimp_enum_get_value_descriptions
@@ -40,6 +42,7 @@ EXPORTS
 	gimp_memsize_serialize
 	gimp_memsize_to_string
 	gimp_message_handler_type_get_type
+	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
 	gimp_param_path_get_type
 	gimp_param_spec_memsize

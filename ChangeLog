@@ -1,5 +1,20 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/paint-enums.h
+	* libgimpbase/gimpbaseenums.h: moved enums to libgimpbase (from
+	app/paint and libgimp). The remaining enums in
+	app/paint/paint-enums.h need special treatment.
+
+	* app/paint/paint-enums.c:
+	* libgimp/gimpenums.h
+	* libgimpbase/gimpbaseenums.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimpbase/gimpbase.def
+	* libgimp/gimp.def: updated.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/plug-in-enums.h: new file with enums moved from ...
 

@@ -56,7 +56,6 @@ EXPORTS
 	gimp_check_type
 	gimp_clone
 	gimp_clone_default
-	gimp_clone_type_get_type
 	gimp_color_balance
 	gimp_colorize
 	gimp_context_get_background
@@ -98,7 +97,6 @@ EXPORTS
 	gimp_display_new
 	gimp_displays_flush
 	gimp_displays_reconnect
-	gimp_dodge_burn_type_get_type
 	gimp_dodgeburn
 	gimp_dodgeburn_default
 	gimp_drawable_attach_new_parasite
@@ -384,7 +382,6 @@ EXPORTS
 	gimp_monitor_number
 	gimp_offset_type_get_type
 	gimp_orientation_type_get_type
-	gimp_paint_application_mode_get_type
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_add_entry
