@@ -1,3 +1,8 @@
+2000-07-05  Tor Lillqvist  <tml@iki.fi>
+
+	* app/user_install.c (user_install_resolution): Use "windowing
+	system" instead of "X-server".
+
 2000-07-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tips_dialog.c: corrected an error message 

@@ -1349,14 +1349,14 @@ user_install_resolution (void)
   gdisplay_xserver_resolution (&xres, &yres);
 
   add_label (GTK_BOX (resolution_page),
-	     _("GIMP can obtain this information from your X-server.\n"
-	       "However, most X-servers do not return useful values."));
+	     _("GIMP can obtain this information from the windowing system.\n"
+	       "However, usually this does not give useful values."));
   
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (resolution_page), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  str = g_strdup_printf (_("Get Resolution from X-server (Currently %d x %d dpi)"),
+  str = g_strdup_printf (_("Get Resolution from windowing system (Currently %d x %d dpi)"),
 			 ROUND (xres), ROUND (yres));
   xserver_toggle = gtk_check_button_new_with_label (str);
   g_free (str);
