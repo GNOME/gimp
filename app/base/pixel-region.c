@@ -104,6 +104,22 @@ pixel_region_resize (PR, x, y, w, h)
   PR->h = h;
 }
 
+/* request that tiles within a region be fetched asynchronously
+ */
+void
+pixel_region_get_async (PR, ulx, uly, lrx, lry)
+    PixelRegion *PR;
+    int ulx;
+    int uly;
+    int lrx;
+    int lry;
+{
+  int x, y;
+
+  for (y = uly; y < lry; y += TILE_HEIGHT)
+    for (x = ulx; x < lrx; x += TILE_WIDTH)
+      tile_manager_get_async (PR->tiles, x, y, 0);
+}
 
 void
 pixel_region_get_row (PR, x, y, w, data, subsample)
@@ -121,6 +137,8 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
   int b;
 
   end = x + w;
+
+  pixel_region_get_async (PR, x, y, end, y);
 
   while (x < end)
     {
@@ -156,6 +174,8 @@ pixel_region_set_row (PR, x, y, w, data)
 
   end = x + w;
 
+  pixel_region_get_async (PR, x, y, end, y);
+
   while (x < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
@@ -189,6 +209,8 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
   int b;
 
   end = y + h;
+
+  pixel_region_get_async (PR, x, y, x, end);
 
   while (y < end)
     {
@@ -224,6 +246,8 @@ pixel_region_set_col (PR, x, y, h, data)
   int b;
 
   end = y + h;
+
+  pixel_region_get_async (PR, x, y, x, end);
 
   while (y < end)
     {

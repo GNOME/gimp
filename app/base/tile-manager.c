@@ -26,6 +26,10 @@
 static void tile_manager_destroy_level (TileManager *tm,
 					TileLevel *level);
 static void tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num);
+static int tile_manager_get_tile_num (TileManager *tm,
+				       int xpixel,
+				       int ypixel,
+				       int level);
 
 
 TileManager*
@@ -164,22 +168,11 @@ tile_manager_get_tile (TileManager *tm,
 		       int          wantread,
 		       int          wantwrite)
 {
-  TileLevel *tile_level;
-  int tile_row;
-  int tile_col;
   int tile_num;
 
-  if ((level < 0) || (level >= tm->nlevels))
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  if (tile_num < 0)
     return NULL;
-
-  tile_level = &tm->levels[level];
-  if ((xpixel < 0) || (xpixel >= tile_level->width) ||
-      (ypixel < 0) || (ypixel >= tile_level->height))
-    return NULL;
-
-  tile_row = ypixel / TILE_HEIGHT;
-  tile_col = xpixel / TILE_WIDTH;
-  tile_num = tile_row * tile_level->ntile_cols + tile_col;
 
   return tile_manager_get (tm, tile_num, level, wantread, wantwrite);
 }
@@ -271,6 +264,26 @@ tile_manager_get (TileManager *tm,
     }
 
   return *tile_ptr;
+}
+
+void
+tile_manager_get_async (TileManager *tm,
+                        int          xpixel,
+                        int          ypixel,
+                        int          level)
+{
+  Tile *tile_ptr;
+  TileLevel *tile_level;
+  int tile_num;
+
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  if (tile_num < 0)
+    return;
+
+  tile_level = &tm->levels[level];
+  tile_ptr = tile_level->tiles[tile_num];
+
+  tile_swap_in_async (tile_ptr);
 }
 
 void
@@ -596,4 +609,30 @@ tile_manager_map (TileManager *tm,
   TILE_MUTEX_UNLOCK (srctile);
 
   /*  printf("}");fflush(stdout);*/
+}
+
+static int
+tile_manager_get_tile_num (TileManager *tm,
+		           int xpixel,
+		           int ypixel,
+		           int level)
+{
+  TileLevel *tile_level;
+  int tile_row;
+  int tile_col;
+  int tile_num;
+
+  if ((level < 0) || (level >= tm->nlevels))
+    return -1;
+
+  tile_level = &tm->levels[level];
+  if ((xpixel < 0) || (xpixel >= tile_level->width) ||
+      (ypixel < 0) || (ypixel >= tile_level->height))
+    return -1;
+
+  tile_row = ypixel / TILE_HEIGHT;
+  tile_col = xpixel / TILE_WIDTH;
+  tile_num = tile_row * tile_level->ntile_cols + tile_col;
+
+  return tile_num;
 }

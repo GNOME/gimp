@@ -38,6 +38,8 @@ struct _PixelRegion
 /*  PixelRegion functions  */
 void  pixel_region_init          (PixelRegion *, TileManager *, int, int, int, int, int);
 void  pixel_region_resize        (PixelRegion *, int, int, int, int);
+void  pixel_region_get_async     (PixelRegion *PR, int ulx, int uly,
+				  int lrx, int lry);
 void  pixel_region_get_row       (PixelRegion *, int, int, int, unsigned char *, int);
 void  pixel_region_set_row       (PixelRegion *, int, int, int, unsigned char *);
 void  pixel_region_get_col       (PixelRegion *, int, int, int, unsigned char *, int);

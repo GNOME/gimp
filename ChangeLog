@@ -1,3 +1,18 @@
+Sun Jul 12 19:00:15 EDT 1998 Michael K. Johnson <johnsonm@redhat.com>
+
+	* app/tile_swap.c
+	* app/tile_swap.h
+	* app/tile_manager.c
+	* app/tile_manager.h
+	* app/pixel_region.c
+	* app/pixel_region.h: asynchronous swapin on systems with
+	pthreads.  This version is not at all tuned, and the only
+	interface which makes use of it now is
+	pixel_region_{g,s}et_{row,col}.  Other functions which
+	know ahead of time the area that they will be needing can
+	request that it be asynchronously swapped in via the
+	pixel_region_get_async() function.
+
 Sun Jul 12 17:32:24 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_cache.c: Some optimizations and bugfixes relative to

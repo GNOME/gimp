@@ -7,6 +7,7 @@
 
 typedef enum {
   SWAP_IN = 1,
+  SWAP_IN_ASYNC,
   SWAP_OUT,
   SWAP_DELETE,
   SWAP_COMPRESS
@@ -24,6 +25,7 @@ int  tile_swap_add      (char      *filename,
 		         gpointer   user_data);
 void tile_swap_remove   (int        swap_num);
 void tile_swap_in       (Tile      *tile);
+void tile_swap_in_async (Tile      *tile);
 void tile_swap_out      (Tile      *tile);
 void tile_swap_delete   (Tile      *tile);
 void tile_swap_compress (int        swap_num);
