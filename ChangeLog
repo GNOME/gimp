@@ -1,3 +1,9 @@
+2002-05-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppencil.c: don't pass bogus [0..255] opacities to
+	gimp_paint_core_paste_canvas() but use gdouble values in a
+	[0.0..1.0] range. Spotted by Jakub Steiner.
+
 2002-05-29  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/Makefile.am: set include paths in AM_ASFLAGS for

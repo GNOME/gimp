@@ -144,7 +144,7 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
   GimpContext          *context;
   TempBuf              *area;
   guchar                col[MAX_CHANNELS];
-  gint                  opacity;
+  gdouble               opacity;
   gdouble               scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
@@ -201,15 +201,15 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
                     area->bytes);
     }
 
-  opacity = 255 * gimp_context_get_opacity (context);
+  opacity = gimp_context_get_opacity (context);
 
   if (paint_options->pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_paste_canvas (paint_core, drawable, 
-                                MIN (opacity, 255),
-                                gimp_context_get_opacity (context) * 255,
+                                MIN (opacity, GIMP_OPACITY_OPAQUE),
+                                gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 GIMP_BRUSH_HARD, scale, paint_appl_mode);
 }
