@@ -1,3 +1,4 @@
+# translation of gimp-libgimp.HEAD.po to 
 # traducción de es.po al Spanish
 # Spanish translation for gimp-libgimp 1.3.X.
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
@@ -6,20 +7,21 @@
 # Francisco Javier Fernandez <serrador@arrakis.es>, 2003.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004.
+# Pablo del Campo <pablodc@par001001-703>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
-"PO-Revision-Date: 2004-10-23 17:08+0200\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
-"Language-Team: Spanish <traductores@es.gnome.org>\n"
+"POT-Creation-Date: 2004-11-12 19:08+0100\n"
+"PO-Revision-Date: 2004-11-12 16:12-0300\n"
+"Last-Translator: Pablo del Campo <pablodc@par001001-703>\n"
+"Language-Team:  <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: libgimp/gimpbrushmenu.c:129
@@ -105,8 +107,7 @@ msgstr ""
 #: libgimp/gimpexport.c:306
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
+msgstr "%s sólo puede manejar imágenes de mapas de bits (de dos colores) o indexadas"
 
 #: libgimp/gimpexport.c:307
 msgid ""
@@ -172,7 +173,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "La conversión de exportación no modificará su imagen original"
+msgstr "La conversión de exportación no modificará su imagen original."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -189,8 +190,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Va a guardar un canal (selección guardada) como %s\n"
-"Esto no guardará las capas visibles. "
+"Va a guardar un canal (selección guardada) como %s.\n"
+"Esto no guardará las capas visibles."
 
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
@@ -200,14 +201,13 @@ msgstr "Selección de tipografía"
 msgid "Gradient Selection"
 msgstr "Selección de gradiente"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Vacío)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Patrón de selección"
+msgstr "Selección de paleta"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -382,21 +382,21 @@ msgstr "No se ha podido crear la carpeta de miniaturas «%s»."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "No se ha podido crear la miniatura para %s: %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/Color de _frente"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "Color de _frente"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/Color de f_ondo"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "Color de f_ondo"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/Ne_gro"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "Ne_gro"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/_Blanco"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Blanco"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -484,17 +484,14 @@ msgid "Select File"
 msgstr "Seleccione archivo"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "Kilobytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
-msgstr "Mega Bytes"
+msgstr "MegaBytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "Gigabytes"
 
@@ -787,8 +784,3 @@ msgstr "Acuarela"
 msgid "Pressure"
 msgstr "Presión"
 
-#~ msgid "He_x Triplet:"
-#~ msgstr "Triplete He_x:"
-
-#~ msgid "None"
-#~ msgstr "Ninguno"
