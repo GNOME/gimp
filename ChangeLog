@@ -1,3 +1,14 @@
+2001-11-20  Rebecca Walter <rjp@mail.tele.dk>
+
+	* app/core/gimpedit.c
+	* app/core/gimpimagefile.c
+	* app/core/gimpmoduleinfo.c
+	* app/core/gimpmodules.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: More of the extensive proofing. Fun fun fun!
+
+
+
 2001-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c

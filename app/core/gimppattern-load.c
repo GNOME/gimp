@@ -287,7 +287,7 @@ gimp_pattern_load (const gchar *filename)
   if (header.magic_number != GPATTERN_MAGIC || header.version != 1 || 
       header.header_size <= sizeof (header)) 
     {
-      g_message (_("Unknown pattern format version #%d in \"%s\"."),
+      g_message (_("Unknown pattern format version %d in '%s'."),
 		 header.version, filename);
       goto error;
     }
@@ -295,9 +295,9 @@ gimp_pattern_load (const gchar *filename)
   /*  Check for supported bit depths  */
   if (header.bytes != 1 && header.bytes != 3)
     {
-      g_message ("Unsupported pattern depth: %d\n"
-		 "in file \"%s\"\n"
-		 "GIMP Patterns must be GRAY or RGB\n",
+      g_message (_("Unsupported pattern depth %d\n"
+		 "in file '%s'.\n"
+		 "GIMP Patterns must be GRAY or RGB.\n"),
                  header.bytes, filename);
       goto error;
     }
@@ -309,13 +309,13 @@ gimp_pattern_load (const gchar *filename)
 
       if ((read (fd, name, bn_size)) < bn_size)
         {
-          g_message (_("Error in GIMP pattern file \"%s\"."), filename);
+          g_message (_("Error in GIMP pattern file '%s'."), filename);
 	  goto error;
         }
         
       if (!g_utf8_validate (name, -1, NULL))
         {
-          g_message (_("Invalid UTF-8 string in GIMP pattern file \"%s\"."), 
+          g_message (_("Invalid UTF-8 string in pattern file '%s'."), 
                      filename);
           g_free (name);
           name = NULL;
@@ -333,7 +333,7 @@ gimp_pattern_load (const gchar *filename)
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
     {
-      g_message (_("GIMP pattern file appears to be truncated: \"%s\"."),
+      g_message (_("Fatal parsing error: Pattern file '%s' appears truncated."),
 		 filename);
       goto error;
     }

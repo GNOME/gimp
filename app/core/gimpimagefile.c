@@ -253,7 +253,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
 
   if (!pixbuf)
     {
-      g_message (_("Couldn't open thumbnail file '%s'\n%s"),
+      g_message (_("Could not open thumbnail\nfile '%s':\n%s"),
                  thumbname, error->message);
       g_free (thumbname);
       g_error_free (error);
@@ -439,7 +439,7 @@ readXVThumb (const gchar  *fnam,
 
   if (strncmp (P7_buf, P7_332, 6)!=0)
     {
-      g_warning ("Thumbnail doesn't have the 'P7 332' header.");
+      g_warning ("Thumbnail does not have the 'P7 332' header.");
       fclose (fp);
       return NULL;
     }
@@ -478,14 +478,14 @@ readXVThumb (const gchar  *fnam,
 
   if (twofivefive!=255)
     {
-      g_warning ("Thumbnail is of funky depth.");
+      g_warning ("Thumbnail depth is incorrect.");
       fclose (fp);
       return NULL;
     }
 
   if ((*w)<1 || (*h)<1 || (*w)>80 || (*h)>60)
     {
-      g_warning ("Thumbnail size bad.  Corrupted?");
+      g_warning ("Thumbnail size is bad.  Corrupted?");
       fclose (fp);
       return NULL;
     }

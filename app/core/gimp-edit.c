@@ -360,7 +360,7 @@ gimp_edit_fill (GimpImage    *gimage,
       return TRUE;  /*  nothing to do, but the fill succeded  */
 
     default:
-      g_warning ("%s(): unknown fill type", G_GNUC_FUNCTION);
+      g_warning ("%s: unknown fill type", G_GNUC_PRETTY_FUNCTION);
       gimp_image_get_background (gimage, drawable, col);
       break;
     }

@@ -273,14 +273,14 @@ gimp_modules_module_initialize (const gchar *filename,
   if (! module_info->load_inhibit)
     {
       if (gimp->be_verbose)
-	g_print (_("load module: \"%s\"\n"), filename);
+	g_print (_("loading module: '%s'\n"), filename);
 
       gimp_module_info_module_load (module_info, TRUE);
     }
   else
     {
       if (gimp->be_verbose)
-	g_print (_("skipping module: \"%s\"\n"), filename);
+	g_print (_("skipping module: '%s'\n"), filename);
 
       module_info->state = GIMP_MODULE_STATE_UNLOADED_OK;
     }

@@ -257,7 +257,8 @@ gimp_palette_load (const gchar *filename)
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
     {
-      g_warning ("Failed to open palette file %s", filename);
+      g_message (_("Failed to open palette file '%s': %s"), 
+		 filename, g_strerror (errno));
       return NULL;
     }
 
@@ -270,12 +271,11 @@ gimp_palette_load (const gchar *filename)
     {
       /* bad magic, but maybe it has \r\n at the end of lines? */
       if (!strcmp (str, "GIMP Palette\r"))
-	g_message (_("Loading palette %s:\n"
-		     "Corrupt palette:\n"
-		     "missing magic header\n"
+	g_message (_("Loading palette '%s':\n"
+		     "Corrupt palette: missing magic header\n"
 		     "Does this file need converting from DOS?"), filename);
       else
-	g_message (_("Loading palette %s:\n"
+	g_message (_("Loading palette '%s':\n"
 		     "Corrupt palette: missing magic header"), filename);
 
       fclose (fp);
@@ -289,7 +289,7 @@ gimp_palette_load (const gchar *filename)
 
   if (! fgets (str, 1024, fp))
     {
-      g_message (_("Loading palette %s (line %d):\nRead error"),
+      g_message (_("Loading palette '%s':\nRead error in line %d."),
 		 filename, linenum);
 
       fclose (fp);
@@ -314,7 +314,7 @@ gimp_palette_load (const gchar *filename)
 
       if (! fgets (str, 1024, fp))
 	{
-	  g_message (_("Loading palette %s (line %d):\nRead error"),
+	  g_message (_("Loading palette '%s':\nRead error in line %d."),
 		     filename, linenum);
 
 	  fclose (fp);
@@ -332,8 +332,8 @@ gimp_palette_load (const gchar *filename)
 
 	  if (columns < 0 || columns > 256)
 	    {
-	      g_message (_("Loading palette %s (line %d):\n"
-			   "Invalid number or columns"),
+	      g_message (_("Loading palette '%s':\n"
+			   "Invalid number or columns in line %d."),
 			 filename, linenum);
 
 	      columns = 0;
@@ -343,7 +343,7 @@ gimp_palette_load (const gchar *filename)
 
 	  if (! fgets (str, 1024, fp))
 	    {
-	      g_message (_("Loading palette %s (line %d):\nRead error"),
+	      g_message (_("Loading palette '%s':\nRead error in line %d."),
 			 filename, linenum);
 
 	      fclose (fp);
@@ -357,8 +357,6 @@ gimp_palette_load (const gchar *filename)
   else /* old palette format */
     {
       gchar *basename;
-
-      g_warning ("old palette format %s", filename);
 
       basename = g_path_get_basename (filename);
 
@@ -376,22 +374,22 @@ gimp_palette_load (const gchar *filename)
 	    r = atoi (tok);
 	  else
 	    /* maybe we should just abort? */
-	    g_message (_("Loading palette %s (line %d):\n"
-			 "Missing RED component"), filename, linenum);
+	    g_message (_("Loading palette '%s':\n"
+			 "Missing RED component in line %d."), filename, linenum);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
 	    g = atoi (tok);
 	  else
-	    g_message (_("Loading palette %s (line %d):\n"
-			 "Missing GREEN component"), filename, linenum);
+	    g_message (_("Loading palette '%s':\n"
+			 "Missing GREEN component in line %d."), filename, linenum);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
 	    b = atoi (tok);
 	  else
-	    g_message (_("Loading palette %s (line %d):\n"
-			 "Missing BLUE component"), filename, linenum);
+	    g_message (_("Loading palette '%s':\n"
+			 "Missing BLUE component in line %d."), filename, linenum);
 
 	  /* optional name */
 	  tok = strtok (NULL, "\n");
@@ -399,8 +397,8 @@ gimp_palette_load (const gchar *filename)
 	  if (r < 0 || r > 255 ||
 	      g < 0 || g > 255 ||
 	      b < 0 || b > 255)
-	    g_message (_("Loading palette %s (line %d):\n"
-			 "RGB value out of range"), filename, linenum);
+	    g_message (_("Loading palette '%s':\n"
+			 "RGB value out of range in line %d."), filename, linenum);
 
 	  gimp_rgba_set_uchar (&color,
 			       (guchar) r,
@@ -416,7 +414,7 @@ gimp_palette_load (const gchar *filename)
 	  if (feof (fp))
 	    break;
 
-	  g_message (_("Loading palette %s (line %d):\nRead error"),
+	  g_message (_("Loading palette '%s':\nRead error in line %d."),
 		     filename, linenum);
 
 	  fclose (fp);
@@ -454,8 +452,8 @@ gimp_palette_save (GimpData *data)
 
   if (! (fp = fopen (GIMP_DATA (palette)->filename, "w")))
     {
-      g_message (_("Can't save palette \"%s\"\n"),
-		 GIMP_DATA (palette)->filename);
+      g_message (_("Cannot save palette '%s':\n%s"),
+		 GIMP_DATA (palette)->filename, g_strerror (errno));
       return FALSE;
     }
 

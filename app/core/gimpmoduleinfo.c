@@ -262,7 +262,7 @@ gimp_module_info_module_load (GimpModuleInfoObj *module_info,
       gimp_module_info_set_last_error (module_info, g_module_error ());
 
       if (verbose)
-	g_warning (_("module load error: %s: %s"),
+	g_message (_("Module '%s' load error:\n%s"),
 		   module_info->fullpath, module_info->last_module_error);
       return;
     }
@@ -280,12 +280,11 @@ gimp_module_info_module_load (GimpModuleInfoObj *module_info,
       module_info->state = GIMP_MODULE_STATE_ERROR;
 
       gimp_module_info_set_last_error (module_info,
-                                       "missing module_init() symbol");
+                                       _("Missing module_init() symbol"));
 
       if (verbose)
-	g_warning ("%s: module_init() symbol not found",
-                   module_info->fullpath);
-
+	g_message (_("Module '%s' load error:\n%s"),
+		   module_info->fullpath, module_info->last_module_error);
       g_module_close (module_info->module);
       module_info->module = NULL;
       return;
