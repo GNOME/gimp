@@ -23,6 +23,7 @@ typedef struct _MemberClass MemberClass;
 typedef struct _DefClass DefClass;
 typedef struct _Param Param;
 typedef struct _Module Module;
+typedef struct _Package Package;
 
 typedef enum{
 	TYPE_INVALID,
@@ -36,19 +37,23 @@ typedef enum{
 	TYPE_OBJECT
 } TypeKind;
 
-struct _Module {
+struct _Package {
 	Id name;
-	Id common_header;
-	GHashTable* decl_hash;
+	GHashTable* type_hash;
+	GHashTable* mod_hash;
 };
+
+struct _Module {
+	Package* package;
+	Id name;
+	Id header;
+};
+
 
 struct _PrimType {
 	Module* module;
 	Id name;
 	TypeKind kind;
-	Id decl_header;
-	Id def_header;
-	Def* definition;
 };
 
 struct _Type {
@@ -114,7 +119,7 @@ typedef enum _EmitDef{
 
 typedef enum _MemberType{
 	MEMBER_DATA,
-	MEMBER_METHOD,
+	MEMBER_METHOD
 } MemberType;
 
 typedef enum _DataMemberKind{
@@ -168,18 +173,14 @@ typedef void (*DefFunc)(Def* def, gpointer user_data);
 
 
 void init_db(void);
-void put_decl(PrimType* t);
+
+PrimType* get_type(Package* pkg, Id type);
+void put_type(PrimType* t);
+Package* get_pkg(Id pkgname);
+void put_pkg(Package* pkg);
+Module* get_mod(Package* pkg, Id module);
+void put_mod(Module* m);
 void put_def(Def* d);
-PrimType* get_type(Id module, Id type);
-Def* get_def(Id module, Id type);
-Module* get_mod(Id module);
 void foreach_def(DefFunc f, gpointer user_data);
-
-
-
-
-extern Type* type_gtk_type;
-
-
 
 #endif

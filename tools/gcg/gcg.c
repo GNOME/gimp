@@ -2,8 +2,16 @@
 #include "parser.h"
 #include <stdio.h>
 #include <glib.h>
+
+#define __USE_POSIX2
+
 #include <unistd.h>
 #include "output.h"
+
+#ifndef CPP
+#define CPP "cpp"
+#endif
+
 
 Type* type_gtk_type;
 
@@ -54,11 +62,6 @@ void output_cb(Def* def, gpointer out){
 int main(int argc, char* argv[]){
 	/*	target=stdout;*/
 	PRoot* out=pr_new();
-	const gchar* tag_type="type";
-	const gchar* tag_source="source";
-	const gchar* tag_source_head="source_head";
-	const gchar* tag_functions="functions";
-	const gchar* tag_protected="protected";
 	
 	FILE* f;
 	init_db();
@@ -67,23 +70,20 @@ int main(int argc, char* argv[]){
 	yyin=fopen(argv[optind], "r");
 	g_assert(yyin);
 	yyparse();
-	type_gtk_type=g_new(Type, 1);
-	type_gtk_type->is_const=FALSE;
-	type_gtk_type->indirection=0;
-	type_gtk_type->notnull=FALSE;
-	type_gtk_type->prim=get_type(GET_ID("Gtk"), GET_ID("Type"));
-	g_assert(type_gtk_type->prim);
 	
 	foreach_def(output_cb, out);
 	f=fopen(type_hdr_name, "w+");
-	pr_write(out, f, &tag_type, 1);
+	pr_write(out, f, "type");
 	f=fopen(source_name, "w+");
-	pr_write(out, f, &tag_source_head, 1);
-	pr_write(out, f, &tag_source, 1);
+	pr_write(out, f, "source_deps");
+	pr_write(out, f, "source_head");
+	pr_write(out, f, "source");
 	f=fopen(func_hdr_name, "w+");
-	pr_write(out, f, &tag_functions, 1);
+	pr_write(out, f, "func_deps");
+	pr_write(out, f, "functions");
 	f=fopen(prot_hdr_name, "w+");
-	pr_write(out, f, &tag_protected, 1);
+	pr_write(out, f, "prot_deps");
+	pr_write(out, f, "protected");
 	return 0;
 }
 

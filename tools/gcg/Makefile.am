@@ -1,8 +1,8 @@
 noinst_PROGRAMS = gcg
 
 
-CFLAGS=-I/usr/local/lib/glib/include -DYYDEBUG=1 -g -Wall -W -DCPP="$(CPP)"
-INCLUDES		= -DYYDEBUG=1 @GLIB_CFLAGS@
+CFLAGS=-g -Wall -W -DCPP="$(CPP)" -ansi -pedantic
+INCLUDES		= @GLIB_CFLAGS@
 YFLAGS			= -d -v 2>/dev/null
 LIBS			= @GLIB_LIBS@
 

@@ -2,36 +2,67 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-const gconstpointer p_no_data = &p_no_data;
 static const gconstpointer p_node_magic_tag = &p_node_magic_tag;
 
 
-#define BE_NODE(x) (g_assert((x) && ((PNode*)(x))->magic == &p_node_magic_tag))
+
+#define BE_NODE(x) g_assert((x) && ((PNode*)(x))->magic == &p_node_magic_tag)
 
 static GMemChunk* p_node_chunk;
 
 static GList* p_float_list;
 static GHashTable* p_str_hash;
 
+typedef enum{
+	NODE_NIL,
+	NODE_DATA,
+	NODE_COLLECT
+} PNodeType;
+
+typedef struct{
+	gchar* str;
+	PNode* node;
+} PBlock;
+
+typedef struct _PRNode{
+	GQuark tag;
+	PNode* node;
+} PRNode;
+
+
+struct _PRoot{
+	GData* data;
+	GList* nodes;
+};
+
 struct _PNode{
 	gconstpointer magic;
 	guint ref_count;
 	GList* float_link;
-	const gchar* str;
-	GSList* children;
+	PNodeType type;
+	union {
+		struct {
+			gint nblocks;
+			PBlock* blocks;
+		} b;
+		struct {
+			PNodeCreateFunc func;
+			GQuark tag;
+		} c;
+	} u;
 };
 
 static PNode p_nil_node = {
 	&p_node_magic_tag,
 	-1,
 	NULL,
-	NULL,
-	NULL
+	NODE_NIL,
+	{{0,NULL}}
 };
 
 PNode* p_nil = &p_nil_node;
 
-static PNode* p_make(void){
+static PNode* p_make(PNodeType type){
 	PNode* node;
 	if(!p_node_chunk)
 		p_node_chunk = g_mem_chunk_create(PNode, 1024,
@@ -41,8 +72,7 @@ static PNode* p_make(void){
 	node->ref_count = 0;
 	node->magic = &p_node_magic_tag;
 	node->float_link = p_float_list = g_list_prepend(p_float_list, node);
-	node->str = NULL;
-	node->children = NULL;
+	node->type = type;
 	return node;
 }
 
@@ -65,162 +95,178 @@ void p_unref(PNode* node){
 	node->ref_count--;
 	if(node->ref_count>0)
 		return;
-	else{
-		GSList* l;
-		if(node->children){
-			for(l = node->children;l;l = l->next)
-				p_unref(l->data);
-			g_slist_free(node->children);
-		} else 
-			g_hash_table_remove(p_str_hash, node->str);
-		g_free((gpointer)node->str);
-		g_mem_chunk_free(p_node_chunk, node);
+	switch(node->type){
+	case NODE_DATA:{
+		PBlock* bl = node->u.b.blocks;
+		gint i=node->u.b.nblocks;
+		while(i--){
+			g_free(bl[i].str);
+			p_unref(bl[i].node);
+		}
+		g_free(bl);
+		break;
+	}
+	case NODE_NIL:
+		break;
+	case NODE_COLLECT:
+		break;
+	}
+	g_mem_chunk_free(p_node_chunk, node);
+}
+
+typedef struct{
+	FILE* f;
+	PRoot* p;
+} PWrite;
+
+typedef struct{
+	PWrite* w;
+	PNode* n;
+} PCollect;
+
+static void p_write(PNode* node, PWrite* w);
+
+
+void cb_pwrite(gpointer key, gpointer value, gpointer data){
+	PCollect* c = data;
+	PNodeCreateFunc func = c->n->u.c.func;
+	(void)key;
+	if(func)
+		p_write(func(value), c->w);
+	else
+		p_write(value, c->w);
+}
+	
+
+static void p_write(PNode* node, PWrite* w){
+	BE_NODE(node);
+	switch(node->type){
+	case NODE_DATA:{
+		gint i = 0, n = node->u.b.nblocks;
+		PBlock* bl = node->u.b.blocks;
+		
+		for(i = 0; i < n; i++){
+			if(bl[i].str)
+				fputs(bl[i].str, w->f);
+			p_write(bl[i].node, w);
+		}
+		break;
+	}
+	case NODE_NIL:
+		break;
+	case NODE_COLLECT:{
+		GHashTable* h = g_datalist_id_get_data(&w->p->data,
+						       node->u.c.tag);
+		PCollect c;
+		c.w = w;
+		c.n = node;
+		if(!h)
+			break;
+		g_hash_table_foreach(h, cb_pwrite, &c);
+		break;
+	}
 	}
 }
 
-void p_write(PNode* node, FILE* f){
-	GSList* l;
-	BE_NODE(node);
-	if(node==p_nil)
-		return;
-	l = node->children;
-	if(l){
-		const gchar* c = node->str;
-		if(c)
-			while(*c){
-				gint i = 0;
-				while(c[i] && c[i] != '~')
-					i++;
-				fwrite(c, i, 1, f);
-				c += i;
-				if(*c == '~'){
-					c++;
-					g_assert(l);
-					p_write(l->data, f);
-					l = l->next;
-				}
-			}
-		else
-			do{
-				p_write(l->data, f);
-			}while((l=l->next));
-	}else if(node->str)
-		fputs(node->str, f);
+static PNode* p_simple_string(gchar* str){
+	PNode* n = p_make(NODE_DATA);
+	n->u.b.nblocks = 1;
+	n->u.b.blocks = g_new(PBlock, 1);
+	n->u.b.blocks[0].str = str;
+	n->u.b.blocks[0].node = p_nil;
+	return n;
 }
-
-void p_traverse(PNode* node, PNodeTraverseFunc func, gpointer user_data){
-	GSList* l;
-	BE_NODE(node);
-	func(node, user_data);
-	for(l=node->children;l;l=l->next)
-		p_traverse(l->data, func, user_data);
-}
-
+	
 PNode* p_str(const gchar* str){
 	PNode* n;
 
 	if(!p_str_hash)
 		p_str_hash = g_hash_table_new(g_str_hash, g_str_equal);
 	n = g_hash_table_lookup(p_str_hash, str);
-	if(!n){
-		n = p_make();
-		n->str = g_strdup(str);
-		g_hash_table_insert(p_str_hash, n->str, n);
-	}
-	return n;
+	if(n)
+		return n;
+	else
+		return p_simple_string(g_strdup(str));
 }
 
 PNode* p_prf(const gchar* format, ...){
-	PNode* n = p_make();
+	PNode* n;
 	va_list args;
 	va_start(args, format);
-	n->str = g_strdup_vprintf (format, args);
+	n = p_simple_string(g_strdup_vprintf (format, args));
+	va_end(args);
 	return n;
 }
 
 PNode* p_fmt(const gchar* f, ...){
 	va_list args;
-	gchar* b = f;
-	PNode* n;
-	GSList* l = NULL;
+	const gchar* b;
+	PNode* n = p_make(NODE_DATA);
+	gint i;
+	PBlock* bl;
+	
 	va_start(args, f);
 	g_assert(f);
-	while(*f){
-		while(*f && *f != '~')
-			f++;
-		if(*f == '~'){
-			PNode* p;
+	for(b = f, i = 0; *b; b++)
+		if(*b == '~')
+			i++;
+	if(b!=f && b[-1] != '~')
+		i++;
+	bl = g_new(PBlock, i);
+	n->u.b.blocks = bl;
+	n->u.b.nblocks = i;
+	
+	for(b = f, i = 0; *b; i++){
+		gint idx=0;
+		PNode* p = p_nil;
+		while(b[idx] && b[idx] != '~')
+			idx++;
+		bl[i].str = g_strndup(b, idx);
+		if(b[idx] == '~'){
 			p = va_arg(args, PNode*);
 			BE_NODE(p);
-			if(p!=p_nil)
-				p_ref(p);
-			l = g_slist_prepend(l, p);
-			
-			f++;
+			p_ref(p);
+			idx++;
 		}
+		bl[i].node = p;
+		b = &b[idx];
 	}
-	if(!l)
-		return p_str(f);
-	n = p_make();
-	n->str = g_strdup(b);
-	n->children = g_slist_reverse(l);
 	return n;
 }
 
-PNode* p_lst(PNode* n, ...){
-	va_list args;
-	GSList* l = NULL;
-	PNode* node;
-	g_assert(n);
-	va_start(args, n);
-	while(n){
-		BE_NODE(n);
-		if(n!=p_nil){
-			p_ref(n);
-			l = g_slist_prepend(l, n);
-		}
-		n = va_arg(args, PNode*);
-	}
-	node = p_make();
-	node->children = g_slist_reverse(l);
-	return node;
-}
-
-PNode* p_for(GSList* l, PNodeCreateFunc func, gpointer user_data){
-	PNode* n = p_make();
-	GSList* lst = NULL;
-	n->str = NULL;
+PNode* p_for(GSList* lst, PNodeCreateFunc func, gpointer user_data){
+	PNode* n = p_make(NODE_DATA);
+	GSList* l = lst;
+	gint i = g_slist_length(l);
+	n->u.b.nblocks = i;
+	n->u.b.blocks = g_new(PBlock, i);
+	i = 0;
 	while(l){
 		PNode* p;
-		if(user_data==p_nil)
-			p=func(l->data);
+		if(user_data == p_nil)
+			p = func(l->data);
 		else
-			p=func(l->data, user_data);
+			p = func(l->data, user_data);
 		BE_NODE(p);
-		if(p!=p_nil){
-			p_ref(p);
-			lst=g_slist_prepend(lst, p);
-		}			
-		l=l->next;
+		p_ref(p);
+		n->u.b.blocks[i].str = NULL;
+		n->u.b.blocks[i++].node = p;
+		l = l->next;
 	}
-	n->children=g_slist_reverse(lst);
 	return n;
 }
 
-typedef struct _PRNode{
-	GQuark tag;
-	PNode* node;
-} PRNode;
-
-
-struct _PRoot{
-	GList* nodes;
-};
-
+PNode* p_col(const gchar* tag, PNodeCreateFunc func){
+	PNode* n = p_make(NODE_COLLECT);
+	n->u.c.func = func;
+	n->u.c.tag = g_quark_from_string(tag);
+	return n;
+}
 
 PRoot* pr_new(void){
 	PRoot* pr = g_new(PRoot, 1);
 	pr->nodes = NULL;
+	g_datalist_init(&pr->data);
 	return pr;
 }
 
@@ -237,27 +283,49 @@ void pr_add(PRoot* pr, const gchar* tag, PNode* node){
 	p_ref(node);
 }
 
-void pr_write(PRoot* pr, FILE* stream, const gchar** tags, gint n){
-	GList* l;
-	GQuark* quarks;
-	gint i;
+void pr_put(PRoot* pr, const gchar* tag, gpointer datum){
+	GHashTable* h = g_datalist_get_data(&pr->data, tag);
+	if(!h){
+		h = g_hash_table_new(NULL, NULL);
+		g_datalist_set_data(&pr->data, tag, h);
+	}
 
-	quarks=g_new(GQuark, n);
-	for(i=0;i<n;i++)
-		quarks[i]=g_quark_from_string(tags[i]);
-		
+	g_hash_table_insert(h, datum, datum);
+}
+
+void pr_write(PRoot* pr, FILE* stream, const gchar* tag){
+	GList* l;
+	GQuark q;
+	PWrite w;
+	
 	g_assert(pr);
+
+	w.p = pr;
+	w.f = stream;
+	q = g_quark_from_string(tag);
 	for(l=g_list_last(pr->nodes);l;l=l->prev){
 		PRNode* node = l->data;
-		for(i=0;i<n;i++)
-			if(node->tag==quarks[i])
-				break;
-		if(i==n)
-			continue;
-		p_write(node->node, stream);
+		if(node->tag == q)
+			p_write(node->node, &w);
 	}
 }
 
+gchar* pr_to_str(PRoot* pr, const gchar* tag){
+	FILE* f = tmpfile();
+	glong len;
+	gchar* buf;
+	pr_write(pr, f, tag);
+	len = ftell(f);
+	rewind(f);
+	buf = g_new(gchar, len+1);
+	fread(buf, len, 1, f);
+	buf[len]='\0';
+	fclose(f);
+	return buf;
+}
+	
+	
+	
 void pr_free(PRoot* pr){
 	GList* l;
 	for(l=pr->nodes;l;l = l->next){

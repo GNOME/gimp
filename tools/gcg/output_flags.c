@@ -13,10 +13,9 @@ PNode* p_flags_member(Id id, FlagData* d){
 }
 
 PNode* p_flags_decl(FlagsDef* e){
-	FlagData d={
-		-1,
-		DEF(e)->type
-	};
+	FlagData d;
+	d.i = -1;
+	d.t = DEF(e)->type;
 	return p_fmt("typedef enum {\n"
 		     "~"
 		     "} ~;\n"
@@ -49,8 +48,7 @@ void output_flags_type_init(PRoot* out, FlagsDef* e){
 			  "~"
 			  "\t\t{0, NULL, NULL}\n"
 			  "\t};\n"
-			  "\t~ = gtk_type_register_flags (\"~\", values);\n"
-			  "\treturn ~;\n",
+			  "\t~ = gtk_type_register_flags (\"~\", values);\n",
 			  p_prf("%d", g_slist_length(e->flags)+1),
 			  p_for(e->flags, p_flags_value, t),
 			  p_internal_varname(t, p_str("type")),
@@ -58,8 +56,9 @@ void output_flags_type_init(PRoot* out, FlagsDef* e){
 			  p_internal_varname(t, p_str("type"))));
 }
 	   
-void output_flags(PRoot* out, FlagsDef* e){
-	pr_add(out, "type", p_flags_decl(e));
-	output_flags_type_init(out, e);
+void output_flags(PRoot* out, Def* d){
+	FlagsDef* f = (FlagsDef*) d;
+	pr_add(out, "type", p_flags_decl(f));
+	output_flags_type_init(out, f);
 }
 

@@ -58,6 +58,8 @@ PNode* p_guard_end(const gchar *c);
 
 PNode* p_c_ident(Id id);
 PNode* p_c_macro(Id id);
+PNode* p_prot_header(Module* m);
+PNode* p_type_header(Module* m);
 
 
 void output_func(PRoot* out,
@@ -71,8 +73,11 @@ void output_func(PRoot* out,
 
 void output_var(PRoot* out, Id tag, PNode* type, PNode* name);
 void output_def(PRoot* out, Def* d);
-void output_object(PRoot* out, ObjectDef* d);
-void output_enum(PRoot* out, EnumDef* d);
-void output_flags(PRoot* out, FlagsDef* d);
+void output_object(PRoot* out, Def* d);
+void output_enum(PRoot* out, Def* d);
+void output_flags(PRoot* out, Def* d);
+PNode* p_type_include(Module* m);
+
+
 
 #endif

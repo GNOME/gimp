@@ -2,14 +2,13 @@
 #include "gcg.h"
 #define YYDEBUG 1
 
+static Package* current_package;
 static Module* current_module;
-static Id current_header;
 static ObjectDef* current_class;
-static GSList* imports;
 static Method* current_method;
 
 static GSList* imports_list;
-	
+ 
 %}
 
 %union {
@@ -70,12 +69,15 @@ static GSList* imports_list;
 %token T_DOUBLE
 %token T_BOXED
 %token T_SIGNAL
+%token T_FOREIGN
+%token T_PACKAGE
 
 %token<id> T_IDENT
 %token<id> T_HEADERNAME
 %token<str> T_STRING
 
 %type<id> ident
+%type<id> headerdef
 %type<fund_type> fundtype
 %type<type> type
 %type<type> typeorvoid
@@ -108,27 +110,73 @@ start_symbol: deffile ;
 
 deffile: declarations definitions;
 
-declarations: /* empty */ | declarations modulescope;
+declarations: /* empty */ | declarations package;
 
 definitions: current_module_def deflist;
 
 deflist: /* empty */ | deflist def {
 	put_def($2);
-};
+} | deflist import;
 
-import: T_IMPORT ident T_END {
-	imports=g_slist_prepend(imports, (gpointer)($2));
+import: T_IMPORT importlist T_END;
+
+importlist: ident {
+	Package* p = get_pkg($1);
+	if(!p)
+		g_error("Attempt to import unknown package %s", $1);
+	imports_list = g_slist_prepend(imports_list, p);
+} | importlist T_COMMA ident {
+	Package* p = get_pkg($3);
+	if(!p)
+		g_error("Attempt to import unknown package %s", $3);
+	imports_list = g_slist_prepend(imports_list, p);
 }
 
-modulescope: T_MODULE ident T_OPEN_B {
-	current_module=get_mod($2);
-} decllist T_CLOSE_B {
-	current_module=NULL;
-} T_END;
-
-current_module_def: T_MODULE ident T_END {
-	current_module=get_mod($2);
+package: T_PACKAGE ident T_OPEN_B {
+	Package* p = get_pkg($2);
+	if(!p){
+		p = g_new(Package, 1);
+		p->name = $2;
+		p->type_hash = g_hash_table_new(NULL, NULL);
+		p->mod_hash = g_hash_table_new(NULL, NULL);
+		put_pkg(p);
+	}
+	current_package = p;
+} modulelist T_CLOSE_B {
+	current_package = NULL;
 };
+
+current_module_def: T_MODULE ident T_SCOPE ident T_END {
+	Package* p = get_pkg($2);
+	Module* m;
+	if(!p)
+		g_error("Unknown package %s", $2);
+	m = get_mod(p, $4);
+	if(!m)
+		g_error("Unknown module %s.%s", $2, $4);
+	current_module = m;
+}
+
+
+modulelist: /* empty */ | modulelist module;
+
+headerdef: /* empty */ {
+	$$ = NULL;
+}| T_HEADERNAME;
+
+
+
+module: T_MODULE ident headerdef T_OPEN_B {
+	Module* m = get_mod(current_package, $2);
+	if(!m){
+		m = g_new(Module, 1);
+		m->package = current_package;
+		m->name = $2;
+		m->header = $3;
+		put_mod(m);
+	}
+	current_module = m;
+} decllist T_CLOSE_B;
 
 decllist: /* empty */ | decllist decl;
 
@@ -148,9 +196,12 @@ fundtype: T_INT {
 	$$ = TYPE_FLAGS;
 }
 
-simpledecl: fundtype primtype T_END {
-	g_assert($2->kind==TYPE_INVALID);
-	$2->kind = $1;
+simpledecl: fundtype ident T_END {
+	PrimType* t = g_new(PrimType, 1);
+	t->module = current_module;
+	t->name = $2;
+	t->kind = $1;
+	put_type(t);
 };
 
 semitype: const_def primtype {
@@ -181,9 +232,26 @@ typeorvoid: type | T_VOID {
 
 	
 primtype: ident T_SCOPE ident {
-	$$ = get_type($1, $3);
+	Package* p=get_pkg($1);
+	PrimType* t;
+	if(!p)
+		g_error("Unknown package %s!", $1);
+	t = get_type(p, $3);
+	if(!t)
+		g_error("Unknown type %s:%s", $1, $3);
+	$$ = t;
 } | ident {
-	$$ = get_type(current_module->name, $1);
+	Package* p = current_module->package;
+	PrimType* t;
+	GSList* l = imports_list;
+	t = get_type(p, $1);
+	while(l && !t){
+		t = get_type(l->data, $1);
+		l = l->next;
+	}
+	if(!t)
+		g_error("Couldn't find type %s in import list", $1);
+	$$ = t;
 };
 
 paramlist: /* empty */ {
@@ -271,22 +339,22 @@ idlist: ident {
 
 def: classdef | enumdef | flagsdef;
 
-enumdef: T_ENUM primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
+enumdef: T_ENUM primtype docstring T_OPEN_B idlist T_CLOSE_B {
 	EnumDef* d=g_new(EnumDef, 1);
 	g_assert($2->kind==TYPE_ENUM);
-	d->alternatives = $4;
+	d->alternatives = $5;
 	$$=DEF(d);
 	$$->type=$2;
-	$$->doc=$6;
+	$$->doc=$3;
 };
 
-flagsdef: T_FLAGS primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
+flagsdef: T_FLAGS primtype docstring T_OPEN_B idlist T_CLOSE_B T_END {
 	FlagsDef* d=g_new(FlagsDef, 1);
 	g_assert($2->kind==TYPE_ENUM);
-	d->flags = $4;
+	d->flags = $5;
 	$$=DEF(d);
 	$$->type=$2;
-	$$->doc=$6;
+	$$->doc=$3;
 };
 
 parent: /* empty */{
@@ -298,9 +366,14 @@ parent: /* empty */{
 classdef: T_CLASS primtype parent docstring T_OPEN_B {
 	g_assert($2->kind==TYPE_OBJECT);
 	g_assert(!$3 || $3->kind==TYPE_OBJECT);
+	g_assert($2->module == current_module);
 	current_class=g_new(ObjectDef, 1);
-} classbody T_CLOSE_B T_END {
-	Type t={FALSE, 1, TRUE, $2};
+} classbody T_CLOSE_B {
+	Type t;
+	t.is_const = FALSE;
+	t.indirection = 1;
+	t.notnull = TRUE;
+	t.prim = $2;
 	current_class->self_type[0]=t;
 	t.is_const=TRUE;
 	current_class->self_type[1]=t;

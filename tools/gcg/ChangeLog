@@ -1,3 +1,8 @@
+1998-11-20  Lauri Alanko  <la@iki.fi>
+
+	* Again modified the formatting stuff. Some preliminary header
+	stuff. Soon moving to use cpp..
+
 1998-11-18  Lauri Alanko  <la@iki.fi>
 
 	* Signal marshalling should be pretty complete now. Demarshalling

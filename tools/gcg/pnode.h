@@ -13,19 +13,20 @@ typedef PNode* (*PNodeCreateFunc) ();
 
 void p_ref(PNode* node);
 void p_unref(PNode* node);
-void p_write(PNode* node, FILE* f);
 PNode* p_str(const gchar* str);
-PNode* p_qrk(const gchar* str);
 PNode* p_prf(const gchar* format, ...) G_GNUC_PRINTF(1, 2);
 PNode* p_fmt(const gchar* f, ...);
 PNode* p_lst(PNode* n, ...);
 PNode* p_for(GSList* l, PNodeCreateFunc func, gpointer user_data);
-void p_traverse(PNode* node, PNodeTraverseFunc func, gpointer user_data);
+PNode* p_col(const gchar* tag, PNodeCreateFunc func);
 
 PRoot* pr_new(void);
 void pr_add(PRoot* root, const gchar* tag, PNode* node);
-void pr_write(PRoot* pr, FILE* stream, const gchar** tags, gint n);
+void pr_put(PRoot* pr, const gchar* tag, gpointer datum);
+void pr_write(PRoot* pr, FILE* stream, const gchar* tag);
 void pr_free(PRoot* root);
+gchar* pr_to_str(PRoot* pr, const gchar* tags);
+
 
 
 #endif

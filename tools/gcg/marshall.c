@@ -46,7 +46,7 @@ MarshallType marshalling_type(Type* t){
 SignalType* sig_type(Method* m){
 	SignalType *t=g_new(SignalType, 1);
 	GSList* p=m->params, *a=NULL;
-	t->package = DEF(MEMBER(m)->my_class)->type->module->name;
+	t->package = DEF(MEMBER(m)->my_class)->type->module->package->name;
 	t->rettype = marshalling_type(&m->ret_type);
 	while(p){
 		Param* param=p->data;
@@ -152,7 +152,7 @@ PNode* p_handler_type(SignalType* t){
 PNode* p_signal_id(Method* s){
 	PrimType* t=DEF(MEMBER(s)->my_class)->type;
 	return p_fmt("_~_~_signal_~",
-		     p_c_ident(t->module->name),
+		     p_c_ident(t->module->package->name),
 		     p_c_ident(t->name),
 		     p_c_ident(MEMBER(s)->name));
 }
@@ -219,7 +219,8 @@ PNode* p_demarshaller(SignalType* t){
 	gint idx=0;
 
 	
-	return p_lst((t->rettype==TYPE_NONE)
+	return p_fmt("~~",
+		     (t->rettype==TYPE_NONE)
 		     ? p_fmt("\t*(GTK_RETLOC_~(args[~])) =\n",
 			     p_gtype_name(t->rettype, FALSE),
 			     p_prf("%d", g_slist_length(t->argtypes)))
@@ -228,8 +229,7 @@ PNode* p_demarshaller(SignalType* t){
 			   "~"
 			   "\tuser_data);\n",
 			   p_cast(p_handler_type(t), p_str("func")),
-			   p_for(t->argtypes, p_arg_demarsh, &idx)),
-		     p_nil);
+			   p_for(t->argtypes, p_arg_demarsh, &idx)));
 }
 
 
