@@ -1,3 +1,13 @@
+2003-09-01  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c: Dereference all pointers
+	  from *outside* of asm() construct.
+
+	* app/paint-funcs/paint-funcs.c: Fixed bug where dissolve opacity
+	  was incorrectly set, and dissolve mask was garbage. This should
+	  fix Bug #121213
+
 2003-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/domain.c: fixed help domain parsing.

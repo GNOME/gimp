@@ -1004,9 +1004,9 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
   /*
    * if destination does not have an alpha channel, add one to it.
    */
+
   if (!gimp_composite_pixel_alphap[ctx->pixelformat_D]) {
     ctx->pixelformat_D = gimp_composite_pixel_alpha[ctx->pixelformat_D];
-    /*gimp_composite_convert_any_any_any_generic (ctx);*/
   }
 
   gr = g_rand_new_with_seed(random_table[y % RANDOM_TABLE_SIZE]);
