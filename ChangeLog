@@ -1,3 +1,10 @@
+2005-01-20  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcomponenteditor.c
+	(gimp_component_editor_button_press): call gimp_image_flush() after
+	setting the active component since this might unselect the active
+	channel. Fixes bug #164195.
+
 2005-01-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c: applied a patch from Geert

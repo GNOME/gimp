@@ -522,10 +522,13 @@ gimp_component_editor_button_press (GtkWidget           *widget,
       switch (bevent->button)
         {
         case 1:
-          if (column != editor->eye_column &&
-              bevent->type == GDK_BUTTON_PRESS)
-            gimp_image_set_component_active (GIMP_IMAGE_EDITOR (editor)->gimage,
-                                             channel, ! active);
+          if (column != editor->eye_column && bevent->type == GDK_BUTTON_PRESS)
+            {
+              GimpImage *image = GIMP_IMAGE_EDITOR (editor)->gimage;
+
+              gimp_image_set_component_active (image, channel, ! active);
+              gimp_image_flush (image);
+            }
           break;
 
         case 2:
