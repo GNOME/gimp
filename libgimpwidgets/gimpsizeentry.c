@@ -69,7 +69,6 @@ struct _GimpSizeEntryField
   gdouble        max_refval;
   gint           refval_digits;
 
-  gboolean       value_boundaries;
   gint           stop_recursion;
 };
 
@@ -90,7 +89,7 @@ static void   gimp_size_entry_refval_callback (GtkWidget          *widget,
 static void   gimp_size_entry_update_unit     (GimpSizeEntry      *gse,
 					       GimpUnit            unit);
 static void   gimp_size_entry_unit_callback   (GtkWidget          *widget,
-					       gpointer            data);
+					       GimpSizeEntry      *sizeentry);
 
 
 static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
@@ -631,7 +630,6 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
   gsef->min_value        = lower;
   gsef->max_value        = upper;
-  gsef->value_boundaries = TRUE;
 
   GTK_ADJUSTMENT (gsef->value_adjustment)->lower = gsef->min_value;
   GTK_ADJUSTMENT (gsef->value_adjustment)->upper = gsef->max_value;
@@ -644,6 +642,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
     {
     case GIMP_SIZE_ENTRY_UPDATE_NONE:
       break;
+
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       switch (gse->unit)
 	{
@@ -672,6 +671,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
 	  break;
 	}
       break;
+
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_refval_boundaries (gse, field,
 					     gsef->min_value *
@@ -679,6 +679,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
 					     gsef->max_value *
 					     _gimp_eek.unit_get_factor (gse->unit));
       break;
+
     default:
       break;
     }
@@ -753,6 +754,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				  gsef->refval);
       break;
+
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->refval =
 	CLAMP (value * _gimp_eek.unit_get_factor (gsef->gse->unit),
@@ -765,6 +767,8 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
     default:
       break;
     }
+
+  g_signal_emit (gsef->gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
 }
 
 /**
@@ -798,7 +802,6 @@ gimp_size_entry_set_value (GimpSizeEntry *gse,
   value = CLAMP (value, gsef->min_value, gsef->max_value);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->value_adjustment), value);
-
   gimp_size_entry_update_value (gsef, value);
 }
 
@@ -815,10 +818,7 @@ gimp_size_entry_value_callback (GtkWidget *widget,
   new_value = GTK_ADJUSTMENT (widget)->value;
 
   if (gsef->value != new_value)
-    {
-      gimp_size_entry_update_value (gsef, new_value);
-      g_signal_emit (gsef->gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
-    }
+    gimp_size_entry_update_value (gsef, new_value);
 }
 
 
@@ -837,10 +837,10 @@ gimp_size_entry_value_callback (GtkWidget *widget,
  * @field's new boundaries.
  **/
 void
-gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
-					gint           field,
-					gdouble        lower,
-					gdouble        upper)
+gimp_size_entry_set_refval_boundaries (GimpSizeEntry *gse,
+                                       gint           field,
+                                       gdouble        lower,
+                                       gdouble        upper)
 {
   GimpSizeEntryField *gsef;
 
@@ -895,6 +895,7 @@ gimp_size_entry_set_refval_boundaries  (GimpSizeEntry *gse,
 	  break;
 	}
       break;
+
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gimp_size_entry_set_value_boundaries (gse, field,
 					    gsef->min_refval /
@@ -1012,6 +1013,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
       gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->value_adjustment),
 				gsef->value);
       break;
+
     case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
       gsef->value =
 	CLAMP (refval / _gimp_eek.unit_get_factor (gsef->gse->unit),
@@ -1023,6 +1025,8 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
     default:
       break;
     }
+
+  g_signal_emit (gsef->gse, gimp_size_entry_signals[REFVAL_CHANGED], 0);
 }
 
 /**
@@ -1052,10 +1056,8 @@ gimp_size_entry_set_refval (GimpSizeEntry *gse,
   refval = CLAMP (refval, gsef->min_refval, gsef->max_refval);
 
   if (gse->show_refval)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
-				refval);
-    }
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (gsef->refval_adjustment),
+                              refval);
 
   gimp_size_entry_update_refval (gsef, refval);
 }
@@ -1072,10 +1074,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
   new_refval = GTK_ADJUSTMENT (widget)->value;
 
   if (gsef->refval != new_refval)
-    {
-      gimp_size_entry_update_refval (gsef, new_refval);
-      g_signal_emit (gsef->gse, gimp_size_entry_signals[REFVAL_CHANGED], 0);
-    }
+    gimp_size_entry_update_refval (gsef, new_refval);
 }
 
 
@@ -1134,26 +1133,12 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
       gsef->stop_recursion = 0; /* hack !!! */
 
-      g_signal_handlers_block_by_func (gsef->value_adjustment,
-                                       gimp_size_entry_value_callback,
-                                       gsef);
-
-      if (gsef->value_boundaries)
-        gimp_size_entry_set_value_boundaries (gse, i,
-                                              gsef->min_value,
-                                              gsef->max_value);
-      else
-        gimp_size_entry_set_refval_boundaries (gse, i,
-                                               gsef->min_refval,
-                                               gsef->max_refval);
-
-      g_signal_handlers_unblock_by_func (gsef->value_adjustment,
-                                         gimp_size_entry_value_callback,
-                                         gsef);
+      gimp_size_entry_set_refval_boundaries (gse, i,
+                                             gsef->min_refval,
+                                             gsef->max_refval);
     }
 
   g_signal_emit (gse, gimp_size_entry_signals[UNIT_CHANGED], 0);
-  g_signal_emit (gse, gimp_size_entry_signals[VALUE_CHANGED], 0);
 }
 
 
@@ -1180,11 +1165,15 @@ gimp_size_entry_set_unit (GimpSizeEntry *gse,
 }
 
 static void
-gimp_size_entry_unit_callback (GtkWidget *widget,
-			       gpointer   data)
+gimp_size_entry_unit_callback (GtkWidget     *widget,
+			       GimpSizeEntry *gse)
 {
-  gimp_size_entry_update_unit (GIMP_SIZE_ENTRY (data),
-			       gimp_unit_menu_get_unit (GIMP_UNIT_MENU(widget)));
+  GimpUnit new_unit;
+
+  new_unit = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+
+  if (gse->unit != new_unit)
+    gimp_size_entry_update_unit (gse, new_unit);
 }
 
 

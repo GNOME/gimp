@@ -1,5 +1,15 @@
 2003-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.c: moved all signal emissions to
+	their resp update() functions (e.g. "value_changed" is emitted
+	from gimp_size_entry_value_update() now). Should fix all bugs ;)
+	for the cost of a few extra signal emissions. We definitely
+	emitted too few signals before so it's at least less broken.
+	Removed "gboolean value_boundaries" stuff because this fix should
+	always update the reference values correctly now.
+	
+2003-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimp-tools.c (gimp_tools_init): made Dodge/Burn the
 	last paint tool, so Convolve and Smudge are together.
 
