@@ -39,10 +39,10 @@ typedef struct _GimpViewRendererClass  GimpViewRendererClass;
 struct _GimpViewRenderer
 {
   GObject             parent_instance;
-                       
+
   GType               viewable_type;
   GimpViewable       *viewable;
-                       
+
   gint                width;
   gint                height;
   gint                border_width;
@@ -57,10 +57,10 @@ struct _GimpViewRenderer
   guchar             *buffer;
   gint                rowstride;
   gint                bytes;
-                      
+
   GdkPixbuf          *no_view_pixbuf;
   gchar              *bg_stock_id;
-                      
+
   gint                size;
   gboolean            needs_render;
   guint               idle_id;
@@ -137,10 +137,10 @@ void   gimp_view_renderer_default_render_stock  (GimpViewRenderer *renderer,
                                                  GtkWidget        *widget,
                                                  const gchar      *stock_id);
 void   gimp_view_renderer_render_buffer         (GimpViewRenderer *renderer,
-                                                   TempBuf        *temp_buf,
-                                                   gint            channel,
-                                                   GimpViewBG      inside_bg,
-                                                   GimpViewBG      outside_bg);
+                                                 TempBuf          *temp_buf,
+                                                 gint              channel,
+                                                 GimpViewBG        inside_bg,
+                                                 GimpViewBG        outside_bg);
 
 
 /*  general purpose temp_buf to buffer projection function  */
