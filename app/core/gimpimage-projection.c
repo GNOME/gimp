@@ -3744,20 +3744,20 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
     {
       layer = (Layer *) reverse_list->data;
 
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      x = (gint) (ratio * off_x + 0.5);
-      y = (gint) (ratio * off_y + 0.5);
-      w = (gint) (ratio * drawable_width (GIMP_DRAWABLE(layer)) + 0.5);
-      h = (gint) (ratio * drawable_height (GIMP_DRAWABLE(layer)) + 0.5);
-
+      x = (gint) (ratio * off_x + 0.5); 
+      y = (gint) (ratio * off_y + 0.5); 
+      w = (gint) (ratio * drawable_width (GIMP_DRAWABLE(layer)) + 0.5); 
+      h = (gint) (ratio * drawable_height (GIMP_DRAWABLE(layer)) + 0.5); 
+      
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);
       x2 = CLAMP (x + w, 0, width);
       y2 = CLAMP (y + h, 0, height);
 
       src1PR.bytes     = comp->bytes;
-      src1PR.x         = x1;  
+      src1PR.x         = x1;
       src1PR.y         = y1;
       src1PR.w         = (x2 - x1);
       src1PR.h         = (y2 - y1);
@@ -3769,7 +3769,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
       src2PR.bytes     = layer_buf->bytes;
       src2PR.w         = src1PR.w;  
       src2PR.h         = src1PR.h;
-      src2PR.x         = src1PR.x;  
+      src2PR.x         = src1PR.x; 
       src2PR.y         = src1PR.y;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
       src2PR.data      = temp_buf_data (layer_buf) + 

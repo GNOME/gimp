@@ -1,3 +1,11 @@
+2000-12-14  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpimage.c
+	* app/layer.c
+	* app/layers_dialog.c
+	* app/nav_window.c: cleaned up these files while trying to find a 
+	fix for #31098. No real changes, the bug is still present :-(
+
 2000-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/color_picker.c

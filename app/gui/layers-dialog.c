@@ -987,20 +987,18 @@ layers_dialog_preview_extents (void)
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
-    layersD->ratio = 
-      (gdouble) preview_size / (gdouble) gimage->width;
+    layersD->ratio = (gdouble) preview_size / (gdouble) gimage->width;
   else
-    layersD->ratio = 
-      (gdouble) preview_size / (gdouble) gimage->height;
+    layersD->ratio = (gdouble) preview_size / (gdouble) gimage->height;
 
   if (preview_size)
     {
       layersD->image_width  = (gint) (layersD->ratio * gimage->width);
       layersD->image_height = (gint) (layersD->ratio * gimage->height);
 
-      if (layersD->image_width < 1)  
+      if (layersD->image_width < 1)
 	layersD->image_width = 1;
-      if (layersD->image_height < 1) 
+      if (layersD->image_height < 1)
 	layersD->image_height = 1;
     }
   else
@@ -2165,7 +2163,8 @@ layer_widget_create (GimpImage *gimage,
   gtk_drawing_area_size (GTK_DRAWING_AREA (layer_widget->layer_preview),
 			 layersD->image_width + 4, layersD->image_height + 4);
   gtk_widget_set_events (layer_widget->layer_preview, PREVIEW_EVENT_MASK);
-  gtk_signal_connect_while_alive (GTK_OBJECT (layer_widget->layer_preview), "event",
+  gtk_signal_connect_while_alive (GTK_OBJECT (layer_widget->layer_preview), 
+				  "event",
 				  GTK_SIGNAL_FUNC (layer_widget_preview_events),
 				  layer_widget,
 				  GTK_OBJECT (layer));
@@ -2303,8 +2302,10 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
 	  ! layer_is_floating_sel (src->layer) &&
 	  src->layer == layersD->active_layer)
 	{
-	  src_index  = gimp_image_get_layer_index (layersD->gimage, src->layer);
-	  dest_index = gimp_image_get_layer_index (layersD->gimage, dest->layer);
+	  src_index  = gimp_image_get_layer_index (layersD->gimage, 
+						   src->layer);
+	  dest_index = gimp_image_get_layer_index (layersD->gimage, 
+						   dest->layer);
 
 	  difference = dest_index - src_index;
 
@@ -2587,7 +2588,9 @@ layer_widget_button_events (GtkWidget *widget,
   static gint       old_state;
   static gint       exclusive;
 
-  layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
+  layer_widget = 
+    (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
   return_val = FALSE;
 
   switch (event->type)
@@ -2730,6 +2733,9 @@ layer_widget_preview_events (GtkWidget *widget,
 
   layer_widget = 
     (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  g_return_val_if_fail (layer_widget != NULL, FALSE);
+  g_return_val_if_fail (layer_widget->layer != NULL, FALSE);  
 
   if (!GIMP_IS_DRAWABLE (layer_widget->layer))
     return FALSE;
@@ -2968,7 +2974,8 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
   TempBuf    *preview_buf;
   GdkPixmap **pixmap;
   GtkWidget  *widget;
-  gint        offx, offy;
+  gint        offx;
+  gint        offy;
 
   preview_buf = NULL;
   pixmap = NULL;
@@ -3001,14 +3008,14 @@ layer_widget_preview_redraw (LayerWidget *layer_widget,
   else
     {
       /*  determine width and height  */
-      layer_widget->width =
+      layer_widget->width  = 
 	(gint) (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->width);
-      layer_widget->height =
-	(gint) (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->height);
+      layer_widget->height = 
+      (gint) (layersD->ratio * GIMP_DRAWABLE (layer_widget->layer)->height);
 
-      if (layer_widget->width < 1) 
+      if (layer_widget->width < 1)  
 	layer_widget->width = 1;
-      if (layer_widget->height < 1) 
+      if (layer_widget->height < 1)  
 	layer_widget->height = 1;
 
       offx = (gint) (layersD->ratio *
