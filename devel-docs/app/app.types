@@ -59,6 +59,7 @@ gimp_container_popup_get_type
 gimp_container_tree_view_get_type
 gimp_container_view_interface_get_type
 gimp_context_get_type
+gimp_controller_editor_get_type
 gimp_controller_keyboard_get_type
 gimp_controller_wheel_get_type
 gimp_convolve_get_type
@@ -151,6 +152,7 @@ gimp_magnify_tool_get_type
 gimp_measure_options_get_type
 gimp_measure_tool_get_type
 gimp_message_box_get_type
+gimp_message_dialog_get_type
 gimp_menu_factory_get_type
 gimp_move_options_get_type
 gimp_move_tool_get_type
@@ -210,6 +212,7 @@ gimp_statusbar_get_type
 gimp_string_action_get_type
 gimp_stroke_editor_get_type
 gimp_stroke_get_type
+gimp_stroke_desc_get_type
 gimp_stroke_options_get_type
 gimp_template_editor_get_type
 gimp_template_get_type

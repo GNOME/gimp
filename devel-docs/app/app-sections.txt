@@ -274,6 +274,7 @@ gimp_parameters_free
 <SECTION>
 <FILE>gimp-transform-utils</FILE>
 gimp_transform_matrix_flip
+gimp_transform_matrix_flip_free
 gimp_transform_matrix_rotate
 gimp_transform_matrix_rotate_center
 gimp_transform_matrix_scale
@@ -680,6 +681,7 @@ gimp_drawable_merge_shadow
 gimp_drawable_fill
 gimp_drawable_fill_by_type
 gimp_drawable_mask_bounds
+gimp_drawable_mask_intersect
 gimp_drawable_has_alpha
 gimp_drawable_has_floating_sel
 gimp_drawable_type
@@ -958,6 +960,7 @@ GIMP_IMAGE_GET_CLASS
 GimpImagefile
 gimp_imagefile_new
 gimp_imagefile_update
+gimp_imagefile_check_thumbnail
 gimp_imagefile_create_thumbnail
 gimp_imagefile_create_thumbnail_weak
 gimp_imagefile_save_thumbnail
@@ -1298,6 +1301,7 @@ gimp_progress_get_value
 gimp_progress_cancel
 gimp_progress_is_active
 gimp_progress_update_and_flush
+gimp_progress_message
 <SUBSECTION Standard>
 GimpProgressInterface
 GIMP_PROGRESS
@@ -1358,6 +1362,24 @@ gimp_template_get_type
 GIMP_TEMPLATE_CLASS
 GIMP_IS_TEMPLATE_CLASS
 GIMP_TEMPLATE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpstrokedesc</FILE>
+<TITLE>GimpStrokeDesc</TITLE>
+GimpStrokeDesc
+gimp_stroke_desc_new
+gimp_stroke_desc_prepare
+gimp_stroke_desc_finish
+<SUBSECTION Standard>
+GimpStrokeDescClass
+GIMP_STROKE_DESC
+GIMP_IS_STROKE_DESC
+GIMP_TYPE_STROKE_DESC
+gimp_stroke_desc_get_type
+GIMP_STROKE_DESC_CLASS
+GIMP_IS_STROKE_DESC_CLASS
+GIMP_STROKE_DESC_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4176,6 +4198,22 @@ GIMP_DATA_FACTORY_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcontrollereditor</FILE>
+<TITLE>GimpControllerEditor</TITLE>
+GimpControllerEditor
+gimp_controller_editor_new
+<SUBSECTION Standard>
+GimpControllerEditorClass
+GIMP_CONTROLLER_EDITOR
+GIMP_IS_CONTROLLER_EDITOR
+GIMP_TYPE_CONTROLLER_EDITOR
+gimp_controller_editor_get_type
+GIMP_CONTROLLER_EDITOR_CLASS
+GIMP_IS_CONTROLLER_EDITOR_CLASS
+GIMP_CONTROLLER_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcontrollerkeyboard</FILE>
 <TITLE>GimpControllerKeyboard</TITLE>
 GimpControllerKeyboard
@@ -4471,6 +4509,7 @@ gimp_enum_stock_box_set_child_padding
 GimpErrorConsole
 gimp_error_console_new
 gimp_error_console_add
+error_console_save_cmd_callback
 <SUBSECTION Standard>
 GimpErrorConsoleClass
 GIMP_ERROR_CONSOLE
@@ -4523,6 +4562,7 @@ GradientEditorDragMode
 GimpGradientEditor
 gimp_gradient_editor_new
 gimp_gradient_editor_update
+gimp_gradient_editor_zoom
 <SUBSECTION Standard>
 GimpGradientEditorClass
 GIMP_GRADIENT_EDITOR
@@ -4741,8 +4781,6 @@ GimpReorderItemFunc
 GimpAddItemFunc
 GimpRemoveItemFunc
 GimpNewItemFunc
-GimpEditItemFunc
-GimpActivateItemFunc
 <TITLE>GimpItemTreeView</TITLE>
 GimpItemTreeView
 gimp_item_tree_view_new
@@ -4832,6 +4870,22 @@ GIMP_MESSAGE_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpmessagedialog</FILE>
+<TITLE>GimpMessageDialog</TITLE>
+GimpMessageDialog
+gimp_message_dialog_new
+<SUBSECTION Standard>
+GimpMessageDialogClass
+GIMP_MESSAGE_DIALOG
+GIMP_IS_MESSAGE_DIALOG
+GIMP_TYPE_MESSAGE_DIALOG
+gimp_message_dialog_get_type
+GIMP_MESSAGE_DIALOG_CLASS
+GIMP_IS_MESSAGE_DIALOG_CLASS
+GIMP_MESSAGE_DIALOG_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpuimanager</FILE>
 GimpUIManagerUIEntry
 <TITLE>GimpUIManager</TITLE>
@@ -4840,6 +4894,7 @@ gimp_ui_manager_new
 gimp_ui_managers_from_name
 gimp_ui_manager_update
 gimp_ui_manager_get_action_group
+gimp_ui_manager_get_action
 gimp_ui_manager_ui_register
 gimp_ui_manager_ui_get
 gimp_ui_manager_ui_popup
@@ -4877,6 +4932,7 @@ GIMP_NAVIGATION_VIEW_GET_CLASS
 GimpPaletteEditor
 gimp_palette_editor_new
 gimp_palette_editor_pick_color
+gimp_palette_editor_zoom
 <SUBSECTION Standard>
 GimpPaletteEditorClass
 GIMP_PALETTE_EDITOR
@@ -5800,11 +5856,11 @@ hue_saturation
 Levels
 levels_init
 levels_channel_reset
-levels_auto
-levels_channel_auto
+levels_channel_stretch
 levels_adjust_by_colors
 levels_calculate_transfers
 levels_lut_func
+levels_stretch
 </SECTION>
 
 <SECTION>
@@ -6219,6 +6275,8 @@ GIMP_TYPE_CONTAINER_POLICY
 GimpContainerPolicy
 GIMP_TYPE_CONVERT_DITHER_TYPE
 GimpConvertDitherType
+GIMP_TYPE_CONVERT_PALETTE_TYPE
+GimpConvertPaletteType
 GIMP_TYPE_DASH_PRESET
 GimpDashPreset
 GIMP_TYPE_DIRTY_MASK
@@ -6245,6 +6303,8 @@ GIMP_TYPE_REPEAT_MODE
 GimpRepeatMode
 GIMP_TYPE_SELECTION_CONTROL
 GimpSelectionControl
+GIMP_TYPE_STROKE_METHOD
+GimpStrokeMethod
 GIMP_TYPE_STROKE_STYLE
 GimpStrokeStyle
 GIMP_TYPE_THUMBNAIL_SIZE
@@ -6277,6 +6337,7 @@ gimp_channel_ops_get_type
 gimp_channel_type_get_type
 gimp_container_policy_get_type
 gimp_convert_dither_type_get_type
+gimp_convert_palette_type_get_type
 gimp_dash_preset_get_type
 gimp_dirty_mask_get_type
 gimp_fill_type_get_type
@@ -6290,6 +6351,7 @@ gimp_rotation_type_get_type
 gimp_view_size_get_type
 gimp_repeat_mode_get_type
 gimp_selection_control_get_type
+gimp_stroke_method_get_type
 gimp_stroke_style_get_type
 gimp_thumbnail_size_get_type
 gimp_transform_direction_get_type
@@ -6371,6 +6433,12 @@ gimp_drawable_calculate_histogram
 <FILE>gimpdrawable-invert</FILE>
 <TITLE>GimpDrawable-invert</TITLE>
 gimp_drawable_invert
+</SECTION>
+
+<SECTION>
+<FILE>gimpdrawable-levels</FILE>
+gimp_drawable_levels
+gimp_drawable_levels_stretch
 </SECTION>
 
 <SECTION>
@@ -6961,6 +7029,13 @@ themes_apply_theme
 </SECTION>
 
 <SECTION>
+<FILE>image-scale-dialog</FILE>
+ImageScaleDialog
+ImageScaleDialogCallback
+image_scale_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>info-dialog</FILE>
 InfoFieldType
 InfoField
@@ -7010,9 +7085,7 @@ preferences_dialog_create
 
 <SECTION>
 <FILE>resize-dialog</FILE>
-ResizeType
-ResizeTarget
-ResizeDialog
+GimpResizeCallback
 resize_dialog_new
 </SECTION>
 
@@ -7061,6 +7134,55 @@ gimp_tips_free
 <FILE>user-install-dialog</FILE>
 user_install_dialog_run
 </SECTION>
+
+<SECTION>
+<FILE>channel-options-dialog</FILE>
+ChannelOptionsDialog
+channel_options_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>vectors-options-dialog</FILE>
+VectorsOptionsDialog
+vectors_options_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>template-options-dialog</FILE>
+TemplateOptionsDialog
+template_options_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>layer-options-dialog</FILE>
+LayerOptionsDialog
+layer_options_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>layer-add-mask-dialog</FILE>
+LayerAddMaskDialog
+layer_add_mask_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>image-merge-layers-dialog</FILE>
+ImageMergeLayersDialog
+image_merge_layers_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>vectors-export-dialog</FILE>
+VectorsExportDialog
+vectors_export_dialog_new
+</SECTION>
+
+<SECTION>
+<FILE>vectors-import-dialog</FILE>
+VectorsImportDialog
+vectors_import_dialog_new
+</SECTION>
+
 
 <SECTION>
 <FILE>paint-enums</FILE>
@@ -7294,6 +7416,7 @@ plug_in_progress_end
 plug_in_progress_install
 plug_in_progress_uninstall
 plug_in_progress_cancel
+plug_in_progress_message
 </SECTION>
 
 <SECTION>
@@ -7667,6 +7790,7 @@ gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
 gimp_dialog_set_sensitive
+gimp_text_buffer_save
 </SECTION>
 
 <SECTION>
@@ -7995,6 +8119,7 @@ buffers_delete_buffer_cmd_callback
 <SECTION>
 <FILE>channels-commands</FILE>
 channels_new_cmd_callback
+channels_new_last_vals_cmd_callback
 channels_raise_cmd_callback
 channels_raise_to_top_cmd_callback
 channels_lower_cmd_callback
@@ -8003,8 +8128,6 @@ channels_duplicate_cmd_callback
 channels_delete_cmd_callback
 channels_to_selection_cmd_callback
 channels_edit_attributes_cmd_callback
-channels_new_channel_query
-channels_edit_channel_query
 </SECTION>
 
 <SECTION>
@@ -8102,6 +8225,7 @@ documents_delete_dangling_documents_cmd_callback
 drawable_desaturate_cmd_callback
 drawable_invert_cmd_callback
 drawable_equalize_cmd_callback
+drawable_levels_stretch_cmd_callback
 drawable_flip_cmd_callback
 drawable_rotate_cmd_callback
 drawable_offset_cmd_callback
@@ -8129,8 +8253,6 @@ edit_fill_cmd_callback
 <SECTION>
 <FILE>error-console-commands</FILE>
 error_console_clear_cmd_callback
-error_console_save_all_cmd_callback
-error_console_save_selection_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8173,6 +8295,7 @@ gradient_editor_recenter_cmd_callback
 gradient_editor_redistribute_cmd_callback
 gradient_editor_blend_color_cmd_callback
 gradient_editor_blend_opacity_cmd_callback
+gradient_editor_zoom_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8208,7 +8331,6 @@ image_configure_grid_cmd_callback
 images_raise_views_cmd_callback
 images_new_view_cmd_callback
 images_delete_image_cmd_callback
-images_raise_views
 </SECTION>
 
 <SECTION>
@@ -8219,6 +8341,7 @@ layers_lower_cmd_callback
 layers_raise_to_top_cmd_callback
 layers_lower_to_bottom_cmd_callback
 layers_new_cmd_callback
+layers_new_last_vals_cmd_callback
 layers_duplicate_cmd_callback
 layers_anchor_cmd_callback
 layers_merge_down_cmd_callback
@@ -8241,20 +8364,14 @@ layers_alpha_to_selection_cmd_callback
 layers_opacity_cmd_callback
 layers_text_tool_cmd_callback
 layers_edit_attributes_cmd_callback
-layers_text_tool
-layers_new_layer_query
-layers_edit_layer_query
 </SECTION>
 
 <SECTION>
 <FILE>palette-editor-commands</FILE>
+palette_editor_new_color_cmd_callback
 palette_editor_edit_color_cmd_callback
-palette_editor_new_color_fg_cmd_callback
-palette_editor_new_color_bg_cmd_callback
 palette_editor_delete_color_cmd_callback
-palette_editor_zoom_in_cmd_callback
-palette_editor_zoom_out_cmd_callback
-palette_editor_zoom_all_cmd_callback
+palette_editor_zoom_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8290,6 +8407,7 @@ select_border_cmd_callback
 select_grow_cmd_callback
 select_save_cmd_callback
 select_stroke_cmd_callback
+select_stroke_last_vals_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8299,9 +8417,6 @@ templates_new_template_cmd_callback
 templates_duplicate_template_cmd_callback
 templates_edit_template_cmd_callback
 templates_delete_template_cmd_callback
-templates_new_template_dialog
-templates_edit_template_dialog
-templates_image_new_dialog
 </SECTION>
 
 <SECTION>
@@ -8325,6 +8440,7 @@ tools_reset_cmd_callback
 <SECTION>
 <FILE>vectors-commands</FILE>
 vectors_new_cmd_callback
+vectors_new_last_vals_cmd_callback
 vectors_raise_cmd_callback
 vectors_raise_to_top_cmd_callback
 vectors_lower_cmd_callback
@@ -8335,15 +8451,13 @@ vectors_merge_visible_cmd_callback
 vectors_to_selection_cmd_callback
 vectors_selection_to_vectors_cmd_callback
 vectors_stroke_cmd_callback
+vectors_stroke_last_vals_cmd_callback
 vectors_copy_cmd_callback
 vectors_paste_cmd_callback
 vectors_import_cmd_callback
 vectors_export_cmd_callback
 vectors_vectors_tool_cmd_callback
 vectors_edit_attributes_cmd_callback
-vectors_vectors_tool
-vectors_new_vectors_query
-vectors_edit_vectors_query
 vectors_visible_cmd_callback
 vectors_linked_cmd_callback
 </SECTION>
