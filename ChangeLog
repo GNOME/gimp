@@ -1,3 +1,9 @@
+2000-12-12  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/autocrop.c: Fixed #7689: plug-in-autocrop shows
+	    a progress dialog when run non-interactively.  In fact, I also
+	    cleared up the initialisation code, and made it more robust.
+
 2000-12-12  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Continue after errors (#28799)

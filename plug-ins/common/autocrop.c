@@ -39,7 +39,8 @@ static gint guess_bgcolor (GimpPixelRgn *pr,
 			   guchar    *color);
 
 static void doit          (GimpDrawable *drawable,
-			   gint32     image_id);
+			   gint32     image_id,
+			   gboolean   show_progress);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -89,51 +90,55 @@ run (gchar   *name,
   GimpRunModeType run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32 image_id;
-  
+  gboolean interactive;
+
   *nreturn_vals = 1;
   *return_vals = values;
   
   run_mode = param[0].data.d_int32;
+  interactive = (run_mode != GIMP_RUN_NONINTERACTIVE);
 
   INIT_I18N();
   
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
+  if (n_params != 3)
     {
-      if (n_params != 3)
-	status = GIMP_PDB_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
+      goto out;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      /*  Get the specified drawable  */
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
-      image_id = param[1].data.d_image;
+  /*  Get the specified drawable  */
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  image_id = param[1].data.d_image;
 
-      /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb (drawable->id) ||
-	  gimp_drawable_is_gray (drawable->id)  ||
-	  gimp_drawable_is_indexed (drawable->id)) 
-	{
-	  gimp_progress_init (_("Cropping..."));
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
-	  doit (drawable, image_id);
+  /*  Make sure that the drawable is gray or RGB color  */
+  if (gimp_drawable_is_rgb (drawable->id) ||
+      gimp_drawable_is_gray (drawable->id)  ||
+      gimp_drawable_is_indexed (drawable->id)) 
+  {
+    if (interactive)
+      gimp_progress_init (_("Cropping..."));
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-	} 
-      else 
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+    gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
 
-      values[0].type = GIMP_PDB_STATUS;
-      values[0].data.d_status = status;
-    }
+    doit (drawable, image_id, interactive);
+
+    if (interactive)
+      gimp_displays_flush ();
+  } 
+  else 
+  {
+      status = GIMP_PDB_EXECUTION_ERROR;
+  }
+
+ out:
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 }
 
 static void
 doit (GimpDrawable *drawable,
-      gint32     image_id)
+      gint32        image_id,
+      gboolean      show_progress)
 {
   GimpPixelRgn srcPR;
   gint width, height;
@@ -178,8 +183,9 @@ doit (GimpDrawable *drawable,
   y--;
   ny = y;
   nh = height - y;
-  
-  gimp_progress_update (0.25);
+
+  if (show_progress)
+    gimp_progress_update (0.25);
   
   /* Check how many of the bottom lines are uniform. */
   abort = 0;
@@ -193,7 +199,8 @@ doit (GimpDrawable *drawable,
     }
   nh = y - ny + 2;
   
-  gimp_progress_update (0.5);
+  if (show_progress)
+    gimp_progress_update (0.5);
   
   /* Check how many of the left lines are uniform. */
   abort = 0;
@@ -209,7 +216,8 @@ doit (GimpDrawable *drawable,
   nx = x;
   nw = width - x;
   
-  gimp_progress_update (0.75);
+  if (show_progress)
+    gimp_progress_update (0.75);
   
   /* Check how many of the right lines are uniform. */
   abort = 0;
@@ -229,6 +237,9 @@ doit (GimpDrawable *drawable,
 
   if (nw != width || nh != height)
     gimp_crop (image_id, nw, nh, nx, ny);
+
+  if (show_progress)
+    gimp_progress_update (1.00);
 }
 
 static gint
