@@ -1,3 +1,4 @@
+
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -31,6 +32,14 @@ enum _Storage
   STORAGE_TILED  = 2,
 };
 
+typedef enum _AutoAlloc AutoAlloc;
+enum _AutoAlloc
+{
+  AUTOALLOC_NONE = 0,
+  AUTOALLOC_OFF  = 1,
+  AUTOALLOC_ON   = 2
+};
+
 
 Canvas *       canvas_new            (Tag, int w, int h, Storage);
 void           canvas_delete         (Canvas *);
@@ -41,16 +50,13 @@ Tag            canvas_tag            (Canvas *);
 Precision      canvas_precision      (Canvas *);
 Format         canvas_format         (Canvas *);
 Alpha          canvas_alpha          (Canvas *);
-Storage        canvas_storage        (Canvas *);
 
-/* should a canvas_portion_ref() automatically perform a
-   canvas_portion_alloc() ? */
-int            canvas_autoalloc      (Canvas *);
-int            canvas_set_autoalloc  (Canvas *, int);
+Storage        canvas_storage        (Canvas *);
+AutoAlloc      canvas_autoalloc      (Canvas *);
+AutoAlloc      canvas_set_autoalloc  (Canvas *, AutoAlloc);
 
 int            canvas_width          (Canvas *);
 int            canvas_height         (Canvas *);
-
 int            canvas_bytes          (Canvas *);
 
 

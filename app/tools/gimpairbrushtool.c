@@ -26,13 +26,12 @@
 #include "errors.h"
 #include "gdisplay.h" /* for airbrush_time_out() */
 #include "gimage.h"
-#include "paint.h"
 #include "paint_core_16.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
 #include "pixelarea.h"
+#include "pixelrow.h"
 #include "tools.h"
-
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
 
@@ -260,10 +259,11 @@ airbrush_motion  (
 
   /* construct the paint hit */
   {
-    Paint * paint = paint_new (canvas_tag (painthit), drawable);
-    gimp16_palette_get_foreground (paint);
-    color_area (&a, paint);
-    paint_delete (paint);
+    COLOR16_NEW (paint, canvas_tag (painthit));
+
+    COLOR16_INIT (paint);
+    color16_foreground (&paint);
+    color_area (&a, &paint);
   }
   
   /* apply it to the image */

@@ -19,12 +19,11 @@
 #define __PAINT_FUNCS_ROW_U16_H__
 
 struct _PixelRow;
-struct _Paint;
 
 void
 color_row_u16 (
-	      struct _PixelRow *dest_row,
-	      struct _Paint   *col
+	      struct _PixelRow * dest_row,
+	      struct _PixelRow * col
 	      );
 
 void
@@ -39,7 +38,7 @@ void
 shade_row_u16 (
 		 struct _PixelRow *src_row,
 	         struct _PixelRow *dest_row,
-	         struct _Paint    *color,
+	         struct _PixelRow    *color,
 		 gfloat blend
 	         );
 
@@ -164,7 +163,7 @@ void
 flatten_row_u16 (
 		   struct _PixelRow *src_row,
 		   struct _PixelRow *dest_row,
- 		   struct _Paint    *background
+ 		   struct _PixelRow    *background
 		  );
 
 void
@@ -381,7 +380,7 @@ combine_inten_a_and_channel_mask_row_u16 (
 					    struct _PixelRow *src_row,
 					    struct _PixelRow *channel_row,
 					    struct _PixelRow *dest_row,
-					    struct _Paint    *col,
+					    struct _PixelRow    *col,
 					    gfloat opac
 					    );
 
@@ -390,7 +389,7 @@ combine_inten_a_and_channel_selection_row_u16 (
 						  struct _PixelRow *src_row,
 						  struct _PixelRow *channel_row,
 						  struct _PixelRow *dest_row,
-						  struct _Paint    *col,
+						  struct _PixelRow    *col,
 						  gfloat opac
 						 );
 
@@ -482,7 +481,7 @@ extract_from_inten_row_u16 (
 			      struct _PixelRow *src_row,
 			      struct _PixelRow *dest_row,
 			      struct _PixelRow *mask_row,
-			      struct _Paint    *background,
+			      struct _PixelRow    *background,
 			      gint      cut
 			      );
 
@@ -495,7 +494,7 @@ extract_from_indexed_row_u16 (
 				struct _PixelRow *dest_row,
 				struct _PixelRow *mask_row,
 				unsigned char  *cmap,
-				struct _Paint *background,
+				struct _PixelRow *background,
 				gint      cut
 				);
 #endif  

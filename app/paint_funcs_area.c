@@ -22,7 +22,6 @@
 #include "appenv.h"
 #include "boundary.h"
 #include "gimprc.h"
-#include "paint.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row.h"
 #include "pixelarea.h"
@@ -236,25 +235,24 @@ paint_funcs_area_free  (
 
 void 
 color_area  (
-             PixelArea * src_area,
-             Paint * color
+             PixelArea * area,
+             PixelRow * color
              )
 {
   void * pag;
-  Tag src_tag = pixelarea_tag (src_area); 
-  Tag color_tag = paint_tag (color); 
-  
-   /*put in tags check*/
+  /* Tag area_tag = pixelarea_tag (area); */
+  /* Tag color_tag = pixelrow_tag (color); */ 
+  /* put in tags check*/
 
-  for (pag = pixelarea_register (1, src_area);
+  for (pag = pixelarea_register (1, area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
       PixelRow row;
-      gint h = pixelarea_height (src_area);
+      gint h = pixelarea_height (area);
       while (h--)
         {
-          pixelarea_getdata (src_area, &row, h);
+          pixelarea_getdata (area, &row, h);
           color_row (&row, color);
         }
     }
@@ -302,7 +300,7 @@ void
 shade_area  (
              PixelArea * src_area,
              PixelArea * dest_area,
-             Paint * col,
+             PixelRow * col,
              gfloat blend
              )
 {
@@ -395,7 +393,7 @@ void
 flatten_area  (
                PixelArea * src_area,
                PixelArea * dest_area,
-               Paint * bg
+               PixelRow * bg
                )
 {
   void *  pag;
@@ -465,7 +463,7 @@ extract_from_area  (
                     PixelArea * src_area,
                     PixelArea * dest_area,
                     PixelArea * mask_area,
-                    Paint * bg,
+                    PixelRow * bg,
                     unsigned char * cmap,
                     gint cut
                     )
@@ -3416,10 +3414,9 @@ draw_segments (
   /* initialize line with opacity */
   {
     Tag t = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
-    Paint * p = paint_new (dest_tag, NULL);
-    paint_load (p, t, &opacity);
-    color_row(&line, p);
-    paint_delete (p);
+    PixelRow paint;
+    pixelrow_init (&paint, t, &opacity, 1);
+    color_row(&line, &paint);
   }
 
   for (i = 0; i < num_segs; i++)

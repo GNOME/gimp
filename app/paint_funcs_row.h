@@ -19,7 +19,6 @@
 #define __PAINT_FUNCS_ROW_H__
 
 struct _PixelRow;
-struct _Paint;
 
 void
 paint_funcs_randomize_row (
@@ -29,7 +28,7 @@ paint_funcs_randomize_row (
 void
 color_row (
 	      struct _PixelRow *dest_row,
-	      struct _Paint   *col
+	      struct _PixelRow *col
 	      );
 void
 blend_row (
@@ -42,7 +41,7 @@ void
 shade_row (
 		 struct _PixelRow *src_row,
 	         struct _PixelRow *dest_row,
-	         struct _Paint    *color,
+	         struct _PixelRow    *color,
 		 gfloat blend
 	         );
 void
@@ -166,7 +165,7 @@ void
 flatten_row (
 		   struct _PixelRow *src_row,
 		   struct _PixelRow *dest_row,
- 		   struct _Paint    *background
+ 		   struct _PixelRow    *background
 		  );
 
 void
@@ -381,7 +380,7 @@ combine_inten_a_and_channel_mask_row (
 					    struct _PixelRow *src_row,
 					    struct _PixelRow *channel_row,
 					    struct _PixelRow *dest_row,
-					    struct _Paint    *col,
+					    struct _PixelRow    *col,
 					    gfloat opac
 					    );
 void
@@ -389,7 +388,7 @@ combine_inten_a_and_channel_selection_row (
 						  struct _PixelRow *src_row,
 						  struct _PixelRow *channel_row,
 						  struct _PixelRow *dest_row,
-						  struct _Paint    *col,
+						  struct _PixelRow    *col,
 						  gfloat opac
 						 );
 /*  paint "behind" the existing pixel row.
@@ -479,7 +478,7 @@ extract_from_inten_row (
 			      struct _PixelRow *src_row,
 			      struct _PixelRow *dest_row,
 			      struct _PixelRow *mask_row,
-			      struct _Paint    *background,
+			      struct _PixelRow    *background,
 			      gint      cut
 			      );
 
@@ -492,7 +491,7 @@ extract_from_indexed_row (
 				struct _PixelRow *dest_row,
 				struct _PixelRow *mask_row,
 				unsigned char   *cmap,
-				struct _Paint *background,
+				struct _PixelRow *background,
 				gint      cut
 				);
 #endif

@@ -133,25 +133,61 @@ static MenuItem palette_ops[] =
 
 
 #include "tag.h"
-#include "paint.h"
+#include "pixelrow.h"
+#include "paint_funcs_row.h"
 
-int
-gimp16_palette_get_foreground (
-                               Paint * p
-                               )
+void 
+color16_black  (
+                PixelRow * color
+                )
 {
-  Tag t = tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO);
-  return paint_load (p, t, foreground);
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {0.0, 0.0, 0.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
+void 
+color16_white  (
+                PixelRow * color
+                )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
+void 
+color16_transparent  (
+                      PixelRow * color
+                      )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES) = {0.0, 0.0, 0.0, 0.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
+void 
+color16_foreground  (
+                     PixelRow * color
+                     )
+{
+  PixelRow init;
+  pixelrow_init (&init, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), foreground, 1);
+  copy_row (&init, color);
+}
+void 
+color16_background  (
+                     PixelRow * color
+                     )
+{
+  PixelRow init;
+  pixelrow_init (&init, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), background, 1);
+  copy_row (&init, color);
 }
 
-int
-gimp16_palette_get_background (
-                               Paint * p
-                               )
-{
-  Tag t = tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO);
-  return paint_load (p, t, background);
-}
+
+
+
 
 
 void

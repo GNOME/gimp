@@ -19,7 +19,6 @@
 #include <stdarg.h>
 
 #include "canvas.h"
-#include "paint.h"
 #include "pixelrow.h"
 #include "pixelarea.h"
 #include "trace.h"

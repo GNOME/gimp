@@ -29,9 +29,34 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
-struct _Paint;
-int gimp16_palette_get_foreground (struct _Paint * );
-int gimp16_palette_get_background (struct _Paint * );
+
+
+/* experimental gimp16 stuff */
+struct _PixelRow;
+
+#define COLOR16_NEWDATA(name, type, prec, format, alpha) \
+        PixelRow name; \
+        Tag name##_tag = tag_new (prec, format, alpha); \
+        type name##_data[TAG_MAX_BYTES/sizeof(type)]
+
+#define COLOR16_NEW(name, tag) \
+        PixelRow name; \
+        Tag name##_tag = tag; \
+        guchar name##_data[TAG_MAX_BYTES]
+
+#define COLOR16_INIT(name) \
+        pixelrow_init (&name, name##_tag, (guchar *)name##_data, 1)
+          
+void color16_black        (struct _PixelRow *);
+void color16_white        (struct _PixelRow *);
+void color16_transparent  (struct _PixelRow *);
+void color16_foreground   (struct _PixelRow *);
+void color16_background   (struct _PixelRow *);
+
+
+
+
+
 void palettes_init (void);
 void palettes_free (void);
 void palette_create (void);

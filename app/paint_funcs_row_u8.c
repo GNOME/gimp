@@ -20,7 +20,6 @@
 #include <math.h>
 
 #include "appenv.h"
-#include "paint.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row_u8.h"
 #include "pixelrow.h"
@@ -39,13 +38,13 @@ static unsigned char no_mask = OPAQUE_8BIT;
 void 
 color_row_u8  (
                PixelRow * dest_row,
-               Paint * col
+               PixelRow * col
                )
 {
   gint    b;
-  guint8 *dest         = (guint8*)pixelrow_data (dest_row);
-  guint8 *color        = (guint8*)paint_data (col);
-  gint    num_channels = tag_num_channels ( pixelrow_tag (dest_row));
+  guint8 *dest         = (guint8*) pixelrow_data (dest_row);
+  guint8 *color        = (guint8*) pixelrow_data (col);
+  gint    num_channels = tag_num_channels (pixelrow_tag (dest_row));
   gint    width        = pixelrow_width (dest_row);  
 
   while (width--)
@@ -97,7 +96,7 @@ void
 shade_row_u8  (
                PixelRow * src_row,
                PixelRow * dest_row,
-               Paint * color,
+               PixelRow * color,
                gfloat blend
                )
 {
@@ -108,7 +107,7 @@ shade_row_u8  (
   gint    width        = pixelrow_width (dest_row);
   gint    num_channels = tag_num_channels (src_tag);
   gint    has_alpha    = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
-  guint8 *col          = (guint8*)paint_data (color);
+  guint8 *col          = (guint8*) pixelrow_data (color);
   gfloat  blend_comp   = 1.0 - blend;
 
   alpha = (has_alpha) ? num_channels - 1 : num_channels;
@@ -775,7 +774,7 @@ void
 flatten_row_u8 (
 		   PixelRow *src_row,
 		   PixelRow *dest_row,
- 		   Paint    *background
+ 		   PixelRow *background
 		  )
 {
   int     alpha, b;
@@ -785,7 +784,7 @@ flatten_row_u8 (
   guint8 *src          = (guint8*)pixelrow_data (src_row);
   gint    width        = pixelrow_width (dest_row);
   gint    num_channels = tag_num_channels (src_tag);
-  guint8 *bg           = (guint8*)paint_data (background);
+  guint8 *bg           = (guint8*) pixelrow_data (background);
 
   alpha = num_channels - 1;
   while (width --)
@@ -1725,7 +1724,7 @@ combine_inten_a_and_channel_mask_row_u8  (
                                           PixelRow * src_row,
                                           PixelRow * channel_row,
                                           PixelRow * dest_row,
-                                          Paint * col,
+                                          PixelRow * col,
                                           gfloat opacity
                                           )
 {
@@ -1739,7 +1738,7 @@ combine_inten_a_and_channel_mask_row_u8  (
   guint8 *channel      = (guint8*)pixelrow_data (channel_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  guint8 *color        = (guint8*)paint_data (col);
+  guint8 *color        = (guint8*) pixelrow_data (col);
 
   alpha = num_channels - 1;
   while (width --)
@@ -1775,7 +1774,7 @@ combine_inten_a_and_channel_selection_row_u8  (
                                                PixelRow * src_row,
                                                PixelRow * channel_row,
                                                PixelRow * dest_row,
-                                               Paint * col,
+                                               PixelRow * col,
                                                gfloat opacity
                                                )
 {
@@ -1789,7 +1788,7 @@ combine_inten_a_and_channel_selection_row_u8  (
   guint8 *channel      = (guint8*)pixelrow_data (channel_row);
   gint    width        = pixelrow_width (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
-  guint8 *color        = (guint8*)paint_data (col);
+  guint8 *color        = (guint8*) pixelrow_data (col);
 
   alpha = num_channels - 1;
   while (width --)
@@ -2152,7 +2151,7 @@ extract_from_inten_row_u8 (
 			      PixelRow *src_row,
 			      PixelRow *dest_row,
 			      PixelRow *mask_row,
-			      Paint    *background,
+			      PixelRow *background,
 			      gint      cut
 			      )
 {
@@ -2165,8 +2164,8 @@ extract_from_inten_row_u8 (
   guint8 *mask          = (guint8*)pixelrow_data (mask_row);
   gint    width         = pixelrow_width (src_row);
   gint    num_channels  = tag_num_channels (src_tag);
-  gint    has_alpha      = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
-  guint8 *bg            = (guint8*)paint_data (background);
+  gint    has_alpha     = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
+  guint8 *bg            = (guint8*) pixelrow_data (background);
 
   if (mask)
     m = mask;
@@ -2212,7 +2211,7 @@ extract_from_indexed_row_u8 (
 				PixelRow *dest_row,
 				PixelRow *mask_row,
 				unsigned char *cmap,
-				Paint *background,
+				PixelRow *background,
 				gint      cut
 				)
 {
@@ -2227,7 +2226,7 @@ extract_from_indexed_row_u8 (
   gint    width         = pixelrow_width (src_row);
   gint    num_channels  = tag_num_channels (src_tag);
   gint    has_alpha     = (tag_alpha (src_tag)==ALPHA_YES)? TRUE: FALSE;
-  guint8 *bg            = (guint8*)paint_data (background);
+  guint8 *bg            = (guint8*) pixelrow_data (background);
 
   if (mask)
     m = mask;

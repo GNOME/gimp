@@ -20,7 +20,6 @@
 
 #include "tag.h"
 
-
 /* a structure that attaches a length and data encoding format to a
    buffer of raw data */
 typedef struct _PixelRow PixelRow;

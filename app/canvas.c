@@ -25,7 +25,7 @@
 struct _Canvas
 {
   Storage    storage;
-  int        autoalloc;
+  AutoAlloc  autoalloc;
   TileBuf  * tile_data;
   FlatBuf  * flat_data;
 
@@ -50,7 +50,7 @@ canvas_new (
   c = (Canvas *) g_malloc (sizeof (Canvas));
 
   c->storage = storage;
-  c->autoalloc = TRUE;
+  c->autoalloc = AUTOALLOC_ON;
   
   c->tag    = tag;
   c->bytes  = tag_bytes (tag);
@@ -129,7 +129,7 @@ canvas_info (
   if (c)
     {
       trace_begin ("Canvas 0x%x", c);
-      trace_printf (c->autoalloc==TRUE ? "AutoAlloc" : "No AutoAlloc" );
+      trace_printf (c->autoalloc==AUTOALLOC_ON ? "AutoAlloc" : "No AutoAlloc" );
       switch (c->storage)
         {
         case STORAGE_TILED:
@@ -195,26 +195,26 @@ canvas_storage  (
 }
 
 
-int
+AutoAlloc
 canvas_autoalloc (
                   Canvas * c
                   )
 {
-  return ( c ? c->autoalloc : TRUE);
+  return ( c ? c->autoalloc : AUTOALLOC_NONE);
 }
 
 
-int
+AutoAlloc
 canvas_set_autoalloc (
                       Canvas * c,
-                      int aa
+                      AutoAlloc aa
                       )
 {
   if (c)
     switch (aa)
       {
-      case TRUE:
-      case FALSE:
+      case AUTOALLOC_OFF:
+      case AUTOALLOC_ON:
         c->autoalloc = aa;
         break;
       }
@@ -276,7 +276,7 @@ canvas_portion_ref  (
       rc = flatbuf_portion_ref (c->flat_data, x, y);
   
   if ((rc == TRUE) &&
-      (c->autoalloc == TRUE) &&
+      (c->autoalloc == AUTOALLOC_ON) &&
       (canvas_portion_alloc (c, x, y) == FALSE))
     g_warning ("canvas failed to auto-alloc");
 

@@ -39,7 +39,6 @@
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "canvas.h"
-#include "paint.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row.h"
 
@@ -1145,14 +1144,11 @@ gradient_precalc_shapeburst  (
       /*  Otherwise, just fill the shapeburst to white  */
       else
         {
-          Paint * white;
-          gfloat e = 1;
-          white = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO), NULL);
-          paint_load (white,
-                      tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                      (guchar *)&e);
-          color_area (&tempR, white);
-          paint_delete (white);
+          COLOR16_NEW (paint, pixelarea_tag (&tempR));
+          
+          COLOR16_INIT (paint);
+          color16_white (&paint);
+          color_area (&tempR, &paint);
         }
     }
 

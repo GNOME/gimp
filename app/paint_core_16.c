@@ -29,7 +29,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "layer.h"
-#include "paint.h"
 #include "paint_core_16.h"
 #include "paint_funcs_area.h"
 #include "paint_funcs_row.h"
@@ -188,7 +187,7 @@ paint_core_16_init  (
                            drawable_width (drawable),
                            drawable_height (drawable),
                            STORAGE_TILED);
-  canvas_set_autoalloc (undo_tiles, FALSE);
+  canvas_set_autoalloc (undo_tiles, AUTOALLOC_OFF);
   
 
   /*  Allocate the cumulative brush stroke mask  */
@@ -1174,7 +1173,7 @@ static void brush_solidify_mask_u8 (
 #endif
       for (j = 0; j < canvas_width (brush_mask); j++)
 	{
-	  *data++ = (*src++) ? OPAQUE : TRANSPARENT;
+	  *data++ = (*src++) ? 255 : 0;
 	}
 #ifdef BRUSH_WITH_BORDER
       data++;

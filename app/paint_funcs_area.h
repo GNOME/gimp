@@ -23,7 +23,7 @@
 
 /* Forward declarations */
 struct _PixelArea;
-struct _Paint;
+struct _PixelRow;
 
 
 /*  The types of convolutions  */
@@ -99,7 +99,7 @@ void              paint_funcs_area_free        (void);
 void 
 color_area  (
              struct _PixelArea * src,
-             struct _Paint * color
+             struct _PixelRow * color
              );
 
 void 
@@ -114,7 +114,7 @@ void
 shade_area  (
              struct _PixelArea * src_area,
              struct _PixelArea * dest_area,
-             struct _Paint * col,
+             struct _PixelRow * col,
              gfloat blend
              );
 
@@ -134,7 +134,7 @@ void
 flatten_area  (
                struct _PixelArea * src_area,
                struct _PixelArea * dest_area,
-               struct _Paint * bg
+               struct _PixelRow * bg
                );
 
 void 
@@ -149,7 +149,7 @@ extract_from_area  (
                     struct _PixelArea * src_area,
                     struct _PixelArea * dest_area,
                     struct _PixelArea * mask_area,
-                    struct _Paint *bg,
+                    struct _PixelRow *bg,
                     unsigned char *cmap,
                     gint cut
                     );

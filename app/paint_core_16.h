@@ -85,12 +85,6 @@ struct _PaintCore16
   int      x, y;
   int      w, h;
 
-  /* buffers */
-  struct _Canvas * canvas_tiles;
-  struct _Canvas * undo_tiles;
-  struct _Canvas * canvas_buf;
-  struct _Canvas * orig_buf;  
-
   /* mask for current brush */
   struct _Canvas * brush_mask;
 

@@ -42,7 +42,6 @@
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
 
-#include "paint.h"
 #include "canvas.h"
 #include "pixelarea.h"
 #include "trace.h"

@@ -23,7 +23,6 @@
 #include "boundary.h"
 #include "tag.h"
 #include "gimprc.h"
-#include "paint.h"
 #include "paint_funcs_row.h"
 #include "paint_funcs_row_u8.h"
 #include "paint_funcs_row_u16.h"
@@ -51,23 +50,22 @@ random_table_initialize (
 }
 
 
-void
-color_row (
-	      PixelRow *dest_row,
-	      Paint   *col
-	      )
+void 
+color_row  (
+            PixelRow * dest_row,
+            PixelRow * color
+            )
 {
-
   switch (tag_precision (pixelrow_tag (dest_row)))
     {
     case PRECISION_U8:
-      color_row_u8 (dest_row, col);
+      color_row_u8 (dest_row, color);
       break;
     case PRECISION_U16:
-      color_row_u16 (dest_row, col);
+      color_row_u16 (dest_row, color);
       break;
     case PRECISION_FLOAT:
-      color_row_float (dest_row, col);
+      color_row_float (dest_row, color);
       break;
     case PRECISION_NONE:
       break;	
@@ -102,7 +100,7 @@ void
 shade_row (
 		 PixelRow *src_row,
 	         PixelRow *dest_row,
-	         Paint    *color,
+	         PixelRow *color,
 		 gfloat blend
 	         )
 {
@@ -544,7 +542,7 @@ void
 flatten_row (
 		   PixelRow *src_row,
 		   PixelRow *dest_row,
- 		   Paint    *background
+ 		   PixelRow *background
 		  )
 {
   switch (tag_precision (pixelrow_tag (dest_row)))
@@ -1069,7 +1067,7 @@ combine_inten_a_and_channel_mask_row (
 					    PixelRow *src_row,
 					    PixelRow *channel_row,
 					    PixelRow *dest_row,
-					    Paint    *col,
+					    PixelRow *col,
 					    gfloat opac
 					    )
 {
@@ -1094,7 +1092,7 @@ combine_inten_a_and_channel_selection_row (
 						  PixelRow *src_row,
 						  PixelRow *channel_row,
 						  PixelRow *dest_row,
-						  Paint    *col,
+						  PixelRow *col,
 						  gfloat opac
 						 )
 {
@@ -1292,7 +1290,7 @@ extract_from_inten_row (
 			      PixelRow *src_row,
 			      PixelRow *dest_row,
 			      PixelRow *mask_row,
-			      Paint    *background,
+			      PixelRow *background,
 			      gint      cut
 			      )
 {
@@ -1321,7 +1319,7 @@ extract_from_indexed_row (
 				PixelRow *dest_row,
 				PixelRow *mask_row,
 				unsigned char   *cmap,
-				Paint *background,
+				PixelRow *background,
 				gint      cut
 				)
 {

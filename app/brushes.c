@@ -22,6 +22,7 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+
 #include "appenv.h"
 #include "brushes.h"
 #include "brush_header.h"
@@ -34,10 +35,14 @@
 #include "general.h"
 #include "gimprc.h"
 #include "menus.h"
-#include "paint.h"
 #include "paint_funcs_area.h"
+#include "paint_funcs_row.h"
+#include "palette.h"
 #include "pixelarea.h"
+#include "pixelrow.h"
 #include "tag.h"
+
+
 
 /*  global variables  */
 GBrushP             active_brush = NULL;
@@ -219,19 +224,24 @@ create_default_brush (gint width, gint height)
   
   /* Fill the default brush canvas with white */
   {
-    PixelArea area;
-    Paint *fill_color = paint_new (brush_tag, NULL);
-    gfloat fill_color_data[] = {1.0};
-    Tag data_tag = tag_new (PRECISION_FLOAT, tag_format (brush_tag), tag_alpha(brush_tag)); 
-    paint_load (fill_color, data_tag , (void *) &fill_color_data);
-    pixelarea_init (&area, brush->mask_canvas, NULL,
-		     0, 0,
-		     canvas_width (brush->mask_canvas),
-		     canvas_height (brush->mask_canvas),
-		     TRUE);
-    color_area (&area, fill_color);
-    paint_delete (fill_color);
+    COLOR16_NEWDATA (init, gfloat,
+                     PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
+    COLOR16_NEW (paint, canvas_tag (brush->mask_canvas));
+
+    /* init the paint with the correctly formatted color */
+    COLOR16_INIT (init);
+    COLOR16_INIT (paint);
+    copy_row (&init, &paint);
+
+    /* fill the area using the paint */
+    {
+      PixelArea area;
+      pixelarea_init (&area, brush->mask_canvas, NULL,
+                      0, 0, 0, 0, TRUE);
+      color_area (&area, &paint);
+    }
   }
+  
   canvas_portion_unref (brush->mask_canvas,0,0);
   
   return brush; 

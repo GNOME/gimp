@@ -20,51 +20,9 @@
 
 #include "tag.h"
 
-/* Forward declarations */
-struct _GimpDrawable;
-
-
-typedef struct _Paint Paint;
-
-Paint *                paint_new            (Tag, struct _GimpDrawable *);
-void                   paint_delete         (Paint *);
-Paint *                paint_clone          (Paint *);
-void                   paint_info           (Paint *);
-
-Tag                    paint_tag            (Paint *);
-Precision              paint_precision      (Paint *);
-Format                 paint_format         (Paint *);
-Alpha                  paint_alpha          (Paint *);
-
-Precision              paint_set_precision  (Paint *, Precision);
-Format                 paint_set_format     (Paint *, Format);
-Alpha                  paint_set_alpha      (Paint *, Alpha);
-
-void *                 paint_component      (Paint *, guint);
-guint                  paint_set_component  (Paint *, guint, void *);
-
-struct _GimpDrawable * paint_drawable       (Paint *);
-struct _GimpDrawable * paint_set_drawable   (Paint  *, struct _GimpDrawable *);
-
-int                    paint_load           (Paint *, Tag, void *);
-void *                 paint_data           (Paint *);
-
-void                   paint_setup          (void);
-void                   paint_free           (void);
-
-
-
-/* ===============================================================
-
-  stuff that is here for the moment for want of a better place
-
-*/
-
-/* Opacities */
-#define TRANSPARENT        0
-#define OPAQUE             255
-
-#define MAX_CHANNELS     4
+/* color hash tables */
+void paint_setup (void);
+void paint_free (void);
 
 /*  Color conversion routines  */
 void  rgb_to_hsv (int *, int *, int *);

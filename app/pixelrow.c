@@ -17,7 +17,6 @@
  */
 
 
-#include "paint.h"
 #include "pixelrow.h"
 
 

@@ -69,17 +69,18 @@ Tag       tag_set_precision     (Tag, Precision);
 Tag       tag_set_format        (Tag, Format);
 Tag       tag_set_alpha         (Tag, Alpha);
 
+guint     tag_num_channels      (Tag);
 guint     tag_bytes             (Tag);
 guint     tag_equal             (Tag, Tag);
-guint     tag_num_channels      (Tag);
+
 guchar *  tag_string_precision  (Precision);
 guchar *  tag_string_format     (Format);
 guchar *  tag_string_alpha      (Alpha);
 
 Tag       tag_null              (void);
-Tag       tag_from_type         (guint);
-gint      tag_to_type           (Tag);
 gint      tag_valid             (Tag);
+
+
 
 /* Hopefully temp "glue" for libgimp  */ 
 gint      tag_to_drawable_type   (Tag);

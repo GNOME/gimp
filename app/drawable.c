@@ -28,14 +28,15 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "layer.h"
-#include "paint.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
 #include "pixelarea.h"
+#include "pixelrow.h"
 #include "undo.h"
 
 #include "drawable_pvt.h"
 #include "canvas.h"
+
 
 enum {
   INVALIDATE_PREVIEW,
@@ -198,88 +199,47 @@ drawable_merge_shadow (GimpDrawable *drawable, int undo)
 		      REPLACE_MODE, NULL, x1, y1);
 }
 
-void
-drawable_fill (GimpDrawable *drawable, int fill_type)
+void 
+drawable_fill  (
+                GimpDrawable * drawable,
+                int fill_type
+                )
 {
   GImage *gimage;
-  Tag draw_tag = drawable_tag (drawable);
-  Paint * color;
-  gfloat  color_data[MAX_CHANNELS]; 
-  gfloat  d[4];
 
   if (! drawable)
     return;
-
   if (! (gimage = drawable_gimage (drawable)))
     return;
 
-  color = paint_new (draw_tag, NULL);
-
-  d[3] = 1.0;
- 
-  /*  a gimage_fill affects the active layer  */
-  switch (fill_type)
-    {
-    case BACKGROUND_FILL:
-      {
-	Paint *bg = paint_new (tag_new(PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), NULL);
-        gfloat *bg_data; 
-        gimp16_palette_get_background (bg);
-        bg_data = (gfloat*)paint_data (bg);
-	 
-	d[0] = bg_data[0]; 
-	d[1] = bg_data[1];
-	d[2] = bg_data[2]; 
-	d[3] = 1.0;
-        paint_delete (bg);
-      }
-      break;
-    case WHITE_FILL:
-      d[0] = d[1] = d[2] = d[3] = 1.0;
-      break;
-    case TRANSPARENT_FILL:
-      d[0] = d[1] = d[2] = d[3] = 0.0;
-      break;
-    case NO_FILL:
-      return;
-      break;
-    }
-  
-  switch (tag_format (draw_tag))
-    {
-    case FORMAT_RGB: 
-      color_data[0] = d[0];
-      color_data[1] = d[1];
-      color_data[2] = d[2];
-      if (tag_alpha (draw_tag) == ALPHA_YES)
-        color_data[3] = d[3];
-      break;
-    case FORMAT_GRAY: 
-      color_data[0] = d[0];
-      if (tag_alpha (draw_tag) == ALPHA_YES)
-        color_data[1] = d[1];
-      break;
-    case FORMAT_INDEXED: 
-      /* Fill this in -- uses transform_color */
-    case FORMAT_NONE: 
-    default:
-      warning ("Unknown format.");
-      return;
-      break;
-    }
-    
-    paint_load (color, tag_new (PRECISION_FLOAT, tag_format (draw_tag), tag_alpha(draw_tag)), 
-			(void *) &color_data);
-
   {
     PixelArea dest_area;
+    COLOR16_NEW (paint, drawable_tag(drawable));
+
+    /* init the fill color */
+    COLOR16_INIT (paint);
+    switch (fill_type)
+      {
+      case BACKGROUND_FILL:
+        color16_background (&paint);
+        break;
+      case WHITE_FILL:
+        color16_white (&paint);
+        break;
+      case TRANSPARENT_FILL:
+        color16_transparent (&paint);
+        break;
+      case NO_FILL:
+      default:
+        return;
+      }
+
+    /* init the area to be filled */
     pixelarea_init (&dest_area, drawable_data_canvas(drawable), NULL,
-		     0, 0,
-		     drawable_width (drawable),
-		     drawable_height (drawable),
-		     TRUE);
-    color_area (&dest_area, color);
-    paint_delete (color);
+                    0, 0, 0, 0, TRUE);
+
+    /* do the fill */
+    color_area (&dest_area, &paint);
   }
   
   /*  Update the filled area  */
@@ -287,7 +247,6 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
 		   drawable_width (drawable),
 		   drawable_height (drawable));
 }
-
 
 void
 drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
