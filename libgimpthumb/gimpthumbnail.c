@@ -44,7 +44,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define GIMP_THUMB_DEBUG
+/*   #define GIMP_THUMB_DEBUG   */
 
 
 #if defined (GIMP_THUMB_DEBUG) && defined (__GNUC__)
