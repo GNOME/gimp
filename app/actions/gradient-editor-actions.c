@@ -243,27 +243,27 @@ static GimpRadioActionEntry gradient_editor_blending_actions[] =
 {
   { "gradient-editor-blending-linear", NULL,
     N_("_Linear"), NULL, NULL,
-    GIMP_GRAD_LINEAR,
+    GIMP_GRADIENT_SEGMENT_LINEAR,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-curved", NULL,
     N_("_Curved"), NULL, NULL,
-    GIMP_GRAD_CURVED,
+    GIMP_GRADIENT_SEGMENT_CURVED,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sine", NULL,
     N_("_Sinusoidal"), NULL, NULL,
-    GIMP_GRAD_SINE,
+    GIMP_GRADIENT_SEGMENT_SINE,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-increasing", NULL,
     N_("Spherical (i_ncreasing)"), NULL, NULL,
-    GIMP_GRAD_SPHERE_INCREASING,
+    GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sphere-decreasing", NULL,
     N_("Spherical (_decreasing)"), NULL, NULL,
-    GIMP_GRAD_SPHERE_DECREASING,
+    GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-varies", NULL,
@@ -276,17 +276,17 @@ static GimpRadioActionEntry gradient_editor_coloring_actions[] =
 {
   { "gradient-editor-coloring-rgb", NULL,
     N_("_RGB"), NULL, NULL,
-    GIMP_GRAD_RGB,
+    GIMP_GRADIENT_SEGMENT_RGB,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-ccw", NULL,
     N_("HSV (_counter-clockwise hue)"), NULL, NULL,
-    GIMP_GRAD_HSV_CCW,
+    GIMP_GRADIENT_SEGMENT_HSV_CCW,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-hsv-cw", NULL,
     N_("HSV (clockwise _hue)"), NULL, NULL,
-    GIMP_GRAD_HSV_CW,
+    GIMP_GRADIENT_SEGMENT_HSV_CW,
     GIMP_HELP_GRADIENT_EDITOR_COLORING },
 
   { "gradient-editor-coloring-varies", NULL,
@@ -520,55 +520,53 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-blending-varies", FALSE);
   SET_SENSITIVE ("gradient-editor-coloring-varies", FALSE);
 
+  SET_VISIBLE ("gradient-editor-blending-varies", ! blending_equal);
+
   if (blending_equal)
     {
-      SET_VISIBLE ("gradient-editor-blending-varies", FALSE);
-
       switch (editor->control_sel_l->type)
         {
-        case GIMP_GRAD_LINEAR:
+        case GIMP_GRADIENT_SEGMENT_LINEAR:
           SET_ACTIVE ("gradient-editor-blending-linear", TRUE);
           break;
-        case GIMP_GRAD_CURVED:
+        case GIMP_GRADIENT_SEGMENT_CURVED:
           SET_ACTIVE ("gradient-editor-blending-curved", TRUE);
           break;
-        case GIMP_GRAD_SINE:
+        case GIMP_GRADIENT_SEGMENT_SINE:
           SET_ACTIVE ("gradient-editor-blending-sine", TRUE);
           break;
-        case GIMP_GRAD_SPHERE_INCREASING:
+        case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-increasing", TRUE);
           break;
-        case GIMP_GRAD_SPHERE_DECREASING:
+        case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-decreasing", TRUE);
           break;
         }
     }
   else
     {
-      SET_VISIBLE ("gradient-editor-blending-varies", TRUE);
       SET_ACTIVE ("gradient-editor-blending-varies", TRUE);
     }
 
+  SET_VISIBLE ("gradient-editor-coloring-varies", ! coloring_equal);
+
   if (coloring_equal)
     {
-      SET_VISIBLE ("gradient-editor-coloring-varies", FALSE);
-
       switch (editor->control_sel_l->color)
         {
-        case GIMP_GRAD_RGB:
+        case GIMP_GRADIENT_SEGMENT_RGB:
           SET_ACTIVE ("gradient-editor-coloring-rgb", TRUE);
           break;
-        case GIMP_GRAD_HSV_CCW:
+        case GIMP_GRADIENT_SEGMENT_HSV_CCW:
           SET_ACTIVE ("gradient-editor-coloring-hsv-ccw", TRUE);
           break;
-        case GIMP_GRAD_HSV_CW:
+        case GIMP_GRADIENT_SEGMENT_HSV_CW:
           SET_ACTIVE ("gradient-editor-coloring-hsv-cw", TRUE);
           break;
         }
     }
   else
     {
-      SET_VISIBLE ("gradient-editor-coloring-varies", TRUE);
       SET_ACTIVE ("gradient-editor-coloring-varies", TRUE);
     }
 

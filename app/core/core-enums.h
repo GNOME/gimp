@@ -580,18 +580,18 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
-  GIMP_GRAD_LINEAR = 0,
-  GIMP_GRAD_CURVED,
-  GIMP_GRAD_SINE,
-  GIMP_GRAD_SPHERE_INCREASING,
-  GIMP_GRAD_SPHERE_DECREASING
+  GIMP_GRADIENT_SEGMENT_LINEAR,
+  GIMP_GRADIENT_SEGMENT_CURVED,
+  GIMP_GRADIENT_SEGMENT_SINE,
+  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
+  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING
 } GimpGradientSegmentType;
 
 typedef enum  /*< skip >*/
 {
-  GIMP_GRAD_RGB,      /* normal RGB           */
-  GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
-  GIMP_GRAD_HSV_CW    /* clockwise hue        */
+  GIMP_GRADIENT_SEGMENT_RGB,      /* normal RGB           */
+  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /* counterclockwise hue */
+  GIMP_GRADIENT_SEGMENT_HSV_CW    /* clockwise hue        */
 } GimpGradientSegmentColor;
 
 typedef enum  /*< skip >*/

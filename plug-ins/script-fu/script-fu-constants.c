@@ -84,15 +84,15 @@ init_generated_constants (void)
   setvar (cintern ("TRANSPARENT-FILL"), flocons (3), NIL);
   setvar (cintern ("PATTERN-FILL"), flocons (4), NIL);
 
-  setvar (cintern ("GRAD-RGB"), flocons (0), NIL);
-  setvar (cintern ("GRAD-HSV-CCW"), flocons (1), NIL);
-  setvar (cintern ("GRAD-HSV-CW"), flocons (2), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-RGB"), flocons (0), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-HSV-CCW"), flocons (1), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-HSV-CW"), flocons (2), NIL);
 
-  setvar (cintern ("GRAD-LINEAR"), flocons (0), NIL);
-  setvar (cintern ("GRAD-CURVED"), flocons (1), NIL);
-  setvar (cintern ("GRAD-SINE"), flocons (2), NIL);
-  setvar (cintern ("GRAD-SPHERE-INCREASING"), flocons (3), NIL);
-  setvar (cintern ("GRAD-SPHERE-DECREASING"), flocons (4), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-LINEAR"), flocons (0), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-CURVED"), flocons (1), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-SINE"), flocons (2), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-SPHERE-INCREASING"), flocons (3), NIL);
+  setvar (cintern ("GRADIENT-SEGMENT-SPHERE-DECREASING"), flocons (4), NIL);
 
   setvar (cintern ("GRADIENT-LINEAR"), flocons (0), NIL);
   setvar (cintern ("GRADIENT-BILINEAR"), flocons (1), NIL);

@@ -683,23 +683,23 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   switch (seg->type)
     {
-    case GIMP_GRAD_LINEAR:
+    case GIMP_GRADIENT_SEGMENT_LINEAR:
       factor = gimp_gradient_calc_linear_factor (middle, pos);
       break;
 
-    case GIMP_GRAD_CURVED:
+    case GIMP_GRADIENT_SEGMENT_CURVED:
       factor = gimp_gradient_calc_curved_factor (middle, pos);
       break;
 
-    case GIMP_GRAD_SINE:
+    case GIMP_GRADIENT_SEGMENT_SINE:
       factor = gimp_gradient_calc_sine_factor (middle, pos);
       break;
 
-    case GIMP_GRAD_SPHERE_INCREASING:
+    case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
       factor = gimp_gradient_calc_sphere_increasing_factor (middle, pos);
       break;
 
-    case GIMP_GRAD_SPHERE_DECREASING:
+    case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
       factor = gimp_gradient_calc_sphere_decreasing_factor (middle, pos);
       break;
 
@@ -711,7 +711,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   /* Calculate color components */
 
-  if (seg->color == GIMP_GRAD_RGB)
+  if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
     {
       rgb.r =
         seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
@@ -735,7 +735,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
       switch (seg->color)
 	{
-	case GIMP_GRAD_HSV_CCW:
+	case GIMP_GRADIENT_SEGMENT_HSV_CCW:
 	  if (left_hsv.h < right_hsv.h)
 	    {
 	      left_hsv.h += (right_hsv.h - left_hsv.h) * factor;
@@ -749,7 +749,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 	    }
 	  break;
 
-	case GIMP_GRAD_HSV_CW:
+	case GIMP_GRADIENT_SEGMENT_HSV_CW:
 	  if (right_hsv.h < left_hsv.h)
 	    {
 	      left_hsv.h -= (left_hsv.h - right_hsv.h) * factor;
@@ -920,8 +920,8 @@ gimp_gradient_segment_new (void)
   gimp_rgba_set (&seg->left_color,  0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&seg->right_color, 1.0, 1.0, 1.0, 1.0);
 
-  seg->type  = GIMP_GRAD_LINEAR;
-  seg->color = GIMP_GRAD_RGB;
+  seg->type  = GIMP_GRADIENT_SEGMENT_LINEAR;
+  seg->color = GIMP_GRADIENT_SEGMENT_RGB;
 
   seg->prev = seg->next = NULL;
 
@@ -1541,12 +1541,12 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
       switch (oseg->type)
 	{
-	case GIMP_GRAD_SPHERE_INCREASING:
-	  seg->type = GIMP_GRAD_SPHERE_DECREASING;
+	case GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING:
+	  seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING;
 	  break;
 
-	case GIMP_GRAD_SPHERE_DECREASING:
-	  seg->type = GIMP_GRAD_SPHERE_INCREASING;
+	case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
+	  seg->type = GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING;
 	  break;
 
 	default:
@@ -1555,12 +1555,12 @@ gimp_gradient_segment_range_flip (GimpGradient         *gradient,
 
       switch (oseg->color)
 	{
-	case GIMP_GRAD_HSV_CCW:
-	  seg->color = GIMP_GRAD_HSV_CW;
+	case GIMP_GRADIENT_SEGMENT_HSV_CCW:
+	  seg->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
 	  break;
 
-	case GIMP_GRAD_HSV_CW:
-	  seg->color = GIMP_GRAD_HSV_CCW;
+	case GIMP_GRADIENT_SEGMENT_HSV_CW:
+	  seg->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
 	  break;
 
 	default:

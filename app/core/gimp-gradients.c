@@ -74,12 +74,12 @@ gimp_gradients_init (Gimp *gimp)
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (HSV counter-clockwise)"),
                                           FG_BG_HSV_CCW_KEY);
-  gradient->segments->color = GIMP_GRAD_HSV_CCW;
+  gradient->segments->color = GIMP_GRADIENT_SEGMENT_HSV_CCW;
 
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to BG (HSV clockwise hue)"),
                                           FG_BG_HSV_CW_KEY);
-  gradient->segments->color = GIMP_GRAD_HSV_CW;
+  gradient->segments->color = GIMP_GRADIENT_SEGMENT_HSV_CW;
 
   gradient = gimp_gradients_add_gradient (gimp,
                                           _("FG to Transparent"),

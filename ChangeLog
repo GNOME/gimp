@@ -1,3 +1,18 @@
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.h: renamed the values of the
+	GimpGradientSegment* enums from GIMP_GRAD_* to
+	GIMP_GRADIENT_SEGMENT_* because they are exported now.
+
+	* app/core/gimp-gradients.c
+	* app/core/gimpgradient.c
+	* app/actions/gradient-editor-actions.c: changed accordingly.
+
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2004-06-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tiff.c: don't call gtk_entry_set_text() with a
