@@ -428,13 +428,13 @@ void create_brushpage(GtkNotebook *notebook)
   if (!standalone) {
     GtkWidget *emptyitem;
 
-    tmpw = gtk_label_new( _("Select:"));
-    gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
-    gtk_widget_show (tmpw);
-
     box3 = gtk_hbox_new(FALSE,0);
     gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
     gtk_widget_show(box3);
+
+    tmpw = gtk_label_new( _("Select:"));
+    gtk_box_pack_start(GTK_BOX(box3), tmpw,FALSE,FALSE,0);
+    gtk_widget_show (tmpw);
 
     brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
     g_signal_connect (G_OBJECT(emptyitem), "activate",

@@ -17,30 +17,32 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
-#define MAPFILE "data.out"
-
 #define NUMVECTYPES 4
 
 GtkWidget *omwindow = NULL;
 
-static GtkWidget *vectorprev = NULL;
-static GtkWidget *ompreviewprev = NULL;
+static GtkWidget *vectorprev;
+static GtkWidget *ompreviewprev;
+static GtkWidget *prev_button;
+static GtkWidget *next_button;
+static GtkWidget *add_button;
+static GtkWidget *kill_button;
 
 GtkObject *vectprevbrightadjust = NULL;
 
-GtkObject *angadjust = NULL;
+static GtkObject *angadjust = NULL;
 GtkObject *stradjust = NULL;
 GtkObject *strexpadjust = NULL;
 GtkObject *angoffadjust = NULL;
-GtkWidget *vectypes[NUMVECTYPES];
+static GtkWidget *vectypes[NUMVECTYPES];
 GtkWidget *orientvoronoi = NULL;
 
 #define OMWIDTH 150
 #define OMHEIGHT 150
 
 static vector_t vector[MAXORIENTVECT];
-static int numvect = 0;
+static gint numvect = 0;
+static gint vector_type;
 
 static double degtorad(double d)
 {
@@ -172,6 +174,11 @@ static void updateompreviewprev(void)
   for(y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row(GTK_PREVIEW(ompreviewprev), (guchar *)nbuffer.col + y * OMWIDTH * 3, 0, y, OMWIDTH);
   gtk_widget_draw(ompreviewprev,NULL);
+
+  gtk_widget_set_sensitive (prev_button, (numvect > 1));  
+  gtk_widget_set_sensitive (next_button, (numvect > 1));  
+  gtk_widget_set_sensitive (add_button, (numvect < MAXORIENTVECT));
+  gtk_widget_set_sensitive (kill_button, (numvect > 1));  
 }
 
 static int selectedvector = 0;
@@ -228,18 +235,14 @@ static gboolean adjignore = FALSE;
 
 static void updatesliders(void)
 {
-  int i;
+  gint type;
   adjignore = TRUE;
   gtk_adjustment_set_value(GTK_ADJUSTMENT(angadjust),
 			   vector[selectedvector].dir);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(stradjust),
 			   vector[selectedvector].str);
-  for(i = 0; i < NUMVECTYPES; i++) {
-    if(i == vector[selectedvector].type)
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[i]), TRUE);
-    else
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[i]), FALSE);
-  }
+  type = vector[selectedvector].type;
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(vectypes[type]), TRUE);
   adjignore = FALSE;
 }
 
@@ -259,11 +262,10 @@ static void nextclick(GtkWidget *w, gpointer data)
   updatevectorprev();
 }
 
-static void addclick(GtkWidget *w, gpointer data)
+static void add_new_vector (gdouble x, gdouble y)
 {
-  if(numvect + 1 == MAXORIENTVECT) return;
-  vector[numvect].x = 0.5;
-  vector[numvect].y = 0.5;
+  vector[numvect].x = x;
+  vector[numvect].y = y;
   vector[numvect].dir = 0.0;
   vector[numvect].dx = sin(degtorad(0.0));
   vector[numvect].dy = cos(degtorad(0.0));
@@ -271,6 +273,11 @@ static void addclick(GtkWidget *w, gpointer data)
   vector[numvect].type = 0;
   selectedvector = numvect;
   numvect++;
+}
+
+static void addclick(GtkWidget *w, gpointer data)
+{
+  add_new_vector (0.5, 0.5);
   updatesliders();
   updatevectorprev();
   updateompreviewprev();
@@ -280,37 +287,29 @@ static void deleteclick(GtkWidget *w, gpointer data)
 {
   int i;
 
-  if(numvect == 1) return;
-
-  for(i = selectedvector; i < numvect-1; i++) {
-    memcpy(&vector[i], &vector[i+1], sizeof(vector_t));
+  for (i = selectedvector; i < numvect-1; i++) {
+    vector[i] = vector[i + 1];
   }
   numvect--;
-  if(selectedvector >= numvect) selectedvector = 0;
+
+  if (selectedvector >= numvect) selectedvector = 0;
   updatesliders();
   updatevectorprev();
   updateompreviewprev();
 }
 
-void mapclick(GtkWidget *w, GdkEventButton *event)
+static void mapclick(GtkWidget *w, GdkEventButton *event)
 {
-  if(event->button == 1) {
+  if (event->button == 1) {
     vector[selectedvector].x = event->x / (double)OMWIDTH;
     vector[selectedvector].y = event->y / (double)OMHEIGHT;
 
-  } else if(event->button == 2) {
-    if(numvect + 1 == MAXORIENTVECT) return;
-    vector[numvect].x = event->x / (double)OMWIDTH;
-    vector[numvect].y = event->y / (double)OMHEIGHT;
-    vector[numvect].dir = 0.0;
-    vector[numvect].dx = sin(degtorad(0.0));
-    vector[numvect].dy = cos(degtorad(0.0));
-    vector[numvect].str = 1.0;
-    selectedvector = numvect;
-    numvect++;
+  } else if (event->button == 2) {
+    if (numvect + 1 == MAXORIENTVECT) return;
+    add_new_vector (event->x / (double)OMWIDTH, event->y / (double)OMHEIGHT);
     updatesliders();
 
-  } else if(event->button == 3) {
+  } else if (event->button == 3) {
     double d;
     d = atan2(OMWIDTH * vector[selectedvector].x - event->x,
 	      OMHEIGHT * vector[selectedvector].y - event->y);
@@ -357,23 +356,15 @@ static void angoffadjmove(GtkWidget *w, gpointer data)
 
 static void vectypeclick(GtkWidget *w, gpointer data)
 {
-  int i;
   if (adjignore) return;
-  for(i = 0; i < NUMVECTYPES; i++) {
-    if(GTK_TOGGLE_BUTTON(vectypes[i])->active)
-      vector[selectedvector].type = i;
-  }
+
+  gimp_radio_button_update (w, data);
+  vector[selectedvector].type = vector_type;
   updatevectorprev();
   updateompreviewprev();
 }
 
-static void omcancelclick(GtkWidget *w, GtkWidget *win)
-{
-  if (win)
-    gtk_widget_hide(win);
-}
-
-static void omokclick(GtkWidget *w, GtkWidget *win)
+static void omapplyclick(GtkWidget *w, gpointer data)
 {
   int i;
   for(i = 0; i < numvect; i++) {
@@ -383,29 +374,28 @@ static void omokclick(GtkWidget *w, GtkWidget *win)
   pcvals.orientstrexp = GTK_ADJUSTMENT(strexpadjust)->value;
   pcvals.orientangoff = GTK_ADJUSTMENT(angoffadjust)->value;
   pcvals.orientvoronoi = GTK_TOGGLE_BUTTON(orientvoronoi)->active;
-  if(win)
-    gtk_widget_hide(win);
 }
 
-void initvectors(void)
+static void omokclick(GtkWidget *w, gpointer data)
 {
-  int i;
+  omapplyclick(NULL, NULL);
+  gtk_widget_hide(w);
+}
 
+static void initvectors(void)
+{
   if (pcvals.numorientvector) {
+    int i;
+
     numvect = pcvals.numorientvector;
     for(i = 0; i < numvect; i++) {
       vector[i] = pcvals.orientvector[i];
     }
-  } else {
-    /* Shouldn't happen */
-    numvect = 1;
-    vector[0].x = 0.5;
-    vector[0].y = 0.5;
-    vector[0].dir = 0.0;
-    vector[0].str = 1.0;
-    vector[0].type = 0;
+  } else {/* Shouldn't happen */
+    numvect = 0;
+    add_new_vector (0.5, 0.5);
   }
-  if(selectedvector >= numvect)
+  if (selectedvector >= numvect)
     selectedvector = numvect-1;
 }
 
@@ -426,61 +416,71 @@ void update_orientmap_dialog(void)
 void create_orientmap_dialog(void)
 {
   GtkWidget *tmpw, *tmpw2;
-  GtkWidget *table1;
-  GtkWidget *table2;
-  GtkWidget *hbox;
+  GtkWidget *table1, *table2;
+  GtkWidget *frame;
+  GtkWidget *ebox, *hbox, *vbox;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orientradio[7]), TRUE);
 
   initvectors();
 
-  if(omwindow) {
+  if (omwindow) {
     updatevectorprev();
     updateompreviewprev();
     gtk_widget_show(omwindow);
     return;
   }
 
-  omwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  omwindow =
+    gimp_dialog_new (_("Orientation Map Editor"), "gimpressionist",
+		     gimp_standard_help_func, "filters/gimpressionst.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT(omwindow), "destroy",
-                      GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-                      &omwindow);
-  gtk_signal_connect (GTK_OBJECT(omwindow), "delete_event",
-                      GTK_SIGNAL_FUNC(gtk_widget_hide_on_delete),
-                      &omwindow);
+		     GTK_STOCK_CANCEL, gtk_widget_hide,
+		     NULL, 1, NULL, FALSE, FALSE,
 
-  gtk_window_set_title(GTK_WINDOW(omwindow), _("Orientation Map Editor"));
+		     GTK_STOCK_APPLY, omapplyclick,
+		     NULL, NULL, NULL, FALSE, FALSE,
 
-  gtk_container_set_border_width (GTK_CONTAINER(omwindow), 5);
+		     GTK_STOCK_OK, omokclick,
+		     NULL, 1, NULL, TRUE, FALSE,
 
-  tmpw = table1 = gtk_table_new(2,5,FALSE);
-  gtk_widget_show(tmpw);
-  gtk_container_add(GTK_CONTAINER(omwindow), tmpw);
+		     NULL);
 
-  tmpw2 = tmpw = gtk_frame_new( _("Vectors"));
-  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_table_attach(GTK_TABLE(table1), tmpw, 0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
-  gtk_widget_show(tmpw);
+  g_signal_connect (G_OBJECT(omwindow), "destroy",
+		    G_CALLBACK(gtk_widget_destroyed), &omwindow);
+  g_signal_connect (G_OBJECT(omwindow), "delete_event",
+		    G_CALLBACK(gtk_widget_hide_on_delete), &omwindow);
 
-  tmpw = hbox = gtk_hbox_new(FALSE,0);
-  gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
-  gtk_widget_show(tmpw);
+  table1 = gtk_table_new(2, 5, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (omwindow)->vbox), table1);
+  gtk_widget_show(table1);
 
-  tmpw = gtk_event_box_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."), NULL);
-  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
-  tmpw2 = tmpw;
+  frame = gtk_frame_new( _("Vectors"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
+  gtk_table_attach(GTK_TABLE(table1), frame, 0, 1, 0, 1,
+		   GTK_EXPAND,GTK_EXPAND, 0, 0);
+  gtk_widget_show(frame);
+
+  hbox = gtk_hbox_new(FALSE, 0);
+  gtk_container_add(GTK_CONTAINER(frame), hbox);
+  gtk_widget_show(hbox);
+
+  ebox = gtk_event_box_new();
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), ebox, _("The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."), NULL);
+  gtk_box_pack_start(GTK_BOX(hbox), ebox, FALSE, FALSE, 0);
 
   tmpw = vectorprev = gtk_preview_new(GTK_PREVIEW_COLOR);
   gtk_preview_size(GTK_PREVIEW(tmpw), OMWIDTH, OMHEIGHT);
-  gtk_container_add(GTK_CONTAINER(tmpw2), tmpw);
+  gtk_container_add(GTK_CONTAINER(ebox), tmpw);
   gtk_widget_show(tmpw);
-  gtk_widget_set_events(tmpw2, GDK_BUTTON_PRESS_MASK);
-  gtk_signal_connect(GTK_OBJECT(tmpw2), "button_press_event",
+  gtk_widget_set_events(ebox, GDK_BUTTON_PRESS_MASK);
+  gtk_signal_connect(GTK_OBJECT(ebox), "button_press_event",
                      GTK_SIGNAL_FUNC(mapclick), NULL);
-  gtk_widget_realize(tmpw2);
-  gtk_widget_show(tmpw2);
+  gtk_widget_realize(ebox);
+  gtk_widget_show(ebox);
 
   vectprevbrightadjust = gtk_adjustment_new(50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
   tmpw = gtk_vscale_new(GTK_ADJUSTMENT(vectprevbrightadjust));
@@ -489,7 +489,8 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   gtk_signal_connect(GTK_OBJECT(vectprevbrightadjust), "value_changed",
                      (GtkSignalFunc)updatevectorprev, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
@@ -506,179 +507,109 @@ void create_orientmap_dialog(void)
   gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,1,2);
   gtk_widget_show(tmpw);
 
-  tmpw = gtk_button_new_with_label("<<");
+  prev_button = tmpw = gtk_button_new_with_mnemonic("_<<");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(prevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select previous vector"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(prevclick), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Select previous vector"), NULL);
 
-  tmpw = gtk_button_new_with_label(">>");
+  next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(nextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Select next vector"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(nextclick), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Select next vector"), NULL);
 
-  tmpw = gtk_button_new_with_label( _("Add"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
+  add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
+  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(addclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Add new vector"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(addclick), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Add new vector"), NULL);
 
-  tmpw = gtk_button_new_with_label( _("Kill"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
+  kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
+  gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(deleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Delete selected vector"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deleteclick), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Delete selected vector"), NULL);
 
-  tmpw = table2 = gtk_table_new(2,2,FALSE);
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 0,1,2,3);
-  gtk_widget_show(tmpw);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_set_spacing (GTK_BOX(hbox), 12);
+  gtk_table_attach_defaults(GTK_TABLE(table1), hbox, 0, 2, 2, 3);
+  gtk_widget_show (hbox);
 
-  tmpw = gtk_label_new( _("Angle:"));
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add(GTK_CONTAINER(hbox), vbox);
+  gtk_widget_show (vbox);
 
-  angadjust = gtk_adjustment_new(0.0, 0.0, 361.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(angadjust));
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 1);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,0,1);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(angadjust), "value_changed",
-		     (GtkSignalFunc)angadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the angle of the selected vector"), NULL);
+  frame = gimp_radio_group_new2 (TRUE, _("Type"),
+				 G_CALLBACK (vectypeclick),
+				 &vector_type, (gpointer) 0,
 
-  tmpw = gtk_label_new( _("Strength:"));
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,1,2);
+				 _("_Normal"), 0, &vectypes[0],
+				 _("Vorte_x"), 1, &vectypes[1],
+				 _("Vortex_2"), 2, &vectypes[2],
+				 _("Vortex_3"), 3, &vectypes[3],
+				 NULL);
+  gtk_container_add(GTK_CONTAINER(vbox), frame);
+  gtk_widget_show(frame);
 
-  stradjust = gtk_adjustment_new(1.0, 0.1, 6.0, 0.1, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(stradjust));
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 1);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,1,2);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(stradjust), "value_changed",
-		     (GtkSignalFunc)stradjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the strength of the selected vector"), NULL);
-
-
-  tmpw = gtk_label_new( _("Type:"));
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
-
-
-  tmpw = hbox = gtk_hbox_new(TRUE,0);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,2,3);
-  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_widget_show(tmpw);
-
-  vectypes[0] = tmpw = gtk_radio_button_new_with_label(NULL, _("Normal"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
-  gtk_widget_show(tmpw);
- 
-  vectypes[1] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
-  gtk_widget_show(tmpw);
-
-
-  tmpw = hbox = gtk_hbox_new(TRUE,0);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,3,4);
-  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_widget_show(tmpw);
- 
-  vectypes[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex2"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
-  gtk_widget_show(tmpw);
- 
-  vectypes[3] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(vectypes[0])), _("Vortex3"));
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(vectypeclick), NULL);
-  gtk_widget_show(tmpw);
- 
-
-  tmpw = hbox = gtk_hbox_new(TRUE,0);
-  gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,1,2);
-  gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_widget_show(tmpw);
-
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_OK);
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(omokclick), omwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply and exit the editor"), NULL);
-
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_APPLY);
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(omokclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Apply, but stay inside the editor"), NULL);
-
-  tmpw = gtk_button_new_from_stock( GTK_STOCK_CANCEL);
-  gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(omcancelclick), omwindow);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Cancel all changes and exit"), NULL);
-
-
-  tmpw = table2 = gtk_table_new(2,2,FALSE);
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table1), tmpw, 1,2,2,3);
-  gtk_widget_show(tmpw);
-
-  tmpw = gtk_label_new( _("Strength exp.:"));
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,0,1);
-
-  strexpadjust = gtk_adjustment_new(pcvals.orientstrexp, 0.1, 11.0, 0.1, 0.1, 0.1);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(strexpadjust));
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 1);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,0,1);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(strexpadjust), "value_changed",
-		     (GtkSignalFunc)strexpadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Change the exponent of the strength"), NULL);
-
-  tmpw = gtk_label_new( _("Angle offset:"));
-  gtk_widget_show(tmpw);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,1,2);
-
-  angoffadjust = gtk_adjustment_new(pcvals.orientangoff, 0.0, 361.0, 1.0, 1.0, 1.0);
-  tmpw = gtk_hscale_new(GTK_ADJUSTMENT(angoffadjust));
-  gtk_scale_set_draw_value (GTK_SCALE (tmpw), TRUE);
-  gtk_scale_set_digits(GTK_SCALE (tmpw), 1);
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 1,2,1,2);
-  gtk_widget_show(tmpw);
-  gtk_signal_connect(GTK_OBJECT(angoffadjust), "value_changed",
-		     (GtkSignalFunc)angoffadjmove, NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Offset all vectors with a given angle"), NULL);
-
-  orientvoronoi = tmpw = gtk_check_button_new_with_label( _("Voronoi"));
-  gtk_table_attach_defaults(GTK_TABLE(table2), tmpw, 0,1,2,3);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
+  orientvoronoi = tmpw = gtk_check_button_new_with_mnemonic( _("_Voronoi"));
+  gtk_container_add(GTK_CONTAINER(vbox), tmpw);
   gtk_widget_show (tmpw);
-  if(pcvals.orientvoronoi)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), TRUE);
-  gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
-		     (GtkSignalFunc)angoffadjmove, NULL);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.orientvoronoi);
+  g_signal_connect(G_OBJECT(tmpw), "clicked", G_CALLBACK(angoffadjmove), NULL);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
-  
+
+  table2 = gtk_table_new(4, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE(table2), 4);
+  gtk_container_add(GTK_CONTAINER(hbox), table2);
+  gtk_widget_show(table2);
+
+  angadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 0, 
+			  _("A_ngle:"),
+			  150, 6, 0.0, 
+			  0.0, 360.0, 1.0, 10.0, 1, 
+			  TRUE, 0, 0,
+			  _("Change the angle of the selected vector"),
+			  NULL);
+  g_signal_connect (angadjust, "value_changed", G_CALLBACK (angadjmove), NULL);
+
+  angoffadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 1, 
+			  _("Ang_le offset:"),
+			  150, 6, 0.0, 
+			  0.0, 360.0, 1.0, 10.0, 1, 
+			  TRUE, 0, 0,
+			  _("Offset all vectors with a given angle"),
+			  NULL);
+  g_signal_connect (angoffadjust, "value_changed", 
+		    G_CALLBACK (angoffadjmove), NULL);
+
+  stradjust = 
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 2, 
+			  _("_Strength:"),
+			  150, 6, 1.0, 
+			  0.1, 5.0, 0.1, 1.0, 1,
+			  TRUE, 0, 0,
+			  _("Change the strength of the selected vector"),
+			  NULL);
+  g_signal_connect (stradjust, "value_changed", G_CALLBACK (stradjmove), NULL);
+
+  strexpadjust = 
+    gimp_scale_entry_new (GTK_TABLE(table2), 0, 3, 
+			  _("S_trength exp.:"),
+			  150, 6, 1.0, 
+			  0.1, 10.9, 0.1, 1.0, 1,
+			  TRUE, 0, 0,
+			  _("Change the exponent of the strength"),
+			  NULL);
+  g_signal_connect (strexpadjust, "value_changed", 
+		    G_CALLBACK (strexpadjmove), NULL);
+
   gtk_widget_show(omwindow);
 
   updatevectorprev();

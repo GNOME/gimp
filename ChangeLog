@@ -1,3 +1,14 @@
+2002-12-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/gimpressionist/paper.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/gimpressionist/orientmap.c: more changes to make 
+	gimpressionist look like a standard GIMP plug-in (#81963) plus lots
+	of code clean-up.
+
 2002-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call): fixed

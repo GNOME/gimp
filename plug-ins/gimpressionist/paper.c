@@ -130,21 +130,22 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX (box2), tmpw, FALSE, FALSE, 5);
   gtk_widget_show(tmpw);
 
-  /* updatepaperprev(NULL); */
-
-  paperinvert = tmpw = gtk_check_button_new_with_label( _("Invert"));
+  paperinvert = tmpw = gtk_check_button_new_with_mnemonic( _("_Invert"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
   g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(selectpaper), list);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Inverts the Papers texture"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Inverts the Papers texture"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperinvert);
 
-  paperoverlay = tmpw = gtk_check_button_new_with_label( _("Overlay"));
+  paperoverlay = tmpw = gtk_check_button_new_with_mnemonic( _("O_verlay"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), FALSE);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Applies the paper as it is (without embossing it)"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Applies the paper as it is (without embossing it)"), 
+		       NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.paperoverlay);
 
   box1 = gtk_hbox_new (FALSE, 0);

@@ -421,7 +421,7 @@ static int create_dialog(void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("_About..."), showabout,
+			 _("A_bout..."), showabout,
 			 NULL, NULL, NULL, FALSE, FALSE,
 			    
 			 GTK_STOCK_CANCEL, dialog_cancel_callback,

@@ -31,11 +31,11 @@ GtkWidget *presetlist = NULL;
 GtkWidget *presetdesctext = NULL;
 GtkWidget *presetdesclabel = NULL;
 
-char presetdesc[4096] = "";
+static char presetdesc[4096] = "";
 
-char *factory_defaults = "<Factory defaults>";
+static char *factory_defaults = "<Factory defaults>";
 
-void presetsrefresh(void)
+static void presetsrefresh(void)
 {
   GtkWidget *list = presetlist;
   GtkWidget *tmpw;
@@ -52,7 +52,7 @@ void presetsrefresh(void)
 
 #define PRESETMAGIC "Preset"
 
-int loadoldpreset(char *fname)
+static int loadoldpreset(char *fname)
 {
   FILE *f;
   int len;
@@ -158,7 +158,7 @@ static void parsedesc(char *str, char *d)
   *d = '\0';
 }
 
-void setval(char *key, char *val)
+static void setval(char *key, char *val)
 {
   if(!strcmp(key, "desc"))
     parsedesc(val, presetdesc);
@@ -263,7 +263,7 @@ void setval(char *key, char *val)
     pcvals.colornoise = g_ascii_strtod (val, NULL);
 }
 
-int loadpreset(char *fn)
+static int loadpreset(char *fn)
 {
   char line[1024] = "";
   FILE *f;
@@ -278,7 +278,7 @@ int loadpreset(char *fn)
     fclose(f);
     return loadoldpreset(fn);
   }
-  memcpy(&pcvals, &defaultpcvals, sizeof(pcvals));
+  pcvals = defaultpcvals;
   while(!feof(f)) {
     char *tmps;
     if(!fgets(line,1024,f)) break;
@@ -293,7 +293,7 @@ int loadpreset(char *fn)
   return 0;
 }
 
-void applypreset(void)
+static void applypreset(void)
 {
   GList *h = GTK_LIST(presetlist)->selection;
   GtkWidget *tmpw = h->data;
@@ -319,7 +319,7 @@ void applypreset(void)
   restorevals();
 }
 
-void deletepreset(void)
+static void deletepreset(void)
 {
   GList *h = GTK_LIST(presetlist)->selection;
   GtkWidget *tmpw = h->data;
@@ -335,9 +335,9 @@ void deletepreset(void)
   presetsrefresh();
 }
 
-void savepreset(GtkWidget *wg, GtkWidget *p);
+static void savepreset(GtkWidget *wg, GtkWidget *p);
 
-void presetdesccallback(GtkWidget *widget, gpointer data)
+static void presetdesccallback(GtkWidget *widget, gpointer data)
 {
   guchar *s;
   char *d, *str;
@@ -353,32 +353,40 @@ void presetdesccallback(GtkWidget *widget, gpointer data)
   g_free(str);
 }
 
-void oksavepreset(GtkWidget *wg, GtkWidget *p)
+static void oksavepreset(GtkWidget *wg, GtkWidget *p)
 {
-  if(wg) gtk_widget_destroy(wg);
+  gtk_widget_destroy(wg);
   savepreset(NULL,NULL);
 }
 
-void create_savepreset(void)
+static void create_savepreset(void)
 {
   static GtkWidget *window = NULL;
-  GtkWidget *button;
   GtkWidget *box, *label;
   GtkWidget *text;
 
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    
-  gtk_signal_connect_object (GTK_OBJECT (window), "delete_event",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT(window));
-    
-  gtk_signal_connect_object(GTK_OBJECT(window), "destroy",
-			    GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			    GTK_OBJECT(window));
+  window = 
+    gimp_dialog_new (_("Save Current"), "gimpressionist",
+		     gimp_standard_help_func, "filters/gimpressionst.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  gtk_container_set_border_width (GTK_CONTAINER (window), 5);
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, FALSE,
 
-  box = gtk_vbox_new(FALSE,5);
+		     GTK_STOCK_OK, oksavepreset,
+		     NULL, 1, NULL, TRUE, FALSE,
+
+		     NULL);
+
+  g_signal_connect (G_OBJECT(window), "destroy",
+		    G_CALLBACK(gtk_widget_destroy), NULL);
+  g_signal_connect (G_OBJECT(window), "delete_event",
+		    G_CALLBACK(gtk_widget_destroy), NULL);
+
+  box = gtk_vbox_new(FALSE, 5);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), box);
+  gtk_widget_show (box);
 
   label = gtk_label_new( _("Description:"));
   gtk_box_pack_start(GTK_BOX(box),label,FALSE,FALSE,0);
@@ -398,26 +406,7 @@ void create_savepreset(void)
   gtk_signal_connect (GTK_OBJECT (text), "changed",
 		      (GtkSignalFunc) presetdesccallback,
 		      NULL);
-
-  button = gtk_button_new_from_stock ( GTK_STOCK_OK);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (oksavepreset),
-			     GTK_OBJECT(window));
-  gtk_box_pack_start(GTK_BOX(box),button,FALSE,FALSE,0);
-  gtk_widget_show (button);
-
-
-  button = gtk_button_new_from_stock ( GTK_STOCK_CANCEL);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
-			     GTK_OBJECT(window));
-  gtk_box_pack_start(GTK_BOX(box),button,FALSE,FALSE,0);
-  gtk_widget_show (button);
-
     
-  gtk_container_add (GTK_CONTAINER (window), box);
-    
-  gtk_widget_show (box);
   gtk_widget_show (window);
 
 }
@@ -624,10 +613,11 @@ void create_presetpage(GtkNotebook *notebook)
   presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current"));
   gtk_box_pack_start(GTK_BOX(box1), tmpw,FALSE,FALSE,5);
   gtk_widget_show (tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(create_savepreset),
-		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Save the current settings to the specified file"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(create_savepreset),
+		    NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Save the current settings to the specified file"), 
+		       NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
@@ -660,31 +650,28 @@ void create_presetpage(GtkNotebook *notebook)
   box2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,5);
   gtk_widget_show (box2);
-  /* gtk_container_set_border_width (GTK_CONTAINER (box2), 5); */
 
-  tmpw = gtk_button_new_with_label( _("Apply"));
-  gtk_box_pack_start(GTK_BOX(box2), tmpw,FALSE,FALSE,0);
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(applypreset),
-		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reads the selected Preset into memory"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(applypreset), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Reads the selected Preset into memory"), NULL);
 
-  tmpw = gtk_button_new_with_label( _("Delete"));
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(deletepreset),
-		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Deletes the selected Preset"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(deletepreset), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
+		       _("Deletes the selected Preset"), NULL);
 
-  tmpw = gtk_button_new_with_label( _("Refresh"));
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
-		      GTK_SIGNAL_FUNC(presetsrefresh),
-		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reread the folder of Presets"), NULL);
+  g_signal_connect (G_OBJECT(tmpw), "clicked", G_CALLBACK(presetsrefresh), 
+		    NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
+		       _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
