@@ -108,7 +108,10 @@ gimp_g_value_get_memsize (GValue *value)
 
   if (G_VALUE_HOLDS_STRING (value))
     {
-      memsize += strlen (g_value_get_string (value)) + 1;
+      const gchar *str = g_value_get_string (value);
+
+      if (str)
+        memsize += strlen (str) + 1;
     }
   else if (G_VALUE_HOLDS_BOXED (value))
     {
