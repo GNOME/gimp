@@ -399,18 +399,6 @@ gimp_message_set_handler
 <SECTION>
 <FILE>gimpmisc</FILE>
 gimp_version
-<SUBSECTION>
-gimp_pixel_fetcher_new
-gimp_pixel_fetcher_destroy
-gimp_pixel_fetcher_get_pixel
-gimp_pixel_fetcher_get_pixel2
-gimp_pixel_fetcher_set_bg_color
-GimpRgnFunc1
-GimpRgnFunc2
-gimp_rgn_iterate1
-gimp_rgn_iterate2
-<SUBSECTION>
-gimp_get_bg_guchar
 </SECTION>
 
 <SECTION>

@@ -1,3 +1,8 @@
+2002-12-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpgradientmenu.c (gimp_gradient_select_widget): match
+	the parameter name in the header to please gtk-doc.
+
 2002-12-17  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpenvirontable.[ch]: added some rudimentary support
@@ -42,13 +47,6 @@
 	functions
 
 	* libgimp/gimpmenu.h: fixed a typo
-
-	* devel-docs/libgimp/libgimp-sections.txt: did some rearranging,
-	added all unused functions (except for temporary ones)
-
-	* devel-docs/libgimp/tmpl/gimp.sgml
-	* devel-docs/libgimp/tmpl/gimpmenu.sgml
-	* devel-docs/libgimp/tmpl/gimpmisc.sgml: regenerated
 
 2002-12-17  Nathan Summers  <rock@gimp.org>
 

@@ -184,7 +184,7 @@ gradient_preview_callback (GtkWidget *widget,
 
 /**
  * gimp_gradient_select_widget:
- * @dname: Title of the dialog to use.  NULL means to use the default title.
+ * @gname: Title of the dialog to use.  NULL means to use the default title.
  * @igradient: Initial gradient name. NULL means to use current selection. 
  * @cback: a function to call when the selected gradient changes.
  * @data: a pointer to arbitary data to be used in the call to @cback.
@@ -196,7 +196,7 @@ gradient_preview_callback (GtkWidget *widget,
  * Returns:A #GtkWidget that you can use in your UI.
  */
 GtkWidget * 
-gimp_gradient_select_widget (gchar                   *dname,
+gimp_gradient_select_widget (gchar                   *gname,
 			     gchar                   *igradient, 
 			     GimpRunGradientCallback  cback,
 			     gpointer                 data)
@@ -233,7 +233,7 @@ gimp_gradient_select_widget (gchar                   *dname,
   gsel->data               = data;
   gsel->grad_data          = NULL;
   gsel->gradient_preview   = gradient;
-  gsel->dname              = dname;
+  gsel->dname              = gname;
   gsel->gradient_popup_pnt = NULL;
   gsel->sample_size        = CELL_SIZE_WIDTH;
 

@@ -1,3 +1,21 @@
+2002-12-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: removed the functions Nathan added
+	since the Makefile explicitely excludes them and they shouldn't
+	show up in the docs until the API has settled and they are moved
+	out of gimpmisc.h.
+
+	* libgimp/tmpl/gimpmisc.sgml: regenerated.
+
+2002-12-17  Nathan Summers  <rock@gimp.org>
+
+	* libgimp/libgimp-sections.txt: did some rearranging, added all
+	unused functions (except for temporary ones)
+
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpmenu.sgml
+	* libgimp/tmpl/gimpmisc.sgml: regenerated.
+
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt
