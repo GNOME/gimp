@@ -1,3 +1,9 @@
+2002-12-21  Garry R. Osgood <grosgood@rcn.com>
+	
+	* app/gimpimage.c: fixed a buglet introduced in 2002-12-19 
+	 check-in that affected scripts bracketing merge operations with
+	 "gimp-image-undo-disable"/"gimp-image-undo-enable" pairs.
+	
 2002-12-20  Garry R. Osgood <grosgood@rcn.com>
 
 	* app/brightness_contrast.c
@@ -11,7 +17,7 @@
 	* app/posterize.c
 	* app/threshold.c
 	* app/threshold.h : fixed connect/disconnect asymmetry bug introduced
-	in my 2002-12-2002 check-in (Thanks, Mitch for pointing it out).
+	in my 2002-19-2002 check-in (Thanks, Mitch for pointing it out).
 	See report for bug #82671 at bugzilla.gnome.org for details.
 	
 2002-12-19  Nathan Summers  <rock@gimp.org>

@@ -2740,14 +2740,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /*  Start a merge undo group  */
 
-  if (!undo_push_group_start (gimage, LAYER_MERGE_UNDO))
-    {
-      /* Could not start an undo group. Likely the undo system is still */
-      /* disabled. Cleanup and return                                   */
-
-      g_slist_free (reverse_list);
-      return NULL;
-    }
+  undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
   name = g_strdup (drawable_get_name (GIMP_DRAWABLE(layer)));
 
