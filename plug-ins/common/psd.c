@@ -1051,6 +1051,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
     }
   else
     {
+      layer->name = "unnamed";
       IFDBG printf("\t\t\t\t\t\tNULL LAYER NAME\n");
     }
   
@@ -1495,7 +1496,6 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	    primary_data[pix * gimpstep + chan] = src[pix * psstep + chan];
 	  }
       }
-    
     gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			 0, 0, drawable->width, drawable->height,
 			 TRUE, FALSE);
@@ -1871,7 +1871,6 @@ load_image(char *name)
 	  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, 
 			       layer->width, layer->height,
 			       TRUE, FALSE);
-
 	  gimp_pixel_rgn_set_rect (&pixel_rgn, merged_data, 0, 0, 
 				   layer->width, layer->height);
 	  
@@ -2124,7 +2123,7 @@ load_image(char *name)
 		      dest[iter*2+1] = 255;
 		    }
 		}
-	  
+
 	      gimp_pixel_rgn_init (&pixel_rgn, drawable,
 				   0, 0, drawable->width, drawable->height,
 				   TRUE, FALSE);
