@@ -25,16 +25,24 @@
         g_return_if_fail ((context) != NULL); \
         g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-#define context_return_val_if_fail(context, val) \
+#define context_return_val_if_fail(context,val) \
         g_return_val_if_fail ((context) != NULL, (val)); \
         g_return_val_if_fail (GIMP_IS_CONTEXT (context), (val));
 
 #define context_check_current(context) \
         ((context) = (context) ? (context) : current_context)
 
-#define context_find_defined(context, field_defined) \
+#define context_find_defined(context,field_defined) \
         while (!((context)->field_defined) && (context)->parent) \
           (context) = (context)->parent
+
+enum {
+  ARG_0,
+  ARG_OPACITY,
+  ARG_PAINT_MODE,
+  ARG_IMAGE,
+  ARG_DISPLAY
+};
 
 enum {
   OPACITY_CHANGED,
@@ -64,6 +72,63 @@ static GimpContext * standard_context = NULL;
 /*  private functions  ******************************************************/
 
 static void
+gimp_context_set_arg (GtkObject *object,
+		      GtkArg    *arg,
+		      guint      arg_id)
+{
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (object);
+
+  switch (arg_id)
+    {
+    case ARG_OPACITY:
+      gimp_context_set_opacity (context, GTK_VALUE_DOUBLE (*arg));
+      break;
+    case ARG_PAINT_MODE:
+      gimp_context_set_paint_mode (context, GTK_VALUE_INT (*arg));
+      break;
+    case ARG_IMAGE:
+      gimp_context_set_image (context, GTK_VALUE_POINTER (*arg));
+      break;
+    case ARG_DISPLAY:
+      gimp_context_set_display (context, GTK_VALUE_POINTER (*arg));
+      break;
+    default:
+      break;
+    }
+}
+
+static void
+gimp_context_get_arg (GtkObject *object,
+		      GtkArg    *arg,
+		      guint      arg_id)
+{
+  GimpContext *context;
+
+  context = GIMP_CONTEXT (object);
+
+  switch (arg_id)
+    {
+    case ARG_OPACITY:
+      GTK_VALUE_DOUBLE (*arg) = gimp_context_get_opacity (context);
+      break;
+    case ARG_PAINT_MODE:
+      GTK_VALUE_INT (*arg) = gimp_context_get_paint_mode (context);
+      break;
+    case ARG_IMAGE:
+      GTK_VALUE_POINTER (*arg) = gimp_context_get_image (context);
+      break;
+    case ARG_DISPLAY:
+      GTK_VALUE_POINTER (*arg) = gimp_context_get_display (context);
+      break;
+    default:
+      arg->type = GTK_TYPE_INVALID;
+      break;
+    }
+}
+
+static void
 gimp_context_destroy (GtkObject *object)
 {
   GimpContext *context;
@@ -86,6 +151,15 @@ gimp_context_class_init (GimpContextClass *klass)
   
   object_class = GTK_OBJECT_CLASS (klass);
 
+  gtk_object_add_arg_type ("GimpContext::opacity",
+			   GTK_TYPE_DOUBLE, GTK_ARG_READWRITE, ARG_OPACITY);
+  gtk_object_add_arg_type ("GimpContext::paint_mode",
+			   GTK_TYPE_INT, GTK_ARG_READWRITE, ARG_PAINT_MODE);
+  gtk_object_add_arg_type ("GimpContext::image",
+			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_IMAGE);
+  gtk_object_add_arg_type ("GimpContext::display",
+			   GTK_TYPE_POINTER, GTK_ARG_READWRITE, ARG_DISPLAY);
+
   parent_class = gtk_type_class (gimp_object_get_type ());
 
   gimp_context_signals[OPACITY_CHANGED] =
@@ -94,7 +168,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					opacity_changed),
-		     gimp_sigtype_void);
+		     gimp_sigtype_double);
 
   gimp_context_signals[PAINT_MODE_CHANGED] =
     gimp_signal_new ("paint_mode_changed",
@@ -102,7 +176,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					paint_mode_changed),
-		     gimp_sigtype_void);
+		     gimp_sigtype_int);
 
   gimp_context_signals[IMAGE_CHANGED] =
     gimp_signal_new ("image_changed",
@@ -110,7 +184,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					image_changed),
-		     gimp_sigtype_void);
+		     gimp_sigtype_pointer);
 
   gimp_context_signals[DISPLAY_CHANGED] =
     gimp_signal_new ("display_changed",
@@ -118,17 +192,19 @@ gimp_context_class_init (GimpContextClass *klass)
 		     object_class->type,
 		     GTK_SIGNAL_OFFSET (GimpContextClass,
 					display_changed),
-		     gimp_sigtype_void);
+		     gimp_sigtype_pointer);
 
   gtk_object_class_add_signals (object_class, gimp_context_signals,
 				LAST_SIGNAL);
+
+  object_class->set_arg = gimp_context_set_arg;
+  object_class->get_arg = gimp_context_get_arg;
+  object_class->destroy = gimp_context_destroy;
 
   klass->opacity_changed    = NULL;
   klass->paint_mode_changed = NULL;
   klass->image_changed      = NULL;
   klass->display_changed    = NULL;
-
-  object_class->destroy = gimp_context_destroy;
 }
 
 static void
@@ -326,7 +402,8 @@ gimp_context_set_opacity (GimpContext *context,
 
   context->opacity = opacity;
   gtk_signal_emit (GTK_OBJECT (context),
-		   gimp_context_signals[OPACITY_CHANGED]);
+		   gimp_context_signals[OPACITY_CHANGED],
+		   opacity);
 }
 
 gboolean
@@ -371,7 +448,8 @@ gimp_context_set_paint_mode (GimpContext *context,
 
   context->paint_mode = paint_mode;
   gtk_signal_emit (GTK_OBJECT(context),
-		   gimp_context_signals[PAINT_MODE_CHANGED]);
+		   gimp_context_signals[PAINT_MODE_CHANGED],
+		   paint_mode);
 }
 
 gboolean
@@ -414,9 +492,12 @@ gimp_context_set_image (GimpContext *context,
   context_return_if_fail (context);
   context_find_defined (context, image_defined);
 
+  if (context->image == image) return;
+
   context->image = image;
   gtk_signal_emit (GTK_OBJECT (context),
-		   gimp_context_signals[IMAGE_CHANGED]);
+		   gimp_context_signals[IMAGE_CHANGED],
+		   image);
 }
 
 gboolean
@@ -455,13 +536,22 @@ void
 gimp_context_set_display (GimpContext *context,
 			  GDisplay    *display)
 {
+  GimpContext *orig = context;
+
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, display_defined);
 
+  if (context->display == display) return;
+
   context->display = display;
+
+  /*  set the image _before_ emitting the display_changed signal  */
+  gimp_context_set_image (orig, display ? display->gimage : NULL);
+
   gtk_signal_emit (GTK_OBJECT (context),
-		   gimp_context_signals[DISPLAY_CHANGED]);
+		   gimp_context_signals[DISPLAY_CHANGED],
+		   display);
 }
 
 gboolean

@@ -29,6 +29,7 @@
 #include "gdisplay_ops.h"
 #include "general.h"
 #include "gimage_mask.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
@@ -152,7 +153,6 @@ gdisplay_new (GimpImage    *gimage,
 
   return gdisp;
 }
-
 
 
 static int print (char *, int, int, const char *, ...) G_GNUC_PRINTF (4, 5);
@@ -283,6 +283,7 @@ static void
 gdisplay_delete (GDisplay *gdisp)
 {
   GDisplay *tool_gdisp;
+  GimpContext *context;
 
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
@@ -330,6 +331,11 @@ gdisplay_delete (GDisplay *gdisp)
   /*  set popup_shell to NULL if appropriate */
   if (popup_shell == gdisp->shell)
     popup_shell= NULL;
+
+  /*  set the active display to NULL  */
+  context = gimp_context_get_user ();
+  if (gimp_context_get_display (context) == gdisp)
+    gimp_context_set_display (context, NULL);
 
   gtk_widget_unref (gdisp->shell);
 
@@ -1520,7 +1526,7 @@ gdisplay_remove_override_cursor (GDisplay      *gdisp)
     }
   else
     {
-/*      g_warning ("Tried to remove override-cursor from un-overridden gdisp."); */
+      /* g_warning ("Tried to remove override-cursor from un-overridden gdisp."); */
     }
 }
 
@@ -1676,15 +1682,28 @@ gdisplay_expose_full (GDisplay *gdisp)
 GDisplay *
 gdisplay_active ()
 {
+  /* FIXME: this function may become useless once the GimpContext, which also
+   *        has an active display, is properly tested
+   * TODO: ensure that gimp_context_get_display (gimp_context_get_user ())
+   *       _always_ return the correct display
+   *
+   * ideally, this function's body should be:
+   * {
+   *   return gimp_context_get_display (gimp_context_get_user ());
+   * }
+   */
+
   GtkWidget *event_widget;
   GtkWidget *toplevel_widget;
   GdkEvent *event;
   GDisplay *gdisp = NULL;
 
-  /*  If the popup shell is valid, then get the gdisplay associated with that shell  */
+  /*  If the popup shell is valid, then get the gdisplay associated
+   *  with that shell
+   */
   event = gtk_get_current_event ();
   event_widget = gtk_get_event_widget (event);
-  if (event != NULL) 
+  if (event != NULL)
     gdk_event_free (event);
 
   if (event_widget == NULL)
@@ -1698,11 +1717,22 @@ gdisplay_active ()
   if (gdisp)
     return gdisp;
 
-  if (popup_shell)
-    {
-      gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
-      return gdisp;
-    }
+  /* The following is insane, since the checking if the display is valid
+   * should not be here - this will be corrected, if the active_image stuff
+   * moves to GimpContext. */
+
+  gdisp = gimp_context_get_display (gimp_context_get_user ());
+ 
+  if (g_slist_index(display_list, gdisp) >= 0)
+    return gdisp;
+  
+  /* disabled, since tear-off menus may have pointers to gone displays...
+   * if (popup_shell)
+   *   {
+   *     gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
+   *     return gdisp;
+   *   }
+   */
 
   return NULL;
 }
@@ -2017,6 +2047,7 @@ gdisplays_delete ()
   /*  free up linked list data  */
   g_slist_free (display_list);
 }
+
 
 GDisplay *
 gdisplays_check_valid (GDisplay *gtest, GimpImage *gimage)

@@ -21,6 +21,7 @@
 #include "buildmenu.h"
 #include "dialog_handler.h"
 #include "gimage.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpset.h"
 #include "interface.h"
@@ -38,8 +39,9 @@ static void  lc_dialog_auto_callback       (GtkWidget *, gpointer);
 static gint  lc_dialog_close_callback      (GtkWidget *, gpointer);
 static void  lc_dialog_add_cb              (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_remove_cb           (GimpSet *, GimpImage *, gpointer);
-static void  lc_dialog_change_image        (GimpSet *, GimpImage *, gpointer);
 static void  lc_dialog_destroy_cb          (GimpImage *, gpointer);
+static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
+					    gpointer);
 
 /*  FIXME: move these to a better place  */
 static GtkWidget * lc_dialog_create_image_menu    (GimpImage **, int *,
@@ -190,7 +192,7 @@ lc_dialog_create (GimpImage* gimage)
 		      GTK_SIGNAL_FUNC (lc_dialog_add_cb), NULL);
   gtk_signal_connect (GTK_OBJECT (image_context), "remove",
 		      GTK_SIGNAL_FUNC (lc_dialog_remove_cb), NULL);
-  gtk_signal_connect (GTK_OBJECT (image_context), "active_changed",
+  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), "image_changed",
 		      GTK_SIGNAL_FUNC (lc_dialog_change_image), NULL);
 
   lc_dialog_update (gimage);
@@ -408,7 +410,7 @@ static void
 lc_dialog_auto_callback (GtkWidget *toggle_button,
 			 gpointer   client_data)
 {
-  GimpImage *gimage;
+  GimpContext *context;
 
   if (! lc_dialog)
     return;
@@ -416,10 +418,12 @@ lc_dialog_auto_callback (GtkWidget *toggle_button,
   lc_dialog->auto_follow_active =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle_button));
 
-  gimage = (GimpImage *) gimp_set_get_active (image_context);
+  context = gimp_context_get_user ();
 
-  if (lc_dialog->auto_follow_active && gimage)
-    lc_dialog_change_image (image_context, gimage, NULL);
+  if (lc_dialog->auto_follow_active)
+    lc_dialog_change_image (context,
+			    gimp_context_get_image (context),
+			    NULL);
 }
 
 static gint
@@ -458,23 +462,27 @@ lc_dialog_remove_cb (GimpSet   *set,
 }
 
 static void
-lc_dialog_change_image (GimpSet   *set,
-		        GimpImage *gimage,
-		        gpointer   user_data)
-{
-  if (lc_dialog && lc_dialog->auto_follow_active && gimage)
-    {
-      lc_dialog_update (gimage);
-      lc_dialog_update_image_list ();
-    }
-}
-
-static void
 lc_dialog_destroy_cb (GimpImage *gimage,
 		      gpointer   user_data)
 {
   if (! lc_dialog)
     return;
+
+  lc_dialog_update_image_list ();
+}
+
+static void
+lc_dialog_change_image (GimpContext *context,
+			GimpImage   *gimage,
+		        gpointer     user_data)
+{
+  if (! lc_dialog || ! lc_dialog->auto_follow_active)
+    return;
+
+  if (gimage && gimp_set_have (image_context, gimage))
+    {
+      lc_dialog_update (gimage);
+    }
 
   lc_dialog_update_image_list ();
 }

@@ -20,7 +20,7 @@
 
 #include <glib.h>
 
-#include "gdisplayF.h"
+#include "gdisplay.h"
 #include "gimpimageF.h"
 #include "gimpobjectP.h"
 
@@ -29,6 +29,22 @@
 #define GIMP_CONTEXT_CLASS(klass)    (GIMP_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
 #define GIMP_IS_CONTEXT(obj)         (GIMP_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
 #define GIMP_IS_CONTEXT_CLASS(klass) (GIMP_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
+
+typedef enum
+{
+  GIMP_CONTEXT_ARG_OPACITY    = 1 << 0,
+  GIMP_CONTEXT_ARG_PAINT_MODE = 1 << 1,
+  GIMP_CONTEXT_ARG_IMAGE      = 1 << 2,
+  GIMP_CONTEXT_ARG_DISPLAY    = 1 << 3,
+  
+  /* aliases
+   */
+  GIMP_CONTEXT_ARG_PAINT      = GIMP_CONTEXT_ARG_OPACITY |
+                                GIMP_CONTEXT_ARG_PAINT_MODE,
+  GIMP_CONTEXT_ARG_ALL        = GIMP_CONTEXT_ARG_PAINT |
+                                GIMP_CONTEXT_ARG_IMAGE |
+                                GIMP_CONTEXT_ARG_DISPLAY
+} GimpContextArgs;
 
 typedef struct _GimpContext GimpContext;
 typedef struct _GimpContextClass GimpContextClass;
@@ -61,11 +77,11 @@ struct _GimpContextClass
 {
   GimpObjectClass parent_class;
 
-  void (* opacity_changed)    (GimpContext *context);
-  void (* paint_mode_changed) (GimpContext *context);
+  void (* opacity_changed)    (GimpContext *context, gdouble opacity);
+  void (* paint_mode_changed) (GimpContext *context, gint paint_mode);
 
-  void (* image_changed)      (GimpContext *context);
-  void (* display_changed)    (GimpContext *context);
+  void (* image_changed)      (GimpContext *context, gpointer image);
+  void (* display_changed)    (GimpContext *context, gpointer display);
 };
 
 GtkType       gimp_context_get_type       (void);

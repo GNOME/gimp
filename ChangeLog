@@ -1,3 +1,39 @@
+1999-06-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/lc_dialog.c
+	* app/menus.c: applied a patch from <Simon.Budig@unix-ag.org>
+	which implements tear-off-menus(!!!). Modified it to use the
+	GimpContext.
+	The sensitivity of the menu entries is not updated after 
+	executing a command. This leaves the sensitivity in the state
+	before the command was executed (which is buggy). Will probably
+	have to update the sensitivity from gdisplays_flush().
+	Simon called the patch "temporary" but it looks pretty stable to
+	me. Please test it :-)
+
+	* app/context_manager.[ch]: minor changes.
+
+	* app/gimpcontext.[ch]: the user context keeps track of the
+	current display and image. The image is set automatically from
+	gimp_context_set_display().
+	Still have to figure out how this should interact with
+	gdisplay_active() (the current state is a hack).
+	Made the context attributes real GtkObject arguments.
+	Pass the changed attributes to the callbacks which connect to
+	the <attribute>_changed signals.
+
+	* app/gimpset.[ch]
+	* app/gimpsetF.h
+	* app/gimpsetP.h: made the gimpset properly derivable by adding
+	signal slots to the object class structure. Added copyright
+	headers.
+
+	* app/gimpsignal.[ch]: new type gimp_sigtype_double, copyright
+	header and my usual indentation fanaticism.
+
 Sun Jun 20 14:55:14 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/xjt/xjt.c: <sys/types.h> before <sys/stat.h> to 

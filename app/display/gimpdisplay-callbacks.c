@@ -24,8 +24,8 @@
 #include "disp_callbacks.h"
 #include "gdisplay.h"
 #include "general.h"
+#include "gimpcontext.h"
 #include "gimprc.h"
-#include "gimpset.h"
 #include "interface.h"
 #include "layer_select.h"
 #include "move.h"
@@ -110,17 +110,22 @@ gdisplay_shell_events (GtkWidget *w,
 		       GdkEvent  *event,
 		       GDisplay  *gdisp)
 {
-  /* Set the active Image to the image where the user clicked/typed */
-
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
     case GDK_KEY_PRESS:
-      gimp_set_set_active(image_context, gdisp->gimage);
+      /*  Setting the context's display automatically sets the image, too  */
+      gimp_context_set_display (gimp_context_get_user (), gdisp);
+
+      /*  Always set the menu sensitivity to ensure the consitency of the
+       *  tear-off menus
+       */
+      gdisplay_set_menu_sensitivity (gdisp);
       break;
     default:
       break;
-  }
+    }
+
   return FALSE;
 }
 
@@ -280,7 +285,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	case 3:
 	  state |= GDK_BUTTON3_MASK;
 	  popup_shell = gdisp->shell;
-	  gdisplay_set_menu_sensitivity (gdisp);
 	  gtk_menu_popup (GTK_MENU (gdisp->popup), NULL, NULL, NULL, NULL, 3, bevent->time);
 	  
 	  break;
@@ -441,9 +445,6 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    }
 	  break;
 	}
-
-      /*  We need this here in case of accelerators  */
-      gdisplay_set_menu_sensitivity (gdisp);
       break;
 
     case GDK_KEY_RELEASE:
@@ -543,7 +544,6 @@ gdisplay_origin_button_press (GtkWidget      *widget,
     {
       gdisp = data;
       popup_shell = gdisp->shell;
-      gdisplay_set_menu_sensitivity (gdisp);
       gtk_menu_popup (GTK_MENU (gdisp->popup),
 		      NULL, NULL, NULL, NULL, 1, event->time);
     }

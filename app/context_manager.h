@@ -23,4 +23,4 @@
 void   context_manager_init (void);
 void   context_manager_free (void);
 
-#endif /* __GIMP_CONTEXT_H__ */
+#endif /* __CONTEXT_MANAGER_H__ */

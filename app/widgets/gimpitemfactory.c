@@ -53,6 +53,7 @@ static GSList *last_opened_raw_filenames = NULL;
 
 static const GtkItemFactoryEntry toolbox_entries[] =
 {
+  { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
@@ -68,6 +69,7 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
+  { N_("/Xtns/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
@@ -80,6 +82,8 @@ static const GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q",
 
 static const GtkItemFactoryEntry image_entries[] =
 {
+  { N_("/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
@@ -92,6 +96,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
   { N_("/File/---moved"), NULL, NULL, 0, "<Separator>" },
   
+  { N_("/Edit/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Edit/Cut"), "<control>X", edit_cut_cmd_callback, 0 },
   { N_("/Edit/Copy"), "<control>C", edit_copy_cmd_callback, 0 },
   { N_("/Edit/Paste"), "<control>V", edit_paste_cmd_callback, 0 },
@@ -107,6 +112,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Edit/Paste Named"), "<control><shift>V", edit_named_paste_cmd_callback, 0 },
   { N_("/Edit/---"), NULL, NULL, 0, "<Separator>" },
   
+  { N_("/Select/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Select/Toggle"), "<control>T", select_toggle_cmd_callback, 0 },
   { N_("/Select/Invert"), "<control>I", select_invert_cmd_callback, 0 },
   { N_("/Select/All"), "<control>A", select_all_cmd_callback, 0 },
@@ -119,6 +125,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Select/Shrink"), NULL, select_shrink_cmd_callback, 0 },
   { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
 
+  { N_("/View/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/View/Zoom In"), "equal", view_zoomin_cmd_callback, 0 },
   { N_("/View/Zoom Out"), "minus", view_zoomout_cmd_callback, 0 },
   { N_("/View/Zoom/16:1"), NULL, view_zoom_16_1_callback, 0 },
@@ -140,6 +147,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/View/New View"), NULL, view_new_view_cmd_callback, 0 },
   { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
   
+  { N_("/Image/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
   { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
   { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
@@ -157,6 +165,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Image/Scale"), NULL, image_scale_cmd_callback, 0 },
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
   
+  { N_("/Layers/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
   { N_("/Layers/Stack/Previous Layer"), "Prior", layers_previous_cmd_callback, 0 },
   { N_("/Layers/Stack/Next Layer"), "Next", layers_next_cmd_callback, 0 },
@@ -204,17 +213,21 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
 */
 
+  { N_("/Tools/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
   { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
 
+  { N_("/Filters/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
   { N_("/Filters/---"), NULL, NULL, 0, "<Separator>" },
   
+  { N_("/Script-Fu/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Script-Fu/"), NULL, NULL, 0 },
   
+  { N_("/Dialogs/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
   { N_("/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { N_("/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
