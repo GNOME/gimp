@@ -355,8 +355,14 @@ plug_in_help_def_deserialize (GScanner  *scanner,
   if (! gimp_scanner_parse_string (scanner, &string))
     return G_TOKEN_STRING;
 
-  plug_in_def_set_help_path (plug_in_def, string);
+  plug_in_def_set_help_domain_name (plug_in_def, string);
   g_free (string);
+
+  if (gimp_scanner_parse_string (scanner, &string))
+    {
+      plug_in_def_set_help_domain_uri (plug_in_def, string);
+      g_free (string);
+    }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -476,22 +482,30 @@ plug_in_rc_write (GSList       *plug_in_defs,
 	      gimp_config_writer_close (writer);
 	    }
 	  
-	  if (plug_in_def->locale_domain)
+	  if (plug_in_def->locale_domain_name)
 	    {
               gimp_config_writer_open (writer, "locale-def");
-              gimp_config_writer_string (writer, plug_in_def->locale_domain);
+              gimp_config_writer_string (writer,
+                                         plug_in_def->locale_domain_name);
 
-	      if (plug_in_def->locale_path)
-		gimp_config_writer_string (writer, plug_in_def->locale_path);
+	      if (plug_in_def->locale_domain_path)
+		gimp_config_writer_string (writer,
+                                           plug_in_def->locale_domain_path);
 
               gimp_config_writer_close (writer);
 	    }
 
-	  if (plug_in_def->help_path)
+	  if (plug_in_def->help_domain_name)
 	    {
 	      gimp_config_writer_open (writer, "help-def");
-              gimp_config_writer_string (writer, plug_in_def->help_path);
-              gimp_config_writer_close (writer);
+              gimp_config_writer_string (writer,
+                                         plug_in_def->help_domain_name);
+ 
+	      if (plug_in_def->help_domain_uri)
+		gimp_config_writer_string (writer,
+                                           plug_in_def->help_domain_uri);
+
+             gimp_config_writer_close (writer);
 	    }
 	    
 	  if (plug_in_def->has_init)

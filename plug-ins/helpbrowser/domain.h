@@ -1,8 +1,11 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphelp.h
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * The GIMP Help Browser
+ * Copyright (C) 1999-2002 Sven Neumann <sven@gimp.org>
+ *                         Michael Natterer <mitch@gimp.org>
+ *
+ * domain.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +22,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HELP_H__
-#define __GIMP_HELP_H__
+#ifndef __DOMAIN_H__
+#define __DOMAIN_H__
 
 
-/*  the main help function
- *
- *  there should be no need to use it in the common case
- */
-void   gimp_help (Gimp        *gimp,
-                  const gchar *help_domain,
-                  const gchar *help_id);
+typedef struct _HelpDomain HelpDomain;
 
 
-#endif /* __GIMP_HELP_H__ */
+void         domain_register (const gchar *domain_name,
+                              const gchar *domain_uri);
+HelpDomain * domain_lookup   (const gchar *domain_name);
+
+gchar      * domain_map      (HelpDomain  *domain,
+                              const gchar *help_locale,
+                              const gchar *help_id);
+
+
+#endif /* ! __DOMAIN_H__ */

@@ -59,19 +59,20 @@
 
 
 typedef struct _PlugInLocaleDomainDef PlugInLocaleDomainDef;
-typedef struct _PlugInHelpPathDef     PlugInHelpPathDef;
+typedef struct _PlugInHelpDomainDef   PlugInHelpDomainDef;
 
 struct _PlugInLocaleDomainDef
 {
   gchar *prog_name;
-  gchar *locale_domain;
-  gchar *locale_path;
+  gchar *domain_name;
+  gchar *domain_path;
 };
 
-struct _PlugInHelpPathDef
+struct _PlugInHelpDomainDef
 {
   gchar *prog_name;
-  gchar *help_path;
+  gchar *domain_name;
+  gchar *domain_uri;
 };
 
 
@@ -240,31 +241,38 @@ plug_ins_init (Gimp               *gimp,
     {
       plug_in_def = tmp->data;
 
-      if (plug_in_def->locale_domain)
+      if (plug_in_def->locale_domain_name)
 	{
-	  PlugInLocaleDomainDef *locale_domain_def;
+	  PlugInLocaleDomainDef *def;
 
-	  locale_domain_def = g_new (PlugInLocaleDomainDef, 1);
+	  def = g_new (PlugInLocaleDomainDef, 1);
 
-	  locale_domain_def->prog_name     = g_strdup (plug_in_def->prog);
-	  locale_domain_def->locale_domain = g_strdup (plug_in_def->locale_domain);
-          locale_domain_def->locale_path   = g_strdup (plug_in_def->locale_path);
+	  def->prog_name   = g_strdup (plug_in_def->prog);
+	  def->domain_name = g_strdup (plug_in_def->locale_domain_name);
+          def->domain_path = g_strdup (plug_in_def->locale_domain_path);
 
 	  gimp->plug_in_locale_domains =
-            g_slist_prepend (gimp->plug_in_locale_domains, locale_domain_def);
+            g_slist_prepend (gimp->plug_in_locale_domains, def);
+
+          g_print ("added locale domain \"%s\" for path \"%s\"\n",
+                   def->domain_name, def->domain_path);
 	}
 
-      if (plug_in_def->help_path)
+      if (plug_in_def->help_domain_name)
 	{
-	  PlugInHelpPathDef *help_path_def;
+	  PlugInHelpDomainDef *def;
 
-	  help_path_def = g_new (PlugInHelpPathDef, 1);
+	  def = g_new (PlugInHelpDomainDef, 1);
 
-	  help_path_def->prog_name = g_strdup (plug_in_def->prog);
-	  help_path_def->help_path = g_strdup (plug_in_def->help_path);
+	  def->prog_name   = g_strdup (plug_in_def->prog);
+	  def->domain_name = g_strdup (plug_in_def->help_domain_name);
+	  def->domain_uri  = g_strdup (plug_in_def->help_domain_uri);
 
-	  gimp->plug_in_help_paths =
-            g_slist_prepend (gimp->plug_in_help_paths, help_path_def);
+	  gimp->plug_in_help_domains =
+            g_slist_prepend (gimp->plug_in_help_domains, def);
+
+          g_print ("added help domain \"%s\" for base uri \"%s\"\n",
+                   def->domain_name, def->domain_uri);
 	}
     }
 
@@ -358,32 +366,29 @@ plug_ins_exit (Gimp *gimp)
 
   for (list = gimp->plug_in_locale_domains; list; list = g_slist_next (list))
     {
-      PlugInLocaleDomainDef *locale_domain_def;
+      PlugInLocaleDomainDef *def = list->data;
 
-      locale_domain_def = list->data;
-
-      g_free (locale_domain_def->prog_name);
-      g_free (locale_domain_def->locale_domain);
-      g_free (locale_domain_def->locale_path);
-      g_free (locale_domain_def);
+      g_free (def->prog_name);
+      g_free (def->domain_name);
+      g_free (def->domain_path);
+      g_free (def);
     }
 
   g_slist_free (gimp->plug_in_locale_domains);
   gimp->plug_in_locale_domains = NULL;
 
-  for (list = gimp->plug_in_help_paths; list; list = g_slist_next (list))
+  for (list = gimp->plug_in_help_domains; list; list = g_slist_next (list))
     {
-      PlugInHelpPathDef *help_path_def;
+      PlugInHelpDomainDef *def = list->data;
 
-      help_path_def = list->data;
-
-      g_free (help_path_def->prog_name);
-      g_free (help_path_def->help_path);
-      g_free (help_path_def);
+      g_free (def->prog_name);
+      g_free (def->domain_name);
+      g_free (def->domain_uri);
+      g_free (def);
     }
 
-  g_slist_free (gimp->plug_in_help_paths);
-  gimp->plug_in_help_paths = NULL;
+  g_slist_free (gimp->plug_in_help_domains);
+  gimp->plug_in_help_domains = NULL;
 }
 
 void
@@ -563,15 +568,15 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
         {
           const gchar *progname;
           const gchar *locale_domain;
-          const gchar *help_path;
+          const gchar *help_domain;
 
           progname = plug_in_proc_def_get_progname (proc_def);
 
           locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
-          help_path     = plug_ins_help_path (gimp, progname);
+          help_domain   = plug_ins_help_domain (gimp, progname, NULL);
 
           plug_in_menus_create_entry (NULL, proc_def,
-                                      locale_domain, help_path);
+                                      locale_domain, help_domain);
         }
     }
 
@@ -608,29 +613,26 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
 const gchar *
 plug_ins_locale_domain (Gimp         *gimp,
                         const gchar  *prog_name,
-                        const gchar **locale_path)
+                        const gchar **domain_path)
 {
-  PlugInLocaleDomainDef *locale_domain_def;
-  GSList                *list;
+  GSList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (prog_name != NULL, NULL);
 
-  if (locale_path)
-    *locale_path = gimp_locale_directory ();
+  if (domain_path)
+    *domain_path = gimp_locale_directory ();
 
   for (list = gimp->plug_in_locale_domains; list; list = g_slist_next (list))
     {
-      locale_domain_def = (PlugInLocaleDomainDef *) list->data;
+      PlugInLocaleDomainDef *def = list->data;
 
-      if (locale_domain_def &&
-          locale_domain_def->prog_name &&
-	  strcmp (locale_domain_def->prog_name, prog_name) == 0)
+      if (def && def->prog_name && ! strcmp (def->prog_name, prog_name))
         {
-          if (locale_path && locale_domain_def->locale_path)
-            *locale_path = locale_domain_def->locale_path;
+          if (domain_path && def->domain_path)
+            *domain_path = def->domain_path;
 
-          return locale_domain_def->locale_domain;
+          return def->domain_name;
         }
     }
 
@@ -638,26 +640,63 @@ plug_ins_locale_domain (Gimp         *gimp,
 }
 
 const gchar *
-plug_ins_help_path (Gimp        *gimp,
-                    const gchar *prog_name)
+plug_ins_help_domain (Gimp         *gimp,
+                      const gchar  *prog_name,
+                      const gchar **domain_uri)
 {
-  PlugInHelpPathDef *help_path_def;
-  GSList            *list;
+  GSList *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (prog_name != NULL, NULL);
 
-  for (list = gimp->plug_in_help_paths; list; list = g_slist_next (list))
-    {
-      help_path_def = (PlugInHelpPathDef *) list->data;
+  if (domain_uri)
+    *domain_uri = NULL;
 
-      if (help_path_def &&
-	  help_path_def->prog_name &&
-	  strcmp (help_path_def->prog_name, prog_name) == 0)
-	return help_path_def->help_path;
+  for (list = gimp->plug_in_help_domains; list; list = g_slist_next (list))
+    {
+      PlugInHelpDomainDef *def = list->data;
+
+      if (def && def->prog_name && ! strcmp (def->prog_name, prog_name))
+        {
+          if (domain_uri && def->domain_uri)
+            *domain_uri = def->domain_uri;
+
+          return def->domain_name;
+        }
     }
 
   return NULL;
+}
+
+gint
+plug_ins_help_domains (Gimp    *gimp,
+                       gchar ***help_domains,
+                       gchar ***help_uris)
+{
+  GSList *list;
+  gint    n_domains;
+  gint    i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (help_domains != NULL, 0);
+  g_return_val_if_fail (help_uris != NULL, 0);
+
+  n_domains = g_slist_length (gimp->plug_in_help_domains);
+
+  *help_domains = g_new0 (gchar *, n_domains);
+  *help_uris    = g_new0 (gchar *, n_domains);
+
+  for (list = gimp->plug_in_help_domains, i = 0;
+       list;
+       list = g_slist_next (list), i++)
+    {
+      PlugInHelpDomainDef *def = list->data;
+
+      *help_domains[i] = g_strdup (def->domain_name);
+      *help_uris[i]    = g_strdup (def->domain_uri);
+    }
+
+  return n_domains;
 }
 
 PlugInProcDef *

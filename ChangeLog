@@ -1,3 +1,50 @@
+2003-08-28  Michael Natterer  <mitch@gimp.org>
+
+	Completed the new help infrastructure. Needs some polishing but
+	basically works as proposed:
+
+	* tools/pdbgen/pdb/plug_in.pdb: changed gimp_plugin_help_register()
+	to take a "domain_name" (which is the XML namespace) and a
+	"domain_uri" (which is the root of the plug-in's help pages).
+
+	* tools/pdbgen/pdb/help.pdb: changed gimp_help() to take help_id
+	instead of a non-UTF-8 help_path.
+
+	* app/plug-in/plug-in-def.[ch]
+	* app/plug-in/plug-in-proc.[ch]
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-ins.[ch]: remember the plug-ins' help_domain
+	and help_uri instead of just help_path. Changed all plug-in APIs
+	to reflect this change.
+
+	* app/widgets/gimphelp.[ch]: on helpbrowser startup, pass it the
+	whole list of help domains. The actual help request is now made
+	using the browser's temporary procedure.
+
+	* app/core/gimp.h
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c
+	* app/gui/plug-in-menus.[ch]
+	* app/widgets/gimpitemfactory.c: changed accordingly.
+
+	* app/pdb/help_cmds.c
+	* app/pdb/plug_in_cmds.c
+	* libgimp/gimphelp_pdb.[ch]
+	* libgimp/gimpplugin_pdb.[ch]: regenerated.
+
+	Changed the help broser to load the pages according to the
+	new system:
+
+	- moved the browser window stuff to dialog.[ch]
+	- moved help domain handling to domain.[ch]
+	- added gimp-help.xml parsing to domain.c
+	- tons of cleanup
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/dialog.[ch]
+	* plug-ins/helpbrowser/domain.[ch]: new files.
+	* plug-ins/helpbrowser/helpbrowser.c: chopped.
+
 2003-08-28  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpimage-mask-select.c

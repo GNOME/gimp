@@ -944,29 +944,29 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
     help_id = item_factory->help_id;
 
   {
-    gchar *help_path   = NULL;
+    gchar *help_domain = NULL;
     gchar *help_string = NULL;
-    gchar *path_separator;
+    gchar *domain_separator;
 
     help_id = g_strdup (help_id);
 
-    path_separator = strchr (help_id, ':');
+    domain_separator = strchr (help_id, '?');
 
-    if (path_separator)
+    if (domain_separator)
       {
-        *path_separator = '\0';
+        *domain_separator = '\0';
 
-        help_path   = g_strdup (help_id);
-        help_string = g_strdup (path_separator + 1);
+        help_domain = g_strdup (help_id);
+        help_string = g_strdup (domain_separator + 1);
       }
     else
       {
         help_string = g_strdup (help_id);
       }
 
-    gimp_help (item_factory->gimp, help_path, help_string);
+    gimp_help (item_factory->gimp, help_domain, help_string);
 
-    g_free (help_path);
+    g_free (help_domain);
     g_free (help_string);
     g_free (help_id);
   }

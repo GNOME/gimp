@@ -53,9 +53,15 @@ const gchar     * plug_ins_locale_domain        (Gimp          *gimp,
                                                  const gchar   *prog_name,
                                                  const gchar  **locale_path);
 
-/* Retrieve a plug-ins help path */
-const gchar     * plug_ins_help_path            (Gimp          *gimp,
-                                                 const gchar   *prog_name);
+/* Retrieve a plug-ins help domain */
+const gchar     * plug_ins_help_domain          (Gimp          *gimp,
+                                                 const gchar   *prog_name,
+                                                 const gchar  **help_uri);
+
+/* Retrieve all help domains */
+gint              plug_ins_help_domains         (Gimp          *gimp,
+                                                 gchar       ***help_domains,
+                                                 gchar       ***help_uris);
 
 /* Retreive a plug-ins proc_def from its ProcRecord */
 PlugInProcDef   * plug_ins_proc_def_find        (Gimp          *gimp,

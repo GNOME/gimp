@@ -158,20 +158,20 @@ gimp_plugin_domain_register (const gchar *domain_name,
 
 /**
  * gimp_plugin_help_register:
- * @help_path: The rootdir of the plug-in's help pages.
+ * @domain_name: The XML namespace of the plug-in's help pages.
+ * @domain_uri: The root URI of the plug-in's help pages.
  *
  * Register a help path for a plug-in.
  *
  * This procedure changes the help rootdir for the plug-in which calls
  * it. All subsequent calls of gimp_help from this plug-in will be
- * interpreted relative to this rootdir. This procedure can only be
- * called in the query function of a plug-in and it has to be called
- * before any procedure is installed.
+ * interpreted relative to this rootdir.
  *
  * Returns: TRUE on success.
  */
 gboolean
-gimp_plugin_help_register (const gchar *help_path)
+gimp_plugin_help_register (const gchar *domain_name,
+			   const gchar *domain_uri)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -179,7 +179,8 @@ gimp_plugin_help_register (const gchar *help_path)
 
   return_vals = gimp_run_procedure ("gimp_plugin_help_register",
 				    &nreturn_vals,
-				    GIMP_PDB_STRING, help_path,
+				    GIMP_PDB_STRING, domain_name,
+				    GIMP_PDB_STRING, domain_uri,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

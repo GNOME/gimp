@@ -48,9 +48,10 @@ plug_in_def_free (PlugInDef *plug_in_def,
   g_return_if_fail (plug_in_def != NULL);
 
   g_free (plug_in_def->prog);
-  g_free (plug_in_def->locale_domain);
-  g_free (plug_in_def->locale_path);
-  g_free (plug_in_def->help_path);
+  g_free (plug_in_def->locale_domain_name);
+  g_free (plug_in_def->locale_domain_path);
+  g_free (plug_in_def->help_domain_name);
+  g_free (plug_in_def->help_domain_uri);
 
   if (free_proc_defs)
     {
@@ -85,9 +86,9 @@ plug_in_def_set_locale_domain_name (PlugInDef   *plug_in_def,
 {
   g_return_if_fail (plug_in_def != NULL);
 
-  if (plug_in_def->locale_domain)
-    g_free (plug_in_def->locale_domain);      
-  plug_in_def->locale_domain = g_strdup (domain_name);
+  if (plug_in_def->locale_domain_name)
+    g_free (plug_in_def->locale_domain_name);      
+  plug_in_def->locale_domain_name = g_strdup (domain_name);
 }
   
 void
@@ -96,21 +97,33 @@ plug_in_def_set_locale_domain_path (PlugInDef   *plug_in_def,
 {
   g_return_if_fail (plug_in_def != NULL);
 
-  if (plug_in_def->locale_path)
-    g_free (plug_in_def->locale_path);
-  plug_in_def->locale_path = g_strdup (domain_path);
+  if (plug_in_def->locale_domain_path)
+    g_free (plug_in_def->locale_domain_path);
+  plug_in_def->locale_domain_path = g_strdup (domain_path);
 }
 
 void
-plug_in_def_set_help_path (PlugInDef   *plug_in_def,
-                           const gchar *help_path)
+plug_in_def_set_help_domain_name (PlugInDef   *plug_in_def,
+                                  const gchar *domain_name)
 {
   g_return_if_fail (plug_in_def != NULL);
 
-  if (plug_in_def->help_path)
-    g_free (plug_in_def->help_path);
-  plug_in_def->help_path = g_strdup (help_path);
+  if (plug_in_def->help_domain_name)
+    g_free (plug_in_def->help_domain_name);
+  plug_in_def->help_domain_name = g_strdup (domain_name);
 }
+
+void
+plug_in_def_set_help_domain_uri (PlugInDef   *plug_in_def,
+                                 const gchar *domain_uri)
+{
+  g_return_if_fail (plug_in_def != NULL);
+
+  if (plug_in_def->help_domain_uri)
+    g_free (plug_in_def->help_domain_uri);
+  plug_in_def->help_domain_uri = g_strdup (domain_uri);
+}
+
 void
 plug_in_def_set_mtime (PlugInDef *plug_in_def,
                        time_t     mtime)

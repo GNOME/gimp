@@ -294,15 +294,16 @@ sub plugin_help_register {
     $help = <<HELP;
 This procedure changes the help rootdir for the plug-in which calls it. All
 subsequent calls of gimp_help from this plug-in will be interpreted relative
-to this rootdir.  This procedure can only be called in the query function of
-a plug-in and it has to be called before any procedure is installed.
+to this rootdir.
 HELP
 
     &mitch_misc;
 
     @inargs = (
-	{ name => 'help_path', type => 'string', no_validate => 1,
-	  desc => 'The rootdir of the plug-in\'s help pages' }
+	{ name => 'domain_name', type => 'string',
+	  desc => 'The XML namespace of the plug-in\'s help pages' },
+	{ name => 'domain_uri', type => 'string',
+	  desc => 'The root URI of the plug-in\'s help pages' }
     );
 
     %invoke = (
@@ -311,7 +312,10 @@ HELP
 {
   if (gimp->current_plug_in && gimp->current_plug_in->query)
     {
-      plug_in_def_set_help_path (gimp->current_plug_in->plug_in_def, help_path);
+      plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
+                                        domain_name);
+      plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
+                                       domain_uri);
     }
 }
 CODE

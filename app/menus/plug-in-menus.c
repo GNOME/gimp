@@ -49,7 +49,7 @@ struct _PlugInMenuEntry
 {
   PlugInProcDef *proc_def;
   const gchar   *locale_domain;
-  const gchar   *help_path;
+  const gchar   *help_domain;
 };
 
 
@@ -135,20 +135,20 @@ plug_in_menus_create (GimpItemFactory *item_factory,
           PlugInMenuEntry *menu_entry;
           const gchar     *progname;
           const gchar     *locale_domain;
-          const gchar     *help_path;
+          const gchar     *help_domain;
 
           progname = plug_in_proc_def_get_progname (proc_def);
 
           locale_domain = plug_ins_locale_domain (item_factory->gimp,
                                                   progname, NULL);
-          help_path = plug_ins_help_path (item_factory->gimp,
-                                          progname);
+          help_domain = plug_ins_help_domain (item_factory->gimp,
+                                              progname, NULL);
 
           menu_entry = g_new0 (PlugInMenuEntry, 1);
 
           menu_entry->proc_def      = proc_def;
           menu_entry->locale_domain = locale_domain;
-          menu_entry->help_path     = help_path;
+          menu_entry->help_domain   = help_domain;
 
           g_tree_insert (menu_entries,
                          dgettext (locale_domain, proc_def->menu_path),
@@ -166,7 +166,7 @@ void
 plug_in_menus_create_entry (GimpItemFactory *item_factory,
                             PlugInProcDef   *proc_def,
                             const gchar     *locale_domain,
-                            const gchar     *help_path)
+                            const gchar     *help_domain)
 {
   GimpItemFactoryEntry  entry;
   gchar                *help_id;
@@ -175,7 +175,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
                     GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (proc_def != NULL);
 
-  help_id = plug_in_proc_def_get_help_id (proc_def, help_path);
+  help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
   entry.entry.path            = strstr (proc_def->menu_path, "/");
   entry.entry.accelerator     = proc_def->accelerator;
@@ -388,7 +388,7 @@ plug_in_menu_tree_traverse_func (gpointer         foo,
   plug_in_menus_create_entry (item_factory,
                               menu_entry->proc_def,
                               menu_entry->locale_domain,
-                              menu_entry->help_path);
+                              menu_entry->help_domain);
 
   return FALSE;
 }

@@ -83,21 +83,21 @@ file_save_menu_setup (GimpItemFactory *factory)
       else
         {
           const gchar *progname;
-          const gchar *help_path;
+          const gchar *help_domain;
 
           progname = plug_in_proc_def_get_progname (file_proc);
 
           locale_domain = plug_ins_locale_domain (factory->gimp, progname, NULL);
-          help_path     = plug_ins_help_path (factory->gimp, progname);
+          help_domain   = plug_ins_help_domain (factory->gimp, progname, NULL);
 
-          help_id = plug_in_proc_def_get_help_id (file_proc, help_path);
+          help_id = plug_in_proc_def_get_help_id (file_proc, help_domain);
         }
 
       entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
       entry.entry.callback        = file_save_type_cmd_callback;
       entry.entry.callback_action = 0;
-      entry.entry.item_type       = item_type;
+      entry.entry.item_type       = (gchar *) item_type;
       entry.entry.extra_data      = stock_id;
       entry.quark_string          = NULL;
       entry.help_id               = help_id;

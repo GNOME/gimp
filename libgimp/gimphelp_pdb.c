@@ -28,7 +28,7 @@
 /**
  * gimp_help:
  * @prog_name: The plug-in's executable name or an empty string.
- * @help_page: The location of the help page.
+ * @help_id: The help page's ID.
  *
  * Load a help page.
  *
@@ -45,7 +45,7 @@
  */
 gboolean
 gimp_help (const gchar *prog_name,
-	   const gchar *help_page)
+	   const gchar *help_id)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -54,7 +54,7 @@ gimp_help (const gchar *prog_name,
   return_vals = gimp_run_procedure ("gimp_help",
 				    &nreturn_vals,
 				    GIMP_PDB_STRING, prog_name,
-				    GIMP_PDB_STRING, help_page,
+				    GIMP_PDB_STRING, help_id,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

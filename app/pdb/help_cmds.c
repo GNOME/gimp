@@ -46,18 +46,18 @@ help_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *prog_name;
-  gchar *help_page;
+  gchar *help_id;
 
   prog_name = (gchar *) args[0].value.pdb_pointer;
   if (prog_name == NULL)
     success = FALSE;
 
-  help_page = (gchar *) args[1].value.pdb_pointer;
-  if (help_page == NULL)
+  help_id = (gchar *) args[1].value.pdb_pointer;
+  if (help_id == NULL || !g_utf8_validate (help_id, -1, NULL))
     success = FALSE;
 
   if (success)
-    gimp_help (gimp, plug_ins_help_path (gimp, prog_name), help_page);
+    gimp_help (gimp, plug_ins_help_domain (gimp, prog_name, NULL), help_id);
 
   return procedural_db_return_args (&help_proc, success);
 }
@@ -71,8 +71,8 @@ static ProcArg help_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "help_page",
-    "The location of the help page"
+    "help_id",
+    "The help page's ID"
   }
 };
 

@@ -1,8 +1,11 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphelp.h
- * Copyright (C) 1999-2000 Michael Natterer <mitch@gimp.org>
+ * The GIMP Help Browser
+ * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
+ *                         Michael Natterer <mitch@gimp.org>
+ *
+ * dialog.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +22,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HELP_H__
-#define __GIMP_HELP_H__
+#ifndef __DIALOG_H__
+#define __DIALOG_H__
 
 
-/*  the main help function
- *
- *  there should be no need to use it in the common case
- */
-void   gimp_help (Gimp        *gimp,
-                  const gchar *help_domain,
-                  const gchar *help_id);
+void   browser_dialog_open (void);
+void   browser_dialog_load (const gchar *ref,
+                            gboolean     add_to_queue);
 
 
-#endif /* __GIMP_HELP_H__ */
+#endif /* ! __DIALOG_H__ */

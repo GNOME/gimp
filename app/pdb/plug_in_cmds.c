@@ -475,17 +475,25 @@ plugin_help_register_invoker (Gimp     *gimp,
                               Argument *args)
 {
   gboolean success = TRUE;
-  gchar *help_path;
+  gchar *domain_name;
+  gchar *domain_uri;
 
-  help_path = (gchar *) args[0].value.pdb_pointer;
-  if (help_path == NULL)
+  domain_name = (gchar *) args[0].value.pdb_pointer;
+  if (domain_name == NULL || !g_utf8_validate (domain_name, -1, NULL))
+    success = FALSE;
+
+  domain_uri = (gchar *) args[1].value.pdb_pointer;
+  if (domain_uri == NULL || !g_utf8_validate (domain_uri, -1, NULL))
     success = FALSE;
 
   if (success)
     {
       if (gimp->current_plug_in && gimp->current_plug_in->query)
 	{
-	  plug_in_def_set_help_path (gimp->current_plug_in->plug_in_def, help_path);
+	  plug_in_def_set_help_domain_name (gimp->current_plug_in->plug_in_def,
+					    domain_name);
+	  plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
+					   domain_uri);
 	}
     }
 
@@ -496,8 +504,13 @@ static ProcArg plugin_help_register_inargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "help_path",
-    "The rootdir of the plug-in's help pages"
+    "domain_name",
+    "The XML namespace of the plug-in's help pages"
+  },
+  {
+    GIMP_PDB_STRING,
+    "domain_uri",
+    "The root URI of the plug-in's help pages"
   }
 };
 
@@ -505,12 +518,12 @@ static ProcRecord plugin_help_register_proc =
 {
   "gimp_plugin_help_register",
   "Register a help path for a plug-in.",
-  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir. This procedure can only be called in the query function of a plug-in and it has to be called before any procedure is installed.",
+  "This procedure changes the help rootdir for the plug-in which calls it. All subsequent calls of gimp_help from this plug-in will be interpreted relative to this rootdir.",
   "Michael Natterer <mitch@gimp.org>",
   "Michael Natterer <mitch@gimp.org>",
   "2000",
   GIMP_INTERNAL,
-  1,
+  2,
   plugin_help_register_inargs,
   0,
   NULL,

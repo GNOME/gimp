@@ -107,7 +107,7 @@ plug_in_proc_def_get_progname (PlugInProcDef *proc_def)
 
 gchar *
 plug_in_proc_def_get_help_id (PlugInProcDef *proc_def,
-                              const gchar   *help_path)
+                              const gchar   *help_domain)
 {
   gchar *help_id;
   gchar *p;
@@ -120,14 +120,14 @@ plug_in_proc_def_get_help_id (PlugInProcDef *proc_def,
     if (*p == '_')
       *p = '-';
 
-  if (help_path)
+  if (help_domain)
     {
-      gchar *path_and_id;
+      gchar *domain_and_id;
 
-      path_and_id = g_strconcat (help_path, ":", help_id, NULL);
+      domain_and_id = g_strconcat (help_domain, "?", help_id, NULL);
       g_free (help_id);
 
-      return path_and_id;
+      return domain_and_id;
     }
 
   return help_id;

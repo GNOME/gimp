@@ -25,9 +25,10 @@ struct _PlugInDef
 {
   gchar    *prog;
   GSList   *proc_defs;
-  gchar    *locale_domain;
-  gchar    *locale_path;
-  gchar    *help_path;
+  gchar    *locale_domain_name;
+  gchar    *locale_domain_path;
+  gchar    *help_domain_name;
+  gchar    *help_domain_uri;
   time_t    mtime;
   gboolean  needs_query;  /* Does the plug-in need to be queried ?     */
   gboolean  has_init;     /* Does the plug-in need to be initialized ? */
@@ -45,8 +46,11 @@ void        plug_in_def_set_locale_domain_name (PlugInDef     *plug_in_def,
                                                 const gchar   *domain_name);
 void        plug_in_def_set_locale_domain_path (PlugInDef     *plug_in_def,
                                                 const gchar   *domain_path);
-void        plug_in_def_set_help_path          (PlugInDef     *plug_in_def,
-                                                const gchar   *help_path);
+
+void        plug_in_def_set_help_domain_name   (PlugInDef     *plug_in_def,
+                                                const gchar   *domain_name);
+void        plug_in_def_set_help_domain_uri    (PlugInDef     *plug_in_def,
+                                                const gchar   *domain_uri);
 
 void        plug_in_def_set_mtime              (PlugInDef     *plug_in_def,
                                                 time_t         mtime);

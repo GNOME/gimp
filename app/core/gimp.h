@@ -84,7 +84,7 @@ struct _Gimp
 
   GSList                 *plug_in_proc_defs;
   GSList                 *plug_in_locale_domains;
-  GSList                 *plug_in_help_paths;
+  GSList                 *plug_in_help_domains;
 
   PlugIn                 *current_plug_in;
   GSList                 *open_plug_ins;
