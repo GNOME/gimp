@@ -1,3 +1,14 @@
+2003-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch]: added new functions
+	gimp_draw_tool_on_vectors_handle() and _on_vectors_curve()
+	so they can be used by all GimpDrawTool subclasses.
+
+	* app/tools/gimpvectortool.[ch]: removed the _on_handle() and
+	_on_curve() functions here. Connect to "active_vectors_changed" of
+	the active_vector's image, so once it has been avtivated, the tool
+	follows the path which is selected in the paths dialog.
+
 2003-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpselection.c

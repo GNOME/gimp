@@ -23,7 +23,7 @@
 #define __GIMP_VECTOR_TOOL_H__
 
 
-#include "gimpselectiontool.h"
+#include "gimpdrawtool.h"
 
 
 /*  possible vector functions  */
@@ -44,7 +44,7 @@ typedef enum
   VECTORS_DELETE_SEGMENT,
   VECTORS_CONVERT_EDGE,
   VECTORS_FINISHED
-} VectorFunction;
+} GimpVectorFunction;
 
 
 #define GIMP_TYPE_VECTOR_TOOL            (gimp_vector_tool_get_type ())
@@ -60,31 +60,31 @@ typedef struct _GimpVectorToolClass GimpVectorToolClass;
 
 struct _GimpVectorTool
 {
-  GimpSelectionTool  parent_instance;
+  GimpDrawTool          parent_instance;
 
-  VectorFunction        function;       /* function we're performing      */
-  GimpAnchorFeatureType restriction;    /* movement restriction           */
-  gboolean              modifier_lock;  /* can we toggle the Shift key?   */
-  GdkModifierType       saved_state;    /* modifier state at button_press */
-  gdouble               last_x;         /* last x coordinate              */
-  gdouble               last_y;         /* last y coordinate              */
+  GimpVectorFunction    function;       /* function we're performing         */
+  GimpAnchorFeatureType restriction;    /* movement restriction              */
+  gboolean              modifier_lock;  /* can we toggle the Shift key?      */
+  GdkModifierType       saved_state;    /* modifier state at button_press    */
+  gdouble               last_x;         /* last x coordinate                 */
+  gdouble               last_y;         /* last y coordinate                 */
 
-  GimpAnchor        *cur_anchor;    /*  The current Anchor                */
-  GimpStroke        *cur_stroke;    /*  The current Stroke                */
-  gdouble            cur_position;  /*  The current Position on a segment */
-  GimpVectors       *vectors;       /*  The current Vector data           */
+  GimpAnchor           *cur_anchor;     /* the current Anchor                */
+  GimpStroke           *cur_stroke;     /* the current Stroke                */
+  gdouble               cur_position;   /* the current Position on a segment */
+  GimpVectors          *vectors;        /* the current Vector data           */
 
-  gint               sel_count;     /*  number of selected anchors        */
-  GimpAnchor        *sel_anchor;    /*  currently selected anchor, NULL   */
-                                    /*  if multiple anchors are selected  */
-  GimpStroke        *sel_stroke;    /*  selected stroke                   */
+  gint                  sel_count;      /* number of selected anchors        */
+  GimpAnchor           *sel_anchor;     /* currently selected anchor, NULL   */
+                                        /* if multiple anchors are selected  */
+  GimpStroke           *sel_stroke;     /* selected stroke                   */
 
-  GimpVectors       *select_vectors;
+  GimpVectors          *select_vectors; /* used for VECTORS_SELECT_VECTOR    */
 };
 
 struct _GimpVectorToolClass
 {
-  GimpSelectionToolClass  parent_class;
+  GimpDrawToolClass  parent_class;
 };
 
 
