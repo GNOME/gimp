@@ -1,3 +1,8 @@
+2002-10-29  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/png.c: Back-ported patch from HEAD to
+	close bug #55700.
+
 2002-10-29  Manish Singh  <yosh@gimp.org>
 
 	* gimptool-1.2.in: strip paths from the plug-in filename for
