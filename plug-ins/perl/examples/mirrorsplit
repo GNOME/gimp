@@ -31,19 +31,19 @@ register	"mirror_split",
 		my $temp1 = gimp_layer_copy($layer, 1);
 
 		if ($mirror == 0) {	# upper half
-			$temp1 = gimp_flip($temp1, ORIENTATION_VERTICAL);
+			$temp1 = gimp_flip($temp1, VERTICAL);
 			gimp_rect_select($img, 0, $hspan, $w, $h - $hspan, REPLACE, 0, 0);
 		};
 		if ($mirror == 1) {	# lower half
-			$temp1 = gimp_flip($temp1, ORIENTATION_VERTICAL);
+			$temp1 = gimp_flip($temp1, VERTICAL);
 			gimp_rect_select($img, 0, 0, $w, $hspan, REPLACE, 0, 0);
 		};
 		if ($mirror == 2) {	# left half
-			$temp1 = gimp_flip($temp1, ORIENTATION_HORIZONTAL);
+			$temp1 = gimp_flip($temp1, HORIZONTAL);
 			gimp_rect_select($img, $wspan, 0, $w - $wspan, $h, REPLACE, 0, 0);
 		};
 		if ($mirror == 3) {	# right half
-			$temp1 = gimp_flip($temp1, ORIENTATION_HORIZONTAL);
+			$temp1 = gimp_flip($temp1, HORIZONTAL);
 			gimp_rect_select($img, 0, 0, $wspan, $h, REPLACE, 0, 0);
 		};
 

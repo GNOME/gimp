@@ -21,7 +21,7 @@
 
 /* libgimo requires a rather broken interface. this must be here because..
  * well, nobody knows why... ARGH! */
-GPlugInInfo PLUG_IN_INFO = { 0, 0, 0, 0 };
+GimpPlugInInfo PLUG_IN_INFO = { 0, 0, 0, 0 };
 
 #if 0
 static void gimp_pattern_select_widget_callback (gchar *name, gint width,

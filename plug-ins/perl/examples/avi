@@ -44,7 +44,7 @@ register "file_avi_save",
    my($img,$drawable,$filename,$raw_filename,$depth,$compression,$index) = @_;
    my($new_img,$new_drawable);
    my $export = Gimp::UI::export_image($new_img=$img, $new_drawable=$drawable, "AVI",
-                                       CAN_HANDLE_RGB|CAN_HANDLE_LAYERS_AS_ANIMATION|CAN_HANDLE_ALPHA);
+                                       EXPORT_CAN_HANDLE_RGB|EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION|EXPORT_CAN_HANDLE_ALPHA );
    die "export failed" if $export == EXPORT_CANCEL;
    sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
    my $us_frame = eval { $img->parasite_find("gimp-interframe-delay")->data } || 100000;
@@ -239,9 +239,9 @@ register "file_avi_load",
             $image = new Image($width,$height,RGB);
             $image->undo_disable;
             $image->set_filename($filename);
-            $image->parasite_attach(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
-            $image->parasite_attach(new Parasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
-            $image->parasite_attach(new Parasite "gimp-avi-compression", PARASITE_PERSISTENT, $compression);
+            $image->parasite_attach(new GimpParasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
+            $image->parasite_attach(new GimpParasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
+            $image->parasite_attach(new GimpParasite "gimp-avi-compression", PARASITE_PERSISTENT, $compression);
          }
       },
       "00db" => sub {

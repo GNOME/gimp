@@ -86,28 +86,28 @@ my $last_func;
 my $last_arg;
 
 my %type2str = (
-   &PARAM_BOUNDARY    => 'BOUNDARY',
-   &PARAM_CHANNEL     => 'CHANNEL',
-   &PARAM_COLOR       => 'COLOR',
-   &PARAM_DISPLAY     => 'DISPLAY',
-   &PARAM_DRAWABLE    => 'DRAWABLE',
-   &PARAM_FLOAT       => 'FLOAT',
-   &PARAM_IMAGE       => 'IMAGE',
-   &PARAM_INT32       => 'INT32',
-   &PARAM_FLOATARRAY  => 'FLOATARRAY',
-   &PARAM_INT16       => 'INT16',
-   &PARAM_PARASITE    => 'PARASITE',
-   &PARAM_STRING      => 'STRING',
-   &PARAM_PATH        => 'PATH',
-   &PARAM_INT16ARRAY  => 'INT16ARRAY',
-   &PARAM_INT8        => 'INT8',
-   &PARAM_INT8ARRAY   => 'INT8ARRAY',
-   &PARAM_LAYER       => 'LAYER',
-   &PARAM_REGION      => 'REGION',
-   &PARAM_STRINGARRAY => 'STRINGARRAY',
-   &PARAM_SELECTION   => 'SELECTION',
-   &PARAM_STATUS      => 'STATUS',
-   &PARAM_INT32ARRAY  => 'INT32ARRAY',
+   &PDB_BOUNDARY    => 'BOUNDARY',
+   &PDB_CHANNEL     => 'CHANNEL',
+   &PDB_COLOR       => 'COLOR',
+   &PDB_DISPLAY     => 'DISPLAY',
+   &PDB_DRAWABLE    => 'DRAWABLE',
+   &PDB_FLOAT       => 'FLOAT',
+   &PDB_IMAGE       => 'IMAGE',
+   &PDB_INT32       => 'INT32',
+   &PDB_FLOATARRAY  => 'FLOATARRAY',
+   &PDB_INT16       => 'INT16',
+   &PDB_PARASITE    => 'PARASITE',
+   &PDB_STRING      => 'STRING',
+   &PDB_PATH        => 'PATH',
+   &PDB_INT16ARRAY  => 'INT16ARRAY',
+   &PDB_INT8        => 'INT8',
+   &PDB_INT8ARRAY   => 'INT8ARRAY',
+   &PDB_LAYER       => 'LAYER',
+   &PDB_REGION      => 'REGION',
+   &PDB_STRINGARRAY => 'STRINGARRAY',
+   &PDB_SELECTION   => 'SELECTION',
+   &PDB_STATUS      => 'STATUS',
+   &PDB_INT32ARRAY  => 'INT32ARRAY',
 );
 
 sub setheight {
@@ -207,15 +207,15 @@ sub complete_function {
 sub complete_type {
    my($type,$name,$desc)=@_;
 
-   if($type==PARAM_IMAGE) {
+   if($type==PDB_IMAGE) {
       set_clist(map(("$$_: ".$_->get_filename,$$_),Gimp->image_list));
-   } elsif($type==PARAM_LAYER) {
+   } elsif($type==PDB_LAYER) {
       set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_layers)} Gimp->image_list);
-   } elsif($type==PARAM_CHANNEL) {
+   } elsif($type==PDB_CHANNEL) {
       set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),$i->get_channels)} Gimp->image_list);
-   } elsif($type==PARAM_DRAWABLE) {
+   } elsif($type==PDB_DRAWABLE) {
       set_clist(map { my $i = $_; map(("$$_: ".$i->get_filename."/".$_->get_name,$$_),($i->get_layers,$i->get_channels))} Gimp->image_list);
-   } elsif ($type==PARAM_INT32) {
+   } elsif ($type==PDB_INT32) {
       if ($name eq "run_mode") {
          set_clist("RUN_NONINTERACTIVE","RUN_NONINTERACTIVE",
                    "RUN_INTERACTIVE","RUN_INTERACTIVE",

@@ -38,7 +38,7 @@ register "file_miff_save",
    my($img,$drawable,$filename) = @_;
    my($new_img,$new_drawable);
    my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "MIFF",
-                                        CAN_HANDLE_GRAY|CAN_HANDLE_RGB|CAN_HANDLE_ALPHA|CAN_HANDLE_LAYERS|CAN_HANDLE_LAYERS_AS_ANIMATION);
+                                        EXPORT_CAN_HANDLE_GRAY|EXPORT_CAN_HANDLE_RGB|EXPORT_CAN_HANDLE_ALPHA |EXPORT_CAN_HANDLE_LAYERS|EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
    die "export failed" if $export == EXPORT_CANCEL;
    my @layers = $new_img->get_layers;
 
@@ -165,7 +165,7 @@ register "file_miff_load",
    if ($comment) {
       $comment =~ s/^\s+//s;
       $comment =~ s/\s+$//s;
-      $img->parasite_attach (new Parasite "gimp-comment", PARASITE_PERSISTENT, $comment);
+      $img->parasite_attach (new GimpParasite "gimp-comment", PARASITE_PERSISTENT, $comment);
    }
    # resolution etc..
 

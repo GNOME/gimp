@@ -44,7 +44,7 @@ register "file_colorhtml_save",
    my($new_img,$new_drawable);
    my $max;
    my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "COLORHTML",
-                                        CAN_HANDLE_RGB);
+                                        EXPORT_CAN_HANDLE_RGB);
    die __"export failed" if $export == EXPORT_CANCEL;
 
    my ($w,$h) = ($new_drawable->width, $new_drawable->height);

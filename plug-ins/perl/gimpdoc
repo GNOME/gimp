@@ -34,29 +34,29 @@ for (@ARGV) {
 @matches = sort @matches;
 
 %pf_type2string = (
-         &PARAM_INT8		=> 'INT8',
-         &PARAM_INT16		=> 'INT16',
-         &PARAM_INT32		=> 'INT32',
-         &PARAM_FLOAT		=> 'FLOAT',
-         &PARAM_STRING		=> 'STRING',
-         &PARAM_INT8ARRAY	=> 'INT8ARRAY',
-         &PARAM_INT16ARRAY	=> 'INT16ARRAY',
-         &PARAM_INT32ARRAY	=> 'INT32ARRAY',
-         &PARAM_FLOATARRAY	=> 'FLOATARRAY',
-         &PARAM_STRINGARRAY	=> 'STRINGARRAY',
-         &PARAM_COLOR		=> 'COLOUR',
-         &PARAM_IMAGE		=> 'IMAGE',
-         &PARAM_LAYER		=> 'LAYER',
-         &PARAM_CHANNEL		=> 'CHANNEL',
-         &PARAM_DRAWABLE	=> 'DRAWABLE',
-         &PARAM_DISPLAY		=> 'DISPLAY',
-         &PARAM_SELECTION	=> 'SELECTION',
-         &PARAM_PARASITE	=> 'PARASITE',
+         &PDB_INT8		=> 'INT8',
+         &PDB_INT16		=> 'INT16',
+         &PDB_INT32		=> 'INT32',
+         &PDB_FLOAT		=> 'FLOAT',
+         &PDB_STRING		=> 'STRING',
+         &PDB_INT8ARRAY		=> 'INT8ARRAY',
+         &PDB_INT16ARRAY	=> 'INT16ARRAY',
+         &PDB_INT32ARRAY	=> 'INT32ARRAY',
+         &PDB_FLOATARRAY	=> 'FLOATARRAY',
+         &PDB_STRINGARRAY	=> 'STRINGARRAY',
+         &PDB_COLOR		=> 'COLOUR',
+         &PDB_IMAGE		=> 'IMAGE',
+         &PDB_LAYER		=> 'LAYER',
+         &PDB_CHANNEL		=> 'CHANNEL',
+         &PDB_DRAWABLE		=> 'DRAWABLE',
+         &PDB_DISPLAY		=> 'DISPLAY',
+         &PDB_SELECTION		=> 'SELECTION',
+         &PDB_PARASITE		=> 'PARASITE',
 
-         &PARAM_STATUS		=> 'STATUS',
-         &PARAM_REGION		=> 'REGION',
-         &PARAM_BOUNDARY	=> 'BOUNDARY',
-         &PARAM_PATH		=> 'PATH',
+         &PDB_STATUS		=> 'STATUS',
+         &PDB_REGION		=> 'REGION',
+         &PDB_BOUNDARY		=> 'BOUNDARY',
+         &PDB_PATH		=> 'PATH',
 );
 
 sub type2str {
@@ -207,11 +207,11 @@ sub gen_va(\@\@) {
 }
 
 sub isarray {
-   return 1 if $_[0] == &PARAM_INT8ARRAY;
-   return 1 if $_[0] == &PARAM_INT16ARRAY;
-   return 1 if $_[0] == &PARAM_INT32ARRAY;
-   return 1 if $_[0] == &PARAM_FLOATARRAY;
-   return 1 if $_[0] == &PARAM_STRINGARRAY;
+   return 1 if $_[0] == &PDB_INT8ARRAY;
+   return 1 if $_[0] == &PDB_INT16ARRAY;
+   return 1 if $_[0] == &PDB_INT32ARRAY;
+   return 1 if $_[0] == &PDB_FLOATARRAY;
+   return 1 if $_[0] == &PDB_STRINGARRAY;
    return 0;
 }
 
@@ -219,7 +219,7 @@ sub killcounts(\@) {
    my $a = shift;
    my $roa=0;
    for(local $_=0; $_<$#$a; $_++) {
-      if (isarray ($a->[$_+1][0]) && $a->[$_][0] == &PARAM_INT32) {
+      if (isarray ($a->[$_+1][0]) && $a->[$_][0] == &PDB_INT32) {
          splice @$a, $_, 1;
          $roa=1;
       }
@@ -257,7 +257,7 @@ sub gen_alternatives(\@$\@) {
             for my $class (qw(
                   Gimp Layer Image Drawable Selection Channel Display
                   Palette Plugin Gradients Edit Progress Region Tile
-                  PixelRgn GDrawable Patterns Parasite
+                  PixelRgn GImpDrawable Patterns GimpParasite
                )) {
                my @pre = @{$class."::PREFIXES"};
                prefix:
@@ -268,19 +268,19 @@ sub gen_alternatives(\@$\@) {
                         last if $_ eq $p;
                         last prefix if Gimp::_gimp_procedure_available($p.$n2);
                      }
-                     if ($class eq "Drawable" && @args && $args[0][0] == &PARAM_DRAWABLE) {
+                     if ($class eq "Drawable" && @args && $args[0][0] == &PDB_DRAWABLE) {
                         push @new, [\@vals,"\$drawable->$n2",[@args[1..$#args]]];
-                     } elsif ($class eq "Layer" && @args && $args[0][0] == &PARAM_LAYER) {
+                     } elsif ($class eq "Layer" && @args && $args[0][0] == &PDB_LAYER) {
                         push @new, [\@vals,"\$layer->$n2",[@args[1..$#args]]];
-                     } elsif ($class eq "Channel" && @args && $args[0][0] == &PARAM_CHANNEL) {
+                     } elsif ($class eq "Channel" && @args && $args[0][0] == &PDB_CHANNEL) {
                         push @new, [\@vals,"\$channel->$n2",[@args[1..$#args]]];
-                     } elsif ($class eq "Image" && @args && $args[0][0] == &PARAM_IMAGE) {
+                     } elsif ($class eq "Image" && @args && $args[0][0] == &PDB_IMAGE) {
                         push @new, [\@vals,"\$image->$n2",[@args[1..$#args]]];
-                     } elsif (@args < 1 or ($args[0][0] != &PARAM_IMAGE
-                                         && $args[0][0] != &PARAM_DRAWABLE
-                                         && $args[0][0] != &PARAM_CHANNEL
-                                         && $args[0][0] != &PARAM_LAYER)) {
-                        if ($class =~ /Gimp|Gradient|Palette|Edit|Patterns|Parasite|PixelRgn/) {
+                     } elsif (@args < 1 or ($args[0][0] != &PDB_IMAGE
+                                         && $args[0][0] != &PDB_DRAWABLE
+                                         && $args[0][0] != &PDB_CHANNEL
+                                         && $args[0][0] != &PDB_LAYER)) {
+                        if ($class =~ /Gimp|Gradient|Palette|Edit|Patterns|GimpParasite|PixelRgn/) {
                            push @new, [\@vals,"${class}->$n2",\@args];
                         } else {
                            push @new, [\@vals,"$n2$nbsp$class",\@args];
@@ -291,10 +291,10 @@ sub gen_alternatives(\@$\@) {
                }
             }
          }
-         if (@args && $args[0][0] == &PARAM_INT32 && $args[0][1] eq "run_mode") {
+         if (@args && $args[0][0] == &PDB_INT32 && $args[0][1] eq "run_mode") {
             push @new, [\@vals,,$name,[@args[1..$#args]]];
          }
-         if (@args>1 && $args[0][0] == &PARAM_IMAGE && $args[1][0] == &PARAM_DRAWABLE) {
+         if (@args>1 && $args[0][0] == &PDB_IMAGE && $args[1][0] == &PDB_DRAWABLE) {
             push @new, [\@vals,,$name,[@args[1..$#args]]];
          }
       }

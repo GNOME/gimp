@@ -38,7 +38,6 @@ $^W=0;
    _EXTENSIVE_TESTS	=> q[@EXTENSIVE_TESTS@],
 
    IN_GIMP		=> q[@IN_GIMP@],
-   COMPAT_CRUFT		=> q[@PERL_COMPAT_CRUFT@],
 
    pdl_inc		=> '',
    pdl_typemaps		=> '',

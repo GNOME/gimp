@@ -5,7 +5,7 @@ use Gimp::Fu;
 use base 'DynaLoader';
 
 BEGIN {
-   $VERSION = 1.2;
+   $VERSION = 1.201;
    eval {
       require XSLoader;
       XSLoader::load Gimp::UI $VERSION;

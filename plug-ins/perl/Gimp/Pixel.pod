@@ -11,7 +11,7 @@ plug-in. If you bug me enough I'll rewrite this document.
   use Gimp;
   use PDL;		# to make sensible things with the pixels
 
-  # Gimp::GDrawable	- The GDrawable structure
+  # Gimp::GimpDrawable	- The GimpDrawable structure
   # Gimp::Tile		- The Tile family of functions.
   # Gimp::PixelRgn	- The PixelRgn family of functions.
 
@@ -19,7 +19,7 @@ plug-in. If you bug me enough I'll rewrite this document.
 
 You can access the pixels in a drawable through tiles or pixel
 regions. This manpage explains how this is done in perl. All classes
-(Gimp::GDrawable, C<Gimp::Tile>, C<Gimp::PixelRgn>) are available with and
+(Gimp::GimpDrawable, C<Gimp::Tile>, C<Gimp::PixelRgn>) are available with and
 without the C<Gimp::> prefix.
 
 =head1 GDRAWABLES
@@ -28,8 +28,8 @@ Well, you know drawables? (also known as PARAM_DRAWABLE or Gimp::Drawable)?
 In the Gimp, drawables are things you can draw on: layers, channels or whole
 images. While most functions named C<gimp_drawable_something> operate on
 C<drawable_ID>s, some functions (notably the ones operating on raw pixel
-data!) need a C<GDrawable> instead. Every drawable has a corresponding
-C<GDrawable>, you can get it with the C<gimp_drawable_get> function:
+data!) need a C<GimpDrawable> instead. Every drawable has a corresponding
+C<GimpDrawable>, you can get it with the C<gimp_drawable_get> function:
 
  my $gdrawable = $drawable->get;
 
@@ -45,7 +45,7 @@ always the same (it's hardcoded in your Gimp program).
 The C<gimp_tile_width> and C<gimp_tile_height> functions return the current
 width/height of a tile (at the moment, this is 64x64).
 
-How do I get a tile? First, you have to grab a GDrawable structure. You can
+How do I get a tile? First, you have to grab a GimpDrawable structure. You can
 get one from any drawable, by calling the C<get> function:
 
  my $gdrawable = $drawable->get;
@@ -74,13 +74,13 @@ pixels, rows, columns and rectangles within these regions. Don't expect me
 to explain everything now, I don't understand the mechanism too well
 myself..
 
-How do I create a pixel region? First, you have to grab a GDrawable structure. You can
+How do I create a pixel region? First, you have to grab a GimpDrawable structure. You can
 get one from any drawable, by calling the C<get> function:
 
  my $gdrawable = $drawable->get;
 
 Now you can create as many PixelRgn structures as you want from
-the C<GDrawable>:
+the C<GimpDrawable>:
 
  my $region = new PixelRgn($gdrawable,0,0,50,30,1,0);	# with "new"
  my $region = $gdrawable->pixel_rgn(0,0,50,30,1,0);	# or from a drawable

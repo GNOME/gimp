@@ -10,14 +10,14 @@ gchar *						T_PV
 gint *						T_PTROBJ
 guchar *					T_PV
 
-GDrawable *					T_GDRAWABLE
-GTile *						T_TILE
-GPixelRgn *					T_PIXELRGN
-GPixelRgn_PDL *					T_PIXELRGN_PDL
+GimpDrawable *					T_GDRAWABLE
+GimpTile *					T_TILE
+GimpPixelRgn *					T_PIXELRGN
+GimpPixelRgn_PDL *				T_PIXELRGN_PDL
 
 GtkWidget *					T_IV
 
-GPixelRgnIterator				T_PTROBJ
+GimpPixelRgnIterator				T_PTROBJ
 
 IMAGE						T_PREF
 LAYER						T_PREF
@@ -50,10 +50,10 @@ T_PIXELRGN_PDL
 OUTPUT
 
 T_PREF
-	$arg = autobless (newSViv($var), PARAM_$ntype);
+	$arg = autobless (newSViv($var), GIMP_PDB_$ntype);
 
 T_PREF_ANY
-	$arg = autobless (newSViv($var), PARAM_$ntype);
+	$arg = autobless (newSViv($var), GIMP_PDB_$ntype);
 
 T_GDRAWABLE
 

@@ -126,7 +126,7 @@ register "dust",
 #          [PF_INT32,	'seed',		'the random seed (0 == unspecified)', 0],
 #         ],
 #         [
-#          [&Gimp::PARAM_FLOATARRAY,'noise','the requested number of 1/f noise values'],
+#          [&Gimp::PDB_FLOATARRAY,'noise','the requested number of 1/f noise values'],
 #         ],
 #         sub {
 #            my ($count, $seed) = @_;

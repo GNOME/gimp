@@ -27,7 +27,7 @@ BOOT:
 {
    HV *stash = gv_stashpvn("Gimp::Module", 12, TRUE);
    
-   newCONSTSUB(stash,"GIMP_MODULE_OK",newSViv(GIMP_MODULE_OK));
-   newCONSTSUB(stash,"GIMP_MODULE_UNLOAD",newSViv(GIMP_MODULE_UNLOAD));
+   newCONSTSUB(stash,"MODULE_OK",newSViv(GIMP_MODULE_OK));
+   newCONSTSUB(stash,"MODULE_UNLOAD",newSViv(GIMP_MODULE_UNLOAD));
 }
 

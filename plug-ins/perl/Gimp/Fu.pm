@@ -49,30 +49,30 @@ starting point for your experiments)
 
 =cut
 
-sub PF_INT8	() { Gimp::PARAM_INT8	};
-sub PF_INT16	() { Gimp::PARAM_INT16	};
-sub PF_INT32	() { Gimp::PARAM_INT32	};
-sub PF_FLOAT	() { Gimp::PARAM_FLOAT	};
-sub PF_STRING	() { Gimp::PARAM_STRING	};
-sub PF_COLOR	() { Gimp::PARAM_COLOR	};
-sub PF_COLOUR	() { Gimp::PARAM_COLOR	};
-sub PF_IMAGE	() { Gimp::PARAM_IMAGE	};
-sub PF_LAYER	() { Gimp::PARAM_LAYER	};
-sub PF_CHANNEL	() { Gimp::PARAM_CHANNEL};
-sub PF_DRAWABLE	() { Gimp::PARAM_DRAWABLE};
+sub PF_INT8	() { Gimp::PDB_INT8	};
+sub PF_INT16	() { Gimp::PDB_INT16	};
+sub PF_INT32	() { Gimp::PDB_INT32	};
+sub PF_FLOAT	() { Gimp::PDB_FLOAT	};
+sub PF_STRING	() { Gimp::PDB_STRING	};
+sub PF_COLOR	() { Gimp::PDB_COLOR	};
+sub PF_COLOUR	() { Gimp::PDB_COLOR	};
+sub PF_IMAGE	() { Gimp::PDB_IMAGE	};
+sub PF_LAYER	() { Gimp::PDB_LAYER	};
+sub PF_CHANNEL	() { Gimp::PDB_CHANNEL	};
+sub PF_DRAWABLE	() { Gimp::PDB_DRAWABLE	};
 
-sub PF_TOGGLE	() { Gimp::PARAM_END+1	};
-sub PF_SLIDER	() { Gimp::PARAM_END+2	};
-sub PF_FONT	() { Gimp::PARAM_END+3	};
-sub PF_SPINNER	() { Gimp::PARAM_END+4	};
-sub PF_ADJUSTMENT(){ Gimp::PARAM_END+5	}; # compatibility fix for script-fu _ONLY_
-sub PF_BRUSH	() { Gimp::PARAM_END+6	};
-sub PF_PATTERN	() { Gimp::PARAM_END+7	};
-sub PF_GRADIENT	() { Gimp::PARAM_END+8	};
-sub PF_RADIO	() { Gimp::PARAM_END+9	};
-sub PF_CUSTOM	() { Gimp::PARAM_END+10	};
-sub PF_FILE	() { Gimp::PARAM_END+11	};
-sub PF_TEXT	() { Gimp::PARAM_END+12	};
+sub PF_TOGGLE	() { Gimp::PDB_END+1	};
+sub PF_SLIDER	() { Gimp::PDB_END+2	};
+sub PF_FONT	() { Gimp::PDB_END+3	};
+sub PF_SPINNER	() { Gimp::PDB_END+4	};
+sub PF_ADJUSTMENT(){ Gimp::PDB_END+5	}; # compatibility fix for script-fu _ONLY_
+sub PF_BRUSH	() { Gimp::PDB_END+6	};
+sub PF_PATTERN	() { Gimp::PDB_END+7	};
+sub PF_GRADIENT	() { Gimp::PDB_END+8	};
+sub PF_RADIO	() { Gimp::PDB_END+9	};
+sub PF_CUSTOM	() { Gimp::PDB_END+10	};
+sub PF_FILE	() { Gimp::PDB_END+11	};
+sub PF_TEXT	() { Gimp::PDB_END+12	};
 
 sub PF_BOOL	() { PF_TOGGLE		};
 sub PF_INT	() { PF_INT32		};
@@ -133,17 +133,17 @@ sub carp {
 }
 
 # Some Standard Arguments
-my @image_params = ([&Gimp::PARAM_IMAGE		, "image",	"The image to work on"],
-                    [&Gimp::PARAM_DRAWABLE	, "drawable",	"The drawable to work on"]);
+my @image_params = ([&Gimp::PDB_IMAGE		, "image",	"The image to work on"],
+                    [&Gimp::PDB_DRAWABLE	, "drawable",	"The drawable to work on"]);
 
-my @load_params  = ([&Gimp::PARAM_STRING	, "filename",	"The name of the file"],
-                    [&Gimp::PARAM_STRING	, "raw_filename","The name of the file"]);
+my @load_params  = ([&Gimp::PDB_STRING	, "filename",	"The name of the file"],
+                    [&Gimp::PDB_STRING	, "raw_filename","The name of the file"]);
 
 my @save_params  = (@image_params, @load_params);
 
-my @load_retvals = ([&Gimp::PARAM_IMAGE		, "image",	"Output image"]);
+my @load_retvals = ([&Gimp::PDB_IMAGE		, "image",	"Output image"]);
 
-my $image_retval = [&Gimp::PARAM_IMAGE		, "image",	"The resulting image"];
+my $image_retval = [&Gimp::PDB_IMAGE		, "image",	"The resulting image"];
 
 # expand all the pod directives in string (currently they are only removed)
 sub expand_podsections() {
@@ -319,7 +319,7 @@ Gimp::on_query {
 
       for (@$results) {
          next if ref $_;
-         if ($_ == &Gimp::PARAM_IMAGE) {
+         if ($_ == &Gimp::PDB_IMAGE) {
             $_ = $image_retval;
          }
       }
@@ -331,24 +331,24 @@ Gimp::on_query {
       # guess the datatype. yeah!
       sub datatype(@) {
          for(@_) {
-            return Gimp::PARAM_STRING unless /^([+-]?)(?=\d|\.\d)\d*(\.\d*)?([Ee]([+-]?\d+))?$/; # perlfaq4
-            return Gimp::PARAM_FLOAT  unless /^[+-]?\d+$/; # again
+            return Gimp::PDB_STRING unless /^([+-]?)(?=\d|\.\d)\d*(\.\d*)?([Ee]([+-]?\d+))?$/; # perlfaq4
+            return Gimp::PDB_FLOAT  unless /^[+-]?\d+$/; # again
          }
-         return Gimp::PARAM_INT32;
+         return Gimp::PDB_INT32;
       }
       sub odd_values(@) {
          my %x = @_; values %x;
       }
 
       for(@$params) {
-         $_->[0]=Gimp::PARAM_INT32	if $_->[0] == PF_TOGGLE;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FONT;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_BRUSH;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_PATTERN;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_GRADIENT;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_CUSTOM;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_FILE;
-         $_->[0]=Gimp::PARAM_STRING	if $_->[0] == PF_TEXT;
+         $_->[0]=Gimp::PDB_INT32	if $_->[0] == PF_TOGGLE;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_FONT;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_BRUSH;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_PATTERN;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_GRADIENT;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_CUSTOM;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_FILE;
+         $_->[0]=Gimp::PDB_STRING	if $_->[0] == PF_TEXT;
          $_->[0]=datatype(odd_values(@{$_->[4]})) if $_->[0] == PF_RADIO;
          $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SLIDER;
          $_->[0]=datatype($_->[3],@{$_->[4]}) if $_->[0] == PF_SPINNER;
@@ -363,7 +363,7 @@ Gimp::on_query {
       
       Gimp->gimp_install_procedure($function,$blurb,$help,$author,$copyright,$date,
                                    $menupath,$imagetypes,$type,
-                                   [[Gimp::PARAM_INT32,"run_mode","Interactive, [non-interactive]"],
+                                   [[Gimp::PDB_INT32,"run_mode","Interactive, [non-interactive]"],
                                     @$params],
                                    $results);
 
@@ -627,23 +627,23 @@ sub register($$$$$$$$$;@) {
 
    for($menupath) {
       if (/^<Image>\//) {
-         $type = &Gimp::PROC_PLUG_IN;
+         $type = &Gimp::PLUGIN;
          unshift @$params, @image_params;
          $defargs = @image_params;
       } elsif (/^<Load>\//) {
-         $type = &Gimp::PROC_PLUG_IN;
+         $type = &Gimp::PLUGIN;
          unshift @$params, @load_params;
          unshift @$results, @load_retvals;
          $defargs = @load_params;
       } elsif (/^<Save>\//) {
-         $type = &Gimp::PROC_PLUG_IN;
+         $type = &Gimp::PLUGIN;
          unshift @$params, @save_params;
          $defargs = @save_params;
       } elsif (/^<Toolbox>\//) {
-         $type = &Gimp::PROC_EXTENSION;
+         $type = &Gimp::EXTENSION;
          $defargs = 0;
       } elsif (/^<None>/) {
-         $type = &Gimp::PROC_EXTENSION;
+         $type = &Gimp::EXTENSION;
          $defargs = 0;
       } else {
          die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";

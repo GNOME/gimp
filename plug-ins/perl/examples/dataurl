@@ -38,9 +38,9 @@ register "file_dataurl_save",
    my($new_img,$new_drawable);
    my $max;
    my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "DATAURL",
-                                        $type==0 ? CAN_HANDLE_INDEXED|CAN_HANDLE_ALPHA
-                                      : $type==1 ? CAN_HANDLE_RGB|CAN_HANDLE_GRAY
-                                      : $type==2 ? CAN_HANDLE_RGB|CAN_HANDLE_GRAY|CAN_HANDLE_INDEXED
+                                        $type==0 ? EXPORT_CAN_HANDLE_INDEXED|EXPORT_CAN_HANDLE_ALPHA 
+                                      : $type==1 ? EXPORT_CAN_HANDLE_RGB|EXPORT_CAN_HANDLE_GRAY
+                                      : $type==2 ? EXPORT_CAN_HANDLE_RGB|EXPORT_CAN_HANDLE_GRAY|EXPORT_CAN_HANDLE_INDEXED
                                       :            0 );
    die __"export failed" if $export == EXPORT_CANCEL;
 

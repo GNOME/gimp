@@ -21,11 +21,11 @@ AC_DEFUN(AM_PATH_GIMP,
 [dnl 
 dnl Get the cflags and libraries from the gimptool script
 dnl
-AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX   Prefix where GIMP is installed (optional)],
+AC_ARG_WITH(gimp-prefix,[  --with-gimp-prefix=PFX  Prefix where GIMP is installed (optional)],
             gimptool_prefix="$withval", gimptool_prefix="")
 AC_ARG_WITH(gimp-exec-prefix,[  --with-gimp-exec-prefix=PFX Exec prefix where GIMP is installed (optional)],
             gimptool_exec_prefix="$withval", gimptool_exec_prefix="")
-AC_ARG_ENABLE(gimptest, [  --disable-gimptest       Do not try to compile and run a test GIMP program],
+AC_ARG_ENABLE(gimptest, [  --disable-gimptest      Do not try to compile and run a test GIMP program],
 		    , enable_gimptest=yes)
 
   if test x$gimptool_exec_prefix != x ; then
@@ -60,6 +60,9 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest       Do not try to compile and ru
        GIMP_LIBS_NOUI=`$GIMPTOOL $gimptool_args --libs-noui`
     fi
 
+    GIMP_DATA_DIR=`$GIMPTOOL $gimptool_args --gimpdatadir`
+    GIMP_PLUGIN_DIR=`$GIMPTOOL $gimptool_args --gimpplugindir`
+
     gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
            sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
     gimptool_minor_version=`$GIMPTOOL $gimptool_args --version | \
@@ -79,9 +82,15 @@ dnl
       AC_TRY_RUN([
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <libgimp/gimp.h>
 
-GPlugInInfo PLUG_IN_INFO =
+#if GIMP_CHECK_VERSION(1,1,20)
+GimpPlugInInfo
+#else
+GPlugInInfo
+#endif
+PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -146,6 +155,14 @@ int main ()
           AC_TRY_LINK([
 #include <stdio.h>
 #include <libgimp/gimp.h>
+
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init_proc */
+  NULL,  /* quit_proc */
+  NULL,  /* query_proc */
+  NULL   /* run_proc */
+};
 ],      [ return 0; ],
         [ echo "*** The test program compiled, but did not run. This usually means"
           echo "*** that the run-time linker is not finding GIMP or finding the wrong"
@@ -174,6 +191,8 @@ int main ()
   AC_SUBST(GIMP_LIBS)
   AC_SUBST(GIMP_CFLAGS_NOUI)
   AC_SUBST(GIMP_LIBS_NOUI)
+  AC_SUBST(GIMP_DATA_DIR)
+  AC_SUBST(GIMP_PLUGIN_DIR)
   rm -f conf.gimptest
 ])
 
