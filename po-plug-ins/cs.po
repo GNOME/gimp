@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-06-27 04:21+0200\n"
-"PO-Revision-Date: 2003-06-27 23:28+0200\n"
+"PO-Revision-Date: 2003-06-28 12:17+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3810,7 +3810,7 @@ msgstr "Jedno políčko na vrstvu (nahradit)"
 
 #: plug-ins/common/gif.c:2370
 msgid "Error writing output file."
-msgstr "Chyba při zápisu výstupního souboru.\n"
+msgstr "Chyba při zápisu výstupního souboru."
 
 #: plug-ins/common/gif.c:2460
 #, c-format
@@ -7343,7 +7343,7 @@ msgid ""
 "Can't read header (ftell == %ld)"
 msgstr ""
 "'%s':\n"
-"Nemohu číst hlavičku (ftell == %ld)\n"
+"Nemohu číst hlavičku (ftell == %ld)"
 
 #: plug-ins/common/xbm.c:825
 #, c-format

@@ -1,3 +1,7 @@
+2003-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* cs.po: fixed Czech translation so it doesn't break the build.
+
 2003-06-28  Miloslav Trmac  <mitr@volny.cz>
 
 	* cs.po: Updated Czech translation.
