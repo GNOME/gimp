@@ -1,5 +1,12 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: disable the whole bunch of FOO_DISABLE_DEPRECATED
+	only for future versions of GLib, GTK+ and Pango because the
+	upcoming new stable versions add no new deprecations that are
+	relevant for the GIMP source.
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/ifscompose/ifscompose.c: some undeprecation and
 	cleanup. Still uses GtkItemFactory.
 
