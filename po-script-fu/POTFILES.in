@@ -7,7 +7,8 @@ plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu-text-console.c
 plug-ins/script-fu/script-fu.c
-plug-ins/dbbrowser/dbbrowser_utils.c
+plug-ins/dbbrowser/gimpprocbrowser.c
+plug-ins/dbbrowser/gimpprocview.c
 
 plug-ins/script-fu/scripts/3d-outline.scm
 plug-ins/script-fu/scripts/3dTruchet.scm
