@@ -181,12 +181,6 @@ image_actions_setup (GimpActionGroup *group)
                                         "image-new-from-image");
   gtk_action_set_accel_path (action, "<Actions>/image/image-new");
 
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
-                     "<Actions>/image/image-new");
-
   gimp_action_group_add_enum_actions (group,
                                       image_convert_actions,
                                       G_N_ELEMENTS (image_convert_actions),

@@ -1,5 +1,17 @@
 2005-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/file-actions.c
+	* app/actions/image-actions.c
+	* app/actions/qmask-actions.c
+	* app/actions/tools-actions.c: removed ugly accel_path hacks
+	(don't g_object_set_data(action, "gimp-accel-path", "foo")).
+
+	* app/widgets/gimpactionview.c (gimp_action_view_accel_edited):
+	simply use gtk_action_get_accel_path() instead of doing even more
+	ugly stuff than above.
+
+2005-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/actions.c (action_data_get_widget): return the
 	active display's shell instead of the toolbox when called from the
 	<Image> popup. Fall back to the toolbox if there is no active

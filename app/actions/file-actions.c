@@ -130,12 +130,6 @@ file_actions_setup (GimpActionGroup *group)
                                         "file-open-from-image");
   gtk_action_set_accel_path (action, "<Actions>/file/file-open");
 
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
-                     "<Actions>/file/file-open");
-
   n_entries = GIMP_GUI_CONFIG (group->gimp->config)->last_opened_size;
 
   entries = g_new0 (GimpEnumActionEntry, n_entries);

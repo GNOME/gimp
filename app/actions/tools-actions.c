@@ -130,21 +130,9 @@ tools_actions_setup (GimpActionGroup *group)
                                         "tools-by-color-select-short");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
 
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
-                     "<Actions>/tools/tools-by-color-select");
-
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "tools-rotate-arbitrary");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-rotate");
-
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
-                     "<Actions>/tools/tools-rotate");
 
   for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
        list;

@@ -100,12 +100,6 @@ qmask_actions_setup (GimpActionGroup *group)
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "qmask-active");
   gtk_action_set_accel_path (action, "<Actions>/qmask/qmask-toggle");
-
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-  g_object_set_data (G_OBJECT (action), "gimp-accel-path",
-                     "<Actions>/qmask/qmask-toggle");
 }
 
 void

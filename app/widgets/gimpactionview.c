@@ -601,7 +601,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
     {
       GtkAction      *action;
       GtkActionGroup *group;
-      gchar          *accel_path;
+      const gchar    *accel_path;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_ACTION_VIEW_COLUMN_ACTION, &action,
@@ -618,17 +618,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
           goto done;
         }
 
-#ifdef __GNUC__
-#warning FIXME: remove accel_path hack
-#endif
-      accel_path = g_object_get_data (G_OBJECT (action), "gimp-accel-path");
-
-      if (accel_path)
-        accel_path = g_strdup (accel_path);
-      else
-        accel_path = g_strdup_printf ("<Actions>/%s/%s",
-                                      gtk_action_group_get_name (group),
-                                      gtk_action_get_name (action));
+      accel_path = gtk_action_get_accel_path (action);
 
       if (delete)
         {
@@ -703,7 +693,6 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
             }
         }
 
-      g_free (accel_path);
       g_object_unref (group);
       g_object_unref (action);
     }
