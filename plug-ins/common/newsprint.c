@@ -90,7 +90,6 @@ static char rcsid[] = "$Id$";
 
 #define ISNEG(x)	(((x) < 0)? 1 : 0)
 #define DEG2RAD(d)	((d) * G_PI / 180)
-#define VALID_BOOL(x)	((x) == TRUE || (x) == FALSE)
 #define CLAMPED_ADD(a, b) (((a)+(b) > 0xff)? 0xff : (a) + (b))
 
 
@@ -190,7 +189,7 @@ static spot_info_t spotfn_list[] =
   }
 };
 
-#define NUM_SPOTFN	((sizeof(spotfn_list) / sizeof(spot_info_t)) - 1)
+#define NUM_SPOTFN	(G_N_ELEMENTS (spotfn_list))
 #define VALID_SPOTFN(x)	((x) >= 0 && (x) < NUM_SPOTFN)
 #define THRESH(x,y)	(thresh[(y)*width + (x)])
 #define THRESHn(n,x,y)	((thresh[n])[(y)*width + (x)])
@@ -254,7 +253,7 @@ struct _channel_st
   gint        *spotfn_num;       /* which spotfn the menu is controlling */
   preview_st   prev[3];          /* state for 3 preview widgets */
   GtkObject   *angle_adj;        /* angle adjustment */
-  GtkWidget   *option_menu;      /* popup for spot function */
+  GtkWidget   *combo;            /* popup for spot function */
   GtkWidget   *menuitem[NUM_SPOTFN]; /* menuitems for each spot function */
   GtkWidget   *ch_menuitem;      /* menuitem for the channel selector */
   gint         ch_menu_num;      /* this channel's position in the selector */
@@ -795,9 +794,9 @@ static void
 newsprint_menu_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  channel_st  *st = data;
-  gint         menufn;
-  static gint  in_progress = FALSE;
+  channel_st      *st = data;
+  gint             value;
+  static gboolean  in_progress = FALSE;
 
   /* we shouldn't need recursion protection, but if lock_channels is
    * set, and gtk_option_menu_set_history ever generates an
@@ -810,10 +809,9 @@ newsprint_menu_callback (GtkWidget *widget,
 
   in_progress = TRUE;
 
-  menufn = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                               "gimp-item-data"));
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
-  *(st->spotfn_num) = menufn;
+  *(st->spotfn_num) = value;
 
   preview_update (st);
 
@@ -822,15 +820,15 @@ newsprint_menu_callback (GtkWidget *widget,
   if (pvals_ui.lock_channels)
     {
       channel_st *c = st->next;
-      gint        oldfn;
+      gint        old_value;
 
       while (c != st)
 	{
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (c->option_menu),
-				       menufn);
-	  oldfn = *(c->spotfn_num);
-	  *(c->spotfn_num) = menufn;
-	  if (oldfn != menufn)
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (c->combo), value);
+
+	  old_value = *(c->spotfn_num);
+	  *(c->spotfn_num) = value;
+	  if (old_value != value)
 	    preview_update (c);
 	  c = c->next;
 	}
@@ -965,9 +963,8 @@ newsprint_defaults_callback (GtkWidget *widget,
 	   * question, in order to run the handler that re-computes
 	   * the preview area */
 	  spotfn = *(ct->factory_spotfn);
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (chst[c]->option_menu),
-				       spotfn);
-	  gtk_menu_item_activate (GTK_MENU_ITEM (chst[c]->menuitem[spotfn]));
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (chst[c]->combo),
+                                         spotfn);
 
 	  c++;
 	  ct++;
@@ -988,7 +985,6 @@ new_channel (const chan_tmpl *ct)
   GtkWidget   *hbox2;
   GtkWidget   *abox;
   GtkWidget   *label;
-  GtkWidget   *menu;
   spot_info_t *sf;
   channel_st  *chst;
   gint         i;
@@ -1035,36 +1031,23 @@ new_channel (const chan_tmpl *ct)
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  chst->option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (hbox2), chst->option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (chst->option_menu);
+  chst->combo = gimp_int_combo_box_new (NULL, 0);
 
-  menu = gtk_menu_new ();
+  for (sf = spotfn_list, i = 0; sf->name; sf++, i++)
+    gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (chst->combo),
+                               GIMP_INT_STORE_VALUE, i,
+                               GIMP_INT_STORE_LABEL, gettext (sf->name),
+                               -1);
 
-  sf = spotfn_list;
-  i = 0;
-  while (sf->name)
-    {
-      chst->menuitem[i] = gtk_menu_item_new_with_label (gettext (sf->name));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu),
-                             GTK_WIDGET (chst->menuitem[i]));
-      gtk_widget_show (chst->menuitem[i]);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (chst->combo),
+                                 *ct->spotfn);
 
-      g_signal_connect (chst->menuitem[i], "activate",
-                        G_CALLBACK (newsprint_menu_callback),
-                        chst);
+  g_signal_connect (chst->combo, "changed",
+                    G_CALLBACK (newsprint_menu_callback),
+                    chst);
 
-      g_object_set_data (G_OBJECT (chst->menuitem[i]), "gimp-item-data",
-                         GINT_TO_POINTER (i));
-
-      sf++;
-      i++;
-    }
-
-  gtk_menu_set_active (GTK_MENU (menu), *ct->spotfn);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (chst->option_menu), menu);
-  gtk_widget_show (chst->option_menu);
+  gtk_box_pack_start (GTK_BOX (hbox2), chst->combo, FALSE, FALSE, 0);
+  gtk_widget_show (chst->combo);
 
   /* spot function previews */
   {

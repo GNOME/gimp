@@ -112,8 +112,6 @@ gimp_int_combo_box_new (const gchar *first_label,
   GtkWidget *combo_box;
   va_list    args;
 
-  g_return_val_if_fail (first_label != NULL, NULL);
-
   va_start (args, first_value);
 
   combo_box = gimp_int_combo_box_new_valist (first_label, first_value, args);
@@ -145,8 +143,6 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
   GtkListStore *store;
   const gchar  *label;
   gint          value;
-
-  g_return_val_if_fail (first_label != NULL, NULL);
 
   store = gimp_int_store_new ();
 

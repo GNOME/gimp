@@ -1,5 +1,15 @@
 2004-04-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpintcombobox.c (gimp_int_combo_box_new):
+	removed the check for first_label != NULL. Passing a NULL label
+	makes a perfect empty combo_box.
+
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/spheredesigner.c: ported from GtkOptioMenu to
+	GimpIntComboBox.
+
+2004-04-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/flame/flame.c
 	* plug-ins/gimpressionist/brush.c: ported the last two users of
 	gimpmenu.h to GimpDrawableComboBox.

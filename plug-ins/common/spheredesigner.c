@@ -328,8 +328,6 @@ static GtkObject *scalescale;
 static GtkObject *turbulencescale;
 static GtkObject *amountscale;
 static GtkObject *expscale;
-static GtkWidget *typemenu_menu;
-static GtkWidget *texturemenu_menu;
 static GtkWidget *typemenu;
 static GtkWidget *texturemenu;
 
@@ -1844,13 +1842,14 @@ setvals (texture * t)
     {
       if (l->n == t->type)
 	{
-	  gtk_option_menu_set_history (GTK_OPTION_MENU (texturemenu),
-				       l->index);
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (texturemenu),
+                                         l->index);
 	  break;
 	}
       l++;
     }
-  gtk_option_menu_set_history (GTK_OPTION_MENU (typemenu), t->majtype);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (typemenu), t->majtype);
 
   noupdate = FALSE;
 }
@@ -2281,33 +2280,39 @@ restartrender (void)
 }
 
 static void
-selecttexture (GtkWidget * wg, gpointer data)
+selecttexture (GtkWidget *widget,
+               gpointer   data)
 {
   texture *t;
-  gint     n = GPOINTER_TO_INT (data);
 
   if (noupdate)
     return;
+
   t = currenttexture ();
   if (!t)
     return;
-  t->type = n;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &t->type);
+
   relabel ();
   restartrender ();
 }
 
 static void
-selecttype (GtkWidget * wg, gpointer data)
+selecttype (GtkWidget *widget,
+            gpointer   data)
 {
   texture *t;
-  gint     n = GPOINTER_TO_INT (data);
 
   if (noupdate)
     return;
+
   t = currenttexture ();
   if (!t)
     return;
-  t->majtype = n;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &t->majtype);
+
   relabel ();
   restartrender ();
 }
@@ -2343,23 +2348,6 @@ getscales (GtkWidget *widget,
   t->translate.z = GTK_ADJUSTMENT (poszscale)->value;
 }
 
-static void
-mktexturemenu (GtkWidget *texturemenu_menu)
-{
-  GtkWidget         *item;
-  struct textures_t *t;
-
-  t = textures;
-  while (t->s)
-    {
-      item = gtk_menu_item_new_with_label (gettext (t->s));
-      gtk_widget_show (item);
-      gtk_menu_shell_append (GTK_MENU_SHELL (texturemenu_menu), item);
-      g_signal_connect (item, "activate",
-			G_CALLBACK (selecttexture), GINT_TO_POINTER (t->n));
-      t++;
-    }
-}
 
 static void
 color1_changed (GimpColorButton *button,
@@ -2475,7 +2463,6 @@ makewindow (void)
   GtkWidget  *button;
   GtkWidget  *label;
   GtkWidget  *list;
-  GtkWidget  *item;
   GtkWidget  *_scalescale;
   GtkWidget  *_rotscale;
   GtkWidget  *_turbulencescale;
@@ -2851,41 +2838,37 @@ makewindow (void)
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   g_signal_connect (poszscale, "value_changed", G_CALLBACK (getscales), NULL);
 
-  typemenu = gtk_option_menu_new ();
-  gtk_widget_show (typemenu);
+  typemenu = gimp_int_combo_box_new (_("Texture"), 0,
+                                     _("Bump"),    1,
+                                     _("Light"),   2,
+                                     NULL);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (typemenu), 0,
+                              G_CALLBACK (selecttype),
+                              NULL);
+
   gtk_table_attach (GTK_TABLE (table), typemenu, 1, 2, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
-  typemenu_menu = gtk_menu_new ();
-  item = gtk_menu_item_new_with_label (_("Texture"));
-  gtk_widget_show (item);
-  g_signal_connect (item, "activate", G_CALLBACK (selecttype), NULL);
-  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
+  gtk_widget_show (typemenu);
 
-  item = gtk_menu_item_new_with_label (_("Bump"));
-  gtk_widget_show (item);
-  g_signal_connect (item, "activate",
-		    G_CALLBACK (selecttype),
-		    GINT_TO_POINTER (1));
-  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
+  texturemenu = gimp_int_combo_box_new (NULL, 0);
 
-  item = gtk_menu_item_new_with_label (_("Light"));
-  gtk_widget_show (item);
-  g_signal_connect (item, "activate",
-		    G_CALLBACK (selecttype),
-		    GINT_TO_POINTER (2));
-  gtk_menu_shell_append (GTK_MENU_SHELL (typemenu_menu), item);
+  {
+    struct textures_t *t;
 
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (typemenu), typemenu_menu);
+    for (t = textures; t->s; t++)
+      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (texturemenu),
+                                 GIMP_INT_STORE_VALUE, t->n,
+                                 GIMP_INT_STORE_LABEL, gettext (t->s),
+                                 -1);
+  }
 
-  texturemenu = gtk_option_menu_new ();
-  gtk_widget_show (texturemenu);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (texturemenu), 0,
+                              G_CALLBACK (selecttexture),
+                              NULL);
+
   gtk_table_attach (GTK_TABLE (table), texturemenu, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-
-  texturemenu_menu = gtk_menu_new ();
-  mktexturemenu (texturemenu_menu);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (texturemenu), texturemenu_menu);
+  gtk_widget_show (texturemenu);
 
   label = gtk_label_new (_("Amount:"));
   gtk_widget_show (label);
