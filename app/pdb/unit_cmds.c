@@ -152,7 +152,7 @@ unit_new_invoker (Gimp     *gimp,
   GimpUnit unit = 0;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL)
+  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
     success = FALSE;
 
   factor = args[1].value.pdb_float;
@@ -160,19 +160,19 @@ unit_new_invoker (Gimp     *gimp,
   digits = args[2].value.pdb_int;
 
   symbol = (gchar *) args[3].value.pdb_pointer;
-  if (symbol == NULL)
+  if (symbol == NULL || !g_utf8_validate (symbol, -1, NULL))
     success = FALSE;
 
   abbreviation = (gchar *) args[4].value.pdb_pointer;
-  if (abbreviation == NULL)
+  if (abbreviation == NULL || !g_utf8_validate (abbreviation, -1, NULL))
     success = FALSE;
 
   singular = (gchar *) args[5].value.pdb_pointer;
-  if (singular == NULL)
+  if (singular == NULL || !g_utf8_validate (singular, -1, NULL))
     success = FALSE;
 
   plural = (gchar *) args[6].value.pdb_pointer;
-  if (plural == NULL)
+  if (plural == NULL || !g_utf8_validate (plural, -1, NULL))
     success = FALSE;
 
   if (success)

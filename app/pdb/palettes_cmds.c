@@ -209,7 +209,7 @@ palettes_set_palette_invoker (Gimp     *gimp,
   GimpPalette *palette;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -263,7 +263,7 @@ palettes_get_palette_entry_invoker (Gimp     *gimp,
   GimpPalette *palette = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   entry_num = args[1].value.pdb_int;

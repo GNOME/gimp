@@ -96,19 +96,19 @@ HELP
 
     @inargs = (
 	{ name => 'identifier', type => 'string', wrap => 1,
-	  desc => "The new unit's identifier" },
+	  desc => "The new unit's identifier", utf8 => 1 },
 	{ name => 'factor', type => 'float',
 	  desc => "The new unit's factor" },
 	{ name => 'digits', type => 'int32',
 	  desc => "The new unit's digits" },
 	{ name => 'symbol', type => 'string',
-	  desc => "The new unit's symbol" },
+	  desc => "The new unit's symbol", utf8 => 1 },
 	{ name => 'abbreviation', type => 'string',
-	  desc => "The new unit's abbreviation" },
+	  desc => "The new unit's abbreviation", utf8 => 1 },
 	{ name => 'singular', type => 'string',
-	  desc => "The new unit's singular form" },
+	  desc => "The new unit's singular form", utf8 => 1 },
 	{ name => 'plural', type => 'string',
-	  desc => "The new unit's plural form" }
+	  desc => "The new unit's plural form", utf8 => 1 }
     );
 
     @outargs = ( &unit_arg );

@@ -60,11 +60,11 @@ gradients_popup_invoker (Gimp     *gimp,
   ProcRecord *proc;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL)
+  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
     success = FALSE;
 
   popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL)
+  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
     success = FALSE;
 
   initial_gradient = (gchar *) args[2].value.pdb_pointer;
@@ -142,7 +142,7 @@ gradients_close_popup_invoker (Gimp     *gimp,
   GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL)
+  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -198,11 +198,11 @@ gradients_set_popup_invoker (Gimp     *gimp,
   GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
-  if (gradient_callback == NULL)
+  if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
     success = FALSE;
 
   gradient_name = (gchar *) args[1].value.pdb_pointer;
-  if (gradient_name == NULL)
+  if (gradient_name == NULL || !g_utf8_validate (gradient_name, -1, NULL))
     success = FALSE;
 
   if (success)

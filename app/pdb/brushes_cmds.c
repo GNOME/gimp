@@ -232,7 +232,7 @@ brushes_set_brush_invoker (Gimp     *gimp,
   GimpBrush *brush;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -523,7 +523,7 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
   GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)

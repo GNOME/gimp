@@ -31,13 +31,13 @@ sub patterns_popup {
 
     @inargs = (
 	{ name => 'pattern_callback', type => 'string',
-	  desc => 'The callback PDB proc to call when pattern selection is
-		   made' },
+	  desc => 'The callback PDB proc to call when pattern selection is 
+		   made', utf8 => 1 },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the pattern popup window' },
+	  desc => 'Title to give the pattern popup window', utf8 => 1 },
 	{ name => 'initial_pattern', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
-	  no_success => 1 },
+	  no_success => 1, utf8 => 1 },
     );
 
     %invoke = (
@@ -69,7 +69,8 @@ sub patterns_close_popup {
 
     @inargs = (
 	{ name => 'pattern_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 }
     );
 
     %invoke = (
@@ -100,9 +101,10 @@ sub patterns_set_popup {
 
     @inargs = (
 	{ name => 'pattern_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 },
 	{ name => 'pattern_name', type => 'string',
-	  desc => 'The name of the pattern to set as selected' },
+	  desc => 'The name of the pattern to set as selected', utf8 => 1 },
     );
 
     %invoke = (

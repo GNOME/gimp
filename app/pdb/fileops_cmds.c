@@ -172,12 +172,12 @@ file_save_invoker (Gimp     *gimp,
   memset (new_args, 0, sizeof (Argument) * proc->num_args);
   memcpy (new_args, args, sizeof (Argument) * 5);
 
-  for (i=5; i<proc->num_args; i++)
-  {
-    new_args[i].arg_type = proc->args[i].arg_type;
-    if (proc->args[i].arg_type == GIMP_PDB_STRING)
-      new_args[i].value.pdb_pointer = g_strdup("\0");
-  }
+  for (i = 5; i < proc->num_args; i++)
+    {
+      new_args[i].arg_type = proc->args[i].arg_type;
+      if (proc->args[i].arg_type == GIMP_PDB_STRING)
+	new_args[i].value.pdb_pointer = g_strdup ("");
+    }
 
   return_vals = procedural_db_execute (gimp, proc->name, new_args);
   g_free (new_args);
@@ -554,7 +554,7 @@ register_magic_load_handler_invoker (Gimp     *gimp,
   PlugInProcDef *file_proc;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   extensions = (gchar *) args[1].value.pdb_pointer;
@@ -704,7 +704,7 @@ register_save_handler_invoker (Gimp     *gimp,
   PlugInProcDef *file_proc;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   extensions = (gchar *) args[1].value.pdb_pointer;

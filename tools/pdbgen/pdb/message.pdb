@@ -34,27 +34,20 @@ HELP
 
     @inargs = (
 	{ name => 'message', type => 'string', const => 1,
-	  desc => 'Message to display in the dialog' }
+	  desc => 'Message to display in the dialog', utf8 => 1 }
     );
 
-    %invoke = ( code => <<CODE
+    %invoke = (
+        code => <<CODE
 {
-  if (! g_utf8_validate (message, -1, NULL))
-    {
-      g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
-      success = FALSE;
-    }
-  else
-    {
-      gchar *domain = NULL;
+  gchar *domain = NULL;
 
-      if (gimp->current_plug_in)
-	domain = plug_in_get_undo_desc (gimp->current_plug_in);
+  if (gimp->current_plug_in)
+    domain = plug_in_get_undo_desc (gimp->current_plug_in);
 
-      gimp_message (gimp, domain, message);
+  gimp_message (gimp, domain, message);
 
-      g_free (domain);
-    }
+  g_free (domain);
 }
 CODE
     );

@@ -35,7 +35,8 @@ sub text_arg () {{
 sub fontname_arg () {{
     name => 'fontname',
     type => 'string',
-    desc => 'The name of the font'
+    desc => 'The name of the font',
+    utf8 => 1
 }}
 
 sub size_args () {(

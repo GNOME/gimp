@@ -58,11 +58,11 @@ palettes_popup_invoker (Gimp     *gimp,
   ProcRecord *proc;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL)
+  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
     success = FALSE;
 
   popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL)
+  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
     success = FALSE;
 
   initial_palette = (gchar *) args[2].value.pdb_pointer;
@@ -130,7 +130,7 @@ palettes_close_popup_invoker (Gimp     *gimp,
   PaletteSelect *psp;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL)
+  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -186,11 +186,11 @@ palettes_set_popup_invoker (Gimp     *gimp,
   PaletteSelect *psp;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
-  if (palette_callback == NULL)
+  if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
     success = FALSE;
 
   palette_name = (gchar *) args[1].value.pdb_pointer;
-  if (palette_name == NULL)
+  if (palette_name == NULL || !g_utf8_validate (palette_name, -1, NULL))
     success = FALSE;
 
   if (success)

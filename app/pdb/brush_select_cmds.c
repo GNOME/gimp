@@ -62,11 +62,11 @@ brushes_popup_invoker (Gimp     *gimp,
   ProcRecord *proc;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL)
+  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
     success = FALSE;
 
   popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL)
+  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
     success = FALSE;
 
   initial_brush = (gchar *) args[2].value.pdb_pointer;
@@ -164,7 +164,7 @@ brushes_close_popup_invoker (Gimp     *gimp,
   BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL)
+  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -223,11 +223,11 @@ brushes_set_popup_invoker (Gimp     *gimp,
   BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
-  if (brush_callback == NULL)
+  if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
     success = FALSE;
 
   brush_name = (gchar *) args[1].value.pdb_pointer;
-  if (brush_name == NULL)
+  if (brush_name == NULL || !g_utf8_validate (brush_name, -1, NULL))
     success = FALSE;
 
   opacity = args[2].value.pdb_float;

@@ -18,16 +18,18 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub proc_name_arg () {{
-    name => 'procedure',
-    type => 'string',
-    desc => 'The procedure name',
-    alias => 'proc_name'
+    name  => 'procedure',
+    type  => 'string',
+    desc  => 'The procedure name',
+    alias => 'proc_name',
+    utf8  => 1
 }}
 
 sub data_ident_arg () {{
     name => 'identifier',
     type => 'string',
-    desc => 'The identifier associated with data'
+    desc => 'The identifier associated with data',
+    utf8 => 1
 }}
 
 sub data_bytes_arg () {{
@@ -37,9 +39,9 @@ sub data_bytes_arg () {{
 }}
 
 sub data_arg () {{
-    name => 'data',
-    type => 'int8array',
-    desc => 'A byte array containing data',
+    name  => 'data',
+    type  => 'int8array',
+    desc  => 'A byte array containing data',
     array => &data_bytes_arg
 }}
 

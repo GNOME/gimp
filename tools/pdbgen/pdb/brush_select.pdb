@@ -43,13 +43,13 @@ sub brushes_popup {
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
-	  desc => 'The callback PDB proc to call when brush selection is
-		   made' },
+	  desc => 'The callback PDB proc to call when brush selection is made',
+          utf8 => 1 },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the brush popup window' },
+	  desc => 'Title to give the brush popup window', utf8 => 1 },
 	{ name => 'initial_brush', type => 'string',
 	  desc => 'The name of the brush to set as the first selected',
-	  no_success => 1 },
+	  no_success => 1, utf8 => 1 },
 	&brush_args
     );
 
@@ -85,7 +85,8 @@ sub brushes_close_popup {
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 }
     );
 
     %invoke = (
@@ -116,9 +117,10 @@ sub brushes_set_popup {
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 },
 	{ name => 'brush_name', type => 'string',
-	  desc => 'The name of the brush to set as selected' },
+	  desc => 'The name of the brush to set as selected', utf8 => 1 },
 	&brush_args
     );
 

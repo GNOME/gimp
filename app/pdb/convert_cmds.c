@@ -163,7 +163,7 @@ convert_indexed_invoker (Gimp     *gimp,
   remove_unused = args[5].value.pdb_int ? TRUE : FALSE;
 
   palette_name = (gchar *) args[6].value.pdb_pointer;
-  if (palette_name == NULL)
+  if (palette_name == NULL || !g_utf8_validate (palette_name, -1, NULL))
     success = FALSE;
 
   if (success)

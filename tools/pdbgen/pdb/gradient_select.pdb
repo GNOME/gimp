@@ -40,13 +40,13 @@ sub gradients_popup {
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
-	  desc => 'The callback PDB proc to call when gradient selection is
-		   made' },
+	  desc => 'The callback PDB proc to call when gradient selection is 
+		   made', utf8 => 1 },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the gradient popup window' },
+	  desc => 'Title to give the gradient popup window', utf8 => 1 },
 	{ name => 'initial_gradient', type => 'string',
 	  desc => 'The name of the pattern to set as the first selected',
-	  no_success => 1 },
+	  no_success => 1, utf8 => 1 },
 	&sample_size_arg
     );
 
@@ -80,7 +80,8 @@ sub gradients_close_popup {
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 }
     );
 
     %invoke = (
@@ -111,9 +112,10 @@ sub gradients_set_popup {
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this popup',
+          utf8 => 1 },
 	{ name => 'gradient_name', type => 'string',
-	  desc => 'The name of the gradient to set as selected' }
+	  desc => 'The name of the gradient to set as selected', utf8 => 1 }
     );
 
     %invoke = (

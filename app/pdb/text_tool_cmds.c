@@ -99,7 +99,7 @@ text_fontname_invoker (Gimp     *gimp,
     success = FALSE;
 
   fontname = (gchar *) args[9].value.pdb_pointer;
-  if (fontname == NULL)
+  if (fontname == NULL || !g_utf8_validate (fontname, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -230,7 +230,7 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
     success = FALSE;
 
   fontname = (gchar *) args[3].value.pdb_pointer;
-  if (fontname == NULL)
+  if (fontname == NULL || !g_utf8_validate (fontname, -1, NULL))
     success = FALSE;
 
   if (success)

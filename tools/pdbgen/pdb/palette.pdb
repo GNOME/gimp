@@ -21,12 +21,6 @@ sub color_blurb {
     $blurb = "@{[shift]} the current GIMP @{[shift]}ground color.";
 }
 
-sub palette_arg () {{
-    name => 'name',
-    type => 'string',
-    desc => 'The palette name'
-}}
-
 sub color_arg {
     my $ground = (shift) . "ground";
     {

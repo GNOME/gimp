@@ -205,7 +205,7 @@ patterns_set_pattern_invoker (Gimp     *gimp,
   GimpPattern *pattern;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -259,7 +259,7 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
   GimpPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)

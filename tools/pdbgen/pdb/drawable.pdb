@@ -489,7 +489,6 @@ HELP
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
-	headers => [ qw(<string.h> "core/gimplayer.h") ],
 	code => <<'CODE'
 {
   TempBuf * buf;
@@ -562,10 +561,10 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
-              "core/gimpdrawable.h" "core/gimpdrawable-offset.h"
-	      "base/tile.h" "base/tile-manager.h" "base/temp-buf.h"
-              "gimp-intl.h");
+@headers = qw("core/gimp.h" "core/gimplayer.h" "core/gimplayermask.h"
+              "core/gimpchannel.h" "core/gimpdrawable.h"
+              "core/gimpdrawable-offset.h" "base/tile.h" "base/tile-manager.h"
+              "base/temp-buf.h" "gimp-intl.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

@@ -46,7 +46,7 @@ HELP
 
     @inargs = (
 	{ name => 'message', type => 'string', no_success => 1,
-	  desc => 'Message to use in the progress dialog' },
+	  desc => 'Message to use in the progress dialog', utf8 => 1 },
 	{ name => 'gdisplay', type => 'int32',
 	  desc => 'GimpDisplay to update progressbar in, or -1 for a seperate
 		   window',
@@ -132,9 +132,9 @@ sub plugins_query {
     &andy_pdb_misc;
 
     @inargs = (
-	{ name => 'search_string', type => 'string',
-	  desc => 'If not an empty string then use this as a search pattern',
-	  alias => 'search_str', no_success => 1 }
+	{ name  => 'search_string', type => 'string',
+	  desc  => 'If not an empty string then use this as a search pattern',
+	  alias => 'search_str', no_success => 1, utf8 => 1 }
     );
 
     @outargs = (
@@ -266,7 +266,7 @@ HELP
 
     @inargs = (
 	{ name => 'domain_name', type => 'string',
-	  desc => 'The name of the textdomain (must be unique).' },
+	  desc => 'The name of the textdomain (must be unique).', utf8 => 1 },
 	{ name => 'domain_path', type => 'string',
 	  desc => 'The absolute path to the compiled message catalog (may be NULL).',
 	  no_success => 1 },

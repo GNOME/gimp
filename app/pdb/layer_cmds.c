@@ -1071,7 +1071,7 @@ layer_set_name_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)

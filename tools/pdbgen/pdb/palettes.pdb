@@ -32,7 +32,8 @@ sub adrian_pdb_misc {
 sub palette_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The palette name'
+    desc => 'The palette name',
+    utf8 => 1
 }}
 
 sub dim_args () {

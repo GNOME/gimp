@@ -53,27 +53,19 @@ message_invoker (Gimp     *gimp,
   gchar *message;
 
   message = (gchar *) args[0].value.pdb_pointer;
-  if (message == NULL)
+  if (message == NULL || !g_utf8_validate (message, -1, NULL))
     success = FALSE;
 
   if (success)
     {
-      if (! g_utf8_validate (message, -1, NULL))
-	{
-	  g_warning ("Strings passed to g_message() must be in UTF-8 encoding.");
-	  success = FALSE;
-	}
-      else
-	{
-	  gchar *domain = NULL;
+      gchar *domain = NULL;
     
-	  if (gimp->current_plug_in)
-	    domain = plug_in_get_undo_desc (gimp->current_plug_in);
+      if (gimp->current_plug_in)
+	domain = plug_in_get_undo_desc (gimp->current_plug_in);
     
-	  gimp_message (gimp, domain, message);
+      gimp_message (gimp, domain, message);
     
-	  g_free (domain);
-	}
+      g_free (domain);
     }
 
   return procedural_db_return_args (&message_proc, success);

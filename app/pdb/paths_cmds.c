@@ -242,7 +242,7 @@ path_set_current_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -302,7 +302,7 @@ path_delete_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -368,7 +368,7 @@ path_get_points_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -493,7 +493,7 @@ path_set_points_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   ptype = args[2].value.pdb_int;
@@ -774,7 +774,7 @@ path_get_tattoo_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -850,7 +850,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   tattovalue = args[2].value.pdb_int;
@@ -994,7 +994,7 @@ path_get_locked_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -1070,7 +1070,7 @@ path_set_locked_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   lockstatus = args[2].value.pdb_int;
@@ -1143,7 +1143,7 @@ path_to_selection_invoker (Gimp     *gimp,
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   op = args[2].value.pdb_int;

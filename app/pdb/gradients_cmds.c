@@ -194,7 +194,7 @@ gradients_set_gradient_invoker (Gimp     *gimp,
   GimpGradient *gradient;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -457,7 +457,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
   GimpGradient *gradient = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
-  if (name == NULL)
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
     success = FALSE;
 
   sample_size = args[1].value.pdb_int;

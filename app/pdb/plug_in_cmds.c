@@ -416,7 +416,7 @@ plugin_domain_register_invoker (Gimp     *gimp,
   gchar *domain_path;
 
   domain_name = (gchar *) args[0].value.pdb_pointer;
-  if (domain_name == NULL)
+  if (domain_name == NULL || !g_utf8_validate (domain_name, -1, NULL))
     success = FALSE;
 
   domain_path = (gchar *) args[1].value.pdb_pointer;

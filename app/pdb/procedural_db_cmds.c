@@ -480,7 +480,7 @@ procedural_db_proc_info_invoker (Gimp     *gimp,
   ProcRecord *proc = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL)
+  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -584,7 +584,7 @@ procedural_db_proc_arg_invoker (Gimp     *gimp,
   ProcArg *arg = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL)
+  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
     success = FALSE;
 
   arg_num = args[1].value.pdb_int;
@@ -671,7 +671,7 @@ procedural_db_proc_val_invoker (Gimp     *gimp,
   ProcArg *val = NULL;
 
   proc_name = (gchar *) args[0].value.pdb_pointer;
-  if (proc_name == NULL)
+  if (proc_name == NULL || !g_utf8_validate (proc_name, -1, NULL))
     success = FALSE;
 
   val_num = args[1].value.pdb_int;
@@ -758,7 +758,7 @@ procedural_db_get_data_invoker (Gimp     *gimp,
   const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL)
+  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -831,7 +831,7 @@ procedural_db_get_data_size_invoker (Gimp     *gimp,
   const guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL)
+  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -892,7 +892,7 @@ procedural_db_set_data_invoker (Gimp     *gimp,
   guint8 *data;
 
   identifier = (gchar *) args[0].value.pdb_pointer;
-  if (identifier == NULL)
+  if (identifier == NULL || !g_utf8_validate (identifier, -1, NULL))
     success = FALSE;
 
   bytes = args[1].value.pdb_int;

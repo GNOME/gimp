@@ -58,7 +58,7 @@ gimprc_query_invoker (Gimp     *gimp,
   gchar *value = NULL;
 
   token = (gchar *) args[0].value.pdb_pointer;
-  if (token == NULL)
+  if (token == NULL || !g_utf8_validate (token, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -120,7 +120,7 @@ gimprc_set_invoker (Gimp     *gimp,
   gchar *value;
 
   token = (gchar *) args[0].value.pdb_pointer;
-  if (token == NULL)
+  if (token == NULL || !g_utf8_validate (token, -1, NULL))
     success = FALSE;
 
   value = (gchar *) args[1].value.pdb_pointer;

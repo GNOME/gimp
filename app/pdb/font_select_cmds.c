@@ -57,11 +57,11 @@ fonts_popup_invoker (Gimp     *gimp,
   ProcRecord *proc;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL)
+  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
     success = FALSE;
 
   popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL)
+  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
     success = FALSE;
 
   initial_font = (gchar *) args[2].value.pdb_pointer;
@@ -127,7 +127,7 @@ fonts_close_popup_invoker (Gimp     *gimp,
   FontSelect *font_select;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL)
+  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -183,11 +183,11 @@ fonts_set_popup_invoker (Gimp     *gimp,
   FontSelect *font_select;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
-  if (font_callback == NULL)
+  if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
     success = FALSE;
 
   font_name = (gchar *) args[1].value.pdb_pointer;
-  if (font_name == NULL)
+  if (font_name == NULL || !g_utf8_validate (font_name, -1, NULL))
     success = FALSE;
 
   if (success)

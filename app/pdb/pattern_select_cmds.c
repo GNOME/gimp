@@ -58,11 +58,11 @@ patterns_popup_invoker (Gimp     *gimp,
   ProcRecord *proc;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL)
+  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
     success = FALSE;
 
   popup_title = (gchar *) args[1].value.pdb_pointer;
-  if (popup_title == NULL)
+  if (popup_title == NULL || !g_utf8_validate (popup_title, -1, NULL))
     success = FALSE;
 
   initial_pattern = (gchar *) args[2].value.pdb_pointer;
@@ -130,7 +130,7 @@ patterns_close_popup_invoker (Gimp     *gimp,
   PatternSelect *pattern_select;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL)
+  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -186,11 +186,11 @@ patterns_set_popup_invoker (Gimp     *gimp,
   PatternSelect *pattern_select;
 
   pattern_callback = (gchar *) args[0].value.pdb_pointer;
-  if (pattern_callback == NULL)
+  if (pattern_callback == NULL || !g_utf8_validate (pattern_callback, -1, NULL))
     success = FALSE;
 
   pattern_name = (gchar *) args[1].value.pdb_pointer;
-  if (pattern_name == NULL)
+  if (pattern_name == NULL || !g_utf8_validate (pattern_name, -1, NULL))
     success = FALSE;
 
   if (success)

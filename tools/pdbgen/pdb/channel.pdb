@@ -88,6 +88,10 @@ sub channel_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
+    if ($type =~ /string/) {
+	$inargs[1]->{utf8} = 1;
+    }
+
     $invoke{code} = $undo ? "gimp_${core_type}_set_$prop ($core_var, $prop, TRUE);"
 			  : "gimp_${core_type}_set_$prop ($core_var, $prop);";
 
@@ -152,7 +156,7 @@ HELP
 	{ name => 'height', type => '0 < int32',
 	  desc => 'The channel height: (%%desc%%)' },
 	{ name => 'name', type => 'string',
-	  desc => 'The channel name' },
+	  desc => 'The channel name', utf8 => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The channel opacity: (%%desc%%)' },
 	{ name => 'color', type => 'color',

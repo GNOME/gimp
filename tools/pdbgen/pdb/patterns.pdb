@@ -20,7 +20,8 @@
 sub pattern_arg () {{
     name => 'name',
     type => 'string',
-    desc => 'The pattern name'
+    desc => 'The pattern name',
+    utf8 => 1
 }}
 
 sub dim_args () {
