@@ -12,6 +12,8 @@ endif
 libapppaint_funcs_a_SOURCES = @STRIP_BEGIN@ \
 	paint-funcs.c		\
 	paint-funcs.h		\
+	paint-funcs-generic.h	\
+	paint-funcs-mmx.h	\
 	$(mmx_sources)		\
 @STRIP_END@
 
