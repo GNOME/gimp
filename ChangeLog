@@ -1,5 +1,9 @@
 2005-02-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp*/Makefile.am: s/GIMP_THREAD_FLAGS/GTHREAD_CFLAGS/
+
+2005-02-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c
 	* app/base/tile-swap.[ch]: moved some code from base_init() into
 	tile_swap_init().

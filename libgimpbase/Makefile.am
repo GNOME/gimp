@@ -47,7 +47,7 @@ AM_CPPFLAGS = \
 	-DPLUGINDIR=\""$(gimpplugindir)"\"	\
 	-DSYSCONFDIR=\""$(gimpsysconfdir)"\"	\
 	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
-	@GIMP_THREAD_FLAGS@
+	@GTHREAD_CFLAGS@
 
 INCLUDES = \
 	-I$(top_srcdir)	\
