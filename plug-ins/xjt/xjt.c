@@ -433,7 +433,7 @@ p_invert(gint value)
   return(FALSE);
 }
 
-int p_system(gchar *cmd)
+int p_system(const gchar *cmd)
 {
   int l_rc;
   int l_rc2;
@@ -644,8 +644,8 @@ run (const gchar      *name,
  *  before calling g_ascii_strtod, and puts back the comma after the call
  */
 static gdouble
-p_my_ascii_strtod (gchar   *nptr,
-		   gchar   **endptr)
+p_my_ascii_strtod (gchar  *nptr,
+		   gchar **endptr)
 {
    gint ii;  
    gint ic;
@@ -1014,12 +1014,12 @@ p_float_to_str(gdouble  flt_val)
  * ============================================================================
  */
 gchar *
-p_namedup(gchar *name)
+p_namedup(const gchar *name)
 {
-  gchar *l_name;
-  gchar *l_str;
-  gchar *l_ptr;
-  gint  l_len;
+  const gchar *l_str;
+  gchar       *l_name;
+  gchar       *l_ptr;
+  gint         l_len;
 
   l_str = name;
   l_len = 0;
@@ -1245,8 +1245,10 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
  */
 
 gint
-p_write_parasite(gchar *dirname, FILE *fp,
-                 GimpParasite *parasite, gint wr_all_prp)
+p_write_parasite(const gchar  *dirname,
+                 FILE         *fp,
+                 GimpParasite *parasite,
+                 gint          wr_all_prp)
 {
   gchar *l_new_parasite_prop_lines;
   gchar *l_parasite_buff;
@@ -1380,7 +1382,10 @@ p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
 }
 
 void
-p_write_image_parasites(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
+p_write_image_parasites(const gchar *dirname,
+                        FILE        *fp,
+                        gint32       image_id,
+                        gint         wr_all_prp)
 {
   GimpParasite  *l_parasite;
   gint32         l_idx;
@@ -1403,7 +1408,10 @@ p_write_image_parasites(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_p
 }
 
 void
-p_write_drawable_parasites(gchar *dirname, FILE *fp, gint32 drawable_id, gint wr_all_prp)
+p_write_drawable_parasites (const gchar *dirname,
+                            FILE        *fp,
+                            gint32       drawable_id,
+                            gint         wr_all_prp)
 {
   GimpParasite  *l_parasite;
   gint32         l_idx;
@@ -1432,11 +1440,12 @@ p_write_drawable_parasites(gchar *dirname, FILE *fp, gint32 drawable_id, gint wr
  */
 
 static void
-p_write_layer_prp(gchar *dirname,
-                  FILE *fp,  gchar *layer_shortname,
-		  gint32  image_id,
-		  gint32  layer_id,
-		  gint    wr_all_prp)
+p_write_layer_prp(const gchar *dirname,
+                  FILE        *fp,
+                  const gchar *layer_shortname,
+		  gint32       image_id,
+		  gint32       layer_id,
+		  gint         wr_all_prp)
 {
   t_param_prop   l_param;
   gint           l_ofsx, l_ofsy;
@@ -1503,11 +1512,12 @@ p_write_layer_prp(gchar *dirname,
  */
 
 static void
-p_write_channel_prp(gchar *dirname,
-                  FILE *fp,  gchar *channel_shortname,
-		  gint32  image_id,
-		  gint32  channel_id,
-		  gint    wr_all_prp)
+p_write_channel_prp(const gchar *dirname,
+                    FILE        *fp,
+                    const gchar *channel_shortname,
+                    gint32       image_id,
+                    gint32       channel_id,
+                    gint         wr_all_prp)
 {
   t_param_prop   l_param;
   gint           l_ofsx, l_ofsy;
@@ -1568,7 +1578,10 @@ p_write_channel_prp(gchar *dirname,
  */
 
 static void
-p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
+p_write_image_prp (const gchar *dirname,
+                   FILE        *fp,
+                   gint32       image_id,
+                   gint         wr_all_prp)
 {
    GimpImageBaseType l_image_type;
    guint   l_width, l_height;
@@ -2113,16 +2126,18 @@ p_skip_blanks(gchar* scan_ptr)
  */
 
 static gchar *
-p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
+p_scann_token(gchar        *scan_ptr,
+              t_param_prop *param,
+              t_proptype   *prop_id)
 {
-  int   l_idx;
-  int   l_ids;
-  int   l_max_line_len;
-  int   l_num_fvals;
-  gchar  *l_token;
-  gchar  *l_string_buff;
-  gchar  *l_ptr;
-  gchar  *l_ptr2;
+  int    l_idx;
+  int    l_ids;
+  int    l_max_line_len;
+  int    l_num_fvals;
+  gchar *l_token;
+  gchar *l_string_buff;
+  gchar *l_ptr;
+  gchar *l_ptr2;
 
 
   /* check for end of property line */
@@ -2536,7 +2551,9 @@ p_find_parasite(t_parasite_props *parasite_props, gint32 parasite_id)
  * ============================================================================
  */
 gint
-p_create_and_attach_parasite(gint32 gimp_obj_id, gchar *dirname, t_parasite_props *parasite_props)
+p_create_and_attach_parasite (gint32            gimp_obj_id,
+                              const gchar      *dirname,
+                              t_parasite_props *parasite_props)
 {
   gchar            *l_parasite_file;
   GimpParasite      l_parasite;
@@ -2606,8 +2623,11 @@ p_create_and_attach_parasite(gint32 gimp_obj_id, gchar *dirname, t_parasite_prop
  * ============================================================================
  */
 void
-p_check_and_add_parasite(gint32 gimp_obj_id, gchar *dirname,
-                         t_parasite_props *parasite_props, gint32 pos, t_parasitetype  parasite_type)
+p_check_and_add_parasite(gint32            gimp_obj_id,
+                         const gchar      *dirname,
+                         t_parasite_props *parasite_props,
+                         gint32            pos,
+                         t_parasitetype    parasite_type)
 {
   t_parasite_props  *l_prop;
 
@@ -2628,7 +2648,8 @@ p_check_and_add_parasite(gint32 gimp_obj_id, gchar *dirname,
  *   scann one inputline for layer properties (also used for layer_mask props)
  * ============================================================================
  */
-gint p_scann_layer_prop(gchar* scan_ptr, t_image_props *image_prop)
+gint p_scann_layer_prop(gchar         *scan_ptr,
+                        t_image_props *image_prop)
 {
 
   t_layer_props  *l_new_prop;
@@ -2739,7 +2760,8 @@ gint p_scann_layer_prop(gchar* scan_ptr, t_image_props *image_prop)
  *   scann one inputline for channel properties (also used for layer_mask props)
  * ============================================================================
  */
-gint p_scann_channel_prop(gchar* scan_ptr, t_image_props *image_prop)
+gint p_scann_channel_prop(const gchar   *scan_ptr,
+                          t_image_props *image_prop)
 {
 
   t_channel_props  *l_new_prop;
@@ -2848,13 +2870,14 @@ gint p_scann_channel_prop(gchar* scan_ptr, t_image_props *image_prop)
  *   
  * ============================================================================
  */
-gint p_scann_image_prop(gchar* scan_ptr, t_image_props *image_prop)
+gint p_scann_image_prop(gchar         *scan_ptr,
+                        t_image_props *image_prop)
 {
-  gchar          *l_ptr;
-  t_param_prop    l_param;
-  t_proptype      l_prop_id;
-  t_guide_props  *l_guide_prop;
-  t_parasite_props  *l_parasite_prop;
+  gchar            *l_ptr;
+  t_param_prop      l_param;
+  t_proptype        l_prop_id;
+  t_guide_props    *l_guide_prop;
+  t_parasite_props *l_parasite_prop;
   
   if(strncmp(scan_ptr, GIMP_XJ_IMAGE, strlen(GIMP_XJ_IMAGE)) != 0)
   {
@@ -2955,7 +2978,8 @@ gint p_scann_image_prop(gchar* scan_ptr, t_image_props *image_prop)
  *   scann one inputline for parasite properties
  * ============================================================================
  */
-gint p_scann_parasite_prop(gchar* scan_ptr, t_image_props *image_prop)
+gint p_scann_parasite_prop(const gchar   *scan_ptr,
+                           t_image_props *image_prop)
 {
 
   t_parasite_props  *l_new_prop;
@@ -3017,7 +3041,8 @@ gint p_scann_parasite_prop(gchar* scan_ptr, t_image_props *image_prop)
  *   scann one inputline for path properties
  * ============================================================================
  */
-gint p_scann_path_prop(gchar* scan_ptr, t_image_props *image_prop)
+gint p_scann_path_prop (gchar         *scan_ptr,
+                        t_image_props *image_prop)
 {
 
   t_path_props  *l_new_prop;
@@ -3118,7 +3143,7 @@ p_add_paths(gint32 image_id, t_path_props *path_props)
 
 
 gchar *
-p_load_linefile(gchar *filename, gint32 *len)
+p_load_linefile(const gchar *filename, gint32 *len)
 {
   FILE *l_fp;
   struct stat  stat_buf;
@@ -3158,7 +3183,7 @@ p_load_linefile(gchar *filename, gint32 *len)
 
 
 gint32
-p_next_lineindex(gchar *file_buff, gint32 max_len, gint32 pos)
+p_next_lineindex(const gchar *file_buff, gint32 max_len, gint32 pos)
 {
   if (pos < 0)       { return (-1); }
   
@@ -3182,7 +3207,7 @@ p_next_lineindex(gchar *file_buff, gint32 max_len, gint32 pos)
  * ============================================================================
  */
 
-t_image_props * p_load_prop_file(gchar *prop_filename)
+t_image_props * p_load_prop_file(const gchar *prop_filename)
 {
   gint32 l_filesize;
   gint32 l_line_idx;

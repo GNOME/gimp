@@ -37,7 +37,6 @@
 #include <unistd.h>
 #endif
 #include <errno.h>
-#include <ctype.h>
 #ifdef __EMX__
 #include <process.h>
 #endif
@@ -79,20 +78,20 @@ static void run   (const gchar      *name,
 		   GimpParam       **return_vals);
 
 static gint open_url_dialog     (void);
-static void ok_callback         (GtkWidget *widget,
-				 gpointer   data);
-static void about_callback      (GtkWidget *widget,
-				 gpointer   data);
-static void new_window_callback (GtkWidget *widget,
-				 gpointer   data);
-static void url_callback        (GtkWidget *widget,
-				 gpointer   data);
+static void ok_callback         (GtkWidget   *widget,
+				 gpointer     data);
+static void about_callback      (GtkWidget   *widget,
+				 gpointer     data);
+static void new_window_callback (GtkWidget   *widget,
+				 gpointer     data);
+static void url_callback        (GtkWidget   *widget,
+				 gpointer     data);
 #ifndef G_OS_WIN32
-static gint mozilla_remote      (gchar     *command);
+static gint mozilla_remote      (const gchar *command);
 #endif
 
-static gint open_url            (gchar     *url,
-				 gint       new_window);
+static gint open_url            (const gchar *url,
+				 gboolean     new_window);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -216,8 +215,8 @@ run (const gchar      *name,
 }
 
 static gint
-start_browser (gchar *prog,
-	       gchar *url)
+start_browser (const gchar *prog,
+	       const gchar *url)
 {
 #ifdef G_OS_WIN32
 
@@ -241,12 +240,12 @@ start_browser (gchar *prog,
 }
 
 static gint
-open_url (gchar *url,
-	  gint   new_window)
+open_url (const gchar *url,
+	  gboolean     new_window)
 {
   gchar buf[512];
 
-  while (isspace (*url))
+  while (g_ascii_isspace (*url))
     ++url;
 
 #ifndef G_OS_WIN32
@@ -931,7 +930,7 @@ mozilla_remote_command (Display *dpy, Window window, const char *command)
 }
 
 static int
-mozilla_remote (char *command)
+mozilla_remote (const gchar *command)
 {
   int status = 0;
   Display *dpy;

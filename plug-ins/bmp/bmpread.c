@@ -79,7 +79,7 @@ ReadColorMap (FILE   *fd,
 }
 
 gint32 
-ReadBMP (gchar *name)
+ReadBMP (const gchar *name)
 {
   FILE *fd;
   gchar *temp_buf;
@@ -326,21 +326,24 @@ ReadImage (FILE   *fd,
     {
       image = gimp_image_new (width, height, GIMP_RGB);
       layer = gimp_layer_new (image, _("Background"),
-                              width, height, GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
+                              width, height,
+                              GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 3;
     }
   else if (grey)
     {
       image = gimp_image_new (width, height, GIMP_GRAY);
       layer = gimp_layer_new (image, _("Background"),
-			      width, height, GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
+			      width, height,
+                              GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 1;
     }
   else
     {
       image = gimp_image_new (width, height, GIMP_INDEXED);
       layer = gimp_layer_new (image, _("Background"),
-                              width, height, GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
+                              width, height,
+                              GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 1;
     }
   

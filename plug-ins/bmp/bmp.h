@@ -9,32 +9,32 @@
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
-extern gint32       ReadBMP       (gchar *);
-extern GimpPDBStatusType  WriteBMP      (gchar *,
-				   gint32,
-				   gint32);
-extern Image        ReadImage     (FILE *,
-				   gint,
-				   gint,
-				   guchar[256][3],
-				   gint,
-				   gint,
-				   gint,
-				   gint,
-				   gint);
-extern void         WriteImage    (FILE *,
-				   guchar *,
-				   gint,
-				   gint,
-				   gint,
-				   gint,
-				   gint,
-				   gint,
-				   gint);
+extern gint32       ReadBMP        (const gchar *filename);
+extern GimpPDBStatusType  WriteBMP (const gchar *filename,
+                                    gint32,
+                                    gint32);
+extern Image        ReadImage      (FILE *,
+                                    gint,
+                                    gint,
+                                    guchar[256][3],
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint);
+extern void         WriteImage     (FILE *,
+                                    guchar *,
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint,
+                                    gint);
 
-extern gboolean   interactive_bmp;
-extern gchar *prog_name;
-extern gchar *filename;
+extern gboolean     interactive_bmp;
+extern const gchar *prog_name;
+extern const gchar *filename;
 
 extern struct Bitmap_File_Head_Struct
 {

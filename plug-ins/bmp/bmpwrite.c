@@ -106,9 +106,9 @@ WriteColorMap (FILE *f,
 }
 
 GimpPDBStatusType
-WriteBMP (gchar  *filename,
-	  gint32  image,
-	  gint32  drawable_ID)
+WriteBMP (const gchar *filename,
+	  gint32       image,
+	  gint32       drawable_ID)
 {
   FILE *outfile;
   gint Red[MAXCOLORS];

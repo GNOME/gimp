@@ -63,21 +63,21 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-gchar *prog_name = "bmp";
-gchar *filename;
-gboolean   interactive_bmp;
+const gchar *prog_name = "bmp";
+const gchar *filename  = NULL;
+gboolean     interactive_bmp;
 
 struct Bitmap_File_Head_Struct Bitmap_File_Head;
 struct Bitmap_Head_Struct Bitmap_Head;
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void   query (void);
+static void   run   (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
