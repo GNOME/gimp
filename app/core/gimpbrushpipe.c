@@ -113,15 +113,10 @@ gimp_brush_pipe_get_type (void)
 static void
 gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpBrushClass    *brush_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  brush_class       = GIMP_BRUSH_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpBrushClass    *brush_class       = GIMP_BRUSH_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -249,46 +244,46 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
   for (i = 0; i < pipe->dimension; i++)
     {
       switch (pipe->select[i])
-	{
-	case PIPE_SELECT_INCREMENTAL:
-	  ix = (pipe->index[i] + 1) % pipe->rank[i];
-	  break;
+        {
+        case PIPE_SELECT_INCREMENTAL:
+          ix = (pipe->index[i] + 1) % pipe->rank[i];
+          break;
 
-	case PIPE_SELECT_ANGULAR:
-	  angle = atan2 (cur_coords->y - last_coords->y,
-			 cur_coords->x - last_coords->x);
-	  /* Offset angle to be compatible with PSP tubes */
-	  angle += G_PI_2;
-	  /* Map it to the [0..2*G_PI) interval */
-	  if (angle < 0)
-	    angle += 2.0 * G_PI;
-	  else if (angle > 2.0 * G_PI)
-	    angle -= 2.0 * G_PI;
-	  ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
-	  break;
+        case PIPE_SELECT_ANGULAR:
+          angle = atan2 (cur_coords->y - last_coords->y,
+                         cur_coords->x - last_coords->x);
+          /* Offset angle to be compatible with PSP tubes */
+          angle += G_PI_2;
+          /* Map it to the [0..2*G_PI) interval */
+          if (angle < 0)
+            angle += 2.0 * G_PI;
+          else if (angle > 2.0 * G_PI)
+            angle -= 2.0 * G_PI;
+          ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
+          break;
 
-	case PIPE_SELECT_RANDOM:
-	  /* This probably isn't the right way */
-	  ix = g_rand_int_range (gr, 0, pipe->rank[i]);
-	  break;
+        case PIPE_SELECT_RANDOM:
+          /* This probably isn't the right way */
+          ix = g_rand_int_range (gr, 0, pipe->rank[i]);
+          break;
 
-	case PIPE_SELECT_PRESSURE:
-	  ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
-	  break;
+        case PIPE_SELECT_PRESSURE:
+          ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
+          break;
 
-	case PIPE_SELECT_TILT_X:
-	  ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
-	  break;
+        case PIPE_SELECT_TILT_X:
+          ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
+          break;
 
-	case PIPE_SELECT_TILT_Y:
-	  ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
-	  break;
+        case PIPE_SELECT_TILT_Y:
+          ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
+          break;
 
-	case PIPE_SELECT_CONSTANT:
-	default:
-	  ix = pipe->index[i];
-	  break;
-	}
+        case PIPE_SELECT_CONSTANT:
+        default:
+          ix = pipe->index[i];
+          break;
+        }
 
       pipe->index[i] = CLAMP (ix, 0, pipe->rank[i] - 1);
       brushix += pipe->stride[i] * pipe->index[i];

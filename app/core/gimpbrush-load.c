@@ -108,19 +108,19 @@ gimp_brush_get_type (void)
       static const GTypeInfo brush_info =
       {
         sizeof (GimpBrushClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_brush_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpBrush),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_brush_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_brush_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpBrush),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_brush_init,
       };
 
       brush_type = g_type_register_static (GIMP_TYPE_DATA,
-					   "GimpBrush",
-					   &brush_info, 0);
+                                           "GimpBrush",
+                                           &brush_info, 0);
   }
 
   return brush_type;
@@ -129,26 +129,21 @@ gimp_brush_get_type (void)
 static void
 gimp_brush_class_init (GimpBrushClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpDataClass     *data_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  data_class        = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   brush_signals[SPACING_CHANGED] =
     g_signal_new ("spacing_changed",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
-		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
-		  G_TYPE_NONE, 0);
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize           = gimp_brush_finalize;
 
@@ -239,8 +234,8 @@ gimp_brush_get_popup_size (GimpViewable *viewable,
 
 static TempBuf *
 gimp_brush_get_new_preview (GimpViewable *viewable,
-			    gint          width,
-			    gint          height)
+                            gint          width,
+                            gint          height)
 {
   GimpBrush *brush      = GIMP_BRUSH (viewable);
   gint       brush_width;
@@ -354,7 +349,7 @@ gimp_brush_new (const gchar *name,
 {
   g_return_val_if_fail (name != NULL, NULL);
 
-  return gimp_brush_generated_new (name, 5.0, 0.5, 0.0, 1.0,
+  return gimp_brush_generated_new (name, 5.0, 0.5, 1.0, 0.0,
                                    stingy_memory_use);
 }
 
@@ -411,7 +406,7 @@ gimp_brush_load (const gchar  *filename,
       temp_buf_swap (brush->mask);
 
       if (brush->pixmap)
-	temp_buf_swap (brush->pixmap);
+        temp_buf_swap (brush->pixmap);
     }
 
   return GIMP_DATA (brush);
@@ -511,7 +506,7 @@ gimp_brush_spacing_changed (GimpBrush *brush)
 
 GimpBrush *
 gimp_brush_load_brush (gint          fd,
-		       const gchar  *filename,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpBrush   *brush;

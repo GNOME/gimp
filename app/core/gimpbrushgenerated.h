@@ -44,8 +44,8 @@ struct _GimpBrushGenerated
 
   gfloat     radius;
   gfloat     hardness;     /* 0.0 - 1.0  */
-  gfloat     angle;        /* in degrees */
   gfloat     aspect_ratio; /* y/x        */
+  gfloat     angle;        /* in degrees */
 };
 
 struct _GimpBrushGeneratedClass
@@ -59,8 +59,8 @@ GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
 GimpData  * gimp_brush_generated_new          (const gchar *name,
                                                gfloat       radius,
 					       gfloat       hardness,
-					       gfloat       angle,
 					       gfloat       aspect_ratio,
+					       gfloat       angle,
                                                gboolean     stingy_memory_use);
 GimpData  * gimp_brush_generated_load         (const gchar *file_name,
                                                gboolean     stingy_memory_use,
@@ -70,15 +70,15 @@ gfloat  gimp_brush_generated_set_radius       (GimpBrushGenerated *brush,
 					       gfloat              radius);
 gfloat  gimp_brush_generated_set_hardness     (GimpBrushGenerated *brush,
 					       gfloat              hardness);
-gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated *brush,
-					       gfloat              angle);
 gfloat  gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
 					       gfloat              ratio);
+gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated *brush,
+					       gfloat              angle);
 
 gfloat  gimp_brush_generated_get_radius       (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_hardness     (const GimpBrushGenerated *brush);
-gfloat  gimp_brush_generated_get_angle        (const GimpBrushGenerated *brush);
 gfloat  gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush);
+gfloat  gimp_brush_generated_get_angle        (const GimpBrushGenerated *brush);
 
 
 #endif  /*  __GIMP_BRUSH_GENERATED_H__  */

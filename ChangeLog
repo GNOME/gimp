@@ -1,5 +1,15 @@
 2004-06-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbrushgenerated.[ch]: reordered parameters and
+	members to be consistent with other places where generated
+	brushes are used. Check for errors when loading a brush and
+	utf8-validate its name. Cleanup.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c: cleanup.
+
+2004-06-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/preferences-dialog.c (prefs_dialog_new): work around
 	GTK+ bug #143270 (set the cursor on the selected model path
 	instead of selecting the iter in the selection). Fixes random

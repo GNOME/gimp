@@ -50,8 +50,8 @@ enum
   PROP_0,
   PROP_RADIUS,
   PROP_HARDNESS,
-  PROP_ANGLE,
-  PROP_ASPECT_RATIO
+  PROP_ASPECT_RATIO,
+  PROP_ANGLE
 };
 
 
@@ -60,11 +60,11 @@ enum
 static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
 static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
 
-static void   gimp_brush_generated_set_property      (GObject      *object,
+static void       gimp_brush_generated_set_property  (GObject      *object,
                                                       guint         property_id,
                                                       const GValue *value,
                                                       GParamSpec   *pspec);
-static void   gimp_brush_generated_get_property      (GObject      *object,
+static void       gimp_brush_generated_get_property  (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
                                                       GParamSpec   *pspec);
@@ -133,15 +133,15 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
                                                         0.0, 1.0, 0.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class, PROP_ANGLE,
-                                   g_param_spec_double ("angle", NULL, NULL,
-                                                        0.0, 180.0, 0.0,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
                                    g_param_spec_double ("aspect-ratio",
                                                         NULL, NULL,
                                                         1.0, 20.0, 1.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_ANGLE,
+                                   g_param_spec_double ("angle", NULL, NULL,
+                                                        0.0, 180.0, 0.0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -151,8 +151,8 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
 {
   brush->radius       = 5.0;
   brush->hardness     = 0.0;
-  brush->angle        = 0.0;
   brush->aspect_ratio = 1.0;
+  brush->angle        = 0.0;
 }
 
 static void
@@ -169,13 +169,13 @@ gimp_brush_generated_set_property (GObject      *object,
       gimp_brush_generated_set_radius (brush, g_value_get_double (value));
       break;
     case PROP_HARDNESS:
-      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
-      break;
-    case PROP_ANGLE:
-      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      gimp_brush_generated_set_hardness (brush, g_value_get_double (value));
       break;
     case PROP_ASPECT_RATIO:
-      gimp_brush_generated_set_radius (brush, g_value_get_double (value));
+      gimp_brush_generated_set_aspect_ratio (brush, g_value_get_double (value));
+      break;
+    case PROP_ANGLE:
+      gimp_brush_generated_set_angle (brush, g_value_get_double (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -199,11 +199,11 @@ gimp_brush_generated_get_property (GObject    *object,
     case PROP_HARDNESS:
       g_value_set_double (value, brush->hardness);
       break;
-    case PROP_ANGLE:
-      g_value_set_double (value, brush->angle);
-      break;
     case PROP_ASPECT_RATIO:
       g_value_set_double (value, brush->aspect_ratio);
+      break;
+    case PROP_ANGLE:
+      g_value_set_double (value, brush->angle);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -284,8 +284,8 @@ gimp_brush_generated_duplicate (GimpData *data,
   return gimp_brush_generated_new (GIMP_OBJECT (brush)->name,
                                    brush->radius,
 				   brush->hardness,
-				   brush->angle,
 				   brush->aspect_ratio,
+				   brush->angle,
                                    stingy_memory_use);
 }
 
@@ -423,8 +423,8 @@ GimpData *
 gimp_brush_generated_new (const gchar *name,
                           gfloat       radius,
 			  gfloat       hardness,
-			  gfloat       angle,
 			  gfloat       aspect_ratio,
+			  gfloat       angle,
                           gboolean     stingy_memory_use)
 {
   GimpBrushGenerated *brush;
@@ -432,16 +432,14 @@ gimp_brush_generated_new (const gchar *name,
   g_return_val_if_fail (name != NULL, NULL);
 
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
-                        "name", name,
+                        "name",         name,
+                        "radius",       radius,
+                        "hardness",     hardness,
+                        "aspect-ratio", aspect_ratio,
+                        "angle",        angle,
                         NULL);
 
   GIMP_BRUSH (brush)->spacing = 20;
-
-  /* set up gimp_brush_generated data */
-  brush->radius       = radius;
-  brush->hardness     = hardness;
-  brush->angle        = angle;
-  brush->aspect_ratio = aspect_ratio;
 
   /* render brush mask */
   gimp_data_dirty (GIMP_DATA (brush));
@@ -460,6 +458,12 @@ gimp_brush_generated_load (const gchar  *filename,
   GimpBrushGenerated *brush;
   FILE               *file;
   gchar               string[256];
+  gchar              *name = NULL;
+  gdouble             spacing;
+  gdouble             radius;
+  gdouble             hardness;
+  gdouble             aspect_ratio;
+  gdouble             angle;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
@@ -476,7 +480,9 @@ gimp_brush_generated_load (const gchar  *filename,
     }
 
   /* make sure the file we are reading is the right type */
-  fgets (string, 255, file);
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
 
   if (strncmp (string, "GIMP-VBR", 8) != 0)
     {
@@ -488,7 +494,10 @@ gimp_brush_generated_load (const gchar  *filename,
     }
 
   /* make sure we are reading a compatible version */
-  fgets (string, 255, file);
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+
   if (strncmp (string, "1.0", 3))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -499,46 +508,78 @@ gimp_brush_generated_load (const gchar  *filename,
     }
 
   /* read name */
-  fgets (string, 255, file);
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+
   g_strstrip (string);
-
-  /* create new brush */
-  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
-                        "name", string,
-                        NULL);
-
-  gimp_data_freeze (GIMP_DATA (brush));
-  g_object_freeze_notify (G_OBJECT (brush));
+  name = gimp_any_to_utf8 (string, -1,
+                           _("Invalid UTF-8 string in brush file '%s'."),
+                           gimp_filename_to_utf8 (filename));
 
   /* read brush spacing */
-  fgets (string, 255, file);
-  GIMP_BRUSH (brush)->spacing = g_ascii_strtod (string, NULL);
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+  spacing = g_ascii_strtod (string, NULL);
 
   /* read brush radius */
-  fgets (string, 255, file);
-  gimp_brush_generated_set_radius (brush, g_ascii_strtod (string, NULL));
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+  radius = g_ascii_strtod (string, NULL);
 
   /* read brush hardness */
-  fgets (string, 255, file);
-  gimp_brush_generated_set_hardness (brush, g_ascii_strtod (string, NULL));
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+  hardness = g_ascii_strtod (string, NULL);
 
   /* read brush aspect_ratio */
-  fgets (string, 255, file);
-  gimp_brush_generated_set_aspect_ratio (brush, g_ascii_strtod (string, NULL));
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+  aspect_ratio = g_ascii_strtod (string, NULL);
 
   /* read brush angle */
-  fgets (string, 255, file);
-  gimp_brush_generated_set_angle (brush, g_ascii_strtod (string, NULL));
+  errno = 0;
+  if (! fgets (string, sizeof (string), file))
+    goto failed;
+  angle = g_ascii_strtod (string, NULL);
 
   fclose (file);
 
-  g_object_thaw_notify (G_OBJECT (brush));
-  gimp_data_thaw (GIMP_DATA (brush));
+  /* create new brush */
+  brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
+                        "name",         name,
+                        "radius",       radius,
+                        "hardness",     hardness,
+                        "aspect-ratio", aspect_ratio,
+                        "angle",        angle,
+                        NULL);
+  g_free (name);
+
+  GIMP_BRUSH (brush)->spacing = spacing;
+
+  /* render brush mask */
+  gimp_data_dirty (GIMP_DATA (brush));
 
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
   return GIMP_DATA (brush);
+
+ failed:
+
+  if (name)
+    g_free (name);
+
+  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+               _("Error while reading brush file '%s': %s"),
+               gimp_filename_to_utf8 (filename),
+               errno ? g_strerror (errno) : _("File is truncated"));
+
+  return NULL;
 }
 
 gfloat
@@ -580,6 +621,25 @@ gimp_brush_generated_set_hardness (GimpBrushGenerated *brush,
 }
 
 gfloat
+gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
+				       gfloat              ratio)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+
+  ratio = CLAMP (ratio, 1.0, 1000.0);
+
+  if (brush->aspect_ratio != ratio)
+    {
+      brush->aspect_ratio = ratio;
+
+      g_object_notify (G_OBJECT (brush), "aspect-ratio");
+      gimp_data_dirty (GIMP_DATA (brush));
+    }
+
+  return brush->aspect_ratio;
+}
+
+gfloat
 gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
 				gfloat              angle)
 {
@@ -602,25 +662,6 @@ gimp_brush_generated_set_angle (GimpBrushGenerated *brush,
 }
 
 gfloat
-gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated *brush,
-				       gfloat              ratio)
-{
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
-
-  ratio = CLAMP (ratio, 1.0, 1000.0);
-
-  if (brush->aspect_ratio != ratio)
-    {
-      brush->aspect_ratio = ratio;
-
-      g_object_notify (G_OBJECT (brush), "aspect-ratio");
-      gimp_data_dirty (GIMP_DATA (brush));
-    }
-
-  return brush->aspect_ratio;
-}
-
-gfloat
 gimp_brush_generated_get_radius (const GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
@@ -637,17 +678,17 @@ gimp_brush_generated_get_hardness (const GimpBrushGenerated *brush)
 }
 
 gfloat
-gimp_brush_generated_get_angle (const GimpBrushGenerated *brush)
-{
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
-
-  return brush->angle;
-}
-
-gfloat
 gimp_brush_generated_get_aspect_ratio (const GimpBrushGenerated *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
 
   return brush->aspect_ratio;
+}
+
+gfloat
+gimp_brush_generated_get_angle (const GimpBrushGenerated *brush)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (brush), -1.0);
+
+  return brush->angle;
 }
