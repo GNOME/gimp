@@ -330,8 +330,6 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   GimpBrushPipe *brush_pipe;
   GimpBrush     *brush;
   TempBuf       *temp_buf;
-  gint           brush_width;
-  gint           brush_height;
 
   preview = GIMP_PREVIEW (brush_preview);
 
@@ -343,26 +341,25 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
       return FALSE;
     }
 
-  brush_pipe   = GIMP_BRUSH_PIPE (preview->viewable);
-  brush_width  = brush->mask->width;
-  brush_height = brush->mask->height;
+  brush_pipe = GIMP_BRUSH_PIPE (preview->viewable);
 
   brush_preview->pipe_animation_index++;
 
   if (brush_preview->pipe_animation_index >= brush_pipe->nbrushes)
     brush_preview->pipe_animation_index = 0;
 
-  brush = GIMP_BRUSH (brush_pipe->brushes[brush_preview->pipe_animation_index]);
+  brush =
+    GIMP_BRUSH (brush_pipe->brushes[brush_preview->pipe_animation_index]);
 
   temp_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (brush),
 					    preview->width,
 					    preview->height);
 
-  gimp_preview_render_and_flush (preview,
-				 temp_buf,
-				 -1);
+  gimp_preview_render_and_flush (preview, temp_buf, -1);
 
   temp_buf_free (temp_buf);
+
+  gtk_widget_queue_draw (GTK_WIDGET (preview));
 
   return TRUE;
 }
