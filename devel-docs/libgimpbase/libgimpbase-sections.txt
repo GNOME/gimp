@@ -1,7 +1,13 @@
 <SECTION>
 <FILE>gimpbasetypes</FILE>
+GimpEnumDesc
+GimpFlagsDesc
 gimp_type_set_translation_domain
 gimp_type_get_translation_domain
+gimp_enum_set_value_descriptions
+gimp_enum_get_value_descriptions
+gimp_flags_get_value_descriptions
+gimp_flags_set_value_descriptions
 </SECTION>
 
 <SECTION>
@@ -18,13 +24,25 @@ GimpProgressCommand
 GimpStackTraceMode
 <SUBSECTION Standard>
 GIMP_TYPE_CHECK_SIZE
-gimp_check_size_get_type
 GIMP_TYPE_CHECK_TYPE
-gimp_check_type_get_type
 GIMP_TYPE_IMAGE_BASE_TYPE
-gimp_image_base_type_get_type
 GIMP_TYPE_IMAGE_TYPE
+GIMP_TYPE_MESSAGE_HANDLER_TYPE
+GIMP_TYPE_PDB_ARG_TYPE
+GIMP_TYPE_PDB_PROC_TYPE
+GIMP_TYPE_PDB_STATUS_TYPE
+GIMP_TYPE_PROGRESS_COMMAND
+GIMP_TYPE_STACK_TRACE_MODE
+gimp_check_size_get_type
+gimp_check_type_get_type
+gimp_image_base_type_get_type
 gimp_image_type_get_type
+gimp_message_handler_type_get_type
+gimp_pdb_arg_type_get_type
+gimp_pdb_proc_type_get_type
+gimp_pdb_status_type_get_type
+gimp_progress_command_get_type
+gimp_stack_trace_mode_get_type
 </SECTION>
 
 <SECTION>
@@ -167,8 +185,14 @@ gimp_filename_to_utf8
 gimp_utf8_strtrim
 gimp_escape_uline
 gimp_strip_uline
-gimp_enum_value_get_name
+gimp_enum_get_desc
+gimp_flags_get_first_desc
 gimp_enum_get_value
+gimp_flags_get_value
+gimp_enum_value_get_desc
+gimp_enum_value_get_help
+gimp_flags_value_get_desc
+gimp_flags_value_get_help
 </SECTION>
 
 <SECTION>

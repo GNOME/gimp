@@ -1,3 +1,9 @@
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimputils.sgml: updated.
+
 2004-10-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: updated.
