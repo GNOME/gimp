@@ -288,7 +288,7 @@ msgid "invalid value '%s' for token %s"
 msgstr "トークン %s において無効な値 '%ld'"
 
 #: app/config/gimpconfig-deserialize.c:524
-#, c-format
+#, fuzzy, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "トークン %s において無効な値 '%ld'"
 
@@ -1415,7 +1415,7 @@ msgid "Could not open '%s' for reading: %s"
 msgstr "読み込み用に '%s' を開けませんでした; %s"
 
 #: app/core/gimpbrush.c:552 app/core/gimppattern.c:358
-#, c-format
+#, fuzzy, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "'%s' から %d 読み込めませんでした: %s"
 
@@ -1718,7 +1718,7 @@ msgstr ""
 "グラデーションファイル '%s' は壊れています."
 
 #: app/core/gimpgradient.c:464
-#, c-format
+#, fuzzy, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "グラデーションファイル '%s' の端点 %d が壊れてます."
 
@@ -9136,7 +9136,7 @@ msgid "Configure input devices"
 msgstr "入力機器の設定"
 
 #: app/widgets/gimpdevicestatus.c:404
-#, c-format
+#, fuzzy, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "描画色: %d, &d, %d"
 

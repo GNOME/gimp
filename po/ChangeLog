@@ -1,3 +1,8 @@
+2003-11-05  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.po: Updated traditional Chinese translation.
+	* ja.po, nl.po: Marked wrong entry as fuzzy.
+
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed font selection dialogs.

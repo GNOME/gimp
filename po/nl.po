@@ -9232,7 +9232,7 @@ msgid "Remove selected entry"
 msgstr "Verwijder geselecteerde ingang"
 
 #: app/widgets/gimpdocumentview.c:189
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Recreate preview\n"
 "%s  Reload all previews\n"
@@ -9336,12 +9336,12 @@ msgid "Position: %0.6f"
 msgstr "Positie: %0.6f"
 
 #: app/widgets/gimpgradienteditor.c:796
-#, c-format
+#, fuzzy, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
 msgstr "RGB (%0.3f, %0.3f, %0.3f, %0.3f)   Ondoorzichtigheid: %0.3f"
 
 #: app/widgets/gimpgradienteditor.c:799
-#, c-format
+#, fuzzy, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f, %0.3f)"
 
