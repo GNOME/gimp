@@ -57,7 +57,7 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {

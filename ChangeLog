@@ -1,3 +1,20 @@
+Mon Jun 21 12:51:15 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am: cosmetic change
+
+	* app/plug_in.c: reordered #includes to prevent MAX/MIN conflict
+
+	* app/menus.c: removed the weird translation code in favor of
+	the item factory translation function. This may have broken some
+	.po files.. we'll see. Also, added some more tearoffs and made
+	tearoffs appear automagically when plugins register menu entries.
+
+	* libgimp/gimpimage.c
+	* libgimp/gimpenums.h: redid the GOrientation enum to match the
+	app. Removed special casing in the handler.
+
+	* plug-ins/guillotine/guillotine.c: small clean up
+
 1999-06-21  Tuomas Kuosmanen  <tigert@interaktiivinen.satama.saunalahti.fi>
 
 	* app/paths_dialog.c app/channels_dialog.c: changed the button 

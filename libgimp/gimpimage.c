@@ -122,18 +122,7 @@ gimp_image_get_guide_orientation (gint32 image_id,
 
   rtn_guide_orientation = ORIENTATION_UNKNOWN;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-    pdb_orientation = return_vals[1].data.d_int32;
-    switch (pdb_orientation)
-      {
-      case 0:
-	rtn_guide_orientation = ORIENTATION_VERTICAL;
-	break;
-      case 1:
-	rtn_guide_orientation = ORIENTATION_HORIZONTAL;
-	break;
-      }
-    }
+    rtn_guide_orientation = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 

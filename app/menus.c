@@ -45,13 +45,13 @@
 
 static char* G_GNUC_UNUSED dummyMRU = N_("/File/MRU00 ");
 
-static void menus_init (void);
-static GtkItemFactoryEntry * translate_entries (const GtkItemFactoryEntry *, gint);
-static void free_translated_entries(GtkItemFactoryEntry *, gint);
+static void   menus_init        (void);
+static gchar* menu_translate    (const gchar *path,
+				 gpointer     data);
 
 static GSList *last_opened_raw_filenames = NULL;
 
-static const GtkItemFactoryEntry toolbox_entries[] =
+static GtkItemFactoryEntry toolbox_entries[] =
 {
   { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
@@ -77,10 +77,10 @@ static const GtkItemFactoryEntry toolbox_entries[] =
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);
 static GtkItemFactory *toolbox_factory = NULL;
 
-static const GtkItemFactoryEntry file_menu_separator = { N_("/File/---"), NULL, NULL, 0, "<Separator>" };
-static const GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 };
+static GtkItemFactoryEntry file_menu_separator = { N_("/File/---"), NULL, NULL, 0, "<Separator>" };
+static GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 };
 
-static const GtkItemFactoryEntry image_entries[] =
+static GtkItemFactoryEntry image_entries[] =
 {
   { N_("/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
@@ -148,12 +148,15 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
   
   { N_("/Image/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Image/Colors/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
   { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
   { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
+  { N_("/Image/Channel Ops/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Image/Channel Ops/Duplicate"), "<control>D", channel_ops_duplicate_cmd_callback, 0 },
   { N_("/Image/Channel Ops/Offset"), "<control><shift>O", channel_ops_offset_cmd_callback, 0 },
+  { N_("/Image/Alpha/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Image/Alpha/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
@@ -167,6 +170,7 @@ static const GtkItemFactoryEntry image_entries[] =
   
   { N_("/Layers/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
+  { N_("/Layers/Stack/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
   { N_("/Layers/Stack/Previous Layer"), "Prior", layers_previous_cmd_callback, 0 },
   { N_("/Layers/Stack/Next Layer"), "Next", layers_next_cmd_callback, 0 },
   { N_("/Layers/Stack/Raise Layer"), "<shift>Prior", layers_raise_cmd_callback, 0 },
@@ -241,7 +245,7 @@ static const GtkItemFactoryEntry image_entries[] =
 static guint n_image_entries = sizeof (image_entries) / sizeof (image_entries[0]);
 static GtkItemFactory *image_factory = NULL;
   
-static const GtkItemFactoryEntry load_entries[] =
+static GtkItemFactoryEntry load_entries[] =
 {
   { N_("/Automatic"), NULL, file_load_by_extension_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
@@ -249,7 +253,7 @@ static const GtkItemFactoryEntry load_entries[] =
 static guint n_load_entries = sizeof (load_entries) / sizeof (load_entries[0]);
 static GtkItemFactory *load_factory = NULL;
   
-static const GtkItemFactoryEntry save_entries[] =
+static GtkItemFactoryEntry save_entries[] =
 {
   { N_("/By extension"), NULL, file_save_by_extension_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
@@ -257,7 +261,7 @@ static const GtkItemFactoryEntry save_entries[] =
 static guint n_save_entries = sizeof (save_entries) / sizeof (save_entries[0]);
 static GtkItemFactory *save_factory = NULL;
 
-static const GtkItemFactoryEntry layers_entries[] =
+static GtkItemFactoryEntry layers_entries[] =
 {
   { N_("/New Layer"), "<control>N", layers_dialog_new_layer_callback, 0 },
   { N_("/Stack/Previous Layer"), "Prior", layers_dialog_previous_layer_callback, 0 },
@@ -286,7 +290,7 @@ static const GtkItemFactoryEntry layers_entries[] =
 static guint n_layers_entries = sizeof (layers_entries) / sizeof (layers_entries[0]);
 static GtkItemFactory *layers_factory = NULL;
 
-static const GtkItemFactoryEntry channels_entries[] =
+static GtkItemFactoryEntry channels_entries[] =
 {
   { N_("/New Channel"), "<control>N", channels_dialog_new_channel_callback, 0 },
   { N_("/Raise Channel"), "<control>F", channels_dialog_raise_channel_callback, 0 },
@@ -302,7 +306,7 @@ static const GtkItemFactoryEntry channels_entries[] =
 static guint n_channels_entries = sizeof (channels_entries) / sizeof (channels_entries[0]);
 static GtkItemFactory *channels_factory = NULL;
 
-static const GtkItemFactoryEntry paths_entries[] =
+static GtkItemFactoryEntry paths_entries[] =
 {
   { N_("/New Path"), "<control>N", paths_dialog_new_path_callback, 0 },
   { N_("/Duplicate Path"), "<control>U", paths_dialog_dup_path_callback, 0 },
@@ -417,32 +421,61 @@ void
 menus_create (GtkMenuEntry *entries,
 	      int           n_menu_entries)
 {
-  GtkItemFactory *ifactory;
   GtkWidget *menu_item;
   int i;
   int redo_image_menu = FALSE;
+  GString *tearoff_path;
 
   if (initialize)
     menus_init ();
 
-  gtk_item_factory_create_menu_entries (n_menu_entries, entries);
+  tearoff_path = g_string_new ("");
 
   for (i = 0; i < n_menu_entries; i++)
-      if (! strncmp (entries[i].path, "<Image>", 7))
-        redo_image_menu = TRUE;
+    if (! strncmp (entries[i].path, "<Image>", 7))
+      {
+	char *p;
+	
+	p = strchr (entries[i].path + 8, '/');
+	while (p)
+	  {
+	    g_string_assign (tearoff_path, entries[i].path + 7);
+	    g_string_truncate (tearoff_path, p - entries[i].path + 1 - 7);
+	    g_string_append (tearoff_path, "tearoff1");
+	    
+	    if (! gtk_item_factory_get_widget (image_factory, tearoff_path->str))
+	      {
+	        GtkItemFactoryEntry entry = { NULL, NULL, NULL, 0, "<Tearoff>" };
+		entry.path = tearoff_path->str;
+		gtk_item_factory_create_items (image_factory, 1, &entry, NULL);
+	      }
+
+	    p = strchr (p + 1, '/');
+	  }
+
+	redo_image_menu = TRUE;
+      }
+
+  g_string_free (tearoff_path, TRUE);
+
+  gtk_item_factory_create_menu_entries (n_menu_entries, entries);
 
   if (redo_image_menu)
     {
-        ifactory = gtk_item_factory_from_path ("<Image>/File/Quit");
-        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/---moved");
-        if (menu_item && menu_item->parent)
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/Close");
-        if (menu_item && menu_item->parent)
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-        menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/Quit");
-        if (menu_item && menu_item->parent)
-            gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+      menu_item = gtk_item_factory_get_widget (image_factory,
+	  				       "<Image>/File/---moved");
+      if (menu_item && menu_item->parent)
+	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+
+      menu_item = gtk_item_factory_get_widget (image_factory,
+	  				       "<Image>/File/Close");
+      if (menu_item && menu_item->parent)
+	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+
+      menu_item = gtk_item_factory_get_widget (image_factory,
+	  				       "<Image>/File/Quit");
+      if (menu_item && menu_item->parent)
+	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
     }
 }
 
@@ -451,7 +484,7 @@ menus_tools_create (ToolInfo *tool_info)
 {
   GtkItemFactoryEntry entry;
 
-  entry.path = gettext(tool_info->menu_path);
+  entry.path = tool_info->menu_path;
   entry.accelerator = tool_info->menu_accel;
   entry.callback = tools_select_cmd_callback;
   entry.callback_action = tool_info->tool_id;
@@ -459,7 +492,7 @@ menus_tools_create (ToolInfo *tool_info)
  
   gtk_item_factory_create_item (image_factory,
 				&entry,
-				(gpointer)tool_info,
+				(gpointer) tool_info,
 				2);
 }
 
@@ -494,9 +527,10 @@ menus_set_sensitive_locale (gchar *prepath,
 			    gint   sensitive)
 {
   gchar *menupath;
-  menupath=g_strdup_printf("%s%s",prepath,_(path));
-  menus_set_sensitive(menupath,sensitive);
-  g_free(menupath); 
+
+  menupath = g_strdup_printf ("%s%s", prepath, _(path));
+  menus_set_sensitive (menupath, sensitive);
+  g_free (menupath); 
 }
 
 void
@@ -530,9 +564,10 @@ menus_set_state_locale (gchar *prepath,
 			gint   state)
 {
   gchar *menupath;
-  menupath=g_strdup_printf("%s%s",prepath,_(path));
-  menus_set_state(menupath,state);
-  g_free(menupath); 
+
+  menupath = g_strdup_printf ("%s%s", prepath, _(path));
+  menus_set_state (menupath, state);
+  g_free (menupath); 
 }
 
 void
@@ -567,16 +602,16 @@ menus_quit (void)
 }
 
 void
-menus_last_opened_cmd_callback (GtkWidget           *widget,
-                                gpointer             callback_data,
-                                guint                num)
+menus_last_opened_cmd_callback (GtkWidget *widget,
+                                gpointer   callback_data,
+                                guint      num)
 {
   gchar *filename, *raw_filename;
 
   raw_filename = ((GString *) g_slist_nth_data (last_opened_raw_filenames, num))->str;
   filename = g_basename (raw_filename);
 
-  if (!file_open(raw_filename, filename))
+  if (!file_open (raw_filename, filename))
     g_message (_("Error opening file: %s\n"), raw_filename);
 }
 
@@ -706,61 +741,22 @@ menus_init_mru (void)
 void
 menus_init_toolbox (void)
 {
-  GtkItemFactoryEntry *translated_entries;
-
   toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>", NULL);
-  translated_entries=translate_entries(toolbox_entries, n_toolbox_entries);
+  gtk_item_factory_set_translate_func (toolbox_factory, menu_translate,
+	  			       NULL, NULL);
   gtk_item_factory_create_items_ac (toolbox_factory, n_toolbox_entries,
-				    translated_entries, NULL, 2);
-  free_translated_entries(translated_entries, n_toolbox_entries);
+				    toolbox_entries, NULL, 2);
   menus_init_mru ();
 
-  translated_entries=translate_entries(&file_menu_separator,1);
-  gtk_item_factory_create_item (toolbox_factory, translated_entries, NULL, 2);
-  free_translated_entries(translated_entries, 1);
+  gtk_item_factory_create_item (toolbox_factory, &file_menu_separator, NULL, 2);
    
-  translated_entries=translate_entries(&toolbox_end,1);
-  gtk_item_factory_create_item (toolbox_factory, translated_entries, NULL, 2);
-  free_translated_entries(translated_entries, 1);
+  gtk_item_factory_create_item (toolbox_factory, &toolbox_end, NULL, 2);
 }
-
-static GtkItemFactoryEntry *
-translate_entries (const GtkItemFactoryEntry *entries, gint n)
-{
-  gint i;
-  GtkItemFactoryEntry *ret;
-
-  ret = g_malloc (sizeof (GtkItemFactoryEntry) * n);
-  for (i=0; i<n; i++)
-    {
-      /* Translation. Note the explicit use of gettext(). */
-      ret[i].path = g_strdup (gettext (entries[i].path));
-      /* accelerator and item_type are not duped, only referenced */
-      ret[i].accelerator = entries[i].accelerator;
-      ret[i].callback = entries[i].callback;
-      ret[i].callback_action = entries[i].callback_action;
-      ret[i].item_type = entries[i].item_type;
-    }
-  return ret;
-}
-
-static void 
-free_translated_entries (GtkItemFactoryEntry *entries, gint n)
-{
-  gint i;
-
-  for (i = 0; i < n; i++)
-    g_free (entries[i].path);
-
-  g_free (entries);
-}
-
 
 static void
-menus_init ()
+menus_init (void)
 {
   int i;
-  GtkItemFactoryEntry *translated_entries;
 
   if (initialize)
     {
@@ -771,52 +767,58 @@ menus_init ()
       menus_init_toolbox ();
 
       image_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Image>", NULL);
-      translated_entries = translate_entries (image_entries, n_image_entries);
+      gtk_item_factory_set_translate_func (image_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (image_factory,
 					n_image_entries,
-					translated_entries,
+					image_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_image_entries);
 
       load_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Load>", NULL);
-      translated_entries = translate_entries (load_entries, n_load_entries);
+      gtk_item_factory_set_translate_func (load_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (load_factory,
 					n_load_entries,
-					translated_entries,
+					load_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_load_entries);
 
       save_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Save>", NULL);
-      translated_entries = translate_entries (load_entries, n_save_entries);
+      gtk_item_factory_set_translate_func (save_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (save_factory,
 					n_save_entries,
-					translated_entries,
+					save_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_save_entries);
 
       layers_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Layers>", NULL);
-      translated_entries = translate_entries (layers_entries, n_layers_entries);
+      gtk_item_factory_set_translate_func (layers_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (layers_factory,
 					n_layers_entries,
-					translated_entries,
+					layers_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_layers_entries);
 
       channels_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Channels>", NULL);
-      translated_entries = translate_entries (channels_entries, n_channels_entries);
+      gtk_item_factory_set_translate_func (channels_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (channels_factory,
 					n_channels_entries,
-					translated_entries,
+					channels_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_channels_entries);
 
       paths_factory = gtk_item_factory_new (GTK_TYPE_MENU, "<Paths>", NULL);
-      translated_entries = translate_entries (paths_entries, n_paths_entries);
+      gtk_item_factory_set_translate_func (paths_factory,
+	  				   menu_translate,
+	  				   NULL, NULL);
       gtk_item_factory_create_items_ac (paths_factory,
 					n_paths_entries,
-					translated_entries,
+					paths_entries,
 					NULL, 2);
-      free_translated_entries (translated_entries, n_paths_entries);
 
       for (i = 0; i < num_tools; i++)
 	{
@@ -829,4 +831,11 @@ menus_init ()
       gtk_item_factory_parse_rc (filename);
       g_free (filename);
     }
+}
+
+static gchar *
+menu_translate (const gchar *path,
+    		gpointer     data)
+{
+  return gettext (path);
 }

@@ -5,3 +5,6 @@ blib
 pm_to_blib
 Gimp.c
 Gimp.bs
+config.log
+config.cache
+config.h

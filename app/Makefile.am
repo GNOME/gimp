@@ -254,7 +254,7 @@ gimp_SOURCES = \
 	layer_select.h		\
 	layers_dialog.c		\
 	layers_dialog.h		\
-	layers_dialogP.h		\
+	layers_dialogP.h	\
 	lc_dialog.c		\
 	lc_dialog.h		\
 	lc_dialogP.h		\
