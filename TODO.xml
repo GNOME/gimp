@@ -218,6 +218,19 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="medium" status="0%" target="1.4">
+      <title>Add Options to "Stroke"</title>
+      <description>
+	<p>
+	  The "Stroke" function should be configurable to optionally
+	  stroke inside or outside the current selection only.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
   </section> <!-- Tools -->
 
   <section>

@@ -1,3 +1,17 @@
+2001-09-19  Michael Natterer  <mitch@gimp.org>
+
+	* TODO.xml: added an entry about "Stroke".
+
+	* app/gui/about-dialog.c: use g_timeout and g_source functions
+	instead if gtk_timeout stuff.
+
+	* app/widgets/gimpdnd.[ch]: general cleanup:
+
+	- removed the internal enum duplication and use GimpDndType all over
+	  the place.
+	- added internal GimpDndDataDef entries for all public DND types.
+	- code cleanup, some debugging output.
+
 2001-09-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: require GTK+-1.3.8 and PangoFT2-0.19.
@@ -88,7 +102,7 @@
 
 	* plug-ins/common/gif.c: applied a patch from David Odin 
 	<dindinx@wanadoo.fr> that brings the GIF plug-in back to live.
-	
+
 	* plug-ins/common/.cvsignore
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl: build it again.

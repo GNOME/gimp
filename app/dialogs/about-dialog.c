@@ -67,7 +67,7 @@ static gint      about_dialog_key         (GtkWidget      *widget,
 static void      about_dialog_tool_drop   (GtkWidget      *widget,
 					   GimpViewable   *viewable,
 					   gpointer        data);
-static gint      about_dialog_timer       (gpointer        data);
+static gboolean  about_dialog_timer       (gpointer        data);
 
 
 static GtkWidget   *about_dialog     = NULL;
@@ -408,7 +408,7 @@ about_dialog_unmap (GtkWidget *widget,
 {
   if (timer)
     {
-      gtk_timeout_remove (timer);
+      g_source_remove (timer);
       timer = 0;
     }
 }
@@ -423,7 +423,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
       if (!timer)
 	{
 	  about_dialog_timer (widget);
-	  timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+	  timer = g_timeout_add (75, about_dialog_timer, NULL);
 	}
     }
   else
@@ -452,8 +452,11 @@ about_dialog_button (GtkWidget      *widget,
 		     gpointer        data)
 {
   if (timer)
-    gtk_timeout_remove (timer);
-  timer = 0;
+    {
+      g_source_remove (timer);
+      timer = 0;
+    }
+
   frame = 0;
 
   gtk_widget_hide (about_dialog);
@@ -538,14 +541,14 @@ about_dialog_tool_drop (GtkWidget    *widget,
   gint       width  = 0;
   gint       height = 0;
   gint       i;
-  
+
   if (do_animation)
     return;
 
   if (timer)
-    gtk_timeout_remove (timer);
+    g_source_remove (timer);
 
-  timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+  timer = g_timeout_add (75, about_dialog_timer, NULL);
 
   frame        = 0;
   do_animation = TRUE;
@@ -609,7 +612,7 @@ about_dialog_tool_drop (GtkWidget    *widget,
   double_speed = TRUE;
 }
 
-static gint
+static gboolean
 about_dialog_timer (gpointer data)
 {
   gint i, j, k;
@@ -641,7 +644,7 @@ about_dialog_timer (gpointer data)
 	      do_scrolling = TRUE;
 	      frame        = 0;
 
-	      timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+	      timer = g_timeout_add (75, about_dialog_timer, NULL);
 
 	      return FALSE;
 	    }
@@ -660,12 +663,12 @@ about_dialog_timer (gpointer data)
 	{
 	case 1:
 	  scroll_state = 2;
-	  timer = gtk_timeout_add (700, about_dialog_timer, NULL);
+	  timer = g_timeout_add (700, about_dialog_timer, NULL);
 	  return_val = FALSE;
 	  break;
 	case 2:
 	  scroll_state = 3;
-	  timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+	  timer = g_timeout_add (75, about_dialog_timer, NULL);
 	  return_val = FALSE;
 	  break;
 	}

@@ -20,27 +20,30 @@
 #define __GIMP_DND_H__
 
 
-enum
+typedef enum
 {
-  GIMP_DND_TYPE_URI_LIST,
-  GIMP_DND_TYPE_TEXT_PLAIN,
-  GIMP_DND_TYPE_NETSCAPE_URL,
-  GIMP_DND_TYPE_IMAGE,
-  GIMP_DND_TYPE_LAYER,
-  GIMP_DND_TYPE_CHANNEL,
-  GIMP_DND_TYPE_LAYER_MASK,
-  GIMP_DND_TYPE_COMPONENT,
-  GIMP_DND_TYPE_PATH,
-  GIMP_DND_TYPE_COLOR,
-  GIMP_DND_TYPE_BRUSH,
-  GIMP_DND_TYPE_PATTERN,
-  GIMP_DND_TYPE_GRADIENT,
-  GIMP_DND_TYPE_PALETTE,
-  GIMP_DND_TYPE_BUFFER,
-  GIMP_DND_TYPE_TOOL,
-  GIMP_DND_TYPE_IMAGEFILE,
-  GIMP_DND_TYPE_DIALOG
-};
+  GIMP_DND_TYPE_NONE         = 0,
+  GIMP_DND_TYPE_URI_LIST     = 1,
+  GIMP_DND_TYPE_TEXT_PLAIN   = 2,
+  GIMP_DND_TYPE_NETSCAPE_URL = 3,
+  GIMP_DND_TYPE_COLOR        = 4,
+  GIMP_DND_TYPE_IMAGE        = 5,
+  GIMP_DND_TYPE_LAYER        = 6,
+  GIMP_DND_TYPE_CHANNEL      = 7,
+  GIMP_DND_TYPE_LAYER_MASK   = 8,
+  GIMP_DND_TYPE_COMPONENT    = 9,
+  GIMP_DND_TYPE_PATH         = 10,
+  GIMP_DND_TYPE_BRUSH        = 11,
+  GIMP_DND_TYPE_PATTERN      = 12,
+  GIMP_DND_TYPE_GRADIENT     = 13,
+  GIMP_DND_TYPE_PALETTE      = 14,
+  GIMP_DND_TYPE_BUFFER       = 15,
+  GIMP_DND_TYPE_IMAGEFILE    = 16,
+  GIMP_DND_TYPE_TOOL         = 17,
+  GIMP_DND_TYPE_DIALOG       = 18,
+
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_DIALOG
+} GimpDndType;
 
 
 #define GIMP_TARGET_URI_LIST \
@@ -88,11 +91,11 @@ enum
 #define GIMP_TARGET_BUFFER \
         { "GIMP_BUFFER", 0, GIMP_DND_TYPE_BUFFER }
 
-#define GIMP_TARGET_TOOL \
-        { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
-
 #define GIMP_TARGET_IMAGEFILE \
         { "GIMP_IMAGEFILE", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
+
+#define GIMP_TARGET_TOOL \
+        { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
 
 #define GIMP_TARGET_DIALOG \
         { "GIMP_DIALOG", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_DIALOG }
@@ -133,7 +136,7 @@ void  gimp_dnd_color_dest_set      (GtkWidget            *widget,
 void  gimp_dnd_color_dest_unset    (GtkWidget            *widget);
 
 
-/*  GimpViewable (by GtkType) dnd functions  */
+/*  GimpViewable (by GType) dnd functions  */
 
 typedef void           (* GimpDndDropViewableFunc) (GtkWidget     *widget,
 						    GimpViewable  *viewable,
@@ -141,27 +144,28 @@ typedef void           (* GimpDndDropViewableFunc) (GtkWidget     *widget,
 typedef GimpViewable * (* GimpDndDragViewableFunc) (GtkWidget     *widget,
 						    gpointer       data);
 
+
 void  gimp_gtk_drag_source_set_by_type (GtkWidget               *widget,
 					GdkModifierType          start_button_mask,
-					GtkType                  type,
+					GType                    type,
 					GdkDragAction            actions);
 void  gimp_gtk_drag_dest_set_by_type   (GtkWidget               *widget,
 					GtkDestDefaults          flags,
-					GtkType                  type,
+					GType                    type,
 					GdkDragAction            actions);
 
 void  gimp_dnd_viewable_source_set     (GtkWidget               *widget,
-					GtkType                  type,
+					GType                    type,
 					GimpDndDragViewableFunc  get_viewable_func,
 					gpointer                 data);
 void  gimp_dnd_viewable_source_unset   (GtkWidget               *widget,
-                                        GtkType                  type);
+                                        GType                    type);
 void  gimp_dnd_viewable_dest_set       (GtkWidget               *widget,
-					GtkType                  type,
+					GType                    type,
 					GimpDndDropViewableFunc  set_viewable_func,
 					gpointer                 data);
 void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
-					GtkType                  type);
+					GType                    type);
 
 GimpViewable * gimp_dnd_get_drag_data  (GtkWidget               *widget);
 
