@@ -2,8 +2,8 @@ The GNU Image Manipulation Program Version 2.1
 ----------------------------------------------
 
 This is the development branch of The GIMP. Here's where new features
-are being added. In a not too distant future the next stable GIMP
-release, GIMP 2.2, will emerge out of this.
+are being added. Very soon now, the next stable GIMP release, GIMP 2.2,
+will emerge out of this.
 
 
 
@@ -56,11 +56,12 @@ Overview of Changes in GIMP 2.1.4
 
 - Image comment, if any, is now shown within the info window.
 
+
 Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Shlomi Fish, Bill Skaggs,
    Simon Budig, Ari Pollak, Spencer Kimball, Michael Schumacher, Joao
-   S. O. Bueno, Manish Singh, Helvetix Victorinox
+   S. O. Bueno, Manish Singh, Helvetix Victorinox, Kevin Cozens
 
 
 
