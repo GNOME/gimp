@@ -118,6 +118,9 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-document-grid",    dialogs_document_grid_new,
     GIMP_PREVIEW_SIZE_LARGE, FALSE, FALSE, FALSE, TRUE },
 
+  { "gimp-template-list",    dialogs_template_list_new,
+    GIMP_PREVIEW_SIZE_SMALL, FALSE, FALSE, FALSE, TRUE },
+
   { "gimp-brush-editor",     dialogs_brush_editor_get,
     0, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-gradient-editor",  dialogs_gradient_editor_get,

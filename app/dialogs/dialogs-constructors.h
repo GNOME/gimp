@@ -143,7 +143,8 @@ GtkWidget * dialogs_document_list_new      (GimpDialogFactory *factory,
 GtkWidget * dialogs_document_grid_new      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_document_tree_new      (GimpDialogFactory *factory,
+
+GtkWidget * dialogs_template_list_new      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 

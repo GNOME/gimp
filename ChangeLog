@@ -1,3 +1,19 @@
+2003-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-utils.c (gimp_config_reset_properties):
+	reset object properties only if they are GIMP_PARAM_SERIALIZABLE.
+
+	* app/core/gimpcontext.[ch]: added a GimpTemplate property.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: added a template dialog.
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: and menu entries to open it.
+
+	* app/widgets/gimpdnd.[ch]: added DND for GimpTemplates.
+
 2003-04-05  Manish Singh  <yosh@gimp.org>
 
 	* themes/Default/gtkrc: remove gtk-can-change-accels setting, since

@@ -96,6 +96,8 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
            "<StockItem>",                      GIMP_STOCK_IMAGES),
   ADD_TAB (N_("/Add Tab/Document History..."), "gimp-document-list",
            "<StockItem>",                      GTK_STOCK_OPEN),
+  ADD_TAB (N_("/Add Tab/Templates..."),        "gimp-template-list",
+           "<StockItem>",                      GIMP_STOCK_TEMPLATE),
   ADD_TAB (N_("/Add Tab/Error Console..."),    "gimp-error-console",
            "<StockItem>",                      GIMP_STOCK_WARNING),
 

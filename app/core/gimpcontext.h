@@ -44,8 +44,9 @@ typedef enum
   GIMP_CONTEXT_PROP_FONT       = 13,
   GIMP_CONTEXT_PROP_BUFFER     = 14,
   GIMP_CONTEXT_PROP_IMAGEFILE  = 15,
+  GIMP_CONTEXT_PROP_TEMPLATE   = 16,
 
-  GIMP_CONTEXT_LAST_PROP       = GIMP_CONTEXT_PROP_IMAGEFILE
+  GIMP_CONTEXT_LAST_PROP       = GIMP_CONTEXT_PROP_TEMPLATE
 } GimpContextPropType;
 
 typedef enum
@@ -64,6 +65,7 @@ typedef enum
   GIMP_CONTEXT_FONT_MASK       = 1 << 13,
   GIMP_CONTEXT_BUFFER_MASK     = 1 << 14,
   GIMP_CONTEXT_IMAGEFILE_MASK  = 1 << 15,
+  GIMP_CONTEXT_TEMPLATE_MASK   = 1 << 16,
 
   /*  aliases  */
   GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
@@ -80,6 +82,7 @@ typedef enum
 				   GIMP_CONTEXT_FONT_MASK       |
 				   GIMP_CONTEXT_BUFFER_MASK     |
 				   GIMP_CONTEXT_IMAGEFILE_MASK  |
+				   GIMP_CONTEXT_TEMPLATE_MASK   |
 				   GIMP_CONTEXT_PAINT_PROPS_MASK)
 } GimpContextPropMask;
 
@@ -133,6 +136,7 @@ struct _GimpContext
 
   GimpBuffer           *buffer;
   GimpImagefile        *imagefile;
+  GimpTemplate         *template;
 };
 
 struct _GimpContextClass
@@ -169,6 +173,8 @@ struct _GimpContextClass
 			       GimpBuffer           *buffer);
   void (* imagefile_changed)  (GimpContext          *context,
 			       GimpImagefile        *imagefile);
+  void (* template_changed)   (GimpContext          *context,
+			       GimpTemplate         *template);
 };
 
 
@@ -329,6 +335,13 @@ GimpImagefile * gimp_context_get_imagefile      (GimpContext     *context);
 void            gimp_context_set_imagefile      (GimpContext     *context,
                                                  GimpImagefile   *imagefile);
 void            gimp_context_imagefile_changed  (GimpContext     *context);
+
+
+/*  template  */
+GimpTemplate  * gimp_context_get_template       (GimpContext     *context);
+void            gimp_context_set_template       (GimpContext     *context,
+                                                 GimpTemplate    *template);
+void            gimp_context_template_changed   (GimpContext     *context);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

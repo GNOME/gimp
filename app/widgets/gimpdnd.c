@@ -43,6 +43,7 @@
 #include "core/gimplayermask.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
+#include "core/gimptemplate.h"
 #include "core/gimptoolinfo.h"
 
 #include "text/gimpfont.h"
@@ -189,6 +190,12 @@ static void        gimp_dnd_set_buffer_data    (GtkWidget *widget,
 static void        gimp_dnd_set_imagefile_data (GtkWidget *widget,
 					        GCallback  set_imagefile_func,
 					        gpointer   set_imagefile_data,
+					        guchar    *vals,
+					        gint       format,
+					        gint       length);
+static void        gimp_dnd_set_template_data  (GtkWidget *widget,
+                                                GCallback  set_template_func,
+					        gpointer   set_template_data,
 					        guchar    *vals,
 					        gint       format,
 					        gint       length);
@@ -399,6 +406,17 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
     gimp_dnd_set_imagefile_data
+  },
+
+  {
+    GIMP_TARGET_TEMPLATE,
+
+    "gimp_dnd_set_template_func",
+    "gimp_dnd_set_template_data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_data_data,
+    gimp_dnd_set_template_data
   },
 
   {
@@ -1179,6 +1197,10 @@ gimp_dnd_data_type_get_by_g_type (GType type)
     {
       dnd_type = GIMP_DND_TYPE_IMAGEFILE;
     }
+  else if (g_type_is_a (type, GIMP_TYPE_TEMPLATE))
+    {
+      dnd_type = GIMP_DND_TYPE_TEMPLATE;
+    }
   else if (g_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       dnd_type = GIMP_DND_TYPE_TOOL;
@@ -1751,6 +1773,39 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
     (* (GimpDndDropViewableFunc) set_imagefile_func) (widget,
 						      GIMP_VIEWABLE (imagefile),
 						      set_imagefile_data);
+}
+
+
+/*****************************/
+/*  template dnd functions  */
+/*****************************/
+
+static void
+gimp_dnd_set_template_data (GtkWidget *widget,
+                            GCallback  set_template_func,
+                            gpointer   set_template_data,
+                            guchar    *vals,
+                            gint       format,
+                            gint       length)
+{
+  GimpTemplate *template;
+  gchar        *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid buffer data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  template = (GimpTemplate *)
+    gimp_container_get_child_by_name (the_gimp->templates, name);
+
+  if (template)
+    (* (GimpDndDropViewableFunc) set_template_func) (widget,
+                                                     GIMP_VIEWABLE (template),
+                                                     set_template_data);
 }
 
 

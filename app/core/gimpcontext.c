@@ -46,6 +46,7 @@
 #include "gimpmarshal.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
+#include "gimptemplate.h"
 #include "gimptoolinfo.h"
 
 #include "text/gimpfont.h"
@@ -222,6 +223,17 @@ static void gimp_context_imagefile_list_thaw (GimpContainer    *container,
 static void gimp_context_real_set_imagefile  (GimpContext      *context,
 					      GimpImagefile    *imagefile);
 
+/*  template  */
+static void gimp_context_template_dirty      (GimpTemplate     *template,
+					      GimpContext      *context);
+static void gimp_context_template_removed    (GimpContainer    *container,
+					      GimpTemplate     *template,
+					      GimpContext      *context);
+static void gimp_context_template_list_thaw  (GimpContainer    *container,
+					      GimpContext      *context);
+static void gimp_context_real_set_template   (GimpContext      *context,
+					      GimpTemplate     *template);
+
 
 /*  properties & signals  */
 
@@ -251,6 +263,7 @@ enum
   FONT_CHANGED,
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
+  TEMPLATE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -271,7 +284,8 @@ static gchar *gimp_context_prop_names[] =
   "palette",
   "font",
   "buffer",
-  "imagefile"
+  "imagefile",
+  "template"
 };
 
 static GType gimp_context_prop_types[] =
@@ -285,6 +299,7 @@ static GType gimp_context_prop_types[] =
   G_TYPE_NONE,
   G_TYPE_NONE,
   G_TYPE_NONE,
+  0,
   0,
   0,
   0,
@@ -501,6 +516,16 @@ gimp_context_class_init (GimpContextClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_IMAGEFILE);
 
+  gimp_context_signals[TEMPLATE_CHANGED] =
+    g_signal_new ("template_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpContextClass, template_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_TEMPLATE);
+
   object_class->constructor      = gimp_context_constructor;
   object_class->set_property     = gimp_context_set_property;
   object_class->get_property     = gimp_context_get_property;
@@ -523,6 +548,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->font_changed            = NULL;
   klass->buffer_changed          = NULL;
   klass->imagefile_changed       = NULL;
+  klass->template_changed        = NULL;
 
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]     = GIMP_TYPE_IMAGE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]      = GIMP_TYPE_TOOL_INFO;
@@ -533,6 +559,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]      = GIMP_TYPE_FONT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]    = GIMP_TYPE_BUFFER;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE] = GIMP_TYPE_IMAGEFILE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]  = GIMP_TYPE_TEMPLATE;
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -626,6 +653,12 @@ gimp_context_class_init (GimpContextClass *klass)
 							NULL, NULL,
 							GIMP_TYPE_IMAGEFILE,
 							G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_TEMPLATE,
+				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_TEMPLATE],
+							NULL, NULL,
+							GIMP_TYPE_TEMPLATE,
+							G_PARAM_READWRITE));
 }
 
 static void
@@ -660,6 +693,7 @@ gimp_context_init (GimpContext *context)
 
   context->buffer        = NULL;
   context->imagefile     = NULL;
+  context->template      = NULL;
 }
 
 static void
@@ -763,6 +797,15 @@ gimp_context_constructor (GType                  type,
 			   0);
   g_signal_connect_object (gimp->documents, "thaw",
 			   G_CALLBACK (gimp_context_imagefile_list_thaw),
+			   object,
+			   0);
+
+  g_signal_connect_object (gimp->templates, "remove",
+			   G_CALLBACK (gimp_context_template_removed),
+			   object,
+			   0);
+  g_signal_connect_object (gimp->templates, "thaw",
+			   G_CALLBACK (gimp_context_template_list_thaw),
 			   object,
 			   0);
 
@@ -877,6 +920,12 @@ gimp_context_finalize (GObject *object)
       context->imagefile = NULL;
     }
 
+  if (context->template)
+    {
+      g_object_unref (context->template);
+      context->template = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -938,6 +987,9 @@ gimp_context_set_property (GObject      *object,
       break;
     case GIMP_CONTEXT_PROP_IMAGEFILE:
       gimp_context_set_imagefile (context, g_value_get_object (value));
+      break;
+    case GIMP_CONTEXT_PROP_TEMPLATE:
+      gimp_context_set_template (context, g_value_get_object (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1011,6 +1063,9 @@ gimp_context_get_property (GObject    *object,
       break;
     case GIMP_CONTEXT_PROP_IMAGEFILE:
       g_value_set_object (value, gimp_context_get_imagefile (context));
+      break;
+    case GIMP_CONTEXT_PROP_TEMPLATE:
+      g_value_set_object (value, gimp_context_get_template (context));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1454,6 +1509,10 @@ gimp_context_copy_property (GimpContext         *src,
 
     case GIMP_CONTEXT_PROP_IMAGEFILE:
       gimp_context_real_set_imagefile (dest, src->imagefile);
+      break;
+
+    case GIMP_CONTEXT_PROP_TEMPLATE:
+      gimp_context_real_set_template (dest, src->template);
       break;
 
     default:
@@ -3110,4 +3169,163 @@ gimp_context_real_set_imagefile (GimpContext   *context,
 
   g_object_notify (G_OBJECT (context), "imagefile");
   gimp_context_imagefile_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  template  ***************************************************************/
+
+/*
+static GimpTemplate *standard_template = NULL;
+*/
+
+GimpTemplate *
+gimp_context_get_template (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->template;
+}
+
+void
+gimp_context_set_template (GimpContext  *context,
+                           GimpTemplate *template)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  context_find_defined (context, GIMP_CONTEXT_PROP_TEMPLATE);
+
+  gimp_context_real_set_template (context, template);
+}
+
+void
+gimp_context_template_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+		 gimp_context_signals[TEMPLATE_CHANGED], 0,
+		 context->template);
+}
+
+/*  the active template was modified  */
+static void
+gimp_context_template_dirty (GimpTemplate *template,
+                             GimpContext  *context)
+{
+  /*
+  g_free (context->template_name);
+  context->template_name = g_strdup (GIMP_OBJECT (template)->name);
+  */
+
+  g_object_notify (G_OBJECT (context), "template");
+  gimp_context_template_changed (context);
+}
+
+/*  the global gradient list is there again after refresh  */
+static void
+gimp_context_template_list_thaw (GimpContainer *container,
+                                 GimpContext   *context)
+{
+  /*
+  GimpBuffer *template;
+
+  if (! context->template_name)
+    context->template_name = g_strdup (context->gimp->config->default_template);
+
+  if ((template = (GimpTemplate *)
+       gimp_container_get_child_by_name (container,
+					 context->template_name)))
+    {
+      gimp_context_real_set_template (context, template);
+      return;
+    }
+  */
+
+  if (gimp_container_num_children (container))
+    {
+      gimp_context_real_set_template
+        (context,
+         GIMP_TEMPLATE (gimp_container_get_child_by_index (container, 0)));
+    }
+  else
+    {
+      g_object_notify (G_OBJECT (context), "template");
+      gimp_context_template_changed (context);
+    }
+
+  /*
+  else
+    gimp_context_real_set_template (context,
+				     GIMP_TEMPLATE (gimp_template_get_standard ()));
+  */
+}
+
+/*  the active template disappeared  */
+static void
+gimp_context_template_removed (GimpContainer *container,
+                               GimpTemplate  *template,
+                               GimpContext   *context)
+{
+  if (template == context->template)
+    {
+      context->template = NULL;
+
+      g_signal_handlers_disconnect_by_func (template,
+					    gimp_context_template_dirty,
+					    context);
+      g_object_unref (template);
+
+      if (! gimp_container_frozen (container))
+	gimp_context_template_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_real_set_template (GimpContext  *context,
+                                GimpTemplate *template)
+{
+  /*
+  if (! standard_template)
+    standard_template = GIMP_TEMPLATE (gimp_template_get_standard ());
+  */
+
+  if (context->template == template)
+    return;
+
+  /*
+  if (context->template_name && template != standard_template)
+    {
+      g_free (context->template_name);
+      context->template_name = NULL;
+    }
+  */
+
+  /*  disconnect from the old template's signals  */
+  if (context->template)
+    {
+      g_signal_handlers_disconnect_by_func (context->template,
+					    gimp_context_template_dirty,
+					    context);
+      g_object_unref (context->template);
+    }
+
+  context->template = template;
+
+  if (template)
+    {
+      g_object_ref (template);
+
+      g_signal_connect_object (template, "name_changed",
+			       G_CALLBACK (gimp_context_template_dirty),
+			       context,
+			       0);
+
+      /*
+      if (template != standard_template)
+	context->template_name = g_strdup (GIMP_OBJECT (template)->name);
+      */
+    }
+
+  g_object_notify (G_OBJECT (context), "template");
+  gimp_context_template_changed (context);
 }

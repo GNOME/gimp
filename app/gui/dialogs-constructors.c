@@ -901,6 +901,26 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
 			       dialogs_set_editor_context_func);
 }
 
+GtkWidget *
+dialogs_template_list_new (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_container_tree_view_new (context->gimp->templates,
+				       context,
+				       preview_size,
+                                       TRUE,
+				       5, 3);
+
+  return dialogs_dockable_new (view,
+			       _("List of Templates"), _("Templates"),
+                               GIMP_STOCK_TEMPLATE,
+			       dialogs_stock_text_tab_func,
+			       dialogs_set_view_context_func);
+}
+
 
 /*****  editors  *****/
 

@@ -25,11 +25,12 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "config-types.h"
 
 #include "gimpconfig.h"
+#include "gimpconfig-params.h"
 #include "gimpconfig-utils.h"
 
 
@@ -235,7 +236,8 @@ gimp_config_reset_properties (GObject *object)
 
       if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
         {
-          if (g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+          if ((prop_spec->flags & GIMP_PARAM_SERIALIZE) &&
+              g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
                                      GIMP_TYPE_CONFIG_INTERFACE))
             {
               g_value_init (&value, prop_spec->value_type);
