@@ -20,7 +20,8 @@
 #define __GIMP_VECTORS_EXPORT_H__
 
 
-gboolean  gimp_vectors_export (const GimpVectors  *vectors,
+gboolean  gimp_vectors_export (const GimpImage    *image,
+                               const GimpVectors  *vectors,
                                const gchar        *filename,
                                GError            **error);
 
