@@ -45,6 +45,8 @@ PDB_WRAPPERS_C = \
 	gimplayer_pdb.c			\
 	gimpmessage_pdb.c		\
 	gimpmisc_pdb.c			\
+	gimpmisctools_pdb.c		\
+	gimppainttools_pdb.c		\
 	gimppalette_pdb.c		\
 	gimpparasite_pdb.c		\
 	gimppaths_pdb.c			\
@@ -55,7 +57,6 @@ PDB_WRAPPERS_C = \
 	gimpselection_pdb.c		\
 	gimpselectiontools_pdb.c	\
 	gimptexttool_pdb.c		\
-	gimptools_pdb.c			\
 	gimptransformtools_pdb.c	\
 	gimpundo_pdb.c			\
 	gimpunit_pdb.c
@@ -81,6 +82,8 @@ PDB_WRAPPERS_H = \
 	gimplayer_pdb.h			\
 	gimpmessage_pdb.h		\
 	gimpmisc_pdb.h			\
+	gimpmisctools_pdb.h		\
+	gimppainttools_pdb.h		\
 	gimppalette_pdb.h		\
 	gimpparasite_pdb.h		\
 	gimppaths_pdb.h			\
@@ -91,7 +94,6 @@ PDB_WRAPPERS_H = \
 	gimpselection_pdb.h		\
 	gimpselectiontools_pdb.h	\
 	gimptexttool_pdb.h		\
-	gimptools_pdb.h			\
 	gimptransformtools_pdb.h	\
 	gimpundo_pdb.h			\
 	gimpunit_pdb.h

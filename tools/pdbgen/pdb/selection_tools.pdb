@@ -17,7 +17,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Tools
+# Selection Tools
 
 # shortcuts
 
@@ -59,6 +59,7 @@ sub feather_select_args () {(
     { name => 'feather_radius', type => 'float',
       desc => 'Radius for feather operation' }
 )}
+
 
 # The defs
 

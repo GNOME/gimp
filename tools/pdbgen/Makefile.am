@@ -21,6 +21,8 @@ pdb_sources = \
 	pdb/layer.pdb		\
 	pdb/message.pdb		\
 	pdb/misc.pdb		\
+	pdb/misc_tools.pdb	\
+	pdb/paint_tools.pdb	\
 	pdb/palette.pdb		\
 	pdb/parasite.pdb	\
 	pdb/paths.pdb		\
@@ -31,7 +33,6 @@ pdb_sources = \
 	pdb/selection.pdb	\
 	pdb/selection_tools.pdb	\
 	pdb/text_tool.pdb	\
-	pdb/tools.pdb		\
 	pdb/transform_tools.pdb	\
 	pdb/undo.pdb		\
 	pdb/unit.pdb

@@ -17,7 +17,7 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-# Tools
+# Transform Tools
 
 # shortcuts
 
@@ -34,6 +34,7 @@ sub drawable_out_arg {
     $arg->{no_declare} = 1;
     $arg;
 }
+
 
 # The defs
 

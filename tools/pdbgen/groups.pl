@@ -19,6 +19,8 @@
     layer
     message
     misc
+    misc_tools
+    paint_tools
     palette
     parasite
     paths
@@ -29,7 +31,6 @@
     selection
     selection_tools
     text_tool
-    tools
     transform_tools
     undo
     unit

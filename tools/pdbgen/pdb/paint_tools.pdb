@@ -35,25 +35,6 @@ sub drawable_out_arg {
     $arg;
 }
 
-sub sample_merged_arg () {{
-    name => 'sample_merged',
-    type => 'boolean',
-    desc => 'Use the composite image, not the drawable'
-}}
-
-sub threshold_arg () {{
-    name => 'threshold',
-    type => '0 <= int32 <= 255',
-    desc => 'Threshold in intensity levels %%desc%%'
-}}
-
-sub feather_select_args () {(
-    { name => 'feather', type => 'boolean',
-      desc => 'Feather option for selections' },
-    { name => 'feather_radius', type => 'float',
-      desc => 'Radius for feather operation' }
-)}
-
 sub stroke_arg () {
     { name => 'strokes', type => 'floatarray',
       desc => 'Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ...,
@@ -122,144 +103,6 @@ CODE
     );
 }
 
-
-sub blend {
-    $blurb = <<'BLURB';
-Blend between the starting and ending coordinates with the specified blend mode
-and gradient type.
-BLURB
-
-    $help = <<'HELP';
-This tool requires information on the paint application mode, the blend mode,
-and the gradient type. It creates the specified variety of blend using the
-starting and ending coordinates as defined for each gradient type.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&drawable_arg,
-        { name => 'blend_mode', type => 'enum BlendMode',
-	  desc => 'The type of blend: { %%desc%% }' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
-	  desc => 'The paint application mode: { %%desc%% }' },
-	{ name => 'gradient_type',  type => 'enum GradientType',
-	  desc => 'The type of gradient: { %%desc%% }' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final blend (%%desc%%)' },
-	{ name => 'offset', type => '0 <= float',
-	  desc => 'Offset relates to the starting and ending coordinates
-		   specified for the blend. This parameter is mode dependent
-		   (%%desc%%)' },
-	{ name => 'repeat', type => 'enum RepeatMode',
-	  desc => 'Repeat mode: { %%desc%% }' },
-	{ name => 'supersample', type => 'boolean',
-	  desc => 'Do adaptive supersampling (%%desc%%)' },
-	{ name => 'max_depth', type => '1 <= int32 <= 9',
-	  desc => 'Maximum recursion levels for supersampling',
-	  cond => [ 'supersample' ] },
-	{ name => 'threshold', type => '0 <= float <= 4',
-	  desc => 'Supersampling threshold',
-	  cond => [ 'supersample' ] },
-	{ name => 'x1', type => 'float',
-	  desc => "The x coordinate of this blend's starting point" },
-	{ name => 'y1', type => 'float',
-	  desc => "The y coordinate of this blend's starting point" },
-	{ name => 'x2', type => 'float',
-	  desc => "The x coordinate of this blend's ending point" },
-	{ name => 'y2', type => 'float',
-	  desc => "The y coordinate of this blend's ending point" }
-    );
-
-    %invoke = (
-        headers => [ qw("core/gimpdrawable-blend.h") ],
-	code => <<'CODE'
-{
-  if (! gimp_drawable_gimage (drawable))
-    {
-      success = FALSE;
-    }
-  else
-    {
-      gimp_drawable_blend (drawable,
-                           blend_mode,
-                           paint_mode,
-                           gradient_type,
-                           opacity / 100.0,
-	                   offset, repeat,
-                           supersample, max_depth,
-                           threshold,
-                           x1, y1, x2, y2,
-	                   NULL, NULL);
-    }
-}
-CODE
-    );
-}
-
-sub bucket_fill {
-    $blurb = <<'BLURB';
-Fill the area specified either by the current selection if there is one, or by
-a seed fill starting at the specified coordinates.
-BLURB
-
-    $help = <<'HELP';
-This tool requires information on the paint application mode, and the fill
-mode, which can either be in the foreground color, or in the currently active
-pattern. If there is no selection, a seed fill is executed at the specified
-coordinates and extends outward in keeping with the threshold parameter. If
-there is a selection in the target image, the threshold, sample merged, x, and
-y arguments are unused. If the sample_merged parameter is non-zero, the data of
-the composite image will be used instead of that for the specified drawable.
-This is equivalent to sampling for colors after merging all visible layers. In
-the case of merged sampling, the x,y coordinates are relative to the image's
-origin; otherwise, they are relative to the drawable's origin.
-HELP
-
-    &std_pdb_misc;
-
-    my $validity = 'This parameter is only valid when there is no selection in
-		    the specified image.';
-
-    @inargs = (
-	&drawable_arg,
-	{ name => 'fill_mode', type => 'enum BucketFillMode',
-	  desc => 'The type of fill: { %%desc%% }' },
-	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
-	  desc => 'The paint application mode: { %%desc%% }' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The opacity of the final bucket fill (%%desc%%)' },
-	{ name => 'threshold', type => '0 <= float <= 255',
-	  desc => "The threshold determines how extensive the seed fill will
-		   be. It's value is specified in terms of intensity levels
-		   (%%desc%%). $validity" },
-	&sample_merged_arg,
-    );
-
-    foreach (qw(x y)) {
-	push @inargs, { name => $_, type => 'float',
-			desc => "The $_ coordinate of this bucket fill's
-				 application. $validity" }
-    }
-
-    %invoke = (
-        headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
-	code => <<'CODE'
-{
-  if (! gimp_drawable_gimage (GIMP_DRAWABLE (drawable)))
-    {
-      success = FALSE;
-    }
-  else
-    {
-      gimp_drawable_bucket_fill (drawable, fill_mode,
-                                 paint_mode, opacity / 100.0,
-	                         threshold, sample_merged, x, y);
-    }
-}
-CODE
-    );
-}
 
 sub clone {
     $blurb = <<'BLURB';
@@ -332,74 +175,6 @@ CODE
     );
 }
 
-sub color_picker {
-    $blurb = <<'BLURB';
-Determine the color at the given drawable coordinates
-BLURB
-
-    $help = <<'HELP';
-This tool determines the color at the specified coordinates. The returned color
-is an RGB triplet even for grayscale and indexed drawables. If the coordinates
-lie outside of the extents of the specified drawable, then an error is
-returned. If the drawable has an alpha channel, the algorithm examines the
-alpha value of the drawable at the coordinates. If the alpha value is
-completely transparent (0), then an error is returned. If the sample_merged
-parameter is non-zero, the data of the composite image will be used instead of
-that for the specified drawable. This is equivalent to sampling for colors
-after merging all visible layers. In the case of a merged sampling, the
-supplied drawable is ignored.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-	&std_image_arg,
-	&drawable_arg,
-	{ name => 'x', type => 'float',
-	  desc => 'x coordinate of upper-left corner of rectangle' },
-	{ name => 'y', type => 'float',
-	  desc => 'y coordinate of upper-left corner of rectangle' },
-	&sample_merged_arg,
-	{ name => 'sample_average', type => 'boolean',
-	  desc => 'Average the color of all the pixels in a specified
-		   radius' },
-	{ name => 'average_radius', type => '0 < float',
-	  desc => 'The radius of pixels to average',
-	  cond => [ 'sample_average' ] },
-	{ name => 'save_color', type => 'boolean',
-	  desc => 'Save the color to the active palette' }
-    );
-    $inargs[1]->{no_success} = 1;
-
-    @outargs = (
-	{ name => 'color', type => 'color', void_ret => 1,
-	  desc => 'The return color', init => 1 }
-    );
-
-    %invoke = (
-	headers => [ qw("tools/gimpcolorpickertool.h") ],
-	code => <<'CODE'
-{
-  if (!sample_merged)
-    if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
-      success = FALSE;
-
-  if (success)
-    success = pick_color (gimage, drawable, (int) x, (int) y,
-			  sample_merged, sample_average, average_radius,
-			  save_color);
-  if (success)
-    {
-      gimp_rgba_set_uchar (&color, 
-		           col_value[RED_PIX],
-		           col_value[GREEN_PIX],
-		           col_value[BLUE_PIX],
-		           col_value[ALPHA_PIX]);
-    }
-}
-CODE
-    );
-}
 
 sub convolve_default {
     $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
@@ -777,13 +552,17 @@ sub ink {
 	      "tools/tools-types.h" "core/gimpdrawable.h"
               "base/tile-manager.h");
 
-@procs = qw(airbrush airbrush_default blend bucket_fill clone clone_default
-            color_picker convolve convolve_default dodgeburn dodgeburn_default
-	    eraser eraser_default paintbrush paintbrush_default
-	    pencil smudge smudge_default);
+@procs = qw(airbrush airbrush_default
+            clone clone_default
+            convolve convolve_default
+            dodgeburn dodgeburn_default
+	    eraser eraser_default
+            paintbrush paintbrush_default
+	    pencil
+            smudge smudge_default);
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Tool procedures';
+$desc = 'Paint Tool procedures';
 
 1;

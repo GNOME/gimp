@@ -26,6 +26,8 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	layer_cmds.c		\
 	message_cmds.c		\
 	misc_cmds.c		\
+	misc_tools_cmds.c	\
+	paint_tools_cmds.c	\
 	palette_cmds.c		\
 	parasite_cmds.c		\
 	paths_cmds.c		\
@@ -38,7 +40,6 @@ libapppdb_a_SOURCES = @STRIP_BEGIN@ \
 	selection_cmds.c	\
 	selection_tools_cmds.c	\
 	text_tool_cmds.c	\
-	tools_cmds.c		\
 	transform_tools_cmds.c	\
 	undo_cmds.c		\
 	unit_cmds.c		\
