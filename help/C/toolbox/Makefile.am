@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = help
+
 helpdatadir = $(gimpdatadir)/help/C/toolbox
 
 helpdata_DATA = \
@@ -13,6 +15,12 @@ EXTRA_DIST = $(helpdata_DATA)
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
+	done
+	@for subdir in $(SUBDIRS); do \
+	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
+	  for file in $$files; do \
+	    echo $$subdir/$$file; \
+	  done; \
 	done
 
 install-data-local:

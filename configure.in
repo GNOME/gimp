@@ -781,6 +781,7 @@ help/C/open/Makefile
 help/C/paths/Makefile
 help/C/save/Makefile
 help/C/toolbox/Makefile
+help/C/toolbox/help/Makefile
 help/C/tools/Makefile
 help/images/Makefile],
 [

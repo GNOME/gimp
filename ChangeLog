@@ -1,5 +1,9 @@
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: create help/C/toolbox/help/Makefile.
+
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c: move <Image>/Dialogs after <Image>/Tools and add a
 	separator after it.
 

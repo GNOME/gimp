@@ -1,5 +1,9 @@
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* C/toolbox/help/*: we forgot help for help ;-)
+
+1999-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* C/filters/Makefile.am
 	* C/filters/gimp_xcf_load.html
 	* C/filters/gimp_xcf_save.html
