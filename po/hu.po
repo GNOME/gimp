@@ -11,12 +11,13 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-04-11 14:24+0200\n"
-"PO-Revision-Date: 2004-05-03 13:20+0200\n"
+"PO-Revision-Date: 2004-05-06 20:39+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3\n"
 
 #: app/app_procs.c:189
 msgid ""
@@ -2486,7 +2487,7 @@ msgstr "/_Sötét négyzetháló"
 
 #: app/display/gimpdisplayshell.c:831
 msgid "/Select _Custom Color..."
-msgstr "/_Egyéni szín kiválasztása..."
+msgstr "/E_gyéni szín kiválasztása..."
 
 #: app/display/gimpdisplayshell.c:835
 msgid "/As in _Preferences"
@@ -4683,7 +4684,7 @@ msgstr "/Szűrők/An_imáció"
 
 #: app/gui/image-menu.c:1127
 msgid "/Filters/C_ombine"
-msgstr "/Szűrők/_Egyesít"
+msgstr "/Szűrők/_Egyesítés"
 
 #: app/gui/image-menu.c:1131
 msgid "/Filters/To_ys"
@@ -5239,7 +5240,7 @@ msgstr "_Háttér"
 
 #: app/gui/offset-dialog.c:210
 msgid "_Transparent"
-msgstr "_Átlátszó"
+msgstr "Á_tlátszó"
 
 #: app/gui/palette-editor-menu.c:48
 msgid "/New Color from _FG"
@@ -6176,7 +6177,7 @@ msgstr "Monitor felbontásának kalibrálása"
 
 #: app/gui/resolution-calibrate-dialog.c:196
 msgid "Measure the rulers and enter their lengths below."
-msgstr "Mérje meg a vonalzókat és írja be a hosszukat lent."
+msgstr "Mérje meg a vonalzókat és írja be a hosszukat lentebb."
 
 #: app/gui/resolution-calibrate-dialog.c:218
 msgid "_Horizontal:"
@@ -7721,7 +7722,7 @@ msgstr "Sárga"
 
 #: app/tools/gimpcolorbalancetool.c:327
 msgid "R_eset Range"
-msgstr "Tartomány _visszaállítása"
+msgstr "Tartomány v_isszaállítása"
 
 #: app/tools/gimpcolorbalancetool.c:336
 msgid "Preserve _Luminosity"
@@ -7898,7 +7899,7 @@ msgstr "Csatorna:"
 
 #: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
 msgid "R_eset Channel"
-msgstr "Csatorna _visszaállítása"
+msgstr "Csatorna v_isszaállítása"
 
 #. Horizontal button box for load / save
 #: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
@@ -8082,7 +8083,7 @@ msgstr "Szín v_isszaállítása"
 
 #: app/tools/gimpimagemaptool.c:243 app/widgets/gimpthumbbox.c:206
 msgid "_Preview"
-msgstr "_Előkép"
+msgstr "Előké_p"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:257
@@ -10053,3 +10054,29 @@ msgstr "Üres vektorok másolása"
 
 msgid "Modify letter spacing"
 msgstr "Betűköz módosítása"
+
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+"Nem sikerült megnyitni a cserefájlt. A program által használható "
+"memória elfogyott, a cserefájl pedig nem használható. A képek egyes "
+"részei megsérülhettek. Próbálja meg elmenteni a módosított "
+"képeket más fájlnevekkel, majd indítsa újra a programot és ellenőrizze "
+"a cserekönyvtár helyét a beállítások között."
+
+#: app/core/core-enums.c:601
+msgid "Scale Item"
+msgstr "Elem átméretezése"
+
+#: app/core/core-enums.c:602
+msgid "Resize Item"
+msgstr "Elem méretének módosítása"
+
+#: app/tools/gimphuesaturationtool.c:263
+msgid "M_aster"
+msgstr "_Fő"
+

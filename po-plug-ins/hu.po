@@ -3,18 +3,20 @@
 # Andras Timar <timar@gnome.hu>
 # Emese Kovacs <emese@gnome.hu>
 # Laszlo Dvornik <dvornikl@mailbox.hu>, 2004.
+# Arpad Biro <biro_arpad@yahoo.com>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-03-22 07:56+0100\n"
-"Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
-"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2004-05-01 14:38+0200\n"
+"PO-Revision-Date: 2004-05-06 22:19+0200\n"
+"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
@@ -64,7 +66,7 @@ msgstr "Névjegy"
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
-#: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
+#: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
@@ -81,7 +83,7 @@ msgstr "Előnézet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:623
 msgid "Realtime Preview"
-msgstr "Valósidejű előnézet"
+msgstr "Valós idejű előnézet"
 
 #: plug-ins/FractalExplorer/Dialogs.c:630
 msgid "If you enable this option the preview will be redrawn automatically"
@@ -186,7 +188,7 @@ msgstr "Fraktál betöltése fájlból"
 
 #: plug-ins/FractalExplorer/Dialogs.c:810
 msgid "Reset parameters to default values"
-msgstr "Paraméterek visszaállÍtása az alapértelmezett értékekre"
+msgstr "Paraméterek visszaállítása az alapértelmezett értékekre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:819
 msgid "Save active fractal to file"
@@ -235,9 +237,8 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:900 plug-ins/common/sinus.c:887
 #: plug-ins/imagemap/imap_preferences.c:515
-#, fuzzy
 msgid "Co_lors"
-msgstr "Színek"
+msgstr "Szí_nek"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:904 plug-ins/common/borderaverage.c:396
@@ -253,14 +254,12 @@ msgid "Change the number of colors in the mapping"
 msgstr "Színek számának megváltoztatása a leképezésben"
 
 #: plug-ins/FractalExplorer/Dialogs.c:927
-#, fuzzy
 msgid "Use loglog smoothing"
 msgstr "Loglog simítás használata"
 
 #: plug-ins/FractalExplorer/Dialogs.c:934
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
+msgstr "Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:938
@@ -405,8 +404,7 @@ msgstr "Aktív színátmenet alkalmazása a végső képre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
-"Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
+msgstr "Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1163
 msgid "FractalExplorer Gradient"
@@ -437,12 +435,12 @@ msgstr "_Fraktálok"
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nem lehet írásra megnyitni '%s'-t: %s"
+msgstr "Nem lehet írásra megnyitni a(z) '%s'-t: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
-#, fuzzy, c-format
+#, c-format
 msgid "Could not write '%s': %s"
-msgstr "A fájl írása sikertelen\n"
+msgstr "Nem lehet írni a(z) '%s'-t: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1861
 msgid "Save: No filename given"
@@ -455,11 +453,11 @@ msgstr "Nem lehet könyvtárba menteni."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1910
 msgid "Load Fractal Parameters"
-msgstr "Fraktál paraméterek betöltése"
+msgstr "Fraktálparaméterek betöltése"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1934
 msgid "Save Fractal Parameters"
-msgstr "Fraktál paraméterek mentése"
+msgstr "Fraktálparaméterek mentése"
 
 #. Do not rely on librsvg setting GError on failure!
 #. stat error (file does not exist)
@@ -483,7 +481,7 @@ msgstr "Fraktál paraméterek mentése"
 #: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Nem lehet olvasásra megnyitni '%s'-t: %s"
+msgstr "Nem lehet olvasásra megnyitni a(z) '%s'-t: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
 #, fuzzy, c-format
@@ -507,12 +505,9 @@ msgstr "Fraktál megjelenítése..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3109
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr ""
-"Biztos, hogy törölni szeretnéd a\n"
-"listából és a lemezről a következő\n"
-"fájlt: '%s'"
+msgstr "Biztos, hogy törölni szeretné a(z) \"%s\"-t a listából és a lemezről?"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:767
 msgid "Delete Fractal"
@@ -521,11 +516,11 @@ msgstr "Fraktál törlése"
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:844
 msgid "Edit fractal name"
-msgstr "Fraktál nevének szerkesztése"
+msgstr "Fraktálnév szerkesztése"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:866
 msgid "Fractal name:"
-msgstr "Fraktál neve:"
+msgstr "Fraktálnév:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:890
 msgid "New Fractal"
@@ -534,7 +529,7 @@ msgstr "Új fraktál"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1170
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "A következő fájl nem Fraktálböngésző fájl: '%s'"
+msgstr "A(z) '%s' fájl nem Fraktálböngésző fájl"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1179
 #, c-format
@@ -542,7 +537,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"A következő fájl hibás: '%s' .\n"
+"A(z) '%s' fájl hibás.\n"
 "A hiba helye: %d. sor, 'Option' szekció hibás"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1229
@@ -571,13 +566,12 @@ msgid "Add FractalExplorer Path"
 msgstr "FractalExplorer elérési útvonal hozzáadása"
 
 #: plug-ins/Lighting/lighting_apply.c:103
-#, fuzzy
 msgid "Lighting Effects..."
-msgstr "Világítás hatásai"
+msgstr "Fényhatások..."
 
 #: plug-ins/Lighting/lighting_main.c:167
 msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-msgstr "<Image>/Szűrők/Fényeffektusok/_Fényhatások..."
+msgstr "<Image>/Szűrők/Fényhatások/_Fényhatások..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:333 plug-ins/MapObject/mapobject_ui.c:532
@@ -612,52 +606,46 @@ msgstr "Általános beállítások"
 #. NULL);
 #.
 #: plug-ins/Lighting/lighting_ui.c:368
-#, fuzzy
 msgid "T_ransparent Background"
-msgstr "Átlátszó háttér"
+msgstr "Á_tlátszó háttér"
 
 #: plug-ins/Lighting/lighting_ui.c:378
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:381
-#, fuzzy
 msgid "Cre_ate New Image"
-msgstr "Új kép létrehozása"
+msgstr "Új kép létrehozás_a"
 
 #: plug-ins/Lighting/lighting_ui.c:391 plug-ins/MapObject/mapobject_ui.c:603
 msgid "Create a new image when applying filter"
-msgstr "Új kép létrehozása szűrő alkalmazásakoz"
+msgstr "Új kép létrehozása szűrő alkalmazásakor"
 
 #: plug-ins/Lighting/lighting_ui.c:393
-#, fuzzy
 msgid "High _Quality Preview"
-msgstr "Jó minőségű előnézet"
+msgstr "_Jó minőségű előnézet"
 
 #: plug-ins/Lighting/lighting_ui.c:403
 msgid "Enable/disable high quality preview"
 msgstr "Jó minőségű előnézet ki- és bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:413
-#, fuzzy
 msgid "E_nable Antialiasing"
-msgstr "Élsimítás bekapcsolása"
+msgstr "É_lsimítás bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:434 plug-ins/MapObject/mapobject_ui.c:636
 #: plug-ins/common/bumpmap.c:1070 plug-ins/common/emboss.c:554
 #: plug-ins/common/fractaltrace.c:845 plug-ins/common/struc.c:1296
-#, fuzzy
 msgid "_Depth:"
-msgstr "Mélység:"
+msgstr "_Mélység:"
 
 #: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Élsimítás minősége. Minnél magasabb, annál jobb, de lassabb"
 
 #: plug-ins/Lighting/lighting_ui.c:444
-#, fuzzy
 msgid "T_hreshold:"
-msgstr "Küszöb:"
+msgstr "_Küszöb:"
 
 #: plug-ins/Lighting/lighting_ui.c:447 plug-ins/Lighting/lighting_ui.c:463
 #: plug-ins/MapObject/mapobject_ui.c:656
@@ -681,9 +669,8 @@ msgid "Point"
 msgstr "Pont"
 
 #: plug-ins/Lighting/lighting_ui.c:514
-#, fuzzy
 msgid "L_ight Type:"
-msgstr "Fény típusa:"
+msgstr "Fény _típusa:"
 
 #: plug-ins/Lighting/lighting_ui.c:517 plug-ins/MapObject/mapobject_ui.c:707
 msgid "Type of light source to apply"
@@ -694,9 +681,8 @@ msgid "Select Lightsource Color"
 msgstr "Add meg a fényforrás színét"
 
 #: plug-ins/Lighting/lighting_ui.c:530
-#, fuzzy
 msgid "Lig_ht Color:"
-msgstr "Fény színe:"
+msgstr "Fény _színe:"
 
 #: plug-ins/Lighting/lighting_ui.c:534 plug-ins/MapObject/mapobject_ui.c:722
 msgid "Set light source color"
@@ -711,9 +697,8 @@ msgstr "Helyzet"
 #: plug-ins/Lighting/lighting_ui.c:554 plug-ins/common/flarefx.c:740
 #: plug-ins/common/nova.c:463 plug-ins/common/papertile.c:270
 #: plug-ins/flame/flame.c:1178 plug-ins/gflare/gflare.c:2650
-#, fuzzy
 msgid "_X:"
-msgstr "X:"
+msgstr "_X:"
 
 #: plug-ins/Lighting/lighting_ui.c:565 plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X position in XYZ space"
@@ -723,18 +708,16 @@ msgstr "A fényforrás X helyzete az XYZ térben"
 #: plug-ins/common/nova.c:484 plug-ins/common/papertile.c:279
 #: plug-ins/common/svg.c:801 plug-ins/common/xbm.c:1241
 #: plug-ins/flame/flame.c:1192 plug-ins/gflare/gflare.c:2654
-#, fuzzy
 msgid "_Y:"
-msgstr "Y:"
+msgstr "_Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:582 plug-ins/MapObject/mapobject_ui.c:763
 msgid "Light source Y position in XYZ space"
 msgstr "A fényforrás Y helyzete az XYZ térben"
 
 #: plug-ins/Lighting/lighting_ui.c:588
-#, fuzzy
 msgid "_Z:"
-msgstr "Z:"
+msgstr "_Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:777
 msgid "Light source Z position in XYZ space"
@@ -786,19 +769,16 @@ msgid "Intensity Levels"
 msgstr "Intenzitás mértéke"
 
 #: plug-ins/Lighting/lighting_ui.c:702
-#, fuzzy
 msgid "_Ambient:"
-msgstr "Ambiens:"
+msgstr "_Ambiens:"
 
 #: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:887
 msgid "Amount of original color to show where no direct light falls"
-msgstr ""
-"Az eredeti szín megjelenő mennyisége, ott, ahova nem esik közvetlenül fény"
+msgstr "Az eredeti szín megjelenő mennyisége, ott, ahova nem esik közvetlenül fény"
 
 #: plug-ins/Lighting/lighting_ui.c:732
-#, fuzzy
 msgid "_Diffuse:"
-msgstr "Szórt:"
+msgstr "_Szórt:"
 
 #: plug-ins/Lighting/lighting_ui.c:750 plug-ins/MapObject/mapobject_ui.c:913
 msgid "Intensity of original color when lit by a light source"
@@ -809,14 +789,12 @@ msgid "Reflectivity"
 msgstr "Fényvisszaverés"
 
 #: plug-ins/Lighting/lighting_ui.c:776
-#, fuzzy
 msgid "D_iffuse:"
-msgstr "Szórt:"
+msgstr "S_zórt:"
 
 #: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
+msgstr "Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
 
 #: plug-ins/Lighting/lighting_ui.c:807
 #, fuzzy
@@ -828,27 +806,24 @@ msgid "Controls how intense the highlights will be"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:838
-#, fuzzy
 msgid "_Highlight:"
-msgstr "Magasság:"
+msgstr "_Kiemelés:"
 
 #: plug-ins/Lighting/lighting_ui.c:856 plug-ins/MapObject/mapobject_ui.c:1005
 msgid "Higher values makes the highlights more focused"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:890
-#, fuzzy
 msgid "E_nable Bump Mapping"
-msgstr "xxxHepehupás leképezés bekapcsolása"
+msgstr "_Hepehupás leképezés bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:904
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "xxxHepehupás leképezés ki- és bekapcsolása"
+msgstr "Hepehupás leképezés ki- és bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:922
-#, fuzzy
 msgid "Bumpm_ap Image:"
-msgstr "A leképezés forrása (kép):"
+msgstr "A leképezés _forrása (kép):"
 
 #: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:706
 msgid "Linear"
@@ -860,48 +835,43 @@ msgstr "Logaritmikus"
 
 #: plug-ins/Lighting/lighting_ui.c:931 plug-ins/flame/flame.c:707
 msgid "Sinusoidal"
-msgstr "Sinusos"
+msgstr "Szinuszos"
 
 #: plug-ins/Lighting/lighting_ui.c:932 plug-ins/flame/flame.c:708
 msgid "Spherical"
-msgstr "Szferikus"
+msgstr "Gömbölyű"
 
 #: plug-ins/Lighting/lighting_ui.c:935
-#, fuzzy
 msgid "Cu_rve:"
-msgstr "Görbe:"
+msgstr "Gö_rbe:"
 
 #: plug-ins/Lighting/lighting_ui.c:941
-#, fuzzy
 msgid "Ma_ximum Height:"
-msgstr "Maximális magaság:"
+msgstr "Ma_ximális magaság:"
 
 #: plug-ins/Lighting/lighting_ui.c:951
 msgid "Maximum height for bumps"
 msgstr "Hepehupák legnagyobb magassága"
 
 #: plug-ins/Lighting/lighting_ui.c:976
-#, fuzzy
 msgid "E_nable Environment Mapping"
-msgstr "xxxKörnyezet leképezése"
+msgstr "Kö_rnyezeti leképezés bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:990
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr ""
+msgstr "Környezeti leképezés (visszaverődés) ki- és bekapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:1008
-#, fuzzy
 msgid "En_vironment Image:"
-msgstr "xxxKörnyezet kép:"
+msgstr "Kör_nyezeti kép:"
 
 #: plug-ins/Lighting/lighting_ui.c:1012
 msgid "Environment image to use"
-msgstr "Használandó környezet kép"
+msgstr "Használandó környezeti kép"
 
 #: plug-ins/Lighting/lighting_ui.c:1035
-#, fuzzy
 msgid "Op_tions"
-msgstr "Beállítások"
+msgstr "Beállí_tások"
 
 #: plug-ins/Lighting/lighting_ui.c:1039 plug-ins/MapObject/mapobject_ui.c:1334
 #, fuzzy
@@ -919,9 +889,8 @@ msgid "_Bump Map"
 msgstr "xxxHepehupás leképezés"
 
 #: plug-ins/Lighting/lighting_ui.c:1051
-#, fuzzy
 msgid "_Environment Map"
-msgstr "xxxKörnyezet leképezése"
+msgstr "_Környezeti leképezés"
 
 #: plug-ins/Lighting/lighting_ui.c:1094
 msgid "Lighting Effects"
@@ -929,28 +898,24 @@ msgstr "Világítás hatásai"
 
 #: plug-ins/Lighting/lighting_ui.c:1148 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
-#, fuzzy
 msgid "_Update"
-msgstr "Előnézet frissítése"
+msgstr "_Frissítés"
 
 #: plug-ins/Lighting/lighting_ui.c:1155 plug-ins/MapObject/mapobject_ui.c:1438
 msgid "Recompute preview image"
 msgstr "Az előnézet újraszámolása"
 
 #: plug-ins/Lighting/lighting_ui.c:1157
-#, fuzzy
 msgid "I_nteractive"
-msgstr "Váltottsoros"
+msgstr "I_nteraktív"
 
 #: plug-ins/Lighting/lighting_ui.c:1172
-#, fuzzy
 msgid "Enable/disable real time preview of changes"
-msgstr "Jó minőségű előnézet ki- és bekapcsolása"
+msgstr "Változások valósidejű előnézetének be- és kikapcsolása"
 
 #: plug-ins/Lighting/lighting_ui.c:1175
-#, fuzzy
 msgid "Preview Options"
-msgstr "Mentés beállításai"
+msgstr "Előnézet beállításai"
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -963,9 +928,8 @@ msgstr "_Doboz"
 
 #: plug-ins/MapObject/mapobject_ui.c:281
 #: plug-ins/MapObject/mapobject_ui.c:1354
-#, fuzzy
 msgid "C_ylinder"
-msgstr "Henger"
+msgstr "_Henger"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
@@ -1012,9 +976,8 @@ msgid "Create New Image"
 msgstr "Új kép létrehozása"
 
 #: plug-ins/MapObject/mapobject_ui.c:611
-#, fuzzy
 msgid "Enable _Antialiasing"
-msgstr "Élsimítás bekapcsolása"
+msgstr "Élsimítás bek_apcsolása"
 
 #: plug-ins/MapObject/mapobject_ui.c:618
 msgid "Enable/disable jagged edges removal (antialiasing)"
@@ -1022,9 +985,8 @@ msgstr "Ki- és bekapcsolja a recés szélek eltüntetését (élsimítás)"
 
 #: plug-ins/MapObject/mapobject_ui.c:648 plug-ins/common/unsharp.c:683
 #: plug-ins/common/wind.c:988 plug-ins/imagemap/imap_preferences.c:537
-#, fuzzy
 msgid "_Threshold:"
-msgstr "Küszöb:"
+msgstr "_Küszöbszint:"
 
 #: plug-ins/MapObject/mapobject_ui.c:698
 msgid "Point Light"
@@ -1093,29 +1055,29 @@ msgstr "Elfordulás szöge az Z tengely körül"
 
 #: plug-ins/MapObject/mapobject_ui.c:1140
 msgid "Front:"
-msgstr ""
+msgstr "Elülső oldal:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1140
 msgid "Back:"
-msgstr ""
+msgstr "Hátsó oldal:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:526
+#: plug-ins/print/gimp_main_window.c:523
 msgid "Top:"
-msgstr ""
+msgstr "Felső:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:567
+#: plug-ins/print/gimp_main_window.c:564
 msgid "Bottom:"
-msgstr ""
+msgstr "Alsó:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:513
+#: plug-ins/print/gimp_main_window.c:510
 msgid "Left:"
 msgstr "Bal:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:539
+#: plug-ins/print/gimp_main_window.c:536
 msgid "Right:"
 msgstr "Jobb:"
 
@@ -1141,21 +1103,19 @@ msgid "Z scale (size)"
 msgstr "Z skála (méret)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1240
-#, fuzzy
 msgid "_Top:"
-msgstr "Típus:"
+msgstr "_Fent:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1240
-#, fuzzy
 msgid "_Bottom:"
-msgstr "Nagyítás:"
+msgstr "_Lent:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1245
 msgid "Images for the Cap Faces"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1274
-#: plug-ins/print/gimp_main_window.c:1119
+#: plug-ins/print/gimp_main_window.c:1116
 msgid "Size"
 msgstr "Méret"
 
@@ -1169,18 +1129,16 @@ msgid "Cylinder radius"
 msgstr "Henger sugara"
 
 #: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
-#, fuzzy
 msgid "L_ength:"
-msgstr "Hossz:"
+msgstr "_Hossz:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1303
 msgid "Cylinder length"
 msgstr "Henger hossza"
 
 #: plug-ins/MapObject/mapobject_ui.c:1330
-#, fuzzy
 msgid "O_ptions"
-msgstr "Beállítások"
+msgstr "_Beállítások"
 
 #: plug-ins/MapObject/mapobject_ui.c:1342
 #, fuzzy
@@ -1192,9 +1150,8 @@ msgid "Map to Object"
 msgstr "Leképezés tárgyra"
 
 #: plug-ins/MapObject/mapobject_ui.c:1429 plug-ins/common/diffraction.c:479
-#, fuzzy
 msgid "_Preview!"
-msgstr "Előnézet!"
+msgstr "_Előnézet!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1452
 msgid "Zoom out (make image smaller)"
@@ -1214,9 +1171,8 @@ msgid "Show/hide preview wireframe"
 msgstr "Drótvázas előnézet mutatása/elrejtése"
 
 #: plug-ins/bmp/bmpread.c:87
-#, fuzzy
 msgid "Bad colormap"
-msgstr "%s: rossz színtérkép"
+msgstr "Rossz színtérkép"
 
 #. Set up progress display
 #. put up a progress bar
@@ -1237,16 +1193,16 @@ msgstr "%s: rossz színtérkép"
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
 #: plug-ins/xjt/xjt.c:3321
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s'..."
-msgstr "%s megnyitása"
+msgstr "'%s' megnyitása..."
 
 #: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
 #: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
 #: plug-ins/bmp/bmpread.c:172 plug-ins/bmp/bmpread.c:307
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid BMP file"
-msgstr "%s: %s nem érvényes BMP fájl"
+msgstr "'%s' nem érvényes BMP fájl"
 
 #: plug-ins/bmp/bmpread.c:185 plug-ins/bmp/bmpread.c:204
 #: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
@@ -1306,9 +1262,9 @@ msgstr "PS: nem tudok ismeretlen képtípusokat kezelni"
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'..."
-msgstr "%s betöltése:"
+msgstr "'%s' mentése..."
 
 #: plug-ins/bmp/bmpwrite.c:554
 msgid "Save as BMP"
@@ -1406,8 +1362,7 @@ msgid "Use cosine-function for green component."
 msgstr "Cosinus függvény használata a zöld komponensnél."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Zöld csatorna: lineáris leképezés használata trigonometrikus függvények "
 "helyett "
@@ -1421,8 +1376,7 @@ msgid "Use cosine-function for blue component."
 msgstr "Cosinus függvény használata a kék komponensnél."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Kék csatorna: Lineáris leképezés használata trigonometrikus függvények "
 "helyett"
@@ -1444,22 +1398,20 @@ msgid "AlienMap2"
 msgstr "AlienMap2"
 
 #: plug-ins/common/AlienMap2.c:1194
-#, fuzzy
 msgid "R/H-_Frequency:"
-msgstr "V/Sz-frekvencia:"
+msgstr "V/Á-_frekvencia:"
 
 #: plug-ins/common/AlienMap2.c:1197
 msgid "Change frequency of the red/hue channel"
-msgstr "A Vörös/Színezet csatorna frekvenciájának módosítása"
+msgstr "A Vörös/Árnyalat csatorna frekvenciájának módosítása"
 
 #: plug-ins/common/AlienMap2.c:1204
-#, fuzzy
 msgid "R/H-_Phaseshift:"
-msgstr "V/Sz-fáziseltolás"
+msgstr "V/Á-fá_ziseltolás:"
 
 #: plug-ins/common/AlienMap2.c:1207
 msgid "Change angle of the red/hue channel"
-msgstr "A Vörös/Színezet csatorna szögének megváltoztatása"
+msgstr "A Vörös/Árnyalat csatorna szögének megváltoztatása"
 
 #: plug-ins/common/AlienMap2.c:1214
 #, fuzzy
@@ -1510,15 +1462,15 @@ msgstr "_RGB színmodell"
 
 #: plug-ins/common/AlienMap2.c:1260
 msgid "_HSL Color Model"
-msgstr "_HSL színmodel"
+msgstr "_HSL színmodell"
 
 #: plug-ins/common/AlienMap2.c:1272
 msgid "_Modify Red/Hue Channel"
-msgstr "Vörös/Színezet csatorna _módosítása"
+msgstr "Vörös/Árnyalat csatorna _módosítása"
 
 #: plug-ins/common/AlienMap2.c:1277
 msgid "Use function for red/hue component"
-msgstr "Függvény használata a vörös/színezet komponenshez"
+msgstr "Függvény használata a vörös/árnyalat komponenshez"
 
 #: plug-ins/common/AlienMap2.c:1284
 #, fuzzy
@@ -1547,9 +1499,8 @@ msgid "Load KISS Palette"
 msgstr "KISS paletta betöltése"
 
 #: plug-ins/common/CEL.c:349
-#, fuzzy
 msgid "Can't create a new image"
-msgstr "CEL Új kép létrehozása sikertelen"
+msgstr "Nem lehet új képet létrehozni"
 
 #: plug-ins/common/CEL.c:438
 #, fuzzy, c-format
@@ -1665,7 +1616,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1593
-#: plug-ins/print/gimp_main_window.c:1648
+#: plug-ins/print/gimp_main_window.c:1645
 msgid "Standard"
 msgstr "Szabványos"
 
@@ -1749,7 +1700,7 @@ msgstr "Véletlen ebből a kiindulóértékből (megosztott)"
 #: plug-ins/gimpressionist/orientation.c:162
 #: plug-ins/gimpressionist/size.c:146
 msgid "Hue"
-msgstr "Színezet"
+msgstr "Árnyalat"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:141
 #: plug-ins/fp/fp_gtk.c:489 plug-ins/rcm/rcm_dialog.c:534
@@ -1788,24 +1739,20 @@ msgstr "Új kiindulóérték"
 
 #: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
-#, fuzzy
 msgid "_Hue"
-msgstr "Színezet"
+msgstr "Á_rnyalat"
 
 #: plug-ins/common/CML_explorer.c:1283
-#, fuzzy
 msgid "Sat_uration"
-msgstr "Telítettség"
+msgstr "_Telítettség"
 
 #: plug-ins/common/CML_explorer.c:1287 plug-ins/fp/fp_gtk.c:298
-#, fuzzy
 msgid "_Value"
-msgstr "Érték:"
+msgstr "É_rték"
 
 #: plug-ins/common/CML_explorer.c:1291
-#, fuzzy
 msgid "_Advanced"
-msgstr "Haladó"
+msgstr "_Haladó"
 
 #: plug-ins/common/CML_explorer.c:1304
 msgid "Channel Independed Parameters"
@@ -1824,6 +1771,7 @@ msgid "Start Offset:"
 msgstr "Kezdőérték eltolása:"
 
 #: plug-ins/common/CML_explorer.c:1374
+#, fuzzy
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr "Véletlenszám-generálás kiindulóértéke (csak a \"\""
 
@@ -1876,9 +1824,8 @@ msgid "Source Channel in File:"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1534
-#, fuzzy
 msgid "_Misc Ops."
-msgstr "Egyébb műveletek"
+msgstr "_Egyéb beállítások"
 
 #: plug-ins/common/CML_explorer.c:1620
 msgid "Function Type:"
@@ -1958,27 +1905,25 @@ msgstr "Figyelmeztetés: a forrás- és célcsatornák megegyeznek."
 
 #: plug-ins/common/CML_explorer.c:2075
 msgid "Save Parameters to"
-msgstr "Paraméterek mentése ide fájlba"
+msgstr "Paraméterek mentése ebbe a fájlba:"
 
 #: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were Saved to '%s'"
-msgstr ""
-"A paraméterek elmentve e következő fájlba:\n"
-"'%s'"
+msgstr "A paraméterek elmentve a következő fájlba: '%s'"
 
 #: plug-ins/common/CML_explorer.c:2210
 msgid "CML File Operation Warning"
 msgstr "CML fájlművelet figyelmeztetés"
 
 #: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
 msgstr ""
-"%s\n"
-"létezik, felülírjam?"
+"'%s' fájl már létezik.\n"
+"Felülírja?"
 
 #: plug-ins/common/CML_explorer.c:2267
 msgid "Load Parameters from"
@@ -1993,19 +1938,18 @@ msgid "Error: it's not CML parameter file."
 msgstr "Hiba: nem CML paraméterfájl"
 
 #: plug-ins/common/CML_explorer.c:2370
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "Figyelmeztetés: ez egy régi formátumfájl"
+msgstr "Figyelmeztetés: '%s' egy régi formátumú fájl"
 
 #: plug-ins/common/CML_explorer.c:2373
 #, fuzzy, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Figyelmeztetés: Hmmmm, ez a paraméterfájl újabb CML_explorer-hez készült."
+msgstr "Figyelmeztetés: Hmmmm, ez a paraméterfájl újabb CML_explorer-hez készült."
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
-msgstr "Hiba: paraméterek betöltése sikertlen"
+msgstr "Hiba: paraméterek betöltése sikertelen"
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:341
@@ -2024,7 +1968,7 @@ msgstr "<Image>/Réteg/_Látható rétegek igazítása..."
 
 #: plug-ins/common/align_layers.c:176
 msgid "There are not enough layers to align."
-msgstr ""
+msgstr "Nincs elég réteg az igazításhoz."
 
 #: plug-ins/common/align_layers.c:401
 msgid "Align Visible Layers"
@@ -2094,7 +2038,7 @@ msgstr "Paraméterek beállítása"
 
 #: plug-ins/common/align_layers.c:427 plug-ins/common/align_layers.c:455
 msgid "Collect"
-msgstr ""
+msgstr "Összegyűjtés"
 
 #: plug-ins/common/align_layers.c:428
 msgid "Fill (left to right)"
@@ -2127,9 +2071,8 @@ msgid "Right Edge"
 msgstr "Jobb szél"
 
 #: plug-ins/common/align_layers.c:447
-#, fuzzy
 msgid "Ho_rizontal Base:"
-msgstr "Vízszintes alap:"
+msgstr "Vízszintes _alap:"
 
 #: plug-ins/common/align_layers.c:456
 msgid "Fill (top to bottom)"
@@ -2140,9 +2083,8 @@ msgid "Fill (bottom to top)"
 msgstr "Kitöltés (lentről fel)"
 
 #: plug-ins/common/align_layers.c:462
-#, fuzzy
 msgid "_Vertical Style:"
-msgstr "Függőleges stílus:"
+msgstr "_Függőleges stílus:"
 
 #: plug-ins/common/align_layers.c:469
 msgid "Top Edge"
@@ -2153,24 +2095,20 @@ msgid "Bottom Edge"
 msgstr "Alsó szél"
 
 #: plug-ins/common/align_layers.c:475
-#, fuzzy
 msgid "Ver_tical Base:"
-msgstr "Függőleges alap:"
+msgstr "Függőleges a_lap:"
 
 #: plug-ins/common/align_layers.c:479
-#, fuzzy
 msgid "_Ignore the Bottom Layer even if Visible"
-msgstr "A legalsó réteget figyelmen kívül hagyja, akkor is, ha láthtó"
+msgstr "A legalsó réteg figyelmen _kívül hagyása akkor is, ha látható"
 
 #: plug-ins/common/align_layers.c:489
-#, fuzzy
 msgid "_Use the (Invisible) Bottom Layer as the Base"
-msgstr "A legalsó (láthatatlan) réteg használata alapként"
+msgstr "A le_galsó (láthatatlan) réteg használata alapként"
 
 #: plug-ins/common/align_layers.c:500
-#, fuzzy
 msgid "_Grid Size:"
-msgstr "Rácsméret:"
+msgstr "_Rácsméret:"
 
 #: plug-ins/common/animationplay.c:243
 msgid "<Image>/Filters/Animation/_Playback..."
@@ -2197,9 +2135,9 @@ msgid "Step"
 msgstr "Léptetés"
 
 #: plug-ins/common/animationplay.c:1241
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d of %d"
-msgstr "%v/%u képkocka"
+msgstr "%d / %d képkocka"
 
 #: plug-ins/common/animoptimize.c:196
 msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
@@ -2320,9 +2258,8 @@ msgstr "_Függőleges"
 
 #: plug-ins/common/blinds.c:321 plug-ins/common/fractaltrace.c:786
 #: plug-ins/common/papertile.c:368
-#, fuzzy
 msgid "_Transparent"
-msgstr "Átlátszó"
+msgstr "Á_tlátszó"
 
 #: plug-ins/common/blinds.c:349
 #, fuzzy
@@ -2346,31 +2283,25 @@ msgid "Blurring..."
 msgstr "Elmosás..."
 
 #: plug-ins/common/blur.c:590
-#, fuzzy
 msgid "Blur"
-msgstr "Kék"
+msgstr "Elmosás"
 
 #: plug-ins/common/blur.c:619 plug-ins/common/randomize.c:740
 #: plug-ins/common/snoise.c:529
-#, fuzzy
 msgid "_Random Seed:"
-msgstr ""
-"Véletlenszám-generálás\n"
-"kiindulópontja:"
+msgstr "_Véletlenszám-generálás kiindulóértéke:"
 
 #: plug-ins/common/blur.c:628
-#, fuzzy
 msgid "R_andomization %:"
-msgstr "Véletleszerűség %-a:"
+msgstr "Véletle_nszerűség %-a:"
 
 #: plug-ins/common/blur.c:631 plug-ins/common/randomize.c:752
 msgid "Percentage of pixels to be filtered"
 msgstr "A szűrendő képpontok százaléka"
 
 #: plug-ins/common/blur.c:640 plug-ins/common/randomize.c:761
-#, fuzzy
 msgid "R_epeat:"
-msgstr "Ismétlés:"
+msgstr "_Ismétlés:"
 
 #: plug-ins/common/blur.c:643 plug-ins/common/randomize.c:764
 msgid "Number of times to apply filter"
@@ -2425,14 +2356,12 @@ msgid "Map Type"
 msgstr "Leképezés típusa"
 
 #: plug-ins/common/bumpmap.c:964
-#, fuzzy
 msgid "_Linear Map"
-msgstr "Lineáris leképezés"
+msgstr "_Lineáris leképezés"
 
 #: plug-ins/common/bumpmap.c:965
-#, fuzzy
 msgid "_Spherical Map"
-msgstr "Szferikus leképezés"
+msgstr "_Gömbölyű leképezés"
 
 #: plug-ins/common/bumpmap.c:966
 #, fuzzy
@@ -2467,9 +2396,8 @@ msgid "_Azimuth:"
 msgstr "Mérték:"
 
 #: plug-ins/common/bumpmap.c:1061
-#, fuzzy
 msgid "_Elevation:"
-msgstr "Rövidítés:"
+msgstr "M_egemelés:"
 
 #: plug-ins/common/bumpmap.c:1081
 msgid "_X Offset:"
@@ -2520,9 +2448,8 @@ msgstr ""
 
 #. set up frame
 #: plug-ins/common/ccanalyze.c:568
-#, fuzzy
 msgid "Results"
-msgstr "VisszaállÍtás"
+msgstr "Eredmények"
 
 #. output results
 #: plug-ins/common/ccanalyze.c:592 plug-ins/imagemap/imap_cmd_guides.c:228
@@ -2531,18 +2458,17 @@ msgid "Image dimensions: %d x %d"
 msgstr "Kép mérete: %d x %d"
 
 #: plug-ins/common/ccanalyze.c:595
-#, fuzzy
 msgid "No colors"
-msgstr "Erre a színre"
+msgstr "Nincs szín"
 
 #: plug-ins/common/ccanalyze.c:597
 msgid "Only one unique color"
 msgstr ""
 
 #: plug-ins/common/ccanalyze.c:599
-#, fuzzy, c-format
+#, c-format
 msgid "Number of unique colors: %d"
-msgstr "Színek száma:"
+msgstr "Egyedi színek száma: %d"
 
 #: plug-ins/common/ccanalyze.c:602
 #, c-format
@@ -2650,7 +2576,7 @@ msgstr "Színezés"
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
 #: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1420
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
 msgstr "Szín"
 
@@ -2706,7 +2632,7 @@ msgstr "HSV"
 #. Gray: Circle: Spinbutton 1
 #: plug-ins/common/compose.c:151 plug-ins/rcm/rcm_dialog.c:447
 msgid "Hue:"
-msgstr "Színezet:"
+msgstr "Árnyalat:"
 
 #. Gray: Circle: Spinbutton 2
 #: plug-ins/common/compose.c:152 plug-ins/print/gimp_color_window.c:359
@@ -2817,19 +2743,17 @@ msgid "Drawables have different size"
 msgstr "compose: A rajzterületek mérete nem egyezik meg"
 
 #: plug-ins/common/compose.c:498
-#, fuzzy
 msgid "Images have different size"
-msgstr "compose: A képek mérete nem egyezik meg"
+msgstr "A képek mérete különböző"
 
 #: plug-ins/common/compose.c:512
-#, fuzzy
 msgid "Error in getting layer IDs"
-msgstr "compose: hiba a rétegazonosítók olvasásáakor"
+msgstr "Hiba a rétegazonosítók megszerzésekor"
 
 #: plug-ins/common/compose.c:529
-#, fuzzy, c-format
+#, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr "compose: A kép nem szürkeárnyalatos (bpp=%d)"
+msgstr "A kép nem szürkeárnyalatos (bpp=%d)"
 
 #: plug-ins/common/compose.c:1090
 msgid "Compose"
@@ -2869,9 +2793,8 @@ msgid "_Alpha"
 msgstr "_Alfa"
 
 #: plug-ins/common/convmatrix.c:96
-#, fuzzy
 msgid "E_xtend"
-msgstr "Kiterjeszt"
+msgstr "K_iterjesztés"
 
 #: plug-ins/common/convmatrix.c:97 plug-ins/common/displace.c:374
 #: plug-ins/common/edge.c:696 plug-ins/common/ripple.c:491
@@ -2984,19 +2907,16 @@ msgid "Cubism"
 msgstr "Kubizmus"
 
 #: plug-ins/common/cubism.c:276
-#, fuzzy
 msgid "_Use Background Color"
-msgstr "Háttérsuín használata"
+msgstr "_Háttérszín használata"
 
 #: plug-ins/common/cubism.c:289
-#, fuzzy
 msgid "_Tile Size:"
-msgstr "Csempe méret:"
+msgstr "Csempe mére_te:"
 
 #: plug-ins/common/cubism.c:299
-#, fuzzy
 msgid "T_ile Saturation:"
-msgstr "Csempe telítettsége:"
+msgstr "_Csempe telítettsége:"
 
 #: plug-ins/common/cubism.c:357
 msgid "Cubistic Transformation"
@@ -3031,9 +2951,8 @@ msgstr "Előnézet"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1311
-#, fuzzy
 msgid "Automatic Pre_view"
-msgstr "Előnézet frissítése"
+msgstr "Automatikus _előnézet"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
@@ -3045,22 +2964,19 @@ msgstr "Beállítások"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1336
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "Forgatás:"
+msgstr "F_orgatás:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1354
-#, fuzzy
 msgid "Smoo_thing"
-msgstr "Simítás"
+msgstr "Simí_tás"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:534 plug-ins/common/ripple.c:451
-#, fuzzy
 msgid "_Antialiasing"
-msgstr "Élsimítás"
+msgstr "É_lsimítás"
 
 #. The wor_on_copy toggle
 #: plug-ins/common/curve_bend.c:1374
@@ -3089,9 +3005,8 @@ msgid "_Lower"
 msgstr "Alsó"
 
 #: plug-ins/common/curve_bend.c:1428
-#, fuzzy
 msgid "Curve Type"
-msgstr "Hullám típusa"
+msgstr "Görbe típusa"
 
 #: plug-ins/common/curve_bend.c:1432
 #, fuzzy
@@ -3099,15 +3014,13 @@ msgid "Smoot_h"
 msgstr "Sima"
 
 #: plug-ins/common/curve_bend.c:1433
-#, fuzzy
 msgid "_Free"
-msgstr "Szabad"
+msgstr "_Szabad"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1448
-#, fuzzy
 msgid "_Copy"
-msgstr "Másolás"
+msgstr "_Másolás"
 
 #: plug-ins/common/curve_bend.c:1453
 msgid "Copy the active curve to the other border"
@@ -3115,9 +3028,8 @@ msgstr ""
 
 #. The CopyInv button
 #: plug-ins/common/curve_bend.c:1460
-#, fuzzy
 msgid "_Mirror"
-msgstr "Hiba"
+msgstr "_Tükrözés"
 
 #: plug-ins/common/curve_bend.c:1465
 msgid "Mirror the active curve to the other border"
@@ -3138,18 +3050,16 @@ msgid "Reset the active curve"
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:1506
-#, fuzzy
 msgid "Load the curves from a file"
-msgstr "Görbe pontjai betöltése fájlból"
+msgstr "Görbék betöltése fájlból"
 
 #: plug-ins/common/curve_bend.c:1518
-#, fuzzy
 msgid "Save the curves to a file"
-msgstr "Görbe pontjai mentése fájlba"
+msgstr "Görbék mentése fájlba"
 
 #: plug-ins/common/curve_bend.c:2055
 msgid "Load Curve Points from file"
-msgstr "Görbe pontjai betöltése fájlból"
+msgstr "Görbe pontjainak betöltése fájlból"
 
 #: plug-ins/common/curve_bend.c:2082
 msgid "Save Curve Points to file"
@@ -3180,7 +3090,7 @@ msgstr "alfa"
 
 #: plug-ins/common/decompose.c:137 plug-ins/common/decompose.c:140
 msgid "hue"
-msgstr "színezet"
+msgstr "árnyalat"
 
 #: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:141
 msgid "saturation"
@@ -3332,11 +3242,11 @@ msgstr ""
 
 #: plug-ins/common/deinterlace.c:302
 msgid "Keep O_dd Fields"
-msgstr ""
+msgstr "Pára_tlan mezők megtartása"
 
 #: plug-ins/common/deinterlace.c:303
 msgid "Keep _Even Fields"
-msgstr ""
+msgstr "Páro_s mezők megtartása"
 
 #: plug-ins/common/depthmerge.c:199
 #, fuzzy
@@ -3427,37 +3337,31 @@ msgid "Type"
 msgstr "Típus"
 
 #: plug-ins/common/despeckle.c:703
-#, fuzzy
 msgid "_Adaptive"
-msgstr "Adaptív"
+msgstr "_Adaptív"
 
 #: plug-ins/common/despeckle.c:713
-#, fuzzy
 msgid "R_ecursive"
-msgstr "Rekurzív"
+msgstr "R_ekurzív"
 
 #: plug-ins/common/despeckle.c:739 plug-ins/common/nlfilt.c:382
 #: plug-ins/common/nova.c:364 plug-ins/common/unsharp.c:665
 #: plug-ins/common/whirlpinch.c:728 plug-ins/gflare/gflare.c:2685
 #: plug-ins/imagemap/imap_circle.c:279
-#, fuzzy
 msgid "_Radius:"
-msgstr "Sugár:"
+msgstr "Sugá_r:"
 
 #: plug-ins/common/despeckle.c:752
-#, fuzzy
 msgid "_Black Level:"
-msgstr "Fekete szint:"
+msgstr "_Fekete szint:"
 
 #: plug-ins/common/despeckle.c:765
-#, fuzzy
 msgid "_White Level:"
-msgstr "Fehér szint:"
+msgstr "_Fehér szint:"
 
 #: plug-ins/common/destripe.c:155
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Des_tripe..."
-msgstr "<Image>/Szűrők/Kiemelés/Csíktalanítás..."
+msgstr "<Image>/Szűrők/Kiemelés/Csík_talanítás..."
 
 #: plug-ins/common/destripe.c:355
 msgid "Destriping..."
@@ -3465,31 +3369,28 @@ msgstr "Csíktalanítás..."
 
 #: plug-ins/common/destripe.c:560
 msgid "Destripe"
-msgstr ""
+msgstr "Csíktalanítás"
 
 #: plug-ins/common/destripe.c:647
-#, fuzzy
 msgid "Create _Histogram"
-msgstr "Hisztogramm létrehozása"
+msgstr "_Hisztogram létrehozása"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
-#, fuzzy
 msgid "_Width:"
-msgstr "Szélesség:"
+msgstr "_Szélesség:"
 
 #: plug-ins/common/dicom.c:317
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a DICOM file."
-msgstr "A következő fájl nem Fraktálböngésző fájl: '%s'"
+msgstr "A(z) '%s' nem egy DCOM fájl."
 
 #: plug-ins/common/diffraction.c:184
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-msgstr "<Image>/Szűrők/Megjelenítés/Minta/Diffrakciós minták..."
+msgstr "<Image>/Szűrők/Megjelenítés/Minta/_Diffrakciós minták..."
 
 #: plug-ins/common/diffraction.c:336
 msgid "Creating diffraction pattern..."
@@ -3500,9 +3401,8 @@ msgid "Diffraction Patterns"
 msgstr "Diffrekciós minták"
 
 #: plug-ins/common/diffraction.c:531
-#, fuzzy
 msgid "_Frequencies"
-msgstr "Frekvenciók"
+msgstr "_Frekvenciák"
 
 #: plug-ins/common/diffraction.c:569
 #, fuzzy
@@ -3515,9 +3415,8 @@ msgid "_Sharp edges"
 msgstr "Éles szélek"
 
 #: plug-ins/common/diffraction.c:619 plug-ins/flame/flame.c:995
-#, fuzzy
 msgid "_Brightness:"
-msgstr "Féynesség:"
+msgstr "_Fényesség:"
 
 #: plug-ins/common/diffraction.c:628
 #, fuzzy
@@ -3525,19 +3424,16 @@ msgid "Sc_attering:"
 msgstr "Minta"
 
 #: plug-ins/common/diffraction.c:637
-#, fuzzy
 msgid "Po_latization:"
-msgstr "Polarizáció:"
+msgstr "Po_larizáció:"
 
 #: plug-ins/common/diffraction.c:645
-#, fuzzy
 msgid "O_ther options"
-msgstr "Egyéb beállítások"
+msgstr "Egyéb beállí_tások"
 
 #: plug-ins/common/displace.c:155
-#, fuzzy
 msgid "<Image>/Filters/Map/_Displace..."
-msgstr "<Image>/Szűrők/Leképezés/Elmozdítás..."
+msgstr "<Image>/Szűrők/Leképezés/Elmoz_dítás..."
 
 #: plug-ins/common/displace.c:227
 msgid "Displacing..."
@@ -3550,19 +3446,17 @@ msgstr "Elmozdítás"
 #. The main table
 #: plug-ins/common/displace.c:277
 msgid "Displace Options"
-msgstr ""
+msgstr "Elmozdítási beállítások"
 
 #. X options
 #: plug-ins/common/displace.c:288
-#, fuzzy
 msgid "_X Displacement:"
-msgstr "X elmozdulás:"
+msgstr "_X elmozdulás:"
 
 #. Y Options
 #: plug-ins/common/displace.c:325
-#, fuzzy
 msgid "_Y Displacement:"
-msgstr "Y elmozdulás:"
+msgstr "_Y elmozdulás:"
 
 #. =======================================================================
 #. Displacement Type
@@ -3572,16 +3466,14 @@ msgstr "A széleken:"
 
 #: plug-ins/common/displace.c:388 plug-ins/common/edge.c:706
 #: plug-ins/common/ripple.c:492 plug-ins/common/waves.c:321
-#, fuzzy
 msgid "_Smear"
-msgstr "Elken"
+msgstr "_Elkenés"
 
 #: plug-ins/common/displace.c:402 plug-ins/common/edge.c:716
 #: plug-ins/common/fractaltrace.c:788 plug-ins/common/newsprint.c:412
 #: plug-ins/common/ripple.c:493
-#, fuzzy
 msgid "_Black"
-msgstr "Fekete"
+msgstr "_Fekete"
 
 #: plug-ins/common/edge.c:152
 #, fuzzy
@@ -3598,9 +3490,8 @@ msgstr "Szélek felismerése"
 
 #. compression
 #: plug-ins/common/edge.c:651
-#, fuzzy
 msgid "Algorithm"
-msgstr "Logaritmikus"
+msgstr "Algoritmus"
 
 #: plug-ins/common/edge.c:655
 msgid "_Sobel"
@@ -3631,14 +3522,12 @@ msgid "_Laplace"
 msgstr "Laplace..."
 
 #: plug-ins/common/edge.c:680 plug-ins/common/unsharp.c:674
-#, fuzzy
 msgid "_Amount:"
-msgstr "Mérték:"
+msgstr "_Mérték:"
 
 #: plug-ins/common/emboss.c:154
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Emboss..."
-msgstr "<Image>/Szűrők/Torzítás/Emboss..."
+msgstr "<Image>/Szűrők/Torzítás/_Emboss..."
 
 #: plug-ins/common/emboss.c:397 plug-ins/common/emboss.c:490
 msgid "Emboss"
@@ -3668,9 +3557,8 @@ msgid "Do _Preview"
 msgstr "Előnézet készítése"
 
 #: plug-ins/common/engrave.c:106
-#, fuzzy
 msgid "<Image>/Filters/Distorts/En_grave..."
-msgstr "<Image>/Szűrők/Torzítás/Gravírozás..."
+msgstr "<Image>/Szűrők/Torzítás/_Gravírozás..."
 
 #: plug-ins/common/engrave.c:177
 msgid "Engraving..."
@@ -3688,16 +3576,14 @@ msgstr "Határvonal szélessége:"
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
 #: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
-#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
-#, fuzzy
 msgid "_Height:"
-msgstr "Magasság:"
+msgstr "_Magasság:"
 
 #: plug-ins/common/exchange.c:138
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-msgstr "<Image>/Szűrők/Színek/Leképezés/Színcsere..."
+msgstr "<Image>/Szűrők/Színek/Leképezés/_Színcsere..."
 
 #: plug-ins/common/exchange.c:240
 msgid "Color Exchange..."
@@ -3729,29 +3615,24 @@ msgid "Color Exchange: From Color"
 msgstr "Színcsere: kiindulási szín"
 
 #: plug-ins/common/exchange.c:431
-#, fuzzy
 msgid "R_ed Threshold:"
-msgstr "Vörös küszöb:"
+msgstr "_Vörös küszöb:"
 
 #: plug-ins/common/exchange.c:475
-#, fuzzy
 msgid "G_reen Threshold:"
-msgstr "Zöld küszöb:"
+msgstr "_Zöld küszöb:"
 
 #: plug-ins/common/exchange.c:519
-#, fuzzy
 msgid "B_lue Threshold:"
-msgstr "Kék küszöb:"
+msgstr "_Kék küszöb:"
 
 #: plug-ins/common/exchange.c:543
-#, fuzzy
 msgid "Lock _Thresholds"
-msgstr "Küszöbök zárolása"
+msgstr "_Küszöbök zárolása"
 
 #: plug-ins/common/film.c:247
-#, fuzzy
 msgid "<Image>/Filters/Combine/_Film..."
-msgstr "<Image>/Szűrők/Kombinálás/Film..."
+msgstr "<Image>/Szűrők/Egyesítés/_Film..."
 
 #: plug-ins/common/film.c:333
 msgid "Composing Images..."
@@ -3775,9 +3656,8 @@ msgid "On Film:"
 msgstr "A filmen:"
 
 #: plug-ins/common/film.c:1193
-#, fuzzy
 msgid "_Selection"
-msgstr "Kijelölés"
+msgstr "_Kijelölés"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1201 plug-ins/common/film.c:1485
@@ -3797,9 +3677,8 @@ msgstr "Film színének kiválasztása"
 
 #: plug-ins/common/film.c:1250 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:351
-#, fuzzy
 msgid "Co_lor:"
-msgstr "Szín:"
+msgstr "_Szín:"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1258
@@ -3812,9 +3691,8 @@ msgid "Start _Index:"
 msgstr "Első kocka száma:"
 
 #: plug-ins/common/film.c:1290
-#, fuzzy
 msgid "_Font:"
-msgstr "Betűtípus:"
+msgstr "_Betűkészlet:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1294
@@ -3837,18 +3715,16 @@ msgid "Image Selection"
 msgstr ""
 
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
+msgid "All Values are Fractions of the Film Height"
 msgstr ""
 
 #: plug-ins/common/film.c:1355
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Haladó"
+msgstr "_Haladó"
 
 #: plug-ins/common/film.c:1373
-#, fuzzy
 msgid "Image _Height:"
-msgstr "Kép magassága:"
+msgstr "Kép _magassága:"
 
 #: plug-ins/common/film.c:1384
 #, fuzzy
@@ -3876,16 +3752,14 @@ msgid "Hole Sp_acing:"
 msgstr "Lyukak távolsága:"
 
 #: plug-ins/common/film.c:1453
-#, fuzzy
 msgid "_Number Height:"
-msgstr "Számok magassága:"
+msgstr "_Számok magassága:"
 
 #. don't translate '<Image>' entry,
 #. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:191
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_FlareFX..."
-msgstr "<Image>/Szűrők/Fényeffektusok/FlareFX..."
+msgstr "<Image>/Szűrők/Fényhatások/_FlareFX..."
 
 #: plug-ins/common/flarefx.c:263
 msgid "Render Flare..."
@@ -3902,9 +3776,8 @@ msgstr ""
 
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:808
-#, fuzzy
 msgid "_Show Cursor"
-msgstr "Kurzor mutatása"
+msgstr "Kurzor _megjelenítése"
 
 #: plug-ins/common/fractaltrace.c:131
 #, fuzzy
@@ -3926,38 +3799,32 @@ msgid "_Warp"
 msgstr "IWarp"
 
 #: plug-ins/common/fractaltrace.c:790
-#, fuzzy
 msgid "_White"
-msgstr "Fehér"
+msgstr "_Fehér"
 
 #: plug-ins/common/fractaltrace.c:797
 msgid "Mandelbrot Parameters"
-msgstr "Mandelbrot paraméterek"
+msgstr "Mandelbrot-paraméterek"
 
 #: plug-ins/common/fractaltrace.c:809
-#, fuzzy
 msgid "X_1:"
-msgstr "X1:"
+msgstr "X_1:"
 
 #: plug-ins/common/fractaltrace.c:818
-#, fuzzy
 msgid "X_2:"
-msgstr "X2:"
+msgstr "X_2:"
 
 #: plug-ins/common/fractaltrace.c:827
-#, fuzzy
 msgid "Y_1:"
-msgstr "Y1:"
+msgstr "Y_1:"
 
 #: plug-ins/common/fractaltrace.c:836
-#, fuzzy
 msgid "Y_2:"
-msgstr "Y2:"
+msgstr "Y_2:"
 
 #: plug-ins/common/gauss_iir.c:164
-#, fuzzy
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
-msgstr "<Image>/Szűrők/Elmosás/Gauss elmosás (IIR)..."
+msgstr "<Image>/Szűrők/Elmosás/Gauss-elmosás (_IIR)..."
 
 #: plug-ins/common/gauss_iir.c:236 plug-ins/common/gauss_rle.c:229
 msgid "You must specify either horizontal or vertical (or both)"
@@ -3966,7 +3833,7 @@ msgstr ""
 #: plug-ins/common/gauss_iir.c:285 plug-ins/common/gauss_iir.c:343
 #: plug-ins/common/gauss_iir.c:423
 msgid "IIR Gaussian Blur"
-msgstr "IIR Gauss elmosás"
+msgstr "IIR Gauss-elmosás"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
@@ -4004,21 +3871,21 @@ msgstr "_Függőleges:"
 
 #: plug-ins/common/gauss_rle.c:158
 msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
-msgstr "<Image>/Szűrők/Elmosás/Gauss elmosás (_RLE)..."
+msgstr "<Image>/Szűrők/Elmosás/Gauss-elmosás (_RLE)..."
 
 #: plug-ins/common/gauss_rle.c:279 plug-ins/common/gauss_rle.c:337
 #: plug-ins/common/gauss_rle.c:417
 msgid "RLE Gaussian Blur"
-msgstr "RLE Gauss elmosás"
+msgstr "RLE Gauss-elmosás"
 
 #: plug-ins/common/gbr.c:364 plug-ins/common/gbr.c:376
 msgid "Unsupported brush format"
 msgstr "Nem támogatott ecsetformátum"
 
 #: plug-ins/common/gbr.c:387
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "Fájlbeolvasási hiba"
+msgstr "Hiba a(z) '%s' GIMP ecsetfájlban"
 
 #: plug-ins/common/gbr.c:395
 #, c-format
@@ -4050,9 +3917,8 @@ msgid "Description:"
 msgstr "Leírás:"
 
 #: plug-ins/common/gee.c:97
-#, fuzzy
 msgid "<Image>/Filters/Toys/Gee-_Slime"
-msgstr "<Image>/Szűrők/Játékok/Gee-Slime"
+msgstr "<Image>/Szűrők/Játékok/Gee-_Slime"
 
 #: plug-ins/common/gee.c:166
 msgid "GEE-SLIME"
@@ -4101,8 +3967,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/gif.c:971
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 
 #: plug-ins/common/gif.c:1114
@@ -4175,7 +4040,7 @@ msgstr "Nem érdekes"
 
 #: plug-ins/common/gif.c:1413
 msgid "Cumulative Layers (Combine)"
-msgstr "Kumulatív rétegek (kombinálás)"
+msgstr "Kumulatív rétegek (egyesítés)"
 
 #: plug-ins/common/gif.c:1415
 msgid "One Frame per Layer (Replace)"
@@ -4192,29 +4057,28 @@ msgid "The default comment is limited to %d characters."
 msgstr ""
 
 #: plug-ins/common/gifload.c:313
-#, fuzzy
 msgid "This is not a GIF file"
-msgstr "A következő fájl nem Fraktálböngésző fájl: '%s'"
+msgstr "Ez nem egy GIF fájl"
 
 #: plug-ins/common/gifload.c:351
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
 #: plug-ins/common/gifload.c:859
-#, fuzzy, c-format
+#, c-format
 msgid "Background (%d%s)"
-msgstr "Háttér"
+msgstr "Háttér (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:783
-#: plug-ins/common/iwarp.c:815
+#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "%d. képkocka"
 
 #: plug-ins/common/gifload.c:909
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d (%d%s)"
-msgstr "%v/%u képkocka"
+msgstr "%d. képkocka (%d%s)"
 
 #: plug-ins/common/gifload.c:939
 #, c-format
@@ -4306,24 +4170,20 @@ msgid "Glass Tile"
 msgstr "Katedrálüveg"
 
 #: plug-ins/common/glasstile.c:264
-#, fuzzy
 msgid "Tile _Width:"
-msgstr "Cserép szélessége:"
+msgstr "Cserép s_zélessége:"
 
 #: plug-ins/common/glasstile.c:278 plug-ins/common/mosaic.c:621
-#, fuzzy
 msgid "Tile _Height:"
-msgstr "Cserép magassága:"
+msgstr "Cserép _magassága:"
 
 #: plug-ins/common/gqbist.c:439
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-msgstr "<Image>/Szűrők/Megjelenítés/Minta/Qbist..."
+msgstr "<Image>/Szűrők/Megjelenítés/Minta/_Qbist..."
 
 #: plug-ins/common/gqbist.c:536
-#, fuzzy
 msgid "Qbist ..."
-msgstr "Qbist..."
+msgstr "Qbist ..."
 
 #: plug-ins/common/gqbist.c:743
 msgid "Load QBE file..."
@@ -4334,9 +4194,8 @@ msgid "Save (middle transform) as QBE file..."
 msgstr ""
 
 #: plug-ins/common/gqbist.c:805
-#, fuzzy
 msgid "G-Qbist"
-msgstr "G-Qbist 1.10"
+msgstr "G-Qbist"
 
 #: plug-ins/common/gradmap.c:121
 #, fuzzy
@@ -4348,9 +4207,8 @@ msgid "Gradient Map..."
 msgstr ""
 
 #: plug-ins/common/grid.c:152
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern/_Grid..."
-msgstr "<Image>/Szűrők/Megjelenítés/Minta/Rács..."
+msgstr "<Image>/Szűrők/Megjelenítés/Minta/_Rács..."
 
 #: plug-ins/common/grid.c:239
 msgid "Drawing Grid..."
@@ -4377,8 +4235,8 @@ msgstr "Metszéspont"
 
 #. Width and Height
 #: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
-#: plug-ins/print/gimp_main_window.c:1008
-#: plug-ins/print/gimp_main_window.c:1224
+#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1221
 msgid "Width:"
 msgstr "Szélesség:"
 
@@ -4415,9 +4273,8 @@ msgid "HTML Page Options"
 msgstr "HTML oldal beállításai"
 
 #: plug-ins/common/gtm.c:449
-#, fuzzy
 msgid "_Generate Full HTML Document"
-msgstr "Teljes HTML dokumentum generálása"
+msgstr "Teljes HTML dokumentum _előállítása"
 
 #: plug-ins/common/gtm.c:455
 msgid ""
@@ -4433,9 +4290,8 @@ msgid "Table Creation Options"
 msgstr "Táblázatgenerálás beállításai"
 
 #: plug-ins/common/gtm.c:477
-#, fuzzy
 msgid "_Use Cellspan"
-msgstr "cellspan használata"
+msgstr "Cellspan _használata"
 
 #: plug-ins/common/gtm.c:483
 msgid ""
@@ -4516,32 +4372,28 @@ msgid "The amount of cellspacing."
 msgstr ""
 
 #: plug-ins/common/guillotine.c:79
-#, fuzzy
 msgid "<Image>/Image/Transform/_Guillotine"
-msgstr "<Image>/Kép/Átalakítás/Guillotine"
+msgstr "<Image>/Kép/Átalakítás/_Guillotine"
 
 #: plug-ins/common/guillotine.c:109
 msgid "Guillotine..."
 msgstr "Guillotine..."
 
 #: plug-ins/common/hot.c:217
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Hot..."
-msgstr "<Image>/Szűrők/Színek/Meleg..."
+msgstr "<Image>/Szűrők/Színek/_Forró..."
 
 #: plug-ins/common/hot.c:377
-#, fuzzy
 msgid "Hot..."
-msgstr "Névjegy"
+msgstr "Forró..."
 
 #: plug-ins/common/hot.c:568
 msgid "Hot"
 msgstr "Meleg"
 
 #: plug-ins/common/hot.c:586
-#, fuzzy
 msgid "Create _New Layer"
-msgstr "Új rétegek létrehozása"
+msgstr "Ú_j réteg létrehozása"
 
 #: plug-ins/common/hot.c:607
 msgid "Action"
@@ -4563,9 +4415,9 @@ msgid "_Blacken"
 msgstr "Fekete"
 
 #: plug-ins/common/hrz.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a HRZ file"
-msgstr "A következő fájl nem Fraktálböngésző fájl: '%s'"
+msgstr "A(z) '%s' nem egy HRZ fájl"
 
 #: plug-ins/common/hrz.c:454
 msgid "Image must be 256x240"
@@ -4576,9 +4428,8 @@ msgid "Image must be RGB or GRAY"
 msgstr ""
 
 #: plug-ins/common/illusion.c:105
-#, fuzzy
 msgid "<Image>/Filters/Map/_Illusion..."
-msgstr "<Image>/Szűrők/Leképezés/Illúzió..."
+msgstr "<Image>/Szűrők/Leképezés/_Illúzió..."
 
 #: plug-ins/common/illusion.c:176
 msgid "Illusion..."
@@ -4594,127 +4445,117 @@ msgid "_Division:"
 msgstr "Osztás:"
 
 #: plug-ins/common/illusion.c:440
-#, fuzzy
 msgid "Mode _1"
-msgstr "1. mód"
+msgstr "_1. mód"
 
 #: plug-ins/common/illusion.c:455
-#, fuzzy
 msgid "Mode _2"
-msgstr "2. mód"
+msgstr "_2. mód"
 
 #: plug-ins/common/iwarp.c:260
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_IWarp..."
-msgstr "<Image>/Szűrők/Torzítás/IWarp..."
+msgstr "<Image>/Szűrők/Torzítás/_IWarp..."
 
-#: plug-ins/common/iwarp.c:688
+#: plug-ins/common/iwarp.c:692
 msgid "Warping..."
 msgstr ""
 
-#: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:794 plug-ins/common/iwarp.c:807
 #, fuzzy, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Láng rajzolása..."
 
-#: plug-ins/common/iwarp.c:804
+#: plug-ins/common/iwarp.c:808
 msgid "Ping Pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:984
-#, fuzzy
+#: plug-ins/common/iwarp.c:989
 msgid "A_nimate"
-msgstr "Animálás"
+msgstr "A_nimálás"
 
-#: plug-ins/common/iwarp.c:1004
-#, fuzzy
+#: plug-ins/common/iwarp.c:1009
 msgid "Number of _Frames:"
-msgstr "Képkockák száma:"
+msgstr "_Képkockák száma:"
 
-#: plug-ins/common/iwarp.c:1013
+#: plug-ins/common/iwarp.c:1018
 #, fuzzy
 msgid "R_everse"
 msgstr "Visszafelé"
 
-#: plug-ins/common/iwarp.c:1022
-#, fuzzy
+#: plug-ins/common/iwarp.c:1027
 msgid "_Ping Pong"
-msgstr "Ping Pong"
+msgstr "_Pingpong"
 
-#: plug-ins/common/iwarp.c:1035
-#, fuzzy
+#: plug-ins/common/iwarp.c:1040
 msgid "_Animate"
-msgstr "Animálás"
+msgstr "_Animálás"
 
-#: plug-ins/common/iwarp.c:1063
+#: plug-ins/common/iwarp.c:1068
 #, fuzzy
 msgid "_Deform Radius:"
 msgstr "Elmosás sugara:"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1078
 #, fuzzy
 msgid "D_eform Amount:"
 msgstr "Eltolás mértéke:"
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1087
 msgid "Deform Mode"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1096
-#, fuzzy
+#: plug-ins/common/iwarp.c:1101
 msgid "_Move"
-msgstr "Mozgatás"
+msgstr "Á_thelyezés"
 
-#: plug-ins/common/iwarp.c:1097
+#: plug-ins/common/iwarp.c:1102
 #, fuzzy
 msgid "_Grow"
 msgstr "Megnövelés"
 
-#: plug-ins/common/iwarp.c:1098
+#: plug-ins/common/iwarp.c:1103
 #, fuzzy
 msgid "S_wirl CCW"
 msgstr "Spirál"
 
-#: plug-ins/common/iwarp.c:1099
-#, fuzzy
+#: plug-ins/common/iwarp.c:1104
 msgid "Remo_ve"
-msgstr "<< Eltávolítás"
+msgstr "_Eltávolítás"
 
-#: plug-ins/common/iwarp.c:1100
+#: plug-ins/common/iwarp.c:1105
 msgid "S_hrink"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1106
 #, fuzzy
 msgid "Sw_irl CW"
 msgstr "Spirál"
 
-#: plug-ins/common/iwarp.c:1123
+#: plug-ins/common/iwarp.c:1128
 #, fuzzy
 msgid "_Bilinear"
 msgstr "Bilineáris"
 
-#: plug-ins/common/iwarp.c:1137
+#: plug-ins/common/iwarp.c:1142
 msgid "Adaptive S_upersample"
 msgstr ""
 
-#: plug-ins/common/iwarp.c:1158
+#: plug-ins/common/iwarp.c:1163
 #, fuzzy
 msgid "Ma_x Depth:"
 msgstr "Max. mélység:"
 
-#: plug-ins/common/iwarp.c:1168
+#: plug-ins/common/iwarp.c:1173
 #, fuzzy
 msgid "Thresho_ld:"
 msgstr "Küszöb:"
 
-#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
+#: plug-ins/common/iwarp.c:1186 plug-ins/common/sinus.c:769
 #: plug-ins/gflare/gflare.c:2795
-#, fuzzy
 msgid "_Settings"
-msgstr "Beállítások"
+msgstr "_Beállítások"
 
-#: plug-ins/common/iwarp.c:1198
+#: plug-ins/common/iwarp.c:1203
 msgid "IWarp"
 msgstr "IWarp"
 
@@ -4772,9 +4613,8 @@ msgid "Jigsaw Style"
 msgstr "Puzzle stílusa"
 
 #: plug-ins/common/jigsaw.c:2655
-#, fuzzy
 msgid "_Square"
-msgstr "Négyzet"
+msgstr "_Négyzet"
 
 #: plug-ins/common/jigsaw.c:2656
 #, fuzzy
@@ -4783,7 +4623,7 @@ msgstr "Gömbölyű"
 
 #: plug-ins/common/jigsaw.c:2660
 msgid "Each piece has straight sides"
-msgstr "Mindegyik darabnak egyenek széle van"
+msgstr "Mindegyik darabnak egyenes széle van"
 
 #: plug-ins/common/jigsaw.c:2661
 msgid "Each piece has curved sides"
@@ -4808,7 +4648,7 @@ msgstr "Méret: ismeretlen"
 
 #: plug-ins/common/jpeg.c:1678
 msgid "Save as JPEG"
-msgstr "Mnetés JPEG formátumba"
+msgstr "Mentés JPEG formátumba"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1694 plug-ins/print/gimp_color_window.c:253
@@ -4816,8 +4656,9 @@ msgid "Image Preview"
 msgstr "Előnézet"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Preview (in image window, will modify image's undo history!)"
-msgstr ""
+#, fuzzy
+msgid "Preview in image window"
+msgstr "Egy ablak elkapása"
 
 #: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -4889,9 +4730,8 @@ msgid "Cleanup..."
 msgstr ""
 
 #: plug-ins/common/lic.c:548
-#, fuzzy
 msgid "Van Gogh (LIC)..."
-msgstr "Van Gogh (LIC)"
+msgstr "Van Gogh (LIC)..."
 
 #: plug-ins/common/lic.c:631
 msgid "Van Gogh (LIC)"
@@ -4902,14 +4742,12 @@ msgid "Effect Channel"
 msgstr ""
 
 #: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
-#, fuzzy
 msgid "_Saturation"
-msgstr "Telítettség:"
+msgstr "Telített_ség"
 
 #: plug-ins/common/lic.c:656
-#, fuzzy
 msgid "_Brightness"
-msgstr "Fényerő"
+msgstr "_Fényerősség"
 
 #: plug-ins/common/lic.c:662
 msgid "Effect Operator"
@@ -4989,7 +4827,7 @@ msgstr "_Tárgy:"
 
 #: plug-ins/common/mail.c:491
 msgid "Comm_ent:"
-msgstr "_Megjegyzés:"
+msgstr "Me_gjegyzés:"
 
 #: plug-ins/common/mail.c:503
 msgid "_Filename:"
@@ -5006,7 +4844,7 @@ msgstr "_Uuencode"
 
 #: plug-ins/common/mail.c:550
 msgid "_MIME"
-msgstr "_MIME"
+msgstr "M_IME"
 
 #: plug-ins/common/mail.c:650
 msgid "some sort of error with the file extension or lack thereof"
@@ -5048,9 +4886,8 @@ msgid "Adjusting Foreground/Background..."
 msgstr "Előtér-háttér igazítása..."
 
 #: plug-ins/common/mapcolor.c:460
-#, fuzzy
 msgid "Mapping colors..."
-msgstr "Színek leképezése"
+msgstr "Színek leképezése..."
 
 #: plug-ins/common/mapcolor.c:535
 msgid "Map Color Range"
@@ -5070,9 +4907,8 @@ msgid "To:"
 msgstr ""
 
 #: plug-ins/common/max_rgb.c:112
-#, fuzzy
 msgid "<Image>/Filters/Colors/_Max RGB..."
-msgstr "<Image>/Szűrők/Színek/Max RGB..."
+msgstr "<Image>/Szűrők/Színek/_Max RGB..."
 
 #: plug-ins/common/max_rgb.c:148
 msgid "Can only operate on RGB drawables."
@@ -5097,9 +4933,8 @@ msgid "Ho_ld the Minimal Channels"
 msgstr "Alfa csatornák"
 
 #: plug-ins/common/mblur.c:150
-#, fuzzy
 msgid "<Image>/Filters/Blur/_Motion Blur..."
-msgstr "<Image>/Szűrők/Elmosás/Elmoság mozgatással..."
+msgstr "<Image>/Szűrők/Elmosás/Elmosás _mozgatással..."
 
 #: plug-ins/common/mblur.c:673
 #, fuzzy
@@ -5120,7 +4955,7 @@ msgstr "_Lineáris"
 
 #: plug-ins/common/mblur.c:762
 msgid "_Radial"
-msgstr "_Radiális"
+msgstr "Sugá_rirányú"
 
 #: plug-ins/common/mblur.c:763
 msgid "_Zoom"
@@ -5187,9 +5022,8 @@ msgid "Default Chunks Type:"
 msgstr ""
 
 #: plug-ins/common/mng.c:1303
-#, fuzzy
 msgid "Combine"
-msgstr "Cosinus"
+msgstr "Egyesítés"
 
 #: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
@@ -5274,19 +5108,16 @@ msgid "Tiling Primitives"
 msgstr "Alapcsempék"
 
 #: plug-ins/common/mosaic.c:591
-#, fuzzy
 msgid "_Squares"
-msgstr "Négyzetek"
+msgstr "_Négyzetek"
 
 #: plug-ins/common/mosaic.c:592
-#, fuzzy
 msgid "He_xagons"
-msgstr "Hatszögek"
+msgstr "_Hatszögek"
 
 #: plug-ins/common/mosaic.c:593
-#, fuzzy
 msgid "Oc_tagons & Squares"
-msgstr "Nyolcszögek és négyzetek"
+msgstr "Nyolc_szögek és négyzetek"
 
 #: plug-ins/common/mosaic.c:612
 #, fuzzy
@@ -5413,24 +5244,20 @@ msgid "Separate to:"
 msgstr ""
 
 #: plug-ins/common/newsprint.c:1310
-#, fuzzy
 msgid "_RGB"
-msgstr "RGB"
+msgstr "_RGB"
 
 #: plug-ins/common/newsprint.c:1323
-#, fuzzy
 msgid "C_MYK"
-msgstr "CMYK"
+msgstr "C_MYK"
 
 #: plug-ins/common/newsprint.c:1336
-#, fuzzy
 msgid "I_ntensity"
-msgstr "Intenzitás"
+msgstr "I_ntenzitás"
 
 #: plug-ins/common/newsprint.c:1357
-#, fuzzy
 msgid "_Lock Channels"
-msgstr "Csatornák zárolása"
+msgstr "Csatornák _zárolása"
 
 #: plug-ins/common/newsprint.c:1367
 #, fuzzy
@@ -5449,14 +5276,12 @@ msgid "O_versample:"
 msgstr "Átfedés:"
 
 #: plug-ins/common/nlfilt.c:128
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_NL Filter..."
-msgstr "<Image>/Szűrők/Kiemelés/NL Szűrő..."
+msgstr "<Image>/Szűrők/Kiemelés/_NL-szűrő..."
 
 #: plug-ins/common/nlfilt.c:246
-#, fuzzy
 msgid "NL Filter..."
-msgstr "NL Szűrő"
+msgstr "NL-szűrő..."
 
 #: plug-ins/common/nlfilt.c:322
 msgid "NL Filter"
@@ -5491,9 +5316,8 @@ msgid "_Do Preview"
 msgstr "Előnézet készítése"
 
 #: plug-ins/common/noisify.c:129
-#, fuzzy
 msgid "<Image>/Filters/Noise/_Noisify..."
-msgstr "<Image>/Szűrők/Zaj/Zajosítás..."
+msgstr "<Image>/Szűrők/Zaj/_Zajosítás..."
 
 #: plug-ins/common/noisify.c:203
 msgid "Adding Noise..."
@@ -5504,9 +5328,8 @@ msgid "Noisify"
 msgstr "Zajosítás"
 
 #: plug-ins/common/noisify.c:344
-#, fuzzy
 msgid "_Independent"
-msgstr "Független"
+msgstr "_Független"
 
 #: plug-ins/common/noisify.c:357 plug-ins/common/noisify.c:361
 #, fuzzy
@@ -5514,9 +5337,8 @@ msgid "_Gray:"
 msgstr "Szürke:"
 
 #: plug-ins/common/noisify.c:362 plug-ins/common/noisify.c:376
-#, fuzzy
 msgid "_Alpha:"
-msgstr "Alfa:"
+msgstr "_Alfa:"
 
 #: plug-ins/common/noisify.c:385
 #, c-format
@@ -5533,9 +5355,8 @@ msgstr "Normalizálás..."
 
 #. don't translate '<Image>'
 #: plug-ins/common/nova.c:196
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/Su_perNova..."
-msgstr "<Image>/Szűrők/Fényeffektusok/Szupernova..."
+msgstr "<Image>/Szűrők/Fényhatások/Szu_pernova..."
 
 #: plug-ins/common/nova.c:277
 msgid "Rendering SuperNova..."
@@ -5554,9 +5375,8 @@ msgid "_Spokes:"
 msgstr ""
 
 #: plug-ins/common/nova.c:391
-#, fuzzy
 msgid "R_andom Hue:"
-msgstr "Véletlenszerű színezet:"
+msgstr "Véletlenszerű árny_alat:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:449
@@ -5564,14 +5384,12 @@ msgid "Center of SuperNova"
 msgstr "A Szupernova középpontja"
 
 #: plug-ins/common/nova.c:531
-#, fuzzy
 msgid "S_how Cursor"
-msgstr "Kurzor mutatása"
+msgstr "Kurzor _megjelenítése"
 
 #: plug-ins/common/oilify.c:106
-#, fuzzy
 msgid "<Image>/Filters/Artistic/Oili_fy..."
-msgstr "<Image>/Szűrők/Művészi/Olajfestés..."
+msgstr "<Image>/Szűrők/Művészi/Olaj_festés..."
 
 #: plug-ins/common/oilify.c:181
 msgid "Oil Painting..."
@@ -5583,12 +5401,11 @@ msgstr "Olajfestés"
 
 #: plug-ins/common/oilify.c:464
 msgid "_Use Intensity Algorithm"
-msgstr ""
+msgstr "_Intenzitásos módszer használata"
 
 #: plug-ins/common/oilify.c:474
-#, fuzzy
 msgid "_Mask Size:"
-msgstr "Maszk mérete:"
+msgstr "Maszk mére_te:"
 
 #: plug-ins/common/papertile.c:237
 msgid "Paper Tile"
@@ -5603,14 +5420,12 @@ msgid "Fractional Pixels"
 msgstr "Részképpontok"
 
 #: plug-ins/common/papertile.c:301
-#, fuzzy
 msgid "_Background"
-msgstr "Háttér"
+msgstr "_Háttér"
 
 #: plug-ins/common/papertile.c:303
-#, fuzzy
 msgid "_Ignore"
-msgstr "Figyelmen kívül hagy"
+msgstr "_Kihagyás"
 
 #: plug-ins/common/papertile.c:305
 #, fuzzy
@@ -5627,9 +5442,8 @@ msgid "Movement"
 msgstr "Mozgás"
 
 #: plug-ins/common/papertile.c:347
-#, fuzzy
 msgid "_Max (%):"
-msgstr "Max (%):"
+msgstr "_Max (%):"
 
 #: plug-ins/common/papertile.c:353
 msgid "_Wrap Around"
@@ -5640,24 +5454,20 @@ msgid "Background Type"
 msgstr "Háttér típusa"
 
 #: plug-ins/common/papertile.c:370
-#, fuzzy
 msgid "I_nverted Image"
-msgstr "Invertált kép"
+msgstr "I_nvertált kép"
 
 #: plug-ins/common/papertile.c:372
-#, fuzzy
 msgid "Im_age"
-msgstr "Kép"
+msgstr "_Kép"
 
 #: plug-ins/common/papertile.c:374
-#, fuzzy
 msgid "Fo_reground Color"
-msgstr "Előtér színe"
+msgstr "_Előtérszín"
 
 #: plug-ins/common/papertile.c:376
-#, fuzzy
 msgid "Bac_kground Color"
-msgstr "Háttér színe"
+msgstr "_Háttérszín"
 
 #: plug-ins/common/papertile.c:378
 #, fuzzy
@@ -5707,15 +5517,15 @@ msgstr ""
 
 #: plug-ins/common/pixelize.c:170
 msgid "<Image>/Filters/Blur/_Pixelize..."
-msgstr "<Image>/Szűrők/Elmosás/_Pixelize..."
+msgstr "<Image>/Szűrők/Elmosás/_Pixelesítés..."
 
 #: plug-ins/common/pixelize.c:268
 msgid "Pixelizing..."
-msgstr ""
+msgstr "Pixelesítés..."
 
 #: plug-ins/common/pixelize.c:309
 msgid "Pixelize"
-msgstr ""
+msgstr "Pixelesítés"
 
 #: plug-ins/common/pixelize.c:337
 msgid "Pixel _Width:"
@@ -5723,7 +5533,7 @@ msgstr "Képpont _szélessége:"
 
 #: plug-ins/common/pixelize.c:342
 msgid "Pixel _Height:"
-msgstr "Képpont _magassága:"
+msgstr "Képpont ma_gassága:"
 
 #: plug-ins/common/plasma.c:184
 msgid "<Image>/Filters/Render/Clouds/_Plasma..."
@@ -5767,7 +5577,7 @@ msgstr "Ideiglenes eljárás"
 
 #: plug-ins/common/plugindetails.c:153
 msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Toolbox>/Kit./_Bővítmények részletei"
+msgstr "<Toolbox>/Kiterj./_Bővítmények részletei"
 
 #: plug-ins/common/plugindetails.c:225
 msgid "Details <<"
@@ -5905,9 +5715,8 @@ msgid "Save _Background Color"
 msgstr "Háttérszín mentése"
 
 #: plug-ins/common/png.c:1603
-#, fuzzy
 msgid "Save _Gamma"
-msgstr "Gamma mentése"
+msgstr "_Gamma mentése"
 
 #: plug-ins/common/png.c:1612
 #, fuzzy
@@ -5915,9 +5724,8 @@ msgid "Save Layer O_ffset"
 msgstr "Mentés szövegként"
 
 #: plug-ins/common/png.c:1621
-#, fuzzy
 msgid "Save _Resolution"
-msgstr "Felbontás mentése"
+msgstr "_Felbontás mentése"
 
 #: plug-ins/common/png.c:1630
 #, fuzzy
@@ -5934,9 +5742,8 @@ msgid "Save Color _Values From Transparent Pixels"
 msgstr ""
 
 #: plug-ins/common/png.c:1666
-#, fuzzy
 msgid "Co_mpression Level:"
-msgstr "Tömörítés mértéke:"
+msgstr "_Tömörítés mértéke:"
 
 #: plug-ins/common/png.c:1786
 msgid "Could not load PNG defaults"
@@ -5953,9 +5760,8 @@ msgid "PNM: Invalid file."
 msgstr "PNM: Érvénytelen fájl."
 
 #: plug-ins/common/pnm.c:442
-#, fuzzy
 msgid "File not in a supported format."
-msgstr "PNM: Nem támogatott formátum."
+msgstr "A fájl formátuma nem támogatott."
 
 #: plug-ins/common/pnm.c:451
 msgid "PNM: Invalid X resolution."
@@ -5979,7 +5785,7 @@ msgstr "A PNM save nem tudja kezelni az alfa csatornás képeket."
 
 #: plug-ins/common/pnm.c:911
 msgid "Save as PNM"
-msgstr "Mnetés PNM formátumba"
+msgstr "Mentés PNM formátumba"
 
 #: plug-ins/common/pnm.c:925
 msgid "Raw"
@@ -6042,9 +5848,9 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/postscript.c:887
-#, fuzzy, c-format
+#, c-format
 msgid "Could not interpret '%s'"
-msgstr "PS: %s értelmezése sikertelen"
+msgstr "Nem lehet értelmezni a(z) '%s'-t"
 
 #: plug-ins/common/postscript.c:975
 msgid "PostScript save cannot handle images with alpha channels"
@@ -6071,7 +5877,7 @@ msgstr "Megjelenítés"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
-#: plug-ins/print/gimp_main_window.c:1103
+#: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Felbontás:"
 
@@ -6277,9 +6083,8 @@ msgid "_Period:"
 msgstr "Periódus:"
 
 #: plug-ins/common/ripple.c:537
-#, fuzzy
 msgid "A_mplitude:"
-msgstr "Amplitúdó:"
+msgstr "A_mplitúdó:"
 
 #: plug-ins/common/rotate.c:421
 msgid "You can not rotate the whole image if there's a selection."
@@ -6409,9 +6214,8 @@ msgid "_Holdness:"
 msgstr ""
 
 #: plug-ins/common/scatter_hsv.c:409
-#, fuzzy
 msgid "H_ue:"
-msgstr "Színezet:"
+msgstr "Á_rnyalat:"
 
 #: plug-ins/common/scatter_hsv.c:418
 #, fuzzy
@@ -6475,26 +6279,23 @@ msgstr "_Elkapás"
 
 #: plug-ins/common/sel_gauss.c:114
 msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-msgstr "<Image>/Szűrők/Elmosás/_Szelektív Gauss elmosás..."
+msgstr "<Image>/Szűrők/Elmosás/_Szelektív Gauss-elmosás..."
 
 #: plug-ins/common/sel_gauss.c:191
-#, fuzzy
 msgid "Selective Gaussian Blur..."
-msgstr "<Image>/Szűrők/Elmosás/Szelektív Gauss elmosás..."
+msgstr "Szelektív Gauss-elmosás..."
 
 #: plug-ins/common/sel_gauss.c:228
 msgid "Selective Gaussian Blur"
-msgstr ""
+msgstr "Szelektív Gauss-elmosás"
 
 #: plug-ins/common/sel_gauss.c:253
-#, fuzzy
 msgid "_Blur Radius:"
-msgstr "Elmosás sugara:"
+msgstr "Elmosás _sugara:"
 
 #: plug-ins/common/sel_gauss.c:260
-#, fuzzy
 msgid "_Max. Delta:"
-msgstr "Max. mélység:"
+msgstr "Ma_x. változás:"
 
 #: plug-ins/common/semiflatten.c:79
 #, fuzzy
@@ -6507,26 +6308,23 @@ msgid "Semi-Flattening..."
 msgstr "Élesítés folyamatban..."
 
 #: plug-ins/common/sharpen.c:148
-#, fuzzy
 msgid "<Image>/Filters/Enhance/_Sharpen..."
-msgstr "<Image>/Szűrők/Kiemelés/Élesítés..."
+msgstr "<Image>/Szűrők/Kiemelés/Éle_sítés..."
 
 #.
 #. * Let the user know what we're doing...
 #.
 #: plug-ins/common/sharpen.c:329
 msgid "Sharpening..."
-msgstr "Élesítés folyamatban..."
+msgstr "Élesítés..."
 
 #: plug-ins/common/sharpen.c:500
-#, fuzzy
 msgid "Sharpen"
-msgstr "Élesítés folyamatban..."
+msgstr "Élesítés"
 
 #: plug-ins/common/sharpen.c:593
-#, fuzzy
 msgid "_Sharpness:"
-msgstr "Élesség:"
+msgstr "Éle_sség:"
 
 #: plug-ins/common/shift.c:107
 #, fuzzy
@@ -6774,9 +6572,8 @@ msgid "Sobel Edge Detecting..."
 msgstr ""
 
 #: plug-ins/common/sparkle.c:184
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_Sparkle..."
-msgstr "<Image>/Szűrők/Fényhatások/Szikra..."
+msgstr "<Image>/Szűrők/Fényhatások/_Szikra..."
 
 #: plug-ins/common/sparkle.c:287
 msgid "Sparkling..."
@@ -6843,9 +6640,8 @@ msgid "Adjust the Opacity of the Spikes"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:439
-#, fuzzy
 msgid "_Random Hue:"
-msgstr "Véletlenszerű színezet:"
+msgstr "Véletlensze_rű árnyalat:"
 
 #: plug-ins/common/sparkle.c:442
 msgid "Adjust the Value how much the Hue should be changed randomly"
@@ -6869,9 +6665,8 @@ msgid "Should the Luminosity be preserved?"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:484
-#, fuzzy
 msgid "In_verse"
-msgstr "Invertálás"
+msgstr "In_vertálás"
 
 #: plug-ins/common/sparkle.c:490
 msgid "Should an Inverse Effect be done?"
@@ -6879,26 +6674,23 @@ msgstr ""
 
 #: plug-ins/common/sparkle.c:496
 msgid "A_dd Border"
-msgstr "Szegély _hozzáadása"
+msgstr "Szegély hozzá_adása"
 
 #: plug-ins/common/sparkle.c:502
 msgid "Draw a Border of Spikes around the Image"
 msgstr ""
 
 #: plug-ins/common/sparkle.c:517
-#, fuzzy
 msgid "_Natural Color"
-msgstr "Természetes színek"
+msgstr "Természetes szí_nek"
 
 #: plug-ins/common/sparkle.c:518
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "Előtér színe"
+msgstr "_Előtérszín"
 
 #: plug-ins/common/sparkle.c:519
-#, fuzzy
 msgid "_Background Color"
-msgstr "Háttér színe"
+msgstr "_Háttérszín"
 
 #: plug-ins/common/sparkle.c:527
 msgid "Use the Color of the Image"
@@ -7223,8 +7015,8 @@ msgstr "Megnyitás"
 msgid "Render Scalable Vector Graphics"
 msgstr ""
 
-#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1022
+#: plug-ins/print/gimp_main_window.c:1234
 msgid "Height:"
 msgstr "Magasság:"
 
@@ -7238,9 +7030,9 @@ msgid "Constrain aspect ratio"
 msgstr ""
 
 #: plug-ins/common/svg.c:826
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%a"
-msgstr "Képpont"
+msgstr "képpont/%a"
 
 #. Path Import
 #: plug-ins/common/svg.c:846
@@ -7248,8 +7040,7 @@ msgid "Import _Paths"
 msgstr ""
 
 #: plug-ins/common/svg.c:852
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 
 #: plug-ins/common/svg.c:865
@@ -7304,7 +7095,7 @@ msgstr ""
 
 #: plug-ins/common/threshold_alpha.c:223
 msgid "Threshold Alpha"
-msgstr ""
+msgstr "Alfa küszöb"
 
 #: plug-ins/common/tiff.c:831
 #, fuzzy, c-format
@@ -7374,16 +7165,16 @@ msgstr "<Image>/Szűrők/Leképezés/Csempe..."
 msgid "Tiling..."
 msgstr "Csempézés..."
 
-#: plug-ins/common/tile.c:389
+#: plug-ins/common/tile.c:391
 msgid "Tile"
 msgstr "Csempe"
 
 #. parameter settings
-#: plug-ins/common/tile.c:399
+#: plug-ins/common/tile.c:401
 msgid "Tile to New Size"
 msgstr ""
 
-#: plug-ins/common/tile.c:423
+#: plug-ins/common/tile.c:425
 #, fuzzy
 msgid "C_reate New Image"
 msgstr "Új kép létrehozása"
@@ -7459,15 +7250,16 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
+"Ha ez az oszlop be van jelölve, akkor a mértékegység-definíció csak a "
+"GIMP-ből való kilépés előtt lesz elmentve."
 
 #: plug-ins/common/uniteditor.c:85
 msgid "ID"
 msgstr "Azonosító"
 
 #: plug-ins/common/uniteditor.c:85
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
+msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgstr "Ez a szöveg fogja azonosítani a mértékegységet a GIMP beállítási fájljaiban."
 
 #: plug-ins/common/uniteditor.c:87
 msgid "Factor"
@@ -7487,6 +7279,11 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
+"Ez a mező a numerikus beviteli mezők számára nyújt információt. Megadja, "
+"hogy hány, tízes számrendszerbeli számjegynek kell szerepelni a "
+"beviteli mezőben ahhoz, hogy az nagyjából akkora pontosságot adjon, "
+"amekkorát egy \"hüvelyk\" beviteli mező ad két, tízes számrendszerbeli "
+"számjeggyel."
 
 #: plug-ins/common/uniteditor.c:93
 msgid "Symbol"
@@ -7497,6 +7294,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
 msgstr ""
+"A mértékegység jele, ha létezik olyan (például \" a hüvelyk esetében). "
+"Ha nincs jele, akkor a rövidítése lesz használva."
 
 #: plug-ins/common/uniteditor.c:96
 msgid "Abbreviation"
@@ -7504,7 +7303,7 @@ msgstr "Rövidítés"
 
 #: plug-ins/common/uniteditor.c:96
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr ""
+msgstr "A mértékegység rövidítése (például \"cm\" a centiméter esetében)."
 
 #: plug-ins/common/uniteditor.c:98
 msgid "Singular"
@@ -7512,7 +7311,7 @@ msgstr "Egyes szám"
 
 #: plug-ins/common/uniteditor.c:98
 msgid "The unit's singular form."
-msgstr ""
+msgstr "A mértékegység egyes száma."
 
 #: plug-ins/common/uniteditor.c:99
 msgid "Plural"
@@ -7520,11 +7319,11 @@ msgstr "Többes szám"
 
 #: plug-ins/common/uniteditor.c:99
 msgid "The unit's plural form."
-msgstr ""
+msgstr "A mértékegység többes száma."
 
 #: plug-ins/common/uniteditor.c:117
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Toolbox>/Kit./Mé_rtékegység-szerkesztő"
+msgstr "<Toolbox>/Kiterj./Mé_rtékegység-szerkesztő"
 
 #: plug-ins/common/uniteditor.c:171
 msgid "New Unit"
@@ -7552,11 +7351,11 @@ msgstr "_Rövidítés:"
 
 #: plug-ins/common/uniteditor.c:252
 msgid "Si_ngular:"
-msgstr "_Egyesszám:"
+msgstr "_Egyes szám:"
 
 #: plug-ins/common/uniteditor.c:264
 msgid "_Plural:"
-msgstr "_Többesszám:"
+msgstr "_Többes szám:"
 
 #: plug-ins/common/uniteditor.c:300
 msgid "Unit factor must not be 0."
@@ -7564,7 +7363,7 @@ msgstr "A mértékegység szorzója nem lehet nulla."
 
 #: plug-ins/common/uniteditor.c:310
 msgid "All text fields must contain a value."
-msgstr "Minden szövegmezűnek kell legyen értéke."
+msgstr "Minden szövegmezőnek kell legyen értéke."
 
 #: plug-ins/common/uniteditor.c:533
 msgid "Unit Editor"
@@ -7572,11 +7371,11 @@ msgstr "Mértékegység-szerkesztő"
 
 #: plug-ins/common/uniteditor.c:559
 msgid "Create a new unit from scratch."
-msgstr "Teljesen új mértékegység létrehozása"
+msgstr "Teljesen új mértékegység létrehozása."
 
 #: plug-ins/common/uniteditor.c:563
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7975,7 +7774,7 @@ msgstr "Másolás folyamatban..."
 
 #: plug-ins/common/winclipboard.c:471
 msgid "Unsupported format or Clipboard empty!"
-msgstr ""
+msgstr "A formátum nem támogatott vagy a vágólap üres."
 
 #: plug-ins/common/winclipboard.c:482
 msgid "Can't get Clipboard data."
@@ -7989,7 +7788,7 @@ msgstr "Beillesztve"
 
 #: plug-ins/common/winclipboard.c:577
 msgid "Pasting..."
-msgstr "Beillesztés folymatban..."
+msgstr "Beillesztés folyamatban..."
 
 #: plug-ins/common/wind.c:190
 #, fuzzy
@@ -8071,9 +7870,8 @@ msgid "Higher values increase the magnitude of the effect"
 msgstr ""
 
 #: plug-ins/common/winprint.c:186
-#, fuzzy
 msgid "<Image>/File/_Print"
-msgstr "<Image>/Fájl/Nyomtatás"
+msgstr "<Image>/Fájl/_Nyomtatás"
 
 #: plug-ins/common/winprint.c:198
 msgid "<Image>/File/Page Setup"
@@ -8289,19 +8087,19 @@ msgstr ""
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Layer/Transform/_Zealous Crop"
-msgstr "<Image>/Réteg/Átalakítás/_Zealous Crop"
+msgstr "<Image>/Réteg/Átalakítás/\"_Zealous\" vágás"
 
 #: plug-ins/common/zealouscrop.c:115
 msgid "ZealousCropping(tm)..."
-msgstr ""
+msgstr "Zealous(tm) vágás..."
 
 #: plug-ins/common/zealouscrop.c:216
 msgid "Nothing to crop."
-msgstr ""
+msgstr "Nincs mit vágni."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
 msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Toolbox>/Kit./_Adatbázis-böngésző"
+msgstr "<Toolbox>/Kiterj./_Adatbázis-böngésző"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:118
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
@@ -8429,9 +8227,8 @@ msgid "_Speed:"
 msgstr "_Sebesség:"
 
 #: plug-ins/flame/flame.c:691
-#, fuzzy
 msgid "_Randomize"
-msgstr "Véletlenszerű"
+msgstr "Véle_tlenszerű"
 
 #: plug-ins/flame/flame.c:704
 msgid "Same"
@@ -8560,7 +8357,7 @@ msgstr "Eredeti:"
 
 #: plug-ins/fp/fp_gtk.c:205
 msgid "Hue Variations"
-msgstr "Színezet változásai:"
+msgstr "Árnyalat változásai:"
 
 #: plug-ins/fp/fp_gtk.c:221
 msgid "Roughness"
@@ -8607,9 +8404,8 @@ msgid "Select Pixels by"
 msgstr ""
 
 #: plug-ins/fp/fp_gtk.c:421
-#, fuzzy
 msgid "H_ue"
-msgstr "Színezet:"
+msgstr "Á_rnyalat"
 
 #: plug-ins/fp/fp_gtk.c:425
 #, fuzzy
@@ -8735,9 +8531,9 @@ msgid "Anti-Clockwise"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
-#: plug-ins/print/gimp_main_window.c:499
+#: plug-ins/print/gimp_main_window.c:496
 msgid "Orientation:"
-msgstr ""
+msgstr "Irány:"
 
 #: plug-ins/gfig/gfig.c:1452
 msgid "Create line"
@@ -9259,9 +9055,8 @@ msgid "Overlay"
 msgstr ""
 
 #: plug-ins/gflare/gflare.c:831
-#, fuzzy
 msgid "<Image>/Filters/Light Effects/_GFlare..."
-msgstr "<Image>/Szűrők/Fényhatások/GFlare..."
+msgstr "<Image>/Szűrők/Fényhatások/_GFlare..."
 
 #: plug-ins/gflare/gflare.c:967
 msgid "Gradient Flare..."
@@ -9515,12 +9310,12 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3792 plug-ins/imagemap/imap_menu.c:369
 #: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
-msgstr ""
+msgstr "Kör"
 
 #: plug-ins/gflare/gflare.c:3809 plug-ins/imagemap/imap_menu.c:371
 #: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
-msgstr ""
+msgstr "Sokszög"
 
 #: plug-ins/gflare/gflare.c:3842
 msgid "Random Seed:"
@@ -9715,8 +9510,7 @@ msgid "Shadow depth:"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:196
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:201
@@ -10130,13 +9924,11 @@ msgid "The largest brush to create"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:125
@@ -10219,20 +10011,20 @@ msgstr ""
 
 #: plug-ins/help/domain.c:161
 msgid "The GIMP help files are not installed."
-msgstr ""
+msgstr "A GIMP súgófájljai nincsenek telepítve."
 
 #: plug-ins/help/domain.c:163
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Probléma adódott a GIMP súgófájljaival."
 
 #: plug-ins/help/domain.c:168
 msgid "Please check your installation."
-msgstr ""
+msgstr "Ellenőrizze a telepítést."
 
 #: plug-ins/help/domain.c:174
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr ""
+msgstr "Ismeretlen súgóazonosító: '%s'"
 
 #: plug-ins/help/domain.c:414
 #, c-format
@@ -10240,31 +10032,37 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
+"Feldolgozási hiba ebben: '%s':\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
 msgstr "GIMP Súgóböngésző"
 
-#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
-msgstr ""
-
-#: plug-ins/helpbrowser/dialog.c:533
-msgid "Document Not Found"
-msgstr ""
+msgstr "<Névtelen>"
 
 #: plug-ins/helpbrowser/dialog.c:535
-msgid "Could not locate help document"
-msgstr ""
+msgid "Document Not Found"
+msgstr "A dokumentum nem található."
 
 #: plug-ins/helpbrowser/dialog.c:537
+msgid "Could not locate help document"
+msgstr "A súgódokumentum nem található."
+
+#: plug-ins/helpbrowser/dialog.c:539
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
 "installation is not complete. Ensure that your installation is complete "
 "before reporting this error as a bug."
 msgstr ""
+"A kért dokumentum nem található a GIMP súgó fentebb jelzett útvonalán. "
+"Ez azt jelenti, hogy vagy nem készült még el az adott témakör leírása, "
+"vagy nincs telepítve. Mielőtt ezt hibaként bejelentené, ellenőrizze, "
+"hogy a telepítés teljes-e."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 #, fuzzy
@@ -10345,14 +10143,13 @@ msgstr ""
 msgid "Render Options"
 msgstr ""
 
-#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:484
 msgid "Auto"
-msgstr ""
+msgstr "Automatikus"
 
 #: plug-ins/ifscompose/ifscompose.c:986 plug-ins/imagemap/imap_menu.c:270
-#, fuzzy
 msgid "Select _All"
-msgstr "Mindent kijelöl"
+msgstr "_Mindent kijelöl"
 
 #: plug-ins/ifscompose/ifscompose.c:993
 #, fuzzy
@@ -10501,7 +10298,7 @@ msgstr "Közép"
 #: plug-ins/imagemap/imap_rectangle.c:409
 #: plug-ins/imagemap/imap_rectangle.c:416
 msgid "pixels"
-msgstr ""
+msgstr "képpont"
 
 #: plug-ins/imagemap/imap_circle.c:272
 #, fuzzy
@@ -10722,9 +10519,8 @@ msgid "_Gopher"
 msgstr "Gopher"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:222
-#, fuzzy
 msgid "Ot_her"
-msgstr "Egyéb"
+msgstr "E_gyéb"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:228
 #, fuzzy
@@ -10801,7 +10597,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:67
 msgid "Load Imagemap"
-msgstr ""
+msgstr "Kép-térkép betöltése"
 
 #: plug-ins/imagemap/imap_file.c:93
 msgid "File exists!"
@@ -10815,7 +10611,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:134
 msgid "Save Imagemap"
-msgstr ""
+msgstr "Kép-térkép mentése"
 
 #: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
@@ -10872,22 +10668,21 @@ msgid "pixels from _top"
 msgstr ""
 
 #: plug-ins/imagemap/imap_main.c:128
-#, fuzzy
 msgid "<Image>/Filters/Web/_ImageMap..."
-msgstr "<Image>/Szűrők/Web/ImageMap..."
+msgstr "<Image>/Szűrők/Web/_Kép-térkép..."
 
 #: plug-ins/imagemap/imap_main.c:738
 msgid "Some data has been changed!"
-msgstr ""
+msgstr "Bizonyos adatok módosultak."
 
 #: plug-ins/imagemap/imap_main.c:739
 msgid "Do you really want to discard your changes?"
-msgstr ""
+msgstr "Eldobja ezeket a módosításokat?"
 
 #: plug-ins/imagemap/imap_main.c:947
 #, c-format
 msgid "File \"%s\" saved."
-msgstr ""
+msgstr "\"%s\" fájl elmentve."
 
 #: plug-ins/imagemap/imap_main.c:951
 msgid "Couldn't save file:"
@@ -10911,58 +10706,54 @@ msgid "URL: %s"
 msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:180
-#, fuzzy
 msgid "_File"
-msgstr "Fájl"
+msgstr "_Fájl"
 
 #: plug-ins/imagemap/imap_menu.c:186
-#, fuzzy
 msgid "Open Recent"
-msgstr "URL megnyitása"
+msgstr "Legutóbbi megnyitása"
 
 #: plug-ins/imagemap/imap_menu.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Vissza"
+msgstr "\"%s\" _visszavonása"
 
 #: plug-ins/imagemap/imap_menu.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "Vörös:"
+msgstr "\"%s\" új_ra"
 
 #: plug-ins/imagemap/imap_menu.c:252
 msgid "_Edit"
-msgstr ""
+msgstr "S_zerkesztés"
 
 #: plug-ins/imagemap/imap_menu.c:273
-#, fuzzy
 msgid "Deselect _All"
-msgstr "Mindent kijelöl"
+msgstr "Kijelölés me_gszüntetése"
 
 #: plug-ins/imagemap/imap_menu.c:278 plug-ins/imagemap/imap_object_popup.c:103
 msgid "Edit Area Info..."
-msgstr ""
+msgstr "Területinformáció szerkesztése..."
 
 #: plug-ins/imagemap/imap_menu.c:293
-#, fuzzy
 msgid "_View"
-msgstr "Nézet"
+msgstr "_Nézet"
 
 #: plug-ins/imagemap/imap_menu.c:297
 msgid "Area List"
-msgstr ""
+msgstr "Területlista"
 
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Source..."
 msgstr "Forrás..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1428
 msgid "Grayscale"
 msgstr "Szürkeárnyalatos"
 
 #: plug-ins/imagemap/imap_menu.c:327
 msgid "Zoom To"
-msgstr ""
+msgstr "Nagyítás"
 
 #: plug-ins/imagemap/imap_menu.c:357
 msgid "_Mapping"
@@ -10973,9 +10764,8 @@ msgid "Arrow"
 msgstr "Nyíl"
 
 #: plug-ins/imagemap/imap_menu.c:363
-#, fuzzy
 msgid "Select Contiguous Region"
-msgstr "Folytonos átmenet"
+msgstr "Egybefüggő terület kijelölése"
 
 #: plug-ins/imagemap/imap_menu.c:381
 msgid "_Tools"
@@ -10999,7 +10789,7 @@ msgstr "_Súgó"
 
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
-msgstr "ImageMap névjegye..."
+msgstr "ImageMap (kép-térkép) névjegye..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
 #, fuzzy
@@ -11182,7 +10972,7 @@ msgstr "Forrás megtekintése"
 
 #: plug-ins/imagemap/imap_stock.c:47
 msgid "Edit Map Info..."
-msgstr ""
+msgstr "Térképinformáció szerkesztése..."
 
 #: plug-ins/imagemap/imap_toolbar.c:103
 msgid "Open"
@@ -11214,40 +11004,39 @@ msgstr "Kicsinyítés"
 
 #: plug-ins/imagemap/imap_toolbar.c:148
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Térképinformáció szerkesztése"
 
 #: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
-msgstr ""
+msgstr "Létező terület kijelölése"
 
 #: plug-ins/imagemap/imap_tools.c:149
 msgid "Fuzzy Select"
-msgstr "Varázspálca kijelölés"
+msgstr "Varázspálca-kijelölés"
 
 #: plug-ins/imagemap/imap_tools.c:150
-#, fuzzy
 msgid "Select contiguous regions"
-msgstr "Kijelölés"
+msgstr "Egybefüggő területek kijelölése"
 
 #: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Négyszög-terület megadása"
 
 #: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Körterület vagy ovális terület megadása"
 
 #: plug-ins/imagemap/imap_tools.c:163
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Sokszög-terület megadása"
 
 #: plug-ins/imagemap/imap_tools.c:168
 msgid "Edit selected area info"
-msgstr ""
+msgstr "A kijelölt terület információinak szerkesztése"
 
 #: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
-msgstr ""
+msgstr "A kijelölt terület törlése"
 
 #: plug-ins/maze/algorithms.c:287
 msgid "Constructing maze using Prim's Algorithm..."
@@ -11280,7 +11069,7 @@ msgstr ""
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
-msgstr ""
+msgstr "Szélesség (képpontban):"
 
 #: plug-ins/maze/maze_face.c:229 plug-ins/maze/maze_face.c:245
 msgid "Pieces:"
@@ -11288,7 +11077,7 @@ msgstr ""
 
 #: plug-ins/maze/maze_face.c:234
 msgid "Height (Pixels):"
-msgstr "Magasság (képpont)"
+msgstr "Magasság (képpontban):"
 
 #: plug-ins/maze/maze_face.c:257
 msgid "Multiple (57):"
@@ -11385,17 +11174,19 @@ msgstr ""
 
 #: plug-ins/print/gimp_color_window.c:211
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "Nyomtatási színek beállítása"
 
 #: plug-ins/print/gimp_color_window.c:263
 msgid "Brightness:"
-msgstr "Féynesség:"
+msgstr "Fényesség:"
 
 #: plug-ins/print/gimp_color_window.c:271
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
+"A nyomat fényességét adja meg.\n"
+"A 0 egyenletes feketét jelöl, a 2 pedig egyenletes fehéret."
 
 #: plug-ins/print/gimp_color_window.c:283
 msgid "Contrast:"
@@ -11403,29 +11194,32 @@ msgstr "Kontraszt:"
 
 #: plug-ins/print/gimp_color_window.c:291
 msgid "Set the contrast of the print"
-msgstr ""
+msgstr "A nyomat kontrasztját adja meg"
 
 #: plug-ins/print/gimp_color_window.c:310
 msgid "Adjust the cyan balance of the print"
-msgstr ""
+msgstr "A nyomat ciánkék-egyensúlyának beállítása"
 
 #: plug-ins/print/gimp_color_window.c:329
 msgid "Adjust the magenta balance of the print"
-msgstr ""
+msgstr "A nyomat bíborvörös-egyensúlyának beállítása"
 
 #: plug-ins/print/gimp_color_window.c:348
 msgid "Adjust the yellow balance of the print"
-msgstr ""
+msgstr "A nyomat sárga-egyensúlyának beállítása"
 
 #: plug-ins/print/gimp_color_window.c:367
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
+"A nyomat telítettségének (színegyensúlyának) beállítása.\n"
+"Ha színes és fekete tintával szürkeárnyalatos nyomtatást szeretne végezni, "
+"akkor adjon meg 0 értéket."
 
 #: plug-ins/print/gimp_color_window.c:380
 msgid "Density:"
-msgstr ""
+msgstr "Sűrűség:"
 
 #: plug-ins/print/gimp_color_window.c:388
 msgid ""
@@ -11433,6 +11227,9 @@ msgid ""
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
+"A nyomat sűrűségének (a tinta mennyiségének) beállítása. "
+"Ha a tinta átüt a papíron vagy elfolyik, akkor csökkentse a sűrűséget. "
+"Ha a fekete területek nem egyenletesek, akkor viszont növelje azt."
 
 #: plug-ins/print/gimp_color_window.c:410
 msgid ""
@@ -11440,10 +11237,13 @@ msgid ""
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
+"A nyomat gamma-értékének beállítása. A nagyobb értékek fényesebb "
+"nyomatot eredményeznek, a kisebbek pedig sötétebbet. A fekete és a fehér "
+"nem változik - ellentétben a fényességi beállítással."
 
 #: plug-ins/print/gimp_color_window.c:426
 msgid "Dither Algorithm:"
-msgstr ""
+msgstr "Színszórási algoritmus:"
 
 #: plug-ins/print/gimp_color_window.c:434
 msgid ""
@@ -11454,6 +11254,14 @@ msgid ""
 "art.\n"
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
+"Válassza ki a használandó színszórási módszert.\n"
+"Általában az \"adaptive hybrid\" (\"adaptív hibrid\") adja a legjobb minőséget.\n"
+"Az \"ordered\" (\"rendezett\") gyorsabb, és majdnem olyan jó minőséget ad "
+"fényképek esetében.\n"
+"A \"fast\" (\"gyors\") és a \"very fast\" (\"nagyon gyors\") lényegesen "
+"gyorsabbak, és jól működnek szövegek valamint rajzok esetében.\n"
+"A \"hybrid Floyd-Steinberg\" (\"hibrid Floyd-Steinberg\") módszer általában "
+"rosszabb minőséget ad."
 
 #.
 #. * Create the main dialog
@@ -11461,19 +11269,23 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:360
 #, c-format
 msgid "%s -- Print v%s"
-msgstr ""
+msgstr "%s -- nyomtatási modul %s"
 
 #: plug-ins/print/gimp_main_window.c:369
 msgid ""
 "Save\n"
 "Settings"
 msgstr ""
+"Beállítások\n"
+"mentése"
 
 #: plug-ins/print/gimp_main_window.c:370
 msgid ""
 "Print and\n"
 "Save Settings"
 msgstr ""
+"Beállítások mentése\n"
+"és nyomtatás"
 
 #: plug-ins/print/gimp_main_window.c:437
 msgid ""
@@ -11488,8 +11300,19 @@ msgid ""
 "If you click another button while dragging the mouse, the image will return "
 "to its original position."
 msgstr ""
+"A kép elhelyezése a lapon.\n"
+"Az elsődleges (általában a bal oldali) egérgomb lenyomása utáni "
+"húzással áthelyezheti a képet.\n"
+"A második egérgomb lenyomása utáni húzással finomabb áthelyezés "
+"végezhető; az elmozdítás pontonként történik (1/72\").\n"
+"A harmadik (középső) egérgomb lenyomása utáni húzással képméretnyi "
+"elmozdítás végezhető.\n"
+"Ha kattintás és húzás közben le van nyomva a Shift billentyű, akkor az "
+"elmozdítás csak vízszintes illetve függőleges irányban lesz lehetséges.\n"
+"Ha húzás közben lenyom egy másik egérgombot, akkor a kép visszakerül "
+"az eredeti helyére."
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/gimp_main_window.c:485
 msgid "Portrait"
 msgstr "Álló"
 
@@ -11497,168 +11320,168 @@ msgstr "Álló"
 msgid "Landscape"
 msgstr "Fekvő"
 
-#: plug-ins/print/gimp_main_window.c:488
+#: plug-ins/print/gimp_main_window.c:487
 msgid "Upside down"
 msgstr "Fejjel lefelé"
 
-#: plug-ins/print/gimp_main_window.c:490
+#: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
-msgstr ""
+msgstr "Fordított fekvő"
 
-#: plug-ins/print/gimp_main_window.c:494
+#: plug-ins/print/gimp_main_window.c:491
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
+"Válasszon irányt: álló, fekvő, fejjel lefelé levő vagy fordított fekvő (fejjel "
+"lefelé levő fekvő)"
 
-#: plug-ins/print/gimp_main_window.c:517
+#: plug-ins/print/gimp_main_window.c:514
 msgid "Distance from the left of the paper to the image"
-msgstr ""
+msgstr "A képnek a papír bal oldalától mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:530
+#: plug-ins/print/gimp_main_window.c:527
 msgid "Distance from the top of the paper to the image"
-msgstr ""
+msgstr "A képnek a papír tetejétől mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:543
+#: plug-ins/print/gimp_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
-msgstr ""
+msgstr "A kép jobb oldalának a papír bal oldalától mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:553
+#: plug-ins/print/gimp_main_window.c:550
 msgid "Right Border:"
 msgstr "Jobb szél:"
 
-#: plug-ins/print/gimp_main_window.c:557
+#: plug-ins/print/gimp_main_window.c:554
 msgid "Distance from the right of the paper to the image"
-msgstr ""
+msgstr "A képnek a papír jobb oldalától mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:571
+#: plug-ins/print/gimp_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
-msgstr ""
+msgstr "A kép aljának a papír tetejétől mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:581
+#: plug-ins/print/gimp_main_window.c:578
 msgid "Bottom Border:"
-msgstr "Bal szél:"
+msgstr "Alsó szél:"
 
-#: plug-ins/print/gimp_main_window.c:585
+#: plug-ins/print/gimp_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
-msgstr ""
+msgstr "A képnek a papír aljától mért távolsága"
 
-#: plug-ins/print/gimp_main_window.c:602
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:599
 msgid "Center:"
-msgstr "Közép"
+msgstr "Középre igazítás:"
 
-#: plug-ins/print/gimp_main_window.c:606
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:603
 msgid "Vertically"
-msgstr "Függőleges"
+msgstr "Függőlegesen"
 
-#: plug-ins/print/gimp_main_window.c:611
+#: plug-ins/print/gimp_main_window.c:608
 msgid "Center the image vertically on the paper"
-msgstr ""
+msgstr "A kép középre igazítása függőleges irányban a papíron"
 
-#: plug-ins/print/gimp_main_window.c:617
+#: plug-ins/print/gimp_main_window.c:614
 msgid "Both"
 msgstr "Mindkettő"
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/gimp_main_window.c:619
 msgid "Center the image on the paper"
-msgstr ""
+msgstr "A kép középre igazítása a papíron"
 
-#: plug-ins/print/gimp_main_window.c:629
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:626
 msgid "Horizontally"
-msgstr "Vízszintes"
+msgstr "Vízszintesen"
 
-#: plug-ins/print/gimp_main_window.c:634
+#: plug-ins/print/gimp_main_window.c:631
 msgid "Center the image horizontally on the paper"
-msgstr ""
+msgstr "A kép középre igazítása vízszintes irányban a papíron"
 
-#: plug-ins/print/gimp_main_window.c:650
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:647
 msgid "Setup Printer"
-msgstr "Nyomtató:"
+msgstr "Nyomtató beállítása"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:939
 msgid "Printer Model:"
 msgstr "Nyomtató típusa:"
 
-#: plug-ins/print/gimp_main_window.c:692
+#: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
-msgstr ""
+msgstr "Jelölje ki a nyomtató típusát"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:731
+#: plug-ins/print/gimp_main_window.c:728
 msgid "PPD File:"
-msgstr "PPD fájl:"
+msgstr "PPD-fájl:"
+
+#: plug-ins/print/gimp_main_window.c:744
+msgid "Enter the correct PPD filename for your printer"
+msgstr "Adja meg a nyomtatónak megfelelő PPD-fájlnevet"
 
 #: plug-ins/print/gimp_main_window.c:747
-msgid "Enter the correct PPD filename for your printer"
-msgstr ""
-
-#: plug-ins/print/gimp_main_window.c:750
 msgid "Browse"
 msgstr "Tallózás"
 
-#: plug-ins/print/gimp_main_window.c:756
+#: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
-msgstr ""
+msgstr "Válassza ki a nyomtatónak megfelelő PPD-fájlnevet"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:766
+#: plug-ins/print/gimp_main_window.c:763
 msgid "Command:"
 msgstr "Parancs:"
 
-#: plug-ins/print/gimp_main_window.c:779
+#: plug-ins/print/gimp_main_window.c:776
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
+"Adja meg a nyomtatást végző parancsot. Megjegyzés: ne távolítsa el "
+"sem a \"-l\", sem a \"-oraw\" részt a parancsszövegből, mert nyomtatási "
+"problémákat okozhat ezzel."
 
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:788
+#: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
-msgstr "Nyomtatás fájlba?"
+msgstr "A nyomtatás célfájlja?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:801
+#: plug-ins/print/gimp_main_window.c:798
 msgid "PPD File?"
-msgstr "PPD fájl?"
+msgstr "PPD-fájl?"
 
-#: plug-ins/print/gimp_main_window.c:819
+#: plug-ins/print/gimp_main_window.c:816
 msgid "Define New Printer"
-msgstr ""
+msgstr "Új nyomtató megadása"
 
-#: plug-ins/print/gimp_main_window.c:842 plug-ins/print/gimp_main_window.c:937
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:839 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Name:"
-msgstr "Nyomtató:"
+msgstr "Nyomtatónév:"
 
-#: plug-ins/print/gimp_main_window.c:846
+#: plug-ins/print/gimp_main_window.c:843
 msgid "Enter the name you wish to give this logical printer"
-msgstr ""
+msgstr "Adja meg a logikai nyomtatóhoz használandó nevet"
 
-#: plug-ins/print/gimp_main_window.c:859
+#: plug-ins/print/gimp_main_window.c:856
 msgid "About Gimp-Print "
-msgstr ""
+msgstr "Névjegy - Gimp-Print "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid "Gimp-Print Version "
-msgstr ""
+msgstr "Gimp-Print "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid ""
 "\n"
 "\n"
@@ -11682,249 +11505,253 @@ msgid ""
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/gimp_main_window.c:917
 msgid "Printer Settings"
 msgstr "Nyomtató beállításai"
 
-#: plug-ins/print/gimp_main_window.c:933
+#: plug-ins/print/gimp_main_window.c:930
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
 msgstr ""
+"Adja meg annak a nyomtatónak a nevét (ne a gyártmányt vagy a modellt), amelyikre "
+"nyomtatni kíván"
 
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:953
+#: plug-ins/print/gimp_main_window.c:950
 msgid "Setup Printer..."
 msgstr "Nyomtató beállítása..."
 
-#: plug-ins/print/gimp_main_window.c:955
+#: plug-ins/print/gimp_main_window.c:952
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
-msgstr ""
+msgstr "A nyomtatómodell, a PPD-fájl és a nyomtatást végző parancs megadása"
 
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:970
+#: plug-ins/print/gimp_main_window.c:967
 msgid "New Printer..."
 msgstr "Új nyomtató..."
 
-#: plug-ins/print/gimp_main_window.c:972
+#: plug-ins/print/gimp_main_window.c:969
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
+"Új logikai nyomtató felvétele. Egy olyan beállítási állapot elnevezésére "
+"használható, amelyet a jövőben is kíván használni."
+
+#: plug-ins/print/gimp_main_window.c:990
+msgid "Size of paper that you wish to print to"
+msgstr "A nyomtatáshoz használt papír mérete"
 
 #: plug-ins/print/gimp_main_window.c:993
-msgid "Size of paper that you wish to print to"
-msgstr ""
-
-#: plug-ins/print/gimp_main_window.c:996
 msgid "Media Size:"
 msgstr "Papír mérete:"
 
-#: plug-ins/print/gimp_main_window.c:1005
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1002
 msgid "Dimensions:"
-msgstr "Méretek"
+msgstr "Méretek:"
 
-#: plug-ins/print/gimp_main_window.c:1019
+#: plug-ins/print/gimp_main_window.c:1016
 msgid "Width of the paper that you wish to print to"
-msgstr ""
+msgstr "A nyomtatáshoz használt papír szélessége"
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/gimp_main_window.c:1033
 msgid "Height of the paper that you wish to print to"
-msgstr ""
+msgstr "A nyomtatáshoz használt papír magassága"
+
+#: plug-ins/print/gimp_main_window.c:1049
+msgid "Type of media you're printing to"
+msgstr "A nyomtatáshoz használt médium típusa"
 
 #: plug-ins/print/gimp_main_window.c:1052
-msgid "Type of media you're printing to"
-msgstr ""
-
-#: plug-ins/print/gimp_main_window.c:1055
 msgid "Media Type:"
 msgstr "Papír típusa:"
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/gimp_main_window.c:1065
 msgid "Source (input slot) of media you're printing to"
-msgstr ""
+msgstr "A nyomtatáshoz használt médium forrása (például tálca)"
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/gimp_main_window.c:1068
 msgid "Media Source:"
 msgstr "Papír forrása:"
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/gimp_main_window.c:1081
 msgid "Type of ink in the printer"
-msgstr ""
+msgstr "A nyomtatóban levő tinta típusa"
 
-#: plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/print/gimp_main_window.c:1084
 msgid "Ink Type:"
 msgstr "Tinta típusa:"
 
-#: plug-ins/print/gimp_main_window.c:1100
+#: plug-ins/print/gimp_main_window.c:1097
 msgid "Resolution and quality of the print"
-msgstr ""
+msgstr "A nyomtatási felbontás és minőség"
 
-#: plug-ins/print/gimp_main_window.c:1139
+#: plug-ins/print/gimp_main_window.c:1136
 msgid "Scaling:"
-msgstr ""
+msgstr "Méretezés:"
 
-#: plug-ins/print/gimp_main_window.c:1145
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1142
 msgid "Set the scale (size) of the image"
-msgstr "A kép színeinek használata"
+msgstr "Megadja a kép méretezését (méretét)"
 
-#: plug-ins/print/gimp_main_window.c:1178
+#: plug-ins/print/gimp_main_window.c:1175
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
+"Megadja, hogy a méretezés a lapméret százalékában legyen-e mérve "
+"vagy a kimeneti pont/hüvelyk-értékben"
 
-#: plug-ins/print/gimp_main_window.c:1183
+#: plug-ins/print/gimp_main_window.c:1180
 msgid "Percent"
-msgstr ""
+msgstr "Százalék"
 
-#: plug-ins/print/gimp_main_window.c:1190
+#: plug-ins/print/gimp_main_window.c:1187
 msgid "Scale the print to the size of the page"
-msgstr ""
+msgstr "Nyomat nagyítása a lap mérete szerint"
 
-#: plug-ins/print/gimp_main_window.c:1196
+#: plug-ins/print/gimp_main_window.c:1193
 msgid "PPI"
-msgstr ""
+msgstr "DPI"
 
-#: plug-ins/print/gimp_main_window.c:1202
+#: plug-ins/print/gimp_main_window.c:1199
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "Nyomat nagyítása pont/hüvelyk érték szerint"
 
-#: plug-ins/print/gimp_main_window.c:1228
+#: plug-ins/print/gimp_main_window.c:1225
 msgid "Set the width of the print"
-msgstr ""
+msgstr "A nyomat szélessége"
 
-#: plug-ins/print/gimp_main_window.c:1241
+#: plug-ins/print/gimp_main_window.c:1238
 msgid "Set the height of the print"
-msgstr ""
+msgstr "A nyomat magassága"
 
-#: plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/print/gimp_main_window.c:1258
 msgid "Units:"
 msgstr "Mértékegység:"
 
-#: plug-ins/print/gimp_main_window.c:1266
+#: plug-ins/print/gimp_main_window.c:1263
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "A nyomtatáshoz használt alapmértékegység megadása"
 
-#: plug-ins/print/gimp_main_window.c:1269
+#: plug-ins/print/gimp_main_window.c:1266
 msgid "Inch"
 msgstr "Hüvelyk"
 
-#: plug-ins/print/gimp_main_window.c:1276
+#: plug-ins/print/gimp_main_window.c:1273
 msgid "Set the base unit of measurement to inches"
-msgstr ""
+msgstr "Az alapmértékegység hüvelykre állítása"
 
-#: plug-ins/print/gimp_main_window.c:1282
+#: plug-ins/print/gimp_main_window.c:1279
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1288
+#: plug-ins/print/gimp_main_window.c:1285
 msgid "Set the base unit of measurement to centimetres"
-msgstr ""
+msgstr "Az alapmértékegység centiméterre állítása"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1298
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1295
 msgid ""
 "Use Original\n"
 "Image Size"
-msgstr "Kép mérete"
-
-#: plug-ins/print/gimp_main_window.c:1304
-msgid "Set the print size to the size of the image"
 msgstr ""
+"Eredeti képméret\n"
+"használata"
 
-#: plug-ins/print/gimp_main_window.c:1327
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1301
+msgid "Set the print size to the size of the image"
+msgstr "A nyomat méretének beállítása a kép méretére"
+
+#: plug-ins/print/gimp_main_window.c:1324
 msgid "Image / Output Settings"
-msgstr "Kép beállításai"
+msgstr "Kép / kivitel beállításai"
 
-#: plug-ins/print/gimp_main_window.c:1340
+#: plug-ins/print/gimp_main_window.c:1337
 msgid "Image Type:"
 msgstr "Képtípus:"
 
-#: plug-ins/print/gimp_main_window.c:1345
+#: plug-ins/print/gimp_main_window.c:1342
 msgid "Optimize the output for the type of image being printed"
-msgstr ""
+msgstr "A kimenet optimalizálása a nyomtatandó kép típusának megfelelően"
 
-#: plug-ins/print/gimp_main_window.c:1349
+#: plug-ins/print/gimp_main_window.c:1346
 msgid "Line Art"
-msgstr ""
+msgstr "Rajz"
 
-#: plug-ins/print/gimp_main_window.c:1356
+#: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
-msgstr ""
+msgstr "A legélénkebb színeket adó és leggyorsabb módszer - szövegekhez és rajzokhoz"
 
-#: plug-ins/print/gimp_main_window.c:1363
+#: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
 msgstr "Homogén színek"
 
-#: plug-ins/print/gimp_main_window.c:1370
+#: plug-ins/print/gimp_main_window.c:1367
 msgid "Best for images dominated by regions of solid color"
-msgstr ""
+msgstr "Az elsősorban egyenletes színű területeket tartalmazó képekhez"
 
-#: plug-ins/print/gimp_main_window.c:1378
+#: plug-ins/print/gimp_main_window.c:1375
 msgid "Photograph"
 msgstr "Fénykép"
 
-#: plug-ins/print/gimp_main_window.c:1386
+#: plug-ins/print/gimp_main_window.c:1383
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
 msgstr ""
+"A leglassabb módszer, viszont ez a legpontosabb és ez adja a legfinomabb "
+"színeket a folyamatos tónusú képekhez és fotókhoz"
 
-#: plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/print/gimp_main_window.c:1409
 msgid "Output Type:"
 msgstr "Kimenet típusa:"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/gimp_main_window.c:1414
 msgid "Select the desired output type"
-msgstr ""
+msgstr "Válassza ki a kívánt kimeneti típust"
 
-#: plug-ins/print/gimp_main_window.c:1426
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1423
 msgid "Color output"
-msgstr "Szín mód"
+msgstr "Színes kimenet"
 
-#: plug-ins/print/gimp_main_window.c:1438
+#: plug-ins/print/gimp_main_window.c:1435
 msgid "Print in shades of gray using black ink"
-msgstr ""
+msgstr "A szürke szín árnyalataival való nyomtatás fekete tintával"
 
-#: plug-ins/print/gimp_main_window.c:1445
-#, fuzzy
+#: plug-ins/print/gimp_main_window.c:1442
 msgid "Black and White"
 msgstr "Fekete-fehér"
 
-#: plug-ins/print/gimp_main_window.c:1452
+#: plug-ins/print/gimp_main_window.c:1449
 msgid "Print in black and white (no color, and no shades of gray)"
-msgstr ""
+msgstr "Fekete-fehér nyomtatás (nincsenek színek és szürkeárnyalatok sem)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1463
+#: plug-ins/print/gimp_main_window.c:1460
 msgid "Adjust Output..."
-msgstr ""
+msgstr "Kimenet beállítása..."
 
-#: plug-ins/print/gimp_main_window.c:1470
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+#: plug-ins/print/gimp_main_window.c:1467
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
+"Színegyensúly, fényesség, kontraszt, telítettség és a színszórási "
+"módszer beállítása"
 
 #: plug-ins/print/print.c:164
-#, fuzzy
 msgid "<Image>/File/_Print..."
-msgstr "<Image>/Fájl/Nyomtatás..."
+msgstr "<Image>/Fájl/_Nyomtatás..."
 
 #: plug-ins/print/print.c:690 plug-ins/print/print.c:691
 #: plug-ins/print/print.c:781 plug-ins/print/print.c:1120
@@ -11932,21 +11759,20 @@ msgid "File"
 msgstr "Fájl"
 
 #: plug-ins/rcm/rcm.c:106
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-msgstr "<Image>/Kép/Színek/Colormap Rotation..."
+msgstr "<Image>/Szűrők/Színek/Térkép/Színtérkép-el_forgatás..."
 
 #: plug-ins/rcm/rcm.c:267
 msgid "Rotating the colormap..."
-msgstr ""
+msgstr "A színtérkép elforgatása..."
 
 #: plug-ins/rcm/rcm_callback.c:146 plug-ins/rcm/rcm_dialog.c:268
 msgid "Switch to clockwise"
-msgstr ""
+msgstr "Váltás óramutató szerintire"
 
 #: plug-ins/rcm/rcm_callback.c:146 plug-ins/rcm/rcm_dialog.c:268
 msgid "Switch to c/clockwise"
-msgstr ""
+msgstr "Váltás óramutatóval ellentétesre"
 
 #: plug-ins/rcm/rcm_dialog.c:119
 msgid "Rotated"
@@ -11954,7 +11780,7 @@ msgstr "Elforgatott"
 
 #: plug-ins/rcm/rcm_dialog.c:278
 msgid "Change order of arrows"
-msgstr ""
+msgstr "Nyilak rendjének módosítása"
 
 #: plug-ins/rcm/rcm_dialog.c:285
 msgid "Select all"
@@ -11963,26 +11789,26 @@ msgstr "Mindent kijelöl"
 #. spinbutton 1
 #: plug-ins/rcm/rcm_dialog.c:296 plug-ins/rcm/rcm_dialog.c:372
 msgid "From"
-msgstr ""
+msgstr "Ebből"
 
 #. spinbutton 2
 #: plug-ins/rcm/rcm_dialog.c:321 plug-ins/rcm/rcm_dialog.c:373
 msgid "To"
-msgstr ""
+msgstr "Ebbe"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:501
 msgid "Treat as this"
-msgstr ""
+msgstr "Ekként való kezelés"
 
 #: plug-ins/rcm/rcm_dialog.c:513
 msgid "Change to this"
-msgstr ""
+msgstr "Erre történő módosítás"
 
 #. * Gray: What is gray? *
 #: plug-ins/rcm/rcm_dialog.c:526
 msgid "What is Gray?"
-msgstr ""
+msgstr "Mi a szürke?"
 
 #. * Misc: Used unit selection *
 #: plug-ins/rcm/rcm_dialog.c:614
@@ -12004,56 +11830,54 @@ msgstr "Fok"
 
 #: plug-ins/rcm/rcm_dialog.c:669
 msgid "Continuous update"
-msgstr ""
+msgstr "Folyamatos frissítés"
 
 #: plug-ins/rcm/rcm_dialog.c:683
 msgid "Area:"
 msgstr "Terület:"
 
 #: plug-ins/rcm/rcm_dialog.c:690
-#, fuzzy
 msgid "Entire Layer"
-msgstr "Egész képet"
+msgstr "Teljes réteg"
 
 #: plug-ins/rcm/rcm_dialog.c:708
 msgid "Context"
-msgstr ""
+msgstr "Környezet"
 
 #. Create dialog
 #: plug-ins/rcm/rcm_dialog.c:761
 msgid "Colormap Rotation"
-msgstr ""
+msgstr "Színtérkép-elforgatás"
 
 #: plug-ins/rcm/rcm_dialog.c:805
 msgid "Main"
-msgstr ""
+msgstr "Fő"
 
 #: plug-ins/rcm/rcm_dialog.c:808
 msgid "Misc"
-msgstr ""
+msgstr "Egyéb"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/sel2path/pxl-outline.c:83
 msgid "Selection to Path..."
-msgstr "Kijelölés útvonallá..."
+msgstr "Kijelölést útvonallá..."
 
 #: plug-ins/sel2path/sel2path.c:185
 msgid "No selection to convert"
 msgstr "Nincs átalakítandó kijelölés"
 
 #: plug-ins/sel2path/sel2path.c:302
-#, fuzzy
 msgid "Selection To Path Advanced Settings"
-msgstr "Haladó beállításaok"
+msgstr "Kijelölést útvonallá - speciális beállítások"
 
 #: plug-ins/sgi/sgi.c:532
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for writing."
-msgstr "fájl megnyitása írásra sikertelen"
+msgstr "\"%s\" írásra való megnyitása sikertelen."
 
 #: plug-ins/sgi/sgi.c:614
 msgid "Save as SGI"
-msgstr "Mnetés SGI formátumba"
+msgstr "Mentés SGI formátumba"
 
 #: plug-ins/sgi/sgi.c:623
 msgid "Compression Type"
@@ -12102,7 +11926,7 @@ msgstr " "
 
 #: plug-ins/winsnap/winsnap.c:1221
 msgid "No data captured"
-msgstr ""
+msgstr "Nincs elkapott adat"
 
 #: plug-ins/xjt/xjt.c:715
 #, c-format
@@ -12157,22 +11981,3 @@ msgstr "Hiba: '%s' megnyitása sikertelen"
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Hiba a következő megnyitásakor: %s"
 
-#, fuzzy
-#~ msgid "M_inimum Height:"
-#~ msgstr "Minimális magasság:"
-
-#~ msgid "Minimum height for bumps"
-#~ msgstr "Hepehupák legkisebb magassága"
-
-#, fuzzy
-#~ msgid "Auto_stretch to Fit Value Range"
-#~ msgstr "Automatikusan az értéktartományhoz igazít"
-
-#~ msgid "Fit into value range"
-#~ msgstr "Értéktartományhoz igazít"
-
-#, fuzzy
-#~ msgid ""
-#~ "Failed to open help files:\n"
-#~ "%s"
-#~ msgstr "A fájl írása sikertelen\n"
