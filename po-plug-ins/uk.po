@@ -1947,6 +1947,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"\"Ф╕ксована база\" - це псевдон╕м.\n"
+"Однаков╕ бази створюють однаков╕ зображення, якщо (1) ширина зображень"
+"однакова (з ц╕╓╖ причини зображення ╕ його перегляд в╕др╕зняються) ╕ "
+"(2) швидкост╕ вс╕х мутац╕й дор╕внюють 0."
 
 #: plug-ins/common/CML_explorer.c:1429
 msgid "Others"
@@ -2046,7 +2050,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1890
 msgid "Mutation Rate:"
-msgstr ""
+msgstr "Показник мутац╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1900
 msgid "Mutation Dist.:"
@@ -2709,11 +2713,11 @@ msgstr "Складання..."
 
 #: plug-ins/common/compose.c:414
 msgid "Compose: Drawables have different size"
-msgstr ""
+msgstr "Складання: Малюнки мають р╕зний розм╕р"
 
 #: plug-ins/common/compose.c:431
 msgid "Compose: Images have different size"
-msgstr ""
+msgstr "Складання: Зображення мають р╕зний розм╕р"
 
 #: plug-ins/common/compose.c:445
 msgid "Compose: Error in getting layer IDs"
@@ -9092,7 +9096,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
-msgstr ""
+msgstr "Шаблон:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:332
