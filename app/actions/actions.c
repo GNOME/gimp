@@ -72,6 +72,7 @@
 #include "qmask-actions.h"
 #include "select-actions.h"
 #include "templates-actions.h"
+#include "text-editor-actions.h"
 #include "tool-options-actions.h"
 #include "tools-actions.h"
 #include "vectors-actions.h"
@@ -170,6 +171,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "templates", N_("Templates"), GIMP_STOCK_TEMPLATE,
     templates_actions_setup,
     templates_actions_update },
+  { "text-editor", N_("Text Editor"), GIMP_STOCK_EDIT,
+    text_editor_actions_setup,
+    text_editor_actions_update },
   { "tool-options", N_("Tool Options"), GIMP_STOCK_TOOL_OPTIONS,
     tool_options_actions_setup,
     tool_options_actions_update },

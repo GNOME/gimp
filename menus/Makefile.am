@@ -28,6 +28,7 @@ menudata_DATA = \
 	qmask-menu.xml			\
 	selection-editor-menu.xml	\
 	templates-menu.xml		\
+	text-editor-toolbar.xml		\
 	tool-options-menu.xml		\
 	tools-menu.xml			\
 	vectors-menu.xml

@@ -1,5 +1,28 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	Don't use deprecated GtkToolbar API in GimpTextEditor:
+
+	* app/actions/Makefile.am
+	* app/actions/actions.c
+	* app/actions/text-editor-actions.[ch]
+	* app/actions/text-editor-commands.[ch]: added acions and
+	callbacks for the new "text-editor" action group.
+
+	* app/menus/menus.c: register a "<TextEditor>" UI manager.
+
+	* menus/Makefile.am
+	* menus/text-editor-toolbar.xml: new file for the toolbar.
+
+	* app/widgets/gimptexteditor.[ch]: use the toolbar created by the
+	UI manager instead of constructing it using deprecated API.
+
+	* app/tools/gimptextoptions.c: changed accordingly.
+
+	* app/widgets/gimpwidgets-utils.[ch]: added gimp_text_buffer_load()
+	(used by text-editor-commands.c).
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/ifscompose/ifscompose.c: #undef GTK_DISABLE_DEPRECATED.
 
 2004-11-04  Michael Natterer  <mitch@gimp.org>

@@ -113,6 +113,10 @@ libappactions_a_SOURCES = \
 	templates-actions.h		\
 	templates-commands.c		\
 	templates-commands.h		\
+	text-editor-actions.c		\
+	text-editor-actions.h		\
+	text-editor-commands.c		\
+	text-editor-commands.h		\
 	tool-options-actions.c		\
 	tool-options-actions.h		\
 	tool-options-commands.c		\

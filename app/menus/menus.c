@@ -279,6 +279,14 @@ menus_init (Gimp              *gimp,
                                       "tool-options-menu.xml",
                                       tool_options_menu_setup,
                                       NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<TextEditor>",
+                                      "text-editor",
+                                      NULL,
+                                      "/text-editor-toolbar",
+                                      "text-editor-toolbar.xml",
+                                      NULL,
+                                      NULL);
 }
 
 void

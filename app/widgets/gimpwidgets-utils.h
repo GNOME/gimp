@@ -72,6 +72,9 @@ void          gimp_window_set_hint       (GtkWindow       *window,
 void          gimp_dialog_set_sensitive  (GtkDialog       *dialog,
                                           gboolean         sensitive);
 
+gboolean      gimp_text_buffer_load      (GtkTextBuffer   *buffer,
+                                          const gchar     *filename,
+                                          GError         **error);
 gboolean      gimp_text_buffer_save      (GtkTextBuffer   *buffer,
                                           const gchar     *filename,
                                           gboolean         selection_only,

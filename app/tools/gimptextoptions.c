@@ -36,6 +36,8 @@
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewablebox.h"
@@ -403,6 +405,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
+  g_object_set_data (G_OBJECT (tool_options), "tool-options-vbox", vbox);
+
   table = gtk_table_new (9, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -508,12 +512,21 @@ GtkWidget *
 gimp_text_options_editor_new (GimpTextOptions *options,
                               const gchar     *title)
 {
-  GtkWidget *editor;
+  GimpMenuFactory *menu_factory;
+  GtkWidget       *vbox;
+  GtkWidget       *toplevel;
+  GtkWidget       *editor;
 
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
   g_return_val_if_fail (title != NULL, NULL);
 
-  editor = gimp_text_editor_new (title);
+  vbox = g_object_get_data (G_OBJECT (options), "tool-options-vbox");
+
+  toplevel = gtk_widget_get_toplevel (vbox);
+
+  menu_factory = GIMP_DOCK (toplevel)->dialog_factory->menu_factory;
+
+  editor = gimp_text_editor_new (title, menu_factory);
 
   gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
                                   options->base_dir);

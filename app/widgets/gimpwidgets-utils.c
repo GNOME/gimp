@@ -23,6 +23,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -745,12 +746,65 @@ gimp_dialog_set_sensitive (GtkDialog *dialog,
 }
 
 gboolean
+gimp_text_buffer_load (GtkTextBuffer  *buffer,
+                       const gchar    *filename,
+                       GError        **error)
+{
+  FILE        *file;
+  gchar        buf[2048];
+  gint         remaining = 0;
+  GtkTextIter  iter;
+
+  g_return_val_if_fail (GTK_IS_TEXT_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = fopen (filename, "r");
+
+  if (! file)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   g_strerror (errno));
+      return FALSE;
+    }
+
+  gtk_text_buffer_set_text (buffer, "", 0);
+  gtk_text_buffer_get_iter_at_offset (buffer, &iter, 0);
+
+  while (! feof (file))
+    {
+      const char *leftover;
+      gint        count;
+      gint        to_read = sizeof (buf) - remaining - 1;
+
+      count = fread (buf + remaining, 1, to_read, file);
+      buf[count + remaining] = '\0';
+
+      g_utf8_validate (buf, count + remaining, &leftover);
+
+      gtk_text_buffer_insert (buffer, &iter, buf, leftover - buf);
+
+      remaining = (buf + remaining + count) - leftover;
+      g_memmove (buf, leftover, remaining);
+
+      if (remaining > 6 || count < to_read)
+        break;
+    }
+
+  if (remaining)
+    g_message (_("Invalid UTF-8 data in file '%s'."),
+	       gimp_filename_to_utf8 (filename));
+
+  return TRUE;
+}
+
+gboolean
 gimp_text_buffer_save (GtkTextBuffer  *buffer,
                        const gchar    *filename,
                        gboolean        selection_only,
                        GError        **error)
 {
-         GtkTextIter  start_iter;
+  GtkTextIter  start_iter;
   GtkTextIter  end_iter;
   gint         fd;
   gchar	      *text_contents;
