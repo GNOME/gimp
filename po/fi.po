@@ -18,9 +18,8 @@ msgid "About the GIMP"
 msgstr "Tietoja GIMP:stä"
 
 #: app/about_dialog.c:234
-#, fuzzy, c-format
 msgid "Version %s brought to you by"
-msgstr " tekijöinä"
+msgstr "Version %s tekijät:"
 
 #: app/about_dialog.c:274
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -329,9 +328,8 @@ msgid "Refresh"
 msgstr "Virkistä"
 
 #: app/brush_select.c:405
-#, fuzzy
 msgid "No Brushes available"
-msgstr "esikatselukuvaa ei saatavana"
+msgstr "Ei siveltimiä"
 
 #: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:595
 msgid "Opacity:"
@@ -622,9 +620,8 @@ msgid "Color Balance"
 msgstr "Väritasapainon säätö"
 
 #: app/color_balance.c:286
-#, fuzzy
 msgid "Color Levels:"
-msgstr "Väritasot"
+msgstr "Väritasot:"
 
 #. Create the cyan-red scale widget
 #: app/color_balance.c:326
@@ -955,19 +952,17 @@ msgid "Curves"
 msgstr "Käyrät"
 
 #: app/curves.c:577
-#, fuzzy
 msgid "Modify Curves for Channel:"
-msgstr "Muokkaa väritasot kanavalle: "
+msgstr "Muokkaa värikäyrät kanavalle:"
 
 #. The option menu for selecting the drawing method
 #: app/curves.c:658
-#, fuzzy
 msgid "Curve Type:"
-msgstr "Käyrä"
+msgstr "Käyrän tyyppi:"
 
 #: app/desaturate.c:35
 msgid "Desaturate operates only on RGB color drawables."
-msgstr ""
+msgstr "Värikylläisyyden vähentäminen onnistuu vain RGB-kuville"
 
 #: app/devices.c:747
 msgid "Device Status"
@@ -3009,19 +3004,16 @@ msgid "Levels"
 msgstr "Väritasot"
 
 #: app/levels.c:388
-#, fuzzy
 msgid "Modify Levels for Channel:"
-msgstr "Muokkaa väritasot kanavalle: "
+msgstr "Muokkaa väritasot kanavalle:"
 
 #: app/levels.c:404
-#, fuzzy
 msgid "Input Levels:"
-msgstr "Ottotasot: "
+msgstr "Ottotasot:"
 
 #: app/levels.c:513
-#, fuzzy
 msgid "Output Levels:"
-msgstr "Antotasot: "
+msgstr "Antotasot:"
 
 #: app/levels.c:617 app/module_db.c:825
 msgid "Load"
@@ -3208,29 +3200,24 @@ msgid "degrees"
 msgstr "astetta"
 
 #: app/menus.c:69
-#, fuzzy
 msgid "/Filters/Render/Clouds"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Tee kuva/Pilvet"
 
 #: app/menus.c:70
-#, fuzzy
 msgid "/Filters/Render/Nature"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Tee kuva/Luonto"
 
 #: app/menus.c:71
-#, fuzzy
 msgid "/Filters/Render/Pattern"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Tee kuva/Kuviot"
 
 #: app/menus.c:72
-#, fuzzy
 msgid "/Filters/Colors/Map"
-msgstr "/Tiedosto/Sulje"
+msgstr "/Suotimet/Värit/Kuvaukset"
 
 #: app/menus.c:73
-#, fuzzy
 msgid "/Filters/Misc"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Sekalaiset"
 
 #. <Toolbox>/File
 #: app/menus.c:84 app/menus.c:194
@@ -3238,19 +3225,16 @@ msgid "/File"
 msgstr "/Tiedosto"
 
 #: app/menus.c:86 app/menus.c:196
-#, fuzzy
 msgid "/File/New..."
-msgstr "/Tiedosto/Uusi"
+msgstr "/Tiedosto/Uusi..."
 
 #: app/menus.c:88 app/menus.c:198
-#, fuzzy
 msgid "/File/Open..."
-msgstr "/Tiedosto/Avaa"
+msgstr "/Tiedosto/Avaa..."
 
 #: app/menus.c:95
-#, fuzzy
 msgid "/File/Acquire"
-msgstr "/Tiedosto/Hanki"
+msgstr "/Tiedosto/Syötä"
 
 #: app/menus.c:100
 msgid "/File/Preferences..."
@@ -3310,42 +3294,37 @@ msgstr "/Tiedosto/Dialogit/Näyttösuotimet..."
 
 #. <Toolbox>/Xtns
 #: app/menus.c:150
-#, fuzzy
 msgid "/Xtns"
-msgstr "/Muokkaa/---"
+msgstr "/Laajennukset"
 
 #: app/menus.c:152
-#, fuzzy
 msgid "/Xtns/Module Browser..."
-msgstr "/Laajennukset/Moduuliselain"
+msgstr "/Laajennukset/Moduuliselain..."
 
 #. <Toolbox>/Help
 #: app/menus.c:160
 msgid "/Help"
-msgstr ""
+msgstr "/Apua"
 
 #: app/menus.c:162
-#, fuzzy
 msgid "/Help/Help..."
-msgstr "/Tiedosto/Apua..."
+msgstr "/Apua/Apua..."
 
 #: app/menus.c:164
 msgid "/Help/Context Help..."
-msgstr ""
+msgstr "/Apua/Yhteysriippuva avustus..."
 
 #: app/menus.c:166
-#, fuzzy
 msgid "/Help/Tip of the day..."
-msgstr "/Tiedosto/Päivän vihje"
+msgstr "/Apua/Päivän vihje..."
 
 #: app/menus.c:168
-#, fuzzy
 msgid "/Help/About..."
-msgstr "/Tiedosto/Tietoja..."
+msgstr "/Apua/Tietoja..."
 
 #: app/menus.c:170
 msgid "/Help/Dump Items (Debug)"
-msgstr ""
+msgstr "/Apua/"
 
 #: app/menus.c:182 app/menus.c:211
 msgid "/File/Quit"
@@ -3356,9 +3335,8 @@ msgid "/File/Save"
 msgstr "/Tiedosto/Talleta"
 
 #: app/menus.c:202
-#, fuzzy
 msgid "/File/Save as..."
-msgstr "/Tiedosto/Talleta nimellä"
+msgstr "/Tiedosto/Talleta nimellä..."
 
 #: app/menus.c:204
 msgid "/File/Revert"
@@ -3403,24 +3381,20 @@ msgstr "/Muokkaa/Liimaa nimetty"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:241
-#, fuzzy
 msgid "/Edit/Buffer"
-msgstr "/Muokkaa/tearoff1"
+msgstr "/Muokkaa/Puskuri"
 
 #: app/menus.c:243
-#, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
-msgstr "/Muokkaa/Leikkaa nimetty"
+msgstr "/Muokkaa/Puskuri/Leikkaa nimetty..."
 
 #: app/menus.c:245
-#, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
-msgstr "/Muokkaa/Kopioi nimetty"
+msgstr "/Muokkaa/Puskuri/Kopioi nimetty..."
 
 #: app/menus.c:247
-#, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
-msgstr "/Muokkaa/Liimaa nimetty"
+msgstr "/Muokkaa/Puskuri/Liimaa nimetty..."
 
 #: app/menus.c:252
 msgid "/Edit/Clear"
@@ -3456,28 +3430,24 @@ msgid "/Select/Float"
 msgstr "/Valitse/Kelluva"
 
 #: app/menus.c:277
-#, fuzzy
 msgid "/Select/Feather..."
-msgstr "/Valitse/Pehmennä"
+msgstr "/Valitse/Pehmennä..."
 
 #: app/menus.c:279
 msgid "/Select/Sharpen"
 msgstr "/Valitse/Terävöitä"
 
 #: app/menus.c:281
-#, fuzzy
 msgid "/Select/Shrink..."
-msgstr "/Valitse/Pienennä"
+msgstr "/Valitse/Pienennä..."
 
 #: app/menus.c:283
-#, fuzzy
 msgid "/Select/Grow..."
-msgstr "/Valitse/Kasvata"
+msgstr "/Valitse/Kasvata..."
 
 #: app/menus.c:285
-#, fuzzy
 msgid "/Select/Border..."
-msgstr "/Valitse/Reuna"
+msgstr "/Valitse/Reuna..."
 
 #: app/menus.c:290
 msgid "/Select/Save To Channel"
@@ -3550,9 +3520,8 @@ msgid "/View/Nav. Window..."
 msgstr "/Näytä/Ikkunan tiedot..."
 
 #: app/menus.c:334
-#, fuzzy
 msgid "/View/Undo history..."
-msgstr "/Muokkaa/Toimintohistoria"
+msgstr "/Muokkaa/Toimintohistoria..."
 
 #: app/menus.c:339
 msgid "/View/Toggle Selection"
@@ -3589,24 +3558,20 @@ msgstr "/Kuva"
 
 #. <Image>/Image/Mode
 #: app/menus.c:367
-#, fuzzy
 msgid "/Image/Mode"
-msgstr "/Kuva/RGB"
+msgstr "/Kuva/Muoto"
 
 #: app/menus.c:369
-#, fuzzy
 msgid "/Image/Mode/RGB"
-msgstr "/Kuva/RGB"
+msgstr "/Kuva/Muoto/RGB"
 
 #: app/menus.c:371
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
-msgstr "/Kuva/Harmaasävy"
+msgstr "/Kuva/Muoto/Harmaasävy"
 
 #: app/menus.c:373
-#, fuzzy
 msgid "/Image/Mode/Indexed..."
-msgstr "/Kuva/Indeksoitu"
+msgstr "/Kuva/Muoto/Indeksoitu"
 
 #. <Image>/Image/Colors
 #: app/menus.c:381
@@ -3623,49 +3588,42 @@ msgstr "/Kuva/Värit/Invertoi"
 
 #. <Image>/Image/Colors/Auto
 #: app/menus.c:396
-#, fuzzy
 msgid "/Image/Colors/Auto"
-msgstr "/Kuva/Värit"
+msgstr "/Kuva/Värit/Automaattinen"
 
 #: app/menus.c:398
-#, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
-msgstr "/Kuva/Värit/Ekvalisoi"
+msgstr "/Kuva/Värit/Automaattinen/Ekvalisoi"
 
 #. <Image>/Image/Alpha
 #: app/menus.c:406
 msgid "/Image/Alpha"
-msgstr "/Kuva/Alfa"
+msgstr "/Kuva/Alfakanava"
 
 #: app/menus.c:408
 msgid "/Image/Alpha/Add Alpha Channel"
-msgstr "/Kuva/Alpha/Lisää alfakanava"
+msgstr "/Kuva/Alfakanava/Lisää alfakanava"
 
 #. <Image>/Image/Transforms
 #: app/menus.c:413
-#, fuzzy
 msgid "/Image/Transforms"
 msgstr "/Kuva/Muunnokset"
 
 #: app/menus.c:415
-#, fuzzy
 msgid "/Image/Transforms/Offset..."
-msgstr "/Kuva/Muunnokset/Siirtymä"
+msgstr "/Kuva/Muunnokset/Siirtymä..."
 
 #: app/menus.c:417
-#, fuzzy
 msgid "/Image/Transforms/Rotate"
-msgstr "/Kuva/Muunnokset/tearoff1"
+msgstr "/Kuva/Muunnokset/Kierto"
 
 #: app/menus.c:424
-#, fuzzy
 msgid "/Image/Canvas Size..."
-msgstr "/Kuva/Muokkaa kokoa"
+msgstr "/Kuva/Muokkaa kokoa..."
 
 #: app/menus.c:426
-#, fuzzy
 msgid "/Image/Scale Image..."
-msgstr "/Kuva/Skaalaa"
+msgstr "/Kuva/Skaalaa..."
 
 #: app/menus.c:428
 msgid "/Image/Duplicate"
@@ -3682,7 +3640,6 @@ msgstr "/Tasot/Tasot & Kanavat..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:443
-#, fuzzy
 msgid "/Layers/Stack"
 msgstr "/Tasot/Pino"
 
@@ -3712,18 +3669,16 @@ msgstr "/Tasot/Pino/Laske taso pohjimmaiseksi"
 
 #. <Image>/Layers/Rotate
 #: app/menus.c:462
-#, fuzzy
 msgid "/Layers/Rotate"
-msgstr "/Tasot/Pino/tearoff1"
+msgstr "/Tasot/Kierrätä"
 
 #: app/menus.c:467
 msgid "/Layers/Anchor Layer"
 msgstr "/Tasot/Ankkuroi taso"
 
 #: app/menus.c:469
-#, fuzzy
 msgid "/Layers/Merge Visible Layers..."
-msgstr "/Tasot/Yhdistä näkyvät tasot"
+msgstr "/Tasot/Yhdistä näkyvät tasot..."
 
 #: app/menus.c:471
 msgid "/Layers/Flatten Image"
@@ -3772,84 +3727,68 @@ msgid "/Filters/Re-show last"
 msgstr "/Suotimet/Näytä uudelleen edellinen"
 
 #: app/menus.c:515
-#, fuzzy
 msgid "/Filters/Blur"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Tee epäteräväksi"
 
 #: app/menus.c:518
-#, fuzzy
 msgid "/Filters/Colors"
-msgstr "/Tiedosto/Sulje"
+msgstr "/Suotimet/Värit"
 
 #: app/menus.c:523
-#, fuzzy
 msgid "/Filters/Noise"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Lisää kohinaa"
 
 #: app/menus.c:525
-#, fuzzy
 msgid "/Filters/Edge-Detect"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Löydä reunoja"
 
 #: app/menus.c:527
-#, fuzzy
 msgid "/Filters/Enhance"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Paranna"
 
 #: app/menus.c:529
-#, fuzzy
 msgid "/Filters/Generic"
-msgstr "/Suotimet/tearoff1"
+msgstr "/Suotimet/Yleiset"
 
 #: app/menus.c:534
-#, fuzzy
 msgid "/Filters/Glass Effects"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Lasiefektit"
 
 #: app/menus.c:536
-#, fuzzy
 msgid "/Filters/Light Effects"
-msgstr "/Suotimet/tearoff1"
+msgstr "/Suotimet/Valoefektit"
 
 #: app/menus.c:538
-#, fuzzy
 msgid "/Filters/Distorts"
-msgstr "/Tiedosto/Dialogit"
+msgstr "/Suotimet/Vääristykset"
 
 #: app/menus.c:540
-#, fuzzy
 msgid "/Filters/Artistic"
-msgstr "/Suotimet/Toista edellinen"
+msgstr "/Suotimet/Taiteelliset"
 
 #: app/menus.c:542
-#, fuzzy
 msgid "/Filters/Map"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Kuvaukset"
 
 #: app/menus.c:544
-#, fuzzy
 msgid "/Filters/Render"
-msgstr "/Tiedosto/Palauta"
+msgstr "/Suotimet/Muodosta kuva"
 
 #: app/menus.c:546
-#, fuzzy
 msgid "/Filters/Web"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Webbi"
 
 #: app/menus.c:551
-#, fuzzy
 msgid "/Filters/Animation"
-msgstr "/Suotimet/tearoff1"
+msgstr "/Suotimet/Animaatio"
 
 #: app/menus.c:553
-#, fuzzy
 msgid "/Filters/Combine"
-msgstr "/Tiedosto/Sulje"
+msgstr "/Suotimet/Yhdistä"
 
 #: app/menus.c:558
-#, fuzzy
 msgid "/Filters/Toys"
-msgstr "/Suotimet"
+msgstr "/Suotimet/Lelut"
 
 #. <Image>/Script-Fu
 #: app/menus.c:563
@@ -3858,7 +3797,6 @@ msgstr "/Script-Fu"
 
 #. <Image>/Dialogs
 #: app/menus.c:568
-#, fuzzy
 msgid "/Dialogs"
 msgstr "/Dialogit"
 
@@ -3919,9 +3857,8 @@ msgid "/By extension"
 msgstr "/Nimen loppuliitteen mukaan"
 
 #: app/menus.c:640
-#, fuzzy
 msgid "/New Layer..."
-msgstr "/Uusi taso"
+msgstr "/Uusi taso..."
 
 #. <Layers>/Stack
 #: app/menus.c:645
@@ -3969,14 +3906,12 @@ msgid "/Layer Boundary Size..."
 msgstr ""
 
 #: app/menus.c:671
-#, fuzzy
 msgid "/Scale Layer..."
-msgstr "/Skaalaa taso"
+msgstr "/Skaalaa tasoa..."
 
 #: app/menus.c:676
-#, fuzzy
 msgid "/Merge Visible Layers..."
-msgstr "/Yhdistä näkyvät tasot"
+msgstr "/Yhdistä näkyvät tasot..."
 
 #: app/menus.c:678
 msgid "/Merge Down"
@@ -3987,14 +3922,12 @@ msgid "/Flatten Image"
 msgstr "/Yhdistä kuva"
 
 #: app/menus.c:685
-#, fuzzy
 msgid "/Add Layer Mask..."
-msgstr "/Lisää tason maski"
+msgstr "/Lisää tason maski..."
 
 #: app/menus.c:687
-#, fuzzy
 msgid "/Apply Layer Mask..."
-msgstr "/Sovella tason maskia"
+msgstr "/Sovella tason maskia..."
 
 #: app/menus.c:689
 msgid "/Mask to Selection"
@@ -4009,9 +3942,8 @@ msgid "/Alpha to Selection"
 msgstr "/Alfakanava valinnaksi"
 
 #: app/menus.c:707
-#, fuzzy
 msgid "/New Channel..."
-msgstr "/Uusi kanava"
+msgstr "/Uusi kanava..."
 
 #: app/menus.c:709
 msgid "/Raise Channel"
@@ -4091,42 +4023,38 @@ msgid "Error opening file: %s\n"
 msgstr "Virhe tiedoston avauksessa: %s\n"
 
 #: app/module_db.c:58
-#, fuzzy
 msgid "Module error"
-msgstr "Moduulien kansiot"
+msgstr "Moduulivirhe"
 
 #: app/module_db.c:59
-#, fuzzy
 msgid "Loaded OK"
-msgstr "Lataa"
+msgstr "Ladattu OK"
 
 #: app/module_db.c:60
-#, fuzzy
 msgid "Load failed"
-msgstr "Lataa kuva"
+msgstr "Lataus epäonnistui"
 
 #: app/module_db.c:61
 msgid "Unload requested"
 msgstr ""
 
 #: app/module_db.c:62
-#, fuzzy
 msgid "Unloaded OK"
-msgstr "Poista"
+msgstr "Poistettu OK"
 
 #: app/module_db.c:271
 msgid "Module DB"
-msgstr ""
+msgstr "Moduulitietokanta"
 
 #: app/module_db.c:560
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr ""
+msgstr "lataa moduuli: \"%s\"\n"
 
 #: app/module_db.c:567
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr ""
+msgstr "ohitan moduulia: \"%s\"\n"
 
 #: app/module_db.c:592
 #, c-format
@@ -4191,14 +4119,13 @@ msgstr "Siirtotyökalun asetukset asetukset"
 
 #. create the info dialog
 #: app/nav_window.c:1254
-#, fuzzy, c-format
+#, c-format
 msgid "Window Navigation:%s-%d.%d"
-msgstr "Ikkunan %s navigointi"
+msgstr "Ikkuna-navigointi:%s-%d.%d"
 
 #: app/nav_window.c:1552
-#, fuzzy
 msgid "No image: Window Navigation"
-msgstr "Ikkunan %s navigointi"
+msgstr "Ikkuna-navigointi: Ei kuvaa"
 
 #: app/paint_core.c:699
 msgid "No brushes available for use with this tool."
@@ -4484,34 +4411,33 @@ msgid "Pattern Selection"
 msgstr "Kuvion valinta"
 
 #: app/pattern_select.c:226
-#, fuzzy
 msgid "No Patterns available"
-msgstr "Täyttö taustavärillä"
+msgstr "Ei kuvioita saatavilla"
 
 #: app/patterns.c:187
 #, c-format
 msgid "Unknown GIMP version #%d in \"%s\"\n"
-msgstr ""
+msgstr "Tuntematon GIMP-versio %s tiedostossa \"%s\"\n"
 
 #: app/patterns.c:204
 msgid "Error in GIMP pattern file...aborting."
-msgstr ""
+msgstr "Virhe kuviotiedostossa...lopetan."
 
 #: app/patterns.c:218
 msgid "GIMP pattern file appears to be truncated."
-msgstr ""
+msgstr "Kuviotiedostoa on katkaistu"
 
 #: app/patterns.c:282
 msgid "Pattern load failed"
-msgstr ""
+msgstr "Kuvion lataaminen epäonnistui"
 
 #: app/perspective_tool.c:60
 msgid "Perspective Transform Information"
-msgstr ""
+msgstr "Tietoja perspektiivimuunnoksesta"
 
 #: app/perspective_tool.c:310
 msgid "Perspective..."
-msgstr ""
+msgstr "Perspektiivi..."
 
 #: app/plug_in.c:312
 msgid "Plug-ins"
@@ -4549,9 +4475,8 @@ msgid "Posterize"
 msgstr ""
 
 #: app/posterize.c:213
-#, fuzzy
 msgid "Posterize Levels:"
-msgstr "Väritasot"
+msgstr "Posterisaatiotasoja:"
 
 #: app/preferences_dialog.c:215
 msgid "Error: Levels of undo must be zero or greater."
@@ -4702,18 +4627,16 @@ msgid "Scaling"
 msgstr "Skaalaus"
 
 #: app/preferences_dialog.c:1439
-#, fuzzy
 msgid "Nearest Neighbor (Fast)"
-msgstr "Lähin naapuri"
+msgstr "Lähin naapuri (nopea)"
 
 #: app/preferences_dialog.c:1443
 msgid "Cubic (Slow)"
-msgstr ""
+msgstr "Kuutiollinen (hidas)"
 
 #: app/preferences_dialog.c:1447
-#, fuzzy
 msgid "Interpolation Type:"
-msgstr "Kuutiollinen interpolaatio"
+msgstr "Interpolaatiomenetelmä:"
 
 #: app/preferences_dialog.c:1452
 msgid "Interface Settings"
@@ -4752,9 +4675,8 @@ msgid "Navigation Window per Display"
 msgstr ""
 
 #: app/preferences_dialog.c:1552
-#, fuzzy
 msgid "Help System Settings"
-msgstr "Avustukset"
+msgstr "Avustusasetukset"
 
 #: app/preferences_dialog.c:1554
 msgid "Help System"
@@ -5157,9 +5079,8 @@ msgid "Size"
 msgstr "Koko"
 
 #: app/resize.c:160
-#, fuzzy
 msgid "Scale Image"
-msgstr "Tallenna kuva"
+msgstr "Skaalaa kuvaa"
 
 #: app/resize.c:162
 msgid "Pixel Dimensions"
@@ -5325,7 +5246,6 @@ msgid "Threshold"
 msgstr ""
 
 #: app/threshold.c:287
-#, fuzzy
 msgid "Threshold Range:"
 msgstr "Raja:"
 
@@ -5400,7 +5320,7 @@ msgstr ""
 
 #: app/tool_options.c:241
 msgid "Fuzzy Selection Options"
-msgstr "Himmeän valinnan asetukset"
+msgstr "Epäterävän valinnan asetukset"
 
 #: app/tool_options.c:243
 msgid "Bezier Selection Options"
@@ -5487,85 +5407,84 @@ msgid "Pressure"
 msgstr ""
 
 #: app/tool_options.c:844
-#, fuzzy
 msgid "Rate"
-msgstr "Virtaus:"
+msgstr "Virtaus"
 
 #: app/tools.c:85
 msgid "Rect Select"
-msgstr ""
+msgstr "Suorakulmiovalinta"
 
 #: app/tools.c:87
 msgid "/Tools/Rect Select"
-msgstr ""
+msgstr "/Työkalut/Suorakulmiovalinta"
 
 #: app/tools.c:90
 msgid "Select rectangular regions"
-msgstr ""
+msgstr "Valitse suorakulmioita"
 
 #: app/tools.c:102
 msgid "Ellipse Select"
-msgstr ""
+msgstr "Ellipsivalinta"
 
 #: app/tools.c:104
 msgid "/Tools/Ellipse Select"
-msgstr ""
+msgstr "/Työkalut/Ellipsivalinta"
 
 #: app/tools.c:107
 msgid "Select elliptical regions"
-msgstr ""
+msgstr "Valitse ellipsejä"
 
 #: app/tools.c:119
 msgid "Free Select"
-msgstr ""
+msgstr "Vapaa valinta"
 
 #: app/tools.c:121
 msgid "/Tools/Free Select"
-msgstr ""
+msgstr "/Työkalut/Vapaamuotoinen valinta"
 
 #: app/tools.c:124
 msgid "Select hand-drawn regions"
-msgstr ""
+msgstr "Valiten vapaamuotoisea alueita"
 
 #: app/tools.c:136
 msgid "Fuzzy Select"
-msgstr ""
+msgstr "Epäterävä valinta"
 
 #: app/tools.c:138
 msgid "/Tools/Fuzzy Select"
-msgstr ""
+msgstr "/Työkalut/Epäterävä valinta"
 
 #: app/tools.c:141
 msgid "Select contiguous regions"
-msgstr ""
+msgstr "Valitse yhteynäisiä alueita"
 
 #: app/tools.c:153
 msgid "Bezier Select"
-msgstr ""
+msgstr "Bezier-valinta"
 
 #: app/tools.c:155
 msgid "/Tools/Bezier Select"
-msgstr ""
+msgstr "/Työkalut/Bezier-valinta"
 
 #: app/tools.c:158
 msgid "Select regions using Bezier curves"
-msgstr ""
+msgstr "Valitse Bezier-käyrien rajaamia alueita"
 
 #: app/tools.c:170
 msgid "Intelligent Scissors"
-msgstr ""
+msgstr "Älysakset"
 
 #: app/tools.c:172
 msgid "/Tools/Intelligent Scissors"
-msgstr ""
+msgstr "/Tools/Älysakset"
 
 #: app/tools.c:175
 msgid "Select shapes from image"
-msgstr ""
+msgstr "Valitse alueita"
 
 #: app/tools.c:187
 msgid "Move"
-msgstr ""
+msgstr "Siirrä"
 
 #: app/tools.c:189
 msgid "/Tools/Move"
@@ -5577,15 +5496,15 @@ msgstr "Siirrä tasot ja valinnat"
 
 #: app/tools.c:204
 msgid "Magnify"
-msgstr ""
+msgstr "Suurenna"
 
 #: app/tools.c:206
 msgid "/Tools/Magnify"
-msgstr ""
+msgstr "/Työkalut/Suurenna"
 
 #: app/tools.c:209
 msgid "Zoom in & out"
-msgstr ""
+msgstr "Zoomaa"
 
 #: app/tools.c:221
 msgid "Crop & Resize"
@@ -5818,75 +5737,66 @@ msgid "Select regions by color"
 msgstr "Valitse osia kuvasta värien mukaan"
 
 #: app/tools.c:616
-#, fuzzy
 msgid "/Image/Colors/Color Balance..."
-msgstr "/Kuva/Värit/Väritasapaino"
+msgstr "/Kuva/Värit/Väritasapaino..."
 
 #: app/tools.c:619
 msgid "Adjust color balance"
 msgstr "Väritasapainon säätö"
 
 #: app/tools.c:633
-#, fuzzy
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/Kuva/Värit/Kirkkaus ja kontrasti"
+msgstr "/Kuva/Värit/Kirkkaus ja kontrasti..."
 
 #: app/tools.c:636
 msgid "Adjust brightness and contrast"
 msgstr "Kirkkauden ja kontrastin säätö"
 
 #: app/tools.c:650
-#, fuzzy
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr "/Kuva/Värit/Sävy ja värikylläisyys"
+msgstr "/Kuva/Värit/Sävy ja värikylläisyys..."
 
 #: app/tools.c:653
 msgid "Adjust hue and saturation"
 msgstr "Värisävyn ja kylläisyyden säätö"
 
 #: app/tools.c:667
-#, fuzzy
 msgid "/Image/Colors/Posterize..."
-msgstr "/Kuva/Värit/Posterisoi"
+msgstr "/Kuva/Värit/Posterisaatio..."
 
 #: app/tools.c:670
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Vähennä värien lukumäärä"
 
 #: app/tools.c:684
-#, fuzzy
 msgid "/Image/Colors/Threshold..."
-msgstr "/Kuva/Värit/Raja"
+msgstr "/Kuva/Värit/Raja..."
 
 #: app/tools.c:687
 msgid "Reduce image to two colors using a threshold"
 msgstr "Vähennä värien lukumäärä kahteen"
 
 #: app/tools.c:701
-#, fuzzy
 msgid "/Image/Colors/Curves..."
-msgstr "/Kuva/Värit/Käyrät"
+msgstr "/Kuva/Värit/Käyrät..."
 
 #: app/tools.c:704
 msgid "Adjust color curves"
 msgstr "Värikäyrien säätö"
 
 #: app/tools.c:718
-#, fuzzy
 msgid "/Image/Colors/Levels..."
-msgstr "/Kuva/Värit/Tasot"
+msgstr "/Kuva/Värit/Tasot..."
 
 #: app/tools.c:721
 msgid "Adjust color levels"
 msgstr "Väritasojen säätö"
 
 #: app/tools.c:735
-#, fuzzy
 msgid "/Image/Histogram..."
-msgstr "/Kuva/Histogrammi"
+msgstr "/Kuva/Histogrammi..."
 
 #: app/tools.c:738
-#, fuzzy
 msgid "View image histogram"
 msgstr "Näytä kuvan histogrammi"
 
@@ -5991,99 +5901,81 @@ msgid "<<invalid>>"
 msgstr ""
 
 #: app/undo.c:2856
-#, fuzzy
 msgid "image"
-msgstr "Kuva"
+msgstr "kuva"
 
 #: app/undo.c:2857
-#, fuzzy
 msgid "image mod"
-msgstr "Kuvamaski"
+msgstr "kuvan muokkaus"
 
 #: app/undo.c:2858
-#, fuzzy
 msgid "mask"
-msgstr "%s-maski"
+msgstr "maski"
 
 #: app/undo.c:2859
-#, fuzzy
 msgid "layer move"
-msgstr "Tason nimi:"
+msgstr "tason siirto"
 
 #. ok
 #: app/undo.c:2860
-#, fuzzy
 msgid "transform"
-msgstr "Muunnokset"
+msgstr "muunnos"
 
 #: app/undo.c:2861
-#, fuzzy
 msgid "paint"
-msgstr "piste"
+msgstr "maalaus"
 
 #: app/undo.c:2862
-#, fuzzy
 msgid "new layer"
-msgstr "/Uusi taso"
+msgstr "uusi taso"
 
 #: app/undo.c:2863
-#, fuzzy
 msgid "delete layer"
-msgstr "/Poista taso"
+msgstr "tason poista"
 
 #: app/undo.c:2864
-#, fuzzy
 msgid "layer mod"
-msgstr "Tason nimi:"
+msgstr "tason muokkaus"
 
 #: app/undo.c:2865
-#, fuzzy
 msgid "add layer mask"
-msgstr "/Lisää tason maski"
+msgstr "tason maskin lisäys"
 
 #. ok
 #: app/undo.c:2866
-#, fuzzy
 msgid "delete layer mask"
-msgstr "Sovella tason maskia?"
+msgstr "tason maskin poisto"
 
 #. ok
 #: app/undo.c:2867
-#, fuzzy
 msgid "rename layer"
-msgstr "nosta taso"
+msgstr "tason nimen vaihto"
 
 #: app/undo.c:2868
-#, fuzzy
 msgid "layer reposition"
-msgstr "Tasojen yhdistelyn asetukset"
+msgstr "tasojen keskinäinen siirto"
 
 #. ok
 #: app/undo.c:2869
-#, fuzzy
 msgid "new channel"
-msgstr "Uusi kanava"
+msgstr "uusi kanava"
 
 #: app/undo.c:2870
-#, fuzzy
 msgid "delete channel"
-msgstr "/Valitse/Talleta kanavalle"
+msgstr "kanavan poisto"
 
 #: app/undo.c:2871
-#, fuzzy
 msgid "channel mod"
-msgstr "Kanavan nimi:"
+msgstr "kanavan muokkaus"
 
 #: app/undo.c:2872
-#, fuzzy
 msgid "FS to layer"
-msgstr "alenna taso"
+msgstr "kelluva valinta tasoksi"
 
 #. ok
 #: app/undo.c:2873
-#, fuzzy
 msgid "gimage"
-msgstr "Kuva"
+msgstr ""
 
 #: app/undo.c:2874
 msgid "FS rigor"
@@ -6098,78 +5990,66 @@ msgid "guide"
 msgstr ""
 
 #: app/undo.c:2877
-#, fuzzy
 msgid "text"
-msgstr "Teksti"
+msgstr "teksti"
 
 #: app/undo.c:2878
-#, fuzzy
 msgid "float selection"
-msgstr "Kelluvat valinnat"
+msgstr "valinnan kellutus"
 
 #: app/undo.c:2879
-#, fuzzy
 msgid "paste"
-msgstr "Liimaa"
+msgstr "liimaa"
 
 #: app/undo.c:2880
 msgid "cut"
-msgstr ""
+msgstr "leikkaa"
 
 #: app/undo.c:2881
-#, fuzzy
 msgid "transform core"
-msgstr "Muunnokset"
+msgstr "ydinmuunnos"
 
 #: app/undo.c:2882
 msgid "paint core"
-msgstr ""
+msgstr "piirtäminen"
 
 #: app/undo.c:2883
-#, fuzzy
 msgid "floating layer"
-msgstr "Kelluva taso"
+msgstr "kelluva taso"
 
 #. unused!
 #: app/undo.c:2884
-#, fuzzy
 msgid "linked layer"
-msgstr "nosta taso"
+msgstr "linkitetty taso"
 
 #: app/undo.c:2885
-#, fuzzy
 msgid "apply layer mask"
-msgstr "Sovella tason maskia?"
+msgstr "tason maskin sovellus"
 
 #. ok
 #: app/undo.c:2886
-#, fuzzy
 msgid "layer merge"
-msgstr "Tason nimi:"
+msgstr "tasojen yhdistäminen"
 
 #: app/undo.c:2887
 msgid "FS anchor"
-msgstr ""
+msgstr "kelluvan valinnan ankkurointi"
 
 #: app/undo.c:2888
-#, fuzzy
 msgid "gimage mod"
-msgstr "Kuvamaski"
+msgstr ""
 
 #: app/undo.c:2889
-#, fuzzy
 msgid "crop"
-msgstr "kopio"
+msgstr "rajaus"
 
 #: app/undo.c:2890
-#, fuzzy
 msgid "layer scale"
-msgstr "harmaasävy"
+msgstr "tason skaalaus"
 
 #: app/undo.c:2891
-#, fuzzy
 msgid "layer resize"
-msgstr "Muokkaa kuvan kokoa"
+msgstr "tason koon muokkaus"
 
 #: app/undo.c:2892
 msgid "quickmask"
@@ -6184,23 +6064,20 @@ msgid "remove parasite"
 msgstr ""
 
 #: app/undo.c:2895
-#, fuzzy
 msgid "resolution change"
-msgstr "Tarkkuus X:"
+msgstr "tarkkuuden vaihto"
 
 #: app/undo.c:2896
-#, fuzzy
 msgid "image scale"
-msgstr "Kuvan mittasuhde"
+msgstr "kuvan skaalaus"
 
 #: app/undo.c:2897
-#, fuzzy
 msgid "image resize"
-msgstr "Muokkaa kuvan kokoa"
+msgstr "kuvan mittojen muutos"
 
 #: app/undo.c:2898
 msgid "misc"
-msgstr ""
+msgstr "sekalaiset"
 
 #: app/xcf.c:364
 #, c-format
@@ -6267,475 +6144,3 @@ msgstr ""
 #, c-format
 msgid "unable to read tile data from xcf file: %d ( %d ) bytes read"
 msgstr ""
-
-#~ msgid "Version "
-#~ msgstr "Versio "
-
-#~ msgid "/File/MRU00 "
-#~ msgstr "/Tiedosto/MRU00"
-
-#~ msgid "/File/tearoff1"
-#~ msgstr "/Tiedosto/tearoff1"
-
-#~ msgid "/File/---"
-#~ msgstr "/Tiedosto/---"
-
-#~ msgid "/File/Acquire/tearoff1"
-#~ msgstr "/Tiedosto/Hae/tearoff1"
-
-#~ msgid "/File/Dialogs/tearoff1"
-#~ msgstr "/Tiedosto/Dialogit/tearoff1"
-
-#, fuzzy
-#~ msgid "/File/Dialogs/---"
-#~ msgstr "/Tiedosto/Dialogit"
-
-#~ msgid "/Xtns/tearoff1"
-#~ msgstr "/Laajennukset/tearoff1"
-
-#, fuzzy
-#~ msgid "/Help/tearoff1"
-#~ msgstr "/Valitse/tearoff1"
-
-#~ msgid "/File/---moved"
-#~ msgstr "/Tiedosto/---moved"
-
-#~ msgid "/Edit/tearoff1"
-#~ msgstr "/Muokkaa/tearoff1"
-
-#~ msgid "/Edit/---"
-#~ msgstr "/Muokkaa/---"
-
-#~ msgid "/Select/tearoff1"
-#~ msgstr "/Valitse/tearoff1"
-
-#~ msgid "/Select/---"
-#~ msgstr "/Valitse/---"
-
-#~ msgid "/View/tearoff1"
-#~ msgstr "/Näytä/tearoff1"
-
-#, fuzzy
-#~ msgid "/View/Zoom/tearoff1"
-#~ msgstr "/Näytä/tearoff1"
-
-#~ msgid "/View/---"
-#~ msgstr "/Näytä/---"
-
-#~ msgid "/Image/tearoff1"
-#~ msgstr "/Kuva/tearoff1"
-
-#, fuzzy
-#~ msgid "/Image/Mode/tearoff1"
-#~ msgstr "/Kuva/tearoff1"
-
-#, fuzzy
-#~ msgid "/Image/Mode/---"
-#~ msgstr "/Kuva/---"
-
-#~ msgid "/Image/Colors/tearoff1"
-#~ msgstr "/Kuva/Värit/tearoff1"
-
-#~ msgid "/Image/Colors/---"
-#~ msgstr "/Kuva/Värit/---"
-
-#, fuzzy
-#~ msgid "/Image/Colors/Auto/tearoff1"
-#~ msgstr "/Kuva/Värit/tearoff1"
-
-#~ msgid "/Image/Alpha/tearoff1"
-#~ msgstr "/Kuva/Alfakanava/tearoff1"
-
-#~ msgid "/Image/Transforms/tearoff1"
-#~ msgstr "/Kuva/Muunnokset/tearoff1"
-
-#~ msgid "/Image/---"
-#~ msgstr "/Kuva/---"
-
-#~ msgid "/Layers/tearoff1"
-#~ msgstr "/Tasot/tearoff1"
-
-#~ msgid "/Layers/Stack/tearoff1"
-#~ msgstr "/Tasot/Pino/tearoff1"
-
-#~ msgid "/Layers/---"
-#~ msgstr "/Tasot/---"
-
-#~ msgid "/Tools/tearoff1"
-#~ msgstr "/Työkalut/tearoff1"
-
-#~ msgid "/Tools/---"
-#~ msgstr "/Työkalut/---"
-
-#~ msgid "/Filters/---"
-#~ msgstr "/Suotimet/---"
-
-#~ msgid "/Script-Fu/tearoff1"
-#~ msgstr "/Script-Fu/tearoff1"
-
-#~ msgid "/Dialogs/tearoff1"
-#~ msgstr "/Dialogit/tearoff1"
-
-#~ msgid "/File/MRU%02d"
-#~ msgstr "/Tiedosto/MRU%02d"
-
-#~ msgid "Active"
-#~ msgstr "Aktiivinen"
-
-#~ msgid "/Image/Channels"
-#~ msgstr "/Kuva/Kanavatoiminnot"
-
-#~ msgid "/Resize Layer"
-#~ msgstr "/Muuta tason kokoa"
-
-#~ msgid "Auto Levels"
-#~ msgstr "Automaattinen"
-
-#~ msgid "/Image/Channels/tearoff1"
-#~ msgstr "/Kuva/Kanavatoiminnot/tearoff1"
-
-#~ msgid "Cubic"
-#~ msgstr "Kuutiollinen"
-
-#~ msgid "Resize Layer"
-#~ msgstr "Muokkaa tason kokoa"
-
-#~ msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
-#~ msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
-
-#~ msgid "Spencer Kimball & Peter Mattis"
-#~ msgstr "Spencer Kimball ja Peter Mattis"
-
-#~ msgid "/Image/Channel Ops/Offset"
-#~ msgstr "/Kuva/Kanavatoiminnot/Siirtymä"
-
-#, fuzzy
-#~ msgid "lower layer to bottom"
-#~ msgstr "alenna taso pohjimmaiseksi"
-
-#, fuzzy
-#~ msgid "Copyright (C) 1995 Spencer Kimball and Peter Mattis\n"
-#~ msgstr "Copyright (C) 1995 Spencer Kimball ja Peter Mattis"
-
-#, fuzzy
-#~ msgid "/View/Window Info..."
-#~ msgstr "/Näytä/Ikkunan tiedot..."
-
-#~ msgid "/Script-Fu/"
-#~ msgstr "/Script-Fu/"
-
-#, fuzzy
-#~ msgid "Invalid point type passed\n"
-#~ msgstr "Vääränlainen piste"
-
-#~ msgid "Success"
-#~ msgstr "Onnistui"
-
-#~ msgid "No match"
-#~ msgstr "Ei löytynyt"
-
-#~ msgid "Invalid regular expression"
-#~ msgstr "Väärä säännöllinen lauseke"
-
-#~ msgid "Invalid collation character"
-#~ msgstr "Väärä vertailu merkki"
-
-#~ msgid "Invalid character class name"
-#~ msgstr "Väärä merkin luokan nimi"
-
-#~ msgid "Trailing backslash"
-#~ msgstr "Lopussa oleva kenoviiva"
-
-#~ msgid "Invalid back reference"
-#~ msgstr "Väärä referenssi"
-
-#~ msgid "Unmatched [ or [^"
-#~ msgstr "Ei löytynyt [ tai [^"
-
-#~ msgid "Unmatched ( or \\("
-#~ msgstr "Ei löytynyt ( tai \\("
-
-#~ msgid "Unmatched \\{"
-#~ msgstr "Ei löytynyt \\{"
-
-#~ msgid "Invalid content of \\{\\}"
-#~ msgstr "Väärä sisältö \\{\\}"
-
-#~ msgid "Invalid range end"
-#~ msgstr "Väärä jakson pää"
-
-#~ msgid "Memory exhausted"
-#~ msgstr "Muisti käytetty"
-
-#~ msgid "Invalid preceding regular expression"
-#~ msgstr "Väärä edeltävä säännöllinen lauseke"
-
-#~ msgid "Premature end of regular expression"
-#~ msgstr "Ennenaikainen säännöllisen lausekkeen loppu"
-
-#~ msgid "Regular expression too big"
-#~ msgstr "Säännöllinen lauseke on liian suuri"
-
-#~ msgid "Unmatched ) or \\)"
-#~ msgstr "Ei löytynyt ) tai \\)"
-
-#~ msgid "No previous regular expression"
-#~ msgstr "Ei ole edellistä säännöllistä lauseketta"
-
-#~ msgid "select"
-#~ msgstr "valitse"
-
-#, fuzzy
-#~ msgid "close"
-#~ msgstr "sulje"
-
-#~ msgid "<Toolbox>/File/Quit"
-#~ msgstr "<Toolbox>/Tiedosto/Poistu"
-
-#~ msgid "<Image>/File/Quit"
-#~ msgstr "<Image>/Tiedosto/Poistu"
-
-#~ msgid "Automatic"
-#~ msgstr "Automaattinen"
-
-#~ msgid "<Toolbox>/File/Open"
-#~ msgstr "<Toolbox>/Tiedosto/Avaa"
-
-#~ msgid "<Image>/File/Open"
-#~ msgstr "<Image>/Tiedosto/Avaa"
-
-#~ msgid "<Image>/File/Save"
-#~ msgstr "<Image>/Tiedosto/Talleta"
-
-#~ msgid "<Image>/File/Save as"
-#~ msgstr "<Image>/Tiedosto/Talleta nimellä"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Previous Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Next Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Raise Layer"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Lower Layer"
-#~ msgstr "/Tasot/Alenna taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Stack/Layer to Top"
-#~ msgstr "/Tasot/Nosta taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Anchor Layer"
-#~ msgstr "/Tasot/Ankkuroi taso"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Merge Visible Layers"
-#~ msgstr "/Tasot/Yhdistä näkyvät tasot"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Flatten Image"
-#~ msgstr "/Tasot/Yhdistä kuva"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Alpha To Selection"
-#~ msgstr "/Tasot/Alpha valinnaksi"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Mask To Selection"
-#~ msgstr "/Tasot/Maski valinnaksi"
-
-#, fuzzy
-#~ msgid "<Image>/Layers/Add Alpha Channel"
-#~ msgstr "/Tasot/Lisää alpha kanava"
-
-#, fuzzy
-#~ msgid "<Image>/Image/RGB"
-#~ msgstr "/Kuva/RGB"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Grayscale"
-#~ msgstr "/Kuva/Harmaasävy"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Indexed"
-#~ msgstr "/Kuva/Indeksoitu"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Threshold"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Posterize"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Equalize"
-#~ msgstr "/Kuva/Värit/Equalize"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Invert"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Color Balance"
-#~ msgstr "/Kuva/Värit/Equalize"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Brightness-Contrast"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Hue-Saturation"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Curves"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Levels"
-#~ msgstr "/Kuva/Värit/Invertoi"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors/Desaturate"
-#~ msgstr "/Kuva/Värit/Desaturate"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Alpha/Add Alpha Channel"
-#~ msgstr "/Kuva/Alpha/Lisää alpha kanava"
-
-#, fuzzy
-#~ msgid "<Image>/Select"
-#~ msgstr "/Kuva/Skaalaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Cut"
-#~ msgstr "/Muokkaa/Leikkaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Copy"
-#~ msgstr "/Muokkaa/Kopioi"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste"
-#~ msgstr "/Muokkaa/Liimaa"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste Into"
-#~ msgstr "/Muokkaa/Liimaa johonkin"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Fill"
-#~ msgstr "/Muokkaa/Täytä"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Stroke"
-#~ msgstr "/Muokkaa/Piirrä"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Cut Named"
-#~ msgstr "/Muokkaa/Leikkaa nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Copy Named"
-#~ msgstr "/Muokkaa/Kopioi nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Edit/Paste Named"
-#~ msgstr "/Muokkaa/Liimaa nimetty"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Colors"
-#~ msgstr "/Kuva/Värit/---"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Channel Ops/Offset"
-#~ msgstr "/Kuva/Kanava operaatiot/Offset"
-
-#, fuzzy
-#~ msgid "<Image>/Filters"
-#~ msgstr "/Suotimet/"
-
-#, fuzzy
-#~ msgid "<Image>/Select/Save To Channel"
-#~ msgstr "/Valitse/Talleta kanavalle"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Rulers"
-#~ msgstr "/Näytä/Vaihda viivottimet"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Guides"
-#~ msgstr "/Näytä/Vaihda apuviivat"
-
-#, fuzzy
-#~ msgid "<Image>/View/Snap To Guides"
-#~ msgstr "/Näytä/Nappaa apuviivoihin"
-
-#, fuzzy
-#~ msgid "<Image>/View/Toggle Statusbar"
-#~ msgstr "/Näytä/Vaihda infopalkki"
-
-#, fuzzy
-#~ msgid "<Image>/File/Close"
-#~ msgstr "/Tiedosto/Sulje"
-
-#, fuzzy
-#~ msgid "Replace Current Selection"
-#~ msgstr "/Tasot/Maski valinnaksi"
-
-#, fuzzy
-#~ msgid "/Select/Toggle"
-#~ msgstr "/Valitse/Vaihda"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Repeat last"
-#~ msgstr "/Suotimet/Toista edellinen"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Re-show last"
-#~ msgstr "/Suotimet/Näytä uudelleen edellinen"
-
-#, fuzzy
-#~ msgid "Add Channel To Selection"
-#~ msgstr "/Tasot/Alpha valinnaksi"
-
-#, fuzzy
-#~ msgid "\t\tyou quit the GIMP.\n"
-#~ msgstr "Tietoja GIMPstä"
-
-#~ msgid ""
-#~ "Unable to set sensitivity for menu which doesn't exist:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ei voi asettaa herkkyyttä menulle, jota ei ole:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to set state for menu which doesn't exist:\n"
-#~ "%s\n"
-#~ msgstr ""
-#~ "Ei voi asettaa tilaa menulle, jota ei ole:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "PDB lookup failed on %s"
-#~ msgstr "Virhe tiedoston avauksessa: %s\n"
-
-#, fuzzy
-#~ msgid "# GIMP sessionrc\n"
-#~ msgstr "GIMP:n versio"
-
-#~ msgid "Gradient Length"
-#~ msgstr "Väriluikuman pituus"
-
-#, fuzzy
-#~ msgid "refresh"
-#~ msgstr "/Tiedosto/Asetukset..."
