@@ -1,5 +1,8 @@
 2002-08-20  Sven Neumann  <sven@gimp.org>
 
+	* data/misc/Makefile.am: don't use the automatic variable $<
+	(seems to work with GNU make only).
+
 	* NEWS: updated.
 
 2002-08-20  Michael Natterer  <mitch@gimp.org>

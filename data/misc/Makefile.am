@@ -20,7 +20,7 @@ CLEANFILES = $(gen_sources)
 DISTCLEANFILES = gimp.desktop
 
 gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
-	sed -e 's|.[{]prefix[}]|${prefix}|' $< > desktop-foo \
+	sed -e 's|.[{]prefix[}]|${prefix}|' gimp.desktop.in > desktop-foo \
 	&& $(INTLTOOL_MERGE) $(top_srcdir)/po desktop-foo $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cachemake \
 	&& rm -r desktop-foo
 
