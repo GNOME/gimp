@@ -1,3 +1,7 @@
+Tue Sep  7 02:09:31 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.c: return FALSE in event_handlers.
+
 Tue Sep  7 02:03:18 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* configure.in

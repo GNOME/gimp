@@ -316,7 +316,7 @@ gimp_context_preview_button_press_event (GtkWidget      *widget,
 	}
       gtk_signal_emit_by_name (GTK_OBJECT (widget), "clicked");
     }
-  return TRUE;
+  return FALSE;
 }
   
 static gint
@@ -328,7 +328,7 @@ gimp_context_preview_button_release_event (GtkWidget      *widget,
       gdk_pointer_ungrab (bevent->time);
       gimp_context_preview_popup_close ();
     }
-  return TRUE;
+  return FALSE;
 }
 
 static void
