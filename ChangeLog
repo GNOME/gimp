@@ -1,3 +1,10 @@
+Wed Jul  7 02:24:22 1999  Tim Janik  <timj@gtk.org>
+
+	* plug-ins/common/csource.c: save RGBA data as string and not seuqences
+	of numbers and commas. this reduces the output file size significantly
+	(by 50-70%) and reduces compile time memory requirement majorly (down
+	to 20% for gcc).
+
 Tue Jul  6 22:26:24 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimpparasite.c: fixed gimp_detach_parasite.

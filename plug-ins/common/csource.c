@@ -31,6 +31,7 @@ typedef struct {
   gchar   *comment;
   gboolean use_comment;
   gboolean glib_types;
+  gboolean stringify;
   gboolean alpha;
   gdouble  opacity;
 } Config;
@@ -119,6 +120,7 @@ run (gchar   *name,
 	NULL,
 	FALSE,
 	TRUE,
+	TRUE,
 	(drawable_type == RGBA_IMAGE ||
 	 drawable_type == GRAYA_IMAGE ||
 	 drawable_type == INDEXEDA_IMAGE),
@@ -162,10 +164,10 @@ run (gchar   *name,
     }
 }
 
-static inline guint
-save_uchar (FILE  *fp,
-	    guint  c,
-	    guint8 d)
+static guint
+save_uchar_n (FILE  *fp,
+	      guint  c,
+	      guint8 d)
 {
   if (c > 74)
     {
@@ -175,6 +177,53 @@ save_uchar (FILE  *fp,
   fprintf (fp, " %u,", d);
   c += 1 + (d > 99) + (d > 9) + 1 + 1;
 
+  return c;
+}
+
+static guint
+save_uchar_s (FILE  *fp,
+	      guint  c,
+	      guint8 d)
+{
+  static guint8 pad = 0;
+
+  if (c > 74)
+    {
+      fprintf (fp, "\"\n   \"");
+      c = 3;
+    }
+  if (d < 33 || d > 126)
+    {
+      fprintf (fp, "\\%o", d);
+      c += 1 + 1 + (d > 7) + (d > 63);
+      pad = d < 64;
+
+      return c;
+    }
+  
+  if (d == '\\')
+    {
+      fputs ("\\\\", fp);
+      c += 2;
+    }
+  else if (d == '"')
+    {
+      fputs ("\\\"", fp);
+      c += 2;
+    }
+  else if (pad && d >= '0' && d <= '9')
+    {
+      fputs ("\"\"", fp);
+      fputc (d, fp);
+      c += 3;
+    }
+  else
+    {
+      fputc (d, fp);
+      c += 1;
+    }
+  pad = 0;
+  
   return c;
 }
 
@@ -189,12 +238,18 @@ save_image (Config *config,
   gchar *s_uint_8, *s_uint_32, *s_int, *s_uint, *s_char, *s_null;
   FILE *fp;
   guint c;
+  guint (*save_uchar) (FILE*, guint, guint8);
   
   fp = fopen (config->file_name, "w");
   if (!fp)
     return FALSE;
   
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
+
+  if (config->stringify)
+    save_uchar = save_uchar_s;
+  else
+    save_uchar = save_uchar_n;
 
   if (config->glib_types)
     {
@@ -263,7 +318,10 @@ save_image (Config *config,
 	  fprintf (fp, "\\%03o", *p);
       fprintf (fp, "\",\n");
     }
-  fprintf (fp, "  {");
+  if (config->stringify)
+    fprintf (fp, "  \"");
+  else
+    fprintf (fp, "  {");
   c = 3;
   switch (drawable_type)
     {
@@ -300,7 +358,10 @@ save_image (Config *config,
       g_warning ("unhandled drawable type (%d)", drawable_type);
       return FALSE;
     }
-  fprintf (fp, "\n  },\n};\n\n");
+  if (config->stringify)
+    fprintf (fp, "\",\n};\n\n");
+  else
+    fprintf (fp, "\n  },\n};\n\n");
   
   fclose (fp);
   
