@@ -43,6 +43,7 @@ static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
 static MaskBuf * paint_core_get_brush_mask  (PaintCore *, int);
 static void      paint_core_paste           (PaintCore *, MaskBuf *, int, int, int, int, int);
+static void      paint_core_replace         (PaintCore *, MaskBuf *, int, int, int, int);
 static void      paint_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
 static void      paint_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (int, int, int, int, int);
@@ -638,6 +639,29 @@ paint_core_paste_canvas (paint_core, drawable_id, brush_opacity, image_opacity, 
 		    brush_opacity, image_opacity, paint_mode, mode);
 }
 
+/* Similar to paint_core_paste_canvas, but replaces the alpha channel
+   rather than using it to composite (i.e. transparent over opaque
+   becomes transparent rather than opauqe. */
+void
+paint_core_replace_canvas (paint_core, drawable_id, brush_opacity, image_opacity,
+			   brush_hardness, mode)
+     PaintCore *paint_core;
+     int drawable_id;
+     int brush_opacity;
+     int image_opacity;
+     int brush_hardness;
+     int mode;
+{
+  MaskBuf *brush_mask;
+
+  /*  get the brush mask  */
+  brush_mask = paint_core_get_brush_mask (paint_core, brush_hardness);
+
+  /*  paste the canvas buf  */
+  paint_core_replace (paint_core, brush_mask, drawable_id,
+		      brush_opacity, image_opacity, mode);
+}
+
 /************************************************************
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
@@ -818,6 +842,85 @@ paint_core_paste (paint_core, brush_mask, drawable_id, brush_opacity, image_opac
 		      FALSE, image_opacity, paint_mode,
 		      alt,  /*  specify an alternative src1  */
 		      canvas_buf->x, canvas_buf->y);
+
+  /*  Update the undo extents  */
+  paint_core->x1 = MINIMUM (paint_core->x1, canvas_buf->x);
+  paint_core->y1 = MINIMUM (paint_core->y1, canvas_buf->y);
+  paint_core->x2 = MAXIMUM (paint_core->x2, (canvas_buf->x + canvas_buf->width));
+  paint_core->y2 = MAXIMUM (paint_core->y2, (canvas_buf->y + canvas_buf->height));
+
+  /*  Update the gimage--it is important to call gdisplays_update_area
+   *  instead of drawable_update because we don't want the drawable
+   *  preview to be constantly invalidated
+   */
+  drawable_offsets (drawable_id, &offx, &offy);
+  gdisplays_update_area (gimage->ID, canvas_buf->x + offx, canvas_buf->y + offy,
+			 canvas_buf->width, canvas_buf->height);
+}
+
+/* This works similarly to paint_core_paste. However, instead of combining
+   the canvas to the paint core drawable using one of the combination
+   modes, it uses a "replace" mode (i.e. transparent pixels in the 
+   canvas erase the paint core drawable).
+
+   When not drawing on alpha-enabled images, it just paints using NORMAL
+   mode.
+*/
+static void
+paint_core_replace (paint_core, brush_mask, drawable_id, brush_opacity, image_opacity, mode)
+     PaintCore *paint_core;
+     MaskBuf *brush_mask;
+     int drawable_id;
+     int brush_opacity;
+     int image_opacity;
+     int mode;
+{
+  GImage *gimage;
+  PixelRegion srcPR, maskPR;
+  int offx, offy;
+
+  if (!drawable_has_alpha (drawable_id))
+    {
+      paint_core_paste (paint_core, brush_mask, drawable_id,
+			brush_opacity, image_opacity, NORMAL_MODE,
+			mode);
+      return;
+    }
+
+  if (mode != INCREMENTAL)
+    {
+      g_warning ("paint_core_replace only works in INCREMENTAL mode");
+      return;
+    }
+
+  if (! (gimage = drawable_gimage (drawable_id)))
+    return;
+
+  /*  set undo blocks  */
+  set_undo_tiles (drawable_id,
+		  canvas_buf->x, canvas_buf->y,
+		  canvas_buf->width, canvas_buf->height);
+
+  maskPR.bytes = 1;
+  maskPR.x = 0; maskPR.y = 0;
+  maskPR.w = srcPR.w;
+  maskPR.h = srcPR.h;
+  maskPR.rowstride = maskPR.bytes * brush_mask->width;
+  maskPR.data = mask_buf_data (brush_mask);
+  
+  /*  intialize canvas buf source pixel regions  */
+  srcPR.bytes = canvas_buf->bytes;
+  srcPR.x = 0; srcPR.y = 0;
+  srcPR.w = canvas_buf->width;
+  srcPR.h = canvas_buf->height;
+  srcPR.rowstride = canvas_buf->width * canvas_buf->bytes;
+  srcPR.data = temp_buf_data (canvas_buf);
+
+  /*  apply the paint area to the gimage  */
+  gimage_replace_image (gimage, drawable_id, &srcPR,
+			FALSE, image_opacity,
+			&maskPR,
+			canvas_buf->x, canvas_buf->y);
 
   /*  Update the undo extents  */
   paint_core->x1 = MINIMUM (paint_core->x1, canvas_buf->x);

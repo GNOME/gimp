@@ -584,6 +584,126 @@ gimage_apply_image (GImage *gimage, int drawable_id, PixelRegion *src2PR,
 		     opacity, mode, active, operation);
 }
 
+/* Similar to gimage_apply_image but works in "replace" mode (i.e.
+   transparent pixels in src2 make the result transparent rather
+   than opaque.
+
+   Takes an additional mask pixel region as well.
+
+*/
+void
+gimage_replace_image (GImage *gimage, int drawable_id, PixelRegion *src2PR,
+		      int undo, int opacity,
+		      PixelRegion *maskPR,
+		      int x, int y)
+{
+  Channel * mask;
+  int x1, y1, x2, y2;
+  int offset_x, offset_y;
+  PixelRegion src1PR, destPR;
+  PixelRegion mask2PR, tempPR;
+  unsigned char *temp_data;
+  int operation;
+  int active [MAX_CHANNELS];
+
+  /*  get the selection mask if one exists  */
+  mask = (gimage_mask_is_empty (gimage)) ?
+    NULL : gimage_get_mask (gimage);
+
+  /*  configure the active channel array  */
+  gimage_get_active_channels (gimage, drawable_id, active);
+
+  /*  determine what sort of operation is being attempted and
+   *  if it's actually legal...
+   */
+  operation = valid_combinations [drawable_type (drawable_id)][src2PR->bytes];
+  if (operation == -1)
+    {
+      warning ("gimage_apply_image sent illegal parameters\n");
+      return;
+    }
+
+  /*  get the layer offsets  */
+  drawable_offsets (drawable_id, &offset_x, &offset_y);
+
+  /*  make sure the image application coordinates are within gimage bounds  */
+  x1 = BOUNDS (x, 0, drawable_width (drawable_id));
+  y1 = BOUNDS (y, 0, drawable_height (drawable_id));
+  x2 = BOUNDS (x + src2PR->w, 0, drawable_width (drawable_id));
+  y2 = BOUNDS (y + src2PR->h, 0, drawable_height (drawable_id));
+
+  if (mask)
+    {
+      /*  make sure coordinates are in mask bounds ...
+       *  we need to add the layer offset to transform coords
+       *  into the mask coordinate system
+       */
+      x1 = BOUNDS (x1, -offset_x, mask->width - offset_x);
+      y1 = BOUNDS (y1, -offset_y, mask->height - offset_y);
+      x2 = BOUNDS (x2, -offset_x, mask->width - offset_x);
+      y2 = BOUNDS (y2, -offset_y, mask->height - offset_y);
+    }
+
+  /*  If the calling procedure specified an undo step...  */
+  if (undo)
+    drawable_apply_image (drawable_id, x1, y1, x2, y2, NULL, FALSE);
+
+  /* configure the pixel regions
+   *  If an alternative to using the drawable's data as src1 was provided...
+   */
+  pixel_region_init (&src1PR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable_id), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+
+  if (mask)
+    {
+      int mx, my;
+
+      /*  configure the mask pixel region
+       *  don't use x1 and y1 because they are in layer
+       *  coordinate system.  Need mask coordinate system
+       */
+      mx = x1 + offset_x;
+      my = y1 + offset_y;
+
+      pixel_region_init (&mask2PR, mask->tiles, mx, my, (x2 - x1), (y2 - y1), FALSE);
+
+      tempPR.bytes = 1;
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.rowstride = mask2PR.rowstride;
+      temp_data = g_malloc (tempPR.h * tempPR.rowstride);
+      tempPR.data = temp_data;
+
+      copy_region (&mask2PR, &tempPR);
+
+      /* apparently, region operations can mutate some PR data. */
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      apply_mask_to_region (&tempPR, maskPR, OPAQUE);
+
+      tempPR.x = 0;
+      tempPR.y = 0;
+      tempPR.w = x2 - x1;
+      tempPR.h = y2 - y1;
+      tempPR.data = temp_data;
+
+      combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
+		       opacity, active, operation);
+
+      g_free (temp_data);
+    }
+  else
+    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
+		     opacity, active, operation);
+}
+
 
 void
 gimage_get_foreground (GImage *gimage, int drawable_id, unsigned char *fg)

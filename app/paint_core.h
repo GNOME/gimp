@@ -96,6 +96,7 @@ void          paint_core_cleanup      (void);
 TempBuf *     paint_core_get_paint_area    (PaintCore *, int);
 TempBuf *     paint_core_get_orig_image    (PaintCore *, int, int, int, int, int);
 void          paint_core_paste_canvas      (PaintCore *, int, int, int, int, int, int);
+void          paint_core_replace_canvas    (PaintCore *, int, int, int, int, int);
 
 
 #endif  /*  __PAINT_CORE_H__  */

@@ -31,6 +31,8 @@ struct _ResizePrivate
 {
   GtkWidget *width_text;
   GtkWidget *height_text;
+  GtkWidget *ratio_x_text;
+  GtkWidget *ratio_y_text;
   GtkWidget *off_x_text;
   GtkWidget *off_y_text;
   GtkWidget *drawing_area;
@@ -50,6 +52,8 @@ static void off_x_update (GtkWidget *w, gpointer data);
 static void off_y_update (GtkWidget *w, gpointer data);
 static void width_update (GtkWidget *w, gpointer data);
 static void height_update (GtkWidget *w, gpointer data);
+static void ratio_x_update (GtkWidget *w, gpointer data);
+static void ratio_y_update (GtkWidget *w, gpointer data);
 static void constrain_update (GtkWidget *w, gpointer data);
 static gint resize_events (GtkWidget *area, GdkEvent *event);
 
@@ -68,6 +72,7 @@ resize_widget_new (ResizeType type,
   GtkWidget *constrain;
   GtkWidget *table;
   char size[12];
+  char ratio_text[12];
 
   table = NULL;
 
@@ -77,6 +82,8 @@ resize_widget_new (ResizeType type,
   resize->private_part = private;
   resize->width = width;
   resize->height = height;
+  resize->ratio_x = 1.0;
+  resize->ratio_y = 1.0;
   resize->off_x = 0;
   resize->off_y = 0;
   private->old_width = width;
@@ -95,11 +102,11 @@ resize_widget_new (ResizeType type,
     {
     case ScaleWidget:
       resize->resize_widget = gtk_frame_new ("Scale");
-      table = gtk_table_new (2, 2, TRUE);
+      table = gtk_table_new (4, 2, TRUE);
       break;
     case ResizeWidget:
       resize->resize_widget = gtk_frame_new ("Resize");
-      table = gtk_table_new (4, 2, TRUE);
+      table = gtk_table_new (6, 2, TRUE);
       break;
     }
   gtk_frame_set_shadow_type (GTK_FRAME (resize->resize_widget), GTK_SHADOW_ETCHED_IN);
@@ -146,17 +153,51 @@ resize_widget_new (ResizeType type,
 		      resize);
   gtk_widget_show (private->height_text);
 
+  /*  the x scale ratio label and entry  */
+  sprintf (ratio_text, "%0.4f", resize->ratio_x);
+  label = gtk_label_new ("X ratio:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+  gtk_widget_show (label);
+  private->ratio_x_text = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), private->ratio_x_text, 1, 2, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+  gtk_widget_set_usize (private->ratio_x_text, TEXT_WIDTH, 25);
+  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
+  gtk_signal_connect (GTK_OBJECT (private->ratio_x_text), "changed",
+		      (GtkSignalFunc) ratio_x_update,
+		      resize);
+  gtk_widget_show (private->ratio_x_text);
+
+  /*  the y scale ratio label and entry  */
+  sprintf (ratio_text, "%0.4f", resize->ratio_y);
+  label = gtk_label_new ("Y ratio:");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+  gtk_widget_show (label);
+  private->ratio_y_text = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), private->ratio_y_text, 1, 2, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
+  gtk_widget_set_usize (private->ratio_y_text, TEXT_WIDTH, 25);
+  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
+  gtk_signal_connect (GTK_OBJECT (private->ratio_y_text), "changed",
+		      (GtkSignalFunc) ratio_y_update,
+		      resize);
+  gtk_widget_show (private->ratio_y_text);
+
   if (type == ResizeWidget)
     {
       /*  the off_x label and entry  */
       sprintf (size, "%d", 0);
       label = gtk_label_new ("X Offset:");
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
       gtk_widget_show (label);
       private->off_x_text = gtk_entry_new ();
-      gtk_table_attach (GTK_TABLE (table), private->off_x_text, 1, 2, 2, 3,
+      gtk_table_attach (GTK_TABLE (table), private->off_x_text, 1, 2, 4, 5,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
       gtk_widget_set_usize (private->off_x_text, TEXT_WIDTH, 25);
       gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
@@ -169,11 +210,11 @@ resize_widget_new (ResizeType type,
       sprintf (size, "%d", 0);
       label = gtk_label_new ("Y Offset:");
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
       gtk_widget_show (label);
       private->off_y_text = gtk_entry_new ();
-      gtk_table_attach (GTK_TABLE (table), private->off_y_text, 1, 2, 3, 4,
+      gtk_table_attach (GTK_TABLE (table), private->off_y_text, 1, 2, 5, 6,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 2, 2);
       gtk_widget_set_usize (private->off_y_text, TEXT_WIDTH, 25);
       gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
@@ -425,12 +466,21 @@ width_update (GtkWidget *w,
   double ratio;
   int new_height;
   char size[12];
+  char ratio_text[12];
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
   str = gtk_entry_get_text (GTK_ENTRY (w));
 
   resize->width = atoi (str);
+
+  ratio = (double) resize->width / (double) private->old_width;
+  resize->ratio_x = ratio;
+  sprintf (ratio_text, "%0.4f", ratio);  
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
+  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
 
   if (resize->type == ResizeWidget)
     {
@@ -445,7 +495,6 @@ width_update (GtkWidget *w,
   if (private->constrain && resize->width != 0)
     {
       private->constrain = FALSE;
-      ratio = (double) resize->width / (double) private->old_width;
       new_height = (int) (private->old_height * ratio);
       if (new_height == 0) new_height = 1;
 
@@ -457,6 +506,12 @@ width_update (GtkWidget *w,
 	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
 	  gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
 	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
+
+	  resize->ratio_y = ratio;
+
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
 
 	  if (resize->type == ResizeWidget)
 	    {
@@ -485,6 +540,7 @@ height_update (GtkWidget *w,
   double ratio;
   int new_width;
   char size[12];
+  char ratio_text[12];
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
@@ -492,6 +548,13 @@ height_update (GtkWidget *w,
 
   resize->height = atoi (str);
 
+  ratio = (double) resize->height / (double) private->old_height;
+  resize->ratio_y = ratio;
+  sprintf (ratio_text, "%0.4f", ratio);
+
+  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
+  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
   if (resize->type == ResizeWidget)
     {
       resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
@@ -517,6 +580,176 @@ height_update (GtkWidget *w,
 	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
 	  gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
 	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
+	  
+	  resize->ratio_x = ratio;
+
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
+
+	  if (resize->type == ResizeWidget)
+	    {
+	      resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
+	      sprintf (size, "%d", resize->off_x);
+
+	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
+	      gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
+	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
+	    }
+	}
+
+      private->constrain = TRUE;
+    }
+
+  resize_draw (resize);
+}
+
+static void
+ratio_x_update (GtkWidget *w,
+		gpointer   data)
+{
+  Resize *resize;
+  ResizePrivate *private;
+  char *str;
+  int new_width;
+  int new_height;
+  char size[12];
+  char ratio_text[12];
+  
+  resize = (Resize *) data;
+  private = (ResizePrivate *) resize->private_part;
+  str = gtk_entry_get_text (GTK_ENTRY (w));
+
+  resize->ratio_x = atof (str);
+
+  new_width = (int) ((double) private->old_width * resize->ratio_x);
+
+  if (new_width != resize->width)
+    {
+      resize->width = new_width;
+      sprintf (size, "%d", new_width);
+
+      gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
+      gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
+
+      if (resize->type == ResizeWidget)
+	{
+	  resize->off_x = resize_bound_off_x (resize, (resize->width - private->old_width) / 2);
+	  sprintf (size, "%d", resize->off_x);
+	  
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_x_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->off_x_text), size);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_x_text), data);
+	}
+    }
+
+  if (private->constrain && resize->width != 0)
+    {
+      private->constrain = FALSE;
+
+      resize->ratio_y = resize->ratio_x;
+
+      new_height = (int) (private->old_height * resize->ratio_y);
+      if (new_height == 0) new_height = 1;
+
+      if (new_height != resize->height)
+	{
+	  resize->height = new_height;
+
+	  sprintf (size, "%d", resize->height);
+
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
+	  
+	  sprintf (ratio_text, "%0.4f", resize->ratio_y);  
+	  
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_y_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->ratio_y_text), ratio_text);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_y_text), data);
+
+	  if (resize->type == ResizeWidget)
+	    {
+	      resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
+	      sprintf (size, "%d", resize->off_y);
+
+	      gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
+	      gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
+	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
+	    }
+	}
+
+      private->constrain = TRUE;
+    }
+
+  resize_draw (resize);
+}
+
+static void
+ratio_y_update (GtkWidget *w,
+		gpointer   data)
+{
+  Resize *resize;
+  ResizePrivate *private;
+  char *str;
+  int new_width;
+  int new_height;
+  char size[12];
+  char ratio_text[12];
+  
+  resize = (Resize *) data;
+  private = (ResizePrivate *) resize->private_part;
+  str = gtk_entry_get_text (GTK_ENTRY (w));
+
+  resize->ratio_y = atof (str);
+
+  new_height = (int) ((double) private->old_height * resize->ratio_y);
+
+  if (new_height != resize->height)
+    {
+      resize->height = new_height;
+      sprintf (size, "%d", new_height);
+
+      gtk_signal_handler_block_by_data (GTK_OBJECT (private->height_text), data);
+      gtk_entry_set_text (GTK_ENTRY (private->height_text), size);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->height_text), data);
+
+      if (resize->type == ResizeWidget)
+	{
+	  resize->off_y = resize_bound_off_y (resize, (resize->height - private->old_height) / 2);
+	  sprintf (size, "%d", resize->off_y);
+	  
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->off_y_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->off_y_text), size);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->off_y_text), data);
+	}
+    }
+
+  if (private->constrain && resize->height != 0)
+    {
+      private->constrain = FALSE;
+
+      resize->ratio_x = resize->ratio_y;
+
+      new_width = (int) (private->old_width * resize->ratio_x);
+      if (new_width == 0) new_width = 1;
+
+      if (new_width != resize->width)
+	{
+	  resize->width = new_width;
+
+	  sprintf (size, "%d", resize->width);
+
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->width_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->width_text), size);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->width_text), data);
+	  
+	  sprintf (ratio_text, "%0.4f", resize->ratio_x);  
+	  
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (private->ratio_x_text), data);
+	  gtk_entry_set_text (GTK_ENTRY (private->ratio_x_text), ratio_text);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->ratio_x_text), data);
 
 	  if (resize->type == ResizeWidget)
 	    {

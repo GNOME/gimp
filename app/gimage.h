@@ -163,6 +163,8 @@ void            gimage_free_shadow            (GImage *);
 void            gimage_delete                 (GImage *);
 void            gimage_apply_image            (GImage *, int, PixelRegion *, int, int, int,
 					       TileManager *, int, int);
+void            gimage_replace_image          (GImage *, int, PixelRegion *, int, int,
+					       PixelRegion *, int, int);
 void            gimage_get_foreground         (GImage *, int, unsigned char *);
 void            gimage_get_background         (GImage *, int, unsigned char *);
 void            gimage_get_color              (GImage *, int, unsigned char *,

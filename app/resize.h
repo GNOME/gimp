@@ -34,6 +34,8 @@ struct _Resize
   ResizeType type;
   int        width;
   int        height;
+  double     ratio_x;
+  double     ratio_y;
   int        off_x;
   int        off_y;
 

@@ -1,3 +1,11 @@
+Sun Dec  7 17:05:32 PST 1997
+
+	* added Sven Neumann's patch to the scale and resize dialogs for		ratio input fields (app/resize.h, app/resize.c)
+
+	* added Raph Levien's patch for the transperancy blur problem
+	(app/convolve.c, app/gimage.h, app/gimage.c, paint_core.h,
+	paint_core.c, paint_funcs.h, paint_funcs.c)
+
 Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
 
 	* fixed refract.c to look for megawidget.h in the proper place

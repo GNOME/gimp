@@ -266,6 +266,11 @@ convolve_motion (PaintCore *paint_core,
       /*  if the source has no alpha, then add alpha pixels  */
       if (!drawable_has_alpha (drawable_id))
 	{
+	  /* note: this architecture needlessly convolves the totally-
+	     opaque alpha channel. A faster approach would be to keep
+	     tempPR the same number of bytes as srcPR, and extend the
+	     paint_core_replace_canvas API to handle non-alpha images. */
+
 	  tempPR.bytes = srcPR.bytes + 1;
 	  tempPR.x = 0; tempPR.y = 0;
 	  tempPR.w = area->width;
@@ -287,6 +292,13 @@ convolve_motion (PaintCore *paint_core,
 	  tempPR.data = temp_data;
 
 	  copy_region (&srcPR, &tempPR);
+
+	  tempPR.x = 0; tempPR.y = 0;
+	  tempPR.w = area->width;
+	  tempPR.h = area->height;
+	  tempPR.data = temp_data;
+
+	  multiply_alpha_region (&tempPR);
 	}
 
       tempPR.x = 0; tempPR.y = 0;
@@ -297,6 +309,9 @@ convolve_motion (PaintCore *paint_core,
       /*  Convolve the region  */
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
 		       matrix_divisor, NORMAL);
+
+      if (drawable_has_alpha (drawable_id))
+	  separate_alpha_region (&destPR);
 
       /*  Free the allocated temp space  */
       g_free (temp_data);
@@ -311,9 +326,9 @@ convolve_motion (PaintCore *paint_core,
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable_id, OPAQUE,
+  paint_core_replace_canvas (paint_core, drawable_id, OPAQUE,
 			   (int) (get_brush_opacity () * 255),
-			   NORMAL_MODE, SOFT, INCREMENTAL);
+			   SOFT, INCREMENTAL);
 }
 
 static void

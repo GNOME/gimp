@@ -324,6 +324,10 @@ void  extract_from_region                 (PixelRegion *, PixelRegion *,
 void  convolve_region                     (PixelRegion *, PixelRegion *,
 					   int *, int, int, int);
 
+void  multiply_alpha_region               (PixelRegion *);
+
+void  separate_alpha_region               (PixelRegion *);
+
 void  gaussian_blur_region                (PixelRegion *, double);
 
 void  border_region                       (PixelRegion *, void *,
@@ -400,6 +404,11 @@ void  initial_region                      (PixelRegion *, PixelRegion *,
 void  combine_regions                     (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
 					   unsigned char *, int,
+					   int, int *, int);
+
+void  combine_regions_replace             (PixelRegion *, PixelRegion *,
+					   PixelRegion *, PixelRegion *,
+					   unsigned char *,
 					   int, int *, int);
 
 

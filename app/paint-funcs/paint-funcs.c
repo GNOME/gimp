@@ -94,6 +94,10 @@ static int *  make_curve         (double, int *);
 static void   run_length_encode  (unsigned char *, int *, int, int);
 static void   draw_segments      (PixelRegion *, BoundSeg *, int, int, int, int);
 static double cubic              (double, int, int, int, int);
+static void apply_layer_mode_replace (unsigned char *, unsigned char *,
+				      unsigned char *, unsigned char *,
+				      int, int, int,
+				      int, int, int, int *);
 
 
 static unsigned char *
@@ -847,6 +851,59 @@ dissolve_pixels (unsigned char *src,
 
       dest += db;
       src += sb;
+    }
+}
+
+void
+replace_pixels (unsigned char *src1,
+		unsigned char *src2,
+		unsigned char *dest,
+		unsigned char *mask,
+		int            length,
+		int            opacity,
+		int           *affect,
+		int            b1,
+		int            b2)
+{
+  int alpha;
+  int b;
+  double a_val, a_recip, mask_val;
+  double norm_opacity;
+  int s1_a, s2_a;
+  int new_val;
+
+  if (b1 != b2)
+    {
+      g_warning ("replace_pixels only works on commensurate pixel regions");
+      return;
+    }
+
+  alpha = b1 - 1;
+  norm_opacity = opacity * (1.0 / 65025.0);
+
+  while (length --)
+    {
+      mask_val = mask[0] * norm_opacity;
+      /* calculate new alpha first. */
+      s1_a = src1[alpha];
+      s2_a = src2[alpha];
+      a_val = s1_a + mask_val * (s2_a - s1_a);
+      if (a_val == 0)
+	a_recip = 0;
+      else
+	a_recip = 1.0 / a_val;
+      /* possible optimization: fold a_recip into s1_a and s2_a */
+      for (b = 0; b < alpha; b++)
+	{
+	  new_val = 0.5 + a_recip * (src1[b] * s1_a + mask_val *
+				     (src2[b] * s2_a - src1[b] * s1_a));
+	  dest[b] = affect[b] ? MIN (new_val, 255) : src1[b];
+	}
+      dest[alpha] = affect[alpha] ? a_val + 0.5: s1_a;
+      src1 += b1;
+      src2 += b2;
+      dest += b2;
+      mask++;
     }
 }
 
@@ -2544,6 +2601,78 @@ convolve_region (PixelRegion *srcR,
     }
 }
 
+/* Convert from separated alpha to premultiplied alpha. Only works on
+   non-tiled regions! */
+void
+multiply_alpha_region (PixelRegion *srcR)
+{
+  unsigned char *src, *s;
+  int x, y;
+  int width, height;
+  int b, bytes;
+  double alpha_val;
+
+  width = srcR->w;
+  height = srcR->h;
+  bytes = srcR->bytes;
+
+  src = srcR->data;
+
+  for (y = 0; y < height; y++)
+    {
+      s = src;
+      for (x = 0; x < width; x++)
+	{
+	  alpha_val = s[bytes - 1] * (1.0 / 255.0);
+	  for (b = 0; b < bytes - 1; b++)
+	    s[b] = 0.5 + s[b] * alpha_val;
+	  s += bytes;
+	}
+      src += srcR->rowstride;
+    }
+}
+
+/* Convert from premultiplied alpha to separated alpha. Only works on
+   non-tiled regions! */
+void
+separate_alpha_region (PixelRegion *srcR)
+{
+  unsigned char *src, *s;
+  int x, y;
+  int width, height;
+  int b, bytes;
+  double alpha_recip;
+  int new_val;
+
+  width = srcR->w;
+  height = srcR->h;
+  bytes = srcR->bytes;
+
+  src = srcR->data;
+
+  for (y = 0; y < height; y++)
+    {
+      s = src;
+      for (x = 0; x < width; x++)
+	{
+	  /* predicate is equivalent to:
+	     (((s[bytes - 1] - 1) & 255) + 2) & 256
+	     */
+	  if (s[bytes - 1] != 0 && s[bytes - 1] != 255)
+	    {
+	      alpha_recip = 255.0 / s[bytes - 1];
+	      for (b = 0; b < bytes - 1; b++)
+		{
+		  new_val = 0.5 + s[b] * alpha_recip;
+		  new_val = MIN (new_val, 255);
+		  s[b] = new_val;
+		}
+	    }
+	  s += bytes;
+	}
+      src += srcR->rowstride;
+    }
+}
 
 void
 gaussian_blur_region (PixelRegion *srcR,
@@ -3792,6 +3921,43 @@ combine_regions (PixelRegion   *src1,
     }
 }
 
+void
+combine_regions_replace (PixelRegion   *src1,
+			 PixelRegion   *src2,
+			 PixelRegion   *dest,
+			 PixelRegion   *mask,
+			 unsigned char *data,
+			 int            opacity,
+			 int           *affect,
+			 int            type)
+{
+  int h;
+  unsigned char * s1, * s2;
+  unsigned char * d, * m;
+  void * pr;
+
+  for (pr = pixel_regions_register (4, src1, src2, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
+    {
+      s1 = src1->data;
+      s2 = src2->data;
+      d = dest->data;
+      m = mask->data;
+
+      for (h = 0; h < src1->h; h++)
+	{
+
+	  /*  Now, apply the paint mode  */
+	  apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h, opacity, src1->w,
+					      src1->bytes, src2->bytes, affect);
+
+	  s1 += src1->rowstride;
+	  s2 += src2->rowstride;
+	  d += dest->rowstride;
+	  m += mask->rowstride;
+	}
+    }
+}
+
 
 /*********************************
  *   color conversion routines   *
@@ -4245,4 +4411,20 @@ apply_indexed_layer_mode (unsigned char  *src1,
     }
 
   return combine;
+}
+
+static void
+apply_layer_mode_replace (unsigned char  *src1,
+			  unsigned char  *src2,
+			  unsigned char  *dest,
+			  unsigned char  *mask,
+			  int             x,
+			  int             y,
+			  int             opacity,
+			  int             length,
+			  int             b1,   /* bytes */
+			  int             b2,   /* bytes */
+			  int            *affect)
+{
+  replace_pixels (src1, src2, dest, mask, length, opacity, affect, b1, b2);
 }
