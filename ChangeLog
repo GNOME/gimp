@@ -5,7 +5,7 @@
 	
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
-	Merged from HEAD (fixes bug #120034, patch from Pedro Gimeno):
+	Merged from HEAD (fixes bug #148614, backported by Pedro Gimeno):
 
 	* app/core/gimpimage.c (gimp_image_finalize): remove the image
 	from the image hash table and set its "gimp" pointer to NULL
