@@ -1,5 +1,5 @@
 /*
- * PSD Plugin version 2.0.2
+ * PSD Plugin version 2.0.3
  * This GIMP plug-in is designed to load Adobe Photoshop(tm) files (.PSD)
  *
  * Adam D. Moss <adam@gimp.org> <adam@foxbox.org>
@@ -34,6 +34,11 @@
 
 /*
  * Revision history:
+ *
+ *  1999.08.20 / v2.0.3 / Adam D. Moss
+ *       Ensure that NULL name does not get passed to gimp_layer_new(),
+ *       or it will fail to create the layer and cause problems down
+ *       the line (only since April 1999).
  *
  *  1999.01.18 / v2.0.2 / Adam D. Moss
  *       Better guess at how PSD files store Guide position precision.
@@ -989,6 +994,10 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
       (*offset) += strlen(psd_image.layer[layernum].name);
       IFDBG printf("\t\t\t\t\t\tLAYER NAME: '%s'\n",psd_image.layer[layernum].name);
     }
+  else
+    {
+      IFDBG printf("\t\t\t\t\t\tNULL LAYER NAME\n");
+    }
   
   if (totaloff-(*offset) > 0)
     {
@@ -1496,7 +1505,7 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	  }
 	
 	channel_ID = gimp_channel_new(image_ID,
-				      psd_image.aux_channel[chan-gimpstep].name,
+				      psd_image.aux_channel[chan-gimpstep].name ? psd_image.aux_channel[chan-gimpstep].name : "Unnamed channel",
 				      width, height,
 				      100.0, colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
@@ -1546,7 +1555,7 @@ void extract_channels(guchar* src, gint num_wanted, gint psstep,
 	  }
 	
 	channel_ID = gimp_channel_new(image_ID,
-				      psd_image.aux_channel[chan-(psstep-num_wanted)].name,
+				      psd_image.aux_channel[chan-(psstep-num_wanted)].name ? psd_image.aux_channel[chan-(psstep-num_wanted)].name : "Unnamed channel",
 				      width, height,
 				      100.0, colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
@@ -1707,17 +1716,21 @@ load_image(char *name)
 		  }
 		  
 		layer_ID = gimp_layer_new (image_ID,
-					   psd_image.layer[lnum].name,
+					   psd_image.layer[lnum].name ?
+					   psd_image.layer[lnum].name :
+					   "Unnamed layer",
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
-					   (numc==1) ? GRAY_IMAGE:GRAYA_IMAGE,
+					   (numc==1) ? GRAY_IMAGE : GRAYA_IMAGE,
 					   (100.0*(double)psd_image.layer[lnum].opacity)/255.0,
 					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
 
 	      }; break; /* case GRAY */
 	    case RGB:
 	      {
-		IFDBG printf("It's RGB.\n");
+		IFDBG printf("It's RGB, %dx%d.\n",
+			     psd_image.layer[lnum].width,
+			     psd_image.layer[lnum].height);
 		if (!psd_layer_has_alpha(&psd_image.layer[lnum]))
 		  {
 		    seek_to_and_unpack_pixeldata(fd, lnum, 0);
@@ -1736,6 +1749,9 @@ load_image(char *name)
 		      g_free(psd_image.layer[lnum].channel[1].data);
 		    if (psd_image.layer[lnum].channel[2].data)
 		      g_free(psd_image.layer[lnum].channel[2].data);
+
+		    IFDBG
+		      fprintf(stderr, "YAH0a\n");
 		  }
 		else
 		  {
@@ -1759,15 +1775,26 @@ load_image(char *name)
 		      g_free(psd_image.layer[lnum].channel[2].data);
 		    if (psd_image.layer[lnum].channel[3].data)
 		      g_free(psd_image.layer[lnum].channel[3].data);
+
+		    IFDBG
+		      fprintf(stderr, "YAH0b\n");
 		  }
 		  
+		IFDBG
+		  fprintf(stderr, "YAH1\n");
+
 		layer_ID = gimp_layer_new (image_ID,
-					   psd_image.layer[lnum].name,
+					   psd_image.layer[lnum].name ?
+					   psd_image.layer[lnum].name :
+					   "Unnamed layer",
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
-					   (numc==3) ? RGB_IMAGE:RGBA_IMAGE,
+					   (numc==3) ? RGB_IMAGE : RGBA_IMAGE,
 					   (100.0*(double)psd_image.layer[lnum].opacity)/255.0,
 					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
+		
+		IFDBG
+		  fprintf(stderr, "YAH2\n");
 
 	      }; break; /* case RGB */
 	    default:
@@ -1777,9 +1804,10 @@ load_image(char *name)
 	      }; break; /* default */
 	    }
 
-
 	  gimp_image_add_layer (image_ID, layer_ID, 0);
 
+	  IFDBG
+	    fprintf(stderr, "YAH3\n");
 
 	  /* Do a layer mask if it exists */
 	  for (iter=0; iter<psd_image.layer[lnum].num_channels; iter++)
@@ -1788,6 +1816,9 @@ load_image(char *name)
 		{
 		  gint32 mask_id;
 		  guchar* lm_data;
+
+		  IFDBG
+		    fprintf(stderr, "YAH3m\n");
 
 		  lm_data = xmalloc(psd_image.layer[lnum].width *
 				    psd_image.layer[lnum].height);
@@ -1834,6 +1865,8 @@ load_image(char *name)
 		}
 	    }
 
+	  IFDBG
+	    fprintf(stderr, "YAH4\n");
 
 	  gimp_layer_translate(layer_ID,
 			       psd_image.layer[lnum].x,
@@ -1844,19 +1877,32 @@ load_image(char *name)
 
 	  drawable = gimp_drawable_get (layer_ID);
 	  
+	  IFDBG
+	    fprintf(stderr, "YAH5 - merged_data=%p, drawable=%p, drawdim=%dx%dx%d\n",
+		    merged_data,
+		    drawable,
+		    drawable->width,
+		    drawable->height,
+		    drawable->bpp);
+
 	  gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			       0, 0, 
 			       psd_image.layer[lnum].width,
 			       psd_image.layer[lnum].height,
 			       TRUE, FALSE);
+
 	  gimp_pixel_rgn_set_rect (&pixel_rgn,
 				   merged_data,
 				   0, 0, 
 				   psd_image.layer[lnum].width,
 				   psd_image.layer[lnum].height);
 	  
+	  IFDBG
+	    fprintf(stderr, "YAH6\n");
+
 	  gimp_drawable_flush (drawable);
 	  gimp_drawable_detach (drawable);
+	  drawable = NULL;
 	  
 	  if (merged_data)
 	    g_free(merged_data);
