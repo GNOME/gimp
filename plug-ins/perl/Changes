@@ -19,6 +19,8 @@ Revision history for Gimp-Perl extension.
         - new module Gimp::Pod.
         - embedded pod documentation will now be shown when the Help button
           is pressed (see image_tile for an example).
+        - new evaluation function that evaluates a string as perl code, but
+          does so on the server side. (Gimp->server_eval(string)).
 
 1.061 Fri Mar 12 21:27:26 CET 1999
 	- closed big, BIG security hole on password authenticitation
