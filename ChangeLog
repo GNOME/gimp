@@ -1,5 +1,10 @@
 2003-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: #include
+	"widgets/gimpwidgets-utils.h" for gimp_button_menu_position().
+
+2003-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/Makefile.am: don't scan "app/tools/tools-enums.h"
 	for PDB types since the PDB doesn't depend on app/tools/ any more.
 
