@@ -268,9 +268,9 @@ gimp_brush_pipe_get_type (void)
 GimpBrushPipe *
 gimp_brush_pipe_load (gchar *filename)
 {
-  GimpBrushPipe *pipe;
-  GPattern      *pattern;
-  PixPipeParams  params;
+  GimpBrushPipe     *pipe;
+  GPattern          *pattern;
+  GimpPixPipeParams  params;
   FILE  *fp;
   gchar  buf[1024];
   gchar *name;
@@ -316,8 +316,8 @@ gimp_brush_pipe_load (gchar *filename)
 
   if (*paramstring)
     {
-      pixpipeparams_init (&params);
-      pixpipeparams_parse (paramstring, &params);
+      gimp_pixpipe_params_init (&params);
+      gimp_pixpipe_params_parse (paramstring, &params);
       pipe->dimension = params.dim;
       pipe->rank      = g_new (gint, pipe->dimension);
       pipe->select    = g_new (PipeSelectModes, pipe->dimension);

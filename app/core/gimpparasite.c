@@ -34,7 +34,7 @@
 static ParasiteList *parasites = NULL;
 
 void 
-gimp_init_parasites()
+gimp_init_parasites (void)
 {
   g_return_if_fail (parasites == NULL);
   parasites = parasite_list_new ();
@@ -42,55 +42,57 @@ gimp_init_parasites()
 }
 
 void
-gimp_parasite_attach (Parasite *p)
+gimp_parasite_attach (GimpParasite *p)
 {
   parasite_list_add (parasites, p);
 }
 
 void
-gimp_parasite_detach (const char *name)
+gimp_parasite_detach (const gchar *name)
 {
   parasite_list_remove (parasites, name);
 }
 
-Parasite *
-gimp_parasite_find (const char *name)
+GimpParasite *
+gimp_parasite_find (const gchar *name)
 {
   return parasite_list_find (parasites, name);
 }
 
 static void 
-list_func (char       *key, 
-	   Parasite   *p, 
-	   char     ***cur)
+list_func (gchar          *key,
+	   GimpParasite   *p,
+	   gchar        ***cur)
 {
   *(*cur)++ = (char *) g_strdup (key);
 }
 
-char **
+gchar **
 gimp_parasite_list (gint *count)
 {
-  gchar **list, **cur;
+  gchar **list;
+  gchar **cur;
 
   *count = parasite_list_length (parasites);
-  cur = list = (char **) g_malloc (sizeof (char *) * *count);
+  cur = list = g_new (gchar *, *count);
 
-  parasite_list_foreach (parasites, (GHFunc)list_func, &cur);
+  parasite_list_foreach (parasites, (GHFunc) list_func, &cur);
   
   return list;
 }
 
 static void 
-save_func (char     *key, 
-	   Parasite *p, 
-	   FILE     *fp)
+save_func (gchar        *key,
+	   GimpParasite *p,
+	   FILE         *fp)
 {
-  if (parasite_is_persistent (p))
+  if (gimp_parasite_is_persistent (p))
     {
-      gchar *s;
-      guint32 l;
+      gchar   *s;
+      guint32  l;
 
-      fprintf (fp, "(parasite \"%s\" %lu \"", parasite_name (p), parasite_flags (p));
+      fprintf (fp, "(parasite \"%s\" %lu \"",
+	       gimp_parasite_name (p), gimp_parasite_flags (p));
 
       /*
        * the current methodology is: never move the parasiterc from one
@@ -99,7 +101,7 @@ save_func (char     *key,
        * characters as \xHH sequences altogether.
        */
 
-      for (s = (gchar *)parasite_data (p), l = parasite_data_size (p);
+      for (s = (gchar *) gimp_parasite_data (p), l = gimp_parasite_data_size (p);
            l;
            l--, s++)
         {
@@ -123,8 +125,8 @@ save_func (char     *key,
 void
 gimp_parasiterc_save (void)
 {
-  char *filename;
-  FILE *fp;
+  gchar *filename;
+  FILE  *fp;
 
   filename = gimp_personal_rc_file ("#parasiterc.tmp~");
 
@@ -137,7 +139,7 @@ gimp_parasiterc_save (void)
 	   "# GIMP parasiterc\n"
 	   "# This file will be entirely rewritten every time you "
 	   "quit the gimp.\n\n");
-  
+
   parasite_list_foreach (parasites, (GHFunc)save_func, fp);
 
   fclose (fp);
@@ -149,22 +151,22 @@ gimp_parasiterc_save (void)
 	  gimp_personal_rc_file ("parasiterc.bak"));
 #endif
 
-  if (rename(gimp_personal_rc_file ("#parasiterc.tmp~"),
-	     gimp_personal_rc_file ("parasiterc")) != 0)
+  if (rename (gimp_personal_rc_file ("#parasiterc.tmp~"),
+	      gimp_personal_rc_file ("parasiterc")) != 0)
     {
 #if defined(G_OS_WIN32) || defined(__EMX__)
       /* Rename the old parasiterc back */
       rename (gimp_personal_rc_file ("parasiterc.bak"),
 	      gimp_personal_rc_file ("parasiterc"));
 #endif
-      unlink(gimp_personal_rc_file ("#parasiterc.tmp~"));
+      unlink (gimp_personal_rc_file ("#parasiterc.tmp~"));
     }
 }
 
 void
 gimp_parasiterc_load (void)
 {
-  char *filename;
+  gchar *filename;
 
   filename = gimp_personal_rc_file ("parasiterc");
   app_init_update_status (NULL, filename, -1);

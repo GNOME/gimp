@@ -338,7 +338,7 @@ static gboolean comment_was_edited = FALSE;
 static gboolean can_crop = FALSE;
 static GRunModeType run_mode;
 #ifdef FACEHUGGERS
-Parasite*      comment_parasite = NULL;
+GimpParasite * comment_parasite = NULL;
 #endif
 
 /* For compression code */
@@ -867,11 +867,12 @@ save_image (gchar  *filename,
   /* Save the comment back to the ImageID, if appropriate */
   if (globalcomment != NULL && comment_was_edited)
     {
-      comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-				       strlen (globalcomment)+1,
-				       (void*) globalcomment);
+      comment_parasite = gimp_parasite_new ("gimp-comment",
+					    GIMP_PARASITE_PERSISTENT,
+					    strlen (globalcomment)+1,
+					    (void*) globalcomment);
       gimp_image_parasite_attach (orig_image_ID, comment_parasite);
-      parasite_free (comment_parasite);
+      gimp_parasite_free (comment_parasite);
       comment_parasite = NULL;
     }
 #endif
@@ -1196,7 +1197,7 @@ save_dialog (gint32 image_ID)
   GtkWidget *com_table;
   GtkWidget *vscrollbar;
 #ifdef FACEHUGGERS
-  Parasite* GIF2_CMNT;
+  GimpParasite* GIF2_CMNT;
 #endif
 
   gint32 nlayers;
@@ -1281,7 +1282,7 @@ save_dialog (gint32 image_ID)
       globalcomment = NULL;
 #ifdef FACEHUGGERS
     }
-  parasite_free (GIF2_CMNT);
+  gimp_parasite_free (GIF2_CMNT);
 #endif
 
   if (globalcomment)

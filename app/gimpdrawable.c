@@ -15,9 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
+
 #include "gimpdrawableP.h"
 #include "gimpsignal.h"
 #include "gimage.h"
@@ -26,11 +28,14 @@
 #include "parasitelist.h"
 #include "undo.h"
 
-#include "config.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/parasite.h"
+
 #include "libgimp/gimpintl.h"
 
-enum {
+
+enum
+{
   INVALIDATE_PREVIEW,
   LAST_SIGNAL
 };
@@ -48,12 +53,12 @@ GtkType
 gimp_drawable_get_type (void)
 {
   static GtkType type;
-  GIMP_TYPE_INIT(type,
-		 GimpDrawable,
-		 GimpDrawableClass,
-		 gimp_drawable_init,
-		 gimp_drawable_class_init,
-		 GIMP_TYPE_OBJECT);
+  GIMP_TYPE_INIT (type,
+		  GimpDrawable,
+		  GimpDrawableClass,
+		  gimp_drawable_init,
+		  gimp_drawable_class_init,
+		  GIMP_TYPE_OBJECT);
   return type;
 }
 
@@ -440,7 +445,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
   return dest;
 }
 
-Parasite *
+GimpParasite *
 gimp_drawable_parasite_find (const GimpDrawable *drawable,
 			     const gchar        *name)
 {
@@ -450,9 +455,9 @@ gimp_drawable_parasite_find (const GimpDrawable *drawable,
 }
 
 static void
-list_func (gchar      *key,
-	   Parasite   *p,
-	   gchar    ***cur)
+list_func (gchar          *key,
+	   GimpParasite   *p,
+	   gchar        ***cur)
 {
   *(*cur)++ = (gchar *) g_strdup (key);
 }
@@ -476,38 +481,38 @@ gimp_drawable_parasite_list (GimpDrawable *drawable,
 
 void
 gimp_drawable_parasite_attach (GimpDrawable *drawable,
-			       Parasite     *parasite)
+			       GimpParasite *parasite)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we arn't undoable */
-  if (parasite_is_undoable (parasite))
+  if (gimp_parasite_is_undoable (parasite))
     {
       /* do a group in case we have attach_parent set */
       undo_push_group_start (drawable->gimage, PARASITE_ATTACH_UNDO);
 
       undo_push_drawable_parasite (drawable->gimage, drawable, parasite);
     }
-  else if (parasite_is_persistent (parasite) &&
-	   !parasite_compare (parasite,
-			      gimp_drawable_parasite_find
-				(drawable, parasite_name (parasite))))
+  else if (gimp_parasite_is_persistent (parasite) &&
+	   !gimp_parasite_compare (parasite,
+				   gimp_drawable_parasite_find
+				   (drawable, gimp_parasite_name (parasite))))
     undo_push_cantundo (drawable->gimage, _("parasite attach to drawable"));
 
   parasite_list_add (drawable->parasites, parasite);
-  if (parasite_has_flag (parasite, PARASITE_ATTACH_PARENT))
+  if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
     {
       parasite_shift_parent (parasite);
       gimp_image_parasite_attach (drawable->gimage, parasite);
     }
-  else if (parasite_has_flag (parasite, PARASITE_ATTACH_GRANDPARENT))
+  else if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_GRANDPARENT))
     {
       parasite_shift_parent (parasite);
       parasite_shift_parent (parasite);
       gimp_parasite_attach (parasite);
     }
-  if (parasite_is_undoable (parasite))
+  if (gimp_parasite_is_undoable (parasite))
     {
       undo_push_group_end (drawable->gimage);
     }
@@ -517,17 +522,17 @@ void
 gimp_drawable_parasite_detach (GimpDrawable *drawable,
 			       const gchar  *parasite)
 {
-  Parasite *p;
+  GimpParasite *p;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   if (!(p = parasite_list_find (drawable->parasites, parasite)))
     return;
 
-  if (parasite_is_undoable (p))
+  if (gimp_parasite_is_undoable (p))
     undo_push_drawable_parasite_remove (drawable->gimage, drawable,
-					parasite_name (p));
-  else if (parasite_is_persistent (p))
+					gimp_parasite_name (p));
+  else if (gimp_parasite_is_persistent (p))
     undo_push_cantundo (drawable->gimage, _("detach parasite from drawable"));
 
   parasite_list_remove (drawable->parasites, parasite);

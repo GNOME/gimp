@@ -798,7 +798,7 @@ gimp_run_procedure (gchar *name,
           (void) va_arg (args, guchar*);
           break;
         case PARAM_PARASITE:
-          (void) va_arg (args, Parasite*);
+          (void) va_arg (args, GimpParasite*);
           break;
         case PARAM_REGION:
           break;
@@ -885,21 +885,22 @@ gimp_run_procedure (gchar *name,
 	  proc_run.params[i].data.d_path = va_arg (args, gint32);
           break;
         case PARAM_PARASITE:
-	{
-	  Parasite *p = va_arg (args, Parasite*);
-	  if (p == NULL)
 	  {
-	    proc_run.params[i].data.d_parasite.name = NULL;
-	    proc_run.params[i].data.d_parasite.data = NULL;
+	    GimpParasite *p = va_arg (args, GimpParasite*);
+	    if (p == NULL)
+	      {
+		proc_run.params[i].data.d_parasite.name = NULL;
+		proc_run.params[i].data.d_parasite.data = NULL;
+	      }
+	    else
+	      {
+		proc_run.params[i].data.d_parasite.name  = p->name;
+		proc_run.params[i].data.d_parasite.flags = p->flags;
+		proc_run.params[i].data.d_parasite.size  = p->size;
+		proc_run.params[i].data.d_parasite.data  = p->data;
+	      }
 	  }
-	  else
-	  {
-	    proc_run.params[i].data.d_parasite.name    = p->name;
-	    proc_run.params[i].data.d_parasite.flags   = p->flags;
-	    proc_run.params[i].data.d_parasite.size    = p->size;
-	    proc_run.params[i].data.d_parasite.data    = p->data;
-	  }
-	} break;
+	  break;
         case PARAM_STATUS:
 	  proc_run.params[i].data.d_status = va_arg (args, gint32);
           break;

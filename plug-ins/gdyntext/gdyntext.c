@@ -244,57 +244,57 @@ void gdt_get_values(GdtVals *data)
 	gchar *gdtparams = NULL, *gdtparams0, **params;
 
 #ifdef GIMP_HAVE_PARASITES
-	Parasite *parasite = NULL;
+	GimpParasite *parasite = NULL;
 
 	if ((parasite = gimp_drawable_parasite_find(data->drawable_id,
 		GDYNTEXT_PARASITE)) != NULL) {
 		/* GDynText 1.3.1 uses one parasite */
-		gdtparams = strdup(parasite_data(parasite));
-		parasite_free(parasite);
+		gdtparams = strdup(gimp_parasite_data(parasite));
+		gimp_parasite_free(parasite);
 	} else if ((parasite = gimp_drawable_parasite_find(data->drawable_id,
 		GDYNTEXT_PARASITE_MAGIC)) != NULL) {
 		/* GDynText 1.3.0 uses too parasites and no serialization!! */
-		parasite_free(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_TEXT);
-		strncpy(data->text, parasite_data(parasite), parasite_data_size(parasite));
-		parasite_free(parasite);
+		strncpy(data->text, gimp_parasite_data(parasite), gimp_parasite_data_size(parasite));
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_FONT_FAMILY);
-		strncpy(data->font_family, parasite_data(parasite), parasite_data_size(parasite));
-		parasite_free(parasite);
+		strncpy(data->font_family, gimp_parasite_data(parasite), gimp_parasite_data_size(parasite));
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_FONT_STYLE);
-		strncpy(data->font_style, parasite_data(parasite), parasite_data_size(parasite));
-		parasite_free(parasite);
+		strncpy(data->font_style, gimp_parasite_data(parasite), gimp_parasite_data_size(parasite));
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_FONT_SIZE);
-		data->font_size = *(gint32*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->font_size = *(gint32*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_FONT_METRIC);
-		data->font_metric = *(gint*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->font_metric = *(gint*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_FONT_COLOR);
-		data->font_color = *(gint32*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->font_color = *(gint32*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_ANTIALIAS);
-		data->antialias = *(gboolean*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->antialias = *(gboolean*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_ALIGNMENT);
-		data->alignment = *(GdtAlign*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->alignment = *(GdtAlign*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_ROTATION);
-		data->rotation = *(gint*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->rotation = *(gint*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		parasite = gimp_drawable_parasite_find(data->drawable_id,
 			GDYNTEXT_PARASITE_PREVIEW);
-		data->preview = *(gboolean*)parasite_data(parasite);
-		parasite_free(parasite);
+		data->preview = *(gboolean*)gimp_parasite_data(parasite);
+		gimp_parasite_free(parasite);
 		return;
 	}
 #endif
@@ -366,7 +366,7 @@ void gdt_set_values(GdtVals *data)
 {
 	char *lname, text[MAX_TEXT_SIZE];
 #ifdef GIMP_HAVE_PARASITES
-	Parasite *parasite;
+	GimpParasite *parasite;
 #endif
 
 	strncpy(text, data->text, sizeof(text));
@@ -382,13 +382,13 @@ void gdt_set_values(GdtVals *data)
 		data->spacing);
 
 #ifdef GIMP_HAVE_PARASITES
-	parasite = parasite_new(GDYNTEXT_PARASITE, PARASITE_PERSISTENT
+	parasite = gimp_parasite_new(GDYNTEXT_PARASITE, GIMP_PARASITE_PERSISTENT
 #ifdef GIMP_HAVE_FEATURES_1_1_5
-				| PARASITE_UNDOABLE
+				| GIMP_PARASITE_UNDOABLE
 #endif
 				, strlen(lname), lname);
 	gimp_drawable_parasite_attach(data->drawable_id, parasite);
-	parasite_free(parasite);
+	gimp_parasite_free(parasite);
 
 	if (!data->change_layer_name) {
 		gchar *lname = gimp_layer_get_name(data->layer_id);

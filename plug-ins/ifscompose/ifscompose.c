@@ -374,7 +374,7 @@ run (gchar   *name,
   GDrawable *active_drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
-  Parasite *parasite = NULL;
+  GimpParasite *parasite = NULL;
   gboolean found_parasite;
 
   run_mode = param[0].data.d_int32;
@@ -403,9 +403,9 @@ run (gchar   *name,
       found_parasite = FALSE;
       if (parasite)
 	{
-	  found_parasite = ifsvals_parse_string (parasite_data (parasite),
+	  found_parasite = ifsvals_parse_string (gimp_parasite_data (parasite),
 						 &ifsvals, &elements);
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
 
       if (!found_parasite)
@@ -417,7 +417,7 @@ run (gchar   *name,
 	  if (length)
 	    {
 	      data = g_new (gchar, length);
-	      gimp_get_data(IFSCOMPOSE_DATA, data);
+	      gimp_get_data (IFSCOMPOSE_DATA, data);
 
 	      ifsvals_parse_string (data, &ifsvals, &elements);
 	      g_free (data);
@@ -465,15 +465,16 @@ run (gchar   *name,
        */
       if (run_mode == RUN_INTERACTIVE)
 	{
-	  char *str = ifsvals_stringify (&ifsvals, elements);
-	  Parasite *parasite;
+	  gchar *str = ifsvals_stringify (&ifsvals, elements);
+	  GimpParasite *parasite;
 
 	  gimp_set_data (IFSCOMPOSE_DATA, str, strlen(str)+1);
-	  parasite = parasite_new (IFSCOMPOSE_PARASITE,
-				   PARASITE_PERSISTENT | PARASITE_UNDOABLE,
-				   strlen(str)+1, str);
+	  parasite = gimp_parasite_new (IFSCOMPOSE_PARASITE,
+					GIMP_PARASITE_PERSISTENT |
+					GIMP_PARASITE_UNDOABLE,
+					strlen(str)+1, str);
 	  gimp_drawable_parasite_attach (active_drawable->id, parasite);
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 
 	  g_free (str);
 	}

@@ -1164,7 +1164,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
 
 gint
 p_write_parasite(gchar *dirname, FILE *fp,
-                 Parasite *parasite, gint wr_all_prp)
+                 GimpParasite *parasite, gint wr_all_prp)
 {
   gchar *l_new_parasite_prop_lines;
   gchar *l_parasite_buff;
@@ -1174,7 +1174,7 @@ p_write_parasite(gchar *dirname, FILE *fp,
   FILE *l_fp_pte;
   t_param_prop   l_param;
   
-  if(parasite->flags & PARASITE_PERSISTENT)  /* check if Parasite should be saved */
+  if(parasite->flags & GIMP_PARASITE_PERSISTENT)  /* check if Parasite should be saved */
   {
      global_parasite_id++;
      
@@ -1300,10 +1300,10 @@ p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
 void
 p_write_image_parasites(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 {
-  Parasite  *l_parasite;
-  gint32     l_idx;
-  gchar    **l_parasite_names = NULL;
-  gint32     l_num_parasites = 0;
+  GimpParasite  *l_parasite;
+  gint32         l_idx;
+  gchar        **l_parasite_names = NULL;
+  gint32         l_num_parasites = 0;
 
   l_parasite_names = p_gimp_image_parasite_list (image_id, &l_num_parasites);
   if(l_parasite_names == NULL) return;
@@ -1323,10 +1323,10 @@ p_write_image_parasites(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_p
 void
 p_write_drawable_parasites(gchar *dirname, FILE *fp, gint32 drawable_id, gint wr_all_prp)
 {
-  Parasite  *l_parasite;
-  gint32     l_idx;
-  gchar    **l_parasite_names = NULL;
-  gint32     l_num_parasites = 0;
+  GimpParasite  *l_parasite;
+  gint32         l_idx;
+  gchar        **l_parasite_names = NULL;
+  gint32         l_num_parasites = 0;
 
   l_parasite_names = p_gimp_drawable_parasite_list (drawable_id, &l_num_parasites);
   if(l_parasite_names == NULL) return;
@@ -1946,7 +1946,7 @@ t_parasite_props * p_new_parasite_prop()
     l_new_prop->parasite_id = -1;
     l_new_prop->name = NULL;
     l_new_prop->obj_pos = -1;
-    l_new_prop->flags = PARASITE_PERSISTENT;
+    l_new_prop->flags = GIMP_PARASITE_PERSISTENT;
     l_new_prop->next = NULL;
   return(l_new_prop);
 }	/* end p_new_parasite_prop */
@@ -2454,8 +2454,8 @@ p_find_parasite(t_parasite_props *parasite_props, gint32 parasite_id)
 gint
 p_create_and_attach_parasite(gint32 gimp_obj_id, gchar *dirname, t_parasite_props *parasite_props)
 {
-  gchar             *l_parasite_file;
-  Parasite          l_parasite;
+  gchar            *l_parasite_file;
+  GimpParasite      l_parasite;
   struct stat       l_stat_buf;
   FILE *l_fp_pte;
 
@@ -2480,7 +2480,7 @@ p_create_and_attach_parasite(gint32 gimp_obj_id, gchar *dirname, t_parasite_prop
   
   l_parasite.size = l_stat_buf.st_size;
   l_parasite.data = g_malloc(l_parasite.size);
-  l_parasite.flags = parasite_props->flags | PARASITE_PERSISTENT;
+  l_parasite.flags = parasite_props->flags | GIMP_PARASITE_PERSISTENT;
   if(parasite_props->name)
   {
      l_parasite.name = g_strdup(parasite_props->name);

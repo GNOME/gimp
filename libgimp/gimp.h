@@ -155,28 +155,28 @@ struct _GParamRegion
 
 union _GParamData
 {
-  gint32 d_int32;
-  gint16 d_int16;
-  gint8 d_int8;
-  gdouble d_float;
-  gchar *d_string;
-  gint32 *d_int32array;
-  gint16 *d_int16array;
-  gint8 *d_int8array;
-  gdouble *d_floatarray;
-  gchar **d_stringarray;
-  GParamColor d_color;
-  GParamRegion d_region;
-  gint32 d_display;
-  gint32 d_image;
-  gint32 d_layer;
-  gint32 d_channel;
-  gint32 d_drawable;
-  gint32 d_selection;
-  gint32 d_boundary;
-  gint32 d_path;
-  Parasite d_parasite;
-  gint32 d_status;
+  gint32         d_int32;
+  gint16         d_int16;
+  gint8          d_int8;
+  gdouble        d_float;
+  gchar         *d_string;
+  gint32        *d_int32array;
+  gint16        *d_int16array;
+  gint8         *d_int8array;
+  gdouble       *d_floatarray;
+  gchar        **d_stringarray;
+  GParamColor    d_color;
+  GParamRegion   d_region;
+  gint32         d_display;
+  gint32         d_image;
+  gint32         d_layer;
+  gint32         d_channel;
+  gint32         d_drawable;
+  gint32         d_selection;
+  gint32         d_boundary;
+  gint32         d_path;
+  GimpParasite   d_parasite;
+  gint32         d_status;
 };
 
 struct _GParam
@@ -514,10 +514,10 @@ void       gimp_image_set_component_visible (gint32     image_ID,
 					     gboolean   visible);
 void       gimp_image_set_filename          (gint32     image_ID,
 					     gchar     *name);
-Parasite  *gimp_image_parasite_find         (gint32          image_ID,
+GimpParasite * gimp_image_parasite_find     (gint32          image_ID,
 					     const gchar    *name);
-void       gimp_image_parasite_attach       (gint32          image_ID,
-					     const Parasite *p);
+void       gimp_image_parasite_attach       (gint32              image_ID,
+					     const GimpParasite *parasite);
 void       gimp_image_attach_new_parasite   (gint32          image_ID,
 					     const gchar    *name, 
 					     gint            flags,
@@ -735,21 +735,21 @@ GTile*        gimp_drawable_get_tile2    (GDrawable *drawable,
 					  gint       shadow,
 					  gint       x,
 					  gint       y);
-Parasite*     gimp_drawable_parasite_find       (gint32          drawable,
-						 const gchar    *name);
-void          gimp_drawable_parasite_attach     (gint32          drawable,
-						 const Parasite *p);
-void          gimp_drawable_attach_new_parasite (gint32          drawable,
-						 const gchar    *name, 
-						 gint            flags,
-						 gint            size, 
-						 const gpointer  data);
-void          gimp_drawable_parasite_detach     (gint32          drawable,
-						 const char     *name);
-guchar*       gimp_drawable_get_thumbnail_data  (gint32          drawable_ID,
-						 gint           *width,
-						 gint           *height,
-						 gint           *bytes);
+GimpParasite * gimp_drawable_parasite_find      (gint32              drawable,
+						 const gchar        *name);
+void           gimp_drawable_parasite_attach    (gint32              drawable,
+						 const GimpParasite *parasite);
+void          gimp_drawable_attach_new_parasite (gint32              drawable,
+						 const gchar        *name, 
+						 gint                flags,
+						 gint                size, 
+						 const gpointer      data);
+void          gimp_drawable_parasite_detach     (gint32              drawable,
+						 const char         *name);
+guchar      * gimp_drawable_get_thumbnail_data  (gint32              drawable_ID,
+						 gint               *width,
+						 gint               *height,
+						 gint               *bytes);
 
 
 /****************************************
@@ -870,24 +870,24 @@ void gimp_palette_set_foreground (guchar  red,
  *            Gradients                 *
  ****************************************/
 
-gchar**  gimp_gradients_get_list       (gint    *num_gradients);
-gchar*   gimp_gradients_get_active     (void);
-void     gimp_gradients_set_active     (char    *name);
-gdouble* gimp_gradients_sample_uniform (gint     num_samples);
-gdouble* gimp_gradients_sample_custom  (gint     num_samples,
-					gdouble *positions);
+gchar   ** gimp_gradients_get_list       (gint    *num_gradients);
+gchar    * gimp_gradients_get_active     (void);
+void       gimp_gradients_set_active     (char    *name);
+gdouble  * gimp_gradients_sample_uniform (gint     num_samples);
+gdouble  * gimp_gradients_sample_custom  (gint     num_samples,
+					  gdouble *positions);
 
 /****************************************
  *            Parasites                 *
  ****************************************/
 
-Parasite *gimp_parasite_find       (const gchar    *name);
-void      gimp_parasite_attach     (const Parasite *p);
-void      gimp_attach_new_parasite (const gchar    *name, 
-				    gint            flags,
-				    gint            size, 
-				    const gpointer  data);
-void      gimp_parasite_detach     (const gchar    *name);
+GimpParasite * gimp_parasite_find       (const gchar        *name);
+void           gimp_parasite_attach     (const GimpParasite *parasite);
+void           gimp_attach_new_parasite (const gchar        *name, 
+					 gint                flags,
+					 gint                size, 
+					 const gpointer      data);
+void           gimp_parasite_detach     (const gchar        *name);
 
 /****************************************
  *                Help                  *

@@ -24,26 +24,26 @@
 
 #include <libgimp/parasiteF.h>
 
-typedef void       (*GimpColorDisplayInit)            (void);
-typedef gpointer   (*GimpColorDisplayNew)             (int       type);
-typedef gpointer   (*GimpColorDisplayClone)           (gpointer  cd_ID);
-typedef void       (*GimpColorDisplayConvert)         (gpointer  cd_ID,
-						       guchar    *buf,
-						       int        width,
-						       int        height,
-						       int        bpp,
-						       int        bpl);
-typedef void       (*GimpColorDisplayDestroy)         (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayFinalize)        (void);
-typedef void       (*GimpColorDisplayLoadState)       (gpointer   cd_ID,
-						       Parasite  *state);
-typedef Parasite * (*GimpColorDisplaySaveState)       (gpointer   cd_ID);
-typedef void       (*GimpColorDisplayConfigure)       (gpointer   cd_ID,
-    						       GFunc      ok_func,
-						       gpointer   ok_data,
-						       GFunc      cancel_func,
-						       gpointer   cancel_data);
-typedef void       (*GimpColorDisplayConfigureCancel) (gpointer   cd_ID);
+typedef void           (* GimpColorDisplayInit)       (void);
+typedef gpointer       (* GimpColorDisplayNew)        (gint          type);
+typedef gpointer       (* GimpColorDisplayClone)      (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayConvert)    (gpointer      cd_ID,
+						       guchar       *buf,
+						       gint          width,
+						       gint          height,
+						       gint          bpp,
+						       gint          bpl);
+typedef void           (* GimpColorDisplayDestroy)    (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayFinalize)   (void);
+typedef void           (* GimpColorDisplayLoadState)  (gpointer      cd_ID,
+						       GimpParasite *state);
+typedef GimpParasite * (* GimpColorDisplaySaveState)  (gpointer      cd_ID);
+typedef void           (* GimpColorDisplayConfigure)  (gpointer      cd_ID,
+						       GFunc         ok_func,
+						       gpointer      ok_data,
+						       GFunc         cancel_func,
+						       gpointer      cancel_data);
+typedef void      (* GimpColorDisplayConfigureCancel) (gpointer      cd_ID);
 
 typedef struct _GimpColorDisplayMethods GimpColorDisplayMethods;
 

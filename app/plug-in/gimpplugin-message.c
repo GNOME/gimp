@@ -3053,8 +3053,8 @@ plug_in_params_to_args (GPParam *params,
 	  break;
 	case PDB_PARASITE:
 	  if (full_copy)
-	    args[i].value.pdb_pointer = parasite_copy ((Parasite *)
-						&(params[i].data.d_parasite));
+	    args[i].value.pdb_pointer =
+	      gimp_parasite_copy ((GimpParasite *) &(params[i].data.d_parasite));
 	  else
 	    args[i].value.pdb_pointer = (void *)&(params[i].data.d_parasite);
 	  break;
@@ -3219,34 +3219,35 @@ plug_in_args_to_params (Argument *args,
 	case PDB_PARASITE:
 	  if (full_copy)
 	    {
-	      Parasite *tmp;
-	      tmp = parasite_copy (args[i].value.pdb_pointer);
+	      GimpParasite *tmp;
+	      tmp = gimp_parasite_copy (args[i].value.pdb_pointer);
 	      if (tmp == NULL)
-	      {
-		params[i].data.d_parasite.name = 0;
-		params[i].data.d_parasite.flags = 0;
-		params[i].data.d_parasite.size = 0;
-		params[i].data.d_parasite.data = 0;
-	      }
+		{
+		  params[i].data.d_parasite.name = 0;
+		  params[i].data.d_parasite.flags = 0;
+		  params[i].data.d_parasite.size = 0;
+		  params[i].data.d_parasite.data = 0;
+		}
 	      else
-	      {
-		memcpy (&params[i].data.d_parasite, tmp, sizeof(Parasite));
-		g_free(tmp);
-	      }
+		{
+		  memcpy (&params[i].data.d_parasite, tmp,
+			  sizeof (GimpParasite));
+		  g_free (tmp);
+		}
 	    }
 	  else
 	    {
 	      if (args[i].value.pdb_pointer == NULL)
-	      {
-		params[i].data.d_parasite.name = 0;
-		params[i].data.d_parasite.flags = 0;
-		params[i].data.d_parasite.size = 0;
-		params[i].data.d_parasite.data = 0;
-	      }
+		{
+		  params[i].data.d_parasite.name = 0;
+		  params[i].data.d_parasite.flags = 0;
+		  params[i].data.d_parasite.size = 0;
+		  params[i].data.d_parasite.data = 0;
+		}
 	      else
 		memcpy (&params[i].data.d_parasite,
-			(Parasite *)(args[i].value.pdb_pointer),
-			sizeof(Parasite));
+			(GimpParasite *) (args[i].value.pdb_pointer),
+			sizeof (GimpParasite));
 	    }
 	  break;
 	case PDB_STATUS:
@@ -3405,10 +3406,10 @@ plug_in_args_destroy (Argument *args,
 	  break;
 	case PDB_PARASITE:
 	  if (full_destroy)
-	  {
-	    parasite_free ((Parasite *)(args[i].value.pdb_pointer));
-	    args[i].value.pdb_pointer = NULL;
-	  }
+	    {
+	      gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
+	      args[i].value.pdb_pointer = NULL;
+	    }
 	  break;
 	case PDB_STATUS:
 	  break;
@@ -3424,7 +3425,7 @@ gint
 plug_in_image_types_parse (gchar *image_types)
 {
   gchar *type_spec = image_types;
-  gint types = 0;
+  gint   types = 0;
 
   /* 
    *  If the plug_in registers with image_type == NULL or "", return 0

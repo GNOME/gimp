@@ -365,7 +365,7 @@ run (gchar   *name,
   gint32        orig_image_ID;
   gint32        display_ID = -1;
 #ifdef GIMP_HAVE_PARASITES
-  Parasite     *parasite;
+  GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   gint          err;
   GimpExportReturnType export = EXPORT_CANCEL;
@@ -439,7 +439,7 @@ run (gchar   *name,
       if (parasite) 
 	{
 	  image_comment = g_strdup (parasite->data);
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
 #endif /* GIMP_HAVE_PARASITES */
       if (!image_comment) 
@@ -476,7 +476,7 @@ run (gchar   *name,
 	      jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
 	      jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
 	      jsvals.preview     = ((JpegSaveVals *)parasite->data)->preview;
-	      parasite_free(parasite);
+	      gimp_parasite_free (parasite);
 	    }
 #endif /* GIMP_HAVE_PARASITES */
 
@@ -557,7 +557,7 @@ run (gchar   *name,
 	      jsvals.restart     = ((JpegSaveVals *)parasite->data)->restart;
 	      jsvals.dct         = ((JpegSaveVals *)parasite->data)->dct;
 	      jsvals.preview     = FALSE;
-	      parasite_free(parasite);
+	      gimp_parasite_free (parasite);
 	    }
 #endif /* GIMP_HAVE_PARASITES */
 	  break;
@@ -602,18 +602,19 @@ run (gchar   *name,
       gimp_image_parasite_detach (orig_image_ID, "gimp-comment");
       if (strlen (image_comment)) 
 	{
-	  parasite = parasite_new ("gimp-comment",
-				   PARASITE_PERSISTENT,
-				   strlen (image_comment) + 1,
-				   image_comment);
+	  parasite = gimp_parasite_new ("gimp-comment",
+					GIMP_PARASITE_PERSISTENT,
+					strlen (image_comment) + 1,
+					image_comment);
 	  gimp_image_parasite_attach (orig_image_ID, parasite);
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
       gimp_image_parasite_detach (orig_image_ID, "jpeg-save-options");
       
-      parasite = parasite_new ("jpeg-save-options", 0, sizeof (jsvals), &jsvals);
+      parasite = gimp_parasite_new ("jpeg-save-options",
+				    0, sizeof (jsvals), &jsvals);
       gimp_image_parasite_attach (orig_image_ID, parasite);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
 #endif /* Have Parasites */  
     }
   else
@@ -725,8 +726,8 @@ load_image (gchar        *filename,
 
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
-  Parasite * volatile comment_parasite = NULL;
-  Parasite * volatile vals_parasite = NULL;
+  GimpParasite * volatile comment_parasite = NULL;
+  GimpParasite * volatile vals_parasite = NULL;
 #endif /* GIMP_HAVE_PARASITES */
 
   
@@ -791,8 +792,9 @@ load_image (gchar        *filename,
 	char *string = local_image_comments->str;
 	g_string_free (local_image_comments,FALSE);
 	local_image_comments = NULL;
-	comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-					 strlen (string) + 1, string);
+	comment_parasite = gimp_parasite_new ("gimp-comment",
+					      GIMP_PARASITE_PERSISTENT,
+					      strlen (string) + 1, string);
       } 
     else 
       {
@@ -819,8 +821,9 @@ load_image (gchar        *filename,
     local_save_vals.dct         = DEFAULT_DCT;
     local_save_vals.preview     = DEFAULT_PREVIEW;
   
-    vals_parasite = parasite_new ("jpeg-save-options", 0,
-				  sizeof (local_save_vals), &local_save_vals);
+    vals_parasite = gimp_parasite_new ("jpeg-save-options", 0,
+				       sizeof (local_save_vals),
+				       &local_save_vals);
   } 
 #endif /* GIMP_HAVE_PARASITES */
   
@@ -1047,12 +1050,12 @@ load_image (gchar        *filename,
       if (comment_parasite)
 	{
 	  gimp_image_parasite_attach (image_ID, comment_parasite);
-	  parasite_free (comment_parasite);
+	  gimp_parasite_free (comment_parasite);
 	}
       if (vals_parasite)
 	{
 	  gimp_image_parasite_attach (image_ID, vals_parasite);
-	  parasite_free (vals_parasite);
+	  gimp_parasite_free (vals_parasite);
 	}   
     }
 #endif /* GIMP_HAVE_PARASITES */

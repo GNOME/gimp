@@ -45,36 +45,36 @@ struct _GammaContext
   GFunc    cancel_func;
   gpointer cancel_data;
 
-  double  gamma;
-  guchar *lookup;
+  gdouble  gamma;
+  guchar  *lookup;
 
   GtkWidget *shell;
   GtkWidget *spinner;
 };
 
-static gpointer   gamma_new                       (int           type);
-static gpointer   gamma_clone                     (gpointer      cd_ID);
-static void       gamma_create_lookup_table       (GammaContext *context);
-static void       gamma_destroy                   (gpointer      cd_ID);
-static void       gamma_convert                   (gpointer      cd_ID,
-						   guchar       *buf,
-						   int           w,
-						   int           h,
-						   int           bpp,
-						   int           bpl);
-static void       gamma_load                      (gpointer      cd_ID,
-						   Parasite     *state);
-static Parasite * gamma_save                      (gpointer      cd_ID);
-static void       gamma_configure_ok_callback     (GtkWidget    *widget,
-						   gpointer      data);
-static void       gamma_configure_cancel_callback (GtkWidget    *widget,
-						   gpointer      data);
-static void       gamma_configure                 (gpointer      cd_ID,
-    						   GFunc         ok_func,
-						   gpointer      ok_data,
-						   GFunc         cancel_func,
-						   gpointer      cancel_data);
-static void       gamma_configure_cancel          (gpointer      cd_ID);
+static gpointer       gamma_new                       (int           type);
+static gpointer       gamma_clone                     (gpointer      cd_ID);
+static void           gamma_create_lookup_table       (GammaContext *context);
+static void           gamma_destroy                   (gpointer      cd_ID);
+static void           gamma_convert                   (gpointer      cd_ID,
+						       guchar       *buf,
+						       int           w,
+						       int           h,
+						       int           bpp,
+						       int           bpl);
+static void           gamma_load                      (gpointer      cd_ID,
+						       GimpParasite *state);
+static GimpParasite * gamma_save                      (gpointer      cd_ID);
+static void           gamma_configure_ok_callback     (GtkWidget    *widget,
+						       gpointer      data);
+static void           gamma_configure_cancel_callback (GtkWidget    *widget,
+						       gpointer      data);
+static void           gamma_configure                 (gpointer      cd_ID,
+						       GFunc         ok_func,
+						       gpointer      ok_data,
+						       GFunc         cancel_func,
+						       gpointer      cancel_data);
+static void           gamma_configure_cancel          (gpointer      cd_ID);
 
 static GimpColorDisplayMethods methods = 
 {
@@ -117,9 +117,9 @@ module_init (GimpModuleInfo **inforet)
 }
 
 G_MODULE_EXPORT void
-module_unload (void *shutdown_data,
-	       void (*completed_cb)(void *),
-	       void *completed_data)
+module_unload (void  *shutdown_data,
+	       void (*completed_cb) (void *),
+	       void  *completed_data)
 {
 #ifndef __EMX__
   gimp_color_display_unregister (COLOR_DISPLAY_NAME);
@@ -154,7 +154,7 @@ gamma_clone (gpointer cd_ID)
   context = gamma_new (0);
   context->gamma = src_context->gamma;
   
-  memcpy (context->lookup, src_context->lookup, sizeof(guchar) * 256);
+  memcpy (context->lookup, src_context->lookup, sizeof (guchar) * 256);
 
   return context;
 }
@@ -174,7 +174,7 @@ gamma_create_lookup_table (GammaContext *context)
   for (i = 0; i < 256; i++)
     {
       ind = (double) i / 255.0;
-      context->lookup[i] = (guchar) (int) (255 * pow (ind, one_over_gamma));
+      context->lookup[i] = (guchar) (gint) (255 * pow (ind, one_over_gamma));
     }
 }
 
@@ -231,26 +231,26 @@ gamma_convert (gpointer  cd_ID,
 }
 
 static void
-gamma_load (gpointer  cd_ID,
-            Parasite *state)
+gamma_load (gpointer      cd_ID,
+            GimpParasite *state)
 {
   GammaContext *context = cd_ID;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&context->gamma, parasite_data (state), sizeof (double));
+  memcpy (&context->gamma, gimp_parasite_data (state), sizeof (gdouble));
 #else
-  guint32 buf[2], *data = parasite_data (state);
+  guint32 buf[2], *data = gimp_parasite_data (state);
 
   buf[0] = g_ntohl (data[1]);
   buf[1] = g_ntohl (data[0]);
 
-  memcpy (&context->gamma, buf, sizeof (double));
+  memcpy (&context->gamma, buf, sizeof (gdouble));
 #endif
 
   gamma_create_lookup_table (context);
 }
 
-static Parasite *
+static GimpParasite *
 gamma_save (gpointer cd_ID)
 {
   GammaContext *context = cd_ID;
@@ -266,8 +266,8 @@ gamma_save (gpointer cd_ID)
   }
 #endif
 
-  return parasite_new ("Display/Gamma", PARASITE_PERSISTENT,
-		       sizeof (double), &buf);
+  return gimp_parasite_new ("Display/Gamma", GIMP_PARASITE_PERSISTENT,
+			    sizeof (double), &buf);
 }
 
 static void
@@ -276,7 +276,8 @@ gamma_configure_ok_callback (GtkWidget *widget,
 {
   GammaContext *context = data;
 
-  context->gamma = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
+  context->gamma =
+    gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (context->spinner));
   gamma_create_lookup_table (context);
 
   dialog_unregister (context->shell);

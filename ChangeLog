@@ -1,3 +1,50 @@
+2000-05-26  Michael Natterer  <mitch@gimp.org>
+
+	Final (1.2) libgimp namespace cleanup part I:
+
+	* app/gimpbrushpipe.c
+	* app/gimpdrawable.[ch]
+	* app/gimpimage.[ch]
+	* app/gimpparasite.[ch]
+	* app/gimprc.c
+	* app/image_new.c
+	* app/parasite_cmds.c
+	* app/parasitelist.[ch]
+	* app/parasitelistP.h
+	* app/plug_in.c
+	* app/undo.c
+	* app/xcf.c
+	* libgimp/color_display.h
+	* libgimp/gimp.[ch]
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpimage.c
+	* libgimp/gimpparasite.c
+	* libgimp/gimpprotocol.c
+	* libgimp/parasite.[ch]
+	* libgimp/parasiteF.h
+	* libgimp/parasiteP.h
+	* libgimp/parasiteio.[ch]
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/xbm.c
+	* plug-ins/gap/gap_exchange_image.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/xjt/xjt.c: s/Parasite/GimpParasite/g,
+	                      s/parasite_*/gimp_parasite_*/g
+
+	* libgimp/gimpcompat.h: added the old names.
+
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/parasite.pdb: dito and an ugly perl hack to work
+	around a substitution clash. Perl gurus, feel free to fix it.
+
 Fri May 26 22:33:05 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/common/wind.c

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * parasiteP.h
+ * gimpparasiteP.h
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -19,9 +19,8 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-
-#ifndef __PARASITEP_H__
-#define __PARASITEP_H__
+#ifndef __GIMP_PARASITE_P_H__
+#define __GIMP_PARASITE_P_H__
 
 #include <glib.h>
 
@@ -29,12 +28,12 @@
 extern "C" {
 #endif /* __cplusplus */
 
-struct _Parasite
+struct _GimpParasite
 {
-  char *name;           /* The name of the parasite. USE A UNIQUE PREFIX! */
-  guint32 flags;	/* save Parasite in XCF file, etc.                */
-  guint32 size;         /* amount of data                                 */
-  void *data;           /* a pointer to the data.  plugin is              *
+  gchar   *name;        /* The name of the parasite. USE A UNIQUE PREFIX! */
+  guint32  flags;       /* save Parasite in XCF file, etc.                */
+  guint32  size;        /* amount of data                                 */
+  gpointer data;        /* a pointer to the data.  plugin is              *
 			 * responsible for tracking byte order            */
 };
 
@@ -42,4 +41,4 @@ struct _Parasite
 }
 #endif /* __cplusplus */
 
-#endif /* __PARASITEP_H__ */
+#endif /* __GIMP_PARASITE_P_H__ */

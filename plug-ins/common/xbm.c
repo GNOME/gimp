@@ -230,7 +230,7 @@ run (gchar   *name,
   GStatusType   status = STATUS_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
-  Parasite     *parasite;
+  GimpParasite *parasite;
   GimpExportReturnType export = EXPORT_CANCEL;
 
   INIT_I18N_UI();
@@ -308,13 +308,13 @@ run (gchar   *name,
 	  gpointer data;
 	  gint     size;
 
-	  data = parasite_data (parasite);
-	  size = parasite_data_size (parasite);
+	  data = gimp_parasite_data (parasite);
+	  size = gimp_parasite_data_size (parasite);
 
 	  strncpy (xsvals.comment, data, MIN (size, MAX_COMMENT));
 	  xsvals.comment[MIN (size, MAX_COMMENT) + 1] = 0;
 
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
 
       parasite = gimp_image_parasite_find (image_ID, "hot-spot");
@@ -324,7 +324,7 @@ run (gchar   *name,
 	  gpointer data;
 	  gint     x, y;
 
-	  data = parasite_data (parasite);
+	  data = gimp_parasite_data (parasite);
 
 	  if (sscanf (data, "%i %i", &x, &y) == 2)
 	    {
@@ -333,7 +333,7 @@ run (gchar   *name,
 	      xsvals.y_hot = y;
 	    }
 
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
 
       switch (run_mode)
@@ -777,12 +777,13 @@ load_image (gchar *filename)
 
   if (comment)
     {
-      Parasite *parasite;
+      GimpParasite *parasite;
 
-      parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-			       strlen (comment) + 1, (gpointer) comment);
+      parasite = gimp_parasite_new ("gimp-comment",
+				    GIMP_PARASITE_PERSISTENT,
+				    strlen (comment) + 1, (gpointer) comment);
       gimp_image_parasite_attach (image_ID, parasite);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
 
       g_free (comment);
     }
@@ -792,15 +793,16 @@ load_image (gchar *filename)
 
   if (x_hot > 0 || y_hot > 0)
     {
-      Parasite *parasite;
-      gchar    *str;
+      GimpParasite *parasite;
+      gchar        *str;
 
       str = g_strdup_printf ("%d %d", x_hot, y_hot);
-      parasite = parasite_new ("hot-spot", PARASITE_PERSISTENT,
-			       strlen (str) + 1, (gpointer) str);
+      parasite = gimp_parasite_new ("hot-spot",
+				    GIMP_PARASITE_PERSISTENT,
+				    strlen (str) + 1, (gpointer) str);
       g_free (str);
       gimp_image_parasite_attach (image_ID, parasite);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
     }
 
   /* Set a black-and-white colormap. */

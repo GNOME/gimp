@@ -68,7 +68,7 @@ parasite_new_invoker (Argument *args)
   gint32 flags;
   gint32 size;
   gchar *data;
-  Parasite *parasite = NULL;
+  GimpParasite *parasite = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -87,7 +87,7 @@ parasite_new_invoker (Argument *args)
       if (size > 0 && data == NULL)
 	success = FALSE;
       else
-	success = (parasite = parasite_new (name, flags, size, data)) != NULL;
+	success = (parasite = gimp_parasite_new (name, flags, size, data)) != NULL;
     }
 
   return_args = procedural_db_return_args (&parasite_new_proc, success);
@@ -153,7 +153,7 @@ parasite_find_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   gchar *name;
-  Parasite *parasite = NULL;
+  GimpParasite *parasite = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -161,7 +161,7 @@ parasite_find_invoker (Argument *args)
 
   if (success)
     {
-      parasite = parasite_copy (gimp_parasite_find (name));
+      parasite = gimp_parasite_copy (gimp_parasite_find (name));
       success = parasite != NULL;
     }
 
@@ -211,9 +211,9 @@ static Argument *
 parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Parasite *parasite;
+  GimpParasite *parasite;
 
-  parasite = (Parasite *) args[0].value.pdb_pointer;
+  parasite = (GimpParasite *) args[0].value.pdb_pointer;
   if (parasite == NULL)
     success = FALSE;
 
@@ -343,7 +343,7 @@ drawable_parasite_find_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
   gchar *name;
-  Parasite *parasite = NULL;
+  GimpParasite *parasite = NULL;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -355,7 +355,7 @@ drawable_parasite_find_invoker (Argument *args)
 
   if (success)
     {
-      parasite = parasite_copy (gimp_drawable_parasite_find (drawable, name));
+      parasite = gimp_parasite_copy (gimp_drawable_parasite_find (drawable, name));
       success = parasite != NULL;
     }
 
@@ -411,13 +411,13 @@ drawable_parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  Parasite *parasite;
+  GimpParasite *parasite;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
-  parasite = (Parasite *) args[1].value.pdb_pointer;
+  parasite = (GimpParasite *) args[1].value.pdb_pointer;
   if (parasite == NULL)
     success = FALSE;
 
@@ -581,7 +581,7 @@ image_parasite_find_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gchar *name;
-  Parasite *parasite = NULL;
+  GimpParasite *parasite = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -593,7 +593,7 @@ image_parasite_find_invoker (Argument *args)
 
   if (success)
     {
-      parasite = parasite_copy (gimp_image_parasite_find (gimage, name));
+      parasite = gimp_parasite_copy (gimp_image_parasite_find (gimage, name));
       success = parasite != NULL;
     }
 
@@ -649,13 +649,13 @@ image_parasite_attach_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  Parasite *parasite;
+  GimpParasite *parasite;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
     success = FALSE;
 
-  parasite = (Parasite *) args[1].value.pdb_pointer;
+  parasite = (GimpParasite *) args[1].value.pdb_pointer;
   if (parasite == NULL)
     success = FALSE;
 

@@ -14,18 +14,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-#ifndef __GIMP_PARASITE_H__
-#define __GIMP_PARASITE_H__
+#ifndef __APP_GIMP_PARASITE_H__
+#define __APP_GIMP_PARASITE_H__
 
 #include "libgimp/parasiteF.h"
 
-void       gimp_init_parasites  (void);
-void       gimp_parasite_attach (Parasite *p);
-void       gimp_parasite_detach (const gchar *name);
-Parasite * gimp_parasite_find   (const gchar *name);
-gchar **   gimp_parasite_list   (gint *count);
-void       gimp_parasiterc_save (void);
-void       gimp_parasiterc_load (void);
+void            gimp_init_parasites  (void);
 
-#endif  /*  __GIMP_PARASITE_H__  */
+void            gimp_parasite_attach (GimpParasite *parasite);
+void            gimp_parasite_detach (const gchar  *name);
+
+GimpParasite  * gimp_parasite_find   (const gchar  *name);
+gchar        ** gimp_parasite_list   (gint         *count);
+
+void            gimp_parasiterc_save (void);
+void            gimp_parasiterc_load (void);
+
+#endif  /*  __APP_GIMP_PARASITE_H__  */

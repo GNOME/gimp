@@ -244,7 +244,7 @@ image_new_create_image (const GimpImageNewValues *values)
   GDisplay *display;
   Layer *layer;
   GimpImageType type;
-  Parasite *comment_parasite;
+  GimpParasite *comment_parasite;
   gint width, height;
 
   g_return_if_fail (values != NULL);
@@ -264,7 +264,7 @@ image_new_create_image (const GimpImageNewValues *values)
     default:
       type = RGB_GIMAGE; 
       break;
-    }  
+    }
 
   image = gimage_new (values->width, values->height, values->type);
   
@@ -273,18 +273,20 @@ image_new_create_image (const GimpImageNewValues *values)
 
   if (default_comment)
     {
-      comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-				       strlen (default_comment)+1,
-				       (gpointer) default_comment);
+      comment_parasite = gimp_parasite_new ("gimp-comment",
+					    GIMP_PARASITE_PERSISTENT,
+					    strlen (default_comment) + 1,
+					    (gpointer) default_comment);
       gimp_image_parasite_attach (image, comment_parasite);
-      parasite_free (comment_parasite);
+      gimp_parasite_free (comment_parasite);
     }
   
   /*  Make the background (or first) layer  */
   width = gimp_image_get_width (image);
-  height = gimp_image_get_height(image);
+  height = gimp_image_get_height (image);
   layer = layer_new (image, width, height,
-                     type, _("Background"), OPAQUE_OPACITY, NORMAL_MODE);
+                     type, _("Background"),
+		     OPAQUE_OPACITY, NORMAL_MODE);
  
   if (layer)
     {

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * parasite.h
+ * gimpparasite.h
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -20,8 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PARASITE_H__
-#define __PARASITE_H__
+#ifndef __GIMP_PARASITE_H__
+#define __GIMP_PARASITE_H__
 
 #include <glib.h>
 #include <stdio.h>
@@ -32,43 +32,42 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define PARASITE_PERSISTENT 1
-#define PARASITE_UNDOABLE   2
+#define GIMP_PARASITE_PERSISTENT 1
+#define GIMP_PARASITE_UNDOABLE   2
 
-#define PARASITE_ATTACH_PARENT (0x80 << 8)
-#define PARASITE_PARENT_PERSISTENT (PARASITE_PERSISTENT << 8)
-#define PARASITE_PARENT_UNDOABLE (PARASITE_UNDOABLE << 8)
+#define GIMP_PARASITE_ATTACH_PARENT     (0x80 << 8)
+#define GIMP_PARASITE_PARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 8)
+#define GIMP_PARASITE_PARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 8)
 
-#define PARASITE_ATTACH_GRANDPARENT (0x80 << 16)
-#define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
-#define PARASITE_GRANDPARENT_UNDOABLE (PARASITE_UNDOABLE << 16)
+#define GIMP_PARASITE_ATTACH_GRANDPARENT     (0x80 << 16)
+#define GIMP_PARASITE_GRANDPARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 16)
+#define GIMP_PARASITE_GRANDPARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 16)
 
-Parasite    *parasite_new           (const gchar    *name, 
-				     guint32         flags,
-				     guint32         size, 
-				     const gpointer  data);
-void         parasite_free          (Parasite       *parasite);
-  
-Parasite    *parasite_copy          (const Parasite *parasite);
+GimpParasite * gimp_parasite_new           (const gchar        *name, 
+					    guint32             flags,
+					    guint32             size, 
+					    const gpointer      data);
+void           gimp_parasite_free          (GimpParasite       *parasite);
 
-gboolean     parasite_compare       (const Parasite *a, 
-				     const Parasite *b);
+GimpParasite * gimp_parasite_copy          (const GimpParasite *parasite);
 
-gboolean     parasite_is_type       (const Parasite *parasite,
-				     const gchar    *name);
-gboolean     parasite_is_persistent (const Parasite *p);
-gboolean     parasite_is_undoable   (const Parasite *p);
-gboolean     parasite_has_flag      (const Parasite *p, 
-				     gulong          flag);
-gulong       parasite_flags         (const Parasite *p);
-const gchar *parasite_name          (const Parasite *p);
-void        *parasite_data          (const Parasite *p);
-glong        parasite_data_size     (const Parasite *p);
+gboolean       gimp_parasite_compare       (const GimpParasite *a, 
+					    const GimpParasite *b);
 
+gboolean       gimp_parasite_is_type       (const GimpParasite *parasite,
+					    const gchar        *name);
+gboolean       gimp_parasite_is_persistent (const GimpParasite *parasite);
+gboolean       gimp_parasite_is_undoable   (const GimpParasite *parasite);
+gboolean       gimp_parasite_has_flag      (const GimpParasite *parasite,
+					    gulong              flag);
+gulong         gimp_parasite_flags         (const GimpParasite *parasite);
+const gchar  * gimp_parasite_name          (const GimpParasite *parasite);
+void         * gimp_parasite_data          (const GimpParasite *parasite);
+glong          gimp_parasite_data_size     (const GimpParasite *parasite);
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __PARASITE_H__ */
+#endif /* __GIMP_PARASITE_H__ */

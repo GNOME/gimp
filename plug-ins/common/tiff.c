@@ -239,7 +239,7 @@ run (gchar   *name,
   GRunModeType  run_mode;
   GStatusType   status = STATUS_SUCCESS;
 #ifdef GIMP_HAVE_PARASITES
-  Parasite     *parasite;
+  GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   gint32        image;
   gint32        drawable;
@@ -303,7 +303,7 @@ run (gchar   *name,
       parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
       if (parasite)
         image_comment = g_strdup (parasite->data);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
       if (!image_comment)
@@ -322,7 +322,7 @@ run (gchar   *name,
 	      tsvals.compression =
 		((TiffSaveVals *) parasite->data)->compression;
 	    }
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
 	  /*  First acquire information with a dialog  */
@@ -362,7 +362,7 @@ run (gchar   *name,
 	      tsvals.compression =
 		((TiffSaveVals *) parasite->data)->compression;
 	    }
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 	  break;
 
@@ -427,7 +427,7 @@ load_image (gchar *filename)
 
   TiffSaveVals save_vals;
 #ifdef GIMP_HAVE_PARASITES
-  Parasite *parasite;
+  GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   guint16 tmp;
 
@@ -528,10 +528,10 @@ load_image (gchar *filename)
   else
     save_vals.compression = tmp;
 #ifdef GIMP_HAVE_PARASITES
-  parasite = parasite_new("tiff-save-options", 0,
-			  sizeof(save_vals), &save_vals);
-  gimp_image_parasite_attach(image, parasite);
-  parasite_free(parasite);
+  parasite = gimp_parasite_new ("tiff-save-options", 0,
+				sizeof (save_vals), &save_vals);
+  gimp_image_parasite_attach (image, parasite);
+  gimp_parasite_free (parasite);
 #endif /* GIMP_HAVE_PARASITES */
 
 
@@ -550,10 +550,11 @@ load_image (gchar *filename)
       len = MIN(len, 241);
       img_desc[len-1] = '\000';
 
-      parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
-			       len, img_desc);
+      parasite = gimp_parasite_new ("gimp-comment",
+				    GIMP_PARASITE_PERSISTENT,
+				    len, img_desc);
       gimp_image_parasite_attach (image, parasite);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
     }
   }
 #endif /* GIMP_HAVE_PARASITES */
@@ -1384,13 +1385,14 @@ save_image (gchar   *filename,
 #ifdef GIMP_HAVE_PARASITES
   if (image_comment && *image_comment != '\000')
     {
-      Parasite *parasite;
+      GimpParasite *parasite;
       
       TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
-      parasite = parasite_new ("gimp-comment", 1,
-			       strlen (image_comment) + 1, image_comment);
+      parasite = gimp_parasite_new ("gimp-comment",
+				    GIMP_PARASITE_PERSISTENT,
+				    strlen (image_comment) + 1, image_comment);
       gimp_image_parasite_attach (orig_image, parasite);
-      parasite_free (parasite);
+      gimp_parasite_free (parasite);
     }
 #endif /* GIMP_HAVE_PARASITES */
 

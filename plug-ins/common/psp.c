@@ -658,7 +658,7 @@ read_creator_block (FILE     *f,
   guint32 dword;
   guint32 cdate = 0, mdate = 0, appid, appver;
   GString *comment;
-  Parasite *comment_parasite;
+  GimpParasite *comment_parasite;
 
   data_start = ftell (f);
   comment = g_string_new (NULL);
@@ -771,10 +771,12 @@ read_creator_block (FILE     *f,
     }
   if (comment->len > 0)
     {
-      comment_parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
-				      strlen (comment->str) + 1, comment->str);
+      comment_parasite = gimp_parasite_new ("gimp-comment",
+					    GIMP_PARASITE_PERSISTENT,
+					    strlen (comment->str) + 1,
+					    comment->str);
       gimp_image_parasite_attach(image_ID, comment_parasite);
-      parasite_free (comment_parasite);
+      gimp_parasite_free (comment_parasite);
     }
 
   g_string_free (comment, FALSE);
@@ -1405,11 +1407,11 @@ read_tube_block (FILE     *f,
   guint32 step_size, column_count, row_count, cell_count;
   guint32 placement_mode, selection_mode;
   gint i;
-  PixPipeParams params;
-  Parasite *pipe_parasite;
+  GimpPixPipeParams params;
+  GimpParasite *pipe_parasite;
   gchar *parasite_text;
 
-  pixpipeparams_init (&params);
+  gimp_pixpipe_params_init (&params);
 
   if (fread (&version, 2, 1, f) < 1
       || fread (name, 513, 1, f) < 1
@@ -1456,15 +1458,15 @@ read_tube_block (FILE     *f,
 			   (selection_mode == tsmPressure ? "pressure" :
 			    (selection_mode == tsmVelocity ? "velocity" :
 			     "default")))));
-  parasite_text = pixpipeparams_build (&params);
+  parasite_text = gimp_pixpipe_params_build (&params);
 
   IFDBG(2) g_message ("parasite: %s", parasite_text);
 
-  pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
-				PARASITE_PERSISTENT,
-				strlen (parasite_text) + 1, parasite_text);
+  pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
+				     GIMP_PARASITE_PERSISTENT,
+				     strlen (parasite_text) + 1, parasite_text);
   gimp_image_parasite_attach (image_ID, pipe_parasite);
-  parasite_free (pipe_parasite);
+  gimp_parasite_free (pipe_parasite);
   g_free (parasite_text);
 
   return 0;

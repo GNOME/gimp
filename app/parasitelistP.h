@@ -14,7 +14,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __PARASITE_LIST_P_H__
 #define __PARASITE_LIST_P_H__
 
@@ -23,17 +22,20 @@
 
 struct _ParasiteList
 {
-  GimpObject object;
+  GimpObject  object;
   GHashTable *table;
 };
 
 typedef struct _ParasiteListClass
 {
   GimpObjectClass parent_class;
-  void (* add)    (ParasiteList *list, Parasite *parasite);
-  void (* remove) (ParasiteList *list, Parasite *parasite);
+
+  void (* add)    (ParasiteList *list,
+		   GimpParasite *parasite);
+  void (* remove) (ParasiteList *list,
+		   GimpParasite *parasite);
 } ParasiteListClass;
 
 #define PARASITE_LIST_CLASS(class) GIMP_CHECK_CLASS_CAST (class, parasite_list_get_type(), ParasiteListClass)
 
-#endif  /*  __GIMP_PARASITE_P_H__  */
+#endif  /*  __PARASITE_LIST_P_H__  */

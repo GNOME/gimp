@@ -191,7 +191,7 @@ gimp_image_init (GimpImage *gimage)
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview          = NULL;
-  gimage->parasites             = parasite_list_new();
+  gimage->parasites             = parasite_list_new ();
   gimage->xresolution           = default_xresolution;
   gimage->yresolution           = default_yresolution;
   gimage->unit                  = default_units;
@@ -1133,7 +1133,7 @@ gimp_image_delete_guide (GimpImage *gimage,
 }
 
 
-Parasite *
+GimpParasite *
 gimp_image_parasite_find (const GimpImage *gimage, 
 			  const gchar     *name)
 {
@@ -1143,9 +1143,9 @@ gimp_image_parasite_find (const GimpImage *gimage,
 }
 
 static void
-list_func (gchar      *key, 
-	   Parasite   *p, 
-	   gchar    ***cur)
+list_func (gchar          *key, 
+	   GimpParasite   *p, 
+	   gchar        ***cur)
 {
   *(*cur)++ = (gchar *) g_strdup (key);
 }
@@ -1167,24 +1167,24 @@ gimp_image_parasite_list (GimpImage *gimage,
 }
 
 void
-gimp_image_parasite_attach (GimpImage *gimage, 
-			    Parasite  *parasite)
+gimp_image_parasite_attach (GimpImage    *gimage, 
+			    GimpParasite *parasite)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
-  if (parasite_is_undoable (parasite))
+  if (gimp_parasite_is_undoable (parasite))
     undo_push_image_parasite (gimage, parasite);
-  if (parasite_is_persistent (parasite)
-      && !parasite_compare (parasite,
-			    gimp_image_parasite_find (gimage,
-						      parasite_name (parasite))))
+  if (gimp_parasite_is_persistent (parasite) &&
+      !gimp_parasite_compare (parasite,
+			      gimp_image_parasite_find (gimage,
+							gimp_parasite_name (parasite))))
     undo_push_cantundo (gimage, _("attach parasite to image"));
 
   parasite_list_add (gimage->parasites, parasite);
 
-  if (parasite_has_flag (parasite, PARASITE_ATTACH_PARENT))
+  if (gimp_parasite_has_flag (parasite, GIMP_PARASITE_ATTACH_PARENT))
     {
       parasite_shift_parent (parasite);
       gimp_parasite_attach (parasite);
@@ -1195,16 +1195,16 @@ void
 gimp_image_parasite_detach (GimpImage   *gimage, 
 			    const gchar *parasite)
 {
-  Parasite *p;
+  GimpParasite *p;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (!(p = parasite_list_find(gimage->parasites, parasite)))
+  if (!(p = parasite_list_find (gimage->parasites, parasite)))
     return;
 
-  if (parasite_is_undoable (p))
-    undo_push_image_parasite_remove (gimage, parasite_name (p));
-  else if (parasite_is_persistent (p))
+  if (gimp_parasite_is_undoable (p))
+    undo_push_image_parasite_remove (gimage, gimp_parasite_name (p));
+  else if (gimp_parasite_is_persistent (p))
     undo_push_cantundo (gimage, _("detach parasite from image"));
 
   parasite_list_remove (gimage->parasites, parasite);
@@ -2792,9 +2792,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   layer_set_tattoo(merge_layer, layer_get_tattoo(layer));
-  GIMP_DRAWABLE(merge_layer)->parasites 
-    = parasite_list_copy(GIMP_DRAWABLE(layer)->parasites);
-
+  GIMP_DRAWABLE(merge_layer)->parasites =
+    parasite_list_copy (GIMP_DRAWABLE(layer)->parasites);
 
   while (reverse_list)
     {

@@ -1,6 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
+ * gimpparasiteio.c
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
  * This library is free software; you can redistribute it and/or
@@ -11,7 +12,7 @@
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
@@ -29,37 +30,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <glib.h>
 
-#include "libgimp/parasiteio.h"
+#include "parasiteio.h"
+
 
 void
-pixpipeparams_init (PixPipeParams *params)
+gimp_pixpipe_params_init (GimpPixPipeParams *params)
 {
-  int i;
+  gint i;
 
-  params->step = 100;
-  params->ncells = 1;
-  params->cellwidth = 1;
+  params->step       = 100;
+  params->ncells     = 1;
+  params->cellwidth  = 1;
   params->cellheight = 1;
-  params->dim = 1;
-  params->cols = 1;
-  params->rows = 1;
-  params->placement = "constant";
+  params->dim        = 1;
+  params->cols       = 1;
+  params->rows       = 1;
+  params->placement  = "constant";
   params->free_placement_string = FALSE;
-  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
-      params->selection[i] = "random";
+      params->selection[i]          = "random";
       params->free_selection_string = FALSE;
     }
   params->rank[0] = 1;
-  for (i = 1; i < PIXPIPE_MAXDIM; i++)
+  for (i = 1; i < GIMP_PIXPIPE_MAXDIM; i++)
     params->rank[i] = 0;
 }
 
 void
-pixpipeparams_parse (gchar	   *string,
-		     PixPipeParams *params)
+gimp_pixpipe_params_parse (gchar            *string,
+			   GimpPixPipeParams *params)
 {
   gchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
   gint i;                       /*          No, we don't!!   <Sven>         */ 
@@ -142,12 +145,12 @@ pixpipeparams_parse (gchar	   *string,
 }
 
 gchar *
-pixpipeparams_build (PixPipeParams *params)
+gimp_pixpipe_params_build (GimpPixPipeParams *params)
 {
   GString *s = g_string_new (NULL);
   gchar *str;
-  
-  int i;
+
+  gint i;
 
   g_string_sprintf (s, "ncells:%d cellwidth:%d cellheight:%d "
 		    "step:%d dim:%d cols:%d rows:%d placement:%s",
@@ -167,4 +170,3 @@ pixpipeparams_build (PixPipeParams *params)
 
   return str;
 }
-

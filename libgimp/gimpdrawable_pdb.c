@@ -579,14 +579,14 @@ gimp_drawable_get_tile2 (GDrawable *drawable,
   return gimp_drawable_get_tile (drawable, shadow, row, col);
 }
 
-Parasite *
+GimpParasite *
 gimp_drawable_parasite_find (gint32       drawable_ID,
 			     const gchar *name)
 
 {
   GParam *return_vals;
   gint nreturn_vals;
-  Parasite *parasite;
+  GimpParasite *parasite;
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_find",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
@@ -594,9 +594,9 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
 				    PARAM_END);
 
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-  {
-    parasite = parasite_copy(&return_vals[1].data.d_parasite);
-  }
+    {
+      parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
+    }
   else
     parasite = NULL;
 
@@ -606,8 +606,8 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
 }
 
 void
-gimp_drawable_parasite_attach (gint32          drawable_ID,
-			       const Parasite *p)
+gimp_drawable_parasite_attach (gint32              drawable_ID,
+			       const GimpParasite *parasite)
 {
   GParam *return_vals;
   gint nreturn_vals;
@@ -615,7 +615,7 @@ gimp_drawable_parasite_attach (gint32          drawable_ID,
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
 				    &nreturn_vals,
 				    PARAM_DRAWABLE, drawable_ID,
-				    PARAM_PARASITE, p,
+				    PARAM_PARASITE, parasite,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -631,7 +631,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable,
 {
   GParam *return_vals;
   gint nreturn_vals;
-  Parasite *p = parasite_new (name, flags, size, data);
+  GimpParasite *p = gimp_parasite_new (name, flags, size, data);
 
   return_vals = gimp_run_procedure ("gimp_drawable_parasite_attach",
 				    &nreturn_vals,
@@ -639,7 +639,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable,
 				    PARAM_PARASITE, p,
 				    PARAM_END);
 
-  parasite_free(p);
+  gimp_parasite_free(p);
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 

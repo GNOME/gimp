@@ -104,7 +104,7 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    gint32   l_path_type;
    gint32   l_path_closed;
    gint32   l_num_points;
-   Parasite  *l_parasite;
+   GimpParasite  *l_parasite;
    gchar    **l_parasite_names = NULL;
    gint32     l_num_parasites = 0;
  

@@ -143,7 +143,7 @@ run (gchar   *name,
     {
       gint32 image_ID    = param[1].data.d_int32;
       gint32 drawable_ID = param[2].data.d_int32;
-      Parasite *parasite;
+      GimpParasite *parasite;
       gchar *x;
       GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -162,7 +162,7 @@ run (gchar   *name,
       if (parasite)
 	{
 	  config.comment = g_strdup (parasite->data);
-	  parasite_free (parasite);
+	  gimp_parasite_free (parasite);
 	}
       x = config.comment;
 
@@ -188,12 +188,12 @@ run (gchar   *name,
 		gimp_image_parasite_detach (image_ID, "gimp-comment");
 	      else
 		{
-		  parasite = parasite_new ("gimp-comment",
-					   PARASITE_PERSISTENT,
-					   strlen (config.comment) + 1,
-					   config.comment);
+		  parasite = gimp_parasite_new ("gimp-comment",
+						GIMP_PARASITE_PERSISTENT,
+						strlen (config.comment) + 1,
+						config.comment);
 		  gimp_image_parasite_attach (image_ID, parasite);
-		  parasite_free (parasite);
+		  gimp_parasite_free (parasite);
 		}
 	    }
 

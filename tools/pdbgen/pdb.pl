@@ -69,7 +69,7 @@ package Gimp::CodeGen::pdb;
 		    id_func => 'layer_mask_get_ID',
 		    id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
     parasite   => { name => 'PARASITE',
-		    type => 'Parasite *',
+		    type => 'GimpParasite *',
 		    headers => [ qw("libgimp/parasite.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME

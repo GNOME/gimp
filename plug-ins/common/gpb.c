@@ -64,7 +64,7 @@ static struct
 static gint run_flag = 0;
 static gint num_layers_with_alpha;
 
-static PixPipeParams gihparms;
+static GimpPixPipeParams gihparms;
 
 typedef struct
 {
@@ -249,7 +249,7 @@ ok_callback (GtkWidget *widget,
 {
   int i;
 
-  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     gihparms.selection[i] = g_strdup (gihparms.selection[i]);
 
   run_flag = 1;
@@ -509,9 +509,9 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Ranks: __ __ __ __ __
    */
-  dimtable = gtk_table_new (1, PIXPIPE_MAXDIM, FALSE);
+  dimtable = gtk_table_new (1, GIMP_PIXPIPE_MAXDIM, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (dimtable), 4);
-  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
       box = gtk_hbox_new (FALSE, 0);
       gtk_table_attach (GTK_TABLE (dimtable), box, i, i + 1, 0, 1,
@@ -550,7 +550,7 @@ gih_save_dialog (gint32 image_ID)
   cbitems = g_list_append (cbitems, "ytilt");
 
   box = gtk_hbox_new (TRUE, 4);
-  for (i = 0; i < PIXPIPE_MAXDIM; i++)
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
       cb = gtk_combo_new ();
       gtk_combo_set_popdown_strings (GTK_COMBO (cb), cbitems);
@@ -794,7 +794,7 @@ gih_save_image (char   *filename,
   GDrawable *drawable;
   GPixelRgn pixel_rgn;
   FILE *file;
-  Parasite *pipe_parasite;
+  GimpParasite *pipe_parasite;
   gchar *msg, *parstring, *ncells;
   gint32 *layer_ID;
   gint nlayers, layer, row, col;
@@ -817,7 +817,7 @@ gih_save_image (char   *filename,
       return FALSE;
     }
 
-  parstring = pixpipeparams_build (&gihparms);
+  parstring = gimp_pixpipe_params_build (&gihparms);
   IFDBG(2) g_message ("parameter string: %s", parstring);
   ncells = g_strdup_printf ("%d ", gihparms.ncells);
   if (!(try_fwrite (info.description, strlen (info.description), 1, file)
@@ -831,11 +831,11 @@ gih_save_image (char   *filename,
       return FALSE;
     }
 
-  pipe_parasite = parasite_new ("gimp-brush-pipe-parameters",
-				PARASITE_PERSISTENT,
-				strlen (parstring) + 1, parstring);
+  pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
+				     GIMP_PARASITE_PERSISTENT,
+				     strlen (parstring) + 1, parstring);
   gimp_image_parasite_attach (orig_image_ID, pipe_parasite);
-  parasite_free (pipe_parasite);
+  gimp_parasite_free (pipe_parasite);
 
   g_free (parstring);
   g_free (ncells);
@@ -898,7 +898,7 @@ run (char    *name,
   static GParam values[1];
   GRunModeType  run_mode;
   GStatusType   status = STATUS_SUCCESS;
-  Parasite     *pipe_parasite;
+  GimpParasite *pipe_parasite;
   gint32        image_ID;
   gint32        orig_image_ID;
   gint32        drawable_ID;
@@ -1037,9 +1037,9 @@ run (char    *name,
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
-	  pixpipeparams_init (&gihparms);
+	  gimp_pixpipe_params_init (&gihparms);
 	  if (pipe_parasite)
-	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
+	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
 
 	  if (!gih_save_dialog (image_ID))
 	    status = STATUS_CANCEL;
@@ -1063,9 +1063,9 @@ run (char    *name,
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
 				      "gimp-brush-pipe-parameters");
-	  pixpipeparams_init (&gihparms);
+	  gimp_pixpipe_params_init (&gihparms);
 	  if (pipe_parasite)
-	    pixpipeparams_parse (pipe_parasite->data, &gihparms);
+	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
 	  break;
 	}
 

@@ -48,6 +48,33 @@ extern "C" {
 #define gimp_image_thaw_undo		gimp_image_undo_thaw
 #define gimp_plugin_help_func           gimp_standard_help_func
 
+#define Parasite                        GimpParasite
+#define PARASITE_PERSISTENT             GIMP_PARASITE_PERSISTENT
+#define PARASITE_UNDOABLE               GIMP_PARASITE_UNDOABLE
+#define PARASITE_ATTACH_PARENT          GIMP_PARASITE_ATTACH_PARENT
+#define PARASITE_PARENT_PERSISTENT      GIMP_PARASITE_PARENT_PERSISTENT
+#define PARASITE_PARENT_UNDOABLE        GIMP_PARASITE_PARENT_UNDOABLE
+#define PARASITE_ATTACH_GRANDPARENT     GIMP_PARASITE_ATTACH_GRANDPARENT
+#define PARASITE_GRANDPARENT_PERSISTENT GIMP_PARASITE_GRANDPARENT_PERSISTENT
+#define PARASITE_GRANDPARENT_UNDOABLE   GIMP_PARASITE_GRANDPARENT_UNDOABLE
+#define parasite_new                    gimp_parasite_new
+#define parasite_free                   gimp_parasite_free
+#define parasite_copy                   gimp_parasite_copy
+#define parasite_compare                gimp_parasite_compare
+#define parasite_is_type                gimp_parasite_is_type
+#define parasite_is_persistent          gimp_parasite_is_persistent
+#define parasite_is_undoable            gimp_parasite_is_undoable
+#define parasite_has_flag               gimp_parasite_has_flag
+#define parasite_flags                  gimp_parasite_flags
+#define parasite_name                   gimp_parasite_name
+#define parasite_data                   gimp_parasite_data
+#define parasite_data_size              gimp_parasite_data_size
+#define PIXPIPE_MAXDIM                  GIMP_PIXPIPE_MAXDIM
+#define PixPipeParams                   GimpPixPipeParams
+#define pixpipeparams_init              gimp_pixpipe_params_init
+#define pixpipeparams_parse             gimp_pixpipe_params_parse
+#define pixpipeparams_build             gimp_pixpipe_params_build
+
 #endif /* GIMP_DISABLE_COMPAT_H */
 
 #ifdef __cplusplus

@@ -693,25 +693,25 @@ xcf_save_channel_props (XcfInfo *info,
 }
 
 static void 
-write_a_parasite (gchar    *key, 
-		  Parasite *p, 
-		  XcfInfo  *info)
+write_a_parasite (gchar        *key, 
+		  GimpParasite *p, 
+		  XcfInfo      *info)
 {
-  if ((p->flags & PARASITE_PERSISTENT))
-  {
-    info->cp += xcf_write_string (info->fp, &p->name, 1);
-    info->cp += xcf_write_int32 (info->fp, &p->flags, 1);
-    info->cp += xcf_write_int32 (info->fp, &p->size, 1);
-    info->cp += xcf_write_int8 (info->fp, p->data, p->size);
-  }
+  if ((p->flags & GIMP_PARASITE_PERSISTENT))
+    {
+      info->cp += xcf_write_string (info->fp, &p->name, 1);
+      info->cp += xcf_write_int32 (info->fp, &p->flags, 1);
+      info->cp += xcf_write_int32 (info->fp, &p->size, 1);
+      info->cp += xcf_write_int8 (info->fp, p->data, p->size);
+    }
 }
 
-static Parasite*
+static GimpParasite *
 read_a_parasite (XcfInfo *info)
 {
-  Parasite *p;
+  GimpParasite *p;
 
-  p = g_new (Parasite, 1);
+  p = g_new (GimpParasite, 1);
   info->cp += xcf_read_string (info->fp, &p->name, 1);
   info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
   info->cp += xcf_read_int32 (info->fp, &p->size, 1);
@@ -1186,21 +1186,22 @@ xcf_save_prop (XcfInfo  *info,
 	guint32 base, length;
 	long pos;
 	list =  va_arg (args, ParasiteList*);
-	if (parasite_list_persistent_length(list) > 0)
-	{
- 	  info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
-	  /* because we don't know how much room the parasite list will take
-	     we save the file position and write the length later */
-	  pos = ftell(info->fp);
- 	  info->cp += xcf_write_int32 (info->fp, &length, 1);
-	  base = info->cp;
-	  parasite_list_foreach(list, (GHFunc) write_a_parasite, info);
-	  length = info->cp - base;
-	  /* go back to the saved position and write the length */
-	  fseek(info->fp, pos, SEEK_SET);
-	  xcf_write_int32 (info->fp, &length, 1);
-	  fseek(info->fp, 0, SEEK_END);
-	}
+	if (parasite_list_persistent_length (list) > 0)
+	  {
+	    info->cp += xcf_write_int32 (info->fp, (guint32*) &prop_type, 1);
+	    /* because we don't know how much room the parasite list will take
+	     * we save the file position and write the length later
+	     */
+	    pos = ftell (info->fp);
+	    info->cp += xcf_write_int32 (info->fp, &length, 1);
+	    base = info->cp;
+	    parasite_list_foreach (list, (GHFunc) write_a_parasite, info);
+	    length = info->cp - base;
+	    /* go back to the saved position and write the length */
+	    fseek (info->fp, pos, SEEK_SET);
+	    xcf_write_int32 (info->fp, &length, 1);
+	    fseek (info->fp, 0, SEEK_END);
+	  }
       }
       break;
     case PROP_UNIT:
@@ -1904,12 +1905,12 @@ xcf_load_image_props (XcfInfo *info,
 	case PROP_PARASITES:
 	  {
 	    glong base = info->cp;
-	    Parasite *p;
+	    GimpParasite *p;
 	    while (info->cp - base < prop_size)
 	      {
-		p = read_a_parasite(info);
-		gimp_image_parasite_attach(gimage, p);
-		parasite_free(p);
+		p = read_a_parasite (info);
+		gimp_image_parasite_attach (gimage, p);
+		gimp_parasite_free (p);
 	      }
 	    if (info->cp - base != prop_size)
 	      g_message ("Error detected while loading an image's parasites");
@@ -2072,12 +2073,12 @@ xcf_load_layer_props (XcfInfo *info,
 	 case PROP_PARASITES:
 	 {
 	   long base = info->cp;
-	   Parasite *p;
+	   GimpParasite *p;
 	   while (info->cp - base < prop_size)
 	   {
 	     p = read_a_parasite(info);
 	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(layer), p);
-	     parasite_free(p);
+	     gimp_parasite_free(p);
 	   }
 	   if (info->cp - base != prop_size)
 	     g_message ("Error detected while loading a layer's parasites");
@@ -2149,13 +2150,13 @@ xcf_load_channel_props (XcfInfo *info,
 	 case PROP_PARASITES:
 	 {
 	   long base = info->cp;
-	   Parasite *p;
+	   GimpParasite *p;
 	   while ((info->cp - base) < prop_size)
-	   {
-	     p = read_a_parasite(info);
-	     gimp_drawable_parasite_attach(GIMP_DRAWABLE(channel), p);
-	     parasite_free(p);
-	   }
+	     {
+	       p = read_a_parasite(info);
+	       gimp_drawable_parasite_attach(GIMP_DRAWABLE(channel), p);
+	       gimp_parasite_free(p);
+	     }
 	   if (info->cp - base != prop_size)
 	     g_message("Error detected while loading a channel's parasites");
 	 }

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * parasite.c
+ * gimpparasite.c
  * Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
  *
  * This library is free software; you can redistribute it and/or
@@ -37,150 +37,164 @@
 
 #ifdef DEBUG
 static void 
-parasite_print (Parasite *p)
+gimp_parasite_print (GimpParasite *parasite)
 {
-  if (p == NULL)
+  if (parasite == NULL)
     {
-      printf("(pid %d)attempt to print a null parasite\n", getpid());
+      g_print ("pid %d: attempt to print a null parasite\n", getpid ());
       return;
     }
-  printf("(pid %d), parasite: %p\n", getpid(), p);
-  if (p->name)
-    printf("\tname: %s\n", p->name);
+
+  g_print ("pid %d: parasite: %p\n", getpid (), parasite);
+
+  if (parasite->name)
+    g_print ("\tname: %s\n", parasite->name);
   else
-    printf("\tname: NULL\n");
-  printf("\tflags: %d\n", p->flags);
-  printf("\tsize: %d\n", p->size);
-  if (p->size > 0)
-    printf("\tdata: %p\n", p->data);
+    g_print ("\tname: NULL\n");
+
+  g_print ("\tflags: %d\n", parasite->flags);
+  g_print ("\tsize: %d\n", parasite->size);
+  if (parasite->size > 0)
+    g_print ("\tdata: %p\n", parasite->data);
 }
 #endif
 
-Parasite *
-parasite_new (const gchar    *name, 
-	      guint32         flags,
-	      guint32         size, 
-	      const gpointer  data)
+GimpParasite *
+gimp_parasite_new (const gchar    *name, 
+		   guint32         flags,
+		   guint32         size, 
+		   const gpointer  data)
 {
-  Parasite *p;
-  p = g_new (Parasite, 1);
-  if (name)
-    p->name = g_strdup (name);
-  else
-    {
-      g_free (p);
-      return NULL;
-    }
-  p->flags = (flags & 0xFF);
-  p->size = size;
+  GimpParasite *parasite;
+
+  if (!name)
+    return NULL;
+
+  parasite = g_new (GimpParasite, 1);
+  parasite->name  = g_strdup (name);
+  parasite->flags = (flags & 0xFF);
+  parasite->size  = size;
   if (size)
-    p->data = g_memdup (data, size);
+    parasite->data = g_memdup (data, size);
   else
-    p->data = NULL;
-  return p;
+    parasite->data = NULL;
+
+  return parasite;
 }
 
 void
-parasite_free (Parasite *parasite)
+gimp_parasite_free (GimpParasite *parasite)
 {
   if (parasite == NULL)
     return;
+
   if (parasite->name)
     g_free (parasite->name);
   if (parasite->data)
     g_free (parasite->data);
+
   g_free (parasite);
 }
 
-int
-parasite_is_type (const Parasite *parasite, 
-		  const gchar    *name)
+gboolean
+gimp_parasite_is_type (const GimpParasite *parasite, 
+		       const gchar        *name)
 {
   if (!parasite || !parasite->name)
     return FALSE;
-  return (strcmp(parasite->name, name) == 0);
+
+  return (strcmp (parasite->name, name) == 0);
 }
 
-Parasite *
-parasite_copy (const Parasite *parasite)
+GimpParasite *
+gimp_parasite_copy (const GimpParasite *parasite)
 {
   if (parasite == NULL)
     return NULL;
-  return parasite_new (parasite->name, parasite->flags,
-		       parasite->size, parasite->data);
+
+  return gimp_parasite_new (parasite->name, parasite->flags,
+			    parasite->size, parasite->data);
 }
 
 gboolean
-parasite_compare (const Parasite *a, 
-		  const Parasite *b)
+gimp_parasite_compare (const GimpParasite *a, 
+		       const GimpParasite *b)
 {
-  if (a && b && a->name && b->name && strcmp(a->name, b->name) == 0 &&
-      a->flags == b->flags && a->size == b->size )
+  if (a && b &&
+      a->name && b->name &&
+      strcmp (a->name, b->name) == 0 &&
+      a->flags == b->flags &&
+      a->size == b->size)
     {
       if (a->data == NULL && b->data == NULL)  
 	return TRUE;
-      else if (a->data && b->data && memcmp(a->data, b->data, a->size) == 0)
+      else if (a->data && b->data && memcmp (a->data, b->data, a->size) == 0)
 	return TRUE;
     }
+
   return FALSE;
 }
 
 gulong
-parasite_flags (const Parasite *p)
+gimp_parasite_flags (const GimpParasite *parasite)
 {
-  if (p == NULL)
+  if (parasite == NULL)
     return 0;
-  return p->flags;
+
+  return parasite->flags;
 }
 
 gboolean
-parasite_is_persistent (const Parasite *p)
+gimp_parasite_is_persistent (const GimpParasite *parasite)
 {
-  if (p == NULL)
+  if (parasite == NULL)
     return FALSE;
-  return (p->flags & PARASITE_PERSISTENT);
+
+  return (parasite->flags & GIMP_PARASITE_PERSISTENT);
 }
 
 gboolean
-parasite_is_undoable (const Parasite *p)
+gimp_parasite_is_undoable (const GimpParasite *parasite)
 {
-  if (p == NULL)
+  if (parasite == NULL)
     return FALSE;
-  return (p->flags & PARASITE_UNDOABLE);
+
+  return (parasite->flags & GIMP_PARASITE_UNDOABLE);
 }
 
 gboolean
-parasite_has_flag (const Parasite *p, 
-		   gulong          flag)
+gimp_parasite_has_flag (const GimpParasite *parasite, 
+			gulong              flag)
 {
-  if (p == NULL)
+  if (parasite == NULL)
     return FALSE;
-  return (p->flags & flag);
+
+  return (parasite->flags & flag);
 }
 
 const gchar *
-parasite_name (const Parasite *p)
+gimp_parasite_name (const GimpParasite *parasite)
 {
-  if (p)
-    return p->name;
+  if (parasite)
+    return parasite->name;
+
   return NULL;
 }
 
 void *
-parasite_data (const Parasite *p)
+gimp_parasite_data (const GimpParasite *parasite)
 {
-  if (p)
-    return p->data;
+  if (parasite)
+    return parasite->data;
+
   return NULL;
 }
 
 glong 
-parasite_data_size (const Parasite *p)
+gimp_parasite_data_size (const GimpParasite *parasite)
 {
-  if (p)
-    return p->size;
+  if (parasite)
+    return parasite->size;
+
   return 0;
 }
-
-
-

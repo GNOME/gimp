@@ -45,36 +45,36 @@ struct _ContrastContext
   GFunc    cancel_func;
   gpointer cancel_data;
 
-  double  contrast;
-  guchar *lookup;
+  gdouble  contrast;
+  guchar  *lookup;
 
   GtkWidget *shell;
   GtkWidget *spinner;
 };
 
-static gpointer   contrast_new                       (int           type);
-static gpointer   contrast_clone                     (gpointer      cd_ID);
-static void       contrast_create_lookup_table       (ContrastContext *context);
-static void       contrast_destroy                   (gpointer      cd_ID);
-static void       contrast_convert                   (gpointer      cd_ID,
-						      guchar       *buf,
-						      int           w,
-						      int           h,
-						      int           bpp,
-						      int           bpl);
-static void       contrast_load                      (gpointer      cd_ID,
-						      Parasite     *state);
-static Parasite * contrast_save                      (gpointer      cd_ID);
-static void       contrast_configure_ok_callback     (GtkWidget    *widget,
-						      gpointer      data);
-static void       contrast_configure_cancel_callback (GtkWidget    *widget,
-						      gpointer      data);
-static void       contrast_configure                 (gpointer      cd_ID,
-						      GFunc         ok_func,
-						      gpointer      ok_data,
-						      GFunc         cancel_func,
-						      gpointer      cancel_data);
-static void       contrast_configure_cancel          (gpointer      cd_ID);
+static gpointer       contrast_new                   (gint             type);
+static gpointer       contrast_clone                 (gpointer         cd_ID);
+static void           contrast_create_lookup_table   (ContrastContext *context);
+static void           contrast_destroy               (gpointer         cd_ID);
+static void           contrast_convert               (gpointer         cd_ID,
+						      guchar          *buf,
+						      gint             w,
+						      gint             h,
+						      gint             bpp,
+						      gint             bpl);
+static void           contrast_load                  (gpointer         cd_ID,
+						      GimpParasite    *state);
+static GimpParasite * contrast_save                  (gpointer         cd_ID);
+static void           contrast_configure_ok_callback (GtkWidget       *widget,
+						      gpointer         data);
+static void       contrast_configure_cancel_callback (GtkWidget       *widget,
+						      gpointer         data);
+static void           contrast_configure             (gpointer         cd_ID,
+						      GFunc            ok_func,
+						      gpointer         ok_data,
+						      GFunc            cancel_func,
+						      gpointer         cancel_data);
+static void           contrast_configure_cancel      (gpointer         cd_ID);
 
 static GimpColorDisplayMethods methods = 
 {
@@ -117,9 +117,9 @@ module_init (GimpModuleInfo **inforet)
 }
 
 G_MODULE_EXPORT void
-module_unload (void *shutdown_data,
-	       void (*completed_cb)(void *),
-	       void *completed_data)
+module_unload (void  *shutdown_data,
+	       void (*completed_cb) (void *),
+	       void  *completed_data)
 {
 #ifndef __EMX__
   gimp_color_display_unregister (COLOR_DISPLAY_NAME);
@@ -152,7 +152,7 @@ contrast_clone (gpointer cd_ID)
   context = contrast_new (0);
   context->contrast = src_context->contrast;
   
-  memcpy (context->lookup, src_context->lookup, sizeof(guchar) * 256);
+  memcpy (context->lookup, src_context->lookup, sizeof (guchar) * 256);
 
   return context;
 }
@@ -225,32 +225,32 @@ contrast_convert (gpointer  cd_ID,
 }
 
 static void
-contrast_load (gpointer  cd_ID,
-	       Parasite *state)
+contrast_load (gpointer      cd_ID,
+	       GimpParasite *state)
 {
   ContrastContext *context = cd_ID;
 
 #if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&context->contrast, parasite_data (state), sizeof (double));
+  memcpy (&context->contrast, gimp_parasite_data (state), sizeof (gdouble));
 #else
-  guint32 buf[2], *data = parasite_data (state);
+  guint32 buf[2], *data = gimp_parasite_data (state);
 
   buf[0] = g_ntohl (data[1]);
   buf[1] = g_ntohl (data[0]);
 
-  memcpy (&context->contrast, buf, sizeof (double));
+  memcpy (&context->contrast, buf, sizeof (gdouble));
 #endif
 
   contrast_create_lookup_table (context);
 }
 
-static Parasite *
+static GimpParasite *
 contrast_save (gpointer cd_ID)
 {
   ContrastContext *context = cd_ID;
   guint32 buf[2];
 
-  memcpy (buf, &context->contrast, sizeof (double));
+  memcpy (buf, &context->contrast, sizeof (gdouble));
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
   {
@@ -260,8 +260,8 @@ contrast_save (gpointer cd_ID)
   }
 #endif
 
-  return parasite_new ("Display/Contrast", PARASITE_PERSISTENT,
-		       sizeof (double), &buf);
+  return gimp_parasite_new ("Display/Contrast", GIMP_PARASITE_PERSISTENT,
+			    sizeof (gdouble), &buf);
 }
 
 static void

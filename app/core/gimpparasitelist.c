@@ -14,15 +14,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <string.h>
 
 #include "gimpobjectP.h"
 #include "gimpobject.h"
 #include "gimpsignal.h"
 #include "parasitelistP.h"
+
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h"
+
 
 enum
 {
@@ -33,21 +34,23 @@ enum
 
 static guint parasite_list_signals[LAST_SIGNAL];
 
-static void parasite_list_destroy    (GtkObject* list);
-static void parasite_list_init       (ParasiteList* list);
+static void parasite_list_destroy    (GtkObject         *list);
+static void parasite_list_init       (ParasiteList      *list);
 static void parasite_list_class_init (ParasiteListClass *klass);
-static int  free_a_parasite          (void *key, void *parasite, void *unused);
+static int  free_a_parasite          (void              *key,
+				      void              *parasite,
+				      void              *unused);
 
 static void
-parasite_list_init (ParasiteList* list)
+parasite_list_init (ParasiteList *list)
 {
-  list->table=NULL;
+  list->table = NULL;
 }
 
 static void
 parasite_list_class_init (ParasiteListClass *klass)
 {
-  GtkObjectClass *class = GTK_OBJECT_CLASS(klass);
+  GtkObjectClass *class = GTK_OBJECT_CLASS (klass);
   GtkType type = class->type;
 
   class->destroy = parasite_list_destroy;
@@ -56,6 +59,7 @@ parasite_list_class_init (ParasiteListClass *klass)
     gimp_signal_new ("add",    GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
   parasite_list_signals[REMOVE] = 
     gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
+
   gtk_object_class_add_signals (class, parasite_list_signals, LAST_SIGNAL);
 }
 
@@ -82,7 +86,7 @@ parasite_list_get_type (void)
   return type;
 }
 
-ParasiteList*
+ParasiteList *
 parasite_list_new (void)
 {
   ParasiteList *list = gtk_type_new (GIMP_TYPE_PARASITE_LIST);
@@ -90,12 +94,12 @@ parasite_list_new (void)
   return list;
 }
 
-static int
+static gint
 free_a_parasite (void *key, 
 		 void *parasite, 
 		 void *unused)
 {
-  parasite_free ((Parasite *)parasite);
+  gimp_parasite_free ((GimpParasite *) parasite);
   return TRUE;
 }
 
@@ -107,7 +111,7 @@ parasite_list_destroy (GtkObject *obj)
   g_return_if_fail (obj != NULL);
   g_return_if_fail (GIMP_IS_PARASITE_LIST(obj));
 
-  list = (ParasiteList *)obj;
+  list = (ParasiteList *) obj;
 
   if (list->table)
     {
@@ -121,12 +125,13 @@ parasite_copy_one (void *key,
 		   void *p, 
 		   void *data)
 {
-  ParasiteList *list = (ParasiteList*)data;
-  Parasite *parasite = (Parasite*)p;
+  ParasiteList *list = (ParasiteList *) data;
+  GimpParasite *parasite = (GimpParasite *) p;
+
   parasite_list_add (list, parasite);
 }
 
-ParasiteList*
+ParasiteList *
 parasite_list_copy (const ParasiteList *list)
 {
   ParasiteList *newlist;
@@ -140,7 +145,7 @@ parasite_list_copy (const ParasiteList *list)
 
 void
 parasite_list_add (ParasiteList *list, 
-		   Parasite     *p)
+		   GimpParasite *p)
 {
   g_return_if_fail (list != NULL);
 
@@ -151,27 +156,27 @@ parasite_list_add (ParasiteList *list,
   g_return_if_fail (p->name != NULL);
 
   parasite_list_remove (list, p->name);
-  p = parasite_copy (p);
+  p = gimp_parasite_copy (p);
   g_hash_table_insert (list->table, p->name, p);
   gtk_signal_emit (GTK_OBJECT(list), parasite_list_signals[ADD], p);
 }
 
 void
 parasite_list_remove (ParasiteList *list, 
-		      const char   *name)
+		      const gchar  *name)
 {
-  Parasite *p;
+  GimpParasite *p;
 
   g_return_if_fail (list != NULL);
 
   if (list->table)
     {
-      p = parasite_list_find(list, name);
+      p = parasite_list_find (list, name);
       if (p)
 	{
 	  g_hash_table_remove (list->table, name);
-	  gtk_signal_emit (GTK_OBJECT(list), parasite_list_signals[REMOVE], p);
-	  parasite_free (p);
+	  gtk_signal_emit (GTK_OBJECT (list), parasite_list_signals[REMOVE], p);
+	  gimp_parasite_free (p);
 	}
     }
 }
@@ -187,25 +192,26 @@ parasite_list_length (ParasiteList *list)
 }
 
 static void 
-ppcount_func (char     *key, 
-	      Parasite *p, 
-	      int      *count)
+ppcount_func (gchar        *key, 
+	      GimpParasite *p, 
+	      gint         *count)
 {
-  if (parasite_is_persistent (p))
+  if (gimp_parasite_is_persistent (p))
     *count = *count + 1;
 }
 
 gint
 parasite_list_persistent_length (ParasiteList *list)
 {
-  int ppcount = 0;
+  gint ppcount = 0;
 
   g_return_val_if_fail (list != NULL, 0);
 
   if (!list->table)
     return 0;
 
-  parasite_list_foreach (list, (GHFunc)ppcount_func, &ppcount);
+  parasite_list_foreach (list, (GHFunc) ppcount_func, &ppcount);
+
   return ppcount;
 }
 
@@ -222,20 +228,20 @@ parasite_list_foreach (ParasiteList *list,
   g_hash_table_foreach (list->table, function, user_data);
 }
 
-Parasite *
+GimpParasite *
 parasite_list_find (ParasiteList *list, 
-		    const char   *name)
+		    const gchar  *name)
 {
   g_return_val_if_fail (list != NULL, NULL);
 
   if (list->table)
-    return (Parasite *)g_hash_table_lookup (list->table, name);
+    return (GimpParasite *) g_hash_table_lookup (list->table, name);
   else
     return NULL;
 }
 
 void
-parasite_shift_parent (Parasite *p)
+parasite_shift_parent (GimpParasite *p)
 {
   if (p == NULL)
     return;

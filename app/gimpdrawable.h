@@ -69,10 +69,11 @@ void 		 gimp_drawable_set_name	          (GimpDrawable *, gchar *);
 guchar *         gimp_drawable_get_color_at       (GimpDrawable *,
 						   gint x, gint y);
 
-void             gimp_drawable_parasite_attach    (GimpDrawable *, Parasite *);
+void             gimp_drawable_parasite_attach    (GimpDrawable *,
+						   GimpParasite *);
 void             gimp_drawable_parasite_detach    (GimpDrawable *,
 						   const gchar *);
-Parasite *       gimp_drawable_parasite_find      (const GimpDrawable *,
+GimpParasite *   gimp_drawable_parasite_find      (const GimpDrawable *,
 						   const gchar *);
 gchar **         gimp_drawable_parasite_list      (GimpDrawable *drawable,
                                                    gint *count);

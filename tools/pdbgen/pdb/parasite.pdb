@@ -49,8 +49,16 @@ sub convert_proc {
 
     unshift @inargs, $arg;
 
+    # ugly double substitution
+    # gimp_parasite_copy -> GIMP_parasite_copy -> gimp_parasite_copy
+    # because of a lack op perl knowledge :)  --Mitch
+
+    $invoke{code} =~ s/gimp_parasite_copy/GIMP_parasite_copy/e;
+
     $invoke{code} =~ s/gimp/"gimp_$type"/e;
     $invoke{code} =~ s/\(((?!gimp).*?(?:parasite|name))/"($var, $1"/e;
+
+    $invoke{code} =~ s/GIMP_parasite_copy/gimp_parasite_copy/e;
 }
 
 # The defs
@@ -80,7 +88,7 @@ sub parasite_new {
   if (size > 0 && data == NULL)
     success = FALSE;
   else
-    success = (parasite = parasite_new (name, flags, size, data)) != NULL;
+    success = (parasite = gimp_parasite_new (name, flags, size, data)) != NULL;
 }
 CODE
     );
@@ -102,7 +110,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  parasite = parasite_copy (gimp_parasite_find (name));
+  parasite = gimp_parasite_copy (gimp_parasite_find (name));
   success = parasite != NULL;
 }
 CODE
@@ -177,9 +185,9 @@ gimp_parasite_attach_new (gchar    *name,
 			  gint      size,
 			  gpointer  data)
 {
-  Parasite *p = parasite_new (name, flags, size, data);
+  GimpParasite *p = gimp_parasite_new (name, flags, size, data);
   gimp_parasite_attach (p);
-  parasite_free (p);
+  gimp_parasite_free (p);
 }
 
 CODE

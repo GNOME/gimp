@@ -1355,7 +1355,7 @@ _gp_params_write (GIOChannel *channel,
 
         case PARAM_PARASITE:
 	  {
-	    Parasite *p = (Parasite *)&params[i].data.d_parasite;
+	    GimpParasite *p = (GimpParasite *) &params[i].data.d_parasite;
 	    if (p->name == NULL)
 	      {
 		/* write a null string to signifly a null parasite */
