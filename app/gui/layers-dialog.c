@@ -1022,9 +1022,6 @@ layers_dialog_set_menu_sensitivity (void)
   SET_SENSITIVE ("New Layer...", gimage);
   SET_OPS_SENSITIVE (0, gimage);
 
-  SET_SENSITIVE ("Stack/Previous Layer", fs && ac && gimage && lp && prev);
-  SET_SENSITIVE ("Stack/Next Layer", fs && ac && gimage && lp && next);
-
   SET_SENSITIVE ("Stack/Raise Layer",
 		 fs && ac && gimage && lp && alpha && prev);
   SET_OPS_SENSITIVE (1, fs && ac && gimage && lp && alpha && prev);

@@ -1,3 +1,18 @@
+Wed Dec 29 17:47:05 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/fileops.c
+	* app/transform_tool.c: tweaks to the dialog layout 
+
+	* app/layers_dialog.c
+	* app/menus.c: changed the Stack menu keybindings back to the
+	ones we used in 1.0 and that we still use in the Channels dialog.
+	Binding the functions to PageUp/PageDown didn't always work since
+	the List also grabs those keys resulting to different behaviour
+	whether the layer list has the focus or not.
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c: i18n issues
+
 Wed Dec 29 11:10:22 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/shear_tool.c: 

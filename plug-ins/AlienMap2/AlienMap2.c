@@ -1116,11 +1116,11 @@ alienmap2_logo_dialog()
       
       xhbox = gtk_hbox_new(FALSE, 5);
       gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = _("\nMartin Weber\n"
+      text = "\nMartin Weber\n"
 	"martin.weber@usa.net\n"
 	"http://diverse.freepage.de/martin.weber\n\n"
 	"AlienMap2 Plug-In for the GIMP\n"
-	"Version 1.0\n");
+	"Version 1.0\n";
       xlabel = gtk_label_new(text);
       gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
       gtk_widget_show(xlabel);

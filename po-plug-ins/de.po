@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-12-28 23:14+0100\n"
-"PO-Revision-Date: 1999-12-28 23:20+0100\n"
+"Project-Id-Version: GIMP 1.1.14\n"
+"POT-Creation-Date: 1999-12-29 17:39+0100\n"
+"PO-Revision-Date: 1999-12-29 17:45+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -238,7 +238,7 @@ msgstr "Abbrechen"
 
 #: plug-ins/AlienMap/AlienMap.c:878 plug-ins/AlienMap2/AlienMap2.c:801
 msgid "Reject any changes and close plug-in"
-msgstr "Alle Änderungen verwerfen und Plug-In beenden"
+msgstr "Alle Änderungen verwerfen und Plugin beenden"
 
 #: plug-ins/AlienMap/AlienMap.c:880 plug-ins/AlienMap2/AlienMap2.c:803
 #: plug-ins/gimpressionist/gimpressionist.c:506
@@ -256,20 +256,6 @@ msgstr "Über Alien Map"
 #: plug-ins/AlienMap/AlienMap.c:1172 plug-ins/AlienMap2/AlienMap2.c:1077
 msgid "This closes the information box"
 msgstr "Schliesst die Infobox"
-
-#: plug-ins/AlienMap/AlienMap.c:1214
-msgid ""
-"\n"
-"Cotting Software Productions\n"
-"Bahnhofstrasse 31\n"
-"CH-3066 Stettlen (Switzerland)\n"
-"\n"
-"cotting@mygale.org\n"
-"http://www.mygale.org/~cotting\n"
-"\n"
-"AlienMap Plug-In for the GIMP\n"
-"Version 1.01\n"
-msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:212
 msgid "AlienMap2 Color Transformation Plug-In"
@@ -387,17 +373,6 @@ msgstr "Benutze Funktion für blauen Kanal / Helligkeit"
 #: plug-ins/AlienMap2/AlienMap2.c:1056
 msgid "About Alien Map 2"
 msgstr "Über Alien Map 2"
-
-#: plug-ins/AlienMap2/AlienMap2.c:1119
-msgid ""
-"\n"
-"Martin Weber\n"
-"martin.weber@usa.net\n"
-"http://diverse.freepage.de/martin.weber\n"
-"\n"
-"AlienMap2 Plug-In for the GIMP\n"
-"Version 1.0\n"
-msgstr ""
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
@@ -872,7 +847,7 @@ msgstr "Lädt Dateien im KISS CEL Format"
 
 #: plug-ins/common/CEL.c:97
 msgid "This plug-in loads individual KISS cell files."
-msgstr "Dieses Plug-in lädt Dateien im KISS CEL Format."
+msgstr "Dieses Plugin lädt Dateien im KISS CEL Format."
 
 #: plug-ins/common/CEL.c:106
 msgid "Saves files in KISS CEL file format"
@@ -880,7 +855,7 @@ msgstr "Speichert Dateien im KISS CEL Format"
 
 #: plug-ins/common/CEL.c:107
 msgid "This plug-in saves individual KISS cell files."
-msgstr "Dieses Plug-in speichert Dateien im KISS CEL Format."
+msgstr "Dieses Plugin speichert Dateien im KISS CEL Format."
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:156
@@ -1600,7 +1575,7 @@ msgstr "Frame %v von %u"
 #: plug-ins/common/animoptimize.c:130
 msgid ""
 "This plugin applies various optimizations to a GIMP layer-based animation."
-msgstr "Dieses plug-in optimiert eine Ebenen-basierte Animation."
+msgstr "Dieses Plugin optimiert eine Ebenen-basierte Animation."
 
 #: plug-ins/common/animoptimize.c:136
 msgid "<Image>/Filters/Animation/Animation Optimize"
@@ -1612,7 +1587,7 @@ msgid ""
 "AnimationOptimized.  This makes the animation much easier to work with if, "
 "for example, the optimized version is all you have."
 msgstr ""
-"Dieses plug-in 'vereinfacht' eine Ebenen-basierte Animation, die optimiert\n"
+"Dieses Plugin 'vereinfacht' eine Ebenen-basierte Animation, die optimiert\n"
 "wurde. Wenn Sie nur die optimierte Version haben, dann wird die Animation\n"
 "durch Anwenden dieses plug-ins viel einfacher zu handhaben."
 
@@ -1813,7 +1788,7 @@ msgstr "Einstellungen annehmen und Filter anwenden"
 
 #: plug-ins/common/blur.c:629
 msgid "Close plug-in without making any changes"
-msgstr "Plug-in schliessen ohne Änderungen zu machen"
+msgstr "Plugin schliessen ohne Änderungen zu machen"
 
 #.
 #. *  Randomization seed initialization controls
@@ -3866,10 +3841,9 @@ msgid "saves files in the hrz file format"
 msgstr "Speichert Datei im .hrz Format"
 
 #: plug-ins/common/hrz.c:169
-#, fuzzy
 msgid "HRZ saving handles all image types except those with alpha channels."
 msgstr ""
-"Das HRZ-Format kann alle Bildtypen speichern, ausser solche mit Alpha-Kanal."
+"Das HRZ-Format kann alle Bildtypen speichern, außer solche mit Alpha-Kanal."
 
 #: plug-ins/common/hrz.c:526
 msgid "Save as HRZ"
@@ -4047,7 +4021,7 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:2501
 msgid "Jigsaw Style"
-msgstr ""
+msgstr "Puzzle Stil"
 
 #: plug-ins/common/jigsaw.c:2510
 msgid "Square"
@@ -4142,7 +4116,7 @@ msgstr "Progressiv"
 
 #: plug-ins/common/jpeg.c:1709
 msgid "Force baseline JPEG (readable by all decoders)"
-msgstr "Erzwinge \"baseline JPEG\" (alle decoder können das lesen)"
+msgstr "Erzwinge \"baseline JPEG\" (alle Decoder können das lesen)"
 
 #: plug-ins/common/jpeg.c:1727
 msgid "Subsampling"
@@ -4158,7 +4132,7 @@ msgstr "Ganzzahlen"
 
 #: plug-ins/common/jpeg.c:1740
 msgid "Floating-point"
-msgstr "Fliesskommazahlen"
+msgstr "Fließkommazahlen"
 
 #: plug-ins/common/jpeg.c:1744
 msgid "DCT method (speed/quality tradeoff)"
@@ -4275,7 +4249,7 @@ msgstr "<Image>/Datei/Verschicke Bild..."
 
 #: plug-ins/common/mail.c:490
 msgid "Send to mail"
-msgstr "Senden an Mail"
+msgstr "Senden als Mail"
 
 #. Filename label
 #: plug-ins/common/mail.c:630 plug-ins/imagemap/imap_settings.c:78
@@ -4575,7 +4549,7 @@ msgstr "Lädt Dateien im PNG-Format"
 #: plug-ins/common/png.c:157
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr ""
-"Dieses Plug-in lädt Dateien im \"Portable Network Graphics\" (PNG)-Format."
+"Dieses Plugin lädt Dateien im \"Portable Network Graphics\" (PNG)-Format."
 
 #: plug-ins/common/png.c:799
 msgid "Can't save image with alpha\n"
@@ -5074,7 +5048,7 @@ msgstr "Farbauswahl-Dialog"
 
 #: plug-ins/common/spheredesigner.c:2230
 msgid "Sphere Designer"
-msgstr ""
+msgstr "Kugel-Designer"
 
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/gimpressionist/preview.c:117
 #: plug-ins/gimpressionist/repaint.c:863 plug-ins/gimpressionist/repaint.c:865
@@ -5084,7 +5058,7 @@ msgstr "Neu zeichnen"
 
 #: plug-ins/common/spheredesigner.c:2263
 msgid "Textures"
-msgstr ""
+msgstr "Texturen"
 
 #: plug-ins/common/spheredesigner.c:2288
 #: plug-ins/gimpressionist/orientmap.c:531
@@ -5094,7 +5068,7 @@ msgstr "Hinzufügen"
 
 #: plug-ins/common/spheredesigner.c:2295
 msgid "Dup"
-msgstr ""
+msgstr "Duplizieren"
 
 #: plug-ins/common/spheredesigner.c:2302
 msgid "Del"
@@ -5102,7 +5076,7 @@ msgstr "Löschen"
 
 #: plug-ins/common/spheredesigner.c:2357
 msgid "Texture Properties"
-msgstr ""
+msgstr "Textureigenschaften"
 
 #: plug-ins/common/spheredesigner.c:2369
 #: plug-ins/gimpressionist/orientmap.c:580
@@ -5111,7 +5085,7 @@ msgstr "Typ:"
 
 #: plug-ins/common/spheredesigner.c:2376
 msgid "Texture:"
-msgstr ""
+msgstr "Textur:"
 
 #: plug-ins/common/spheredesigner.c:2383
 msgid "Colors:"
@@ -5123,7 +5097,7 @@ msgstr "Skalierung:"
 
 #: plug-ins/common/spheredesigner.c:2437
 msgid "Turbulence:"
-msgstr ""
+msgstr "Turbulenz:"
 
 #: plug-ins/common/spheredesigner.c:2454
 msgid "Scale X:"
@@ -5177,17 +5151,20 @@ msgstr "Rendere..."
 
 #: plug-ins/common/spheredesigner.c:2845
 msgid "Renders textures spheres"
-msgstr ""
+msgstr "Berechnet texturierte Kugeln"
 
 #: plug-ins/common/spheredesigner.c:2846
 msgid ""
 "This plugin can be used to create textured and/or bumpmapped spheres, and "
 "uses a small lightweight raytracer to perform the task with good quality"
 msgstr ""
+"Dieses Plugin kann verwendet werden, um texturierte oder gebumpmappteKugeln "
+"zu erstellen. Es benutzt einen kleinen, einfachen Raytracer umdiesen Zweck "
+"mit hoher Qualität zu erfüllen."
 
 #: plug-ins/common/spheredesigner.c:2850
 msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/Filter/Render/Kugeldesigner..."
+msgstr "<Image>/Filter/Render/Kugel-Designer..."
 
 #: plug-ins/common/threshold_alpha.c:196
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
@@ -5219,7 +5196,7 @@ msgid ""
 "watercolor paint, in some cases."
 msgstr ""
 "Verwischt ein Bild entlang Vektor-Pfaden, die aus dem Gradienten\n"
-"einer Separaten Kontrollmatrix errechnet werden. Das Result sieht\n"
+"einer separaten Kontrollmatrix errechnet werden. Das Result sieht\n"
 "in manchen Fällen dann so aus wie Pinselstriche mit Wasserfarben\n"
 "oder Akrylfarbe."
 
@@ -5229,7 +5206,7 @@ msgstr "<Image>/Filter/Abbilden/Warp..."
 
 #: plug-ins/common/warp.c:477
 msgid "Warp"
-msgstr "Verwinden"
+msgstr ""
 
 #. The main table
 #: plug-ins/common/warp.c:534
@@ -7519,7 +7496,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:337
 msgid "Dither Options"
-msgstr "Dithering Einstellungen"
+msgstr "Rasterung Einstellungen"
 
 #: plug-ins/gap/gap_range_ops.c:344
 msgid "Enable transparency"
@@ -7998,11 +7975,11 @@ msgstr "Relief:"
 
 #: plug-ins/gimpressionist/brush.c:453
 msgid "(None)"
-msgstr "Kein"
+msgstr "(Kein)"
 
 #: plug-ins/gimpressionist/brush.c:466
 msgid "Save..."
-msgstr "Speichern.."
+msgstr "Sichern..."
 
 #: plug-ins/gimpressionist/brush.c:480
 msgid "Specifies the aspect ratio of the brush"
@@ -9659,7 +9636,7 @@ msgstr "EPSON Stylus Photo EX"
 
 #: plug-ins/print/print.c:378
 msgid "This plug-in prints images from The GIMP."
-msgstr "Dieses plug-in druckt Bilder von GIMP aus."
+msgstr "Dieses Plugin druckt Bilder von GIMP aus."
 
 #: plug-ins/print/print.c:379
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
@@ -10084,7 +10061,7 @@ msgstr "Konvertiert eine Auswahl in einen Pfad"
 
 #: plug-ins/sel2path/sel2path.c:158
 msgid "<Image>/Select/To Path"
-msgstr "<Image>/Auswahl/Zu Pfad"
+msgstr "<Image>/Auswahl/In Pfad umwandeln"
 
 #: plug-ins/sel2path/sel2path.c:203
 msgid "No selection to convert"

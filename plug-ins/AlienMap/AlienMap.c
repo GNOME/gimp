@@ -1211,13 +1211,13 @@ alienmap_logo_dialog()
       
       xhbox = gtk_hbox_new(FALSE, 5);
       gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = _("\nCotting Software Productions\n"
+      text = "\nCotting Software Productions\n"
 	"Bahnhofstrasse 31\n"
 	"CH-3066 Stettlen (Switzerland)\n\n"
 	"cotting@mygale.org\n"
 	"http://www.mygale.org/~cotting\n\n"
 	"AlienMap Plug-In for the GIMP\n"
-	"Version 1.01\n");
+	"Version 1.01\n";
       xlabel = gtk_label_new(text);
       gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
       gtk_widget_show(xlabel);

@@ -229,7 +229,6 @@ file_open_callback (GtkWidget *widget,
 {
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *load_menu;
   GtkWidget *open_options_genbutton;
@@ -239,6 +238,9 @@ file_open_callback (GtkWidget *widget,
       fileload = gtk_file_selection_new (_("Load Image"));
       gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
+
+      gtk_container_set_border_width (GTK_CONTAINER (fileload), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (fileload)->button_area), 2);
 
       dialog_register_fileload (fileload);
 
@@ -283,7 +285,7 @@ file_open_callback (GtkWidget *widget,
       open_options = gtk_hbox_new (TRUE, 1);
 
       /* format-chooser frame */
-      frame = gtk_frame_new (_("Open Options"));
+      frame = gtk_frame_new (_("Determine file type"));
       {
 	gtk_frame_set_shadow_type (GTK_FRAME (frame),
 				   GTK_SHADOW_ETCHED_IN);
@@ -298,17 +300,13 @@ file_open_callback (GtkWidget *widget,
 	    gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
 	    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 	    
-	    label = gtk_label_new (_("Determine file type:"));
-	    gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
-	    gtk_widget_show (label);
-	    
 	    option_menu = gtk_option_menu_new ();
 	    gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, TRUE, 0);
 	    gtk_widget_show (option_menu);
 	    
 	    menus_get_load_menu (&load_menu, NULL);
 	    gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), load_menu);
-	    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 5);
+	    gtk_box_pack_start (GTK_BOX (open_options), frame, TRUE, TRUE, 4);
 	  }
 	  gtk_widget_show (hbox);
 	}
@@ -322,11 +320,11 @@ file_open_callback (GtkWidget *widget,
       {
 	gtk_frame_set_shadow_type (GTK_FRAME (frame),
 				   GTK_SHADOW_ETCHED_IN);
-	gtk_box_pack_end (GTK_BOX (open_options), frame, FALSE, TRUE, 5);
+	gtk_box_pack_end (GTK_BOX (open_options), frame, FALSE, TRUE, 4);
 	
 	vbox = gtk_vbox_new (FALSE, 1);
 	{
-	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 	  gtk_container_add (GTK_CONTAINER (frame), vbox);
 
 	  hbox = gtk_hbox_new (TRUE, 1);

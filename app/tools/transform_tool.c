@@ -290,43 +290,34 @@ transform_options_new (void)
 
   gtk_widget_show (vbox);
 
-  /*  the left vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 0, 1, 1, 2);
-
   /*  the smoothing toggle button  */
   options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
   gtk_signal_connect (GTK_OBJECT (options->smoothing_w), "toggled",
 		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
 		      &options->smoothing);
-  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), 
+			     options->smoothing_w, 0, 1, 1, 2);
   gtk_widget_show (options->smoothing_w);
+
+  /*  the showpath toggle button  */
+  options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
+  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
+		      GTK_SIGNAL_FUNC (transform_show_path_update),
+		      &options->showpath);
+  gtk_table_attach_defaults (GTK_TABLE (table), 
+			     options->showpath_w, 1, 2, 1, 2);
+  gtk_widget_show (options->showpath_w);
+
+  gtk_widget_show (table);
 
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
   gtk_signal_connect (GTK_OBJECT (options->clip_w), "toggled",
 		      GTK_SIGNAL_FUNC (tool_options_toggle_update),
 		      &options->clip);
-  gtk_box_pack_start (GTK_BOX (vbox), options->clip_w, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), 
+		      options->clip_w, FALSE, FALSE, 0);
   gtk_widget_show (options->clip_w);
-
-  gtk_widget_show (vbox);
-
-  /*  the right vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
-
-  /*  the show_path toggle button  */
-  options->showpath_w = gtk_check_button_new_with_label (_("Show Path"));
-  gtk_signal_connect (GTK_OBJECT (options->showpath_w), "toggled",
-		      GTK_SIGNAL_FUNC (transform_show_path_update),
-		      &options->showpath);
-  gtk_box_pack_start (GTK_BOX (vbox), options->showpath_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->showpath_w);
-
-  gtk_widget_show (vbox);
-
-  gtk_widget_show (table);
   
   return options;
 }
