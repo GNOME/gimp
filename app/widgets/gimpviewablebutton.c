@@ -40,12 +40,16 @@
 #include "gimp-intl.h"
 
 
-static void     gimp_viewable_button_class_init     (GimpViewableButtonClass *klass);
-static void     gimp_viewable_button_init           (GimpViewableButton      *button);
-static void     gimp_viewable_button_destroy        (GtkObject      *object);
-static gboolean gimp_viewable_button_scroll_event   (GtkWidget      *widget,
-                                                     GdkEventScroll *sevent);
-static void     gimp_viewable_button_clicked        (GtkButton      *button);
+static void     gimp_viewable_button_class_init   (GimpViewableButtonClass *klass);
+static void     gimp_viewable_button_init         (GimpViewableButton      *button);
+
+static void     gimp_viewable_button_destroy      (GtkObject          *object);
+static gboolean gimp_viewable_button_scroll_event (GtkWidget          *widget,
+                                                   GdkEventScroll     *sevent);
+static void     gimp_viewable_button_clicked      (GtkButton          *button);
+
+static void     gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
+                                                   GimpViewableButton *button);
 
 
 static GimpButtonClass *parent_class = NULL;
@@ -100,7 +104,9 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
 static void
 gimp_viewable_button_init (GimpViewableButton *button)
 {
-  button->view_type            = GIMP_VIEW_TYPE_LIST;
+  button->popup_view_type      = GIMP_VIEW_TYPE_LIST;
+  button->popup_preview_size   = GIMP_PREVIEW_SIZE_SMALL;
+
   button->preview_size         = GIMP_PREVIEW_SIZE_SMALL;
   button->preview_border_width = 1;
 }
@@ -108,9 +114,7 @@ gimp_viewable_button_init (GimpViewableButton *button)
 static void
 gimp_viewable_button_destroy (GtkObject *object)
 {
-  GimpViewableButton *button;
-
-  button = GIMP_VIEWABLE_BUTTON (object);
+  GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (object);
 
   if (button->dialog_identifier)
     {
@@ -137,11 +141,9 @@ static gboolean
 gimp_viewable_button_scroll_event (GtkWidget      *widget,
                                    GdkEventScroll *sevent)
 {
-  GimpViewableButton *button;
+  GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (widget);
   GimpObject         *object;
   gint                index;
-
-  button = GIMP_VIEWABLE_BUTTON (widget);
 
   object = gimp_context_get_by_type (button->context,
                                      button->container->children_type);
@@ -188,22 +190,40 @@ gimp_viewable_button_scroll_event (GtkWidget      *widget,
 static void
 gimp_viewable_button_clicked (GtkButton *button)
 {
-  GimpViewableButton *viewable_button;
+  GimpViewableButton *viewable_button = GIMP_VIEWABLE_BUTTON (button);
   GtkWidget          *popup;
-
-  viewable_button = GIMP_VIEWABLE_BUTTON (button);
 
   popup = gimp_container_popup_new (viewable_button->container,
                                     viewable_button->context,
-                                    viewable_button->view_type,
+                                    viewable_button->popup_view_type,
                                     viewable_button->preview_size,
+                                    viewable_button->popup_preview_size,
                                     viewable_button->preview_border_width,
                                     viewable_button->dialog_factory,
                                     viewable_button->dialog_identifier,
                                     viewable_button->dialog_stock_id,
                                     viewable_button->dialog_tooltip);
+
+  g_signal_connect (popup, "cancel",
+                    G_CALLBACK (gimp_viewable_button_popup_closed),
+                    button);
+  g_signal_connect (popup, "confirm",
+                    G_CALLBACK (gimp_viewable_button_popup_closed),
+                    button);
+
   gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), GTK_WIDGET (button));
 }
+
+static void
+gimp_viewable_button_popup_closed (GimpContainerPopup *popup,
+                                   GimpViewableButton *button)
+{
+  button->popup_view_type    = popup->view_type;
+  button->popup_preview_size = popup->preview_size;
+}
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_viewable_button_new (GimpContainer     *container,
@@ -239,6 +259,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   button->container = container;
   button->context   = context;
 
+  button->popup_preview_size   = preview_size;
   button->preview_size         = preview_size;
   button->preview_border_width = preview_border_width;
 
@@ -253,7 +274,7 @@ gimp_viewable_button_new (GimpContainer     *container,
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
   button->preview = gimp_prop_preview_new (G_OBJECT (context), prop_name,
-                                           preview_size);
+                                           button->preview_size);
   gtk_container_add (GTK_CONTAINER (button), button->preview);
   gtk_widget_show (button->preview);
 
@@ -266,5 +287,5 @@ gimp_viewable_button_set_view_type (GimpViewableButton *button,
 {
   g_return_if_fail (GIMP_IS_VIEWABLE_BUTTON (button));
 
-  button->view_type = view_type;
+  button->popup_view_type = view_type;
 }

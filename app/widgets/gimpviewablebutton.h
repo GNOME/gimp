@@ -43,7 +43,9 @@ struct _GimpViewableButton
   GimpContainer     *container;
   GimpContext       *context;
 
-  GimpViewType       view_type;
+  GimpViewType       popup_view_type;
+  GimpViewType       popup_preview_size;
+
   gint               preview_size;
   gint               preview_border_width;
 
