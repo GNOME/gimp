@@ -126,18 +126,17 @@ main (int argc, char **argv)
 	  (strcmp (argv[i], "-n") == 0))
 	{
 	  no_interface = TRUE;
-	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--batch") == 0) ||
 	       (strcmp (argv[i], "-b") == 0))
 	{
-	  argv[i] = NULL;
-	  for (j = 0, i++ ; i < argc; j++, i++)
-	    {
+	  for (j = 0, i++ ; i < argc && argv[i][0] != '-'; j++, i++)
 	      batch_cmds[j] = argv[i];
-	      argv[i] = NULL;
-	    }
 	  batch_cmds[j] = NULL;
+	  if (batch_cmds[0] == NULL)	/* We need at least one batch command */
+		 show_help = TRUE;
+	  if (argv[i-1][0] != '-')		/* Did loop end due to a new argument? */
+		 --i;						/* Ensure new argument gets processed */
 	}
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))

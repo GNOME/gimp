@@ -56,6 +56,7 @@
 #define WHITE_FILL       1
 #define TRANSPARENT_FILL 2
 #define NO_FILL          3
+#define FOREGROUND_FILL  4
 
 #define COLORMAP_SIZE    768
 

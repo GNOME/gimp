@@ -2307,6 +2307,9 @@ gimage_remove_layer_mask (GImage *gimage, Layer *layer, int mode)
       gdisplays_update_area (gimage->ID, off_x, off_y,
 			     drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
     }
+
+  drawable_update (GIMP_DRAWABLE(layer), 0, 0, drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
+
   gdisplays_flush ();
 
   return NULL;

@@ -205,6 +205,10 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
     case NO_FILL:
       return;
       break;
+    case FOREGROUND_FILL:
+      palette_get_foreground (&r, &g, &b);
+      a = 255;
+      break;
     }
 
   switch (drawable_type (drawable))

@@ -1,3 +1,12 @@
+Tue Jul  7 23:50:23 EST 1998 Kevin Cozens <kcozens@interlog.com>
+
+	* Force a redraw of the image after applying a layer mask
+
+Tue Jul  7 13:52:23 EST 1998 Kevin Cozens <kcozens@interlog.com>
+
+	* Dialog boxes for creating a new image or a new layer now include
+	foreground as a fill type option.
+
 Mon Jul  6 5:12:00 CST  1998 Seth Burgess <sjburges@gimp.org>
         
         * plug-ins/gbr/gbr.c: added gbr version 1 support
@@ -16,6 +25,13 @@ Sat Jul  4 16:58:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
         * app/tile_swap.c: made the g_message errors a little smarter instead
         of popping up a ton of dialogs
+
+Fri Jul  3 02:15:45 EST 1998 Kevin Cozens <kcozens@interlog.com>
+
+	* Fixed a bug in the command line parsing that caused GIMP to crash
+	on startup if there were more arguments following a -b argument
+	and a list of batch commands. Also eliminated setting of command
+	line arguments to NULL as there seemed to be no reason for this.
 
 Wed Jul  1 14:13:45 PDT 1998 Manish Singh <yosh@gimp.org>
 
