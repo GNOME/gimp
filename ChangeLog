@@ -1,3 +1,7 @@
+2003-08-14  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.def: Add gimp_image_is_dirty.
+
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/plugindetails.c (get_plugin_info): convert the

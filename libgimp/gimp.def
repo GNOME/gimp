@@ -166,6 +166,7 @@ EXPORTS
 	gimp_image_get_thumbnail_data
 	gimp_image_get_unit
 	gimp_image_height
+	gimp_image_is_dirty
 	gimp_image_list
 	gimp_image_lower_channel
 	gimp_image_lower_layer
