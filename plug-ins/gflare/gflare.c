@@ -477,7 +477,9 @@ static void             gradient_menu_rescan  (void);
 static GradientMenu   * gradient_menu_new     (GradientMenuCallback callback,
 					       gpointer  callback_data,
 					       gchar    *default_gradient_name);
+/*
 static void             gradient_menu_destroy (GradientMenu *gm);
+*/
 static void             gradient_name_copy    (gchar  *dest,
 					       gchar  *src);
 static void             gradient_name_encode  (guchar *dest,
@@ -491,12 +493,6 @@ static void             gradient_get_values   (gchar  *gradient_name,
 					       guchar *values,
 					       gint    nvalues);
 static void             gradient_cache_flush  (void);
-
-static GtkWidget * query_string_box (gchar     *title,
-				     gchar     *message,
-				     gchar     *initial,
-				     QueryFunc  callback,
-				     gpointer   data);
 
 /* *** INSERT-FILE-END *** */
 
@@ -686,22 +682,36 @@ static void dlg_make_page_settings      (GFlareDialog *dlg, GtkWidget *notebook)
 static void dlg_position_entry_callback (GtkWidget *widget, gpointer data);
 static void dlg_update_preview_callback (GtkWidget *widget, gpointer data);
 static void dlg_make_page_selector      (GFlareDialog *dlg, GtkWidget *notebook);
-static void dlg_selector_setup_listbox  (void);
-static void dlg_selector_insert             (GFlare *gflare,
-					     int pos, int select);
-static void dlg_selector_list_item_callback (GtkWidget *widget, gpointer data);
-static void dlg_selector_new_callback       (GtkWidget *widget, gpointer data);
+
+static void dlg_selector_setup_listbox      (void);
+static void dlg_selector_insert             (GFlare    *gflare,
+					     gint       pos,
+					     gint       select);
+static void dlg_selector_list_item_callback (GtkWidget *widget,
+					     gpointer   data);
+
+static void dlg_selector_new_callback       (GtkWidget *widget,
+					     gpointer   data);
 static void dlg_selector_new_ok_callback    (GtkWidget *widget,
-					     gpointer client_data,
-					     gpointer call_data);
-static void dlg_selector_edit_callback      (GtkWidget *widget, gpointer data);
-static void dlg_selector_edit_done_callback (gint updated, gpointer data);
-static void dlg_selector_copy_callback      (GtkWidget *widget, gpointer data);
+					     gchar     *new_name,
+					     gpointer   data);
+
+static void dlg_selector_edit_callback      (GtkWidget *widget,
+					     gpointer   data);
+static void dlg_selector_edit_done_callback (gint       updated,
+					     gpointer   data);
+
+static void dlg_selector_copy_callback      (GtkWidget *widget,
+					     gpointer   data);
 static void dlg_selector_copy_ok_callback   (GtkWidget *widget,
-					     gpointer client_data, gpointer call_data);
-static void dlg_selector_delete_callback    (GtkWidget *widget, gpointer data);
-static void dlg_selector_delete_ok_callback (GtkWidget *widget, gpointer data);
-static void dlg_selector_delete_cancel_callback (GtkWidget *widget, gpointer data);
+					     gchar     *copy_name,
+					     gpointer   data);
+
+static void dlg_selector_delete_callback    (GtkWidget *widget,
+					     gpointer   data);
+static void dlg_selector_do_delete_callback (GtkWidget *widget,
+					     gboolean   delete,
+					     gpointer   data);
 
 static void ed_run                (GFlare *target_gflare,
 				   GFlareEditorCallback callback,
@@ -758,11 +768,6 @@ static void gradient_get_values_real_external   (gchar *gradient_name,
 						 guchar *values, gint nvalues);
 static GradientCacheItem *gradient_cache_lookup (gchar *name, gint *found);
 static void gradient_cache_zorch            (void);
-
-static void query_box_cancel_callback (GtkWidget *widget,
-				       gpointer   data);
-static void query_box_ok_callback     (GtkWidget *widget,
-				       gpointer   data);
 
 /* *** INSERT-FILE-END *** */
 
@@ -3249,18 +3254,23 @@ static void
 dlg_selector_new_callback (GtkWidget *widget,
 			   gpointer data)
 {
-  query_string_box (_("New GFlare"),
-		     _("Enter a Name for the New GFlare:"),
-		     _("untitled"),
-		     dlg_selector_new_ok_callback, dlg);
+  GtkWidget *query_box;
+
+  query_box = gimp_query_string_box (_("New GFlare"),
+				     gimp_plugin_help_func,
+				     "filters/gflare.html",
+				     _("Enter a Name for the New GFlare:"),
+				     _("untitled"),
+				     NULL, NULL,
+				     dlg_selector_new_ok_callback, dlg);
+  gtk_widget_show (query_box);
 }
 
 static void
 dlg_selector_new_ok_callback (GtkWidget *widget,
-			      gpointer   client_data,
-			      gpointer   call_data)
+			      gchar     *new_name,
+			      gpointer   data)
 {
-  gchar  *new_name = call_data;
   GFlare *gflare;
   gint    pos;
 
@@ -3268,7 +3278,7 @@ dlg_selector_new_ok_callback (GtkWidget *widget,
 
   if (gflares_list_lookup (new_name))
     {
-      g_warning (_("The name `%s' is used already!"), new_name);
+      g_message (_("The name `%s' is used already!"), new_name);
       return;
     }
 
@@ -3282,7 +3292,7 @@ dlg_selector_new_ok_callback (GtkWidget *widget,
 }
 
 /*
- *	"Edit" button in Selector page
+ *  "Edit" button in Selector page
  */
 static void
 dlg_selector_edit_callback (GtkWidget *widget,
@@ -3306,30 +3316,34 @@ dlg_selector_edit_done_callback (gint     updated,
 }
 
 /*
- *	"Copy" button in Selector page
+ *  "Copy" button in Selector page
  */
 static void
 dlg_selector_copy_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  gchar *name;
+  GtkWidget *query_box;
+  gchar     *name;
 
   name = g_strdup_printf ("%s copy", dlg->gflare->name);
 
-  query_string_box (_("Copy GFlare"),
-		     _("Enter a Name for the Copied GFlare:"),
-		     name,
-		     dlg_selector_copy_ok_callback, dlg);
-
+  query_box = gimp_query_string_box (_("Copy GFlare"),
+				     gimp_plugin_help_func,
+				     "filters/gflare.html",
+				     _("Enter a Name for the Copied GFlare:"),
+				     name,
+				     NULL, NULL,
+				     dlg_selector_copy_ok_callback, dlg);
   g_free (name);
+
+  gtk_widget_show (query_box);
 }
 
 static void
 dlg_selector_copy_ok_callback (GtkWidget *widget,
-			       gpointer   client_data,
-			       gpointer   call_data)
+			       gchar     *copy_name,
+			       gpointer   data)
 {
-  gchar  *copy_name = call_data;
   GFlare *gflare;
   gint    pos;
 
@@ -3359,61 +3373,47 @@ dlg_selector_delete_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *label;
   gchar	    *str;
 
   if (num_gflares <= 1)
     {
-      /* message_box () */
-      g_warning (_("Cannot delete!! There must be at least one GFlare."));
+      g_message (_("Cannot delete!! There must be at least one GFlare."));
       return;
     }
 
-  dialog = gimp_dialog_new (_("Delete GFlare"), "gflare",
-			    gimp_plugin_help_func, "filters/gflare.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
+  gtk_widget_set_sensitive (dlg->shell, FALSE);
 
-			    _("Delete"), dlg_selector_delete_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
-			    _("Cancel"), dlg_selector_delete_cancel_callback,
-			    NULL, NULL, NULL, FALSE, TRUE,
+  str = g_strdup_printf (_("Are you sure you want to delete\n"
+			   "\"%s\" from the list and from disk?"),
+			 dlg->gflare->name);
 
-			    NULL);
+  dialog = gimp_query_boolean_box (_("Delete GFlare"),
+				   gimp_plugin_help_func,
+				   "filters/gflare.html",
+				   str,
+				   _("Delete"), _("Cancel"),
+				   NULL, NULL,
+				   dlg_selector_do_delete_callback,
+				   NULL);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  /* Question */
-
-  str = g_strdup_printf(_("Are you sure you want to delete "
-			  "\"%s\" from the list and from disk?"),
-			dlg->gflare->name);
-  label = gtk_label_new (str);
   g_free (str);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   gtk_widget_show (dialog);
-
-  gtk_widget_set_sensitive (dlg->shell, FALSE);
 }
 
 static void
-dlg_selector_delete_ok_callback (GtkWidget *widget,
+dlg_selector_do_delete_callback (GtkWidget *widget,
+				 gboolean   delete,
 				 gpointer   data)
 {
   GFlare *old_gflare;
   GList  *tmp;
   gint    i, new_i;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
   gtk_widget_set_sensitive (dlg->shell, TRUE);
+
+  if (!delete)
+    return;
 
   i = gflares_list_index (dlg->gflare);
 
@@ -3442,15 +3442,9 @@ dlg_selector_delete_ok_callback (GtkWidget *widget,
       dlg_preview_update ();
     }
   else
-    g_warning (_("not found %s in gflares_list"), dlg->gflare->name);
-}
-
-static void
-dlg_selector_delete_cancel_callback (GtkWidget *widget,
-				     gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-  gtk_widget_set_sensitive (dlg->shell, TRUE);
+    {
+      g_warning (_("not found %s in gflares_list"), dlg->gflare->name);
+    }
 }
 
 /*************************************************************************/
@@ -4706,19 +4700,21 @@ gradient_menu_new (GradientMenuCallback callback,
   return gm;
 }
 
-void
+/*
+static void
 gradient_menu_destroy (GradientMenu *gm)
 {
   gtk_widget_destroy (gm->preview);
-  gtk_widget_destroy (gm->option_menu);	  /* gm is removed from gradient_menus too */
+  gtk_widget_destroy (gm->option_menu);
 
   g_free (gm);
 }
+*/
 
 /* Local Functions */
 
 static void
-gm_gradient_get_list ()
+gm_gradient_get_list (void)
 {
   int	i;
 
@@ -4738,7 +4734,8 @@ gm_gradient_get_list ()
  */
 
 static GtkWidget *
-gm_menu_new (GradientMenu *gm, gchar *default_gradient_name)
+gm_menu_new (GradientMenu *gm,
+	     gchar        *default_gradient_name)
 {
   GtkWidget	*menu;
   GtkWidget	*menuitem;
@@ -5333,118 +5330,3 @@ gradient_report ()
 	  total / get_values_external_count);
 }
 #endif
-
-/*************************************************************************/
-/**									**/
-/**			+++ Miscellaneous				**/
-/**									**/
-/*************************************************************************/
-
-/*
-  These query box functions are yanked from app/interface.c.	taka
- */
-
-/*
- *  A text string query box
- */
-
-typedef struct _QueryBox QueryBox;
-
-struct _QueryBox
-{
-  GtkWidget *qbox;
-  GtkWidget *entry;
-  QueryFunc callback;
-  gpointer data;
-};
-
-static void query_box_cancel_callback (GtkWidget *, gpointer);
-static void query_box_ok_callback     (GtkWidget *, gpointer);
-
-GtkWidget *
-query_string_box (char	      *title,
-		  char	      *message,
-		  char	      *initial,
-		  QueryFunc    callback,
-		  gpointer     data)
-{
-  QueryBox  *query_box;
-  GtkWidget *qbox;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *entry;
-
-  query_box = g_new (QueryBox, 1);
-
-  qbox = gimp_dialog_new (title, "gflare",
-			  gimp_plugin_help_func, "filters/gflare.html",
-			  GTK_WIN_POS_MOUSE,
-			  FALSE, TRUE, FALSE,
-
-			  _("OK"), query_box_ok_callback,
-			  query_box, NULL, NULL, TRUE, FALSE,
-			  _("Cancel"), query_box_cancel_callback,
-			  query_box, NULL, NULL, FALSE, TRUE,
-
-			  NULL);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (qbox)->vbox), vbox);
-  gtk_widget_show (vbox);
-
-  label = gtk_label_new (message);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
-  gtk_widget_show (label);
-
-  entry = gtk_entry_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), entry, TRUE, TRUE, 0);
-  if (initial)
-    gtk_entry_set_text (GTK_ENTRY (entry), initial);
-  gtk_widget_show (entry);
-
-  query_box->qbox = qbox;
-  query_box->entry = entry;
-  query_box->callback = callback;
-  query_box->data = data;
-
-  gtk_widget_show (qbox);
-
-  return qbox;
-}
-
-static void
-query_box_cancel_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  QueryBox *query_box;
-
-  query_box = (QueryBox *) data;
-
-  /*  Destroy the box  */
-  gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
-}
-
-static void
-query_box_ok_callback (GtkWidget *widget,
-		       gpointer	  data)
-{
-  QueryBox *query_box;
-  char *string;
-
-  query_box = (QueryBox *) data;
-
-  /*  Get the entry data  */
-  string = g_strdup (gtk_entry_get_text (GTK_ENTRY (query_box->entry)));
-
-  /*  Call the user defined callback  */
-  (* query_box->callback) (widget, query_box->data, (gpointer) string);
-
-  /*  Destroy the box  */
-  gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
-}

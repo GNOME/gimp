@@ -1,5 +1,9 @@
 2000-02-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/gflare/gflare.c: use the new libgimp query boxes.
+
+2000-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpui.[ch]: removed the query boxes.
 
 	* po-libgimp/POTFILES.in
