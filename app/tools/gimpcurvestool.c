@@ -557,10 +557,10 @@ curves_dialog_new (void)
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
-			       _("Reset"), curves_reset_callback,
-			       cd, NULL, FALSE, FALSE,
 			       _("OK"), curves_ok_callback,
 			       cd, NULL, TRUE, FALSE,
+			       _("Reset"), curves_reset_callback,
+			       cd, NULL, FALSE, FALSE,
 			       _("Cancel"), curves_cancel_callback,
 			       cd, NULL, FALSE, TRUE,
 

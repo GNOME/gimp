@@ -1,3 +1,35 @@
+1999-12-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: Default to "Cancel" in the "Really Quit?" dialog.
+
+	* app/app_procs.c
+	* app/brush_select.c
+	* app/gimpbrushlist.c: Call brush_select_[freeze|thaw]_all() from
+	brushes_init() and brushes_free(), so refreshing the brushes from
+	plugins/scripts is faster.
+
+	* app/brightness_contrast.c
+	* app/color_balance.c
+	* app/curves.c
+	* app/file_new_dialog.c
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c:
+	Reorder the action are buttons: [ "OK" "Reset" "Cancel" ]
+
+	* app/menus.c: Some more cleanups in the menu code. Reorder
+	<Image>/Filters/Misc only if ot exists. Generalized
+	menu_translate() in preparation for correctly supporting catalogs
+	which only exist sometimes (like gimp-perl).
+
+	* app/gradient.c
+	* app/gradient_select.c: Save some lines of code by using
+	gtk_clist_new_with_titles() instead of gtk_clist_new().
+
+	* libgimp/gimpunitmenu.c: Code cleanup and made the clist titles
+	of the unit selection un-clickable.
+
 Thu Dec  2 01:18:33 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/grid.c: more chainbuttons and nicer dialog layout 

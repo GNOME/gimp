@@ -361,10 +361,10 @@ levels_dialog_new (void)
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
-			       _("Reset"), levels_reset_callback,
-			       ld, NULL, FALSE, FALSE,
 			       _("OK"), levels_ok_callback,
 			       ld, NULL, TRUE, FALSE,
+			       _("Reset"), levels_reset_callback,
+			       ld, NULL, FALSE, FALSE,
 			       _("Cancel"), levels_cancel_callback,
 			       ld, NULL, FALSE, TRUE,
 

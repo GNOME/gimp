@@ -1734,12 +1734,8 @@ static void
 brush_select_refresh_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  brush_select_freeze_all ();
-
   /*  re-init the brush list  */
   brushes_init (FALSE);
-
-  brush_select_thaw_all ();
 }
 
 static void

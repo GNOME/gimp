@@ -374,10 +374,10 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, FALSE, TRUE,
 
-			       _("Reset"), file_new_reset_callback,
-			       info, NULL, FALSE, FALSE,
 			       _("OK"), file_new_ok_callback,
 			       info, NULL, TRUE, FALSE,
+			       _("Reset"), file_new_reset_callback,
+			       info, NULL, FALSE, FALSE,
 			       _("Cancel"), file_new_cancel_callback,
 			       info, NULL, FALSE, TRUE,
 

@@ -266,9 +266,9 @@ color_balance_dialog_new (void)
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
-				_("Reset"), color_balance_reset_callback,
-				cbd, NULL, TRUE, FALSE,
 				_("OK"), color_balance_ok_callback,
+				cbd, NULL, TRUE, FALSE,
+				_("Reset"), color_balance_reset_callback,
 				cbd, NULL, TRUE, FALSE,
 				_("Cancel"), color_balance_cancel_callback,
 				cbd, NULL, FALSE, TRUE,

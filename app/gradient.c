@@ -328,10 +328,11 @@ static void  gradient_editor_drop_gradient (GtkWidget  *widget,
 
 /* Gradient editor functions */
 
-static GtkWidget *ed_create_button (gchar *label,
-				    double xalign, double yalign,
-				    GtkSignalFunc signal_func,
-				    gpointer user_data);
+static GtkWidget *ed_create_button (gchar         *label,
+				    gdouble        xalign,
+				    gdouble        yalign,
+				    GtkSignalFunc  signal_func,
+				    gpointer       data);
 
 static void  ed_fetch_foreground (double *fg_r, double *fg_g, double *fg_b,
 				  double *fg_a);
@@ -855,12 +856,13 @@ gradient_editor_create (void)
   GtkWidget *frame;
   GtkWidget *scrolled_win;
   GdkColormap *colormap;
-  GtkWidget* pixmapwid;
-  GdkPixmap* pixmap;
-  GdkBitmap* mask;
-  GtkStyle* style;
-  gint i;
-  gint select_pos;
+  GtkWidget *pixmapwid;
+  GdkPixmap *pixmap;
+  GdkBitmap *mask;
+  GtkStyle  *style;
+  gchar *titles[2];
+  gint   select_pos;
+  gint   i;
 
   /* If the editor already exists, just show it */
   if (g_editor)
@@ -904,28 +906,23 @@ gradient_editor_create (void)
 
   /* clist preview of gradients */
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-
-  g_editor->clist = gtk_clist_new (2);
-  gtk_clist_set_shadow_type (GTK_CLIST (g_editor->clist), GTK_SHADOW_IN);
-  gtk_clist_set_row_height (GTK_CLIST (g_editor->clist), 18);
-  gtk_clist_set_selection_mode (GTK_CLIST (g_editor->clist),
-				GTK_SELECTION_BROWSE);
-
-  gtk_clist_set_column_width (GTK_CLIST (g_editor->clist), 0, 52);
-  gtk_clist_set_column_title (GTK_CLIST (g_editor->clist), 0, _("Gradient"));
-  gtk_clist_set_column_title (GTK_CLIST (g_editor->clist), 1, _("Name"));
-
-  gtk_clist_column_titles_show (GTK_CLIST (g_editor->clist));
-  gtk_clist_set_use_drag_icons (GTK_CLIST (g_editor->clist), FALSE);
-  gtk_clist_column_titles_passive (GTK_CLIST (g_editor->clist));
-
-  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
-  gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
   gtk_widget_show (scrolled_win);
+
+  titles[0] = _("Gradient");
+  titles[1] = _("Name");
+  g_editor->clist = gtk_clist_new_with_titles (2, titles);
+  gtk_clist_set_shadow_type (GTK_CLIST (g_editor->clist), GTK_SHADOW_IN);
+  gtk_clist_set_selection_mode (GTK_CLIST (g_editor->clist),
+				GTK_SELECTION_BROWSE);
+  gtk_clist_set_row_height (GTK_CLIST (g_editor->clist), 18);
+  gtk_clist_set_use_drag_icons (GTK_CLIST (g_editor->clist), FALSE);
+  gtk_clist_column_titles_passive (GTK_CLIST (g_editor->clist));
+  gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
+
   gtk_widget_show (g_editor->clist);
 
   colormap = gtk_widget_get_colormap (g_editor->clist);
@@ -965,31 +962,36 @@ gradient_editor_create (void)
 
   /* Buttons for gradient functions */
   button = ed_create_button (_("New Gradient"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_new_gradient_callback, NULL);
+			     GTK_SIGNAL_FUNC (ed_new_gradient_callback),
+			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = ed_create_button (_("Copy Gradient"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_copy_gradient_callback, NULL);
+			     GTK_SIGNAL_FUNC (ed_copy_gradient_callback),
+			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = ed_create_button (_("Delete Gradient"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_delete_gradient_callback, NULL);
+			     GTK_SIGNAL_FUNC (ed_delete_gradient_callback),
+			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = ed_create_button (_("Rename Gradient"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_rename_gradient_callback, NULL);
+			     GTK_SIGNAL_FUNC (ed_rename_gradient_callback),
+			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   button = ed_create_button (_("Save as POV-Ray"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_save_pov_callback, NULL);
+			     GTK_SIGNAL_FUNC (ed_save_pov_callback),
+			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (gvbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1005,7 +1007,8 @@ gradient_editor_create (void)
 
   /*  Zoom all button */
   button = ed_create_button (_("Zoom all"), 0.5, 0.5,
-			     (GtkSignalFunc) ed_zoom_all_callback, g_editor);
+			     GTK_SIGNAL_FUNC (ed_zoom_all_callback),
+			     g_editor);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1053,10 +1056,10 @@ gradient_editor_create (void)
 					      1.0);
 
   gtk_signal_connect (g_editor->scroll_data, "value_changed",
-		      (GtkSignalFunc) ed_scrollbar_update,
+		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
 		      g_editor);
   gtk_signal_connect (g_editor->scroll_data, "changed",
-		      (GtkSignalFunc) ed_scrollbar_update,
+		      GTK_SIGNAL_FUNC (ed_scrollbar_update),
 		      g_editor);
 
   g_editor->scrollbar =
@@ -1072,7 +1075,7 @@ gradient_editor_create (void)
   button = gtk_check_button_new_with_label (_("Instant update"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) ed_instant_update_update,
+		      GTK_SIGNAL_FUNC (ed_instant_update_update),
 		      g_editor);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
@@ -1105,7 +1108,7 @@ gradient_editor_create (void)
 
   gtk_widget_set_events (g_editor->preview, GRAD_PREVIEW_EVENT_MASK);
   gtk_signal_connect (GTK_OBJECT(g_editor->preview), "event",
-		      (GdkEventFunc) prev_events,
+		      GTK_SIGNAL_FUNC (prev_events),
 		      g_editor);
 
   gtk_drag_dest_set (g_editor->preview,
@@ -1343,10 +1346,10 @@ ed_update_editor (int flags)
 
 static GtkWidget *
 ed_create_button (gchar         *label,
-		  double         xalign,
-		  double         yalign,
+		  gdouble        xalign,
+		  gdouble        yalign,
 		  GtkSignalFunc  signal_func,
-		  gpointer       user_data)
+		  gpointer       data)
 {
   GtkWidget *button;
   GtkWidget *text;
@@ -1361,8 +1364,8 @@ ed_create_button (gchar         *label,
 
   if (signal_func != NULL)
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			(GtkSignalFunc) signal_func,
-			user_data);
+			signal_func,
+			data);
 
   return button;
 }
@@ -1373,7 +1376,7 @@ static void
 ed_set_hint (gchar *str)
 {
   gtk_label_set_text (GTK_LABEL (g_editor->hint_label), str);
-  gdk_flush();
+  /*gdk_flush();*/
 }
 
 /*****/
@@ -2354,10 +2357,10 @@ prev_events (GtkWidget *widget,
 static void
 prev_set_hint (gint x)
 {
-  double xpos;
-  double r, g, b, a;
-  double h, s, v;
-  gchar  str[256];
+  gdouble xpos;
+  gdouble r, g, b, a;
+  gdouble h, s, v;
+  gchar   str[512];
 
   xpos = control_calc_g_pos (x);
 
@@ -2955,7 +2958,7 @@ control_extend_selection (grad_segment_t *seg,
 			  double          pos)
 {
   if (fabs (pos - g_editor->control_sel_l->left) <
-      fabs(pos - g_editor->control_sel_r->right))
+      fabs (pos - g_editor->control_sel_r->right))
     g_editor->control_sel_l = seg;
   else
     g_editor->control_sel_r = seg;
@@ -2967,9 +2970,9 @@ static void
 control_motion (gint x)
 {
   grad_segment_t *seg;
-  double          pos;
-  double          delta;
-  char            str[256];
+  gdouble pos;
+  gdouble delta;
+  gchar   str[256];
 
   seg = g_editor->control_drag_segment;
 

@@ -123,10 +123,11 @@ GradientSelect *
 gradient_select_new (gchar *title,
 		     gchar *initial_gradient)
 {
-  GradientSelect  *gsp;
+  GradientSelect *gsp;
   GtkWidget   *vbox;
   GtkWidget   *scrolled_win;
   GdkColormap *colormap;
+  gchar       *titles[2];
   gint         select_pos;
 
   gradient_t *active = NULL;
@@ -195,29 +196,24 @@ gradient_select_new (gchar *title,
 
   /*  clist preview of gradients  */
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-
-  gsp->clist = gtk_clist_new (2);
-  gtk_clist_set_shadow_type (GTK_CLIST (gsp->clist), GTK_SHADOW_IN);
-  gtk_clist_set_row_height (GTK_CLIST (gsp->clist), 18);
-  gtk_clist_set_selection_mode (GTK_CLIST (gsp->clist), GTK_SELECTION_BROWSE);
-
-  gtk_clist_set_column_width (GTK_CLIST (gsp->clist), 0, 52);
-  gtk_clist_set_column_title (GTK_CLIST (gsp->clist), 0, _("Gradient"));
-  gtk_clist_set_column_title (GTK_CLIST (gsp->clist), 1, _("Name"));
-
-  gtk_clist_column_titles_show (GTK_CLIST (gsp->clist));
-  gtk_clist_set_use_drag_icons (GTK_CLIST (gsp->clist), FALSE);
-  gtk_clist_column_titles_passive (GTK_CLIST (gsp->clist));
-
-  gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-
+  gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
   gtk_widget_show (scrolled_win);
-  gtk_widget_show (gsp->clist);
+
+  titles[0] = _("Gradient");
+  titles[1] = _("Name");
+  gsp->clist = gtk_clist_new_with_titles (2, titles);
+  gtk_clist_set_shadow_type (GTK_CLIST (gsp->clist), GTK_SHADOW_IN);
+  gtk_clist_set_selection_mode (GTK_CLIST (gsp->clist), GTK_SELECTION_BROWSE);
+  gtk_clist_set_row_height (GTK_CLIST (gsp->clist), 18);
+  gtk_clist_set_use_drag_icons (GTK_CLIST (gsp->clist), FALSE);
+  gtk_clist_column_titles_passive (GTK_CLIST (gsp->clist));
   gtk_widget_set_usize (gsp->clist, 200, 250);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
+
+  gtk_widget_show (gsp->clist);
 
   colormap = gtk_widget_get_colormap (gsp->clist);
   gdk_color_parse ("black", &gsp->black);

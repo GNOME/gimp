@@ -34,6 +34,7 @@
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "brush_header.h"
+#include "brush_select.h"
 #include "datafiles.h"
 #include "gimprc.h"
 #include "gimpsignal.h"
@@ -119,7 +120,7 @@ gimp_brush_list_get_type (void)
 }
 
 GimpBrushList *
-gimp_brush_list_new ()
+gimp_brush_list_new (void)
 {
   GimpBrushList *list;
 
@@ -141,8 +142,14 @@ brushes_init (int no_data)
     brush_list = gimp_brush_list_new ();
 
   if (brush_path != NULL && !no_data)
-    datafiles_read_directories (brush_path,
-				(datafile_loader_t) brushes_brush_load, 0);
+    {
+      brush_select_freeze_all ();
+
+      datafiles_read_directories (brush_path,
+				  (datafile_loader_t) brushes_brush_load, 0);
+
+      brush_select_thaw_all ();
+    }
 
   gimp_context_refresh_brushes ();
 }
@@ -215,10 +222,12 @@ brush_compare_func (gconstpointer first,
 }
 
 void
-brushes_free ()
+brushes_free (void)
 {
   if (brush_list)
     {
+      brush_select_freeze_all ();
+
       while (GIMP_LIST (brush_list)->list)
 	{
 	  GimpBrush * b = GIMP_BRUSH (GIMP_LIST (brush_list)->list->data);
@@ -290,6 +299,8 @@ brushes_free ()
 
 	  gimp_brush_list_remove (brush_list, b);
 	}
+
+      brush_select_thaw_all ();
     }
 }
 

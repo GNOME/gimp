@@ -658,11 +658,6 @@ app_exit_finish (void)
   named_buffers_free ();
   swapping_free ();
   brush_dialog_free ();
-
-  /*  there may be dialogs still waiting for brush signals  */
-  if (!no_interface)
-    brush_select_freeze_all ();
-
   brushes_free ();
   pattern_dialog_free ();
   patterns_free ();
@@ -750,9 +745,9 @@ really_quit_dialog (void)
 			    FALSE, TRUE, FALSE,
 
 			    _("Quit"), really_quit_callback,
-			    NULL, NULL, TRUE, FALSE,
+			    NULL, NULL, FALSE, FALSE,
 			    _("Cancel"), really_quit_cancel_callback,
-			    NULL, NULL, FALSE, TRUE,
+			    NULL, NULL, TRUE, TRUE,
 
 			    NULL);
 
