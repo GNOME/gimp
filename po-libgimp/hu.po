@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2004-03-21 15:42+0100\n"
+"POT-Creation-Date: 2004-04-26 14:44+0200\n"
+"PO-Revision-Date: 2004-04-26 17:43+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornikl@mailbox.hu>\n"
-"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,7 +35,7 @@ msgstr "Látható rétegek összefésülése"
 #: libgimp/gimpexport.c:224
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s nem kezeli a rétegeltolásokat, méretet és átlátszóságot"
+msgstr "%s nem kezeli a rétegeltolásokat, a méretet vagy az átlátszatlanságot"
 
 #: libgimp/gimpexport.c:233 libgimp/gimpexport.c:242
 #, c-format
@@ -92,7 +92,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Átalakítás indexeltté az alapbeállítások használatával\n"
+"Átalakítás indexeltté az alapértelmezett beállítások használatával\n"
 "(A finomhangoláshoz válassza a kézi beállítást)"
 
 #: libgimp/gimpexport.c:306
@@ -144,7 +144,7 @@ msgstr "Fájl exportálása"
 
 #: libgimp/gimpexport.c:461
 msgid "_Ignore"
-msgstr "_Figyelmen kívül hagy"
+msgstr "_Kihagyás"
 
 #: libgimp/gimpexport.c:463
 msgid "_Export"
@@ -162,8 +162,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr ""
-"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -171,6 +170,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Rétegmaszkot készül menteni %s formátumba.\n"
+"Ez nem fogja menteni a látható rétegeket."
 
 #: libgimp/gimpexport.c:671
 #, c-format
@@ -263,7 +264,7 @@ msgstr "Modul betöltése: '%s'\n"
 #: libgimpmodule/gimpmodule.c:450
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
+msgstr "'%s' modul betöltési hiba: %s"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
@@ -301,11 +302,11 @@ msgstr "/_Háttérszín"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
 msgid "/Blac_k"
-msgstr "/_Fekete"
+msgstr "/F_ekete"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
-msgstr "/F_ehér"
+msgstr "/_Fehér"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -341,7 +342,7 @@ msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr "Színezet"
+msgstr "Árnyalat"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
 #: modules/cdisplay_proof.c:323
@@ -370,11 +371,11 @@ msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "A HTML-ben használatos hexadecimális színjelölés"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "He_xa hármas:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -405,14 +406,12 @@ msgid "GigaBytes"
 msgstr "gigabájt"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "Háromszög"
+msgstr "Írható"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "Mappa kiválasztása"
+msgstr "Mappa"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -442,11 +441,11 @@ msgstr "Beillesztés újként"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
-msgstr "Beillesztés a képbe"
+msgstr "Helyben beillesztés"
 
 #: libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
-msgstr "_Alapértékek"
+msgstr "_Visszaállítás"
 
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
@@ -454,11 +453,11 @@ msgstr "Látható"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "B_etűköz"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "S_orköz"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
@@ -466,7 +465,7 @@ msgstr "Átmé_retezés"
 
 #: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
-msgstr ""
+msgstr "_Méretezés"
 
 #: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
@@ -474,7 +473,7 @@ msgstr "Kivágás"
 
 #: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
-msgstr "_Átalakítás"
+msgstr "Á_talakítás"
 
 #: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
@@ -505,12 +504,12 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Ezt a számot használja a véletlenszám-generálás kiindulópontjaként. Így az "
-"adott \"véletlen\" sorozat megismételhető."
+"Ezt az értéket használja a véletlenszám-előállítás kiindulóértékeként - ez "
+"lehetővé teszi egy adott \"véletlen\" művelet megismétlését"
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
-msgstr ""
+msgstr "Ú_j kiindulóérték"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
@@ -658,11 +657,11 @@ msgstr "Háromszög"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Vízfestmény stílusú színválasztó"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
-msgstr ""
+msgstr "Vízfestmény"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
