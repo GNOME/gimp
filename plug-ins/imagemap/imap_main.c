@@ -95,6 +95,7 @@ static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
 FALSE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
+static GimpDrawable *_drawable;
 static GdkCursorType _cursor;
 static gboolean	    _show_url = TRUE;
 static gchar	   *_filename = NULL;
@@ -171,6 +172,7 @@ run(char *name, int n_params, GimpParam *param, int *nreturn_vals,
    
    /*  Get the specified drawable  */
    drawable = gimp_drawable_get(param[2].data.d_drawable);
+   _drawable = drawable;
    _image_name = gimp_image_get_name(param[1].data.d_image);
    _image_width = gimp_image_width(param[1].data.d_image);
    _image_height = gimp_image_height(param[1].data.d_image);
@@ -433,6 +435,95 @@ set_arrow_func(void)
 {
    _button_press_func = arrow_on_button_press;
    _cursor = GDK_TOP_LEFT_ARROW;
+}
+
+static gboolean
+fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event, 
+			     gpointer data)
+{
+   if (event->button == 1) {
+      gdouble rx = get_real_coord((gint) event->x);
+      gdouble ry = get_real_coord((gint) event->y);  
+      gint32 image_ID = gimp_drawable_image(_drawable->drawable_id);
+      gint32 channel_ID;
+
+      /* Save the old selection first */
+      channel_ID = gimp_selection_save(image_ID);
+
+      if (gimp_fuzzy_select(_drawable->drawable_id, rx, ry,
+			    10, /* Treshold */
+			    GIMP_CHANNEL_OP_REPLACE,
+			    FALSE, FALSE, 0, FALSE)) {
+	 GimpParam *return_vals;
+	 gint nreturn_vals;
+
+	 return_vals = gimp_run_procedure("plug_in_sel2path",
+					  &nreturn_vals,
+					  GIMP_PDB_INT32, TRUE,
+					  GIMP_PDB_IMAGE, 0,
+					  GIMP_PDB_DRAWABLE, 
+					  _drawable->drawable_id,
+					  GIMP_PDB_END);
+	 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS) {
+	    gdouble distance;
+	    gchar *path_name = gimp_path_get_current(image_ID);
+	    Object_t *object = create_polygon(NULL);
+	    Polygon_t *polygon = ObjectToPolygon(object);
+	    gint x0, y0;
+	    gdouble grad0;
+	    
+	    add_shape(object);
+	    x0 = gimp_path_get_point_at_dist(image_ID, 0.0, &y0, &grad0);
+	    polygon->points = g_list_append(NULL, new_point(x0, y0));
+	    
+	    for (distance = 1.0;; distance += 1.0) {
+	       gint x1, y1 = -1;
+	       gdouble grad1;
+	       
+	       x1 = gimp_path_get_point_at_dist(image_ID, distance, &y1, 
+						&grad1);
+	       
+	       if (y1 == -1)
+		  break;
+
+	       if (abs(x1 - x0) <= 1 || abs(y1 - y0) <= 1) {
+		  gdouble diff;
+
+		  if (grad0 != 0.0)
+		     diff = (grad1 - grad0) / grad0;
+		  else
+		     diff = grad1;
+		  
+		  if (fabs(diff) > 0.1) {
+		     polygon->points = g_list_append(polygon->points,
+						     new_point(x1, y1));
+		     grad0 = grad1;
+		  }
+		  x0 = x1;
+		  y0 = y1;
+	       }
+	    }
+	    gimp_path_delete(image_ID, path_name);
+	    g_free(path_name);
+	 } else {
+	    printf("Damn %d\n", return_vals[0].data.d_status);
+	 }
+	 gimp_destroy_params(return_vals, nreturn_vals);
+      }
+
+      /* Restore old selection */
+      (void) gimp_selection_load(channel_ID);
+      (void) gimp_image_remove_channel(image_ID, channel_ID);
+      gimp_channel_delete(channel_ID);
+   }
+   return FALSE;
+}
+
+void
+set_fuzzy_select_func(void)
+{
+   _button_press_func = fuzzy_select_on_button_press;
+   _cursor = GDK_TOP_LEFT_ARROW; /* Fix me! */
 }
 
 static void 

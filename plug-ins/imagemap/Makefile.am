@@ -11,11 +11,9 @@ EXTRA_DIST = \
 	circle.xpm	\
 	coord.xpm	\
 	dimension.xpm	\
-	edit.xpm	\
 	grid.xpm	\
 	map_info.xpm	\
 	polygon.xpm	\
-	preferences.xpm	\
 	rectangle.xpm	\
 	to_back.xpm	\
 	to_front.xpm	\

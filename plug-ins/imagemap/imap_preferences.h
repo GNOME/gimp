@@ -41,6 +41,8 @@ typedef struct {
    gboolean 		keep_circles_round;
    gboolean 		show_url_tip;
    gboolean 		use_doublesized;
+   gboolean		auto_convert;
+   gdouble		threshold;
    gint			undo_levels;
    gint			mru_size;
    ColorSelData_t	colors;
@@ -70,6 +72,9 @@ typedef struct {
    GtkWidget		*selected_bg;
    GtkWidget		*color_sel_dlg;
    GtkWidget		*color_sel;
+
+   GtkWidget		*threshold;
+   GtkWidget		*auto_convert;
 
    PreferencesData_t	*old_data;
    ColorSelData_t	old_colors;

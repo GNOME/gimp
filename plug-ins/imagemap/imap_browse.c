@@ -21,11 +21,6 @@
  *
  */
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_browse.h"
@@ -65,9 +60,9 @@ browse_cb(GtkWidget *widget, gpointer data)
    if (!browse->file_selection) {
       GtkWidget *dialog;
       dialog = browse->file_selection = gtk_file_selection_new(browse->name);
-      gtk_signal_connect_object(
-	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
-	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
+      g_signal_connect_swapped(
+	 G_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
+	 "clicked", G_CALLBACK(gtk_widget_hide), G_OBJECT(dialog));
       g_signal_connect(G_OBJECT(GTK_FILE_SELECTION(dialog)->ok_button),
 			 "clicked", G_CALLBACK(select_cb), data);
    }

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ typedef struct {
    GtkWidget *clear;
    GtkWidget *edit;
    GtkWidget *arrow;
+   GtkWidget *fuzzy_select;
    GtkWidget *rectangle;
    GtkWidget *circle;
    GtkWidget *polygon;
@@ -134,6 +135,7 @@ void menu_build_mru_items(MRU_t *mru);
 void menu_set_zoom_sensitivity(gint factor);
 
 void menu_select_arrow(void);
+void menu_select_fuzzy_select(void);
 void menu_select_rectangle(void);
 void menu_select_circle(void);
 void menu_select_polygon(void);

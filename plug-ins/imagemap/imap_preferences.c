@@ -27,11 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
@@ -307,15 +302,10 @@ static void
 change_color(PreferencesDialog_t *param, GtkWidget *button, 
 	     GdkColor *gdk_color)
 {
-   gdouble color[3];
    GdkColormap *colormap;
    GtkColorSelection *colorsel = GTK_COLOR_SELECTION(param->color_sel);
 
-   gtk_color_selection_get_color(colorsel, color);
-   
-   gdk_color->red = (guint16)(color[0]*65535.0);
-   gdk_color->green = (guint16)(color[1]*65535.0);
-   gdk_color->blue = (guint16)(color[2]*65535.0);
+   gtk_color_selection_get_current_color(colorsel, gdk_color);
 
    colormap = gdk_drawable_get_colormap(button->window);
    gdk_colormap_alloc_color(colormap, gdk_color, FALSE, TRUE);
@@ -356,8 +346,6 @@ area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
 	   GdkColor *gdk_color, 
 	   void (*color_changed_func)(GtkWidget *widget, gpointer data))
 {
-   gdouble color[3];
-
    if (event->type != GDK_BUTTON_PRESS)
       return FALSE;
 
@@ -369,25 +357,22 @@ area_event(GtkWidget *widget, GdkEvent *event, PreferencesDialog_t *param,
       param->color_sel = GTK_COLOR_SELECTION_DIALOG(
 	 param->color_sel_dlg)->colorsel;
    
-      gtk_signal_connect(GTK_OBJECT(param->color_sel), "color_changed", 
-			 (GtkSignalFunc)color_changed, (gpointer) param);
+      g_signal_connect(G_OBJECT(param->color_sel), "color_changed", 
+		       (GtkSignalFunc)color_changed, (gpointer) param);
 
-      gtk_signal_connect(
-	 GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button), 
+      g_signal_connect(
+	 G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->ok_button), 
 	 "clicked", GTK_SIGNAL_FUNC(select_color_ok), (gpointer) param);
 
-      gtk_signal_connect(
-	 GTK_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->cancel_button), 
+      g_signal_connect(
+	 G_OBJECT(GTK_COLOR_SELECTION_DIALOG(dialog)->cancel_button), 
 	 "clicked", GTK_SIGNAL_FUNC(select_color_cancel), (gpointer) param);
-
    }
 
    _color_changed_func = color_changed_func;
 
-   color[0] = (gdouble) gdk_color->red / 65535.0;
-   color[1] = (gdouble) gdk_color->green / 65535.0;
-   color[2] = (gdouble) gdk_color->blue / 65535.0;
-   gtk_color_selection_set_color(GTK_COLOR_SELECTION(param->color_sel), color);
+   gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(param->color_sel),
+					 gdk_color);
 
    gtk_widget_show(param->color_sel_dlg);
    return TRUE;
@@ -425,19 +410,34 @@ edit_selected_bg(GtkWidget *widget, GdkEvent *event,
 		     selected_bg_color_changed);
 }
 
-static void
-create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
+static GtkWidget*
+create_tab(GtkWidget *notebook, gchar *label, gint rows, gint cols)
 {
    GtkWidget *table;
-   GtkWidget *frame;
-   GtkWidget *hbox;
-   GtkWidget *label;
+   GtkWidget *vbox;
 
-   table = gtk_table_new(7, 2, FALSE);
+   vbox = gtk_vbox_new(FALSE, 1);
+   gtk_widget_show(vbox);
+
+   table = gtk_table_new(rows, cols, FALSE);
+   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
+
+   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, 
+			    gtk_label_new_with_mnemonic(label));
+
+   return table;
+} 
+
+static void
+create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
+{
+   GtkWidget *table = create_tab(notebook, _("_General"), 7, 2);
+   GtkWidget *frame;
+   GtkWidget *hbox;
 
    frame = gtk_frame_new( _("Default Map Type"));
    gtk_widget_show(frame);
@@ -471,39 +471,22 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
       create_check_button_in_table(table, 6, 0,
 				   _("_Use double-sized grab handles"));
    gtk_widget_show(frame);
-
-   label = gtk_label_new_with_mnemonic( _("_General"));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
 }
 
 static void
 create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table;
+   GtkWidget *table = create_tab(notebook, _("_Menu"), 2, 2);
    GtkWidget *label;
-   GtkWidget *vbox;
-
-   vbox = gtk_vbox_new(FALSE, 1);
-   gtk_widget_show(vbox);
-
-   table = gtk_table_new(2, 2, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-   gtk_widget_show(table);
 
    label = create_label_in_table(table, 0, 0, 
-				 _("Number of Undo _levels (1 - 99):"));
+				 _("Number of _Undo levels (1 - 99):"));
    data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1, 
 						   99);
 
    label = create_label_in_table(table, 1, 0, 
-				 _("Number of MRU _entries (1 - 16):"));
+				 _("Number of M_RU entries (1 - 16):"));
    data->mru_size = create_spin_button_in_table(table, label, 1, 1, 1, 1, 16);
-
-   label = gtk_label_new_with_mnemonic( _("_Menu"));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 
 static GtkWidget*
@@ -512,11 +495,11 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 {
    GtkWidget *area = gtk_drawing_area_new();
 
-   gtk_drawing_area_size(GTK_DRAWING_AREA(area), 16, 8);
+   gtk_widget_set_size_request(area, 16, 8);
    gtk_widget_set_events(area, GDK_BUTTON_PRESS_MASK);
    gtk_table_attach_defaults(GTK_TABLE(table), area, col, col + 1, row, 
 			     row + 1);
-   gtk_signal_connect(GTK_OBJECT(area), "event", func, (gpointer) data);
+   g_signal_connect(G_OBJECT(area), "event", func, (gpointer) data);
    gtk_widget_show(area);
 
    return area;
@@ -525,19 +508,8 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 static void
 create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table, *label;
-   GtkWidget *vbox;
-
-   vbox = gtk_vbox_new(FALSE, 1);
-   gtk_widget_show(vbox);
-
-   table = gtk_table_new(2, 3, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-   gtk_widget_show(table);
-
+   GtkWidget *table = create_tab(notebook, _("Co_lors"), 2, 3);
+ 
    create_label_in_table(table, 0, 0, _("Normal:"));
    data->normal_fg = create_color_field(data, table, 0, 1, 
 					(GtkSignalFunc) edit_normal_fg);
@@ -549,9 +521,18 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 					  (GtkSignalFunc) edit_selected_fg);
    data->selected_bg = create_color_field(data, table, 1, 2,
 					  (GtkSignalFunc) edit_selected_bg);
+}
 
-   label = gtk_label_new_with_mnemonic( _("Co_lors"));
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+static void
+create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
+{
+   GtkWidget *table = create_tab(notebook, _("Co_ntiguous Region"), 2, 2);
+   GtkWidget *label;
+
+   label = create_label_in_table(table, 0, 0, 
+				 _("_Threshold:"));
+   data->auto_convert =
+      create_check_button_in_table(table, 1, 0, _("_Automatically convert"));
 }
 
 static void
@@ -577,14 +558,15 @@ create_preferences_dialog()
    
    data->notebook = notebook = gtk_notebook_new();
    gtk_container_set_border_width(GTK_CONTAINER(notebook), 10);
-   gtk_signal_connect_after(GTK_OBJECT(notebook), "switch_page", 
-			    GTK_SIGNAL_FUNC(switch_page), (gpointer) data);
+   g_signal_connect_after(G_OBJECT(notebook), "switch_page", 
+			  GTK_SIGNAL_FUNC(switch_page), (gpointer) data);
 
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), 
 		      notebook, TRUE, TRUE, 10);
    create_general_tab(data, notebook);
    create_menu_tab(data, notebook);
    create_colors_tab(data, notebook);
+   create_contiguous_regions_tab(data, notebook);
 
    gtk_widget_show(notebook);
 

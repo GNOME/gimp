@@ -26,11 +26,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_circle.h"
@@ -96,62 +91,18 @@ menu_shapes_selected(gint count)
 }
 
 static void
-menu_zoom_to(gint factor)
+menu_zoom_to(GtkWidget *widget, gpointer data)
 {
-   if (_menu_callback_lock) {
-      _menu_callback_lock--;
-   } else {
-      set_zoom(factor);
+   if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget))) {
+      gint factor = (gint) data;
+
+      if (_menu_callback_lock) {
+	 _menu_callback_lock--;
+      } else {
+	 set_zoom(factor);
+      }
+      menu_set_zoom_sensitivity(factor);
    }
-   menu_set_zoom_sensitivity(factor);
-}
-
-static void
-menu_zoom_to_1(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(1);
-}
-
-static void
-menu_zoom_to_2(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(2);
-}
-
-static void
-menu_zoom_to_3(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(3);
-}
-
-static void
-menu_zoom_to_4(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(4);
-}
-
-static void
-menu_zoom_to_5(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(5);
-}
-
-static void
-menu_zoom_to_6(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(6);
-}
-
-static void
-menu_zoom_to_7(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(7);
-}
-
-static void
-menu_zoom_to_8(GtkWidget *widget, gpointer data)
-{
-   menu_zoom_to(8);
 }
 
 static void
@@ -199,6 +150,20 @@ menu_arrow(GtkWidget *widget, gpointer data)
       set_arrow_func();
       tools_select_arrow();
       popup_select_arrow();
+   }
+}
+
+static void
+menu_fuzzy_select(GtkWidget *widget, gpointer data)
+{
+   if (_menu_callback_lock) {
+      _menu_callback_lock = FALSE;
+   } else {
+/*
+      set_arrow_func();
+      tools_select_arrow();
+      popup_select_arrow();
+*/
    }
 }
 
@@ -359,29 +324,29 @@ make_view_menu(GtkWidget *menu_bar)
 
    zoom_menu = make_sub_menu(view_menu, _("Zoom To"));
 
-   _menu.zoom[0] = make_radio_item(zoom_menu, NULL, "1:1", menu_zoom_to_1,
-				   NULL);
+   _menu.zoom[0] = make_radio_item(zoom_menu, NULL, "1:1", menu_zoom_to,
+				   (gpointer) 1);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[0]));
-   _menu.zoom[1] = make_radio_item(zoom_menu, group, "1:2", menu_zoom_to_2,
-				   NULL);
+   _menu.zoom[1] = make_radio_item(zoom_menu, group, "1:2", menu_zoom_to,
+				   (gpointer) 2);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[1]));
-   _menu.zoom[2] = make_radio_item(zoom_menu, group, "1:3", menu_zoom_to_3,
-				   NULL);
+   _menu.zoom[2] = make_radio_item(zoom_menu, group, "1:3", menu_zoom_to,
+				   (gpointer) 3);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[2]));
-   _menu.zoom[3] = make_radio_item(zoom_menu, group, "1:4", menu_zoom_to_4,
-				   NULL);
+   _menu.zoom[3] = make_radio_item(zoom_menu, group, "1:4", menu_zoom_to,
+				   (gpointer) 4);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[3]));
-   _menu.zoom[4] = make_radio_item(zoom_menu, group, "1:5", menu_zoom_to_5,
-				   NULL);
+   _menu.zoom[4] = make_radio_item(zoom_menu, group, "1:5", menu_zoom_to,
+				   (gpointer) 5);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[4]));
-   _menu.zoom[5] = make_radio_item(zoom_menu, group, "1:6", menu_zoom_to_6,
-				   NULL);
+   _menu.zoom[5] = make_radio_item(zoom_menu, group, "1:6", menu_zoom_to,
+				   (gpointer) 6);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[5]));
-   _menu.zoom[6] = make_radio_item(zoom_menu, group, "1:7", menu_zoom_to_7,
-				   NULL);
+   _menu.zoom[6] = make_radio_item(zoom_menu, group, "1:7", menu_zoom_to,
+				   (gpointer) 7);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[6]));
-   _menu.zoom[7] = make_radio_item(zoom_menu, group, "1:8", menu_zoom_to_8,
-				   NULL);
+   _menu.zoom[7] = make_radio_item(zoom_menu, group, "1:8", menu_zoom_to,
+				   (gpointer) 8);
 }
 
 static void
@@ -392,6 +357,10 @@ make_mapping_menu(GtkWidget *menu_bar)
 
    _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
+   _menu.fuzzy_select = make_radio_item(menu, group, 
+					_("Select Contiguous Region"),
+					menu_fuzzy_select, NULL);
+   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.fuzzy_select));
    _menu.rectangle = make_radio_item(menu, group, _("Rectangle"),
 				     menu_rectangle, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.rectangle));
@@ -419,8 +388,8 @@ static void
 make_help_menu(GtkWidget *menu_bar)
 {
    GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
-   gtk_menu_item_right_justify(GTK_MENU_ITEM(gtk_menu_get_attach_widget(
-      GTK_MENU(help_menu))));
+   gtk_menu_item_set_right_justified(
+      GTK_MENU_ITEM(gtk_menu_get_attach_widget(GTK_MENU(help_menu))), TRUE);
    make_item_with_label(help_menu, _("About ImageMap..."), menu_command,
 			&_menu.cmd_about);
 }
@@ -482,6 +451,12 @@ void
 menu_select_arrow(void)
 {
    menu_select(_menu.arrow);
+}
+
+void
+menu_select_fuzzy_select(void)
+{
+   menu_select(_menu.fuzzy_select);
 }
 
 void

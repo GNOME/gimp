@@ -29,6 +29,7 @@
 typedef struct {
    GtkWidget *container;
    GtkWidget *arrow;
+   GtkWidget *fuzzy_select;
    GtkWidget *rectangle;
    GtkWidget *circle;
    GtkWidget *polygon;

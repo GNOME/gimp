@@ -1,3 +1,28 @@
+2002-08-03  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/Makefile.am (EXTRA_DIST): removed *.xpm files for
+	which we now use GTK stock icons
+	* plug-ins/imagemap/edit.xpm
+	* plug-ins/imagemap/preferences.xpm: removed these pixmaps since we now
+	use stock icons for those.
+
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_browse.c: replaced a few deprecated GTK 
+	function calls.
+
+2002-08-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_main.h
+	* plug-ins/imagemap/imap_menu.c 
+	* plug-ins/imagemap/imap_menu.h 
+	* plug-ins/imagemap/imap_tools.c
+	* plug-ins/imagemap/imap_tools.h: started implementation of fuzzy 
+	select:  you can now click on a more or less contiguous region and the 
+	plug-in will automatically create an object (circle, rectangle or 
+	polygon)
+
 2002-08-01  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_object.c (object_list_write_csim)

@@ -37,6 +37,7 @@
 #include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpstock.h"
 
 static gboolean _callback_lock;
 static Tools_t _tools;
@@ -72,6 +73,20 @@ arrow_clicked(GtkWidget *widget, gpointer data)
       set_arrow_func();
       menu_select_arrow();
       popup_select_arrow();
+   }
+}
+
+static void
+fuzzy_select_clicked(GtkWidget *widget, gpointer data)
+{
+   if (_callback_lock) {
+      _callback_lock = FALSE;
+   } else {
+      set_fuzzy_select_func();
+/*
+      menu_select_fuzzy_select();
+      popup_select_fuzzy_select();
+*/
    }
 }
 
@@ -129,8 +144,14 @@ make_tools(GtkWidget *window)
 					  NULL, _("Select"), 
                                           _("Select existing area"), 
 					  arrow_clicked, NULL);
+   _tools.fuzzy_select = 
+      make_toolbar_radio_icon(toolbar, GIMP_STOCK_TOOL_FUZZY_SELECT,
+			      _tools.arrow, _("Fuzzy Select"),
+			      _("Select contiguous regions"),
+			      fuzzy_select_clicked, NULL);
    _tools.rectangle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_RECTANGLE, 
-					      _tools.arrow, _("Rectangle"), 
+					      _tools.fuzzy_select, 
+					      _("Rectangle"), 
 					      _("Define Rectangle area"), 
 					      rectangle_clicked, NULL);
    _tools.circle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_CIRCLE, 
