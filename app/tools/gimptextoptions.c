@@ -57,25 +57,27 @@ enum
 };
 
 
-static void  gimp_text_options_init       (GimpTextOptions      *options);
-static void  gimp_text_options_class_init (GimpTextOptionsClass *options_class);
+static void  gimp_text_options_init        (GimpTextOptions      *options);
+static void  gimp_text_options_class_init  (GimpTextOptionsClass *options_class);
 
-static void  gimp_text_options_finalize         (GObject      *object);
-static void  gimp_text_options_set_property     (GObject      *object,
-                                                 guint         property_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
-static void  gimp_text_options_get_property     (GObject      *object,
-                                                 guint         property_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
+static void  gimp_text_options_finalize         (GObject         *object);
+static void  gimp_text_options_set_property     (GObject         *object,
+                                                 guint            property_id,
+                                                 const GValue    *value,
+                                                 GParamSpec      *pspec);
+static void  gimp_text_options_get_property     (GObject         *object,
+                                                 guint            property_id,
+                                                 GValue          *value,
+                                                 GParamSpec      *pspec);
 
-static void  gimp_text_options_notify_font      (GimpContext  *context,
-                                                 GParamSpec   *pspec,
-                                                 GimpText     *text);
-static void  gimp_text_options_notify_text_font (GimpText     *text,
-                                                 GParamSpec   *pspec,
-                                                 GimpContext  *context);
+static void  gimp_text_options_reset            (GimpToolOptions *options);
+
+static void  gimp_text_options_notify_font      (GimpContext     *context,
+                                                 GParamSpec      *pspec,
+                                                 GimpText        *text);
+static void  gimp_text_options_notify_text_font (GimpText        *text,
+                                                 GParamSpec      *pspec,
+                                                 GimpContext     *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -112,15 +114,19 @@ gimp_text_options_get_type (void)
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass         *object_class;
+  GimpToolOptionsClass *options_class;
 
   object_class = G_OBJECT_CLASS (klass);
+  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
+
+  options_class->reset       = gimp_text_options_reset;
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
                                    "text", NULL,
@@ -201,6 +207,24 @@ gimp_text_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_text_options_reset (GimpToolOptions *options)
+{
+  GimpTextOptions *text_options = GIMP_TEXT_OPTIONS (options);
+  gchar           *text;
+
+  g_object_freeze_notify (G_OBJECT (text_options->text));
+
+  text = text_options->text->text;
+  text_options->text->text = NULL;
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (options);
+
+  text_options->text->text = text;
+
+  g_object_thaw_notify (G_OBJECT (text_options->text));
 }
 
 static void

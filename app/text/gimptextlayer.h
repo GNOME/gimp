@@ -41,6 +41,10 @@ struct _GimpTextLayer
   GimpLayer     layer;
 
   GimpText     *text;
+  const gchar  *text_parasite;  /*  parasite name that this text was set from,
+                                 *  and that should be removed when the text
+                                 *  is changed.
+                                 */
   guint         idle_render_id;
   gboolean      auto_rename;
 };
@@ -51,15 +55,13 @@ struct _GimpTextLayerClass
 };
 
 
-/*  function declarations  */
-
 GType       gimp_text_layer_get_type (void) G_GNUC_CONST;
 
 GimpLayer * gimp_text_layer_new        (GimpImage     *image,
                                         GimpText      *text);
-GimpLayer * gimp_text_layer_from_layer (GimpLayer     *layer,
-                                        GimpText      *text);
 GimpText  * gimp_text_layer_get_text   (GimpTextLayer *layer);
+void        gimp_text_layer_set_text   (GimpTextLayer *layer,
+                                        GimpText      *text);
 void        gimp_text_layer_render     (GimpTextLayer *layer);
 
 

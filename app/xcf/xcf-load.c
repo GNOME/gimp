@@ -49,8 +49,7 @@
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
-#include "text/gimptextlayer.h"
-#include "text/gimptext-parasite.h"
+#include "text/gimptextlayer-xcf.h"
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpstroke.h"
@@ -790,18 +789,18 @@ xcf_load_layer (XcfInfo   *info,
 {
   GimpLayer     *layer;
   GimpLayerMask *layer_mask;
-  GimpParasite  *parasite;
   guint32        hierarchy_offset;
   guint32        layer_mask_offset;
   gboolean       apply_mask;
   gboolean       edit_mask;
   gboolean       show_mask;
+  gboolean       active;
+  gboolean       floating;
   gint           width;
   gint           height;
   gint           type;
   gint           add_floating_sel;
   gchar         *name;
-  GimpText      *text = NULL;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -827,35 +826,12 @@ xcf_load_layer (XcfInfo   *info,
                               &apply_mask, &edit_mask, &show_mask))
     goto error;
 
-  /* check for a gimp-text parasite */
-  parasite = gimp_item_parasite_find (GIMP_ITEM (layer),
-                                      gimp_text_parasite_name ());
-  if (parasite)
+  /* call the evil text layer hack that might change our layer pointer */
+  active   = (info->active_layer == layer);
+  floating = (info->floating_sel == layer);
+
+  if (gimp_text_layer_xcf_load_hack (&layer))
     {
-      text = gimp_text_from_parasite (parasite);
-
-      if (text)
-        gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
-                                   gimp_parasite_name (parasite));
-    }
-  else
-    {
-      /* check for a GDynText parasite */
-      parasite = gimp_item_parasite_find (GIMP_ITEM (layer),
-                                          gimp_text_gdyntext_parasite_name ());
-
-      if (parasite)
-        text = gimp_text_from_gdyntext_parasite (parasite);
-    }
-
-  /* if there's a text object, convert the layer to a text layer */
-  if (text)
-    {
-      gboolean active   = (info->active_layer == layer);
-      gboolean floating = (info->floating_sel == layer);
-
-      layer = gimp_text_layer_from_layer (layer, text);
-
       if (active)
         info->active_layer = layer;
       if (floating)

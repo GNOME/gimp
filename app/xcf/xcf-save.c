@@ -46,7 +46,7 @@
 #include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"
-#include "text/gimptext-parasite.h"
+#include "text/gimptextlayer-xcf.h"
 
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpstroke.h"
@@ -525,12 +525,7 @@ xcf_save_layer_props (XcfInfo   *info,
                                   GIMP_ITEM (layer)->tattoo));
 
   if (GIMP_IS_TEXT_LAYER (layer))
-    {
-      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-
-      parasite = gimp_text_to_parasite (text);
-      gimp_parasite_list_add (GIMP_ITEM (layer)->parasites, parasite);
-    }
+    gimp_text_layer_xcf_save_prepare (GIMP_TEXT_LAYER (layer));
 
   if (gimp_parasite_list_length (GIMP_ITEM (layer)->parasites) > 0)
     {

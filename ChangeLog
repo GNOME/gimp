@@ -1,3 +1,28 @@
+2003-10-27  Sven Neumann  <sven@gimp.org>
+
+	* app/text/Makefile.am	
+	* app/text/gimptextlayer-xcf.[ch]: new files that load and save
+	text layers to/from XCF.
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/text/gimptextlayer.c: removed that code here and use the new
+	functions instead.
+
+	* app/text/gimptext-parasite.[ch] (gimp_text_from_parasite): added
+	a GError parameter.
+
+	* app/text/gimptextlayer.[ch]: store the name of the parasite that
+	the text layer was created from (if read from XCF). Remove the
+	parasite when the text layer is edited. If a text layer wasn't
+	touched, the original parasite is written back to the XCF file.
+	
+	* app/text/gimptextlayout.c (gimp_text_layout_new): handle a NULL
+	text string.
+
+	* app/tools/gimptextoptions.c: implement GimpToolOptions::reset
+	and save the text across a reset.
+
 2003-10-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_style_set): call

@@ -40,6 +40,8 @@ libapptext_a_sources = \
 	gimptextlayer.h			\
 	gimptextlayer-transform.c	\
 	gimptextlayer-transform.h	\
+	gimptextlayer-xcf.c		\
+	gimptextlayer-xcf.h		\
 	gimptextlayout.c		\
 	gimptextlayout.h		\
 	gimptextlayout-render.c		\

@@ -70,30 +70,27 @@ gimp_text_to_parasite (const GimpText *text)
 }
 
 GimpText *
-gimp_text_from_parasite (const GimpParasite *parasite)
+gimp_text_from_parasite (const GimpParasite  *parasite,
+                         GError             **error)
 {
   GimpText    *text;
   const gchar *str;
-  GError      *error = NULL;
 
-  g_return_val_if_fail (parasite != NULL, NULL);
+  g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
-                                gimp_text_parasite_name ()) == 0, NULL);
+                                gimp_text_parasite_name ()) == 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
+  g_return_val_if_fail (str != NULL, FALSE);
 
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  if (! gimp_config_deserialize_string (GIMP_CONFIG (text),
-                                        str,
-                                        gimp_parasite_data_size (parasite),
-                                        NULL,
-                                        &error))
-    {
-      g_warning ("Failed to deserialize text parasite: %s", error->message);
-      g_error_free (error);
-    }
+  gimp_config_deserialize_string (GIMP_CONFIG (text),
+                                  str,
+                                  gimp_parasite_data_size (parasite),
+                                  NULL,
+                                  error);
 
   return text;
 }

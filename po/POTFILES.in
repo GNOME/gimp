@@ -8,6 +8,7 @@ app/base/base-enums.c
 
 app/config/gimpconfig-deserialize.c
 app/config/gimpconfig-path.c
+app/config/gimpconfig-utils.c
 app/config/gimpconfig.c
 app/config/gimpconfigwriter.c
 app/config/gimprc.c
@@ -188,6 +189,7 @@ app/text/gimptext-parasite.c
 app/text/gimptext.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
+app/text/gimptextlayer-xcf.c
 
 app/tools/tools-enums.c
 app/tools/gimp-tools.c

@@ -19,17 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TEXT_PARASITE_H__
-#define __GIMP_TEXT_PARASITE_H__
+#ifndef __GIMP_TEXT_LAYER_XCF_H__
+#define __GIMP_TEXT_LAYER_XCF_H__
 
 
-const gchar  * gimp_text_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_text_to_parasite            (const GimpText      *text);
-GimpText     * gimp_text_from_parasite          (const GimpParasite  *parasite,
-                                                 GError             **error);
+gboolean  gimp_text_layer_xcf_load_hack    (GimpLayer     **layer);
 
-const gchar  * gimp_text_gdyntext_parasite_name (void) G_GNUC_CONST;
-GimpText     * gimp_text_from_gdyntext_parasite (const GimpParasite  *parasite);
+void      gimp_text_layer_xcf_save_prepare (GimpTextLayer  *layer);
 
 
-#endif /* __GIMP_TEXT_PARASITE_H__ */
+#endif /* __GIMP_TEXT_LAYER_XCF_H__ */
