@@ -1,3 +1,8 @@
+2004-06-10  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/paint/gimpbrushcore.c (gimp_brush_core_pressurize_mask):
+	avoided some redundant calculations.
+
 2004-06-10  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c: removed the monitor calibration

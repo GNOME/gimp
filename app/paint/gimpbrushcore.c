@@ -1057,15 +1057,22 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
       }
 #else /* ! FANCY_PRESSURE */
 
-  for (i = 0; i < 256; i++)
-    {
-      gint tmp = (pressure / 0.5) * i;
+  {
+    gdouble j, k;
 
-      if (tmp > 255)
-	mapi[i] = 255;
-      else
-	mapi[i] = tmp;
-    }
+    j = pressure + pressure;
+    k = 0;
+    
+    for (i = 0; i < 256; i++)
+      {
+        if (k > 255)
+          mapi[i] = 255;
+        else
+          mapi[i] = (guchar) k;
+
+        k += j;
+      }
+  }
 
 #endif /* FANCY_PRESSURE */
 
