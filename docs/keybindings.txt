@@ -77,7 +77,7 @@ Select
     Toggle Quickmask....................Shift+Q
 
 View
-    Zoom in............................ =
+    Zoom in............................ +
     Zoom out........................... -
     Zoom to fit window..................Shift+Ctrl+E
     Zoom >

@@ -311,7 +311,7 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/View/Zoom  */
 
-  { { N_("/View/Zoom/Zoom In"), "equal",
+  { { N_("/View/Zoom/Zoom In"), "plus",
       view_zoom_in_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL,
