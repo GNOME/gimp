@@ -1,3 +1,17 @@
+2005-03-05  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-altivec.[ch]
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-altivec-test.c:
+	Added updates from starox-gimp@starox.org
+	(Frederic Leroy) to implement Altivec instruction optimisations.
+
+	Regenerated sources.
+
+	* app/composite/gimp-composite-mmx.c: Replaced a pesky movntq
+	instruction with a movq.  Movntq is an SSE instruction, not an MMX
+	instruction.
+
 2005-03-05  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/siod/sliba.c: Oops...one 'case tc_string:' was
