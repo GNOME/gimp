@@ -152,33 +152,6 @@ view_dot_for_dot_cmd_callback (GtkWidget *widget,
 }
 
 void
-view_fullscreen_cmd_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  gboolean          fullscreen;
-  return_if_no_display (gdisp, data);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_display_shell_set_fullscreen (shell,
-                                     GTK_CHECK_MENU_ITEM (widget)->active);
-
-  fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
-
-  if (fullscreen != GTK_CHECK_MENU_ITEM (widget)->active)
-    {
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Fullscreen",
-                                    fullscreen);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Fullscreen",
-                                    fullscreen);
-    }
-}
-
-void
 view_info_window_cmd_callback (GtkWidget *widget,
 			       gpointer   data)
 {
@@ -410,4 +383,97 @@ view_shrink_wrap_cmd_callback (GtkWidget *widget,
   return_if_no_display (gdisp, data);
 
   gimp_display_shell_scale_shrink_wrap (GIMP_DISPLAY_SHELL (gdisp->shell));
+}
+
+void
+view_fullscreen_cmd_callback (GtkWidget *widget,
+			      gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  gboolean          fullscreen;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_set_fullscreen (shell,
+                                     GTK_CHECK_MENU_ITEM (widget)->active);
+
+  fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+
+  if (fullscreen != GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Fullscreen",
+                                    fullscreen);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Fullscreen",
+                                    fullscreen);
+    }
+}
+
+static void
+view_change_screen_confirm_callback (GtkWidget *query_box,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GdkScreen *screen;
+
+  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
+                                   value);
+
+  if (screen)
+    gtk_window_set_screen (GTK_WINDOW (data), screen);
+}
+
+static void
+view_change_screen_destroy_callback (GtkWidget *query_box,
+                                     GtkWidget *shell)
+{
+  g_object_set_data (G_OBJECT (shell), "gimp-change-screen-dialog", NULL);
+}
+
+void
+view_change_screen_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
+{
+  GimpDisplay *gdisp;
+  GdkScreen   *screen;
+  GdkDisplay  *display;
+  gint         cur_screen;
+  gint         num_screens;
+  GtkWidget   *qbox;
+  return_if_no_display (gdisp, data);
+
+  qbox = g_object_get_data (G_OBJECT (gdisp->shell),
+                            "gimp-change-screen-dialog");
+
+  if (qbox)
+    {
+      gtk_window_present (GTK_WINDOW (qbox));
+      return;
+    }
+
+  screen  = gtk_widget_get_screen (gdisp->shell);
+  display = gtk_widget_get_display (gdisp->shell);
+
+  cur_screen  = gdk_screen_get_number (screen);
+  num_screens = gdk_display_get_n_screens (display);
+
+  qbox = gimp_query_int_box ("Move Display to Screen",
+                             gdisp->shell,
+                             NULL, 0,
+                             "Enter Destination Screen:",
+                             cur_screen, 0, num_screens - 1,
+                             G_OBJECT (gdisp->shell), "destroy",
+                             view_change_screen_confirm_callback,
+                             gdisp->shell);
+
+  g_object_set_data (G_OBJECT (gdisp->shell), "gimp-change-screen-dialog", qbox);
+
+  g_signal_connect (qbox, "destroy",
+                    G_CALLBACK (view_change_screen_destroy_callback),
+                    gdisp->shell);
+
+  gtk_widget_show (qbox);
 }

@@ -482,6 +482,11 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     GIMP_HELP_VIEW_FULLSCREEN, NULL },
 
+  { { N_("/View/Move to Screen..."), NULL,
+      view_change_screen_cmd_callback, 0, NULL },
+    NULL,
+    GIMP_HELP_VIEW_CHANGE_SCREEN, NULL },
+
   /*  <Image>/Image  */
 
   MENU_BRANCH (N_("/_Image")),
@@ -1322,6 +1327,7 @@ image_menu_update (GtkItemFactory *item_factory,
   gint                lind          = -1;
   gint                lnum          = -1;
   gboolean            fullscreen    = FALSE;
+  gint                n_screens     = 1;
 
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
@@ -1371,6 +1377,9 @@ image_menu_update (GtkItemFactory *item_factory,
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
       options = fullscreen ? shell->fullscreen_options : shell->options;
+
+      n_screens =
+        gdk_display_get_n_screens (gtk_widget_get_display (GTK_WIDGET (shell)));
     }
 
   gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
@@ -1378,6 +1387,8 @@ image_menu_update (GtkItemFactory *item_factory,
 
 #define SET_ACTIVE(menu,condition) \
         gimp_item_factory_set_active (item_factory, menu, (condition) != 0)
+#define SET_VISIBLE(menu,condition) \
+        gimp_item_factory_set_visible (item_factory, menu, (condition) != 0)
 #define SET_LABEL(menu,label) \
         gimp_item_factory_set_label (item_factory, menu, (label))
 #define SET_SENSITIVE(menu,condition) \
@@ -1509,10 +1520,10 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
   SET_ACTIVE    ("/View/Show Statusbar",  gdisp && options->show_statusbar);
 
-  SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
-
-  SET_SENSITIVE ("/View/Fullscreen", gdisp);
-  SET_ACTIVE    ("/View/Fullscreen", gdisp && fullscreen);
+  SET_SENSITIVE ("/View/Shrink Wrap",       gdisp);
+  SET_SENSITIVE ("/View/Fullscreen",        gdisp);
+  SET_ACTIVE    ("/View/Fullscreen",        gdisp && fullscreen);
+  SET_VISIBLE   ("/View/Move to Screen...", gdisp && n_screens > 1);
 
   /*  Image  */
 
@@ -1600,6 +1611,7 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Transform/Offset...",             lp);
 
 #undef SET_ACTIVE
+#undef SET_VISIBLE
 #undef SET_LABEL
 #undef SET_SENSITIVE
 

@@ -180,7 +180,11 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   { { N_("/Auto Follow Active _Image"), NULL,
       dialogs_toggle_auto_cmd_callback, 0, "<ToggleItem>" },
     NULL,
-    GIMP_HELP_DOCK_AUTO_BUTTON, NULL }
+    GIMP_HELP_DOCK_AUTO_BUTTON, NULL },
+  { { N_("/Move to Screen..."), NULL,
+      dialogs_change_screen_cmd_callback, 0, NULL },
+    NULL,
+    GIMP_HELP_DOCK_CHANGE_SCREEN, NULL }
 };
 
 #undef ADD_TAB
@@ -204,6 +208,7 @@ dialogs_menu_update (GtkItemFactory *factory,
   GimpPreviewSize         preview_size        = -1;
   GimpTabStyle            tab_style           = -1;
   gint                    n_pages             = 0;
+  gint                    n_screens           = 1;
 
   if (GIMP_IS_DOCKBOOK (data))
     {
@@ -356,6 +361,9 @@ dialogs_menu_update (GtkItemFactory *factory,
       SET_SENSITIVE ("/View as List", list_view_available);
     }
 
+  n_screens = gdk_display_get_n_screens
+    (gtk_widget_get_display (GTK_WIDGET (dockbook->dock)));
+
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     {
       GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dockbook->dock);
@@ -369,10 +377,12 @@ dialogs_menu_update (GtkItemFactory *factory,
     }
   else
     {
-      SET_VISIBLE ("/image-menu-separator",     FALSE);
+      SET_VISIBLE ("/image-menu-separator",     n_screens > 1);
       SET_VISIBLE ("/Show Image Menu",          FALSE);
       SET_VISIBLE ("/Auto Follow Active Image", FALSE);
     }
+
+  SET_VISIBLE ("/Move to Screen...", n_screens > 1);
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

@@ -1317,20 +1317,6 @@ gimp_display_shell_vruler_button_press (GtkWidget        *widget,
   return FALSE;
 }
 
-static void
-gimp_display_shell_change_screen_callback (GtkWidget *query_box,
-                                           gint       value,
-                                           gpointer   data)
-{
-  GdkScreen *screen;
-
-  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
-                                   value);
-
-  if (screen)
-    gtk_window_set_screen (GTK_WINDOW (data), screen);
-}
-
 gboolean
 gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
@@ -1339,33 +1325,7 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
   if (! shell->gdisp->gimage->gimp->busy)
     {
       if (event->button == 1)
-        {
-          gimp_display_shell_popup_menu (GTK_WIDGET (shell));
-        }
-      else if (event->button == 2)
-        {
-          GdkScreen  *screen;
-          GdkDisplay *display;
-          gint        cur_screen;
-          gint        num_screens;
-          GtkWidget  *qbox;
-
-          screen  = gtk_widget_get_screen (widget);
-          display = gtk_widget_get_display (widget);
-
-          cur_screen  = gdk_screen_get_number (screen);
-          num_screens = gdk_display_get_n_screens (display);
-
-          qbox = gimp_query_int_box ("Move Display to Screen",
-                                     GTK_WIDGET (shell),
-                                     NULL, 0,
-                                     "Enter Destination Screen:",
-                                     cur_screen, 0, num_screens - 1,
-                                     G_OBJECT (shell), "destroy",
-                                     gimp_display_shell_change_screen_callback,
-                                     shell);
-          gtk_widget_show (qbox);
-        }
+        gimp_display_shell_popup_menu (GTK_WIDGET (shell));
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the

@@ -1,3 +1,18 @@
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: removed the
+	"Move to Screen" hack.
+
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/view-commands.[ch]
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c: added proper menu items to the
+	<Image>/View and the <Dialogs> menus so all image windows and
+	docks can be sent to other screens. Hide the menu items when
+	there is just one screen.
+
+	* app/widgets/gimphelp-ids.h: new help IDd for the new menu items.
+
 2003-11-10  Sven Neumann  <sven@gimp.org>
 
 	* app/display/Makefile.am

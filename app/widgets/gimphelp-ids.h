@@ -89,6 +89,7 @@
 #define GIMP_HELP_VIEW_SHOW_STATUSBAR             "gimp-view-show-statusbar"
 #define GIMP_HELP_VIEW_SHRINK_WRAP                "gimp-view-shrink-wrap"
 #define GIMP_HELP_VIEW_FULLSCREEN                 "gimp-view-fullscreen"
+#define GIMP_HELP_VIEW_CHANGE_SCREEN              "gimp-view-change-screen"
 
 #define GIMP_HELP_IMAGE_WINDOW                    "gimp-image-window"
 #define GIMP_HELP_IMAGE_DIALOG                    "gimp-image-dialog"
@@ -377,6 +378,7 @@
 #define GIMP_HELP_DOCK_TAB_STYLE                  "gimp-dock-tab-style"
 #define GIMP_HELP_DOCK_VIEW_AS_LIST               "gimp-dock-view-as-list"
 #define GIMP_HELP_DOCK_VIEW_AS_GRID               "gimp-dock-view-as-grid"
+#define GIMP_HELP_DOCK_CHANGE_SCREEN              "gimp-dock-change-screen"
 
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"
 #define GIMP_HELP_COLOR_DIALOG                    "gimp-color-dialog"

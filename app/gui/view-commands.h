@@ -33,8 +33,6 @@ void   view_zoom_other_cmd_callback            (GtkWidget *widget,
                                                 gpointer   data);
 void   view_dot_for_dot_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
-void   view_fullscreen_cmd_callback            (GtkWidget *widget,
-						gpointer   data);
 void   view_info_window_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
 void   view_navigation_window_cmd_callback     (GtkWidget *widget,
@@ -63,8 +61,13 @@ void   view_snap_to_grid_cmd_callback          (GtkWidget *widget,
                                                 gpointer   data);
 void   view_new_view_cmd_callback              (GtkWidget *widget,
                                                 gpointer   data);
+
 void   view_shrink_wrap_cmd_callback           (GtkWidget *widget,
                                                 gpointer   data);
+void   view_fullscreen_cmd_callback            (GtkWidget *widget,
+						gpointer   data);
+void   view_change_screen_cmd_callback         (GtkWidget *widget,
+						gpointer   data);
 
 
 #endif /* __VIEW_COMMANDS_H__ */

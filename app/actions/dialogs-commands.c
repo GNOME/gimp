@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
 #include "widgets/gimpcontainerview.h"
@@ -359,6 +361,74 @@ dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
     gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
                                             GTK_CHECK_MENU_ITEM (widget)->active);
+}
+
+static void
+dialogs_change_screen_confirm_callback (GtkWidget *query_box,
+                                        gint       value,
+                                        gpointer   data)
+{
+  GdkScreen *screen;
+
+  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
+                                   value);
+
+  if (screen)
+    gtk_window_set_screen (GTK_WINDOW (data), screen);
+}
+
+static void
+dialogs_change_screen_destroy_callback (GtkWidget *query_box,
+                                        GtkWidget *dock)
+{
+  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", NULL);
+}
+
+void
+dialogs_change_screen_cmd_callback (GtkWidget *widget,
+                                    gpointer   data,
+                                    guint      action)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GtkWidget    *dock;
+  GdkScreen    *screen;
+  GdkDisplay   *display;
+  gint          cur_screen;
+  gint          num_screens;
+  GtkWidget    *qbox;
+
+  dock = GTK_WIDGET (dockbook->dock);
+
+  qbox = g_object_get_data (G_OBJECT (dock), "gimp-change-screen-dialog");
+
+  if (qbox)
+    {
+      gtk_window_present (GTK_WINDOW (qbox));
+      return;
+    }
+
+  screen  = gtk_widget_get_screen (dock);
+  display = gtk_widget_get_display (dock);
+
+  cur_screen  = gdk_screen_get_number (screen);
+  num_screens = gdk_display_get_n_screens (display);
+
+  qbox = gimp_query_int_box ("Move Dock to Screen",
+                             dock,
+                             NULL, 0,
+                             "Enter Destination Screen:",
+                             cur_screen, 0, num_screens - 1,
+                             G_OBJECT (dock), "destroy",
+                             dialogs_change_screen_confirm_callback,
+                             dock);
+
+  g_object_set_data (G_OBJECT (dock), "gimp-change-screen-dialog", qbox);
+
+  g_signal_connect (qbox, "destroy",
+                    G_CALLBACK (dialogs_change_screen_destroy_callback),
+                    dock);
+
+  gtk_widget_show (qbox);
 }
 
 void
