@@ -19,6 +19,7 @@
 #include "boundary.h"
 #include "by_color_select.h"
 #include "colormaps.h"
+#include "cursorutil.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
@@ -87,6 +88,7 @@ static void by_color_select_color_drop (GtkWidget *, guchar, guchar, guchar,
 static void by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
 static void by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
 static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void by_color_select_oper_update    (Tool *, GdkEventMotion *, gpointer);
 static void by_color_select_control        (Tool *, ToolAction,       gpointer);
 
 static ByColorDialog * by_color_select_dialog_new (void);
@@ -111,7 +113,7 @@ static Channel *  by_color_select_color           (GImage *, GimpDrawable *,
 
 /*  by_color selection machinery  */
 
-static int
+static gint
 is_pixel_sufficiently_different (guchar *col1,
 				 guchar *col2,
 				 gint    antialias,
@@ -119,10 +121,10 @@ is_pixel_sufficiently_different (guchar *col1,
 				 gint    bytes,
 				 gint    has_alpha)
 {
-  int diff;
-  int max;
-  int b;
-  int alpha;
+  gint diff;
+  gint max;
+  gint b;
+  gint alpha;
 
   max = 0;
   alpha = (has_alpha) ? bytes - 1 : bytes;
@@ -141,9 +143,9 @@ is_pixel_sufficiently_different (guchar *col1,
 
   if (antialias && threshold > 0)
     {
-      float aa;
+      gfloat aa;
 
-      aa = 1.5 - ((float) max / threshold);
+      aa = 1.5 - ((gfloat) max / threshold);
       if (aa <= 0)
 	return 0;
       else if (aa < 0.5)
@@ -179,12 +181,12 @@ by_color_select_color (GImage       *gimage,
   guchar *mask_data;
   guchar *idata, *mdata;
   guchar rgb[MAX_CHANNELS];
-  int has_alpha, indexed;
-  int width, height;
-  int bytes, color_bytes, alpha;
-  int i, j;
+  gint has_alpha, indexed;
+  gint width, height;
+  gint bytes, color_bytes, alpha;
+  gint i, j;
   void * pr;
-  int d_type;
+  gint d_type;
 
   /*  Get the image information  */
   if (sample_merged)
@@ -280,8 +282,8 @@ by_color_select (GImage       *gimage,
 		 gdouble       feather_radius,
 		 gint          sample_merged)
 {
-  Channel * new_mask;
-  int off_x, off_y;
+  Channel *new_mask;
+  gint     off_x, off_y;
 
   if (!drawable) 
     return;
@@ -321,7 +323,7 @@ by_color_select_button_press (Tool           *tool,
 			      GdkEventButton *bevent,
 			      gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay      *gdisp;
   ByColorSelect *by_color_sel;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -337,19 +339,6 @@ by_color_select_button_press (Tool           *tool,
 
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
-
-  /*  Defaults  */
-  by_color_sel->operation = REPLACE;
-
-  /*  Based on modifiers, and the "by color" dialog's selection mode  */
-  if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
-    by_color_sel->operation = ADD;
-  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
-    by_color_sel->operation = SUB;
-  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
-    by_color_sel->operation = INTERSECT;
-  else
-    by_color_sel->operation = by_color_dialog->operation;
 
   /*  Make sure the "by color" select dialog is visible  */
   if (! GTK_WIDGET_VISIBLE (by_color_dialog->shell))
@@ -374,7 +363,8 @@ by_color_select_button_press (Tool           *tool,
   gdisp->gimage->by_color_select = TRUE;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-                    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+                    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
                     GDK_BUTTON_RELEASE_MASK,
                     NULL, NULL, bevent->time);
 }
@@ -384,12 +374,12 @@ by_color_select_button_release (Tool           *tool,
 				GdkEventButton *bevent,
 				gpointer        gdisp_ptr)
 {
-  ByColorSelect * by_color_sel;
-  GDisplay * gdisp;
-  gint x, y;
-  GimpDrawable *drawable;
-  guchar *color;
-  gint use_offsets;
+  ByColorSelect *by_color_sel;
+  GDisplay      *gdisp;
+  gint           x, y;
+  GimpDrawable  *drawable;
+  guchar        *color;
+  gint           use_offsets;
 
   gdisp = (GDisplay *) gdisp_ptr;
   by_color_sel = (ByColorSelect *) tool->private;
@@ -443,11 +433,13 @@ by_color_select_cursor_update (Tool           *tool,
 			       GdkEventMotion *mevent,
 			       gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
-  Layer *layer;
-  gint x, y;
+  ByColorSelect *by_col_sel;
+  GDisplay      *gdisp;
+  Layer         *layer;
+  gint           x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
+  by_col_sel = (ByColorSelect *) tool->private;
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
@@ -455,11 +447,56 @@ by_color_select_cursor_update (Tool           *tool,
   if ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)))
     if (layer == gdisp->gimage->active_layer)
       {
-	gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+	switch (by_col_sel->operation)
+	  {
+	  case SELECTION_ADD:
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1P_CURSOR);
+	    break;
+	  case SELECTION_SUB:
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1M_CURSOR);
+	    break;
+	  case SELECTION_INTERSECT: 
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE1U_CURSOR);
+	    break;
+	  case SELECTION_REPLACE:
+	    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+	    break;
+	  case SELECTION_MOVE_MASK:
+	    gdisplay_install_tool_cursor (gdisp, GDK_DIAMOND_CROSS);
+	    break;
+	  case SELECTION_MOVE: 
+	    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+	  }
+
 	return;
       }
 
   gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
+}
+
+static void
+by_color_select_oper_update (Tool           *tool,
+			     GdkEventMotion *mevent,
+			     gpointer        gdisp_ptr)
+{
+  ByColorSelect *by_col_sel;
+
+  if (active_tool->state == ACTIVE)
+    return;
+
+  by_col_sel = (ByColorSelect *) tool->private;
+
+  if ((mevent->state & GDK_SHIFT_MASK) &&
+      !(mevent->state & GDK_CONTROL_MASK))
+    by_col_sel->operation = SELECTION_ADD;   /* add to the selection */
+  else if ((mevent->state & GDK_CONTROL_MASK) &&
+           !(mevent->state & GDK_SHIFT_MASK))
+    by_col_sel->operation = SELECTION_SUB;   /* subtract from the selection */
+  else if ((mevent->state & GDK_CONTROL_MASK) &&
+           (mevent->state & GDK_SHIFT_MASK))
+    by_col_sel->operation = SELECTION_INTERSECT; /* intersect with selection */
+  else
+    by_col_sel->operation = by_color_dialog->operation;
 }
 
 static void
@@ -469,13 +506,13 @@ by_color_select_control (Tool       *tool,
 {
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
 
-    case RESUME :
+    case RESUME:
       break;
 
-    case HALT :
+    case HALT:
       if (by_color_dialog)
 	by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
       break;
@@ -494,8 +531,8 @@ by_color_select_options_reset (void)
 Tool *
 tools_new_by_color_select (void)
 {
-  Tool * tool;
-  ByColorSelect * private;
+  Tool          *tool;
+  ByColorSelect *private;
 
   /*  The tool options  */
   if (!by_color_options)
@@ -508,13 +545,16 @@ tools_new_by_color_select (void)
   tool = tools_new_tool (BY_COLOR_SELECT);
   private = g_new (ByColorSelect, 1);
 
-  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
+  private->operation = SELECTION_REPLACE;
 
   tool->private = (void *) private;
+
+  tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 
   tool->button_press_func   = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->cursor_update_func  = by_color_select_cursor_update;
+  tool->oper_update_func    = by_color_select_oper_update;
   tool->control_func        = by_color_select_control;
 
   return tool;
@@ -523,7 +563,7 @@ tools_new_by_color_select (void)
 void
 tools_free_by_color_select (Tool *tool)
 {
-  ByColorSelect * by_color_sel;
+  ByColorSelect *by_color_sel;
 
   by_color_sel = (ByColorSelect *) tool->private;
 
@@ -649,13 +689,13 @@ by_color_select_dialog_new (void)
     gimp_radio_group_new (TRUE, _("Selection Mode"),
 
 			  _("Replace"), by_color_select_type_callback,
-			  (gpointer) REPLACE, NULL, NULL, TRUE,
+			  (gpointer) SELECTION_REPLACE, NULL, NULL, TRUE,
 			  _("Add"), by_color_select_type_callback,
-			  (gpointer) ADD, NULL, NULL, FALSE,
+			  (gpointer) SELECTION_ADD, NULL, NULL, FALSE,
 			  _("Subtract"), by_color_select_type_callback,
-			  (gpointer) SUB, NULL, NULL, FALSE,
+			  (gpointer) SELECTION_SUB, NULL, NULL, FALSE,
 			  _("Intersect"), by_color_select_type_callback,
-			  (gpointer) INTERSECT, NULL, NULL, FALSE,
+			  (gpointer) SELECTION_INTERSECT, NULL, NULL, FALSE,
 
 			  NULL);
 
@@ -926,12 +966,15 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   operation = REPLACE;
 
   /*  Based on modifiers, and the "by color" dialog's selection mode  */
-  if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
-    operation = ADD;
-  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
-    operation = SUB;
-  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
-    operation = INTERSECT;
+  if ((bevent->state & GDK_SHIFT_MASK) &&
+      !(bevent->state & GDK_CONTROL_MASK))
+    operation = SELECTION_ADD;
+  else if ((bevent->state & GDK_CONTROL_MASK) &&
+	   !(bevent->state & GDK_SHIFT_MASK))
+    operation = SELECTION_SUB;
+  else if ((bevent->state & GDK_CONTROL_MASK) &&
+	   (bevent->state & GDK_SHIFT_MASK))
+    operation = SELECTION_INTERSECT;
   else
     operation = by_color_dialog->operation;
 
@@ -944,7 +987,8 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, TRUE, FALSE);
+      tile = tile_manager_get_tile (gimage_composite (bcd->gimage),
+				    x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
     }
   else
@@ -954,7 +998,8 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       drawable_offsets (drawable, &offx, &offy);
       x = drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;
       y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
-      if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
+      if (x < 0 || y < 0 ||
+	  x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	return;
       tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);

@@ -1,5 +1,11 @@
 2000-02-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/by_color_select.c: show our selection mode cursors (REPLACE,
+	ADD, ...) depending on the modifier state and the "Selection Mode"
+	toggles in the tool's dialog.
+
+2000-02-08  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpfileselection.[ch]
 	* libgimp/gimppatheditor.[ch]: document the two widgets.
 
