@@ -116,7 +116,7 @@ void create_paperpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
-  paperlist = view = createonecolumnlist (box1, selectpaper);
+  paperlist = view = create_one_column_list (box1, selectpaper);
   paperstore = GTK_LIST_STORE(gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 

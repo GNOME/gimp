@@ -118,7 +118,7 @@ updatepreview (GtkWidget *wg, gpointer d)
     }
     if(d)
     {
-      storevals();
+      store_values ();
 
       if(GPOINTER_TO_INT(d) != 2)
         repaint(&preview_ppm, &alpha_ppm);

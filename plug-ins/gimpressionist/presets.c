@@ -477,7 +477,7 @@ static void apply_preset(GtkWidget *w, GtkTreeSelection *selection)
 
       select_preset(preset);
 
-      restorevals ();
+      restore_values ();
 
       /* g_free (preset); */
       g_free (selected_preset_filename);
@@ -622,7 +622,7 @@ static void save_preset(void)
 
   preset_name = gtk_entry_get_text (GTK_ENTRY (presetnameentry));
   thispath = parsepath ();
-  storevals ();
+  store_values ();
 
   if (!thispath)
     {

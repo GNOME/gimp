@@ -1,3 +1,9 @@
+2004-07-14  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: Added more underscores to identifiers.
+	Fixed some of the style (added whitespace before the '(' in function
+	calls)
+
 2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/mng.c: Now writes a global palette chunk, and

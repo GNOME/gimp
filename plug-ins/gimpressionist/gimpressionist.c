@@ -28,29 +28,30 @@
 
 static GtkWidget *dlg = NULL;
 
-void storevals(void)
+void store_values (void)
 {
-  paper_store();
-  brush_store();
-  general_store();
+  paper_store ();
+  brush_store ();
+  general_store ();
 }
 
-void restorevals(void)
+void restore_values (void)
 {
-  brush_restore();
-  paper_restore();
-  orientation_restore();
-  size_restore();
-  place_restore();
-  general_restore();
-  color_restore();
+  brush_restore ();
+  paper_restore ();
+  orientation_restore ();
+  size_restore ();
+  place_restore ();
+  general_restore ();
+  color_restore ();
 
-  update_orientmap_dialog();
+  update_orientmap_dialog ();
 }
 
-GtkWidget *createonecolumnlist(GtkWidget *parent,
-                               void (*changed_cb)
-                               (GtkTreeSelection *selection, gpointer data))
+GtkWidget *create_one_column_list (GtkWidget *parent,
+                                   void (*changed_cb)
+                                   (GtkTreeSelection *selection, 
+                                    gpointer data))
 {
   GtkListStore *store;
   GtkTreeSelection *selection;
@@ -92,7 +93,7 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 }
 
 static void
-showabout (void)
+show_about (void)
 {
   static GtkWidget *window = NULL;
 
@@ -165,11 +166,11 @@ dialog_response (GtkWidget *widget,
   switch (response_id)
     {
     case RESPONSE_ABOUT:
-      showabout ();
+      show_about ();
       break;
 
     case GTK_RESPONSE_OK:
-      storevals ();
+      store_values ();
       pcvals.run = TRUE;
       gtk_widget_destroy (widget);
       break;
@@ -234,7 +235,7 @@ create_dialog (void)
    * This is to make sure the values from the pcvals will be reflected
    * in the GUI here. Otherwise they will be set to the defaults.
    * */
-  restorevals ();
+  restore_values ();
 
   gtk_widget_show (dlg);
 

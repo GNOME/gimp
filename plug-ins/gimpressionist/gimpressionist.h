@@ -124,37 +124,38 @@ extern gimpressionist_vals_t pcvals;
 
 /* Prototypes */
 
-GList *parsepath(void);
-void free_parsepath_cache(void);
+GList *parsepath (void);
+void free_parsepath_cache (void);
 
-void create_orientationpage(GtkNotebook *);
+void create_orientationpage (GtkNotebook *);
 
-void grabarea(void);
-void storevals(void);
-void restorevals(void);
-gchar *findfile(const gchar *);
+void grabarea (void);
+void store_values (void);
+void restore_values (void);
+gchar *findfile (const gchar *);
 
-void unselectall(GtkWidget *list);
-void reselect(GtkWidget *list, char *fname);
-void readdirintolist(char *subdir, GtkWidget *view, char *selected);
-void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
-                              gboolean with_filename_column,
-                              gchar *(*get_object_name_cb)
-                              (gchar *dir, gchar *filename, void *context),
-                              void * context);
-void orientation_restore(void);
+void unselectall (GtkWidget *list);
+void reselect (GtkWidget *list, char *fname);
+void readdirintolist (char *subdir, GtkWidget *view, char *selected);
+void readdirintolist_extended (char *subdir, GtkWidget *view, char *selected,
+                               gboolean with_filename_column,
+                               gchar *(*get_object_name_cb)
+                               (gchar *dir, gchar *filename, void *context),
+                               void * context);
+void orientation_restore (void);
 
-GtkWidget *createonecolumnlist(GtkWidget *parent,
-			       void (*changed_cb)
-			       (GtkTreeSelection *selection, gpointer data));
+GtkWidget *create_one_column_list (GtkWidget *parent,
+			           void (*changed_cb)
+			           (GtkTreeSelection *selection, 
+                                    gpointer data));
 
-void brush_reload(const gchar *fn, struct ppm *p);
+void brush_reload (const gchar *fn, struct ppm *p);
 
-void create_orientmap_dialog(void);
-void update_orientmap_dialog(void);
-double getdir(double x, double y, int from);
+void create_orientmap_dialog (void);
+void update_orientmap_dialog (void);
+double getdir (double x, double y, int from);
 
-void create_sizemap_dialog(void);
+void create_sizemap_dialog (void);
 double getsiz_proto (double x, double y, int n, smvector_t *vec,
                      double smstrexp, int voronoi);
 
@@ -162,9 +163,9 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
 void set_colorbrushes (const gchar *fn);
 int  create_gimpressionist (void);
 
-double dist(double x, double y, double dx, double dy);
+double dist (double x, double y, double dx, double dy);
 
-void restore_default_values(void);
+void restore_default_values (void);
 
 GtkWidget *create_radio_button (GtkWidget *box, int orienttype,
                                 void (*callback)(GtkWidget *wg, void *d),
