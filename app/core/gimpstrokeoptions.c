@@ -36,7 +36,7 @@ enum
   PROP_0,
   PROP_STYLE,
   PROP_WIDTH,
-  PROP_WIDTH_UNIT,
+  PROP_UNIT,
   PROP_CAP_STYLE,
   PROP_JOIN_STYLE,
   PROP_MITER,
@@ -112,8 +112,8 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                    "width", NULL,
                                    0.0, 2000.0, 5.0,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_WIDTH_UNIT,
-				 "width-unit", NULL,
+  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
+				 "unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
 				 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CAP_STYLE,
@@ -132,10 +132,6 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                     "antialias", NULL,
                                     TRUE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_DASH_UNIT,
-				 "dash-unit", NULL,
-				 TRUE, FALSE, GIMP_UNIT_PIXEL,
-				 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_DASH_OFFSET,
                                    "dash-offset", NULL,
                                    0.0, 2000.0, 10.0,
@@ -167,8 +163,8 @@ gimp_stroke_options_set_property (GObject      *object,
     case PROP_WIDTH:
       options->width = g_value_get_double (value);
       break;
-    case PROP_WIDTH_UNIT:
-      options->width_unit = g_value_get_int (value);
+    case PROP_UNIT:
+      options->unit = g_value_get_int (value);
       break;
     case PROP_CAP_STYLE:
       options->cap_style = g_value_get_enum (value);
@@ -181,9 +177,6 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
-      break;
-    case PROP_DASH_UNIT:
-      options->dash_unit = g_value_get_int (value);
       break;
     case PROP_DASH_OFFSET:
       options->dash_offset = g_value_get_double (value);
@@ -246,8 +239,8 @@ gimp_stroke_options_get_property (GObject    *object,
     case PROP_WIDTH:
       g_value_set_double (value, options->width);
       break;
-    case PROP_WIDTH_UNIT:
-      g_value_set_int (value, options->width_unit);
+    case PROP_UNIT:
+      g_value_set_int (value, options->unit);
       break;
     case PROP_CAP_STYLE:
       g_value_set_enum (value, options->cap_style);
@@ -260,9 +253,6 @@ gimp_stroke_options_get_property (GObject    *object,
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
-      break;
-    case PROP_DASH_UNIT:
-      g_value_set_int (value, options->dash_unit);
       break;
     case PROP_DASH_OFFSET:
       g_value_set_double (value, options->dash_offset);

@@ -94,12 +94,10 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (options->width_unit != GIMP_UNIT_PIXEL)
+  if (options->unit != GIMP_UNIT_PIXEL)
     {
-      width = (width *
-               _gimp_unit_get_factor (gimage->gimp,
-                                      options->width_unit) *
-               (gimage->xresolution + gimage->yresolution) / 2);
+      width *= (((gimage->xresolution + gimage->yresolution) / 2) /
+                _gimp_unit_get_factor (gimage->gimp, options->unit));
     }
 
   /* what area do we operate on? */

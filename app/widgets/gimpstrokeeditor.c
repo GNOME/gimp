@@ -173,23 +173,14 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  box = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->options), "style",
-                                        _("Style"), 0, 0);
-  gtk_table_attach (GTK_TABLE (table), box, 0, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (box);
-
-  row++;
-
-  digits = gimp_unit_get_digits (editor->options->width_unit);
+  digits = gimp_unit_get_digits (editor->options->unit);
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (editor->options), "width",
                                           1.0, 10.0, digits);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Stroke _Width:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
 
-  menu = gimp_prop_unit_menu_new (G_OBJECT (editor->options), "width-unit",
-                                  "%a");
+  menu = gimp_prop_unit_menu_new (G_OBJECT (editor->options), "unit", "%a");
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
   gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -219,6 +210,13 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_table_attach (GTK_TABLE (table), button, 0, 2, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
+  row++;
+
+  box = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->options), "style",
+                                        _("Style"), 0, 0);
+  gtk_table_attach (GTK_TABLE (table), box, 0, 3, row, row + 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (box);
   row++;
 
   return object;
