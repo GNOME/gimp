@@ -302,7 +302,7 @@ while (<>) {
 	        $nick = lc($nick);
             }
 	    if (!defined $desc) {
-	        $desc = "NULL";
+		$desc = "\"$name\"";
 	    } else {
 		$desc = "N_($desc)";
 	    }

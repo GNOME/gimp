@@ -1,5 +1,11 @@
 2002-03-17  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-mkenums: allowing NULL for names was a bad idea...
+
+	* app/base/base-enums.[ch]: added more descriptions.
+
+2002-03-17  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: define GIMP_MKENUMS for use in Makefile.am.
 
 	* tools/Makefile.am
@@ -15,7 +21,7 @@
 
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
-	* app/widgets/gimpenummenu.[ch]: new widget to create a GtkMenu or
+	* app/widgets/gimpenummenu.[ch]: new widget to create a GtkMenu or a
 	GtkOptionMenu directly from a registered enum.
 
 	* app/gui/preferences-dialog.c

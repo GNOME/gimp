@@ -21,7 +21,7 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen
-   and glib-mkenums. All enums that are not marked with /*< pdb-skip >*/
+   and gimp-mkenums. All enums that are not marked with /*< pdb-skip >*/
    are exported to libgimp and the PDB. Enums that are not marked with
    /*< skip >*/ are registered with the GType system. If you want the
    enum to be skipped by both scripts, you have to use /*< pdb-skip >*/
@@ -86,9 +86,9 @@ GType gimp_check_size_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_SMALL_CHECKS  = 0,
-  GIMP_MEDIUM_CHECKS = 1,
-  GIMP_LARGE_CHECKS  = 2
+  GIMP_SMALL_CHECKS  = 0,  /*< desc="Small"  >*/ 
+  GIMP_MEDIUM_CHECKS = 1,  /*< desc="Medium" >*/
+  GIMP_LARGE_CHECKS  = 2   /*< desc="Large"  >*/
 } GimpCheckSize;
 
 
@@ -98,12 +98,12 @@ GType gimp_check_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_LIGHT_CHECKS = 0,
-  GIMP_GRAY_CHECKS  = 1,
-  GIMP_DARK_CHECKS  = 2,
-  GIMP_WHITE_ONLY   = 3,
-  GIMP_GRAY_ONLY    = 4,
-  GIMP_BLACK_ONLY   = 5
+  GIMP_LIGHT_CHECKS = 0,   /*< desc="Light Checks"    >*/
+  GIMP_GRAY_CHECKS  = 1,   /*< desc="Mid-Tone Checks" >*/
+  GIMP_DARK_CHECKS  = 2,   /*< desc="Dark Checks"     >*/
+  GIMP_WHITE_ONLY   = 3,   /*< desc="White Only"      >*/
+  GIMP_GRAY_ONLY    = 4,   /*< desc="Gray Only"       >*/
+  GIMP_BLACK_ONLY   = 5    /*< desc="Black Only"      >*/
 } GimpCheckType;
 
 

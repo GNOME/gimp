@@ -30,26 +30,26 @@ gimp_interpolation_type_get_type (void)
 
 static const GEnumValue gimp_layer_mode_effects_enum_values[] =
 {
-  { GIMP_NORMAL_MODE, NULL, "normal-mode" },
-  { GIMP_DISSOLVE_MODE, NULL, "dissolve-mode" },
-  { GIMP_BEHIND_MODE, NULL, "behind-mode" },
-  { GIMP_MULTIPLY_MODE, NULL, "multiply-mode" },
-  { GIMP_SCREEN_MODE, NULL, "screen-mode" },
-  { GIMP_OVERLAY_MODE, NULL, "overlay-mode" },
-  { GIMP_DIFFERENCE_MODE, NULL, "difference-mode" },
-  { GIMP_ADDITION_MODE, NULL, "addition-mode" },
-  { GIMP_SUBTRACT_MODE, NULL, "subtract-mode" },
-  { GIMP_DARKEN_ONLY_MODE, NULL, "darken-only-mode" },
-  { GIMP_LIGHTEN_ONLY_MODE, NULL, "lighten-only-mode" },
-  { GIMP_HUE_MODE, NULL, "hue-mode" },
-  { GIMP_SATURATION_MODE, NULL, "saturation-mode" },
-  { GIMP_COLOR_MODE, NULL, "color-mode" },
-  { GIMP_VALUE_MODE, NULL, "value-mode" },
-  { GIMP_DIVIDE_MODE, NULL, "divide-mode" },
-  { GIMP_DODGE_MODE, NULL, "dodge-mode" },
-  { GIMP_BURN_MODE, NULL, "burn-mode" },
-  { GIMP_HARDLIGHT_MODE, NULL, "hardlight-mode" },
-  { GIMP_COLOR_ERASE_MODE, NULL, "color-erase-mode" },
+  { GIMP_NORMAL_MODE, "GIMP_NORMAL_MODE", "normal-mode" },
+  { GIMP_DISSOLVE_MODE, "GIMP_DISSOLVE_MODE", "dissolve-mode" },
+  { GIMP_BEHIND_MODE, "GIMP_BEHIND_MODE", "behind-mode" },
+  { GIMP_MULTIPLY_MODE, "GIMP_MULTIPLY_MODE", "multiply-mode" },
+  { GIMP_SCREEN_MODE, "GIMP_SCREEN_MODE", "screen-mode" },
+  { GIMP_OVERLAY_MODE, "GIMP_OVERLAY_MODE", "overlay-mode" },
+  { GIMP_DIFFERENCE_MODE, "GIMP_DIFFERENCE_MODE", "difference-mode" },
+  { GIMP_ADDITION_MODE, "GIMP_ADDITION_MODE", "addition-mode" },
+  { GIMP_SUBTRACT_MODE, "GIMP_SUBTRACT_MODE", "subtract-mode" },
+  { GIMP_DARKEN_ONLY_MODE, "GIMP_DARKEN_ONLY_MODE", "darken-only-mode" },
+  { GIMP_LIGHTEN_ONLY_MODE, "GIMP_LIGHTEN_ONLY_MODE", "lighten-only-mode" },
+  { GIMP_HUE_MODE, "GIMP_HUE_MODE", "hue-mode" },
+  { GIMP_SATURATION_MODE, "GIMP_SATURATION_MODE", "saturation-mode" },
+  { GIMP_COLOR_MODE, "GIMP_COLOR_MODE", "color-mode" },
+  { GIMP_VALUE_MODE, "GIMP_VALUE_MODE", "value-mode" },
+  { GIMP_DIVIDE_MODE, "GIMP_DIVIDE_MODE", "divide-mode" },
+  { GIMP_DODGE_MODE, "GIMP_DODGE_MODE", "dodge-mode" },
+  { GIMP_BURN_MODE, "GIMP_BURN_MODE", "burn-mode" },
+  { GIMP_HARDLIGHT_MODE, "GIMP_HARDLIGHT_MODE", "hardlight-mode" },
+  { GIMP_COLOR_ERASE_MODE, "GIMP_COLOR_ERASE_MODE", "color-erase-mode" },
   { 0, NULL, NULL }
 };
 
@@ -67,9 +67,9 @@ gimp_layer_mode_effects_get_type (void)
 
 static const GEnumValue gimp_check_size_enum_values[] =
 {
-  { GIMP_SMALL_CHECKS, NULL, "small-checks" },
-  { GIMP_MEDIUM_CHECKS, NULL, "medium-checks" },
-  { GIMP_LARGE_CHECKS, NULL, "large-checks" },
+  { GIMP_SMALL_CHECKS, N_("Small"), "small-checks" },
+  { GIMP_MEDIUM_CHECKS, N_("Medium"), "medium-checks" },
+  { GIMP_LARGE_CHECKS, N_("Large"), "large-checks" },
   { 0, NULL, NULL }
 };
 
@@ -87,12 +87,12 @@ gimp_check_size_get_type (void)
 
 static const GEnumValue gimp_check_type_enum_values[] =
 {
-  { GIMP_LIGHT_CHECKS, NULL, "light-checks" },
-  { GIMP_GRAY_CHECKS, NULL, "gray-checks" },
-  { GIMP_DARK_CHECKS, NULL, "dark-checks" },
-  { GIMP_WHITE_ONLY, NULL, "white-only" },
-  { GIMP_GRAY_ONLY, NULL, "gray-only" },
-  { GIMP_BLACK_ONLY, NULL, "black-only" },
+  { GIMP_LIGHT_CHECKS, N_("Light Checks"), "light-checks" },
+  { GIMP_GRAY_CHECKS, N_("Mid-Tone Checks"), "gray-checks" },
+  { GIMP_DARK_CHECKS, N_("Dark Checks"), "dark-checks" },
+  { GIMP_WHITE_ONLY, N_("White Only"), "white-only" },
+  { GIMP_GRAY_ONLY, N_("Gray Only"), "gray-only" },
+  { GIMP_BLACK_ONLY, N_("Black Only"), "black-only" },
   { 0, NULL, NULL }
 };
 
@@ -110,11 +110,11 @@ gimp_check_type_get_type (void)
 
 static const GEnumValue gimp_histogram_channel_enum_values[] =
 {
-  { GIMP_HISTOGRAM_VALUE, NULL, "value" },
-  { GIMP_HISTOGRAM_RED, NULL, "red" },
-  { GIMP_HISTOGRAM_GREEN, NULL, "green" },
-  { GIMP_HISTOGRAM_BLUE, NULL, "blue" },
-  { GIMP_HISTOGRAM_ALPHA, NULL, "alpha" },
+  { GIMP_HISTOGRAM_VALUE, "GIMP_HISTOGRAM_VALUE", "value" },
+  { GIMP_HISTOGRAM_RED, "GIMP_HISTOGRAM_RED", "red" },
+  { GIMP_HISTOGRAM_GREEN, "GIMP_HISTOGRAM_GREEN", "green" },
+  { GIMP_HISTOGRAM_BLUE, "GIMP_HISTOGRAM_BLUE", "blue" },
+  { GIMP_HISTOGRAM_ALPHA, "GIMP_HISTOGRAM_ALPHA", "alpha" },
   { 0, NULL, NULL }
 };
 
