@@ -14,6 +14,10 @@ release for GIMP 2.0. GAP, a set of plug-ins that used to live in the
 Video submenu has also become a separate package and can be downloaded
 from ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/gap/.
 
+This release does also not contain any user documentation to be used
+by the built-in help system. Help files for GIMP 2.0 are being worked
+on and you can find snapshots at ftp://ftp.gimp.org/pub/gimp/help/.
+
 For detailed installation instructions, see the file INSTALL.
 
 
