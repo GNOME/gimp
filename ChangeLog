@@ -1,3 +1,9 @@
+2005-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/uri/uri-backend-gnomevfs.c: fixed wrong use of
+	GnomeVFSFileInfo (it wants to be allocated and unrefed). Extended
+	the list of supported prefixes (still conceptually broken).
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* HACKING

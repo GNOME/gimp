@@ -40,7 +40,7 @@ static gboolean   copy_uri (const gchar  *src_uri,
 const gchar *
 uri_backend_get_load_protocols (void)
 {
-  return "http:,https:,ftp:";
+  return "http:,https:,ftp:,sftp:,ssh:,smb:,dav:,davs:";
 }
 
 gboolean
@@ -71,7 +71,7 @@ copy_uri (const gchar  *src_uri,
 {
   GnomeVFSHandle   *read_handle;
   GnomeVFSHandle   *write_handle;
-  GnomeVFSFileInfo  src_info;
+  GnomeVFSFileInfo *src_info;
   GnomeVFSFileSize  file_size  = 0;
   GnomeVFSFileSize  bytes_read = 0;
   guchar            buffer[BUFSIZE];
@@ -86,14 +86,17 @@ copy_uri (const gchar  *src_uri,
 
   gimp_progress_init (_("Connecting to server..."));
 
-  result = gnome_vfs_get_file_info (src_uri, &src_info, 0);
+  src_info = gnome_vfs_file_info_new ();
+  result = gnome_vfs_get_file_info (src_uri, src_info, 0);
 
-  /*  ignore errors here, thes will be noticed below  */
+  /*  ignore errors here, they will be noticed below  */
   if (result == GNOME_VFS_OK &&
-      (src_info.valid_fields & GNOME_VFS_FILE_INFO_FIELDS_SIZE))
+      (src_info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_SIZE))
     {
-      file_size = src_info.size;
+      file_size = src_info->size;
     }
+
+  gnome_vfs_file_info_unref (src_info);
 
   result = gnome_vfs_open (&read_handle, src_uri, GNOME_VFS_OPEN_READ);
 
