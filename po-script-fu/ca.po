@@ -1,13 +1,13 @@
-# gimp-script-fu-ca translation to Catalan.
+# gimp-script-fu translation to Catalan.
 # Copyright (C) 2000, 2001, 2004 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000, 2001.
+# Softcatala <linux@softcatala.org>, 2000, 2001
 # Xavier Conde Rueda <xaviconde@eresmas.com>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-05 14:29+0100\n"
-"PO-Revision-Date: 2004-01-29 01:08+0100\n"
+"POT-Creation-Date: 2004-01-26 20:33+0100\n"
+"PO-Revision-Date: 2004-02-10 01:08+0100\n"
 "Last-Translator: Xavier Conde Rueda <xaviconde@eresmas.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -215,7 +215,7 @@ msgstr "S'està cercant. Espereu un moment"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
-msgstr "Cap concordància"
+msgstr "Cap concordança"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -445,12 +445,12 @@ msgstr "Fi de la barreja"
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X Tiles"
-msgstr "Nombre de mosàics en X"
+msgstr "Nombre de mosaics en X"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y Tiles"
-msgstr "Nombre de mosàics en Y"
+msgstr "Nombre de mosaics en Y"
 
 #
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
@@ -576,13 +576,13 @@ msgstr "Amunt"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Lluentor estranya/Regle "
-"_horitzontal..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Lluentor estranya/"
+"Regle _horitzontal..."
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
-msgstr "Amlçada de la barra"
+msgstr "Alçada de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar Length"
@@ -602,9 +602,9 @@ msgstr ""
 msgid "Radius"
 msgstr "Radi"
 
-# SF == Script-Fu??
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+# SF == Script-Fu??
 msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
@@ -794,15 +794,13 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/"
-"_Encapçalament..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/_Encapçalament..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/Regle "
-"_horitzontal..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/Regle _horitzontal..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -927,8 +925,7 @@ msgstr "Cream: es necessiten dues capes"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr ""
-"Efecte de cremat en una capa principal (text) i una capa de fons (Versió 2.1)"
+msgstr "Efecte de cremat en una capa principal (text) i una capa de fons (Versió 2.1)"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -990,16 +987,16 @@ msgstr "Suavitza"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
 msgid "<Image>/Script-Fu/Stencil Ops/C_arve-It..."
-msgstr "<Image>/Script-Fu/Operacions de plantilla/_Escolpeix..."
+msgstr "<Image>/Script-Fu/Operacions de plantilla/_Esculpeix..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
-msgstr "Escolpeix les àrees blanques"
+msgstr "Esculpeix les àrees blanques"
 
 #
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to Carve"
-msgstr "Imatge que s'escolpeix"
+msgstr "Imatge que s'esculpeix"
 
 #
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
@@ -1014,7 +1011,7 @@ msgstr "Imatge de fons"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
-msgstr "Escolpeix el text aixecat"
+msgstr "Esculpeix el text aixecat"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Padding Around Text"
@@ -1540,7 +1537,7 @@ msgstr "Color fosc"
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight Color"
-msgstr "Color resaltat"
+msgstr "Color ressaltat"
 
 #
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
@@ -1576,16 +1573,16 @@ msgstr "Color de l'ombra"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Etiq_ueta del "
-"sub-botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Etiq_ueta "
+"del sub-botó del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiqueta del "
-"sub-sub-botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiqueta "
+"del sub-sub-botó del conducte..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
@@ -1598,8 +1595,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/E_tiqueta del "
-"botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/E_tiqueta "
+"del botó del conducte..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1913,7 +1910,8 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Fes un pinzell/El·lí_ptic, ploma..."
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Fes un pinzell/Re_ctangular, ploma..."
+msgstr ""
+"<Toolbox>/Extensions/Script-Fu/Fes un pinzell/Re_ctangular, ploma..."
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
@@ -1962,7 +1960,8 @@ msgstr "Mida de l'efecte (píxels * 5)"
 #
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Text de paper de diari..."
+msgstr ""
+"<Toolbox>/Extensions/Script-Fu/Logotipus/Text de paper de diari..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
@@ -2098,7 +2097,7 @@ msgstr "Detall en el mig"
 #
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
-msgstr "Mosàic"
+msgstr "Mosaic"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/_Rippling..."
@@ -2120,7 +2119,7 @@ msgstr "Nombre de marcs"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
-msgstr "Força de la ondulació"
+msgstr "Força de l'ondulació"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
@@ -2514,7 +2513,7 @@ msgstr "Hexàgons"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
-msgstr "Tipus de mosàic"
+msgstr "Tipus de mosaic"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
@@ -2565,7 +2564,8 @@ msgstr "RLE"
 #
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Capçalera de títol de web..."
+msgstr ""
+"<Toolbox>/Extensions/Script-Fu/Logotipus/Capçalera de títol de web..."
 
 #
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
@@ -2647,7 +2647,8 @@ msgstr "Longitud de fil"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr "<Toolbox>/Ajuda/El GIMP al web/_Registre dels connectors"
+msgstr ""
+"<Toolbox>/Ajuda/El GIMP al web/_Registre dels connectors"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
@@ -2685,14 +2686,14 @@ msgstr ""
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Opacity"
-msgstr "Opacitat del resaltat"
+msgstr "Opacitat del ressaltat"
 
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight X Offset"
-msgstr "Desplaçament del resaltat X"
+msgstr "Desplaçament del ressaltat X"
 
 #
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
-msgstr "Desplaçament del resaltat Y"
+msgstr "Desplaçament del ressaltat Y"
