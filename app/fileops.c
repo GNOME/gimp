@@ -1093,7 +1093,7 @@ file_save (GimpImage   *gimage,
   struct stat statbuf;
 
   if (gimage_active_drawable (gimage) == NULL)
-    return FALSE;
+    return PDB_EXECUTION_ERROR;
 
   file_proc = gimage_get_save_proc (gimage);
 
@@ -1676,6 +1676,45 @@ clist_to_slist (GtkCList *file_list)
   return list;
 }
 
+
+/* Set "gimage"s save handler to "save_proc", then save the image.  
+ * Hide the dialog if all went well, otherwise make the user knows an
+ * error happened and leave the dialog up.  Make sure it's sensitive.
+ */
+static void
+file_save_with_proc (GImage *gimage,
+		     gchar *full_filename,
+		     gchar *raw_filename,
+		     PlugInProcDef *save_proc)
+{
+    gint status = PDB_EXECUTION_ERROR;
+
+    if (gimage != NULL)
+    {
+	gimage_set_save_proc (gimage, save_proc);
+	status = file_save (gimage,
+			    full_filename,
+			    raw_filename,
+			    RUN_INTERACTIVE);
+
+	/* hide the file save dialog on success */
+	if (status == PDB_SUCCESS)
+	    file_dialog_hide (filesave);
+    }
+
+    /* If there was an error but file_save() didn't print an error
+     * message, then we'd better. */
+    if (status != PDB_SUCCESS &&
+	status != PDB_CANCEL)
+    {
+	g_message (_("Save failed.\n%s"), full_filename);
+    }
+
+    /* always make file save dialog sensitive */
+    gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+}
+
+
 static void
 file_save_ok_callback (GtkWidget *widget,
 		       gpointer   data)
@@ -1711,26 +1750,9 @@ file_save_ok_callback (GtkWidget *widget,
     }
   else
     {
-      gint status;
-
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
-      gimage_set_save_proc (the_gimage, save_file_proc);
-      status = file_save (the_gimage,
-			  filename,
-			  raw_filename,
-			  RUN_INTERACTIVE);
-
-      if (status == PDB_SUCCESS)
-	{
-	  file_dialog_hide (data);
-	}
-      else if (status != PDB_CANCEL)
-	{
-	  g_message (_("Save failed.\n%s"), filename);
-	}
-
-      gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+      file_save_with_proc (the_gimage, filename, raw_filename, save_file_proc);
     }
 }
 
@@ -1798,35 +1820,16 @@ file_overwrite_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   OverwriteData *overwrite_data;
-  GImage       *gimage;
-  gint status = PDB_EXECUTION_ERROR;
 
   overwrite_data = (OverwriteData *) data;
 
   if (overwrite)
-    {
-      if ((gimage = the_gimage) != NULL)
-	{
-	  status = file_save (the_gimage,
-			      overwrite_data->full_filename,
-			      overwrite_data->raw_filename,
-			      RUN_INTERACTIVE);
-
-	  if (status == PDB_SUCCESS)
-	    {
-	      the_gimage = NULL;
-	      file_dialog_hide (filesave);
-	    }
-	}
-
-      if (status != PDB_SUCCESS &&
-	  status != PDB_CANCEL)
-	{
-	  g_message (_("Save failed.\n%s"), overwrite_data->full_filename);
-	}
-    }
-
-  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  {
+      file_save_with_proc (the_gimage,
+			   overwrite_data->full_filename,
+			   overwrite_data->raw_filename,
+			   save_file_proc);
+  }
 
   g_free (overwrite_data->full_filename);
   g_free (overwrite_data->raw_filename);

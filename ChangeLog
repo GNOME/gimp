@@ -1,6 +1,20 @@
+Fri Aug 18 18:14:35 BST 2000 Austin Donnelly <austin@gimp.org>
+
+	* app/fileops.c: fix nasty bug where if overwriting a file and
+	    also changing the format, gimp would use the old format
+	    rather than the newly selected one.  To repeat: save a new
+	    image as (eg) jpeg by typing foo.jpg<RET>, then Save As XCF by
+	    using the pop-up menu and clicking OK, then Save As jpeg by
+	    using pop-up and clicking OK, and OK again to allow the file
+	    to be overwritten.  You should find that foo.jpg contains an
+	    XCF version of the image.  This was because the "overwrite"
+	    path through the code was subtly different from the standard
+	    way through, meaning that gimage_set_save_proc() was never
+	    called.  Now unified into new function file_save_with_proc().
+
 2000-08-17  Nick Lamb  <njl195@zepler.org.uk>
 
-        * app/fileops.c: I venture once again into app/ to fix #11701.
+	* app/fileops.c: I venture once again into app/ to fix #11701.
         This fix is somewhat evil. Tell me (rather than reverting it)
         if you find a case for which it does not work.
 
