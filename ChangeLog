@@ -1,5 +1,11 @@
 2000-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gdisplay_ops.c (gdisplay_shrink_wrap): after resizing the
+	display, check if the window manager placed it offscreen and
+	center it in that case.
+
+2000-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/disp_callbacks.c: s/0/FALSE/
 
 	* app/gdisplay_ops.c (gdisplay_shrink_wrap): removed all the

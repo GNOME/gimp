@@ -151,6 +151,7 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   GtkAllocation allocation;
   gint disp_width, disp_height;
   gint width, height;
+  gint shell_x, shell_y;
   gint shell_width, shell_height;
   gint max_auto_width, max_auto_height;
   gint border_x, border_y;
@@ -250,6 +251,22 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   /*  Otherwise, reexpose by hand to reflect changes  */
   else
     gdisplay_expose_full (gdisp);
+
+  /*  let Gtk/X/WM position the window  */
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
+  gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
+
+  /*  if the window is offscreen, center it...  */
+  if (shell_x > s_width || shell_y > s_height ||
+      (shell_x + width +  border_x) < 0 || (shell_y + height + border_y) < 0)
+    {
+      shell_x = (s_width  - width  - border_x) >> 1;
+      shell_y = (s_height - height - border_y) >> 1;
+
+      gdk_window_move (gdisp->shell->window, shell_x, shell_y);
+    }
 
   /*  If the width or height of the display has changed, recalculate
    *  the display offsets...
