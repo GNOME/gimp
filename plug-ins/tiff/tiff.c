@@ -307,8 +307,12 @@ static gint32 load_image (char *filename) {
   }
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet)) {
-    g_message("TIFF Can't get photometric");
-    gimp_quit ();
+    g_message("TIFF Can't get photometric\nassuming min-is-black");
+    /* old AppleScan software misses out the photometric tag (and
+     * incidentally assumes min-is-white, but xv assumes min-is-black,
+     * so we follow xv's lead.  It's not much hardship to invert the
+     * image later). */
+    photomet = PHOTOMETRIC_MINISBLACK;
   }
 
   /* test if the extrasample represents an associated alpha channel... */
@@ -359,6 +363,73 @@ static gint32 load_image (char *filename) {
     gimp_quit ();
   }
   gimp_image_set_filename (image, filename);
+
+
+  /* any resolution info in the file? */
+  {
+    float xres=0, yres=0;
+    unsigned short units;
+    float res=0.0;
+
+    if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
+      if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
+	if (abs(xres - yres) > 1e-5)
+	  g_message("TIFF warning: x resolution differs "
+		    "from y resolution (%g != %g)\n"
+		    "Using x resolution\n", xres, yres);
+
+	res = xres;
+
+	if (TIFFGetField (tif, TIFFTAG_RESOLUTIONUNIT, &units)) {
+	  switch(units) {
+	  case RESUNIT_NONE:
+	    /* ImageMagick writes files with this silly resunit */
+	    g_message("TIFF warning: resolution units meaningless, "
+		      "forcing 72 dpi\n");
+	    res = 72.0;
+	    break;
+
+	  case RESUNIT_INCH:
+	    break;
+
+	  case RESUNIT_CENTIMETER:
+	    res = ((float)xres) * 2.54;
+	    break;
+
+	  default:
+	    g_message("TIFF file error: unknown resolution unit type %d, "
+		      "assuming dpi\n", units);
+	  }
+	} else { /* no res unit tag */
+	  /* old AppleScan software produces these */
+	  g_message("TIFF warning: resolution specified without\n"
+		    "any units tag, assuming dpi\n");
+	}
+      } else { /* xres but no yres */
+	g_message("TIFF warning: no y resolution info, assuming same as x\n");
+      }
+
+      /* sanity check, since division by zero later could be embarrassing */
+      if (res < 1e-5) {
+	g_message("TIFF: image resolution is zero: forcing 72 dpi\n");
+	res = 72.0;
+      }
+
+      /* now set the new image's resolution info */
+      gimp_image_set_resolution (image, res);
+    }
+
+    /* no x res tag => we assume we have no resolution info, so we
+     * don't care.  Older versions of this plugin used to write files
+     * with no resolution tags at all. */
+
+    /* TODO: haven't caught the case where yres tag is present, but
+       not xres.  This is left as an exercise for the reader - they
+       should feel free to shoot the author of the broken program
+       that produced the damaged TIFF file in the first place. */
+  }
+
+
 
   /* Install colormap for INDEXED images only */
   if (image_type == INDEXED) {
@@ -698,6 +769,17 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, rowsperstrip);
   /* TIFFSetField( tif, TIFFTAG_STRIPBYTECOUNTS, rows / rowsperstrip ); */
   TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+
+  /* resolution fields */
+  {
+      float resolution = gimp_image_get_resolution(image);
+      if (resolution)
+      {
+	  TIFFSetField (tif, TIFFTAG_XRESOLUTION, resolution);
+	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, resolution);
+	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
+      }
+  }
 
   if (drawable_type == INDEXED_IMAGE)
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);

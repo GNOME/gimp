@@ -150,6 +150,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview = NULL;
+  gimage->resolution = 72.0;  /* maybe should be rc-supplied default? */
 }
 
 GtkType gimp_image_get_type(void){
@@ -290,6 +291,20 @@ gimp_image_set_filename (GimpImage *gimage, char *filename)
     }
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RENAME]);
+}
+
+
+void
+gimp_image_set_resolution (GimpImage *gimage, float resolution)
+{
+  gimage->resolution = resolution;
+}
+
+
+float
+gimp_image_get_resolution (GimpImage *gimage)
+{
+  return gimage->resolution;
 }
 
 

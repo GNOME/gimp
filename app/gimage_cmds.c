@@ -31,6 +31,7 @@
 #include "drawable_pvt.h"		/* ick ick. */
 
 static int int_value;
+static float float_value;
 static int success;
 static Argument *return_args;
 
@@ -2764,6 +2765,142 @@ ProcRecord gimage_set_filename_proc =
   /*  Exec method  */
   { { gimage_set_filename_invoker } },
 };
+
+
+
+/***************************/
+/*  GIMAGE_GET_RESOLUTION  */
+
+static Argument *
+gimage_get_resolution_invoker (Argument *args)
+{
+  GImage *gimage;
+  float resolution;
+  Argument *return_args;
+
+  resolution = 0;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((gimage = gimage_get_ID (int_value)))
+	resolution = gimage->resolution;
+      else
+	success = FALSE;
+    }
+
+  return_args= procedural_db_return_args(&gimage_get_resolution_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_float = resolution;
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_get_resolution_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  }
+};
+
+ProcArg gimage_get_resolution_out_args[] =
+{
+  { PDB_FLOAT,
+    "resolution",
+    "the image's resolution, in dots per inch"
+  }
+};
+
+ProcRecord gimage_get_resolution_proc =
+{
+  "gimp_image_get_resolution",
+  "Return the resolution of the image",
+  "This procedure returns the image's resolution, in dots per inch.  This value is independent of any of the layers in this image.  A return value of 0.0 means the image was invalid.",
+  "Austin Donnelly",
+  "Austin Donnelly",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  gimage_get_resolution_args,
+
+  /*  Output arguments  */
+  1,
+  gimage_get_resolution_out_args,
+
+  /*  Exec method  */
+  { { gimage_get_resolution_invoker } },
+};
+
+
+/***************************/
+/*  GIMAGE_SET_RESOLUTION  */
+
+static Argument *
+gimage_set_resolution_invoker (Argument *args)
+{
+  GImage *gimage;
+  Argument *return_args;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (!(gimage = gimage_get_ID (int_value)))
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      float_value = args[1].value.pdb_float;
+      gimage->resolution = float_value;
+    }
+
+  return_args= procedural_db_return_args(&gimage_set_resolution_proc, success);
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg gimage_set_resolution_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the image"
+  },
+  { PDB_FLOAT,
+    "resolution",
+    "resolution in dots per inch"
+  }
+};
+
+ProcRecord gimage_set_resolution_proc =
+{
+  "gimp_image_set_resolution",
+  "Sets the resolution of the image",
+  "This procedure sets the image's resolution, in dots per inch.  This value is independent of any of the layers in this image.  No scaling or resizing is performed.",
+  "Austin Donnelly",
+  "Austin Donnelly",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimage_set_resolution_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimage_set_resolution_invoker } },
+};
+
 
 
 /******************/

@@ -597,9 +597,12 @@ devices_write_rc_device (DeviceInfo *device_info, FILE *fp)
 
   if (device_info->is_init)
     {
-      fprintf(fp, "\n        (brush \"%s\")",device_info->brush->name);
-      fprintf(fp, "\n        (pattern \"%s\")",device_info->pattern->name);
-      fprintf(fp, "\n        (tool \"%s\")",
+      if (device_info->brush)
+        fprintf(fp, "\n        (brush \"%s\")",device_info->brush->name);
+      if (device_info->pattern)
+        fprintf(fp, "\n        (pattern \"%s\")",device_info->pattern->name);
+      if (device_info->tool)
+        fprintf(fp, "\n        (tool \"%s\")",
 	      tool_info[device_info->tool].tool_name);
       fprintf(fp, "\n        (foreground %d %d %d)",
 	      device_info->foreground[0],

@@ -58,6 +58,8 @@ extern ProcRecord gimage_active_drawable_proc;
 extern ProcRecord gimage_base_type_proc;
 extern ProcRecord gimage_get_filename_proc;
 extern ProcRecord gimage_set_filename_proc;
+extern ProcRecord gimage_get_resolution_proc;
+extern ProcRecord gimage_set_resolution_proc;
 extern ProcRecord gimage_width_proc;
 extern ProcRecord gimage_height_proc;
 extern ProcRecord gimage_get_cmap_proc;

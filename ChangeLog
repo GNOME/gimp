@@ -1,3 +1,21 @@
+Mon Oct  5 02:42:47 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/general.c: applied gimp-bjj-980922-0, makes get_token's
+	EOF report "sticky"
+
+	* app/devices.c: applied gimp-bjj-980922-1, sanity check our
+	saved device info for NULL pointers
+
+	* app/file_new_dialog.c
+	* app/gimage_cmds.[ch]
+	* app/gimpimage.[ch]
+	* app/info_window.c
+	* app/internal_procs.c
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c
+	* plug-ins/tiff/tiff.c: applied gimp-austin-980916-0, adds resolution
+	info to GimpImage, with accessors, and support in the tiff plug-in
+
 Mon Oct  5 00:28:58 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* po/de.po

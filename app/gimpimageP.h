@@ -19,7 +19,8 @@ struct _GimpImage
   int has_filename;                   /*  has a valid filename         */
 
   int width, height;		      /*  width and height attributes  */
-  int base_type;                      /*  base gimp_image type             */
+  float resolution;                   /*  image res, in dpi            */
+  int base_type;                      /*  base gimp_image type         */
 
   unsigned char * cmap;               /*  colormap--for indexed        */
   int num_cols;                       /*  number of cols--for indexed  */

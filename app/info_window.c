@@ -39,6 +39,7 @@ struct _InfoWinData
   char visual_class_str[MAX_BUF];
   char visual_depth_str[MAX_BUF];
   char shades_str[MAX_BUF];
+  char resolution_str[MAX_BUF];
 };
 
 /*  The different classes of visuals  */
@@ -144,6 +145,7 @@ info_window_create (void *gdisp_ptr)
   iwd = (InfoWinData *) g_malloc (sizeof (InfoWinData));
   info_win->user_data = iwd;
   iwd->dimensions_str[0] = '\0';
+  iwd->resolution_str[0] = '\0';
   iwd->scale_str[0] = '\0';
   iwd->color_type_str[0] = '\0';
   iwd->visual_class_str[0] = '\0';
@@ -152,6 +154,7 @@ info_window_create (void *gdisp_ptr)
 
   /*  add the information fields  */
   info_dialog_add_field (info_win, "Dimensions (w x h): ", iwd->dimensions_str, NULL, NULL);
+  info_dialog_add_field (info_win, "Resolution: ", iwd->resolution_str, NULL, NULL);
   info_dialog_add_field (info_win, "Scale Ratio: ", iwd->scale_str, NULL, NULL);
   info_dialog_add_field (info_win, "Display Type: ", iwd->color_type_str, NULL, NULL);
   info_dialog_add_field (info_win, "Visual Class: ", iwd->visual_class_str, NULL, NULL);
@@ -194,6 +197,9 @@ info_window_update (InfoDialog *info_win,
   /*  width and height  */
   sprintf (iwd->dimensions_str, "%d x %d",
 	   (int) gdisp->gimage->width, (int) gdisp->gimage->height);
+
+  /*  image resolution  */
+  sprintf (iwd->resolution_str, "%g dpi", gdisp->gimage->resolution);
 
   /*  zoom ratio  */
   sprintf (iwd->scale_str, "%d:%d",

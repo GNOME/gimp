@@ -425,6 +425,10 @@ void       gimp_image_set_component_visible (gint32     image_ID,
 					     gint       visible);
 void       gimp_image_set_filename          (gint32     image_ID,
 					     char      *name);
+void       gimp_image_set_resolution        (gint32     image_ID,
+					     float      resolution);
+float      gimp_image_get_resolution        (gint32     image_ID);
+
 
 
 /****************************************
