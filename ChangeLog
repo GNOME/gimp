@@ -1,3 +1,7 @@
+2005-01-18  Alexander Shopov  <ash@contact.bg>
+
+	* configure.in (ALL_LINGUAS): Added "bg" (Bulgarian)
+
 2005-01-17  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/xjt/xjt.c: use gimp_temp_name instead of trying to

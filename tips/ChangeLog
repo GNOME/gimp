@@ -1,3 +1,7 @@
+2005-01-18  Alexander Shopov  <ash@contact.bg>
+
+	* bg.po: Initial bg.po file
+
 2004-12-20  Jarkko Ranta  <jjranta@cc.joensuu.fi>
 
 	* fi.po: Updated Finnish translation by Mikko Paananen.
@@ -21,7 +25,7 @@
 2004-11-21  David Lodge <dave@cirt.net>
 
 	* en_GB.po: Updated British translation.
-                                                                                
+
 2004-11-21  Vincent van Adrighem  <adrighem@gnome.org>
 
 	* nl.po: Translation updated by Tino Meinen.
