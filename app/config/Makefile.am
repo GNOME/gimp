@@ -16,15 +16,12 @@ libappconfig_a_SOURCES = \
 	gimpconfig-dump.h		\
 	gimpconfig-error.c		\
 	gimpconfig-error.h		\
-	gimpconfig-params.c		\
 	gimpconfig-params.h		\
 	gimpconfig-path.c		\
 	gimpconfig-path.h		\
 	gimpconfig-serialize.c		\
 	gimpconfig-serialize.h		\
 	gimpconfig-serialize.h		\
-	gimpconfig-types.c		\
-	gimpconfig-types.h		\
 	gimpconfig-utils.c		\
 	gimpconfig-utils.h		\
 	gimpconfigwriter.c		\

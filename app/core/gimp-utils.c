@@ -25,11 +25,10 @@
 #include <glib-object.h>
 #include <gobject/gvaluecollector.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
-
-#include "config/gimpconfig-types.h"
 
 #include "gimp-utils.h"
 

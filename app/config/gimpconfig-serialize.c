@@ -32,7 +32,6 @@
 #include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
-#include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
 #include "gimpconfigwriter.h"
 

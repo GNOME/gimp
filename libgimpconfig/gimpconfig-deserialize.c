@@ -33,7 +33,6 @@
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
-#include "gimpconfig-types.h"
 #include "gimpscanner.h"
 
 #include "gimp-intl.h"

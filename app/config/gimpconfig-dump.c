@@ -42,7 +42,6 @@
 #include "gimpconfig-dump.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
-#include "gimpconfig-types.h"
 #include "gimpconfigwriter.h"
 #include "gimprc.h"
 

@@ -1,3 +1,47 @@
+2005-01-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+	
+	* app/config/gimpconfig-types.c
+	* app/config/gimpconfig-types.h: removed...
+
+	* libgimpbase/gimpbasetypes.c
+	* libgimpbase/gimpbasetypes.h: and contents merged
+	into here.
+	
+	* app/config/gimpconfig-params.c: removed...
+
+	* libgimpbase/gimpbaseparams.c
+	* libgimpcolor/gimprgb.c
+	* libgimpmath/gimpmatrix.c: and contents merged
+	into here.
+
+	* app/config/gimpconfig-params.h: part removed...
+
+	* libgimpbase/gimpbaseparams.h
+	* libgimpcolor/gimprgb.h
+	* libgimpmath/gimpmatrix.h: and merged into here
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimpbase.h
+	* libgimpcolor/gimpbilinear.c
+	* libgimpcolor/gimpcmyk.c
+	* libgimpmath/gimpvector.c
+	* app/config/Makefile.am
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c
+	* app/core/gimp-utils.c
+	* app/core/gimpcontext.c
+	* app/tools/tools-utils.c
+	* app/widgets/gimpaction.c
+	* plug-ins/gimpressionist/utils.c: dependencies changed
+	accordingly.
+
+	First step in config migration out of core.  Need to fix
+	devel-docs to reflect these changes.
+
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimputils.c (gimp_enum_value_get_desc): no point in
