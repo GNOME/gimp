@@ -1,3 +1,25 @@
+2000-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c: when dropping layers/channels around in the
+	stack, Gtk sometimes continues searching a drag destination
+	_after_ the drop callback has been called (which is probably a
+	bug), causing a SEGV because the callback changed the GtkList
+	containing the layer/channel widgets.
+
+	The safe way is to reorder the stack in an idle function which
+	should also be robust against any future Gdk/X dnd protocol
+	change.
+
+	For the same reason, I added an idle function which lets the
+	active layer/channel widget grab the focus because in some dnd
+	cases the row holding the focus was not the active one (which is
+	otherwise impossible with GTK_SELECTION_BROWSE).
+
+	This commit should fix the remaining problems with layer/channel
+	dnd as well as all cases where the highlighted layer was not the
+	active one. Please report if it still doesn't work for you.
+
 2000-04-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/3d-outline.scm

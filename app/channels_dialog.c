@@ -686,6 +686,14 @@ channels_dialog_set_menu_sensitivity (void)
 #undef SET_SENSITIVE
 }
 
+static gint
+channels_dialog_idle_set_channel_focus (gpointer data)
+{
+  gtk_widget_grab_focus (GTK_WIDGET (data));
+
+  return FALSE;
+}
+
 static void
 channels_dialog_set_channel (ChannelWidget *channel_widget)
 {
@@ -712,9 +720,12 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 				    NULL);
 	  gtk_list_select_item (GTK_LIST (channelsD->channel_list),
 				index + channelsD->num_components);
+	  /*  let dnd finish it's work before setting the focus  */
+	  gtk_idle_add ((GtkFunction) channels_dialog_idle_set_channel_focus,
+			channel_widget->list_item);
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item),
 				    channel_widget);
-/* 	  channels_dialog_scroll_index (index + channelsD->num_components); */
+	  /* channels_dialog_scroll_index (index + channelsD->num_components); */
 	}
     }
   else
@@ -1573,7 +1584,7 @@ channel_widget_drag_motion_callback (GtkWidget      *widget,
 
   gdk_drag_status (context, drag_action, time);
 
-  if (drop_type != dest->drop_type)
+  if (dest && drop_type != dest->drop_type)
     {
       channel_widget_draw_drop_indicator (dest, dest->drop_type);
       channel_widget_draw_drop_indicator (dest, drop_type);
@@ -1594,6 +1605,28 @@ channel_widget_drag_begin_callback (GtkWidget      *widget,
 
   gimp_dnd_set_drawable_preview_icon (widget, context,
 				      GIMP_DRAWABLE (channel_widget->channel));
+}
+
+typedef struct
+{
+  GimpImage *gimage;
+  Channel   *channel;
+  gint       dest_index;
+} ChannelDrop;
+
+static gint
+channel_widget_idle_drop_channel (gpointer data)
+{
+  ChannelDrop *cd;
+
+  cd = (ChannelDrop *) data;
+
+  gimp_image_position_channel (cd->gimage, cd->channel, cd->dest_index);
+  gdisplays_flush ();
+
+  g_free (cd);
+
+  return FALSE;
 }
 
 static gboolean
@@ -1646,17 +1679,27 @@ channel_widget_drag_drop_callback (GtkWidget      *widget,
 
           if (src_index != dest_index)
             {
-              gimage_position_channel (channelsD->gimage, src->channel,
-				       dest_index);
-              gdisplays_flush ();
+              ChannelDrop *cd;
 
+              cd = g_new (ChannelDrop, 1);
+              cd->gimage     = channelsD->gimage;
+              cd->channel    = src->channel;
+              cd->dest_index = dest_index;
+
+              /*  let dnd finish it's work before changing the widget tree  */
+              gtk_idle_add ((GtkFunction) channel_widget_idle_drop_channel, cd);
               return_val = TRUE;
             }
         }
     }
 
-  channel_widget_draw_drop_indicator (dest, dest->drop_type);
-  dest->drop_type = GIMP_DROP_NONE;
+  if (dest)
+    {
+      if (!return_val)
+	channel_widget_draw_drop_indicator (dest, dest->drop_type);
+
+      dest->drop_type = GIMP_DROP_NONE;
+    }
 
   gtk_drag_finish (context, return_val, FALSE, time);
 
@@ -2308,8 +2351,11 @@ channel_widget_channel_flush (GtkWidget *widget,
     }
   else
     {
-      /*  to insensitive if there is an active channel, and this is a component channel  */
-      if (channel_widget->type != AUXILLARY_CHANNEL && channelsD->active_channel != NULL)
+      /*  to insensitive if there is an active channel,
+       *  and this is a component channel
+       */
+      if (channel_widget->type != AUXILLARY_CHANNEL &&
+	  channelsD->active_channel != NULL)
 	{
 	  if (GTK_WIDGET_IS_SENSITIVE (channel_widget->list_item))
 	    gtk_widget_set_sensitive (channel_widget->list_item, FALSE);

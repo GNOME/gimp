@@ -1073,6 +1073,14 @@ layers_dialog_scroll_index (gint index)
     }
 }
 
+static gint
+layer_dialog_idle_set_active_layer_focus (gpointer data)
+{
+  gtk_widget_grab_focus (GTK_WIDGET (data));
+
+  return FALSE;
+}
+
 static void
 layers_dialog_set_active_layer (Layer *layer)
 {
@@ -1093,7 +1101,11 @@ layers_dialog_set_active_layer (Layer *layer)
     {
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), NULL);
       gtk_list_select_item (GTK_LIST (layersD->layer_list), index);
-      gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item), layer_widget);
+      /*  let dnd finish it's work before setting the focus  */
+      gtk_idle_add ((GtkFunction) layer_dialog_idle_set_active_layer_focus,
+		    layer_widget->list_item);
+      gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item),
+				layer_widget);
  
       layers_dialog_scroll_index (index);
     }
@@ -2247,6 +2259,28 @@ layer_mask_drag_begin_callback (GtkWidget      *widget,
      GIMP_DRAWABLE (layer_get_mask (layer_widget->layer)));
 }
 
+typedef struct
+{
+  GimpImage *gimage;
+  Layer     *layer;
+  gint       dest_index;
+} LayerDrop;
+
+static gint
+layer_widget_idle_drop_layer (gpointer data)
+{
+  LayerDrop *ld;
+
+  ld = (LayerDrop *) data;
+
+  gimp_image_position_layer (ld->gimage, ld->layer, ld->dest_index, TRUE);
+  gdisplays_flush ();
+
+  g_free (ld);
+
+  return FALSE;
+}
+
 static gboolean
 layer_widget_drag_drop_callback (GtkWidget      *widget,
 				 GdkDragContext *context,
@@ -2299,11 +2333,15 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
 
 	  if (src_index != dest_index)
 	    {
-	      gimp_image_position_layer (layersD->gimage, src->layer,
-					 dest_index, TRUE);
+	      LayerDrop *ld;
 
-	      gdisplays_flush ();
+	      ld = g_new (LayerDrop, 1);
+	      ld->gimage     = layersD->gimage;
+	      ld->layer      = src->layer;
+	      ld->dest_index = dest_index;
 
+	      /*  let dnd finish it's work before changing the widget tree  */
+	      gtk_idle_add ((GtkFunction) layer_widget_idle_drop_layer, ld);
 	      return_val = TRUE;
 	    }
 	}
