@@ -425,7 +425,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (vbox), channel_hbox, FALSE, FALSE, 0);
   gtk_widget_show (channel_hbox);
 
-  label = gtk_label_new (_("Modify Levels for Channel:"));
+  label = gtk_label_new (_("Channel:"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -440,7 +440,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   l_tool->channel_menu = menu;
 
   button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
-  gtk_box_pack_start (GTK_BOX (channel_hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (channel_hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -911,11 +911,13 @@ levels_update (GimpLevelsTool *l_tool,
       gint     width  = l_tool->input_area[0]->allocation.width;
       gdouble  delta, mid, tmp;
 
-      l_tool->slider_pos[0] = (width *
-                               ((gdouble) levels->low_input[l_tool->channel] / 255.0));
+      l_tool->slider_pos[0] = ROUND ((gdouble) width *
+                                     levels->low_input[l_tool->channel] /
+                                     256.0);
 
-      l_tool->slider_pos[2] = (width *
-                               ((gdouble) levels->high_input[l_tool->channel] / 255.0));
+      l_tool->slider_pos[2] = ROUND ((gdouble) width *
+                                     levels->high_input[l_tool->channel] /
+                                     256.0);
 
       delta = (gdouble) (l_tool->slider_pos[2] - l_tool->slider_pos[0]) / 2.0;
       mid   = l_tool->slider_pos[0] + delta;
@@ -931,11 +933,13 @@ levels_update (GimpLevelsTool *l_tool,
       Levels  *levels = l_tool->levels;
       gint     width  = l_tool->output_area[0]->allocation.width;
 
-      l_tool->slider_pos[3] = (width *
-                               ((gdouble) levels->low_output[l_tool->channel] / 255.0));
+      l_tool->slider_pos[3] = ROUND ((gdouble) width *
+                                     levels->low_output[l_tool->channel] /
+                                     256.0);
 
-      l_tool->slider_pos[4] = (width *
-                               ((gdouble) levels->high_output[l_tool->channel] / 255.0));
+      l_tool->slider_pos[4] = ROUND ((gdouble) width *
+                                     levels->high_output[l_tool->channel] /
+                                     256.0);
 
       gtk_widget_queue_draw (l_tool->output_area[1]);
     }
