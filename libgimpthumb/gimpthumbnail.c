@@ -883,8 +883,8 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
 
       if (! success)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                     "Could not set permissions of thumbnail '%s': %s",
-                     name, g_strerror (errno));
+                     "Could not set permissions of thumbnail for %s: %s",
+                     thumbnail->image_uri, g_strerror (errno));
     }
 
   g_free (num_str);

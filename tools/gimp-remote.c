@@ -37,10 +37,13 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>

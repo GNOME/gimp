@@ -167,6 +167,6 @@ endif
 # hooks to assure that the system gimprc and the gimprc manpage are
 # uptodate when a release is made
 
-dist-hook: gimp-@GIMP_APP_VERSION@
+dist-hook: gimp-$(GIMP_APP_VERSION)$(EXEEXT)
 	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
 	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc-$(GIMP_APP_VERSION).5.in

@@ -1,3 +1,12 @@
+2004-02-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save_thumb): use
+	the UTF-encoded URI in error messages, not the filename.
+
+	* app/Makefile.am: use $(EXEEXT) for dist-hook binary dependency.
+	
+	* tools/gimp-remote.c: include <unistd.h> conditionally.
+
 2004-02-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpimagedock.c (gimp_image_dock_constructor):
