@@ -1,3 +1,11 @@
+2000-12-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/layers_dialog.c: layers_dialog_scroll_index(): don't fiddle
+	around with magic numbers when calculating the layer widget's
+	height but simply ask one of them for it's allocation.  Fixes
+	positioning when the preview is smaller than the layer widget list
+	item.
+
 2000-12-27  Tomas Ogren  <stric@ing.umu.se>
 
 	* plug-ins/ifscompose/ifscompose_storage.c: Remove the last comma in

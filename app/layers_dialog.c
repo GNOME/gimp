@@ -1136,10 +1136,16 @@ layers_dialog_set_menu_sensitivity (void)
 static void
 layers_dialog_scroll_index (gint index)
 {
+  LayerWidget   *layer_widget;
   GtkAdjustment *adj;
   gint           item_height;
 
-  item_height = 6 + (preview_size ? preview_size : layer_height);
+  if (!layersD->layer_widgets)
+    return;
+
+  layer_widget = (LayerWidget *) layersD->layer_widgets->data;
+  item_height = layer_widget->list_item->allocation.height;
+
   adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (layersD->scrolled_win));
  
   if (index * item_height < adj->value)
