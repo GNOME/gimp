@@ -6,7 +6,7 @@
  */
 
 /* History:
- * 0.1	Very limited functionality (modern 4bit only)
+ * 0.1  Very limited functionality (modern 4bit only)
  * 0.2  Default palette (nice yellows) is automatically used
  * 0.3  Support for the older (pre KISS/GS) cell format
  * 0.4  First support for saving images
@@ -41,24 +41,24 @@
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static gint   load_palette   (FILE        *fp,
-			      guchar       palette[]);
+                              guchar       palette[]);
 static gint32 load_image     (const gchar *file,
-			      const gchar *brief);
+                              const gchar *brief);
 static gint   save_image     (const gchar *file,
-			      const gchar *brief,
-			      gint32       image,
-			      gint32       layer);
+                              const gchar *brief,
+                              gint32       image,
+                              gint32       layer);
 static void   palette_dialog (const gchar *title);
 
 /* Globals... */
 
-GimpPlugInInfo	PLUG_IN_INFO =
+GimpPlugInInfo  PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -101,37 +101,37 @@ query (void)
   };
 
   gimp_install_procedure ("file_cel_load",
-			  "Loads files in KISS CEL file format",
-			  "This plug-in loads individual KISS cell files.",
-			  "Nick Lamb",
-			  "Nick Lamb <njl195@zepler.org.uk>",
-			  "May 1998",
-			  "<Load>/CEL",
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (load_args),
+                          "Loads files in KISS CEL file format",
+                          "This plug-in loads individual KISS cell files.",
+                          "Nick Lamb",
+                          "Nick Lamb <njl195@zepler.org.uk>",
+                          "May 1998",
+                          "<Load>/CEL",
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
-			  load_args, load_return_vals);
+                          load_args, load_return_vals);
 
   gimp_install_procedure ("file_cel_save",
-			  "Saves files in KISS CEL file format",
-			  "This plug-in saves individual KISS cell files.",
-			  "Nick Lamb",
-			  "Nick Lamb <njl195@zepler.org.uk>",
-			  "May 1998",
-			  "<Save>/CEL",
-			  "INDEXEDA",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args), 0,
-			  save_args, NULL);
+                          "Saves files in KISS CEL file format",
+                          "This plug-in saves individual KISS cell files.",
+                          "Nick Lamb",
+                          "Nick Lamb <njl195@zepler.org.uk>",
+                          "May 1998",
+                          "<Save>/CEL",
+                          "INDEXEDA",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
 
   gimp_register_magic_load_handler ("file_cel_load",
-				    "cel",
-				    "",
-				    "0,string,KiSS\\040");
+                                    "cel",
+                                    "",
+                                    "0,string,KiSS\\040");
   gimp_register_save_handler       ("file_cel_save",
-				    "cel",
-				    "");
+                                    "cel",
+                                    "");
 }
 
 static void
@@ -160,58 +160,58 @@ run (const gchar      *name,
   if (strcmp (name, "file_cel_load") == 0)
     {
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	{
-	  gimp_get_data ("file_cel_save:length", &data_length);
-	  if (data_length > 0)
-	    {
-	      palette_file = (char *) g_malloc(data_length);
-	      gimp_get_data ("file_cel_save:data", palette_file);
-	    }
-	  else
-	    {
-	      palette_file = g_strdup("*.kcf");
-	      data_length = strlen(palette_file) + 1;
-	    }
-	}
+        {
+          gimp_get_data ("file_cel_save:length", &data_length);
+          if (data_length > 0)
+            {
+              palette_file = g_malloc(data_length);
+              gimp_get_data ("file_cel_save:data", palette_file);
+            }
+          else
+            {
+              palette_file = g_strdup("*.kcf");
+              data_length = strlen(palette_file) + 1;
+            }
+        }
 
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
-	{
-	  palette_file = param[3].data.d_string;
-	  data_length = strlen(palette_file) + 1;
-	}
+        {
+          palette_file = param[3].data.d_string;
+          data_length = strlen(palette_file) + 1;
+        }
       else if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  /* Let user choose KCF palette (cancel ignores) */
-	  palette_dialog (_("Load KISS Palette"));
-	  gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
-	  gimp_set_data ("file_cel_save:data", palette_file, data_length);
-	}
+        {
+          /* Let user choose KCF palette (cancel ignores) */
+          palette_dialog (_("Load KISS Palette"));
+          gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
+          gimp_set_data ("file_cel_save:data", palette_file, data_length);
+        }
 
       image = load_image (param[1].data.d_string, param[2].data.d_string);
 
       if (image != -1)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image;
-	}
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image;
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
   else if (strcmp (name, "file_cel_save") == 0)
     {
       if (! save_image (param[3].data.d_string, param[4].data.d_string,
-			param[1].data.d_int32, param[2].data.d_int32))
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+                        param[1].data.d_int32, param[2].data.d_int32))
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
-	  gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
-	  gimp_set_data ("file_cel_save:data", palette_file, data_length);
-	}
+        {
+          gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
+          gimp_set_data ("file_cel_save:data", palette_file, data_length);
+        }
     }
   else
     {
@@ -225,7 +225,7 @@ run (const gchar      *name,
 
 static gint32
 load_image (const gchar *file,
-	    const gchar *brief)
+            const gchar *brief)
 {
   FILE      *fp;            /* Read file pointer */
   gchar     *progress;      /* Title for progress display */
@@ -294,7 +294,7 @@ load_image (const gchar *file,
   /* Create an indexed-alpha layer to hold the image... */
 
   layer = gimp_layer_new (image, _("Background"), width, height,
-			  GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
+                          GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, 0);
   gimp_layer_set_offsets (layer, offx, offy);
 
@@ -303,7 +303,7 @@ load_image (const gchar *file,
   drawable = gimp_drawable_get (layer);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, TRUE, FALSE);
+                       drawable->height, TRUE, FALSE);
 
   /* Read the image in and give it to the GIMP a line at a time */
 
@@ -313,55 +313,55 @@ load_image (const gchar *file,
   for (i = 0; i < height && !feof(fp); ++i)
     {
       switch (colours)
-	{
-	case 16:
-	  fread (buffer, (width+1)/2, 1, fp);
-	  for (j = 0, k = 0; j < width*2; j+= 4, ++k)
-	    {
-	      if (buffer[k] / 16 == 0)
-		{
-		  line[j]= 16;
-		  line[j+1]= 0;
-		}
-	      else
-		{
-		  line[j]= (buffer[k] / 16) - 1;
-		  line[j+1]= 255;
-		}
-	      if (buffer[k] % 16 == 0)
-		{
-		  line[j+2]= 16;
-		  line[j+3]= 0;
-		}
-	      else
-		{
-		  line[j+2]= (buffer[k] % 16) - 1;
-		  line[j+3]= 255;
-		}
-	    }
-	  break;
+        {
+        case 16:
+          fread (buffer, (width+1)/2, 1, fp);
+          for (j = 0, k = 0; j < width*2; j+= 4, ++k)
+            {
+              if (buffer[k] / 16 == 0)
+                {
+                  line[j]= 16;
+                  line[j+1]= 0;
+                }
+              else
+                {
+                  line[j]= (buffer[k] / 16) - 1;
+                  line[j+1]= 255;
+                }
+              if (buffer[k] % 16 == 0)
+                {
+                  line[j+2]= 16;
+                  line[j+3]= 0;
+                }
+              else
+                {
+                  line[j+2]= (buffer[k] % 16) - 1;
+                  line[j+3]= 255;
+                }
+            }
+          break;
 
-	case 256:
-	  fread (buffer, width, 1, fp);
-	  for (j = 0, k = 0; j < width*2; j+= 2, ++k)
-	    {
-	      if (buffer[k] == 0)
-		{
-		  line[j]= 255;
-		  line[j+1]= 0;
-		}
-	      else
-		{
-		  line[j]= buffer[k] - 1;
-		  line[j+1]= 255;
-		}
-	    }
-	  break;
+        case 256:
+          fread (buffer, width, 1, fp);
+          for (j = 0, k = 0; j < width*2; j+= 2, ++k)
+            {
+              if (buffer[k] == 0)
+                {
+                  line[j]= 255;
+                  line[j+1]= 0;
+                }
+              else
+                {
+                  line[j]= buffer[k] - 1;
+                  line[j+1]= 255;
+                }
+            }
+          break;
 
-	default:
-	  g_message (_("Unsupported number of colors (%d)"), colours);
-	  return -1;
-	}
+        default:
+          g_message (_("Unsupported number of colors (%d)"), colours);
+          return -1;
+        }
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
       gimp_progress_update ((float) i / (float) height);
@@ -394,9 +394,9 @@ load_image (const gchar *file,
   else
     {
       for (i= 0; i < colours; ++i)
-	{
-	  palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
-	}
+        {
+          palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
+        }
     }
 
   gimp_image_set_cmap (image, palette + 3, colours - 1);
@@ -415,11 +415,11 @@ load_image (const gchar *file,
 
 static gint
 load_palette (FILE   *fp,
-	      guchar  palette[])
+              guchar  palette[])
 {
-  guchar	header[32];	/* File header */
-  guchar	buffer[2];
-  int		i, bpp, colours= 0;
+  guchar        header[32];     /* File header */
+  guchar        buffer[2];
+  int           i, bpp, colours= 0;
 
   fread (header, 4, 1, fp);
   if (!strncmp(header, "KiSS", 4))
@@ -428,31 +428,31 @@ load_palette (FILE   *fp,
       bpp = header[5];
       colours = header[8] + header[9] * 256;
       if (bpp == 12)
-	{
-	  for (i= 0; i < colours; ++i)
-	    {
-	      fread (buffer, 1, 2, fp);
-	      palette[i*3]= buffer[0] & 0xf0;
-	      palette[i*3+1]= (buffer[1] & 0x0f) * 16;
-	      palette[i*3+2]= (buffer[0] & 0x0f) * 16;
-	    }
-	}
+        {
+          for (i= 0; i < colours; ++i)
+            {
+              fread (buffer, 1, 2, fp);
+              palette[i*3]= buffer[0] & 0xf0;
+              palette[i*3+1]= (buffer[1] & 0x0f) * 16;
+              palette[i*3+2]= (buffer[0] & 0x0f) * 16;
+            }
+        }
       else
-	{
-	  fread (palette, colours, 3, fp);
-	}
+        {
+          fread (palette, colours, 3, fp);
+        }
     }
   else
     {
       colours = 16; bpp = 12;
       fseek (fp, 0, SEEK_SET);
       for (i= 0; i < colours; ++i)
-	{
-	  fread (buffer, 1, 2, fp);
-	  palette[i*3] = buffer[0] & 0xf0;
-	  palette[i*3+1] = (buffer[1] & 0x0f) * 16;
-	  palette[i*3+2] = (buffer[0] & 0x0f) * 16;
-	}
+        {
+          fread (buffer, 1, 2, fp);
+          palette[i*3] = buffer[0] & 0xf0;
+          palette[i*3+1] = (buffer[1] & 0x0f) * 16;
+          palette[i*3+2] = (buffer[0] & 0x0f) * 16;
+        }
     }
 
   return colours;
@@ -460,9 +460,9 @@ load_palette (FILE   *fp,
 
 static gint
 save_image (const gchar *file,
-	    const gchar *brief,
-	    gint32       image,
-	    gint32       layer)
+            const gchar *brief,
+            gint32       image,
+            gint32       layer)
 {
   FILE          *fp;            /* Write file pointer */
   char          *progress;      /* Title for progress display */
@@ -533,7 +533,7 @@ save_image (const gchar *file,
 
   /* Arrange for memory etc. */
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, TRUE, FALSE);
+                       drawable->height, TRUE, FALSE);
   buffer = g_new (guchar, drawable->width);
   line = g_new (guchar, (drawable->width+1) * 2);
 
@@ -544,32 +544,32 @@ save_image (const gchar *file,
       memset (buffer, 0, drawable->width);
 
       if (colours > 16)
-	{
-	  for (j = 0, k = 0; j < drawable->width*2; j+= 2, ++k)
-	    {
-	      if (line[j+1] > 127)
-		{
-		  buffer[k]= line[j] + 1;
-		}
-	    }
-	  fwrite (buffer, drawable->width, 1, fp);
-	}
+        {
+          for (j = 0, k = 0; j < drawable->width*2; j+= 2, ++k)
+            {
+              if (line[j+1] > 127)
+                {
+                  buffer[k]= line[j] + 1;
+                }
+            }
+          fwrite (buffer, drawable->width, 1, fp);
+        }
       else
-	{
-	  for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k)
-	    {
-	      buffer[k] = 0;
-	      if (line[j+1] > 127)
-		{
-		  buffer[k] += (line[j] + 1)<< 4;
-		}
-	      if (line[j+3] > 127)
-		{
-		  buffer[k] += (line[j+2] + 1);
-		}
-	    }
-	  fwrite (buffer, (drawable->width+1)/2, 1, fp);
-	}
+        {
+          for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k)
+            {
+              buffer[k] = 0;
+              if (line[j+1] > 127)
+                {
+                  buffer[k] += (line[j] + 1)<< 4;
+                }
+              if (line[j+3] > 127)
+                {
+                  buffer[k] += (line[j+2] + 1);
+                }
+            }
+          fwrite (buffer, (drawable->width+1)/2, 1, fp);
+        }
 
       gimp_progress_update ((float) i / (float) drawable->height);
     }
@@ -594,7 +594,7 @@ palette_dialog (const gchar *title)
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog), palette_file);
 
   gimp_help_connect (dialog, gimp_standard_help_func,
-		     "filters/cel.html", NULL);
+                     "filters/cel.html", NULL);
 
   gtk_widget_show (dialog);
 

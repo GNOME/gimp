@@ -73,23 +73,23 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_c_astretch",
-			  "Automatically stretch the contrast of the "
-			  "specified drawable to cover all possible ranges.",
-			  "This simple plug-in does an automatic contrast "
-			  "stretch.  For each channel in the image, it finds "
-			  "the minimum and maximum values... it uses those "
-			  "values to stretch the individual histograms to the "
-			  "full contrast range.  For some images it may do "
-			  "just what you want; for others it may not work "
-			  "that well.",
-			  "Federico Mena Quintero",
-			  "Federico Mena Quintero",
-			  "1996",
-			  N_("<Image>/Layer/Colors/Auto/_Stretch Contrast"),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Automatically stretch the contrast of the "
+                          "specified drawable to cover all possible ranges.",
+                          "This simple plug-in does an automatic contrast "
+                          "stretch.  For each channel in the image, it finds "
+                          "the minimum and maximum values... it uses those "
+                          "values to stretch the individual histograms to the "
+                          "full contrast range.  For some images it may do "
+                          "just what you want; for others it may not work "
+                          "that well.",
+                          "Federico Mena Quintero",
+                          "Federico Mena Quintero",
+                          "1996",
+                          N_("<Image>/Layer/Colors/Auto/_Stretch Contrast"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -122,14 +122,14 @@ run (const gchar      *name,
       c_astretch (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
       indexed_c_astretch (image_ID);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -150,8 +150,8 @@ static void
 indexed_c_astretch (gint32 image_ID)
 {
   guchar *cmap;
-  gint ncols,i;
-  gint rhi=0,ghi=0,bhi=0,rlo=255,glo=255,blo=255;
+  gint    ncols, i;
+  gint    rhi=0, ghi=0, bhi=0, rlo=255, glo=255, blo=255;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
@@ -174,22 +174,22 @@ indexed_c_astretch (gint32 image_ID)
   for (i=0;i<ncols;i++)
     {
       if (rhi!=rlo)
-	cmap[i*3 +0] = (255 * (cmap[i*3 +0] - rlo)) / (rhi-rlo);
+        cmap[i*3 +0] = (255 * (cmap[i*3 +0] - rlo)) / (rhi-rlo);
       if (ghi!=glo)
-	cmap[i*3 +1] = (255 * (cmap[i*3 +1] - glo)) / (ghi-glo);
+        cmap[i*3 +1] = (255 * (cmap[i*3 +1] - glo)) / (ghi-glo);
       if (rhi!=rlo)
-	cmap[i*3 +2] = (255 * (cmap[i*3 +2] - blo)) / (bhi-blo);
+        cmap[i*3 +2] = (255 * (cmap[i*3 +2] - blo)) / (bhi-blo);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
 typedef struct {
-  gint		alpha;
-  guchar  	lut[256][3];
-  guchar  	min[3];
-  guchar	max[3];
-  gboolean 	has_alpha;
+  gint          alpha;
+  guchar        lut[256][3];
+  guchar        min[3];
+  guchar        max[3];
+  gboolean      has_alpha;
 } AutoStretchParam_t;
 
 static void
@@ -197,18 +197,18 @@ find_min_max (const guchar *src,
               gint         bpp,
               gpointer     data)
 {
-  AutoStretchParam_t *param = (AutoStretchParam_t*) data;
-  gint b;
+  AutoStretchParam_t *param = data;
+  gint                b;
 
   for (b = 0; b < param->alpha; b++)
     {
       if (!param->has_alpha || src[param->alpha])
-	{
-	  if (src[b] < param->min[b])
-	    param->min[b] = src[b];
-	  if (src[b] > param->max[b])
-	    param->max[b] = src[b];
-	}
+        {
+          if (src[b] < param->min[b])
+            param->min[b] = src[b];
+          if (src[b] > param->max[b])
+            param->max[b] = src[b];
+        }
     }
 }
 
@@ -218,8 +218,8 @@ c_astretch_func (const guchar *src,
                  gint          bpp,
                  gpointer      data)
 {
-  AutoStretchParam_t *param = (AutoStretchParam_t*) data;
-  gint b;
+  AutoStretchParam_t *param = data;
+  gint                b;
 
   for (b = 0; b < param->alpha; b++)
     dest[b] = param->lut[src[b]][b];
@@ -232,7 +232,7 @@ static void
 c_astretch (GimpDrawable *drawable)
 {
   AutoStretchParam_t param;
-  gint b;
+  gint               b;
 
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.alpha = (param.has_alpha) ? drawable->bpp - 1 : drawable->bpp;
@@ -250,10 +250,10 @@ c_astretch (GimpDrawable *drawable)
       gint x;
 
       if (range != 0)
-	for (x = param.min[b]; x <= param.max[b]; x++)
-	  param.lut[x][b] = 255 * (x - param.min[b]) / range;
+        for (x = param.min[b]; x <= param.max[b]; x++)
+          param.lut[x][b] = 255 * (x - param.min[b]) / range;
       else
-	param.lut[param.min[b]][b] = param.min[b];
+        param.lut[param.min[b]][b] = param.min[b];
     }
 
   gimp_rgn_iterate2 (drawable, run_mode, c_astretch_func, &param);

@@ -849,7 +849,7 @@ typedef struct
   gdouble greenangle;
   gdouble bluefrequency;
   gdouble blueangle;
-  gint	  colormodel;
+  gint    colormodel;
   gint    redmode;
   gint    greenmode;
   gint    bluemode;
@@ -864,25 +864,25 @@ typedef struct
 
 static void      query  (void);
 static void      run    (const gchar      *name,
-        		 gint              nparams,
-        		 const GimpParam  *param,
-        		 gint             *nreturn_vals,
-        		 GimpParam       **return_vals);
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
-static void      alienmap2 	       (GimpDrawable  *drawable);
-static void    	 transform             (guchar*, guchar*, guchar*);
+static void      alienmap2             (GimpDrawable  *drawable);
+static void      transform             (guchar*, guchar*, guchar*);
 
 static gint      alienmap2_dialog        (void);
 static void      dialog_update_preview   (void);
 static void      dialog_scale_update     (GtkAdjustment *adjustment,
-					  gdouble       *value);
+                                          gdouble       *value);
 static void      dialog_response         (GtkWidget     *widget,
                                           gint           response_id,
                                           gpointer       data);
 static void      alienmap2_toggle_update (GtkWidget     *widget,
-					  gpointer       data);
+                                          gpointer       data);
 static void      alienmap2_radio_update  (GtkWidget     *widget,
-					  gpointer       data);
+                                          gpointer       data);
 static void      alienmap2_logo_dialog   (GtkWidget     *parent);
 
 /***** Variables *****/
@@ -946,22 +946,22 @@ query (void)
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_alienmap2",
-        		  "AlienMap2 Color Transformation Plug-In",
-        		  "No help yet. Just try it and you'll see!",
-        		  "Martin Weber (martweb@gmx.net)",
-        		  "Martin Weber (martweb@gmx.net",
-        		  "24th April 1998",
-        		  N_("<Image>/Filters/Colors/Map/Alien Map _2..."),
-        		  "RGB*",
-        		  GIMP_PLUGIN,
-        		  G_N_ELEMENTS (args), nreturn_vals,
-        		  args, return_vals);
+                          "AlienMap2 Color Transformation Plug-In",
+                          "No help yet. Just try it and you'll see!",
+                          "Martin Weber (martweb@gmx.net)",
+                          "Martin Weber (martweb@gmx.net",
+                          "24th April 1998",
+                          N_("<Image>/Filters/Colors/Map/Alien Map _2..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), nreturn_vals,
+                          args, return_vals);
 }
 
 static void
 transform (guchar *r,
-	   guchar *g,
-	   guchar *b)
+           guchar *g,
+           guchar *b)
 {
   if (wvals.colormodel == HSL_MODEL)
     {
@@ -972,15 +972,15 @@ transform (guchar *r,
       gimp_rgb_to_hsl (&rgb, &hsl);
 
       if (wvals.redmode)
-	hsl.h = 0.5 * (1.0 + sin (((2 * hsl.h - 1.0) * wvals.redfrequency +
+        hsl.h = 0.5 * (1.0 + sin (((2 * hsl.h - 1.0) * wvals.redfrequency +
                                    wvals.redangle / 180.0) * G_PI));
 
       if (wvals.greenmode)
-	hsl.s = 0.5 * (1.0 + sin (((2 * hsl.s - 1.0) * wvals.greenfrequency +
+        hsl.s = 0.5 * (1.0 + sin (((2 * hsl.s - 1.0) * wvals.greenfrequency +
                                    wvals.greenangle / 180.0) * G_PI));
 
       if (wvals.bluemode)
-	hsl.l = 0.5 * (1.0 + sin (((2 * hsl.l - 1.0) * wvals.bluefrequency +
+        hsl.l = 0.5 * (1.0 + sin (((2 * hsl.l - 1.0) * wvals.bluefrequency +
                                    wvals.blueangle / 180.0) * G_PI));
 
       gimp_hsl_to_rgb (&hsl, &rgb);
@@ -989,12 +989,12 @@ transform (guchar *r,
   else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
-	*r = ROUND (127.5 * (1.0 +
+        *r = ROUND (127.5 * (1.0 +
                              sin (((*r / 127.5 - 1.0) * wvals.redfrequency +
                                    wvals.redangle / 180.0) * G_PI)));
 
       if (wvals.greenmode)
-	*g = ROUND (127.5 * (1.0 +
+        *g = ROUND (127.5 * (1.0 +
                              sin (((*g / 127.5 - 1.0) * wvals.greenfrequency +
                                    wvals.greenangle / 180.0) * G_PI)));
 
@@ -1037,28 +1037,28 @@ run (const gchar      *name,
 
       /* Get information from the dialog */
       if (!alienmap2_dialog())
-	return;
+        return;
 
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 13)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  wvals.redfrequency   = param[3].data.d_float;
-	  wvals.redangle       = param[4].data.d_float;
-	  wvals.greenfrequency = param[5].data.d_float;
-	  wvals.greenangle     = param[6].data.d_float;
-	  wvals.bluefrequency  = param[7].data.d_float;
-	  wvals.blueangle      = param[8].data.d_float;
-	  wvals.colormodel     = param[9].data.d_int8;
-	  wvals.redmode        = param[10].data.d_int8 ? TRUE : FALSE;
-	  wvals.greenmode      = param[11].data.d_int8 ? TRUE : FALSE;
-	  wvals.bluemode       = param[12].data.d_int8 ? TRUE : FALSE;
-	}
+        {
+          wvals.redfrequency   = param[3].data.d_float;
+          wvals.redangle       = param[4].data.d_float;
+          wvals.greenfrequency = param[5].data.d_float;
+          wvals.greenangle     = param[6].data.d_float;
+          wvals.bluefrequency  = param[7].data.d_float;
+          wvals.blueangle      = param[8].data.d_float;
+          wvals.colormodel     = param[9].data.d_int8;
+          wvals.redmode        = param[10].data.d_int8 ? TRUE : FALSE;
+          wvals.greenmode      = param[11].data.d_int8 ? TRUE : FALSE;
+          wvals.bluemode       = param[12].data.d_int8 ? TRUE : FALSE;
+        }
 
       break;
 
@@ -1078,22 +1078,22 @@ run (const gchar      *name,
         {
           gimp_progress_init (_("AlienMap2: Transforming..."));
 
-	  /* Set the tile cache size */
-	  gimp_tile_cache_ntiles(2*(drawable->width / gimp_tile_width()+1));
+          /* Set the tile cache size */
+          gimp_tile_cache_ntiles(2*(drawable->width / gimp_tile_width()+1));
 
-	  /* Run! */
+          /* Run! */
 
           alienmap2 (drawable);
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush();
 
-	  /* Store data */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data("plug_in_alienmap2", &wvals, sizeof(alienmap2_vals_t));
+          /* Store data */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data("plug_in_alienmap2", &wvals, sizeof(alienmap2_vals_t));
         }
       else
         {
-	  /* gimp_message("This filter only applies on RGB_MODEL-images"); */
+          /* gimp_message("This filter only applies on RGB_MODEL-images"); */
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
@@ -1168,7 +1168,7 @@ alienmap2_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (top_table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (top_table), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_table,
-		      FALSE, FALSE, 0);
+                      FALSE, FALSE, 0);
   gtk_widget_show (top_table);
 
   /* Preview */
@@ -1187,65 +1187,65 @@ alienmap2_dialog (void)
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_attach (GTK_TABLE (top_table), table, 0, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+                    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("R/H-_Frequency:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.redfrequency, 0, 5.0, 0.1, 1, 2,
-			      TRUE, 0, 0,
-			      _("Change frequency of the red/hue channel"),
-			      NULL);
+                              _("R/H-_Frequency:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.redfrequency, 0, 5.0, 0.1, 1, 2,
+                              TRUE, 0, 0,
+                              _("Change frequency of the red/hue channel"),
+                              NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("R/H-_Phaseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.redangle, 0, 360.0, 1, 15, 2,
-			      TRUE, 0, 0,
-			      _("Change angle of the red/hue channel"),
-			      NULL);
+                              _("R/H-_Phaseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.redangle, 0, 360.0, 1, 15, 2,
+                              TRUE, 0, 0,
+                              _("Change angle of the red/hue channel"),
+                              NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("G/S-Fr_equency:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.greenfrequency, 0, 5.0, 0.1, 1, 2,
-			      TRUE, 0, 0,
-			      _("Change frequency of the green/saturation "
-				"channel"), NULL);
+                              _("G/S-Fr_equency:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.greenfrequency, 0, 5.0, 0.1, 1, 2,
+                              TRUE, 0, 0,
+                              _("Change frequency of the green/saturation "
+                                "channel"), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenfrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("G/S-Ph_aseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.redangle, 0, 360.0, 1, 15, 2,
-			      TRUE, 0, 0,
-			      _("Change angle of the green/saturation channel"),
-			      NULL);
+                              _("G/S-Ph_aseshift:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.redangle, 0, 360.0, 1, 15, 2,
+                              TRUE, 0, 0,
+                              _("Change angle of the green/saturation channel"),
+                              NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenangle);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("B/L-Freq_uency:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.bluefrequency, 0, 5.0, 0.1, 1, 2,
-			      TRUE, 0, 0,
-			      _("Change frequency of the blue/luminance "
-				"channel"), NULL);
+                              _("B/L-Freq_uency:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.bluefrequency, 0, 5.0, 0.1, 1, 2,
+                              TRUE, 0, 0,
+                              _("Change frequency of the blue/luminance "
+                                "channel"), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.bluefrequency);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("B/L-Pha_seshift:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      wvals.blueangle, 0, 360.0, 1, 15, 2,
-			      TRUE, 0, 0,
-			      _("Change angle of the blue/luminance channel"),
-			      NULL);
+                              _("B/L-Pha_seshift:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wvals.blueangle, 0, 360.0, 1, 15, 2,
+                              TRUE, 0, 0,
+                              _("Change angle of the blue/luminance channel"),
+                              NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.blueangle);
@@ -1253,15 +1253,15 @@ alienmap2_dialog (void)
   /*  Mode toggle box  */
   frame =
     gimp_int_radio_group_new (TRUE, _("Mode"),
-			      G_CALLBACK (alienmap2_radio_update),
-			      &wvals.colormodel, wvals.colormodel,
+                              G_CALLBACK (alienmap2_radio_update),
+                              &wvals.colormodel, wvals.colormodel,
 
-			      _("_RGB Color Model"), RGB_MODEL, NULL,
-			      _("_HSL Color Model"), HSL_MODEL, NULL,
+                              _("_RGB Color Model"), RGB_MODEL, NULL,
+                              _("_HSL Color Model"), HSL_MODEL, NULL,
 
-			      NULL);
+                              NULL);
   gtk_table_attach (GTK_TABLE (top_table), frame, 1, 2, 0, 1,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
 
   toggle_vbox = GTK_BIN (frame)->child;
 
@@ -1275,7 +1275,7 @@ alienmap2_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle, _("Use function for red/hue component"),
-			   NULL);
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
@@ -1287,8 +1287,8 @@ alienmap2_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("Use function for green/saturation component"),
-			   NULL);
+                           _("Use function for green/saturation component"),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
@@ -1300,8 +1300,8 @@ alienmap2_dialog (void)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-			   _("Use function for blue/luminance component"),
-			   NULL);
+                           _("Use function for blue/luminance component"),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (alienmap2_toggle_update),
@@ -1326,7 +1326,7 @@ dialog_update_preview (void)
 
 static void
 dialog_scale_update (GtkAdjustment *adjustment,
-		     gdouble       *value)
+                     gdouble       *value)
 {
   gimp_double_adjustment_update (adjustment, value);
 
@@ -1355,7 +1355,7 @@ dialog_response (GtkWidget *widget,
 
 static void
 alienmap2_toggle_update (GtkWidget *widget,
-			 gpointer   data)
+                         gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
 
@@ -1364,7 +1364,7 @@ alienmap2_toggle_update (GtkWidget *widget,
 
 static void
 alienmap2_radio_update (GtkWidget *widget,
-			gpointer   data)
+                        gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -1381,10 +1381,10 @@ alienmap2_logo_dialog (GtkWidget *parent)
   GtkWidget *xframe, *xframe2;
   GtkWidget *xvbox;
   GtkWidget *xhbox;
-  gchar  *text;
-  guchar *temp, *temp2;
-  guchar *datapointer;
-  gint    y,x;
+  gchar     *text;
+  guchar    *temp, *temp2;
+  guchar    *datapointer;
+  gint       y, x;
 
   if (logodlg)
     {

@@ -63,10 +63,10 @@
  */
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 static void drawlens    (GimpDrawable *drawable);
 
@@ -114,16 +114,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_applylens",
-			  "Apply a lens effect",
-			  "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
-			  "Morten Eriksen",
-			  "Morten Eriksen",
-			  "1997",
-			  N_("<Image>/Filters/Glass Effects/Apply _Lens..."),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Apply a lens effect",
+                          "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
+                          "Morten Eriksen",
+                          "Morten Eriksen",
+                          "1997",
+                          N_("<Image>/Filters/Glass Effects/Apply _Lens..."),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -155,23 +155,23 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_applylens", &lvals);
       if(!lens_dialog (drawable))
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 7)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  lvals.refraction = param[3].data.d_float;
-	  lvals.keep_surr = param[4].data.d_int32;
-	  lvals.use_bkgr = param[5].data.d_int32;
-	  lvals.set_transparent = param[6].data.d_int32;
-	}
+        {
+          lvals.refraction = param[3].data.d_float;
+          lvals.keep_surr = param[4].data.d_int32;
+          lvals.use_bkgr = param[5].data.d_int32;
+          lvals.set_transparent = param[6].data.d_int32;
+        }
 
       if (status == GIMP_PDB_SUCCESS && (lvals.refraction < 1.0))
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -201,12 +201,12 @@ run (const gchar      *name,
  */
 static void
 find_projected_pos (gfloat  a2,
-		    gfloat  b2,
-		    gfloat  c2,
-		    gfloat  x,
-		    gfloat  y,
-		    gfloat *projx,
-		    gfloat *projy)
+                    gfloat  b2,
+                    gfloat  c2,
+                    gfloat  x,
+                    gfloat  y,
+                    gfloat *projx,
+                    gfloat *projy)
 {
   gfloat n[3];
   gfloat nxangle, nyangle, theta1, theta2;
@@ -250,7 +250,7 @@ drawlens (GimpDrawable *drawable)
 
   gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background,
-		      &bgr_red, &bgr_green, &bgr_blue);
+                      &bgr_red, &bgr_green, &bgr_blue);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   regionwidth = x2 - x1;
@@ -280,65 +280,65 @@ drawlens (GimpDrawable *drawable)
       dx = (gfloat) col - a + 0.5;
       xsqr = dx * dx;
       for (row = 0; row < regionheight; row++)
-	{
-	  pixelpos = (col + row * regionwidth) * bytes;
-	  dy = -((gfloat) row - b) - 0.5;
-	  ysqr = dy * dy;
-	  if (ysqr < (bsqr - (bsqr * xsqr) / asqr))
-	    {
-	      find_projected_pos (asqr, bsqr, csqr, dx, dy, &x, &y);
-	      y = -y;
-	      pos = ((gint) (y + b) * regionwidth + (gint) (x + a)) * bytes;
+        {
+          pixelpos = (col + row * regionwidth) * bytes;
+          dy = -((gfloat) row - b) - 0.5;
+          ysqr = dy * dy;
+          if (ysqr < (bsqr - (bsqr * xsqr) / asqr))
+            {
+              find_projected_pos (asqr, bsqr, csqr, dx, dy, &x, &y);
+              y = -y;
+              pos = ((gint) (y + b) * regionwidth + (gint) (x + a)) * bytes;
 
-	      for (i = 0; i < bytes; i++)
-		{
-		  dest[pixelpos + i] = src[pos + i];
-		}
-	    }
-	  else
-	    {
-	      if (lvals.keep_surr)
-		{
-		  for (i = 0; i < bytes; i++)
-		    {
-		      dest[pixelpos + i] = src[pixelpos + i];
-		    }
-		}
-	      else
-		{
-		  if (lvals.set_transparent)
-		    alphaval = 0;
-		  else
-		    alphaval = 255;
+              for (i = 0; i < bytes; i++)
+                {
+                  dest[pixelpos + i] = src[pos + i];
+                }
+            }
+          else
+            {
+              if (lvals.keep_surr)
+                {
+                  for (i = 0; i < bytes; i++)
+                    {
+                      dest[pixelpos + i] = src[pixelpos + i];
+                    }
+                }
+              else
+                {
+                  if (lvals.set_transparent)
+                    alphaval = 0;
+                  else
+                    alphaval = 255;
 
-		  switch (drawtype)
-		    {
-		    case GIMP_INDEXEDA_IMAGE:
-		      dest[pixelpos + 1] = alphaval;
-		    case GIMP_INDEXED_IMAGE:
-		      dest[pixelpos + 0] = 0;
-		      break;
+                  switch (drawtype)
+                    {
+                    case GIMP_INDEXEDA_IMAGE:
+                      dest[pixelpos + 1] = alphaval;
+                    case GIMP_INDEXED_IMAGE:
+                      dest[pixelpos + 0] = 0;
+                      break;
 
-		    case GIMP_RGBA_IMAGE:
-		      dest[pixelpos + 3] = alphaval;
-		    case GIMP_RGB_IMAGE:
-		      dest[pixelpos + 0] = bgr_red;
-		      dest[pixelpos + 1] = bgr_green;
-		      dest[pixelpos + 2] = bgr_blue;
-		      break;
+                    case GIMP_RGBA_IMAGE:
+                      dest[pixelpos + 3] = alphaval;
+                    case GIMP_RGB_IMAGE:
+                      dest[pixelpos + 0] = bgr_red;
+                      dest[pixelpos + 1] = bgr_green;
+                      dest[pixelpos + 2] = bgr_blue;
+                      break;
 
-		    case GIMP_GRAYA_IMAGE:
-		      dest[pixelpos + 1] = alphaval;
-		    case GIMP_GRAY_IMAGE:
-		      dest[pixelpos+0] = bgr_red;
-		      break;
-		    }
-		}
-	    }
-	}
+                    case GIMP_GRAYA_IMAGE:
+                      dest[pixelpos + 1] = alphaval;
+                    case GIMP_GRAY_IMAGE:
+                      dest[pixelpos+0] = bgr_red;
+                      break;
+                    }
+                }
+            }
+        }
 
       if (((gint) (regionwidth-col) % 5) == 0)
-	gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
+        gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
     }
 
   gimp_pixel_rgn_set_rect (&destPR, dest, x1, y1, regionwidth, regionheight);
@@ -368,12 +368,12 @@ lens_dialog (GimpDrawable *drawable)
 
   dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/apply_lens.html",
+                         gimp_standard_help_func, "filters/apply_lens.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -414,7 +414,7 @@ lens_dialog (GimpDrawable *drawable)
         (GTK_RADIO_BUTTON (toggle), _("_Make Surroundings Transparent"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				    lvals.set_transparent);
+                                    lvals.set_transparent);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
@@ -434,7 +434,7 @@ lens_dialog (GimpDrawable *drawable)
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&adj, lvals.refraction,
-				     1.0, 100.0, 0.1, 1.0, 0, 1, 2);
+                                     1.0, 100.0, 0.1, 1.0, 0, 1, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 

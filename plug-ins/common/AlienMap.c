@@ -1346,10 +1346,10 @@ alienmap_logo_dialog (GtkWidget *parent)
   GtkWidget *xframe, *xframe2;
   GtkWidget *xvbox;
   GtkWidget *xhbox;
-  gchar  *text;
-  guchar *temp, *temp2;
-  guchar *datapointer;
-  gint    y,x;
+  gchar     *text;
+  guchar    *temp, *temp2;
+  guchar    *datapointer;
+  gint       y, x;
 
   if (logodlg)
     {

@@ -116,10 +116,10 @@ static BlurVals pivals =
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -132,10 +132,10 @@ GimpPlugInInfo PLUG_IN_INFO =
 static void blur (GimpDrawable *drawable);
 
 static inline void blur_prepare_row (GimpPixelRgn *pixel_rgn,
-				     guchar       *data,
-				     gint          x,
-				     gint          y,
-				     gint          w);
+                                     guchar       *data,
+                                     gint          x,
+                                     gint          y,
+                                     gint          w);
 
 static gint blur_dialog             (void);
 
@@ -179,28 +179,28 @@ query (void)
   const gchar *copyright_date = "1995-1998";
 
   gimp_install_procedure ("plug_in_blur_randomize",
-			  (gchar *) blurb,
-			  (gchar *) help,
-			  (gchar *) author,
-			  (gchar *) copyrights,
-			  (gchar *) copyright_date,
-			  N_("<Image>/Filters/Blur/_Blur..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          (gchar *) blurb,
+                          (gchar *) help,
+                          (gchar *) author,
+                          (gchar *) copyrights,
+                          (gchar *) copyright_date,
+                          N_("<Image>/Filters/Blur/_Blur..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  (gchar *) blurb,
-			  (gchar *) help,
-			  (gchar *) author,
-			  (gchar *) copyrights,
-			  (gchar *) copyright_date,
-			  NULL,
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args_ni), 0,
-			  args_ni, NULL);
+                          (gchar *) blurb,
+                          (gchar *) help,
+                          (gchar *) author,
+                          (gchar *) copyrights,
+                          (gchar *) copyright_date,
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args_ni), 0,
+                          args_ni, NULL);
 }
 
 /*********************************
@@ -244,90 +244,90 @@ run (const gchar      *name,
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       switch (run_mode)
-	{
-	  /*
-	   *  If we're running interactively, pop up the dialog box.
-	   */
-	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data (PLUG_IN_NAME, &pivals);
-	  if (!blur_dialog ())        /* return on Cancel */
-	    return;
-	  break;
+        {
+          /*
+           *  If we're running interactively, pop up the dialog box.
+           */
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data (PLUG_IN_NAME, &pivals);
+          if (!blur_dialog ())        /* return on Cancel */
+            return;
+          break;
 
-	  /*
-	   *  If we're not interactive (probably scripting), we
-	   *  get the parameters from the param[] array, since
-	   *  we don't use the dialog box.  Make sure all
-	   *  parameters have legitimate values.
-	   */
-	case GIMP_RUN_NONINTERACTIVE:
-	  if ((strcmp (name, "plug_in_blur_randomize") == 0) &&
-	      (nparams == 7))
-	    {
-	      pivals.blur_pct       = (gdouble) param[3].data.d_float;
-	      pivals.blur_pct       = (gdouble) MIN (100.0, pivals.blur_pct);
-	      pivals.blur_pct       = (gdouble) MAX (1.0, pivals.blur_pct);
-	      pivals.blur_rcount    = (gdouble) param[4].data.d_float;
-	      pivals.blur_rcount    = (gdouble) MIN (100.0,pivals.blur_rcount);
-	      pivals.blur_rcount    = (gdouble) MAX (1.0, pivals.blur_rcount);
-	      pivals.blur_randomize = (gboolean) param[5].data.d_int32;
-	      pivals.blur_seed      = (gint) param[6].data.d_int32;
-	    }
-	  else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
-		   (nparams == 3))
-	    {
-	      pivals.blur_pct       = (gdouble) 100.0;
-	      pivals.blur_rcount    = (gdouble) 1.0;
-	      pivals.blur_randomize = FALSE;
-	      pivals.blur_seed      = g_random_int ();
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  break;
+          /*
+           *  If we're not interactive (probably scripting), we
+           *  get the parameters from the param[] array, since
+           *  we don't use the dialog box.  Make sure all
+           *  parameters have legitimate values.
+           */
+        case GIMP_RUN_NONINTERACTIVE:
+          if ((strcmp (name, "plug_in_blur_randomize") == 0) &&
+              (nparams == 7))
+            {
+              pivals.blur_pct       = (gdouble) param[3].data.d_float;
+              pivals.blur_pct       = (gdouble) MIN (100.0, pivals.blur_pct);
+              pivals.blur_pct       = (gdouble) MAX (1.0, pivals.blur_pct);
+              pivals.blur_rcount    = (gdouble) param[4].data.d_float;
+              pivals.blur_rcount    = (gdouble) MIN (100.0,pivals.blur_rcount);
+              pivals.blur_rcount    = (gdouble) MAX (1.0, pivals.blur_rcount);
+              pivals.blur_randomize = (gboolean) param[5].data.d_int32;
+              pivals.blur_seed      = (gint) param[6].data.d_int32;
+            }
+          else if ((strcmp (name, PLUG_IN_NAME) == 0) &&
+                   (nparams == 3))
+            {
+              pivals.blur_pct       = (gdouble) 100.0;
+              pivals.blur_rcount    = (gdouble) 1.0;
+              pivals.blur_randomize = FALSE;
+              pivals.blur_seed      = g_random_int ();
+            }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
 
-	  /*
-	   *  If we're running with the last set of values, get those values.
-	   */
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data (PLUG_IN_NAME, &pivals);
-	  break;
+          /*
+           *  If we're running with the last set of values, get those values.
+           */
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data (PLUG_IN_NAME, &pivals);
+          break;
 
-	  /*
-	   *  Hopefully we never get here!
-	   */
-	default:
-	  break;
+          /*
+           *  Hopefully we never get here!
+           */
+        default:
+          break;
         }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  /*
-	   *  JUST DO IT!
-	   */
-	  gimp_progress_init (_("Blurring..."));
+        {
+          /*
+           *  JUST DO IT!
+           */
+          gimp_progress_init (_("Blurring..."));
           gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
                                        + 1));
-	  /*
-	   *  Initialize the rand() function seed
-	   */
+          /*
+           *  Initialize the rand() function seed
+           */
           g_random_set_seed (pivals.blur_seed);
 
-	  blur (drawable);
-	  /*
-	   *  If we ran interactively (even repeating) update the display.
-	   */
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    {
-	      gimp_displays_flush ();
+          blur (drawable);
+          /*
+           *  If we ran interactively (even repeating) update the display.
+           */
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            {
+              gimp_displays_flush ();
             }
-	  /*
-	   *  If we use the dialog popup, set the data for future use.
-	   */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    {
-	      gimp_set_data (PLUG_IN_NAME, &pivals, sizeof (BlurVals));
+          /*
+           *  If we use the dialog popup, set the data for future use.
+           */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            {
+              gimp_set_data (PLUG_IN_NAME, &pivals, sizeof (BlurVals));
             }
         }
     }
@@ -359,10 +359,10 @@ run (const gchar      *name,
 
 static inline void
 blur_prepare_row (GimpPixelRgn *pixel_rgn,
-		  guchar    *data,
-		  gint       x,
-		  gint       y,
-		  gint       w)
+                  guchar       *data,
+                  gint          x,
+                  gint          y,
+                  gint          w)
 {
   int b;
 
@@ -455,97 +455,97 @@ blur (GimpDrawable *drawable)
        *  loop through the rows, applying the selected convolution
        */
       for (row = y1; row < y2; row++)
-	{
-	  /*  prepare the next row  */
-	  blur_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
+        {
+          /*  prepare the next row  */
+          blur_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
 
-	  d = dest;
-	  ind = 0;
-	  for (col = 0; col < (x2 - x1) * bytes; col++)
-	    {
-	      if (g_random_int_range (0, 100) <= (gint) pivals.blur_pct)
-		{
-		  ind++;
-		  if (ind == bytes || !has_alpha)
-		    {
-		      /*
-		       *  If no alpha channel,
-		       *   or if there is one and this is it...
-		       */
-		      *d++ = ((gint) pr[col - bytes] + (gint) pr[col] +
-			      (gint) pr[col + bytes] +
-			      (gint) cr[col - bytes] + (gint) cr[col] +
-			      (gint) cr[col + bytes] +
-			      (gint) nr[col - bytes] + (gint) nr[col] +
-			      (gint) nr[col + bytes]) / 9;
-		      ind = 0;
+          d = dest;
+          ind = 0;
+          for (col = 0; col < (x2 - x1) * bytes; col++)
+            {
+              if (g_random_int_range (0, 100) <= (gint) pivals.blur_pct)
+                {
+                  ind++;
+                  if (ind == bytes || !has_alpha)
+                    {
+                      /*
+                       *  If no alpha channel,
+                       *   or if there is one and this is it...
+                       */
+                      *d++ = ((gint) pr[col - bytes] + (gint) pr[col] +
+                              (gint) pr[col + bytes] +
+                              (gint) cr[col - bytes] + (gint) cr[col] +
+                              (gint) cr[col + bytes] +
+                              (gint) nr[col - bytes] + (gint) nr[col] +
+                              (gint) nr[col + bytes]) / 9;
+                      ind = 0;
                     }
-		  else
-		    {
-		      /*
-		       *  otherwise we have an alpha channel,
-		       *   but this is a color channel
-		       */
-		      *d++ = ((gint)
-			      (((gdouble) (pr[col - bytes] * pr[col - ind])
-				+ (gdouble) (pr[col] * pr[col + bytes - ind])
-				+ (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
-				+ (gdouble) (cr[col - bytes] * cr[col - ind])
-				+ (gdouble) (cr[col] * cr[col + bytes - ind])
-				+ (gdouble) (cr[col + bytes] * cr[col + 2*bytes - ind])
-				+ (gdouble) (nr[col - bytes] * nr[col - ind])
-				+ (gdouble) (nr[col] * nr[col + bytes - ind])
-				+ (gdouble) (nr[col + bytes] * nr[col + 2*bytes - ind]))
+                  else
+                    {
+                      /*
+                       *  otherwise we have an alpha channel,
+                       *   but this is a color channel
+                       */
+                      *d++ = ((gint)
+                              (((gdouble) (pr[col - bytes] * pr[col - ind])
+                                + (gdouble) (pr[col] * pr[col + bytes - ind])
+                                + (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
+                                + (gdouble) (cr[col - bytes] * cr[col - ind])
+                                + (gdouble) (cr[col] * cr[col + bytes - ind])
+                                + (gdouble) (cr[col + bytes] * cr[col + 2*bytes - ind])
+                                + (gdouble) (nr[col - bytes] * nr[col - ind])
+                                + (gdouble) (nr[col] * nr[col + bytes - ind])
+                                + (gdouble) (nr[col + bytes] * nr[col + 2*bytes - ind]))
                              / ((gdouble) pr[col - ind]
-				+ (gdouble) pr[col + bytes - ind]
-				+ (gdouble) pr[col + 2*bytes - ind]
-				+ (gdouble) cr[col - ind]
-				+ (gdouble) cr[col + bytes - ind]
-				+ (gdouble) cr[col + 2*bytes - ind]
-				+ (gdouble) nr[col - ind]
-				+ (gdouble) nr[col + bytes - ind]
-				+ (gdouble) nr[col + 2*bytes - ind])));
+                                + (gdouble) pr[col + bytes - ind]
+                                + (gdouble) pr[col + 2*bytes - ind]
+                                + (gdouble) cr[col - ind]
+                                + (gdouble) cr[col + bytes - ind]
+                                + (gdouble) cr[col + 2*bytes - ind]
+                                + (gdouble) nr[col - ind]
+                                + (gdouble) nr[col + bytes - ind]
+                                + (gdouble) nr[col + 2*bytes - ind])));
                     }
-		  /*
-		   *  Otherwise, this pixel was not selected for randomization,
-		   *  so use the current value.
-		   */
+                  /*
+                   *  Otherwise, this pixel was not selected for randomization,
+                   *  so use the current value.
+                   */
                 }
-	      else
-		{
-		  *d++ = (gint) cr[col];
+              else
+                {
+                  *d++ = (gint) cr[col];
                 }
             }
-	  /*
-	   *  Save the modified row, shuffle the row pointers, and every
-	   *  so often, update the progress meter.
-	   */
-	  gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
+          /*
+           *  Save the modified row, shuffle the row pointers, and every
+           *  so often, update the progress meter.
+           */
+          gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
 
-	  tmp = pr;
-	  pr = cr;
-	  cr = nr;
-	  nr = tmp;
+          tmp = pr;
+          pr = cr;
+          cr = nr;
+          nr = tmp;
 
-	  if (PROG_UPDATE_TIME)
-	    gimp_progress_update ((double) row / (double) (y2 - y1));
+          if (PROG_UPDATE_TIME)
+            gimp_progress_update ((double) row / (double) (y2 - y1));
         }
       /*
        *  if we have more cycles to perform, swap the src and dest Pixel Regions
        */
       if (cnt < repeat_count)
-	{
-	  if (tp != NULL)
-	    {
-	      tp = dp;
-	      dp = sp;
-	      sp = tp;
+        {
+          if (tp != NULL)
+            {
+              tp = dp;
+              dp = sp;
+              sp = tp;
             }
-	  else
-	    {
-	      tp = &srcPR;
-	      sp = &destPR;
-	      dp = &destPR2;
+          else
+            {
+              tp = &srcPR;
+              sp = &destPR;
+              dp = &destPR2;
             }
         }
     }
@@ -584,12 +584,12 @@ blur_dialog (void)
 
   dlg = gimp_dialog_new (_("Blur"), "blur",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/blur.html",
+                         gimp_standard_help_func, "filters/blur.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   /*
    *  Parameter settings
@@ -611,19 +611,19 @@ blur_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.blur_randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Random Seed:"), 1.0, 0.5,
-				     seed_hbox, 1, TRUE);
+                                     _("_Random Seed:"), 1.0, 0.5,
+                                     seed_hbox, 1, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-				 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
+                                 GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
 
   /*
    *  Randomization percentage label & scale (1 to 100)
    */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("R_andomization %:"), SCALE_WIDTH, 0,
-			      pivals.blur_pct, 1.0, 100.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      _("Percentage of pixels to be filtered"), NULL);
+                              _("R_andomization %:"), SCALE_WIDTH, 0,
+                              pivals.blur_pct, 1.0, 100.0, 1.0, 10.0, 0,
+                              TRUE, 0, 0,
+                              _("Percentage of pixels to be filtered"), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.blur_pct);
@@ -632,10 +632,10 @@ blur_dialog (void)
    *  Repeat count label & scale (1 to 100)
    */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("R_epeat:"), SCALE_WIDTH, 0,
-			      pivals.blur_rcount, 1.0, 100.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      _("Number of times to apply filter"), NULL);
+                              _("R_epeat:"), SCALE_WIDTH, 0,
+                              pivals.blur_rcount, 1.0, 100.0, 1.0, 10.0, 0,
+                              TRUE, 0, 0,
+                              _("Number of times to apply filter"), NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.blur_rcount);

@@ -76,21 +76,21 @@ query (void)
   };
 
   gimp_install_procedure ("file_aa_save",
-			  "Saves grayscale image in various text formats",
-			  "This plug-in uses aalib to save grayscale image "
+                          "Saves grayscale image in various text formats",
+                          "This plug-in uses aalib to save grayscale image "
                           "as ascii art into a variety of text formats",
-			  "Tim Newsome <nuisance@cmu.edu>",
-			  "Tim Newsome <nuisance@cmu.edu>",
-			  "1997",
-			  "<Save>/AA",
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args), 0,
-			  save_args, NULL);
+                          "Tim Newsome <nuisance@cmu.edu>",
+                          "Tim Newsome <nuisance@cmu.edu>",
+                          "1997",
+                          "<Save>/AA",
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
 
   gimp_register_save_handler ("file_aa_save",
-			      "ansi,txt,text",
-			      "");
+                              "ansi,txt,text",
+                              "");
 }
 
 /**
@@ -149,14 +149,14 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_ui_init ("aa", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "AA",
-				  (GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                  (GIMP_EXPORT_CAN_HANDLE_RGB  |
                                    GIMP_EXPORT_CAN_HANDLE_GRAY |
-				   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+                                   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
       if (export == GIMP_EXPORT_CANCEL)
-	{
-	  values[0].data.d_status = GIMP_PDB_CANCEL;
-	  return;
-	}
+        {
+          values[0].data.d_status = GIMP_PDB_CANCEL;
+          return;
+        }
       break;
     default:
       break;
@@ -171,47 +171,47 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  gimp_get_data ("file_aa_save", &output_type);
-	  output_type = type_dialog (output_type);
-	  if (output_type < 0)
-	    status = GIMP_PDB_CANCEL;
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data ("file_aa_save", &output_type);
+          output_type = type_dialog (output_type);
+          if (output_type < 0)
+            status = GIMP_PDB_CANCEL;
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 6)
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  else
-	    {
-	      output_type = get_type_from_string (param[5].data.d_string);
-	      if (output_type < 0)
-		status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  break;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 6)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              output_type = get_type_from_string (param[5].data.d_string);
+              if (output_type < 0)
+                status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("file_aa_save", &output_type);
-	  break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data ("file_aa_save", &output_type);
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
       if (save_aa (drawable_ID, param[3].data.d_string, output_type))
-	{
-	  gimp_set_data ("file_aa_save", &output_type, sizeof (output_type));
-	}
+        {
+          gimp_set_data ("file_aa_save", &output_type, sizeof (output_type));
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   if (export == GIMP_EXPORT_EXPORT)
@@ -253,7 +253,7 @@ save_aa (gint32  drawable_ID,
 
 static void
 gimp2aa (gint32      drawable_ID,
-	 aa_context *context)
+         aa_context *context)
 {
   GimpDrawable    *drawable;
   GimpPixelRgn     pixel_rgn;
@@ -321,7 +321,7 @@ gimp2aa (gint32      drawable_ID,
   renderparams->dither = AA_FLOYD_S;
 
   aa_render (context, renderparams, 0, 0,
-	     aa_scrwidth (context), aa_scrheight (context));
+             aa_scrwidth (context), aa_scrheight (context));
 }
 
 /*
@@ -340,12 +340,12 @@ type_dialog (gint selected)
   /* Create the actual window. */
   dlg = gimp_dialog_new (_("Save as Text"), "aa",
                          NULL, 0,
-			 gimp_standard_help_func, "filters/aa.html",
+                         gimp_standard_help_func, "filters/aa.html",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   /*  file save type  */
   frame = gtk_frame_new (_("Data Formatting"));
@@ -363,20 +363,20 @@ type_dialog (gint selected)
 
     while (*p != NULL)
       {
-	toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
-	group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-	gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-	gtk_widget_show (toggle);
+        toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
+        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
+        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+        gtk_widget_show (toggle);
 
-	g_signal_connect (toggle, "toggled",
+        g_signal_connect (toggle, "toggled",
                           G_CALLBACK (type_dialog_toggle_update),
                           (gpointer) (*p)->formatname);
 
-	if (current == selected)
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+        if (current == selected)
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 
-	p++;
-	current++;
+        p++;
+        current++;
       }
   }
 
@@ -399,7 +399,7 @@ type_dialog (gint selected)
 
 static void
 type_dialog_toggle_update (GtkWidget *widget,
-			   gpointer   data)
+                           gpointer   data)
 {
   selected_type = get_type_from_string ((const gchar *) data);
 }

@@ -427,11 +427,11 @@ blindsapply (guchar *srow,
              gint    bpp,
              guchar *bg)
 {
-  guchar *src;
-  guchar *dst;
-  gint i,j,k;
-  gdouble ang;
-  gint available;
+  guchar  *src;
+  guchar  *dst;
+  gint     i,j,k;
+  gdouble  ang;
+  gint     available;
 
   /* Make the row 'shrink' around points along its length */
   /* The bvals.numsegs determins how many segments to slip it in to */
@@ -686,11 +686,11 @@ apply_blinds (void)
        * this act as a transfomation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
-      int i;
-      gint *sr = g_new (gint, sel_height * 4);
-      gint *dr = g_new (gint, sel_height * 4);
+      int     i;
+      gint   *sr  = g_new (gint, sel_height * 4);
+      gint   *dr  = g_new (gint, sel_height * 4);
       guchar *dst = g_new (guchar, STEP * 4);
-      guchar dummybg[4];
+      guchar  dummybg[4];
 
       memset (dummybg, 0, 4);
       memset (dr, 0, sel_height * 4); /* all dr rows are background rows */
@@ -709,7 +709,7 @@ apply_blinds (void)
       /* Fill in with background color ? */
       for (i = 0 ; i < STEP ; i++)
         {
-          int j;
+          int     j;
           guchar *bgdst;
           bgdst = &dst[i * src_rgn.bpp];
 
@@ -721,8 +721,8 @@ apply_blinds (void)
 
       for (x = 0; x < sel_width; x += STEP)
         {
-          int rr;
-          int step;
+          int     rr;
+          int     step;
           guchar *p;
 
           if((x + STEP) > sel_width)

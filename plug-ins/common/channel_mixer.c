@@ -100,11 +100,11 @@ typedef struct
 
 typedef struct
 {
-  gint width;
-  gint height;
-  gint bpp;
-  gdouble scale;
-  guchar *bits;
+  gint     width;
+  gint     height;
+  gint     bpp;
+  gdouble  scale;
+  guchar  *bits;
 } mwPreview;
 
 #define PREVIEW_SIZE 200
@@ -521,7 +521,7 @@ cm_dialog (void)
         default:
           g_assert_not_reached ();
 
-	  red_value = green_value = blue_value = 0.0;
+          red_value = green_value = blue_value = 0.0;
           break;
         }
     }
@@ -535,7 +535,7 @@ cm_dialog (void)
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
@@ -1043,7 +1043,7 @@ cm_load_file_callback (GtkWidget    *widget,
 
       g_signal_connect (filesel, "response",
                         G_CALLBACK (cm_load_file_response_callback),
-		        mix);
+                        mix);
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
@@ -1075,12 +1075,12 @@ cm_load_file_response_callback (GtkFileSelection *fs,
       fp = fopen (mix->filename, "r");
 
       if (fp)
-	{
-	  gchar buf[3][CM_LINE_SIZE];
+        {
+          gchar buf[3][CM_LINE_SIZE];
 
-	  buf[0][0] = '\0';
-	  buf[1][0] = '\0';
-	  buf[2][0] = '\0';
+          buf[0][0] = '\0';
+          buf[1][0] = '\0';
+          buf[2][0] = '\0';
 
           fgets (buf[0], CM_LINE_SIZE - 1, fp);
 
@@ -1180,7 +1180,7 @@ cm_save_file_callback (GtkWidget    *widget,
 
       g_signal_connect (filesel, "response",
                         G_CALLBACK (cm_save_file_response_callback),
-		        mix);
+                        mix);
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);

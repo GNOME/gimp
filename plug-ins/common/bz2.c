@@ -55,18 +55,18 @@
 
 static void          query       (void);
 static void          run         (const gchar       *name,
-				  gint               nparams,
-				  const GimpParam   *param,
-				  gint              *nreturn_vals,
-				  GimpParam        **return_vals);
+                                  gint               nparams,
+                                  const GimpParam   *param,
+                                  gint              *nreturn_vals,
+                                  GimpParam        **return_vals);
 
 static gint32        load_image  (const gchar       *filename,
-				  gint32             run_mode,
-				  GimpPDBStatusType *status /* return value */);
+                                  gint32             run_mode,
+                                  GimpPDBStatusType *status /* return value */);
 static GimpPDBStatusType save_image  (const gchar   *filename,
-				      gint32         image_ID,
-				      gint32         drawable_ID,
-				      gint32         run_mode);
+                                      gint32         image_ID,
+                                      gint32         drawable_ID,
+                                      gint32         run_mode);
 
 static gboolean      valid_file     (const gchar    *filename);
 static const gchar * find_extension (const gchar    *filename);
@@ -111,7 +111,7 @@ query (void)
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
                           "<Load>/bzip2",
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -124,18 +124,18 @@ query (void)
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
                           "<Save>/bzip2",
-			  "RGB*, GRAY*, INDEXED*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
   gimp_register_magic_load_handler ("file_bz2_load",
-				    "xcf.bz2,bz2,xcfbz2",
-				    "",
-				    "0,string,BZh");
+                                    "xcf.bz2,bz2,xcfbz2",
+                                    "",
+                                    "0,string,BZh");
   gimp_register_save_handler ("file_bz2_save",
-			      "xcf.bz2,bz2,xcfbz2",
-			      "");
+                              "xcf.bz2,bz2,xcfbz2",
+                              "");
 }
 
 static void
@@ -162,42 +162,42 @@ run (const gchar      *name,
   if (strcmp (name, "file_bz2_load") == 0)
     {
       image_ID = load_image (param[1].data.d_string,
-			     param[0].data.d_int32,
-			     &status);
+                             param[0].data.d_int32,
+                             &status);
 
       if (image_ID != -1 &&
-	  status == GIMP_PDB_SUCCESS)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+          status == GIMP_PDB_SUCCESS)
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
     }
   else if (strcmp (name, "file_bz2_save") == 0)
     {
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  break;
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 4)
-	    status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	case GIMP_RUN_WITH_LAST_VALS:
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+          break;
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 4)
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  status = save_image (param[3].data.d_string,
-			       param[1].data.d_int32,
-			       param[2].data.d_int32,
-			       param[0].data.d_int32);
-	}
+        {
+          status = save_image (param[3].data.d_string,
+                               param[1].data.d_int32,
+                               param[2].data.d_int32,
+                               param[0].data.d_int32);
+        }
     }
   else
     {
@@ -210,12 +210,12 @@ run (const gchar      *name,
 #ifdef __EMX__
 static gint
 spawn_bz (gchar *filename,
-	  gchar *tmpname,
-	  gchar *parms,
-	  gint  *pid)
+          gchar *tmpname,
+          gchar *parms,
+          gint  *pid)
 {
   FILE *f;
-  gint tfd;
+  gint  tfd;
 
   if (!(f = fopen (filename,"wb")))
     {
@@ -249,9 +249,9 @@ spawn_bz (gchar *filename,
 
 static GimpPDBStatusType
 save_image (const gchar *filename,
-	    gint32       image_ID,
-	    gint32       drawable_ID,
-	    gint32       run_mode)
+            gint32       image_ID,
+            gint32       drawable_ID,
+            gint32       run_mode)
 {
   FILE        *f;
   const gchar *ext;
@@ -270,10 +270,10 @@ save_image (const gchar *filename,
   tmpname = gimp_temp_name (ext + 1);
 
   if (! (gimp_file_save (run_mode,
-			 image_ID,
-			 drawable_ID,
-			 tmpname,
-			 tmpname) && valid_file (tmpname)) )
+                         image_ID,
+                         drawable_ID,
+                         tmpname,
+                         tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
       g_free (tmpname);
@@ -291,15 +291,15 @@ save_image (const gchar *filename,
   else if (pid == 0)
     {
       if (!(f = fopen (filename, "w")))
-	{
-	  g_message ("fopen() failed: %s", g_strerror (errno));
-	  g_free (tmpname);
-	  _exit(127);
-	}
+        {
+          g_message ("fopen() failed: %s", g_strerror (errno));
+          g_free (tmpname);
+          _exit(127);
+        }
 
       /* make stdout for this process be the output file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))
-	g_message ("dup2() failed: %s", g_strerror (errno));
+        g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
@@ -319,13 +319,13 @@ save_image (const gchar *filename,
       wpid = waitpid (pid, &process_status, 0);
 
       if ((wpid < 0)
-	  || !WIFEXITED (process_status)
-	  || (WEXITSTATUS (process_status) != 0))
-	{
-	  g_message ("bzip2 exited abnormally on file '%s'", tmpname);
-	  g_free (tmpname);
-	  return GIMP_PDB_EXECUTION_ERROR;
-	}
+          || !WIFEXITED (process_status)
+          || (WEXITSTATUS (process_status) != 0))
+        {
+          g_message ("bzip2 exited abnormally on file '%s'", tmpname);
+          g_free (tmpname);
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   unlink (tmpname);
@@ -336,8 +336,8 @@ save_image (const gchar *filename,
 
 static gint32
 load_image (const gchar       *filename,
-	    gint32             run_mode,
-	    GimpPDBStatusType *status /* return value */)
+            gint32             run_mode,
+            GimpPDBStatusType *status /* return value */)
 {
   gint32       image_ID;
   const gchar *ext;
@@ -369,15 +369,15 @@ load_image (const gchar       *filename,
     {
       FILE *f;
        if (!(f = fopen (tmpname,"w")))
-	 {
-	   g_message ("fopen() failed: %s", g_strerror (errno));
-	   g_free (tmpname);
-	   _exit (127);
-	 }
+         {
+           g_message ("fopen() failed: %s", g_strerror (errno));
+           g_free (tmpname);
+           _exit (127);
+         }
 
       /* make stdout for this child process be the temp file */
       if (-1 == dup2 (fileno (f), fileno (stdout)))
-	g_message ("dup2() failed: %s", g_strerror (errno));
+        g_message ("dup2() failed: %s", g_strerror (errno));
 
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
@@ -398,14 +398,14 @@ load_image (const gchar       *filename,
       wpid = waitpid (pid, &process_status, 0);
 
       if ((wpid < 0)
-	  || !WIFEXITED (process_status)
-	  || (WEXITSTATUS (process_status) != 0))
-	{
-	  g_message ("bzip2 exited abnormally on file '%s'", filename);
-	  g_free (tmpname);
-	  *status = GIMP_PDB_EXECUTION_ERROR;
-	  return -1;
-	}
+          || !WIFEXITED (process_status)
+          || (WEXITSTATUS (process_status) != 0))
+        {
+          g_message ("bzip2 exited abnormally on file '%s'", filename);
+          g_free (tmpname);
+          *status = GIMP_PDB_EXECUTION_ERROR;
+          return -1;
+        }
     }
 
   /* now that we un-bzip2ed it, load the temp file */
@@ -455,22 +455,22 @@ find_extension (const gchar* filename)
   while (TRUE)
     {
       if (!ext || ext[1] == '\0' || strchr (ext, '/'))
-	{
-	  return NULL;
-	}
+        {
+          return NULL;
+        }
       if (0 == g_ascii_strcasecmp (ext, ".xcfbz2"))
-	{
-	  return ".xcf";  /* we've found it */
-	}
+        {
+          return ".xcf";  /* we've found it */
+        }
       if (0 != g_ascii_strcasecmp (ext, ".bz2"))
-	{
-	  return ext;
-	}
+        {
+          return ext;
+        }
       else
-	{
-	  /* we found ".bz2" so strip it, loop back, and look again */
-	  *ext = '\0';
-	  ext = strrchr (filename_copy, '.');
-	}
+        {
+          /* we found ".bz2" so strip it, loop back, and look again */
+          *ext = '\0';
+          ext = strrchr (filename_copy, '.');
+        }
     }
 }

@@ -61,10 +61,8 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -647,9 +645,7 @@ nova_center_preview_expose (GtkWidget *widget,
                             GdkEvent  *event,
                             gpointer   data)
 {
-  printf("Before\n");
   nova_center_draw ((NovaCenter*) data, ALL);
-  printf("After\n");
   return FALSE;
 }
 

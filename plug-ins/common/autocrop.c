@@ -24,31 +24,31 @@
 /* Declare local functions. */
 static void query         (void);
 static void run           (const gchar      *name,
-			   gint              nparams,
-			   const GimpParam  *param,
-			   gint             *nreturn_vals,
-			   GimpParam       **return_vals);
+                           gint              nparams,
+                           const GimpParam  *param,
+                           gint             *nreturn_vals,
+                           GimpParam       **return_vals);
 
 static gint colors_equal  (guchar       *col1,
-			   guchar       *col2,
-			   gint          bytes);
+                           guchar       *col2,
+                           gint          bytes);
 static gint guess_bgcolor (GimpPixelRgn *pr,
-			   gint          width,
-			   gint          height,
-			   gint          bytes,
-			   guchar       *color);
+                           gint          width,
+                           gint          height,
+                           gint          bytes,
+                           guchar       *color);
 
 static void doit          (GimpDrawable *drawable,
-			   gint32        image_id,
-			   gboolean      show_progress);
+                           gint32        image_id,
+                           gboolean      show_progress);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,	  /* init_proc  */
+  NULL,   /* init_proc  */
   NULL,   /* quit_proc  */
   query,  /* query_proc */
-  run,	  /* run_proc   */
+  run,    /* run_proc   */
 };
 
 static gint bytes;
@@ -67,16 +67,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_autocrop",
-			  "Automagically crops a picture.",
-			  "",
-			  "Tim Newsome",
-			  "Tim Newsome",
-			  "1997",
-			  N_("<Image>/Image/Transform/_Autocrop"),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Automagically crops a picture.",
+                          "",
+                          "Tim Newsome",
+                          "Tim Newsome",
+                          "1997",
+                          N_("<Image>/Image/Transform/_Autocrop"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 }
 
 static void
@@ -171,9 +171,9 @@ doit (GimpDrawable *drawable,
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
       for (x = 0; x < width && !abort; x++)
-	{
-	  abort = !colors_equal (color, buffer + x * bytes, bytes);
-	}
+        {
+          abort = !colors_equal (color, buffer + x * bytes, bytes);
+        }
     }
   if (y == height && !abort)
     {
@@ -194,9 +194,9 @@ doit (GimpDrawable *drawable,
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
       for (x = 0; x < width && !abort; x++)
-	{
-	  abort = !colors_equal (color, buffer + x * bytes, bytes);
-	}
+        {
+          abort = !colors_equal (color, buffer + x * bytes, bytes);
+        }
     }
   nh = y - ny + 2;
   
@@ -209,9 +209,9 @@ doit (GimpDrawable *drawable,
     {
       gimp_pixel_rgn_get_col (&srcPR, buffer, x, ny, nh);
       for (y = 0; y < nh && !abort; y++)
-	{
-	  abort = !colors_equal (color, buffer + y * bytes, bytes);
-	}
+        {
+          abort = !colors_equal (color, buffer + y * bytes, bytes);
+        }
     }
   x--;
   nx = x;
@@ -226,9 +226,9 @@ doit (GimpDrawable *drawable,
     {
       gimp_pixel_rgn_get_col (&srcPR, buffer, x, ny, nh);
       for (y = 0; y < nh && !abort; y++)
-	{
-	  abort = !colors_equal (color, buffer + y * bytes, bytes);
-	}
+        {
+          abort = !colors_equal (color, buffer + y * bytes, bytes);
+        }
     }
   nw = x - nx + 2;
   
@@ -245,10 +245,10 @@ doit (GimpDrawable *drawable,
 
 static gint
 guess_bgcolor (GimpPixelRgn *pr,
-	       gint          width,
-	       gint          height,
-	       gint          bytes,
-	       guchar       *color)
+               gint          width,
+               gint          height,
+               gint          bytes,
+               guchar       *color)
 {
   guchar tl[4], tr[4], bl[4], br[4];
   
@@ -284,7 +284,7 @@ guess_bgcolor (GimpPixelRgn *pr,
       return 3;
     }
   else if (colors_equal (tl, tr, bytes) || colors_equal (tl, bl, bytes) ||
-	   colors_equal (tl, br, bytes))
+           colors_equal (tl, br, bytes))
     {
       memcpy (color, tl, bytes);
       return 2;
@@ -302,35 +302,35 @@ guess_bgcolor (GimpPixelRgn *pr,
   else
     {
       while (bytes--)
-	{
-	  color[bytes] = (tl[bytes] + tr[bytes] + bl[bytes] + br[bytes]) / 4;
-	}
+        {
+          color[bytes] = (tl[bytes] + tr[bytes] + bl[bytes] + br[bytes]) / 4;
+        }
       return 0;
     }
 }
 
 static gint 
 colors_equal (guchar *col1,
-	      guchar *col2,
-	      gint    bytes)
+              guchar *col2,
+              gint    bytes)
 {
   gint equal = 1;
   gint b;
 
-  if ((bytes == 2 || bytes == 4) &&	/* HACK! */
+  if ((bytes == 2 || bytes == 4) &&     /* HACK! */
       col1[bytes-1] == 0 &&
       col2[bytes-1] == 0)
     {
-      return 1;				/* handle zero alpha */
+      return 1;                         /* handle zero alpha */
     }
   
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
-	{
-	  equal = 0;
-	  break;
-	}
+        {
+          equal = 0;
+          break;
+        }
     }
   
   return equal;
