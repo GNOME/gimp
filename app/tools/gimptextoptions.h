@@ -48,6 +48,7 @@ struct _GimpTextOptions
   GimpTextJustification  justify;
   gdouble                indent;
   gdouble                line_spacing;
+  gdouble                letter_spacing;
 
   GimpSizeEntry         *size_entry;
 };

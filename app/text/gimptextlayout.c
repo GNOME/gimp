@@ -213,6 +213,22 @@ gimp_text_layout_new (GimpText  *text,
                                                          text->line_spacing,
                                                          text->unit,
                                                          yres));
+  if (fabs (text->letter_spacing) > 0.1)
+    {
+      PangoAttrList  *attrs = pango_attr_list_new ();
+      PangoAttribute *attr;
+
+      attr = pango_attr_letter_spacing_new (text->letter_spacing * PANGO_SCALE);
+
+      attr->start_index = 0;
+      attr->end_index   = -1;
+
+      pango_attr_list_insert (attrs, attr);
+
+      pango_layout_set_attributes (layout->layout, attrs);
+      pango_attr_list_unref (attrs);
+    }
+
   gimp_text_layout_position (layout);
 
   switch (text->box_mode)

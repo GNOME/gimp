@@ -1,3 +1,8 @@
+2005-03-02  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayout.[ch]
+	* app/tools/gimptextoptions.h: allow to adjust letter-spacing.
+
 2005-03-01  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/mail.c: use g_spawn_async_with_pipes instead of

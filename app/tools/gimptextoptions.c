@@ -61,7 +61,8 @@ enum
   PROP_BASE_DIR,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
-  PROP_LINE_SPACING
+  PROP_LINE_SPACING,
+  PROP_LETTER_SPACING
 };
 
 
@@ -182,6 +183,11 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    N_("Modify line spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_CONFIG_PARAM_DEFAULTS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
+                                   "letter-spacing",
+                                   N_("Modify letter spacing"),
+                                   -8192.0, 8192.0, 0.0,
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
 }
 
 static void
@@ -230,6 +236,9 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_LINE_SPACING:
       g_value_set_double (value, options->line_spacing);
       break;
+    case PROP_LETTER_SPACING:
+      g_value_set_double (value, options->letter_spacing);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -276,6 +285,9 @@ gimp_text_options_set_property (GObject      *object,
       break;
     case PROP_LINE_SPACING:
       options->line_spacing = g_value_get_double (value);
+      break;
+    case PROP_LETTER_SPACING:
+      options->letter_spacing = g_value_get_double (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -407,7 +419,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   g_object_set_data (G_OBJECT (tool_options), "tool-options-vbox", vbox);
 
-  table = gtk_table_new (9, 3, FALSE);
+  table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -473,6 +485,13 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            _("Line\nspacing:"), 0.0,
                            spinbutton, 1, GIMP_STOCK_LINE_SPACING);
+
+  spinbutton = gimp_prop_spin_button_new (config,
+                                          "letter-spacing", 1.0, 10.0, 1);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), row++,
+                           _("Letter\nspacing:"), 0.0,
+                           spinbutton, 1, GIMP_STOCK_LETTER_SPACING);
 
   button = gtk_button_new_with_label (_("Create path from text"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
