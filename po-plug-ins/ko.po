@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "POT-Creation-Date: 1999-10-04 09:28-0700\n"
-"PO-Revision-Date: 1999-10-23 12:51:05+0900\n"
-"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
+"PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
+"Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-kr\n"
@@ -412,7 +412,7 @@ msgstr "확산 목적지"
 
 #: plug-ins/common/CML_explorer.c:1689
 msgid "# of subranges"
-msgstr "# 부 구역의"
+msgstr "부 구역 번호"
 
 #: plug-ins/common/CML_explorer.c:1696
 msgid "P(ower factor)"
@@ -650,7 +650,7 @@ msgstr "도구 팁 가능"
 
 #: plug-ins/Lighting/lighting_ui.c:587
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "충돌-매핑(bump-mapping) 가능/불가능 (이미지 깊이)"
+msgstr "충돌-매핑(bump-mapping) 가능/불가능 (이미지 깊이(depth))"
 
 #: plug-ins/Lighting/lighting_ui.c:588
 msgid "Enable/disable environment mapping (reflection)"
@@ -687,11 +687,11 @@ msgstr "톱니 같은 들쑥날쑥한 것 제거 가능/불가능 (앤티앨리어싱)"
 
 #: plug-ins/Lighting/lighting_ui.c:628
 msgid "Depth:"
-msgstr "깊이:"
+msgstr "깊이(depth):"
 
 #: plug-ins/Lighting/lighting_ui.c:633
 msgid "Threshold:"
-msgstr "시작:"
+msgstr "발단규모(Threshold):"
 
 #: plug-ins/Lighting/lighting_ui.c:645
 msgid "Antialiasing quality. Higher is better, but slower"
@@ -1321,7 +1321,7 @@ msgstr "앙각"
 #. Horizontal scale
 #: plug-ins/common/bumpmap.c:955 plug-ins/struc/struc.c:307
 msgid "Depth"
-msgstr "짙은정도(depth)"
+msgstr "깊이(depth)"
 
 #: plug-ins/common/bumpmap.c:956
 msgid "X offset"
@@ -1888,7 +1888,7 @@ msgstr "채널 추출"
 
 #: plug-ins/common/depthmerge.c:194
 msgid "Combine two images using corresponding depth maps (z-buffers)"
-msgstr "일치하는 깊이 맵을 사용하여 두가지 이미지 결합하기 (z-buffers)"
+msgstr "일치하는 깊이(depth) 맵을 사용하여 두가지 이미지 결합하기 (z-buffers)"
 
 #: plug-ins/common/depthmerge.c:195
 msgid ""
@@ -1897,20 +1897,20 @@ msgid ""
 "closer (has a lower depth map value) at each point."
 msgstr ""
 "두가지 전체 색생이 입력된 것, 전체-알파 이미지들과 두가지 일치하는 "
-"그레이스케일 깊이 맵들을 다루려면, 이 플러그인은 각 포인트에 가까운 것 (낮은 "
-"깊이 맵 값을 가진) 에 기초한 이미지들을 결합합니다."
+"그레이스케일 깊이(depth) 맵들을 다루려면, 이 플러그인은 각 포인트에 가까운 것 (낮은 "
+"깊이(depth) 맵 값을 가진) 에 기초한 이미지들을 결합합니다."
 
 #: plug-ins/common/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge"
-msgstr "<Image>/필터/결합/깊이 머지"
+msgstr "<Image>/필터/결합/깊이(depth) 머지"
 
 #: plug-ins/common/depthmerge.c:369
 msgid "Depth-merging..."
-msgstr "깊이 머지중..."
+msgstr "깊이(depth) 머지중..."
 
 #: plug-ins/common/depthmerge.c:609
 msgid "Depth Merge"
-msgstr "깊이 머지"
+msgstr "깊이(depth) 머지"
 
 #: plug-ins/common/depthmerge.c:647
 msgid "Source 1"
@@ -1918,7 +1918,7 @@ msgstr "원본 1"
 
 #: plug-ins/common/depthmerge.c:664 plug-ins/common/depthmerge.c:698
 msgid "Depth Map"
-msgstr "깊이 맵"
+msgstr "깊이(depth) 맵"
 
 #: plug-ins/common/depthmerge.c:681
 msgid "Source 2"
@@ -2355,7 +2355,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:328
 msgid "<Image>/AnimFrames/Goto Next"
-msgstr "<Image>/음직이는 프레임/다음으로"
+msgstr "<Image>/움직이는 프레임/다음으로"
 
 #: plug-ins/gap/gap_main.c:335
 msgid ""
@@ -2365,7 +2365,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:340
 msgid "<Image>/AnimFrames/Goto Prev"
-msgstr "<Image>/음직이는 프레임/앞으로"
+msgstr "<Image>/움직이는 프레임/앞으로"
 
 #: plug-ins/gap/gap_main.c:347
 msgid ""
@@ -4109,7 +4109,7 @@ msgstr "GIF: 무엇인가가 변질되었다.\n"
 #: plug-ins/common/gifload.c:925
 #, c-format
 msgid "GIF: reading %d by %d%s GIF image, ncols=%d\n"
-msgstr "GIF: %2$d%3$s GIF 이미지로 %1$d 읽는중, 칸=%d\n"
+msgstr "GIF: %2$d%3$s GIF 이미지로 %1$d 읽는중, 칸=%4$d\n"
 
 #: plug-ins/common/gifload.c:926
 msgid " interlaced"
@@ -4281,13 +4281,13 @@ msgstr "그림자넣기에 얼마나 \"어두운\"가"
 
 #: plug-ins/gimpressionist/general.c:305
 msgid "Shadow depth:"
-msgstr "그림자 깊이:"
+msgstr "그림자 깊이(depth):"
 
 #: plug-ins/gimpressionist/general.c:316
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
-"그림자넣기의 깊이, 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는가"
+"그림자넣기의 깊이(depth), 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는가"
 
 #: plug-ins/gimpressionist/general.c:322
 msgid "Shadow blur:"
@@ -4369,7 +4369,7 @@ msgstr "프로그램에 대한 정보 보여주기"
 
 #: plug-ins/gimpressionist/orientation.c:52
 msgid "Orientation"
-msgstr "적응"
+msgstr "적응성"
 
 #: plug-ins/gimpressionist/orientation.c:76
 msgid "Directions:"
@@ -4400,7 +4400,7 @@ msgstr "얼마나 사용하기위한 (360 = 원의 각도) 각도-폭이 넓은가 "
 #.
 #: plug-ins/gimpressionist/orientation.c:124 plug-ins/print/print.c:822
 msgid "Orientation:"
-msgstr "적응:"
+msgstr "적응성:"
 
 #: plug-ins/gimpressionist/orientation.c:140
 msgid ""
@@ -4456,7 +4456,7 @@ msgstr "지역 색상은 한번긋기 방향을 결정한다."
 #: plug-ins/gimpressionist/orientation.c:201
 #: plug-ins/gimpressionist/size.c:199
 msgid "Adaptive"
-msgstr "적응성있는"
+msgstr "적응성있게"
 
 #: plug-ins/gimpressionist/orientation.c:207
 msgid "The direction that matches the original image the closest is selected"
@@ -4465,11 +4465,11 @@ msgstr "원래 이미지와 일치하는 방향에서 가장가까운 것이 선택되어 집니다."
 #: plug-ins/gimpressionist/orientation.c:216
 #: plug-ins/gimpressionist/size.c:213 plug-ins/print/print-pcl.c:248
 msgid "Manual"
-msgstr "매뉴얼"
+msgstr "수동"
 
 #: plug-ins/gimpressionist/orientation.c:222
 msgid "Manually specify the stroke orientation"
-msgstr "직접 한번긋기 적응 지정"
+msgstr "직접 한번긋기 적응성 지정"
 
 #: plug-ins/gimpressionist/orientation.c:226
 #: plug-ins/gimpressionist/size.c:223
@@ -4478,11 +4478,11 @@ msgstr "편집..."
 
 #: plug-ins/gimpressionist/orientation.c:231
 msgid "Opens up the Orientation Map Editor"
-msgstr "적응 맵 편집기 열어놓기"
+msgstr "적응성 맵 편집기 열어놓기"
 
 #: plug-ins/gimpressionist/orientmap.c:461
 msgid "Orientation Map Editor"
-msgstr "적응 맵 편집기"
+msgstr "적응성 맵 편집기"
 
 #: plug-ins/gimpressionist/orientmap.c:469
 msgid "Vectors"
@@ -4607,7 +4607,7 @@ msgstr "보르노이-모드는 오직 SM백터가 영향을 가진 주어진 포인트를 조밀하게 한다.
 #: plug-ins/gimpressionist/paper.c:74
 #, c-format
 msgid "Paper/%s"
-msgstr "페이퍼/%s"
+msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:89
 msgid "Paper"
@@ -4773,7 +4773,7 @@ msgstr "미리조절 디랙토리 다시 읽기"
 
 #: plug-ins/gimpressionist/presets.c:668
 msgid "(Desc)"
-msgstr "(설명)"
+msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:673
 msgid ""
@@ -4784,9 +4784,9 @@ msgid ""
 "for inclusion into the next release!\n"
 msgstr ""
 "\n"
-"만약 몇몇 좋은 미리조절가지고 생기면,\n"
+"만약 좋은 미리조절이 생기면,\n"
 "(또는 그 문제에 맞는 브러쉬와 페이퍼)\n"
-"마음대로 다음 릴리즈에 포함하기 위해\n"
+"다음 릴리즈에 포함하기 위해\n"
 "저 <vidar@prosalg.no> 에게 보내주세요!\n"
 
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:863
@@ -4816,7 +4816,7 @@ msgstr "어? 이미지 크기와 알파 크기가 다르네?\n"
 
 #: plug-ins/gimpressionist/repaint.c:667
 msgid "Internal error; Unknown orientationtype\n"
-msgstr "내부 애러; 알수없는 적응유형\n"
+msgstr "내부 애러; 알수없는 적응성유형\n"
 
 #: plug-ins/gimpressionist/repaint.c:687
 msgid "Internal error; Unknown sizetype\n"
@@ -4869,7 +4869,7 @@ msgstr "각 한번긋기를 위한 랜덤 크기 선택"
 
 #: plug-ins/gimpressionist/size.c:169
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr ""
+msgstr "중앙에서의 방향에서 한번긋기의 크기를 결정하세요"
 
 #: plug-ins/gimpressionist/size.c:195
 msgid "The hue of the region determines the size of the stroke"
@@ -5126,7 +5126,7 @@ msgstr "얽기"
 
 #: plug-ins/common/lic.c:1101
 msgid "With white noise"
-msgstr "하얀 잡음을 가지고 "
+msgstr "하얀 노이즈을 가지고 "
 
 #: plug-ins/common/lic.c:1113
 msgid "With source image"
@@ -5146,7 +5146,7 @@ msgstr "필터 길이:"
 
 #: plug-ins/common/lic.c:1176
 msgid "Noise magnitude:"
-msgstr "매그니튜드 잡음:"
+msgstr "매그니튜드 노이즈:"
 
 #: plug-ins/common/lic.c:1191
 msgid "Integration steps:"
@@ -6095,11 +6095,11 @@ msgstr ""
 
 #: plug-ins/common/warp.c:306
 msgid "<Image>/Filters/Artistic/Warp"
-msgstr "<Image>/필터/미술적/휘어지게"
+msgstr "<Image>/필터/미술적/왜곡되게"
 
 #: plug-ins/common/warp.c:476
 msgid "Warp"
-msgstr "휘어지게"
+msgstr "왜곡되게"
 
 #. The main table
 #: plug-ins/common/warp.c:526
@@ -6362,7 +6362,7 @@ msgstr "색상 앤트리를 읽을 수 없습니다."
 
 #: plug-ins/common/xwd.c:448
 msgid "this image depth/format is not supported"
-msgstr "이런 그림 깊이/형식은 지원되지 않습니다"
+msgstr "이런 그림 깊이(depth)/형식은 지원되지 않습니다"
 
 #: plug-ins/common/xwd.c:452
 #, c-format
@@ -6371,7 +6371,7 @@ msgid ""
 "and bits per pixel %d.\n"
 "Currently this is not supported.\n"
 msgstr ""
-"load_image (xwd): XWD-파일 %s는 형식 %d, 깊이 %d,\n"
+"load_image (xwd): XWD-파일 %s는 형식 %d, 깊이(depth) %d,\n"
 "픽셀 당 비트 %d를 가지고 있습니다.\n"
 "현재 이것은 지원되지 않고 있습니다.\n"
 

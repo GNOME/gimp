@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.10\n"
 "POT-Creation-Date: 1999-10-06 13:09-0700\n"
-"PO-Revision-Date: 1999-10-21 01:41:25+0900\n"
-"Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
+"PO-Revision-Date: 1999-10-13 05:30:34+0900\n"
+"Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=euc-kr\n"
@@ -231,7 +231,7 @@ msgstr "슈퍼샘플링 적응성"
 #. max depth scale
 #: app/blend.c:440
 msgid "Max depth:"
-msgstr "최대 깊이:"
+msgstr "최대 깊이(depth):"
 
 #. threshold scale
 #: app/blend.c:458 app/bucket_fill.c:132 app/fuzzy_select.c:641
@@ -280,7 +280,7 @@ msgstr "명도대비"
 #: app/posterize.c:203 app/preferences_dialog.c:1170 app/qmask.c:255
 #: app/resize.c:191 app/threshold.c:287
 msgid "OK"
-msgstr "예"
+msgstr "확인"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:238
@@ -353,7 +353,7 @@ msgstr "활성"
 
 #: app/brush_select.c:302
 msgid "(0 X 0)"
-msgstr "(0 X 0)"
+msgstr ""
 
 #. Create the opacity scale widget
 #: app/brush_select.c:330 app/layers_dialog.c:386 app/tool_options.c:603
@@ -389,7 +389,7 @@ msgstr "간격"
 #: app/brush_select.c:1317
 #, c-format
 msgid "(%d X %d)"
-msgstr "(%d X %d)"
+msgstr ""
 
 #: app/brush_select.c:1352
 msgid ""
@@ -457,7 +457,7 @@ msgstr "색상 선택에 의해"
 #: app/by_color_select.c:565 app/curves.c:556 app/file_new_dialog.c:376
 #: app/tools.c:926 app/transform_core.c:247
 msgid "Reset"
-msgstr "리셋"
+msgstr "재설정"
 
 #: app/by_color_select.c:607
 msgid "Inactive"
@@ -779,7 +779,7 @@ msgstr "명암:"
 #: app/color_picker.c:628 app/color_picker.c:646 app/color_picker.c:661
 #: app/color_picker.c:679
 msgid "N/A"
-msgstr "N/A"
+msgstr ""
 
 #: app/colormap_dialog.i.c:171
 msgid "Indexed Color Palette"
@@ -1509,7 +1509,7 @@ msgstr "/보기/셀렉션 토글"
 
 #: app/gdisplay.c:1681 app/menus.c:268
 msgid "/View/Toggle Rulers"
-msgstr "/보기/룰러 토글"
+msgstr "/보기/눈금자 토글"
 
 #: app/gdisplay.c:1683 app/menus.c:272
 msgid "/View/Toggle Guides"
@@ -2195,7 +2195,7 @@ msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
 msgstr ""
-"위치 : 0.6f        RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
+"위치 : %0.6f        RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "불투명율 : %0.3f"
 
 #: app/gradient.c:2080
@@ -2358,7 +2358,7 @@ msgstr "전경 색상"
 #: app/gradient.c:3885
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr ""
 
 #: app/gradient.c:4398 app/gradient.c:4468
 msgid "(Varies)"
@@ -2409,7 +2409,7 @@ msgstr "당신은 셀렉션을 복사하기 원합니다."
 #: app/gradient.c:5553
 #, c-format
 msgid "grad_load_gradient(): invalid number of segments in \"%s\""
-msgstr "grad_load_gradient(): \"%s\"에서 다수의 세그먼트들이 잘못 되었다."
+msgstr "grad_load_gradient(): \"%s\" 에서 다수의 세그먼트들이 잘못 되었다."
 
 #: app/gradient.c:5579
 #, c-format
@@ -2417,7 +2417,7 @@ msgid ""
 "grad_load_gradient(): badly formatted gradient segment %d in \"%s\" --- bad "
 "things may happen soon"
 msgstr ""
-"grad_load_gradient(): \"%s\"에 잘못 포멧된 색감변화도 세그먼트 %d가 있다. "
+"grad_load_gradient(): \"%2$s\"에 잘못 포멧된 색감변화도 세그먼트 %1$d가 있다. "
 "--- 곧 잘못될 것이다"
 
 #: app/gradient.c:5615
@@ -2545,7 +2545,7 @@ msgstr "채도"
 
 #: app/image_map.c:283
 msgid "image depth change, unable to restore original image"
-msgstr "이미지깊이가 바뀌어서, 원래 이미지로 복구될 수 없습니다."
+msgstr "이미지깊이(depth)가 바뀌어서, 원래 이미지로 복구될 수 없습니다."
 
 #: app/image_new.c:59 app/info_window.c:60 app/info_window.c:449
 #: app/preferences_dialog.c:1335
@@ -2568,27 +2568,27 @@ msgstr "%d 바이트"
 #: app/image_new.c:265
 #, c-format
 msgid "%.2f KB"
-msgstr "%.2f KB"
+msgstr ""
 
 #: app/image_new.c:267
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f KB"
+msgstr ""
 
 #: app/image_new.c:269
 #, c-format
 msgid "%d KB"
-msgstr "%d KB"
+msgstr ""
 
 #: app/image_new.c:271
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f MB"
+msgstr ""
 
 #: app/image_new.c:273
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f MB"
+msgstr ""
 
 #: app/indicator_area.c:170
 msgid ""
@@ -2679,7 +2679,7 @@ msgstr "시각적(Visual) 클레스:"
 
 #: app/info_window.c:316
 msgid "Visual Depth:"
-msgstr "시각적(Visual) 깊이:"
+msgstr "시각적(Visual) 깊이(depth):"
 
 #: app/info_window.c:319
 msgid "Shades of Color:"
@@ -2817,7 +2817,7 @@ msgstr ""
 
 #: app/install.c:140
 msgid "gimprc\n"
-msgstr "gimprc\n"
+msgstr ""
 
 #: app/install.c:141
 msgid ""
@@ -2833,7 +2833,7 @@ msgstr ""
 
 #: app/install.c:146
 msgid "unitrc\n"
-msgstr "unitrc\n"
+msgstr ""
 
 #: app/install.c:147
 msgid ""
@@ -2850,7 +2850,7 @@ msgstr ""
 
 #: app/install.c:153
 msgid "pluginrc\n"
-msgstr "pluginrc\n"
+msgstr ""
 
 #: app/install.c:154
 msgid ""
@@ -2869,7 +2869,7 @@ msgstr ""
 
 #: app/install.c:161
 msgid "brushes\n"
-msgstr "brushes\n"
+msgstr ""
 
 #: app/install.c:162
 msgid ""
@@ -2900,7 +2900,7 @@ msgstr ""
 
 #: app/install.c:174
 msgid "gradients\n"
-msgstr "gradients\n"
+msgstr ""
 
 #: app/install.c:175
 msgid ""
@@ -2918,7 +2918,7 @@ msgstr ""
 
 #: app/install.c:181
 msgid "gfig\n"
-msgstr "gfig\n"
+msgstr ""
 
 #: app/install.c:182
 msgid ""
@@ -2936,7 +2936,7 @@ msgstr ""
 
 #: app/install.c:188
 msgid "gflares\n"
-msgstr "gflares\n"
+msgstr ""
 
 #: app/install.c:189
 msgid ""
@@ -2954,7 +2954,7 @@ msgstr ""
 
 #: app/install.c:195
 msgid "fractalexplorer\n"
-msgstr "fractalexplorer\n"
+msgstr ""
 
 #: app/install.c:196
 msgid ""
@@ -2972,7 +2972,7 @@ msgstr ""
 
 #: app/install.c:202
 msgid "palettes\n"
-msgstr "palettes\n"
+msgstr ""
 
 #: app/install.c:203
 msgid ""
@@ -2996,7 +2996,7 @@ msgstr ""
 
 #: app/install.c:212
 msgid "patterns\n"
-msgstr "patterns\n"
+msgstr ""
 
 #: app/install.c:213
 msgid ""
@@ -3014,7 +3014,7 @@ msgstr ""
 
 #: app/install.c:219
 msgid "plug-ins\n"
-msgstr "plug-ins\n"
+msgstr ""
 
 #: app/install.c:220
 msgid ""
@@ -3034,7 +3034,7 @@ msgstr ""
 
 #: app/install.c:227
 msgid "modules\n"
-msgstr "modules\n"
+msgstr ""
 
 #: app/install.c:228
 msgid ""
@@ -3052,7 +3052,7 @@ msgstr ""
 
 #: app/install.c:234
 msgid "scripts\n"
-msgstr "scripts\n"
+msgstr ""
 
 #: app/install.c:235
 msgid ""
@@ -3068,7 +3068,7 @@ msgstr ""
 
 #: app/install.c:240
 msgid "tmp\n"
-msgstr "tmp\n"
+msgstr ""
 
 #: app/install.c:241
 msgid ""
@@ -3154,7 +3154,7 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"전경과 배경 색상들. 검은색과 흰색 정사각형들은 색상들을 리셋합니다.방향키는 "
+"전경과 배경 색상들. 검은색과 흰색 정사각형들은 색상들을 재설정합니다.방향키는 "
 "색상들을 바꿉니다. 색을 선택하기 위해 더블 클릭을 하세요."
 
 #: app/interface.c:531
@@ -3914,7 +3914,7 @@ msgstr "/파일/---"
 
 #: app/menus.c:143
 msgid "/tearoff1"
-msgstr "/tearoff1"
+msgstr ""
 
 #: app/menus.c:166
 msgid "/File/---moved"
@@ -4523,7 +4523,7 @@ msgstr "이름:"
 
 #: app/palette.c:2874
 msgid "new_import"
-msgstr "new_import"
+msgstr ""
 
 #. The source type
 #: app/palette.c:2878
@@ -4913,7 +4913,7 @@ msgstr "확대시 창 크기 조정"
 
 #: app/preferences_dialog.c:1560
 msgid "Show Rulers"
-msgstr "룰러 보기"
+msgstr "눈금자 보기"
 
 #: app/preferences_dialog.c:1569
 msgid "Show Statusbar"
@@ -4996,7 +4996,7 @@ msgstr "자원 소비량"
 
 #: app/preferences_dialog.c:1733
 msgid "Conservative Memory Usage"
-msgstr "보존적 메모리 사용"
+msgstr "보존 메모리 사용"
 
 #: app/preferences_dialog.c:1784 app/preferences_dialog.c:1825
 msgid "Bytes"
@@ -5223,7 +5223,7 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 "부정확한 인수가 procedural_db_run_proc로 넘겨졌습니다.:\n"
-"'%s'로된 인수 %d는 %s가 되어야만 하나 %s가 넘겨져야 합니다."
+"'%2$s'로된 인수 %1$d는 %3$s가 되어야만 하나 %4$s가 넘겨져야 합니다."
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
@@ -5391,7 +5391,7 @@ msgstr ""
 #: app/temp_buf.c:485 app/temp_buf.c:494
 #, c-format
 msgid "Cannot write \"%s\""
-msgstr "%s로 쓸 수 없습니다; %s"
+msgstr "\"%s\"로 쓸 수 없습니다"
 
 #: app/temp_buf.c:550
 msgid "Error in temp buf caching: information swapped to disk was lost!"
@@ -5866,11 +5866,11 @@ msgstr "패턴이나 이미지 지역을 사용한 페인트"
 
 #: app/tools.c:429
 msgid "Convolve"
-msgstr "말기"
+msgstr "말기(Consolve)"
 
 #: app/tools.c:431
 msgid "/Tools/Convolve"
-msgstr "/도구/말기"
+msgstr "/도구/말기(Convolve)"
 
 #: app/tools.c:434
 msgid "Blur or sharpen"
@@ -5898,11 +5898,11 @@ msgstr "/도구/피하기 태우기"
 
 #: app/tools.c:474 app/tools.c:479
 msgid "Smudge"
-msgstr "얼룩"
+msgstr "얼룩(smudge)"
 
 #: app/tools.c:476
 msgid "/Tools/Smudge"
-msgstr "/도구/얼룩"
+msgstr "/도구/얼룩(smudge)"
 
 #: app/tools.c:489
 msgid "Measure"
