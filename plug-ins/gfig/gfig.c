@@ -2965,7 +2965,9 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_FLOAT,0.0,
 					     PARAM_INT32,2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					     PARAM_FLOATARRAY, &line_pnts[0],  
+					     PARAM_FLOATARRAY, &line_pnts[0],
+					     PARAM_INT32, 0,
+					     PARAM_FLOAT, 0.0,
 					     PARAM_END);
 	   break;
 	 case BRUSH_PENCIL_TYPE:
@@ -8104,7 +8106,9 @@ d_paint_line(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,seg_count*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
@@ -8962,7 +8966,9 @@ d_paint_approx_ellipse(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
@@ -9595,7 +9601,9 @@ d_paint_poly(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
@@ -10564,7 +10572,9 @@ d_paint_arc(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
@@ -11136,8 +11146,10 @@ d_paint_star(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
-					    PARAM_END);
+					    PARAM_FLOATARRAY, &line_pnts[0],
+ 					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
+ 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
@@ -11639,7 +11651,9 @@ d_paint_spiral(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
@@ -12168,7 +12182,9 @@ d_paint_bezier(DOBJECT *obj)
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
-					    PARAM_FLOATARRAY, &line_pnts[0],  
+					    PARAM_FLOATARRAY, &line_pnts[0],
+					    PARAM_INT32, 0,
+					    PARAM_FLOAT, 0.0,
 					    PARAM_END);
 	  break;
 	case BRUSH_PENCIL_TYPE:
