@@ -154,7 +154,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "準備將圖層遮罩儲存為 %s。\n"
-"這樣將不會儲存可見的圖層。"
+"本程序不會儲存可見的圖層。"
 
 #: libgimp/gimpexport.c:600
 #, c-format
@@ -162,8 +162,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"準備將色版(已儲存的選擇區域)為 %s。\n"
-"這樣將不會儲存可見的圖層。"
+"準備將色版(已儲存的選擇區域)儲存為 %s。\n"
+"本程序不會儲存可見的圖層。"
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
@@ -193,7 +193,7 @@ msgstr ""
 #: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr "略過模組：‘%s’\n"
+msgstr "忽略模組：‘%s’\n"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Module error"
@@ -323,7 +323,7 @@ msgstr "按下滴管，然後在畫面中選取任何想要的顏色。"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
-msgstr ""
+msgstr "固定"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "_Duplicate"
@@ -339,7 +339,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
-msgstr ""
+msgstr "貼上至新圖像"
 
 #: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
@@ -387,7 +387,7 @@ msgstr "推移(_S)"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
-msgstr "更多..."
+msgstr "其它..."
 
 #: libgimpwidgets/gimpunitmenu.c:525
 msgid "Unit Selection"
