@@ -724,6 +724,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
   GimpDialogFactoryEntry *entry;
   GimpSessionInfo        *info;
   GList                  *list;
+  gboolean                toplevel;
 
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
@@ -750,12 +751,10 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
       return;
     }
 
+  toplevel = GTK_WIDGET_TOPLEVEL (dialog);
+
   if (entry) /* dialog is a toplevel (but not a GimpDock) or a GimpDockable */
     {
-      gboolean toplevel;
-
-      toplevel = GTK_WIDGET_TOPLEVEL (dialog);
-
       D (g_print ("%s: adding %s \"%s\"\n",
                   G_GNUC_FUNCTION,
                   toplevel ? "toplevel" : "dockable",
@@ -793,7 +792,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                           toplevel ? "toplevel" : "dockable",
                           entry->identifier));
 
-	      if (entry->session_managed)
+	      if (toplevel && entry->session_managed)
                 gimp_session_info_set_geometry (info);
 
 	      break;
@@ -889,15 +888,11 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                            factory,
                            G_CONNECT_SWAPPED);
 
-  if (entry                  &&
-      entry->session_managed &&
-      GTK_WIDGET_TOPLEVEL (dialog))
-    {
-      g_signal_connect_object (dialog, "configure_event",
-                               G_CALLBACK (gimp_dialog_factory_dialog_configure),
-                               factory,
-                               0);
-    }
+  if (entry && entry->session_managed && toplevel)
+    g_signal_connect_object (dialog, "configure_event",
+                             G_CALLBACK (gimp_dialog_factory_dialog_configure),
+                             factory,
+                             0);
 }
 
 void
@@ -1176,6 +1171,16 @@ gimp_dialog_factory_set_user_pos (GtkWidget         *dialog,
                                   GdkEventConfigure *cevent,
                                   gpointer           data)
 {
+#ifdef DEBUG_FACTORY
+  GimpDialogFactoryEntry *entry;
+
+  gimp_dialog_factory_from_widget (dialog, &entry);
+
+  if (entry)
+    g_print ("%s: setting GDK_HINT_USER_POS for \"%s\"\n",
+             G_GNUC_FUNCTION, entry->identifier);
+#endif /* DEBUG_FACTORY */
+
   g_signal_handlers_disconnect_by_func (dialog,
                                         gimp_dialog_factory_set_user_pos,
                                         data);
@@ -1223,7 +1228,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
 
       if (session_info->widget == dialog)
         {
-          D (g_print ("%s: updating session info for \"%s\"\n",
+          D (g_print ("%s: updating session info for \"%s\" from window geometry\n",
                       G_GNUC_FUNCTION, entry->identifier));
 
           gimp_session_info_get_geometry (session_info);
