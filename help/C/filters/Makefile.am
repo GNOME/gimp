@@ -123,7 +123,6 @@ helpdata_DATA = \
         reshow_last.html \
         ripple.html \
         rotate.html \
-        rotators.html \
         sample_colorize.html \
         scatter_hsv.html \
         screenshot.html \
