@@ -220,23 +220,32 @@ curves_add_point(GimpDrawable * drawable,gint x, gint y,gint cchan)
   int curvex;
   int i;
 
-  curvex = curves_dialog->col_value[cchan];
-  distance = G_MAXINT;
-  for (i = 0; i < 17; i++)
+  switch (curves_dialog->curve_type)
     {
-      if (curves_dialog->points[cchan][i][0] != -1)
-	if (abs (curvex - curves_dialog->points[cchan][i][0]) < distance)
-	  {
-	    distance = abs (curvex - curves_dialog->points[cchan][i][0]);
-	    closest_point = i;
-	  }
+    case SMOOTH:
+      curvex = curves_dialog->col_value[cchan];
+      distance = G_MAXINT;
+      for (i = 0; i < 17; i++)
+	{
+	  if (curves_dialog->points[cchan][i][0] != -1)
+	    if (abs (curvex - curves_dialog->points[cchan][i][0]) < distance)
+	      {
+		distance = abs (curvex - curves_dialog->points[cchan][i][0]);
+		closest_point = i;
+	      }
+	}
+      
+      if (distance > MIN_DISTANCE)
+	closest_point = (curvex + 8) / 16;
+      
+      curves_dialog->points[cchan][closest_point][0] = curvex;
+      curves_dialog->points[cchan][closest_point][1] = curves_dialog->curve[cchan][curvex];
+      break;
+      
+    case GFREE:
+      curves_dialog->curve[cchan][x] = 255 - y;
+      break;
     }
-
-  if (distance > MIN_DISTANCE)
-    closest_point = (curvex + 8) / 16;
-  
-  curves_dialog->points[cchan][closest_point][0] = curvex;
-  curves_dialog->points[cchan][closest_point][1] = curves_dialog->curve[cchan][curvex];
 }
 
 /*  curves action functions  */
@@ -527,6 +536,7 @@ curves_new_dialog ()
   };
 
   cd = g_malloc (sizeof (CurvesDialog));
+  cd->cursor_ind_height = cd->cursor_ind_width = -1;
   cd->preview = TRUE;
   cd->curve_type = SMOOTH;
   cd->pixmap = NULL;
@@ -671,6 +681,57 @@ curves_new_dialog ()
   return cd;
 }
 
+static void
+curve_print_loc(CurvesDialog *cd,
+		gint xpos,
+		gint ypos)
+{
+  char buf[32];
+  gint width;
+  gint ascent;
+  gint descent;
+
+  if(cd->cursor_ind_width < 0)
+    {
+      /* Calc max extents */
+      gdk_string_extents(cd->graph->style->font,
+			 "x:888 y:888",
+			 NULL,
+			 NULL,
+			 &width,
+			 &ascent,
+			 &descent);
+	
+      cd->cursor_ind_width = width;
+      cd->cursor_ind_height = ascent + descent;
+      cd->cursor_ind_ascent = ascent;
+    }
+  
+  if(xpos >= 0 && xpos <= 255 && ypos >=0 && ypos <= 255)
+    {
+      g_snprintf (buf, sizeof (buf), "x:%d y:%d",xpos,ypos);
+
+      gdk_draw_rectangle (cd->graph->window, 
+			  cd->graph->style->bg_gc[GTK_STATE_ACTIVE],
+			  TRUE, RADIUS*2 + 2 , RADIUS*2 + 2, 
+			  cd->cursor_ind_width+4, 
+			  cd->cursor_ind_height+5);
+
+      gdk_draw_rectangle (cd->graph->window, 
+			  cd->graph->style->black_gc,
+			  FALSE, RADIUS*2 + 2 , RADIUS*2 + 2, 
+			  cd->cursor_ind_width+3, 
+			  cd->cursor_ind_height+4);
+
+      gdk_draw_string (cd->graph->window,
+		       cd->graph->style->font,
+		       cd->graph->style->black_gc,
+		       RADIUS*2 + 4,
+		       RADIUS*2 + 5 + cd->cursor_ind_ascent,
+		       buf);
+    }
+}
+
 /* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
 static void
 curves_update (CurvesDialog *cd,
@@ -678,6 +739,8 @@ curves_update (CurvesDialog *cd,
 {
   GdkRectangle area;
   int i, j;
+  char buf[32];
+  gint offset;
 
   if (update & XRANGE_TOP)
     {
@@ -834,8 +897,28 @@ curves_update (CurvesDialog *cd,
 		    cd->col_value[cd->channel]+RADIUS,RADIUS,
 		    cd->col_value[cd->channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
 
+      /* and xpos indicator */
+      g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[cd->channel]);
+      
+      if((cd->col_value[cd->channel]+RADIUS) < 127)
+	{
+	  offset = RADIUS + 4;
+	}
+      else
+	{
+	  offset = -gdk_string_width(cd->graph->style->font,buf) - 2;
+	}
+
+      gdk_draw_string (cd->pixmap,
+		       cd->graph->style->font,
+		       cd->graph->style->black_gc,
+		       cd->col_value[cd->channel]+offset,
+		       GRAPH_HEIGHT,
+		       buf);
+
       gdk_draw_pixmap (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
 		       0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
+      
     }
 }
 
@@ -1405,6 +1488,9 @@ curves_graph_events (GtkWidget    *widget,
 	  cursor_type = new_type;
 	  change_win_cursor (cd->graph->window, cursor_type);
 	}
+
+      curve_print_loc(cd,x,255-y);
+
       break;
 
     default:

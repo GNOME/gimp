@@ -1,3 +1,11 @@
+Fri Sep  3 22:52:26 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/curves.c
+	* app/curves.h
+
+	Added indicators (x,y of mouse & x for the line) to the curves 
+	dialog.
+
 Fri Sep  3 21:52:09 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* data/patterns/corkboard.pat: replaced by the version

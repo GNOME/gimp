@@ -49,6 +49,10 @@ struct _CurvesDialog
   int            points[5][17][2];
   unsigned char  curve[5][256];
   int            col_value[5];
+  
+  int            cursor_ind_height;
+  int            cursor_ind_width;
+  int            cursor_ind_ascent;
 
   GimpLut       *lut;
 };
