@@ -648,6 +648,7 @@ sub this_script {
    my @names;
    for my $this (@scripts) {
       my $fun = (split /\//,$this->[1])[-1];
+      $fun =~ s/^(?:perl_fu|plug_in)_//;
       return $this if lc($exe) eq lc($fun);
       push(@names,$fun);
    }
@@ -1088,8 +1089,11 @@ sub register($$$$$$$$$;@) {
          @pre = (shift,shift);
       } elsif ($menupath=~/^<Toolbox>\// or !defined $menupath) {
          # valid ;)
-      } elsif ($menupath=~/^<(?:Load|Save)>\//) {
-         @_ >= 4 or die "<Load/Save> plug-in called without the 5 standard arguments!\n";
+      } elsif ($menupath=~/^<Load>\//) {
+         @_ >= 2 or die "<Load> plug-in called without the 5 standard arguments!\n";
+         @pre = (shift,shift);
+      } elsif ($menupath=~/^<Save>\//) {
+         @_ >= 4 or die "<Save> plug-in called without the 5 standard arguments!\n";
          @pre = (shift,shift,shift,shift);
       } else {
          die "menupath _must_ start with <Image>, <Toolbox>, <Load> or <Save>!";
@@ -1144,7 +1148,7 @@ sub register($$$$$$$$$;@) {
       my @imgs = &$code(@pre,@_);
       $old_trace = Gimp::set_trace (0);
       
-      if (@imgs) {
+      if (@imgs && $menupath !~ /^<Load>\//) {
          for my $i (0..$#imgs) {
             my $img = $imgs[$i];
             next unless defined $img;
@@ -1160,12 +1164,12 @@ sub register($$$$$$$$$;@) {
                } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
                   $img->display_new unless $input_image && $$img == $$input_image;
                }
-            } elsif (!@$results) {
+            } elsif (!@$retvals) { 
                warn "WARNING: $function returned something that is not an image: \"$img\"\n";
             }
 	 }
+         Gimp->displays_flush;
       }
-      Gimp->displays_flush;
       
       Gimp::set_trace ($old_trace);
       wantarray ? @imgs : $imgs[0];

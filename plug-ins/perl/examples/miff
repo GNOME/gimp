@@ -31,7 +31,7 @@ register "file_miff_save",
          "RGB, RGBA, GRAY, INDEXED-NOT-YET",	# weird, but no matte for !DirectColour
          [],
          sub {
-   my($img,$drawable,$filename) =@_;
+   my($img,$drawable,$filename) = @_;
    my @layers = $img->get_layers;
    sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
    my $hdr = eval { $img->find_parasite("gimp-comment")->data };
@@ -42,6 +42,9 @@ id=ImageMagick
    CREATOR: file_miff_save gimp plug-in, see http://www.gimp.org/
 $hdr}
 EOF
+
+   Gimp->tile_cache_ntiles($img->width / Gimp->tile_width + 1);
+
    init Progress "Saving '$filename' as MIFF...";
    my $scene = 0;
    for (@layers) {
@@ -49,6 +52,7 @@ EOF
             "scene=$scene\n",
             "class=", $_->color ? "DirectClass" : "PseudoClass", "\n";
             #"gamma=", Gimp->gamma, "\n";
+      # resolution etc..
       write_layer(*FILE,$_);
       $scene++;
       update Progress $scene/@layers;
@@ -57,8 +61,115 @@ EOF
    ();
 };
 
+sub read_layer {
+   my($img)=shift;
+   local $_=shift;
+   my($w,$h,$d)=($_->{columns},$_->{rows},$_->{_bpp});
+
+   my $l = new Layer $img, $w, $h,
+                     (
+                        $d == 1 ? GRAY_IMAGE
+                      : $d == 2 ? GRAYA_IMAGE
+                      : $d == 3 ? RGB_IMAGE
+                      : $d == 4 ? RGBA_IMAGE
+                      : die "Unsupported image depth ($d channels)\n"
+                     ),
+                     $_->{scene}, 100, NORMAL_MODE;
+
+   $l->add_layer($_->{scene});
+
+   my $r = new PixelRgn $l,0,0,$w,$h,1,0;
+   seek FILE, $_->{_offset}, 0;
+
+   for my $y (0..$h-1) {
+      read FILE, $_, $w * $d;
+      $r->set_rect2($_,0,$y);
+   }
+   undef $r;
+   $l;
+}
+
+register "file_miff_load",
+         "load miff images (Magick Interchange File Format)",
+         "Loads images that were saved in the miff (Magick Interchange File Format) format used by the ImageMagick package",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-07-30",
+         "<Load>/MIFF",
+         undef,
+         [],
+         sub {
+   my($filename) = @_;
+   sysopen FILE,$filename,O_RDONLY or die "Unable to open '$filename' for reading: $!\n";
+   my(@scenes);
+   my $comment;
+   seek FILE, 0, 2; my $filesize = tell FILE; seek FILE, 0, 0;
+   local $/ = "\012";
+   init Progress "Loading MIFF image from '$filename'...";
+   do {
+      my %h;
+      header:
+      while (<FILE>) {
+         die "Unexpected end of file while reading from '$filename'\n" if eof;
+         while($_ =~ /\S/) {
+            if (/:\012$/) {
+               last header;
+            } elsif (s/^\s*(\w+)=(\S+|"(?:[^\\"]+|\\"|\\)*")//) {
+               $h{$1}=$2;
+            } elsif (s/\s*\{//) {
+               while(!s/([^}]*)}//) {
+                  $comment .= $_;
+                  $_ = <FILE>;
+                  die "Unexpected end of file while reading comment block from '$filename'\n" if eof;
+               }
+               $comment .= $1;
+            } else {
+               die "Unparseable header line ($_) while reading '$filename'\n";
+            }
+         }
+      }
+
+      die "No ImageMagick header found in '$filename'\n" unless $h{id} eq "ImageMagick";
+   
+      $h{_bpp} = ($h{class} =~ /PseudoClass/ ? 1 : 3)
+              + ($h{matte} =~ /True/i ? 1 : 0);
+      $h{_size} = $h{rows} * $h{columns} * $h{_bpp};
+      $h{_offset} = tell;
+      push @scenes, \%h;
+      
+      seek FILE, $h{_size}, 1;
+      update Progress tell()/$filesize*0.2;
+   } while !eof;
+
+   my ($w,$h,$d);
+   for (@scenes) {
+      $w = $_->{columns} if $_->{columns} > $w;
+      $h = $_->{rows}    if $_->{rows}    > $h;
+      $d = $_->{_bpp}    if $_->{_bpp}    > $d;
+   }
+
+   my $img = new Image $w, $h, $d >= 3 ? RGB : GRAY;
+
+   if ($comment) {
+      $comment =~ s/^\s+//s;
+      $comment =~ s/\s+$//s;
+      $img->attach_parasite (new Parasite "gimp-comment", PARASITE_PERSISTENT, $comment);
+   }
+   # resolution etc..
+
+   Gimp->tile_cache_ntiles($w / Gimp->tile_width + 1);
+
+   # horrors, reverse, and line-by-line (!!)
+   for (@scenes) {
+      my $layer = read_layer $img,$_;
+      update Progress tell()/$filesize*0.8 + 0.2;
+   }
+
+   $img;
+};
+
 Gimp::on_query {
-   ##Gimp->register_magic_load_handler("file_miff_load", "miff", "", "0,string,id=ImageMagick");
+   Gimp->register_magic_load_handler("file_miff_load", "miff", "", "0,string,id=ImageMagick");
    Gimp->register_save_handler("file_miff_save", "miff", "");
 };
 

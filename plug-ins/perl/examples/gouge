@@ -16,7 +16,7 @@ sub iterate {
 
    Gimp->progress_init ($message);
 
-   my @bounds = $drawable->mask;
+   my @bounds = $drawable->bounds;
    my @off = $drawable->offsets;
    $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
    $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;

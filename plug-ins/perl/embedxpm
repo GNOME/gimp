@@ -23,7 +23,7 @@ To only insert the xpm data, use this form:
 
 Here is an example (taken from the Gimp/PDB program):
  
- # create the logo pixmap for the given widget
+ C<# create the logo pixmap for the given widget
  sub create_logo($) {
     new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d(
        $_[0]->window,
@@ -32,7 +32,7 @@ Here is an example (taken from the Gimp/PDB program):
        'xpm data', 'xpm data...',...
        #%XPM%
     ))
- }
+ }>
 
 To insert the xpm with the name example.xpm into this source you would have
 to use the following commandline:

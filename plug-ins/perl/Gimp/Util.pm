@@ -250,13 +250,13 @@ sub gimp_text_wh {
 
 =pod
 
-=item C<gimp_drawable_mask $drawable>
+=item C<gimp_drawable_bounds $drawable>
 
 returns an array (x,y,w,h) containing the upper left corner and the size of the
 current mask, just as needed by pixelrgn and similar functions.
 
 =cut
-sub gimp_drawable_mask {
+sub gimp_drawable_bounds {
    my @b = (shift->mask_bounds)[1..4];
    (@b[0,1],$b[2]-$b[0],$b[3]-$b[1]);
 }
@@ -264,6 +264,11 @@ sub gimp_drawable_mask {
 =pod
 
 =item C<gimp_image_layertype $alpha>
+
+returns the corresponding layer type for an image, alpha controls wether the layer type
+is with alpha or not. Example: imagetype: RGB -> RGB_IMAGE (or RGBA_IMAGE).
+
+=item C<gimp_layer2imagetype $layertype>
 
 returns the corresponding layer type for an image, alpha controls wether the layer type
 is with alpha or not. Example: imagetype: RGB -> RGB_IMAGE (or RGBA_IMAGE).
@@ -293,6 +298,17 @@ sub gimp_image_layertype {
    $type == RGB     ? $alpha ? RGBA_IMAGE     : RGB_IMAGE     :
    $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE    :
    $type == INDEXED ? $alpha ? INDEXEDA_IMAGE : INDEXED_IMAGE :
+   die;
+}
+
+sub gimp_layer2imagetype {
+   my $type = shift;
+   $type == RGB_IMAGE		? RGB		:
+   $type == RGBA_IMAGE		? RGB		:
+   $type == GRAY_IMAGE		? GRAY		:
+   $type == GRAYA_IMAGE		? GRAY		:
+   $type == INDEXED_IMAGE	? INDEXED	:
+   $type == INDEXEDA_IMAGE	? INDEXED	:
    die;
 }
 

@@ -82,7 +82,7 @@ sub write_logo {
 
   gimp_image_add_layer ($img,$shadow,1);
 
-  gimp_shear ($shadow,1,HORIZONTAL,-$th);
+  gimp_shear ($shadow,1,ORIENTATION_HORIZONTAL,-$th);
   gimp_layer_scale ($shadow, $tw, $th*0.3, 1);
   gimp_layer_translate ($shadow, $th*0.1, $th*0.3);
   plug_in_gauss_rle ($shadow, 1, 1, 1);

@@ -1,12 +1,18 @@
 Revision history for Gimp-Perl extension.
 
+1.1   Fri Jul 30 07:37:30 CEST 1999
+	- one of the most successful releases, in terms of features & bugfixes.
+        - it was also a long night. And expensive (irc).
+        - renamed gimp_drawable_mask to gimp_drawable_bounds to avoid clashes.
 	- new enums.pl, some changes: SELECTION_* becomes * again.
         - compatibility fix for 5.005_58, also fixed a bug in Gimp::Pod.
         - removed register_magic_load_handler from Lib.xs (is in PDB).
         - preliminary <Load> and <Save> support (arguments are automatically
           supplied).
-        - enabled limited pixel access functions even when PDL was not found.
-        - implemented and added examples/miff (a save filter for miff images).
+        - enabled limited pixel access functions even when PDL was not found,
+          just enough to re-enable magick and implement miff.
+        - implemented and added examples/miff (a load/save filter for miff
+          images).
         - close DATA in Gimp unconditionally, saves one open filehandle.
         - fixed the longstanding preview bug in Gimp::UI by reversing the
           order of calls to draw_row. => something in gtk+ is really broken.
@@ -14,10 +20,14 @@ Revision history for Gimp-Perl extension.
           were not sever'ed created garbage.
         - allow dummy dimension in grayscale pdls, i.e. pdl(1,width,height)
           instead of pdl(width,height).
-        - improved gimpdoc.
+        - improved gimpdoc & pixelmap.
         - removed debugging code from gouge. ouch!
         - bug fixed: PDL::Core was not automatically required when not
           already loaded.
+        - passing undef as PARAM_STRING passes a zero pointer in install_proc.
+          Required for load handlers. Ugh.
+        - fixed typoe in Parasite::is_persistent and implement "new" method.
+        - added new convinience function to Gimp::Util.
 
 1.0981 Wed Jul 28 00:09:50 CEST 1999
 	- improved gouge ;) In a sense, it's actually pretty code now!
@@ -27,6 +37,7 @@ Revision history for Gimp-Perl extension.
         - fixed warnings in case no pod documentation is found.
         - added examples/logulator.
         - Carp is no longer loaded unless necessary. Reduces memory footprint.
+        - install embedxpm script by default.
 
 1.098 Wed Jul 21 20:57:12 CEST 1999
 	- do not try to compile gimp_personal_rc_file without gimp-1.1.

@@ -26,7 +26,7 @@ register "colour_to_alpha",
 
    Gimp->progress_init ("Replacing colour...");
 
-   my @bounds = $drawable->mask;
+   my @bounds = $drawable->bounds;
    {
       # $src and $dst must either be scoped or explicitly undef'ed
       # before merge_shadow.
@@ -62,7 +62,7 @@ register "colour_to_alpha",
    Gimp->progress_update (1);
 
    $drawable->merge_shadow (1);
-   $drawable->update ($drawable->mask);
+   $drawable->update ($drawable->bounds);
 
    ();		# wir haben kein neues Bild erzeugt
 };

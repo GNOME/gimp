@@ -912,7 +912,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
   PUTBACK;
 }
 
-#define SvPv(sv) (SvOK(sv) ? SvPV_nolen(sv) : NULL)
+#define SvPv(sv) (SvOK(sv) ? SvPV_nolen(sv) : 0)
 #define Sv32(sv) unbless ((sv), PKG_ANY, croak_str)
 
 #define av2gimp(arg,sv,datatype,type,svxv) { \
@@ -950,8 +950,8 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
          			arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
       case PARAM_INT16:		arg->data.d_int16	= sv2gimp_extract_noref (SvIV, "INT16");
       case PARAM_INT8:		arg->data.d_int8	= sv2gimp_extract_noref (SvIV, "INT8");
-      case PARAM_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");;
-      case PARAM_STRING:	arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");;
+      case PARAM_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");
+      case PARAM_STRING:	arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");
 
       case PARAM_DISPLAY:
       case PARAM_IMAGE:	
@@ -1629,46 +1629,42 @@ gimp_call_procedure (proc_name, ...)
 	}
 
 void
-gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path_sv, image_types, type, params, return_vals)
+gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, image_types, type, params, return_vals)
 	char *	name
 	char *	blurb
 	char *	help
 	char *	author
 	char *	copyright
 	char *	date
-	SV *	menu_path_sv
-	char *	image_types
+	SV *	menu_path
+	SV *	image_types
 	int	type
 	SV *	params
 	SV *	return_vals
 	ALIAS:
 		gimp_install_temp_proc = 1
 	CODE:
-	{
-         	char *menu_path = SvPv (menu_path_sv);
-
-		if (SvROK(params) && SvTYPE(SvRV(params)) == SVt_PVAV
-		    && SvROK(return_vals) && SvTYPE(SvRV(return_vals)) == SVt_PVAV)
-		  {
-		    GParamDef *apd; int nparams;
-		    GParamDef *rpd; int nreturn_vals;
-		    
-		    nparams      = convert_array2paramdef ((AV *)SvRV(params)     , &apd);
-		    nreturn_vals = convert_array2paramdef ((AV *)SvRV(return_vals), &rpd);
-		    
-		    if (ix)
-		      gimp_install_temp_proc(name,blurb,help,author,copyright,date,menu_path,image_types,
-		                             type,nparams,nreturn_vals,apd,rpd,pii_run);
-		    else
-		      gimp_install_procedure(name,blurb,help,author,copyright,date,menu_path,image_types,
-		                             type,nparams,nreturn_vals,apd,rpd);
-		    
-		    g_free (rpd);
-		    g_free (apd);
-		  }
-		else
-		  croak ("params and return_vals must be array refs (even if empty)!");
-	}
+        if (SvROK(params) && SvTYPE(SvRV(params)) == SVt_PVAV
+            && SvROK(return_vals) && SvTYPE(SvRV(return_vals)) == SVt_PVAV)
+          {
+            GParamDef *apd; int nparams;
+            GParamDef *rpd; int nreturn_vals;
+            
+            nparams      = convert_array2paramdef ((AV *)SvRV(params)     , &apd);
+            nreturn_vals = convert_array2paramdef ((AV *)SvRV(return_vals), &rpd);
+            
+            if (ix)
+              gimp_install_temp_proc(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
+                                     type,nparams,nreturn_vals,apd,rpd,pii_run);
+            else
+              gimp_install_procedure(name,blurb,help,author,copyright,date,SvPv(menu_path),SvPv(image_types),
+                                     type,nparams,nreturn_vals,apd,rpd);
+            
+            g_free (rpd);
+            g_free (apd);
+          }
+        else
+          croak ("params and return_vals must be array refs (even if empty)!");
 
 void
 gimp_uninstall_temp_proc(name)
@@ -2002,6 +1998,19 @@ gimp_pixel_rgn_get_rect2(pr, x, y, width, height)
 	gimp_pixel_rgn_get_rect (pr, SvPV_nolen(RETVAL), x, y, width, height);
 	OUTPUT:
 	RETVAL
+
+void
+gimp_pixel_rgn_set_rect2(pr, data, x, y, w=pr->w)
+	GPixelRgn *	pr
+	SV *	data
+	int	x
+	int	y
+        int	w
+	CODE:
+{
+        STRLEN dlen; char *dta = SvPV (data, dlen);
+	gimp_pixel_rgn_set_rect (pr, dta, x, y, w, dlen / (w*pr->bpp));
+}
 
 #if HAVE_PDL
 

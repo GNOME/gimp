@@ -6,7 +6,7 @@ use Gimp::Fu;
 use Gtk;
 BEGIN { eval "use Image::Magick 1.45"; $@ and Gimp::Feature::missing ("Image::Magick version 1.45 or higher") };
 
-$VERSION = '0.2';
+$VERSION = '0.2.1';
 
 $preview_size = 160; # max. size for image preview
 
@@ -121,7 +121,7 @@ sub read_pixels {
    for(my $y=0; $y<$y2; $y+=$th) {
       # calling internal function, sorry folks!
       Gimp->progress_update ($y/$y2*100);
-      print TEMP $region->rect2($region,0,$y,$x2,$y2-$y > $th ? $th : $y2-$y);
+      print TEMP $region->get_rect2(0,$y,$x2,$y2-$y > $th ? $th : $y2-$y);
    }
    close TEMP;
    $im->Set(size => $x2.'x'.$y2);
@@ -160,12 +160,13 @@ sub write_pixels {
       # calling internal function, sorry folks!
       Gimp->progress_update ($y/$y2*100);
       read TEMP,$buf,$stride*$th;
-      Gimp::PixelRgn::_set_rect($region,$buf,0,$y,$x2);
+      $region->set_rect2($buf,0,$y);
    }
    close TEMP;
 
    undef $region;
    $drawable->merge_shadow (1);
+   $drawable->update ($x1, $y1, $x2, $y2);
    Gimp->displays_flush;
 }
 
