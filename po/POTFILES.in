@@ -147,6 +147,7 @@ app/dialogs/stroke-dialog.c
 app/dialogs/tips-dialog.c
 app/dialogs/tips-parser.c
 app/dialogs/user-install-dialog.c
+app/dialogs/vectors-options-dialog.c
 
 app/display/display-enums.c
 app/display/gimpdisplay.c
