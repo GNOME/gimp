@@ -1,3 +1,8 @@
+2004-04-06  Sven Neumann  <sven@gimp.org>
+
+	* pt.po: fixed translation for menu entry "/View/Move to screen...".
+	Fixes bug #139141.
+
 2004-04-05  Miloslav Trmac  <mitr@volny.cz>
 
 	* cs.po: Updated Czech translation.

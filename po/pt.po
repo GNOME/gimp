@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-23 16:10+0100\n"
-"PO-Revision-Date: 2004-03-21 20:15+0000\n"
+"PO-Revision-Date: 2004-04-06 00:02+0200\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -4169,7 +4169,7 @@ msgstr "/Visualizar/Ecrã Co_mpleto"
 
 #: app/gui/image-menu.c:508
 msgid "/View/Move to Screen..."
-msgstr "Visualizar/Mover para Ecrã..."
+msgstr "/Visualizar/Mover para Ecrã..."
 
 #. <Image>/Image
 #: app/gui/image-menu.c:516
