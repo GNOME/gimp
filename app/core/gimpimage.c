@@ -1605,7 +1605,8 @@ gimp_image_get_foreground (const GimpImage    *gimage,
   g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (fg != NULL);
 
-  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
+  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp),
+                               &color);
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
@@ -1624,7 +1625,8 @@ gimp_image_get_background (const GimpImage    *gimage,
   g_return_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (bg != NULL);
 
-  gimp_context_get_background (gimp_get_current_context (gimage->gimp), &color);
+  gimp_context_get_background (gimp_get_current_context (gimage->gimp),
+                               &color);
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 
@@ -1641,21 +1643,24 @@ gimp_image_get_color (const GimpImage *src_gimage,
 
   switch (src_type)
     {
-    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       /*  Straight copy  */
       *rgb++ = *src++;
       *rgb++ = *src++;
       *rgb   = *src;
       break;
 
-    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       /*  Gray to RG&B */
       *rgb++ = *src;
       *rgb++ = *src;
       *rgb   = *src;
       break;
 
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       /*  Indexed palette lookup  */
       {
 	gint index = *src * 3;
@@ -1702,7 +1707,7 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
 	  /*  NTSC conversion  */
 	  *dest = GIMP_RGB_INTENSITY (src[RED_PIX],
                                       src[GREEN_PIX],
-                                      src[BLUE_PIX]);
+                                      src[BLUE_PIX]) + 0.5;
 	  break;
 
 	case GIMP_INDEXED_IMAGE:
@@ -1719,19 +1724,22 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
     case GIMP_GRAY:
       switch (dest_type)
 	{
-	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+	case GIMP_RGB_IMAGE:
+        case GIMP_RGBA_IMAGE:
 	  /*  Gray to RG&B */
 	  *dest++ = *src;
 	  *dest++ = *src;
 	  *dest++ = *src;
 	  break;
 
-	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
+	case GIMP_GRAY_IMAGE:
+        case GIMP_GRAYA_IMAGE:
 	  /*  Straight copy  */
 	  *dest = *src;
 	  break;
 
-	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+	case GIMP_INDEXED_IMAGE:
+        case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
 	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
 							src[GRAY_PIX],

@@ -70,7 +70,7 @@ static char rcsid[] = "$Id$";
 #define DEBUG_PRINT(X)
 #endif
 
-#define LUMINOSITY(PIX) (GIMP_RGB_INTENSITY (PIX[0], PIX[1], PIX[2]))
+#define LUMINOSITY(PIX) (GIMP_RGB_INTENSITY (PIX[0], PIX[1], PIX[2]) + 0.5)
 #define OFFSETOF(t,f)	((int) ((char*) &((t*) 0)->f))
 
 #define RESPONSE_RESCAN     1

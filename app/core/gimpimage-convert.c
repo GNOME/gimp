@@ -1197,7 +1197,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 		{
 		  val = GIMP_RGB_INTENSITY (s[RED_PIX],
                                             s[GREEN_PIX],
-                                            s[BLUE_PIX]);
+                                            s[BLUE_PIX]) + 0.5;
 		  *d++ = (guchar) val;
 		  s += 3;
 		  if (has_alpha)
@@ -1219,7 +1219,7 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 		  offset = *s++ * 3;
 		  val = GIMP_RGB_INTENSITY (cmap[offset+0],
                                             cmap[offset+1],
-                                            cmap[offset+2]);
+                                            cmap[offset+2]) + 0.5;
 		  *d++ = (guchar) val;
 		  if (has_alpha)
 		    *d++ = *s++;

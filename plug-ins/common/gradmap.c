@@ -66,7 +66,7 @@ static char rcsid[] = "$Id$";
 
 #define NSAMPLES	256
 #define TILE_CACHE_SIZE 32
-#define LUMINOSITY(X)	(GIMP_RGB_INTENSITY (X[0], X[1], X[2]))
+#define LUMINOSITY(X)	(GIMP_RGB_INTENSITY (X[0], X[1], X[2]) + 0.5)
 
 static GimpRunMode run_mode;
 
@@ -178,7 +178,7 @@ typedef struct {
   gboolean has_alpha;
 } GradMapParam_t;
 
-static void 
+static void
 gradmap_func (const guchar *src,
 	      guchar       *dest,
 	      gint          bpp,

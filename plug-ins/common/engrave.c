@@ -325,7 +325,7 @@ engrave_large (GimpDrawable *drawable,
 	      average[b] = (guchar) (average[b] / count);
 
 	  if (bpp < 3)
-	    inten = average[0]/254.0*height;
+	    inten = average[0] / 254.0 * height;
 	  else
 	    inten = GIMP_RGB_INTENSITY (average[0],
                                         average[1],

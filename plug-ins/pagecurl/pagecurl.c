@@ -782,10 +782,10 @@ do_curl_effect (void)
 
   fore_grayval = GIMP_RGB_INTENSITY (fore_color[0],
                                      fore_color[1],
-                                     fore_color[2]);
+                                     fore_color[2]) + 0.5;
   back_grayval = GIMP_RGB_INTENSITY (back_color[0],
                                      back_color[1],
-                                     back_color[2]);
+                                     back_color[2]) + 0.5;
 
   /* Gradient Samples */
   if (curl.do_curl_gradient)

@@ -1,3 +1,22 @@
+2003-11-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb.h (GIMP_RGB_INTENSITY): removed the
+	addition of 0.001 that isn't correct for use with integers (should
+	be 0.5 then) and just plain wrong for use with floats/doubles.
+
+	* app/base/temp-buf.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/pagecurl/pagecurl.c: add 0.5 to the result of
+	GIMP_RGB_INTENSITY() in all places that use it with integers.
+
 2003-11-17  Michael Natterer  <mitch@gimp.org>
 
 	* modules/colorsel_triangle.c (colorsel_triangle_update_previews): 

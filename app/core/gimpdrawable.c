@@ -788,7 +788,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
     case GIMP_GRAY:
       c[GRAY_PIX] = GIMP_RGB_INTENSITY (c[RED_PIX],
                                         c[GREEN_PIX],
-                                        c[BLUE_PIX]);
+                                        c[BLUE_PIX]) + 0.5;
       c[ALPHA_G_PIX] = c[ALPHA_PIX];
 
       if (drawable_type != GIMP_GRAYA_IMAGE)
