@@ -394,69 +394,47 @@ channel_toggle_visibility (Channel *channel)
 
 
 Canvas *
-channel_preview (Channel *channel, int width, int height)
+channel_preview (Channel *channel, int w, int h)
 {
-  Canvas * image_buf, * preview_buf;
-  PixelArea srcPR, destPR;
-  int subsample;
+  if (w < 1) w = 1;
+  if (h < 1) h = 1;
 
-  /*  The easy way  */
-  if (GIMP_DRAWABLE(channel)->preview_valid &&
-      (canvas_width (GIMP_DRAWABLE(channel)->preview) == width) &&
-      (canvas_height (GIMP_DRAWABLE(channel)->preview) == height))
-    return GIMP_DRAWABLE(channel)->preview;
-  /*  The hard way  */
-  else
+  if (! (GIMP_DRAWABLE(channel)->preview_valid &&
+         canvas_width (GIMP_DRAWABLE(channel)->preview) == w &&
+         canvas_height (GIMP_DRAWABLE(channel)->preview) == h))
     {
-      int w, h;
+      PixelArea srcPR, destPR;
+      Canvas * preview_buf;
+      Precision p;
 
-      image_buf = drawable_data (GIMP_DRAWABLE(channel));
-      w = canvas_width (image_buf);
-      h = canvas_height (image_buf);
+      p = tag_precision (drawable_tag (GIMP_DRAWABLE(channel)));
       
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-      if (width < 1) width = 1;
-      if (height < 1) height = 1;
-      while ((width * (subsample + 1) * 2 < w) &&
-	     (height * (subsample + 1) * 2 < h))
-	subsample = subsample + 1;
+      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+                                w, h,
+                                STORAGE_FLAT);
 
-      preview_buf = canvas_new (tag_new (tag_precision (canvas_tag(image_buf)),
-                                         FORMAT_GRAY,
-                                         ALPHA_NO),
-                                width, height,
-                                STORAGE_TILED);
-      
-      pixelarea_init (&srcPR, image_buf,
+      pixelarea_init (&srcPR, GIMP_DRAWABLE(channel)->tiles,
                       0, 0,
-                      w, h,
+                      0, 0,
                       FALSE);
 
       pixelarea_init (&destPR, preview_buf,
                       0, 0,
-                      width, height,
+                      0, 0,
                       TRUE);
+
 #define FIXME
-#if 0
-      subsample_area (&srcPR, &destPR, subsample);
-#else
-      {
-        COLOR16_NEW (x, canvas_tag (preview_buf));
-        COLOR16_INIT (x);
-        color16_foreground (&x);
-        color_area (&destPR, &x);
-      }
-#endif
-      
-      if (GIMP_DRAWABLE(channel)->preview_valid)
+      /* scale_area (&srcPR, &destPR); */
+      copy_area (&srcPR, &destPR);
+
+      if (GIMP_DRAWABLE(channel)->preview)
 	canvas_delete (GIMP_DRAWABLE(channel)->preview);
 
       GIMP_DRAWABLE(channel)->preview = preview_buf;
-      GIMP_DRAWABLE(channel)->preview_valid = 1;
-
-      return GIMP_DRAWABLE(channel)->preview;
+      GIMP_DRAWABLE(channel)->preview_valid = TRUE;
     }
+
+  return GIMP_DRAWABLE(channel)->preview;
 }
 
 

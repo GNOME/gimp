@@ -154,15 +154,6 @@ gimp_layer_mask_init (GimpLayerMask *layermask)
 {
 }
 
-/*  static functions  */
-#if 0
-#define FIXME
-static void transform_color     (GImage *, PixelRegion *,
-				 PixelRegion *, GimpDrawable *, int);
-static void layer_preview_scale (int, unsigned char *, PixelRegion *,
-				 PixelRegion *, int);
-#endif
-
 /*
  *  Static variables
  */
@@ -188,42 +179,6 @@ layer_invalidate_preview (GtkObject *object)
     floating_sel_invalidate (layer);
 }
 
-#if 0
-static void
-transform_color (gimage, layerPR, bufPR, drawable, type)
-     GImage * gimage;
-     PixelRegion * layerPR;
-     PixelRegion * bufPR;
-     GimpDrawable *drawable;
-     int type;
-{
-  int i, h;
-  unsigned char * s, * d;
-  void * pr;
-
-  for (pr = pixel_regions_register (2, layerPR, bufPR); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      h = layerPR->h;
-      s = bufPR->data;
-      d = layerPR->data;
-
-      while (h--)
-	{
-	  for (i = 0; i < layerPR->w; i++)
-	    {
-	      gimage_transform_color (gimage, drawable,
-				      s + (i * bufPR->bytes),
-				      d + (i * layerPR->bytes), type);
-	      /*  copy alpha channel  */
-	      d[(i + 1) * layerPR->bytes - 1] = s[(i + 1) * bufPR->bytes - 1];
-	    }
-
-	  s += bufPR->rowstride;
-	  d += layerPR->rowstride;
-	}
-    }
-}
-#endif
 
 /**************************/
 /*  Function definitions  */
@@ -1019,74 +974,45 @@ layer_preview (layer, w, h)
      Layer *layer;
      int w, h;
 {
-  printf("layer_preview not implemented\n");
-  return NULL;
-#define FIXME
-#if 0
-  GImage *gimage;
-  TempBuf *preview_buf;
-  PixelRegion srcPR, destPR;
-  int type;
-  int bytes;
-  int subsample;
+  if (w < 1) w = 1;
+  if (h < 1) h = 1;
 
-  type  = 0;
-  bytes = 0;
-
-  /*  The easy way  */
-  if (GIMP_DRAWABLE(layer)->preview_valid &&
-      GIMP_DRAWABLE(layer)->preview->width == w &&
-      GIMP_DRAWABLE(layer)->preview->height == h)
-    return GIMP_DRAWABLE(layer)->preview;
-  /*  The hard way  */
-  else
+  if (! (GIMP_DRAWABLE(layer)->preview_valid &&
+         canvas_width (GIMP_DRAWABLE(layer)->preview) == w &&
+         canvas_height (GIMP_DRAWABLE(layer)->preview) == h))
     {
-      gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID);
-      switch (GIMP_DRAWABLE(layer)->type)
-	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  type = 0;
-	  bytes = GIMP_DRAWABLE(layer)->bytes;
-	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  type = 1;
-	  bytes = GIMP_DRAWABLE(layer)->bytes;
-	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  type = 2;
-	  bytes = (GIMP_DRAWABLE(layer)->type == INDEXED_GIMAGE) ? 3 : 4;
-	  break;
-	}
+      PixelArea srcPR, destPR;
+      Canvas * preview_buf;
+      Precision p;
 
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-      /* handle some truncation errors */
-      if (w < 1) w = 1;
-      if (h < 1) h = 1;
-      while ((w * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->width) &&
-	     (h * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->height)) 
-	subsample = subsample + 1;
+      p = tag_precision (drawable_tag (GIMP_DRAWABLE(layer)));
+      
+      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+                                w, h,
+                                STORAGE_FLAT);
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+      pixelarea_init (&srcPR, GIMP_DRAWABLE(layer)->tiles,
+                      0, 0,
+                      0, 0,
+                      FALSE);
 
-      preview_buf = temp_buf_new (w, h, bytes, 0, 0, NULL);
-      destPR.bytes = preview_buf->bytes;
-      destPR.w = w;
-      destPR.h = h;
-      destPR.rowstride = w * destPR.bytes;
-      destPR.data = temp_buf_data (preview_buf);
+      pixelarea_init (&destPR, preview_buf,
+                      0, 0,
+                      0, 0,
+                      TRUE);
 
-      layer_preview_scale (type, gimage->cmap, &srcPR, &destPR, subsample);
+#define FIXME
+      /* scale_area (&srcPR, &destPR); */
+      copy_area (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(layer)->preview)
-	temp_buf_free (GIMP_DRAWABLE(layer)->preview);
+	canvas_delete (GIMP_DRAWABLE(layer)->preview);
 
       GIMP_DRAWABLE(layer)->preview = preview_buf;
       GIMP_DRAWABLE(layer)->preview_valid = TRUE;
-
-      return GIMP_DRAWABLE(layer)->preview;
     }
-#endif
+
+  return GIMP_DRAWABLE(layer)->preview;
 }
 
 
@@ -1095,55 +1021,49 @@ layer_mask_preview (layer, w, h)
      Layer *layer;
      int w, h;
 {
-  printf("layer_mask_preview not implemented\n");
-  return NULL;
-#define FIXME
-#if 0
-  TempBuf *preview_buf;
-  LayerMask *mask;
-  PixelRegion srcPR, destPR;
-  int subsample;
+  LayerMask * mask = layer->mask;
 
-  mask = layer->mask;
   if (!mask)
     return NULL;
 
-  /*  The easy way  */
-  if (GIMP_DRAWABLE(mask)->preview_valid &&
-      GIMP_DRAWABLE(mask)->preview->width == w &&
-      GIMP_DRAWABLE(mask)->preview->height == h)
-    return GIMP_DRAWABLE(mask)->preview;
-  /*  The hard way  */
-  else
+  if (w < 1) w = 1; 
+  if (h < 1) h = 1;
+
+  if (! (GIMP_DRAWABLE(mask)->preview_valid &&
+         canvas_width (GIMP_DRAWABLE(mask)->preview) == w &&
+         canvas_height (GIMP_DRAWABLE(mask)->preview) == h))
     {
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-      if (w < 1) w = 1;
-      if (h < 1) h = 1;
-      while ((w * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->width) &&
-	     (h * (subsample + 1) * 2 < GIMP_DRAWABLE(layer)->height))
-	subsample = subsample + 1;
+      PixelArea srcPR, destPR;
+      Canvas * preview_buf;
+      Precision p;
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(mask)->tiles, 0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, FALSE);
+      p = tag_precision (drawable_tag (GIMP_DRAWABLE(mask)));
 
-      preview_buf = temp_buf_new (w, h, 1, 0, 0, NULL);
-      destPR.bytes = preview_buf->bytes;
-      destPR.w = w;
-      destPR.h = h;
-      destPR.rowstride = w * destPR.bytes;
-      destPR.data = temp_buf_data (preview_buf);
+      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+                                w, h,
+                                STORAGE_FLAT);
 
-      layer_preview_scale (1 /* GRAY */, NULL, &srcPR, &destPR, subsample);
+      pixelarea_init (&srcPR, GIMP_DRAWABLE(mask)->tiles,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+
+      pixelarea_init (&destPR, preview_buf,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+#define FIXME
+      /* scale_area (&srcPR, &destPR); */
+      copy_area (&srcPR, &destPR);
 
       if (GIMP_DRAWABLE(mask)->preview)
-	temp_buf_free (GIMP_DRAWABLE(mask)->preview);
+	canvas_delete (GIMP_DRAWABLE(mask)->preview);
 
       GIMP_DRAWABLE(mask)->preview = preview_buf;
       GIMP_DRAWABLE(mask)->preview_valid = TRUE;
-
-      return GIMP_DRAWABLE(mask)->preview;
     }
-#endif
+
+  return GIMP_DRAWABLE(mask)->preview;
 }
 
 
@@ -1168,184 +1088,6 @@ layer_invalidate_previews (gimage_id)
     }
 }
 
-
-#define FIXME
-#if 0
-static void
-layer_preview_scale (type, cmap, srcPR, destPR, subsample)
-     int type;
-     unsigned char *cmap;
-     PixelRegion *srcPR;
-     PixelRegion *destPR;
-     int subsample;
-{
-  printf("layer_preview_scale not implemented\n");
-  return;
-#define EPSILON 0.000001
-  unsigned char * src, * s;
-  unsigned char * dest, * d;
-  double * row, * r;
-  int destwidth;
-  int src_row, src_col;
-  int bytes, b;
-  int width, height;
-  int orig_width, orig_height;
-  double x_rat, y_rat;
-  double x_cum, y_cum;
-  double x_last, y_last;
-  double * x_frac, y_frac, tot_frac;
-  int i, j;
-  int frac;
-  int advance_dest;
-  unsigned char rgb[MAX_CHANNELS];
-
-  orig_width = srcPR->w / subsample;
-  orig_height = srcPR->h / subsample;
-  width = destPR->w;
-  height = destPR->h;
-
-  /*  Some calculations...  */
-  bytes = destPR->bytes;
-  destwidth = destPR->rowstride;
-
-  /*  the data pointers...  */
-  src = (unsigned char *) g_malloc (orig_width * bytes);
-  dest = destPR->data;
-
-  /*  find the ratios of old x to new x and old y to new y  */
-  x_rat = (double) orig_width / (double) width;
-  y_rat = (double) orig_height / (double) height;
-
-  /*  allocate an array to help with the calculations  */
-  row    = (double *) g_malloc (sizeof (double) * width * bytes);
-  x_frac = (double *) g_malloc (sizeof (double) * (width + orig_width));
-
-  /*  initialize the pre-calculated pixel fraction array  */
-  src_col = 0;
-  x_cum = (double) src_col;
-  x_last = x_cum;
-
-  for (i = 0; i < width + orig_width; i++)
-    {
-      if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	{
-	  x_cum += x_rat;
-	  x_frac[i] = x_cum - x_last;
-	}
-      else
-	{
-	  src_col ++;
-	  x_frac[i] = src_col - x_last;
-	}
-      x_last += x_frac[i];
-    }
-
-  /*  clear the "row" array  */
-  memset (row, 0, sizeof (double) * width * bytes);
-
-  /*  counters...  */
-  src_row = 0;
-  y_cum = (double) src_row;
-  y_last = y_cum;
-
-  pixel_region_get_row (srcPR, 0, src_row * subsample, orig_width * subsample, src, subsample);
-
-  /*  Scale the selected region  */
-  for (i = 0; i < height; )
-    {
-      src_col = 0;
-      x_cum = (double) src_col;
-
-      /* determine the fraction of the src pixel we are using for y */
-      if (y_cum + y_rat <= (src_row + 1 + EPSILON))
-	{
-	  y_cum += y_rat;
-	  y_frac = y_cum - y_last;
-	  advance_dest = TRUE;
-	}
-      else
-	{
-	  src_row ++;
-	  y_frac = src_row - y_last;
-	  advance_dest = FALSE;
-	}
-
-      y_last += y_frac;
-
-      s = src;
-      r = row;
-
-      frac = 0;
-      j = width;
-
-      while (j)
-	{
-	  tot_frac = x_frac[frac++] * y_frac;
-
-	  /*  If indexed, transform the color to RGB  */
-	  if (type == 2)
-	    {
-	      map_to_color (2, cmap, s, rgb);
-
-	      r[RED_PIX] += rgb[RED_PIX] * tot_frac;
-	      r[GREEN_PIX] += rgb[GREEN_PIX] * tot_frac;
-	      r[BLUE_PIX] += rgb[BLUE_PIX] * tot_frac;
-	      if (bytes == 4)
-		r[ALPHA_PIX] += s[ALPHA_I_PIX] * tot_frac;
-	    }
-	  else
-	    for (b = 0; b < bytes; b++)
-	      r[b] += s[b] * tot_frac;
-
-	  /*  increment the destination  */
-	  if (x_cum + x_rat <= (src_col + 1 + EPSILON))
-	    {
-	      r += bytes;
-	      x_cum += x_rat;
-	      j--;
-	    }
-
-	  /* increment the source */
-	  else
-	    {
-	      s += srcPR->bytes;
-	      src_col++;
-	    }
-	}
-
-      if (advance_dest)
-	{
-	  tot_frac = 1.0 / (x_rat * y_rat);
-
-	  /*  copy "row" to "dest"  */
-	  d = dest;
-	  r = row;
-
-	  j = width;
-	  while (j--)
-	    {
-	      b = bytes;
-	      while (b--)
-		*d++ = (unsigned char) (*r++ * tot_frac);
-	    }
-
-	  dest += destwidth;
-
-	  /*  clear the "row" array  */
-	  memset (row, 0, sizeof (double) * destwidth);
-
-	  i++;
-	}
-      else
-	pixel_region_get_row (srcPR, 0, src_row * subsample, orig_width * subsample, src, subsample);
-    }
-
-  /*  free up temporary arrays  */
-  g_free (row);
-  g_free (x_frac);
-  g_free (src);
-}
-#endif
 
 static void
 gimp_layer_mask_destroy (GtkObject *object)

@@ -1561,7 +1561,7 @@ layer_get_opacity_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((layer = layer_get_ID (int_value)))
-	opacity = ((layer->opacity) * 100.0) / 255.0;
+	opacity = layer->opacity * 100.0;
       else
 	success = FALSE;
     }
@@ -1633,7 +1633,7 @@ layer_set_opacity_invoker (Argument *args)
   if (success)
     {
       opacity = args[1].value.pdb_float;
-      layer->opacity = (int) ((opacity * 255) / 100);
+      layer->opacity = opacity / 100.0;
     }
 
   return procedural_db_return_args (&layer_set_opacity_proc, success);

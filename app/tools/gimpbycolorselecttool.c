@@ -597,7 +597,6 @@ by_color_select_render (ByColorDialog *bcd,
   Canvas * scaled_buf = NULL;
   unsigned char *buf;
   PixelArea srcPR, destPR;
-  int subsample;
   int width, height, w, h;
   int i;
   int scale;
@@ -661,13 +660,7 @@ by_color_select_render (ByColorDialog *bcd,
 
   if (scale)
     {
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-      while ((width * (subsample + 1) * 2 < w) &&
-	     (height * (subsample + 1) * 2 < h))
-	subsample = subsample + 1;
-      
-      subsample_area (&srcPR, &destPR, subsample);
+      scale_area (&srcPR, &destPR);
     }
   else
     {

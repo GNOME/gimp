@@ -31,6 +31,8 @@ drawable creation
 
 
 
+fix blend supersampling
+
 do color_panel
   self contained, used only in channels_dialog
 
@@ -39,6 +41,10 @@ do color_picker
 
 do convert.c
   ????
+
+fix convolve
+  it darkens the area being convolved
+  multiply/separate alpha for images with alpha channel
 
 fix equalize
   two inner loops needs precision wrapping
@@ -71,7 +77,7 @@ fix transform_core
 xcf
   should fix this at some point
 
+fix scale_area
 
-  this is more of a paint_funcs problem
 
 

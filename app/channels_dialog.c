@@ -1343,6 +1343,8 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
   int width, height;
   int channel;
 
+  return;
+  
   /*  allocate the channel widget pixmap  */
   if (! channel_widget->channel_pixmap)
     channel_widget->channel_pixmap = gdk_pixmap_new (channel_widget->channel_preview->window,
@@ -1726,7 +1728,7 @@ new_channel_query_ok_callback (GtkWidget *w,
     {
       new_channel = channel_new (gimage->ID, gimage->width, gimage->height,
                                  default_precision,
-				 channel_name, options->opacity / 100,
+				 channel_name, options->opacity / 100.0,
 				 options->color_panel->color);
       drawable_fill (GIMP_DRAWABLE(new_channel), TRANSPARENT_FILL);
 
@@ -1889,7 +1891,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
 
   options = (EditChannelOptions *) client_data;
   channel = options->channel_widget->channel;
-  opacity = options->opacity / 100;
+  opacity = options->opacity / 100.0;
 
 
   if (gimage_get_ID (options->gimage_id)) {
@@ -1968,7 +1970,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
   options->channel_widget = channel_widget;
   options->gimage_id = channel_widget->gimage->ID;
-  options->opacity = (double) channel_widget->channel->opacity;
+  options->opacity = (double) channel_widget->channel->opacity * 100.0;
 #define FIXME /* should use channel_widget->channel->col directly */
   {
     PixelRow c;

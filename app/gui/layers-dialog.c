@@ -39,6 +39,7 @@
 #include "ops_buttons.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
 #include "resize.h"
 #include "undo.h"
 
@@ -870,7 +871,6 @@ layers_dialog_clear ()
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
 }
 
-
 void
 render_preview (Canvas    *preview_buf,
 		GtkWidget *preview_widget,
@@ -878,183 +878,63 @@ render_preview (Canvas    *preview_buf,
 		int        height,
 		int        channel)
 {
-  unsigned char *src, *s;
-  unsigned char *cb;
-  unsigned char *buf;
-  int a;
-  int i, j, b;
-  int x1, y1, x2, y2;
-  int rowstride;
-  int color_buf;
-  int color;
-  int alpha;
-  int has_alpha;
-  int image_bytes;
-  int offset;
+  PixelArea src, back, dest;
+  Canvas * temp;
+  gint affect[3];
 
-  return;
+  g_return_if_fail (preview_buf != NULL);
   
-  alpha = ALPHA_PIX;
+  affect[0] = affect[1] = affect[2] = 0;
 
-  /*  Here are the different cases this functions handles correctly:
-   *  1)  Offset preview_buf which does not necessarily cover full image area
-   *  2)  Color conversion of preview_buf if it is gray and image is color
-   *  3)  Background check buffer for transparent preview_bufs
-   *  4)  Using the optional "channel" argument, one channel can be extracted
-   *      from a multi-channel preview_buf and composited as a grayscale
-   *  Prereqs:
-   *  1)  Grayscale preview_bufs have bytes == {1, 2}
-   *  2)  Color preview_bufs have bytes == {3, 4}
-   *  3)  If image is gray, then preview_buf should have bytes == {1, 2}
-   */
-  color_buf = (GTK_PREVIEW (preview_widget)->type == GTK_PREVIEW_COLOR);
-  image_bytes = (color_buf) ? 3 : 1;
-  has_alpha = (canvas_alpha (preview_buf) == ALPHA_YES);
-  rowstride = canvas_width (preview_buf) * canvas_bytes (preview_buf);
-
-  /*  Determine if the preview buf supplied is color
-   *   Generally, if the bytes == {3, 4}, this is true.
-   *   However, if the channel argument supplied is not -1, then
-   *   the preview buf is assumed to be gray despite the number of
-   *   channels it contains
-   */
-  color = (canvas_format (preview_buf) == FORMAT_RGB) && (channel == -1);
-
-  if (has_alpha)
+  switch (channel)
     {
-      buf = check_buf;
-      alpha = (color) ? ALPHA_PIX : ((channel != -1) ? (canvas_bytes (preview_buf) - 1) : ALPHA_G_PIX);
+    case 0:    affect[0] = 1; break;
+    case 1:    affect[1] = 1; break;
+    case 2:    affect[2] = 1; break;
+    default:   affect[0] = 1; break;
     }
-  else
-    buf = empty_buf;
 
-  x1 = BOUNDS (canvas_fixme_getx (preview_buf), 0, width);
-  y1 = BOUNDS (canvas_fixme_gety (preview_buf), 0, height);
-  x2 = BOUNDS (canvas_fixme_getx (preview_buf) + canvas_width (preview_buf), 0, width);
-  y2 = BOUNDS (canvas_fixme_gety (preview_buf) + canvas_height (preview_buf), 0, height);
 
-  src = canvas_portion_data (preview_buf,
-                             (x1 - canvas_fixme_getx (preview_buf)),
-                             (y1 - canvas_fixme_gety (preview_buf)));
+  temp = canvas_new (tag_new (PRECISION_U8,
+                              FORMAT_RGB,
+                              ALPHA_NO),
+                     width, height,
+                     STORAGE_FLAT);
+  
+  pixelarea_init (&src, preview_buf,
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  
+#define FIXME /* get empty or check buf */
+  pixelarea_init (&back, preview_buf,
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  
+  pixelarea_init (&dest, temp,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+  
+  combine_areas (&src, &back, &dest, NULL,
+                 NULL, 1.0, NORMAL_MODE, affect,
+                 combine_areas_type (pixelarea_tag (&src),
+                                     pixelarea_tag (&dest)));
 
-  /*  One last thing for efficiency's sake:  */
-  if (channel == -1)
-    channel = 0;
+  canvas_portion_refro (temp, 0, 0);
+  {
+    int i;
+    for (i = 0; i < height; i++)
+      {
+        guchar * t = canvas_portion_data (temp, 0, i);
+        gtk_preview_draw_row (GTK_PREVIEW (preview_widget), t, 0, i, width);
+      }
+  }
+  canvas_portion_unref (temp, 0, 0);
 
-  for (i = 0; i < height; i++)
-    {
-      if (i & 0x4)
-	{
-	  offset = 4;
-	  cb = buf + offset * 3;
-	}
-      else
-	{
-	  offset = 0;
-	  cb = buf;
-	}
-
-      /*  The interesting stuff between leading & trailing vertical transparency  */
-      if (i >= y1 && i < y2)
-	{
-	  /*  Handle the leading transparency  */
-	  for (j = 0; j < x1; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-
-	  /*  The stuff in the middle  */
-	  s = src;
-	  for (j = x1; j < x2; j++)
-	    {
-	      if (color)
-		{
-		  if (has_alpha)
-		    {
-		      a = s[alpha] << 8;
-
-		      if ((j + offset) & 0x4)
-			{
-			  temp_buf[j * 3 + 0] = blend_dark_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = blend_dark_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = blend_dark_check [(a | s[BLUE_PIX])];
-			}
-		      else
-			{
-			  temp_buf[j * 3 + 0] = blend_light_check [(a | s[RED_PIX])];
-			  temp_buf[j * 3 + 1] = blend_light_check [(a | s[GREEN_PIX])];
-			  temp_buf[j * 3 + 2] = blend_light_check [(a | s[BLUE_PIX])];
-			}
-		    }
-		  else
-		    {
-		      temp_buf[j * 3 + 0] = s[RED_PIX];
-		      temp_buf[j * 3 + 1] = s[GREEN_PIX];
-		      temp_buf[j * 3 + 2] = s[BLUE_PIX];
-		    }
-		}
-	      else
-		{
-		  if (has_alpha)
-		    {
-		      a = s[alpha] << 8;
-
-		      if ((j + offset) & 0x4)
-			{
-			  if (color_buf)
-			    {
-			      temp_buf[j * 3 + 0] = blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = blend_dark_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = blend_dark_check [(a | s[GRAY_PIX])];
-			    }
-			  else
-			    temp_buf[j] = blend_dark_check [(a | s[GRAY_PIX + channel])];
-			}
-		      else
-			{
-			  if (color_buf)
-			    {
-			      temp_buf[j * 3 + 0] = blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 1] = blend_light_check [(a | s[GRAY_PIX])];
-			      temp_buf[j * 3 + 2] = blend_light_check [(a | s[GRAY_PIX])];
-			    }
-			  else
-			    temp_buf[j] = blend_light_check [(a | s[GRAY_PIX + channel])];
-			}
-		    }
-		  else
-		    {
-		      if (color_buf)
-			{
-			  temp_buf[j * 3 + 0] = s[GRAY_PIX];
-			  temp_buf[j * 3 + 1] = s[GRAY_PIX];
-			  temp_buf[j * 3 + 2] = s[GRAY_PIX];
-			}
-		      else
-			temp_buf[j] = s[GRAY_PIX + channel];
-		    }
-		}
-
-	      s += canvas_bytes (preview_buf);
-	    }
-
-	  /*  Handle the trailing transparency  */
-	  for (j = x2; j < width; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-
-	  src += rowstride;
-	}
-      else
-	{
-	  for (j = 0; j < width; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      temp_buf[j * image_bytes + b] = cb[j * 3 + b];
-	}
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview_widget), temp_buf, 0, i, width);
-    }
+  canvas_delete (temp);
 }
-
 
 void
 render_fs_preview (GtkWidget *widget,
@@ -2814,7 +2694,7 @@ layer_widget_layer_flush (GtkWidget *widget,
        *  2)  The paint mode menu
        *  3)  The preserve trans button
        */
-      layersD->opacity_data->value = (gfloat) layer_widget->layer->opacity / 2.55;
+      layersD->opacity_data->value = layer_widget->layer->opacity * 100.0;
       gtk_signal_emit_by_name (GTK_OBJECT (layersD->opacity_data), "value_changed");
       gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
 				   /*  Kludge to deal with the absence of behind */

@@ -238,13 +238,6 @@ scale_area (
 	    struct _PixelArea *dest_area
            );
 
-void
-subsample_area (
-		struct _PixelArea *src_area,
-		struct _PixelArea *dest_area,
-		gint        subsample
-	       );
-
 float
 shapeburst_area (
                  struct _PixelArea *srcPR,
@@ -295,6 +288,13 @@ initial_area  (
                gint type
                );
 
+/* temp until gimage.c operations table is moved here */
+int
+combine_areas_type (
+                    Tag src,
+                    Tag dst
+                    );
+
 void 
 combine_areas  (
                 struct _PixelArea * src1_area,
@@ -305,7 +305,8 @@ combine_areas  (
                 gfloat opacity,
                 gint mode,
                 gint * affect,
-                gint type
+                gint type /* this will eventually be two tags and the operations table in
+                             gimage.c will be internal to this module */
                 );
 
 void 

@@ -111,36 +111,28 @@ static void scale_row_no_resample_u16 (PixelRow*, PixelRow*, gint*);
 static void scale_row_no_resample_float (PixelRow*, PixelRow*, gint*);
 
 /* scale_area */
-static void scale_area_funcs (Tag);
 
-typedef void (*ScaleRowResampleFunc) ( guchar*, guchar*, guchar*, guchar*, 
-		               gdouble, gdouble*, gdouble, gdouble, 
-			       gdouble*, gint, gint, gint, gint); 
-static ScaleRowResampleFunc scale_row_resample;
-static void scale_row_resample_u8 (guchar*, guchar*, guchar*, guchar*, 
-			  gdouble, gdouble*, gdouble, gdouble, 
-			  gdouble*, gint, gint, gint, gint); 
-static void scale_row_resample_u16 (guchar*, guchar*, guchar*, guchar*, 
-			  gdouble, gdouble*, gdouble, gdouble, 
-			  gdouble*, gint, gint, gint, gint); 
+typedef void (*ScaleRowResampleFunc) (guchar*, guchar*, guchar*, guchar*, 
+                                      gdouble, gdouble*, gdouble, gdouble, 
+                                      gdouble*, gint, gint, gint, gint); 
+static void scale_row_resample_u8    (guchar*, guchar*, guchar*, guchar*, 
+                                      gdouble, gdouble*, gdouble, gdouble, 
+                                      gdouble*, gint, gint, gint, gint); 
+static void scale_row_resample_u16   (guchar*, guchar*, guchar*, guchar*, 
+                                      gdouble, gdouble*, gdouble, gdouble, 
+                                      gdouble*, gint, gint, gint, gint); 
 static void scale_row_resample_float (guchar*, guchar*, guchar*, guchar*, 
-			  gdouble, gdouble*, gdouble, gdouble, 
-			  gdouble*, gint, gint, gint, gint); 
+                                      gdouble, gdouble*, gdouble, gdouble, 
+                                      gdouble*, gint, gint, gint, gint); 
+static ScaleRowResampleFunc scale_row_resample_funcs (Tag);
 
-typedef void (*ScaleSetDestRowFunc) (PixelRow*, gdouble*);
-static ScaleSetDestRowFunc scale_set_dest_row;
-static void scale_set_dest_row_u8 (PixelRow*, gdouble*);
-static void scale_set_dest_row_u16 (PixelRow*, gdouble*);
+
+typedef void (*ScaleSetDestRowFunc)  (PixelRow*, gdouble*);
+static void scale_set_dest_row_u8    (PixelRow*, gdouble*);
+static void scale_set_dest_row_u16   (PixelRow*, gdouble*);
 static void scale_set_dest_row_float (PixelRow*, gdouble*);
+static ScaleSetDestRowFunc scale_set_dest_funcs     (Tag);
 
-/* subsample_area */
-static void subsample_area_funcs (Tag); 
-
-typedef void (*SubsampleRowFunc) (PixelRow*, gdouble*, gdouble, gdouble, gdouble*);
-static SubsampleRowFunc subsample_row;
-static void subsample_row_u8 (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
-static void subsample_row_u16(PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
-static void subsample_row_float (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
 
 /* thin_area */
 static void thin_area_funcs (Tag); 
@@ -2008,32 +2000,47 @@ scale_row_no_resample_float  (
     dest[x] = src[x_src_offsets[x]];
 }
 
-static void 
-scale_area_funcs (
-			Tag tag
-		    )
+static ScaleRowResampleFunc
+scale_row_resample_funcs (
+                          Tag tag
+                          )
+     
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return scale_row_resample_u8;	
+  case PRECISION_U16:
+    return scale_row_resample_u16;	
+  case PRECISION_FLOAT:
+    return scale_row_resample_float;	
+  case PRECISION_NONE:
+  default:
+  }
+  return NULL;
+}
+
+static ScaleSetDestRowFunc
+scale_set_dest_funcs (
+                      Tag tag
+                      )
 		  
 {
   switch (tag_precision (tag))
   {
   case PRECISION_U8:
-    scale_row_resample = scale_row_resample_u8;	
-    scale_set_dest_row = scale_set_dest_row_u8;	
-    break;
+    return scale_set_dest_row_u8;	
   case PRECISION_U16:
-    scale_row_resample = scale_row_resample_u16;	
-    scale_set_dest_row = scale_set_dest_row_u16;	
-    break;
+    return scale_set_dest_row_u16;	
   case PRECISION_FLOAT:
-    scale_row_resample = scale_row_resample_float;	
-    scale_set_dest_row = scale_set_dest_row_float;	
-    break;
+    return scale_set_dest_row_float;	
+  case PRECISION_NONE:
   default:
-    scale_row_resample = NULL;	
-    scale_set_dest_row = NULL;	
     break;
-  } 
+  }
+  return NULL;
 }
+
 
 void 
 scale_area  (
@@ -2066,7 +2073,8 @@ scale_area  (
   gint bytes_per_pixel = tag_bytes (dest_tag);
  
   /* set up the function pointers for scale */ 
-  scale_area_funcs (src_tag);
+  ScaleRowResampleFunc scale_row_resample = scale_row_resample_funcs (src_tag);
+  ScaleSetDestRowFunc  scale_set_dest_row = scale_set_dest_funcs (dest_tag);
 
   /* set up the src rows and data  */
   src_m1_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
@@ -2628,278 +2636,6 @@ scale_row_resample_float  (
 	  s    += num_channels;
 	  s_p1 += num_channels;
 	  s_p2 += num_channels;
-	  src_col_num++;
-	}
-    }
-}
-
-static void 
-subsample_area_funcs (Tag tag)
-{
-  switch (tag_precision (tag))
-  {
-  case PRECISION_U8:
-    subsample_row = subsample_row_u8;
-    break;
-  case PRECISION_U16:
-    subsample_row = subsample_row_u16;
-    break;
-  case PRECISION_FLOAT:
-    subsample_row = subsample_row_float;
-    break;
-  default:
-    subsample_row = NULL;
-    break;
-  } 
-}
-
-void 
-subsample_area  (
-                 PixelArea * src_area,
-                 PixelArea * dest_area,
-                 gint subsample
-                 )
-{
-  gdouble * row_accum;
-  gint src_row_num, src_col_num, dest_row_num;
-  gdouble x_rat, y_rat;
-  gdouble x_cum, y_cum;
-  gdouble x_last, y_last;
-  gdouble * x_frac, y_frac, tot_frac;
-  gint i;
-  gint x;
-  gint advance_dest;
-  PixelRow src_row, dest_row;
-  guchar *src_row_data;
-  Tag src_tag = pixelarea_tag (src_area);
-  Tag dest_tag = pixelarea_tag (dest_area);
-  
-  /* src and dest width and height */
-  gint orig_width = pixelarea_width (src_area) / subsample;
-  gint orig_height = pixelarea_height (src_area) / subsample;
-  gint width = pixelarea_width (dest_area);
-  gint height = pixelarea_height (dest_area);
-  
-  /*  get bytes per pixel and num_channels per pixel */
-  gint bytes_per_pixel = tag_bytes (dest_tag);
-  gint num_channels = tag_num_channels (dest_tag); 
-
-  subsample_area_funcs (src_tag);
-  /*  set up the src pixel row */
-  src_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
-  pixelrow_init (&src_row, src_tag, src_row_data, orig_width);
-
-  /*  find the ratios of old x to new x and old y to new y  */
-  x_rat = (double) orig_width / (double) width;
-  y_rat = (double) orig_height / (double) height;
-
-  /*  allocate an array to help with the calculations  */
-  row_accum    = (double *) g_malloc (sizeof (double) * width * num_channels);
-  x_frac = (double *) g_malloc (sizeof (double) * (width + orig_width));
-
-  /*  initialize the pre-calculated pixel fraction array  */
-  src_col_num = 0;
-  x_cum = 0.0;
-  x_last = 0.0;
-
-  for (i = 0; i < width + orig_width; i++)
-    {
-      if (x_cum + x_rat <= (src_col_num + 1 + EPSILON))
-	{
-	  x_cum += x_rat;
-	  x_frac[i] = x_cum - x_last;
-	}
-      else
-	{
-	  src_col_num ++;
-	  x_frac[i] = src_col_num - x_last;
-	}
-      x_last += x_frac[i];
-    }
-
-  /*  clear the row_accum array  */
-  memset (row_accum, 0, sizeof (double) * width * num_channels);
-
-  /*  counters...  */
-  src_row_num = 0;
-  dest_row_num = 0;
-  y_cum = 0.0;
-  y_last = 0.0;
-
-  /* pixel_region_get_row (srcPR, 0, src_row_num * subsample, orig_width * subsample, src, subsample); */
-  pixelarea_copy_row (src_area, &src_row, 0, src_row_num * subsample,
-  			 orig_width * subsample, subsample);
-
-  /*  Scale the selected region  */
-  for (i = 0; i < height; )
-    {
-
-      /* determine the fraction of the src pixel we are using for y */
-      if (y_cum + y_rat <= (src_row_num + 1 + EPSILON))
-	{
-	  y_cum += y_rat;
-	  y_frac = y_cum - y_last;
-	  advance_dest = TRUE;
-	}
-      else
-	{
-	  src_row_num ++;
-	  y_frac = src_row_num - y_last;
-	  advance_dest = FALSE;
-	}
-
-      y_last += y_frac;
-       
-      (*subsample_row) ( &src_row, x_frac, y_frac, x_rat, row_accum);   
-
-      if (advance_dest)
-	{
-	  tot_frac = 1.0 / (x_rat * y_rat);
-  	  pixelarea_getdata (dest_area, &dest_row, dest_row_num);
-          
-          for( x= 0; x < width; x++)
-            row_accum[x] *= tot_frac; 
-         
-          /*  set dest row from row_accum */
-          (*scale_set_dest_row)( &dest_row, row_accum ); 
-          
-          dest_row_num++;
-
-	  /*  clear the row_accum array  */
-	  memset (row_accum, 0, sizeof (double) * width * num_channels);
-
-	  i++;
-	}
-      else
- 	 /*pixel_region_get_row (srcPR, 0, src_row_num * subsample, orig_width * subsample, src, subsample);*/
-        pixelarea_copy_row (src_area, &src_row, 0, src_row_num * subsample, 
-  				orig_width * subsample, subsample);
-    }
-
-  /*  free up temporary arrays  */
-  g_free (row_accum);
-  g_free (x_frac);
-  g_free (src_row_data);
-}
-
-static void 
-subsample_row_u8  (
-                   PixelRow * src_row,
-                   gdouble * x_frac,
-                   gdouble y_frac,
-                   gdouble x_rat,
-                   gdouble * row_accum
-                   )
-{
-  gdouble tot_frac;
-  gint b;
-  guint8 * s = (guint8 *)pixelrow_data (src_row);
-  gint num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gint frac = 0;
-  gdouble *r = row_accum;
-  gint src_col_num = 0;
-  gdouble x_cum = 0.0;
-  gint j = pixelrow_width (src_row);
-   
-  while (j)
-    {
-      tot_frac = x_frac[frac++] * y_frac;
-
-      for (b = 0; b < num_channels; b++)
-	r[b] += s[b] * tot_frac;
-
-      /*  increment the destination  */
-      if (x_cum + x_rat <= (src_col_num + 1 + EPSILON))
-	{
-	  r += num_channels;
-	  x_cum += x_rat;
-	  j--;
-	}
-      else  /* increment the source */
-	{
-	  s += num_channels;
-	  src_col_num++;
-	}
-    }
-}
-
-static void 
-subsample_row_u16  (
-                    PixelRow * src_row,
-                    gdouble * x_frac,
-                    gdouble y_frac,
-                    gdouble x_rat,
-                    gdouble * row_accum
-                    )
-{
-  gdouble tot_frac;
-  gint b;
-  guint16 * s = (guint16 *)pixelrow_data (src_row);
-  gint num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gint frac = 0;
-  gdouble *r = row_accum;
-  gint src_col_num = 0;
-  gdouble x_cum = 0.0;
-  gint j = pixelrow_width (src_row);
-   
-  while (j)
-    {
-      tot_frac = x_frac[frac++] * y_frac;
-
-      for (b = 0; b < num_channels; b++)
-	r[b] += s[b] * tot_frac;
-
-      /*  increment the destination  */
-      if (x_cum + x_rat <= (src_col_num + 1 + EPSILON))
-	{
-	  r += num_channels;
-	  x_cum += x_rat;
-	  j--;
-	}
-      else  /* increment the source */
-	{
-	  s += num_channels;
-	  src_col_num++;
-	}
-    }
-}
-
-static void 
-subsample_row_float  (
-                      PixelRow * src_row,
-                      gdouble * x_frac,
-                      gdouble y_frac,
-                      gdouble x_rat,
-                      gdouble * row_accum
-                      )
-{
-  gdouble tot_frac;
-  gint b;
-  gfloat *s = (gfloat *)pixelrow_data (src_row);
-  gint num_channels = tag_num_channels (pixelrow_tag (src_row));
-  gint frac = 0;
-  gdouble *r = row_accum;
-  gint src_col_num = 0;
-  gdouble x_cum = 0.0;
-  gint j = pixelrow_width (src_row);
-   
-  while (j)
-    {
-      tot_frac = x_frac[frac++] * y_frac;
-
-      for (b = 0; b < num_channels; b++)
-	r[b] += s[b] * tot_frac;
-
-      /*  increment the destination  */
-      if (x_cum + x_rat <= (src_col_num + 1 + EPSILON))
-	{
-	  r += num_channels;
-	  x_cum += x_rat;
-	  j--;
-	}
-      else  /* increment the source */
-	{
-	  s += num_channels;
 	  src_col_num++;
 	}
     }
@@ -3805,6 +3541,73 @@ combine_areas_funcs (
   } 
 }
 
+int
+combine_areas_type (
+                    Tag src,
+                    Tag dst
+                    )
+{
+  int s_index;
+  int d_index;
+  static int valid_combos[][6] =
+  {
+    {
+      COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A,
+      -1, -1,
+      -1, -1
+    },
+    {
+      COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A,
+      -1, -1,
+      -1, -1
+    },
+    {
+      -1, -1,
+      COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A,
+      -1, -1
+    },
+    {
+      -1, -1,
+      COMBINE_INTEN_A_INTEN, COMBINE_INTEN_A_INTEN_A,
+      -1, -1
+    },
+    {
+      -1, -1,
+      -1, -1,
+      COMBINE_INDEXED_INDEXED, COMBINE_INDEXED_INDEXED_A
+    },
+    {
+      -1, -1,
+      -1, -1,
+      -1, COMBINE_INDEXED_A_INDEXED_A
+    }
+  };
+
+  switch (tag_format (src))
+    {
+    case FORMAT_RGB:      s_index = 0; break;
+    case FORMAT_GRAY:     s_index = 1; break;
+    case FORMAT_INDEXED:  s_index = 2; break;
+    case FORMAT_NONE:
+    default:              return -1;
+    }
+  
+  switch (tag_format (dst))
+    {
+    case FORMAT_RGB:      d_index = 0; break;
+    case FORMAT_GRAY:     d_index = 1; break;
+    case FORMAT_INDEXED:  d_index = 2; break;
+    case FORMAT_NONE:
+    default:              return -1;
+    }
+
+  s_index = 2 * s_index + (tag_alpha (src) == ALPHA_YES ? 1 : 0);
+  d_index = 2 * d_index + (tag_alpha (dst) == ALPHA_YES ? 1 : 0);
+
+  return valid_combos[s_index][d_index];
+  
+};
+
 void 
 combine_areas  (
                 PixelArea * src1_area,
@@ -3826,10 +3629,24 @@ combine_areas  (
   guchar *buf_row_data = 0; 
   Tag src1_tag = pixelarea_tag (src1_area); 
   Tag src2_tag = pixelarea_tag (src2_area); 
+  Tag dest_tag = pixelarea_tag (dest_area); 
+  Tag mask_tag = pixelarea_tag (mask_area); 
   Tag buf_tag = src2_tag;
   gint src2_width = pixelarea_width (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);
- 
+
+  if ((tag_precision (src1_tag) != tag_precision (src2_tag)) ||
+      (tag_format    (src1_tag) != tag_format    (src2_tag)) ||
+      (tag_precision (src1_tag) != tag_precision (dest_tag)) ||
+      (tag_format    (src1_tag) != tag_format    (dest_tag)) ||
+      (mask_area &&
+       ((tag_precision (src1_tag) != tag_precision (mask_tag)) ||
+        (tag_format    (src1_tag) != tag_format    (mask_tag)))))
+    {
+      g_warning ("bad tags!");
+      return;
+    }
+  
   combine_areas_funcs (src1_tag); 
   
   buf_size = src2_width * src2_bytes;

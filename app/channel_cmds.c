@@ -697,7 +697,7 @@ channel_get_opacity_invoker (Argument *args)
     {
       int_value = args[0].value.pdb_int;
       if ((channel = channel_get_ID (int_value)))
-	opacity = ((channel->opacity) * 100.0) / 255.0;
+	opacity = (channel->opacity) * 100.0;
       else
 	success = FALSE;
     }
@@ -769,7 +769,7 @@ channel_set_opacity_invoker (Argument *args)
   if (success)
     {
       opacity = args[1].value.pdb_float;
-      channel->opacity = (int) ((opacity * 255) / 100);
+      channel->opacity = opacity / 100.0;
     }
 
   return procedural_db_return_args (&channel_set_opacity_proc, success);

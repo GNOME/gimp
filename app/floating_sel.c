@@ -439,7 +439,7 @@ floating_sel_composite (Layer *layer,
 	   */
 	  gimage_apply_painthit (gimage, layer->fs.drawable, NULL, 
 				&fsPR,
-			      	undo, layer->opacity/255.0, layer->mode,
+			      	undo, layer->opacity, layer->mode,
 			      	(x1 - offx), (y1 - offy));
 
 	  /*  restore preserve transparency  */
