@@ -1,3 +1,7 @@
+2004-02-24  Adam Weinberger  <adamw@FreeBSD.org>
+
+	* en_CA.po: Added Canadian English translation.
+
 2004-02-20  Danilo Šegan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation.
