@@ -658,7 +658,7 @@ run_save_dialog	(Config *config)
    */
   prefixed_name = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Prefixed Name:"), 0.0, 0.5,
+			     _("_Prefixed name:"), 0.0, 0.5,
 			     prefixed_name, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
@@ -674,7 +674,7 @@ run_save_dialog	(Config *config)
 
   /* Use Comment
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Save Comment to File"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Save comment to file"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_comment);
@@ -698,7 +698,7 @@ run_save_dialog	(Config *config)
 
   /* Use Macros
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Us_e Macros instead of Struct"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Us_e macros instead of struct"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_macros);
@@ -710,7 +710,7 @@ run_save_dialog	(Config *config)
 
   /* Use RLE
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Use _1 Byte Run-Length-Encoding"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Use _1 byte Run-Length-Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_rle);
@@ -722,7 +722,7 @@ run_save_dialog	(Config *config)
 
   /* Alpha
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Sa_ve Alpha Channel (RGBA/RGB)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sa_ve alpha channel (RGBA/RGB)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->alpha);

@@ -3,84 +3,22 @@
  *
  * (c) Adam D. Moss : 1997-2000 : adam@gimp.org : adam@foxbox.org
  *
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is part of the GIMP package and is released under the GNU
- * Public License.
- */
-
-/*
- * REVISION HISTORY:
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * 2000-08-30 : version 0.98.8
- *              Default frame timing is now 100ms instead of 125ms.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * 2000-06-05 : version 0.98.7
- *              Fix old bug which could cause errors in evaluating the
- *              final pixel of each composed layer.
- *
- * 2000-01-13 : version 0.98.6
- *              Looser parsing of (XXXXX) layer-name tags
- *
- * 98.07.27 : version 0.98.5
- *            UI tweaks, fix for pseudocolor displays w/gdkrgb.
- *
- * 98.07.20 : version 0.98.4
- *            User interface improvements.
- *
- * 98.07.19 : version 0.98.2
- *            Another speedup for some kinds of shaped animations.
- *
- * 98.07.19 : version 0.98.0
- *            Adapted to use GDKRGB (from recent GTK >= 1.1) if
- *            available - good speed and reliability improvement.
- *            Plus some minor tweaks.
- *
- * 98.04.28 : version 0.94.2
- *            Fixed a time-parsing bug.
- *
- * 98.04.05 : version 0.94.0
- *            Improved performance and removed flicker when shaped.
- *            Shaped mode also works with RGB* images now.
- *            Fixed some longstanding potential visual debris.
- *
- * 98.04.04 : version 0.92.0
- *            Improved responsiveness and performance for the new
- *            shaped-animation mode.  Still some flicker.
- *
- * 98.04.02 : version 0.90.0
- *            EXPERIMENTAL wackyness - try dragging the animation
- *            out of the plugin dialog's preview box...
- *            (only works on non-RGB* images for now)
- *
- * 98.03.16 : version 0.85.0
- *            Implemented some more rare opaque/alpha combinations.
- *
- * 98.03.15 : version 0.84.0
- *            Tried to clear up the GTK object/cast warnings.  Only
- *            partially successful.  Could use some help.
- *
- * 97.12.11 : version 0.83.0
- *            GTK's timer logic changed a little... adjusted
- *            plugin to fit.
- *
- * 97.09.16 : version 0.81.7
- *            Fixed progress bar's off-by-one problem with
- *            the new timing.  Fixed erroneous black bars which
- *            were sometimes visible when the first frame was
- *            smaller than the image itself.  Made playback
- *            controls inactive when image doesn't have multiple
- *            frames.  Moved progress bar above control buttons,
- *            it's less distracting there.  More cosmetic stuff.
- *
- * 97.09.15 : version 0.81.0
- *            Now plays INDEXED and GRAY animations.
- *
- * 97.09.15 : version 0.75.0
- *            Next frame is generated ahead of time - results
- *            in more precise timing.
- *
- * 97.09.14 : version 0.70.0
- *            Initial release.  RGB only.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /*
@@ -166,8 +104,8 @@ static void        init_preview_misc   (void);
 /* tag util functions*/
 static         int parse_ms_tag        (const char *str);
 static DisposeType parse_disposal_tag  (const char *str);
-static DisposeType get_frame_disposal  (const guint whichframe);
-static     guint32 get_frame_duration  (const guint whichframe);
+static DisposeType get_frame_disposal  (guint whichframe);
+static     guint32 get_frame_duration  (guint whichframe);
 static int is_disposal_tag (const char *str,
                             DisposeType *disposal,
                             int *taglength);
@@ -310,7 +248,6 @@ reshape_from_bitmap (gchar* bitmap)
     }
 }
 
-
 static gboolean
 shape_pressed (GtkWidget      *widget,
                GdkEventButton *event)
@@ -338,7 +275,6 @@ shape_pressed (GtkWidget      *widget,
 
   return FALSE;
 }
-
 
 static gboolean
 maybeblocked_expose (GtkWidget      *widget,
@@ -391,7 +327,6 @@ shape_motion (GtkWidget      *widget,
   return FALSE;
 }
 
-
 static gboolean
 repaint_da (GtkWidget      *darea,
             GdkEventExpose *event,
@@ -406,7 +341,6 @@ repaint_da (GtkWidget      *darea,
   return TRUE;
 }
 
-
 static gboolean
 repaint_sda (GtkWidget      *darea,
              GdkEventExpose *event,
@@ -420,7 +354,6 @@ repaint_sda (GtkWidget      *darea,
 
   return TRUE;
 }
-
 
 static gboolean
 preview_pressed (GtkWidget      *widget,
@@ -459,8 +392,6 @@ preview_pressed (GtkWidget      *widget,
   /* mildly amusing hack */
   return shape_pressed (shape_window, event);
 }
-
-
 
 static void
 build_dialog (GimpImageBaseType  basetype,
@@ -1192,7 +1123,6 @@ render_frame (gint32 whichframe)
   gimp_drawable_detach(drawable);
 }
 
-
 /* If we're using GDKRGB, we don't reshape in this function because
    it's too late (GDKRGB is synchronous).  So this just updates the
    progress bar. */
@@ -1209,7 +1139,6 @@ show_frame (void)
   gtk_progress_bar_set_text (progress, text);
   g_free (text);
 }
-
 
 static void
 init_preview_misc (void)
@@ -1247,29 +1176,26 @@ init_preview_misc (void)
   shape_drawing_area_data = preview_data;
 }
 
-
 static void
 total_alpha_preview (guchar* ptr)
 {
-  int i;
-
   if (shaping)
     {
       memset(shape_preview_mask, 0, (width*height)/8 + height);
     }
   else
     {
-      for (i=0;i<height;i++)
+      gint i;
+
+      for (i = 0;i < height; i++)
         {
-          if (i&8)
-            memcpy(&ptr[i*3*width], preview_alpha1_data, 3*width);
+          if (i & 8)
+            memcpy (&ptr[i*3*width], preview_alpha1_data, 3*width);
           else
-            memcpy(&ptr[i*3*width], preview_alpha2_data, 3*width);
+            memcpy (&ptr[i*3*width], preview_alpha2_data, 3*width);
         }
     }
 }
-
-
 
 /* Util. */
 
@@ -1374,35 +1300,29 @@ step_callback (GtkWidget *widget,
   show_frame();
 }
 
-
-
-
-
 /* tag util. */
 
 static DisposeType
-get_frame_disposal (const guint whichframe)
+get_frame_disposal (guint whichframe)
 {
   gchar       *layer_name;
   DisposeType  disposal;
 
-  layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
-  disposal = parse_disposal_tag(layer_name);
-  g_free(layer_name);
+  layer_name = gimp_drawable_get_name (layers[total_frames-(whichframe+1)]);
+  disposal = parse_disposal_tag (layer_name);
+  g_free (layer_name);
 
-  return(disposal);
+  return disposal;
 }
 
-
-
 static guint32
-get_frame_duration (const guint whichframe)
+get_frame_duration (guint whichframe)
 {
   gchar *layer_name;
   gint   duration = 0;
 
   layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
-  if (layer_name != NULL)
+  if (layer_name)
     {
       duration = parse_ms_tag(layer_name);
       g_free(layer_name);
@@ -1412,12 +1332,13 @@ get_frame_duration (const guint whichframe)
   else
     if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
 
-  return ((guint32) duration);
+  return (guint32) duration;
 }
 
-
 static int
-is_ms_tag (const char *str, int *duration, int *taglength)
+is_ms_tag (const char *str, 
+	   int *duration, 
+	   int *taglength)
 {
   gint sum = 0;
   gint offset;
@@ -1474,7 +1395,6 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   return 1;
 }
 
-
 static int
 parse_ms_tag (const char *str)
 {
@@ -1485,7 +1405,7 @@ parse_ms_tag (const char *str)
 
   length = strlen(str);
 
-  for (i=0; i<length; i++)
+  for (i = 0; i < length; i++)
     {
       if (is_ms_tag (&str[i], &rtn, &dummy))
         return rtn;
@@ -1494,9 +1414,10 @@ parse_ms_tag (const char *str)
   return -1;
 }
 
-
 static int
-is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
+is_disposal_tag (const char *str, 
+		 DisposeType *disposal, 
+		 int *taglength)
 {
   if (strlen(str) != 9)
     return 0;
@@ -1517,7 +1438,6 @@ is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
   return 0;
 }
 
-
 static DisposeType
 parse_disposal_tag (const char *str)
 {
@@ -1527,14 +1447,14 @@ parse_disposal_tag (const char *str)
 
   length = strlen(str);
 
-  for (i=0; i<length; i++)
+  for (i = 0; i < length; i++)
     {
-      if (is_disposal_tag(&str[i], &rtn, &dummy))
+      if (is_disposal_tag (&str[i], &rtn, &dummy))
         {
           return rtn;
         }
     }
 
-  return (DISPOSE_UNDEFINED); /* FIXME */
+  return DISPOSE_UNDEFINED; /* FIXME */
 }
 

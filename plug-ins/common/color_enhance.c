@@ -22,18 +22,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* This simple plug-in does an automatic Saturation stretch.  For each
-   channel in the image, it finds the minimum and maximum values... it
-   uses those values to stretch the individual histograms to the full
-   range.  For some images it may do just what you want; for others
-   it may not work that well. This version operates in HSV space
-   and preserves hue. Most code is taken from autostretch_hsv */
-
-
 #include "config.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -231,7 +220,7 @@ indexed_Color_Enhance (gint32 image_ID)
 
   if (!cmap)
     {
-      printf("Color_Enhance: cmap was NULL!  Quitting...\n");
+      g_message(_("Color_Enhance: cmap was NULL!  Quitting...\n"));
       gimp_quit();
     }
 

@@ -1,3 +1,28 @@
+2004-05-25  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/autostretch_hsv.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/borderaverage.c: 
+	* plug-ins/common/bz2.c: 
+	* plug-ins/common/c_astretch.c: 
+	* plug-ins/common/ccanalyze.c: 
+	* plug-ins/common/channel_mixer.c: 
+	* plug-ins/common/color_enhance.c: 
+	* plug-ins/common/colorify.c: 
+	* plug-ins/common/colortoalpha.c: 
+	* plug-ins/common/csource.c: 
+	* plug-ins/common/cubism.c: 
+	* plug-ins/common/curve_bend.c: 
+
+	Use HIG capitalization style. Added GPL license in a few places.
+	Minor code clean-up.
+
 2004-05-25  Sven Neumann  <sven@gimp.org>
 
 	Sorry, couldn't resist to finish this task...

@@ -1310,7 +1310,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Automatic Pre_view"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Automatic pre_view"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -1372,7 +1372,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The wor_on_copy toggle  */
-  toggle = gtk_check_button_new_with_mnemonic (_("Work on Cop_y"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Work on cop_y"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->work_on_copy);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

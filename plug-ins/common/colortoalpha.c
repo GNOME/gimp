@@ -328,6 +328,9 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+		      hbox, FALSE, FALSE, 0);
+
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("From:"));
@@ -345,7 +348,7 @@ colortoalpha_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_color_button_get_color),
                     &pvals.color);
 
-  label = gtk_label_new (_("to Alpha"));
+  label = gtk_label_new (_("to alpha"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

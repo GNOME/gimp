@@ -5,78 +5,22 @@
  *     adam@gimp.org
  *     adam@foxbox.org
  *
- * This is part of the GIMP package and falls under the GPL.
- */
-
-/*
- * REVISION HISTORY:
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * 2003-11-23 : version 1.1.2
- *              Improved optimization for GIF and file formats using
- *              compression on a line-by-line basis.  See bug #66367.
- *              (Raphaël Quinet)
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * 2003-08-12 : version 1.1.1
- *              Disable the semi-broken background/foreground stuff
- *              unless EXPERIMENTAL_BACKDROP_CODE is defined...
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * 2001-04-28 : version 1.1.0 [ALPHA]
- *              Support automated background (or foreground) removal.
- *              It's half-broken.
- *              Eliminated special optimized frame alignment cases --
- *              we're not trying to be real-time like animationplay
- *              and it complicates the code.
- *
- * 2000-08-30 : version 1.0.4
- *              Change default frame duration from 125ms to 100ms for
- *              consistancy.
- *
- * 2000-06-05 : version 1.0.3
- *              Fix old bug which could cause errors in evaluating the
- *              final pixel of each composed layer.
- *
- * 2000-01-13 : version 1.0.2
- *              Collapse timing of completely optimized-away frames
- *              onto previous surviving frame.  Also be looser with
- *              (XXXXX) tag parsing.
- *
- * 2000-01-07 : version 1.0.1
- *              PDB interface submitted by Andreas Jaekel
- *              <jaekel@cablecats.de>
- *
- * 98.05.17 : version 1.0.0
- *            Finally preserves frame timings / layer names.  Has
- *            a progress bar now.  No longer beta, I suppose.
- *
- * 98.04.19 : version 0.70.0
- *            Plug-in doubles up as Animation UnOptimize too!  (This
- *            is somewhat more useful than it sounds.)
- *
- * 98.03.16 : version 0.61.0
- *            Support more rare opaque/transparent combinations.
- *
- * 97.12.09 : version 0.60.0
- *            Added support for INDEXED* and GRAY* images.
- *
- * 97.12.09 : version 0.52.0
- *            Fixed some bugs.
- *
- * 97.12.08 : version 0.51.0
- *            Relaxed bounding box on optimized layers marked
- *            'replace'.
- *
- * 97.12.07 : version 0.50.0
- *            Initial release.
- */
-
-/*
- * BUGS:
- *  ?
- */
-
-/*
- * TODO:
- *   User interface
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /*
@@ -1171,9 +1115,6 @@ do_optimizations (GimpRunMode run_mode,
   return new_image_id;
 }
 
-
-
-
 /* Util. */
 
 static DisposeType
@@ -1186,10 +1127,8 @@ get_frame_disposal (guint whichframe)
   disposal = parse_disposal_tag(layer_name);
   g_free(layer_name);
 
-  return(disposal);
+  return disposal;
 }
-
-
 
 static guint32
 get_frame_duration (guint whichframe)
@@ -1198,7 +1137,7 @@ get_frame_duration (guint whichframe)
   gint   duration = 0;
 
   layer_name = gimp_drawable_get_name(layers[total_frames-(whichframe+1)]);
-  if (layer_name != NULL)
+  if (layer_name)
     {
       duration = parse_ms_tag(layer_name);
       g_free(layer_name);
@@ -1207,9 +1146,8 @@ get_frame_duration (guint whichframe)
   if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
   if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
 
-  return ((guint32) duration);
+  return (guint32) duration;
 }
-
 
 static gboolean
 is_ms_tag (const gchar *str,
@@ -1271,7 +1209,6 @@ is_ms_tag (const gchar *str,
   return TRUE;
 }
 
-
 static int
 parse_ms_tag (const char *str)
 {
@@ -1282,7 +1219,7 @@ parse_ms_tag (const char *str)
 
   length = strlen (str);
 
-  for (i=0; i<length; i++)
+  for (i = 0; i < length; i++)
     {
       if (is_ms_tag (&str[i], &rtn, &dummy))
         return rtn;
@@ -1290,7 +1227,6 @@ parse_ms_tag (const char *str)
 
   return -1;
 }
-
 
 static gboolean
 is_disposal_tag (const gchar *str,
@@ -1337,8 +1273,6 @@ parse_disposal_tag (const gchar *str)
   return DISPOSE_UNDEFINED; /* FIXME */
 }
 
-
-
 static void
 remove_disposal_tag (gchar *dest,
                      gchar *src)
@@ -1366,8 +1300,6 @@ remove_disposal_tag (gchar *dest,
 
   dest[offset] = '\0';
 }
-
-
 
 static void
 remove_ms_tag (gchar *dest,

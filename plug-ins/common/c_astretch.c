@@ -21,16 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* This simple plug-in does an automatic contrast stretch.  For each
-   channel in the image, it finds the minimum and maximum values... it
-   uses those values to stretch the individual histograms to the full
-   contrast range.  For some images it may do just what you want; for
-   others it may not work that well */
-
 #include "config.h"
-
-#include <stdlib.h>
-#include <stdio.h>
 
 #include <libgimp/gimp.h>
 
@@ -154,34 +145,34 @@ indexed_c_astretch (gint32 image_ID)
 {
   guchar *cmap;
   gint    ncols, i;
-  gint    rhi=0, ghi=0, bhi=0, rlo=255, glo=255, blo=255;
+  gint    rhi = 0, ghi = 0, bhi = 0, rlo = 255, glo = 255, blo = 255;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
-  if (cmap==NULL)
+  if (!cmap)
     {
-      printf("c_astretch: cmap was NULL!  Quitting...\n");
+      g_message (_("c_astretch: cmap was NULL!  Quitting...\n"));
       gimp_quit();
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      if (cmap[i*3 +0] > rhi) rhi=cmap[i*3 +0];
-      if (cmap[i*3 +1] > ghi) ghi=cmap[i*3 +1];
-      if (cmap[i*3 +2] > bhi) bhi=cmap[i*3 +2];
-      if (cmap[i*3 +0] < rlo) rlo=cmap[i*3 +0];
-      if (cmap[i*3 +1] < glo) glo=cmap[i*3 +1];
-      if (cmap[i*3 +2] < blo) blo=cmap[i*3 +2];
+      if (cmap[i * 3 + 0] > rhi) rhi = cmap[i * 3 + 0];
+      if (cmap[i * 3 + 1] > ghi) ghi = cmap[i * 3 + 1];
+      if (cmap[i * 3 + 2] > bhi) bhi = cmap[i * 3 + 2];
+      if (cmap[i * 3 + 0] < rlo) rlo = cmap[i * 3 + 0];
+      if (cmap[i * 3 + 1] < glo) glo = cmap[i * 3 + 1];
+      if (cmap[i * 3 + 2] < blo) blo = cmap[i * 3 + 2];
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      if (rhi!=rlo)
-        cmap[i*3 +0] = (255 * (cmap[i*3 +0] - rlo)) / (rhi-rlo);
-      if (ghi!=glo)
-        cmap[i*3 +1] = (255 * (cmap[i*3 +1] - glo)) / (ghi-glo);
-      if (rhi!=rlo)
-        cmap[i*3 +2] = (255 * (cmap[i*3 +2] - blo)) / (bhi-blo);
+      if (rhi != rlo)
+        cmap[i * 3 + 0] = (255 * (cmap[i * 3 + 0] - rlo)) / (rhi - rlo);
+      if (ghi != glo)
+        cmap[i * 3 + 1] = (255 * (cmap[i * 3 + 1] - glo)) / (ghi - glo);
+      if (rhi != rlo)
+        cmap[i * 3 + 2] = (255 * (cmap[i * 3 + 2] - blo)) / (bhi - blo);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);

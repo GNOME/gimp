@@ -19,8 +19,6 @@
  */
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -43,10 +41,10 @@ static void      borderaverage (GimpDrawable *drawable,
 
 static gboolean  borderaverage_dialog (void);
 
-static void      add_new_color (gint    bytes,
-                                guchar *buffer,
-                                gint   *cube,
-                                gint    bucket_expo);
+static void      add_new_color (gint          bytes,
+                                const guchar *buffer,
+                                gint   	     *cube,
+                                gint          bucket_expo);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -65,12 +63,14 @@ struct borderaverage_data
   gint  thickness;
   gint  bucket_exponent;
 }
-borderaverage_data =
+
+static borderaverage_data =
 {
   3,
   4
 };
 
+static GimpRunMode run_mode;
 
 MAIN ()
 
@@ -116,7 +116,6 @@ run (const gchar      *name,
 {
   static GimpParam   values[3];
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
 
@@ -194,6 +193,30 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  gint x1, x2, y1, y2;
+  gint bucket_expo;
+  gint *cube;
+} BorderAverageParam_t;
+
+static void
+borderaverage_func (gint x,
+		    gint y,
+		    const guchar *src,
+		    gint bpp,
+		    gpointer data)
+{
+  BorderAverageParam_t *param = (BorderAverageParam_t*) data;
+
+  if (x <  param->x1 + borderaverage_thickness ||
+      x >= param->x2 - borderaverage_thickness ||
+      y <  param->y1 + borderaverage_thickness ||
+      y >= param->y2 - borderaverage_thickness)
+    {
+      add_new_color (bpp, src, param->cube, param->bucket_expo);
+    }
+}
+
 static void
 borderaverage (GimpDrawable *drawable,
                GimpRGB      *result)
@@ -207,15 +230,15 @@ borderaverage (GimpDrawable *drawable,
   guchar *buffer;
   gint    bucket_num, bucket_expo, bucket_rexpo;
   gint   *cube;
-  gint    row, col;
   gint    i, j, k; /* index variables */
+  GimpRgnIterator *iter;
 
-  GimpPixelRgn  myPR;
+  BorderAverageParam_t     param;
 
   /* allocate and clear the cube before */
   bucket_expo = borderaverage_bucket_exponent;
   bucket_rexpo = 8 - bucket_expo;
-  cube = g_new (gint, 1 << (bucket_rexpo * 3));
+  param.cube = cube = g_new (gint, 1 << (bucket_rexpo * 3));
   bucket_num = 1 << bucket_rexpo;
 
   for (i = 0; i < bucket_num; i++)
@@ -229,13 +252,12 @@ borderaverage (GimpDrawable *drawable,
         }
     }
 
-  /*  Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  param.x1 = x1;
+  param.y1 = y1;
+  param.x2 = x2;
+  param.y2 = y2;
+  param.bucket_expo = bucket_expo;
 
   /*  Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -249,41 +271,9 @@ borderaverage (GimpDrawable *drawable,
   /*  allocate row buffer  */
   buffer = g_new (guchar, (x2 - x1) * bytes);
 
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&myPR, drawable, 0, 0, width, height, FALSE, FALSE);
-
-  /*  loop through the rows, performing our magic*/
-  for (row = y1; row < y2; row++)
-    {
-      gimp_pixel_rgn_get_row (&myPR, buffer, x1, row, (x2-x1));
-
-      if (row < y1 + borderaverage_thickness ||
-          row >= y2 - borderaverage_thickness)
-        {
-          /* add the whole row */
-          for (col = 0; col < ((x2 - x1) * bytes); col += bytes)
-            {
-              add_new_color (bytes, &buffer[col], cube, bucket_expo);
-            }
-        }
-      else
-        {
-          /* add the left border */
-          for (col = 0; col < (borderaverage_thickness * bytes); col += bytes)
-            {
-              add_new_color (bytes, &buffer[col], cube, bucket_expo);
-            }
-          /* add the right border */
-          for (col = ((x2 - x1 - borderaverage_thickness) * bytes);
-               col < ((x2 - x1) * bytes); col += bytes)
-            {
-              add_new_color (bytes, &buffer[col], cube, bucket_expo);
-            }
-        }
-
-      if ((row % 5) == 0)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
-    }
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_src (iter, borderaverage_func, &param);
+  gimp_rgn_iterator_free (iter);
 
   max = 0; r = 0; g = 0; b = 0;
 
@@ -315,32 +305,18 @@ borderaverage (GimpDrawable *drawable,
 }
 
 static void
-add_new_color (gint    bytes,
-               guchar *buffer,
-               gint   *cube,
-               gint    bucket_expo)
+add_new_color (gint    	     bytes,
+               const guchar *buffer,
+               gint   	    *cube,
+               gint          bucket_expo)
 {
   guchar r, g, b;
   gint   bucket_rexpo;
 
   bucket_rexpo = 8 - bucket_expo;
-  r = buffer[0] >>bucket_expo;
-  if (bytes > 1)
-    {
-      g = buffer[1] >>bucket_expo;
-    }
-  else
-    {
-      g = 0;
-    }
-  if (bytes > 2)
-    {
-      b = buffer[2] >>bucket_expo;
-    }
-  else
-    {
-      b = 0;
-    }
+  r = buffer[0] >> bucket_expo;
+  g = (bytes > 1) ? buffer[1] >> bucket_expo : 0;
+  b = (bytes > 2) ? buffer[2] >> bucket_expo : 0;
   cube[(r << (bucket_rexpo << 1)) + (g << bucket_rexpo) + b]++;
 }
 
@@ -412,7 +388,7 @@ borderaverage_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("_Bucket Size:"));
+  label = gtk_label_new_with_mnemonic (_("_Bucket size:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

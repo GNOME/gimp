@@ -965,16 +965,16 @@ bumpmap_dialog (void)
                               G_CALLBACK (dialog_map_type_callback),
                               &bmvals.type, bmvals.type,
 
-                              _("_Linear Map"),     LINEAR,     NULL,
-                              _("_Spherical Map"),  SPHERICAL,  NULL,
-                              _("S_inusoidal Map"), SINUSOIDAL, NULL,
+                              _("_Linear"),     LINEAR,     NULL,
+                              _("_Spherical"),  SPHERICAL,  NULL,
+                              _("S_inusoidal"), SINUSOIDAL, NULL,
 
                               NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   /* Compensate darkening */
-  button = gtk_check_button_new_with_mnemonic (_("Co_mpensate for Darkening"));
+  button = gtk_check_button_new_with_mnemonic (_("Co_mpensate for darkening"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 bmvals.compensate ? TRUE : FALSE);
@@ -985,7 +985,7 @@ bumpmap_dialog (void)
                     NULL);
 
   /* Invert bumpmap */
-  button = gtk_check_button_new_with_mnemonic (_("I_nvert Bumpmap"));
+  button = gtk_check_button_new_with_mnemonic (_("I_nvert bumpmap"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 bmvals.invert ? TRUE : FALSE);
@@ -996,7 +996,7 @@ bumpmap_dialog (void)
                     NULL);
 
   /* Tile bumpmap */
-  button = gtk_check_button_new_with_mnemonic (_("_Tile Bumpmap"));
+  button = gtk_check_button_new_with_mnemonic (_("_Tile bumpmap"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 bmvals.tiled ? TRUE : FALSE);
@@ -1020,7 +1020,7 @@ bumpmap_dialog (void)
 
   row = 0;
   gimp_table_attach_aligned (GTK_TABLE (table), row++, 0,
-                             _("_Bump Map:"), 1.0, 0.5, combo, 2, FALSE);
+                             _("_Bump map:"), 1.0, 0.5, combo, 2, FALSE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
                               _("_Azimuth:"), SCALE_WIDTH, 6,
@@ -1052,7 +1052,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_x = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("_X Offset:"), SCALE_WIDTH, 6,
+                          _("_X offset:"), SCALE_WIDTH, 6,
                           bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
                           TRUE, 0, 0,
                           NULL, NULL);
@@ -1062,7 +1062,7 @@ bumpmap_dialog (void)
 
   bmint.offset_adj_y = adj =
     gimp_scale_entry_new (GTK_TABLE (table), 0, row,
-                          _("_Y Offset:"), SCALE_WIDTH, 6,
+                          _("_Y offset:"), SCALE_WIDTH, 6,
                           bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
                           TRUE, 0, 0,
                           NULL, NULL);

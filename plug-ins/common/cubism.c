@@ -276,7 +276,7 @@ cubism_dialog (void)
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Tile Size:"), SCALE_WIDTH, 5,
+				     _("_Tile size:"), SCALE_WIDTH, 5,
 				     cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
 				     TRUE, 0, 0,
 				     NULL, NULL);
@@ -286,7 +286,7 @@ cubism_dialog (void)
 
   scale_data =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			  _("T_ile Saturation:"), SCALE_WIDTH, 5,
+			  _("T_ile saturation:"), SCALE_WIDTH, 5,
 			  cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
 			  TRUE, 0, 0,
 			  NULL, NULL);
@@ -294,7 +294,7 @@ cubism_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_saturation);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Use Background Color"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use background color"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 

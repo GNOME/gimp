@@ -55,10 +55,7 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -413,13 +410,6 @@ blur (GimpDrawable *drawable)
   gint          repeat_count;
   gboolean      has_alpha;
 
-  /*
-   *  Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   /*
    *  Get the size of the input image. (This will/must be the same
@@ -614,7 +604,7 @@ blur_dialog (void)
   /*  Random Seed  */
   seed_hbox = gimp_random_seed_new (&pivals.blur_seed, &pivals.blur_randomize);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("_Random Seed:"), 0.0, 0.5,
+                                     _("Random _seed:"), 0.0, 0.5,
                                      seed_hbox, 2, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
                                  GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));

@@ -21,10 +21,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -389,7 +385,6 @@ align_layers_get_align_offsets (gint32  drawable_id,
   gimp_drawable_detach (layer);
 }
 
-/* dialog stuff */
 static int
 align_layers_dialog (void)
 {
@@ -423,7 +418,7 @@ align_layers_dialog (void)
                                   _("Collect"),              H_COLLECT,
                                   _("Fill (left to right)"), LEFT2RIGHT,
                                   _("Fill (right to left)"), RIGHT2LEFT,
-                                  _("Snap to Grid"),         SNAP2HGRID,
+                                  _("Snap to grid"),         SNAP2HGRID,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_style);
 
@@ -432,13 +427,13 @@ align_layers_dialog (void)
                     &VALS.h_style);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Horizontal Style:"), 0.0, 0.5,
+                             _("_Horizontal style:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
 
-  combo = gimp_int_combo_box_new (_("Left Edge"),  H_BASE_LEFT,
+  combo = gimp_int_combo_box_new (_("Left edge"),  H_BASE_LEFT,
                                   _("Center"),     H_BASE_CENTER,
-                                  _("Right Edge"), H_BASE_RIGHT,
+                                  _("Right edge"), H_BASE_RIGHT,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.h_base);
 
@@ -447,14 +442,14 @@ align_layers_dialog (void)
                     &VALS.h_base);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Ho_rizontal Base:"), 0.0, 0.5,
+                             _("Ho_rizontal base:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   combo = gimp_int_combo_box_new (_("None"),                 V_NONE,
                                   _("Collect"),              V_COLLECT,
                                   _("Fill (top to bottom)"), TOP2BOTTOM,
                                   _("Fill (bottom to top)"), BOTTOM2TOP,
-                                  _("Snap to Grid"),         SNAP2VGRID,
+                                  _("Snap to grid"),         SNAP2VGRID,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_style);
 
@@ -463,12 +458,12 @@ align_layers_dialog (void)
                     &VALS.v_style);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Vertical Style:"), 0.0, 0.5,
+                             _("_Vertical style:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
-  combo = gimp_int_combo_box_new (_("Top Edge"),    V_BASE_TOP,
+  combo = gimp_int_combo_box_new (_("Top edge"),    V_BASE_TOP,
                                   _("Center"),      V_BASE_CENTER,
-                                  _("Bottom Edge"), V_BASE_BOTTOM,
+                                  _("Bottom edge"), V_BASE_BOTTOM,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), VALS.v_base);
 
@@ -477,11 +472,11 @@ align_layers_dialog (void)
                     &VALS.v_base);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Ver_tical Base:"), 0.0, 0.5,
+                             _("Ver_tical base:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                              _("_Grid Size:"), SCALE_WIDTH, 0,
+                              _("_Grid size:"), SCALE_WIDTH, 0,
                               VALS.grid_size, 0, 200, 1, 10, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
@@ -490,7 +485,7 @@ align_layers_dialog (void)
                     &VALS.grid_size);
 
   toggle = gtk_check_button_new_with_mnemonic
-    (_("_Ignore the Bottom Layer even if Visible"));
+    (_("_Ignore the bottom layer even if visible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 5, 6);
   gtk_widget_show (toggle);
@@ -500,7 +495,7 @@ align_layers_dialog (void)
                     &VALS.ignore_bottom);
 
   toggle = gtk_check_button_new_with_mnemonic
-    (_("_Use the (Invisible) Bottom Layer as the Base"));
+    (_("_Use the (invisible) bottom layer as the base"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 VALS.base_is_bottom_layer);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 6, 7);

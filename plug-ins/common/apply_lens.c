@@ -382,8 +382,8 @@ lens_dialog (GimpDrawable *drawable)
   toggle = gtk_radio_button_new_with_mnemonic_from_widget
     (GTK_RADIO_BUTTON (toggle),
      gimp_drawable_is_indexed (drawable->drawable_id)
-     ? _("_Set Surroundings to Index 0")
-     : _("_Set Surroundings to Background Color"));
+     ? _("_Set surroundings to index 0")
+     : _("_Set surroundings to background color"));
   gtk_box_pack_start(GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
@@ -395,7 +395,7 @@ lens_dialog (GimpDrawable *drawable)
   if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       toggle = gtk_radio_button_new_with_mnemonic_from_widget
-        (GTK_RADIO_BUTTON (toggle), _("_Make Surroundings Transparent"));
+        (GTK_RADIO_BUTTON (toggle), _("_Make surroundings transparent"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     lvals.set_transparent);
@@ -409,7 +409,7 @@ lens_dialog (GimpDrawable *drawable)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new_with_mnemonic (_("_Lens Refraction Index:"));
+  label = gtk_label_new_with_mnemonic (_("_Lens refraction index:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

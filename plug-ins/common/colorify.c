@@ -19,19 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Changes:
-
-   1.1
-   -Corrected small bug when calling color selection dialog
-   -Added LUTs to speed things a little bit up
-
-   1.0
-   -First release */
-
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -205,9 +193,8 @@ colorify_func (const guchar *src,
 {
   gint lum;
 
-  lum = (lum_red_lookup[src[0]]   +
-         lum_green_lookup[src[1]] +
-         lum_blue_lookup[src[2]]);
+  lum = lum_red_lookup[src[0]] + lum_green_lookup[src[1]] +
+    lum_blue_lookup[src[2]];
 
   dest[0] = final_red_lookup[lum];
   dest[1] = final_green_lookup[lum];

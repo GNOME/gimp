@@ -382,10 +382,7 @@ valid_file (const gchar* filename)
 
   stat_res = stat (filename, &buf);
 
-  if ((0 == stat_res) && (buf.st_size > 0))
-    return TRUE;
-  else
-    return FALSE;
+  return 0 == stat_res && buf.st_size > 0;
 }
 
 static const gchar *

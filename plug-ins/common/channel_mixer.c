@@ -344,9 +344,6 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static gdouble
 cm_calculate_norm (CmParamsType  *mix,
                    CmChannelType *ch)
@@ -361,9 +358,6 @@ cm_calculate_norm (CmParamsType  *mix,
   return fabs (1 / sum);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static inline guchar
 cm_mix_pixel (CmChannelType *ch,
               guchar         r,
@@ -375,18 +369,9 @@ cm_mix_pixel (CmChannelType *ch,
 
   c *= norm;
 
-  if (c > 255.0)
-    c = 255.0;
-
-  if (c < 0.0)
-    c = 0.0;
-
-  return (guchar) c;
+  return (guchar) CLAMP0255 (c);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 channel_mixer (GimpDrawable *drawable)
 {
@@ -474,9 +459,6 @@ channel_mixer (GimpDrawable *drawable)
                         sel_x1, sel_y1, sel_width, sel_height);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static gboolean
 cm_dialog (void)
 {
@@ -587,7 +569,7 @@ cm_dialog (void)
   gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("O_utput Channel:"));
+  label = gtk_label_new_with_mnemonic (_("O_utput channel:"));
 
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -701,7 +683,7 @@ cm_dialog (void)
 
   /*  The preserve luminosity toggle  */
   mix.preserve_luminosity_toggle =
-    gtk_check_button_new_with_mnemonic (_("Preserve _Luminosity"));
+    gtk_check_button_new_with_mnemonic (_("Preserve _luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
                                 (mix.preserve_luminosity_toggle),
                                 mix.preserve_luminosity_flag);
@@ -735,8 +717,6 @@ cm_dialog (void)
                     G_CALLBACK (cm_save_file_callback),
                     &mix);
 
-  /*........................................................... */
-
   if (mix.preview_flag)
     cm_preview (&mix);
 
@@ -749,9 +729,6 @@ cm_dialog (void)
   return run;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_red_scale_callback (GtkAdjustment *adjustment,
                        CmParamsType  *mix)
@@ -776,9 +753,6 @@ cm_red_scale_callback (GtkAdjustment *adjustment,
     cm_preview (mix);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_green_scale_callback (GtkAdjustment *adjustment,
                          CmParamsType  *mix)
@@ -803,9 +777,6 @@ cm_green_scale_callback (GtkAdjustment *adjustment,
     cm_preview (mix);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_blue_scale_callback (GtkAdjustment *adjustment,
                         CmParamsType  *mix)
@@ -830,9 +801,6 @@ cm_blue_scale_callback (GtkAdjustment *adjustment,
     cm_preview (mix);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_preview (CmParamsType *mix)
 {
@@ -892,9 +860,6 @@ cm_preview (CmParamsType *mix)
   g_free (dst);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static mwPreview *
 mw_preview_build_virgin (GimpDrawable *drawable)
 {
@@ -921,9 +886,6 @@ mw_preview_build_virgin (GimpDrawable *drawable)
   return mwp;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static mwPreview *
 mw_preview_build (GimpDrawable *drawable)
 {
@@ -965,9 +927,6 @@ mw_preview_build (GimpDrawable *drawable)
   return mwp;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_preview_callback (GtkWidget    *widget,
                      CmParamsType *mix)
@@ -981,9 +940,6 @@ cm_preview_callback (GtkWidget    *widget,
     mix->preview_flag = FALSE;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_monochrome_callback (GtkWidget    *widget,
                         CmParamsType *mix)
@@ -1007,9 +963,6 @@ cm_monochrome_callback (GtkWidget    *widget,
     cm_preview (mix);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_preserve_luminosity_callback (GtkWidget    *widget,
                                  CmParamsType *mix)
@@ -1052,9 +1005,6 @@ cm_settings_filename (CmParamsType *mix)
   return filename;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_load_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
@@ -1094,9 +1044,6 @@ cm_load_file_callback (GtkWidget    *widget,
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_load_file_response_callback (GtkWidget    *dialog,
                                 gint          response_id,
@@ -1198,9 +1145,6 @@ cm_load_file_response_callback (GtkWidget    *dialog,
   gtk_widget_hide (dialog);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_save_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
@@ -1240,9 +1184,6 @@ cm_save_file_callback (GtkWidget    *widget,
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_save_file_response_callback (GtkWidget    *dialog,
                                 gint          response_id,
@@ -1289,9 +1230,6 @@ cm_save_file_response_callback (GtkWidget    *dialog,
   gtk_widget_hide (dialog);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static gboolean
 cm_force_overwrite (const gchar *filename,
                     GtkWidget   *parent)
@@ -1335,9 +1273,6 @@ cm_force_overwrite (const gchar *filename,
   return overwrite;
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_save_file (CmParamsType *mix,
               FILE         *fp)
@@ -1406,9 +1341,6 @@ cm_save_file (CmParamsType *mix,
   fclose (fp);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_combo_callback (GtkWidget    *widget,
                    CmParamsType *mix)
@@ -1419,9 +1351,6 @@ cm_combo_callback (GtkWidget    *widget,
   cm_set_adjusters (mix);
 }
 
-/*----------------------------------------------------------------------
- *
- *--------------------------------------------------------------------*/
 static void
 cm_set_adjusters (CmParamsType *mix)
 {

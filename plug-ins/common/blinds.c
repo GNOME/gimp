@@ -30,28 +30,8 @@
  *
  */
 
-/* Change log:-
- *
- * Version 0.5 10 June 1997.
- * Changes required to work with 0.99.10.
- *
- * Version 0.4 20 May 1997.
- * Fixed problem with using this plugin in GIMP_RUN_NONINTERACTIVE mode
- *
- * Version 0.3 8 May 1997.
- * Make preview work in Quartics words "The Right Way".
- *
- * Allow the background to be transparent.
- *
- * Version 0.2 1 May 1997 (not released).
- * Added patches supplied by Tim Mooney mooney@dogbert.cc.ndsu.NoDak.edu
- * to allow the plug-in to build with Digitals compiler.
- */
-
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -351,7 +331,7 @@ blinds_dialog (void)
                     &bvals.angledsp);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                    _("_Num Segments:"), SCALE_WIDTH, 0,
+                                    _("_Number of segments:"), SCALE_WIDTH, 0,
                                     bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
