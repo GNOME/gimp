@@ -7,6 +7,7 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 dubbed GIMP 1.4.
 
+
 Overview of Changes in GIMP 1.3.5
 =================================
 - Improved tool options and made them dockable [Mitch]
@@ -17,8 +18,11 @@ Overview of Changes in GIMP 1.3.5
 - Plug-in code cleanup (colorify) [Maurits Rijk]
 - New menu icons [Jimmac, Mitch]
 - New widgets to choose from enum values [Sven]
-- Enum cleanup [Yosh, Sven]
+- Enum cleanups [Yosh, Sven]
 - Resizeable docks [Mitch]
+- Parse unitrc and document history using GScanner [Mitch] 
+- Fixes for build on Win32 [Hans]
+- Treeviewified user installation dialog [Yosh]
 
 Other Contributors:
   Rebecca Walter, Tuomas Kuosmanen, Marcel Telka

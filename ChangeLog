@@ -114,7 +114,7 @@
 
 2002-03-26  Sven Neumann  <sven@gimp.org>
 
-	* tools/gimp-mkenums:`merged glib-mkenums changes (#74431).
+	* tools/gimp-mkenums: merged glib-mkenums changes (#74431).
 
 2002-03-25  Sven Neumann  <sven@gimp.org>
 
