@@ -1,3 +1,9 @@
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_help_domains): argh, need to
+	assign strings to (*array_retloc[i]), not just *array_retloc[i].
+	Fixes passing of the list of help domains to the help browser.
+
 2003-11-20  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/gui/preferences-dialog.c

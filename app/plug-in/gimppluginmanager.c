@@ -697,8 +697,8 @@ plug_ins_help_domains (Gimp    *gimp,
     {
       PlugInHelpDomainDef *def = list->data;
 
-      *help_domains[i] = g_strdup (def->domain_name);
-      *help_uris[i]    = g_strdup (def->domain_uri);
+      (*help_domains)[i] = g_strdup (def->domain_name);
+      (*help_uris)[i]    = g_strdup (def->domain_uri);
     }
 
   return n_domains;
