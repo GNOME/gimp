@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2003-01-06 05:03+0100\n"
-"PO-Revision-Date: 2003-01-08 19:17+EDT\n"
+"PO-Revision-Date: 2003-01-09 21:53+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
 "MIME-Version: 1.0\n"
@@ -3373,7 +3373,7 @@ msgstr ""
 
 #: app/gui/menus.c:1349 app/gui/menus.c:1399
 msgid "/Delete Path"
-msgstr "/የመተላለፊያ ሰረዝ"
+msgstr "/የመተላለፊያ አጥፉ"
 
 #: app/gui/menus.c:1357
 msgid "/Path Tool"
@@ -3685,27 +3685,27 @@ msgstr "/አዲስ ቀለም"
 
 #: app/gui/menus.c:1877 app/gui/menus.c:1973
 msgid "/Edit Color..."
-msgstr ""
+msgstr "/ቀለምን ያስተካክሉ..."
 
 #: app/gui/menus.c:1882
 msgid "/Delete Color"
-msgstr "/ቀለምን ሰረዝ"
+msgstr "/ቀለምን አጥፉ"
 
 #: app/gui/menus.c:1894
 msgid "/New Palette"
-msgstr ""
+msgstr "/አዲስ መደርደሪያ"
 
 #: app/gui/menus.c:1899
 msgid "/Duplicate Palette"
-msgstr ""
+msgstr "/መደርደሪያን አባዛ..."
 
 #: app/gui/menus.c:1904
 msgid "/Edit Palette..."
-msgstr ""
+msgstr "/መደርደሪያን ያስተካክሉ..."
 
 #: app/gui/menus.c:1909
 msgid "/Delete Palette..."
-msgstr ""
+msgstr "/መደርደሪያን አጥፉ..."
 
 #: app/gui/menus.c:1917
 msgid "/Refresh Palettes"
@@ -3749,7 +3749,7 @@ msgstr ""
 
 #: app/gui/menus.c:1993
 msgid "/Delete Image"
-msgstr ""
+msgstr "/ምስልን አጥፉ"
 
 #: app/gui/menus.c:2004
 msgid "/Open Image"
@@ -4017,7 +4017,7 @@ msgstr ""
 
 #: app/gui/paths-dialog.c:187
 msgid "Delete Path"
-msgstr "መተላለፊያ ሰረዝ"
+msgstr "መተላለፊያን አጥፉ"
 
 #: app/gui/paths-dialog.c:196
 msgid "New Point"
@@ -4029,11 +4029,11 @@ msgstr "ነጥብ ጨምር"
 
 #: app/gui/paths-dialog.c:204
 msgid "Delete Point"
-msgstr "ነጥብ ሰረዝ"
+msgstr "ነጥብን አጥፉ"
 
 #: app/gui/paths-dialog.c:208
 msgid "Edit Point"
-msgstr ""
+msgstr "ነጥብን ያስተካክሉ"
 
 #: app/gui/paths-dialog.c:439
 #, c-format
