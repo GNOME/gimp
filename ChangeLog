@@ -1,3 +1,9 @@
+2002-08-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c: avoid integer overflow in progress
+	bar calculation (bug #89825).
+
 2002-07-26  Sven Neumann  <sven@gimp.org>
 
 	* app/commands.c (select_shrink_cmd_callback): use _(), not N_() so
