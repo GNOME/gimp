@@ -1326,7 +1326,7 @@ gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
 {
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (current_device == gdk_core_pointer)
+  if (current_device == gdk_device_get_core_pointer ())
     {
       *width  = mask->width;
       *height = mask->height;
@@ -1646,7 +1646,7 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
 {
   MaskBuf *mask;
 
-  if (current_device == gdk_core_pointer)
+  if (current_device == gdk_device_get_core_pointer ())
     mask = paint_tool->brush->mask;
   else
     mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);

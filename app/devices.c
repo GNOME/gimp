@@ -244,7 +244,7 @@ devices_init (void)
   DeviceInfo *device_info;
   GList      *list;
 
-  current_device = gdk_core_pointer;
+  current_device = gdk_device_get_core_pointer ();
 
   /*  create device info structures for present devices */
   for (list = gdk_devices_list (); list; list = g_list_next (list))

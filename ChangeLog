@@ -1,3 +1,10 @@
+2001-09-08  Daniel Egger  <egger@interearth.com>
+
+	* app/devices.c
+	* app/tools/gimppainttool.c: Use new gdk_device_get_core_pointer ()
+	instead of the former gdk_core_pointer variable. You will need a
+	recent CVS gtk to compile it!
+
 2001-09-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpbrushfactoryview.c
