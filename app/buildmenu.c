@@ -21,13 +21,13 @@
 
 GtkWidget *
 build_menu (MenuItem            *items,
-	    GtkAcceleratorTable *table)
+	    GtkAccelGroup       *accel_group)
 {
   GtkWidget *menu;
   GtkWidget *menu_item;
 
   menu = gtk_menu_new ();
-  gtk_menu_set_accelerator_table (GTK_MENU (menu), table);
+  gtk_menu_set_accel_group (GTK_MENU (menu), accel_group);
 
   while (items->label)
     {
@@ -41,12 +41,13 @@ build_menu (MenuItem            *items,
 	  menu_item = gtk_menu_item_new_with_label (items->label);
 	  gtk_container_add (GTK_CONTAINER (menu), menu_item);
 
-	  if (items->accelerator_key && table)
-	    gtk_widget_install_accelerator (menu_item,
-					    table,
-					    "activate",
-					    items->accelerator_key,
-					    items->accelerator_mods);
+	  if (items->accelerator_key && accel_group)
+	    gtk_widget_add_accelerator (menu_item,
+					"activate",
+					accel_group,
+					items->accelerator_key,
+					items->accelerator_mods,
+					GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 	}
 
       if (items->callback)
@@ -55,7 +56,7 @@ build_menu (MenuItem            *items,
 			    items->user_data);
 
       if (items->subitems)
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), build_menu (items->subitems, table));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), build_menu (items->subitems, accel_group));
 
       gtk_widget_show (menu_item);
       items->widget = menu_item;

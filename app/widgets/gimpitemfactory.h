@@ -23,21 +23,19 @@
 
 
 void menus_get_toolbox_menubar (GtkWidget           **menubar,
-				GtkAcceleratorTable **table);
+				GtkAccelGroup	    **accel_group);
 void menus_get_image_menu      (GtkWidget           **menu,
-				GtkAcceleratorTable **table);
+				GtkAccelGroup	    **accel_group);
 void menus_get_load_menu       (GtkWidget           **menu,
-				GtkAcceleratorTable **table);
+				GtkAccelGroup	    **accel_group);
 void menus_get_save_menu       (GtkWidget           **menu,
-				GtkAcceleratorTable **table);
+				GtkAccelGroup	    **accel_group);
 void menus_create              (GtkMenuEntry         *entries,
 				int                   nmenu_entries);
 void menus_set_sensitive       (char                 *path,
 				int                   sensitive);
 void menus_set_state           (char                 *path,
 				int                   state);
-void menus_add_path            (char                 *path,
-				char                 *accelerator);
 void menus_destroy             (char                 *path);
 void menus_quit                (void);
 

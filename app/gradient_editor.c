@@ -320,7 +320,7 @@ typedef struct {
 	GtkWidget           *control_coloring_popup;          /* Coloring type menu */
 	GtkWidget           *control_sel_ops_popup;           /* Selection ops menu */
 
-	GtkAcceleratorTable *accelerator_table;
+        GtkAccelGroup *accel_group;
 
 	/* Blending and coloring menus */
 
@@ -1015,7 +1015,7 @@ grad_create_gradient_editor(void)
 	g_editor->control_coloring_popup          = NULL;
 	g_editor->control_sel_ops_popup           = NULL;
 
-	g_editor->accelerator_table = NULL;
+	g_editor->accel_group = NULL;
 
 	for (i = 0;
 	     i < (sizeof(g_editor->control_blending_items) / sizeof(g_editor->control_blending_items[0]));
@@ -2871,16 +2871,15 @@ cpopup_create_main_menu(void)
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
 	GtkWidget           *label;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup       *accel_group;
 
 	menu      = gtk_menu_new();
-	acc_table = gtk_accelerator_table_new();
+	accel_group = gtk_accel_group_new();
 
-	g_editor->accelerator_table = acc_table;
+	g_editor->accel_group = accel_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
-	gtk_window_add_accelerator_table(GTK_WINDOW(g_editor->shell), acc_table);
-	gtk_window_add_accelerator_table(GTK_WINDOW(g_editor->shell), acc_table);
+	gtk_menu_set_accel_group (GTK_MENU(menu), accel_group);
+	gtk_window_add_accel_group (GTK_WINDOW (g_editor->shell), accel_group);
 
 	/* Left endpoint */
 
@@ -2891,7 +2890,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'L', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'L', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Load from");
 	g_editor->control_left_load_popup = cpopup_create_load_menu(g_editor->left_load_color_boxes,
@@ -2929,7 +2932,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'R', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'R', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Load from");
 	g_editor->control_right_load_popup = cpopup_create_load_menu(g_editor->right_load_color_boxes,
@@ -2988,7 +2995,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'S', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'S', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Split uniformly */
 
@@ -2998,7 +3009,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'U', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'U', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Delete */
 
@@ -3009,7 +3024,11 @@ cpopup_create_main_menu(void)
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
 	g_editor->control_delete_menu_item = menuitem;
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'D', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'D', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Recenter */
 
@@ -3019,7 +3038,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'C', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'C', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Redistribute */
 
@@ -3029,7 +3052,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'C', GDK_CONTROL_MASK);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'C', GDK_CONTROL_MASK,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Selection ops */
 
@@ -3376,17 +3403,18 @@ static GtkWidget *
 cpopup_create_menu_item_with_label(char *str, GtkWidget **label)
 {
 	GtkWidget *menuitem;
-	GtkWidget *wlabel;
+	GtkWidget *accel_label;
 
 	menuitem = gtk_menu_item_new();
 
-	wlabel = gtk_label_new(str);
-	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
-	gtk_container_add(GTK_CONTAINER(menuitem), wlabel);
-	gtk_widget_show(wlabel);
+	accel_label = gtk_accel_label_new(str);
+	gtk_misc_set_alignment(GTK_MISC(accel_label), 0.0, 0.5);
+	gtk_container_add(GTK_CONTAINER(menuitem), accel_label);
+	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (accel_label), menuitem);
+	gtk_widget_show(accel_label);
 
 	if (label)
-		*label = wlabel;
+		*label = accel_label;
 
 	return menuitem;
 } /* cpopup_create_menu_item_with_label */
@@ -3476,13 +3504,13 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 {
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup       *accel_group;
 	int                  i;
 
 	menu      = gtk_menu_new();
-	acc_table = g_editor->accelerator_table;
+	accel_group = g_editor->accel_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
+	gtk_menu_set_accel_group (GTK_MENU (menu), accel_group);
 
 	/* Create items */
 
@@ -3502,23 +3530,32 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 		gtk_widget_show(menuitem);
 
 		switch (i) {
-			case 0:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_0, accel_mods_0);
-				break;
-
-			case 1:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_1, accel_mods_1);
-				break;
-
-			case 2:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_2, accel_mods_2);
-				break;
-
-			default:
-				break;
+		case 0:
+		  gtk_widget_add_accelerator(menuitem,
+					     "activate",
+					     accel_group,
+					     accel_key_0, accel_mods_0,
+					     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
+		  break;
+		  
+		case 1:
+		  gtk_widget_add_accelerator(menuitem,
+					     "activate",
+					     accel_group,
+					     accel_key_1, accel_mods_1,
+					     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
+		  break;
+		  
+		case 2:
+		  gtk_widget_add_accelerator(menuitem,
+					     "activate",
+					     accel_group,
+					     accel_key_2, accel_mods_2,
+					     GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
+		  break;
+		  
+		default:
+		  break;
 		} /* switch */
 	} /* for */
 
@@ -3886,12 +3923,12 @@ cpopup_create_sel_ops_menu(void)
 {
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup       *accel_group;
 
 	menu      = gtk_menu_new();
-	acc_table = g_editor->accelerator_table;
+	accel_group = g_editor->accel_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
+	gtk_menu_set_accel_group (GTK_MENU (menu), accel_group);
 
 	/* Flip */
 
@@ -3901,7 +3938,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'F', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'F', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Replicate */
 
@@ -3911,7 +3952,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'M', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'M', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Blend colors / opacity */
 
@@ -3926,7 +3971,11 @@ cpopup_create_sel_ops_menu(void)
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
 	g_editor->control_blend_colors_menu_item = menuitem;
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'B', 0);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'B', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Blend endpoints' opacity");
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -3934,7 +3983,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'B', GDK_CONTROL_MASK);
+        gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   accel_group,
+				   'B', GDK_CONTROL_MASK,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 	g_editor->control_blend_opacity_menu_item = menuitem;
 
 	return menu;

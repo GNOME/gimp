@@ -373,7 +373,6 @@ file_new_resolution_callback (GtkWidget *widget,
 
   gchar *newvalue;
   NewImageValues *vals;
-  float new_resolution;
   float temp_units;
   float temp_pixels;
   char buffer[12];
@@ -406,8 +405,9 @@ file_new_resolution_callback (GtkWidget *widget,
 }
   
 void
-file_new_cmd_callback (GtkWidget *widget,
-		       gpointer   client_data)
+file_new_cmd_callback (GtkWidget           *widget,
+		       gpointer             callback_data,
+		       guint                callback_action)
 {
   GDisplay *gdisp;
   NewImageValues *vals;
@@ -418,7 +418,6 @@ file_new_cmd_callback (GtkWidget *widget,
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *radio_box;
-  GtkWidget *units_box;
   GtkWidget *menu;
   GtkWidget *menuitem;
   GtkWidget *optionmenu;
@@ -439,7 +438,7 @@ file_new_cmd_callback (GtkWidget *widget,
   /*  Before we try to determine the responsible gdisplay,
    *  make sure this wasn't called from the toolbox
    */
-  if ((long) client_data)
+  if (callback_action)
     gdisp = gdisplay_active ();
   else
     gdisp = NULL;
@@ -2621,13 +2620,14 @@ tools_swap_colors_cmd_callback (GtkWidget *widget,
 }
 
 void
-tools_select_cmd_callback (GtkWidget *widget,
-			   gpointer   client_data)
+tools_select_cmd_callback (GtkWidget           *widget,
+			   gpointer             callback_data,
+			   guint                callback_action)
 {
   GDisplay * gdisp;
 
   /*  Activate the approriate widget  */
-  gtk_widget_activate (tool_widgets[tool_info[(long) client_data].toolbar_position]);
+  gtk_widget_activate (tool_widgets[tool_info[callback_action].toolbar_position]);
 
   gdisp = gdisplay_active ();
 
@@ -2635,10 +2635,11 @@ tools_select_cmd_callback (GtkWidget *widget,
 }
 
 void
-filters_repeat_cmd_callback (GtkWidget *widget,
-			     gpointer   client_data)
+filters_repeat_cmd_callback (GtkWidget           *widget,
+			     gpointer             callback_data,
+			     guint                callback_action)
 {
-  plug_in_repeat ((long) client_data);
+  plug_in_repeat (callback_action);
 }
 
 void

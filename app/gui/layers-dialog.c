@@ -87,7 +87,7 @@ struct _LayersDialog {
   GtkWidget *mode_box;
   GtkWidget *opacity_box;
   GtkWidget *ops_menu;
-  GtkAcceleratorTable *accel_table;
+  GtkAccelGroup *accel_group;
   GtkAdjustment *opacity_data;
   GdkGC *red_gc;     /*  for non-applied layer masks  */
   GdkGC *green_gc;   /*  for visible layer masks      */
@@ -629,7 +629,7 @@ layers_dialog_create ()
       layersD->active_channel = NULL;
       layersD->floating_sel = NULL;
       layersD->layer_widgets = NULL;
-      layersD->accel_table = gtk_accelerator_table_new ();
+      layersD->accel_group = gtk_accel_group_new ();
       layersD->green_gc = NULL;
       layersD->red_gc = NULL;
 
@@ -644,7 +644,7 @@ layers_dialog_create ()
       gtk_container_border_width (GTK_CONTAINER (vbox), 2);
 
       /*  The layers commands pulldown menu  */
-      layersD->ops_menu = build_menu (layers_ops, layersD->accel_table);
+      layersD->ops_menu = build_menu (layers_ops, layersD->accel_group);
 
       /*  The Mode option menu, and the preserve transparency  */
       layersD->mode_box = util_box = gtk_hbox_new (FALSE, 1);
@@ -1527,9 +1527,9 @@ layers_dialog_map_callback (GtkWidget *w,
 {
   if (!layersD)
     return;
-
-  gtk_window_add_accelerator_table (GTK_WINDOW (lc_shell),
-				    layersD->accel_table);
+  
+  gtk_window_add_accel_group (GTK_WINDOW (lc_shell),
+			      layersD->accel_group);
 }
 
 static void
@@ -1538,9 +1538,9 @@ layers_dialog_unmap_callback (GtkWidget *w,
 {
   if (!layersD)
     return;
-
-  gtk_window_remove_accelerator_table (GTK_WINDOW (lc_shell),
-				       layersD->accel_table);
+  
+  gtk_window_remove_accel_group (GTK_WINDOW (lc_shell),
+				 layersD->accel_group);
 }
 
 static void

@@ -92,7 +92,7 @@ struct _ChannelsDialog {
   GtkWidget *channel_list;
   GtkWidget *preview;
   GtkWidget *ops_menu;
-  GtkAcceleratorTable *accel_table;
+  GtkAccelGroup *accel_group;
 
   int num_components;
   int base_type;
@@ -204,7 +204,7 @@ channels_dialog_create ()
       channelsD->active_channel = NULL;
       channelsD->floating_sel = NULL;
       channelsD->channel_widgets = NULL;
-      channelsD->accel_table = gtk_accelerator_table_new ();
+      channelsD->accel_group = gtk_accel_group_new ();
 
       if (preview_size)
 	{
@@ -217,7 +217,7 @@ channels_dialog_create ()
       gtk_container_border_width (GTK_CONTAINER (vbox), 2);
 
       /*  The layers commands pulldown menu  */
-      channelsD->ops_menu = build_menu (channels_ops, channelsD->accel_table);
+      channelsD->ops_menu = build_menu (channels_ops, channelsD->accel_group);
 
       /*  The channels listbox  */
       listbox = gtk_scrolled_window_new (NULL, NULL);
@@ -830,8 +830,8 @@ channels_dialog_map_callback (GtkWidget *w,
   if (!channelsD)
     return;
 
-  gtk_window_add_accelerator_table (GTK_WINDOW (lc_shell),
-				    channelsD->accel_table);
+  gtk_window_add_accel_group (GTK_WINDOW (lc_shell),
+			      channelsD->accel_group);
 }
 
 static void
@@ -841,8 +841,8 @@ channels_dialog_unmap_callback (GtkWidget *w,
   if (!channelsD)
     return;
 
-  gtk_window_remove_accelerator_table (GTK_WINDOW (lc_shell),
-				       channelsD->accel_table);
+  gtk_window_remove_accel_group (GTK_WINDOW (lc_shell),
+				 channelsD->accel_group);
 }
 
 static void

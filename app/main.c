@@ -90,9 +90,10 @@ main (int argc, char **argv)
   gtk_set_locale ();
   setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
   gtk_init (&argc, &argv);
-  gtk_accelerator_table_set_mod_mask (NULL, GDK_SHIFT_MASK |
-                                            GDK_CONTROL_MASK |
-                                            GDK_MOD1_MASK);
+
+#ifdef HAVE_LIBGLE
+  gle_init (&argc, &argv);
+#endif /* !HAVE_LIBGLE */
 
   display_name = gdk_get_display ();
   display_env = g_new (gchar, strlen (display_name) + 9);

@@ -565,7 +565,7 @@ create_toolbox ()
   GtkWidget *vbox;
   GtkWidget *menubar;
   GList *device_list;
-  GtkAcceleratorTable *table;
+  GtkAccelGroup *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
@@ -626,7 +626,7 @@ create_toolbox ()
   gtk_widget_show (menubar);
 
   /*  Install the accelerator table in the main window  */
-  gtk_window_add_accelerator_table (GTK_WINDOW (window), table);
+  gtk_window_add_accel_group (GTK_WINDOW (window), table);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
@@ -673,7 +673,7 @@ create_display_shell (int   gdisp_id,
 		      int   type)
 {
   static GtkWidget *image_popup_menu = NULL;
-  static GtkAcceleratorTable *image_accelerator_table = NULL;
+  static GtkAccelGroup *image_accel_group = NULL;
   GDisplay *gdisp;
   GtkWidget *table;
   int n_width, n_height;
@@ -798,13 +798,13 @@ create_display_shell (int   gdisp_id,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   if (! image_popup_menu)
-    menus_get_image_menu (&image_popup_menu, &image_accelerator_table);
+    menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 
   /*  the accelerator table for images  */
-  gtk_window_add_accelerator_table (GTK_WINDOW (gdisp->shell), image_accelerator_table);
+  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
 
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);

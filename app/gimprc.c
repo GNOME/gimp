@@ -1339,7 +1339,7 @@ parse_menu_path (gpointer val1p,
     goto error;
   token = get_next_token ();
 
-  menus_add_path (menu_path, accelerator);
+  // FIXME   menus_add_path (menu_path, accelerator);
 
   return OK;
 

@@ -31,9 +31,9 @@ typedef void (*MenuItemCallback) (GtkWidget *widget,
 
 struct _MenuItem
 {
-  char *label;
-  char  accelerator_key;
-  int   accelerator_mods;
+  gchar *label;
+  guint  accelerator_key;
+  guint  accelerator_mods;
   MenuItemCallback callback;
   gpointer user_data;
   MenuItem *subitems;
@@ -42,6 +42,6 @@ struct _MenuItem
 
 
 /* Function declarations */
-GtkWidget *  build_menu (MenuItem *, GtkAcceleratorTable *);
+GtkWidget *  build_menu (MenuItem *, GtkAccelGroup *);
 
 #endif /* BUILDMENU_H */
