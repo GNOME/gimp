@@ -439,7 +439,7 @@ strip_off_cnumber(gchar *str)
   return copy;
 }
 
-/* Return NULL is already unique else a unique string */
+/* Return NULL if already unique else a unique string */
 
 static gchar *
 unique_name(GimpImage *gimage,gchar *cstr)
@@ -1836,7 +1836,12 @@ paths_dialog_flush()
 
   gimage = paths_dialog->gimage;
 
-  if ((gimage->width != paths_dialog->gimage_width) ||
+  /* Check current_path_list since we might not have a valid preview.
+   * which means it should be removed.. Or if we have one
+   * created it!
+   */
+  if ((paths_dialog->current_path_list == NULL) ||
+      (gimage->width != paths_dialog->gimage_width) ||
       (gimage->height != paths_dialog->gimage_height))
     {
       paths_dialog->gimage = NULL;
@@ -2031,6 +2036,7 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
   GSList * pts_list = NULL;
   PATHIMAGELISTP plp;
   gint row = paths_dialog->selected_row_num;
+  gint this_path_count = 0;
 
   fs = GTK_FILE_SELECTION (file_dlg);
   filename = gtk_file_selection_get_filename (fs);
@@ -2092,6 +2098,27 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 		  gtk_widget_hide (file_dlg);  
 		  return;
 		}
+	      this_path_count++;
+	      switch(type)
+		{
+		case BEZIER_ANCHOR:
+		case BEZIER_CONTROL:
+		  break;
+		case BEZIER_MOVE:
+		  if(this_path_count < 6)
+		    {
+		      g_warning(_("Invalid single point in path\n"));
+		      gtk_widget_hide (file_dlg);  
+		      return;
+		    }
+		  this_path_count = 0;
+		  break;
+		default:
+		  g_warning(_("Invalid point type passed\n"));
+		  gtk_widget_hide (file_dlg);  
+		  return;
+		}
+
 	      bpt = pathpoint_new(type, (gdouble)x, (gdouble)y);
 	      pts_list = g_slist_append(pts_list,bpt);
 	    }
@@ -2565,10 +2592,12 @@ paths_set_path_points(GimpImage * gimage,
   GSList    *pts_list = NULL;
   PATHP      bzpath;
   gint       pcount   = 0;
+  gint       this_path_count = 0;
+  gchar     *suniq;
 
   if(num_pnts < 6 ||
-     (pclosed && ((num_pnts/2) % 3)) ||
-     (!pclosed && ((num_pnts/2) % 3) != 2))
+     (pclosed && ((num_pnts/3) % 3)) ||
+     (!pclosed && ((num_pnts/3) % 3) != 2))
     {
       g_warning(_("wrong number of points\n"));
       return FALSE;
@@ -2577,6 +2606,11 @@ paths_set_path_points(GimpImage * gimage,
   if(ptype != BEZIER)
     ptype = BEZIER;
 
+  suniq = unique_name(gimage,pname);
+
+  if(suniq)
+    pname = suniq;
+
   while(num_pnts)
     {
       PATHPOINTP bpt;
@@ -2584,13 +2618,34 @@ paths_set_path_points(GimpImage * gimage,
       gdouble x; 
       gdouble y;
       
-      if((pcount/2)%3)
-	type = BEZIER_CONTROL;
-      else
-	type = BEZIER_ANCHOR;
-      
+/*       if((pcount/2)%3) */
+/* 	type = BEZIER_CONTROL; */
+/*       else */
+/* 	type = BEZIER_ANCHOR; */
+
       x = pnts[pcount++];
       y = pnts[pcount++];
+      type = (gint)pnts[pcount++];
+      this_path_count++;
+
+      switch(type)
+	{
+	case BEZIER_ANCHOR:
+	case BEZIER_CONTROL:
+	  break;
+	case BEZIER_MOVE:
+	  if(this_path_count < 6)
+	    {
+	      g_warning(_("Invalid single point in path\n"));
+	      return FALSE;
+	    }
+	  this_path_count = 0;
+	  break;
+	default:
+	  g_warning(_("Invalid point type passed\n"));
+	  return FALSE;
+	}
+
       
 /*       printf("New point type = %s, x = %d y= %d\n", */
 /* 	     (type==BEZIER_CONTROL)?"CNTL":"ANCH", */
@@ -2600,14 +2655,14 @@ paths_set_path_points(GimpImage * gimage,
       bpt = pathpoint_new(type, (gdouble)x, (gdouble)y);
       pts_list = g_slist_append(pts_list,bpt);
 
-      num_pnts -= 2;
+      num_pnts -= 3;
     }
   
 
   if(!plist)
     {
       GSList *bzp_list = NULL;
-      /* No paths at all.... create one & rename */
+      /* No paths at all.... create one */
       bzpath = path_new(gimage,
 			ptype,
 			pts_list,
@@ -2616,63 +2671,35 @@ paths_set_path_points(GimpImage * gimage,
 			0, /* Can't be locked */
 			0, /* No tattoo assigned */
 			pname);
-      bzp_list = g_slist_append(bzp_list,bzpath);
-      plist = pathsList_new(gimage,0,bzp_list);
-      gimp_image_set_paths(gimage,plist);
+      if(!paths_dialog)
+	{
+	  bzp_list = g_slist_append(bzp_list,bzpath);
+	  plist = pathsList_new(gimage,0,bzp_list);
+	  gimp_image_set_paths(gimage,plist);
+	}
     }
   else
     {
-      GSList        *tlist;
-      PATHP          pp = NULL;
-      gint           row = 0;
-
-      /* Check if name already exists.. if so delete all points assoc with it
-       * if not create a new one with the passed name.
-       */
-      tlist = plist->bz_paths;
+      bzpath = path_new(gimage,
+			ptype,
+			pts_list,
+			pclosed,
+			(pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
+			0, /* Can't be locked */
+			0, /* No tattoo assigned */
+			pname);
       
-      while(tlist)
+      if(!paths_dialog)
 	{
-	  gchar *test_str = ((PATHP)(tlist->data))->name->str;
-	  if(strcmp(pname,test_str) == 0)
-	    {
-	      pp = (PATHP)(tlist->data);
-	      break;
-	    }
-	  tlist = g_slist_next(tlist);
-	  row++;
+	  path_add_to_current(plist,bzpath,gimage,0);
 	}
+    }
 
-      if(pp)
-	{
-	  pathpoints_free(pp->path_details);
-	  pp->path_details = pts_list;
-	  pp->pathtype = ptype;
-	  pp->closed = pclosed;
-	  pp->locked = 0;
-	  if(paths_dialog)
-	    gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
-				 row,
-				 1);
-	  return TRUE;
-	}
-      else
-	{
-	  bzpath = path_new(gimage,
-			    ptype,
-			    pts_list,
-			    pclosed,
-			    (pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
-			    0, /* Can't be locked */
-			    0, /* No tattoo assigned */
-			    pname);
-
-	  path_add_to_current(plist,bzpath,gimage,-1);
-	}
-    }  
-
-  if(paths_dialog) 
+  if(paths_dialog)
     { 
+      gint           tmprow;
+      BezierSelect  *bezier_sel;
+
       paths_dialog->current_path_list =  
 	path_add_to_current(paths_dialog->current_path_list, 
 			    bzpath, 
@@ -2680,6 +2707,15 @@ paths_set_path_points(GimpImage * gimage,
 			    0); 
       
       paths_add_path(bzpath,0); 
+
+      /* Update the preview */
+      bezier_sel = path_to_beziersel(bzpath);
+      tmprow = paths_dialog->current_path_list->last_selected_row;
+      paths_dialog->current_path_list->last_selected_row = 0;
+      paths_update_preview(bezier_sel);
+      beziersel_free(bezier_sel);
+      paths_dialog->current_path_list->last_selected_row = tmprow;
+      paths_dialog->selected_row_num = tmprow;
 
       gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
 			   paths_dialog->current_path_list->last_selected_row,
@@ -2696,6 +2732,12 @@ paths_set_path_points(GimpImage * gimage,
       point_ops_button_set_sensitive(POINT_NEW_BUTTON,TRUE);
       point_ops_button_set_sensitive(POINT_EDIT_BUTTON,TRUE);
     }
+  else
+    {
+      /* Mark this path as selected */
+      plist->last_selected_row = 0;
+    }
+
   return TRUE;
 }
 
@@ -2762,3 +2804,65 @@ paths_get_path_by_tattoo(GimpImage *gimage,Tattoo tattoo)
     }
   return (NULL);
 }
+
+
+gboolean
+paths_delete_path(GimpImage *gimage,
+		  gchar     *pname)
+{
+  gint           row = 0;
+  gboolean       found = FALSE;
+  GSList        *tlist;
+  PATHIMAGELISTP plp;
+
+  if(!pname || !gimage)
+    {
+      g_warning(_("paths_delete_path: invalid path"));
+      return 0;
+    }
+
+  /* Removed the named path ... */
+  /* Get bzpath structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+
+  if(!plp)
+    return FALSE;
+
+  tlist = plp->bz_paths;
+  
+  while(tlist)
+    {
+      gchar *test_str = ((PATHP)(tlist->data))->name->str;
+      if(strcmp(pname,test_str) == 0)
+	{
+	  found = TRUE;
+	  break;
+	}
+      row++;
+      tlist = g_slist_next(tlist);
+    }
+
+  if(!found)
+    return FALSE;
+
+  plp->bz_paths = g_slist_remove(plp->bz_paths,tlist->data);
+  /* If now empty free everything up */
+  if(!plp->bz_paths || g_slist_length(plp->bz_paths) == 0)
+    {
+      gtk_signal_disconnect(GTK_OBJECT (plp->gimage),
+			    plp->sig_id);
+      gimp_image_set_paths(plp->gimage,NULL);
+      pathimagelist_free(plp);
+    }
+
+  /* Redisplay if required */
+  if(paths_dialog && paths_dialog->gimage == gimage)
+    {
+      paths_dialog->current_path_list = NULL;
+      paths_dialog_flush();
+    }
+
+  return TRUE;
+}
+
+

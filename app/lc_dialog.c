@@ -416,6 +416,13 @@ lc_dialog_fill_preview_with_thumb(GtkWidget *w,
   gint       bpp;
   gint       dwidth;
   gint       dheight;
+  gint       has_alpha;
+  gint       x,y;
+  guchar    *src;
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  guchar    *p0, *p1,*even,*odd;
+      
   
   bpp = 0; /* Only returned */
   
@@ -435,99 +442,67 @@ lc_dialog_fill_preview_with_thumb(GtkWidget *w,
   buf = gimp_image_construct_composite_preview(gimage,
  					       width,
  					       height);
-  
   drawable_data = temp_buf_data(buf);
   bpp = buf->bytes;
-  
+
   gtk_preview_size(GTK_PREVIEW(w),width,height);
+
+  /*  Draw the thumbnail with checks  */
+  src = drawable_data;
   
-  /* First greyscale and non-alpha */
-  if(bpp < 4)
+  even = g_malloc(width*3);
+  odd = g_malloc(width*3);
+  
+  for (y = 0; y < height; y++)
     {
-      guchar *buf;
-      guchar *src;
-      gint x,y;
+      p0 = even;
+      p1 = odd;
       
-      /*  Draw the image  */
-      buf = g_new (gchar, width * 3);
-      src = drawable_data;
-      for (y = 0; y < height; y++)
- 	{
- 	  if (bpp == 1)
- 	    for (x = 0; x < width; x++)
- 	      {
- 		buf[x*3+0] = src[x];
- 		buf[x*3+1] = src[x];
- 		buf[x*3+2] = src[x];
- 	      }
- 	  else
- 	    for (x = 0; x < width; x++)
- 	      {
- 		buf[x*3+0] = src[x*3+0];
- 		buf[x*3+1] = src[x*3+1];
- 		buf[x*3+2] = src[x*3+2];
- 	      }
- 	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)buf, 0, y, width);
- 	  src += width * bpp;
- 	}
-      g_free(buf);
+      for (x = 0; x < width; x++) {
+	if(bpp == 4)
+	  {
+	    r =  ((gdouble)src[x*4+0])/255.0;
+	    g = ((gdouble)src[x*4+1])/255.0;
+	    b = ((gdouble)src[x*4+2])/255.0;
+	    a = ((gdouble)src[x*4+3])/255.0;
+	  }
+	else
+	  {
+	    r = ((gdouble)src[x*bpp+0])/255.0;
+	    g = b = r;
+	    a = ((gdouble)src[x*bpp+1])/255.0;
+	  }
+	
+	if ((x / GRAD_CHECK_SIZE_SM) & 1) {
+	  c0 = GRAD_CHECK_LIGHT;
+	  c1 = GRAD_CHECK_DARK;
+	} else {
+	  c0 = GRAD_CHECK_DARK;
+	  c1 = GRAD_CHECK_LIGHT;
+	} /* else */
+	
+	*p0++ = (c0 + (r - c0) * a) * 255.0;
+	*p0++ = (c0 + (g - c0) * a) * 255.0;
+	*p0++ = (c0 + (b - c0) * a) * 255.0;
+	
+	*p1++ = (c1 + (r - c1) * a) * 255.0;
+	*p1++ = (c1 + (g - c1) * a) * 255.0;
+	*p1++ = (c1 + (b - c1) * a) * 255.0;
+	
+      } /* for */
+      
+      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)odd, 0, y, width);
+	}
+      else
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)even, 0, y, width);
+	}
+      src += width * bpp;
     }
-  else /* Has alpha channel */
-    {
-      gint     x,y;
-      guchar  *src;
-      gdouble  r, g, b, a;
-      gdouble  c0, c1;
-      guchar  *p0, *p1,*even,*odd;
-      
-      /*  Draw the thumbnail with checks  */
-      src = drawable_data;
-      
-      even = g_malloc(width*3);
-      odd = g_malloc(width*3);
-      
-      for (y = 0; y < height; y++)
- 	{
- 	  p0 = even;
- 	  p1 = odd;
- 	  
- 	  for (x = 0; x < width; x++) {
- 	    r =  ((gdouble)src[x*4+0])/255.0;
- 	    g = ((gdouble)src[x*4+1])/255.0;
- 	    b = ((gdouble)src[x*4+2])/255.0;
- 	    a = ((gdouble)src[x*4+3])/255.0;
- 	    
- 	    if ((x / GRAD_CHECK_SIZE_SM) & 1) {
- 	      c0 = GRAD_CHECK_LIGHT;
- 	      c1 = GRAD_CHECK_DARK;
- 	    } else {
- 	      c0 = GRAD_CHECK_DARK;
- 	      c1 = GRAD_CHECK_LIGHT;
- 	    } /* else */
- 	    
- 	    *p0++ = (c0 + (r - c0) * a) * 255.0;
- 	    *p0++ = (c0 + (g - c0) * a) * 255.0;
- 	    *p0++ = (c0 + (b - c0) * a) * 255.0;
- 	    
- 	    *p1++ = (c1 + (r - c1) * a) * 255.0;
- 	    *p1++ = (c1 + (g - c1) * a) * 255.0;
- 	    *p1++ = (c1 + (b - c1) * a) * 255.0;
- 	    
- 	  } /* for */
- 	  
- 	  if ((y / GRAD_CHECK_SIZE_SM) & 1)
- 	    {
- 	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)odd, 0, y, width);
- 	    }
- 	  else
- 	    {
- 	      gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)even, 0, y, width);
-	    }
- 	  src += width * bpp;
- 	}
-      g_free(even);
-      g_free(odd);
-    }
+  g_free(even);
+  g_free(odd);
 }
 
 static void

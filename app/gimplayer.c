@@ -732,6 +732,7 @@ layer_add_alpha (layer)
   GIMP_DRAWABLE(layer)->type = type;
   GIMP_DRAWABLE(layer)->bytes = GIMP_DRAWABLE(layer)->bytes + 1;
   GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
+  GIMP_DRAWABLE(layer)->preview_valid = FALSE;
 
   gtk_signal_emit_by_name(GTK_OBJECT(gimp_drawable_gimage(GIMP_DRAWABLE(layer))),
 			 "restructure");

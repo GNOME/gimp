@@ -34,6 +34,7 @@ static ProcRecord path_stroke_current_proc;
 static ProcRecord path_get_point_at_dist_proc;
 static ProcRecord path_get_tattoo_proc;
 static ProcRecord get_path_by_tattoo_proc;
+static ProcRecord path_delete_proc;
 
 void
 register_paths_procs (void)
@@ -47,6 +48,7 @@ register_paths_procs (void)
   procedural_db_register (&path_get_point_at_dist_proc);
   procedural_db_register (&path_get_tattoo_proc);
   procedural_db_register (&get_path_by_tattoo_proc);
+  procedural_db_register (&path_delete_proc);
 }
 
 static Argument *
@@ -418,9 +420,9 @@ path_set_points_invoker (Argument *args)
 
   if (success)
     {
-      if ((numpoints / 2) % 3 == 0)
+      if ((numpoints / 3) % 3 == 0)
 	pclosed = TRUE;
-      else if ((numpoints / 2) % 3 != 2)
+      else if ((numpoints / 3) % 3 != 2)
 	success = FALSE;
     
       if (success && !paths_set_path_points (gimage, pname, ptype, pclosed,
@@ -441,7 +443,7 @@ static ProcArg path_set_points_inargs[] =
   {
     PDB_STRING,
     "pathname",
-    "The name of the path to create (if it exists then all current points are removed). This will not be set as the current path. You will have to do a gimp_set_current_path after creating the path to make it current."
+    "The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will not be set as the current path. You will have to do a gimp_set_current_path after creating the path to make it current."
   },
   {
     PDB_INT32,
@@ -451,7 +453,7 @@ static ProcArg path_set_points_inargs[] =
   {
     PDB_INT32,
     "num_path_points",
-    "The number of points in the path. Each point is made up of (x,y) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. For BEZIERS. Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC."
+    "The number of points in the path. Each point is made up of (x,y,type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. For BEZIERS. Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC."
   },
   {
     PDB_FLOATARRAY,
@@ -800,4 +802,55 @@ static ProcRecord get_path_by_tattoo_proc =
   1,
   get_path_by_tattoo_outargs,
   { { get_path_by_tattoo_invoker } }
+};
+
+static Argument *
+path_delete_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *pname;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
+
+  if (success)
+    success = paths_delete_path (gimage, pname);
+
+  return procedural_db_return_args (&path_delete_proc, success);
+}
+
+static ProcArg path_delete_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The ID of the image to list delete the paths from"
+  },
+  {
+    PDB_STRING,
+    "path_name_to_del",
+    "The name of the path to delete"
+  }
+};
+
+static ProcRecord path_delete_proc =
+{
+  "gimp_path_delete",
+  "Delete the named paths associated with the passed image.",
+  "Delete the named path.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  path_delete_inargs,
+  0,
+  NULL,
+  { { path_delete_invoker } }
 };

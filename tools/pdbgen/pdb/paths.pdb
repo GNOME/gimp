@@ -231,8 +231,10 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'pathname', type => 'string',
-	  desc => 'The name of the path to create (if it exists then all
-		   current points are removed). This will not be set as the
+	  desc => 'The name of the path to create (if it exists then a unique
+		   name will be created - query the list of paths if you want
+		   to make sure that the name of the path you create is 
+		   unique. This will not be set as the
 		   current path. You will have to do a gimp_set_current_path
 		   after creating the path to make it current.',
 	  alias => 'pname', init => 1 },
@@ -248,8 +250,8 @@ HELP
 		   resolution',
 	  array => { name => 'num_path_points',
 		     desc => 'The number of points in the path. Each point is
-			      made up of (x,y) of floats. Currently only the
-			      creation of bezier curves is allowed. The type
+			      made up of (x,y,type) of floats. Currently only 
+			      the creation of bezier curves is allowed. The type
 			      parameter must be set to (1) to indicate a BEZIER
 			      type curve. For BEZIERS. Note the that points
 			      must be given in the following order... ACCACCAC
@@ -268,9 +270,9 @@ HELP
 	vars => [ 'gboolean pclosed = FALSE' ],
 	code  => <<'CODE'
 {
-  if ((numpoints / 2) % 3 == 0)
+  if ((numpoints / 3) % 3 == 0)
     pclosed = TRUE;
-  else if ((numpoints / 2) % 3 != 2)
+  else if ((numpoints / 3) % 3 != 2)
     success = FALSE;
 
   if (success && !paths_set_path_points (gimage, pname, ptype, pclosed,
@@ -462,12 +464,32 @@ CODE
     );
 }
 
+sub path_delete {
+    $blurb = 'Delete the named paths associated with the passed image.';
+
+    $help = <<'HELP';
+Delete the named path.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'path_name_to_del', type => 'string',
+	  desc => 'The name of the path to delete',
+	  alias => 'pname' }	
+    );
+    $inargs[0]->{desc} = 'The ID of the image to list delete the paths from';
+
+    %invoke = ( code => 'success = paths_delete_path (gimage, pname);' );
+}
+
 
 @headers = qw(<string.h> "gimage.h" "pathsP.h");
 
 @procs = qw(path_list path_get_points path_get_current path_set_current
 	    path_set_points path_stroke_current path_get_point_at_dist
-	    path_get_tattoo get_path_by_tattoo);
+	    path_get_tattoo get_path_by_tattoo path_delete);
 %exports = (app => [@procs]);
 
 $desc = 'Paths';

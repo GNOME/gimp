@@ -73,5 +73,6 @@ void        * paths_transform_start_undo(GimpImage  *);
 void          paths_transform_free_undo(void *);
 void          paths_transform_do_undo(GimpImage *,void *);
 void          paths_transform_current_path(GimpImage  *,GimpMatrix,gboolean);
+gboolean      paths_delete_path(GimpImage *,gchar *);
 
 #endif  /*  __PATHSP_H__  */
