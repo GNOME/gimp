@@ -48,7 +48,6 @@ gimp_color_tool_get_type
 gimp_colorize_tool_get_type
 gimp_colormap_editor_get_type
 gimp_component_editor_get_type
-gimp_config_interface_get_type
 gimp_container_box_get_type
 gimp_container_combo_box_get_type
 gimp_container_editor_get_type
