@@ -88,7 +88,7 @@ void            gimp_channel_set_opacity        (GimpChannel       *channel,
 
 void            gimp_channel_get_color          (const GimpChannel *channel,
                                                  GimpRGB           *color);
-void 		gimp_channel_set_color          (GimpChannel       *channel, 
+void 		gimp_channel_set_color          (GimpChannel       *channel,
                                                  const GimpRGB     *color,
                                                  gboolean           push_undo);
 
@@ -104,8 +104,8 @@ GimpChannel   * gimp_channel_new_mask          (GimpImage         *gimage,
 						gint               height);
 
 gboolean        gimp_channel_boundary          (GimpChannel       *mask,
-						BoundSeg         **segs_in,
-						BoundSeg         **segs_out,
+						const BoundSeg   **segs_in,
+						const BoundSeg   **segs_out,
 						gint              *num_segs_in,
 						gint              *num_segs_out,
 						gint               x1,
@@ -117,8 +117,8 @@ gboolean        gimp_channel_bounds            (GimpChannel       *mask,
 						gint              *y1,
 						gint              *x2,
 						gint              *y2);
-gint            gimp_channel_value             (GimpChannel       *mask, 
-						gint               x, 
+gint            gimp_channel_value             (GimpChannel       *mask,
+						gint               x,
 						gint               y);
 gboolean        gimp_channel_is_empty          (GimpChannel       *mask);
 

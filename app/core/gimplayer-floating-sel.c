@@ -238,7 +238,7 @@ floating_sel_to_layer (GimpLayer *layer)
 			0, 0,
 			GIMP_ITEM (layer)->width,
 			GIMP_ITEM (layer)->height);
-  
+
   gimp_image_floating_selection_changed (gimage);
 }
 
@@ -496,7 +496,7 @@ floating_sel_composite (GimpLayer *layer,
     }
 }
 
-BoundSeg *
+const BoundSeg *
 floating_sel_boundary (GimpLayer *layer,
 		       gint      *n_segs)
 {

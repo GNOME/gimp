@@ -261,8 +261,8 @@ init_edit_selection (GimpTool    *tool,
   edit_select->y = edit_select->origy = coords->y - off_y;
 
   gimp_image_mask_boundary (gdisp->gimage,
-                            &edit_select->segs_in,
-                            &edit_select->segs_out,
+                            (const BoundSeg **) &edit_select->segs_in,
+                            (const BoundSeg **) &edit_select->segs_out,
                             &edit_select->num_segs_in,
                             &edit_select->num_segs_out);
 

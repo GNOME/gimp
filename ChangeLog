@@ -1,5 +1,22 @@
 2003-08-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.[ch] (gimp_channel_boundary)
+	* app/core/gimpimage-mask.[ch] (gimp_image_mask_boundary)
+	* app/core/gimplayer-floating-sel.[ch] (floating_sel_boundary):
+	return const BoundSeg arrays because they are cached and not newly
+	allocated.
+
+	* app/base/boundary.[ch] (sort_boundary)
+	* app/tools/gimpdrawtool.[ch] (gimp_draw_tool_draw_boundary):
+	take const BoundSeg arrays.
+
+	* app/core/gimpimage-mask.c (gimp_image_mask_stroke)
+	* app/display/gimpdisplayshell-selection.c
+	* app/tools/gimpeditselectiontool.c (init_edit_selection):
+	changed accordingly.
+
+2003-08-30  Michael Natterer  <mitch@gimp.org>
+
 	Fixed & cleaned up paint function registration to work without
 	GUI. Finishes core/GUI separation for the paint tools:
 

@@ -57,16 +57,14 @@ static gboolean   gimp_image_mask_stroking = FALSE;
 /*  public functions  */
 
 gboolean
-gimp_image_mask_boundary (GimpImage  *gimage,
-                          BoundSeg  **segs_in,
-                          BoundSeg  **segs_out,
-                          gint       *num_segs_in,
-                          gint       *num_segs_out)
+gimp_image_mask_boundary (GimpImage       *gimage,
+                          const BoundSeg **segs_in,
+                          const BoundSeg **segs_out,
+                          gint            *num_segs_in,
+                          gint            *num_segs_out)
 {
-  GimpDrawable *d;
+  GimpDrawable *drawable;
   GimpLayer    *layer;
-  gint          x1, y1;
-  gint          x2, y2;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (segs_in != NULL, FALSE);
@@ -96,18 +94,24 @@ gimp_image_mask_boundary (GimpImage  *gimage,
 
       return TRUE;
     }
-  /*  Otherwise, return the boundary...if a channel is active  */
-  else if ((d = gimp_image_active_drawable (gimage)) &&
-	   GIMP_IS_CHANNEL (d))
+  else if ((drawable = gimp_image_active_drawable (gimage)) &&
+	   GIMP_IS_CHANNEL (drawable))
     {
+      /*  Otherwise, return the boundary...if a channel is active  */
+
       return gimp_channel_boundary (gimp_image_get_mask (gimage),
 				    segs_in, segs_out,
 				    num_segs_in, num_segs_out,
 				    0, 0, gimage->width, gimage->height);
     }
-  /* if a layer is active, we return multiple boundaries based on the extents */
   else if ((layer = gimp_image_get_active_layer (gimage)))
     {
+      /*  If a layer is active, we return multiple boundaries based
+       *  on the extents
+       */
+
+      gint x1, y1;
+      gint x2, y2;
       gint off_x, off_y;
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
@@ -126,10 +130,11 @@ gimp_image_mask_boundary (GimpImage  *gimage,
     }
   else
     {
-      *segs_in = NULL;
-      *segs_out = NULL;
-      *num_segs_in = 0;
+      *segs_in      = NULL;
+      *segs_out     = NULL;
+      *num_segs_in  = 0;
       *num_segs_out = 0;
+
       return FALSE;
     }
 }
@@ -623,14 +628,14 @@ gimp_image_mask_stroke (GimpImage    *gimage,
                         GimpDrawable *drawable,
                         GimpContext  *context)
 {
-  BoundSeg      *bs_in;
-  BoundSeg      *bs_out;
-  gint           num_segs_in;
-  gint           num_segs_out;
-  GimpToolInfo  *tool_info;
-  GimpPaintInfo *paint_info;
-  GimpPaintCore *core;
-  gboolean       retval;
+  const BoundSeg *bs_in;
+  const BoundSeg *bs_out;
+  gint            num_segs_in;
+  gint            num_segs_out;
+  GimpToolInfo   *tool_info;
+  GimpPaintInfo  *paint_info;
+  GimpPaintCore  *core;
+  gboolean        retval;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);

@@ -178,7 +178,7 @@ void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool,
                                                     gboolean        use_offsets);
 
 void       gimp_draw_tool_draw_boundary            (GimpDrawTool   *draw_tool,
-                                                    BoundSeg       *bound_segs,
+                                                    const BoundSeg *bound_segs,
                                                     gint            n_bound_segs,
                                                     gdouble         offset_x,
                                                     gdouble         offset_y);

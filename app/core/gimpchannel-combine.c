@@ -522,7 +522,7 @@ gimp_channel_validate (TileManager *tm,
 		       Tile        *tile)
 {
   /*  Set the contents of the tile to empty  */
-  memset (tile_data_pointer (tile, 0, 0), 
+  memset (tile_data_pointer (tile, 0, 0),
 	  TRANSPARENT_OPACITY, tile_size (tile));
 }
 
@@ -644,7 +644,7 @@ gimp_channel_new_from_component (GimpImage       *gimage,
   return channel;
 }
 
-void 
+void
 gimp_channel_set_color (GimpChannel   *channel,
 			const GimpRGB *color,
                         gboolean       push_undo)
@@ -775,15 +775,15 @@ gimp_channel_new_mask (GimpImage *gimage,
 }
 
 gboolean
-gimp_channel_boundary (GimpChannel  *mask,
-		       BoundSeg    **segs_in,
-		       BoundSeg    **segs_out,
-		       gint         *num_segs_in,
-		       gint         *num_segs_out,
-		       gint          x1,
-		       gint          y1,
-		       gint          x2,
-		       gint          y2)
+gimp_channel_boundary (GimpChannel     *mask,
+		       const BoundSeg **segs_in,
+		       const BoundSeg **segs_out,
+		       gint            *num_segs_in,
+		       gint            *num_segs_out,
+		       gint             x1,
+		       gint             y1,
+		       gint             x2,
+		       gint             y2)
 {
   gint        x3, y3, x4, y4;
   PixelRegion bPR;
@@ -1311,7 +1311,7 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
 		    val = (int) (255 * (1 - (dist + 0.5)));
 		  else
 		    val = 0;
-		  
+
 		  if (last != val && last)
 		    {
 		      switch (op)
@@ -1662,7 +1662,7 @@ gimp_channel_invert (GimpChannel *mask,
                          0, 0,
                          GIMP_ITEM (mask)->width,
                          GIMP_ITEM (mask)->height, TRUE);
-  
+
       lut = invert_lut_new (1);
 
       pixel_regions_process_parallel ((p_func) gimp_lut_process_inline, lut,
@@ -1745,7 +1745,7 @@ gimp_channel_grow (GimpChannel *mask,
 
   if (radius_x < 0 || radius_y < 0)
     return;
-  
+
   if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
 
@@ -1804,7 +1804,7 @@ gimp_channel_shrink (GimpChannel  *mask,
 
   if (radius_x < 0 || radius_y < 0)
     return;
-  
+
   if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
 

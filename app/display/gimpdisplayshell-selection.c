@@ -50,24 +50,24 @@
 
 /*  local function prototypes  */
 
-static GdkPixmap * create_cycled_ants_pixmap (GdkWindow  *window,
-					      gint        depth);
-static void        cycle_ant_colors          (Selection  *select);
-static void        selection_add_point       (GdkPoint   *points[8],
-					      gint        max_npoints[8],
-					      gint        npoints[8],
-					      gint        x,
-					      gint        y);
-static void        selection_render_points   (Selection  *select);
-static void        selection_draw            (Selection  *select);
-static void        selection_transform_segs  (Selection  *select,
-					      BoundSeg   *src_segs,
-					      GdkSegment *dest_segs,
-					      gint        num_segs);
-static void        selection_generate_segs   (Selection  *select);
-static void        selection_free_segs       (Selection  *select);
-static gboolean    selection_start_marching  (gpointer    data);
-static gboolean    selection_march_ants      (gpointer    data);
+static GdkPixmap * create_cycled_ants_pixmap (GdkWindow      *window,
+					      gint            depth);
+static void        cycle_ant_colors          (Selection      *select);
+static void        selection_add_point       (GdkPoint       *points[8],
+					      gint            max_npoints[8],
+					      gint            npoints[8],
+					      gint            x,
+					      gint            y);
+static void        selection_render_points   (Selection      *select);
+static void        selection_draw            (Selection      *select);
+static void        selection_transform_segs  (Selection      *select,
+					      const BoundSeg *src_segs,
+					      GdkSegment     *dest_segs,
+					      gint            num_segs);
+static void        selection_generate_segs   (Selection      *select);
+static void        selection_free_segs       (Selection      *select);
+static gboolean    selection_start_marching  (gpointer        data);
+static gboolean    selection_march_ants      (gpointer        data);
 
 
 static GdkColor   marching_ants_colors[8];
@@ -629,10 +629,10 @@ selection_draw (Selection *select)
 
 
 static void
-selection_transform_segs (Selection  *select,
-			  BoundSeg   *src_segs,
-			  GdkSegment *dest_segs,
-			  gint        num_segs)
+selection_transform_segs (Selection      *select,
+			  const BoundSeg *src_segs,
+			  GdkSegment     *dest_segs,
+			  gint            num_segs)
 {
   gint x, y;
   gint i;
@@ -685,9 +685,9 @@ selection_transform_segs (Selection  *select,
 static void
 selection_generate_segs (Selection *select)
 {
-  BoundSeg *segs_in;
-  BoundSeg *segs_out;
-  BoundSeg *segs_layer;
+  const BoundSeg *segs_in;
+  const BoundSeg *segs_out;
+  BoundSeg       *segs_layer;
 
   /*  Ask the gimage for the boundary of its selected region...
    *  Then transform that information into a new buffer of XSegments

@@ -803,11 +803,11 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
-                              BoundSeg     *bound_segs,
-                              gint          n_bound_segs,
-                              gdouble       offset_x,
-                              gdouble       offset_y)
+gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
+                              const BoundSeg *bound_segs,
+                              gint            n_bound_segs,
+                              gdouble         offset_x,
+                              gdouble         offset_y)
 {
   GimpDisplayShell *shell;
   GdkSegment       *gdk_segs;
