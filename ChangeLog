@@ -1,3 +1,10 @@
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorselect.c (gimp_color_select_xy_events):
+	removed "case GDK_CONFIGURE" because it's not needed and did
+	"break" instead of "return FALSE", causing random color changes
+	when resizing and initially showing the widget.
+
 2004-09-20  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.1.5 release.

@@ -714,10 +714,6 @@ gimp_color_select_xy_events (GtkWidget       *widget,
         }
       break;
 
-    case GDK_CONFIGURE:
-      gimp_color_select_update (select, UPDATE_XY_COLOR);
-      break;
-
     default:
       return FALSE;
     }
@@ -737,6 +733,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
   select->pos[1] = CLAMP (select->pos[1], 0, 255);
 
   gimp_color_select_draw_xy_marker (select, NULL);
+
   gimp_color_select_update (select, UPDATE_VALUES | UPDATE_CALLER);
 
   return TRUE;
