@@ -1,3 +1,8 @@
+2004-03-30  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in (ALL_LINGUAS): revert addition on "pa" until
+	all .po files are there.
+
 2004-03-20  Guntupalli Karunakar  <karunakar@freedomink.org>
 
 	* configure.in: Added "pa" for Punjabi to ALL_LINGUAS.
