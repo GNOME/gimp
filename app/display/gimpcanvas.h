@@ -35,9 +35,25 @@ typedef struct _GimpCanvasClass GimpCanvasClass;
 
 struct _GimpCanvas
 {
-  GtkDrawingArea       parent_instance;
+  GtkDrawingArea  parent_instance;
 
-  GdkGC               *render_gc;  /*  GC for rendering the image  */
+  /*  GC for rendering the image  */
+  GdkGC          *render_gc;
+
+  /*  GCs for rendering guides    */
+  struct
+  {
+    GdkGC        *normal_hgc;
+    GdkGC        *active_hgc;
+    GdkGC        *normal_vgc;
+    GdkGC        *active_vgc;
+  } guides;
+
+  /*  GC for the grid             */
+  GdkGC          *grid_gc;
+
+  /*  GC for the vectors          */
+  GdkGC          *vectors_gc;
 };
 
 struct _GimpCanvasClass
@@ -46,9 +62,14 @@ struct _GimpCanvasClass
 };
 
 
-GType        gimp_canvas_get_type  (void) G_GNUC_CONST;
+GType        gimp_canvas_get_type    (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_canvas_new       (void);
+GtkWidget  * gimp_canvas_new         (void);
+GdkGC      * gimp_canvas_grid_gc_new (GimpCanvas *canvas,
+                                      GimpGrid   *grid);
+void         gimp_canvas_draw_cursor (GimpCanvas *canvas,
+                                      gint        x,
+                                      gint        y);
 
 
 #endif /*  __GIMP_CANVAS_H__  */

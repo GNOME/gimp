@@ -1244,11 +1244,6 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
                                GimpGuide        *guide,
                                gboolean          active)
 {
-  static GdkGC    *normal_hgc  = NULL;
-  static GdkGC    *active_hgc  = NULL;
-  static GdkGC    *normal_vgc  = NULL;
-  static GdkGC    *active_vgc  = NULL;
-  static gboolean  initialized = FALSE;
   gint x1, x2;
   gint y1, y2;
   gint w, h;
@@ -1259,91 +1254,6 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
   if (guide->position < 0)
     return;
-
-  if (! initialized)
-    {
-      GdkGCValues values;
-      GdkColor    fg;
-      GdkColor    bg;
-
-      const guchar stipple[] =
-      {
-	0xF0,    /*  ####----  */
-	0xE1,    /*  ###----#  */
-	0xC3,    /*  ##----##  */
-	0x87,    /*  #----###  */
-	0x0F,    /*  ----####  */
-	0x1E,    /*  ---####-  */
-	0x3C,    /*  --####--  */
-	0x78,    /*  -####---  */
-      };
-
-      initialized = TRUE;
-
-      {
-        fg.red   = 0x0;
-        fg.green = 0x0;
-        fg.blue  = 0x0;
-
-        bg.red   = 0x0;
-        bg.green = 0x7f7f;
-        bg.blue  = 0xffff;
-
-        values.fill = GDK_OPAQUE_STIPPLED;
-        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (const gchar *) stipple,
-                                                      8, 1);
-        normal_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL |
-                                             GDK_GC_STIPPLE);
-
-        gdk_gc_set_rgb_fg_color (normal_hgc, &fg);
-        gdk_gc_set_rgb_bg_color (normal_hgc, &bg);
-
-        values.fill = GDK_OPAQUE_STIPPLED;
-        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (const gchar *) stipple,
-                                                      1, 8);
-        normal_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL |
-                                             GDK_GC_STIPPLE);
-
-        gdk_gc_set_rgb_fg_color (normal_vgc, &fg);
-        gdk_gc_set_rgb_bg_color (normal_vgc, &bg);
-      }
-
-      {
-        fg.red   = 0x0;
-        fg.green = 0x0;
-        fg.blue  = 0x0;
-
-        bg.red   = 0xffff;
-        bg.green = 0x0;
-        bg.blue  = 0x0;
-
-        values.fill = GDK_OPAQUE_STIPPLED;
-        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (const gchar *) stipple,
-                                                      8, 1);
-        active_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL |
-                                             GDK_GC_STIPPLE);
-
-        gdk_gc_set_rgb_fg_color (active_hgc, &fg);
-        gdk_gc_set_rgb_bg_color (active_hgc, &bg);
-
-        values.fill = GDK_OPAQUE_STIPPLED;
-        values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (const gchar *) stipple,
-                                                      1, 8);
-        active_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                             GDK_GC_FILL |
-                                             GDK_GC_STIPPLE);
-
-        gdk_gc_set_rgb_fg_color (active_vgc, &fg);
-        gdk_gc_set_rgb_bg_color (active_vgc, &bg);
-      }
-    }
 
   gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
   gimp_display_shell_transform_xy (shell,
@@ -1359,23 +1269,31 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
   if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
     {
+      GimpCanvas *canvas = GIMP_CANVAS (shell->canvas);
+
       gimp_display_shell_transform_xy (shell,
                                        0, guide->position, &x, &y, FALSE);
 
       if (active)
-	gdk_draw_line (shell->canvas->window, active_hgc, x1, y, x2, y);
+	gdk_draw_line (shell->canvas->window,
+                       canvas->guides.active_hgc, x1, y, x2, y);
       else
-	gdk_draw_line (shell->canvas->window, normal_hgc, x1, y, x2, y);
+	gdk_draw_line (shell->canvas->window,
+                       canvas->guides.normal_hgc, x1, y, x2, y);
     }
   else if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
     {
+      GimpCanvas *canvas = GIMP_CANVAS (shell->canvas);
+
       gimp_display_shell_transform_xy (shell,
                                        guide->position, 0, &x, &y, FALSE);
 
       if (active)
-	gdk_draw_line (shell->canvas->window, active_vgc, x, y1, x, y2);
+	gdk_draw_line (shell->canvas->window,
+                       canvas->guides.active_vgc, x, y1, x, y2);
       else
-	gdk_draw_line (shell->canvas->window, normal_vgc, x, y1, x, y2);
+	gdk_draw_line (shell->canvas->window,
+                       canvas->guides.normal_vgc, x, y1, x, y2);
     }
 }
 
@@ -1400,59 +1318,25 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 void
 gimp_display_shell_draw_grid (GimpDisplayShell *shell)
 {
-  GdkGC       *gc;
-  GdkGCValues  values;
-  GdkColor     fg, bg;
-
-  GimpGrid    *grid;
-
-  gint         x1, x2;
-  gint         y1, y2;
-  gint         x, y;
-  gint         x_real, y_real;
-  gint         width, height;
-  const gint   length = 2;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  grid = GIMP_GRID (shell->gdisp->gimage->grid);
-
-  if (grid == NULL)
-    return;
 
   if (gimp_display_shell_get_show_grid (shell))
     {
-      switch (grid->style)
-        {
-        case GIMP_GRID_ON_OFF_DASH:
-          values.line_style = GDK_LINE_ON_OFF_DASH;
-          break;
+      GimpGrid   *grid;
+      GdkGC      *gc;
+      gint        x1, x2;
+      gint        y1, y2;
+      gint        x, y;
+      gint        x_real, y_real;
+      gint        width, height;
+      const gint  length = 2;
 
-        case GIMP_GRID_DOUBLE_DASH:
-          values.line_style = GDK_LINE_DOUBLE_DASH;
-          break;
+      grid = GIMP_GRID (shell->gdisp->gimage->grid);
 
-        case GIMP_GRID_DOTS:
-        case GIMP_GRID_INTERSECTIONS:
-        case GIMP_GRID_SOLID:
-          values.line_style = GDK_LINE_SOLID;
-          break;
-        }
+      if (grid == NULL)
+        return;
 
-      values.join_style = GDK_JOIN_MITER;
-
-      /* FIXME: This GC should be part of the display and should
-         be changed only when one of the relevant grid properties
-         changes (on notify)
-       */
-      gc = gdk_gc_new_with_values (shell->canvas->window, &values,
-                                   GDK_GC_LINE_STYLE | GDK_GC_JOIN_STYLE);
-
-      gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
-      gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
-
-      gdk_gc_set_rgb_fg_color (gc, &fg);
-      gdk_gc_set_rgb_bg_color (gc, &bg);
+      gc = gimp_canvas_grid_gc_new (GIMP_CANVAS (shell->canvas), grid);
 
       gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
       gimp_display_shell_transform_xy (shell,
@@ -1548,27 +1432,10 @@ void
 gimp_display_shell_draw_vector (GimpDisplayShell *shell,
                                 GimpVectors      *vectors)
 {
-  static GdkGC *xor_gc = NULL;
-  GimpStroke   *stroke = NULL;
+  GimpStroke *stroke = NULL;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
-  if (! xor_gc)
-    {
-      GdkColor fg;
-      GdkColor bg;
-
-      xor_gc = gdk_gc_new (shell->canvas->window);
-
-      gdk_gc_set_function (xor_gc, GDK_INVERT);
-      fg.pixel = 0xFFFFFFFF;
-      bg.pixel = 0x00000000;
-      gdk_gc_set_foreground (xor_gc, &fg);
-      gdk_gc_set_background (xor_gc, &bg);
-      gdk_gc_set_line_attributes (xor_gc, 0, GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
-                                  GDK_JOIN_MITER);
-    }
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
@@ -1598,7 +1465,8 @@ gimp_display_shell_draw_vector (GimpDisplayShell *shell,
               gdk_coords[i].y = ROUND (sy);
             }
 
-          gdk_draw_lines (shell->canvas->window, xor_gc,
+          gdk_draw_lines (shell->canvas->window,
+                          GIMP_CANVAS (shell->canvas)->vectors_gc,
                           gdk_coords, coords->len);
 
           g_free (gdk_coords);
@@ -1687,31 +1555,10 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 void
 gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 {
-  gint x, y;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  x = shell->cursor_x;
-  y = shell->cursor_y;
-
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->white_gc,
-		 x - 7, y-1, x + 7, y-1);
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->black_gc,
-		 x - 7, y, x + 7, y);
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->white_gc,
-		 x - 7, y+1, x + 7, y+1);
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->white_gc,
-		 x-1, y - 7, x-1, y + 7);
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->black_gc,
-		 x, y - 7, x, y + 7);
-  gdk_draw_line (shell->canvas->window,
-		 shell->canvas->style->white_gc,
-		 x+1, y - 7, x+1, y + 7);
+  gimp_canvas_draw_cursor (GIMP_CANVAS (shell->canvas),
+                           shell->cursor_x, shell->cursor_y);
 }
 
 void
