@@ -36,6 +36,10 @@ struct _PaintPressureOptions
   gboolean     pressure_d;
   GtkWidget   *pressure_w;
 
+  gboolean     rate;
+  gboolean     rate_d;
+  GtkWidget   *rate_w;
+
   gboolean     size;
   gboolean     size_d;
   GtkWidget   *size_w;
@@ -75,6 +79,7 @@ struct _PaintOptions
 static PaintPressureOptions non_gui_pressure_options =
 {
   NULL,
+  FALSE, FALSE, NULL,
   FALSE, FALSE, NULL,
   FALSE, FALSE, NULL,
   FALSE, FALSE, NULL,

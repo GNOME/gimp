@@ -42,7 +42,7 @@
 
 /* default defines */
 
-#define SMUDGE_DEFAULT_PRESSURE   50.0
+#define SMUDGE_DEFAULT_RATE   50.0
 
 /*  the smudge structures  */
 
@@ -51,9 +51,9 @@ struct _SmudgeOptions
 {
   PaintOptions  paint_options;
 
-  double        pressure;
-  double        pressure_d;
-  GtkObject    *pressure_w;
+  double        rate;
+  double        rate_d;
+  GtkObject    *rate_w;
 
 };
 
@@ -61,14 +61,14 @@ static PixelRegion    accumPR;
 static unsigned char *accum_data;
 
 /*  the smudge tool options  */
-static SmudgeOptions * smudge_options = NULL;
+static SmudgeOptions *smudge_options = NULL;
 
 /*  local variables */
-static double       non_gui_pressure;
+static gdouble        non_gui_rate;
 
 /*  function prototypes */
 static void         smudge_motion 	(PaintCore *, PaintPressureOptions *,
-					 double, GimpDrawable *);
+					 gdouble, GimpDrawable *);
 static void 	    smudge_init   	(PaintCore *, GimpDrawable *);
 static void 	    smudge_finish   	(PaintCore *, GimpDrawable *);
 
@@ -86,8 +86,7 @@ smudge_options_reset (void)
 
   paint_options_reset ((PaintOptions *) options);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
-			    options->pressure_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
 }
 
 static SmudgeOptions *
@@ -106,29 +105,29 @@ smudge_options_new (void)
 		      SMUDGE,
 		      smudge_options_reset);
 
-  options->pressure = options->pressure_d = SMUDGE_DEFAULT_PRESSURE;
+  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
-  /*  the pressure scale  */
+  /*  the rate scale  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Pressure:"));
+  label = gtk_label_new (_("Rate:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  options->pressure_w =
-    gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
+  options->rate_w =
+    gtk_adjustment_new (options->rate_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
 		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->pressure);
+		      &options->rate);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
@@ -147,7 +146,7 @@ smudge_paint_func (PaintCore    *paint_core,
       break;
     case MOTION_PAINT:
       smudge_motion (paint_core, smudge_options->paint_options.pressure_options,
-		     smudge_options->pressure, drawable);
+		     smudge_options->rate, drawable);
       break;
     case FINISH_PAINT:
       smudge_finish (paint_core, drawable);
@@ -225,8 +224,8 @@ smudge_init (PaintCore    *paint_core,
      that may enter into the blend */
 
   if (was_clipped)
-  do_fill = gimp_drawable_get_color_at (drawable, (gint)paint_core->curx, (gint) paint_core->cury);
-
+    do_fill = gimp_drawable_get_color_at (drawable, (gint)paint_core->curx, (gint) paint_core->cury);
+  
   smudge_allocate_accum_buffer (w, h, drawable_bytes(drawable), do_fill);
 
   accumPR.x = area->x - x; 
@@ -313,13 +312,13 @@ tools_free_smudge (Tool *tool)
 static void
 smudge_motion (PaintCore            *paint_core,
 	       PaintPressureOptions *pressure_options,
-	       double                smudge_pressure,
+	       gdouble               smudge_rate,
 	       GimpDrawable         *drawable)
 {
   GImage *gimage;
   TempBuf * area;
   PixelRegion srcPR, destPR, tempPR;
-  gfloat pressure;
+  gdouble rate;
   gint opacity;
   gint x,y,w,h;
 
@@ -344,11 +343,11 @@ smudge_motion (PaintCore            *paint_core,
   pixel_region_init (&srcPR, drawable_data (drawable), 
 	area->x, area->y, area->width, area->height, FALSE);
 
-  /* Enable pressure sensitive pressure */
-  if (pressure_options->pressure)
-    pressure = ((smudge_pressure) / 100.0 * (paint_core->curpressure) / 0.5);
+  /* Enable pressure sensitive rate */
+  if (pressure_options->rate)
+    rate = MIN (smudge_rate / 100.0 * paint_core->curpressure * 2.0, 1.0);
   else
-    pressure = smudge_pressure / 100.0;
+    rate = smudge_rate / 100.0;
 
   /* The tempPR will be the built up buffer (for smudge) */ 
   tempPR.bytes = accumPR.bytes;
@@ -373,13 +372,13 @@ smudge_motion (PaintCore            *paint_core,
   /*  
      Smudge uses the buffer Accum.
      For each successive painthit Accum is built like this
-	Accum =  pressure*Accum  + (1-pressure)*I.
+	Accum =  rate*Accum  + (1-rate)*I.
      where I is the pixels under the current painthit. 
      Then the paint area (canvas_buf) is built as 
 	(Accum,1) (if no alpha),
   */
 
-  blend_region (&srcPR, &tempPR, &tempPR, ROUND(pressure * 255.0));
+  blend_region (&srcPR, &tempPR, &tempPR, ROUND (rate * 255.0));
 
   /* re-init the tempPR */
 
@@ -415,7 +414,7 @@ smudge_non_gui_paint_func (PaintCore    *paint_core,
 			   GimpDrawable *drawable,
 			   int           state)
 {
-  smudge_motion (paint_core, &non_gui_pressure_options, non_gui_pressure, drawable);
+  smudge_motion (paint_core, &non_gui_pressure_options, non_gui_rate, drawable);
 
   return NULL;
 }
@@ -425,18 +424,18 @@ smudge_non_gui_default (GimpDrawable *drawable,
 			int           num_strokes,
 			double       *stroke_array)
 {
-  double          pressure = SMUDGE_DEFAULT_PRESSURE;
-  SmudgeOptions  *options  = smudge_options;
+  gdouble rate = SMUDGE_DEFAULT_RATE;
+  SmudgeOptions *options = smudge_options;
 
   if (options)
-    pressure = options->pressure;
+    rate = options->rate;
 
-  return smudge_non_gui(drawable,pressure,num_strokes,stroke_array);
+  return smudge_non_gui (drawable, rate, num_strokes, stroke_array);
 }
 
 gboolean
 smudge_non_gui (GimpDrawable *drawable,
-		double        pressure,
+		gdouble       rate,
 		int           num_strokes,
 		double       *stroke_array)
 {
@@ -445,12 +444,12 @@ smudge_non_gui (GimpDrawable *drawable,
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
-      smudge_init(&non_gui_paint_core,drawable);
+      smudge_init (&non_gui_paint_core, drawable);
 
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = smudge_non_gui_paint_func;
 
-      non_gui_pressure = pressure;
+      non_gui_rate = rate;
 
       non_gui_paint_core.curx = non_gui_paint_core.startx = 
 	non_gui_paint_core.lastx = stroke_array[0];
@@ -475,7 +474,7 @@ smudge_non_gui (GimpDrawable *drawable,
 
       /* Cleanup */
       paint_core_cleanup ();
-      smudge_finish(&non_gui_paint_core, drawable);
+      smudge_finish (&non_gui_paint_core, drawable);
       return TRUE;
     }
   else

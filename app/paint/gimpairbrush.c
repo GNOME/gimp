@@ -189,6 +189,7 @@ airbrush_paint_func (PaintCore    *paint_core,
 		     int           state)
 {
   GimpBrushP brush;
+  gdouble rate;
 
   if (!drawable) 
     return NULL;
@@ -221,8 +222,10 @@ airbrush_paint_func (PaintCore    *paint_core,
 	{
 	  airbrush_timeout.paint_core = paint_core;
 	  airbrush_timeout.drawable = drawable;
-	  timer = gtk_timeout_add ((10000 / airbrush_options->rate),
-				   airbrush_time_out, NULL);
+	  rate = airbrush_options->paint_options.pressure_options->rate ? 
+	    (10000 / (airbrush_options->rate * 2.0 * paint_core->curpressure)) : 
+	    (10000 / airbrush_options->rate);
+	  timer = gtk_timeout_add (rate, airbrush_time_out, NULL);
 	  timer_state = ON;
 	}
       break;
@@ -266,7 +269,17 @@ airbrush_time_out (gpointer client_data)
 
   /*  restart the timer  */
   if (airbrush_options->rate != 0.0)
-    return TRUE;
+    {
+      if (airbrush_options->paint_options.pressure_options->rate)
+	{
+	  /* set a new timer */
+	  timer = gtk_timeout_add ((10000 / (airbrush_options->rate * 2.0 * airbrush_timeout.paint_core->curpressure)), 
+				   airbrush_time_out, NULL);
+	  return FALSE;
+	}
+      else 
+	return TRUE;
+    }
   else
     return FALSE;
 }
@@ -298,7 +311,22 @@ airbrush_motion (PaintCore	      *paint_core,
   if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
+  /*  color the pixels  */
+  if (pressure_options->color)
+    {
+      gdouble r, g, b, a;
+      
+      gradient_get_color_at (gimp_context_get_gradient (NULL),
+			     paint_core->curpressure, &r, &g, &b, &a);
+      col[0] = r * 255.0;
+      col[1] = g * 255.0;
+      col[2] = b * 255.0;
+      col[3] = a * 255.0;
+      mode = INCREMENTAL;
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
+  else if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       mode = INCREMENTAL;
       paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
@@ -306,24 +334,8 @@ airbrush_motion (PaintCore	      *paint_core,
     }
   else
     {
-      /*  color the pixels  */
-      if (pressure_options->color)
-	{
-	  gdouble r, g, b, a;
-
-	  gradient_get_color_at (gimp_context_get_gradient (NULL),
-				 paint_core->curpressure, &r, &g, &b, &a);
-	  col[0] = r * 255.0;
-	  col[1] = g * 255.0;
-	  col[2] = b * 255.0;
-	  col[3] = a * 255.0;
-	  mode = INCREMENTAL;
-	}
-      else
-	{      
-	  gimage_get_foreground (gimage, drawable, col);
-	  col[area->bytes - 1] = OPAQUE_OPACITY;
-	}
+      gimage_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }

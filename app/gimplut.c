@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 GimpLut *
-gimp_lut_new()
+gimp_lut_new ()
 {
  GimpLut *lut;
  lut = g_new(GimpLut, 1);
@@ -33,7 +33,7 @@ gimp_lut_new()
 }
 
 void
-gimp_lut_free(GimpLut *lut)
+gimp_lut_free (GimpLut *lut)
 {
   int i;
   for (i = 0; i < lut->nchannels; i++)
@@ -43,8 +43,10 @@ gimp_lut_free(GimpLut *lut)
 }
 
 void
-gimp_lut_setup (GimpLut *lut, GimpLutFunc func,
-		void *user_data, int nchannels)
+gimp_lut_setup (GimpLut     *lut, 
+		GimpLutFunc  func,
+		void        *user_data, 
+		int          nchannels)
 {
   int i, v;
   double val;
@@ -73,8 +75,10 @@ gimp_lut_setup (GimpLut *lut, GimpLutFunc func,
 }
 
 void
-gimp_lut_setup_exact (GimpLut *lut, GimpLutFunc func,
-		      void *user_data, int nchannels)
+gimp_lut_setup_exact (GimpLut     *lut, 
+		      GimpLutFunc  func,
+		      void        *user_data, 
+		      int          nchannels)
 {
   gimp_lut_setup(lut, func, user_data, nchannels);
 }

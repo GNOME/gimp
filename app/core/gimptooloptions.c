@@ -760,6 +760,8 @@ paint_pressure_options_new (ToolType tool_type)
   pressure->opacity = pressure->opacity_d =TRUE;
   pressure->pressure_w = NULL;
   pressure->pressure = pressure->pressure_d = TRUE;
+  pressure->rate_w = NULL;
+  pressure->rate = pressure->rate_d = FALSE;
   pressure->size_w = NULL;
   pressure->size = pressure->size_d = FALSE;
   pressure->color_w = NULL;
@@ -767,14 +769,14 @@ paint_pressure_options_new (ToolType tool_type)
 
   switch (tool_type)
     {
+    case AIRBRUSH:
     case CLONE:
     case CONVOLVE:
     case DODGEBURN:
-    case SMUDGE:
-    case AIRBRUSH:
     case ERASER:
     case PAINTBRUSH:
     case PENCIL:
+    case SMUDGE:
       frame = gtk_frame_new (_("Pressure sensitivity"));
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
@@ -787,8 +789,8 @@ paint_pressure_options_new (ToolType tool_type)
   /*  the opacity toggle  */
   switch (tool_type)
     {
-    case AIRBRUSH:
     case CLONE:
+    case DODGEBURN:
     case ERASER:
     case PAINTBRUSH:
     case PENCIL:
@@ -806,16 +808,17 @@ paint_pressure_options_new (ToolType tool_type)
       break;
     }
 
-  /*  the pressure toggle  */
+ /*  the pressure toggle  */
   switch (tool_type)
     {
+    case AIRBRUSH:
     case CLONE:
+    case CONVOLVE:
     case DODGEBURN:
-    case SMUDGE:
     case ERASER:
     case PAINTBRUSH:
-      pressure->pressure_w =
-	gtk_check_button_new_with_label (_("Pressure"));
+    case SMUDGE:
+      pressure->pressure_w = gtk_check_button_new_with_label (_("Pressure"));
       gtk_container_add (GTK_CONTAINER (hbox), pressure->pressure_w);
       gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
 			  (GtkSignalFunc) tool_options_toggle_update,
@@ -823,6 +826,26 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
       gtk_widget_show (pressure->pressure_w);
+      break;
+    default:
+      break;
+    }
+
+  /*  the rate toggle */
+  switch (tool_type)
+    {
+    case AIRBRUSH:
+    case CONVOLVE:
+    case SMUDGE:
+      pressure->rate_w =
+	gtk_check_button_new_with_label (_("Rate"));
+      gtk_container_add (GTK_CONTAINER (hbox), pressure->rate_w);
+      gtk_signal_connect (GTK_OBJECT (pressure->rate_w), "toggled",
+			  (GtkSignalFunc) tool_options_toggle_update,
+			  &pressure->rate);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
+				    pressure->rate_d);
+      gtk_widget_show (pressure->rate_w);
       break;
     default:
       break;
@@ -871,6 +894,7 @@ paint_pressure_options_new (ToolType tool_type)
     default:
       break;
     }
+
   pressure->frame = frame;
 
   return (pressure);
@@ -888,6 +912,11 @@ paint_pressure_options_reset (PaintPressureOptions *pressure)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
+    }
+  if (pressure->rate_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
+				    pressure->rate_d);
     }
   if (pressure->size_w)
     {

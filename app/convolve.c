@@ -40,8 +40,8 @@
 #define MAX_SHARPEN   -64
 
 /* defaults */
-#define DEFAULT_CONVOLVE_PRESSURE  50.0
-#define DEFAULT_CONVOLVE_TYPE      BLUR_CONVOLVE
+#define DEFAULT_CONVOLVE_RATE  50.0
+#define DEFAULT_CONVOLVE_TYPE  BLUR_CONVOLVE
 
 /*  the convolve structures  */
 
@@ -54,9 +54,9 @@ struct _ConvolveOptions
   ConvolveType  type_d;
   GtkWidget    *type_w[2];
 
-  double        pressure;
-  double        pressure_d;
-  GtkObject    *pressure_w;
+  double        rate;
+  double        rate_d;
+  GtkObject    *rate_w;
 };
 
 
@@ -69,7 +69,7 @@ static int          matrix_size;
 static int          matrix_divisor;
 
 static ConvolveType non_gui_type;
-static double       non_gui_pressure;
+static double       non_gui_rate;
 
 static float        custom_matrix [25] =
 {
@@ -100,12 +100,13 @@ static float        sharpen_matrix [25] =
 
 
 /*  forward function declarations  */
-static void         calculate_matrix     (ConvolveType, double, double);
+static void         calculate_matrix     (ConvolveType, double);
 static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
 
-static void         convolve_motion      (PaintCore *, GimpDrawable *, PaintPressureOptions *,
+static void         convolve_motion      (PaintCore *, GimpDrawable *, 
+					  PaintPressureOptions *,
 					  ConvolveType, double);
 
 /* functions  */
@@ -118,8 +119,7 @@ convolve_options_reset (void)
 
   paint_options_reset ((PaintOptions *) options);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
-			    options->pressure_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
 }
 
@@ -141,30 +141,30 @@ convolve_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      CONVOLVE,
 		      convolve_options_reset);
-  options->type     = options->type_d     = DEFAULT_CONVOLVE_TYPE;
-  options->pressure = options->pressure_d = DEFAULT_CONVOLVE_PRESSURE;
+  options->type = options->type_d = DEFAULT_CONVOLVE_TYPE;
+  options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
 
-  /*  the pressure scale  */
+  /*  the rate scale  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Pressure:"));
+  label = gtk_label_new (_("Rate:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  options->pressure_w =
-    gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
+  options->rate_w =
+    gtk_adjustment_new (options->rate_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
 		      (GtkSignalFunc) tool_options_double_adjustment_update,
-		      &options->pressure);
+		      &options->rate);
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
@@ -191,7 +191,7 @@ convolve_paint_func (PaintCore    *paint_core,
     case MOTION_PAINT:
       convolve_motion (paint_core, drawable, 
 		       convolve_options->paint_options.pressure_options,
-		       convolve_options->type, convolve_options->pressure);
+		       convolve_options->type, convolve_options->rate);
       break;
     }
 
@@ -261,7 +261,7 @@ convolve_motion (PaintCore            *paint_core,
 		 GimpDrawable         *drawable,
 		 PaintPressureOptions *pressure_options,
 		 ConvolveType          type,
-		 double                pressure)
+		 double                rate)
 {
   GImage *gimage;
   TempBuf * area;
@@ -296,8 +296,10 @@ convolve_motion (PaintCore            *paint_core,
   destPR.rowstride = area->width * destPR.bytes;
   destPR.data = temp_buf_data (area);
 
-  calculate_matrix (type, pressure,
-		    paint_core->curpressure);
+  if (pressure_options->rate)
+    rate = rate * 2.0 * paint_core->curpressure;
+
+  calculate_matrix (type, rate); 
 
   /*  convolve the source image with the convolve mask  */
   if (srcPR.w >= matrix_size && srcPR.h >= matrix_size)
@@ -367,18 +369,18 @@ convolve_motion (PaintCore            *paint_core,
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			     (int) (gimp_context_get_opacity (NULL) * 255),
-			     SOFT, scale, INCREMENTAL);
+			     pressure_options->pressure ? PRESSURE : SOFT,
+			     scale, INCREMENTAL);
 }
 
 static void
 calculate_matrix (ConvolveType type,
-		  double       pressure,
-		  double       curpressure)
+		  double       rate)
 {
   float percent;
 
   /*  find percent of tool pressure  */
-  percent = (pressure / 100.0) * curpressure;
+  percent = MIN (rate / 100.0, 1.0);
 
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
@@ -452,7 +454,7 @@ convolve_non_gui_paint_func (PaintCore *paint_core,
 			     int        state)
 {
   convolve_motion (paint_core, drawable, &non_gui_pressure_options,
-		   non_gui_type, non_gui_pressure);
+		   non_gui_type, non_gui_rate);
 
   return NULL;
 }
@@ -462,22 +464,22 @@ convolve_non_gui_default (GimpDrawable *drawable,
 			  int           num_strokes,
 			  double       *stroke_array)
 {
-  double pressure   = DEFAULT_CONVOLVE_PRESSURE;
+  double rate = DEFAULT_CONVOLVE_RATE;
   ConvolveType type = DEFAULT_CONVOLVE_TYPE;
   ConvolveOptions *options = convolve_options;
 
-  if(options)
+  if (options)
     {
-      pressure = options->pressure;
+      rate = options->rate;
       type = options->type;
     }
 
-  return convolve_non_gui(drawable,pressure,type,num_strokes,stroke_array);
+  return convolve_non_gui (drawable, rate, type, num_strokes, stroke_array);
 }
 
 gboolean
 convolve_non_gui (GimpDrawable *drawable,
-    		  double        pressure,
+    		  double        rate,
 		  ConvolveType  type,
 		  int           num_strokes,
 		  double       *stroke_array)
@@ -491,7 +493,7 @@ convolve_non_gui (GimpDrawable *drawable,
       non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
       
       non_gui_type = type;
-      non_gui_pressure = pressure;
+      non_gui_rate = rate;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];

@@ -50,7 +50,7 @@ struct _DodgeBurnOptions
   DodgeBurnType  type_d;
   GtkWidget     *type_w[2];
 
-  DodgeBurnMode  mode;     /*highlights,midtones,shadows*/
+  DodgeBurnMode  mode;     /*highlights, midtones, shadows*/
   DodgeBurnMode  mode_d;
   GtkWidget     *mode_w[3];
 
@@ -70,9 +70,9 @@ static gfloat dodgeburn_midtones_lut_func   (void *, int, int, gfloat);
 static gfloat dodgeburn_shadows_lut_func    (void *, int, int, gfloat);
 
 /* The dodge burn lookup tables */
-gfloat dodgeburn_highlights(void *, int, int, gfloat);
-gfloat dodgeburn_midtones(void *, int, int, gfloat);
-gfloat dodgeburn_shadows(void *, int, int, gfloat);
+gfloat dodgeburn_highlights (void *, int, int, gfloat);
+gfloat dodgeburn_midtones   (void *, int, int, gfloat);
+gfloat dodgeburn_shadows    (void *, int, int, gfloat);
 
 /*  the dodgeburn tool options  */
 static DodgeBurnOptions * dodgeburn_options = NULL;
@@ -216,8 +216,8 @@ dodgeburn_paint_func (PaintCore    *paint_core,
 }
 
 static void
-dodgeburn_finish ( PaintCore *paint_core,
-		   GimpDrawable * drawable)
+dodgeburn_finish (PaintCore    *paint_core,
+		  GimpDrawable *drawable)
 {
   /* Here we destroy the luts to do the painting with.*/
   if (dodgeburn_options->lut)
@@ -228,8 +228,8 @@ dodgeburn_finish ( PaintCore *paint_core,
 }
 
 static void
-dodgeburn_init ( PaintCore *paint_core,
-		 GimpDrawable * drawable)
+dodgeburn_init (PaintCore    *paint_core,
+		GimpDrawable *drawable)
 {
   /* Here we create the luts to do the painting with.*/
   dodgeburn_options->lut = gimp_lut_new();
@@ -242,18 +242,18 @@ dodgeburn_init ( PaintCore *paint_core,
 }
 
 static void 
-dodgeburn_make_luts ( PaintCore     *paint_core,
-		      double        db_exposure,
-		      DodgeBurnType type,
-		      DodgeBurnMode mode,
-		      GimpLut       *lut,
-		      GimpDrawable  *drawable)
+dodgeburn_make_luts (PaintCore     *paint_core,
+		     double         db_exposure,
+		     DodgeBurnType  type,
+		     DodgeBurnMode  mode,
+		     GimpLut       *lut,
+		     GimpDrawable  *drawable)
 {
   GimpLutFunc lut_func;
   int nchannels = gimp_drawable_bytes (drawable);
   static gfloat exposure;
 
-  exposure = (db_exposure)/100.0;
+  exposure = (db_exposure) / 100.0;
 
   /* make the exposure negative if burn for luts*/
   if (type == BURN)
@@ -353,7 +353,6 @@ dodgeburn_motion (PaintCore            *paint_core,
   TempBuf * orig;
   PixelRegion srcPR, destPR, tempPR;
   guchar *temp_data;
-  gfloat exposure;
   gint opacity;
   gdouble scale;
 
@@ -408,9 +407,6 @@ dodgeburn_motion (PaintCore            *paint_core,
   temp_data = g_malloc (tempPR.h * tempPR.rowstride);
   tempPR.data = temp_data;
 
-  /* Enable pressure sensitive exposure */
-  exposure = ((dodgeburn_exposure)/100.0 * (paint_core->curpressure)/0.5);
-
   /*  DodgeBurn the region  */
   gimp_lut_process (lut, &srcPR, &tempPR);
 
@@ -427,13 +423,13 @@ dodgeburn_motion (PaintCore            *paint_core,
   if (!drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
   else
-    copy_region(&tempPR, &destPR);
+    copy_region (&tempPR, &destPR);
 
   opacity = 255 * gimp_context_get_opacity (NULL);
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->curpressure;
 
-  /*Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
+  /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
   paint_core_replace_canvas (paint_core, drawable, 
 			     MIN (opacity, 255),
 			     OPAQUE_OPACITY, 
@@ -444,9 +440,9 @@ dodgeburn_motion (PaintCore            *paint_core,
 }
 
 static void *
-dodgeburn_non_gui_paint_func (PaintCore *paint_core,
-			     GimpDrawable *drawable,
-			     int        state)
+dodgeburn_non_gui_paint_func (PaintCore    *paint_core,
+			      GimpDrawable *drawable,
+			      int           state)
 {
   dodgeburn_motion (paint_core, &non_gui_pressure_options,
 		    non_gui_exposure, non_gui_lut, drawable);
@@ -475,12 +471,12 @@ dodgeburn_non_gui_default (GimpDrawable *drawable,
 }
 
 gboolean
-dodgeburn_non_gui (GimpDrawable *drawable,
-		   double        exposure,
-		   DodgeBurnType type,
-		   DodgeBurnMode mode,
-		   int           num_strokes,
-		   double       *stroke_array)
+dodgeburn_non_gui (GimpDrawable  *drawable,
+		   double         exposure,
+		   DodgeBurnType  type,
+		   DodgeBurnMode  mode,
+		   int            num_strokes,
+		   double        *stroke_array)
 {
   int i;
 
@@ -530,10 +526,10 @@ dodgeburn_non_gui (GimpDrawable *drawable,
 }
 
 static gfloat 
-dodgeburn_highlights_lut_func(void * user_data, 
-				int nchannels, 
-				int channel, 
-				gfloat value)
+dodgeburn_highlights_lut_func (void   *user_data, 
+			       int     nchannels, 
+			       int     channel, 
+			       gfloat  value)
 {
    gfloat * exposure_ptr = (gfloat *)user_data;
    gfloat exposure = *exposure_ptr;
@@ -547,10 +543,10 @@ dodgeburn_highlights_lut_func(void * user_data,
 }
 
 static gfloat 
-dodgeburn_midtones_lut_func(void * user_data, 
-				int nchannels, 
-				int channel, 
-				gfloat value)
+dodgeburn_midtones_lut_func (void   *user_data, 
+			     int     nchannels, 
+			     int     channel, 
+			     gfloat  value)
 {
    gfloat * exposure_ptr = (gfloat *)user_data;
    gfloat exposure = *exposure_ptr;
@@ -568,10 +564,10 @@ dodgeburn_midtones_lut_func(void * user_data,
 }
 
 static gfloat 
-dodgeburn_shadows_lut_func(void * user_data, 
-				int nchannels, 
-				int channel, 
-				gfloat value)
+dodgeburn_shadows_lut_func (void   *user_data, 
+			    int     nchannels, 
+			    int     channel, 
+			    gfloat  value)
 {
   gfloat * exposure_ptr = (gfloat *)user_data;
   gfloat exposure = *exposure_ptr;
@@ -597,3 +593,10 @@ dodgeburn_shadows_lut_func(void * user_data,
   }
   return new_value; 
 }
+
+
+
+
+
+
+

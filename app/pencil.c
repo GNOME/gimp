@@ -153,7 +153,22 @@ pencil_motion (PaintCore            *paint_core,
   if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
+  /*  color the pixels  */
+  if (pressure_options->color)
+    {
+      gdouble r, g, b, a;
+      
+      gradient_get_color_at (gimp_context_get_gradient (NULL),
+			     paint_core->curpressure, &r, &g, &b, &a);
+      col[0] = r * 255.0;
+      col[1] = g * 255.0;
+      col[2] = b * 255.0;
+      col[3] = a * 255.0;
+      paint_appl_mode = INCREMENTAL;
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
+  else if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
       /* if its a pixmap, do pixmap stuff */      
       paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
@@ -162,24 +177,8 @@ pencil_motion (PaintCore            *paint_core,
     }
   else
     {
-      /*  color the pixels  */
-      if (pressure_options->color)
-	{
-	  gdouble r, g, b, a;
-
-	  gradient_get_color_at (gimp_context_get_gradient (NULL),
-				 paint_core->curpressure, &r, &g, &b, &a);
-	  col[0] = r * 255.0;
-	  col[1] = g * 255.0;
-	  col[2] = b * 255.0;
-	  col[3] = a * 255.0;
-	  paint_appl_mode = INCREMENTAL;
-	}
-      else
-	{
-	  gimage_get_foreground (gimage, drawable, col);
-	  col[area->bytes - 1] = OPAQUE_OPACITY;
-	}
+      gimage_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }

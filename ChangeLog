@@ -1,3 +1,18 @@
+Sat Nov 13 01:58:31 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/airbrush.c
+	* app/convolve.c
+	* app/dodgeburn.c
+	* app/paint_options.h
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/smudge.c
+	* app/tool_options.c: cleaned up pressure sensitivity for paint
+	tools. I had to rename Pressure to Rate in a few tools to avoid
+	confusion with the Pressure option that applies to the brush.
+
+	* app/gimplut.c: indentation, no changes
+
 Fri Nov 12 17:23:05 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/unittest/gimpmodule.c : Unit test program for module_db.c and
