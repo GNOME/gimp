@@ -52,7 +52,6 @@ struct _PatternSelect {
   gint old_col;
   gint NUM_PATTERN_COLUMNS;
   gint NUM_PATTERN_ROWS;
-  gint STD_CELL_SIZE;
 };
 
 PatternSelectP  pattern_select_new     (gchar *,gchar *);

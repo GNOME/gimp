@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -33,14 +31,14 @@
 
 #include "libgimp/gimpintl.h"
 
-#define STD_CELL_WIDTH    24
-#define STD_CELL_HEIGHT   24
+#define MIN_CELL_SIZE     24
+#define MAX_CELL_SIZE     24  /*  disable variable brush preview size  */ 
 
 #define STD_BRUSH_COLUMNS 5
 #define STD_BRUSH_ROWS    5
 
-#define MAX_WIN_WIDTH(p)     (STD_CELL_WIDTH * ((p)->NUM_BRUSH_COLUMNS))
-#define MAX_WIN_HEIGHT(p)    (STD_CELL_HEIGHT * ((p)->NUM_BRUSH_ROWS))
+#define MAX_WIN_WIDTH(bsp)     (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_COLUMNS))
+#define MAX_WIN_HEIGHT(bsp)    (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_ROWS))
 #define MARGIN_WIDTH      3
 #define MARGIN_HEIGHT     3
 
@@ -75,6 +73,7 @@ static void brush_added_callback     (GimpBrushList *list,
 static void brush_removed_callback   (GimpBrushList *list,
 				      GimpBrushP brush,
 				      BrushSelectP bsp);
+/* static void brush_select_map_callback    (GtkWidget *, BrushSelectP); */
 static void brush_select_close_callback  (GtkWidget *, gpointer);
 static void brush_select_refresh_callback(GtkWidget *, gpointer);
 static void paint_mode_menu_callback     (GtkWidget *, gpointer);
@@ -85,7 +84,6 @@ static gint brush_select_delete_callback        (GtkWidget *, GdkEvent *, gpoint
 static void preview_scroll_update         (GtkAdjustment *, gpointer);
 static void opacity_scale_update          (GtkAdjustment *, gpointer);
 static void spacing_scale_update          (GtkAdjustment *, gpointer);
-/* static void paint_options_toggle_callback (GtkWidget *,     gpointer); */
 
 
 /*  local variables  */
@@ -146,7 +144,7 @@ brush_select_new (gchar   *title,
   bsp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
 
-  if(!title)
+  if (!title)
     {
       gtk_window_set_title (GTK_WINDOW (bsp->shell), _("Brush Selection"));
 
@@ -166,14 +164,16 @@ brush_select_new (gchar   *title,
     }
 
   gtk_window_set_policy (GTK_WINDOW (bsp->shell), FALSE, TRUE, FALSE);
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
 
   /*  Handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (bsp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (brush_select_delete_callback),
 		      bsp);
+
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
 
   /*  The horizontal box containing the brush list & options box */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -197,16 +197,17 @@ brush_select_new (gchar   *title,
 		      (GtkSignalFunc) preview_scroll_update, bsp);
   gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), sbar, FALSE, FALSE, 0);
 
-
   /*  Create the brush preview window and the underlying image  */
 
   /*  Get the maximum brush extents  */
-  bsp->cell_width = STD_CELL_WIDTH;
-  bsp->cell_height = STD_CELL_HEIGHT;
+  bsp->cell_width = MIN_CELL_SIZE;
+  bsp->cell_height = MIN_CELL_SIZE;
 
   bsp->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
   gtk_preview_size (GTK_PREVIEW (bsp->preview),
 		    MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
+  gtk_widget_set_usize (bsp->preview,
+			MAX_WIN_WIDTH (bsp), MAX_WIN_HEIGHT (bsp));
   gtk_preview_set_expand (GTK_PREVIEW (bsp->preview), TRUE);
   gtk_widget_set_events (bsp->preview, BRUSH_EVENT_MASK);
 
@@ -230,11 +231,11 @@ brush_select_new (gchar   *title,
   gtk_box_pack_start (GTK_BOX (hbox), bsp->options_box, FALSE, FALSE, 0);
 
   /*  Create the active brush label  */
-  util_box = gtk_hbox_new (FALSE, 5);
+  util_box = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 2);
 
   bsp->brush_name = gtk_label_new (_("Active"));
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 4);
   bsp->brush_size = gtk_label_new ("(0 X 0)");
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
 
@@ -359,16 +360,16 @@ brush_select_new (gchar   *title,
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
 
-  /* calculate the scrollbar */
+  /*  Calculate the scrollbar  */
   if (no_data)
     brushes_init (FALSE);
-  /* This is done by size_allocate anyway, which is much better */
+  /*  This is done by size_allocate anyway, which is much better  */
   preview_calc_scrollbar (bsp);
 
   /*  render the brushes into the newly created image structure  */
   display_brushes (bsp);
 
-  /* Only for main dialog */
+  /*  Only for main dialog  */
   if(!title)
     {
       /*  add callbacks to keep the display area current  */
@@ -382,51 +383,14 @@ brush_select_new (gchar   *title,
 			  (GtkSignalFunc) brush_removed_callback,
 			  bsp);
 
-      /*  Check if it's possible to set the dialog's size before ...  */
-      if ((bsp->shell->allocation.width <= brush_select_session_info.width) &&
-	  (bsp->shell->allocation.height <= brush_select_session_info.height))
-	session_set_window_geometry (bsp->shell, &brush_select_session_info,
-				     TRUE);
+      /*  set the preview's size in the callback
+      gtk_signal_connect (GTK_OBJECT (bsp->shell), "map",
+			  GTK_SIGNAL_FUNC (brush_select_map_callback),
+			  bsp);
+      */
 
       /*  if we are in per-tool paint options mode, hide the paint options  */
       brush_select_show_paint_options (bsp, global_paint_options);
-
-      /*  ... and after it has (eventually) changed it's size.
-       *  This is necessary because the brush preview follows the size of
-       *  the dialog and will cause ugly SIGFPE's when it's size is reduced
-       *  beyond it's minimum.
-       */
-      if ((bsp->shell->allocation.width <= brush_select_session_info.width) &&
-	  (bsp->shell->allocation.height <= brush_select_session_info.height))
-	session_set_window_geometry (bsp->shell, &brush_select_session_info,
-				     TRUE);
-
-      /*  add a toggle button which switches from global to per-tool
-       *  paint options mode
-       *
-       *  FIXME: a shortcut like this would be nice but must look different
-       */
-
-      /*
-      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bsp->shell)->action_area),
-			  abox, FALSE, FALSE, 0);
-
-      button2 = gtk_check_button_new_with_label (_("Global Paint Options"));
-      gtk_container_add (GTK_CONTAINER (abox), button2);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button2),
-				    global_paint_options);
-      gtk_signal_connect (GTK_OBJECT (button2), "toggled",
-			  (GtkSignalFunc) paint_options_toggle_callback, bsp);
-
-      gtk_widget_show (button2);
-      gtk_widget_show (abox);
-
-      sep = gtk_vseparator_new ();
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bsp->shell)->action_area), sep,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (sep);
-      */
     }
 
   /*  update the active selection  */
@@ -499,7 +463,12 @@ brush_select_free (BrushSelectP bsp)
     {
       /* Only main one is saved */
       if (bsp == brush_select_dialog)
-	session_get_window_info (bsp->shell, &brush_select_session_info);
+	{
+	  session_get_window_info (bsp->shell, &brush_select_session_info);
+	  /*  save the size of the preview  */
+	  brush_select_session_info.width = bsp->preview->allocation.width;
+	  brush_select_session_info.height = bsp->preview->allocation.height;
+	}
       if (bsp->brush_popup != NULL)
 	gtk_widget_destroy (bsp->brush_popup);
 
@@ -578,7 +547,8 @@ brush_select_show_paint_options (BrushSelectP  bsp,
 				 bsp->options_box,
 				 FALSE, FALSE, 0, GTK_PACK_START);
       gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
-				 bsp->left_box, TRUE, TRUE, 0, GTK_PACK_START);
+				 bsp->left_box,
+				 TRUE, TRUE, 0, GTK_PACK_START);
       gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 2);
     }
   else
@@ -587,14 +557,39 @@ brush_select_show_paint_options (BrushSelectP  bsp,
 	gtk_widget_hide (bsp->paint_options_box);
       if (bsp->brush_selection_box->parent != bsp->right_box)
 	gtk_widget_reparent (bsp->brush_selection_box, bsp->right_box);
+      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
+				 bsp->left_box,
+				 FALSE, FALSE, 0, GTK_PACK_START);
       gtk_box_set_child_packing (GTK_BOX (bsp->options_box->parent),
 				 bsp->options_box,
 				 TRUE, TRUE, 0, GTK_PACK_START);
-      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
-				 bsp->left_box, FALSE, FALSE, 0, GTK_PACK_START);
       gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 0);
     }
 }
+
+/*  Disabled until I've figured out how gtk window resizing *really* works.
+ *  I don't think that the function below is the correct way to do it
+ *    --  Michael
+ *
+static void
+brush_select_map_callback (GtkWidget    *widget,
+			   BrushSelectP  bsp)
+{
+  GtkAllocation allocation;
+  gint xdiff, ydiff;
+
+  xdiff =
+    bsp->shell->allocation.width - bsp->preview->allocation.width;
+  ydiff =
+    bsp->shell->allocation.height - bsp->preview->allocation.height;
+
+  allocation = bsp->shell->allocation;
+  allocation.width = brush_select_session_info.width + xdiff;
+  allocation.height = brush_select_session_info.height + ydiff;
+
+  gtk_widget_size_allocate (bsp->shell, &allocation);
+}
+*/
 
 static void
 brush_select_brush_changed (BrushSelectP bsp,
@@ -702,10 +697,10 @@ brush_popup_open (BrushSelectP bsp,
 		    brush->mask->width, brush->mask->height);
 
   gtk_widget_popup (bsp->brush_popup, x, y);
-  
+
   /*  Draw the brush  */
   buf = g_new (gchar, brush->mask->width);
-  src = (gchar *)temp_buf_data (brush->mask);
+  src = (gchar *) temp_buf_data (brush->mask);
   for (y = 0; y < brush->mask->height; y++)
     {
       /*  Invert the mask for display.  We're doing this because
@@ -720,7 +715,7 @@ brush_popup_open (BrushSelectP bsp,
       src += brush->mask->width;
     }
   g_free(buf);
-  
+
   /*  Draw the brush preview  */
   gtk_widget_draw (bsp->brush_preview, NULL);
 }
@@ -959,22 +954,40 @@ brush_select_resize (GtkWidget    *widget,
 		     GdkEvent     *event, 
 		     BrushSelectP  bsp)
 {
+  /*  calculate the best-fit approximation...  */  
+  gint wid;
+  gint now;
+  gint cell_size;
+
+  wid = widget->allocation.width;
+
+  for(now = cell_size = MIN_CELL_SIZE;
+      now < MAX_CELL_SIZE; ++now)
+    {
+      if ((wid % now) < (wid % cell_size)) cell_size = now;
+      if ((wid % cell_size) == 0)
+        break;
+    }
+
    bsp->NUM_BRUSH_COLUMNS =
-     (gint) ((widget->allocation.width) / STD_CELL_WIDTH);
+     (gint) (wid / cell_size);
    bsp->NUM_BRUSH_ROWS =
      (gint) ((gimp_brush_list_length (brush_list) + bsp->NUM_BRUSH_COLUMNS - 1) /
 	     bsp->NUM_BRUSH_COLUMNS);
    
+   bsp->cell_width = cell_size;
+   bsp->cell_height = cell_size;
+
    /*  recalculate scrollbar extents  */
    preview_calc_scrollbar (bsp);
  
-   /*  render the brush into the newly created image structure  */
+   /*  render the brushes into the newly created image structure  */
    display_brushes (bsp);
 
    /*  update the display  */   
    if (bsp->redraw)
      gtk_widget_draw (bsp->preview, NULL);
-   
+
    return FALSE;
 }
  
@@ -996,7 +1009,7 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  sprintf (buf, "(%d X %d)", brush->mask->width, brush->mask->height);
+  g_snprintf (buf, 32, "(%d X %d)", brush->mask->width, brush->mask->height);
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */

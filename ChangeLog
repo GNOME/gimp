@@ -1,3 +1,12 @@
+1999-04-29  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brush_select.[ch]
+	* app/pattern_select.[ch]: disabled setting the size of the
+	brushes dialog again because it still caused SIGFPE's in some rare
+	cases. I'm trying to fix that.
+	*Minimal* ui spacing changes. Some changes to make the code look
+	more similar (I'm a make-them-look-the-same fanatic ;)
+
 Wed Apr 28 20:53:18 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/bucket_fill.c

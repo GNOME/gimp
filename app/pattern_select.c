@@ -15,8 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -31,13 +29,11 @@
 
 #include "libgimp/gimpintl.h"
 
-#define MIN_CELL_SIZE    32
-#define MAX_CELL_SIZE    45
+#define MIN_CELL_SIZE       32
+#define MAX_CELL_SIZE       45
 
-/*
 #define STD_PATTERN_COLUMNS 6
 #define STD_PATTERN_ROWS    5 
-*/
 
 #define MAX_WIN_WIDTH(psp)     (MIN_CELL_SIZE * (psp)->NUM_PATTERN_COLUMNS)
 #define MAX_WIN_HEIGHT(psp)    (MIN_CELL_SIZE * (psp)->NUM_PATTERN_ROWS)
@@ -67,9 +63,6 @@ static void pattern_select_scroll_update     (GtkAdjustment *, gpointer);
 
 
 /*  local variables  */
-gint NUM_PATTERN_COLUMNS = 6;
-gint NUM_PATTERN_ROWS    = 5;
-gint STD_CELL_SIZE = MIN_CELL_SIZE;
 
 /*  List of active dialogs  */
 GSList *pattern_active_dialogs = NULL;
@@ -99,9 +92,8 @@ pattern_select_new (gchar *title,
   psp->old_col = psp->old_row = 0;
   psp->callback_name = NULL;
   psp->pattern_popup = NULL;
-  psp->NUM_PATTERN_COLUMNS = 6;
-  psp->NUM_PATTERN_ROWS    = 5;
-  psp->STD_CELL_SIZE = MIN_CELL_SIZE;
+  psp->NUM_PATTERN_COLUMNS = STD_PATTERN_COLUMNS;
+  psp->NUM_PATTERN_ROWS    = STD_PATTERN_COLUMNS;
 
   /*  The shell and main vbox  */
   psp->shell = gtk_dialog_new ();
@@ -130,27 +122,28 @@ pattern_select_new (gchar *title,
 
   gtk_window_set_policy (GTK_WINDOW (psp->shell), FALSE, TRUE, FALSE);
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (psp->shell)->vbox), vbox,
-		      TRUE, TRUE, 0);
-
   /* handle the wm close event */
   gtk_signal_connect (GTK_OBJECT (psp->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (pattern_select_delete_callback),
 		      psp);
 
-  psp->options_box = gtk_vbox_new (FALSE, 1);
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), vbox);
+
+  /*  Options box  */
+  psp->options_box = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), psp->options_box, FALSE, FALSE, 0);
 
   /*  Create the active pattern label  */
-  label_box = gtk_hbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (label_box), 2);
-  gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 0);
+  label_box = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 2);
+
   psp->pattern_name = gtk_label_new (_("Active"));
-  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 4);
   psp->pattern_size = gtk_label_new ("(0 X 0)");
-  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_size, FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_size, FALSE, FALSE, 2);
 
   gtk_widget_show (psp->pattern_name);
   gtk_widget_show (psp->pattern_size);
@@ -173,8 +166,8 @@ pattern_select_new (gchar *title,
   /*  Create the pattern preview window and the underlying image  */
 
   /*  Get the initial pattern extents  */
-  psp->cell_width = STD_CELL_SIZE;
-  psp->cell_height = STD_CELL_SIZE;
+  psp->cell_width = MIN_CELL_SIZE;
+  psp->cell_height = MIN_CELL_SIZE;
 
   psp->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (psp->preview),
@@ -623,7 +616,7 @@ update_active_pattern_field (PatternSelectP psp)
   gtk_label_set_text (GTK_LABEL (psp->pattern_name), pattern->name);
 
   /*  Set pattern size  */
-  sprintf (buf, "(%d X %d)", pattern->mask->width, pattern->mask->height);
+  g_snprintf (buf, 32, "(%d X %d)", pattern->mask->width, pattern->mask->height);
   gtk_label_set_text (GTK_LABEL (psp->pattern_size), buf);
 }
 
@@ -632,44 +625,35 @@ pattern_select_resize (GtkWidget      *widget,
 		       GdkEvent       *event,
 		       PatternSelectP  psp)
 {
-  /* calculate the best-fit approximation... */  
+  /*  calculate the best-fit approximation...  */  
   gint wid;
   gint now;
+  gint cell_size;
 
   wid = widget->allocation.width;
 
-  for(now = psp->STD_CELL_SIZE = MIN_CELL_SIZE;
+  for(now = cell_size = MIN_CELL_SIZE;
       now < MAX_CELL_SIZE; ++now)
     {
-      if ((wid % now) < (wid % psp->STD_CELL_SIZE)) psp->STD_CELL_SIZE = now;
-      if ((wid % psp->STD_CELL_SIZE) == 0)
+      if ((wid % now) < (wid % cell_size)) cell_size = now;
+      if ((wid % cell_size) == 0)
         break;
     }
 
   psp->NUM_PATTERN_COLUMNS =
-    (gint) (wid / psp->STD_CELL_SIZE);
+    (gint) (wid / cell_size);
   psp->NUM_PATTERN_ROWS =
-    (gint) ((num_patterns + psp->NUM_PATTERN_COLUMNS-1) /
+    (gint) ((num_patterns + psp->NUM_PATTERN_COLUMNS - 1) /
 	    psp->NUM_PATTERN_COLUMNS);
 
-  psp->cell_width = psp->STD_CELL_SIZE;
-  psp->cell_height = psp->STD_CELL_SIZE;
-
-  /*
-  NUM_PATTERN_COLUMNS=(gint)(widget->allocation.width/STD_CELL_WIDTH);
-  NUM_PATTERN_ROWS = (num_patterns + NUM_PATTERN_COLUMNS - 1) / NUM_PATTERN_COLUMNS;
-  */
+  psp->cell_width = cell_size;
+  psp->cell_height = cell_size;
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (psp);
 
   /*  render the patterns into the newly created image structure  */
   display_patterns (psp);
-
-  /*  update the active selection  */
-/*  active = get_active_pattern ();
-  if (active)
-    pattern_select_select (psp, active->index); */
 
   /*  update the display  */
   draw_preview (psp);

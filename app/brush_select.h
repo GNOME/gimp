@@ -62,7 +62,8 @@ struct _BrushSelect {
   gint    paint_mode;
 
   /*  Some variables to keep the GUI consistent  */
-  int  cell_width, cell_height;
+  int  cell_width;
+  int  cell_height;
   int  scroll_offset;
   int  redraw;
   int  old_row;
