@@ -54,7 +54,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.8 - 8 Sep 1999"
+#define PLUG_IN_VERSION		"1.1.9 - 2 Oct 1999"
 #define SCALE_WIDTH		125
 
 #define DEFAULT_GAMMA		2.20
@@ -288,6 +288,7 @@ static gint32
 load_image(char *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
+                trns = 0,       /* Transparency present */
 		bpp = 0,	/* Bytes per pixel */
 		image_type = 0,	/* Type of image */
 		layer_type = 0,	/* Type of drawable/layer */
@@ -307,7 +308,8 @@ load_image(char *filename)	/* I - File to load */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
-
+  guchar	alpha[256],	/* Index -> Alpha */
+  		*alpha_ptr;	/* Temporary pointer */
 
  /*
   * Setup the PNG data structures...
@@ -364,15 +366,16 @@ load_image(char *filename)	/* I - File to load */
   png_read_info(pp, info);
 
  /*
-  * Hopefully this is now fixed once and for all, please tell me if you
-  * have any problems with <8-bit images -- njl195@zepler.org.uk
+  * This is a new version with support for tRNS (alpha + colourmaps)
+  * Mail me if you have trouble -- njl195@zepler.org.uk
   */
 
   if (info->bit_depth < 8) 
   {
     png_set_packing(pp);
-    if (info->color_type != PNG_COLOR_TYPE_PALETTE)
+    if (info->color_type != PNG_COLOR_TYPE_PALETTE) {
       png_set_expand(pp);
+    }
   }
   else if (info->bit_depth == 16)
     png_set_strip_16(pp);
@@ -385,6 +388,23 @@ load_image(char *filename)	/* I - File to load */
     num_passes = png_set_interlace_handling(pp);
   else
     num_passes = 1;
+
+ /*
+  * Special handling for INDEXED + tRNS (transparency palette)
+  */
+
+  if (info->valid & PNG_INFO_tRNS &&
+      info->color_type == PNG_COLOR_TYPE_PALETTE)
+  {
+    png_get_tRNS(pp, info, &alpha_ptr, &num, NULL);
+    /* Copy the existing alpha values from the tRNS chunk */
+    for (i= 0; i < num; ++i)
+      alpha[i]= alpha_ptr[i];
+    /* And set any others to fully opaque (255)  */
+    for (i= num; i < 256; ++i)
+      alpha[i]= 255;
+    trns= 1;
+  }
 
  /*
   * Update the info structures after the transformations take effect
@@ -503,11 +523,13 @@ load_image(char *filename)	/* I - File to load */
       num = end - begin;
 	
       if (pass != 0) /* to handle interlaced PiNGs */
-        gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, begin, drawable->width, num);
+        gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, begin,
+                                drawable->width, num);
 
       png_read_rows(pp, pixels, NULL, num);
 
-      gimp_pixel_rgn_set_rect(&pixel_rgn, pixel, 0, begin, drawable->width, num);
+      gimp_pixel_rgn_set_rect(&pixel_rgn, pixel, 0, begin,
+                              drawable->width, num);
 
       gimp_progress_update(((double)pass + (double)end / (double)info->height) /
                            (double)num_passes);
@@ -527,6 +549,35 @@ load_image(char *filename)	/* I - File to load */
   free(info);
 
   fclose(fp);
+
+
+  if (trns) {
+    gimp_layer_add_alpha(layer);
+    drawable = gimp_drawable_get(layer);
+    gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
+                        drawable->height, TRUE, FALSE);
+
+    pixel  = g_new(guchar, tile_height * drawable->width * 2); /* bpp == 1 */
+
+    for (begin = 0, end = tile_height;
+         begin < drawable->height;
+         begin += tile_height, end += tile_height)
+    {
+      if (end > drawable->height) end = drawable->height;
+      num= end - begin;
+
+      gimp_pixel_rgn_get_rect(&pixel_rgn, pixel, 0, begin,
+                                drawable->width, num);
+
+      for (i= 0; i < tile_height * drawable->width; ++i) {
+        pixel[i*2+1]= alpha [ pixel[i*2] ];
+      }
+
+      gimp_pixel_rgn_set_rect(&pixel_rgn, pixel, 0, begin,
+                              drawable->width, num);
+    }
+    g_free(pixel);
+  }
 
  /*
   * Update the display...
