@@ -2199,7 +2199,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
                 memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage));
 
-                size_str = gimp_image_new_get_size_string (memsize);
+                size_str = gimp_image_new_get_memsize_string (memsize);
 
                 i += print (title, title_len, i, "%s", size_str);
 

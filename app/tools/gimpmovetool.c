@@ -97,6 +97,10 @@ static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
 
 static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
 
+static void   gimp_move_tool_start_guide    (GimpTool          *tool,
+                                             GimpDisplay       *gdisp,
+                                             OrientationType    orientation);
+
 static GimpToolOptions * move_options_new   (GimpToolInfo      *tool_info);
 static void              move_options_reset (GimpToolOptions   *tool_options);
 
@@ -594,35 +598,25 @@ void
 gimp_move_tool_start_hguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  GimpMoveTool *move;
-
-  move = GIMP_MOVE_TOOL (tool);
-
-  gimp_display_shell_selection_visibility (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                           GIMP_SELECTION_PAUSE);
-
-  tool->gdisp       = gdisp;
-  tool->scroll_lock = TRUE;
-
-  if (move->guide && move->disp && move->disp->gimage)
-    gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (move->disp->shell),
-                                   move->guide, FALSE);
-
-  move->guide = gimp_image_add_hguide (gdisp->gimage);
-  move->disp  = gdisp;
-
-  tool->state = ACTIVE;
-
-  undo_push_guide (gdisp->gimage, move->guide);
-
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
+  gimp_move_tool_start_guide (tool, gdisp, HORIZONTAL);
 }
 
 void
 gimp_move_tool_start_vguide (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
+  gimp_move_tool_start_guide (tool, gdisp, VERTICAL);
+}
+
+static void
+gimp_move_tool_start_guide (GimpTool        *tool,
+                            GimpDisplay     *gdisp,
+                            OrientationType  orientation)
+{
   GimpMoveTool *move;
+
+  g_return_if_fail (GIMP_IS_MOVE_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   move = GIMP_MOVE_TOOL (tool);
 
@@ -630,18 +624,35 @@ gimp_move_tool_start_vguide (GimpTool    *tool,
                                            GIMP_SELECTION_PAUSE);
 
   tool->gdisp       = gdisp;
+  tool->state       = ACTIVE;
   tool->scroll_lock = TRUE;
 
   if (move->guide && move->disp && move->disp->gimage)
     gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (move->disp->shell),
                                    move->guide, FALSE);
 
-  move->guide = gimp_image_add_vguide (gdisp->gimage);
-  move->disp  = gdisp;
+  switch (orientation)
+    {
+    case HORIZONTAL:
+      move->guide = gimp_image_add_hguide (gdisp->gimage);
+      break;
 
-  tool->state = ACTIVE;
+    case VERTICAL:
+      move->guide = gimp_image_add_vguide (gdisp->gimage);
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+
+  move->disp = gdisp;
 
   undo_push_guide (gdisp->gimage, move->guide);
+
+  gimp_tool_set_cursor (tool, gdisp,
+                        GDK_HAND2,
+                        GIMP_TOOL_CURSOR_NONE,
+                        GIMP_CURSOR_MODIFIER_HAND);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }

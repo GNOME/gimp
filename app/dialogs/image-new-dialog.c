@@ -582,8 +582,8 @@ file_new_confirm_dialog (NewImageInfo *info)
 
   gtk_widget_set_sensitive (info->dialog, FALSE);
 
-  size     = gimp_image_new_get_size_string (info->size);
-  max_size = gimp_image_new_get_size_string (gimprc.max_new_image_size);
+  size     = gimp_image_new_get_memsize_string (info->size);
+  max_size = gimp_image_new_get_memsize_string (gimprc.max_new_image_size);
 
   /* xgettext:no-c-format */
 	    
@@ -685,9 +685,9 @@ file_new_image_size_callback (GtkWidget *widget,
   info->values->height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
 
-  info->size = gimp_image_new_calculate_size (info->values);
+  info->size = gimp_image_new_calculate_memsize (info->values);
 
-  text = gimp_image_new_get_size_string (info->size);
+  text = gimp_image_new_get_memsize_string (info->size);
   gtk_label_set_text (GTK_LABEL (info->memsize_label), text);
   g_free (text);
 }

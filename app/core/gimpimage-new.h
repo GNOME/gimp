@@ -61,8 +61,8 @@ void         gimp_image_new_set_default_values    (Gimp               *gimp,
 						   GimpImageNewValues *values);
 void         gimp_image_new_values_free           (GimpImageNewValues *values);
 
-gdouble      gimp_image_new_calculate_size        (GimpImageNewValues *values);
-gchar      * gimp_image_new_get_size_string       (gdouble             size);
+gsize        gimp_image_new_calculate_memsize     (GimpImageNewValues *values);
+gchar      * gimp_image_new_get_memsize_string    (gsize               memsize);
 
 void   gimp_image_new_set_have_current_cut_buffer (Gimp               *gimp);
 

@@ -182,38 +182,45 @@ gimp_image_new_values_free (GimpImageNewValues *values)
   g_free (values);
 }
 
-gdouble
-gimp_image_new_calculate_size (GimpImageNewValues *values)
+gsize
+gimp_image_new_calculate_memsize (GimpImageNewValues *values)
 {
-  gdouble width, height;
-  gdouble size;
+  gint channels;
 
-  width  = (gdouble) values->width;
-  height = (gdouble) values->height;
+  channels = ((values->type == GIMP_RGB ? 3 : 1)      /* color     */ +
+              (values->fill_type == TRANSPARENT_FILL) /* alpha     */ +
+              1                                       /* selection */);
 
-  size = 
-    width * height *
-      ((values->type == GIMP_RGB ? 3 : 1) +              /* bytes per pixel */
-       (values->fill_type == TRANSPARENT_FILL ? 1 : 0)); /* alpha channel */
-
-  return size;
+  return channels * values->width * values->height;
 }
 
 gchar *
-gimp_image_new_get_size_string (gdouble size)
+gimp_image_new_get_memsize_string (gsize memsize)
 {
-  if (size < 4096)
-    return g_strdup_printf (_("%d Bytes"), (gint) size);
-  else if (size < 1024 * 10)
-    return g_strdup_printf (_("%.2f KB"), size / 1024);
-  else if (size < 1024 * 100)
-    return g_strdup_printf (_("%.1f KB"), size / 1024);
-  else if (size < 1024 * 1024)
-    return g_strdup_printf (_("%d KB"), (gint) size / 1024);
-  else if (size < 1024 * 1024 * 10)
-    return g_strdup_printf (_("%.2f MB"), size / 1024 / 1024);
+  if (memsize < 4096)
+    {
+      return g_strdup_printf (_("%d Bytes"), memsize);
+    }
+  else if (memsize < 1024 * 10)
+    {
+      return g_strdup_printf (_("%.2f KB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 100)
+    {
+      return g_strdup_printf (_("%.1f KB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 1024)
+    {
+      return g_strdup_printf (_("%d KB"), memsize / 1024);
+    }
+  else if (memsize < 1024 * 1024 * 10)
+    {
+      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+    }
   else
-    return g_strdup_printf (_("%.1f MB"), size / 1024 / 1024);
+    {
+      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+    }
 }
 
 void

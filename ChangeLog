@@ -1,3 +1,19 @@
+2002-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-new.[ch]: renamed the image size utility
+	functions from foo_size_bar() to foo_memsize_bar(), use "gsize"
+	instead of "gdouble". Also take the selection mask into account
+	for the initial image size.
+
+	* app/display/gimpdisplayshell.c
+	* app/gui/file-new-dialog.c: changed accordingly.
+
+	* app/display/gimpdisplayshell-handlers.c: connect to "undo_event",
+	not "dirty" and "clean" to dirty the image title.
+
+	* app/tools/gimpmovetool.c: factored common code out to
+	gimp_move_tool_start_guide(), also set a useful cursor there.
+
 2002-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.c (gimp_message_box): changed the
@@ -69,7 +85,7 @@
 	pointer when dragging guides from the rulers. Coincidentially,
 	this also fixes the buggy offset between guide and mouse
 	pointer...
-	Cleaned up the main tool event callback a but more.
+	Cleaned up the main tool event callback a bit more.
 
 	* app/widgets/gimppreview.c
 	* app/gui/commands.c: set the new global "gimp_debug_memsize"
@@ -84,7 +100,7 @@
 
 	* app/tools/gimpdrawtool.[ch]: store the GimpDisplay passed to
 	gimp_draw_tool_start() in draw_tool->gdisp and use it for
-	coordinate transfomration. This way we can paint on a display
+	coordinate transfomration. This way we can draw on a display
 	which is not tool->gdisp.
 
 	* app/tools/gimppainttool.c: changed the gimp_draw_tool_foo()

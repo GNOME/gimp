@@ -38,7 +38,10 @@
 
 /*  local function prototypes  */
 
-static void   gimp_display_shell_update_title_handler       (GimpImage        *gimage,
+static void   gimp_display_shell_undo_event_handler         (GimpImage        *gimage,
+                                                             gint              event,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_name_changed_handler       (GimpImage        *gimage,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_selection_control_handler  (GimpImage        *gimage,
                                                              GimpSelectionControl control,
@@ -69,16 +72,12 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   gimage = shell->gdisp->gimage;
 
-  g_signal_connect (G_OBJECT (gimage), "dirty",
-                    G_CALLBACK (gimp_display_shell_update_title_handler),
-                    shell);
-  g_signal_connect (G_OBJECT (gimage), "clean",
-                    G_CALLBACK (gimp_display_shell_update_title_handler),
+  g_signal_connect (G_OBJECT (gimage), "undo_event",
+                    G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
   g_signal_connect (G_OBJECT (gimage), "name_changed",
-                    G_CALLBACK (gimp_display_shell_update_title_handler),
+                    G_CALLBACK (gimp_display_shell_name_changed_handler),
                     shell);
-
   g_signal_connect (G_OBJECT (gimage), "selection_control",
                     G_CALLBACK (gimp_display_shell_selection_control_handler),
                     shell);
@@ -128,9 +127,11 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
                                         gimp_display_shell_selection_control_handler,
                                         shell);
-
   g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
-                                        gimp_display_shell_update_title_handler,
+                                        gimp_display_shell_name_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_undo_event_handler,
                                         shell);
 }
 
@@ -138,7 +139,15 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 /*  private functions  */
 
 static void
-gimp_display_shell_update_title_handler (GimpImage        *gimage,
+gimp_display_shell_undo_event_handler (GimpImage        *gimage,
+                                       gint              event,
+                                       GimpDisplayShell *shell)
+{
+  shell->title_dirty = TRUE;
+}
+
+static void
+gimp_display_shell_name_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   shell->title_dirty = TRUE;
