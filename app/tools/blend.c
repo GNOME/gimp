@@ -37,7 +37,7 @@
 #include "tools.h"
 #include "undo.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"
 
 /*  target size  */
 #define  TARGET_HEIGHT     15
@@ -1034,7 +1034,7 @@ gradient_calc_shapeburst_angular_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0, TRUE, FALSE);
-  value = 1.0 - *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
+  value = 1.0 - *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   tile_release (tile, FALSE);
 
   return value;
@@ -1052,7 +1052,7 @@ gradient_calc_shapeburst_spherical_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0, TRUE, FALSE);
-  value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
+  value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = 1.0 - sin (0.5 * M_PI * value);
   tile_release (tile, FALSE);
 
@@ -1071,7 +1071,7 @@ gradient_calc_shapeburst_dimpled_factor (double x,
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
   tile = tile_manager_get_tile (distR.tiles, ix, iy, 0, TRUE, FALSE);
-  value = *(((float *) tile->data) + ((iy % TILE_HEIGHT) * tile->ewidth + (ix % TILE_WIDTH)));
+  value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
   value = cos (0.5 * M_PI * value);
   tile_release (tile, FALSE);
 

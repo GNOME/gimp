@@ -38,7 +38,7 @@
 #include "layer_pvt.h"
 #include "drawable_pvt.h"
 #include "tile_manager_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #define    SQR(x) ((x) * (x))
 
@@ -65,7 +65,7 @@ static void	   invert		     (Matrix, Matrix);
 
 #define REF_TILE(i,x,y) \
      tile[i] = tile_manager_get_tile (float_tiles, x, y, 0, TRUE, FALSE); \
-     src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
+     src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
 
 
 void

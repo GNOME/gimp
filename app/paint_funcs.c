@@ -26,7 +26,7 @@
 #include "tile_manager.h"
 
 #include "tile_manager_pvt.h"  /* For copy-on-write */
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076
@@ -3707,10 +3707,10 @@ shapeburst_region (PixelRegion *srcPR,
 	      while (y >= end)
 		{
 		  tile = tile_manager_get_tile (srcPR->tiles, x, y, 0, TRUE, FALSE);
-		  tile_data = tile->data + (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile->ewidth - (x % TILE_WIDTH) - 1));
+		  tile_data = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
+		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile_ewidth(tile) - (x % TILE_WIDTH) - 1));
 		  boundary = MINIMUM (boundary, (y - end)) + 1;
-		  inc = 1 - tile->ewidth;
+		  inc = 1 - tile_ewidth (tile);
 
 		  while (boundary--)
 		    {

@@ -31,7 +31,7 @@
 
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 enum {
   LAST_SIGNAL
@@ -942,11 +942,16 @@ layer_pick_correlate (layer, x, y)
        */
       tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, 0, TRUE, FALSE);
 
-      val = tile->data[tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH) + 1) - 1];
+      val = * (unsigned char*) (tile_data_pointer (tile,
+						   x % TILE_WIDTH,
+						   y % TILE_HEIGHT) +
+				tile_bpp (tile) - 1);
       if (layer->mask)
 	{
+	  unsigned char *ptr;
 	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, 0, TRUE, FALSE);
-	  val = (val * mask_tile->data[mask_tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)]) / 255;
+	  ptr = tile_data_pointer (mask_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+	  val = val * (*ptr) / 255;
 	  tile_release (mask_tile, FALSE);
 	}
 

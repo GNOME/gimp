@@ -26,7 +26,7 @@
 #include "pixel_region.h"
 #include "scale.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -2438,10 +2438,9 @@ render_image_tile_fault (RenderInfo *info)
   if (!tile)
     return NULL;
 
-  data = (tile->data +
-	  ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-	   (info->src_x % TILE_WIDTH)) * tile->bpp);
-
+  data = tile_data_pointer (tile, 
+			    info->src_x % TILE_WIDTH,
+			    info->src_y % TILE_HEIGHT);
   scale = info->scale;
   step = info->scalesrc * info->src_bpp;
   dest = tile_buf;
@@ -2468,9 +2467,9 @@ render_image_tile_fault (RenderInfo *info)
 	      if (!tile)
 		return tile_buf;
 
-	      data = (tile->data +
-		      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-		       (x % TILE_WIDTH)) * tile->bpp);
+	      data = tile_data_pointer (tile, 
+			    x % TILE_WIDTH,
+			    info->src_y % TILE_HEIGHT);
 	    }
 	}
     }

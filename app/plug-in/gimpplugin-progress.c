@@ -47,7 +47,7 @@
 #include "menus.h"
 #include "plug_in.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #define SEPARATE_PROGRESS_BAR
 
@@ -1367,9 +1367,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 	}
 
       if (tile_data.use_shm)
-	memcpy (tile->data, shm_addr, tile_size (tile));
+	memcpy (tile_data_pointer (tile, 0, 0), shm_addr, tile_size (tile));
       else
-	memcpy (tile->data, tile_info->data, tile_size (tile));
+	memcpy (tile_data_pointer (tile, 0, 0), tile_info->data, tile_size (tile));
 
       tile_release (tile, TRUE);
 
@@ -1406,15 +1406,15 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_data.drawable_ID = tile_req->drawable_ID;
       tile_data.tile_num = tile_req->tile_num;
       tile_data.shadow = tile_req->shadow;
-      tile_data.bpp = tile->bpp;
-      tile_data.width = tile->ewidth;
-      tile_data.height = tile->eheight;
+      tile_data.bpp = tile_bpp(tile);
+      tile_data.width = tile_ewidth(tile);
+      tile_data.height = tile_eheight(tile);
       tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
 
       if (tile_data.use_shm)
-	memcpy (shm_addr, tile->data, tile_size (tile));
+	memcpy (shm_addr, tile_data_pointer (tile, 0, 0), tile_size (tile));
       else
-	tile_data.data = tile->data;
+	tile_data.data = tile_data_pointer (tile, 0, 0);
 
       if (!gp_tile_data_write (current_writefd, &tile_data))
 	{

@@ -45,6 +45,16 @@ void tile_alloc (Tile *tile);
  */
 int tile_size (Tile *tile);
 
+int tile_ewidth (Tile *tile);
+int tile_eheight (Tile *tile);
+int tile_bpp (Tile *tile);
+
+int tile_is_valid (Tile *tile);
+
+void tile_mark_valid (Tile *tile);
+
+void *tile_data_pointer (Tile *tile, int xoff, int yoff);
+
 /* tile_attach attaches a tile to a tile manager: this function
  * increments the tile's share count and inserts a tilelink into the
  * tile's link list.  tile_detach reverses the process.

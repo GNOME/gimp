@@ -26,8 +26,8 @@
 #include "undo.h"
 #include "gimpsignal.h"
 
-#include "tile_manager.h"		/* ick. */
-#include "tile_pvt.h"
+#include "tile_manager.h"
+#include "tile.h"
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
 
@@ -1234,19 +1234,19 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 	if (! flat)
 	  {
 	    /*  check if the tile is outside the bounds  */
-	    if ((MIN ((j + tile->ewidth), x2) - MAX (j, x1)) <= 0)
+	    if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
 	      {
-		tile->valid = FALSE;
+		tile_invalidate_tile (&tile, tm, j, i, 0);
 		if (j < x1)
-		  startx = MAX (startx, (j + tile->ewidth));
+		  startx = MAX (startx, (j + tile_ewidth(tile)));
 		else
 		  endx = MIN (endx, j);
 	      }
-	    else if (MIN ((i + tile->eheight), y2) - MAX (i, y1) <= 0)
+	    else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
 	      {
-		tile->valid = FALSE;
+		tile_invalidate_tile (&tile, tm, j, i, 0);
 		if (i < y1)
-		  starty = MAX (starty, (i + tile->eheight));
+		  starty = MAX (starty, (i + tile_eheight(tile)));
 		else
 		  endy = MIN (endy, i);
 	      }
@@ -1255,17 +1255,17 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
 		/*  If the tile is not valid, make sure we get the entire tile
 		 *   in the construction extents
 		 */
-		if (tile->valid == FALSE)
+		if (tile_is_valid(tile) == FALSE)
 		  {
 		    tilex = j - (j % TILE_WIDTH);
 		    tiley = i - (i % TILE_HEIGHT);
 
 		    startx = MIN (startx, tilex);
-		    endx = MAX (endx, tilex + tile->ewidth);
+		    endx = MAX (endx, tilex + tile_ewidth(tile));
 		    starty = MIN (starty, tiley);
-		    endy = MAX (endy, tiley + tile->eheight);
+		    endy = MAX (endy, tiley + tile_eheight(tile));
 
-		    tile->valid = TRUE;
+		    tile_mark_valid (tile); /* hmmmmmmm..... */
 		  }
 	      }
 	  }
@@ -1287,8 +1287,8 @@ gimp_image_validate (TileManager *tm, Tile *tile, int level)
 
   /*  Find the coordinates of this tile  */
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
-  w = tile->ewidth;
-  h = tile->eheight;
+  w = tile_ewidth(tile);
+  h = tile_eheight(tile);
 
   gimp_image_construct (gimage, x, y, w, h);
 }

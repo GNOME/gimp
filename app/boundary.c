@@ -21,7 +21,7 @@
 #include "errors.h"
 #include "boundary.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"
 
 /* half intensity for mask */
 #define HALF_WAY 127
@@ -126,8 +126,8 @@ find_empty_segs (PixelRegion  *maskPR,
 	  if (tile)
 	    tile_release (tile, FALSE);
 	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, 0, TRUE, FALSE);
-	  data = tile->data + tile->bpp *
-	    ((scanline % TILE_HEIGHT) * tile->ewidth + (x % TILE_WIDTH)) + (tile->bpp - 1);
+	  data = tile_data_pointer (tile, x % TILE_WIDTH, scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
+
 	  tilex = x / TILE_WIDTH;
 	}
 
@@ -143,7 +143,7 @@ find_empty_segs (PixelRegion  *maskPR,
 	(*num_empty)++;
       last = val;
 
-      data += tile->bpp;
+      data += tile_bpp(tile);
     }
 
   if (last > 0)

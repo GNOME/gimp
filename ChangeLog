@@ -1,3 +1,18 @@
+Tue Aug 11 12:24:14 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* tile.c tile.h: exported some accessor functions, made Tile
+	opaque.
+	* tile_manager.c tile_manager.h: added a public call to invalidate
+	a tile
+	* blend.c boundary.c by_color_select.c channel.c color_picker.c
+	drawable_cmds.c fuzzy_select.c gimpimage.c image_render.c ink.c
+	layer.c paint_core.c paint_funcs.c pixel_region.c plug_in.c undo.c
+	xcf.c: eliminated references to tile private data
+	* ink.c (ink_set_undo_tiles), paint_core.c (set_undo_tiles): used
+	tile sharing to replace tile copies for undo tiles
+	* undo.c (undo_pop_image): swap tiles instead of pixels when
+	possible
+
 Mon Aug 10 14:48:20 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/gdisplay.c: corrected 2 annoyances: that stupid hash table

@@ -31,7 +31,7 @@
 #include "undo.h"
 
 #include "channel_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"
 
 /*
 enum {
@@ -111,7 +111,8 @@ static void
 channel_validate (TileManager *tm, Tile *tile, int level)
 {
   /*  Set the contents of the tile to empty  */
-  memset (tile->data, TRANSPARENT_OPACITY, tile->ewidth * tile->eheight);
+  memset (tile_data_pointer (tile, 0, 0), 
+	  TRANSPARENT_OPACITY, tile_size(tile));
 }
 
 
@@ -549,7 +550,7 @@ channel_value (Channel *mask, int x, int y)
     }
 
   tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, 0, TRUE, FALSE);
-  val = tile->data[(y % TILE_HEIGHT) * TILE_WIDTH + (x % TILE_WIDTH)];
+  val = *(unsigned char *)(tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
   tile_release (tile, FALSE);
 
   return val;

@@ -33,7 +33,7 @@
 #include "tools.h"
 #include "undo.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
@@ -676,13 +676,14 @@ paint_core_get_orig_image (paint_core, drawable, x1, y1, x2, y2)
       /*  If the undo tile corresponding to this location is valid, use it  */
       undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
 					 0, FALSE, FALSE);
-      if (undo_tile->valid == TRUE)
+      if (tile_is_valid (undo_tile) == TRUE)
 	{
 	  refd = 1;
 	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
 					     0, TRUE, FALSE);
-	  s = undo_tile->data + srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
-	    srcPR.bytes * (srcPR.x % TILE_WIDTH);
+	  s = tile_data_pointer (undo_tile, 0, 0) +
+	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
+	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
 	}
       else
 	{
@@ -1244,14 +1245,11 @@ set_undo_tiles (drawable, x, y, w, h)
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, FALSE, FALSE);
-	  if (dest_tile->valid == FALSE)
+	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, TRUE, TRUE);
 	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0, TRUE, FALSE);
-	      memcpy (dest_tile->data, src_tile->data,
-		      (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
+	      tile_manager_map_tile (undo_tiles, j, i, 0, src_tile);
 	      tile_release (src_tile, FALSE);
-	      tile_release (dest_tile, TRUE);
 	    }
 	}
     }
@@ -1270,10 +1268,11 @@ set_canvas_tiles (x, y, w, h)
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0, FALSE, FALSE);
-	  if (tile->valid == FALSE)
+	  if (tile_is_valid (tile) == FALSE)
 	    {
 	      tile = tile_manager_get_tile (canvas_tiles, j, i, 0, TRUE, TRUE);
-	      memset (tile->data, 0, (tile->ewidth * tile->eheight * tile->bpp));
+	      memset (tile_data_pointer (tile, 0, 0), 0, 
+		      tile_size (tile));
 	      tile_release (tile, TRUE);
 	    }
 	}

@@ -28,7 +28,7 @@
 #include "gdisplay.h"
 #include "rect_select.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #define NO  0
 #define YES 1
@@ -131,8 +131,8 @@ ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
   *s_tile = tile_manager_get_tile (src, x, y, 0, TRUE, FALSE);
   *m_tile = tile_manager_get_tile (mask, x, y, 0, TRUE, TRUE);
 
-  *s = (*s_tile)->data + (*s_tile)->bpp * ((*s_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-  *m = (*m_tile)->data + (*m_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH);
+  *s = tile_data_pointer (*s_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  *m = tile_data_pointer (*m_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 }
 
 static int
@@ -215,7 +215,8 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
   if (y < 0 || y >= src->h) return;
 
   tile = tile_manager_get_tile (mask->tiles, x, y, 0, TRUE, FALSE);
-  val = tile->data[tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)];
+  val = *(unsigned char *)(tile_data_pointer (tile, 
+					      x%TILE_WIDTH, y%TILE_HEIGHT));
   tile_release (tile, FALSE);
   if (val != 0)
     return;
@@ -283,8 +284,7 @@ find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
   tile = tile_manager_get_tile (srcPR.tiles, x, y, 0, TRUE, FALSE);
   if (tile)
     {
-      start = tile->data + tile->ewidth * tile->bpp * (y % TILE_HEIGHT) +
-	tile->bpp * (x % TILE_WIDTH);
+      start = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
 
       find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, bytes, x, y, start);
 

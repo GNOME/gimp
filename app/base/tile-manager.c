@@ -25,7 +25,6 @@
 
 static void tile_manager_destroy_level (TileManager *tm,
 					TileLevel *level);
-static void tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num);
 static int tile_manager_get_tile_num (TileManager *tm,
 				       int xpixel,
 				       int ypixel,
@@ -444,7 +443,20 @@ tile_manager_destroy_level (TileManager *tm, TileLevel *level)
 }
 
 
-static void
+void
+tile_invalidate_tile (Tile **tile_ptr, TileManager *tm, 
+		      int xpixel, int ypixel, int level)
+{
+  int tile_num;
+
+  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel, level);
+  if (tile_num < 0) return;
+  
+  tile_invalidate (tile_ptr, tm, tile_num);
+}
+
+
+void
 tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num)
 {
   Tile *tile = *tile_ptr;

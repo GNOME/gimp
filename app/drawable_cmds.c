@@ -23,7 +23,7 @@
 #include "drawable.h"
 #include "drawable_cmds.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 static int int_value;
 static int success;
@@ -1270,7 +1270,7 @@ drawable_set_pixel_invoker (Argument *args)
       x %= TILE_WIDTH;
       y %= TILE_HEIGHT;
 
-      p = tile->data + tile->bpp * (tile->ewidth * y + x);
+      p = tile_data_pointer (tile, y, x);
       for (b = 0; b < num_channels; b++)
 	*p++ = *pixel++;
 
@@ -1374,7 +1374,7 @@ drawable_get_pixel_invoker (Argument *args)
       x %= TILE_WIDTH;
       y %= TILE_HEIGHT;
 
-      p = tile->data + tile->bpp * (tile->ewidth * y + x);
+      p = tile_data_pointer (tile, x, y);
       for (b = 0; b < num_channels; b++)
 	pixel[b] = p[b];
 

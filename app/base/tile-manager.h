@@ -119,6 +119,10 @@ void tile_manager_map (TileManager *tm,
 void tile_manager_validate (TileManager *tm,
 			    Tile        *tile);
 
+void tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num);
+void tile_invalidate_tile (Tile **tile_ptr, TileManager *tm, 
+			   int xpixel, int ypixel, int level);
+
 /* Given a toplevel tile, this procedure will invalidate
  *  (set the dirty bit) for all tiles in lower levels which
  *  contain this toplevel tile.

@@ -40,7 +40,7 @@
 #include "layer_pvt.h"
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 
 
@@ -618,14 +618,23 @@ undo_pop_image (GImage *gimage,
 	  for (j = x; j < image_undo->x2; j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	    {
 	      src_tile = tile_manager_get_tile (tiles, j, i, 0, FALSE, FALSE);
-	      if (src_tile->valid == TRUE)
+	      if (tile_is_valid (src_tile) == TRUE)
 		{
-		  src_tile = tile_manager_get_tile (tiles, j, i, 0, TRUE, TRUE);
-		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0, TRUE, TRUE);
-		  swap_pixels (src_tile->data, dest_tile->data,
-			       (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
-		  tile_release (dest_tile, TRUE);
-		  tile_release (src_tile, TRUE);
+		  /* swap tiles, not pixels! */
+
+		  src_tile = tile_manager_get_tile (tiles, j, i, 0, TRUE, FALSE /* TRUE */);
+		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, 0, TRUE, FALSE /* TRUE */);
+
+		  tile_manager_map_tile (tiles, j, i, 0, dest_tile);
+		  tile_manager_map_tile (drawable_data (image_undo->drawable), j, i, 0, src_tile);
+#if 0
+		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
+			       tile_data_pointer (dest_tile, 0, 0),
+			       tile_size (src_tile));
+#endif
+		  
+		  tile_release (dest_tile, FALSE /* TRUE */);
+		  tile_release (src_tile, FALSE /* TRUE */);
 		}
 	    }
 	}

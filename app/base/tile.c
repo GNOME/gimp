@@ -204,6 +204,43 @@ tile_size (Tile *tile)
 }
 
 
+int
+tile_ewidth (Tile *tile)
+{
+  return tile->ewidth;
+}
+
+
+int
+tile_eheight (Tile *tile)
+{
+  return tile->eheight;
+}
+
+
+int
+tile_bpp (Tile *tile)
+{
+  return tile->bpp;
+}
+
+
+int 
+tile_is_valid (Tile *tile)
+{
+  return tile->valid;
+}
+
+
+void
+tile_mark_valid (Tile *tile)
+{
+  TILE_MUTEX_LOCK (tile);
+  tile->valid = TRUE;
+  TILE_MUTEX_UNLOCK (tile);
+}
+
+
 void
 tile_attach (Tile *tile, void *tm, int tile_num)
 {
@@ -264,3 +301,9 @@ tile_detach (Tile *tile, void *tm, int tile_num)
 }
 
 
+void *
+tile_data_pointer (Tile *tile, int xoff, int yoff)
+{
+  int offset = yoff * tile->ewidth + xoff;
+  return (void *)(tile->data + offset * tile->bpp);
+}

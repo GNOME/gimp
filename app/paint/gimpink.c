@@ -26,7 +26,7 @@
 #include "undo.h"
 #include "blob.h"
 
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 #include <math.h>
 #include <stdlib.h>
@@ -975,14 +975,11 @@ ink_set_undo_tiles (drawable, x, y, w, h)
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, FALSE, FALSE);
-	  if (dest_tile->valid == FALSE)
+	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      dest_tile = tile_manager_get_tile (undo_tiles, j, i, 0, TRUE, TRUE);
 	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, 0, TRUE, FALSE);
-	      memcpy (dest_tile->data, src_tile->data,
-		      (src_tile->ewidth * src_tile->eheight * src_tile->bpp));
+	      tile_manager_map_tile (undo_tiles, j, i, 0, src_tile);
 	      tile_release (src_tile, FALSE);
-	      tile_release (dest_tile, TRUE);
 	    }
 	}
     }
@@ -1002,10 +999,12 @@ ink_set_canvas_tiles (x, y, w, h)
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
 	  tile = tile_manager_get_tile (canvas_tiles, j, i, 0, FALSE, FALSE);
-	  if (tile->valid == FALSE)
+	  if (tile_is_valid (tile) == FALSE)
 	    {
 	      tile = tile_manager_get_tile (canvas_tiles, j, i, 0, TRUE, TRUE);
-	      memset (tile->data, 0, (tile->ewidth * tile->eheight * tile->bpp));
+	      memset (tile_data_pointer (tile, 0, 0), 
+		      0, 
+		      tile_size (tile));
 	      tile_release (tile, TRUE);
 	    }
 	}

@@ -26,7 +26,7 @@
 #include "layer_pvt.h"
 #include "channel_pvt.h"
 #include "tile_manager_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 /* #define SWAP_FROM_FILE */
 
@@ -1090,7 +1090,8 @@ xcf_save_tile (XcfInfo *info,
 	       Tile    *tile)
 {
   tile_lock (tile);
-  info->cp += xcf_write_int8 (info->fp, tile->data, tile_size (tile));
+  info->cp += xcf_write_int8 (info->fp, tile_data_pointer (tile, 0, 0), 
+			      tile_size (tile));
   tile_release (tile, FALSE);
 }
 
@@ -1110,16 +1111,16 @@ xcf_save_tile_rle (XcfInfo *info,
 
   tile_lock (tile);
 
-  bpp = tile->bpp;
+  bpp = tile_bpp (tile);
 
   for (i = 0; i < bpp; i++)
     {
-      data = tile->data + i;
+      data = tile_data_pointer (tile, 0, 0) + i;
 
       state = 0;
       length = 0;
       count = 0;
-      size = tile->ewidth * tile->eheight;
+      size = tile_ewidth(tile) * tile_eheight(tile);
       last = -1;
 
       while (size > 0)
@@ -1207,7 +1208,7 @@ xcf_save_tile_rle (XcfInfo *info,
 	  }
 	}
 
-      if (count != (tile->ewidth * tile->eheight))
+      if (count != (tile_ewidth (tile) * tile_eheight (tile)))
 	g_print ("xcf: uh oh! xcf rle tile saving error: %d\n", count);
     }
 
@@ -1944,10 +1945,11 @@ xcf_load_level (XcfInfo     *info,
       if (previous != NULL) 
 	{
 	  tile_lock (previous);
-	  if (tile->ewidth == previous->ewidth &&
-	      tile->eheight == previous->eheight &&
-	      tile->bpp == previous->bpp &&
-	      memcmp (tile->data, previous->data,
+	  if (tile_ewidth (tile) == tile_ewidth (previous) &&
+	      tile_eheight (tile) == tile_eheight (previous) &&
+	      tile_bpp (tile) == tile_bpp (previous) &&
+	      memcmp (tile_data_pointer(tile, 0, 0), 
+		      tile_data_pointer(previous, 0, 0),
 		      tile_size (tile)) == 0)
 	    {
 	      tile_release (tile, TRUE);
@@ -2007,7 +2009,8 @@ xcf_load_tile (XcfInfo *info,
 
 #else
 
-  info->cp += xcf_read_int8 (info->fp, tile->data, tile_size (tile));
+  info->cp += xcf_read_int8 (info->fp, tile_data_pointer(tile, 0, 0), 
+			     tile_size (tile));
 
 #endif
 
@@ -2028,13 +2031,13 @@ xcf_load_tile_rle (XcfInfo *info,
   int bpp;
   int i, j;
 
-  data = tile->data;
-  bpp = tile->bpp;
+  data = tile_data_pointer (tile, 0, 0);
+  bpp = tile_bpp (tile);
 
   for (i = 0; i < bpp; i++)
     {
-      data = tile->data + i;
-      size = tile->ewidth * tile->eheight;
+      data = tile_data_pointer (tile, 0, 0) + i;
+      size = tile_ewidth (tile) * tile_eheight (tile);
       count = 0;
 
       while (size > 0)

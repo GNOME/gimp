@@ -23,7 +23,7 @@
 #include "pixel_region.h"
 
 #include "tile_manager_pvt.h"
-#include "tile_pvt.h"			/* ick. */
+#include "tile.h"			/* ick. */
 
 typedef struct _PixelRegionHolder PixelRegionHolder;
 
@@ -144,25 +144,25 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
   while (x < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      npixels = tile->ewidth - (x % TILE_WIDTH);
+      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
 
       if ((x + npixels) > end) /* make sure we don't write past the end */
 	npixels = end - x;
 
       if (subsample == 1) /* optimize for the common case */
       {
-	memcpy(data, tile_data, tile->bpp*npixels);
-	data += tile->bpp*npixels;
+	memcpy(data, tile_data, tile_bpp(tile)*npixels);
+	data += tile_bpp(tile)*npixels;
 	x += npixels;
       }
       else
       {
 	boundary = x + npixels;
-	inc = subsample * tile->bpp;
+	inc = subsample * tile_bpp(tile);
 	for ( ; x < boundary; x += subsample)
 	{
-	  for (b = 0; b < tile->bpp; b++)
+	  for (b = 0; b < tile_bpp(tile); b++)
 	    *data++ = tile_data[b];
 	  tile_data += inc;
 	}
@@ -191,16 +191,16 @@ pixel_region_set_row (PR, x, y, w, data)
   while (x < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-      npixels = tile->ewidth - (x % TILE_WIDTH);
+      npixels = tile_ewidth(tile) - (x % TILE_WIDTH);
 
       if ((x + npixels) > end) /* make sure we don't write past the end */
 	npixels = end - x;
 
-      memcpy(tile_data, data, tile->bpp*npixels);
+      memcpy(tile_data, data, tile_bpp(tile)*npixels);
 
-      data += tile->bpp*npixels;
+      data += tile_bpp(tile)*npixels;
       x += npixels;
 
       tile_release (tile, TRUE);
@@ -230,16 +230,16 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
   while (y < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, FALSE);
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      boundary = y + (tile->eheight - (y % TILE_HEIGHT));
+      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
       if (boundary > end) /* make sure we don't write past the end */
 	boundary = end;
 
-      inc = subsample * tile->bpp * tile->ewidth;
+      inc = subsample * tile_bpp(tile) * tile_ewidth(tile);
 
       for ( ; y < boundary; y += subsample)
 	{
-	  for (b = 0; b < tile->bpp; b++)
+	  for (b = 0; b < tile_bpp(tile); b++)
 	    *data++ = tile_data[b];
 	  tile_data += inc;
 	}
@@ -270,16 +270,16 @@ pixel_region_set_col (PR, x, y, h, data)
   while (y < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, 0, TRUE, TRUE);
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      boundary = y + (tile->eheight - (y % TILE_HEIGHT));
-      inc = tile->bpp * tile->ewidth;
+      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
+      inc = tile_bpp(tile) * tile_ewidth(tile);
 
       if (boundary > end) /* make sure we don't write past the end */
 	boundary = end;
 
       for ( ; y < boundary; y++)
 	{
-	  for (b = 0; b < tile->bpp; b++)
+	  for (b = 0; b < tile_bpp(tile); b++)
 	    tile_data[b] = *data++;
 	  tile_data += inc;
 	}
@@ -596,8 +596,8 @@ pixel_region_configure (PRH, PRI)
       offx = PRH->PR->x % TILE_WIDTH;
       offy = PRH->PR->y % TILE_HEIGHT;
 
-      PRH->PR->rowstride = tile->ewidth * PRH->PR->bytes;
-      PRH->PR->data = tile->data + offy * PRH->PR->rowstride + offx * PRH->PR->bytes;
+      PRH->PR->rowstride = tile_ewidth(tile) * PRH->PR->bytes;
+      PRH->PR->data = tile_data_pointer(tile, offx, offy);
     }
   else
     {
