@@ -441,7 +441,7 @@ oilify_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
-  GtkWidget *adj;
+  GtkObject *adj;
   gchar **argv;
   gint    argc;
 
