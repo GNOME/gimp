@@ -1945,9 +1945,17 @@ construct_edge_map (Tool    *tool,
 	    srcPR.x=x;
 	    srcPR.y=y;
 	    srcPR.rowstride = srcPR.bytes * block->width;
-	    srcPR.data = temp_buf_data (block) + offy * srcPR.rowstride + offx * srcPR.bytes;
+	    srcPR.data = temp_buf_data (block) + /*off*/y * srcPR.rowstride +
+	    /*off*/x * srcPR.bytes;
 	    destPR.data = temp_buf_data (edge_buf) +
-	      (y - edge_buf->y) * destPR.rowstride + (x - edge_buf->x) * edge_buf->bytes;
+	      y * destPR.rowstride + x * edge_buf->bytes;
+
+	   /* look at this debuggin info.*/
+	   printf("Pixel region dump %d %d\n", x, endx);
+	   printf("rowstride:%d bytes:%d index:%d\n",srcPR.rowstride,srcPR.bytes, index);
+	   printf("x:%d y:%d w:%d h:%d\n",srcPR.x, srcPR.y, srcPR.w, srcPR.h);
+	   printf("sdata:%d ddata:%d\n",srcPR.data, destPR.data);
+	   printf("bdata:%d edata:%d\n", block->data, edge_buf->data);
 
 	    copy_region (&srcPR, &destPR);
 	  }
