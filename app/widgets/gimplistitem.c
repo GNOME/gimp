@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpchannel.h"
@@ -536,12 +538,20 @@ gimp_list_item_name_changed (GimpViewable *viewable,
   if (list_item->get_name_func)
     {
       gchar *name;
+      gchar *tooltip;
 
-      name = list_item->get_name_func (GTK_WIDGET (list_item));
+      name = list_item->get_name_func (GTK_WIDGET (list_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (list_item->name_label), name);
 
       g_free (name);
+
+      if (tooltip)
+	{
+	  gimp_help_set_help_data (GTK_WIDGET (list_item), tooltip, NULL);
+
+	  g_free (tooltip);
+	}
     }
   else
     {

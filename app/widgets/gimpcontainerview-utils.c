@@ -28,6 +28,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
@@ -39,12 +40,41 @@
 #include "gimppreview.h"
 
 
-static gchar * gimp_container_view_tool_name_func    (GtkWidget *widget);
-static gchar * gimp_container_view_image_name_func   (GtkWidget *widget);
-static gchar * gimp_container_view_brush_name_func   (GtkWidget *widget);
-static gchar * gimp_container_view_pattern_name_func (GtkWidget *widget);
-static gchar * gimp_container_view_palette_name_func (GtkWidget *widget);
-static gchar * gimp_container_view_buffer_name_func  (GtkWidget *widget);
+typedef struct _GimpNameFuncEntry GimpNameFuncEntry;
+
+struct _GimpNameFuncEntry
+{
+  GType               type;
+  GimpItemGetNameFunc name_func;
+};
+
+
+static gchar * gimp_container_view_tool_name_func      (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_image_name_func     (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_brush_name_func     (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_pattern_name_func   (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_palette_name_func   (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_buffer_name_func    (GtkWidget  *widget,
+							gchar     **tooltip);
+static gchar * gimp_container_view_imagefile_name_func (GtkWidget  *widget,
+							gchar     **tooltip);
+
+
+static GimpNameFuncEntry name_func_entries[] =
+{
+  { G_TYPE_NONE, gimp_container_view_tool_name_func      },
+  { G_TYPE_NONE, gimp_container_view_image_name_func     },
+  { G_TYPE_NONE, gimp_container_view_brush_name_func     },
+  { G_TYPE_NONE, gimp_container_view_pattern_name_func   },
+  { G_TYPE_NONE, gimp_container_view_palette_name_func   },
+  { G_TYPE_NONE, gimp_container_view_buffer_name_func    },
+  { G_TYPE_NONE, gimp_container_view_imagefile_name_func }
+};
 
 
 /*  public functions  */
@@ -52,45 +82,37 @@ static gchar * gimp_container_view_buffer_name_func  (GtkWidget *widget);
 GimpItemGetNameFunc
 gimp_container_view_get_built_in_name_func (GType  type)
 {
-  if (type == GIMP_TYPE_TOOL_INFO)
+  gint i;
+
+  if (name_func_entries[0].type == G_TYPE_NONE)
     {
-      return gimp_container_view_tool_name_func;
+      name_func_entries[0].type = GIMP_TYPE_TOOL_INFO;
+      name_func_entries[1].type = GIMP_TYPE_IMAGE;
+      name_func_entries[2].type = GIMP_TYPE_BRUSH;
+      name_func_entries[3].type = GIMP_TYPE_PATTERN;
+      name_func_entries[4].type = GIMP_TYPE_PALETTE;
+      name_func_entries[5].type = GIMP_TYPE_BUFFER;
+      name_func_entries[6].type = GIMP_TYPE_IMAGEFILE;
     }
-  else if (type == GIMP_TYPE_IMAGE)
+
+  for (i = 0; i < G_N_ELEMENTS (name_func_entries); i++)
     {
-      return gimp_container_view_image_name_func;
-    }
-  else if (type == GIMP_TYPE_BRUSH)
-    {
-      return gimp_container_view_brush_name_func;
-    }
-  else if (type == GIMP_TYPE_PATTERN)
-    {
-      return gimp_container_view_pattern_name_func;
-    }
-  else if (type == GIMP_TYPE_PALETTE)
-    {
-      return gimp_container_view_palette_name_func;
-    }
-  else if (type == GIMP_TYPE_BUFFER)
-    {
-      return gimp_container_view_buffer_name_func;
+      if (type == name_func_entries[i].type)
+	return name_func_entries[i].name_func;
     }
 
   return NULL;
 }
 
 gboolean
-gimp_container_view_is_built_in_name_func (GimpItemGetNameFunc  get_name_func)
+gimp_container_view_is_built_in_name_func (GimpItemGetNameFunc get_name_func)
 {
-  if (get_name_func == gimp_container_view_tool_name_func    ||
-      get_name_func == gimp_container_view_image_name_func   ||
-      get_name_func == gimp_container_view_brush_name_func   ||
-      get_name_func == gimp_container_view_pattern_name_func ||
-      get_name_func == gimp_container_view_palette_name_func ||
-      get_name_func == gimp_container_view_buffer_name_func)
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (name_func_entries); i++)
     {
-      return TRUE;
+      if (get_name_func == name_func_entries[i].name_func)
+	return TRUE;
     }
 
   return FALSE;
@@ -122,9 +144,10 @@ gimp_container_view_get_name_func_preview (GtkWidget *widget)
 }
 
 static gchar *
-gimp_container_view_tool_name_func (GtkWidget *widget)
+gimp_container_view_tool_name_func (GtkWidget  *widget,
+				    gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -135,16 +158,22 @@ gimp_container_view_tool_name_func (GtkWidget *widget)
       tool_info = GIMP_TOOL_INFO (preview->viewable);
 
       if (tool_info)
-	return g_strdup (tool_info->blurb);
+	{
+	  if (tooltip)
+	    *tooltip = NULL;
+
+	  return g_strdup (tool_info->blurb);
+	}
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_image_name_func (GtkWidget *widget)
+gimp_container_view_image_name_func (GtkWidget  *widget,
+				     gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -167,6 +196,9 @@ gimp_container_view_image_name_func (GtkWidget *widget)
 
 	  g_free (basename);
 
+	  if (tooltip)
+	    *tooltip = g_strdup (gimp_image_filename (gimage));
+
 	  return retval;
 	}
     }
@@ -175,9 +207,10 @@ gimp_container_view_image_name_func (GtkWidget *widget)
 }
 
 static gchar *
-gimp_container_view_brush_name_func (GtkWidget *widget)
+gimp_container_view_brush_name_func (GtkWidget  *widget,
+				     gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -188,19 +221,25 @@ gimp_container_view_brush_name_func (GtkWidget *widget)
       brush = GIMP_BRUSH (preview->viewable);
 
       if (brush)
-	return g_strdup_printf ("%s (%d x %d)",
-				GIMP_OBJECT (brush)->name,
-				brush->mask->width,
-				brush->mask->height);
+	{
+	  if (tooltip)
+	    *tooltip = NULL;
+
+	  return g_strdup_printf ("%s (%d x %d)",
+				  GIMP_OBJECT (brush)->name,
+				  brush->mask->width,
+				  brush->mask->height);
+	}
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_pattern_name_func (GtkWidget *widget)
+gimp_container_view_pattern_name_func (GtkWidget  *widget,
+				       gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -211,19 +250,25 @@ gimp_container_view_pattern_name_func (GtkWidget *widget)
       pattern = GIMP_PATTERN (preview->viewable);
 
       if (pattern)
-	return g_strdup_printf ("%s (%d x %d)",
-				GIMP_OBJECT (pattern)->name,
-				pattern->mask->width,
-				pattern->mask->height);
+	{
+	  if (tooltip)
+	    *tooltip = NULL;
+
+	  return g_strdup_printf ("%s (%d x %d)",
+				  GIMP_OBJECT (pattern)->name,
+				  pattern->mask->width,
+				  pattern->mask->height);
+	}
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_palette_name_func (GtkWidget *widget)
+gimp_container_view_palette_name_func (GtkWidget  *widget,
+				       gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -234,18 +279,24 @@ gimp_container_view_palette_name_func (GtkWidget *widget)
       palette = GIMP_PALETTE (preview->viewable);
 
       if (palette)
-	return g_strdup_printf ("%s (%d)",
-				GIMP_OBJECT (palette)->name,
-				palette->n_colors);
+	{
+	  if (tooltip)
+	    *tooltip = NULL;
+
+	  return g_strdup_printf ("%s (%d)",
+				  GIMP_OBJECT (palette)->name,
+				  palette->n_colors);
+	}
     }
 
   return g_strdup ("EEK");
 }
 
 static gchar *
-gimp_container_view_buffer_name_func (GtkWidget *widget)
+gimp_container_view_buffer_name_func (GtkWidget  *widget,
+				      gchar     **tooltip)
 {
-  GimpPreview  *preview;
+  GimpPreview *preview;
 
   preview = gimp_container_view_get_name_func_preview (widget);
 
@@ -256,10 +307,57 @@ gimp_container_view_buffer_name_func (GtkWidget *widget)
       buffer = GIMP_BUFFER (preview->viewable);
 
       if (buffer)
-	return g_strdup_printf ("%s (%d x %d)",
-				GIMP_OBJECT (buffer)->name,
-				tile_manager_width (buffer->tiles),
-				tile_manager_height (buffer->tiles));
+	{
+	  if (tooltip)
+	    *tooltip = NULL;
+
+	  return g_strdup_printf ("%s (%d x %d)",
+				  GIMP_OBJECT (buffer)->name,
+				  tile_manager_width (buffer->tiles),
+				  tile_manager_height (buffer->tiles));
+	}
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+gimp_container_view_imagefile_name_func (GtkWidget  *widget,
+					 gchar     **tooltip)
+{
+  GimpPreview *preview;
+
+  preview = gimp_container_view_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpImagefile *imagefile;
+
+      imagefile = GIMP_IMAGEFILE (preview->viewable);
+
+      if (imagefile)
+	{
+	  gchar *basename;
+
+	  basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
+
+	  if (tooltip)
+	    *tooltip = g_strdup (GIMP_OBJECT (imagefile)->name);
+
+	  if (imagefile->width > 0 && imagefile->height > 0)
+	    {
+	      return g_strdup_printf ("%s (%d x %d)",
+				      basename,
+				      imagefile->width,
+				      imagefile->height);
+	    }
+	  else
+	    {
+	      return g_strdup (basename);
+	    }
+
+	  g_free (basename);
+	}
     }
 
   return g_strdup ("EEK");

@@ -411,7 +411,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 	{
 	  gchar *name;
 
-	  name = view->get_name_func (GTK_WIDGET (preview));
+	  name = view->get_name_func (GTK_WIDGET (preview), NULL);
 
 	  gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
 

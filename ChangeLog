@@ -1,5 +1,18 @@
 2001-11-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/widgets-types.h: changed GimpItemGetNameFunc
+	signature to return a tooltip in a passed gchar* pointer location.
+
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c: changed all get_name_funcs and their
+	callers accordingly (passing the "gchar **tooltip" pointer is
+	optional).
+
+2001-11-12  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/pixelize.c: implemented a feature request:
 
 	Made the pixel size configurable independently in x and y

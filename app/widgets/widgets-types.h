@@ -161,7 +161,8 @@ typedef struct _GimpHistogramView       GimpHistogramView;
 
 /*  function types  */
 
-typedef gchar * (* GimpItemGetNameFunc) (GtkWidget *widget);
+typedef gchar * (* GimpItemGetNameFunc) (GtkWidget  *widget,
+					 gchar     **tooltip);
 
 
 #endif /* __WIDGETS_TYPES_H__ */

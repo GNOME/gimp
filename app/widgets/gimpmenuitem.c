@@ -184,12 +184,20 @@ gimp_menu_item_name_changed (GimpViewable *viewable,
   if (menu_item->get_name_func)
     {
       gchar *name;
+      gchar *tooltip;
 
-      name = menu_item->get_name_func (GTK_WIDGET (menu_item));
+      name = menu_item->get_name_func (GTK_WIDGET (menu_item), &tooltip);
 
       gtk_label_set_text (GTK_LABEL (menu_item->name_label), name);
 
       g_free (name);
+
+      if (tooltip)
+	{
+	  gimp_help_set_help_data (GTK_WIDGET (menu_item), tooltip, NULL);
+
+	  g_free (tooltip);
+	}
     }
   else
     {
