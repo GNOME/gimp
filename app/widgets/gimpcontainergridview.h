@@ -44,6 +44,9 @@ struct _GimpContainerGridView
 
   GtkWidget         *scrolled_win;
   GtkWidget         *wrap_box;
+
+  gint               rows;
+  gint               columns;
 };
 
 struct _GimpContainerGridViewClass

@@ -34,7 +34,7 @@
 
 #include "gimpcontainergridview.h"
 #include "gimppreview.h"
-#include "gimpconstrainedhwrapbox.h"
+#include "gtkhwrapbox.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -66,6 +66,10 @@ static void   gimp_container_grid_view_item_context   (GtkWidget              *w
 static void   gimp_container_grid_view_highlight_item (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
+
+static void  gimp_container_grid_view_vieport_resized (GtkWidget              *widget,
+                                                       GtkAllocation          *allocation,
+                                                       GimpContainerGridView  *view);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -125,6 +129,9 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 static void
 gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 {
+  grid_view->rows    = 1;
+  grid_view->columns = 1;
+
   grid_view->name_label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
   gtk_misc_set_padding (GTK_MISC (grid_view->name_label),
@@ -143,18 +150,19 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   GIMP_CONTAINER_VIEW (grid_view)->dnd_widget = grid_view->scrolled_win;
 
-  grid_view->wrap_box = gimp_constrained_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (grid_view->wrap_box),
-				 1.0 / 256.0);
-  gtk_scrolled_window_add_with_viewport
-    (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
-     grid_view->wrap_box);
+  grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (grid_view->scrolled_win),
+                                         grid_view->wrap_box);
   gtk_widget_show (grid_view->wrap_box);
+
+  g_signal_connect (G_OBJECT (grid_view->wrap_box->parent), "size_allocate",
+                    G_CALLBACK (gimp_container_grid_view_vieport_resized),
+                    grid_view);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (grid_view->wrap_box->parent),
-    gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
-					 (grid_view->scrolled_win)));
+     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW
+                                          (grid_view->scrolled_win)));
 
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW
 			  (grid_view->scrolled_win)->vscrollbar,
@@ -393,7 +401,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       index = gimp_container_get_child_index (view->container,
                                               GIMP_OBJECT (viewable));
 
-      row = index / GIMP_CONSTRAINED_HWRAP_BOX (grid_view->wrap_box)->columns;
+      row = index / grid_view->columns;
 
       if (row * item_height < adj->value)
         {
@@ -429,4 +437,52 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
     }
 
   g_object_set_data (G_OBJECT (view), "last_selected_item", preview);
+}
+
+static void
+gimp_container_grid_view_vieport_resized (GtkWidget             *widget,
+                                          GtkAllocation         *allocation,
+                                          GimpContainerGridView *grid_view)
+{
+  GimpContainerView *view;
+
+  view = GIMP_CONTAINER_VIEW (grid_view);
+
+  if (view->container)
+    {
+      GList *children;
+      gint   n_children;
+
+      children = gtk_container_get_children (GTK_CONTAINER (grid_view->wrap_box));
+      n_children = g_list_length (children);
+
+      if (children)
+        {
+          GtkRequisition preview_requisition;
+          gint           columns;
+          gint           rows;
+
+          gtk_widget_size_request (GTK_WIDGET (children->data),
+                                   &preview_requisition);
+
+          g_list_free (children);
+
+          columns = MAX (1, allocation->width / preview_requisition.width);
+
+          rows = n_children / columns;
+
+          if (n_children % columns)
+            rows++;
+
+          if ((rows != grid_view->rows) || (columns != grid_view->columns))
+            {
+              grid_view->rows    = rows;
+              grid_view->columns = columns;
+
+              gtk_widget_set_size_request (grid_view->wrap_box,
+                                           columns * preview_requisition.width,
+                                           rows    * preview_requisition.height);
+            }
+        }
+    }
 }

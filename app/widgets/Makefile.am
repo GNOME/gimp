@@ -143,8 +143,6 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gtkhwrapbox.h			\
 	gtkvwrapbox.c			\
 	gtkvwrapbox.h			\
-	gimpconstrainedhwrapbox.c	\
-	gimpconstrainedhwrapbox.h	\
 @STRIP_END@
 
 libappwidgets_a_built_sources = @STRIP_BEGIN@ \
