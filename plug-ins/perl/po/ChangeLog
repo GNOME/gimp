@@ -1,3 +1,9 @@
+2001-11-15  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5 -> zh_TW.po: Replace traditional Chinese translation
+	  with those from stable branch, renamed to avoid specifying
+	  encoding, converted to UTF-8.
+
 2001-10-14  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Fixed. Thanks to

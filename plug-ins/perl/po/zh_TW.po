@@ -1,28 +1,30 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Traditional chinese translation for gimp-perl.
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
+# Abel Cheung <maddog@linux.org.hk>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.3.0\n"
-"POT-Creation-Date: Tue May 22 01:23:52 2001\n"
-"PO-Revision-Date: 2001-06-07 01:00+01\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese <zh@li.org>\n"
+"POT-Creation-Date: Tue Nov 13 03:06:20 2001\n"
+"PO-Revision-Date: 2001-11-13 04:59+0800\n"
+"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
+"Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=big5\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 #: examples/PDB:0
 msgid " (press Tab to complete)"
-msgstr ""
+msgstr "（請按 Tab 鍵補齊）"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
-msgstr ""
+msgstr " = [參數錯誤]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr ""
+msgstr "符合的函式"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -31,6 +33,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
+"       介面參數為\n"
+"           -o | --output <filespec>   只將圖像寫入磁碟，不顯示出來\n"
+"           -i | --interact            先讓使用者編輯數值\n"
+"       script 參數為\n"
 
 #: Gimp.pm:0
 msgid ""
@@ -39,120 +45,132 @@ msgid ""
 "           -gimp <anything>           used internally only\n"
 "           -h | -help | --help | -?   print some help\n"
 "           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
+"用法：$0 [gimp 參數..] [介面參數..] [script 參數..]\n"
+"       gimp 參數為\n"
+"           -gimp <anything>           袛供內部使用\n"
+"           -h | -help | --help | -?   印出輔助說明\n"
+"           -v | --verbose             使用時印出更多資訊\n"
+"           --host|--tcp HOST[:PORT]   連接到 HOST（選擇性地指定 PORT）\n"
+"                                      （可由 Gimp::Net(3) 觀看更多資料）\n"
 
 #: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr ""
+msgstr "$_ 不是套件 $pkg 的正確匯入標籤"
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr ""
+msgstr "$_：不合法的選項，請嘗試 $0 --help\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr ""
+msgstr "$_：不明或不合法的檔案儲存選項"
 
 #: Gimp/Fu.pm:0
-msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
-msgstr ""
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
+msgstr "$function：參數名稱 '$p->[1]' 含有不合法的字元，只允許 0-9、a-z 和 _"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
+msgstr "$function：參數或回傳值 '$p->[1]' 的類型 '$p->[0]' 不合法"
 
 #: Gimp.pm:0
-msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
-msgstr ""
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr "$functions：未指定 :auto 匯入標籤就呼叫 $AUTOLOAD 已是過時了！\n"
 
 #: Gimp/Fu.pm:0
-msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
-msgstr ""
+msgid ""
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
+msgstr "$function：函式名稱含有不正常的字元，建議只使用 0-9、a-z 和 _"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s：不是整數\n"
 
+# First %s is "not enough" or "too many"
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
-msgstr ""
+msgstr "%s，錯誤發生於函式 '%s'"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
+msgstr "%s：程序資料庫執行失敗，因為輸入的參數無效"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
-msgstr ""
+msgstr "%s：程序資料庫執行失敗"
 
 #: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
-msgstr ""
+msgstr "（未初始化）"
 
 #: UI/UI.pm:0
 msgid "(none)"
-msgstr ""
+msgstr "（無）"
 
 #: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
-msgstr ""
+msgstr "，%d 位元組資料]"
 
 #: Perl-Server:0
 msgid ", authorization required"
-msgstr ""
+msgstr "，需要認証"
 
 #: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgstr ""
+"-*-courier-medium-r-normal--*-120-*-*-*-*-*,-*-*-medium-r-normal--*-120-*-*-"
+"*-big5-0,*-r-*"
 
 #: UI/UI.pm:0
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal-*-24-*-*-*-p-*-iso8859-1"
 
 #: examples/logulator:0
 msgid "/Filters/Logulator"
-msgstr ""
+msgstr "/濾鏡/Logulator"
 
 #: Perl-Server:0
 msgid "/Xtns/Perl"
-msgstr ""
+msgstr "/擴展/Perl"
 
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
-#: examples/povray:0
-#: examples/stamps:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
+#: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
-msgstr ""
+msgstr "/擴展/描繪"
 
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0
 msgid "/Xtns/Render/Logos"
-msgstr ""
+msgstr "/擴展/描繪/標誌"
 
 #: examples/povray:0
 msgid "/Xtns/Render/Povray"
-msgstr ""
+msgstr "/擴展/描繪/Povray"
 
 #: UI/UI.pm:0
 msgid "9x15bold"
-msgstr ""
+msgstr "9x15bold"
 
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr ""
+msgstr "呼叫 <Image> 增效模組時沒有同時指定圖像和可繪物件參數！\n"
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr ""
+msgstr "<Image>/編輯/重覆與複製..."
 
 #: examples/animate_cells:0
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr ""
+msgstr "<Image>/濾鏡/動畫/動畫畫格..."
 
 #: examples/blowinout:0
 msgid "<Image>/Filters/Animation/BlowInOut..."
@@ -160,23 +178,23 @@ msgstr ""
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr ""
+msgstr "<Image>/濾鏡/套用 Perl 表示式..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr ""
+msgstr "<Image>/過濾器/模糊化/2x2 模糊化"
 
 #: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/色彩轉為透明..."
 
 #: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/火焰..."
 
 #: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr ""
+msgstr "<Image>/濾鏡/色彩/映射至漸層..."
 
 #: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
@@ -188,15 +206,15 @@ msgstr ""
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr ""
+msgstr "<Image>/過濾器/扭曲/風吹..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr ""
+msgstr "<Image>/濾鏡/邊緣偵測/2×2 邊緣偵測"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr ""
+msgstr "<Image>/濾鏡/加強品質/2×2 增強反差"
 
 #: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
@@ -212,15 +230,15 @@ msgstr ""
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/水晶"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/Imigre-26"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/報紙印刷文字"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
@@ -232,11 +250,11 @@ msgstr ""
 
 #: examples/translogo:0
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/透明標誌..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr ""
+msgstr "<Image>/濾鏡/Logulator/網頁標題"
 
 #: examples/image_tile:0
 msgid "<Image>/Filters/Map/Image Tile..."
@@ -252,7 +270,7 @@ msgstr ""
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr ""
+msgstr "<Image>/濾鏡/映射/Xach 陰影..."
 
 #: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
@@ -260,7 +278,7 @@ msgstr ""
 
 #: examples/gimpmagick:0
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr ""
+msgstr "<Image>/濾鏡/其它/Magick..."
 
 #: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
@@ -268,7 +286,7 @@ msgstr ""
 
 #: examples/feedback:0
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr ""
+msgstr "<Image>/濾鏡/雜訊/回饋..."
 
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
@@ -304,11 +322,11 @@ msgstr ""
 
 #: examples/stampify:0
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr ""
+msgstr "<Image>/濾鏡/描繪/郵票..."
 
 #: examples/tex-to-float:0
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr ""
+msgstr "<Image>/濾鏡/描繪/TeX 字串..."
 
 #: examples/terral_text:0
 msgid "<Image>/Filters/Render/Terral Text..."
@@ -324,67 +342,67 @@ msgstr ""
 
 #: examples/webify:0
 msgid "<Image>/Filters/Web/Webify..."
-msgstr ""
+msgstr "<Image>/濾鏡/網站/網頁化..."
 
 #: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
-msgstr ""
+msgstr "<Image>/參考線/中心點參考線..."
 
 #: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
-msgstr ""
+msgstr "<Image>/參考線/參考格線..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr ""
+msgstr "<Image>/參考線/移除參考線"
 
 #: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
-msgstr ""
+msgstr "<Image>/參考線/轉為選擇區域..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr ""
+msgstr "<Image>/圖像/透明/透明至色彩..."
 
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr ""
+msgstr "<Image>/圖像/透明/清除透明..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr ""
+msgstr "<Image>/圖層/將圖層置中"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr ""
+msgstr "<Image>/圖層/堆疊/重新排列圖層..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr ""
+msgstr "<Image>/選擇/圓角矩形選擇區域..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr ""
+msgstr "<Image>/選擇/圓角..."
 
 #: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
-msgstr ""
+msgstr "<Image>/選擇/三角形..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr ""
+msgstr "<Image>/視像/錄影控制器..."
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
-msgstr ""
+msgstr "<Image>/檢視/3D 表面..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr ""
+msgstr "呼叫 <Load> 增效模組時不是使用 3 個標準參數！\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr ""
+msgstr "呼叫 <Save> 增效模組時不是使用 5 個標準參數！\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
@@ -392,19 +410,19 @@ msgstr ""
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr ""
+msgstr "<Toolbox>/擴展/動畫/Seth 旋轉..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr ""
+msgstr "<Toolbox>/擴展/產生圖像"
 
 #: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Gimp::Fu 範例..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr ""
+msgstr "<Toolbox>/擴展/網頁標誌"
 
 #: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
@@ -412,39 +430,39 @@ msgstr ""
 
 #: examples/parasite-editor:0
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr ""
+msgstr "<Toolbox>/擴展/附帶物件編輯器..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr ""
+msgstr "<Toolbox>/擴展/Perl 增效模組範例"
 
 #: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr ""
+msgstr "<Toolbox>/擴展/Perl/控制中心..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr ""
+msgstr "<Toolbox>/擴展/Perl/伺服器"
 
 #: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/磚塊..."
 
 #: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/字型列表..."
 
 #: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/黃金比例..."
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/標誌/火焰文字..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/標誌/發光金屬..."
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
@@ -452,11 +470,11 @@ msgstr ""
 
 #: examples/pixelmap:0
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/像素產生方程..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/Povray/偏好設定..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
@@ -464,15 +482,15 @@ msgstr ""
 
 #: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/隨機繪畫 1..."
 
 #: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/郵票..."
 
 #: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr ""
+msgstr "<Toolbox>/擴展/描繪/陰陽..."
 
 #: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
@@ -483,168 +501,184 @@ msgid "Accelerator"
 msgstr ""
 
 #: examples/sethspin:0
-msgid "An even number of frames is needed for spin back.\nAdjusted frames up to $frames"
+msgid ""
+"An even number of frames is needed for spin back.\n"
+"Adjusted frames up to $frames"
 msgstr ""
 
 #: examples/PDB:0
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: UI/UI.pm:0
 msgid "BG"
-msgstr ""
+msgstr "背景"
 
 #: UI/UI.pm:0
-msgid "BLURB:\n\n$blurb\n\nHELP:\n\n$help"
+msgid ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HELP:\n"
+"\n"
+"$help"
 msgstr ""
+"簡介：\n"
+"\n"
+"$blurb\n"
+"\n"
+"說明：\n"
+"\n"
+"$help"
 
 #: examples/example-fu:0
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: UI/UI.pm:0
 msgid "Browse"
-msgstr ""
+msgstr "瀏覽"
 
 #: UI/UI.pm:0
 msgid "Brush Selection Dialog"
-msgstr ""
+msgstr "筆刷選擇對話窗"
 
 #: examples/translogo:0
 msgid "Bumpmap"
-msgstr ""
+msgstr "Bumpmap"
 
 #: UI/UI.pm:0
-#: UI/UI.pm:0
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr ""
+msgstr "此時無法呼叫 '$AUTOLOAD'"
 
 #: examples/PDB:0
-#: examples/PDB:0
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: UI/UI.pm:0
 msgid "Color"
-msgstr ""
+msgstr "顏色"
 
 #: examples/PDB:0
 msgid "Command"
-msgstr ""
+msgstr "指令"
 
 #: examples/PDB:0
 msgid "Copyright"
-msgstr ""
+msgstr "版權"
 
 #: examples/PDB:0
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "描述"
 
 #: examples/PDB:0
 msgid "Date/Version"
-msgstr ""
+msgstr "日期/版本"
 
 #: UI/UI.pm:0
 msgid "Defaults"
-msgstr ""
+msgstr "預設值"
 
 #: examples/PDB:0
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: UI/UI.pm:0
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: Gimp/Lib.xs:0
-msgid "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
-msgstr ""
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
+msgstr "應該是 INT32 但實際上是 '%s'。如果想送入字串請加入 '*1'"
 
 #: Gimp/Lib.xs:0
-msgid "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"
-msgstr ""
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
+msgstr "應該為 INT32 但實際上是 '%s'。或許你想用 '%s' 但忘記加入 'use strict'"
 
 #: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr ""
+msgstr "重大錯誤：canonicalize_colur 沒有任何回傳值！"
 
 #: UI/UI.pm:0
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr ""
+msgstr "重大錯誤：無法建立 $tmp：$!\n"
 
 #: UI/UI.pm:0
 msgid "FG"
-msgstr ""
+msgstr "前景"
 
 #: UI/UI.pm:0
 msgid "Fileselector for $name"
-msgstr ""
+msgstr "$name 的檔案選擇器"
 
 #: UI/UI.pm:0
 msgid "Font Selection Dialog ($desc)"
-msgstr ""
+msgstr "字型選擇對話窗（$desc）"
 
 #: examples/PDB:0
 msgid "Function Info"
-msgstr ""
+msgstr "函式資訊"
 
 #: UI/UI.pm:0
 msgid "Gradient Selection Dialog"
-msgstr ""
+msgstr "漸層選擇對話窗"
 
 #: UI/UI.pm:0
 msgid "Help for "
-msgstr ""
+msgstr "說明："
 
 #: UI/UI.pm:0
 msgid "Help"
-msgstr ""
+msgstr "說明"
 
 #: UI/UI.pm:0
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
+msgstr "$function 裡有不合法的預設字型描述：$val\n"
 
 #: examples/PDB:0
 msgid "Image Types"
-msgstr ""
+msgstr "圖像類型"
 
 #: examples/PDB:0
 msgid "Last Modified"
-msgstr ""
+msgstr "最後修改日期"
 
 #: UI/UI.pm:0
 msgid "Load $name"
-msgstr ""
+msgstr "載入 $name"
 
 #: UI/UI.pm:0
 msgid "Load"
-msgstr ""
+msgstr "載入"
 
 #: examples/PDB:0
 msgid "Menu Path"
-msgstr ""
+msgstr "選單路徑"
 
 #: examples/PDB:0
 msgid "More..."
-msgstr ""
+msgstr "更多..."
 
 #: examples/PDB:0
 msgid "NAME"
-msgstr ""
+msgstr "名稱"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
+msgstr "找不到任何水平或是垂直的參考線。中斷作業。"
 
 #: UI/UI.pm:0
-#: UI/UI.pm:0
-#: UI/UI.pm:0
 msgid "OK"
-msgstr ""
+msgstr "確定"
 
 #: examples/PDB:0
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
@@ -652,47 +686,47 @@ msgstr ""
 
 #: UI/UI.pm:0
 msgid "Pattern Selection Dialog"
-msgstr ""
+msgstr "圖樣選擇對話窗"
 
 #: examples/PDB:0
 msgid "Plug-In Path"
-msgstr ""
+msgstr "增效模組路徑"
 
 #: UI/UI.pm:0
 msgid "Previous"
-msgstr ""
+msgstr "還原"
 
 #: UI/UI.pm:0
 msgid "Reset all values to their default"
-msgstr ""
+msgstr "重設所有設定值為預設值"
 
 #: UI/UI.pm:0
 msgid "Restore values to the previous ones"
-msgstr ""
+msgstr "還原為上次的設定值"
 
 #: UI/UI.pm:0
 msgid "Save $name"
-msgstr ""
+msgstr "儲存 $name"
 
 #: UI/UI.pm:0
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 #: examples/colorhtml:0
 msgid "Saving '$filename' as COLORHTML..."
-msgstr ""
+msgstr "儲存 '$filename' 為彩色 HTML..."
 
 #: examples/dataurl:0
 msgid "Saving '$filename' as DATAURL..."
-msgstr ""
+msgstr "儲存 '$filename' 為資料 URL..."
 
 #: examples/sethspin:0
 msgid "Seth Spin..."
-msgstr ""
+msgstr "Seth 旋轉..."
 
 #: examples/PDB:0
 msgid "Shortcuts"
-msgstr ""
+msgstr "快速鍵"
 
 #: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
@@ -704,23 +738,23 @@ msgstr ""
 
 #: examples/PDB:0
 msgid "Status"
-msgstr ""
+msgstr "狀態"
 
 #: examples/PDB:0
 msgid "Synopsis"
-msgstr ""
+msgstr "摘要"
 
 #: examples/PDB:0
 msgid "TYPE"
-msgstr ""
+msgstr "類型"
 
 #: examples/translogo:0
 msgid "Text"
-msgstr ""
+msgstr "文字"
 
 #: Gimp/Lib.xs:0
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "此模組編譯時沒有加入 PDL 支援。"
 
 #: Gimp/Lib.xs:0
 msgid "Unable to convert a reference to type '%s'"
@@ -730,18 +764,17 @@ msgstr ""
 msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
-#: examples/colorhtml:0
-#: examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr ""
+msgstr "無法寫入 '$filename'：$!\n"
 
 #: examples/dataurl:0
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr ""
+msgstr "無法讀入暫存圖像區域 $tmp：$!"
 
 #: UI/UI.pm:0
 msgid "Unsupported argumenttype $type"
-msgstr ""
+msgstr "未支援的參數類型 $type"
 
 #: examples/visual:0
 msgid "Visual Scriptor"
@@ -749,253 +782,265 @@ msgstr ""
 
 #: Gimp.pm:0
 msgid "WARNING"
-msgstr ""
+msgstr "警告"
 
 #: Gimp/Fu.pm:0
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr ""
+msgstr "警告：$function 的回傳值不是圖像：「%img」\n"
 
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr ""
+msgstr "警告：用戶端仍在鎖定時突然中斷連線\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr ""
+msgstr "警告：客戶端嘗試在沒有鎖定的情況下解除鎖定"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "警告：要求共用鎖定功能但此功能尚未完成"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
+msgstr "不能在索引色圖像中使用這個 script！！"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr ""
+msgstr "不能在沒有 ALPHA 色頻下使用這個 script！！"
 
 #: examples/prep4gif:0
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
+msgstr "進行 prep4gif 需要最少 2 個圖層"
 
 #: Gimp/Lib.xs:0
 msgid "[undefined]"
-msgstr ""
+msgstr "[未定義]"
 
 #: Gimp/Lib.xs:0
 msgid "[unfinished]\n"
-msgstr ""
+msgstr "[未完成]\n"
 
 #: UI/UI.pm:0
-msgid "\n\nEMBEDDED POD DOCUMENTATION:\n\n"
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
 msgstr ""
+"\n"
+"\n"
+"嵌入式 POD 文件：\n"
+"\n"
 
 #: Gimp/Lib.xs:0
 msgid "a color must have three components (array elements)"
-msgstr ""
+msgstr "色彩必須由三個部份組成（陣列元素）"
 
 #: Perl-Server:0
 msgid "accepted tcp connection from "
-msgstr ""
+msgstr "已接受由下列地址發出的 tcp 連線："
 
 #: Perl-Server:0
 msgid "accepted unix connection"
-msgstr ""
+msgstr "已接受 unix 連線"
 
 #: Perl-Server:0
 msgid "accepting connections in $host"
-msgstr ""
+msgstr "正在接受連線到 $host"
 
 #: Perl-Server:0
 msgid "accepting connections on $unix_path"
-msgstr ""
+msgstr "正在接受連線到 $unix_path"
 
 #: Perl-Server:0
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr ""
+msgstr "正在接受連線到連接埠 $Gimp::Net::default_tcp_port"
 
 #: Perl-Server:0
 msgid "accepting connections on port $port"
-msgstr ""
+msgstr "正在接受連線到連接埠 $port"
 
 #: Gimp/Lib.xs:0
 msgid "argument incompatible with type IMAGE"
-msgstr ""
+msgstr "參數不能配合類型 IMAGE 使用"
 
 #: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
-msgstr ""
+msgstr "參數不是 %s 類型"
 
 #: Gimp/Lib.xs:0
 msgid "argument type %s expected (not %s)"
-msgstr ""
+msgstr "參數類型應為 %s（不是 %s）"
 
 #: Gimp/Lib.xs:0
 msgid "arguments to main not yet supported!"
-msgstr ""
+msgstr "main 不支援使用參數！"
 
 #: Net/Net.pm:0
 msgid "authorization failed: $r[1]\n"
-msgstr ""
+msgstr "認證失敗：$r[1]\n"
 
 #: Net/Net.pm:0
 msgid "authorization ok, but: $r[1]\n"
-msgstr ""
+msgstr "認證成功，但是：$r[1]\n"
 
 #: Perl-Server:0
 msgid "authorization required for tcp connections"
-msgstr ""
+msgstr "認證需要 tcp 連線"
 
 #: Perl-Server:0
 msgid "authorization unnecessary"
-msgstr ""
+msgstr "不需要認證"
 
 #: Gimp/Lib.xs:0
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr ""
+msgstr "以 '%s' 形式呼叫，但 '%s' 並未在 pdb 中登記"
 
 #: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr ""
+msgstr "正在關閉連線 %d（%3$g 秒內有 %2$d 個要求）"
 
 #: Gimp/Fu.pm:0
-msgid "conversion from string to type $pf_type2string{$type} is not yet implemented\n"
-msgstr ""
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr "轉換至類型 $pf_type2string{$type} 的功能尚未完成\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr "無法連接到 gimp 伺服器（請確定 Perl-Server 在執行中）"
+
+#: Gimp/Lib.xs:0
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr ""
-
-#: Gimp/Lib.xs:0
-msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
-msgstr ""
+msgstr "不知道如何傳遞參數類型 %d"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
-msgstr ""
+msgstr "不知道如何回傳參數類型 %d"
 
 #: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr ""
+msgstr "socket 的另一端應為 perl-server，但事實上為 @r\n"
 
 #: Net/Net.pm:0
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
+msgstr "協定的版本應為 $Gimp::_PROT_VERSION，但伺服器使用 $r[0]\n"
 
-#: examples/colorhtml:0
-#: examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
-msgstr ""
+msgstr "匯出失敗"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
-msgstr ""
+msgstr "在這個 script 中找不到函式 '$exe' (必須為以下其中之一："
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "函數名稱含有減號（－）而不是底線（ˍ）"
 
 #: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "$class 裡找不到函數或巨集「$name」"
 
 #: UI/UI.pm:0
 msgid "get current background colour from the gimp"
-msgstr ""
+msgstr "由 gimp 取得現時的背景顏色"
 
 #: UI/UI.pm:0
 msgid "get current foreground colour from the gimp"
-msgstr ""
+msgstr "由 gimp 取得現時的前景顏色"
 
 #: Gimp/Lib.xs:0
 msgid "gimp procedure '%s' not found"
-msgstr ""
+msgstr "找不到 gimp 程序 '%s'"
 
 #: Net/Net.xs:0
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr ""
+msgstr "gimp-perl-pixel 函式需要 PDL::Core 模組"
 
 #: Gimp/Lib.xs:0
-msgid "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
+"gimp_pixel_rgns_register 只支援 1、2 或 3 個參數，\n"
+"請更新至 gimp-1.1 並回報此錯誤"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_get_data 並未編寫未成\n"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_set_data 並未編寫未成\n"
 
 #: Perl-Server:0
 msgid "illegal command received, aborting connection"
-msgstr ""
+msgstr "收到不合法的指令，中斷連結"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
-msgstr ""
+msgstr "不合法的附帶物件規格，需要 arrayref"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
-msgstr ""
+msgstr "不合法的附帶物件規格，需要三個陣列元素"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
-msgstr ""
+msgstr "不合法的附帶物件規格，需要 reference"
 
 #: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
-msgstr ""
+msgstr "色彩規格的類型不合法"
 
 #: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
-msgstr ""
+msgstr "不支援介面 '$interface_type'。"
 
 #: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
-msgstr ""
+msgstr "已不再支援 interface=... 標籤\n"
 
 #: Perl-Server:0
-msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr ""
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr "不正確的 GIMP_HOST：'spawn' 不是伺服器的正確連線方法"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
-msgstr ""
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
+msgstr "不正常的參數定義，需要 [參數類型,\"名稱\",\"描述\"] 或 <參數類型>"
 
 #: Gimp/Fu.pm:0
-#: Gimp/Fu.pm:0
-msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr "選單路徑的開頭必須為 <Image>、<Toolbox>、<Load>、<Save> 或 <None>！"
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
-msgstr ""
+msgstr "沒有額外的資訊，請使用 --help\n"
 
 #: Gimp/Util.pm:0
-#: Gimp/Util.pm:0
 msgid "no font specified, using default"
-msgstr ""
+msgstr "沒有指定字型，使用預設值"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"
-msgstr ""
+msgstr "參數不足"
 
 #: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
@@ -1003,7 +1048,7 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "參數 '$entry->[1]' 並不是選擇性的\n"
 
 #: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
@@ -1011,23 +1056,24 @@ msgstr ""
 
 #: Gimp/Lib.xs:0
 msgid "pdl height != region height"
-msgstr ""
+msgstr "pdl 高度不等於區域高度"
 
 #: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgstr "像素大小不配合，pdl 的像素有 %d 個色版但需要的是 %d 個色版"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
-msgstr ""
+msgstr "增效模組的回傳值比預期中多了 %d 個"
 
 #: Perl-Server:0
 msgid "received QUIT request"
-msgstr ""
+msgstr "收到 QUIT 要求"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
@@ -1047,82 +1093,79 @@ msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
+msgstr "run_mode 一定要是 INTERACTIVE、NONINTERACTIVE 或 RUN_WITH_LAST_VALS\n"
 
 #: Perl-Server:0
 msgid "server going down..."
-msgstr ""
+msgstr "伺服器關閉中..."
 
 #: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
-msgstr ""
+msgstr "伺服器要求認證，但是沒有可用的認證方法\n"
 
 #: Perl-Server:0
 msgid "server version $Gimp::VERSION started"
-msgstr ""
+msgstr "伺服器版本 $Gimp::VERSION 已啟動"
 
-#: Gimp/Util.pm:0
 #: Gimp/Util.pm:0
 msgid "text string is empty"
-msgstr ""
+msgstr "字串是空白的"
 
 #: Gimp/Fu.pm:0
-msgid "the gtk perl module is required to open a dialog\nwindow, running with default values"
-msgstr ""
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr "開啟對話窗是需要 gtk perl 模組的，因此使用預設值執行"
 
 #: Gimp/Fu.pm:0
-msgid "the gtk perl module is required to run\nthis plug-in in interactive mode\n"
-msgstr ""
+msgid ""
+"the gtk perl module is required to run\n"
+"this plug-in in interactive mode\n"
+msgstr "以互動模式執行此增效模組是需要 gtk perl 模組的\n"
 
 #: examples/PDB:0
 msgid "too many arguments"
-msgstr ""
-
-#: Gimp/Fu.pm:0
-msgid "too many arguments, use --help\n"
-msgstr ""
+msgstr "參數太多"
 
 #: Gimp/Lib.xs:0
 msgid "too many"
-msgstr ""
+msgstr "參數太多"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr ""
+msgstr "嘗試使用選項 \"$opt\" 啟動 gimp\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
-msgstr ""
+msgstr "無法接受 tcp 連線：$!\n"
 
 #: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
-msgstr ""
+msgstr "無法接受 unix 連線：$!\n"
 
 #: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr ""
+msgstr "無法轉換 Gimp::Drawable 到 Gimp::GimpDrawable（識別碼 %d）"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
-msgstr ""
+msgstr "無法建立 '$fn'：$!"
 
-#: Perl-Server:0
 #: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
-msgstr ""
+msgstr "無法建立 tcp socket：$!\n"
 
 #: Perl-Server:0
-#: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
-msgstr ""
+msgstr "無法建立 unix socket：$!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr ""
+msgstr "無法建立一對 socket 作為 gimp 的通信渠道：$!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
-msgstr ""
+msgstr "無法衍生程序：$!"
 
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
@@ -1130,33 +1173,32 @@ msgstr ""
 
 #: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
-msgstr ""
+msgstr "無法開啟 $rgb_db_path"
 
 #: Perl-Server:0
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr ""
+msgstr "無法開啟 Gimp::Net 通訊 socket：$!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr ""
+msgstr "無法讀入 '$fn'：$!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr ""
+msgstr "無法讀入暫存檔 $tmp：$!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr ""
+msgstr "收到未確認的指令，中斷連線"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr ""
+msgstr "url 太長（$max > 1024）\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr ""
+msgstr "認證錯誤，中斷連線"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr ""
-
+msgstr "xlfd_unpack：不匹配的字型描述 '$fontname'\n"
