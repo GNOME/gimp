@@ -1,5 +1,14 @@
 2003-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: fixed the "TAB toggles
+	dialogs" feature.
+
+	(gimp_display_shell_get_event_coords,device_coords): CLAMP() all
+	extended axes to be safe against crappy XInput drivers and provide
+	default values for not existing axes.
+
+2003-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpscanner.c (gimp_scanner_parse_int): handle
 	negative integers.
 

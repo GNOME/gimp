@@ -75,14 +75,14 @@ static void     gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustme
 static void     gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                                       GimpDisplayShell *shell);
 
-static gboolean gimp_display_shell_get_coords        (GimpDisplayShell *shell,
+static gboolean gimp_display_shell_get_event_coords  (GimpDisplayShell *shell,
                                                       GdkEvent         *event,
                                                       GdkDevice        *device,
                                                       GimpCoords       *coords);
 static void     gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
                                                       GdkDevice        *device,
                                                       GimpCoords       *coords);
-static gboolean gimp_display_shell_get_state         (GimpDisplayShell *shell,
+static gboolean gimp_display_shell_get_event_state   (GimpDisplayShell *shell,
                                                       GdkEvent         *event,
                                                       GdkDevice        *device,
                                                       GdkModifierType  *state);
@@ -393,12 +393,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       gimp_display_shell_check_device_cursor (shell);
     }
 
-  gimp_display_shell_get_coords (shell, event,
-                                 gimp_devices_get_current (gimp),
-                                 &display_coords);
-  gimp_display_shell_get_state (shell, event,
-                                gimp_devices_get_current (gimp),
-                                &state);
+  gimp_display_shell_get_event_coords (shell, event,
+                                       gimp_devices_get_current (gimp),
+                                       &display_coords);
+  gimp_display_shell_get_event_state (shell, event,
+                                      gimp_devices_get_current (gimp),
+                                      &state);
   time = gdk_event_get_time (event);
 
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
@@ -796,12 +796,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             g_print ("gimp_display_shell_compress_motion() returned an event\n");
 
-            gimp_display_shell_get_coords (shell, compressed_motion,
-                                           gimp_devices_get_current (gimp),
-                                           &display_coords);
-            gimp_display_shell_get_state (shell, compressed_motion,
-                                          gimp_devices_get_current (gimp),
-                                          &state);
+            gimp_display_shell_get_event_coords (shell, compressed_motion,
+                                                 gimp_devices_get_current (gimp),
+                                                 &display_coords);
+            gimp_display_shell_get_event_state (shell, compressed_motion,
+                                                gimp_devices_get_current (gimp),
+                                                &state);
             time = gdk_event_get_time (event);
 
             /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
@@ -973,7 +973,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             break;
 
           case GDK_Tab:
-            if (! gimp_image_is_empty (gimage))
+            if (! state)
+              {
+                /* Hide or show all dialogs */
+
+                gimp_dialog_factories_toggle (global_toolbox_factory);
+              }
+            else if (! gimp_image_is_empty (gimage))
               {
                 if (state & GDK_MOD1_MASK)
                   {
@@ -985,14 +991,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_layer_select_init (gdisp->gimage,
                                                           -1, kevent->time);
                   }
-              }
-            else if (! state)
-              {
-                /* Hide or show all dialogs */
-
-                g_print ("toggle dialogs\n");
-
-                gimp_dialog_factories_toggle (global_toolbox_factory);
               }
 
             return_val = TRUE;
@@ -1407,27 +1405,39 @@ gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
 }
 
 static gboolean
-gimp_display_shell_get_coords (GimpDisplayShell *shell,
-                               GdkEvent         *event,
-                               GdkDevice        *device,
-                               GimpCoords       *coords)
+gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
+                                     GdkEvent         *event,
+                                     GdkDevice        *device,
+                                     GimpCoords       *coords)
 {
-  /*  initialize extended axes to something meaningful because each of
-   *  the following *_get_axis() calls may return FALSE and leave the
-   *  passed gdouble location untouched
-   */
-  coords->pressure = 1.0;
-  coords->xtilt    = 0.5;
-  coords->ytilt    = 0.5;
-  coords->wheel    = 0.5;
-
   if (gdk_event_get_axis (event, GDK_AXIS_X, &coords->x))
     {
-      gdk_event_get_axis (event, GDK_AXIS_Y,        &coords->y);
-      gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure);
-      gdk_event_get_axis (event, GDK_AXIS_XTILT,    &coords->xtilt);
-      gdk_event_get_axis (event, GDK_AXIS_YTILT,    &coords->ytilt);
-      gdk_event_get_axis (event, GDK_AXIS_WHEEL,    &coords->wheel);
+      gdk_event_get_axis (event, GDK_AXIS_Y, &coords->y);
+
+      /*  CLAMP() the return value of each *_get_axis() call to be safe
+       *  against buggy XInput drivers. Provide default values if the
+       *  requested axis does not exist.
+       */
+
+      if (gdk_event_get_axis (event, GDK_AXIS_PRESSURE, &coords->pressure))
+        coords->pressure = CLAMP (coords->pressure, 0.0, 1.0);
+      else
+        coords->pressure = 1.0;
+
+      if (gdk_event_get_axis (event, GDK_AXIS_XTILT, &coords->xtilt))
+        coords->xtilt = CLAMP (coords->xtilt, 0.0, 1.0);
+      else
+        coords->xtilt = 0.5;
+
+      if (gdk_event_get_axis (event, GDK_AXIS_YTILT, &coords->ytilt))
+        coords->ytilt = CLAMP (coords->ytilt, 0.0, 1.0);
+      else
+        coords->ytilt = 0.5;
+
+      if (gdk_event_get_axis (event, GDK_AXIS_WHEEL, &coords->wheel))
+        coords->wheel = CLAMP (coords->wheel, 0.0, 1.0);
+      else
+        coords->wheel = 0.5;
 
       return TRUE;
     }
@@ -1446,24 +1456,43 @@ gimp_display_shell_get_device_coords (GimpDisplayShell *shell,
 
   gdk_device_get_state (device, shell->canvas->window, axes, NULL);
 
-  gdk_device_get_axis (device, axes, GDK_AXIS_X,        &coords->x);
-  gdk_device_get_axis (device, axes, GDK_AXIS_Y,        &coords->y);
-  gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure);
-  gdk_device_get_axis (device, axes, GDK_AXIS_XTILT,    &coords->xtilt);
-  gdk_device_get_axis (device, axes, GDK_AXIS_YTILT,    &coords->ytilt);
-  gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL,    &coords->wheel);
+  gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
+  gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
+
+  /*  CLAMP() the return value of each *_get_axis() call to be safe
+   *  against buggy XInput drivers. Provide default values if the
+   *  requested axis does not exist.
+   */
+
+  if (gdk_device_get_axis (device, axes, GDK_AXIS_PRESSURE, &coords->pressure))
+    coords->pressure = CLAMP (coords->pressure, 0.0, 1.0);
+  else
+    coords->pressure = 1.0;
+
+  if (gdk_device_get_axis (device, axes, GDK_AXIS_XTILT, &coords->xtilt))
+    coords->xtilt = CLAMP (coords->xtilt, 0.0, 1.0);
+  else
+    coords->xtilt = 0.5;
+
+  if (gdk_device_get_axis (device, axes, GDK_AXIS_YTILT, &coords->ytilt))
+    coords->ytilt = CLAMP (coords->ytilt, 0.0, 1.0);
+  else
+    coords->ytilt = 0.5;
+
+  if (gdk_device_get_axis (device, axes, GDK_AXIS_WHEEL, &coords->wheel))
+    coords->wheel = CLAMP (coords->wheel, 0.0, 1.0);
+  else
+    coords->wheel = 0.5;
 }
 
 static gboolean
-gimp_display_shell_get_state (GimpDisplayShell *shell,
-                              GdkEvent         *event,
-                              GdkDevice        *device,
-                              GdkModifierType  *state)
+gimp_display_shell_get_event_state (GimpDisplayShell *shell,
+                                    GdkEvent         *event,
+                                    GdkDevice        *device,
+                                    GdkModifierType  *state)
 {
   if (gdk_event_get_state (event, state))
-    {
-      return TRUE;
-    }
+    return TRUE;
 
   gimp_display_shell_get_device_state (shell, device, state);
 
