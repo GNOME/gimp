@@ -14,6 +14,7 @@
     gimage
     gimage_mask
     gimprc
+    gimphelp
     gradient
     gradient_select
     guides
