@@ -47,6 +47,8 @@ libappwidgets_a_sources = \
 	gimpcontainermenu.h		\
 	gimpcontainermenuimpl.c		\
 	gimpcontainermenuimpl.h		\
+	gimpcontainerpopup.c		\
+	gimpcontainerpopup.h		\
 	gimpcontainertreeview.c		\
 	gimpcontainertreeview.h		\
 	gimpcontainertreeview-dnd.c	\

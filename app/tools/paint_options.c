@@ -28,10 +28,12 @@
 #include "config/gimpconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
@@ -65,8 +67,8 @@ static GtkWidget * gradient_options_gui   (GimpGradientOptions *gradient,
                                            GType                tool_type,
                                            GtkWidget           *incremental_toggle);
 
-static void   paint_options_brush_clicked (GtkWidget        *widget, 
-                                           gpointer          data);
+static void   paint_options_brush_clicked (GtkWidget           *widget, 
+                                           GimpContext         *context);
 
 
 GtkWidget *
@@ -134,7 +136,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (paint_options_brush_clicked),
-                        NULL);
+                        context);
     }
 
   /*  a separator after the common paint options  */
@@ -411,14 +413,12 @@ gradient_options_gui (GimpGradientOptions *gradient,
 }
 
 static void
-paint_options_brush_clicked (GtkWidget *widget, 
-                             gpointer   data)
+paint_options_brush_clicked (GtkWidget   *widget, 
+                             GimpContext *context)
 {
-  GtkWidget *toplevel;
+  GtkWidget *popup;
 
-  toplevel = gtk_widget_get_toplevel (widget);
-
-  if (GIMP_IS_DOCK (toplevel))
-    gimp_dialog_factory_dialog_raise (GIMP_DOCK (toplevel)->dialog_factory,
-                                      "gimp-brush-grid", -1); 
+  popup = gimp_container_popup_new (context->gimp->brush_factory->container,
+                                    context);
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }

@@ -552,7 +552,13 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
 				       gimp_container_tree_view_selection_changed,
 				       tree_view);
 
-      gtk_tree_selection_select_path (tree_view->selection, path);
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as #108956 is fixed.
+#endif
+      if (tree_view->main_column->editable_widget)
+        gtk_cell_editable_remove_widget (tree_view->main_column->editable_widget);
+
+      gtk_tree_view_set_cursor (tree_view->view, path, NULL, FALSE);
 
       g_signal_handlers_unblock_by_func (tree_view->selection,
 					 gimp_container_tree_view_selection_changed,
@@ -683,7 +689,9 @@ gimp_container_tree_view_find_click_cell (GList             *cells,
           column_area->x + start_pos + renderer->xpad             <= tree_x &&
           column_area->x + start_pos + renderer->xpad + width - 1 >= tree_x)
         {
+#if 0
           g_print ("click on cell at %d (%d width)\n", start_pos, width);
+#endif
 
           return renderer;
         }
@@ -700,7 +708,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
   GimpContainerView *container_view;
   GtkTreeViewColumn *column;
   GtkTreePath       *path;
-  gboolean           retval = FALSE;
 
   container_view = GIMP_CONTAINER_VIEW (tree_view);
 
@@ -714,6 +721,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       GimpPreviewRenderer      *renderer;
       GimpCellRendererToggle   *toggled_cell = NULL;
       GimpCellRendererViewable *clicked_cell = NULL;
+      GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
       gint                      tree_x;
       gint                      tree_y;
@@ -749,66 +757,95 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                                     column, &column_area,
                                                     tree_x, tree_y);
 
+      if (! toggled_cell && ! clicked_cell)
+        edit_cell =
+          gimp_container_tree_view_find_click_cell (tree_view->editable_cells,
+                                                    column, &column_area,
+                                                    tree_x, tree_y);
+
+      g_object_ref (tree_view);
+
       switch (bevent->button)
         {
         case 1:
           if (bevent->type == GDK_BUTTON_PRESS)
             {
-              if (toggled_cell || clicked_cell)
-                {
-                  gchar *path_str;
+              /*  don't select item if a toggle was clicked */
+              if (! toggled_cell)
+                gimp_container_view_item_selected (container_view,
+                                                   renderer->viewable);
 
-                  path_str = gtk_tree_path_to_string (path);
+              /*  a callback invoked by selecting the item may have
+               *  destroyed us, so check if the container is still there
+               */
+              if (container_view->container)
+                {
+                  gchar *path_str = NULL;
+
+                  if (toggled_cell || clicked_cell)
+                    path_str = gtk_tree_path_to_string (path);
  
                   if (toggled_cell)
                     {
-                      /*  don't select path  */
                       gimp_cell_renderer_toggle_clicked (toggled_cell,
                                                          path_str,
                                                          bevent->state);
                     }
                   else if (clicked_cell)
                     {
-                      gtk_tree_selection_select_path (tree_view->selection,
-                                                      path);
                       gimp_cell_renderer_viewable_clicked (clicked_cell,
                                                            path_str,
                                                            bevent->state);
                     }
 
-                  g_free (path_str);
-
-                  retval = TRUE;
+                  if (path_str)
+                    g_free (path_str);
                 }
             }
           else if (bevent->type == GDK_2BUTTON_PRESS)
             {
-              gimp_container_view_item_activated (container_view,
-                                                  renderer->viewable);
-              retval = TRUE;
+              if (edit_cell)
+                {
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as #108956 is fixed.
+#endif
+                  if (column->editable_widget)
+                    gtk_cell_editable_remove_widget (column->editable_widget);
+
+                  gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
+                                                    column, edit_cell, TRUE);
+                }
+              else
+                {
+                  gimp_container_view_item_activated (container_view,
+                                                      renderer->viewable);
+                }
             }
           break;
 
         case 2:
-          retval = TRUE; /* we want to button2-drag without selecting */
           break;
 
         case 3:
-          gtk_tree_selection_select_path (tree_view->selection, path);
-          gimp_container_view_item_context (GIMP_CONTAINER_VIEW (tree_view),
-                                            renderer->viewable);
-          retval = TRUE;
+          gimp_container_view_item_selected (container_view,
+                                             renderer->viewable);
+
+          if (container_view->container)
+            gimp_container_view_item_context (GIMP_CONTAINER_VIEW (tree_view),
+                                              renderer->viewable);
           break;
 
         default:
           break;
         }
 
+      g_object_unref (tree_view);
+
       gtk_tree_path_free (path);
       g_object_unref (renderer);
     }
 
-  return retval;
+  return TRUE;
 }
 
 static void

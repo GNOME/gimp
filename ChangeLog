@@ -1,3 +1,37 @@
+2003-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainereditor.c: allow to create a
+	GimpContainerEditor without a popup menu.
+
+	* app/widgets/gimpcellrendererviewable.c: free the event we
+	got from gdk_get_current_event().
+
+	* app/widgets/gimpcontainerview.c: check view->hash_table for
+	being non-NULL before using it. Be prepared to be destroyed by as
+	a result of calling gimp_context_set_foo(view->context, foo).
+
+	* app/widgets/gimpcontainertreeview.[ch]: added
+	tree_view->editable_cells and handle *all* mouse clicks in
+	gimp_container_tree_view_button_press() (by returning TRUE). Start
+	editing on double-click only. Use gtk_tree_view_set_cursor()
+	instead of gtk_tree_selection_select_path() to avoid
+	selected/focus confusion when the focus enters the widget. Be
+	prepeared to be destroyed as a result of item selection.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontainerpopup.[ch]: new GtkWindow derived
+	widget which pops up a selection of any GimpContainer/GimpContext
+	combo.
+
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemtreeview.c: add the name cell to
+	tree_view->editable_cells so it becomes editable.
+
+	* app/tools/gimpblendoptions.c
+	* app/tools/paint_options.c: use the new container popup for
+	selecting brushes and gradients.
+
 2003-03-22  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-linked-12.png:

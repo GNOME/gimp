@@ -119,13 +119,12 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
-  g_return_val_if_fail (menu_identifier != NULL, FALSE);
-
   g_return_val_if_fail (preview_size > 0 &&
 			preview_size <= GIMP_PREVIEW_MAX_SIZE, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
+  g_return_val_if_fail (menu_factory == NULL ||
+                        GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
 
   switch (view_type)
     {
@@ -154,8 +153,9 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
       return FALSE;
     }
 
-  gimp_editor_create_menu (GIMP_EDITOR (editor->view),
-                           menu_factory, menu_identifier, editor);
+  if (menu_factory && menu_identifier)
+    gimp_editor_create_menu (GIMP_EDITOR (editor->view),
+                             menu_factory, menu_identifier, editor);
 
   gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));

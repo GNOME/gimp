@@ -438,45 +438,54 @@ void
 gimp_container_view_select_item (GimpContainerView *view,
 				 GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+  if (view->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-		 viewable, insert_data);
+      insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+      g_signal_emit (view, view_signals[SELECT_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
 gimp_container_view_activate_item (GimpContainerView *view,
 				   GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+  if (view->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (view, view_signals[ACTIVATE_ITEM], 0,
-		 viewable, insert_data);
+      insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+      g_signal_emit (view, view_signals[ACTIVATE_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
 gimp_container_view_context_item (GimpContainerView *view,
 				  GimpViewable      *viewable)
 {
-  gpointer insert_data;
-
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+  if (view->hash_table)
+    {
+      gpointer insert_data;
 
-  g_signal_emit (view, view_signals[CONTEXT_ITEM], 0,
-		 viewable, insert_data);
+      insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+      g_signal_emit (view, view_signals[CONTEXT_ITEM], 0,
+                     viewable, insert_data);
+    }
 }
 
 void
@@ -486,12 +495,31 @@ gimp_container_view_item_selected (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  if (view->container && view->context)
-    gimp_context_set_by_type (view->context,
-                              view->container->children_type,
-                              GIMP_OBJECT (viewable));
-
   gimp_container_view_select_item (view, viewable);
+
+  if (view->container && view->context)
+    {
+      GimpContext *context;
+
+      /*  ref and remember the context because view->context may
+       *  become NULL by calling gimp_context_set_by_type()
+       */
+      context = g_object_ref (view->context);
+
+      g_signal_handlers_block_by_func (context,
+                                       gimp_container_view_context_changed,
+                                       view);
+
+      gimp_context_set_by_type (context,
+                                view->container->children_type,
+                                GIMP_OBJECT (viewable));
+
+      g_signal_handlers_unblock_by_func (context,
+                                         gimp_container_view_context_changed,
+                                         view);
+
+      g_object_unref (context);
+    }
 }
 
 void

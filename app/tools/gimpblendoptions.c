@@ -27,8 +27,10 @@
 #include "config/gimpconfig-params.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimppropwidgets.h"
@@ -67,7 +69,7 @@ static void   gradient_type_notify            (GimpBlendOptions *options,
                                                GParamSpec       *pspec,
                                                GtkWidget        *repeat_menu);
 static void   blend_options_gradient_clicked  (GtkWidget        *widget,
-                                               gpointer          data);
+                                               GimpContext      *context);
 
 
 static GimpPaintOptionsClass *parent_class = NULL;
@@ -263,7 +265,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (blend_options_gradient_clicked),
-                    NULL);
+                    tool_options);
 
   /*  the gradient type menu  */
   optionmenu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
@@ -322,16 +324,14 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 }
 
 static void
-blend_options_gradient_clicked (GtkWidget *widget, 
-                                gpointer   data)
+blend_options_gradient_clicked (GtkWidget   *widget, 
+                                GimpContext *context)
 {
-  GtkWidget *toplevel;
+  GtkWidget *popup;
 
-  toplevel = gtk_widget_get_toplevel (widget);
-
-  if (GIMP_IS_DOCK (toplevel))
-    gimp_dialog_factory_dialog_raise (GIMP_DOCK (toplevel)->dialog_factory,
-                                      "gimp-gradient-list", -1); 
+  popup = gimp_container_popup_new (context->gimp->gradient_factory->container,
+                                    context);
+  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
 }
 
 static void

@@ -58,6 +58,7 @@ struct _GimpContainerTreeView
 
   GList             *toggle_cells;
   GList             *renderer_cells;
+  GList             *editable_cells;
 
   gint               preview_border_width;
 

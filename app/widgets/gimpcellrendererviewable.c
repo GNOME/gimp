@@ -356,13 +356,18 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
 
   event = gtk_get_current_event ();
 
-  if (event &&
-      ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
-      ((GdkEventButton *) event)->button == 1)
-    gimp_preview_popup_show (gtk_get_event_widget (event),
-                             (GdkEventButton *) event,
-                             cell->renderer->viewable,
-                             cell->renderer->width,
-                             cell->renderer->height,
-                             TRUE);
+  if (event)
+    {
+
+      if (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
+          ((GdkEventButton *) event)->button == 1)
+        gimp_preview_popup_show (gtk_get_event_widget (event),
+                                 (GdkEventButton *) event,
+                                 cell->renderer->viewable,
+                                 cell->renderer->width,
+                                 cell->renderer->height,
+                                 TRUE);
+
+      gdk_event_free (event);
+    }
 }

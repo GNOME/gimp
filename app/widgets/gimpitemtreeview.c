@@ -309,6 +309,9 @@ gimp_item_tree_view_constructor (GType                  type,
   tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
   GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
 
+  tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
+                                              tree_view->name_cell);
+
   g_signal_connect (tree_view->name_cell, "edited",
                     G_CALLBACK (gimp_item_tree_view_name_edited),
                     item_view);
