@@ -22,6 +22,7 @@ endif
 
 if OS_WIN32
 twain = twain
+uri = uri
 winsnap = winsnap
 endif
 
@@ -57,7 +58,7 @@ SUBDIRS = \
 	sgi			\
 	sel2path		\
 	$(twain)		\
-	uri			\
+	$(uri)			\
 	winicon			\
 	$(winsnap)		\
 	$(xjt)			\

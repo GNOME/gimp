@@ -1344,12 +1344,10 @@ if test x"$os_win32" = xyes; then
 else
   MAIL='mail$(EXEEXT)'
   SCREENSHOT='screenshot$(EXEEXT)'
-  URL='url$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
 AC_SUBST(SCREENSHOT)
-AC_SUBST(URL)
 AC_SUBST(WINCLIPBOARD)
 AC_SUBST(WINPRINT)
 AC_SUBST(WMF)

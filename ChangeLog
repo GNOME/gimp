@@ -1,5 +1,11 @@
 2005-02-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: removed traces of url plug-in.
+
+	* plug-ins/Makefile.am: don't build uri on Win32 (for now).
+
+2005-02-06  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added $(EXEEXT) to gimp-remote so it can be built
 	on Win32 when compiling for GTK+-X11.
 
