@@ -117,7 +117,7 @@ gtk_widget_grab_default().</entry>
 <entry>#TRUE if the dialog's "delete_event" should be connected to
 this button's callback. Usually you will connect to the dialog's
 "Cancel" callback. Note that the callback will be called indirectly,
-so you don't habe to worry about the #GdkEvent pointer which comes
+so you don't have to worry about the #GdkEvent pointer which comes
 with the "delete_event", as it will be stripped away before your
 "Cancel" callback is called.</entry>
 </row>
