@@ -1,3 +1,7 @@
+Sun Feb 13 23:23:40 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
+
+	* app/palette.c: Slightly better behaviour (no more horiz scroll)
+
 2000-02-13  Michael Natterer  <mitch@gimp.org>
 
 	* po/POTFILES.in
