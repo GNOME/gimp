@@ -1,3 +1,9 @@
+2004-09-15  Nathan Summers  <rock@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c 
+	(gimp_container_tree_view_menu_position): clamp the popup menu's Y
+	position to the visible area of the GtkTreeView.  Fixes #152662.	
+
 2004-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpquerybox.c: set the "activates-default"

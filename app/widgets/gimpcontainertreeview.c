@@ -359,6 +359,9 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
                                    tree_view->main_column, &cell_rect);
       gtk_tree_path_free (path);
 
+
+      cell_rect.y = CLAMP (cell_rect.y, 0, widget->allocation.height);
+      
       *x += widget->allocation.width / 2;
       *y += cell_rect.y + cell_rect.height / 2;
     }
