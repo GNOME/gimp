@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2001-08-07 17:00+0200\n"
-"PO-Revision-Date: 2001-08-07 17:37+0200\n"
+"PO-Revision-Date: 2001-08-07 17:55+0200\n"
 "Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -6392,7 +6392,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:570
 msgid "Saved"
-msgstr "Elmetve"
+msgstr "Elmentve"
 
 #: plug-ins/common/uniteditor.c:571
 msgid "ID"
@@ -6416,11 +6416,11 @@ msgstr "Röv."
 
 #: plug-ins/common/uniteditor.c:576
 msgid "Singular"
-msgstr "Egyesszám"
+msgstr "Egyes szám"
 
 #: plug-ins/common/uniteditor.c:577
 msgid "Plural"
-msgstr "Többesszám"
+msgstr "Többes szám"
 
 #: plug-ins/common/uniteditor.c:631
 msgid "Create a new unit from scratch."
