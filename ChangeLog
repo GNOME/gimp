@@ -1,3 +1,7 @@
+2004-11-03  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/base/gimphistogram.h: %s/historgam/histogram/
+	
 2004-11-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdasheditor.c (gimp_dash_editor_finalize): don't

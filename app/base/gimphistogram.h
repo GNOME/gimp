@@ -25,7 +25,7 @@
 GimpHistogram * gimp_histogram_new         (GimpBaseConfig       *config);
 void            gimp_histogram_free        (GimpHistogram        *histogram);
 
-void            gimp_histogram_calculate   (GimpHistogram        *historgam,
+void            gimp_histogram_calculate   (GimpHistogram        *histogram,
                                             PixelRegion          *region,
                                             PixelRegion          *mask);
 
