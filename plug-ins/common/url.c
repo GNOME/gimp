@@ -79,18 +79,19 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1997",
-                          "<Load>/URL",
+                          N_("URL"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_plugin_menu_register ("file_url_load", "<Load>");
+  gimp_plugin_icon_register ("file_url_load",
+                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
   gimp_register_load_handler ("file_url_load",
 			      "",
 			      "http:,https:,ftp:");
-  gimp_plugin_icon_register ("file_url_load",
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
 }
 
 static void

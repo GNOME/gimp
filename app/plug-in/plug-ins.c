@@ -618,7 +618,7 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
   procedural_db_register (gimp, &proc_def->db_info);
 
   /*  Add the definition to the global list  */
-  gimp->plug_in_proc_defs = g_slist_append (gimp->plug_in_proc_defs, proc_def);
+  gimp->plug_in_proc_defs = g_slist_prepend (gimp->plug_in_proc_defs, proc_def);
 }
 
 void
@@ -915,7 +915,7 @@ plug_ins_init_file (const GimpDatafileData *file_data,
   plug_in_def_set_mtime (plug_in_def, file_data->mtime);
   plug_in_def_set_needs_query (plug_in_def, TRUE);
 
-  *plug_in_defs = g_slist_append (*plug_in_defs, plug_in_def);
+  *plug_in_defs = g_slist_prepend (*plug_in_defs, plug_in_def);
 }
 
 static void

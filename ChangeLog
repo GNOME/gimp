@@ -1,3 +1,12 @@
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-ins.c (plug_ins_temp_proc_def_add)
+	(plug_ins_init_file): use g_slist_prepend() instead of
+	g_slist_append().
+
+	* plug-ins/common/url.c (query): ported to the new PDB registration
+	scheme.
+
 2004-07-16  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-ins.c (plug_ins_init): sort the file procedures
