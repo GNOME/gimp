@@ -21,7 +21,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <float.h>
 #include <math.h>
 #include <assert.h>
-#include <malloc.h>
+
+#include <glib.h>
 
 #include "global.h"
 #include "spline.h"
@@ -1308,7 +1309,7 @@ fit_one_spline (curve_type curve)
   int Alen = CURVE_LENGTH (curve);
   vector_type *A; 
   
-  A = (vector_type *)calloc(sizeof(vector_type)*2,Alen);
+  A = g_new0 (vector_type, Alen * 2);
 
   START_POINT (spline) = CURVE_POINT (curve, 0);
   END_POINT (spline) = LAST_CURVE_POINT (curve);
@@ -1361,7 +1362,7 @@ fit_one_spline (curve_type curve)
                                   Vmult_scalar (t2_hat, alpha2));
   SPLINE_DEGREE (spline) = CUBIC;
 
-  free(A);
+  g_free (A);
   
   return spline;
 }
@@ -1617,7 +1618,7 @@ find_tangent (curve_type curve, boolean to_start_point, boolean cross_curve)
 
   if (*curve_tangent == NULL)
     {
-      *curve_tangent = malloc (sizeof (vector_type));
+      *curve_tangent = g_new (vector_type, 1);
       tangent = find_half_tangent (curve, to_start_point, &n_points);
 
       if (cross_curve)
@@ -1933,7 +1934,7 @@ free_index_list (index_list_type *index_list)
 {
   if (INDEX_LIST_LENGTH (*index_list) > 0)
     {
-      free (index_list->data);
+      g_free (index_list->data);
       index_list->data = NULL;
       INDEX_LIST_LENGTH (*index_list) = 0;
     }
@@ -1944,7 +1945,7 @@ static void
 append_index (index_list_type *list, unsigned new_index)
 {
   INDEX_LIST_LENGTH (*list)++;
-  list->data = (unsigned *)realloc(list->data,(INDEX_LIST_LENGTH (*list)) * sizeof(unsigned));
+  list->data = (unsigned *)g_realloc(list->data,(INDEX_LIST_LENGTH (*list)) * sizeof(unsigned));
 /*   XRETALLOC (list->data, INDEX_LIST_LENGTH (*list), unsigned); */
   list->data[INDEX_LIST_LENGTH (*list) - 1] = new_index;
 }

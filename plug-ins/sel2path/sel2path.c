@@ -659,10 +659,9 @@ safe_free (address *item)
   if (item == NULL || *item == NULL)
     {
       g_warning ("safe_free: Attempt to free a null item.");
-      abort ();
     }
   
-  free (*item);
+  g_free (*item);
   
   *item = NULL;
 }

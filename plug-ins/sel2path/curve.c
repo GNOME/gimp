@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
 #include <stdio.h>
-#include <malloc.h>
+#include <glib.h>
 
 #include "config.h"
 #include "global.h"
@@ -29,7 +29,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 curve_type
 new_curve ()
 {
-  curve_type curve = malloc (sizeof (struct curve));
+  curve_type curve = g_new (struct curve, 1);
 
   curve->point_list = NULL;
   CURVE_LENGTH (curve) = 0;
@@ -48,7 +48,7 @@ init_curve (coordinate_type coord)
 {
   curve_type curve = new_curve ();
 
-  curve->point_list = malloc (sizeof (point_type));
+  curve->point_list = g_new (point_type, 1);
   CURVE_LENGTH (curve) = 1;
 
   CURVE_POINT (curve, 0) = int_to_real_coord (coord);
@@ -95,7 +95,7 @@ void
 append_point (curve_type curve, real_coordinate_type coord)
 {
   CURVE_LENGTH (curve)++;
-  curve->point_list = realloc(curve->point_list,CURVE_LENGTH (curve) * sizeof(point_type));
+  curve->point_list = g_realloc (curve->point_list,CURVE_LENGTH (curve) * sizeof(point_type));
   LAST_CURVE_POINT (curve) = coord;
   /* The t value does not need to be set.  */
 }
@@ -136,7 +136,7 @@ void
 append_curve (curve_list_type *curve_list, curve_type curve)
 {
   curve_list->length++;
-  curve_list->data = realloc(curve_list->data,curve_list->length*sizeof(curve_type));
+  curve_list->data = g_realloc (curve_list->data,curve_list->length*sizeof(curve_type));
   curve_list->data[curve_list->length - 1] = curve;
 }
 
@@ -178,6 +178,6 @@ void
 append_curve_list (curve_list_array_type *l, curve_list_type curve_list)
 {
   CURVE_LIST_ARRAY_LENGTH (*l)++;
-  l->data = realloc(l->data,( CURVE_LIST_ARRAY_LENGTH (*l))*sizeof(curve_list_type));
+  l->data = g_realloc (l->data,( CURVE_LIST_ARRAY_LENGTH (*l))*sizeof(curve_list_type));
   LAST_CURVE_LIST_ARRAY_ELT (*l) = curve_list;
 }

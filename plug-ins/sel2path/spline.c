@@ -16,8 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
-#include <malloc.h>
 #include <assert.h>
+
+#include <glib.h>
 
 #include "global.h"
 #include "bounding-box.h"
@@ -114,7 +115,7 @@ evaluate_spline (spline_type s, real t)
 spline_list_type *
 new_spline_list ()
 {
-  spline_list_type *answer = malloc (sizeof (spline_list_type));
+  spline_list_type *answer = g_new (spline_list_type, 1);
 
   SPLINE_LIST_DATA (*answer) = NULL;
   SPLINE_LIST_LENGTH (*answer) = 0;
@@ -128,9 +129,9 @@ new_spline_list ()
 spline_list_type *
 init_spline_list (spline_type spline)
 {
-  spline_list_type *answer = malloc (sizeof (spline_list_type));
+  spline_list_type *answer = g_new (spline_list_type, 1);
 
-  SPLINE_LIST_DATA (*answer) = malloc (sizeof (spline_type));
+  SPLINE_LIST_DATA (*answer) = g_new (spline_type, 1);
   SPLINE_LIST_ELT (*answer, 0) = spline;
   SPLINE_LIST_LENGTH (*answer) = 1;
 
@@ -158,7 +159,7 @@ append_spline (spline_list_type *l, spline_type s)
   assert (l != NULL);
   
   SPLINE_LIST_LENGTH (*l)++;
-  SPLINE_LIST_DATA (*l) = realloc (SPLINE_LIST_DATA (*l),
+  SPLINE_LIST_DATA (*l) = g_realloc (SPLINE_LIST_DATA (*l),
                                SPLINE_LIST_LENGTH (*l) * sizeof (spline_type));
   LAST_SPLINE_LIST_ELT (*l) = s;
 }
@@ -177,7 +178,7 @@ concat_spline_lists (spline_list_type *s1, spline_list_type s2)
 
   new_length = SPLINE_LIST_LENGTH (*s1) + SPLINE_LIST_LENGTH (s2);
 
-  SPLINE_LIST_DATA (*s1) = realloc(SPLINE_LIST_DATA (*s1),new_length * sizeof(spline_type));
+  SPLINE_LIST_DATA (*s1) = g_realloc(SPLINE_LIST_DATA (*s1),new_length * sizeof(spline_type));
 
   for (this_spline = 0; this_spline < SPLINE_LIST_LENGTH (s2); this_spline++)
     SPLINE_LIST_ELT (*s1, SPLINE_LIST_LENGTH (*s1)++)
@@ -224,6 +225,6 @@ append_spline_list (spline_list_array_type *l, spline_list_type s)
 {
   SPLINE_LIST_ARRAY_LENGTH (*l)++;
   
-  SPLINE_LIST_ARRAY_DATA (*l) = realloc(SPLINE_LIST_ARRAY_DATA (*l),(SPLINE_LIST_ARRAY_LENGTH (*l))*sizeof(spline_list_type));
+  SPLINE_LIST_ARRAY_DATA (*l) = g_realloc(SPLINE_LIST_ARRAY_DATA (*l),(SPLINE_LIST_ARRAY_LENGTH (*l))*sizeof(spline_list_type));
   LAST_SPLINE_LIST_ARRAY_ELT (*l) = s;
 }

@@ -45,7 +45,7 @@ local_new_bitmap (unsigned width,unsigned height)
   BITMAP_HEIGHT(answer) = height;
   BITMAP_WIDTH(answer) = width;
 
-  BITMAP_BITS (answer) = size > 0 ? calloc (size, 1) : NULL;
+  BITMAP_BITS (answer) = g_new0 (one_byte, size);  /* g_new returns NULL if size == 0 */
 
 /*   printf("local_new_bitmap size = %d @[%p]\n",size,BITMAP_BITS (answer)); */
 
@@ -150,7 +150,7 @@ append_pixel_outline (pixel_outline_list_type *outline_list,
 		      pixel_outline_type outline)
 {
   O_LIST_LENGTH (*outline_list)++;
-  outline_list->data = (pixel_outline_type *)realloc(outline_list->data,outline_list->length *sizeof(pixel_outline_type));
+  outline_list->data = (pixel_outline_type *)g_realloc(outline_list->data,outline_list->length *sizeof(pixel_outline_type));
   O_LIST_OUTLINE (*outline_list, O_LIST_LENGTH (*outline_list) - 1) = outline;
 }
 
@@ -194,7 +194,7 @@ static void
 append_outline_pixel (pixel_outline_type *o, coordinate_type c)
 {
   O_LENGTH (*o)++;
-  o->data = (coordinate_type *)realloc(o->data, O_LENGTH (*o)*sizeof(coordinate_type));
+  o->data = (coordinate_type *)g_realloc(o->data, O_LENGTH (*o)*sizeof(coordinate_type));
   O_COORDINATE (*o, O_LENGTH (*o) - 1) = c;
 }
 

@@ -167,7 +167,7 @@ map_to_unit (real *values, unsigned value_count)
 {
   real smallest, largest;
   int this_value;
-  real *mapped_values = malloc (sizeof (real) * value_count);
+  real *mapped_values = g_new (real, value_count);
 
   find_bounds (values, value_count, &smallest, &largest);
 
