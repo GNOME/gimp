@@ -304,7 +304,13 @@ clone_paint_func (PaintCore    *paint_core,
     {
       gint off_x, off_y;
 
-      gimp_drawable_offsets (src_drawable_, &off_x, &off_y);
+      if (clone_options->type == PATTERN_CLONE)
+	{
+	  off_x = 0;
+	  off_y = 0;
+	}
+      else
+	gimp_drawable_offsets (src_drawable_, &off_x, &off_y);
 
       /*  Find the target cursor's location onscreen  */
       gdisplay_transform_coords (src_gdisp,

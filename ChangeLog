@@ -1,3 +1,8 @@
+2002-09-03  Manish Singh  <yosh@gimp.org>
+
+	* app/clone.c: only do the below for image clone, pattern clones
+	don't have source drawables
+
 2002-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/clone.c: draw the source crosshair with the src_drawable's
