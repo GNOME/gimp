@@ -1000,7 +1000,7 @@ script_fu_auxillary_init ()
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
 			  "<Toolbox>/Xtns/Script-Fu/Refresh",
-			  "",
+			  NULL,
 			  PROC_TEMPORARY,
 			  nargs, 0,
 			  args, NULL,
