@@ -1,18 +1,33 @@
-THIS IS AN UNSTABLE DEVELOPMENT VERSION! DO NOT USE!
-====================================================
+THIS IS A PREVIEW RELEASE FOR TESTING PURPOSES
+==============================================
 
-This is the development branch of The GIMP. Here's where new features
-are being added. Somewhen this summer the next stable GIMP release,
-GIMP 2.2, will emerge out of this. This is an early development
-snapshot, there are bugs and quite some loose ends.
+This is a preview release of GIMP 2.2 which will replace GIMP 2.0 as
+the stable GIMP. This is not yet the final release but it should have
+all the features that 2.2.0 will have. This code hasn't seen a lot of
+testing yet so there are certainly bugs. If you find any, make sure
+you report them at bugzilla.gnome.org (after checking that it isn't
+reported already).
 
-Since the plug-in API of GIMP 2.2 will be compatible with GIMP 2.0,
-2.2 is supposed to install itself into the gimp-2.0 directories. It is
-thus not possible to install this development version into the same
-prefix with GIMP 2.0. A number of files will clash, so please use a
-separate prefix to install this development version.
+Please do not install this pre-releae of GIMP 2.2 into the same prefix
+as GIMP 2.0. It would overwrite most of the GIMP 2.0 installation. To
+install in parallel to 2.0, please use a different prefix which is not
+in your default library search path. If you wish to replace GIMP 2.0
+with this pre-release, then please remove the GIMP 2.0 installation
+before installing this software.
 
-Please do not distribute binary packages of gimp-2.1!
+The GIMP 2.2 plug-in API is fully backward compatible to GIMP 2.0.
+Plug-ins for GIMP 2.0 should continue to work and don't need to be
+recompiled. We do however hope that plug-in authors will update their
+plug-ins for GIMP 2.2 and adapt the GUI changes we did with this
+version.
+
+It might turn out that we have to do some late changes to the newly
+added API before the final 2.2.0 release, so don't consider the API
+strictly frozen yet. The API is however guaranteed to be backward
+compatible (source and binary) with the GIMP 2.0 API. If you find that
+your 2.0 plug-in break when used with the GIMP 2.2 libraries, or if
+you cannot compile a GIMP 2.0 plug-in against the GIMP 2.2 header
+files, please report that as a bug.
 
 If you want to hack on The GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.
@@ -89,13 +104,13 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.0/gtkrc so
+http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.2/gtkrc so
 you can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-2.0/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-2.0/menurc.
+to ~/.gimp-2.2/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.2/menurc.
 
 
 Have fun,

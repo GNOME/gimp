@@ -1,14 +1,15 @@
-Installation instructions for GIMP 2.1
+Installation instructions for GIMP 2.2
 --------------------------------------
 
 There are some basic steps to building and installing this development
 version of The GIMP.
 
-Since the plug-in API of GIMP 2.2 will be compatible with GIMP 2.0,
-2.2 is supposed to install itself into the gimp-2.0 directories. It
-is thus not possible to install this development version into the
-same prefix with GIMP 2.0. A number of files will clash, so PLEASE
-USE A SEPARATE PREFIX to install this development version!!
+Please do not install this pre-releae of GIMP 2.2 into the same prefix
+as GIMP 2.0. It would overwrite most of the GIMP 2.0 installation. To
+install in parallel to 2.0, please use a different prefix which is not
+in your default library search path. If you wish to replace GIMP 2.0
+with this pre-release, then please remove the GIMP 2.0 installation
+before installing this software.
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
@@ -54,10 +55,10 @@ header files installed.
      of make, we'd appreciate if you'd send us a patch with the changes.
 
   8. Install the GIMP by running `make install'. In order to avoid clashes
-     with other versions of The GIMP, we install a binary called gimp-2.1.
+     with other versions of The GIMP, we install a binary called gimp-2.2.
      By default there's also a link created so that you can type 'gimp'
-     to start gimp-2.1. If you have the 1.2 version installed, you should
-     still be able to run it using 'gimp-1.2'.
+     to start gimp-2.2. If you have the 2.0 version installed, you should
+     still be able to run it using 'gimp-2.0'.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -69,8 +70,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-2.1.x.tar.gz   # unpack the sources
-  % cd gimp-2.1.x                # change to the toplevel directory
+  % tar xvfz gimp-2.2.x.tar.gz   # unpack the sources
+  % cd gimp-2.2.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -100,8 +101,8 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp-2.1 
-     (the directory .gimp-2.1 in the users home directory) to DIR.
+     the gimp uses to search for its configuration files from ~/.gimp-2.2 
+     (the directory .gimp-2.2 in the users home directory) to DIR.
 
   --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
@@ -165,8 +166,8 @@ These are:
      --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.1 the default gimp installation. Otherwise a link called
-     gimp pointing to the gimp-2.1 executable will be installed.
+     gimp-2.2 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.2 executable will be installed.
 
   --enable-gimp-console.  In addition to the standard gimp binary,
      build a console-only binary which does not link GTK+ at all.
@@ -176,7 +177,7 @@ The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-2.1' in `app'.
+ - The main GIMP program 'gimp-2.2' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 

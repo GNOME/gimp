@@ -1,9 +1,49 @@
-The GNU Image Manipulation Program Version 2.1
+The GNU Image Manipulation Program Version 2.2
 ----------------------------------------------
 
-This is the development branch of The GIMP. Here's where new features
-are being added. Very soon now, the next stable GIMP release, GIMP 2.2,
-will emerge out of this.
+This is a preview release of GIMP 2.2. This is not yet the final 2.2.0
+release which will replace GIMP 2.0 as the stable GIMP version. This
+code hasn't seen a lot of testing yet so there are certainly bugs. If
+you find any, make sure you report them at bugzilla.gnome.org (after
+checking that it isn't reported already).
+
+
+Overview of Changes in GIMP 2.2.0-pre1
+======================================
+
+- Added more plug-in previews (Displace, Color To Alpha, Newsprint)
+  and ported existing previews to the new widgets (Glass Tiles).
+
+- Added preview to WMF loader plug-in.
+
+- Added Retinex plug-in for color normalization.
+
+- Added plug-in to load and save raw image data (_not_ the raw format
+  used by some digital cameras)
+
+- Added a GUI to configure controller modules.
+
+- Let lots of core dialogs remember their last values and add
+  shortcuts to run with the last values w/o opening the dialog.
+
+- Added new PDB API for drawable tranformations.
+
+- Register all libgimp enums to allow language bindings such as
+  Script-Fu to access them using GType introspection.
+
+- Improved how we attach user-visible strings to enums registered with
+  the type system. Added API to access these strings to libgimpbase.
+
+- Cleanups to the new GFig GUI (still work in progress).
+
+- HIGification of the ImageMap plug-in.
+
+- Cleaned up dialogs code.
+
+- Added Auto Whitebalance menu item.
+
+- lots of bug fixes.
+
 
 
 Overview of Changes in GIMP 2.1.7
