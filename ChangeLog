@@ -1,5 +1,10 @@
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplay.c: EEK, actually increase
+	gimp->next_display_ID after taking a value.
+
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.c (file_open_image): invalidate all layer and
 	channel previews after loading an image. Fixes previews containing
 	garbage after image loading (also fixes thumbnail generation).

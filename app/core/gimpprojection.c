@@ -219,7 +219,7 @@ gimp_display_new (GimpImage *gimage,
 
   gdisp = g_object_new (GIMP_TYPE_DISPLAY, NULL);
 
-  gdisp->ID = gimage->gimp->next_display_ID;
+  gdisp->ID = gimage->gimp->next_display_ID++;
 
   /*  refs the image  */
   gimp_display_connect (gdisp, gimage);
