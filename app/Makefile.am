@@ -292,6 +292,8 @@ gimp_SOURCES = \
 	gimpcontainerview.c		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
+	gimpimagepreview.h		\
+	gimpimagepreview.c		\
 	gimppatternpreview.h		\
 	gimppatternpreview.c		\
 	gimppreview.h			\

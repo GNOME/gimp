@@ -57,7 +57,6 @@
 #include "fileops.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimprc.h"

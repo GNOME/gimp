@@ -29,7 +29,7 @@
 #define GIMP_IS_OBJECT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OBJECT))
 #define GIMP_IS_OBJECT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OBJECT))
 
-typedef struct _GimpObject GimpObject;
+
 typedef struct _GimpObjectClass GimpObjectClass;
 
 struct _GimpObject

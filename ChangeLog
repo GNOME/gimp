@@ -1,3 +1,19 @@
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimpimagepreview.[ch]: new object with own implementations
+	of "create_preview" and "create_popup".
+
+	* app/gimpdrawablepreview.c: stuff... still unused.
+
+	* app/gimppreview.c: fixed idle rendering crashes, don't
+	forget popups on GDK_2BUTTON_PRESS.
+
+	* app/app_procs.c: gimpbrushlist.h doesn't exist any more.
+
+	* app/gimpobject.h: removed the GimpObject typedef because it
+	is in apptypes.h
+
 2001-02-07  Hans Breuer <Hans@Breuer.org>
 
 	* */makefile.msc : Gimp 1.3 for win32 (msc) builds and runs at 
@@ -39,7 +55,6 @@
 	real dynamic linking on win32, against exported symbols from
 	the application or libgimp. This allows to resolve the
 	double dependency for currently 11 functions
-
 
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 

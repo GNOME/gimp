@@ -29,11 +29,12 @@
 
 #include "apptypes.h"
 
-#include "gimpimage.h"
 #include "gimpbrush.h"
 #include "gimpbrushpreview.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
+#include "gimpimage.h"
+#include "gimpimagepreview.h"
 #include "gimpmarshal.h"
 #include "gimppattern.h"
 #include "gimppatternpreview.h"
@@ -194,6 +195,17 @@ gimp_preview_init (GimpPreview *preview)
 static void
 gimp_preview_destroy (GtkObject *object)
 {
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (object);
+
+  if (preview->idle_id)
+    {
+      g_source_remove (preview->idle_id);
+    }
+
+  gimp_preview_popup_hide (preview);
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -219,6 +231,10 @@ gimp_preview_new (GimpViewable *viewable,
   else if (GIMP_IS_DRAWABLE (viewable))
     {
       preview = gtk_type_new (GIMP_TYPE_DRAWABLE_PREVIEW);
+    }
+  else if (GIMP_IS_IMAGE (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_IMAGE_PREVIEW);
     }
   else if (GIMP_IS_PATTERN (viewable))
     {
@@ -256,16 +272,23 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
-  if (bevent->button == 1)
-    {
-      gtk_grab_add (widget);
+  if (! preview->clickable &&
+      ! preview->show_popup)
+    return FALSE;
 
-      if (preview->show_popup)
-        {
-          gimp_preview_popup_show (preview,
-				   bevent->x,
-				   bevent->y);
-        }
+  if (bevent->type == GDK_BUTTON_PRESS)
+    {
+      if (bevent->button == 1)
+	{
+	  gtk_grab_add (widget);
+
+	  if (preview->show_popup)
+	    {
+	      gimp_preview_popup_show (preview,
+				       bevent->x,
+				       bevent->y);
+	    }
+	}
     }
 
   return TRUE;
@@ -280,16 +303,21 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
+  if (! preview->clickable &&
+      ! preview->show_popup)
+    return FALSE;
+
   if (bevent->button == 1)
     {
-      gtk_grab_remove (widget);
-
       if (preview->show_popup)
         {
 	  fast_click = (preview->popup_id != 0);
-
-          gimp_preview_popup_hide (preview);
         }
+
+      gimp_preview_popup_hide (preview);
+
+      /*  remove the grab _after_ hiding the popup  */
+      gtk_grab_remove (widget);
 
       if (preview->clickable && fast_click && preview->in_button)
 	{
@@ -486,11 +514,14 @@ static void
 gimp_preview_paint (GimpPreview *preview)
 {
   if (preview->idle_id)
-    return;
+    {
+      g_source_remove (preview->idle_id);
+    }
 
-  preview->idle_id = g_idle_add_full (G_PRIORITY_LOW,
-				      (GSourceFunc) gimp_preview_idle_paint, preview,
-				      NULL);
+  preview->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+		     (GSourceFunc) gimp_preview_idle_paint, preview,
+		     NULL);
 }
 
 static gboolean
@@ -557,7 +588,7 @@ gimp_preview_idle_paint (GimpPreview *preview)
 
     if (has_alpha)
       {
-	buf = render_check_buf;
+	buf   = render_check_buf;
 	alpha = ((color) ? ALPHA_PIX :
 		 ((channel != -1) ? (temp_buf->bytes - 1) :
 		  ALPHA_G_PIX));

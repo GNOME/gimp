@@ -31,6 +31,9 @@
 static void   gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass);
 static void   gimp_drawable_preview_init       (GimpDrawablePreview      *preview);
 
+static TempBuf   * gimp_drawable_preview_create_preview (GimpPreview *preview);
+static GtkWidget * gimp_drawable_preview_create_popup   (GimpPreview *preview);
+
 
 static GimpPreviewClass *parent_class = NULL;
 
@@ -74,5 +77,15 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 
 static void
 gimp_drawable_preview_init (GimpDrawablePreview *preview)
+{
+}
+
+static TempBuf *
+gimp_drawable_preview_create_preview (GimpPreview *preview)
+{
+}
+
+static GtkWidget *
+gimp_drawable_preview_create_popup (GimpPreview *preview)
 {
 }
