@@ -98,6 +98,9 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 
 /***** Magic numbers *****/
 
@@ -292,9 +295,9 @@ static bumpmap_interface_t bmint = {
 }; /* bmint */
 
 static char *map_types[] = {
-	"Linear map",
-	"Spherical map",
-	"Sinuosidal map"
+	N_("Linear map"),
+	N_("Spherical map"),
+	N_("Sinusoidal map")
 }; /* map_types */
 
 GDrawable *drawable = NULL;
@@ -337,16 +340,18 @@ query(void)
 	static int        nargs        = sizeof(args) / sizeof(args[0]);
 	static int        nreturn_vals = 0;
 
+	INIT_I18N();
+
 	gimp_install_procedure(PLUG_IN_NAME,
-			       "Create an embossing effect using an image as a bump map",
-			       "This plug-in uses the algorithm described by John Schlag, "
+			       _("Create an embossing effect using an image as a bump map"),
+			       ("This plug-in uses the algorithm described by John Schlag, "
 			       "\"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV "
 			       "(ISBN 0-12-336155-9). It takes a grayscale image to be applied as "
-			       "a bump map to another image and produces a nice embossing effect.",
-			       "Federico Mena Quintero and Jens Lautenbacher",
-			       "Federico Mena Quintero and Jens Lautenbacher",
+			       "a bump map to another image and produces a nice embossing effect."),
+			       "Federico Mena Quintero & Jens Lautenbacher",
+			       "Federico Mena Quintero & Jens Lautenbacher",
 			       PLUG_IN_VERSION,
-			       "<Image>/Filters/Map/Bump Map",
+			       _("<Image>/Filters/Map/Bump Map"),
 			       "RGB*, GRAY*",
 			       PROC_PLUG_IN,
 			       nargs,
@@ -369,6 +374,8 @@ run(char    *name,
 
 	GRunModeType run_mode;
 	GStatusType  status;
+
+	INIT_I18N();
 
 	status   = STATUS_SUCCESS;
 	run_mode = param[0].data.d_int32;
@@ -490,7 +497,7 @@ bumpmap(void)
 	printf("bumpmap: waiting... (pid %d)\n", getpid());
 	kill(getpid(), SIGSTOP);
 #endif
-	gimp_progress_init("Bump-mapping...");
+	gimp_progress_init(_("Bump-mapping..."));
 	
 	/* Get the bumpmap drawable */
 
@@ -820,7 +827,7 @@ bumpmap_dialog(void)
 	/* Dialog */
 
 	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), "Bump map");
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Bump map"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -874,7 +881,7 @@ bumpmap_dialog(void)
 
 	/* Compensate darkening */
 
-	button = gtk_check_button_new_with_label("Compensate for darkening");
+	button = gtk_check_button_new_with_label(_("Compensate for darkening"));
 	gtk_table_attach(GTK_TABLE(table), button, 0, 1, 0, 1,
 			 GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), bmvals.compensate ? TRUE : FALSE);
@@ -885,7 +892,7 @@ bumpmap_dialog(void)
 
 	/* Invert bumpmap */
 
-	button = gtk_check_button_new_with_label("Invert bumpmap");
+	button = gtk_check_button_new_with_label(_("Invert bumpmap"));
 	gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
 			 GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), bmvals.invert ? TRUE : FALSE);
@@ -909,7 +916,7 @@ bumpmap_dialog(void)
 	group = NULL;
 
 	for (i = 0; i < (sizeof(map_types) / sizeof(map_types[0])); i++) {
-		button = gtk_radio_button_new_with_label(group, map_types[i]);
+		button = gtk_radio_button_new_with_label(group, gettext(map_types[i]));
 		group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
 		if (i == bmvals.type)
 			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -929,7 +936,7 @@ bumpmap_dialog(void)
 
 	/* Bump map menu */
 
-	label = gtk_label_new("Bump map");
+	label = gtk_label_new(_("Bump map"));
 	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
 	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
 	gtk_widget_show(label);
@@ -948,19 +955,19 @@ bumpmap_dialog(void)
 
 	/* Controls */
 
-	dialog_create_dvalue("Azimuth", GTK_TABLE(table), 1, &bmvals.azimuth, 0.0, 360.0);
-	dialog_create_dvalue("Elevation", GTK_TABLE(table), 2, &bmvals.elevation, 0.5, 90.0);
-	dialog_create_ivalue("Depth", GTK_TABLE(table), 3, &bmvals.depth, 1, 65, FALSE);
-	dialog_create_ivalue("X offset", GTK_TABLE(table), 4, &bmvals.xofs, -1000, 1001, FALSE);
-	dialog_create_ivalue("Y offset", GTK_TABLE(table), 5, &bmvals.yofs, -1000, 1001, FALSE);
-	dialog_create_ivalue("Waterlevel", GTK_TABLE(table), 6, &bmvals.waterlevel, 0, 256, TRUE);
-	dialog_create_ivalue("Ambient", GTK_TABLE(table), 7, &bmvals.ambient, 0, 256, FALSE);
+	dialog_create_dvalue(_("Azimuth"), GTK_TABLE(table), 1, &bmvals.azimuth, 0.0, 360.0);
+	dialog_create_dvalue(_("Elevation"), GTK_TABLE(table), 2, &bmvals.elevation, 0.5, 90.0);
+	dialog_create_ivalue(_("Depth"), GTK_TABLE(table), 3, &bmvals.depth, 1, 65, FALSE);
+	dialog_create_ivalue(_("X offset"), GTK_TABLE(table), 4, &bmvals.xofs, -1000, 1001, FALSE);
+	dialog_create_ivalue(_("Y offset"), GTK_TABLE(table), 5, &bmvals.yofs, -1000, 1001, FALSE);
+	dialog_create_ivalue(_("Waterlevel"), GTK_TABLE(table), 6, &bmvals.waterlevel, 0, 256, TRUE);
+	dialog_create_ivalue(_("Ambient"), GTK_TABLE(table), 7, &bmvals.ambient, 0, 256, FALSE);
 
 	/* Buttons */
 
 	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 	
-	button = gtk_button_new_with_label("OK");
+	button = gtk_button_new_with_label(_("OK"));
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) dialog_ok_callback,
@@ -969,7 +976,7 @@ bumpmap_dialog(void)
 	gtk_widget_grab_default(button);
 	gtk_widget_show(button);
 	
-	button = gtk_button_new_with_label("Cancel");
+	button = gtk_button_new_with_label(_("Cancel"));
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) dialog_cancel_callback,

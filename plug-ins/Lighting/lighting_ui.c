@@ -31,26 +31,26 @@ GckScaleValues sample_scale_vals = {128,3.0,1.0,6.0,1.0,1.0,1.0,GTK_UPDATE_CONTI
 
 gchar *light_labels[] =
   {
-    "Point light",
-    "Directional light",
-    "Spot light",
-    "No light",
+    N_("Point light"),
+    N_("Directional light"),
+    N_("Spot light"),
+    N_("No light"),
      NULL
   };
 
 gchar *maptype_labels[] =
   {
-    "From image",
-    "Waves",
+    N_("From image"),
+    N_("Waves"),
      NULL
   };
 
 gchar *curvetype_labels[] =
   {
-    "Linear",
-    "Logarithmic",
-    "Sinusoidal",
-    "Spherical",
+    N_("Linear"),
+    N_("Logarithmic"),
+    N_("Sinusoidal"),
+    N_("Spherical"),
      NULL
   };
 
@@ -566,34 +566,34 @@ GtkWidget *create_options_page(void)
 
   page = gck_vbox_new(NULL,FALSE,FALSE,FALSE,0,0,0);
 
-  frame=gck_frame_new("General options",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("General options"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,FALSE,FALSE,0,5,5);
 
-  togglebump=gck_checkbutton_new("Use bump mapping",vbox,mapvals.bump_mapped,
+  togglebump=gck_checkbutton_new(_("Use bump mapping"),vbox,mapvals.bump_mapped,
     (GtkSignalFunc)togglebump_update);
-  toggleenvironment=gck_checkbutton_new("Use environment mapping",vbox,mapvals.env_mapped,
+  toggleenvironment=gck_checkbutton_new(_("Use environment mapping"),vbox,mapvals.env_mapped,
     (GtkSignalFunc)toggleenvironment_update);
 /*  togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
     (GtkSignalFunc)togglerefraction_update); */
-  toggletrans=gck_checkbutton_new("Transparent background",vbox,mapvals.transparent_background,
+  toggletrans=gck_checkbutton_new(_("Transparent background"),vbox,mapvals.transparent_background,
     (GtkSignalFunc)toggletrans_update);
-  toggleimage=gck_checkbutton_new("Create new image",vbox,mapvals.create_new_image,
+  toggleimage=gck_checkbutton_new(_("Create new image"),vbox,mapvals.create_new_image,
     (GtkSignalFunc)toggle_update);
-  togglequality=gck_checkbutton_new("High preview quality",vbox,mapvals.previewquality,
+  togglequality=gck_checkbutton_new(_("High preview quality"),vbox,mapvals.previewquality,
     (GtkSignalFunc)togglequality_update);
-  toggletips=gck_checkbutton_new("Enable tooltips",vbox,mapvals.tooltips_enabled,
+  toggletips=gck_checkbutton_new(_("Enable tooltips"),vbox,mapvals.tooltips_enabled,
     (GtkSignalFunc)toggletips_update);
 
-  gtk_tooltips_set_tip(tooltips,togglebump,"Enable/disable bump-mapping (image depth)",NULL);
-  gtk_tooltips_set_tip(tooltips,toggleenvironment,"Enable/disable environment mapping (reflection)",NULL);
+  gtk_tooltips_set_tip(tooltips,togglebump,_("Enable/disable bump-mapping (image depth)"),NULL);
+  gtk_tooltips_set_tip(tooltips,toggleenvironment,_("Enable/disable environment mapping (reflection)"),NULL);
 /*  gtk_tooltips_set_tips(tooltips,togglerefraction,"Enable/disable refractive layer"); */
-  gtk_tooltips_set_tip(tooltips,toggletrans,"Make destination image transparent where bump height is zero",NULL);
-  gtk_tooltips_set_tip(tooltips,toggleimage,"Create a new image when applying filter",NULL);
-  gtk_tooltips_set_tip(tooltips,togglequality,"Enable/disable high quality previews",NULL);
-  gtk_tooltips_set_tip(tooltips,toggletips,"Enable/disable tooltip messages",NULL); 
+  gtk_tooltips_set_tip(tooltips,toggletrans, _("Make destination image transparent where bump height is zero"),NULL);
+  gtk_tooltips_set_tip(tooltips,toggleimage, _("Create a new image when applying filter"),NULL);
+  gtk_tooltips_set_tip(tooltips,togglequality, _("Enable/disable high quality previews"),NULL);
+  gtk_tooltips_set_tip(tooltips,toggletips, _("Enable/disable tooltip messages"),NULL); 
 
-  gtk_object_set_data(GTK_OBJECT(togglebump),"ValuePtr",(gpointer)&mapvals.bump_mapped);
-  gtk_object_set_data(GTK_OBJECT(toggleenvironment),"ValuePtr",(gpointer)&mapvals.env_mapped);
+  gtk_object_set_data(GTK_OBJECT(togglebump), "ValuePtr",(gpointer)&mapvals.bump_mapped);
+  gtk_object_set_data(GTK_OBJECT(toggleenvironment), "ValuePtr",(gpointer)&mapvals.env_mapped);
 /*  gtk_object_set_data(GTK_OBJECT(togglerefraction),"ValuePtr",(gpointer)&mapvals.ref_mapped); */
   gtk_object_set_data(GTK_OBJECT(toggletrans),"ValuePtr",(gpointer)&mapvals.transparent_background);
   gtk_object_set_data(GTK_OBJECT(toggleimage),"ValuePtr",(gpointer)&mapvals.create_new_image);
@@ -609,13 +609,13 @@ GtkWidget *create_options_page(void)
   gtk_widget_show(vbox);
   gtk_widget_show(frame);
 
-  frame=gck_frame_new("Antialiasing options",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("Antialiasing options"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,FALSE,FALSE,5,5,5);
 
-  toggleanti=gck_checkbutton_new("Enable antialiasing",vbox,mapvals.antialiasing,
+  toggleanti=gck_checkbutton_new(_("Enable antialiasing"),vbox,mapvals.antialiasing,
     (GtkSignalFunc)toggleanti_update);
   gtk_object_set_data(GTK_OBJECT(toggleanti),"ValuePtr",(gpointer)&mapvals.antialiasing);
-  gtk_tooltips_set_tip(tooltips,toggleanti,"Enable/disable jagged edges removal (antialiasing)",NULL);
+  gtk_tooltips_set_tip(tooltips,toggleanti,_("Enable/disable jagged edges removal (antialiasing)"),NULL);
    
   hbox=gck_hbox_new(vbox,FALSE,TRUE,TRUE,0,0,0);
   
@@ -625,12 +625,12 @@ GtkWidget *create_options_page(void)
 
   vbox=gck_vbox_new(hbox,TRUE,FALSE,TRUE,0,0,0);
   frame=gck_frame_new(NULL,vbox,GTK_SHADOW_NONE,TRUE,TRUE,0,0);
-  label=gck_label_aligned_new("Depth:",frame,GCK_ALIGN_RIGHT,GCK_ALIGN_BOTTOM);
+  label=gck_label_aligned_new(_("Depth:"),frame,GCK_ALIGN_RIGHT,GCK_ALIGN_BOTTOM);
   gtk_widget_show(label);
   gtk_widget_show(frame);
   
   frame=gck_frame_new(NULL,vbox,GTK_SHADOW_NONE,TRUE,TRUE,0,0);
-  label=gck_label_aligned_new("Treshold:",frame,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label=gck_label_aligned_new(_("Threshold:"),frame,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
   gtk_widget_show(label);
   gtk_widget_show(vbox);
   gtk_widget_show(frame);
@@ -642,8 +642,8 @@ GtkWidget *create_options_page(void)
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.max_depth);
   gtk_object_set_data(GTK_OBJECT(widget2),"ValuePtr",(gpointer)&mapvals.pixel_treshold);
 
-  gtk_tooltips_set_tip(tooltips,widget1,"Antialiasing quality. Higher is better, but slower",NULL);
-  gtk_tooltips_set_tip(tooltips,widget2,"Stop when pixel differences are smaller than this value",NULL);
+  gtk_tooltips_set_tip(tooltips,widget1,_("Antialiasing quality. Higher is better, but slower"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,_("Stop when pixel differences are smaller than this value"),NULL);
 
   gtk_widget_show(widget1);
   gtk_widget_show(widget2);
@@ -666,39 +666,39 @@ GtkWidget *create_light_page(void)
 
   page=gtk_vbox_new(FALSE,0);
   
-  frame=gck_frame_new("Light settings",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("Light settings"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,TRUE,TRUE,5,0,5);
 
   gck_auto_show(TRUE);
-  widget1=gck_option_menu_new("Lightsource type:",vbox,TRUE,TRUE,0,
+  widget1=gck_option_menu_new(_("Lightsource type:"),vbox,TRUE,TRUE,0,
     light_labels,(GtkSignalFunc)lightmenu_callback, NULL);
   gtk_option_menu_set_history(GTK_OPTION_MENU(widget1),mapvals.lightsource.type);
   gck_auto_show(FALSE);
   
-  widget2=gck_pushbutton_new("Lightsource color",vbox,TRUE,FALSE,0,
+  widget2=gck_pushbutton_new(_("Lightsource color"),vbox,TRUE,FALSE,0,
     (GtkSignalFunc)light_color_callback);
 
   gtk_widget_show(widget2);
   gtk_widget_show(vbox);
   gtk_widget_show(frame);
 
-  gtk_tooltips_set_tip(tooltips,widget1,"Type of light source to apply",NULL);
-  gtk_tooltips_set_tip(tooltips,widget2,"Set light source color (white is default)",NULL);
+  gtk_tooltips_set_tip(tooltips,widget1,_("Type of light source to apply"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,_("Set light source color (white is default)"),NULL);
   
-  pointlightwid=gck_frame_new("Position",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  pointlightwid=gck_frame_new(_("Position"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(pointlightwid,FALSE,FALSE,FALSE,5,0,5);
 
-  xentry=gck_entryfield_new("X:",vbox,mapvals.lightsource.position.x,(GtkSignalFunc)entry_update);
-  yentry=gck_entryfield_new("Y:",vbox,mapvals.lightsource.position.y,(GtkSignalFunc)entry_update);
-  zentry=gck_entryfield_new("Z:",vbox,mapvals.lightsource.position.z,(GtkSignalFunc)entry_update);
+  xentry=gck_entryfield_new(_("X:"),vbox,mapvals.lightsource.position.x,(GtkSignalFunc)entry_update);
+  yentry=gck_entryfield_new(_("Y:"),vbox,mapvals.lightsource.position.y,(GtkSignalFunc)entry_update);
+  zentry=gck_entryfield_new(_("Z:"),vbox,mapvals.lightsource.position.z,(GtkSignalFunc)entry_update);
 
   gtk_object_set_data(GTK_OBJECT(xentry),"ValuePtr",(gpointer)&mapvals.lightsource.position.x);
   gtk_object_set_data(GTK_OBJECT(yentry),"ValuePtr",(gpointer)&mapvals.lightsource.position.y);
   gtk_object_set_data(GTK_OBJECT(zentry),"ValuePtr",(gpointer)&mapvals.lightsource.position.z);
 
-  gtk_tooltips_set_tip(tooltips,xentry,"Light source X position in XYZ space",NULL);
-  gtk_tooltips_set_tip(tooltips,yentry,"Light source Y position in XYZ space",NULL);
-  gtk_tooltips_set_tip(tooltips,zentry,"Light source Z position in XYZ space",NULL);
+  gtk_tooltips_set_tip(tooltips,xentry,_("Light source X position in XYZ space"),NULL);
+  gtk_tooltips_set_tip(tooltips,yentry,_("Light source Y position in XYZ space"),NULL);
+  gtk_tooltips_set_tip(tooltips,zentry,_("Light source Z position in XYZ space"),NULL);
 
   gtk_widget_show(xentry);
   gtk_widget_show(yentry);
@@ -707,16 +707,16 @@ GtkWidget *create_light_page(void)
   gtk_widget_show(frame);
   gtk_widget_show(pointlightwid);
 
-  dirlightwid=gck_frame_new("Direction vector",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  dirlightwid=gck_frame_new(_("Direction vector"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(dirlightwid,FALSE,FALSE,FALSE,5,0,5);
 
-  widget1=gck_entryfield_new("X:",vbox,mapvals.lightsource.direction.x,(GtkSignalFunc)entry_update);
-  widget2=gck_entryfield_new("Y:",vbox,mapvals.lightsource.direction.y,(GtkSignalFunc)entry_update);
-  widget3=gck_entryfield_new("Z:",vbox,mapvals.lightsource.direction.z,(GtkSignalFunc)entry_update);
+  widget1=gck_entryfield_new(_("X:"),vbox,mapvals.lightsource.direction.x,(GtkSignalFunc)entry_update);
+  widget2=gck_entryfield_new(_("Y:"),vbox,mapvals.lightsource.direction.y,(GtkSignalFunc)entry_update);
+  widget3=gck_entryfield_new(_("Z:"),vbox,mapvals.lightsource.direction.z,(GtkSignalFunc)entry_update);
 
-  gtk_tooltips_set_tip(tooltips,widget1,"Light source X direction in XYZ space",NULL);
-  gtk_tooltips_set_tip(tooltips,widget2,"Light source Y direction in XYZ space",NULL);
-  gtk_tooltips_set_tip(tooltips,widget3,"Light source Z direction in XYZ space",NULL);
+  gtk_tooltips_set_tip(tooltips,widget1,_("Light source X direction in XYZ space"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,_("Light source Y direction in XYZ space"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget3,_("Light source Z direction in XYZ space"),NULL);
 
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.lightsource.direction.x);
   gtk_object_set_data(GTK_OBJECT(widget2),"ValuePtr",(gpointer)&mapvals.lightsource.direction.y);
@@ -748,13 +748,13 @@ GtkWidget *create_material_page(void)
   
   page=gtk_vbox_new(FALSE,0);
 
-  frame=gck_frame_new("Intensity levels",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("Intensity levels"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
 
   table=gtk_table_new(2,4,FALSE);
   gtk_container_add(GTK_CONTAINER(frame),table);
   
-  label1=gck_label_aligned_new("Ambient:",NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
-  label2=gck_label_aligned_new("Diffuse:",NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label1=gck_label_aligned_new(_("Ambient:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label2=gck_label_aligned_new(_("Diffuse:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
 
   gtk_table_attach(GTK_TABLE(table),label1,0,1,0,1, 0,0,0,0);
   gtk_table_attach(GTK_TABLE(table),label2,0,1,1,2, 0,0,0,0);
@@ -794,20 +794,20 @@ GtkWidget *create_material_page(void)
   gtk_widget_show(table);
   gtk_widget_show(frame);
 
-  gtk_tooltips_set_tip(tooltips,widget1,"Amount of original color to show where no direct light falls",NULL);
-  gtk_tooltips_set_tip(tooltips,widget2,"Intensity of original color when lit by a light source",NULL);
+  gtk_tooltips_set_tip(tooltips,widget1,_("Amount of original color to show where no direct light falls"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,_("Intensity of original color when lit by a light source"),NULL);
 
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.material.ambient_int);
   gtk_object_set_data(GTK_OBJECT(widget2),"ValuePtr",(gpointer)&mapvals.material.diffuse_int);
 
-  frame=gck_frame_new("Reflectivity",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("Reflectivity"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
 
   table=gtk_table_new(3,4,FALSE);
   gtk_container_add(GTK_CONTAINER(frame),table);
   
-  label1=gck_label_aligned_new("Diffuse:",NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED); 
-  label2=gck_label_aligned_new("Specular:",NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
-  label3=gck_label_aligned_new("Hightlight:",NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label1=gck_label_aligned_new(_("Diffuse:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED); 
+  label2=gck_label_aligned_new(_("Specular:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
+  label3=gck_label_aligned_new(_("Hightlight:"),NULL,GCK_ALIGN_RIGHT,GCK_ALIGN_CENTERED);
 
   gtk_table_attach(GTK_TABLE(table),label1,0,1,0,1, 0,0,0,0);
   gtk_table_attach(GTK_TABLE(table),label2,0,1,1,2, 0,0,0,0);
@@ -821,9 +821,9 @@ GtkWidget *create_material_page(void)
   gtk_table_attach(GTK_TABLE(table),widget2,2,3,1,2, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
   gtk_table_attach(GTK_TABLE(table),widget3,2,3,2,3, GTK_EXPAND|GTK_FILL,GTK_EXPAND|GTK_FILL, 0,0);
 
-  gtk_tooltips_set_tip(tooltips,widget1,"Higher values makes the object reflect more light (appear lighter)",NULL);
-  gtk_tooltips_set_tip(tooltips,widget2,"Controls how intense the highlights will be",NULL);
-  gtk_tooltips_set_tip(tooltips,widget3,"Higher values makes the highlights more focused",NULL);
+  gtk_tooltips_set_tip(tooltips,widget1,_("Higher values makes the object reflect more light (appear lighter)"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget2,_("Controls how intense the highlights will be"),NULL);
+  gtk_tooltips_set_tip(tooltips,widget3,_("Higher values makes the highlights more focused"),NULL);
 
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.material.diffuse_ref);
   gtk_object_set_data(GTK_OBJECT(widget2),"ValuePtr",(gpointer)&mapvals.material.specular_ref);
@@ -885,13 +885,13 @@ GtkWidget *create_bump_page(void)
   
   page=gtk_vbox_new(FALSE,0);
 
-  frame=gck_frame_new("Bumpmap settings",page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
+  frame=gck_frame_new(_("Bumpmap settings"),page,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,TRUE,TRUE,5,0,5);
 
   imagewid=gck_vbox_new(vbox,FALSE,TRUE,TRUE,5,0,5);
 
   widget1=gck_hbox_new(imagewid,FALSE,TRUE,TRUE,5,0,3);
-  label = gck_label_new("Bumpmap image:",widget1);
+  label = gck_label_new(_("Bumpmap image:"),widget1);
 
   gtk_widget_show(label);
   gtk_widget_show(widget1);
@@ -910,9 +910,9 @@ GtkWidget *create_bump_page(void)
   gtk_option_menu_set_history(GTK_OPTION_MENU(widget1),mapvals.bumpmaptype);
   gck_auto_show(FALSE);
 
-  widget1=gck_entryfield_new("Minimum height:",imagewid,mapvals.bumpmin,
+  widget1=gck_entryfield_new(_("Minimum height:"),imagewid,mapvals.bumpmin,
     (GtkSignalFunc)entry_update);
-  widget2=gck_entryfield_new("Maximum height:",imagewid,mapvals.bumpmax,
+  widget2=gck_entryfield_new(_("Maximum height:"),imagewid,mapvals.bumpmax,
     (GtkSignalFunc)entry_update);
 
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.bumpmin);
@@ -920,7 +920,7 @@ GtkWidget *create_bump_page(void)
   gtk_widget_show(widget1);
   gtk_widget_show(widget2);
 
-  widget1=gck_checkbutton_new("Autostretch to fit value range",imagewid,mapvals.bumpstretch,
+  widget1=gck_checkbutton_new(_("Autostretch to fit value range"),imagewid,mapvals.bumpstretch,
     (GtkSignalFunc)togglestretch_update);
   gtk_object_set_data(GTK_OBJECT(widget1),"ValuePtr",(gpointer)&mapvals.bumpstretch);
   gtk_widget_show(widget1);
@@ -943,14 +943,14 @@ GtkWidget *create_environment_page(void)
   
   page=gck_vbox_new(NULL,FALSE,FALSE,FALSE,0,0,0);
 
-  frame=gck_frame_new("Environment settings",page,
+  frame=gck_frame_new(_("Environment settings"),page,
     GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,5);
   vbox=gck_vbox_new(frame,FALSE,TRUE,TRUE,5,0,5);
 
   imagewid=gck_vbox_new(vbox,FALSE,TRUE,TRUE,5,0,5);
 
   widget1=gck_hbox_new(imagewid,FALSE,TRUE,TRUE,5,0,3);
-  gck_label_new("Environment image:",widget1);
+  gck_label_new(_("Environment image:"),widget1);
 
   widget2=gtk_option_menu_new();
   gtk_box_pack_end(GTK_BOX(widget1),widget2,TRUE,TRUE,0);
@@ -984,19 +984,19 @@ void create_main_notebook(GtkWidget *container)
   gtk_container_add(GTK_CONTAINER(container),GTK_WIDGET(options_note_book));
 
   page = create_options_page();
-  label=gtk_label_new("Options");
+  label=gtk_label_new(_("Options"));
   gtk_widget_show(label);
 
   gtk_notebook_append_page(options_note_book,page,label);
   
   page = create_light_page();
-  label=gtk_label_new("Light");
+  label=gtk_label_new(_("Light"));
   gtk_widget_show(label);
 
   gtk_notebook_append_page(options_note_book,page,label);
   
   page = create_material_page();
-  label=gtk_label_new("Material");
+  label=gtk_label_new(_("Material"));
   gtk_widget_show(label);
 
   gtk_notebook_append_page(options_note_book,page,label);
@@ -1004,7 +1004,7 @@ void create_main_notebook(GtkWidget *container)
   if (mapvals.bump_mapped==TRUE)
     {
       bump_page = create_bump_page();
-      bump_label=gtk_label_new("Bump");
+      bump_label=gtk_label_new(_("Bump"));
       gtk_widget_show(bump_label);
       bump_page_pos = g_list_length(options_note_book->children);
       gtk_notebook_append_page(options_note_book,bump_page,bump_label);      
@@ -1013,7 +1013,7 @@ void create_main_notebook(GtkWidget *container)
   if (mapvals.env_mapped==TRUE)
     {
       env_page = create_environment_page();
-      env_label=gtk_label_new("Env");
+      env_label=gtk_label_new(_("Env"));
       gtk_widget_show(env_label);
       env_page_pos = g_list_length(options_note_book->children);
       gtk_notebook_append_page(options_note_book,env_page,env_label);
@@ -1034,7 +1034,7 @@ void create_main_dialog(void)
   GtkWidget *main_vbox,*main_workbox,*actionbox,*workbox1,*workbox1b,*workbox2;
   GtkWidget *frame,*applybutton,*cancelbutton,*helpbutton,*hbox,*wid;
 
-  appwin = gck_application_window_new("Lighting effects");
+  appwin = gck_application_window_new(_("Lighting effects"));
   gtk_widget_realize(appwin->widget);
 
   tooltips=gtk_tooltips_new();
@@ -1058,9 +1058,9 @@ void create_main_dialog(void)
   /* Add Ok, Cancel and Help buttons to the action area */
   /* ================================================== */
 
-  applybutton=gck_pushbutton_new("Apply",actionbox,FALSE,FALSE,5,(GtkSignalFunc)apply_callback);
-  cancelbutton=gck_pushbutton_new("Cancel",actionbox,FALSE,FALSE,5,(GtkSignalFunc)exit_callback);
-  helpbutton=gck_pushbutton_new("Help",actionbox,FALSE,FALSE,5,NULL);
+  applybutton=gck_pushbutton_new(_("Apply"),actionbox,FALSE,FALSE,5,(GtkSignalFunc)apply_callback);
+  cancelbutton=gck_pushbutton_new(_("Cancel"),actionbox,FALSE,FALSE,5,(GtkSignalFunc)exit_callback);
+  helpbutton=gck_pushbutton_new(_("Help"),actionbox,FALSE,FALSE,5,NULL);
 
   GTK_WIDGET_SET_FLAGS (applybutton, GTK_CAN_DEFAULT);
   GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
@@ -1069,8 +1069,8 @@ void create_main_dialog(void)
   gtk_widget_grab_default (applybutton);
   gtk_widget_set_sensitive(helpbutton,FALSE);
   
-  gtk_tooltips_set_tip(tooltips,applybutton,"Apply filter with current settings",NULL);
-  gtk_tooltips_set_tip(tooltips,cancelbutton,"Close filter without doing anything",NULL);
+  gtk_tooltips_set_tip(tooltips,applybutton,_("Apply filter with current settings"),NULL);
+  gtk_tooltips_set_tip(tooltips,cancelbutton,_("Close filter without doing anything"),NULL);
 
   /* Split the workarea in two */
   /* ========================= */
@@ -1090,13 +1090,13 @@ void create_main_dialog(void)
   workbox1b=gck_vbox_new(workbox1,FALSE,FALSE,FALSE,0,0,0);
 
   hbox=gck_hbox_new(workbox1b,FALSE,FALSE,FALSE,5,0,0);
-  wid=gck_pushbutton_new("  Preview!  ",hbox,FALSE,FALSE,0,(GtkSignalFunc)preview_callback);
-  gtk_tooltips_set_tip(tooltips,wid,"Recompute preview image",NULL);
+  wid=gck_pushbutton_new(_("  Preview!  "),hbox,FALSE,FALSE,0,(GtkSignalFunc)preview_callback);
+  gtk_tooltips_set_tip(tooltips,wid,_("Recompute preview image"),NULL);
   hbox=gck_hbox_new(hbox,TRUE,FALSE,FALSE,0,0,0);
   wid=gck_pushbutton_new(" + ",hbox,FALSE,FALSE,0,(GtkSignalFunc)zoomin_callback);
-  gtk_tooltips_set_tip(tooltips,wid,"Zoom in (make image bigger)",NULL);
+  gtk_tooltips_set_tip(tooltips,wid,_("Zoom in (make image bigger)"),NULL);
   wid=gck_pushbutton_new(" - ",hbox,FALSE,FALSE,0,(GtkSignalFunc)zoomout_callback);
-  gtk_tooltips_set_tip(tooltips,wid,"Zoom out (make image smaller)",NULL);
+  gtk_tooltips_set_tip(tooltips,wid,_("Zoom out (make image smaller)"),NULL);
 
   create_main_notebook(workbox2);
 

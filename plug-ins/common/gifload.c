@@ -50,13 +50,14 @@
 /* +-------------------------------------------------------------------+ */
 
 
-
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 /* uncomment the line below for a little debugging info */
@@ -127,8 +128,10 @@ query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_gif_load",
-                          "loads files of Compuserve GIF file format",
+                          _("loads files of Compuserve GIF file format"),
                           "FIXME: write help for gif_load",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
@@ -162,6 +165,8 @@ run (char    *name,
 
   if (strcmp (name, "file_gif_load") == 0)
     {
+      INIT_I18N();
+
       image_ID = load_image (param[1].data.d_string);
 
       /* The GIF format only tells you how many bits per pixel
@@ -271,7 +276,7 @@ load_image (char *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message ("GIF: can't open \"%s\"\n", filename);
+      g_message (_("GIF: can't open \"%s\"\n"), filename);
       return -1;
     }
 
@@ -279,20 +284,20 @@ load_image (char *filename)
 
   if (run_mode != RUN_NONINTERACTIVE)
     {
-      sprintf (name_buf, "Loading %s:", filename);
+      sprintf (name_buf, _("Loading %s:"), filename);
       gimp_progress_init (name_buf);
       g_free (name_buf);
     }
 
   if (!ReadOK (fd, buf, 6))
     {
-      g_message ("GIF: error reading magic number\n");
+      g_message (_("GIF: error reading magic number\n"));
       return -1;
     }
 
   if (strncmp ((char *) buf, "GIF", 3) != 0)
     {
-      g_message ("GIF: not a GIF file\n");
+      g_message (_("GIF: not a GIF file\n"));
       return -1;
     }
 
@@ -301,13 +306,13 @@ load_image (char *filename)
 
   if ((strcmp (version, "87a") != 0) && (strcmp (version, "89a") != 0))
     {
-      g_message ("GIF: bad version number, not '87a' or '89a'\n");
+      g_message (_("GIF: bad version number, not '87a' or '89a'\n"));
       return -1;
     }
 
   if (!ReadOK (fd, buf, 7))
     {
-      g_message ("GIF: failed to read screen descriptor\n");
+      g_message (_("GIF: failed to read screen descriptor\n"));
       return -1;
     }
 
@@ -323,14 +328,14 @@ load_image (char *filename)
       /* Global Colormap */
       if (ReadColorMap (fd, GifScreen.BitPixel, GifScreen.ColorMap, &GifScreen.GrayScale))
 	{
-	  g_message ("GIF: error reading global colormap\n");
+	  g_message (_("GIF: error reading global colormap\n"));
 	  return -1;
 	}
     }
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
     {
-      g_message ("GIF: warning - non-square pixels\n");
+      g_message (_("GIF: warning - non-square pixels\n"));
     }
 
 
@@ -341,7 +346,7 @@ load_image (char *filename)
     {
       if (!ReadOK (fd, &c, 1))
 	{
-	  g_message ("GIF: EOF / read error on image data\n");
+	  g_message (_("GIF: EOF / read error on image data\n"));
 	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
@@ -356,7 +361,7 @@ load_image (char *filename)
 	  /* Extension */
 	  if (!ReadOK (fd, &c, 1))
 	    {
-	      g_message ("GIF: OF / read error on extention function code\n");
+	      g_message (_("GIF: OF / read error on extension function code\n"));
 	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  DoExtension (fd, c);
@@ -366,7 +371,7 @@ load_image (char *filename)
       if (c != ',')
 	{
 	  /* Not a valid start character */
-	  g_message ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
+	  g_message (_("GIF: bogus character 0x%02x, ignoring\n"), (int) c);
 	  continue;
 	}
 
@@ -374,7 +379,7 @@ load_image (char *filename)
 
       if (!ReadOK (fd, buf, 9))
 	{
-	  g_message ("GIF: couldn't read left/top/width/height\n");
+	  g_message (_("GIF: couldn't read left/top/width/height\n"));
 	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
@@ -386,7 +391,7 @@ load_image (char *filename)
 	{
 	  if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
 	    {
-	      g_message ("GIF: error reading local colormap\n");
+	      g_message (_("GIF: error reading local colormap\n"));
 	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
@@ -444,7 +449,7 @@ ReadColorMap (FILE *fd,
     {
       if (!ReadOK (fd, rgb, sizeof (rgb)))
 	{
-	  g_message ("GIF: bad colormap\n");
+	  g_message (_("GIF: bad colormap\n"));
 	  return TRUE;
 	}
 
@@ -560,7 +565,7 @@ GetDataBlock (FILE          *fd,
 
   if (!ReadOK (fd, &count, 1))
     {
-      g_message ("GIF: error in getting DataBlock size\n");
+      g_message (_("GIF: error in getting DataBlock size\n"));
       return -1;
     }
 
@@ -568,7 +573,7 @@ GetDataBlock (FILE          *fd,
 
   if ((count != 0) && (!ReadOK (fd, buf, count)))
     {
-      g_message ("GIF: error in reading DataBlock\n");
+      g_message (_("GIF: error in reading DataBlock\n"));
       return -1;
     }
 
@@ -599,7 +604,7 @@ GetCode (FILE *fd,
 	{
 	  if (curbit >= lastbit)
 	    {
-	      g_message ("GIF: ran off the end of by bits\n");
+	      g_message (_("GIF: ran off the end of by bits\n"));
 	      gimp_quit ();
 	    }
 	  return -1;
@@ -710,7 +715,7 @@ LWZReadByte (FILE *fd,
 	    ;
 
 	  if (count != 0)
-	    g_print ("GIF: missing EOD in data stream (common occurence)");
+	    g_print (_("GIF: missing EOD in data stream (common occurence)"));
 	  return -2;
 	}
 
@@ -727,7 +732,7 @@ LWZReadByte (FILE *fd,
 	  *sp++ = table[1][code];
 	  if (code == table[0][code])
 	    {
-	      g_message ("GIF: circular table entry BIG ERROR\n");
+	      g_message (_("GIF: circular table entry BIG ERROR\n"));
 	      gimp_quit ();
 	    }
 	  code = table[0][code];
@@ -795,13 +800,13 @@ ReadImage (FILE *fd,
    */
   if (!ReadOK (fd, &c, 1))
     {
-      g_message ("GIF: EOF / read error on image data\n");
+      g_message (_("GIF: EOF / read error on image data\n"));
       return -1;
     }
 
   if (LWZReadByte (fd, TRUE, c) < 0)
     {
-      g_message ("GIF: error while reading\n");
+      g_message (_("GIF: error while reading\n"));
       return -1;
     }
 
@@ -820,9 +825,9 @@ ReadImage (FILE *fd,
       gimp_image_set_cmap (image_ID, gimp_cmap, ncols);
 
       if (Gif89.delayTime < 0)
-	strcpy(framename, "Background");
+	strcpy(framename, _("Background"));
       else
-	sprintf(framename, "Background (%dms)", 10*Gif89.delayTime);
+	sprintf(framename, _("Background (%dms)"), 10*Gif89.delayTime);
 
       previous_disposal = Gif89.disposal;
 
@@ -869,26 +874,26 @@ ReadImage (FILE *fd,
 	}
 
       if (Gif89.delayTime < 0)
-	sprintf(framename, "Frame %d", frame_number);
+	sprintf(framename, _("Frame %d"), frame_number);
       else
-	sprintf(framename, "Frame %d (%dms)",
+	sprintf(framename, _("Frame %d (%dms)"),
 		frame_number, 10*Gif89.delayTime);
 
       switch (previous_disposal)
 	{
 	case 0x00: break; /* 'don't care' */
-	case 0x01: strcat(framename," (combine)"); break;
-	case 0x02: strcat(framename," (replace)"); break;
-	case 0x03: strcat(framename," (combine)"); break;
+	case 0x01: strcat(framename,_(" (combine)")); break;
+	case 0x02: strcat(framename,_(" (replace)")); break;
+	case 0x03: strcat(framename,_(" (combine)")); break;
 	case 0x04:
 	case 0x05:
 	case 0x06:
 	case 0x07:
-	  strcat(framename," (unknown disposal)");
-	  g_message ("GIF: Hmm... please forward this GIF to the "
-		     "GIF plugin author!\n  (adam@foxbox.org)\n");
+	  strcat(framename,_(" (unknown disposal)"));
+	  g_message (_("GIF: Hmm... please forward this GIF to the "
+		     "GIF plugin author!\n  (adam@foxbox.org)\n"));
 	  break;
-	default: g_message ("GIF: Something got corrupted.\n"); break;
+	default: g_message (_("GIF: Something got corrupted.\n")); break;
 	}
 
       previous_disposal = Gif89.disposal;
@@ -917,12 +922,12 @@ ReadImage (FILE *fd,
     dest = (guchar *) g_malloc (len * height);
 
   if (verbose)
-    g_print ("GIF: reading %d by %d%s GIF image, ncols=%d\n",
-	     len, height, interlace ? " interlaced" : "", ncols);
+    g_print (_("GIF: reading %d by %d%s GIF image, ncols=%d\n"),
+	     len, height, interlace ? _(" interlaced") : "", ncols);
 
   if (!alpha_frame && promote_to_rgb)
     {
-      g_message ("GIF: Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)\n");
+      g_message (_("GIF: Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)\n"));
       exit(-1);
     }
 
@@ -1014,7 +1019,7 @@ ReadImage (FILE *fd,
 
 fini:
   if (LWZReadByte (fd, FALSE, c) >= 0)
-    g_print ("GIF: too much input data, ignoring extra...\n");
+    g_print (_("GIF: too much input data, ignoring extra...\n"));
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
   gimp_pixel_rgn_set_rect (&pixel_rgn, dest, 0, 0, drawable->width, drawable->height);

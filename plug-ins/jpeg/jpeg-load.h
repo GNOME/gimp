@@ -59,6 +59,8 @@
 #include "config.h"    /* configure cares about HAVE_PROGRESSIVE_JPEG */
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 
 #define SCALE_WIDTH 125
 
@@ -168,8 +170,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_jpeg_load",
-                          "loads files of the jpeg file format",
+                          _("loads files of the jpeg file format"),
 			  "FIXME: write help for jpeg_load",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
@@ -220,6 +224,8 @@ run (char    *name,
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
+      INIT_I18N();
+
       image_ID = load_image (param[1].data.d_string, run_mode);
 
       if (image_ID != -1)
@@ -236,6 +242,8 @@ run (char    *name,
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
     {
+      INIT_I18N();
+
       image_ID = param[1].data.d_int32;
       if(image_comment) {
 	g_free(image_comment);
@@ -476,14 +484,14 @@ load_image (char *filename, GRunModeType runmode)
 
   if ((infile = fopen (filename, "rb")) == NULL)
     {
-      g_warning ("can't open \"%s\"\n", filename);
+      g_warning (_("can't open \"%s\"\n"), filename);
       gimp_quit ();
     }
 
   if (runmode != RUN_NONINTERACTIVE)
     {
       name = malloc (strlen (filename) + 12);
-      sprintf (name, "Loading %s:", filename);
+      sprintf (name, _("Loading %s:"), filename);
       gimp_progress_init (name);
       free (name);
     }
@@ -592,7 +600,7 @@ load_image (char *filename, GRunModeType runmode)
       layer_type = RGB_IMAGE;
       break;
     default:
-      g_message ("don't know how to load JPEGs\nwith %d color channels",
+      g_message (_("don't know how to load JPEGs\nwith %d color channels"),
 		 cinfo.output_components);
       gimp_quit ();
     }
@@ -600,7 +608,7 @@ load_image (char *filename, GRunModeType runmode)
   image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height, image_type);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, "Background",
+  layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     cinfo.output_width,
 			     cinfo.output_height,
 			     layer_type, 100, NORMAL_MODE);
@@ -637,7 +645,7 @@ load_image (char *filename, GRunModeType runmode)
 	break;
 
     default:
-	g_message ("unknown density unit %d\nassuming dots per inch",
+	g_message (_("unknown density unit %d\nassuming dots per inch"),
 		   cinfo.density_unit);
 	break;
       }
@@ -748,7 +756,7 @@ save_image (char   *filename,
 
   name = malloc (strlen (filename) + 11);
 
-  sprintf (name, "Saving %s:", filename);
+  sprintf (name, _("Saving %s:"), filename);
   gimp_progress_init (name);
   free (name);
 
@@ -982,14 +990,14 @@ save_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as Jpeg");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as Jpeg"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -998,7 +1006,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -1007,7 +1015,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -1015,7 +1023,7 @@ save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Quality");
+  label = gtk_label_new (_("Quality"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -1031,7 +1039,7 @@ save_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Smoothing");
+  label = gtk_label_new (_("Smoothing"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -1047,7 +1055,7 @@ save_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  toggle = gtk_check_button_new_with_label("Optimize");
+  toggle = gtk_check_button_new_with_label(_("Optimize"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_optimize_update, NULL);
@@ -1055,7 +1063,7 @@ save_dialog ()
   gtk_widget_show(toggle);
 
 
-  progressive = gtk_check_button_new_with_label("Progressive");
+  progressive = gtk_check_button_new_with_label(_("Progressive"));
   gtk_table_attach(GTK_TABLE(table), progressive, 0, 2, 3, 4,
 		   GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(progressive), "toggled",
@@ -1068,7 +1076,7 @@ save_dialog ()
   gtk_widget_set_sensitive(progressive,FALSE);
 #endif
   
-  com_frame = gtk_frame_new ("Image Comments");
+  com_frame = gtk_frame_new (_("Image Comments"));
   gtk_frame_set_shadow_type (GTK_FRAME (com_frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (com_frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), com_frame, TRUE, TRUE, 0

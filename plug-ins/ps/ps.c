@@ -45,6 +45,7 @@
 static char dversio[] =                                    "v1.06  22-Dec-98";
 static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.06  22-Dec-98";
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,6 +53,8 @@ static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.06  22-Dec-98";
 #include <time.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
+
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -310,9 +313,11 @@ query (void)
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_ps_load",
-                          "load file of PostScript/PDF file format",
-                          "load file of PostScript/PDF file format",
+                          _("load file of PostScript/PDF file format"),
+                          _("load file of PostScript/PDF file format"),
                           "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
                           dversio,
@@ -335,9 +340,9 @@ query (void)
                           set_load_args, NULL);
 
   gimp_install_procedure ("file_ps_save",
-                          "save file in PostScript file format",
-                          "PostScript saving handles all image types except \
-those with alpha channels.",
+                          _("save file in PostScript file format"),
+                          _("PostScript saving handles all image types except \
+those with alpha channels."),
                           "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
                           dversio,
@@ -377,6 +382,8 @@ run (char    *name,
 
   if (strcmp (name, "file_ps_load") == 0)
     {
+      INIT_I18N();
+
       *nreturn_vals = 2;
       values[1].type = PARAM_IMAGE;
       values[1].data.d_image = -1;
@@ -422,6 +429,8 @@ run (char    *name,
     }
   else if (strcmp (name, "file_ps_save") == 0)
     {
+      INIT_I18N();
+
       switch (run_mode)
         {
         case RUN_INTERACTIVE:
@@ -537,14 +546,14 @@ load_image (char *filename)
  ifp = fopen (filename, "r");
  if (ifp == NULL)
  {
-   g_message ("can't open file for reading");
+   g_message (_("PS: can't open file for reading"));
    return (-1);
  }
  fclose (ifp);
 
  if (l_run_mode != RUN_NONINTERACTIVE)
  {
-   format = "Interpreting and Loading %s:";
+   format = _("Interpreting and Loading %s:");
    temp = g_malloc (strlen (format) + strlen (filename) + 5);
    sprintf (temp, format, filename);
    gimp_progress_init (temp);
@@ -554,14 +563,14 @@ load_image (char *filename)
  ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury);
  if (!ifp)
  {
-   g_message ("can't interprete file");
+   g_message (_("PS: can't interprete file"));
    return (-1);
  }
 
  image_list = (gint32 *)g_malloc (10 * sizeof (gint32));
  if (image_list == NULL)
  {
-   g_message ("out of memory");
+   g_message (_("PS: out of memory"));
    return (-1);
  }
  n_images = 0;
@@ -641,7 +650,7 @@ save_image (char *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
   {
-    g_message ("PostScript save cannot handle images with alpha channels");
+    g_message (_("PostScript save cannot handle images with alpha channels"));
     return FALSE;
   }
 
@@ -652,7 +661,7 @@ save_image (char *filename,
     case RGB_IMAGE:
       break;
     default:
-      g_message ("cannot operate on unknown image types");
+      g_message (_("PS: cannot operate on unknown image types"));
       return (FALSE);
       break;
   }
@@ -661,14 +670,14 @@ save_image (char *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
   {
-    g_message ("cant open file for writing");
+    g_message (_("PS: can't open file for writing"));
     return (FALSE);
   }
 
   if (l_run_mode != RUN_NONINTERACTIVE)
   {
     temp = g_malloc (strlen (filename) + 11);
-    sprintf (temp, "Saving %s:", filename);
+    sprintf (temp, _("Saving %s:"), filename);
     gimp_progress_init (temp);
     g_free (temp);
   }
@@ -1935,7 +1944,7 @@ save_rgb (FILE *ofp,
 
   if (ferror (ofp))
   {
-    g_message ("write error occured");
+    g_message (_("write error occured"));
     return (FALSE);
   }
   return (TRUE);
@@ -1961,9 +1970,12 @@ load_dialog (void)
   gchar **argv;
   gint argc;
   char buffer[STR_LENGTH];
-  static char *label_text[] = { "Resolution:", "Width:", "Height:", "Pages:" };
-  static char *radio_text[] = { "b/w", "gray", "colour", "automatic" };
-  static char *alias_text[] = { "none", "weak", "strong" };
+  static char *label_text[] =
+    { N_("Resolution:"), N_("Width:"), N_("Height:"), N_("Pages:") };
+  static char *radio_text[] =
+    { N_("b/w"), N_("gray"), N_("colour"), N_("automatic") };
+  static char *alias_text[] =
+    { N_("none"), N_("weak"), N_("strong") };
   int j, n_prop, alias, *alpha_bits;
 
   argc = 1;
@@ -1976,14 +1988,14 @@ load_dialog (void)
   vals = g_malloc (sizeof (*vals));
 
   vals->dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), "Load PostScript");
+  gtk_window_set_title (GTK_WINDOW (vals->dialog), _("Load PostScript"));
   gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
                       (GtkSignalFunc) load_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) load_ok_callback,
@@ -1993,7 +2005,7 @@ load_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -2009,7 +2021,7 @@ load_dialog (void)
   gtk_widget_show (hbox);
 
   /* Rendering */
-  frame = gtk_frame_new ("Rendering");
+  frame = gtk_frame_new (_("Rendering"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
@@ -2027,7 +2039,7 @@ load_dialog (void)
 
   for (j = 0; j < n_prop; j++)
   {
-    label = gtk_label_new (label_text[j]);
+    label = gtk_label_new (gettext(label_text[j]));
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
                       GTK_FILL, GTK_FILL, 0, 0);
@@ -2049,7 +2061,7 @@ load_dialog (void)
     gtk_widget_show (vals->entry[j]);
   }
 
-  toggle = gtk_check_button_new_with_label ("try BoundingBox");
+  toggle = gtk_check_button_new_with_label (_("try BoundingBox"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->use_bbox = (plvals.use_bbox != 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2062,7 +2074,7 @@ load_dialog (void)
   gtk_widget_show (frame);
 
   /* Colouring */
-  frame = gtk_frame_new ("Colouring");
+  frame = gtk_frame_new (_("Colouring"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
@@ -2073,7 +2085,7 @@ load_dialog (void)
   group = NULL;
   for (j = 0; j < 4; j++)
   {
-    toggle = gtk_radio_button_new_with_label (group, radio_text[j]);
+    toggle = gtk_radio_button_new_with_label (group, gettext(radio_text[j]));
     group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
     vals->dataformat[j] = (plvals.pnm_type == j+4);
@@ -2098,7 +2110,8 @@ load_dialog (void)
   {
     alpha_bits = alias ? &(vals->graphicsalphabits[0])
                        : &(vals->textalphabits[0]);
-    frame = gtk_frame_new (alias ? "Graphic antialiasing":"Text antialiasing");
+    frame = gtk_frame_new (alias ? _("Graphic antialiasing")
+                                 : _("Text antialiasing"));
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width (GTK_CONTAINER (frame), 10);
     gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
@@ -2110,7 +2123,7 @@ load_dialog (void)
     group = NULL;
     for (j = 0; j < 3; j++)
     {
-      toggle = gtk_radio_button_new_with_label (group, alias_text[j]);
+      toggle = gtk_radio_button_new_with_label (group, gettext(alias_text[j]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       alpha_bits[j] = alias ? (plvals.graphicsalpha == (1 << j))
@@ -2222,9 +2235,12 @@ save_dialog (void)
   GSList *group;
   gchar **argv;
   gint argc;
-  static char *label_text[] = { "Width:", "Height:", "X-offset:", "Y-offset:" };
-  static char *radio_text[] = { "0", "90", "180", "270" };
-  static char *unit_text[] = { "Inch", "Millimeter" };
+  static char *label_text[] =
+    { N_("Width:"), N_("Height:"), N_("X-offset:"), N_("Y-offset:") };
+  static char *radio_text[] =
+    { N_("0"), N_("90"), N_("180"), N_("270") };
+  static char *unit_text[] =
+    { N_("Inch"), N_("Millimeter") };
   char tmp[80];
   int j, idata;
   double rdata;
@@ -2239,14 +2255,14 @@ save_dialog (void)
   vals = g_malloc (sizeof (*vals));
 
   vals->dialog = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (vals->dialog), "Save PostScript");
+  gtk_window_set_title (GTK_WINDOW (vals->dialog), _("Save PostScript"));
   gtk_window_position (GTK_WINDOW (vals->dialog), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (vals->dialog), "destroy",
                       (GtkSignalFunc) save_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -2256,7 +2272,7 @@ save_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -2280,7 +2296,7 @@ save_dialog (void)
   }
 
   /* Image Size */
-  frame = gtk_frame_new ("Image Size");
+  frame = gtk_frame_new (_("Image Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
@@ -2297,7 +2313,7 @@ save_dialog (void)
 
   for (j = 0; j < 4; j++)
   {
-    label = gtk_label_new (label_text[j]);
+    label = gtk_label_new (gettext(label_text[j]));
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
                       GTK_FILL, GTK_FILL, 0, 0);
@@ -2319,7 +2335,7 @@ save_dialog (void)
     gtk_widget_show (vals->entry[j]);
   }
 
-  toggle = gtk_check_button_new_with_label ("keep aspect ratio");
+  toggle = gtk_check_button_new_with_label (_("keep aspect ratio"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->keep_ratio = (psvals.keep_ratio != 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2329,7 +2345,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   /* Unit */
-  uframe = gtk_frame_new ("Unit");
+  uframe = gtk_frame_new (_("Unit"));
   gtk_frame_set_shadow_type (GTK_FRAME (uframe), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (uframe), 5);
   gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
@@ -2340,7 +2356,7 @@ save_dialog (void)
   group = NULL;
   for (j = 0; j < 2; j++)
   {
-    toggle = gtk_radio_button_new_with_label (group, unit_text[j]);
+    toggle = gtk_radio_button_new_with_label (group, gettext(unit_text[j]));
     group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (uvbox), toggle, FALSE, FALSE, 0);
     vals->unit[j] = (psvals.unit_mm == j);
@@ -2360,7 +2376,7 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Rotation */
-  frame = gtk_frame_new ("Rotation");
+  frame = gtk_frame_new (_("Rotation"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
@@ -2387,7 +2403,7 @@ save_dialog (void)
   gtk_widget_show (frame);
 
   /* Format */
-  frame = gtk_frame_new ("Output");
+  frame = gtk_frame_new (_("Output"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
@@ -2395,7 +2411,7 @@ save_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Encapsulated PostScript");
+  toggle = gtk_check_button_new_with_label (_("Encapsulated PostScript"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->eps = (psvals.eps != 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2404,7 +2420,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->eps);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->preview = psvals.preview;
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -2421,7 +2437,7 @@ save_dialog (void)
   gtk_widget_show (table);
 
   j = 0;
-  label = gtk_label_new ("Preview size");
+  label = gtk_label_new (_("Preview size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
                     GTK_FILL, GTK_FILL, 0, 0);

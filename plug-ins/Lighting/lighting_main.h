@@ -14,6 +14,10 @@
 #include "lighting_apply.h"
 #include "lighting_preview.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
+
 /* Defines and stuff */
 /* ================= */
 

@@ -166,13 +166,15 @@ static void query(void)
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_lighting",
-			  "Apply various lighting effects to an image",
-			  "No help yet",
+			  _("Apply various lighting effects to an image"),
+			  _("No help yet"),
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.2.0, March 15 1998",
-			  "<Image>/Filters/Light Effects/Lighting Effects",
+			  _("<Image>/Filters/Light Effects/Lighting Effects"),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -189,6 +191,8 @@ static void run(gchar   *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -334,7 +338,7 @@ void lighting_interactive(GDrawable *drawable)
 
 void lighting_noninteractive(GDrawable *drawable)
 {
-  printf("Noninteractive not yet implemented! Sorry.\n");
+  fprintf(stderr, "Noninteractive not yet implemented! Sorry.\n");
 }
 
 MAIN ()

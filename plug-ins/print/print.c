@@ -39,6 +39,83 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.13  1999/05/29 16:35:30  yosh
+ *   * configure.in
+ *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
+ *   GIMP_MODULES so you can easily skip those parts of the build
+ *
+ *   * acinclude.m4
+ *   * config.sub
+ *   * config.guess
+ *   * ltconfig
+ *   * ltmain.sh: libtool 1.3.2
+ *
+ *   * app/fileops.c: shuffle #includes to avoid warning about MIN and
+ *   MAX
+ *
+ *   [ The following is a big i18n patch from David Monniaux
+ *     <david.monniaux@ens.fr> ]
+ *
+ *   * tips/gimp_conseils.fr.txt
+ *   * tips/gimp_tips.txt
+ *   * tips/Makefile.am
+ *   * configure.in: moved tips to separate dir
+ *
+ *   * po-plugins: new dir for plug-in translation files
+ *
+ *   * configure.in: add po-plugins dir and POTFILES processing
+ *
+ *   * app/boundary.c
+ *   * app/brightness_contrast.c
+ *   * app/by_color_select.c
+ *   * app/color_balance.c
+ *   * app/convert.c
+ *   * app/curves.c
+ *   * app/free_select.c
+ *   * app/gdisplay.c
+ *   * app/gimpimage.c
+ *   * app/gimpunit.c
+ *   * app/gradient.c
+ *   * app/gradient_select.c
+ *   * app/install.c
+ *   * app/session.c: various i18n tweaks
+ *
+ *   * app/tips_dialog.c: localize tips filename
+ *
+ *   * libgimp/gimpunit.c
+ *   * libgimp/gimpunitmenu.c: #include "config.h"
+ *
+ *   * plug-ins/CEL
+ *   * plug-ins/CML_explorer
+ *   * plug-ins/Lighting
+ *   * plug-ins/apply_lens
+ *   * plug-ins/autostretch_hsv
+ *   * plug-ins/blur
+ *   * plug-ins/bmp
+ *   * plug-ins/borderaverage
+ *   * plug-ins/bumpmap
+ *   * plug-ins/bz2
+ *   * plug-ins/checkerboard
+ *   * plug-ins/colorify
+ *   * plug-ins/compose
+ *   * plug-ins/convmatrix
+ *   * plug-ins/cubism
+ *   * plug-ins/depthmerge
+ *   * plug-ins/destripe
+ *   * plug-ins/gif
+ *   * plug-ins/gifload
+ *   * plug-ins/jpeg
+ *   * plug-ins/mail
+ *   * plug-ins/oilify
+ *   * plug-ins/png
+ *   * plug-ins/print
+ *   * plug-ins/ps
+ *   * plug-ins/xbm
+ *   * plug-ins/xpm
+ *   * plug-ins/xwd: plug-in i18n stuff
+ *
+ *   -Yosh
+ *
  *   Revision 1.12  1999/05/01 17:53:52  asbjoer
  *   os2 printing
  *
@@ -149,6 +226,8 @@
 #include <os2.h>
 #endif
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Constants for GUI...
@@ -324,57 +403,57 @@ int		runme = FALSE,		/* True if print should proceed */
 
 printer_t	printers[] =		/* List of supported printer types */
 {
-  { "PostScript Level 1",	"ps",		1,	0,	1.000,	1.000,
+  { N_("PostScript Level 1"),	"ps",		1,	0,	1.000,	1.000,
     ps_parameters,	ps_media_size,	ps_imageable_area,	ps_print },
-  { "PostScript Level 2",	"ps2",		1,	1,	1.000,	1.000,
+  { N_("PostScript Level 2"),	"ps2",		1,	1,	1.000,	1.000,
     ps_parameters,	ps_media_size,	ps_imageable_area,	ps_print },
-  { "HP DeskJet 500, 520",	"pcl-500",	0,	500,	0.818,	0.786,
+  { N_("HP DeskJet 500, 520"),	"pcl-500",	0,	500,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 500C, 540C",	"pcl-501",	1,	501,	0.818,	0.786,
+  { N_("HP DeskJet 500C, 540C"),	"pcl-501",	1,	501,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 550C, 560C",	"pcl-550",	1,	550,	0.818,	0.786,
+  { N_("HP DeskJet 550C, 560C"),	"pcl-550",	1,	550,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 600 series",	"pcl-600",	1,	600,	0.818,	0.786,
+  { N_("HP DeskJet 600 series"),	"pcl-600",	1,	600,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 800 series",	"pcl-800",	1,	800,	0.818,	0.786,
+  { N_("HP DeskJet 800 series"),	"pcl-800",	1,	800,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 1100C, 1120C",	"pcl-1100",	1,	1100,	0.818,	0.786,
+  { N_("HP DeskJet 1100C, 1120C"),	"pcl-1100",	1,	1100,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP DeskJet 1200C, 1600C",	"pcl-1200",	1,	1200,	0.818,	0.786,
+  { N_("HP DeskJet 1200C, 1600C"),	"pcl-1200",	1,	1200,	0.818,	0.786,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet II series",	"pcl-2",	0,	2,	1.000,	0.596,
+  { N_("HP LaserJet II series"),	"pcl-2",	0,	2,	1.000,	0.596,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet III series",	"pcl-3",	0,	3,	1.000,	0.596,
+  { N_("HP LaserJet III series"),	"pcl-3",	0,	3,	1.000,	0.596,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 4 series",	"pcl-4",	0,	4,	1.000,	0.615,
+  { N_("HP LaserJet 4 series"),	"pcl-4",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 4V, 4Si",	"pcl-4v",	0,	5,	1.000,	0.615,
+  { N_("HP LaserJet 4V, 4Si"),	"pcl-4v",	0,	5,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 5 series",	"pcl-5",	0,	4,	1.000,	0.615,
+  { N_("HP LaserJet 5 series"),	"pcl-5",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 5Si",		"pcl-5si",	0,	5,	1.000,	0.615,
+  { N_("HP LaserJet 5Si"),		"pcl-5si",	0,	5,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "HP LaserJet 6 series",	"pcl-6",	0,	4,	1.000,	0.615,
+  { N_("HP LaserJet 6 series"),	"pcl-6",	0,	4,	1.000,	0.615,
     pcl_parameters,	default_media_size,	pcl_imageable_area,	pcl_print },
-  { "EPSON Stylus Color",	"escp2",	1,	0,	0.597,	0.568,
+  { N_("EPSON Stylus Color"),	"escp2",	1,	0,	0.597,	0.568,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color Pro",	"escp2-pro",	1,	1,	0.597,	0.631,
+  { N_("EPSON Stylus Color Pro"),	"escp2-pro",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color Pro XL","escp2-proxl",	1,	1,	0.597,	0.631,
+  { N_("EPSON Stylus Color Pro XL"),"escp2-proxl",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 1500",	"escp2-1500",	1,	2,	0.597,	0.631,
+  { N_("EPSON Stylus Color 1500"),	"escp2-1500",	1,	2,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 400",	"escp2-400",	1,	1,	0.585,	0.646,
+  { N_("EPSON Stylus Color 400"),	"escp2-400",	1,	1,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 500",	"escp2-500",	1,	1,	0.597,	0.631,
+  { N_("EPSON Stylus Color 500"),	"escp2-500",	1,	1,	0.597,	0.631,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 600",	"escp2-600",	1,	3,	0.585,	0.646,
+  { N_("EPSON Stylus Color 600"),	"escp2-600",	1,	3,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 800",	"escp2-800",	1,	4,	0.585,	0.646,
+  { N_("EPSON Stylus Color 800"),	"escp2-800",	1,	4,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 1520",	"escp2-1520",	1,	5,	0.585,	0.646,
+  { N_("EPSON Stylus Color 1520"),	"escp2-1520",	1,	5,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { "EPSON Stylus Color 3000",	"escp2-3000",	1,	5,	0.585,	0.646,
+  { N_("EPSON Stylus Color 3000"),	"escp2-3000",	1,	5,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print }
 };
 
@@ -423,15 +502,16 @@ query(void)
   };
   static int		nargs = sizeof(args) / sizeof(args[0]);
 
+  INIT_I18N();
 
   gimp_install_procedure(
       "file_print",
-      "This plug-in prints images from The GIMP.",
-      "Prints images to PostScript, PCL, or ESC/P2 printers.",
+      _("This plug-in prints images from The GIMP."),
+      _("Prints images to PostScript, PCL, or ESC/P2 printers."),
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
-      "<Image>/File/Print",
+      _("<Image>/File/Print"),
       "RGB*,GRAY*,INDEXED*",
       PROC_PLUG_IN,
       nargs,
@@ -488,6 +568,7 @@ run(char   *name,		/* I - Name of print program. */
   char		*tmpfile;	/* temp filename */
 #endif
 
+  INIT_I18N();
 
  /*
   * Initialize parameter data...
@@ -743,10 +824,11 @@ do_print_dialog(void)
   gchar		**argv;		/* Fake argv for GUI */
   static char	*orients[] =	/* Orientation strings */
   {
-    "Auto",
-    "Portrait",
-    "Landscape"
+    N_("Auto"),
+    N_("Portrait"),
+    N_("Landscape")
   };
+  char plug_in_name[80];
 
 
  /*
@@ -775,7 +857,9 @@ do_print_dialog(void)
   */
 
   print_dialog = dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Print " PLUG_IN_VERSION);
+  sprintf(plug_in_name, _("Print v%s"), PLUG_IN_VERSION);
+
+  gtk_window_set_title(GTK_WINDOW(dialog), plug_in_name);
   gtk_window_set_wmclass(GTK_WINDOW(dialog), "print", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
@@ -823,7 +907,7 @@ do_print_dialog(void)
   * Media size option menu...
   */
 
-  label = gtk_label_new("Media Size:");
+  label = gtk_label_new(_("Media Size:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -839,7 +923,7 @@ do_print_dialog(void)
   * Media type option menu...
   */
 
-  label = gtk_label_new("Media Type:");
+  label = gtk_label_new(_("Media Type:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -855,7 +939,7 @@ do_print_dialog(void)
   * Media source option menu...
   */
 
-  label = gtk_label_new("Media Source:");
+  label = gtk_label_new(_("Media Source:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -871,7 +955,7 @@ do_print_dialog(void)
   * Orientation option menu...
   */
 
-  label = gtk_label_new("Orientation:");
+  label = gtk_label_new(_("Orientation:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -879,7 +963,7 @@ do_print_dialog(void)
   menu = gtk_menu_new();
   for (i = 0; i < (int)(sizeof(orients) / sizeof(orients[0])); i ++)
   {
-    item = gtk_menu_item_new_with_label(orients[i]);
+    item = gtk_menu_item_new_with_label(gettext(orients[i]));
     gtk_menu_append(GTK_MENU(menu), item);
     gtk_signal_connect(GTK_OBJECT(item), "activate",
 		       (GtkSignalFunc)orientation_callback,
@@ -901,7 +985,7 @@ do_print_dialog(void)
   * Resolution option menu...
   */
 
-  label = gtk_label_new("Resolution:");
+  label = gtk_label_new(_("Resolution:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 5, 6, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -917,7 +1001,7 @@ do_print_dialog(void)
   * Output type toggles...
   */
 
-  label = gtk_label_new("Output Type:");
+  label = gtk_label_new(_("Output Type:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 6, 7, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -926,7 +1010,7 @@ do_print_dialog(void)
   gtk_table_attach(GTK_TABLE(table), box, 3, 4, 6, 7, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(box);
 
-  output_gray = button = gtk_radio_button_new_with_label(NULL, "B&W");
+  output_gray = button = gtk_radio_button_new_with_label(NULL, _("B&W"));
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (vars.output_type == 0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -936,7 +1020,7 @@ do_print_dialog(void)
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  output_color = button = gtk_radio_button_new_with_label(group, "Color");
+  output_color = button = gtk_radio_button_new_with_label(group, _("Color"));
   if (vars.output_type == 1)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
@@ -949,7 +1033,7 @@ do_print_dialog(void)
   * Scaling...
   */
 
-  label = gtk_label_new("Scaling:");
+  label = gtk_label_new(_("Scaling:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 7, 8, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -984,7 +1068,7 @@ do_print_dialog(void)
   gtk_widget_set_usize(entry, 60, 0);
   gtk_widget_show(entry);
 
-  scaling_percent = button = gtk_radio_button_new_with_label(NULL, "Percent");
+  scaling_percent = button = gtk_radio_button_new_with_label(NULL, _("Percent"));
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
   if (vars.scaling > 0.0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -993,7 +1077,7 @@ do_print_dialog(void)
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  scaling_ppi = button = gtk_radio_button_new_with_label(group, "PPI");
+  scaling_ppi = button = gtk_radio_button_new_with_label(group, _("PPI"));
   if (vars.scaling < 0.0)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
   gtk_signal_connect(GTK_OBJECT(button), "toggled",
@@ -1005,7 +1089,7 @@ do_print_dialog(void)
   * Brightness slider...
   */
 
-  label = gtk_label_new("Brightness:");
+  label = gtk_label_new(_("Brightness:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 8, 9, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -1040,7 +1124,7 @@ do_print_dialog(void)
   * Printer option menu...
   */
 
-  label = gtk_label_new("Printer:");
+  label = gtk_label_new(_("Printer:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -1048,7 +1132,7 @@ do_print_dialog(void)
   menu = gtk_menu_new();
   for (i = 0; i < plist_count; i ++)
   {
-    item = gtk_menu_item_new_with_label(plist[i].name);
+    item = gtk_menu_item_new_with_label(gettext(plist[i].name));
     gtk_menu_append(GTK_MENU(menu), item);
     gtk_signal_connect(GTK_OBJECT(item), "activate",
 		       (GtkSignalFunc)plist_callback,
@@ -1066,7 +1150,7 @@ do_print_dialog(void)
   gtk_option_menu_set_history(GTK_OPTION_MENU(option), plist_current);
   gtk_widget_show(option);
 
-  button = gtk_button_new_with_label(" Setup ");
+  button = gtk_button_new_with_label(_("Setup"));
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)setup_open_callback, NULL);
@@ -1079,14 +1163,14 @@ do_print_dialog(void)
   gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->action_area), 0);
 
-  button = gtk_button_new_with_label(" Cancel ");
+  button = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)cancel_callback, NULL);
   gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label(" Print ");
+  button = gtk_button_new_with_label(_("Print"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)print_callback, NULL);
@@ -1099,7 +1183,7 @@ do_print_dialog(void)
   */
 
   setup_dialog = dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Setup");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Setup"));
   gtk_window_set_wmclass(GTK_WINDOW(dialog), "print", "Gimp");
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
@@ -1121,7 +1205,7 @@ do_print_dialog(void)
   * Printer driver option menu...
   */
 
-  label = gtk_label_new("Driver:");
+  label = gtk_label_new(_("Driver:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -1129,7 +1213,7 @@ do_print_dialog(void)
   menu = gtk_menu_new();
   for (i = 0; i < (int)(sizeof(printers) / sizeof(printers[0])); i ++)
   {
-    item = gtk_menu_item_new_with_label(printers[i].long_name);
+    item = gtk_menu_item_new_with_label(gettext(printers[i].long_name));
     gtk_menu_append(GTK_MENU(menu), item);
     gtk_signal_connect(GTK_OBJECT(item), "activate",
 		       (GtkSignalFunc)print_driver_callback,
@@ -1146,7 +1230,7 @@ do_print_dialog(void)
   * PPD file...
   */
 
-  label = gtk_label_new("PPD File:");
+  label = gtk_label_new(_("PPD File:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -1159,7 +1243,7 @@ do_print_dialog(void)
   gtk_box_pack_start(GTK_BOX(box), entry, TRUE, TRUE, 0);
   gtk_widget_show(entry);
 
-  ppd_button = button = gtk_button_new_with_label(" Browse ");
+  ppd_button = button = gtk_button_new_with_label(_("Browse"));
   gtk_box_pack_start(GTK_BOX(box), button, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)ppd_browse_callback, NULL);
@@ -1169,7 +1253,7 @@ do_print_dialog(void)
   * Print command...
   */
 
-  label = gtk_label_new("Command:");
+  label = gtk_label_new(_("Command:"));
   gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);
@@ -1185,14 +1269,14 @@ do_print_dialog(void)
   gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->action_area), 0);
 
-  button = gtk_button_new_with_label(" Cancel ");
+  button = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)setup_cancel_callback, NULL);
   gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label(" OK ");
+  button = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc)setup_ok_callback, NULL);
@@ -1204,7 +1288,7 @@ do_print_dialog(void)
   * Output file selection dialog...
   */
 
-  file_browser = gtk_file_selection_new("Print To File?");
+  file_browser = gtk_file_selection_new(_("Print To File?"));
   gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(file_browser)->ok_button),
                      "clicked", (GtkSignalFunc)file_ok_callback, NULL);
   gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(file_browser)->cancel_button),
@@ -1214,7 +1298,7 @@ do_print_dialog(void)
   * PPD file selection dialog...
   */
 
-  ppd_browser = gtk_file_selection_new("PPD File?");
+  ppd_browser = gtk_file_selection_new(_("PPD File?"));
   gtk_file_selection_hide_fileop_buttons(GTK_FILE_SELECTION(ppd_browser));
   gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(ppd_browser)->ok_button),
                      "clicked", (GtkSignalFunc)ppd_ok_callback, NULL);
@@ -1401,7 +1485,7 @@ plist_build_menu(GtkWidget *option,				/* I - Option button */
 
   for (i = 0; i < num_items; i ++)
   {
-    item = gtk_menu_item_new_with_label(items[i]);
+    item = gtk_menu_item_new_with_label(gettext(items[i]));
     if (i == 0)
       item0 = item;
     gtk_menu_append(GTK_MENU(*menu), item);
@@ -2200,7 +2284,7 @@ get_printers(void)
 
   memset(plist, 0, sizeof(plist));
   plist_count = 1;
-  strcpy(plist[0].name, "File");
+  strcpy(plist[0].name, _("File"));
   plist[0].command[0] = '\0';
   strcpy(plist[0].driver, "ps2");
   plist[0].output_type = OUTPUT_COLOR;

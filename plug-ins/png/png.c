@@ -37,6 +37,83 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.19  1999/05/29 16:35:23  yosh
+ *   * configure.in
+ *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
+ *   GIMP_MODULES so you can easily skip those parts of the build
+ *
+ *   * acinclude.m4
+ *   * config.sub
+ *   * config.guess
+ *   * ltconfig
+ *   * ltmain.sh: libtool 1.3.2
+ *
+ *   * app/fileops.c: shuffle #includes to avoid warning about MIN and
+ *   MAX
+ *
+ *   [ The following is a big i18n patch from David Monniaux
+ *     <david.monniaux@ens.fr> ]
+ *
+ *   * tips/gimp_conseils.fr.txt
+ *   * tips/gimp_tips.txt
+ *   * tips/Makefile.am
+ *   * configure.in: moved tips to separate dir
+ *
+ *   * po-plugins: new dir for plug-in translation files
+ *
+ *   * configure.in: add po-plugins dir and POTFILES processing
+ *
+ *   * app/boundary.c
+ *   * app/brightness_contrast.c
+ *   * app/by_color_select.c
+ *   * app/color_balance.c
+ *   * app/convert.c
+ *   * app/curves.c
+ *   * app/free_select.c
+ *   * app/gdisplay.c
+ *   * app/gimpimage.c
+ *   * app/gimpunit.c
+ *   * app/gradient.c
+ *   * app/gradient_select.c
+ *   * app/install.c
+ *   * app/session.c: various i18n tweaks
+ *
+ *   * app/tips_dialog.c: localize tips filename
+ *
+ *   * libgimp/gimpunit.c
+ *   * libgimp/gimpunitmenu.c: #include "config.h"
+ *
+ *   * plug-ins/CEL
+ *   * plug-ins/CML_explorer
+ *   * plug-ins/Lighting
+ *   * plug-ins/apply_lens
+ *   * plug-ins/autostretch_hsv
+ *   * plug-ins/blur
+ *   * plug-ins/bmp
+ *   * plug-ins/borderaverage
+ *   * plug-ins/bumpmap
+ *   * plug-ins/bz2
+ *   * plug-ins/checkerboard
+ *   * plug-ins/colorify
+ *   * plug-ins/compose
+ *   * plug-ins/convmatrix
+ *   * plug-ins/cubism
+ *   * plug-ins/depthmerge
+ *   * plug-ins/destripe
+ *   * plug-ins/gif
+ *   * plug-ins/gifload
+ *   * plug-ins/jpeg
+ *   * plug-ins/mail
+ *   * plug-ins/oilify
+ *   * plug-ins/png
+ *   * plug-ins/print
+ *   * plug-ins/ps
+ *   * plug-ins/xbm
+ *   * plug-ins/xpm
+ *   * plug-ins/xwd: plug-in i18n stuff
+ *
+ *   -Yosh
+ *
  *   Revision 1.18  1999/05/22 17:56:32  mitch
  *   1999-05-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
  *
@@ -325,6 +402,8 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Constants...
@@ -419,10 +498,11 @@ query(void)
   };
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
 
   gimp_install_procedure("file_png_load",
-      "Loads files in PNG file format",
-      "This plug-in loads Portable Network Graphics (PNG) files.",
+      _("Loads files in PNG file format"),
+      _("This plug-in loads Portable Network Graphics (PNG) files."),
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
       PLUG_IN_VERSION,
@@ -474,6 +554,8 @@ run(char   *name,		/* I - Name of filter program. */
 
   if (strcmp(name, "file_png_load") == 0)
   {
+    INIT_I18N();
+
     *nreturn_vals = 2;
 
     image_ID = load_image(param[1].data.d_string);
@@ -488,6 +570,8 @@ run(char   *name,		/* I - Name of filter program. */
   }
   else if (strcmp (name, "file_png_save") == 0)
   {
+    INIT_I18N();
+
     *nreturn_vals = 1;
 
     switch (param[0].data.d_int32)
@@ -613,9 +697,9 @@ load_image(char *filename)	/* I - File to load */
   png_init_io(pp, fp);
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, "Loading %s:", strrchr(filename, '/') + 1);
+    sprintf(progress, _("Loading %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, "Loading %s:", filename);
+    sprintf(progress, _("Loading %s:"), filename);
 
   gimp_progress_init(progress);
 
@@ -723,7 +807,7 @@ load_image(char *filename)	/* I - File to load */
   * Create the "background" layer to hold the image...
   */
 
-  layer = gimp_layer_new(image, "Background", info->width, info->height,
+  layer = gimp_layer_new(image, _("Background"), info->width, info->height,
                          layer_type, 100, NORMAL_MODE);
   gimp_image_add_layer(image, layer, 0);
 
@@ -863,9 +947,9 @@ save_image(char   *filename,	/* I - File to save to */
   png_init_io(pp, fp);
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, "Saving %s:", strrchr(filename, '/') + 1);
+    sprintf(progress, _("Saving %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, "Saving %s:", filename);
+    sprintf(progress, _("Saving %s:"), filename);
 
   gimp_progress_init(progress);
 
@@ -1084,7 +1168,7 @@ save_dialog(void)
   */
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "PNG Options");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("PNG Options"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
                      (GtkSignalFunc)save_close_callback, NULL);
@@ -1093,7 +1177,7 @@ save_dialog(void)
   * OK/cancel buttons...
   */
 
-  button = gtk_button_new_with_label("OK");
+  button = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT (button), "clicked",
                      (GtkSignalFunc)save_ok_callback,
@@ -1102,7 +1186,7 @@ save_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
                             (GtkSignalFunc)gtk_widget_destroy, GTK_OBJECT(dlg));
@@ -1113,7 +1197,7 @@ save_dialog(void)
   * Compression level, interlacing controls...
   */
 
-  frame = gtk_frame_new("Parameter Settings");
+  frame = gtk_frame_new(_("Parameter Settings"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -1122,14 +1206,14 @@ save_dialog(void)
   gtk_container_border_width(GTK_CONTAINER(table), 10);
   gtk_container_add(GTK_CONTAINER(frame), table);
 
-  toggle = gtk_check_button_new_with_label("Interlace");
+  toggle = gtk_check_button_new_with_label(_("Interlace"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_interlace_update, NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle), pngvals.interlaced);
   gtk_widget_show(toggle);
 
-  label = gtk_label_new("Compression level");
+  label = gtk_label_new(_("Compression level"));
   gtk_misc_set_alignment(GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
 

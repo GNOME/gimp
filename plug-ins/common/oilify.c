@@ -27,6 +27,9 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 #define ENTRY_WIDTH     30
 #define SCALE_WIDTH     125
 #define HISTSIZE	256
@@ -113,13 +116,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_oilify",
-			  "Modify the specified drawable to resemble an oil painting",
-			  "This function performs the well-known oil-paint effect on the specified drawable.  The size of the input mask is specified by 'mask_size'.",
+			  _("Modify the specified drawable to resemble an oil painting"),
+			  _("This function performs the well-known oil-paint effect on the specified drawable.  The size of the input mask is specified by 'mask_size'."),
 			  "Torsten Martinsen",
 			  "Torsten Martinsen",
 			  "1996",
-			  "<Image>/Filters/Artistic/Oilify",
+			  _("<Image>/Filters/Artistic/Oilify"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -137,6 +142,8 @@ run (char    *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -188,7 +195,7 @@ run (char    *name,
   if ((status == STATUS_SUCCESS) &&
       (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id)))
     {
-      gimp_progress_init ("Oil Painting...");
+      gimp_progress_init (_("Oil Painting..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
       if (gimp_drawable_color (drawable->id) && (ovals.mode == MODE_INTEN))
@@ -443,14 +450,14 @@ oilify_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Oilify");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Oilify"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) oilify_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) oilify_ok_callback,
@@ -459,7 +466,7 @@ oilify_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -468,7 +475,7 @@ oilify_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -476,7 +483,7 @@ oilify_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ("Use intensity algorithm");
+  toggle = gtk_check_button_new_with_label (_("Use intensity algorithm"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) oilify_toggle_update,
@@ -484,7 +491,7 @@ oilify_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_show (toggle);
 
-  dialog_create_value("Mask Size", GTK_TABLE(table), 1, &ovals.mask_size, 3.0, 50.0);
+  dialog_create_value(_("Mask Size"), GTK_TABLE(table), 1, &ovals.mask_size, 3.0, 50.0);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);

@@ -264,22 +264,17 @@
 /* +-------------------------------------------------------------------+ */
 
 
-
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* uncomment the line below for a little debugging info */
 /* #define GIFDEBUG yesplease */
-
-
-/* Wear your GIMP with pride! */
-#define DEFAULT_COMMENT "Made with GIMP"
-
 
 /* Does the version of GIMP we're compiling for support
    data attachments to images?  ('Parasites') */
@@ -408,8 +403,9 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
   gimp_install_procedure ("file_gif_save",
-                          "saves files in Compuserve GIF file format",
+                          _("saves files in Compuserve GIF file format"),
                           "FIXME: write help for gif_save",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
                           "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
@@ -448,7 +444,9 @@ run (char    *name,
       argc = 1;
       argv = g_new (gchar *, 1);
       argv[0] = g_strdup ("gif");
-      
+     
+      INIT_I18N();
+ 
       gtk_init (&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());
  
@@ -681,7 +679,7 @@ static int find_unused_ia_colour (guchar *pixels,
       return ((*colors)-1);
     }
   
-  g_message ("GIF: Couldn't simply reduce colours further.  Saving as opaque.\n");
+  g_message (_("GIF: Couldn't simply reduce colours further.  Saving as opaque.\n"));
   return (-1);
 }
 
@@ -937,7 +935,7 @@ save_image (char   *filename,
       break;
 
     default:
-      g_message ("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n");
+      g_message (_("GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first.\n"));
       return FALSE;
       break;
     }
@@ -956,7 +954,7 @@ save_image (char   *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message ("GIF: can't open %s\n", filename);
+      g_message (_("GIF: can't open %s\n"), filename);
       return FALSE;
     }
 
@@ -1063,8 +1061,8 @@ save_image (char   *filename,
 	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
 		    liberalBPP, BitsPerPixel);
 #endif
-	  g_warning("Transparent colour *might* be incorrect on viewers which"
-		    " don't support transparency.");
+	  g_warning(_("Transparent colour *might* be incorrect on viewers which"
+		    " don't support transparency."));
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
@@ -1162,7 +1160,7 @@ badbounds_dialog ( void )
 		      dlg);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("Crop");
+  button = gtk_button_new_with_label (_("Crop"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) cropok_callback,
@@ -1171,7 +1169,7 @@ badbounds_dialog ( void )
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) cropcancel_callback,
@@ -1194,14 +1192,14 @@ badbounds_dialog ( void )
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   
-  label= gtk_label_new(
+  label= gtk_label_new(_(
 		       "The image which you are trying to save as a GIF\n"
 		       "contains layers which extend beyond the actual\n"
 		       "borders of the image.  This isn't allowed in GIFs,\n"
 		       "I'm afraid.\n\n"
 		       "You may choose whether to crop all of the layers to\n"
 		       "the image borders, or cancel this save."
-		       );
+		       ));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show(label);
 
@@ -1251,7 +1249,7 @@ save_dialog ( gint32 image_ID )
 
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as GIF");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as GIF"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
@@ -1262,7 +1260,7 @@ save_dialog ( gint32 image_ID )
 
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -1285,7 +1283,7 @@ save_dialog ( gint32 image_ID )
 
 
   /*  regular gif parameter settings  */
-  frame = gtk_frame_new ("GIF Options");
+  frame = gtk_frame_new (_("GIF Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -1293,7 +1291,7 @@ save_dialog ( gint32 image_ID )
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Interlace");
+  toggle = gtk_check_button_new_with_label (_("Interlace"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
@@ -1305,7 +1303,7 @@ save_dialog ( gint32 image_ID )
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  toggle = gtk_check_button_new_with_label ("GIF Comment: ");
+  toggle = gtk_check_button_new_with_label (_("GIF Comment: "));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
@@ -1338,8 +1336,8 @@ save_dialog ( gint32 image_ID )
     else
       {
 #endif
-	globalcomment = g_malloc(1+strlen(DEFAULT_COMMENT));
-	strcpy(globalcomment, DEFAULT_COMMENT);
+	globalcomment = g_malloc(1+strlen(_("Made with GIMP")));
+	strcpy(globalcomment, _("Made with GIMP"));
 #ifdef FACEHUGGERS
       }
     parasite_free (GIF2_CMNT);
@@ -1364,7 +1362,7 @@ save_dialog ( gint32 image_ID )
 
 
   /*  additional animated gif parameter settings  */
-  frame = gtk_frame_new ("Animated GIF Options");
+  frame = gtk_frame_new (_("Animated GIF Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -1372,7 +1370,7 @@ save_dialog ( gint32 image_ID )
   gtk_container_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("Loop forever");
+  toggle = gtk_check_button_new_with_label (_("Loop forever"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
@@ -1385,7 +1383,7 @@ save_dialog ( gint32 image_ID )
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
-  label = gtk_label_new ("Delay between frames where unspecified: ");
+  label = gtk_label_new (_("Delay between frames where unspecified: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1399,7 +1397,7 @@ save_dialog ( gint32 image_ID )
                       NULL);
   gtk_widget_show (entry);
 
-  label = gtk_label_new (" milliseconds");
+  label = gtk_label_new (_(" milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1410,7 +1408,7 @@ save_dialog ( gint32 image_ID )
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, FALSE, 0);
 
-  label = gtk_label_new ("Frame disposal where unspecified: ");
+  label = gtk_label_new (_("Frame disposal where unspecified: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1420,19 +1418,19 @@ save_dialog ( gint32 image_ID )
 
     menu = gtk_menu_new();
     {
-      menu_item = gtk_menu_item_new_with_label ("I don't care");
+      menu_item = gtk_menu_item_new_with_label (_("I don't care"));
       gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
 			  (GtkSignalFunc) disposal_select_callback,
 			  &radio_pressed[0]);
       gtk_container_add(GTK_CONTAINER(menu), menu_item);
       gtk_widget_show(menu_item);
-      menu_item = gtk_menu_item_new_with_label ("Cumulative layers (combine)");
+      menu_item = gtk_menu_item_new_with_label (_("Cumulative layers (combine)"));
       gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
 			  (GtkSignalFunc) disposal_select_callback,
 			  &radio_pressed[1]);
       gtk_container_add(GTK_CONTAINER(menu), menu_item);
       gtk_widget_show(menu_item);
-      menu_item = gtk_menu_item_new_with_label ("One frame per layer (replace)");
+      menu_item = gtk_menu_item_new_with_label (_("One frame per layer (replace)"));
       gtk_signal_connect( GTK_OBJECT(menu_item), "activate",
 			  (GtkSignalFunc) disposal_select_callback,
 			  &radio_pressed[2]);
@@ -1490,7 +1488,7 @@ colorstobpp (int colors)
     bpp = 8;
   else
     {
-      g_warning ("GIF: colorstobpp - Eep! too many colours: %d\n", colors);
+      g_warning (_("GIF: colorstobpp - Eep! too many colours: %d\n"), colors);
       return 8;
     }
 
@@ -1506,7 +1504,7 @@ bpptocolors (int bpp)
 
   if (bpp>8)
     {
-      g_warning ("GIF: bpptocolors - Eep! bpp==%d !\n", bpp);
+      g_warning (_("GIF: bpptocolors - Eep! bpp==%d !\n"), bpp);
       return 256;
     }
   

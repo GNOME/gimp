@@ -2256,8 +2256,8 @@ control_do_hint(gint x, gint y)
 				break;
 
 			default:
-				g_message (_("control_do_hint: oops, in_handle is true "
-					"yet we got handle type %d"), (int) handle);
+				g_message ("control_do_hint: oops, in_handle is true "
+					"yet we got handle type %d", (int) handle);
 				break;
 		} /* switch */
 	} else
@@ -2360,8 +2360,8 @@ control_button_press(gint x, gint y, guint button, guint state)
 				return;
 
 			default:
-				g_message (_("control_button_press(): oops, in_handle is true "
-					"yet we got handle type %d"), (int) handle);
+				g_message ("control_button_press(): oops, in_handle is true "
+					"yet we got handle type %d", (int) handle);
 				return;
 		} /* switch */
 	else {
@@ -2404,7 +2404,7 @@ control_point_in_handle(gint x, gint y, grad_segment_t *seg, control_drag_mode_t
 			break;
 
 		default:
-			g_message (_("control_point_in_handle(): oops, can not handle drag mode %d"),
+			g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
 				(int) handle);
 			return 0;
 	} /* switch */
@@ -2498,7 +2498,7 @@ control_motion(gint x)
 			break;
 
 		default:
-			fatal_error(_("control_motion(): aieee, attempt to move bogus handle %d"),
+			fatal_error("control_motion(): aieee, attempt to move bogus handle %d",
 				    (int) g_editor->control_drag_mode);
 			break;
 	} /* switch */

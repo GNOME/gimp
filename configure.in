@@ -633,6 +633,12 @@ AC_SUBST(GIMP_MP_LIBS)
 AC_SUBST(GIMP_PERL)
 AC_SUBST(GIMPDOCS)
 
+dnl easy way to skip the plug-in build
+GIMP_PLUGINS=plug-ins
+GIMP_MODULES=modules
+AC_SUBST(GIMP_PLUGINS)
+AC_SUBST(GIMP_MODULES)
+
 dnl Output the Makefiles
 
 AC_OUTPUT([
@@ -802,16 +808,19 @@ data/Makefile
 data/brushes/Makefile
 data/gradients/Makefile
 data/palettes/Makefile
+data/patterns/Makefile
 Makefile
 po/Makefile.in
+po-plug-ins/Makefile.in
 intl/Makefile
 tools/Makefile
 tools/pdbgen/Makefile
 libgimp/Makefile
-data/patterns/Makefile],
+tips/Makefile],
 [
    chmod +x gimptool
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
+   sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then

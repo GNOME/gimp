@@ -390,7 +390,7 @@ grad_change_callbacks(GradSelectP gsp, gint closing)
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message (_("failed to run gradient callback function"));
+	g_message ("failed to run gradient callback function");
       else
 	procedural_db_destroy_args (return_vals, nreturn_vals);
     }

@@ -63,6 +63,8 @@
 #include "config.h"
 #endif
 
+#include "libgimp/stdplugins-intl.h"
+
 /*********************************
  *
  *  PLUGIN-SPECIFIC CONSTANTS
@@ -189,11 +191,13 @@ query()
     static GParamDef *return_vals = NULL;
     static int nreturn_vals = 0;
 
-    const char *blurb = "Apply a 3x3 blurring convolution kernel to the specified drawable.";
-    const char *help = "This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.";
+    const char *blurb = _("Apply a 3x3 blurring convolution kernel to the specified drawable.");
+    const char *help = _("This plug-in randomly blurs the specified drawable, using a 3x3 blur.  You control the percentage of the pixels that are blurred and the number of times blurring is applied.  Indexed images are not supported.");
     const char *author = "Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/";
     const char *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
     const char *copyright_date = "1995-1998";
+
+    INIT_I18N();
 
     gimp_install_procedure("plug_in_blur_randomize",
         (char *) blurb,
@@ -201,7 +205,7 @@ query()
         (char *) author,
         (char *) copyrights,
         (char *) copyright_date,
-        "<Image>/Filters/Blur/Blur",
+        _("<Image>/Filters/Blur/Blur"),
         "RGB*, GRAY*",
         PROC_PLUG_IN,
         nargs, nreturn_vals,
@@ -240,6 +244,9 @@ run(char *name, int nparams, GParam *param, int *nreturn_vals,
     GStatusType status = STATUS_SUCCESS;        /* assume the best! */
     char prog_label[32];
     static GParam values[1];
+
+    INIT_I18N();
+
 /*
  *  Get the specified drawable, do standard initialization.
  */
@@ -597,7 +604,7 @@ blur_dialog()
  *
  *  First set up the basic containers, label them, etc.
  */
-    frame = gtk_frame_new("Parameter Settings");
+    frame = gtk_frame_new(_("Parameter Settings"));
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_container_border_width(GTK_CONTAINER(frame), 10);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -609,14 +616,14 @@ blur_dialog()
 /*
  *  Action area OK & Cancel buttons
  */
-    gpc_add_action_button("OK", (GtkSignalFunc) blur_ok_callback, dlg,
-        "Accept settings and apply filter to image");
-    gpc_add_action_button("Cancel", (GtkSignalFunc) gpc_cancel_callback, dlg,
-        "Close plug-in without making any changes");
+    gpc_add_action_button(_("OK"), (GtkSignalFunc) blur_ok_callback, dlg,
+        _("Accept settings and apply filter to image"));
+    gpc_add_action_button(_("Cancel"), (GtkSignalFunc) gpc_cancel_callback, dlg,
+        _("Close plug-in without making any changes"));
 /*
  *  Randomization seed initialization controls
  */
-    gpc_add_label("Randomization Seed:", table, 0, 1, 1, 2);
+    gpc_add_label(_("Randomization Seed:"), table, 0, 1, 1, 2);
 /*
  *  Box to hold seed initialization radio buttons
  */
@@ -627,8 +634,8 @@ blur_dialog()
 /*
  *  Time button
  */
-    gpc_add_radio_button(&seed_group, "Current Time", seed_vbox, &do_time,
-        "Seed random number generator from the current time - this guarantees a reasonable randomization");
+    gpc_add_radio_button(&seed_group, _("Current Time"), seed_vbox, &do_time,
+        _("Seed random number generator from the current time - this guarantees a reasonable randomization"));
 /*
  *  Box to hold seed user initialization controls
  */
@@ -638,8 +645,8 @@ blur_dialog()
 /*
  *  User button
  */
-    gpc_add_radio_button(&seed_group, "Other Value", seed_hbox, &do_user,
-        "Enable user-entered value for random number generator seed - this allows you to repeat a given \"random\" operation");
+    gpc_add_radio_button(&seed_group, _("Other Value"), seed_hbox, &do_user,
+        _("Enable user-entered value for random number generator seed - this allows you to repeat a given \"random\" operation"));
 /*
  *  Randomization seed number (text)
  */
@@ -651,23 +658,23 @@ blur_dialog()
     gtk_signal_connect(GTK_OBJECT(entry), "changed",
         (GtkSignalFunc) gpc_text_update, &pivals.blur_seed);
     gtk_widget_show(entry);
-    gpc_set_tooltip(entry, "Value for seeding the random number generator");
+    gpc_set_tooltip(entry, _("Value for seeding the random number generator"));
     gtk_widget_show(seed_hbox);
 /*
  *  Randomization percentage label & scale (1 to 100)
  */
-    gpc_add_label("Randomization %:", table, 0, 1, 2, 3);
+    gpc_add_label(_("Randomization %:"), table, 0, 1, 2, 3);
     gpc_add_hscale(table, SCALE_WIDTH,
         1.0, 100.0, &pivals.blur_pct, 1, 2, 2, 3,
-        "Percentage of pixels to be filtered");
+        _("Percentage of pixels to be filtered"));
 
 /*
  *  Repeat count label & scale (1 to 100)
  */
-    gpc_add_label("Repeat:", table, 0, 1, 3, 4);
+    gpc_add_label(_("Repeat:"), table, 0, 1, 3, 4);
     gpc_add_hscale(table, SCALE_WIDTH,
         1.0, 100.0, &pivals.blur_rcount, 1, 2, 3, 4,
-        "Number of times to apply filter");
+        _("Number of times to apply filter"));
 
 /*
  *  Display everything.

@@ -37,13 +37,14 @@
  * ----------------------------------------------------------------------------
  */
 
-
+#include "config.h"
 #include <string.h>
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "bmp.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 FILE *errorfile;
@@ -101,8 +102,8 @@ query ()
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
   
   gimp_install_procedure ("file_bmp_load",
-                          "Loads files of Windows BMP file format",
-                          "Loads files of Windows BMP file format",
+                          _("Loads files of Windows BMP file format"),
+                          _("Loads files of Windows BMP file format"),
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",
@@ -113,8 +114,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_bmp_save",
-                          "Saves files in Windows BMP file format",
-                          "Saves files in Windows BMP file format",
+                          _("Saves files in Windows BMP file format"),
+                          _("Saves files in Windows BMP file format"),
                           "Alexander Schulz",
                           "Alexander Schulz",
                           "1997",
@@ -149,6 +150,8 @@ run (char    *name,
 
   if (strcmp (name, "file_bmp_load") == 0)
     {
+       INIT_I18N();
+
        switch (run_mode)
         {
         case RUN_INTERACTIVE:
@@ -182,6 +185,8 @@ run (char    *name,
     }
   else if (strcmp (name, "file_bmp_save") == 0)
     {
+      INIT_I18N();
+
       switch (run_mode)
         {
         case RUN_INTERACTIVE:

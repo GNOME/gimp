@@ -202,7 +202,7 @@ make_seg (int x1,
 					sizeof (BoundSeg) * max_segs);
 
       if (!tmp_segs)
-	fatal_error (_("Unable to reallocate segments array for mask boundary."));
+	fatal_error ("Unable to reallocate segments array for mask boundary.");
     }
 
   tmp_segs[num_segs].x1 = x1;
@@ -244,7 +244,7 @@ allocate_empty_segs (void)
       empty_segs_l = (int *) g_realloc (empty_segs_l, sizeof (int) * max_empty_segs);
 
       if (!empty_segs_n || !empty_segs_l || !empty_segs_c)
-	fatal_error (_("Unable to reallocate empty segments array for mask boundary."));
+	fatal_error ("Unable to reallocate empty segments array for mask boundary.");
     }
 }
 
@@ -499,7 +499,7 @@ sort_boundary (BoundSeg *segs,
 	    }
 
 	  if (x != startx || y != starty)
-	    g_message (_("sort_boundary(): Unconnected boundary group!"));
+	    g_message ("sort_boundary(): Unconnected boundary group!");
 
 	  /*  Mark the end of a group  */
 	  *num_groups = *num_groups + 1;

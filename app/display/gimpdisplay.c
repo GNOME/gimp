@@ -216,7 +216,7 @@ gdisplay_format_title (GDisplay *gdisp,
       format++;
       switch (*format) {
       case 0:
-	  g_warning (_("image-title-format string ended within %%-sequence"));
+	  g_warning ("image-title-format string ended within %%-sequence");
 	  break;
 
       case '%':
@@ -264,7 +264,7 @@ gdisplay_format_title (GDisplay *gdisp,
 	   */
 
       default:
-	  g_warning (_("image-title-format contains unknown format sequence '%%%c'"), *format);
+	  g_warning ("image-title-format contains unknown format sequence '%%%c'", *format);
 	  break;
       }
       break;
@@ -538,7 +538,7 @@ gdisplay_idlerender_init (GDisplay *gdisp)
     {
       if (gdisp->idle_render.update_areas == NULL)
 	{
-	  g_warning (_("Wanted to start idlerender thread with no update_areas. (+memleak)"));
+	  g_warning ("Wanted to start idlerender thread with no update_areas. (+memleak)");
 	  return;
 	}
       

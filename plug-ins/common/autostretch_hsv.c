@@ -34,6 +34,9 @@
 #include <stdio.h>
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Declare local functions.
  */
 static void      query  (void);
@@ -73,13 +76,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_autostretch_hsv",
-			  "Automatically stretch the contrast of the specified drawable to cover all possible ranges.",
-			  "This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
+			  _("Automatically stretch the contrast of the specified drawable to cover all possible ranges."),
+			  _("This simple plug-in does an automatic contrast stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full contrast range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue."),
 			  "Scott Goehring and Federico Mena Quintero",
 			  "Scott Goehring and Federico Mena Quintero",
 			  "1997",
-			  "<Image>/Image/Colors/Auto-Stretch HSV",
+			  _("<Image>/Image/Colors/Auto-Stretch HSV"),
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -100,6 +105,8 @@ run (char    *name,
 
   gint32 image_ID;
 
+  INIT_I18N();
+
   run_mode = param[0].data.d_int32;
 
   /*  Get the specified drawable  */
@@ -109,7 +116,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Auto-Stretching HSV...");
+      gimp_progress_init (_("Auto-Stretching HSV..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       autostretch_hsv (drawable);
 
@@ -151,7 +158,7 @@ indexed_autostretch_hsv(gint32 image_ID)  /* a.d.m. */
 
   if (cmap==NULL)
     {
-      printf("autostretch_hsv: cmap was NULL!  Quitting...\n");
+      fprintf(stderr, "autostretch_hsv: cmap was NULL!  Quitting...\n");
       gimp_quit();
     }
 

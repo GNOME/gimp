@@ -54,8 +54,8 @@ modename="$progname"
 # Constants.
 PROGRAM=ltmain.sh
 PACKAGE=libtool
-VERSION=1.3
-TIMESTAMP=" (1.385.2.117 1999/04/29 13:07:13)"
+VERSION=1.3.2
+TIMESTAMP=" (1.385.2.150 1999/05/26 00:28:32)"
 
 default_mode=
 help="Try \`$progname --help' for more information."
@@ -466,6 +466,7 @@ compiler."
 	command="$command -o $output_obj"
       fi
 
+      $run $rm "$output_obj"
       $show "$command"
       if $run eval "$command"; then :
       else
@@ -545,6 +546,7 @@ compiler."
 
       # Suppress compiler output if we already did a PIC compilation.
       command="$command$suppress_output"
+      $run $rm "$output_obj"
       $show "$command"
       if $run eval "$command"; then :
       else
@@ -1021,8 +1023,9 @@ compiler."
 	*)
 	  absdir=`cd "$dir" && pwd`
 	  if test -z "$absdir"; then
-	    $echo "$modename: cannot determine absolute directory name of \`$dir'" 1>&2
-	    exit 1
+	    $echo "$modename: warning: cannot determine absolute directory name of \`$dir'" 1>&2
+	    $echo "$modename: passing it literally to the linker, although it might fail" 1>&2
+	    absdir="$dir"
 	  fi
 	  dir="$absdir"
 	  ;;
@@ -1294,8 +1297,9 @@ compiler."
 	  *)
 	    absdir=`cd "$dir" && pwd`
 	    if test -z "$absdir"; then
-	      $echo "$modename: cannot determine absolute directory name of \`$dir'" 1>&2
-	      exit 1
+	      $echo "$modename: warning: cannot determine absolute directory name of \`$dir'" 1>&2
+	      $echo "$modename: passing it literally to the linker, although it might fail" 1>&2
+	      absdir="$dir"
 	    fi
 	    ;;
 	  esac
@@ -1902,7 +1906,7 @@ EOF
 		    potential_libs=`ls $i/$libname[.-]* 2>/dev/null`
 		    for potent_lib in $potential_libs; do
 		      # Follow soft links.
-		      if ls -lLd "$potlib" 2>/dev/null \
+		      if ls -lLd "$potent_lib" 2>/dev/null \
 			 | grep " -> " >/dev/null; then
 			continue 
 		      fi

@@ -15,6 +15,9 @@ INCLUDES = \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"
+
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)

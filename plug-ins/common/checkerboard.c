@@ -24,6 +24,9 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Variables set in dialog box */
 typedef struct data {
     gint mode;
@@ -88,13 +91,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_checkerboard",
-			  "Adds a checkerboard pattern to an image",
+			  _("Adds a checkerboard pattern to an image"),
 			  "More here later",
 			  "Brent Burton & the Edward Blevins",
 			  "Brent Burton & the Edward Blevins",
 			  "1997",
-			  "<Image>/Filters/Render/Checkerboard",
+			  _("<Image>/Filters/Render/Checkerboard"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -112,6 +117,8 @@ run    (gchar    *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -154,7 +161,7 @@ run    (gchar    *name,
 
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Adding Checkerboard...");
+      gimp_progress_init (_("Adding Checkerboard..."));
 
       check (drawable);
 
@@ -364,14 +371,14 @@ check_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Checkerboard");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Checkerboard"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) check_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) check_ok_callback,
@@ -380,7 +387,7 @@ check_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -389,7 +396,7 @@ check_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -397,7 +404,7 @@ check_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ("Psychobilly");
+  toggle = gtk_check_button_new_with_label (_("Psychobilly"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) check_toggle_update,
@@ -405,7 +412,7 @@ check_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
   gtk_widget_show (toggle);
 
-  label = gtk_label_new ("Check Size");
+  label = gtk_label_new (_("Check Size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (label);

@@ -36,6 +36,9 @@ static char ident[] = "@(#) GIMP Compose plug-in v1.01 20-Dec-97";
 #include "libgimp/gimp.h"
 #include "libgimp/gimpmenu.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 /* Declare local functions
  */
 static void      query  (void);
@@ -101,15 +104,15 @@ typedef struct {
 
 /* Array of available compositions. */
 static COMPOSE_DSC compose_dsc[] = {
- { "RGB",  3, { "Red:",   "Green:     ", "Blue:",   "N/A" },
+ { N_("RGB"),  3, { N_("Red:"), N_("Green:     "), N_("Blue:"), N_("N/A") },
               "rgb-compose",  compose_rgb },
- { "RGBA", 4, { "Red:",   "Green:     ", "Blue:",   "Alpha:" },
+ { N_("RGBA"), 4, { N_("Red:"), N_("Green:     "), N_("Blue:"), N_("Alpha:") },
               "rgba-compose",  compose_rgba },
- { "HSV",  3, { "Hue:",   "Saturation:", "Value:",  "N/A" },
+ { N_("HSV"),  3, { N_("Hue:"), N_("Saturation:"), N_("Value:"), N_("N/A") },
               "hsv-compose",  compose_hsv },
- { "CMY",  3, { "Cyan:",  "Magenta:   ", "Yellow:", "N/A" },
+ { N_("CMY"),  3, { N_("Cyan:"), N_("Magenta:   "), N_("Yellow:"), N_("N/A") },
               "cmy-compose",  compose_cmy },
- { "CMYK", 4, { "Cyan:",  "Magenta:   ", "Yellow:", "Black:" },
+ { N_("CMYK"), 4, { N_("Cyan:"), N_("Magenta:   "), N_("Yellow:"), N_("Black:") },
               "cmyk-compose", compose_cmyk }
 };
 
@@ -178,14 +181,16 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_compose",
-			  "Compose an image from different types of channels",
-			  "This function creates a new image from\
- different channel informations kept in gray images",
+			  _("Compose an image from different types of channels"),
+			  _("This function creates a new image from\
+ different channel informations kept in gray images"),
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (pkirchg@aol.com)",
 			  "1997",
-			  "<Image>/Image/Channel Ops/Compose",
+			  _("<Image>/Image/Channel Ops/Compose"),
 			  "GRAY",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -202,6 +207,8 @@ run (char    *name,
   static GParam values[2];
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -252,7 +259,7 @@ run (char    *name,
   if (status == STATUS_SUCCESS)
     {
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Composing...");
+        gimp_progress_init (_("Composing..."));
 
       image_ID = compose (composevals.compose_type, composevals.compose_ID);
 
@@ -428,7 +435,7 @@ create_new_image (char *filename,
  image_ID = gimp_image_new (width, height, gitype);
  gimp_image_set_filename (image_ID, filename);
 
- *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+ *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                              gdtype, 100, NORMAL_MODE);
  gimp_image_add_layer (image_ID, *layer_ID, 0);
 
@@ -610,14 +617,14 @@ compose_dialog (char *compose_type,
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Compose");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Compose"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) compose_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) compose_ok_callback, dlg);
@@ -626,7 +633,7 @@ compose_dialog (char *compose_type,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -642,7 +649,7 @@ compose_dialog (char *compose_type,
   gtk_widget_show (hbox);
 
   /* The left frame keeps the compose type toggles */
-  left_frame = gtk_frame_new ("Compose channels:");
+  left_frame = gtk_frame_new (_("Compose channels:"));
   gtk_frame_set_shadow_type (GTK_FRAME (left_frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (left_frame), 10);
   gtk_box_pack_start (GTK_BOX (hbox), left_frame, TRUE, TRUE, 0);
@@ -656,7 +663,7 @@ compose_dialog (char *compose_type,
   /* in the left frame is changed, fill in the right part first. */
   /* Otherwise it can occur, that a non-existing label might be changed. */
 
-  right_frame = gtk_frame_new ("Channel representations:");
+  right_frame = gtk_frame_new (_("Channel representations:"));
   gtk_frame_set_shadow_type (GTK_FRAME (right_frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (right_frame), 10);
   gtk_box_pack_start (GTK_BOX (hbox), right_frame, TRUE, TRUE, 0);
@@ -701,7 +708,7 @@ compose_dialog (char *compose_type,
   for (j = 0; j < MAX_COMPOSE_TYPES; j++)
   {
     toggle = gtk_radio_button_new_with_label (group,
-                                              compose_dsc[j].compose_type);
+                                        gettext(compose_dsc[j].compose_type));
     group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
     gtk_box_pack_start (GTK_BOX (left_vbox), toggle, TRUE, TRUE, 0);
     composeint.compose_flag[j] = (j == compose_idx);

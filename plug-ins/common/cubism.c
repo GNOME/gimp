@@ -28,6 +28,7 @@
 #include "libgimp/gimp.h"
 
 #include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Some useful macros */
 #define SQR(a) ((a) * (a))
@@ -175,13 +176,14 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
   gimp_install_procedure ("plug_in_cubism",
-			  "Convert the input drawable into a collection of rotated squares",
+			  _("Convert the input drawable into a collection of rotated squares"),
 			  "Help not yet written for this plug-in",
 			  "Spencer Kimball & Tracy Scott",
 			  "Spencer Kimball & Tracy Scott",
 			  "1996",
-			  "<Image>/Filters/Artistic/Cubism",
+			  _("<Image>/Filters/Artistic/Cubism"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -199,6 +201,8 @@ run (char    *name,
   GDrawable *active_drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -291,7 +295,7 @@ cubism (GDrawable *drawable)
   if (gimp_drawable_has_alpha (drawable->id))
     bg_col[drawable->bpp - 1] = 0;
 
-  gimp_progress_init ("Cubistic Transformation");
+  gimp_progress_init (_("Cubistic Transformation"));
 
   /*  render the cubism  */
   render_cubism (drawable);
@@ -324,14 +328,14 @@ cubism_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Cubism");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Cubism"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) cubism_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) cubism_ok_callback,
@@ -340,7 +344,7 @@ cubism_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -349,7 +353,7 @@ cubism_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -357,7 +361,7 @@ cubism_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ("Use Background Color");
+  toggle = gtk_check_button_new_with_label (_("Use Background Color"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) cubism_toggle_update,
@@ -365,7 +369,7 @@ cubism_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), (cvals.bg_color == BG));
   gtk_widget_show (toggle);
 
-  label = gtk_label_new ("Tile Size");
+  label = gtk_label_new (_("Tile Size"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (cvals.tile_size, 0.0, 100.0, 1.0, 1.0, 0.0);
@@ -381,7 +385,7 @@ cubism_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Tile Saturation");
+  label = gtk_label_new (_("Tile Saturation"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   scale_data = gtk_adjustment_new (cvals.tile_saturation, 0.0, 10.0, 0.1, 0.1, 0.0);

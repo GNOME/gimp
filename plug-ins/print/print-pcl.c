@@ -34,6 +34,83 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.11  1999/05/29 16:35:27  yosh
+ *   * configure.in
+ *   * Makefile.am: removed tips files, AC_SUBST GIMP_PLUGINS and
+ *   GIMP_MODULES so you can easily skip those parts of the build
+ *
+ *   * acinclude.m4
+ *   * config.sub
+ *   * config.guess
+ *   * ltconfig
+ *   * ltmain.sh: libtool 1.3.2
+ *
+ *   * app/fileops.c: shuffle #includes to avoid warning about MIN and
+ *   MAX
+ *
+ *   [ The following is a big i18n patch from David Monniaux
+ *     <david.monniaux@ens.fr> ]
+ *
+ *   * tips/gimp_conseils.fr.txt
+ *   * tips/gimp_tips.txt
+ *   * tips/Makefile.am
+ *   * configure.in: moved tips to separate dir
+ *
+ *   * po-plugins: new dir for plug-in translation files
+ *
+ *   * configure.in: add po-plugins dir and POTFILES processing
+ *
+ *   * app/boundary.c
+ *   * app/brightness_contrast.c
+ *   * app/by_color_select.c
+ *   * app/color_balance.c
+ *   * app/convert.c
+ *   * app/curves.c
+ *   * app/free_select.c
+ *   * app/gdisplay.c
+ *   * app/gimpimage.c
+ *   * app/gimpunit.c
+ *   * app/gradient.c
+ *   * app/gradient_select.c
+ *   * app/install.c
+ *   * app/session.c: various i18n tweaks
+ *
+ *   * app/tips_dialog.c: localize tips filename
+ *
+ *   * libgimp/gimpunit.c
+ *   * libgimp/gimpunitmenu.c: #include "config.h"
+ *
+ *   * plug-ins/CEL
+ *   * plug-ins/CML_explorer
+ *   * plug-ins/Lighting
+ *   * plug-ins/apply_lens
+ *   * plug-ins/autostretch_hsv
+ *   * plug-ins/blur
+ *   * plug-ins/bmp
+ *   * plug-ins/borderaverage
+ *   * plug-ins/bumpmap
+ *   * plug-ins/bz2
+ *   * plug-ins/checkerboard
+ *   * plug-ins/colorify
+ *   * plug-ins/compose
+ *   * plug-ins/convmatrix
+ *   * plug-ins/cubism
+ *   * plug-ins/depthmerge
+ *   * plug-ins/destripe
+ *   * plug-ins/gif
+ *   * plug-ins/gifload
+ *   * plug-ins/jpeg
+ *   * plug-ins/mail
+ *   * plug-ins/oilify
+ *   * plug-ins/png
+ *   * plug-ins/print
+ *   * plug-ins/ps
+ *   * plug-ins/xbm
+ *   * plug-ins/xpm
+ *   * plug-ins/xwd: plug-in i18n stuff
+ *
+ *   -Yosh
+ *
  *   Revision 1.10  1998/08/28 23:01:45  yosh
  *   * acconfig.h
  *   * configure.in
@@ -111,6 +188,8 @@
 
 #include "print.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Constants for 4-level dithering functions...
@@ -150,33 +229,33 @@ pcl_parameters(int  model,	/* I - Printer model */
 		**valptrs;
   static char	*media_sizes[] =
 		{
-		  "Letter",
-		  "Legal",
-		  "A4",
-		  "Tabloid",
-		  "A3",
-		  "12x18"
+		  N_("Letter"),
+		  N_("Legal"),
+		  N_("A4"),
+		  N_("Tabloid"),
+		  N_("A3"),
+		  N_("12x18")
 		};
   static char	*media_types[] =
 		{
-		  "Plain",
-		  "Premium",
-		  "Glossy",
-		  "Transparency"
+		  N_("Plain"),
+		  N_("Premium"),
+		  N_("Glossy"),
+		  N_("Transparency")
 		};
   static char	*media_sources[] =
 		{
-		  "Manual",
-		  "Tray 1",
-		  "Tray 2",
-		  "Tray 3",
-		  "Tray 4",
+		  N_("Manual"),
+		  N_("Tray 1"),
+		  N_("Tray 2"),
+		  N_("Tray 3"),
+		  N_("Tray 4"),
 		};
   static char	*resolutions[] =
 		{
-		  "150 DPI",
-		  "300 DPI",
-		  "600 DPI"
+		  N_("150 DPI"),
+		  N_("300 DPI"),
+		  N_("600 DPI")
 		};
 
 
@@ -531,7 +610,7 @@ pcl_print(int       model,		/* I - Model */
   * Let the user know what we're doing...
   */
 
-  gimp_progress_init("Printing...");
+  gimp_progress_init(_("Printing..."));
 
  /*
   * Send PCL initialization commands...

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = tools po intl libgimp app plug-ins modules data @GIMPDOCS@
+SUBDIRS = tools po po-plug-ins intl libgimp app $(GIMP_PLUGINS) $(GIMP_MODULES) data tips $(GIMPDOCS)
 
 bin_SCRIPTS = gimptool
 
@@ -67,7 +67,6 @@ EXTRA_DIST = \
 	rmshm			 \
 	user_install		 \
 	user_install.bat	 \
-	gimp_tips.txt		 \
 	ps-menurc		 \
 	gimp.1			 \
 	gimptool.1		 \
@@ -84,7 +83,6 @@ gimpdata_DATA = \
 	gimp_logo.ppm		 \
 	gimp_splash.ppm		 \
 	gimp1_1_splash.ppm	 \
-	gimp_tips.txt		 \
 	ps-menurc		 \
 	gtkrc.forest2
 

@@ -61,6 +61,7 @@
 
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 
 typedef enum {
 	EXTEND,
@@ -72,11 +73,11 @@ typedef enum {
 GDrawable *drawable;
 
 char * const channel_labels[]={
-	"Grey","Red","Green","Blue","Alpha"
+	N_("Grey"), N_("Red"), N_("Green"), N_("Blue"), N_("Alpha")
 };
 
 char * const bmode_labels[]={
-	"Extend","Wrap","Crop"
+	N_("Extend"), N_("Wrap"), N_("Crop")
 };
 
 /* Declare local functions. */
@@ -166,13 +167,15 @@ static void query()
 	static int nargs = (int)(sizeof(args) / sizeof(args[0]));
 	static int nreturn_vals = 0;
 
+	INIT_I18N();
+
 	gimp_install_procedure("plug_in_convmatrix",
-			       "A generic 5x5 convolution matrix",
+			       _("A generic 5x5 convolution matrix"),
 			       "",
 			       "Lauri Alanko",
 			       "Lauri Alanko",
 			       "1997",
-			       "<Image>/Filters/Generic/Convolution Matrix",
+			       _("<Image>/Filters/Generic/Convolution Matrix"),
 			       "RGB*, GRAY*",
 			       PROC_PLUG_IN,
 			       nargs, nreturn_vals,
@@ -185,6 +188,8 @@ static void run(char *name, int n_params, GParam * param,
 	GRunModeType run_mode;
 	GStatusType status = STATUS_SUCCESS;
 	int x,y;
+
+	INIT_I18N();
 
 	(void)name; /* Shut up warnings about unused parameters. */
 	*nreturn_vals = 1;
@@ -231,7 +236,7 @@ static void run(char *name, int n_params, GParam * param,
 		/*  Make sure that the drawable is gray or RGB color  */
 		if (gimp_drawable_color(drawable->id) ||
 		    gimp_drawable_gray(drawable->id)) {
-			gimp_progress_init("Applying convolution");
+			gimp_progress_init(_("Applying convolution"));
 			gimp_tile_cache_ntiles(2 * (drawable->width /
 						    gimp_tile_width() + 1));
 
@@ -692,13 +697,13 @@ static gint dialog()
 	gtk_rc_parse (gimp_gtkrc ());
 
 	dlg = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dlg), "Convolution Matrix");
+	gtk_window_set_title(GTK_WINDOW(dlg), _("Convolution Matrix"));
 	gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
 	gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 			   (GtkSignalFunc) close_callback, NULL);
 
 	/*  Action area  */
-	my_widgets.ok = button = gtk_button_new_with_label("OK");
+	my_widgets.ok = button = gtk_button_new_with_label(_("OK"));
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   (GtkSignalFunc) ok_callback,
@@ -707,7 +712,7 @@ static gint dialog()
 	gtk_widget_grab_default(button);
 	gtk_widget_show(button);
 
-	button = gtk_button_new_with_label("Defaults");
+	button = gtk_button_new_with_label(_("Defaults"));
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 				  (GtkSignalFunc) defaults_callback,
@@ -715,7 +720,7 @@ static gint dialog()
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = gtk_button_new_with_label("Cancel");
+	button = gtk_button_new_with_label(_("Cancel"));
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
 				  (GtkSignalFunc) close_callback,
@@ -733,7 +738,7 @@ static gint dialog()
 	gtk_box_pack_start (GTK_BOX (outbox), yetanotherbox, TRUE, TRUE, 0);
 
 /* Outbox:YABox:Frame */	
-	frame = gtk_frame_new ("Matrix");
+	frame = gtk_frame_new (_("Matrix"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start (GTK_BOX (yetanotherbox), frame, TRUE, TRUE, 0);
@@ -780,7 +785,7 @@ static gint dialog()
 	/* divisor */
 	
 	
-	label=gtk_label_new("Divisor");
+	label=gtk_label_new(_("Divisor"));
 	gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0);
 	gtk_widget_show(label);
 	
@@ -795,7 +800,7 @@ static gint dialog()
 	/* Offset */
 
 	
-	label=gtk_label_new("Offset");
+	label=gtk_label_new(_("Offset"));
 	gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0);
 	gtk_widget_show(label);
 	
@@ -815,7 +820,7 @@ static gint dialog()
 	box=gtk_hbox_new(TRUE,0);
 	gtk_box_pack_start(GTK_BOX(yetanotherbox),box, TRUE, TRUE, 0);
 	
-	my_widgets.autoset=button=gtk_check_button_new_with_label("Automatic");
+	my_widgets.autoset=button=gtk_check_button_new_with_label(_("Automatic"));
 	gtk_box_pack_start(GTK_BOX(box), button, TRUE, FALSE,0);
 	gtk_signal_connect(GTK_OBJECT(button), "toggled",
 			   (GtkSignalFunc) my_toggle_callback, &my_config.autoset);
@@ -824,7 +829,7 @@ static gint dialog()
 
 	/* Alpha-weighting */
 	
-	my_widgets.alpha_alg=button=gtk_check_button_new_with_label("Alpha-weighting");
+	my_widgets.alpha_alg=button=gtk_check_button_new_with_label(_("Alpha-weighting"));
 	if(my_config.alpha_alg==-1)
 	    gtk_widget_set_sensitive(button,0);
 	gtk_box_pack_start(GTK_BOX(box),button,TRUE,TRUE,0);
@@ -839,7 +844,7 @@ static gint dialog()
 	
 	/* Wrap-modes */
 /* OutBox:Inbox:Frame */
-	frame=gtk_frame_new("Border");
+	frame=gtk_frame_new(_("Border"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start(GTK_BOX(inbox), frame, TRUE, TRUE,0);
@@ -852,7 +857,7 @@ static gint dialog()
 	
 
 	for(i=0;i<3;i++){
-		my_widgets.bmode[i]=button=gtk_radio_button_new_with_label(group,bmode_labels[i]);
+		my_widgets.bmode[i]=button=gtk_radio_button_new_with_label(group,gettext(bmode_labels[i]));
 		group=gtk_radio_button_group(GTK_RADIO_BUTTON(button));
 		gtk_box_pack_start(GTK_BOX(box),button,TRUE,TRUE,0);
 		gtk_widget_show(button);
@@ -867,7 +872,7 @@ static gint dialog()
 	gtk_widget_show(frame);
 
 /* OutBox:Inbox:Frame */
-	frame=gtk_frame_new("Channels");
+	frame=gtk_frame_new(_("Channels"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start(GTK_BOX(inbox), frame, TRUE, TRUE,0);
@@ -876,7 +881,7 @@ static gint dialog()
 	box=gtk_vbox_new(TRUE, 0);
 	gtk_container_add(GTK_CONTAINER(frame),box);
 	for(i=0;i<5;i++){
-		my_widgets.channels[i]=button=gtk_check_button_new_with_label(channel_labels[i]);
+		my_widgets.channels[i]=button=gtk_check_button_new_with_label(gettext(channel_labels[i]));
 		if(my_config.channels[i]<0)
 		    gtk_widget_set_sensitive(button,0);
 		gtk_signal_connect(GTK_OBJECT(button), "toggled",(GtkSignalFunc)my_toggle_callback,&my_config.channels[i]);

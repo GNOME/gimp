@@ -37,16 +37,17 @@
 /* Set this for debugging. */
 /* #define VERBOSE 2 */
 
+#include "config.h"
 #include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Wear your GIMP with pride! */
 #define DEFAULT_USE_COMMENT TRUE
-#define DEFAULT_COMMENT "Made with GIMP"
 #define MAX_COMMENT 72
 
 /* C identifier prefix. */
@@ -67,7 +68,7 @@ typedef struct _XBMSaveVals
 
 static XBMSaveVals xsvals =
 {
-  DEFAULT_COMMENT,		/* comment */
+  "###",		/* comment */
   DEFAULT_X10_FORMAT,		/* x10_format */
   -1,				/* x_hot */
   -1,				/* y_hot */
@@ -159,8 +160,8 @@ query ()
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_xbm_load",
-                          "Load a file in X10 or X11 bitmap (XBM) file format",
-                          "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images.",
+                          _("Load a file in X10 or X11 bitmap (XBM) file format"),
+                          _("Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless format for flat black-and-white (two color indexed) images."),
                           "Gordon Matzigkeit",
                           "Gordon Matzigkeit",
                           "1998",
@@ -224,6 +225,9 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   gint32 image_ID;
+
+  INIT_I18N();
+  strncpy(xsvals.comment, _("Made with Gimp"), MAX_COMMENT);
 
   run_mode = param[0].data.d_int32;
 
@@ -511,12 +515,12 @@ load_image (char *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      printf ("XBM: cannot open \"%s\"\n", filename);
+      g_message (_("XBM: cannot open \"%s\"\n"), filename);
       return -1;
     }
 
   name_buf = g_malloc (strlen (filename) + 11);
-  sprintf (name_buf, "Loading %s:", filename);
+  sprintf (name_buf, _("Loading %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -576,25 +580,25 @@ load_image (char *filename)
 
   if (c == EOF)
     {
-      printf ("XBM: cannot read header (ftell == %ld)\n", ftell (fp));
+      g_message (_("XBM: cannot read header (ftell == %ld)\n"), ftell (fp));
       return -1;
     }
 
   if (width == 0)
     {
-      printf ("XBM: no image width specified\n");
+      g_message (_("XBM: no image width specified\n"));
       return -1;
     }
 
   if (height == 0)
     {
-      printf ("XBM: no image height specified\n");
+      g_message (_("XBM: no image height specified\n"));
       return -1;
     }
 
   if (intbits == 0)
     {
-      printf ("XBM: no image data type specified\n");
+      g_message (_("XBM: no image data type specified\n"));
       return -1;
     }
 
@@ -605,7 +609,7 @@ load_image (char *filename)
   gimp_image_set_cmap (image_ID, cmap, 2);
 
   layer_ID = gimp_layer_new (image_ID,
-			     "Background",
+			     _("Background"),
 			     width, height,
 			     INDEXED_IMAGE,
 			     100,
@@ -685,12 +689,12 @@ not_bw_dialog (void)
 
   if (!gtk_initialized)
     {
-      printf ("XBM: can only save two color indexed images\n");
+      fprintf (stderr, _("XBM: can only save two color indexed images\n"));
       return;
     }
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "XBM Warning");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("XBM Warning"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback,
@@ -700,7 +704,7 @@ not_bw_dialog (void)
 		      dlg);
 
   /* Action area */
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -719,12 +723,12 @@ not_bw_dialog (void)
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  label = gtk_label_new (
+  label = gtk_label_new (_(
 			 "The image which you are trying to save as\n"
 			 "an XBM contains more than two colors.\n\n"
 			 "Please convert it to a black and white\n"
 			 "(1-bit) indexed image and try again."
-			 );
+			 ));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
   gtk_widget_show (vbox);
@@ -770,7 +774,7 @@ save_image (char   *filename,
     }
 
   name_buf = (guchar *) g_malloc (strlen (filename) + 11);
-  sprintf (name_buf, "Saving %s:", filename);
+  sprintf (name_buf, _("Saving %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -792,7 +796,7 @@ save_image (char   *filename,
   fp = fopen (filename, "w");
   if (!fp)
     {
-      printf ("XBM: cannot create \"%s\"\n", filename);
+      g_message (_("XBM: cannot create \"%s\"\n"), filename);
       return FALSE;
     }
 
@@ -942,7 +946,7 @@ save_dialog (gint32  drawable_ID)
   gdk_set_use_xshm(gimp_use_xshm());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as XBM");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as XBM"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback,
@@ -952,7 +956,7 @@ save_dialog (gint32  drawable_ID)
 		      dlg);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -962,7 +966,7 @@ save_dialog (gint32  drawable_ID)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -973,7 +977,7 @@ save_dialog (gint32  drawable_ID)
 
 
   /* parameter settings */
-  frame = gtk_frame_new ("XBM Options");
+  frame = gtk_frame_new (_("XBM Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_widget_show (frame);
@@ -988,7 +992,7 @@ save_dialog (gint32  drawable_ID)
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  label = gtk_label_new ("Description: ");
+  label = gtk_label_new (_("Description: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1004,7 +1008,7 @@ save_dialog (gint32  drawable_ID)
   gtk_widget_show (hbox);
 
   /*  X10 format  */
-  toggle = gtk_check_button_new_with_label ("X10 format bitmap");
+  toggle = gtk_check_button_new_with_label (_("X10 format bitmap"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,
@@ -1017,7 +1021,7 @@ save_dialog (gint32  drawable_ID)
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
-  label = gtk_label_new ("Identifier prefix: ");
+  label = gtk_label_new (_("Identifier prefix: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

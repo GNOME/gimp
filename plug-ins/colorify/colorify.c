@@ -34,6 +34,9 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 #define PLUG_IN_NAME "Colorify"
 #define PLUG_IN_VERSION "1.1"
 
@@ -113,11 +116,14 @@ query ()
 	static int        nargs        = sizeof(args) / sizeof(args[0]),
 		          nreturn_vals = 0;
 
+	INIT_I18N();
+
 	gimp_install_procedure ("plug_in_colorify",
-				"Similar to the \"Color\" mode for layers.",
-				"Makes an average of the RGB channels and uses it to set the color",
+				_("Similar to the \"Color\" mode for layers."),
+				_("Makes an average of the RGB channels and uses it to set the color"),
 				"Francisco Bustamante", "Francisco Bustamante",
-				"0.0.1", "<Image>/Filters/Colors/Colorify", "RGB",
+				"0.0.1",
+				_("<Image>/Filters/Colors/Colorify"), "RGB",
 				PROC_PLUG_IN,
 				nargs, nreturn_vals,
 				args, return_vals);
@@ -139,6 +145,8 @@ run (char    *name,
 	GStatusType status;
 	static GParam values[1];
 	GDrawable *drawable;
+
+	INIT_I18N();
 
 	status = STATUS_SUCCESS;
 	run_mode = param[0].data.d_int32;
@@ -183,7 +191,7 @@ run (char    *name,
 	}
 
 	if (status == STATUS_SUCCESS) {
-		gimp_progress_init("Colorifying...");
+		gimp_progress_init(_("Colorifying..."));
 
 		colorify (drawable);
 
@@ -293,13 +301,13 @@ colorify_dialog (guchar red,
 	gtk_rc_parse (gimp_gtkrc());
 
 	dialog = gtk_dialog_new ();
-	gtk_window_set_title (GTK_WINDOW (dialog), "Colorify");
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Colorify"));
 	gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
 	gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
 			    (GtkSignalFunc) close_callback,
 			    NULL);
 
-	button = gtk_button_new_with_label ("Ok");
+	button = gtk_button_new_with_label (_("Ok"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    (GtkSignalFunc) colorify_ok_callback,
@@ -308,7 +316,7 @@ colorify_dialog (guchar red,
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
 
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label (_("Cancel"));
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				   (GtkSignalFunc) gtk_widget_destroy,
@@ -316,7 +324,7 @@ colorify_dialog (guchar red,
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show (button);
 
-	frame = gtk_frame_new ("Color");
+	frame = gtk_frame_new (_("Color"));
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
 	gtk_container_border_width (GTK_CONTAINER (frame), 10);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame, TRUE, TRUE, 0);
@@ -329,7 +337,7 @@ colorify_dialog (guchar red,
 	gtk_table_set_col_spacings (GTK_TABLE (table), 5);
 	gtk_widget_show (table);
 
-	label = gtk_label_new ("Custom Color: ");
+	label = gtk_label_new (_("Custom Color: "));
 	gtk_table_attach (GTK_TABLE (table), label, 4, 6, 0, 1,  GTK_FILL, GTK_FILL, 0, 0);
 	gtk_widget_show (label);
 
@@ -419,7 +427,7 @@ custom_color_callback (GtkWidget *widget,
 	GtkColorSelectionDialog *csd;
 	gdouble colour[3];
 
-	c_dialog = gtk_color_selection_dialog_new ("Colorify Custom Color");
+	c_dialog = gtk_color_selection_dialog_new (_("Colorify Custom Color"));
 	csd = GTK_COLOR_SELECTION_DIALOG (c_dialog);
  	gtk_color_selection_set_update_policy (GTK_COLOR_SELECTION(csd->colorsel), 
  					       GTK_UPDATE_DISCONTINUOUS); 

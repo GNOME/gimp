@@ -81,6 +81,9 @@
 #include <sys/stat.h>
 #include <time.h>		/* for seed of random number */
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
@@ -220,107 +223,107 @@ static GtkTooltips	*gtkW_tooltips_new (GtkWidget *frame);
 gtkW_menu_item function_menu [] =
 {
 #define	CML_KEEP_VALUES	0
-  { "Keep image's values", NULL },
+  { N_("Keep image's values"), NULL },
 #define	CML_KEEP_FIRST	1
-  { "Keep the first value", NULL },
+  { N_("Keep the first value"), NULL },
 #define	CML_FILL	2
-  { "Fill with parameter k", NULL },
+  { N_("Fill with parameter k"), NULL },
 #define	CML_LOGIST	3
-  { "k{x(1-x)}^p", NULL },
+  { N_("k{x(1-x)}^p"), NULL },
 #define	CML_LOGIST_STEP	4
-  { "k{x(1-x)}^p stepped", NULL },
+  { N_("k{x(1-x)}^p stepped"), NULL },
 #define	CML_POWER	5
-  { "kx^p", NULL },
+  { N_("kx^p"), NULL },
 #define	CML_POWER_STEP	6
-  { "kx^p stepped", NULL },
+  { N_("kx^p stepped"), NULL },
 #define	CML_REV_POWER	7
-  { "k(1 - x^p)", NULL },
+  { N_("k(1 - x^p)"), NULL },
 #define	CML_REV_POWER_STEP	8
-  { "k(1 - x^p) stepped", NULL },
+  { N_("k(1 - x^p) stepped"), NULL },
 #define	CML_DELTA	9
-  { "Delta function", NULL },
+  { N_("Delta function"), NULL },
 #define	CML_DELTA_STEP	10
-  { "Delta function stepped", NULL },
+  { N_("Delta function stepped"), NULL },
 #define CML_SIN_CURVE	11
-  { "sin^p-based function", NULL },
+  { N_("sin^p-based function"), NULL },
 #define CML_SIN_CURVE_STEP	12
-  { "sin^p, stepped", NULL },
+  { N_("sin^p, stepped"), NULL },
 };
 
 gtkW_menu_item composition_menu [] =
 {
 #define COMP_NONE		0
-  { "None", NULL },
+  { N_("None"), NULL },
 #define COMP_MAX_LINEAR		1
-  { "Max (x, -)", NULL },
+  { N_("Max (x, -)"), NULL },
 #define COMP_MAX_LINEAR_P1	2
-  { "Max (x+d, -)", NULL },
+  { N_("Max (x+d, -)"), NULL },
 #define COMP_MAX_LINEAR_M1	3
-  { "Max (x-d, -)", NULL },
+  { N_("Max (x-d, -)"), NULL },
 #define COMP_MIN_LINEAR		4
-  { "Mix (x, -)", NULL },
+  { N_("Mix (x, -)"), NULL },
 #define COMP_MIN_LINEAR_P1	5
-  { "Min (x+d, -)", NULL },
+  { N_("Min (x+d, -)"), NULL },
 #define COMP_MIN_LINEAR_M1	6
-  { "Min (x-d, -)", NULL },
+  { N_("Min (x-d, -)"), NULL },
 #define COMP_MAX_LINEAR_P1L	7
-  { "Max (x+d, -), (x < 0.5)", NULL },
+  { N_("Max (x+d, -), (x < 0.5)"), NULL },
 #define COMP_MAX_LINEAR_P1U	8
-  { "Max (x+d, -), (0.5 < x)", NULL },
+  { N_("Max (x+d, -), (0.5 < x)"), NULL },
 #define COMP_MAX_LINEAR_M1L	9
-  { "Max (x-d, -), (x < 0.5)", NULL },
+  { N_("Max (x-d, -), (x < 0.5)"), NULL },
 #define COMP_MAX_LINEAR_M1U	10
-  { "Max (x-d, -), (0.5 < x)", NULL },
+  { N_("Max (x-d, -), (0.5 < x)"), NULL },
 #define COMP_MIN_LINEAR_P1L	11
-  { "Min (x+d, -), (x < 0.5)", NULL },
+  { N_("Min (x+d, -), (x < 0.5)"), NULL },
 #define COMP_MIN_LINEAR_P1U	12
-  { "Min (x+d, -), (0.5 < x)", NULL },
+  { N_("Min (x+d, -), (0.5 < x)"), NULL },
 #define COMP_MIN_LINEAR_M1L	13
-  { "Min (x-d, -), (x < 0.5)", NULL },
+  { N_("Min (x-d, -), (x < 0.5)"), NULL },
 #define COMP_MIN_LINEAR_M1U	14
-  { "Min (x-d, -), (0.5 < x)", NULL }
+  { N_("Min (x-d, -), (0.5 < x)"), NULL }
 };
 
 gtkW_menu_item arrange_menu [] =
 {
 #define	STANDARD	0
-  { "Standard", NULL },
+  { N_("Standard"), NULL },
 #define	AVERAGE		1
-  { "Use average value", NULL },
+  { N_("Use average value"), NULL },
 #define	ANTILOG		2
-  { "Use reverse value", NULL },
+  { N_("Use reverse value"), NULL },
 #define	RAND_POWER0	3
-  { "With random power (0,10)", NULL },
+  { N_("With random power (0,10)"), NULL },
 #define	RAND_POWER1	4
-  { "With random power (0,1)", NULL },
+  { N_("With random power (0,1)"), NULL },
 #define	RAND_POWER2	5
-  { "With gradient power (0,1)", NULL },
+  { N_("With gradient power (0,1)"), NULL },
 #define	MULTIPLY_RANDOM0	6
-  { "Multiply rand. value (0,1)", NULL },
+  { N_("Multiply rand. value (0,1)"), NULL },
 #define	MULTIPLY_RANDOM1	7
-  { "Multiply rand. value (0,2)", NULL },
+  { N_("Multiply rand. value (0,2)"), NULL },
 #define	MULTIPLY_GRADIENT	8
-  { "Multiply gradient (0,1)", NULL },
+  { N_("Multiply gradient (0,1)"), NULL },
 #define RAND_AND_P	9
-  { "With p and random (0,1)", NULL },
+  { N_("With p and random (0,1)"), NULL },
 };
 
 gtkW_menu_item initial_value_menu [] =
 {
-  { "All black", NULL },	/* 0 */
-  { "All gray", NULL },		/* 1 */
-  { "All white", NULL },	/* 2 */
-  { "The first row of the image", NULL }, /* 3 */
-  { "Continuous gradient", NULL }, /* 4 */
-  { "Continuous grad. w/o gap", NULL }, /* 5 */
+  { N_("All black"), NULL },	/* 0 */
+  { N_("All gray"), NULL },		/* 1 */
+  { N_("All white"), NULL },	/* 2 */
+  { N_("The first row of the image"), NULL }, /* 3 */
+  { N_("Continuous gradient"), NULL }, /* 4 */
+  { N_("Continuous grad. w/o gap"), NULL }, /* 5 */
 #define	CML_INITIAL_RANDOM_INDEPENDENT	6
-  { "Random, ch. independent", NULL },
+  { N_("Random, ch. independent"), NULL },
 #define	CML_INITIAL_RANDOM_SHARED	7
-  { "Random shared", NULL },
+  { N_("Random shared"), NULL },
 #define	CML_INITIAL_RANDOM_FROM_SEED	8
-  { "Randoms from seed" , NULL },
+  { N_("Randoms from seed") , NULL },
 #define	CML_INITIAL_RANDOM_FROM_SEED_SHARED	9
-  { "Randoms from seed (shared)" , NULL }
+  { N_("Randoms from seed (shared)") , NULL }
 } ;
 
 #define CML_PARAM_NUM	15
@@ -374,17 +377,17 @@ static ValueType VALS =
 
 gtkW_menu_item channel_menu [] =
 {
-  { "Hue", (gpointer) &VALS.hue },
-  { "Saturation", (gpointer) &VALS.sat },
-  { "Value", (gpointer) &VALS.val },
+  { N_("Hue"), (gpointer) &VALS.hue },
+  { N_("Saturation"), (gpointer) &VALS.sat },
+  { N_("Value"), (gpointer) &VALS.val },
 };
 
 gtkW_menu_item sload_menu [] =
 {
-  { "NULL", NULL },
-  { "Hue", NULL },
-  { "Saturation", NULL },
-  { "Value", NULL },
+  { N_("NULL"), NULL },
+  { N_("Hue"), NULL },
+  { N_("Saturation"), NULL },
+  { N_("Value"), NULL },
 };
 
 static void	query	(void);
@@ -485,9 +488,11 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Make an image of Coupled-Map Lattice",
-			  "Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a prameter file is passed as the 4th arg. You can control CML_explorer via parameter file.",
+			  _("Make an image of Coupled-Map Lattice"),
+			  _("Make an image of Coupled-Map Lattice (CML). CML is a kind of Cellula Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a prameter file is passed as the 4th arg. You can control CML_explorer via parameter file."),
 			  /*  Or do you want to call me with over 50 args? */
 			  "Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/",
 			  "Shuji Narazaki",
@@ -1319,7 +1324,7 @@ DIALOG ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gtkW_dialog_new ("Coupled-Map-Lattice Explorer",
+  dlg = gtkW_dialog_new (_("Coupled-Map-Lattice Explorer"),
 			 (GtkSignalFunc) OK_CALLBACK,
 			 (GtkSignalFunc) gtkW_close_callback);
 
@@ -1336,7 +1341,7 @@ DIALOG ()
     GtkWidget *hseparator;
 
     table = gtkW_table_new (hbox, 8, 1);
-    frame = gtkW_frame_new (NULL, "Preview");
+    frame = gtkW_frame_new (NULL, _("Preview"));
     gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		      0, 0, 0, gtkW_border_width);
     preview_box = gtkW_hbox_new (frame);
@@ -1377,19 +1382,19 @@ DIALOG ()
 			GTK_FILL, GTK_FILL|GTK_EXPAND, 0, 0);
     }
 
-    button = gtkW_table_add_button (table, "New seed", 0, 1, 2,
+    button = gtkW_table_add_button (table, _("New seed"), 0, 1, 2,
 				    (GtkSignalFunc) CML_preview_update_callback,
 				    &VALS);
     random_sensitives[0].widget = button;
     random_sensitives[0].logic = TRUE;
 
-    button = gtkW_table_add_button (table, "Fix seed", 0, 1, 3,
+    button = gtkW_table_add_button (table, _("Fix seed"), 0, 1, 3,
 				    (GtkSignalFunc) CML_set_or_randomize_seed_callback,
 				    &VALS);
     random_sensitives[1].widget = button;
     random_sensitives[1].logic = TRUE;
 
-    button = gtkW_table_add_button (table, "Random seed", 0, 1, 4,
+    button = gtkW_table_add_button (table, _("Random seed"), 0, 1, 4,
 				    (GtkSignalFunc) CML_set_or_randomize_seed_callback,
 				    &VALS);
     random_sensitives[2].widget = button;
@@ -1401,10 +1406,10 @@ DIALOG ()
 		      GTK_FILL, GTK_FILL,
 		      gtkW_border_width, 2 * gtkW_border_width);
 
-    gtkW_table_add_button (table, "Load", 0, 1, 6,
+    gtkW_table_add_button (table, _("Load"), 0, 1, 6,
 			   (GtkSignalFunc) CML_load_from_file_callback,
 			   &VALS);
-    gtkW_table_add_button (table, "Save", 0, 1, 7,
+    gtkW_table_add_button (table, _("Save"), 0, 1, 7,
 			   (GtkSignalFunc) CML_save_to_file_callback,
 			   &VALS);
   }
@@ -1421,21 +1426,21 @@ DIALOG ()
     gtk_widget_show (notebook);
     parent = NULL;
 
-    page = CML_dialog_sub_panel_new (parent, "Hue settings", &VALS.hue, 0);
+    page = CML_dialog_sub_panel_new (parent, _("Hue settings"), &VALS.hue, 0);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new ("Hue"));
+			      gtk_label_new (_("Hue")));
 
-    page = CML_dialog_sub_panel_new (parent, "Saturation settings", &VALS.sat, 1);
+    page = CML_dialog_sub_panel_new (parent, _("Saturation settings"), &VALS.sat, 1);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new ("Saturation"));
+			      gtk_label_new (_("Saturation")));
 
-    page = CML_dialog_sub_panel_new (parent, "Value (grayimage) settings", &VALS.val, 2);
+    page = CML_dialog_sub_panel_new (parent, _("Value (grayimage) settings"), &VALS.val, 2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new ("Value"));
+			      gtk_label_new (_("Value")));
 
-    page = CML_dialog_advanced_panel_new (parent, "Advanced settings");
+    page = CML_dialog_advanced_panel_new (parent, _("Advanced settings"));
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
-			      gtk_label_new ("Advanced"));
+			      gtk_label_new (_("Advanced")));
 
     {
       GtkWidget	*table;
@@ -1447,26 +1452,26 @@ DIALOG ()
       gint	index;
       gint	sindex;
 
-      frame = gtkW_frame_new (NULL, "Other parameter settings");
+      frame = gtkW_frame_new (NULL, _("Other parameter settings"));
       vbox = gtkW_vbox_new (frame);
       table = gtkW_table_new (vbox, 6, 1);
       index = 0;
-      subframe = gtkW_frame_new (NULL, "Channel independed parameters");
+      subframe = gtkW_frame_new (NULL, _("Channel independed parameters"));
       box = gtkW_vbox_new (subframe);
       subtable = gtkW_table_new (box, 3, 2);
       sindex = 0;
-      gtkW_table_add_menu (subtable, "Initial value", 0, sindex++,
+      gtkW_table_add_menu (subtable, _("Initial value"), 0, sindex++,
 			   (GtkSignalFunc) CML_initial_value_menu_update,
 			   &VALS.initial_value,
 			   initial_value_menu,
 			   sizeof (initial_value_menu) / sizeof (initial_value_menu[0]),
 			   &widget_pointers[3][0]);
-      gtkW_table_add_iscale_entry (subtable, "Zoom scale", 0, sindex++,
+      gtkW_table_add_iscale_entry (subtable, _("Zoom scale"), 0, sindex++,
 				   (GtkSignalFunc) gtkW_iscale_update,
 				   (GtkSignalFunc) gtkW_ientry_update,
 				   &VALS.scale,
 				   1, 10, 1, &widget_pointers[3][1]);
-      gtkW_table_add_iscale_entry (subtable, "Start offset", 0, sindex++,
+      gtkW_table_add_iscale_entry (subtable, _("Start offset"), 0, sindex++,
 				   (GtkSignalFunc) gtkW_iscale_update,
 				   (GtkSignalFunc) gtkW_ientry_update,
 				   &VALS.start_offset,
@@ -1486,11 +1491,11 @@ DIALOG ()
 	index++;
       }
 
-      subframe = gtkW_frame_new (NULL, "Seed of random (only for \"from seed\" modes)");
+      subframe = gtkW_frame_new (NULL, _("Seed of random (only for \"from seed\" modes)"));
       box = gtkW_vbox_new (subframe);
       subtable = gtkW_table_new (box, 1, 2);
       sindex = 0;
-      gtkW_table_add_iscale_entry (subtable, "Seed", 0, sindex++,
+      gtkW_table_add_iscale_entry (subtable, _("Seed"), 0, sindex++,
 				   (GtkSignalFunc) gtkW_iscale_update,
 				   (GtkSignalFunc) gtkW_ientry_update,
 				   &VALS.seed, 0, 1 << 15, 1,
@@ -1500,14 +1505,14 @@ DIALOG ()
       {
 	GtkWidget *button;
 
-	button = gtkW_vbox_add_button (box, "Switch to \"from seed\" with the last seed",
+	button = gtkW_vbox_add_button (box, _("Switch to \"from seed\" with the last seed"),
 				       (GtkSignalFunc) CML_set_or_randomize_seed_callback,
 				       &VALS);
 	random_sensitives[4].widget = button;
 	random_sensitives[4].logic = TRUE;
 
 	tooltips = gtkW_tooltips_new (frame);
-	gtk_tooltips_set_tip  (tooltips, button, "\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero.",NULL);
+	gtk_tooltips_set_tip  (tooltips, button, _("\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."), NULL);
 	gtk_tooltips_enable (tooltips);
       }
       gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1,
@@ -1524,35 +1529,35 @@ DIALOG ()
 	index++;
       }
 
-      label = gtk_label_new ("Others");
+      label = gtk_label_new (_("Others"));
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, label);
     }
     {
       GtkWidget	*table, *subtable, *frame, *subframe, *box, *vbox;
       int	index, sindex;
 
-      frame = gtkW_frame_new (NULL, "Misc operations");
+      frame = gtkW_frame_new (NULL, _("Misc operations"));
       vbox = gtkW_vbox_new (frame);
       table = gtkW_table_new (vbox, 4, 1);
       index = 0;
 
-      subframe = gtkW_frame_new (NULL, "Copy settings");
+      subframe = gtkW_frame_new (NULL, _("Copy settings"));
       box = gtkW_vbox_new (subframe);
       subtable = gtkW_table_new (box, 3, 2);
       sindex = 0;
-      gtkW_table_add_menu (subtable, "Source ch.", 0, sindex++,
+      gtkW_table_add_menu (subtable, _("Source ch."), 0, sindex++,
 			   (GtkSignalFunc) gtkW_menu_update,
 			   &copy_source,
 			   channel_menu,
 			   sizeof (channel_menu) / sizeof (channel_menu[0]),
 			   NULL);
-      gtkW_table_add_menu (subtable, "Destination ch.", 0, sindex++,
+      gtkW_table_add_menu (subtable, _("Destination ch."), 0, sindex++,
 			   (GtkSignalFunc) gtkW_menu_update,
 			   &copy_destination,
 			   channel_menu,
 			   sizeof (channel_menu) / sizeof (channel_menu[0]),
 			   NULL);
-      gtkW_table_add_button (subtable, "Do copy parameters",
+      gtkW_table_add_button (subtable, _("Do copy parameters"),
 			     0, 2, sindex++,
 			     (GtkSignalFunc) CML_copy_parameters_callback,
 			     &VALS);
@@ -1570,17 +1575,17 @@ DIALOG ()
 	index++;
       }
 
-      subframe = gtkW_frame_new (NULL, "Selective load settings");
+      subframe = gtkW_frame_new (NULL, _("Selective load settings"));
       box = gtkW_vbox_new (subframe);
       subtable = gtkW_table_new (box, 2, 2);
       sindex = 0;
-      gtkW_table_add_menu (subtable, "Source ch. in file", 0, sindex++,
+      gtkW_table_add_menu (subtable, _("Source ch. in file"), 0, sindex++,
 			   (GtkSignalFunc) gtkW_menu_update,
 			   &selective_load_source,
 			   sload_menu,
 			   sizeof (sload_menu) / sizeof (sload_menu[0]),
 			   NULL);
-      gtkW_table_add_menu (subtable, "Destination ch.", 0, sindex++,
+      gtkW_table_add_menu (subtable, _("Destination ch."), 0, sindex++,
 			   (GtkSignalFunc) gtkW_menu_update,
 			   &selective_load_destination,
 			   sload_menu,
@@ -1600,7 +1605,7 @@ DIALOG ()
 	index++;
       }
 
-      label = gtk_label_new ("Misc ops.");
+      label = gtk_label_new (_("Misc ops."));
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, label);
     }
   }
@@ -1636,82 +1641,82 @@ CML_dialog_sub_panel_new (GtkWidget	*parent,
   subframe = gtkW_frame_new (parent, name);
   table = gtkW_table_new (subframe, 14, 2);
 
-  gtkW_table_add_menu (table, "Function type", 0, index,
+  gtkW_table_add_menu (table, _("Function type"), 0, index,
 		       (GtkSignalFunc) CML_menu_update,
 		       &param->function,
 		       function_menu,
 		       sizeof (function_menu) / sizeof (function_menu[0]),
 		       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_menu (table, "Composition", 0, index,
+  gtkW_table_add_menu (table, _("Composition"), 0, index,
 		       (GtkSignalFunc) CML_menu_update,
 		       &param->composition,
 		       composition_menu,
 		       sizeof (composition_menu) / sizeof (composition_menu[0]),
 		       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_menu (table, "Misc arrange", 0, index,
+  gtkW_table_add_menu (table, _("Misc arrange"), 0, index,
 		       (GtkSignalFunc) CML_menu_update,
 		       &param->arrange,
 		       arrange_menu,
 		       sizeof (arrange_menu) / sizeof (arrange_menu[0]),
 		       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_toggle (table, "Use cyclic range", 0, index,
+  gtkW_table_add_toggle (table, _("Use cyclic range"), 0, index,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &param->cyclic_range,
 			 &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "Mod. rate", 0, index,
+  gtkW_table_add_dscale_entry (table, _("Mod. rate"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->mod_rate,
 			       0.0, 1.0, 0.01,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "Env. sensitivity", 0, index,
+  gtkW_table_add_dscale_entry (table, _("Env. sensitivity"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->env_sensitivity,
 			       0.0, 1.0, 0.01,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_iscale_entry (table, "Diffusion dist.", 0, index,
+  gtkW_table_add_iscale_entry (table, _("Diffusion dist."), 0, index,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
 			       &param->diffusion_dist,
 			       2, 10, 1,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_iscale_entry (table, "# of subranges", 0, index,
+  gtkW_table_add_iscale_entry (table, _("# of subranges"), 0, index,
 			       (GtkSignalFunc) gtkW_iscale_update,
 			       (GtkSignalFunc) gtkW_ientry_update,
 			       &param->range_num,
 			       1, 10, 1,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "P(ower factor)", 0, index,
+  gtkW_table_add_dscale_entry (table, _("P(ower factor)"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->power,
 			       0.0, 10.0, 0.01,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "Parameter k", 0, index,
+  gtkW_table_add_dscale_entry (table, _("Parameter k"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->parameter_k,
 			       0.0, 10.0, 0.01,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "Range low", 0, index,
+  gtkW_table_add_dscale_entry (table, _("Range low"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->range_l,
 			       0, 1.0, 0.01,
 			       &widget_pointers[channel_id][index]);
   index++;
-  gtkW_table_add_dscale_entry (table, "Range high", 0, index,
+  gtkW_table_add_dscale_entry (table, _("Range high"), 0, index,
 			       (GtkSignalFunc) gtkW_dscale_update,
 			       (GtkSignalFunc) gtkW_dentry_update,
 			       &param->range_h,
@@ -1730,7 +1735,7 @@ CML_dialog_sub_panel_new (GtkWidget	*parent,
   chank = (gpointer *) g_malloc (2 *sizeof (gpointer));
   chank[0] = (gpointer) channel_id;
   chank[1] = (gpointer) param;
-  gtkW_table_add_button (table, "Plot the graph of the settings",
+  gtkW_table_add_button (table, _("Plot the graph of the settings"),
 			 0, 2, index++,
 			 (GtkSignalFunc) function_graph_new, chank);
 
@@ -1747,7 +1752,7 @@ CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name)
   gint		index = 0;
   gint		widget_offset = 12;
   gint		channel_id;
-  gchar	*ch_name[] = { "Hue", "Saturation", "Value" };
+  gchar	*ch_name[] = { N_("Hue"), N_("Saturation"), N_("Value") };
   CML_PARAM	*param;
 
   frame = gtkW_frame_new (parent, name);
@@ -1757,28 +1762,28 @@ CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name)
     {
       param = (CML_PARAM *)&VALS + channel_id;
 
-      subframe = gtkW_frame_new (NULL, ch_name[channel_id]);
+      subframe = gtkW_frame_new (NULL, gettext(ch_name[channel_id]));
       gtk_table_attach (GTK_TABLE (table), subframe,
 			0, 1, channel_id, channel_id + 1,
 			GTK_FILL, GTK_FILL, 0, 0);
       subtable = gtkW_table_new (subframe, 3, 2);
 
       index = 0;
-      gtkW_table_add_dscale_entry (subtable, "Ch. sensitivity", 0, index,
+      gtkW_table_add_dscale_entry (subtable, _("Ch. sensitivity"), 0, index,
 				   (GtkSignalFunc) gtkW_dscale_update,
 				   (GtkSignalFunc) gtkW_dentry_update,
 				   &param->ch_sensitivity,
 				   0.0, 1.0, 0.01,
 				   &widget_pointers[channel_id][index + widget_offset]);
       index++;
-      gtkW_table_add_dscale_entry (subtable, "Mutation rate", 0, index,
+      gtkW_table_add_dscale_entry (subtable, _("Mutation rate"), 0, index,
 				   (GtkSignalFunc) gtkW_dscale_update,
 				   (GtkSignalFunc) gtkW_dentry_update,
 				   &param->mutation_rate,
 				   0, 1.0, 0.01,
 				   &widget_pointers[channel_id][index + widget_offset]);
       index++;
-      gtkW_table_add_dscale_entry (subtable, "Mutation dist.", 0, index,
+      gtkW_table_add_dscale_entry (subtable, _("Mutation dist."), 0, index,
 				   (GtkSignalFunc) gtkW_dscale_update,
 				   (GtkSignalFunc) gtkW_dentry_update,
 				   &param->mutation_dist,
@@ -1807,12 +1812,12 @@ function_graph_new (GtkWidget *widget, gpointer data)
   CML_PARAM	*param = (CML_PARAM *) *((gpointer *)data + 1);
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Graph of the current settings");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Graph of the current settings"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -1822,7 +1827,7 @@ function_graph_new (GtkWidget *widget, gpointer data)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, "The Graph");
+  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("The Graph"));
   vbox = gtkW_vbox_new (frame);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -1914,7 +1919,7 @@ CML_copy_parameters_callback (GtkWidget *widget, gpointer data)
 
   if (copy_source == copy_destination)
     {
-      gtkW_message_dialog (TRUE, "Warning: the source and the destination are the same channel.");
+      gtkW_message_dialog (TRUE, _("Warning: the source and the destination are the same channel."));
       gdk_flush ();
       return;
     }
@@ -2002,7 +2007,7 @@ CML_dialog_new (char * name,
 		      (GtkSignalFunc) close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("Execute");
+  button = gtk_button_new_with_label (_("Execute"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) execute_callback, dlg);
@@ -2011,7 +2016,7 @@ CML_dialog_new (char * name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Execute and Exit");
+  button = gtk_button_new_with_label (_("Execute and Exit"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -2019,7 +2024,7 @@ CML_dialog_new (char * name,
 		      TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Exit");
+  button = gtk_button_new_with_label (_("Exit"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -2037,7 +2042,7 @@ CML_save_to_file_callback (GtkWidget *widget, gpointer client_data)
 {
   GtkWidget *filesel;
 
-  filesel = gtk_file_selection_new ("Save parameters to");
+  filesel = gtk_file_selection_new (_("Save parameters to"));
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
@@ -2100,7 +2105,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
     {
       gchar buffer[CML_LINE_SIZE];
 
-      sprintf (buffer, "Error: could not open \"%s\"", filename);
+      sprintf (buffer, _("Error: could not open \"%s\""), filename);
       gtkW_message_dialog (TRUE, buffer);
       return;
     }
@@ -2165,14 +2170,14 @@ force_overwrite (char *filename)
   gchar		buffer[CML_LINE_SIZE];
   gint		tmp;
 
-  dlg = gtkW_dialog_new ("CML file operation warning",
+  dlg = gtkW_dialog_new (_("CML file operation warning"),
 			 (GtkSignalFunc) CML_overwrite_ok_callback,
 			 (GtkSignalFunc) gtkW_close_callback);
 
   table = gtkW_table_new (NULL, 1, 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
 
-  sprintf (buffer, "%s exists, overwrite?", filename);
+  sprintf (buffer, _("%s exists, overwrite?"), filename);
   label = gtk_label_new (buffer);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
 		    0, 0, 0);
@@ -2215,9 +2220,9 @@ CML_load_from_file_callback (GtkWidget *widget, gpointer client_data)
   GtkWidget *filesel;
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
-    filesel = gtk_file_selection_new ("Load parameters from");
+    filesel = gtk_file_selection_new (_("Load parameters from"));
   else
-    filesel = gtk_file_selection_new ("Selective load from");
+    filesel = gtk_file_selection_new (_("Selective load from"));
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
@@ -2293,7 +2298,7 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
 
       if (interactive_mode)
 	{
-	  sprintf (buffer, "Error: could not open \"%s\"", filename);
+	  sprintf (buffer, _("Error: could not open \"%s\""), filename);
 	  gtkW_message_dialog (TRUE, buffer);
 	}
       return FALSE;
@@ -2316,16 +2321,16 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
       if (version == 0)
 	{
 	  if (interactive_mode)
-	    gtkW_message_dialog (TRUE, "Error: it's not CML parameter file.");
+	    gtkW_message_dialog (TRUE, _("Error: it's not CML parameter file."));
 	  fclose(file);
 	  return FALSE;
 	}
       if (interactive_mode)
 	{
 	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    gtkW_message_dialog (TRUE, "Warning: it's an old format file.");
+	    gtkW_message_dialog (TRUE, _("Warning: it's an old format file."));
 	  if (PARAM_FILE_FORMAT_VERSION < version)
-	    gtkW_message_dialog (TRUE, "Warning: Hmmm, it's a parameter file for newer CML_explorer than me.");
+	    gtkW_message_dialog (TRUE, _("Warning: Hmmm, it's a parameter file for newer CML_explorer than me."));
 	}
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
 	{
@@ -2673,7 +2678,7 @@ gtkW_dialog_new (gchar		*name,
 		      (GtkSignalFunc) close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback, dlg);
@@ -2682,7 +2687,7 @@ gtkW_dialog_new (gchar		*name,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -2769,7 +2774,7 @@ gtkW_message_dialog_new (gchar * name)
 		      (GtkSignalFunc) gtkW_close_callback, NULL);
 
   /* Action Area */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -2972,7 +2977,7 @@ gtkW_table_add_menu (GtkWidget		*table,
       buffer[0] = (gint *) ((*val == i) ? TRUE : FALSE); /* for trick */
       buffer[1] = val;				/* for pointer */
       buffer[2] = (gint *) i;			/* for value */
-      menuitem = gtk_menu_item_new_with_label (item[i].name);
+      menuitem = gtk_menu_item_new_with_label (gettext(item[i].name));
       gtk_menu_append (GTK_MENU (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  (GtkSignalFunc) menu_update,

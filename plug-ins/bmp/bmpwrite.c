@@ -19,6 +19,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include "bmp.h"
+#include "libgimp/stdplugins-intl.h"
 
 guchar *pixels;
 int cur_progress;
@@ -79,7 +80,7 @@ WriteBMP (filename,image,drawable_ID)
     case INDEXED_IMAGE:
       break;
     default:
-      printf("bmp: cannot operate on unknown image types or alpha images");
+      g_message(_("bmp: cannot operate on unknown image types or alpha images"));
       gimp_quit ();
       break;
     }
@@ -136,7 +137,7 @@ WriteBMP (filename,image,drawable_ID)
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      fprintf (stderr, "can't open %s\n", filename);
+      g_message (_("can't open %s\n"), filename);
       return -1;
     }
   
@@ -150,7 +151,7 @@ WriteBMP (filename,image,drawable_ID)
   if (interactive_bmp)
     {
       temp_buf = g_malloc (strlen (filename) + 11);
-      sprintf (temp_buf, "Saving %s:", filename);
+      sprintf (temp_buf, _("Saving %s:"), filename);
       gimp_progress_init (temp_buf);
       g_free (temp_buf);
     }
@@ -417,14 +418,14 @@ save_dialog ()
   gtk_rc_parse (gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as BMP");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as BMP"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) save_close_callback,
                       NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -433,7 +434,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
                              (GtkSignalFunc) gtk_widget_destroy,
@@ -442,7 +443,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Save Options");
+  frame = gtk_frame_new (_("Save Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -450,7 +451,7 @@ save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label ("RLE encoded");
+  toggle = gtk_check_button_new_with_label (_("RLE encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
                       (GtkSignalFunc) save_toggle_update,

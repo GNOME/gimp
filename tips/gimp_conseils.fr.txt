@@ -1,0 +1,148 @@
+# Traduction par David Monniaux
+
+Bienvenue à GIMP !
+
+Presque toutes les opérations sur les images s'obtiennent en
+pressant le bouton de droite de la souris. Et ne vous inquiétez
+pas, vous pouvez défaire la plupart des erreurs...
+
+# Conseils pour débutants
+
+Vous pouvez mieux organiser votre image à l'aide des calques de
+GIMP. Pensez à votre image comme une superposition de transparents
+ou de filtres tels que l'image soit une combinaison du contenu des
+différents calques.
+
+Vous pouvez effectuer beaucoup d'opération sur les calques en
+pressant avec le bouton droit sur le nom d'un calque dans la
+boîte de dialogue répertoriant les calques
+(Dialogues -> Calques & Canaux).
+
+Avant de sauvegarder des images dans des formats utilisant des
+couleurs indexées tels que GIF et XPM, vous devez d'abord convertir
+l'image en couleurs indexées (menu Image/Indexée).
+
+Vous pouvez ouvrir le menu d'options d'un outil en double-cliquant
+dessus dans la barre d'outils.
+
+Vous pouvez renommer un calque en double-cliquant sur son nom
+dans le dialogue Calques & Canaux.
+
+# Fond ou Background?
+Le calque appellé "Fond" est spécial. Vous ne pouvez lui ajouter
+de transparence ou de masque de calque. Pour ajouter de la
+transparence, vous devez d'abord lui ajouter un canal alpha
+(click droit dans Calques & Canaux, "Ajouter Canal Alpha").
+
+Lors de l'utilisation d'un outil de dessin (Pinceau, Aérographe
+ou Crayon), Shift+Click tracera une ligne droite depuis le dernier
+point de tracé jusqu'à la position du pointeur (souris).
+
+La plupart des modules plug-ins opèrent sur le calque courant
+de l'image courante. Dans certains cas, vous devrez d'abord
+fusionner tous les calques (Calques->Aplatir image) si vous
+voulez que le module opère sur l'image entière.
+
+La plupart des formats de fichiers ne gèrent pas les calques et
+pour cette raison seul le calque actif est sauvé. Utilisez XCF,
+le format natif de GIMP, pour sauvegarder les calques, les
+canaux et les guides avec votre image.
+
+Tous les effets ne peuvent être appliqués à tous les types d'images.
+Lorsqu'un effet ne peut être appliqué, son option de menu est
+grisée. Vous devrez éventuellement convertir l'image en RVB,
+lui ajouter un canal alpha ou l'aplatir pour utiliser cet effet.
+
+# Conseils pour utilisateurs intermédiaires
+
+Dans la boîte de sélection de fichiers, presser TAB complète
+le nom de fichier que vous avez commencé à taper, comme dans
+le shell. Pratique !
+
+Vous pouvez réattribuer des raccourcis clavier à toute option
+de menu en sélectionnant cette option dans le menu, puis en
+pressant le nouveau raccourci. Ces réglages personnalisés
+seront sauvés lorsque vous quitterez GIMP.
+
+Les anciennes opérations de canaux ont été remplacées par les
+opérations de Calques et de Modes de Calques, plus puissantes
+et flexibles.
+
+Vous pouvez utiliser le bouton du milieu de la souris pour
+déplacer l'image dans la fenêtre si elle est ne tient pas dans
+celle-ci.
+
+Cliquez et tirez sur une règle pour placer un Guide dans
+l'image. Toutes les sélections tirées seront alignées sur les
+guides. Vous pouvez ôter les guides en les tirant hors de
+l'image avec l'Outil Déplacement.
+
+GIMP supporte la compression au vol. Vous n'avez qu'à ajouter
+au nom de votre fichier .gz pour une compression gzip (ou
+.bz2 pour une compression bzip2, si bzip2 est installé).
+Bien entendu, le chargement d'images ainsi compressées
+fonctionne également de façon transparente.
+
+Presser et maintenir la touche Shift avant de faire une
+sélection permet de rajouter à la sélection courante au lieu
+de la remplacer. Control permet de soustraire à la sélection
+courante.
+
+Vous pouvez presser ou relâcher les touches Shift et Control
+pendant que vous faites une sélection pour la contraindre à
+être un carré ou un cercle, ou pour la centrer sur son point
+de départ.
+
+# Conseils pour utilisateurs expérimentés
+
+Vous pouvez ajuster l'intervalle de sélection pour la sélection
+floue en cliquant et en tirant à gauche et à droite.
+
+Shift+Click sur l'icône «oeil» dans Calques & Canaux pour
+cacher tous les calques sauf celui-ci. Shift+Click de nouveau
+pour voir tous les calques.
+
+Control+Click sur la prévisualisation du masque de calque
+dans Calques & Canaux (dés)active l'effet de ce masque.
+
+Alt+Click sur la prévisualisation du masque de calque
+dans Calques & Canaux (dés)active la visualisation directe
+du masque.
+
+Alt+Tab pour voir à tour de rôle tous les calques d'une image
+(si votre gestionnaire de fenêtrage ne récupère pas déjà
+cette combinaison de touches).
+
+Shift+Click avec l'outil Remplissage lui fait utiliser la
+couleur d'arrière plan au lieu de celle d'avant-plan.
+
+Control-tirer avec l'outil Transformation en mode Rotation
+le contraint à des angles multiples de 15°.
+
+Vous pouvez ajuster et replacer une sélection avec Alt+tirer.
+
+Si vos polices de caractères ont des contours fortement crénelés,
+c'est qu'elles ne sont pas agrandissables. La plupart des
+serveurs X acceptent d'afficher des fontes Type 1 Postscript.
+Installez-en donc.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+Après l'installation d'une nouvelle version, vous devriez effacer
+votre répertoire ~/.gimp
+
+# Traduction de GFig ?
+Édition->Coup de pinceau vous permet de tracer des carrés ou des
+cercles simples en peignant autour de la sélection courante avec
+la brosse active. Des formes plus complexes peuvent être tracées
+avec Filters->Render->Gfig
+
+Pour créer un cercle parfait, pressez Shift lors d'une sélection
+elliptique. Pour le placer précisément, tirez des guides horizontaux
+et verticaux tangents au cercle que vous voulez sélectionner, placez
+votre curseur à l'intersection des guides. La sélection résultante
+touchera les guides.
+

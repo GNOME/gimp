@@ -118,6 +118,8 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 static void query (void);
 static void run (char *name,
@@ -204,13 +206,15 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_mail_image",
-			  "pipe files to uuencode then mail them",
-			  "You need to have uuencode and mail installed",
+			  _("pipe files to uuencode then mail them"),
+			  _("You need to have uuencode and mail installed"),
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, Spencer Kimball and Peter Mattis",
 			  "1995-1997",
-			  "<Image>/File/Mail image",
+			  _("<Image>/File/Mail image"),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -232,6 +236,7 @@ run (char *name,
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
 
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
   drawable_ID = param[2].data.d_drawable;
@@ -478,12 +483,12 @@ save_dialog ()
   gimp_destroy_params (return_vals, nreturn_vals);  
   
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Send to mail");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Send to mail"));
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
   /* action area   */
   /* Okay buton */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -494,7 +499,7 @@ save_dialog ()
 
 
   /* cancel button */
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
@@ -612,7 +617,7 @@ save_dialog ()
 
 
   /* filename label  */
-  label = gtk_label_new ("Filename:");
+  label = gtk_label_new (_("Filename:"));
   gtk_table_attach (GTK_TABLE (table), label, 
 		    0, 1, 4, 5, 
 		    GTK_EXPAND | GTK_FILL,
@@ -666,7 +671,7 @@ save_dialog ()
   
 
   /* Encapsulation label */
-  label = gtk_label_new ("Encapsulation:");
+  label = gtk_label_new (_("Encapsulation:"));
   gtk_table_attach( GTK_TABLE (table), label ,
 		    0, 1, 7, 8,
 		    GTK_EXPAND | GTK_FILL,
@@ -675,9 +680,9 @@ save_dialog ()
   gtk_widget_show(label);
 
   /* Encapsulation radiobutton */
-  button1 = gtk_radio_button_new_with_label( NULL, "Uuencode");
+  button1 = gtk_radio_button_new_with_label( NULL, _("Uuencode"));
   group = gtk_radio_button_group( GTK_RADIO_BUTTON( button1 ) );
-  button2 = gtk_radio_button_new_with_label( group, "MIME" );
+  button2 = gtk_radio_button_new_with_label( group, _("MIME" ));
   if( mail_info.encapsulation == ENCAPSULATION_UUENCODE ) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button1),TRUE);
   } else {
@@ -791,7 +796,7 @@ find_extension (char *filename)
     {
       if (!ext || ext[1] == 0 || strchr (ext, '/'))
 	{
-	  g_message ("mail: some sort of error with the file extension or lack thereof \n");
+	  g_message (_("mail: some sort of error with the file extension or lack thereof \n"));
 	  
 	  return NULL;
 	}

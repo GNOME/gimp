@@ -29,6 +29,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define DEBUG
 
@@ -40,7 +42,6 @@
 #define DIV255(i) (((i) + (i)/256 + 1) / 256)
 
 #define PLUG_IN_NAME    "plug_in_depth_merge"
-#define PLUG_IN_TITLE   "Depth Merge"
 #define PLUG_IN_VERSION "1.0.0; 14 August 1998"
 
 #define PREVIEW_SIZE 256
@@ -187,15 +188,18 @@ static void query() {
   };
   static int       numArgs = sizeof(args) / sizeof(GParamDef);
 
+  INIT_I18N();
+
   gimp_install_procedure(PLUG_IN_NAME,
-    "Combine two images using corresponding depth maps (z-buffers)",
-    "Taking as input two full-colour, full-alpha images and two corresponding "
-      "grayscale depth maps, this plug-in combines the images based on which "
-      "is closer (has a lower depth map value) at each point.",
+    _("Combine two images using corresponding depth maps (z-buffers)"),
+    _("Taking as input two full-colour, full-alpha images and two "
+      "corresponding grayscale depth maps, this plug-in combines the "
+      "images based on which is closer (has a lower depth map value) "
+      "at each point."),
     "Sean Cier",
     "Sean Cier",
     PLUG_IN_VERSION,
-    "<Image>/Filters/Combine/Depth Merge",
+    _("<Image>/Filters/Combine/Depth Merge"),
     "RGB*, GRAY*",
     PROC_PLUG_IN,
     numArgs,
@@ -212,6 +216,8 @@ static void run(char *name,
   GRunModeType     runMode;
   GStatusType      status;
   DepthMerge       dm;
+
+  INIT_I18N();
 
   runMode = (GRunModeType)param[0].data.d_int32;
   status = STATUS_SUCCESS;
@@ -360,7 +366,7 @@ gint32 DepthMerge_execute(DepthMerge *dm) {
   depthMap1HasAlpha = 0;
   depthMap2HasAlpha = 0;
   
-  gimp_progress_init("Depth-merging...");
+  gimp_progress_init(_("Depth-merging..."));
 
   resultRow    = (guchar *)g_malloc(dm->selectionWidth * 4);
   source1Row   = (guchar *)g_malloc(dm->selectionWidth * 4);
@@ -600,7 +606,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
 
   dm->interface->dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dm->interface->dialog), PLUG_IN_TITLE);
+  gtk_window_set_title(GTK_WINDOW(dm->interface->dialog), _("Depth Merge"));
   gtk_window_position(GTK_WINDOW(dm->interface->dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dm->interface->dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dm->interface->dialog), "destroy",
@@ -638,7 +644,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
 		   GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show(sourceTable);
 
-  tempLabel = gtk_label_new("Source 1");
+  tempLabel = gtk_label_new(_("Source 1"));
   gtk_misc_set_alignment(GTK_MISC(tempLabel), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(sourceTable), tempLabel, 0, 1, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -655,7 +661,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_option_menu_set_menu(GTK_OPTION_MENU(tempOptionMenu), tempMenu);
   gtk_widget_show(tempOptionMenu);
 
-  tempLabel = gtk_label_new("Depth Map");
+  tempLabel = gtk_label_new(_("Depth Map"));
   gtk_misc_set_alignment(GTK_MISC(tempLabel), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(sourceTable), tempLabel, 2, 3, 0, 1,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -672,7 +678,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_option_menu_set_menu(GTK_OPTION_MENU(tempOptionMenu), tempMenu);
   gtk_widget_show(tempOptionMenu);
 
-  tempLabel = gtk_label_new("Source 2");
+  tempLabel = gtk_label_new(_("Source 2"));
   gtk_misc_set_alignment(GTK_MISC(tempLabel), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(sourceTable), tempLabel, 0, 1, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -689,7 +695,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_option_menu_set_menu(GTK_OPTION_MENU(tempOptionMenu), tempMenu);
   gtk_widget_show(tempOptionMenu);
 
-  tempLabel = gtk_label_new("Depth Map");
+  tempLabel = gtk_label_new(_("Depth Map"));
   gtk_misc_set_alignment(GTK_MISC(tempLabel), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(sourceTable), tempLabel, 2, 3, 1, 2,
 		   GTK_FILL, GTK_FILL, 4, 0);
@@ -714,22 +720,22 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_widget_show(numericParameterTable);
 
   dm->interface->overlapValueEdit =
-    DepthMerge_createValueEdit(dm, "Overlap",
+    DepthMerge_createValueEdit(dm, _("Overlap"),
 			       GTK_TABLE(numericParameterTable), 0, 0,
 			       &(dm->params.overlap),
 			       0, 2, 0.001);
   dm->interface->offsetValueEdit =
-    DepthMerge_createValueEdit(dm, "Offset",
+    DepthMerge_createValueEdit(dm, _("Offset"),
 			       GTK_TABLE(numericParameterTable), 1, 0,
 			       &(dm->params.offset),
 			       -1, 1, 0.001);
   dm->interface->scale1ValueEdit =
-    DepthMerge_createValueEdit(dm, "Scale 1",
+    DepthMerge_createValueEdit(dm, _("Scale 1"),
 			       GTK_TABLE(numericParameterTable), 2, 0,
 			       &(dm->params.scale1),
 			       -1, 1, 0.001);
   dm->interface->scale2ValueEdit =
-    DepthMerge_createValueEdit(dm, "Scale 2",
+    DepthMerge_createValueEdit(dm, _("Scale 2"),
 			       GTK_TABLE(numericParameterTable), 3, 0,
 			       &(dm->params.scale2),
 			       -1, 1, 0.001);
@@ -737,7 +743,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   /* Buttons */
 
   gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dm->interface->dialog)->action_area), 6);
-  tempButton = gtk_button_new_with_label("OK");
+  tempButton = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(tempButton, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(tempButton), "clicked",
 		     (GtkSignalFunc)dialogOkCallback,
@@ -747,7 +753,7 @@ gint32 DepthMerge_dialog(DepthMerge *dm) {
   gtk_widget_grab_default(tempButton);
   gtk_widget_show(tempButton);
 
-  tempButton = gtk_button_new_with_label("Cancel");
+  tempButton = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS(tempButton, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(tempButton), "clicked",
 		     (GtkSignalFunc)dialogCancelCallback,
@@ -1172,7 +1178,7 @@ void util_convertColorspace(guchar *dest,
 
   if (((sourceColorBPP != 1) && (sourceColorBPP != 3)) ||
       ((destColorBPP   != 1) && (destColorBPP   != 3)))
-    fprintf(stderr, "Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n");
+    fprintf(stderr, _("Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n"));
 
   if ((sourceColorBPP == destColorBPP) &&
       (sourceBPP      == destBPP     )) {

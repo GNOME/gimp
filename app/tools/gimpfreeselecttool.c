@@ -72,7 +72,7 @@ add_point (int num_pts, int x, int y)
       global_pts = (GdkPoint *) g_realloc ((void *) global_pts, sizeof (GdkPoint) * max_segs);
 
       if (!global_pts)
-	fatal_error (_("Unable to reallocate points array in free_select."));
+	fatal_error ("Unable to reallocate points array in free_select.");
     }
 
   global_pts[num_pts].x = x;

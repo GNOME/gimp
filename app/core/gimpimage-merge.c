@@ -1028,7 +1028,7 @@ gimp_image_get_new_tattoo(GimpImage *image)
 {
   image->tattoo_state++;
   if (image->tattoo_state <= 0)
-    g_warning(_("Tattoo state has become corrupt (2.1 billion operation limit exceded)"));
+    g_warning("Tattoo state has become corrupt (2.1 billion operation limit exceded)");
   return (image->tattoo_state);
 }
 

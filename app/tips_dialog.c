@@ -13,7 +13,7 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
-#define TIPS_FILE_NAME "gimp_tips.txt"
+#define TIPS_DIR_NAME	"tips"
 
 static int  tips_dialog_hide (GtkWidget *widget, gpointer data);
 static int  tips_show_next (GtkWidget *widget, gpointer data);
@@ -51,8 +51,10 @@ tips_dialog_create ()
 
   if (tips_count == 0)
     {
-      temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-			      gimp_data_directory (), TIPS_FILE_NAME);
+      temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S TIPS_DIR_NAME
+                              G_DIR_SEPARATOR_S "%s",
+			      gimp_data_directory (),
+                              _("gimp_tips.txt"));
       read_tips_file (temp);
       g_free (temp);
     }
@@ -252,7 +254,7 @@ read_tips_file (char *filename)
   if (!fp)
     {
       store_tip (_("Your GIMP tips file appears to be missing!\n"
-		 "There should be a file called " TIPS_FILE_NAME " in the\n"
+		 "There should be a file called gimp_tips.txt in the\n"
 		 "GIMP data directory.  Please check your installation."));
       return;
     }

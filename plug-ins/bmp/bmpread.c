@@ -2,12 +2,14 @@
 /*		except OS2 bitmaps (wrong colors)        */
 /* Alexander.Schulz@stud.uni-karlsruhe.de                */
 
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include "bmp.h"
+#include "libgimp/stdplugins-intl.h"
 
 gint32 ReadBMP (name)
      char *name;
@@ -22,7 +24,7 @@ gint32 ReadBMP (name)
   if (interactive_bmp)
     {
       temp_buf = g_malloc (strlen (name) + 11);
-      sprintf (temp_buf, "Loading %s:", name);
+      sprintf (temp_buf, _("Loading %s:"), name);
       gimp_progress_init (temp_buf);
       g_free (temp_buf);
     }
@@ -34,7 +36,7 @@ gint32 ReadBMP (name)
   
   if (!fd)
     {
-      printf ("%s: can't open \"%s\"\n", prog_name, filename);
+      g_message (_("%s: can't open \"%s\"\n"), prog_name, filename);
       return -1;
     }
 
@@ -42,7 +44,7 @@ gint32 ReadBMP (name)
   
   if (!ReadOK(fd,buf,2) || (strncmp(buf,"BM",2)))
     {
-      printf ("%s: not a valid BMP file %s\n", prog_name,buf);
+      g_message (_("%s: not a valid BMP file %s\n"), prog_name,buf);
       return -1;
     }
 
@@ -50,11 +52,11 @@ gint32 ReadBMP (name)
 
   if (!ReadOK (fd, puffer, 0x10))
     {
-      printf ("%s: error reading bitmap file header\n", prog_name);
+      g_message (_("%s: error reading BMP file header\n"), prog_name);
       return -1;
     }
 
-  /* bring them to the rigth byreorder. Not too nice, but it should work */
+  /* bring them to the right byteorder. Not too nice, but it should work */
 
   Bitmap_File_Head.bfSize=ToL(&puffer[0]);
   Bitmap_File_Head.reserverd=ToL(&puffer[4]);
@@ -65,10 +67,10 @@ gint32 ReadBMP (name)
   
   if (Bitmap_File_Head.biSize!=40) 
     {
-      printf("\nos2 unsupported!\n");
+      g_warning(_("OS/2 unsupported!\n"));
       if (!ReadOK (fd, puffer, Bitmap_File_Head.biSize))
         {
-          printf ("%s: error reading bitmap header\n", prog_name);
+          g_message (_("%s: error reading BMP file header\n"), prog_name);
           return -1;
         }
 
@@ -90,7 +92,7 @@ gint32 ReadBMP (name)
     {
       if (!ReadOK (fd, puffer, 36))
         {
-          printf ("\n%s: error reading bitmap header\n", prog_name);
+          g_message (_("%s: error reading BMP file header\n"), prog_name);
           return -1;
         }
       Bitmap_Head.biWidth=ToL(&puffer[0x00]);		/* 12 */
@@ -112,7 +114,8 @@ gint32 ReadBMP (name)
   
   if (Bitmap_Head.biBitCnt>24) 
   {
-    printf("\n%s: to many colors: %u\n",prog_name,(unsigned int) Bitmap_Head.biBitCnt);
+    g_message(_("%s: too many colors: %u\n"),prog_name,
+      (unsigned int) Bitmap_Head.biBitCnt);
     return -1;
   }
 
@@ -159,7 +162,7 @@ gint ReadColorMap (fd, buffer, number, size, grey)
     {
       if (!ReadOK (fd, rgb, size))
 	{
-	  printf ("%s: bad colormap\n", prog_name);
+	  g_message (_("%s: bad colormap\n"), prog_name);
 	  return -1;
 	}
       
@@ -204,7 +207,7 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
   if (grey)
     {
       image = gimp_image_new (len, height, GRAY);
-      layer = gimp_layer_new (image, "Background", len, height, GRAY_IMAGE, 100, NORMAL_MODE);
+      layer = gimp_layer_new (image, _("Background"), len, height, GRAY_IMAGE, 100, NORMAL_MODE);
       channels = 1;
     }
   else 
@@ -212,19 +215,19 @@ Image ReadImage (fd, len, height, cmap, ncols, bpp, compression, spzeile, grey)
       if (bpp<24) 
 	{
 	  image = gimp_image_new (len, height, INDEXED);
-	  layer = gimp_layer_new (image, "Background", len, height, INDEXED_IMAGE, 100, NORMAL_MODE);
+	  layer = gimp_layer_new (image, _("Background"), len, height, INDEXED_IMAGE, 100, NORMAL_MODE);
 	  channels = 1;
 	}
       else 
 	{
 	  image = gimp_image_new (len, height, RGB);
-	  layer = gimp_layer_new (image, "Background", len, height, RGB_IMAGE, 100, NORMAL_MODE);
+	  layer = gimp_layer_new (image, _("Background"), len, height, RGB_IMAGE, 100, NORMAL_MODE);
 	  channels = 3;
 	}
     }
   
   name_buf = g_malloc (strlen (filename) + 10);
-  sprintf (name_buf, "%s", filename);
+  strcpy (name_buf, filename);
   gimp_image_set_filename(image,name_buf);
   g_free (name_buf);
   

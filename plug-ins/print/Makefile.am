@@ -12,16 +12,17 @@ print_SOURCES = \
 	print.c		\
 	print.h   
 
-CPPFLAGS = \
-	@LP_DEF@	\
-	@LPSTAT_DEF@	\
-	@LPR_DEF@	\
-	@LPC_DEF@
-
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
+
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"	\
+	@LP_DEF@			\
+	@LPSTAT_DEF@			\
+	@LPR_DEF@			\
+	@LPC_DEF@
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\

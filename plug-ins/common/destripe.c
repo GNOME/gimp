@@ -53,6 +53,7 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * Constants...
@@ -144,13 +145,14 @@ query(void)
   static int		nargs        = sizeof(args) / sizeof(args[0]),
 			nreturn_vals = 0;
 
+  INIT_I18N();
 
   gimp_install_procedure(PLUG_IN_NAME,
-      "Destripe filter, used to remove vertical stripes caused by cheap scanners.",
-      "This plug-in tries to remove vertical stripes from an image.",
+      _("Destripe filter, used to remove vertical stripes caused by cheap scanners."),
+      _("This plug-in tries to remove vertical stripes from an image."),
       "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Destripe",
+      _("<Image>/Filters/Enhance/Destripe"),
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
@@ -171,6 +173,8 @@ run(char   *name,		/* I - Name of filter program. */
   GStatusType	status;		/* Return status */
   static GParam	values[1];	/* Return values */
 
+
+  INIT_I18N();
 
  /*
   * Initialize parameter data...
@@ -351,7 +355,7 @@ destripe_rect (int sel_x1, int sel_y1, int sel_x2, int sel_y2, int do_preview)
 
   if (!do_preview)
     {
-      gimp_progress_init ("Destriping...");
+      gimp_progress_init (_("Destriping..."));
       
       progress = 0;
       progress_inc = 0.5 * tile_width / sel_width;
@@ -582,7 +586,7 @@ destripe_dialog(void)
   */
 
   dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dialog), "Destripe");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Destripe"));
   gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(dialog), 0);
   gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -656,7 +660,7 @@ destripe_dialog(void)
   gtk_table_attach(GTK_TABLE(table), ftable, 2, 3, 0, 1, 0, 0, 0, 0);
   gtk_widget_show(ftable);
 
-  button = gtk_check_button_new_with_label("Histogram");
+  button = gtk_check_button_new_with_label(_("Histogram"));
   gtk_table_attach(GTK_TABLE(ftable), button, 0, 1, 0, 1,
 		   GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button),
@@ -680,7 +684,7 @@ destripe_dialog(void)
   * Box size (radius) control...
   */
 
-  dialog_create_ivalue("Width", GTK_TABLE(table), 2, &avg_width, 2, MAX_AVG);
+  dialog_create_ivalue(_("Width"), GTK_TABLE(table), 2, &avg_width, 2, MAX_AVG);
 
  /*
   * OK, cancel buttons...
@@ -688,7 +692,7 @@ destripe_dialog(void)
 
   gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 
-  button = gtk_button_new_with_label("OK");
+  button = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) dialog_ok_callback,
@@ -697,7 +701,7 @@ destripe_dialog(void)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label("Cancel");
+  button = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) dialog_cancel_callback,

@@ -122,127 +122,127 @@ install_help (InstallCallback callback)
     { 1, N_("Copyright (C) 1995 Spencer Kimball and Peter Mattis\n") },
     { 0, "\n" },
     
-    { 0, N_("This program is free software; you can redistribute it and/or modify\n") },
-    { 0, N_("it under the terms of the GNU General Public License as published by\n") },
-    { 0, N_("the Free Software Foundation; either version 2 of the License, or\n") },
-    { 0, N_("(at your option) any later version.\n") },
+    { 0, N_(
+      "This program is free software; you can redistribute it and/or modify\n"
+      "it under the terms of the GNU General Public License as published by\n"
+      "the Free Software Foundation; either version 2 of the License, or\n"
+      "(at your option) any later version.\n") },
     { 0, "\n" },
-    { 0, N_("This program is distributed in the hope that it will be useful,\n") },
-    { 0, N_("but WITHOUT ANY WARRANTY; without even the implied warranty of\n") },
-    { 0, N_("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n") },
-    { 0, N_("See the GNU General Public License for more details.\n") },
+    { 0, N_(
+      "This program is distributed in the hope that it will be useful,\n"
+      "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+      "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+      "See the GNU General Public License for more details.\n") },
     { 0, "\n" },
-    { 0, N_("You should have received a copy of the GNU General Public License\n") },
-    { 0, N_("along with this program; if not, write to the Free Software\n") },
-    { 0, N_("Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n") },
+    { 0, N_(
+      "You should have received a copy of the GNU General Public License\n"
+      "along with this program; if not, write to the Free Software\n"
+      "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+      "MA 02111-1307, USA.\n") },
     { 0, "\n\n" },
 
     { 2, N_("Personal GIMP Installation\n\n") },
     { 0, N_("For a proper GIMP installation, a subdirectory called\n") },
     { 1, NULL }, /* will be replaced with gimp_directory() */
-    { 0, N_(" needs to be created.  This\n") },
-    { 0, N_("subdirectory will contain a number of important files:\n\n") },
+    { 0, N_(" needs to be created.  This\n"
+      "subdirectory will contain a number of important files:\n\n") },
 
     { 1, N_("gimprc\n") },
-    { 0, N_("\t\tThe gimprc is used to store personal preferences\n") },
-    { 0, N_("\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n") },
-    { 0, N_("\t\tPaths to search for brushes, palettes, gradients\n") },
-    { 0, N_("\t\tpatterns, plug-ins and modules are also configured here.\n") },
+    { 0, N_("\t\tThe gimprc is used to store personal preferences\n"
+       "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
+       "\t\tPaths to search for brushes, palettes, gradients\n"
+       "\t\tpatterns, plug-ins and modules are also configured here.\n") },
 
     { 1, N_("unitrc\n") },
-    { 0, N_("\t\tThe unitrc is used to store your user units database.\n") },
-    { 0, N_("\t\tYou can define additional units and use them just\n") },
-    { 0, N_("\t\tlike you use the built-in units inches, millimeters,\n") },
-    { 0, N_("\t\tpoints and picas. This file is overwritten each time\n") },
-    { 0, N_("\t\tyou quit the GIMP.\n") },
+    { 0, N_("\t\tThe unitrc is used to store your user units database.\n"
+       "\t\tYou can define additional units and use them just\n"
+       "\t\tlike you use the built-in units inches, millimeters,\n"
+       "\t\tpoints and picas. This file is overwritten each time\n"
+       "\t\tyou quit the GIMP.\n") },
 
     { 1, N_("pluginrc\n") },
-    { 0, N_("\t\tPlug-ins and extensions are external programs run by\n") },
-    { 0, N_("\t\tthe GIMP which provide additional functionality.\n") },
-    { 0, N_("\t\tThese programs are searched for at run-time and\n") },
-    { 0, N_("\t\tinformation about their functionality and mod-times\n") },
-    { 0, N_("\t\tis cached in this file.  This file is intended to\n") },
-    { 0, N_("\t\tbe GIMP-readable only, and should not be edited.\n") },
+    { 0, N_("\t\tPlug-ins and extensions are external programs run by\n"
+       "\t\tthe GIMP which provide additional functionality.\n"
+       "\t\tThese programs are searched for at run-time and\n"
+       "\t\tinformation about their functionality and mod-times\n"
+       "\t\tis cached in this file.  This file is intended to\n"
+       "\t\tbe GIMP-readable only, and should not be edited.\n") },
 
     { 1, N_("brushes\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined brushes.  The default gimprc file\n") },
-    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
-    { 0, N_("\t\twide gimp brushes installation when searching for\n") },
-    { 0, N_("\t\tbrushes.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined brushes.  The default gimprc file\n"
+       "\t\tchecks this subdirectory in addition to the system-\n"
+       "\t\twide gimp brushes installation when searching for\n"
+       "\t\tbrushes.\n") },
 
     { 1, N_("gradients\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined gradients.  The default gimprc file\n") },
-    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
-    { 0, N_("\t\twide gimp gradients installation when searching for\n") },
-    { 0, N_("\t\tgradients.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n\t\tuser defined gradients.  The default gimprc file\n\t\tchecks this subdirectory in addition to the system-\n\t\twide gimp gradients installation when searching for\n\t\tgradients.\n") },
 
     { 1, N_("gfig\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined figures to be used by the gfig plug-in.\n") },
-    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
-    { 0, N_("\t\taddition to the systemwide gimp gfig installation\n") },
-    { 0, N_("\t\twhen searching for gfig figures.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined figures to be used by the gfig plug-in.\n"
+       "\t\tThe default gimprc file checks this subdirectory in\n"
+       "\t\taddition to the systemwide gimp gfig installation\n"
+       "\t\twhen searching for gfig figures.\n") },
 
     { 1, N_("gflares\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined gflares to be used by the gflare plug-in.\n") },
-    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
-    { 0, N_("\t\taddition to the systemwide gimp gflares installation\n") },
-    { 0, N_("\t\twhen searching for gflares.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined gflares to be used by the gflare plug-in.\n"
+       "\t\tThe default gimprc file checks this subdirectory in\n"
+       "\t\taddition to the systemwide gimp gflares installation\n"
+       "\t\twhen searching for gflares.\n") },
 
     { 1, N_("fractalexplorer\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n") },
-    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
-    { 0, N_("\t\taddition to the systemwide gimp FractalExplorer installation\n") },
-    { 0, N_("\t\twhen searching for fractals.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n"
+       "\t\tThe default gimprc file checks this subdirectory in\n"
+       "\t\taddition to the systemwide gimp FractalExplorer installation\n"
+       "\t\twhen searching for fractals.\n") },
 
     { 1, N_("palettes\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined palettes.  The default gimprc file\n") },
-    { 0, N_("\t\tchecks only this subdirectory (not the system-wide\n") },
-    { 0, N_("\t\tinstallation) when searching for palettes.  During\n") },
-    { 0, N_("\t\tinstallation, the system palettes will be copied\n") },
-    { 0, N_("\t\there.  This is done to allow modifications made to\n") },
-    { 0, N_("\t\tpalettes during GIMP execution to persist across\n") },
-    { 0, N_("\t\tsessions.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined palettes.  The default gimprc file\n"
+       "\t\tchecks only this subdirectory (not the system-wide\n"
+       "\t\tinstallation) when searching for palettes.  During\n"
+       "\t\tinstallation, the system palettes will be copied\n"
+       "\t\there.  This is done to allow modifications made to\n"
+       "\t\tpalettes during GIMP execution to persist across\n"
+       "\t\tsessions.\n") },
 
     { 1, N_("patterns\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser defined patterns.  The default gimprc file\n") },
-    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
-    { 0, N_("\t\twide gimp patterns installation when searching for\n") },
-    { 0, N_("\t\tpatterns.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser defined patterns.  The default gimprc file\n"
+       "\t\tchecks this subdirectory in addition to the system-\n"
+       "\t\twide gimp patterns installation when searching for\n"
+       "\t\tpatterns.\n") },
 
     { 1, N_("plug-ins\n") },
-    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
-    { 0, N_("\t\tuser created, temporary, or otherwise non-system-\n") },
-    { 0, N_("\t\tsupported plug-ins.  The default gimprc file\n") },
-    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
-    { 0, N_("\t\twide GIMP plug-in directories when searching for\n") },
-    { 0, N_("\t\tplug-ins.\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n"
+       "\t\tuser created, temporary, or otherwise non-system-\n"
+       "\t\tsupported plug-ins.  The default gimprc file\n"
+       "\t\tchecks this subdirectory in addition to the system-\n"
+       "\t\twide GIMP plug-in directories when searching for\n"
+       "\t\tplug-ins.\n") },
 
     { 1, N_("modules\n") },
-    { 0, N_("\t\tThis subdirectory can be used to store user created,\n") },
-    { 0, N_("\t\ttemporary, or otherwise non-system-supported DLL modules.\n") },
-    { 0, N_("\t\tThe default gimprc file checks this subdirectory\n") },
-    { 0, N_("\t\tin addition to the system-wide GIMP module directory\n") },
-    { 0, N_("\t\twhen searching for modules to load when initialising.\n") },
+    { 0, N_("\t\tThis subdirectory can be used to store user created,\n"
+       "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
+       "\t\tThe default gimprc file checks this subdirectory\n"
+       "\t\tin addition to the system-wide GIMP module directory\n"
+       "\t\twhen searching for modules to load when initialising.\n") },
 
     { 1, N_("scripts\n") },
-    { 0, N_("\t\tThis subdirectory is used by the GIMP to store \n") },
-    { 0, N_("\t\tuser created and installed scripts. The default gimprc\n") },
-    { 0, N_("\t\tfile checks this subdirectory in addition to the system\n") },
-    { 0, N_("\t\t-wide gimp scripts subdirectory when searching for scripts\n") },
+    { 0, N_("\t\tThis subdirectory is used by the GIMP to store \n"
+       "\t\tuser created and installed scripts. The default gimprc\n"
+       "\t\tfile checks this subdirectory in addition to the system\n"
+       "\t\t-wide gimp scripts subdirectory when searching for scripts\n") },
 
     { 1, N_("tmp\n") },
-    { 0, N_("\t\tThis subdirectory is used by the GIMP to temporarily\n") },
-    { 0, N_("\t\tstore undo buffers to reduce memory usage.  If GIMP is\n") },
-    { 0, N_("\t\tunceremoniously killed, files may persist in this directory\n") },
-    { 0, N_("\t\tof the form: gimp<#>.<#>.  These files are useless across\n") },
-    { 0, N_("\t\tGIMP sessions and can be destroyed with impunity.\n") }
+    { 0, N_("\t\tThis subdirectory is used by the GIMP to temporarily\n"
+       "\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
+       "\t\tunceremoniously killed, files may persist in this directory\n"
+       "\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
+       "\t\tGIMP sessions and can be destroyed with impunity.\n") }
   };
   gint nhelp_lines = sizeof (help_lines) / sizeof (help_lines[0]);
   gint i;

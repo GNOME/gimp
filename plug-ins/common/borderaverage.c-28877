@@ -24,6 +24,8 @@
 #include <gck/gck.h>
 #include <plug-ins/megawidget/megawidget.h>
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
 
 
 /* Declare local functions.
@@ -85,13 +87,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_borderaverage",
 			  "Borderaverage",
 			  "",
 			  "Philipp Klaus",
 			  "Internet Access AG",
 			  "1998",
-			  "<Image>/Filters/Colors/Border Average",
+			  _("<Image>/Filters/Colors/Border Average"),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -110,6 +114,8 @@ run (char    *name,
 	GRunModeType run_mode;
 	GStatusType status = STATUS_SUCCESS;
 	gint8		*result_color;
+
+	INIT_I18N();
 
 	run_mode = param[0].data.d_int32;
 	
@@ -330,13 +336,13 @@ static gint borderaverage_dialog() {
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show(vbox);
 
-  mw_ientry_new(vbox, "Border Size", "Thickness", &borderaverage_thickness);
+  mw_ientry_new(vbox, _("Border Size"), _("Thickness"), &borderaverage_thickness);
 
 
-  frame=gck_frame_new("Number of colors",vbox,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,2);
+  frame=gck_frame_new(_("Number of colors"),vbox,GTK_SHADOW_ETCHED_IN,FALSE,FALSE,0,2);
   vbox2=gck_vbox_new(frame,FALSE,TRUE,TRUE,5,0,5);
 
-  menu=gck_option_menu_new("Bucket Size:",vbox2,TRUE,TRUE,0,
+  menu=gck_option_menu_new(_("Bucket Size:"),vbox2,TRUE,TRUE,0,
     menu_labels,(GtkSignalFunc)menu_callback, NULL);
   gtk_option_menu_set_history(GTK_OPTION_MENU(menu),borderaverage_bucket_exponent);
   gtk_widget_show(menu);

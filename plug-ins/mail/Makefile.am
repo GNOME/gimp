@@ -7,13 +7,14 @@ pluginlib_PROGRAMS = mail
 mail_SOURCES = \
 	mail.c   
 
-CPPFLAGS = \
-	@MAILER@
-
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
+
+AM_CPPFLAGS = \
+        -DLOCALEDIR=\""$(localedir)"\"	\
+	@MAILER@
 
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\

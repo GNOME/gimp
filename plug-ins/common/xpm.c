@@ -29,6 +29,7 @@ doesn't load parameter screen on images that don't have alpha
 Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 */
 
+#include "config.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +38,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 #include <X11/xpm.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 static const char linenoise [] =
 " .+@#$%&*=-;>,')!~{]^/(_:<[}|1234567890abcdefghijklmnopqrstuvwxyz\
@@ -162,8 +164,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_xpm_load",
-                          "loads files of the xpm file format",
+                          _("loads files of the xpm file format"),
                           "FIXME: write help for xpm_load",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi",
                           "Spencer Kimball & Peter Mattis",
@@ -175,7 +179,7 @@ query ()
                           load_args, load_return_vals);
   
   gimp_install_procedure ("file_xpm_save",
-                          "saves files in the xpm file format (if you're on a 16 bit display...)",
+                          _("saves files in the xpm file format (if you're on a 16 bit display...)"),
                           "FIXME: write help for xpm",
                           "Spencer Kimball & Peter Mattis & Ray Lehtiniemi & Nathan Summers",
                           "Spencer Kimball & Peter Mattis",
@@ -210,6 +214,8 @@ run (char    *name,
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+  INIT_I18N();
 
   if (strcmp (name, "file_xpm_load") == 0)
     {
@@ -291,7 +297,7 @@ load_image (char *filename)
   name = malloc (strlen (filename) + 12);
   if (!name)
     gimp_quit();
-  sprintf (name, "Loading %s:", filename);
+  sprintf (name, _("Loading %s:"), filename);
   gimp_progress_init (name);
   free (name);
 
@@ -397,7 +403,7 @@ parse_image(gint32 image_ID, XpmImage *xpm_image, guchar *cmap)
     
 
   layer_ID = gimp_layer_new (image_ID,
-                             "Color",
+                             _("Color"),
                              xpm_image->width,
                              xpm_image->height,
                              RGBA_IMAGE,
@@ -602,7 +608,7 @@ save_image (char   *filename,
     char *name = g_new (char, strlen (filename) + 12);
     if (!name)
       gimp_quit();
-    sprintf (name, "Saving %s:", filename);
+    sprintf (name, _("Saving %s:"), filename);
     gimp_progress_init (name);
     free (name);
   }
@@ -747,14 +753,14 @@ save_dialog ()
   gtk_rc_parse(gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as Xpm");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save as Xpm"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_ok_callback,
@@ -763,7 +769,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -772,7 +778,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -781,7 +787,7 @@ save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Alpha Threshold");
+  label = gtk_label_new (_("Alpha Threshold"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   scale_data = gtk_adjustment_new (xpmvals.threshold, 0.0, 1.0, 0.01, 0.01, 0.0);

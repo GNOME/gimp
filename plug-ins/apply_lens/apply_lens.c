@@ -58,6 +58,9 @@
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 
+#include "config.h"
+#include "libgimp/stdplugins-intl.h"
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
@@ -127,13 +130,15 @@ query(void)
   static int nargs = sizeof(args)/ sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_applylens",
-			 "Apply a lens effect",
-			 "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
+			 _("Apply a lens effect"),
+			 _("This plug-in uses Snell's law to draw an ellipsoid lens over the image"),
 			 "Morten Eriksen",
 			 "Morten Eriksen",
 			 "1997",
-			 "<Image>/Filters/Glass Effects/Apply Lens",
+			 _("<Image>/Filters/Glass Effects/Apply Lens"),
 			 "RGB*, GRAY*, INDEXED*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,
@@ -151,6 +156,8 @@ run(char *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+
+  INIT_I18N();
 
   run_mode = param[0].data.d_int32;
 
@@ -190,7 +197,7 @@ run(char *name,
   }
 
   gimp_tile_cache_ntiles(2 *(drawable->width / gimp_tile_width() + 1));
-  gimp_progress_init("Applying lens...");
+  gimp_progress_init(_("Applying lens..."));
   drawlens(drawable);
 
   if(run_mode != RUN_NONINTERACTIVE)
@@ -404,13 +411,13 @@ lens_dialog(GDrawable *drawable)
   gtk_rc_parse(gimp_gtkrc());
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Lens effect");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Lens effect"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
                      (GtkSignalFunc)lens_close_callback,
 		     NULL);
 
-  button = gtk_button_new_with_label("OK");
+  button = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
                      (GtkSignalFunc)lens_ok_callback,
@@ -420,7 +427,7 @@ lens_dialog(GDrawable *drawable)
   gtk_widget_grab_default(button);
   gtk_widget_show(button);
 
-  button = gtk_button_new_with_label("Cancel");
+  button = gtk_button_new_with_label(_("Cancel"));
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
                             (GtkSignalFunc)gtk_widget_destroy,
@@ -429,7 +436,7 @@ lens_dialog(GDrawable *drawable)
 		     button, TRUE, TRUE, 0);
   gtk_widget_show(button);
 
-  frame = gtk_frame_new("Parameter Settings");
+  frame = gtk_frame_new(_("Parameter Settings"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -438,7 +445,7 @@ lens_dialog(GDrawable *drawable)
   gtk_container_add(GTK_CONTAINER(frame), vbox);
 
   toggle = gtk_radio_button_new_with_label(group,
-					   "Keep original surroundings");
+					   _("Keep original surroundings"));
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
   gtk_box_pack_start(GTK_BOX(vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -451,8 +458,8 @@ lens_dialog(GDrawable *drawable)
     gtk_radio_button_new_with_label(group,
 				    drawtype == INDEXEDA_IMAGE ||
 				    drawtype == INDEXED_IMAGE ?
-				    "Set surroundings to index 0" :
-				    "Set surroundings to background color");
+				    _("Set surroundings to index 0") :
+				    _("Set surroundings to background color"));
   group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
   gtk_box_pack_start(GTK_BOX(vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -465,7 +472,7 @@ lens_dialog(GDrawable *drawable)
      (drawtype == GRAYA_IMAGE) ||
      (drawtype == RGBA_IMAGE)) {
     toggle = gtk_radio_button_new_with_label(group,
-					     "Make surroundings transparent");
+					     _("Make surroundings transparent"));
     group = gtk_radio_button_group(GTK_RADIO_BUTTON(toggle));
     gtk_box_pack_start(GTK_BOX(vbox), toggle, FALSE, FALSE, 0);
     gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
@@ -480,7 +487,7 @@ lens_dialog(GDrawable *drawable)
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
 
-  label = gtk_label_new("Lens refraction index: ");
+  label = gtk_label_new(_("Lens refraction index: "));
   gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, FALSE, 0);
   gtk_widget_show(label);
 
