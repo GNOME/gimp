@@ -1,3 +1,8 @@
+2004-09-16  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/quit-dialog.c: removed code that isn't needed any
+	longer now that the dialog is a singleton.
+
 2004-09-15  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/mblur.c: fix the preview for the zoom blur mode.

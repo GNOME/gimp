@@ -33,7 +33,6 @@
 
 #include "display/gimpdisplay-foreach.h"
 
-#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
@@ -59,7 +58,6 @@ quit_dialog_new (Gimp *gimp)
   GtkWidget     *box;
   GtkWidget     *label;
   GtkWidget     *view;
-  GList         *list;
   gint           rows;
   gint           preview_size;
 
@@ -73,20 +71,13 @@ quit_dialog_new (Gimp *gimp)
 
   g_return_val_if_fail (images != NULL, NULL);
 
-  for (list = gimp_action_groups_from_name ("file");
-       list;
-       list = g_list_next (list))
-    {
-      gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
-    }
-
-  dialog = gimp_dialog_new (_("Quit The GIMP?"), "gimp-quit",
+  dialog = gimp_dialog_new (_("Quit The GIMP"), "gimp-quit",
                             NULL, 0,
                             gimp_standard_help_func,
                             GIMP_HELP_FILE_QUIT_CONFIRM,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_QUIT,   GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                            _("_Discard Changes"), GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -130,16 +121,7 @@ quit_dialog_response (GtkWidget *dialog,
                       gint       response_id,
                       Gimp      *gimp)
 {
-  GList *list;
-
   gtk_widget_destroy (dialog);
-
-  for (list = gimp_action_groups_from_name ("file");
-       list;
-       list = g_list_next (list))
-    {
-      gimp_action_group_set_action_sensitive (list->data, "file-quit", TRUE);
-    }
 
   if (response_id == GTK_RESPONSE_OK)
     gimp_exit (gimp, TRUE);
