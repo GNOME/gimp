@@ -378,7 +378,6 @@ warp_dialog (GimpDrawable *drawable)
   GtkWidget *toggle_hbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *otable;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *combo;
@@ -396,27 +395,29 @@ warp_dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Main Options"));
+  frame = gimp_frame_new (_("Basic Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   /*  amount, iter */
   spinbutton = gimp_spin_button_new (&adj, dvals.amount,
 				     -1000, 1000, /* ??? */
 				     1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Step Size:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Step Size:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount);
@@ -424,14 +425,15 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.iter,
 				     1, 100, 1, 5, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Iterations:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Iterations:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.iter);
 
   /*  Displacement map menu  */
   label = gtk_label_new (_("Displacement Map:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -449,7 +451,7 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  Displacement Type  */
   label = gtk_label_new (_("On Edges:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -457,6 +459,7 @@ warp_dialog (GimpDrawable *drawable)
   toggle_hbox = gtk_hbox_new (FALSE, 4);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 1, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (toggle_hbox);
 
   toggle = gtk_radio_button_new_with_label (group, _("Wrap"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -518,28 +521,27 @@ warp_dialog (GimpDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dvals.wrap_type == COLOR);
 
-  gtk_widget_show (toggle_hbox);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
 
   /* -------------------------------------------------------------------- */
   /* ---------    The secondary table         --------------------------  */
 
-  frame = gtk_frame_new (_("Secondary Options"));
+  frame = gimp_frame_new (_("Advanced Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.dither,
 				     0, 100, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Dither Size:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Dither Size:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.dither);
@@ -547,8 +549,8 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.angle,
 				     0, 360, 1, 15, 0, 1, 1);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Rotation Angle:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Rotation Angle:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.angle);
@@ -556,14 +558,15 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
 				     1, 100, 1, 5, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Substeps:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Substeps:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.substeps);
 
   /*  Magnitude map menu  */
   label = gtk_label_new (_("Magnitude Map:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -582,8 +585,9 @@ warp_dialog (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (toggle_hbox), 1);
   gtk_table_attach (GTK_TABLE (table), toggle_hbox, 2, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (toggle_hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Use Mag Map"));
+  toggle = gtk_check_button_new_with_label (_("Use Magnitude Map"));
   gtk_box_pack_start (GTK_BOX (toggle_hbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.mag_use);
   gtk_widget_show (toggle);
@@ -592,29 +596,27 @@ warp_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.mag_use);
 
-  gtk_widget_show (toggle_hbox);
-
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
 
   /* -------------------------------------------------------------------- */
   /* ---------    The "other" table         --------------------------  */
 
-  frame = gtk_frame_new (_("Other Options"));
+  frame = gimp_frame_new (_("More Advanced Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  otable = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (otable), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (otable), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (otable), 4);
-  gtk_container_add (GTK_CONTAINER (frame), otable);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, dvals.grad_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 0,
-			     _("Gradient Scale:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Gradient Scale:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.grad_scale);
@@ -626,7 +628,7 @@ warp_dialog (GimpDrawable *drawable)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dvals.grad_map);
 
-  gtk_table_attach (GTK_TABLE (otable), combo, 2, 3, 0, 1,
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
@@ -637,9 +639,9 @@ warp_dialog (GimpDrawable *drawable)
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_scale,
 				     -1000, 1000, /* ??? */
 				     0.01, 0.1, 0, 1, 3);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 1,
-			     _("Vector Mag:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Vector Mag:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_scale);
@@ -648,9 +650,9 @@ warp_dialog (GimpDrawable *drawable)
 
   spinbutton = gimp_spin_button_new (&adj, dvals.vector_angle,
 				     0, 360, 1, 15, 0, 1, 1);
-  gimp_table_attach_aligned (GTK_TABLE (otable), 0, 2,
-			     _("Angle:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+			     _("Angle:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_angle);
@@ -661,16 +663,13 @@ warp_dialog (GimpDrawable *drawable)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &dvals.vector_map);
 
-  gtk_table_attach (GTK_TABLE (otable), combo, 2, 3, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), combo, 2, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   gimp_help_set_help_data (combo,
 			   _("Fixed-direction-vector map selection menu"),
 			   NULL);
-
-  gtk_widget_show (otable);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 

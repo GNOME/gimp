@@ -103,15 +103,16 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static void   whirl_pinch (void);
-static int    calc_undistorted_coords (double wx, double wy,
-				       double whirl, double pinch,
-				       double *x, double *y);
-static void build_preview_source_image (void);
+static void      whirl_pinch                (void);
+static int       calc_undistorted_coords    (double wx, double wy,
+                                             double whirl, double pinch,
+                                             double *x, double *y);
+static void      build_preview_source_image (void);
 
-static gint whirl_pinch_dialog    (void);
-static void dialog_update_preview (void);
-static void dialog_scale_update   (GtkAdjustment *adjustment, gdouble *value);
+static gboolean  whirl_pinch_dialog         (void);
+static void      dialog_update_preview      (void);
+static void      dialog_scale_update        (GtkAdjustment *adjustment,
+                                             gdouble       *value);
 
 
 /***** Variables *****/
@@ -644,14 +645,13 @@ build_preview_source_image (void)
   gimp_pixel_fetcher_destroy (pf);
 }
 
-static gint
+static gboolean
 whirl_pinch_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *abox;
-  GtkWidget *pframe;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
@@ -669,44 +669,34 @@ whirl_pinch_dialog (void)
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), main_vbox,
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), vbox,
 		      FALSE, FALSE, 0);
-  gtk_widget_show (main_vbox);
+  gtk_widget_show (vbox);
 
   /* Preview */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_widget_show (frame);
 
-  /* Preview */
   wpint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (wpint.preview),
 		    preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (pframe), wpint.preview);
+  gtk_container_add (GTK_CONTAINER (frame), wpint.preview);
   gtk_widget_show (wpint.preview);
 
   /* Controls */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

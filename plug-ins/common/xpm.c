@@ -95,23 +95,23 @@ static gboolean   color;
 static gint       cpp;
 
 /* Declare local functions */
-static void     query               (void);
-static void     run                 (const gchar      *name,
-                                     gint              nparams,
-                                     const GimpParam  *param,
-                                     gint             *nreturn_vals,
-                                     GimpParam       **return_vals);
+static void       query               (void);
+static void       run                 (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
-static gint32   load_image          (const gchar      *filename);
-static guchar  *parse_colors        (XpmImage         *xpm_image);
-static void     parse_image         (gint32            image_ID,
-                                     XpmImage         *xpm_image,
-                                     guchar           *cmap);
-static gboolean save_image          (const gchar      *filename,
-                                     gint32            image_ID,
-                                     gint32            drawable_ID);
+static gint32     load_image          (const gchar      *filename);
+static guchar   * parse_colors        (XpmImage         *xpm_image);
+static void       parse_image         (gint32            image_ID,
+                                       XpmImage         *xpm_image,
+                                       guchar           *cmap);
+static gboolean   save_image          (const gchar      *filename,
+                                       gint32            image_ID,
+                                       gint32            drawable_ID);
 
-static gint     save_dialog         (void);
+static gboolean   save_dialog         (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -766,11 +766,10 @@ save_image (const gchar *filename,
   return rc;
 }
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
   gboolean   run;
@@ -784,16 +783,10 @@ save_dialog (void)
 
                          NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

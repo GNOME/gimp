@@ -1,3 +1,11 @@
+2004-05-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/warp.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/common/wmf.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xpm.c: HIG-ified.
+
 2004-05-19  Manish Singh  <yosh@gimp.org>
 
 	* app/actions/file-actions.c: remove unnecessary G_OBJECT() casts.

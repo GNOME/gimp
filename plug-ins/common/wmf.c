@@ -211,26 +211,23 @@ load_dialog (const gchar *filename)
                             NULL);
 
   /* Rendering */
-  frame = gtk_frame_new (g_strdup_printf (_("Rendering %s"), filename));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  frame = gimp_frame_new (g_strdup_printf (_("Rendering %s"), filename));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
 		      TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   /* Scale label */
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* Scale slider */
-
   value = CLAMP (load_vals.scale, 1.0 / 64.0, 64.0);
   value = log (value) / log (2.0);
 

@@ -97,23 +97,23 @@ static void   run     (const gchar      *name,
 		       gint             *nreturn_vals,
 		       GimpParam       **return_vals);
 
-static gint32 load_image              (const gchar *filename);
-static gint   save_image              (const gchar *filename,
-				       const gchar *prefix,
-				       const gchar *comment,
-				       gboolean     save_mask,
-				       gint32       image_ID,
-				       gint32       drawable_ID);
-static gint   save_dialog             (gint32       drawable_ID);
+static gint32    load_image              (const gchar *filename);
+static gint      save_image              (const gchar *filename,
+                                          const gchar *prefix,
+                                          const gchar *comment,
+                                          gboolean     save_mask,
+                                          gint32       image_ID,
+                                          gint32       drawable_ID);
+static gboolean  save_dialog             (gint32       drawable_ID);
 #if 0
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
-static void   comment_entry_callback  (GtkWidget   *widget,
-				       gpointer     data);
+static void      comment_entry_callback  (GtkWidget   *widget,
+                                          gpointer     data);
 #endif
-static void   prefix_entry_callback   (GtkWidget   *widget,
-				       gpointer     data);
-static void   mask_ext_entry_callback (GtkWidget   *widget,
-				       gpointer     data);
+static void      prefix_entry_callback   (GtkWidget   *widget,
+                                          gpointer     data);
+static void      mask_ext_entry_callback (GtkWidget   *widget,
+                                          gpointer     data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -1136,7 +1136,7 @@ save_image (const gchar *filename,
   return TRUE;
 }
 
-static gint
+static gboolean
 save_dialog (gint32 drawable_ID)
 {
   GtkWidget *dlg;
@@ -1159,13 +1159,12 @@ save_dialog (gint32 drawable_ID)
                          NULL);
 
   /* parameter settings */
-  frame = gtk_frame_new (_("XBM Options"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  frame = gimp_frame_new (_("XBM Options"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /*  X10 format  */
@@ -1179,8 +1178,8 @@ save_dialog (gint32 drawable_ID)
                     &xsvals.x10_format);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1189,7 +1188,7 @@ save_dialog (gint32 drawable_ID)
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_PREFIX);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Identifier Prefix:"), 1.0, 0.5,
+			     _("_Identifier Prefix:"), 0.0, 0.5,
 			     entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (prefix_entry_callback),
@@ -1203,7 +1202,7 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_set_size_request (entry, 240, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Comment:"), 1.0, 0.5,
+			     _("Comment:"), 0.0, 0.5,
 			     entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
@@ -1221,8 +1220,8 @@ save_dialog (gint32 drawable_ID)
                     &xsvals.use_hot);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1233,7 +1232,7 @@ save_dialog (gint32 drawable_ID)
 				     gimp_drawable_width (drawable_ID) - 1,
 				     1, 1, 1, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Hot Spot _X:"), 1.0, 0.5,
+			     _("Hot Spot _X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1243,21 +1242,20 @@ save_dialog (gint32 drawable_ID)
 				     gimp_drawable_height (drawable_ID) - 1,
 				     1, 1, 1, 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Y:"), 1.0, 0.5,
+			     _("Hot Spot _Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.y_hot);
 
   /* mask file */
-  frame = gtk_frame_new (_("Mask File"));
+  frame = gimp_frame_new (_("Mask File"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -1274,7 +1272,7 @@ save_dialog (gint32 drawable_ID)
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_MASK_EXT);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.mask_ext);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Mask File Extension:"), 1.0, 0.5,
+			     _("_Mask File Extension:"), 0.0, 0.5,
 			     entry, 1, TRUE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mask_ext_entry_callback),
