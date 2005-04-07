@@ -1,5 +1,9 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-path.c: added API documentation.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpcoreconfig.c
 	* app/config/gimpguiconfig.c
 	* app/config/gimppluginconfig.c: need to free the return value of
