@@ -342,5 +342,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
           gtk_label_set_text (GTK_LABEL (frame->name_labels[i]),  " ");
           gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), " ");
         }
+
+      g_free (values[i]);
     }
 }
