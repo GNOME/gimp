@@ -2,6 +2,12 @@
 
 	Merged from HEAD branch:
 
+	* docs/gimp.1.in: fixed typos and improved explanation of parasiterc.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_update)
 	* app/widgets/gimpmessagebox.c: plugged small memleaks.
 

@@ -104,7 +104,7 @@ If a stack-trace should be generated in case of fatal signals.
 If the PDB should provide aliases for deprecated functions.
 .TP 8
 .B \-\-batch-interpreter \fI<procedure>\fP
-Speficies the procedure to use to process batch events. The default is
+Specifies the procedure to use to process batch events. The default is
 to let Script-Fu evaluate the commands.
 .TP 8
 .B \-b, \-\-batch \fI<commands>\fP
@@ -154,8 +154,8 @@ config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
-\fB$HOME\fP/@gimpdir@/parasiterc - Description of all available GIMP
-parasites. This is file is recreated everytime GIMP starts up.
+\fB$HOME\fP/@gimpdir@/parasiterc - Stores all persistent GIMP
+parasites. This file will be rewritten every time you quit the GIMP.
 
 \fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
 info (that is info, you want to keep between two GIMP sessions). You
@@ -247,7 +247,7 @@ the Day" dialog box.
 GIMP comes with a default image for the splash screen but it allows
 system administrators and users to customize the splash screen by
 providing other images. The image to be used with the splash screen is
-choosen as follows:
+chosen as follows:
 
 .IP 1.
 GIMP tries to load a random splash screen from the directory
