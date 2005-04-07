@@ -179,6 +179,15 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
   g_return_if_fail (color != NULL);
 
+  if (frame->sample_valid               &&
+      frame->sample_type == sample_type &&
+      frame->color_index == color_index &&
+      gimp_rgb_distance (&frame->color, color) < 0.0001)
+    {
+      frame->color = *color;
+      return;
+    }
+
   frame->sample_valid = TRUE;
   frame->sample_type  = sample_type;
   frame->color        = *color;

@@ -1,5 +1,10 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_set_color): only
+	update the view if there's actually a change.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-utils.[ch]: changed GimpConfig utility
 	functions to take GObject variables instead of GimpConfig. There's
 	nothing GimpConfig specific about these utilities.
