@@ -47,8 +47,7 @@ gimp_rc_serialize (GimpConfig       *config,
 {
   if (data && GIMP_IS_RC (data))
     {
-      if (! gimp_rc_serialize_properties_diff (config, GIMP_CONFIG (data),
-                                               writer))
+      if (! gimp_rc_serialize_properties_diff (config, data, writer))
         return FALSE;
     }
   else
@@ -76,7 +75,8 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
 
   klass = G_OBJECT_GET_CLASS (config);
 
-  diff = gimp_config_diff (config, compare, GIMP_CONFIG_PARAM_SERIALIZE);
+  diff = gimp_config_diff (G_OBJECT (config),
+                           G_OBJECT (compare), GIMP_CONFIG_PARAM_SERIALIZE);
 
   if (! diff)
     return TRUE;

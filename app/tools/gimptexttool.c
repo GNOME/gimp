@@ -213,9 +213,9 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->layer   = NULL;
   text_tool->image   = NULL;
 
-  gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor     (tool->control,
-                                         GIMP_TOOL_CURSOR_TEXT);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_TOOL_CURSOR_TEXT);
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-font-select-set");
 }
@@ -408,8 +408,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
 
       if (text)
         {
-          gimp_config_sync (GIMP_CONFIG (text),
-                            GIMP_CONFIG (text_tool->proxy), 0);
+          gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
 
           text_tool->text = g_object_ref (text);
 

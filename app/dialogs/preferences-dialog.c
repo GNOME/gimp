@@ -237,10 +237,10 @@ prefs_response (GtkWidget *widget,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpConfig *config_copy;
-      GList      *restart_diff;
-      GList      *confirm_diff;
-      GList      *list;
+      GObject *config_copy;
+      GList   *restart_diff;
+      GList   *confirm_diff;
+      GList   *list;
 
       config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
@@ -249,7 +249,7 @@ prefs_response (GtkWidget *widget,
 
       gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
-      confirm_diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config),
+      confirm_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
                                        config_copy,
                                        GIMP_CONFIG_PARAM_CONFIRM);
 
@@ -257,14 +257,12 @@ prefs_response (GtkWidget *widget,
 
       for (list = confirm_diff; list; list = g_list_next (list))
         {
-          GParamSpec *param_spec;
-          GValue      value = { 0, };
-
-          param_spec = (GParamSpec *) list->data;
+          GParamSpec *param_spec = list->data;
+          GValue      value      = { 0, };
 
           g_value_init (&value, param_spec->value_type);
 
-          g_object_get_property (G_OBJECT (config_copy),
+          g_object_get_property (config_copy,
                                  param_spec->name, &value);
           g_object_set_property (G_OBJECT (gimp->edit_config),
                                  param_spec->name, &value);
@@ -281,8 +279,8 @@ prefs_response (GtkWidget *widget,
       /*  spit out a solely informational warning about changed values
        *  which need restart
        */
-      restart_diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config),
-                                       GIMP_CONFIG (gimp->config),
+      restart_diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                                       G_OBJECT (gimp->config),
                                        GIMP_CONFIG_PARAM_RESTART);
 
       if (restart_diff)
@@ -309,9 +307,9 @@ prefs_response (GtkWidget *widget,
     }
   else  /* cancel */
     {
-      GimpConfig *config_orig;
-      GList      *diff;
-      GList      *list;
+      GObject *config_orig;
+      GList   *diff;
+      GList   *list;
 
       config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
 
@@ -320,26 +318,23 @@ prefs_response (GtkWidget *widget,
 
       gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
-      diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config), config_orig,
+      diff = gimp_config_diff (G_OBJECT (gimp->edit_config),
+                               config_orig,
                                GIMP_CONFIG_PARAM_SERIALIZE);
 
       g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 
       for (list = diff; list; list = g_list_next (list))
         {
-          GParamSpec *param_spec;
-          GValue      value = { 0, };
-
-          param_spec = (GParamSpec *) list->data;
+          GParamSpec *param_spec = list->data;
+          GValue      value      = { 0, };
 
           g_value_init (&value, param_spec->value_type);
 
-          g_object_get_property (G_OBJECT (config_orig),
-                                 param_spec->name,
-                                 &value);
+          g_object_get_property (config_orig,
+                                 param_spec->name, &value);
           g_object_set_property (G_OBJECT (gimp->edit_config),
-                                 param_spec->name,
-                                 &value);
+                                 param_spec->name, &value);
 
           g_value_unset (&value);
         }
@@ -362,7 +357,7 @@ prefs_template_select_callback (GimpContainerView *view,
                                 GimpTemplate      *edit_template)
 {
   if (template)
-    gimp_config_sync (GIMP_CONFIG (template), GIMP_CONFIG (edit_template), 0);
+    gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template), 0);
 }
 
 static void

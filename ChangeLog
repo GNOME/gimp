@@ -10,16 +10,19 @@
 	* app/config/gimpcoreconfig.c
 	* app/config/gimpdisplayconfig.c
 	* app/config/gimprc.c
+	* app/config/gimprc-serialize.c
 	* app/core/gimpimage-grid.c
 	* app/core/gimpimage-new.c
 	* app/core/gimpstrokedesc.c
 	* app/dialogs/grid-dialog.c
 	* app/dialogs/image-new-dialog.c
 	* app/dialogs/stroke-dialog.c
+	* app/dialogs/preferences-dialog.c
 	* app/display/gimpdisplayshell.c
 	* app/text/gimptextlayer.c
 	* app/text/gimptextundo.c
 	* app/tools/gimptextoptions.c
+	* app/tools/gimptexttool.c: 
 	* libgimpconfig/gimpconfig-iface.c: changed accordingly.
 
 2005-04-07  Sven Neumann  <sven@gimp.org>
