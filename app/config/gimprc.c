@@ -277,7 +277,7 @@ gimp_rc_duplicate (GimpConfig *config)
 {
   GimpConfig *dup = g_object_new (GIMP_TYPE_RC, NULL);
 
-  gimp_config_sync (config, dup, 0);
+  gimp_config_sync (G_OBJECT (config), G_OBJECT (dup), 0);
 
   gimp_rc_foreach_unknown_token (config,
                                  gimp_rc_duplicate_unknown_token, dup);

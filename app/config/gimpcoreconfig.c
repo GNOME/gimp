@@ -500,13 +500,13 @@ gimp_core_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_IMAGE:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (core_config->default_image), 0);
+        gimp_config_sync (g_value_get_object (value) ,
+                          G_OBJECT (core_config->default_image), 0);
       break;
     case PROP_DEFAULT_GRID:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (core_config->default_grid), 0);
+        gimp_config_sync (g_value_get_object (value),
+                          G_OBJECT (core_config->default_grid), 0);
       break;
     case PROP_UNDO_LEVELS:
       core_config->levels_of_undo = g_value_get_int (value);
@@ -541,8 +541,8 @@ gimp_core_config_set_property (GObject      *object,
       break;
     case PROP_COLOR_MANAGEMENT:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (core_config->color_management), 0);
+        gimp_config_sync (g_value_get_object (value),
+                          G_OBJECT (core_config->color_management), 0);
       break;
 
     default:

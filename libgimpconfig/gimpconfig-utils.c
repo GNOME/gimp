@@ -74,8 +74,8 @@ gimp_config_diff_property (GObject    *a,
 }
 
 static GList *
-gimp_config_diff_same (GimpConfig  *a,
-                       GimpConfig  *b,
+gimp_config_diff_same (GObject     *a,
+                       GObject     *b,
                        GParamFlags  flags)
 {
   GParamSpec **param_specs;
@@ -92,8 +92,7 @@ gimp_config_diff_same (GimpConfig  *a,
 
       if (! flags || ((prop_spec->flags & flags) == flags))
         {
-          if (gimp_config_diff_property (G_OBJECT (a),
-                                         G_OBJECT (b), prop_spec))
+          if (gimp_config_diff_property (a, b, prop_spec))
             list = g_list_prepend (list, prop_spec);
         }
     }
@@ -104,8 +103,8 @@ gimp_config_diff_same (GimpConfig  *a,
 }
 
 static GList *
-gimp_config_diff_other (GimpConfig  *a,
-                        GimpConfig  *b,
+gimp_config_diff_other (GObject     *a,
+                        GObject     *b,
                         GParamFlags  flags)
 {
   GParamSpec **param_specs;
@@ -126,7 +125,7 @@ gimp_config_diff_other (GimpConfig  *a,
           (a_spec->value_type == b_spec->value_type) &&
           (! flags || (a_spec->flags & b_spec->flags & flags) == flags))
         {
-          if (gimp_config_diff_property (G_OBJECT (a), G_OBJECT (b), b_spec))
+          if (gimp_config_diff_property (a, b, b_spec))
             list = g_list_prepend (list, b_spec);
         }
     }
@@ -139,8 +138,8 @@ gimp_config_diff_other (GimpConfig  *a,
 
 /**
  * gimp_config_diff:
- * @a: a #GimpConfig object
- * @b: another #GimpConfig object
+ * @a: a #GObject
+ * @b: another #GObject object
  * @flags: a mask of GParamFlags
  *
  * Compares all properties of @a and @b that have all @flags set. If
@@ -155,14 +154,14 @@ gimp_config_diff_other (GimpConfig  *a,
  * Since: GIMP 2.4
  **/
 GList *
-gimp_config_diff (GimpConfig  *a,
-                  GimpConfig  *b,
+gimp_config_diff (GObject     *a,
+                  GObject     *b,
                   GParamFlags  flags)
 {
   GList *diff;
 
-  g_return_val_if_fail (GIMP_IS_CONFIG (a), NULL);
-  g_return_val_if_fail (GIMP_IS_CONFIG (b), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (a), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (b), NULL);
 
   if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
     diff = gimp_config_diff_same (a, b, flags);
@@ -174,8 +173,8 @@ gimp_config_diff (GimpConfig  *a,
 
 /**
  * gimp_config_sync:
- * @src: a #GimpConfig object
- * @dest: another #GimpConfig object
+ * @src: a #GObject
+ * @dest: another #GObject
  * @flags: a mask of GParamFlags
  *
  * Compares all read- and write-able properties from @src and @dest
@@ -184,24 +183,24 @@ gimp_config_diff (GimpConfig  *a,
  *
  * Properties marked as "construct-only" are not touched.
  *
- * If the two objects are not of the same type, only
- * properties that exist in both object classes and are of the same
- * value_type are synchronized
+ * If the two objects are not of the same type, only properties that
+ * exist in both object classes and are of the same value_type are
+ * synchronized
  *
  * Return value: %TRUE if @dest was modified, %FALSE otherwise
  *
  * Since: GIMP 2.4
  **/
 gboolean
-gimp_config_sync (GimpConfig  *src,
-                  GimpConfig  *dest,
+gimp_config_sync (GObject     *src,
+                  GObject     *dest,
                   GParamFlags  flags)
 {
   GList *diff;
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_CONFIG (src), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONFIG (dest), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (src), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (dest), FALSE);
 
   /* we use the internal versions here for a number of reasons:
    *  - it saves a g_list_reverse()
@@ -226,8 +225,8 @@ gimp_config_sync (GimpConfig  *src,
 
           g_value_init (&value, prop_spec->value_type);
 
-          g_object_get_property (G_OBJECT (src),  prop_spec->name, &value);
-          g_object_set_property (G_OBJECT (dest), prop_spec->name, &value);
+          g_object_get_property (src,  prop_spec->name, &value);
+          g_object_set_property (dest, prop_spec->name, &value);
 
           g_value_unset (&value);
         }
@@ -240,34 +239,32 @@ gimp_config_sync (GimpConfig  *src,
 
 /**
  * gimp_config_reset_properties:
- * @config: a #GimpConfig object
+ * @object: a #GObject
  *
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec. Properties marked as "construct-only"
  * are not touched.
  *
+ * If you want to reset a #GimpConfig object, please use gimp_config_reset().
+ *
  * Since: GIMP 2.4
  **/
 void
-gimp_config_reset_properties (GimpConfig *config)
+gimp_config_reset_properties (GObject *object)
 {
-  GObject       *object;
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   GValue         value = { 0, };
   guint          n_property_specs;
   guint          i;
 
-  g_return_if_fail (GIMP_IS_CONFIG (config));
+  g_return_if_fail (G_IS_OBJECT (object));
 
-  klass = G_OBJECT_GET_CLASS (config);
+  klass = G_OBJECT_GET_CLASS (object);
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
-
   if (!property_specs)
     return;
-
-  object = G_OBJECT (config);
 
   g_object_freeze_notify (object);
 
@@ -316,26 +313,25 @@ gimp_config_reset_properties (GimpConfig *config)
 
 /**
  * gimp_config_reset_property:
- * @config: a #GimpConfig object
+ * @object: a #GObject
  * @property_name: name of the property to reset
  *
- * Resets the property named @property_name to its default value.
- * Nothing happens if the property is not writable or marked as
- * "construct-only".
+ * Resets the property named @property_name to its default value.  The
+ * property must be writable and must not be marked as "construct-only".
  *
  * Since: GIMP 2.4
  **/
 void
-gimp_config_reset_property (GimpConfig  *config,
+gimp_config_reset_property (GObject     *object,
                             const gchar *property_name)
 {
   GObjectClass  *klass;
   GParamSpec    *prop_spec;
 
-  g_return_if_fail (GIMP_IS_CONFIG (config));
+  g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (property_name != NULL);
 
-  klass = G_OBJECT_GET_CLASS (config);
+  klass = G_OBJECT_GET_CLASS (object);
 
   prop_spec = g_object_class_find_property (klass, property_name);
 
@@ -345,8 +341,7 @@ gimp_config_reset_property (GimpConfig  *config,
   if ((prop_spec->flags & G_PARAM_WRITABLE) &&
       ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
     {
-      GObject *object = G_OBJECT (config);
-      GValue   value  = { 0, };
+      GValue  value = { 0, };
 
       if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
         {

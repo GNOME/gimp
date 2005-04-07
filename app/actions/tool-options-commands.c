@@ -98,8 +98,8 @@ tool_options_save_to_cmd_callback (GtkAction *action,
 
       name = g_strdup (gimp_object_get_name (GIMP_OBJECT (options)));
 
-      gimp_config_sync (GIMP_CONFIG (tool_info->tool_options),
-                        GIMP_CONFIG (options), 0);
+      gimp_config_sync (G_OBJECT (tool_info->tool_options),
+                        G_OBJECT (options), 0);
       gimp_object_set_name (GIMP_OBJECT (options), name);
 
       g_free (name);
@@ -120,8 +120,8 @@ tool_options_restore_from_cmd_callback (GtkAction *action,
     gimp_container_get_child_by_index (tool_info->options_presets, value);
 
   if (options)
-    gimp_config_sync (GIMP_CONFIG (options),
-                      GIMP_CONFIG (tool_info->tool_options), 0);
+    gimp_config_sync (G_OBJECT (options),
+                      G_OBJECT (tool_info->tool_options), 0);
 }
 
 void

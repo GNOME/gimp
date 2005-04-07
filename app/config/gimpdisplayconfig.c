@@ -362,13 +362,13 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_VIEW:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (display_config->default_view), 0);
+        gimp_config_sync (g_value_get_object (value),
+                          G_OBJECT (display_config->default_view), 0);
       break;
     case PROP_DEFAULT_FULLSCREEN_VIEW:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (display_config->default_fullscreen_view),
+        gimp_config_sync (g_value_get_object (value),
+                          G_OBJECT (display_config->default_fullscreen_view),
                           0);
       break;
     case PROP_ACTIVATE_ON_FOCUS:

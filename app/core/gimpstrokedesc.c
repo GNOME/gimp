@@ -212,8 +212,8 @@ gimp_stroke_desc_set_property (GObject      *object,
       break;
     case PROP_STROKE_OPTIONS:
       if (g_value_get_object (value))
-        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
-                          GIMP_CONFIG (desc->stroke_options), 0);
+        gimp_config_sync (g_value_get_object (value),
+                          G_OBJECT (desc->stroke_options), 0);
       break;
     case PROP_PAINT_INFO:
       if (desc->paint_info)

@@ -1,5 +1,29 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-utils.[ch]: changed GimpConfig utility
+	functions to take GObject variables instead of GimpConfig. There's
+	nothing GimpConfig specific about these utilities.
+
+	* app/actions/templates-commands.c
+	* app/actions/tool-options-commands.c
+	* app/base/base.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimprc.c
+	* app/core/gimpimage-grid.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpstrokedesc.c
+	* app/dialogs/grid-dialog.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/stroke-dialog.c
+	* app/display/gimpdisplayshell.c
+	* app/text/gimptextlayer.c
+	* app/text/gimptextundo.c
+	* app/tools/gimptextoptions.c
+	* libgimpconfig/gimpconfig-iface.c: changed accordingly.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/plug-in-actions.c (plug_in_actions_add_branch)
 	* app/core/gimpinterpreterdb.c (resolve_extension)
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): plugged

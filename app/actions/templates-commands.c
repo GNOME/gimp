@@ -282,8 +282,8 @@ templates_edit_response (GtkWidget             *dialog,
     {
       GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (options->editor);
 
-      gimp_config_sync (GIMP_CONFIG (editor->template),
-                        GIMP_CONFIG (options->template), 0);
+      gimp_config_sync (G_OBJECT (editor->template),
+                        G_OBJECT (options->template), 0);
     }
 
   gtk_widget_destroy (dialog);

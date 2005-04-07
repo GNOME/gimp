@@ -57,5 +57,5 @@ gimp_image_set_grid (GimpImage *gimage,
   if (push_undo)
     gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
 
-  gimp_config_sync (GIMP_CONFIG (grid), GIMP_CONFIG (gimage->grid), 0);
+  gimp_config_sync (G_OBJECT (grid), G_OBJECT (gimage->grid), 0);
 }

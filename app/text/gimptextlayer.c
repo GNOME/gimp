@@ -290,7 +290,7 @@ gimp_text_layer_duplicate (GimpItem *item,
   layer     = GIMP_TEXT_LAYER (item);
   new_layer = GIMP_TEXT_LAYER (new_item);
 
-  gimp_config_sync (GIMP_CONFIG (layer), GIMP_CONFIG (new_layer), 0);
+  gimp_config_sync (G_OBJECT (layer), G_OBJECT (new_layer), 0);
 
   if (layer->text)
     {

@@ -591,10 +591,10 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->dot_for_dot = display_config->default_dot_for_dot;
 
-  gimp_config_sync (GIMP_CONFIG (display_config->default_view),
-                    GIMP_CONFIG (shell->options), 0);
-  gimp_config_sync (GIMP_CONFIG (display_config->default_fullscreen_view),
-                    GIMP_CONFIG (shell->fullscreen_options), 0);
+  gimp_config_sync (G_OBJECT (display_config->default_view),
+                    G_OBJECT (shell->options), 0);
+  gimp_config_sync (G_OBJECT (display_config->default_fullscreen_view),
+                    G_OBJECT (shell->fullscreen_options), 0);
 
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It

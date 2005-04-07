@@ -23,16 +23,16 @@
 #ifndef __GIMP_CONFIG_UTILS_H__
 #define __GIMP_CONFIG_UTILS_H__
 
-GList    * gimp_config_diff                  (GimpConfig   *a,
-                                              GimpConfig   *b,
+GList    * gimp_config_diff                  (GObject      *a,
+                                              GObject      *b,
                                               GParamFlags   flags);
 
-gboolean   gimp_config_sync                  (GimpConfig   *src,
-                                              GimpConfig   *dest,
+gboolean   gimp_config_sync                  (GObject      *src,
+                                              GObject      *dest,
                                               GParamFlags   flags);
 
-void       gimp_config_reset_properties      (GimpConfig   *config);
-void       gimp_config_reset_property        (GimpConfig   *config,
+void       gimp_config_reset_properties      (GObject      *object);
+void       gimp_config_reset_property        (GObject      *object,
                                               const gchar  *property_name);
 
 void       gimp_config_string_append_escaped (GString      *string,

@@ -86,7 +86,7 @@ base_init (GimpBaseConfig *config,
                     NULL);
 
   if (! config->swap_path || ! *config->swap_path)
-    gimp_config_reset_property (GIMP_CONFIG (config), "swap-path");
+    gimp_config_reset_property (G_OBJECT (config), "swap-path");
 
   base_toast_old_swap_files (config->swap_path);
 
@@ -96,7 +96,7 @@ base_init (GimpBaseConfig *config,
 
   /*  create the temp directory if it doesn't exist  */
   if (! config->temp_path || ! *config->temp_path)
-    gimp_config_reset_property (GIMP_CONFIG (config), "temp-path");
+    gimp_config_reset_property (G_OBJECT (config), "temp-path");
 
   temp_dir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
 

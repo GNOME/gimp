@@ -138,8 +138,8 @@ grid_dialog_response (GtkWidget  *widget,
   switch (response_id)
     {
     case GRID_RESPONSE_RESET:
-      gimp_config_sync (GIMP_CONFIG (gimage->gimp->config->default_grid),
-                        GIMP_CONFIG (grid), 0);
+      gimp_config_sync (G_OBJECT (gimage->gimp->config->default_grid),
+                        G_OBJECT (grid), 0);
       break;
 
     case GTK_RESPONSE_OK:

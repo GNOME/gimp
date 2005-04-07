@@ -376,7 +376,7 @@ gimp_text_options_connect_text (GimpTextOptions *options,
 
   gimp_context_get_foreground (context, &color);
 
-  gimp_config_sync (GIMP_CONFIG (options), GIMP_CONFIG (text), 0);
+  gimp_config_sync (G_OBJECT (options), G_OBJECT (text), 0);
 
   g_object_set (text,
                 "color", &color,

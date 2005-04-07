@@ -245,8 +245,8 @@ gimp_text_undo_pop (GimpUndo            *undo,
               gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
 
       if (layer->text && text_undo->text)
-        gimp_config_sync (GIMP_CONFIG (text_undo->text),
-                          GIMP_CONFIG (layer->text), 0);
+        gimp_config_sync (G_OBJECT (text_undo->text),
+                          G_OBJECT (layer->text), 0);
       else
         gimp_text_layer_set_text (layer, text_undo->text);
 

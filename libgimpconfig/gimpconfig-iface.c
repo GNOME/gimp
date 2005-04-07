@@ -123,15 +123,14 @@ gimp_config_iface_deserialize (GimpConfig *config,
 static GimpConfig *
 gimp_config_iface_duplicate (GimpConfig *config)
 {
-  GObjectClass  *klass;
+  GObject       *object = G_OBJECT (config);
+  GObjectClass  *klass  = G_OBJECT_GET_CLASS (object);
   GParamSpec   **property_specs;
   guint          n_property_specs;
   GParameter    *construct_params   = NULL;
   gint           n_construct_params = 0;
   guint          i;
-  GimpConfig    *dup;
-
-  klass = G_OBJECT_GET_CLASS (config);
+  GObject       *dup;
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
@@ -152,14 +151,14 @@ gimp_config_iface_duplicate (GimpConfig *config)
           construct_param->name = prop_spec->name;
 
           g_value_init (&construct_param->value, prop_spec->value_type);
-          g_object_get_property (G_OBJECT (config), prop_spec->name,
-                                 &construct_param->value);
+          g_object_get_property (object,
+                                 prop_spec->name, &construct_param->value);
         }
     }
 
   g_free (property_specs);
 
-  dup = g_object_newv (G_TYPE_FROM_INSTANCE (config),
+  dup = g_object_newv (G_TYPE_FROM_INSTANCE (object),
                        n_construct_params, construct_params);
 
   for (i = 0; i < n_construct_params; i++)
@@ -167,9 +166,9 @@ gimp_config_iface_duplicate (GimpConfig *config)
 
   g_free (construct_params);
 
-  gimp_config_sync (config, dup, 0);
+  gimp_config_sync (object, dup, 0);
 
-  return dup;
+  return GIMP_CONFIG (dup);
 }
 
 static gboolean
@@ -233,7 +232,7 @@ gimp_config_iface_equal (GimpConfig *a,
 static void
 gimp_config_iface_reset (GimpConfig *config)
 {
-  gimp_config_reset_properties (config);
+  gimp_config_reset_properties (G_OBJECT (config));
 }
 
 /**

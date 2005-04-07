@@ -93,7 +93,7 @@ stroke_dialog_new (GimpItem    *item,
   saved_desc = g_object_get_data (G_OBJECT (context), "saved-stroke-desc");
 
   if (saved_desc)
-    gimp_config_sync (GIMP_CONFIG (saved_desc), GIMP_CONFIG (desc), 0);
+    gimp_config_sync (G_OBJECT (saved_desc), G_OBJECT (desc), 0);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item),
                                      title, "gimp-stroke-options",
@@ -287,7 +287,7 @@ stroke_dialog_response (GtkWidget  *widget,
         else
           saved_desc = gimp_stroke_desc_new (context->gimp, context);
 
-        gimp_config_sync (GIMP_CONFIG (desc), GIMP_CONFIG (saved_desc), 0);
+        gimp_config_sync (G_OBJECT (desc), G_OBJECT (saved_desc), 0);
 
         g_object_set_data_full (G_OBJECT (context), "saved-stroke-desc",
                                 saved_desc,

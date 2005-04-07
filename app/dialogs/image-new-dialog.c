@@ -181,8 +181,7 @@ image_new_dialog_set (GtkWidget    *widget,
     {
       template = gimp_image_new_get_last_template (dialog->gimp, gimage);
 
-      gimp_config_sync (GIMP_CONFIG (template),
-                        GIMP_CONFIG (dialog->template), 0);
+      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
 
       g_object_unref (template);
     }
@@ -199,8 +198,8 @@ image_new_response (GtkWidget      *widget,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      gimp_config_sync (GIMP_CONFIG (dialog->gimp->config->default_image),
-                        GIMP_CONFIG (dialog->template), 0);
+      gimp_config_sync (G_OBJECT (dialog->gimp->config->default_image),
+                        G_OBJECT (dialog->template), 0);
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (dialog->combo),
                                        NULL);
       break;
@@ -233,7 +232,7 @@ image_new_template_select (GimpContainerView  *view,
   if (!template->comment || !strlen (template->comment))
     comment = g_strdup (dialog->template->comment);
 
-  gimp_config_sync (GIMP_CONFIG (template), GIMP_CONFIG (dialog->template), 0);
+  gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template), 0);
 
   if (comment)
     {
