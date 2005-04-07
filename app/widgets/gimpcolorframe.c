@@ -319,7 +319,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
   if (has_alpha)
     {
-      names[alpha_row]  = _("Alpha:");
+      names[alpha_row] = _("Alpha:");
 
       if (frame->frame_mode == GIMP_COLOR_FRAME_MODE_PIXEL)
         values[alpha_row] = g_strdup_printf ("%d", a);
@@ -344,5 +344,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
           gtk_label_set_text (GTK_LABEL (frame->name_labels[i]),  " ");
           gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), " ");
         }
+
+      g_free (values[i]);
     }
 }

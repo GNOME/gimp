@@ -270,7 +270,7 @@ dockable_actions_update (GimpActionGroup *group,
         }
     }
 
-  SET_VISIBLE ("dockable-tab-style-menu",  n_pages > 1);
+  SET_VISIBLE ("dockable-tab-style-menu", n_pages > 1);
 
   if (n_pages > 1)
     {

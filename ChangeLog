@@ -1,5 +1,12 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-actions.c (plug_in_actions_add_branch)
+	* app/core/gimpinterpreterdb.c (resolve_extension)
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): plugged
+	memleaks.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpmessagebox.c: plugged a small memleak.
 
 	* libgimpwidgets/gimpcontroller.c: added a finalizer and free the

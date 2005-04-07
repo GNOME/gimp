@@ -628,15 +628,22 @@ static gchar *
 resolve_extension (GimpInterpreterDB *db,
                    const gchar       *program_path)
 {
-  gchar *filename, *p, *program;
+  gchar       *filename;
+  gchar       *p;
+  const gchar *program;
 
   filename = g_path_get_basename (program_path);
 
   p = strrchr (filename, '.');
   if (! p)
-    return NULL;
+    {
+      g_free (filename);
+      return NULL;
+    }
 
   program = g_hash_table_lookup (db->extensions, p + 1);
+
+  g_free (filename);
 
   return g_strdup (program);
 }

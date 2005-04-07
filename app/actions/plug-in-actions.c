@@ -365,6 +365,9 @@ plug_in_actions_add_branch (GimpActionGroup *group,
     plug_in_actions_build_path (group, full, full_translated);
   else
     plug_in_actions_build_path (group, full, full);
+
+  g_free (full_translated);
+  g_free (full);
 }
 
 
