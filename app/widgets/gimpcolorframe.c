@@ -211,6 +211,9 @@ gimp_color_frame_set_invalid (GimpColorFrame *frame)
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
+  if (! frame->sample_valid)
+    return;
+
   frame->sample_valid = FALSE;
 
   gimp_color_frame_update (frame);
