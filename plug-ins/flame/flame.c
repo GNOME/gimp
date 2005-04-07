@@ -478,6 +478,11 @@ make_file_dlg (const gchar *title,
 
                                           NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (file_dlg),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_object_add_weak_pointer (G_OBJECT (file_dlg), (gpointer) &file_dlg);
 
   gtk_dialog_set_default_response (GTK_DIALOG (file_dlg), GTK_RESPONSE_OK);

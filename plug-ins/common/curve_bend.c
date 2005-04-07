@@ -2057,6 +2057,14 @@ bender_load_callback (GtkWidget    *w,
 
                                      NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (cd->filechooser),
+                                       GTK_RESPONSE_OK);
+
       g_signal_connect (cd->filechooser, "response",
                         G_CALLBACK (p_points_load_from_file_response),
                         cd);

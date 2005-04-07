@@ -125,6 +125,7 @@ static void
 gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 {
   GObjectClass *object_class;
+  gchar        *path;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -219,11 +220,12 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     TOOLBOX_IMAGE_AREA_BLURB,
                                     FALSE,
                                     0);
+  path = gimp_config_build_data_path ("themes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("themes"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
                                    DEFAULT_THEME,

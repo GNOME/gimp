@@ -1,5 +1,32 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c: need to free the return value of
+	gimp_config_build_foo_path() now that gimp_param_spec_path() is
+	sane and doesn't take ownership of the passed string any longer.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/utils.c: use gimp_config_build_data_path().
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gimpressionist/brush.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_browse.c
+	* plug-ins/imagemap/imap_file.c
+	* plug-ins/print/gimp_main_window.c: set alternative button order
+	on file-chooser dialogs (as well as default response where missing).
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* docs/gimp.1.in: fixed typos and improved explanation of parasiterc.
 
 2005-04-07  Sven Neumann  <sven@gimp.org>

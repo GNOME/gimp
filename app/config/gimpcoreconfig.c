@@ -145,6 +145,7 @@ static void
 gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class;
+  gchar        *path;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -160,81 +161,95 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_LINEAR,
                                  0);
+  path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path", PLUG_IN_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_plug_in_path ("plug-ins"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_plug_in_path ("modules");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path", MODULE_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_plug_in_path ("modules"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_plug_in_path ("interpreters");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
                                  "interpreter-path", INTERPRETER_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_plug_in_path ("interpreters"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_plug_in_path ("environ");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
                                  "environ-path", ENVIRON_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_plug_in_path ("environ"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_data_path ("brushes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path", BRUSH_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("brushes"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_writable_path ("brushes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
                                  "brush-path-writable",
                                  BRUSH_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_writable_path ("brushes"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_data_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("patterns"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_writable_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
                                  "pattern-path-writable",
                                  PATTERN_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_writable_path ("patterns"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_data_path ("palettes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
                                  "palette-path", PALETTE_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("palettes"),
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_writable_path ("palettes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
                                  "palette-path-writable",
                                  PALETTE_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_writable_path ("palettes"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_data_path ("gradients");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path", GRADIENT_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("gradients"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_writable_path ("gradients");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
                                  "gradient-path-writable",
                                  GRADIENT_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_writable_path ("gradients"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  path = gimp_config_build_data_path ("fonts");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
                                  "font-path", FONT_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("fonts"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
+  path = gimp_config_build_writable_path ("fonts");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
                                  "font-path-writable",
                                  FONT_PATH_WRITABLE_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_writable_path ("fonts"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,
                                    DEFAULT_BRUSH,

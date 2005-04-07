@@ -88,6 +88,7 @@ static void
 gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
 {
   GObjectClass *object_class;
+  gchar        *path;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -97,39 +98,44 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
   object_class->set_property = gimp_plugin_config_set_property;
   object_class->get_property = gimp_plugin_config_get_property;
 
+  path = gimp_config_build_data_path ("fractalexplorer");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_FRACTALEXPLORER_PATH,
                                  "fractalexplorer-path",
                                  FRACTALEXPLORER_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("fractalexplorer"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
+  path = gimp_config_build_data_path ("gfig");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFIG_PATH,
                                  "gfig-path", GFIG_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("gfig"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
+  path = gimp_config_build_data_path ("gflare");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFLARE_PATH,
                                  "gflare-path", GFLARE_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("gflare"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
+  path = gimp_config_build_data_path ("gimpressionist");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GIMPRESSIONIST_PATH,
                                  "gimpressionist-path",
                                  GIMPRESSIONIST_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("gimpressionist"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
+  path = gimp_config_build_data_path ("scripts");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_SCRIPT_FU_PATH,
                                  "script-fu-path",
                                  SCRIPT_FU_PATH_BLURB,
-				 GIMP_CONFIG_PATH_DIR_LIST,
-                                 gimp_config_build_data_path ("scripts"),
+				 GIMP_CONFIG_PATH_DIR_LIST, path,
                                  0);
+  g_free (path);
 }
 
 static void

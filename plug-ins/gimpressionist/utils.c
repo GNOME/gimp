@@ -8,11 +8,13 @@
 
 #include <glib-object.h>
 
+#include <libgimpconfig/gimpconfig.h>
 #include <libgimpmath/gimpmath.h>
 
 #include "gimpressionist.h"
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Mathematical Utilities */
 
@@ -102,16 +104,10 @@ static GList *parsepath_cached_path = NULL;
 GList *
 parsepath (void)
 {
-  gchar *gimpdatasubdir, *defaultpath, *rc_path, *path;
+  gchar *rc_path, *path;
 
   if (parsepath_cached_path)
     return parsepath_cached_path;
-
-  gimpdatasubdir = g_build_filename (gimp_data_directory (),
-                                     "gimpressionist", NULL);
-
-  defaultpath = g_build_filename (gimp_directory (),
-                                  "gimpressionist", gimpdatasubdir, NULL);
 
   path = gimp_gimprc_query ("gimpressionist-path");
   if (path)
@@ -121,27 +117,22 @@ parsepath (void)
     }
   else
     {
-      if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
-        {
-          /* No gimpressionist-path parameter,
-             and the default doesn't exist */
-          gchar *path = g_strconcat ("${gimp_dir}",
-                                     G_DIR_SEPARATOR_S,
-                                     "gimpressionist",
-                                     G_SEARCHPATH_SEPARATOR_S,
-                                     "${gimp_data_dir}",
-                                     G_DIR_SEPARATOR_S,
-                                     "gimpressionist",
-                                     NULL);
+      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      gchar *full_path = gimp_config_build_data_path ("gimpressionist");
+      gchar *esc_path  = g_strescape (full_path, NULL);
 
-          /* don't translate the gimprc entry */
-          g_message (_("It is highly recommended to add\n"
-                       " (gimpressionist-path \"%s\")\n"
-                       "(or similar) to your gimprc file."), path);
-          g_free (path);
-        }
+      g_message (_("No %s in gimprc:\n"
+                   "You need to add an entry like\n"
+                   "(%s \"%s\")\n"
+                   "to your %s file."),
+                 "gflare-path", "gflare-path",
+                 esc_path, gimp_filename_to_utf8 (gimprc));
 
-      rc_path = g_strdup (defaultpath);
+      g_free (gimprc);
+      g_free (esc_path);
+
+      rc_path = gimp_config_path_expand (full_path, TRUE, NULL);
+      g_free (full_path);
     }
 
   parsepath_cached_path = gimp_path_parse (rc_path, 16, FALSE, NULL);

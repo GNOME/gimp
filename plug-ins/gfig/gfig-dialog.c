@@ -41,6 +41,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <libgimpconfig/gimpconfig.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
@@ -245,7 +247,8 @@ gfig_dialog (void)
     }
   else
     {
-      newlayer = gimp_layer_new (gfig_context->image_id, "GFig", img_width, img_height,
+      newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
+                                 img_width, img_height,
                                  GIMP_RGBA_IMAGE, 100., GIMP_NORMAL_MODE);
       gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
       gimp_image_add_layer (gfig_context->image_id, newlayer, -1);
@@ -266,15 +269,9 @@ gfig_dialog (void)
     }
   else
     {
-      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *full_path;
-      gchar *esc_path;
-
-      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gfig",
-                               G_SEARCHPATH_SEPARATOR_S,
-                               "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gfig",
-                               NULL);
-      esc_path = g_strescape (full_path, NULL);
+      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      gchar *full_path = gimp_config_build_data_path ("gfig");
+      gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
       g_message (_("No %s in gimprc:\n"
@@ -649,6 +646,11 @@ gfig_load_action_callback (GtkAction *action,
 
                                      NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
@@ -692,6 +694,13 @@ gfig_save_action_callback (GtkAction *action,
                                      GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                                      NULL);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 

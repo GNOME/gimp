@@ -74,6 +74,11 @@ do_file_open_dialog (void)
 
                                      NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "destroy",
@@ -170,6 +175,11 @@ do_file_save_as_dialog (void)
                                      GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
                                      NULL);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 

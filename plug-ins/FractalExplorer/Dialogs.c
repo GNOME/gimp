@@ -28,6 +28,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <libgimpconfig/gimpconfig.h>
+
 #include "FractalExplorer.h"
 #include "Dialogs.h"
 
@@ -532,17 +534,9 @@ explorer_dialog (void)
     }
   else
     {
-      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *full_path;
-      gchar *esc_path;
-
-      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S,
-                               "fractalexplorer",
-                               G_SEARCHPATH_SEPARATOR_S,
-                               "${gimp_data_dir}", G_DIR_SEPARATOR_S,
-                               "fractalexplorer",
-                               NULL);
-      esc_path = g_strescape (full_path, NULL);
+      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      gchar *full_path = gimp_config_build_data_path ("fractalexplorer");
+      gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
       g_message (_("No %s in gimprc:\n"
@@ -550,7 +544,8 @@ explorer_dialog (void)
                    "(%s \"%s\")\n"
                    "to your %s file."),
                  "fractalexplorer-path",
-                 "fractalexplorer-path", esc_path, gimprc);
+                 "fractalexplorer-path",
+                 esc_path, gimp_filename_to_utf8 (gimprc));
 
       g_free (gimprc);
       g_free (esc_path);
@@ -1647,9 +1642,9 @@ logo_preview_size_allocate (GtkWidget *preview)
       temp2 += 3;
     }
   }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview), 0, 0, 
-      logo_width, logo_height, GIMP_RGB_IMAGE,
-      temp, logo_width * 3);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview), 0, 0,
+                          logo_width, logo_height, GIMP_RGB_IMAGE,
+                          temp, logo_width * 3);
   g_free (temp);
 }
 
@@ -1899,6 +1894,11 @@ create_load_file_chooser (GtkWidget *widget,
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
@@ -1929,6 +1929,11 @@ create_save_file_chooser (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

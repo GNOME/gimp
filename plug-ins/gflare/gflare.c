@@ -46,6 +46,7 @@
 #include <glib-object.h>
 
 #include <libgimpcolor/gimpcolor.h>
+#include <libgimpconfig/gimpconfig.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -880,22 +881,17 @@ plugin_run (const gchar      *name,
     }
   else
     {
-      gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *full_path;
-      gchar *esc_path;
-
-      full_path = g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, "gflare",
-                               G_SEARCHPATH_SEPARATOR_S,
-                               "${gimp_data_dir}", G_DIR_SEPARATOR_S, "gflare",
-                               NULL);
-      esc_path = g_strescape (full_path, NULL);
+      gchar *gimprc    = gimp_personal_rc_file ("gimprc");
+      gchar *full_path = gimp_config_build_data_path ("gflare");
+      gchar *esc_path  = g_strescape (full_path, NULL);
       g_free (full_path);
 
       g_message (_("No %s in gimprc:\n"
                    "You need to add an entry like\n"
                    "(%s \"%s\")\n"
                    "to your %s file."),
-                 "gflare-path", "gflare-path", esc_path, gimprc);
+                 "gflare-path", "gflare-path",
+                 esc_path, gimp_filename_to_utf8 (gimprc));
 
       g_free (gimprc);
       g_free (esc_path);

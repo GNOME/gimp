@@ -241,6 +241,13 @@ savebrush (GtkWidget *wg,
 
                                  NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
   path = g_build_filename ((gchar *)thispath->data, "Brushes", NULL);
 
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), path);

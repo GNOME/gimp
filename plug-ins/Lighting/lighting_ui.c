@@ -1092,6 +1092,13 @@ save_lighting_preset (GtkWidget *widget,
 
                                      NULL);
 
+      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);
@@ -1228,6 +1235,11 @@ load_lighting_preset (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
 
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

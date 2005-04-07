@@ -794,6 +794,12 @@ create_printer_dialog (void)
                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                  NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (ppd_browser),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_dialog_set_default_response (GTK_DIALOG (ppd_browser), GTK_RESPONSE_OK);
 
   g_signal_connect (ppd_browser, "response",
@@ -1496,6 +1502,12 @@ gimp_create_main_window (void)
                                  GTK_STOCK_PRINT,  GTK_RESPONSE_OK,
 
                                  NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (file_browser),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   gtk_dialog_set_default_response (GTK_DIALOG (file_browser), GTK_RESPONSE_OK);
 
   g_signal_connect (file_browser, "response",
