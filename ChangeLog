@@ -1,5 +1,9 @@
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
+	* docs/gimp.1.in: fixed typos and improved explanation of parasiterc.
+
+2005-04-07  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolorframe.c
 	(gimp_color_frame_set_color) (gimp_color_frame_set_invalid): only
 	update the view if there's actually a change.
