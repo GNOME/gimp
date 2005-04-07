@@ -1,3 +1,7 @@
+2005-04-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base.c: include libgimpbase/gimpwin32-io.h.
+
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfig-path.c: added API documentation.

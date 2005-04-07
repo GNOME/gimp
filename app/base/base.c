@@ -32,6 +32,7 @@
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
 #include <process.h>	/*  for _getpid()  */
 #include <io.h>         /*  for _unlink()  */
 #endif
