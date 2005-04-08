@@ -2995,7 +2995,7 @@ msgstr "衬垫颜色(_P)"
 
 #: app/actions/view-actions.c:73
 msgid "_Close"
-msgstr "克隆(_C)"
+msgstr "关闭(_C)"
 
 #: app/actions/view-actions.c:78
 msgid "_Fit Image in Window"
