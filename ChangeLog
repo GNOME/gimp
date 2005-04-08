@@ -1,5 +1,13 @@
 2005-04-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icodialog.c: rewrote preview code to use
+	GtkImage and pixbufs. The previous implementation was severily
+	broken.
+
+	* plug-ins/winicon/icosave.c: cosmetics.
+
+2005-04-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icoload.c: code cleanup, no real changes.
 
 2005-04-08  Simon Budig  <simon@gimp.org>
