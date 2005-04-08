@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -106,9 +103,6 @@ static void     gimp_vector_tool_oper_update     (GimpTool        *tool,
                                                   GimpDisplay     *gdisp);
 static void     gimp_vector_tool_status_update   (GimpTool        *tool,
                                                   GimpDisplay     *gdisp);
-static void     gimp_vector_tool_status_set      (GimpTool        *tool,
-                                                  GimpDisplay     *gdisp,
-                                                  const gchar     *message);
 static void     gimp_vector_tool_cursor_update   (GimpTool        *tool,
                                                   GimpCoords      *coords,
                                                   GdkModifierType  state,
@@ -230,8 +224,6 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_tool_cursor         (tool->control,
                                              GIMP_TOOL_CURSOR_PATHS);
 
-  vector_tool->status_msg     = NULL;
-
   vector_tool->function       = VECTORS_CREATE_VECTOR;
   vector_tool->restriction    = GIMP_ANCHOR_FEATURE_NONE;
   vector_tool->modifier_lock  = FALSE;
@@ -272,7 +264,7 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_vector_tool_set_vectors (vector_tool, NULL);
-      gimp_vector_tool_status_set (tool, NULL, NULL);
+      gimp_tool_pop_status (tool);
       break;
 
     default:
@@ -1187,95 +1179,75 @@ gimp_vector_tool_status_update (GimpTool    *tool,
 {
   GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDisplayShell *shell;
-  const gchar      *new_status  = NULL;
 
   shell = tool->gdisp ? GIMP_DISPLAY_SHELL (tool->gdisp->shell) : NULL;
 
   if (shell && shell->proximity)
     {
+      const gchar *status = NULL;
+
       switch (vector_tool->function)
       {
         case VECTORS_SELECT_VECTOR:
-          new_status = _("Click to pick path to edit.");
+          status = _("Click to pick path to edit.");
           break;
         case VECTORS_CREATE_VECTOR:
-          new_status = _("Click to create a new path.");
+          status = _("Click to create a new path.");
           break;
         case VECTORS_CREATE_STROKE:
-          new_status = _("Click to create a new component of the path.");
+          status = _("Click to create a new component of the path.");
           break;
         case VECTORS_ADD_ANCHOR:
-          new_status = _("Click to create a new anchor. (try SHIFT)");
+          status = _("Click to create a new anchor. (try SHIFT)");
           break;
         case VECTORS_MOVE_ANCHOR:
-          new_status = _("Click-Drag to move the anchor around.");
+          status = _("Click-Drag to move the anchor around.");
           break;
         case VECTORS_MOVE_ANCHORSET:
-          new_status = _("Click-Drag to move the anchors around.");
+          status = _("Click-Drag to move the anchors around.");
           break;
         case VECTORS_MOVE_HANDLE:
-          new_status = _("Click-Drag to move the handle around. (try SHIFT)");
+          status = _("Click-Drag to move the handle around. (try SHIFT)");
           break;
         case VECTORS_MOVE_CURVE:
           if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
-            new_status = _("Click-Drag to move the anchors around.");
+            status = _("Click-Drag to move the anchors around.");
           else
-            new_status = _("Click-Drag to change the shape of the curve. "
-                           "(SHIFT: symmetrical)");
+            status = _("Click-Drag to change the shape of the curve. "
+                       "(SHIFT: symmetrical)");
           break;
         case VECTORS_MOVE_STROKE:
-          new_status = _("Click-Drag to move the component around. "
-                         "(try SHIFT)");
+          status = _("Click-Drag to move the component around. "
+                     "(try SHIFT)");
           break;
         case VECTORS_MOVE_VECTORS:
-          new_status = _("Click-Drag to move the path around.");
+          status = _("Click-Drag to move the path around.");
           break;
         case VECTORS_INSERT_ANCHOR:
-          new_status = _("Click to insert an anchor on the path. (try SHIFT)");
+          status = _("Click to insert an anchor on the path. (try SHIFT)");
           break;
         case VECTORS_DELETE_ANCHOR:
-          new_status = _("Click to delete this anchor.");
+          status = _("Click to delete this anchor.");
           break;
         case VECTORS_CONNECT_STROKES:
-          new_status = _("Click to connect this anchor "
-                          "with the selected endpoint.");
+          status = _("Click to connect this anchor "
+                     "with the selected endpoint.");
           break;
         case VECTORS_DELETE_SEGMENT:
-          new_status = _("Click to open up the path.");
+          status = _("Click to open up the path.");
           break;
         case VECTORS_CONVERT_EDGE:
-          new_status = _("Click to make this node angular.");
+          status = _("Click to make this node angular.");
           break;
         case VECTORS_FINISHED:
-          new_status = " ";
+          status = NULL;
           break;
       }
-    }
 
-  gimp_vector_tool_status_set (tool, gdisp, new_status);
-}
-
-static void
-gimp_vector_tool_status_set (GimpTool    *tool,
-                             GimpDisplay *gdisp,
-                             const gchar *message)
-{
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  if (tool->gdisp &&
-      vector_tool->status_msg != message)
-    {
-      if (vector_tool->status_msg)
-        {
-          gimp_tool_pop_status (tool);
-          vector_tool->status_msg = NULL;
-        }
-
-      if (message)
-        {
-          gimp_tool_push_status (tool, message);
-          vector_tool->status_msg = message;
-        }
+      if (status)
+        gimp_tool_push_status (tool, status);
+      else
+        gimp_tool_pop_status (tool);
     }
 }
 

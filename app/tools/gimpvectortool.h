@@ -63,8 +63,6 @@ struct _GimpVectorTool
 {
   GimpDrawTool          parent_instance;
 
-  const gchar          *status_msg;     /* current status message            */
-
   GimpVectorFunction    function;       /* function we're performing         */
   GimpAnchorFeatureType restriction;    /* movement restriction              */
   gboolean              modifier_lock;  /* can we toggle the Shift key?      */
