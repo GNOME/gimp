@@ -1,3 +1,10 @@
+2005-04-08  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/gauss.c: fixed preview for zero blur radii
+	(bug #173039).
+
 2005-04-07  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

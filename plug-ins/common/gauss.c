@@ -669,7 +669,7 @@ gauss (GimpDrawable *drawable,
     return;
 
   bytes = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   switch (method)
     {
@@ -869,6 +869,11 @@ gauss (GimpDrawable *drawable,
                            drawable, 0, 0, drawable->width, drawable->height,
                            FALSE, TRUE);
     }
+  else if (preview)
+    {
+      gimp_pixel_rgn_get_rect (&src_rgn,
+                               preview_buffer1, x1, y1, width, height);
+    }
 
   /*  Now the horizontal pass  */
   if (horz > 0.0)
@@ -1038,6 +1043,10 @@ gauss (GimpDrawable *drawable,
                 gimp_progress_update (progress / max_progress);
             }
         }
+    }
+  else if (preview)
+    {
+      memcpy (preview_buffer2, preview_buffer1, width * height * bytes);
     }
 
   if (preview)
