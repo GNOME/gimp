@@ -1,3 +1,7 @@
+2005-04-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/icoload.c: code cleanup, no real changes.
+
 2005-04-08  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: Applied Patch by Sven Neumann
