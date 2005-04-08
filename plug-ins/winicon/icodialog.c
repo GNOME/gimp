@@ -34,60 +34,26 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkWidget *ico_preview_new             (gint32     layer);
-static void       ico_fill_preview_with_thumb (GtkWidget *widget,
-                                               gint32     drawable_ID);
-static void       combo_bpp_changed           (GtkWidget *combo,
-                                               GObject   *hbox);
+static GtkWidget * ico_preview_new   (gint32     layer);
+static void        combo_bpp_changed (GtkWidget *combo,
+                                      GObject   *hbox);
 
 
 static GtkWidget *
 ico_preview_new (gint32 layer)
 {
-  GtkWidget *icon_preview;
+  GtkWidget *image;
+  GdkPixbuf *pixbuf;
+  gint       width  = gimp_drawable_width (layer);
+  gint       height = gimp_drawable_height (layer);
 
-  icon_preview = gimp_preview_area_new ();
-  ico_fill_preview_with_thumb (icon_preview, layer);
+  pixbuf = gimp_drawable_get_thumbnail (layer,
+                                        MIN (width, 128), MIN (height, 128),
+                                        GIMP_PIXBUF_SMALL_CHECKS);
+  image = gtk_image_new_from_pixbuf (pixbuf);
+  g_object_unref (pixbuf);
 
-  return icon_preview;
-}
-
-
-static void
-ico_fill_preview_with_thumb (GtkWidget *widget,
-                             gint32     drawable_ID)
-{
-  guchar *drawable_data;
-  gint    bpp;
-  gint    width;
-  gint    height;
-
-  width  = gimp_drawable_width (drawable_ID);
-  height = gimp_drawable_height (drawable_ID);
-  bpp    = 0; /* Only returned */
-
-  if (width > 128)
-    width = 128;
-  if (height > 128)
-    height = 128;
-
-  drawable_data =
-    gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
-
-  if (width < 1 || height < 1)
-    return;
-
-  gtk_widget_set_size_request (widget, width, height);
-  GIMP_PREVIEW_AREA (widget)->width = width;
-  GIMP_PREVIEW_AREA (widget)->height = height;
-
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (widget),
-                          0, 0, width, height,
-                          gimp_drawable_type (drawable_ID),
-                          drawable_data,
-                          bpp * width);
-
-  g_free (drawable_data);
+  return image;
 }
 
 
@@ -199,7 +165,7 @@ ico_specs_dialog_get_layer_preview (GtkWidget *dialog,
   GtkWidget *icon_hbox;
   gchar      key[MAXLEN];
 
-  g_snprintf (key, MAXLEN, "layer_%i_hbox", layer);
+  g_snprintf (key, sizeof (key), "layer_%i_hbox", layer);
   icon_hbox = g_object_get_data (G_OBJECT (dialog), key);
 
   if (!icon_hbox)
@@ -219,7 +185,6 @@ ico_specs_dialog_get_layer_preview (GtkWidget *dialog,
   return preview;
 }
 
-
 void
 ico_specs_dialog_add_icon (GtkWidget *dialog,
                            gint32     layer,
@@ -238,67 +203,78 @@ ico_specs_dialog_add_icon (GtkWidget *dialog,
   gtk_widget_show (hbox);
 
   /* Let's make the hbox accessible through the layer ID */
-  g_snprintf (key, MAXLEN, "layer_%i_hbox", layer);
+  g_snprintf (key, sizeof (key), "layer_%i_hbox", layer);
   g_object_set_data (G_OBJECT (dialog), key, hbox);
 }
-
 
 void
 ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
                                       gint32     layer,
                                       gint       bpp)
 {
-  GtkWidget    *preview;
-  GimpPixelRgn  src_pixel_rgn, dst_pixel_rgn;
-  gint32        tmp_image;
-  gint32        tmp_layer;
-  gint          w, h;
-  guchar       *buffer;
-  gboolean      result;
-  GimpDrawable *drawable = gimp_drawable_get (layer);
-  GimpDrawable *tmp;
+  GtkWidget *preview = ico_specs_dialog_get_layer_preview (dialog, layer);
+  GdkPixbuf *pixbuf;
+  gint       w       = gimp_drawable_width (layer);
+  gint       h       = gimp_drawable_height (layer);
 
-  tmp_image = gimp_image_new (gimp_drawable_width (layer),
-                              gimp_drawable_height (layer),
-                              GIMP_RGB);
+  if (! preview)
+    return;
 
-  w = gimp_drawable_width (layer);
-  h = gimp_drawable_height (layer);
+  g_printerr ("ico_specs_dialog_update_icon_preview: %d\n", bpp);
 
-  tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
-                              GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (tmp_image, tmp_layer, 0);
-
-  tmp = gimp_drawable_get (tmp_layer);
-
-  gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
-
-  buffer = g_malloc (w * h * 4);
-  gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
-  gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
-
-  gimp_drawable_detach (tmp);
-  gimp_drawable_detach (drawable);
-
-  if (bpp < 32)
+  if (bpp <= 8)
     {
-      result = gimp_image_convert_indexed (tmp_image,
-                                           GIMP_FS_DITHER,
-                                           GIMP_MAKE_PALETTE,
-                                           1 << bpp,
-                                           TRUE,
-                                           FALSE,
-                                           "dummy");
+      GimpDrawable *drawable;
+      GimpDrawable *tmp;
+      GimpPixelRgn  src_pixel_rgn, dst_pixel_rgn;
+      gint32        image;
+      gint32        tmp_image;
+      gint32        tmp_layer;
+      guchar       *buffer;
+
+      image = gimp_drawable_get_image (layer);
+      tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
+      tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
+                                  gimp_drawable_type (layer),
+                                  100, GIMP_NORMAL_MODE);
+      gimp_image_add_layer (tmp_image, tmp_layer, 0);
+
+      drawable = gimp_drawable_get (layer);
+      tmp      = gimp_drawable_get (tmp_layer);
+
+      gimp_pixel_rgn_init (&src_pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
+      gimp_pixel_rgn_init (&dst_pixel_rgn, tmp,      0, 0, w, h, TRUE, FALSE);
+
+      buffer = g_malloc (w * h * 4);
+      gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
+      gimp_pixel_rgn_set_rect (&dst_pixel_rgn, buffer, 0, 0, w, h);
+      g_free (buffer);
+
+      gimp_drawable_detach (tmp);
+      gimp_drawable_detach (drawable);
+
+      if (gimp_drawable_is_indexed (layer))
+        gimp_image_convert_rgb (tmp_image);
+
+      gimp_image_convert_indexed (tmp_image,
+                                  GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                  1 << bpp, TRUE, FALSE, "dummy");
+
+      pixbuf = gimp_drawable_get_thumbnail (tmp_layer,
+                                            MIN (w, 128), MIN (h, 128),
+                                            GIMP_PIXBUF_SMALL_CHECKS);
+
+      gimp_image_delete (tmp_image);
+    }
+  else
+    {
+      pixbuf = gimp_drawable_get_thumbnail (layer,
+                                            MIN (w, 128), MIN (h, 128),
+                                            GIMP_PIXBUF_SMALL_CHECKS);
     }
 
-  gimp_image_delete (tmp_image);
-
-  preview = ico_specs_dialog_get_layer_preview (dialog, layer);
-  ico_fill_preview_with_thumb (preview, tmp_layer);
-  gtk_widget_queue_draw (preview);
-
-  g_free (buffer);
+  gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
+  g_object_unref (pixbuf);
 }
 
 static void
