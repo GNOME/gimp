@@ -1,5 +1,9 @@
 2005-04-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: coding style, no real changes.
+
+2005-04-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gauss.c: fixed preview for zero blur radii
 	(bug #173039).
 
