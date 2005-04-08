@@ -1,3 +1,8 @@
+2005-04-08  Sven Neumann  <neumann@jpk.com>
+
+	* plug-ins/common/gauss.c: fixed preview for zero blur radii
+	(bug #173039).
+
 2005-04-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/base.c: include libgimpbase/gimpwin32-io.h.
