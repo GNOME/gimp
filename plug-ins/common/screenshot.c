@@ -160,11 +160,11 @@ typedef struct
 
 static ScreenShotValues shootvals =
 {
-  SHOOT_ROOT, /* root window  */
-  TRUE,       /* include WM decorations */
-  0,          /* window ID    */
-  0,          /* select delay */
-  0,          /* coords of region dragged out by pointer */
+  SHOOT_WINDOW, /* root window  */
+  TRUE,         /* include WM decorations */
+  0,            /* window ID    */
+  0,            /* select delay */
+  0,            /* coords of region dragged out by pointer */
   0,
   0,
   0
@@ -324,7 +324,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (shootvals.shoot_type == SHOOT_ROOT && shootvals.select_delay > 0)
+      if ( (shootvals.shoot_type == SHOOT_ROOT || shootvals.shoot_type == SHOOT_WINDOW)
+           && shootvals.select_delay > 0)
 	shoot_delay (shootvals.select_delay);
 
       image_ID = shoot (screen);
@@ -882,8 +883,8 @@ shoot_dialog (GdkScreen **screen)
 
      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
        {
-         if (shootvals.select_delay > 0)
-           shoot_delay (shootvals.select_delay);
+/*          if (shootvals.select_delay > 0) */
+/*            shoot_delay (shootvals.select_delay); */
 
          shootvals.window_id = select_window (*screen);
        }

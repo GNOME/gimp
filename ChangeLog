@@ -1,3 +1,9 @@
+2005-04-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/screenshot.c: Change default back to Window
+	rather than Root.  When shooting window, delay after instead
+	of before selecting, so shooting menus etc becomes possible.
+
 2005-04-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/gifload.c (GetCode): GetDataBlock returns -1 on
