@@ -1,3 +1,11 @@
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
+	Merged from gimp-2-2 branch:
+
+	* menus/Makefile.am
+	* tips/Makefile.am: changed the validate rules to work with srcdir
+	!= builddir.
+
 2005-04-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbuffer.[ch]: added gimp_buffer_new_from_pixbuf().
