@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -68,7 +70,7 @@ gimp_pixbuf_targets_add (GtkTargetList *target_list,
 
       for (type = mime_types; *type; type++)
         {
-          GdkAtom *atom = gdk_atom_intern (*type, FALSE);
+          GdkAtom atom = gdk_atom_intern (*type, FALSE);
 
           gtk_target_list_add (target_list, atom, 0, info);
         }
@@ -99,7 +101,7 @@ gimp_pixbuf_targets_remove (GtkTargetList *target_list)
 
       for (type = mime_types; *type; type++)
         {
-          GdkAtom *atom = gdk_atom_intern (*type, FALSE);
+          GdkAtom atom = gdk_atom_intern (*type, FALSE);
 
           gtk_target_list_remove (target_list, atom);
         }

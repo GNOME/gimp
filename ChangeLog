@@ -1,3 +1,8 @@
+2005-04-09  Manish Singh  <yosh@gimp.org>
+
+	* app/widgets/gimppixbuf.c: #include <string.h> for strcmp, and
+	fix gdk_atom_intern usage.
+
 2005-04-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c: quote the shell command passed to execl().
