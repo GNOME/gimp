@@ -1,27 +1,27 @@
 # Translation of gimp-libgimp to Czech
 # Copyright (C) 2000,2003 Free Software Foundation, Inc.
-# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
+# Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
 # Stanislav Brabec <utx@penguin.cz>, 2000
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
-# Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
+# Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 19:52+0100\n"
-"PO-Revision-Date: 2004-11-09 14:54+0100\n"
+"POT-Creation-Date: 2005-04-09 11:10+0000\n"
+"PO-Revision-Date: 2005-04-09 18:04+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../libgimp/gimpbrushmenu.c:129
+#: ../libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
 msgstr "Výběr stopy"
 
-#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
 msgid "_Browse..."
 msgstr "_Procházet..."
 
@@ -147,20 +147,20 @@ msgstr "Potvrzení zápisu"
 msgid "Confirm"
 msgstr "Potvrzení"
 
-#: ../libgimp/gimpexport.c:454
+#: ../libgimp/gimpexport.c:459
 msgid "Export File"
 msgstr "Exportovat soubor"
 
-#: ../libgimp/gimpexport.c:458
+#: ../libgimp/gimpexport.c:463
 msgid "_Ignore"
 msgstr "_Ignorovat"
 
-#: ../libgimp/gimpexport.c:460
+#: ../libgimp/gimpexport.c:465
 msgid "_Export"
 msgstr "_Exportovat"
 
 #. the headline
-#: ../libgimp/gimpexport.c:482
+#: ../libgimp/gimpexport.c:493
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -170,11 +170,11 @@ msgstr ""
 "důvodů:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:553
+#: ../libgimp/gimpexport.c:564
 msgid "The export conversion won't modify your original image."
 msgstr "Exportní konverze by neměla změnit původní obrázek."
 
-#: ../libgimp/gimpexport.c:653
+#: ../libgimp/gimpexport.c:664
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -183,7 +183,7 @@ msgstr ""
 "Chcete zapsat masku vrstev jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: ../libgimp/gimpexport.c:659
+#: ../libgimp/gimpexport.c:670
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -192,23 +192,23 @@ msgstr ""
 "Chcete zapsat kanál (uložený výběr) jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: ../libgimp/gimpfontmenu.c:89
+#: ../libgimp/gimpfontmenu.c:100
 msgid "Font Selection"
 msgstr "Výběr písma"
 
-#: ../libgimp/gimpgradientmenu.c:104
+#: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
 msgstr "Výběr přechodu"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Prázdné)"
 
-#: ../libgimp/gimppalettemenu.c:91
+#: ../libgimp/gimppalettemenu.c:102
 msgid "Palette Selection"
 msgstr "Výběr palety"
 
-#: ../libgimp/gimppatternmenu.c:113
+#: ../libgimp/gimppatternmenu.c:125
 msgid "Pattern Selection"
 msgstr "Výběr vzorku"
 
@@ -454,12 +454,11 @@ msgstr "Žádná (nejrychlejší)"
 
 #: ../libgimpbase/gimpbaseenums.c:469
 msgid "Cubic"
-msgstr ""
+msgstr "Kubická"
 
 #: ../libgimpbase/gimpbaseenums.c:470
-#, fuzzy
 msgid "Lanczos (Best)"
-msgstr "Kubická (nejlepší)"
+msgstr "Lanczos (nejlepší)"
 
 #: ../libgimpbase/gimpbaseenums.c:498
 msgid "Constant"
@@ -486,9 +485,8 @@ msgid "Pixels"
 msgstr "pixelů"
 
 #: ../libgimpbase/gimpbaseenums.c:559
-#, fuzzy
 msgid "Points"
-msgstr "bodů"
+msgstr "Bodů"
 
 #: ../libgimpbase/gimpbaseenums.c:588
 msgid "Shadows"
@@ -564,6 +562,76 @@ msgstr "%d GB"
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
+#: ../libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "Režim práce pro správu barev."
+
+#: ../libgimpconfig/gimpcolorconfig.c:42
+msgid "Sets the color profile for the display."
+msgstr "Nastaví profil barev displeje."
+
+#: ../libgimpconfig/gimpcolorconfig.c:44
+msgid "Sets default RGB workspace color profile."
+msgstr "Nastaví implicitní profil barev pracovního prostředí RGB."
+
+#: ../libgimpconfig/gimpcolorconfig.c:46
+msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
+msgstr "Nastaví profil barev CMYK používaný pro převod mezi RGB a CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:48
+msgid "Sets the color profile used when printing."
+msgstr "Nastaví profil barev používaný při tisku."
+
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "Sets how colors are mapped for your display."
+msgstr "Nastaví, jak se barvy mapují na vašem displeji."
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "Sets how colors are converted from workspace to simulation device."
+msgstr "Nastaví, jak se varvy převádí z pracovního prostředí na simulované zařízení."
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "Žádná správa barev"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "Displej se správou barev"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "Simulace tisku"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+msgid "Perceptual"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+msgid "Relative Colorimetric"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
+msgid "Saturation"
+msgstr "Sytost"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+msgid "Absolute Colorimetric"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:88
+msgid "Ask"
+msgstr "Ptát se"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:89
+msgid "Use embedded profile"
+msgstr "Použít vložený profil"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:90
+msgid "Convert to RGB workspace"
+msgstr "Převést do pracovního prostředí RGB"
+
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
@@ -592,28 +660,28 @@ msgstr "neplatná hodnota '%ld' pro prvek %s"
 msgid "while parsing token '%s': %s"
 msgstr "při zpracování prvku '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
-#: ../libgimpconfig/gimpscanner.c:594
+#: ../libgimpconfig/gimpconfig-iface.c:453
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
+#: ../libgimpconfig/gimpscanner.c:596
 msgid "fatal parse error"
 msgstr "fatální chyba zpracování"
 
-#: ../libgimpconfig/gimpconfig-path.c:349
+#: ../libgimpconfig/gimpconfig-path.c:376
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nemohu expandovat ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:134
+#: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Nemohu vytvořit dočasný soubor pro '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:147
+#: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:666
+#: ../libgimpconfig/gimpconfigwriter.c:667
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -622,7 +690,7 @@ msgstr ""
 "Chyba při zápisu do dočasného souboru pro '%s': %s\n"
 "Původní soubor zůstal nedotčen."
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:675
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -631,64 +699,73 @@ msgstr ""
 "Chyba při zápisu do dočasného souboru pro '%s': %s\n"
 "Žádný soubor nebyl vytvořen."
 
-#: ../libgimpconfig/gimpconfigwriter.c:685
+#: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Chyba při zápisu '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:703
+#: ../libgimpconfig/gimpconfigwriter.c:704
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nemohu odstranit '%s': %s"
 
-#: ../libgimpconfig/gimpscanner.c:100
+#: ../libgimpconfig/gimpscanner.c:102
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nelze otevřít '%s' pro čtení: %s"
 
-#: ../libgimpconfig/gimpscanner.c:270
+#: ../libgimpconfig/gimpscanner.c:272
 msgid "invalid UTF-8 string"
 msgstr "neplatný řetězec v kódování UTF-8"
 
-#: ../libgimpconfig/gimpscanner.c:621
+#: ../libgimpconfig/gimpscanner.c:623
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Chyba při zpracovávání '%s' na řádku %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:177
+#: ../libgimpmodule/gimpmodule.c:180
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Načítá se modul: '%s'\n"
 
-#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
-#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
-#: ../libgimpmodule/gimpmodule.c:478
+#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
+#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
+#: ../libgimpmodule/gimpmodule.c:482
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Chyba při načítání modulu '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:282
+#: ../libgimpmodule/gimpmodule.c:286
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Vynechává se modul: '%s'\n"
 
-#: ../libgimpmodule/gimpmodule.c:422
+#: ../libgimpmodule/gimpmodule.c:426
 msgid "Module error"
 msgstr "Chyba modulu"
 
-#: ../libgimpmodule/gimpmodule.c:423
+#: ../libgimpmodule/gimpmodule.c:427
 msgid "Loaded"
 msgstr "Načteno"
 
-#: ../libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:428
 msgid "Load failed"
 msgstr "Načtení selhalo"
 
-#: ../libgimpmodule/gimpmodule.c:425
+#: ../libgimpmodule/gimpmodule.c:429
 msgid "Not loaded"
 msgstr "Nenačteno"
 
-#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"Nemohu určit platný domovský adresář.\n"
+"Miniatury budou místo toho uloženy v adresáři pro dočasné soubory (%s)."
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nemohu vytvořit adresář miniatur '%s'."
@@ -756,11 +833,6 @@ msgstr "_A"
 #: ../libgimpwidgets/gimpcolorselect.c:349
 msgid "Hue"
 msgstr "Odstín"
-
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
-msgid "Saturation"
-msgstr "Sytost"
 
 #: ../libgimpwidgets/gimpcolorscales.c:167
 #: ../libgimpwidgets/gimpcolorselect.c:351
@@ -832,6 +904,11 @@ msgstr "Zkotrolovat styl"
 msgid "_Preview"
 msgstr "Ná_hled"
 
+#: ../libgimpwidgets/gimppropwidgets.c:1728
+#, c-format
+msgid "This text input field is limited to %d characters."
+msgstr "Toto pole pro vstup textu je omezeno na %d znaků."
+
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Ukotvit"
@@ -884,23 +961,23 @@ msgstr "Řá_dkování"
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:294
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: ../libgimpwidgets/gimpstock.c:271
+#: ../libgimpwidgets/gimpstock.c:273
 msgid "Crop"
 msgstr "Ořezat"
 
-#: ../libgimpwidgets/gimpstock.c:288
+#: ../libgimpwidgets/gimpstock.c:290
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: ../libgimpwidgets/gimpstock.c:291
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:295
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -912,11 +989,11 @@ msgstr "Více..."
 msgid "Unit Selection"
 msgstr "Výběr jednotek"
 
-#: ../libgimpwidgets/gimpunitmenu.c:655
+#: ../libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Jednotka"
 
-#: ../libgimpwidgets/gimpunitmenu.c:659
+#: ../libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Faktor"
 
@@ -940,88 +1017,84 @@ msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čí
 msgid "_Randomize"
 msgstr "_Randomizovat"
 
-#: ../modules/cdisplay_colorblind.c:68
+#: ../modules/cdisplay_colorblind.c:67
 #, fuzzy
 msgid "Protanopia (insensitivity to red"
 msgstr "Protanopie (necitlivost na červenou)"
 
-#: ../modules/cdisplay_colorblind.c:70
+#: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteroanopie (barvoslepost na zelenou)"
 
-#: ../modules/cdisplay_colorblind.c:72
+#: ../modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopie (necitlivost na modrou)"
 
-#: ../modules/cdisplay_colorblind.c:163
+#: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr simulace barevné poruchy (algoritmus Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:256
+#: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
 msgstr "Vidění s barevnou poruchou"
 
-#: ../modules/cdisplay_colorblind.c:554
+#: ../modules/cdisplay_colorblind.c:503
 msgid "Color _Deficiency Type:"
 msgstr "Typ barevné _poruchy:"
 
-#: ../modules/cdisplay_gamma.c:105
+#: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
 msgstr "Zobrazovací filtr barvy gama"
 
-#: ../modules/cdisplay_gamma.c:178
+#: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
 msgstr "Gama"
 
-#: ../modules/cdisplay_gamma.c:352
+#: ../modules/cdisplay_gamma.c:251
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../modules/cdisplay_highcontrast.c:105
+#: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
 msgstr "Zobrazovací filtr vysoce kontrastních barev"
 
-#: ../modules/cdisplay_highcontrast.c:178
+#: ../modules/cdisplay_highcontrast.c:160
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/cdisplay_highcontrast.c:352
+#: ../modules/cdisplay_highcontrast.c:251
 msgid "Contrast C_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_proof.c:57
-msgid "Perceptual"
-msgstr ""
+#: ../modules/cdisplay_lcms.c:95
+msgid "Color management display filter using ICC color profiles"
+msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_proof.c:58
-msgid "Relative Colorimetric"
-msgstr ""
+#: ../modules/cdisplay_lcms.c:163
+msgid "Color Management"
+msgstr "Správa barev"
 
-#: ../modules/cdisplay_proof.c:60
-msgid "Absolute Colorimetric"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:147
+#: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:251
+#: ../modules/cdisplay_proof.c:221
 msgid "Color Proof"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:462
+#: ../modules/cdisplay_proof.c:346
 msgid "_Intent:"
 msgstr "_Cíl:"
 
-#: ../modules/cdisplay_proof.c:465
+#: ../modules/cdisplay_proof.c:350
 msgid "Choose an ICC Color Profile"
 msgstr "Zvolte profil barev ICC"
 
-#: ../modules/cdisplay_proof.c:468
+#: ../modules/cdisplay_proof.c:353
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:476
+#: ../modules/cdisplay_proof.c:358
 msgid "_Black Point Compensation"
 msgstr "_Kompenzace černého bodu"
 
