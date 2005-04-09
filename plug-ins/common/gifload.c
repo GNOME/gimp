@@ -603,8 +603,7 @@ GetCode (FILE *fd,
 {
   static unsigned char buf[280];
   static int curbit, lastbit, done, last_byte;
-  int i, j, ret;
-  unsigned char count;
+  int i, j, ret, count;
 
   if (flag)
     {
