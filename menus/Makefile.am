@@ -53,7 +53,8 @@ endif
 
 validate: $(menudata_DATA)
 if HAVE_XMLLINT
-	@for menu in $(menudata_DATA); do \
+	@cd $(srcdir); \
+	for menu in $(menudata_DATA); do \
 	   $(XMLLINT) --noout --valid $$menu || \
 	   ( echo "* $$menu INVALID *"; exit 1; ) ; \
 	done

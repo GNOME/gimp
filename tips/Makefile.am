@@ -85,7 +85,8 @@ update-po: $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot
 
 validate: update-po gimp-tips.xml
 if HAVE_XMLLINT
-	@$(XMLLINT) --noout --valid gimp-tips.xml || \
+	@cd $(srcdir); \
+	$(XMLLINT) --noout --valid gimp-tips.xml || \
 	  ( echo "* gimp-tips.xml INVALID *"; exit 1; )
 endif
 

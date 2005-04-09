@@ -1,5 +1,11 @@
 2005-04-09  Sven Neumann  <sven@gimp.org>
 
+	* menus/Makefile.am
+	* tips/Makefile.am: changed the validate rules to work with srcdir
+	!= builddir.
+
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
 	Merged from HEAD branch:
 
 	* plug-ins/print/print.c: quote the shell command passed to execl().
