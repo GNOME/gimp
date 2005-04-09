@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2004-11-23 14:20+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -135,7 +135,7 @@ msgstr "Datum:"
 msgid "Image Types:"
 msgstr "Bildtyper:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:611
+#: ../plug-ins/script-fu/script-fu-scripts.c:622
 #, c-format
 msgid ""
 "Error while executing\n"

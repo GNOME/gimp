@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -135,7 +135,7 @@ msgstr "Tarikh"
 msgid "Image Types:"
 msgstr "Jenis Imej"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:611
+#: ../plug-ins/script-fu/script-fu-scripts.c:622
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"

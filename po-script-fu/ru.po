@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2004-07-15 00:10+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -140,7 +140,7 @@ msgstr "Дата:"
 msgid "Image Types:"
 msgstr "Типы изображений:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:611
+#: ../plug-ins/script-fu/script-fu-scripts.c:622
 #, c-format
 msgid ""
 "Error while executing\n"

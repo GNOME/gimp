@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2004-09-28 11:46+0800\n"
 "Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -375,7 +375,7 @@ msgstr "碎形(_F)"
 #: ../plug-ins/common/pat.c:433 ../plug-ins/common/pcx.c:585
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1178
 #: ../plug-ins/common/pnm.c:809 ../plug-ins/common/postscript.c:1123
-#: ../plug-ins/common/psd_save.c:1588 ../plug-ins/common/raw.c:517
+#: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/raw.c:517
 #: ../plug-ins/common/raw.c:544 ../plug-ins/common/spheredesigner.c:2088
 #: ../plug-ins/common/sunras.c:513 ../plug-ins/common/tga.c:1030
 #: ../plug-ins/common/tiff.c:1810 ../plug-ins/common/xbm.c:996
@@ -1213,35 +1213,36 @@ msgstr "正在開啟‘%s’..."
 
 #: ../plug-ins/bmp/bmpread.c:170 ../plug-ins/bmp/bmpread.c:179
 #: ../plug-ins/bmp/bmpread.c:185 ../plug-ins/bmp/bmpread.c:193
-#: ../plug-ins/bmp/bmpread.c:207 ../plug-ins/bmp/bmpread.c:341
+#: ../plug-ins/bmp/bmpread.c:207 ../plug-ins/bmp/bmpread.c:307
+#: ../plug-ins/bmp/bmpread.c:348
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "‘%s’不是有效的 BMP 點陣圖"
 
 #: ../plug-ins/bmp/bmpread.c:220 ../plug-ins/bmp/bmpread.c:239
 #: ../plug-ins/bmp/bmpread.c:260 ../plug-ins/bmp/bmpread.c:279
-#: ../plug-ins/bmp/bmpread.c:300 ../plug-ins/bmp/bmpread.c:306
-#: ../plug-ins/bmp/bmpread.c:312
+#: ../plug-ins/bmp/bmpread.c:300 ../plug-ins/bmp/bmpread.c:313
+#: ../plug-ins/bmp/bmpread.c:319
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "讀取 BMP 點陣圖‘%s’的檔頭時發生錯誤"
 
-#: ../plug-ins/bmp/bmpread.c:442 ../plug-ins/bmp/bmpread.c:477
+#: ../plug-ins/bmp/bmpread.c:450 ../plug-ins/bmp/bmpread.c:485
 msgid "Unrecognized or invalid BMP compression format."
 msgstr ""
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:482 ../plug-ins/common/CEL.c:357
+#: ../plug-ins/bmp/bmpread.c:490 ../plug-ins/common/CEL.c:357
 #: ../plug-ins/common/CEL.c:360 ../plug-ins/common/blinds.c:273
 #: ../plug-ins/common/compose.c:625 ../plug-ins/common/decompose.c:595
 #: ../plug-ins/common/dicom.c:442 ../plug-ins/common/film.c:946
-#: ../plug-ins/common/gifload.c:865 ../plug-ins/common/jpeg.c:1113
+#: ../plug-ins/common/gifload.c:864 ../plug-ins/common/jpeg.c:1113
 #: ../plug-ins/common/jpeg.c:2474 ../plug-ins/common/pcx.c:334
 #: ../plug-ins/common/pcx.c:340 ../plug-ins/common/pix.c:374
 #: ../plug-ins/common/png.c:808 ../plug-ins/common/pnm.c:517
-#: ../plug-ins/common/psd.c:2173 ../plug-ins/common/raw.c:677
+#: ../plug-ins/common/psd.c:2174 ../plug-ins/common/raw.c:677
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:925
 #: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:833
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/winclipboard.c:579
@@ -1272,12 +1273,12 @@ msgstr "無法處理不明的影像。"
 #: ../plug-ins/common/jpeg.c:1453 ../plug-ins/common/pat.c:438
 #: ../plug-ins/common/pcx.c:545 ../plug-ins/common/pix.c:521
 #: ../plug-ins/common/png.c:1185 ../plug-ins/common/pnm.c:814
-#: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1593
+#: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1341
 #: ../plug-ins/common/sunras.c:518 ../plug-ins/common/tga.c:1035
 #: ../plug-ins/common/tiff.c:1815 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
-#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:957
+#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
@@ -1613,7 +1614,7 @@ msgid "Hue"
 msgstr "色相"
 
 #: ../plug-ins/common/CML_explorer.c:303 ../plug-ins/common/CML_explorer.c:311
-#: ../plug-ins/common/decompose.c:144 ../plug-ins/rcm/rcm_dialog.c:541
+#: ../plug-ins/common/decompose.c:144 ../plug-ins/rcm/rcm_dialog.c:548
 msgid "Saturation"
 msgstr "彩度"
 
@@ -2414,25 +2415,25 @@ msgstr ""
 msgid "Color to _Alpha..."
 msgstr "色彩轉為透明(_A)..."
 
-#: ../plug-ins/common/colortoalpha.c:181
+#: ../plug-ins/common/colortoalpha.c:187
 msgid "Removing color..."
 msgstr "正在移除顏色..."
 
-#: ../plug-ins/common/colortoalpha.c:377
+#: ../plug-ins/common/colortoalpha.c:380
 msgid "Color to Alpha"
 msgstr "色彩轉為透明"
 
-#: ../plug-ins/common/colortoalpha.c:402 ../plug-ins/common/mapcolor.c:424
+#: ../plug-ins/common/colortoalpha.c:405 ../plug-ins/common/mapcolor.c:424
 #: ../plug-ins/gfli/gfli.c:835 ../plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "從："
 
 # does not express well in Chinese, so change form -- Abel
-#: ../plug-ins/common/colortoalpha.c:406
+#: ../plug-ins/common/colortoalpha.c:409
 msgid "Color to Alpha Color Picker"
 msgstr "選擇準備轉換為透明的顏色"
 
-#: ../plug-ins/common/colortoalpha.c:420
+#: ../plug-ins/common/colortoalpha.c:423
 msgid "to alpha"
 msgstr "轉為透明"
 
@@ -2455,13 +2456,13 @@ msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/common/compose.c:148 ../plug-ins/rcm/rcm_dialog.c:452
+#: ../plug-ins/common/compose.c:148 ../plug-ins/rcm/rcm_dialog.c:459
 msgid "Hue:"
 msgstr "色相："
 
 #. Gray: Circle: Spinbutton 2
 #: ../plug-ins/common/compose.c:149 ../plug-ins/print/gimp_color_window.c:364
-#: ../plug-ins/rcm/rcm_dialog.c:479
+#: ../plug-ins/rcm/rcm_dialog.c:486
 msgid "Saturation:"
 msgstr "彩度："
 
@@ -3075,15 +3076,15 @@ msgstr ""
 msgid "Deinterlace..."
 msgstr ""
 
-#: ../plug-ins/common/deinterlace.c:315
+#: ../plug-ins/common/deinterlace.c:324
 msgid "Deinterlace"
 msgstr ""
 
-#: ../plug-ins/common/deinterlace.c:340
+#: ../plug-ins/common/deinterlace.c:349
 msgid "Keep o_dd fields"
 msgstr ""
 
-#: ../plug-ins/common/deinterlace.c:341
+#: ../plug-ins/common/deinterlace.c:350
 msgid "Keep _even fields"
 msgstr ""
 
@@ -3483,7 +3484,7 @@ msgstr ""
 
 #. Create selection
 #: ../plug-ins/common/film.c:1166 ../plug-ins/imagemap/imap_selection.c:400
-#: ../plug-ins/rcm/rcm_dialog.c:158
+#: ../plug-ins/rcm/rcm_dialog.c:165
 msgid "Selection"
 msgstr "選擇區域"
 
@@ -4013,23 +4014,23 @@ msgstr "這個不是 GIF 檔"
 msgid "Non-square pixels.  Image might look squashed."
 msgstr ""
 
-#: ../plug-ins/common/gifload.c:867
+#: ../plug-ins/common/gifload.c:866
 #, c-format
 msgid "Background (%d%s)"
 msgstr "背景 (%d%s)"
 
-#: ../plug-ins/common/gifload.c:915 ../plug-ins/common/iwarp.c:783
+#: ../plug-ins/common/gifload.c:914 ../plug-ins/common/iwarp.c:783
 #: ../plug-ins/common/iwarp.c:817
 #, c-format
 msgid "Frame %d"
 msgstr "第 %d 畫格"
 
-#: ../plug-ins/common/gifload.c:917
+#: ../plug-ins/common/gifload.c:916
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "第 %d 畫格 (%d%s)"
 
-#: ../plug-ins/common/gifload.c:947
+#: ../plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -5807,7 +5808,7 @@ msgstr "著色方式"
 msgid "B/W"
 msgstr "黑白"
 
-#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:404
+#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:411
 msgid "Gray"
 msgstr "灰"
 
@@ -5896,18 +5897,18 @@ msgstr "預覽圖尺寸(_S)："
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "PSD 檔案中含有無效的 UTF-8 字串"
 
-#: ../plug-ins/common/psd_save.c:181
+#: ../plug-ins/common/psd_save.c:192
 msgid "Photoshop image"
 msgstr ""
 
-#: ../plug-ins/common/psd_save.c:1564
+#: ../plug-ins/common/psd_save.c:1312
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
 msgstr ""
 
-#: ../plug-ins/common/psd_save.c:1576
+#: ../plug-ins/common/psd_save.c:1324
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -11377,87 +11378,87 @@ msgstr ""
 msgid "Rotating the colormap..."
 msgstr ""
 
-#: ../plug-ins/rcm/rcm_dialog.c:114
+#: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
 msgstr "原來"
 
-#: ../plug-ins/rcm/rcm_dialog.c:127
+#: ../plug-ins/rcm/rcm_dialog.c:133
 msgid "Rotated"
 msgstr "旋轉後"
 
-#: ../plug-ins/rcm/rcm_dialog.c:140
+#: ../plug-ins/rcm/rcm_dialog.c:147
 msgid "Continuous update"
 msgstr "連續更新"
 
-#: ../plug-ins/rcm/rcm_dialog.c:153
+#: ../plug-ins/rcm/rcm_dialog.c:160
 msgid "Area:"
 msgstr "區域："
 
-#: ../plug-ins/rcm/rcm_dialog.c:157
+#: ../plug-ins/rcm/rcm_dialog.c:164
 msgid "Entire Layer"
 msgstr "整個圖層"
 
-#: ../plug-ins/rcm/rcm_dialog.c:159
+#: ../plug-ins/rcm/rcm_dialog.c:166
 msgid "Context"
 msgstr ""
 
 #. spinbutton 1
-#: ../plug-ins/rcm/rcm_dialog.c:284 ../plug-ins/rcm/rcm_dialog.c:362
+#: ../plug-ins/rcm/rcm_dialog.c:291 ../plug-ins/rcm/rcm_dialog.c:369
 msgid "From"
 msgstr "從"
 
 #. spinbutton 2
-#: ../plug-ins/rcm/rcm_dialog.c:310 ../plug-ins/rcm/rcm_dialog.c:363
+#: ../plug-ins/rcm/rcm_dialog.c:317 ../plug-ins/rcm/rcm_dialog.c:370
 msgid "To"
 msgstr "至"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/rcm/rcm_dialog.c:499
+#: ../plug-ins/rcm/rcm_dialog.c:506
 msgid "Gray Mode"
 msgstr "灰階模式"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/rcm/rcm_dialog.c:508
+#: ../plug-ins/rcm/rcm_dialog.c:515
 msgid "Treat as this"
 msgstr ""
 
-#: ../plug-ins/rcm/rcm_dialog.c:520
+#: ../plug-ins/rcm/rcm_dialog.c:527
 msgid "Change to this"
 msgstr ""
 
 #. * Gray: What is gray? *
-#: ../plug-ins/rcm/rcm_dialog.c:533
+#: ../plug-ins/rcm/rcm_dialog.c:540
 msgid "Gray Threshold"
 msgstr ""
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/rcm/rcm_dialog.c:572 ../plug-ins/rcm/rcm_dialog.c:676
+#: ../plug-ins/rcm/rcm_dialog.c:579 ../plug-ins/rcm/rcm_dialog.c:683
 msgid "Units"
 msgstr "單位"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/rcm/rcm_dialog.c:581
+#: ../plug-ins/rcm/rcm_dialog.c:588
 msgid "Radians"
 msgstr "弧度"
 
-#: ../plug-ins/rcm/rcm_dialog.c:593
+#: ../plug-ins/rcm/rcm_dialog.c:600
 msgid "Radians/Pi"
 msgstr "弧度/π"
 
-#: ../plug-ins/rcm/rcm_dialog.c:605
+#: ../plug-ins/rcm/rcm_dialog.c:612
 msgid "Degrees"
 msgstr "角度"
 
 #. Create dialog
-#: ../plug-ins/rcm/rcm_dialog.c:638
+#: ../plug-ins/rcm/rcm_dialog.c:645
 msgid "Colormap Rotation"
 msgstr ""
 
-#: ../plug-ins/rcm/rcm_dialog.c:670
+#: ../plug-ins/rcm/rcm_dialog.c:677
 msgid "Main Options"
 msgstr "主要選項"
 
-#: ../plug-ins/rcm/rcm_dialog.c:673
+#: ../plug-ins/rcm/rcm_dialog.c:680
 msgid "Gray Options"
 msgstr ""
 
@@ -11538,27 +11539,27 @@ msgstr ""
 msgid "Transferring TWAIN data..."
 msgstr "正在傳送 TWAIN 資料..."
 
-#: ../plug-ins/winicon/icodialog.c:123
+#: ../plug-ins/winicon/icodialog.c:89
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:124
+#: ../plug-ins/winicon/icodialog.c:90
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:125
+#: ../plug-ins/winicon/icodialog.c:91
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:126
+#: ../plug-ins/winicon/icodialog.c:92
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:151
+#: ../plug-ins/winicon/icodialog.c:117
 msgid "GIMP Windows Icon Plugin"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:172
+#: ../plug-ins/winicon/icodialog.c:138
 msgid "Icon details"
 msgstr "圖示詳細資料"
 
@@ -11567,7 +11568,7 @@ msgstr "圖示詳細資料"
 msgid "Icon #%i"
 msgstr "Icon #%i"
 
-#: ../plug-ins/winicon/icosave.c:943
+#: ../plug-ins/winicon/icosave.c:969
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 

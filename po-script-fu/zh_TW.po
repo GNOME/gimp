@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2004-09-28 11:10+0800\n"
 "Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -134,7 +134,7 @@ msgstr "日期："
 msgid "Image Types:"
 msgstr "影像類型："
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:611
+#: ../plug-ins/script-fu/script-fu-scripts.c:622
 #, c-format
 msgid ""
 "Error while executing\n"

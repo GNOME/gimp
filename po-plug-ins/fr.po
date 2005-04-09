@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-22 23:04+0100\n"
+"POT-Creation-Date: 2005-04-09 21:56+0200\n"
 "PO-Revision-Date: 2005-01-25 20:11+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <fr@li.org>\n"
@@ -399,7 +399,7 @@ msgstr "_Fractales"
 #: ../plug-ins/common/pat.c:433 ../plug-ins/common/pcx.c:585
 #: ../plug-ins/common/pix.c:515 ../plug-ins/common/png.c:1178
 #: ../plug-ins/common/pnm.c:809 ../plug-ins/common/postscript.c:1123
-#: ../plug-ins/common/psd_save.c:1588 ../plug-ins/common/raw.c:517
+#: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/raw.c:517
 #: ../plug-ins/common/raw.c:544 ../plug-ins/common/spheredesigner.c:2088
 #: ../plug-ins/common/sunras.c:513 ../plug-ins/common/tga.c:1030
 #: ../plug-ins/common/tiff.c:1810 ../plug-ins/common/xbm.c:996
@@ -1245,35 +1245,36 @@ msgstr "Ouverture de « %s »..."
 
 #: ../plug-ins/bmp/bmpread.c:170 ../plug-ins/bmp/bmpread.c:179
 #: ../plug-ins/bmp/bmpread.c:185 ../plug-ins/bmp/bmpread.c:193
-#: ../plug-ins/bmp/bmpread.c:207 ../plug-ins/bmp/bmpread.c:341
+#: ../plug-ins/bmp/bmpread.c:207 ../plug-ins/bmp/bmpread.c:307
+#: ../plug-ins/bmp/bmpread.c:348
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "« %s » n'est pas un fichier BMP valide"
 
 #: ../plug-ins/bmp/bmpread.c:220 ../plug-ins/bmp/bmpread.c:239
 #: ../plug-ins/bmp/bmpread.c:260 ../plug-ins/bmp/bmpread.c:279
-#: ../plug-ins/bmp/bmpread.c:300 ../plug-ins/bmp/bmpread.c:306
-#: ../plug-ins/bmp/bmpread.c:312
+#: ../plug-ins/bmp/bmpread.c:300 ../plug-ins/bmp/bmpread.c:313
+#: ../plug-ins/bmp/bmpread.c:319
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Erreur de lecture de l'en-tête BMP depuis « %s »"
 
-#: ../plug-ins/bmp/bmpread.c:442 ../plug-ins/bmp/bmpread.c:477
+#: ../plug-ins/bmp/bmpread.c:450 ../plug-ins/bmp/bmpread.c:485
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Format de compression BMP inconnu ou non valide."
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:482 ../plug-ins/common/CEL.c:357
+#: ../plug-ins/bmp/bmpread.c:490 ../plug-ins/common/CEL.c:357
 #: ../plug-ins/common/CEL.c:360 ../plug-ins/common/blinds.c:273
 #: ../plug-ins/common/compose.c:625 ../plug-ins/common/decompose.c:595
 #: ../plug-ins/common/dicom.c:442 ../plug-ins/common/film.c:946
-#: ../plug-ins/common/gifload.c:865 ../plug-ins/common/jpeg.c:1113
+#: ../plug-ins/common/gifload.c:864 ../plug-ins/common/jpeg.c:1113
 #: ../plug-ins/common/jpeg.c:2474 ../plug-ins/common/pcx.c:334
 #: ../plug-ins/common/pcx.c:340 ../plug-ins/common/pix.c:374
 #: ../plug-ins/common/png.c:808 ../plug-ins/common/pnm.c:517
-#: ../plug-ins/common/psd.c:2173 ../plug-ins/common/raw.c:677
+#: ../plug-ins/common/psd.c:2174 ../plug-ins/common/raw.c:677
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:925
 #: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:833
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/winclipboard.c:579
@@ -1304,12 +1305,12 @@ msgstr "Impossible d'opérer sur des types d'images inconnus."
 #: ../plug-ins/common/jpeg.c:1453 ../plug-ins/common/pat.c:438
 #: ../plug-ins/common/pcx.c:545 ../plug-ins/common/pix.c:521
 #: ../plug-ins/common/png.c:1185 ../plug-ins/common/pnm.c:814
-#: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1593
+#: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1341
 #: ../plug-ins/common/sunras.c:518 ../plug-ins/common/tga.c:1035
 #: ../plug-ins/common/tiff.c:1815 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
-#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:957
+#: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:977
 #: ../plug-ins/xjt/xjt.c:1682
 #, c-format
 msgid "Saving '%s'..."
@@ -1645,7 +1646,7 @@ msgid "Hue"
 msgstr "Teinte"
 
 #: ../plug-ins/common/CML_explorer.c:303 ../plug-ins/common/CML_explorer.c:311
-#: ../plug-ins/common/decompose.c:144 ../plug-ins/rcm/rcm_dialog.c:541
+#: ../plug-ins/common/decompose.c:144 ../plug-ins/rcm/rcm_dialog.c:548
 msgid "Saturation"
 msgstr "Saturation"
 
@@ -2457,24 +2458,24 @@ msgstr "Coloriser, couleur personnalisée"
 msgid "Color to _Alpha..."
 msgstr "Couleur vers _alpha..."
 
-#: ../plug-ins/common/colortoalpha.c:181
+#: ../plug-ins/common/colortoalpha.c:187
 msgid "Removing color..."
 msgstr "Suppression de la couleur..."
 
-#: ../plug-ins/common/colortoalpha.c:377
+#: ../plug-ins/common/colortoalpha.c:380
 msgid "Color to Alpha"
 msgstr "Couleur vers alpha"
 
-#: ../plug-ins/common/colortoalpha.c:402 ../plug-ins/common/mapcolor.c:424
+#: ../plug-ins/common/colortoalpha.c:405 ../plug-ins/common/mapcolor.c:424
 #: ../plug-ins/gfli/gfli.c:835 ../plug-ins/gfli/gfli.c:898
 msgid "From:"
 msgstr "Depuis :"
 
-#: ../plug-ins/common/colortoalpha.c:406
+#: ../plug-ins/common/colortoalpha.c:409
 msgid "Color to Alpha Color Picker"
 msgstr "Couleur vers alpha : sélection de la couleur"
 
-#: ../plug-ins/common/colortoalpha.c:420
+#: ../plug-ins/common/colortoalpha.c:423
 msgid "to alpha"
 msgstr "vers alpha"
 
@@ -2497,13 +2498,13 @@ msgid "HSV"
 msgstr "TSV"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/common/compose.c:148 ../plug-ins/rcm/rcm_dialog.c:452
+#: ../plug-ins/common/compose.c:148 ../plug-ins/rcm/rcm_dialog.c:459
 msgid "Hue:"
 msgstr "Teinte :"
 
 #. Gray: Circle: Spinbutton 2
 #: ../plug-ins/common/compose.c:149 ../plug-ins/print/gimp_color_window.c:364
-#: ../plug-ins/rcm/rcm_dialog.c:479
+#: ../plug-ins/rcm/rcm_dialog.c:486
 msgid "Saturation:"
 msgstr "Saturation :"
 
@@ -3122,15 +3123,15 @@ msgstr "_Désentrelacer..."
 msgid "Deinterlace..."
 msgstr "Désentrelacement..."
 
-#: ../plug-ins/common/deinterlace.c:315
+#: ../plug-ins/common/deinterlace.c:324
 msgid "Deinterlace"
 msgstr "Désentrelacer"
 
-#: ../plug-ins/common/deinterlace.c:340
+#: ../plug-ins/common/deinterlace.c:349
 msgid "Keep o_dd fields"
 msgstr "Garder les lignes _impaires"
 
-#: ../plug-ins/common/deinterlace.c:341
+#: ../plug-ins/common/deinterlace.c:350
 msgid "Keep _even fields"
 msgstr "Garder les lignes _paires"
 
@@ -3529,7 +3530,7 @@ msgstr "Sur le film :"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1166 ../plug-ins/imagemap/imap_selection.c:400
-#: ../plug-ins/rcm/rcm_dialog.c:158
+#: ../plug-ins/rcm/rcm_dialog.c:165
 msgid "Selection"
 msgstr "Sélection"
 
@@ -4073,23 +4074,23 @@ msgstr "Ce n'est pas un fichier GIF."
 msgid "Non-square pixels.  Image might look squashed."
 msgstr "Pixels non carrés. L'image peut apparaître criarde."
 
-#: ../plug-ins/common/gifload.c:867
+#: ../plug-ins/common/gifload.c:866
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Arrière-plan (%d%s)"
 
-#: ../plug-ins/common/gifload.c:915 ../plug-ins/common/iwarp.c:783
+#: ../plug-ins/common/gifload.c:914 ../plug-ins/common/iwarp.c:783
 #: ../plug-ins/common/iwarp.c:817
 #, c-format
 msgid "Frame %d"
 msgstr "Image %d"
 
-#: ../plug-ins/common/gifload.c:917
+#: ../plug-ins/common/gifload.c:916
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Image vidéo %d (%d%s)"
 
-#: ../plug-ins/common/gifload.c:947
+#: ../plug-ins/common/gifload.c:946
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
@@ -5887,7 +5888,7 @@ msgstr "Coloration"
 msgid "B/W"
 msgstr "N/B"
 
-#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:404
+#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:411
 msgid "Gray"
 msgstr "Gris"
 
@@ -5978,11 +5979,11 @@ msgstr "_Taille de l'aperçu :"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Chaîne de caractèe UTF-8 non valide dans le fichiers PSD"
 
-#: ../plug-ins/common/psd_save.c:181
+#: ../plug-ins/common/psd_save.c:192
 msgid "Photoshop image"
 msgstr "Image Photoshop"
 
-#: ../plug-ins/common/psd_save.c:1564
+#: ../plug-ins/common/psd_save.c:1312
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5991,7 +5992,7 @@ msgstr ""
 "Impossible d'enregistrer « %s ». Le format de fichier PSD ne supporte pas "
 "les images de plus de 30000 pixels de largeur ou de hauteur."
 
-#: ../plug-ins/common/psd_save.c:1576
+#: ../plug-ins/common/psd_save.c:1324
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -11517,87 +11518,87 @@ msgstr "Rotation de la carte des co_uleurs..."
 msgid "Rotating the colormap..."
 msgstr "Rotation de la carte des couleurs en cours..."
 
-#: ../plug-ins/rcm/rcm_dialog.c:114
+#: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
 msgstr "Original"
 
-#: ../plug-ins/rcm/rcm_dialog.c:127
+#: ../plug-ins/rcm/rcm_dialog.c:133
 msgid "Rotated"
 msgstr "Tourné"
 
-#: ../plug-ins/rcm/rcm_dialog.c:140
+#: ../plug-ins/rcm/rcm_dialog.c:147
 msgid "Continuous update"
 msgstr "Mise à jour continue"
 
-#: ../plug-ins/rcm/rcm_dialog.c:153
+#: ../plug-ins/rcm/rcm_dialog.c:160
 msgid "Area:"
 msgstr "Zone :"
 
-#: ../plug-ins/rcm/rcm_dialog.c:157
+#: ../plug-ins/rcm/rcm_dialog.c:164
 msgid "Entire Layer"
 msgstr "Calque entier"
 
-#: ../plug-ins/rcm/rcm_dialog.c:159
+#: ../plug-ins/rcm/rcm_dialog.c:166
 msgid "Context"
 msgstr "Contexte"
 
 #. spinbutton 1
-#: ../plug-ins/rcm/rcm_dialog.c:284 ../plug-ins/rcm/rcm_dialog.c:362
+#: ../plug-ins/rcm/rcm_dialog.c:291 ../plug-ins/rcm/rcm_dialog.c:369
 msgid "From"
 msgstr "Depuis"
 
 #. spinbutton 2
-#: ../plug-ins/rcm/rcm_dialog.c:310 ../plug-ins/rcm/rcm_dialog.c:363
+#: ../plug-ins/rcm/rcm_dialog.c:317 ../plug-ins/rcm/rcm_dialog.c:370
 msgid "To"
 msgstr "Vers"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/rcm/rcm_dialog.c:499
+#: ../plug-ins/rcm/rcm_dialog.c:506
 msgid "Gray Mode"
 msgstr "Mode gris"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/rcm/rcm_dialog.c:508
+#: ../plug-ins/rcm/rcm_dialog.c:515
 msgid "Treat as this"
 msgstr "Traiter comme cela"
 
-#: ../plug-ins/rcm/rcm_dialog.c:520
+#: ../plug-ins/rcm/rcm_dialog.c:527
 msgid "Change to this"
 msgstr "Changer en cela"
 
 #. * Gray: What is gray? *
-#: ../plug-ins/rcm/rcm_dialog.c:533
+#: ../plug-ins/rcm/rcm_dialog.c:540
 msgid "Gray Threshold"
 msgstr "Seuil gris"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/rcm/rcm_dialog.c:572 ../plug-ins/rcm/rcm_dialog.c:676
+#: ../plug-ins/rcm/rcm_dialog.c:579 ../plug-ins/rcm/rcm_dialog.c:683
 msgid "Units"
 msgstr "Unités"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/rcm/rcm_dialog.c:581
+#: ../plug-ins/rcm/rcm_dialog.c:588
 msgid "Radians"
 msgstr "Radians"
 
-#: ../plug-ins/rcm/rcm_dialog.c:593
+#: ../plug-ins/rcm/rcm_dialog.c:600
 msgid "Radians/Pi"
 msgstr "Radians/Pi"
 
-#: ../plug-ins/rcm/rcm_dialog.c:605
+#: ../plug-ins/rcm/rcm_dialog.c:612
 msgid "Degrees"
 msgstr "Degrés"
 
 #. Create dialog
-#: ../plug-ins/rcm/rcm_dialog.c:638
+#: ../plug-ins/rcm/rcm_dialog.c:645
 msgid "Colormap Rotation"
 msgstr "Rotation de la Carte des Couleurs"
 
-#: ../plug-ins/rcm/rcm_dialog.c:670
+#: ../plug-ins/rcm/rcm_dialog.c:677
 msgid "Main Options"
 msgstr "Options principales"
 
-#: ../plug-ins/rcm/rcm_dialog.c:673
+#: ../plug-ins/rcm/rcm_dialog.c:680
 msgid "Gray Options"
 msgstr "Options gris"
 
@@ -11680,27 +11681,27 @@ msgstr "_TWAIN..."
 msgid "Transferring TWAIN data..."
 msgstr "Transfert des données TWAIN..."
 
-#: ../plug-ins/winicon/icodialog.c:123
+#: ../plug-ins/winicon/icodialog.c:89
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alpha, 2-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:124
+#: ../plug-ins/winicon/icodialog.c:90
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alpha, 16-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:125
+#: ../plug-ins/winicon/icodialog.c:91
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alpha, 256-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:126
+#: ../plug-ins/winicon/icodialog.c:92
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alpha, no palette"
 
-#: ../plug-ins/winicon/icodialog.c:151
+#: ../plug-ins/winicon/icodialog.c:117
 msgid "GIMP Windows Icon Plugin"
 msgstr "Greffon icône Windows"
 
-#: ../plug-ins/winicon/icodialog.c:172
+#: ../plug-ins/winicon/icodialog.c:138
 msgid "Icon details"
 msgstr "Détails de l'icône"
 
@@ -11709,7 +11710,7 @@ msgstr "Détails de l'icône"
 msgid "Icon #%i"
 msgstr "Icône n° %i"
 
-#: ../plug-ins/winicon/icosave.c:943
+#: ../plug-ins/winicon/icosave.c:969
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Les icônes Windows ne peuvent être plus large ou haute que 255 pixels."
 

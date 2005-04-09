@@ -1,5 +1,9 @@
 2005-04-09  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.5 release.
+
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
 	* menus/Makefile.am
 	* tips/Makefile.am: changed the validate rules to work with srcdir
 	!= builddir.
