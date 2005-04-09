@@ -20,11 +20,6 @@
 #define  __GIMP_RECTANGLE_TOOL_H__
 
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "gimpselectiontool.h"
 
 
@@ -94,15 +89,17 @@ struct _GimpRectangleToolClass
 
   /*  virtual function  */
 
-  void (* execute) (GimpRectangleTool *rect_tool,
-                    gint               x,
-                    gint               y,
-                    gint               w,
-                    gint               h);
+  gboolean (* execute) (GimpRectangleTool *rect_tool,
+                        gint               x,
+                        gint               y,
+                        gint               w,
+                        gint               h);
 };
 
 
-GType   gimp_rectangle_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_rectangle_tool_get_type      (void) G_GNUC_CONST;
 
+void    gimp_rectangle_tool_width_changed (GimpRectangleTool *rectangle,
+                                           gint               new_width);
 
 #endif  /*  __GIMP_RECTANGLE_TOOL_H__  */

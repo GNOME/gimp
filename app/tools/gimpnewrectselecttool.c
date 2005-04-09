@@ -30,6 +30,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimp-utils.h"
@@ -44,12 +45,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-dialog.h"
-
 #include "gimpselectiontool.h"
 #include "gimpselectionoptions.h"
 #include "gimprectangletool.h"
@@ -63,6 +58,11 @@
 static void gimp_new_rect_select_tool_class_init     (GimpNewRectSelectToolClass *klass);
 static void gimp_new_rect_select_tool_init           (GimpNewRectSelectTool      *rect_tool);
 
+static void gimp_new_rect_select_tool_button_press   (GimpTool                   *tool,
+                                                      GimpCoords                 *coords,
+                                                      guint32                     time,
+                                                      GdkModifierType             state,
+                                                      GimpDisplay                *gdisp);
 static void gimp_new_rect_select_tool_modifier_key   (GimpTool                   *tool,
                                                       GdkModifierType             key,
                                                       gboolean                    press,
@@ -73,7 +73,7 @@ static void gimp_new_rect_select_tool_cursor_update  (GimpTool                  
                                                       GdkModifierType             state,
                                                       GimpDisplay                *gdisp);
 
-static void gimp_new_rect_select_tool_execute        (GimpRectangleTool          *rect_tool,
+static gboolean gimp_new_rect_select_tool_execute    (GimpRectangleTool          *rect_tool,
                                                       gint                        x,
                                                       gint                        y,
                                                       gint                        w,
@@ -137,6 +137,7 @@ gimp_new_rect_select_tool_class_init (GimpNewRectSelectToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  tool_class->button_press   = gimp_new_rect_select_tool_button_press;
   tool_class->modifier_key   = gimp_new_rect_select_tool_modifier_key;
   tool_class->cursor_update  = gimp_new_rect_select_tool_cursor_update;
 
@@ -152,6 +153,43 @@ gimp_new_rect_select_tool_init (GimpNewRectSelectTool *new_rect_select_tool)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RECT_SELECT);
 
   rectangle->selection_tool = TRUE;
+}
+
+static void
+gimp_new_rect_select_tool_button_press (GimpTool        *tool,
+                                        GimpCoords      *coords,
+                                        guint32          time,
+                                        GdkModifierType  state,
+                                        GimpDisplay     *gdisp)
+{
+  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
+
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords,
+                                                time, state, gdisp);
+
+  if (gimp_selection_tool_start_edit (sel_tool, coords))
+    {
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+      return;
+    }
+
+  switch (sel_tool->op)
+    {
+    case SELECTION_ADD:
+      gimp_tool_push_status (tool, _("Selection: ADD"));
+      break;
+    case SELECTION_SUBTRACT:
+      gimp_tool_push_status (tool, _("Selection: SUBTRACT"));
+      break;
+    case SELECTION_INTERSECT:
+      gimp_tool_push_status (tool, _("Selection: INTERSECT"));
+      break;
+    case SELECTION_REPLACE:
+      gimp_tool_push_status (tool, _("Selection: REPLACE"));
+      break;
+    default:
+      break;
+    }
 }
 
 static void
@@ -174,24 +212,89 @@ gimp_new_rect_select_tool_cursor_update (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
-static void
-gimp_new_rect_select_tool_execute (GimpRectangleTool  *rect_tool,
+/*
+ * This function is called if the user clicks and releases the left
+ * button without moving it.  There are five things we might want
+ * to do here:
+ * 1) If there is a floating selection, we anchor it.
+ * 2) If there is an existing rectangle and we are inside it, we
+ *    convert it into a selection.
+ * 3) If there is an existing rectangle and we are outside it, we
+ *    clear it.
+ * 4) If there is no rectangle and we are inside the selection, we
+ *    create a rectangle from the selection bounds.
+ * 5) If there is no rectangle and we are outside the selection,
+ *    we clear the selection.
+ */
+static gboolean
+gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
                                    gint                x,
                                    gint                y,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool             *tool     = GIMP_TOOL (rect_tool);
-  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (rect_tool);
+  GimpTool             *tool     = GIMP_TOOL (rectangle);
   GimpSelectionOptions *options;
+  GimpImage            *gimage;
+  gboolean              rectangle_exists;
+  gboolean              selected;
+  gint                  val;
+  GimpChannel          *selection_mask;
 
   options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  gimp_channel_select_rectangle (gimp_image_get_mask (tool->gdisp->gimage),
-                                 x, y, w, h,
-                                 options->operation,
-                                 options->feather,
-                                 options->feather_radius,
-                                 options->feather_radius);
+  gimage = tool->gdisp->gimage;
+  selection_mask = gimp_image_get_mask (gimage);
+
+  rectangle_exists = (w > 0 && h > 0);
+
+  /*  If there is a floating selection, anchor it  */
+  if (gimp_image_floating_sel (gimage))
+    {
+      floating_sel_anchor (gimp_image_floating_sel (gimage));
+      return FALSE;
+    }
+
+  /* if rectangle exists, turn it into a selection */
+  if (rectangle_exists)
+    {
+      GimpChannel  *selection_mask = gimp_image_get_mask (gimage);
+
+      gimp_channel_select_rectangle (selection_mask,
+                                     x, y, w, h,
+                                     options->operation,
+                                     options->feather,
+                                     options->feather_radius,
+                                     options->feather_radius);
+      return TRUE;
+    }
+
+
+  val = gimp_channel_value (selection_mask,
+                            rectangle->pressx, rectangle->pressy);
+
+  selected = (val > 127);
+
+  /* if point clicked is inside selection, set rectangle to  */
+  /* selection bounds.                                       */
+  if (selected)
+    {
+      if (! gimp_channel_bounds (selection_mask,
+                                 &rectangle->x1, &rectangle->y1,
+                                 &rectangle->x2, &rectangle->y2))
+        {
+          rectangle->x1 = 0;
+          rectangle->y1 = 0;
+          rectangle->x2 = gimage->width;
+          rectangle->y2 = gimage->height;
+        }
+
+      return FALSE;
+    }
+
+  /* otherwise clear the selection */
+  gimp_channel_clear (selection_mask, NULL, TRUE);
+
+  return TRUE;
 }
 

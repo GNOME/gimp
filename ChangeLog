@@ -1,3 +1,9 @@
+2005-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpnewrectselecttool.[ch]
+	* app/tools/gimprectangletool.[ch]: more work on rectangle
+	tool ui.
+	
 2005-04-09  Michael Natterer  <mitch@gimp.org>
 
 	Implement dragging and dropping in any GdkPixbuf supported format.
@@ -44,7 +50,7 @@
 
 	* app/display/gimpdisplayshell-dnd.c: allow dropping of pixbufs.
 
-2005-04-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2005-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/screenshot.c: Change default back to Window
 	rather than Root.  When shooting window, delay after instead

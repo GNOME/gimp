@@ -19,12 +19,6 @@
 #ifndef  __GIMP_NEW_RECT_SELECT_TOOL_H__
 #define  __GIMP_NEW_RECT_SELECT_TOOL_H__
 
-
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "gimprectangletool.h"
 
 
