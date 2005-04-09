@@ -1,3 +1,10 @@
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/print/print.c: quote the shell command passed to execl().
+	Fixes bug #169909.
+
 2005-04-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimp-tools.c (gimp_tools_register): manually hardwire

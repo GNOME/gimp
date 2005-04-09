@@ -43,6 +43,13 @@ Bugs fixed in GIMP 2.2.5
 - fixed installation directories for message catalogs (bug #169274)
 - handle deletion of layers and channels that have a floating selection
   attached (bug #168582)
+- plugged some smaller memory leaks
+- fixed preview in Gaussian Blur plug-in for zero radii (bug #173039)
+- fixed a couple of problems in the Winicon plug-in
+- fixed bug in GIF loader that was triggered with a broken GIF (bug #173119)
+- fixed crash in Ink tool (bug #164272)
+- let the text tool remember the last-used font (bug #171024)
+- quote the print command used in the Print plug-in (bug #169909)
 
 
 Bugs fixed in GIMP 2.2.4
