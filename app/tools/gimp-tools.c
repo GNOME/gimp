@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimplist.h"
@@ -454,6 +455,11 @@ gimp_tools_register (GType                   tool_type,
 				  help_data,
                                   paint_core_name,
 				  stock_id);
+
+  if (tool_type == GIMP_TYPE_TEXT_TOOL)
+    gimp_config_connect (G_OBJECT (tool_info->tool_options),
+                         G_OBJECT (gimp_get_user_context (gimp)),
+                         "font");
 
   if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
     g_object_set (tool_info, "visible", FALSE, NULL);
