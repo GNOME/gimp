@@ -433,7 +433,7 @@ run (const gchar      *name,
 	      close (pipefd[0]);
 	      close (pipefd[1]);
 	      execl ("/bin/sh", "/bin/sh", "-c",
-                     stp_get_output_to (vars), NULL);
+                     g_shell_quote (stp_get_output_to (vars)), NULL);
 	      /* NOTREACHED */
 	      exit (1);
 	    } else {
@@ -1107,14 +1107,14 @@ get_system_printers (void)
   char	*ptr;			/* Pointer into line */
   char  name[128];		/* Printer name from status command */
 
-  static const char	*lpcs[] =	/* Possible locations of LPC... */
-		{
-		  "/etc"
-		  "/usr/bsd",
-		  "/usr/etc",
-		  "/usr/libexec",
-		  "/usr/sbin"
-		};
+  static const char *lpcs[] =   /* Possible locations of LPC... */
+    {
+      "/etc"
+      "/usr/bsd",
+      "/usr/etc",
+      "/usr/libexec",
+      "/usr/sbin"
+    };
 
  /*
   * Setup defaults...

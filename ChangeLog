@@ -1,3 +1,8 @@
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c: quote the shell command passed to execl().
+	Fixes bug #169909.
+
 2005-04-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpnewrectselecttool.[ch]
