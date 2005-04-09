@@ -41,8 +41,6 @@
 
 #include "core/core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 

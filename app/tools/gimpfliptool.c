@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "base/tile-manager.h"
-
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"

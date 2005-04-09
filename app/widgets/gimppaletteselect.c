@@ -27,8 +27,6 @@
 
 #include "widgets-types.h"
 
-#include "base/temp-buf.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimppalette.h"
