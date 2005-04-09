@@ -35,14 +35,17 @@
 #define GIMP_TARGET_COLOR \
         { "application/x-color", 0, GIMP_DND_TYPE_COLOR }
 
-#define GIMP_TARGET_PNG \
-        { "image/png", 0, GIMP_DND_TYPE_PNG }
-
 #define GIMP_TARGET_SVG \
         { "image/svg", 0, GIMP_DND_TYPE_SVG }
 
 #define GIMP_TARGET_SVG_XML \
         { "image/svg+xml", 0, GIMP_DND_TYPE_SVG_XML }
+
+/* just here for documentation purposes, the actual list of targets
+ * is created dynamically from available GdkPixbuf loaders
+ */
+#define GIMP_TARGET_PIXBUF \
+        { NULL, 0, GIMP_DND_TYPE_PIXBUF }
 
 #define GIMP_TARGET_IMAGE \
         { "application/x-gimp-image-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGE }
@@ -162,6 +165,27 @@ void  gimp_dnd_svg_dest_add      (GtkWidget              *widget,
                                   GimpDndDropStreamFunc   set_svg_func,
                                   gpointer                data);
 void  gimp_dnd_svg_dest_remove   (GtkWidget              *widget);
+
+
+/*  pixbuf dnd functions  */
+
+typedef GdkPixbuf * (* GimpDndDragPixbufFunc) (GtkWidget    *widget,
+                                               gpointer      data);
+typedef void        (* GimpDndDropPixbufFunc) (GtkWidget    *widget,
+                                               gint          x,
+                                               gint          y,
+                                               GdkPixbuf    *pixbuf,
+                                               gpointer      data);
+
+void  gimp_dnd_pixbuf_source_add    (GtkWidget              *widget,
+                                     GimpDndDragPixbufFunc   get_pixbuf_func,
+                                     gpointer                data);
+void  gimp_dnd_pixbuf_source_remove (GtkWidget              *widget);
+
+void  gimp_dnd_pixbuf_dest_add      (GtkWidget              *widget,
+                                     GimpDndDropPixbufFunc   set_pixbuf_func,
+                                     gpointer                data);
+void  gimp_dnd_pixbuf_dest_remove   (GtkWidget              *widget);
 
 
 /*  component dnd functions  */

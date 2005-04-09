@@ -1,3 +1,49 @@
+2005-04-09  Michael Natterer  <mitch@gimp.org>
+
+	Implement dragging and dropping in any GdkPixbuf supported
+	format. Fixes bug #172794 and bug #172795.
+
+	* app/core/gimplayer.[ch] (gimp_layer_new_from_region): new
+	function which contains all stuff that was in
+	gimp_layer_new_from_tiles().
+
+	(gimp_layer_new_from_tiles): use above function.
+	(gimp_layer_new_from_pixbuf): new function.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimppixbuf.[ch]: new files containing GdkPixbuf
+	utility functions for clipboard and DnD.
+
+	* app/widgets/gimpselectiondata.[ch]: removed
+	gimp_selection_data_set,get_pixbuf(), GTK+ provides the same API.
+	Also removed GdkAtom parameters all over the place because it's
+	always the same as selection_data->target.
+
+	* app/widgets/gimpclipboard.c: use the new pixbuf utility
+	functions and gtk_selection_data_set,get_pixbuf().
+
+	* app/widgets/widgets-enums.h
+	* app/widgets/gimpdnd.[ch]: removed never-implemented
+	GIMP_DND_TYPE_PNG and added a generic GIMP_DND_TYPE_PIXBUF
+	instead. Added API to drag and drop GdkPixbufs which transparently
+	converts from/to and GdkPixbuf-supported image format. Removed
+	passing around of GdkAtoms, since they were always the same
+	as selection_data->target.
+
+	* app/widgets/gimpdnd-xds.[ch]: follow GdkAtom parameter removal.
+
+	* app/widgets/gimpcontainertreeview.[ch]: added virtual function
+	GimpContainerTreeView::drop_pixbuf().
+
+	* app/widgets/gimpcontainertreeview-dnd.c: dispatch drop_pixbuf().
+
+	* app/widgets/gimplayertreeview.c: implement drop_pixbuf().
+
+	* app/widgets/gimpdrawabletreeview.c: allow to drag all drawables
+	as pixbufs.
+
+	* app/display/gimpdisplayshell-dnd.c: allow dropping of pixbufs.
+
 2005-04-10  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/screenshot.c: Change default back to Window

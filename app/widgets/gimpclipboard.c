@@ -32,7 +32,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpclipboard.h"
-#include "gimpdnd.h"
+#include "gimppixbuf.h"
 #include "gimpselectiondata.h"
 
 #include "gimp-intl.h"
@@ -49,7 +49,6 @@ struct _GimpClipboard
 
   GtkTargetEntry  *target_entries;
   gint             n_target_entries;
-  gchar          **savers;
 };
 
 
@@ -67,9 +66,6 @@ static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
 
 static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
 static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
-
-static gint      gimp_clipboard_format_compare   (GdkPixbufFormat  *a,
-                                                  GdkPixbufFormat  *b);
 
 
 void
@@ -95,9 +91,7 @@ gimp_clipboard_init (Gimp *gimp)
                            G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
 
-  gimp_clip->pixbuf_formats =
-    g_slist_sort (gdk_pixbuf_get_formats (),
-                  (GCompareFunc) gimp_clipboard_format_compare);
+  gimp_clip->pixbuf_formats = gimp_pixbuf_get_formats ();
 
   for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
     {
@@ -123,8 +117,6 @@ gimp_clipboard_init (Gimp *gimp)
 
       gimp_clip->target_entries = g_new0 (GtkTargetEntry,
                                           gimp_clip->n_target_entries);
-      gimp_clip->savers         = g_new0 (gchar *,
-                                          gimp_clip->n_target_entries + 1);
 
       for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
         {
@@ -150,8 +142,6 @@ gimp_clipboard_init (Gimp *gimp)
                   gimp_clip->target_entries[i].target = g_strdup (mime_type);
                   gimp_clip->target_entries[i].flags  = 0;
                   gimp_clip->target_entries[i].info   = i;
-
-                  gimp_clip->savers[i]                = g_strdup (format_name);
 
                   i++;
                 }
@@ -278,7 +268,7 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 
       if (data)
         {
-          GdkPixbuf *pixbuf = gimp_selection_data_get_pixbuf (data);
+          GdkPixbuf *pixbuf = gtk_selection_data_get_pixbuf (data);
 
           gtk_selection_data_free (data);
 
@@ -315,7 +305,6 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
 {
   g_slist_free (gimp_clip->pixbuf_formats);
   g_free (gimp_clip->target_entries);
-  g_strfreev (gimp_clip->savers);
   g_free (gimp_clip);
 }
 
@@ -472,15 +461,10 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
 
   if (pixbuf)
     {
-      GdkAtom atom = gdk_atom_intern (gimp_clip->target_entries[info].target,
-                                      FALSE);
+      g_printerr ("sending pixbuf data as '%s'\n",
+                  gimp_clip->target_entries[info].target);
 
-      g_printerr ("sending pixbuf data as '%s' (%s)\n",
-                  gimp_clip->target_entries[info].target,
-                  gimp_clip->savers[info]);
-
-      gimp_selection_data_set_pixbuf (selection_data, atom, pixbuf,
-                                      gimp_clip->savers[info]);
+      gtk_selection_data_set_pixbuf (selection_data, pixbuf);
     }
   else
     {
@@ -488,45 +472,4 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
     }
 
   gimp_unset_busy (gimp);
-}
-
-static gint
-gimp_clipboard_format_compare (GdkPixbufFormat *a,
-                               GdkPixbufFormat *b)
-{
-  gchar *a_name = gdk_pixbuf_format_get_name (a);
-  gchar *b_name = gdk_pixbuf_format_get_name (b);
-  gint   retval = 0;
-
-#ifdef GDK_WINDOWING_WIN32
-  /*  move BMP to the front of the list  */
-  if (strcmp (a_name, "bmp") == 0)
-    retval = -1;
-  else if (strcmp (b_name, "bmp") == 0)
-    retval = 1;
-  else
-#endif
-
-  /*  move PNG to the front of the list  */
-  if (strcmp (a_name, "png") == 0)
-    retval = -1;
-  else if (strcmp (b_name, "png") == 0)
-    retval = 1;
-
-  /*  move JPEG to the end of the list  */
-  else if (strcmp (a_name, "jpeg") == 0)
-    retval = 1;
-  else if (strcmp (b_name, "jpeg") == 0)
-    retval = -1;
-
-  /*  move GIF to the end of the list  */
-  else if (strcmp (a_name, "gif") == 0)
-    retval = 1;
-  else if (strcmp (b_name, "gif") == 0)
-    retval = -1;
-
-  g_free (a_name);
-  g_free (b_name);
-
-  return retval;
 }

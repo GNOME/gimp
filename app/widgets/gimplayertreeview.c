@@ -102,6 +102,10 @@ static void   gimp_layer_tree_view_drop_component (GimpContainerTreeView *tree_v
                                                    GimpChannelType      component,
                                                    GimpViewable        *dest_viewable,
                                                    GtkTreeViewDropPosition  drop_pos);
+static void   gimp_layer_tree_view_drop_pixbuf    (GimpContainerTreeView *tree_view,
+                                                   GdkPixbuf           *pixbuf,
+                                                   GimpViewable        *dest_viewable,
+                                                   GtkTreeViewDropPosition  drop_pos);
 
 static void   gimp_layer_tree_view_set_image      (GimpItemTreeView    *view,
                                                    GimpImage           *gimage);
@@ -224,6 +228,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
   tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
   tree_view_class->drop_component  = gimp_layer_tree_view_drop_component;
+  tree_view_class->drop_pixbuf     = gimp_layer_tree_view_drop_pixbuf;
 
   item_view_class->item_type       = GIMP_TYPE_LAYER;
   item_view_class->signal_name     = "active-layer-changed";
@@ -413,6 +418,8 @@ gimp_layer_tree_view_constructor (GType                  type,
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
                                NULL, tree_view);
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
+                               NULL, tree_view);
+  gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
   /*  hide basically useless edit button  */
@@ -663,6 +670,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
        src_type == GIMP_DND_TYPE_TEXT_PLAIN   ||
        src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
        src_type == GIMP_DND_TYPE_COMPONENT    ||
+       src_type == GIMP_DND_TYPE_PIXBUF       ||
        GIMP_IS_DRAWABLE (src_viewable))
     {
       GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
@@ -818,6 +826,35 @@ gimp_layer_tree_view_drop_component (GimpContainerTreeView   *tree_view,
 
   gimp_image_add_layer (item_view->gimage, GIMP_LAYER (new_item), index);
   gimp_image_flush (item_view->gimage);
+}
+
+static void
+gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
+                                  GdkPixbuf               *pixbuf,
+                                  GimpViewable            *dest_viewable,
+                                  GtkTreeViewDropPosition  drop_pos)
+{
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (tree_view);
+  GimpImage        *image     = item_view->gimage;
+  GimpLayer        *new_layer;
+  gint              index     = -1;
+
+  if (dest_viewable)
+    {
+      index = gimp_image_get_layer_index (image, GIMP_LAYER (dest_viewable));
+
+      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        index++;
+    }
+
+  new_layer =
+    gimp_layer_new_from_pixbuf (pixbuf, image,
+                                gimp_image_base_type_with_alpha (image),
+                                _("Dropped Buffer"),
+                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image, new_layer, index);
+  gimp_image_flush (image);
 }
 
 

@@ -58,14 +58,12 @@
 
 void
 gimp_selection_data_set_uri_list (GtkSelectionData *selection,
-                                  GdkAtom           atom,
                                   GList            *uri_list)
 {
   GList *list;
   gchar *vals = NULL;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (uri_list != NULL);
 
   for (list = uri_list; list; list = g_list_next (list))
@@ -87,7 +85,7 @@ gimp_selection_data_set_uri_list (GtkSelectionData *selection,
         }
     }
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) vals, strlen (vals) + 1);
 
   g_free (vals);
@@ -351,14 +349,12 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
 void
 gimp_selection_data_set_color (GtkSelectionData *selection,
-                               GdkAtom           atom,
                                const GimpRGB    *color)
 {
   guint16 *vals;
   guchar   r, g, b, a;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (color != NULL);
 
   vals = g_new (guint16, 4);
@@ -370,7 +366,7 @@ gimp_selection_data_set_color (GtkSelectionData *selection,
   vals[2] = b + (b << 8);
   vals[3] = a + (a << 8);
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           16, (guchar *) vals, 8);
 
   g_free (vals);
@@ -404,16 +400,14 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
 
 void
 gimp_selection_data_set_stream (GtkSelectionData *selection,
-                                GdkAtom           atom,
                                 const guchar     *stream,
                                 gsize             stream_length)
 {
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (stream != NULL);
   g_return_if_fail (stream_length > 0);
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) stream, stream_length);
 }
 
@@ -436,84 +430,17 @@ gimp_selection_data_get_stream (GtkSelectionData *selection,
 }
 
 void
-gimp_selection_data_set_pixbuf (GtkSelectionData *selection,
-                                GdkAtom           atom,
-                                GdkPixbuf        *pixbuf,
-                                const gchar      *format)
-{
-  gchar  *buffer;
-  gsize   buffer_size;
-  GError *error = NULL;
-
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
-  g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
-  g_return_if_fail (format != NULL);
-
-  if (gdk_pixbuf_save_to_buffer (pixbuf,
-                                 &buffer, &buffer_size, format,
-                                 &error, NULL))
-    {
-      gtk_selection_data_set (selection, atom,
-                              8, (guchar *) buffer, buffer_size);
-      g_free (buffer);
-    }
-  else
-    {
-      g_warning ("%s: %s", G_STRFUNC, error->message);
-      g_error_free (error);
-    }
-}
-
-GdkPixbuf *
-gimp_selection_data_get_pixbuf (GtkSelectionData *selection)
-{
-  GdkPixbufLoader *loader;
-  GdkPixbuf       *pixbuf = NULL;
-  GError          *error  = NULL;
-
-  g_return_val_if_fail (selection != NULL, NULL);
-
-  if ((selection->format != 8) || (selection->length < 1))
-    {
-      g_warning ("Received invalid image data!");
-      return NULL;
-    }
-
-  loader = gdk_pixbuf_loader_new ();
-
-  if (gdk_pixbuf_loader_write (loader,
-                               selection->data, selection->length, &error) &&
-      gdk_pixbuf_loader_close (loader, &error))
-    {
-      pixbuf = gdk_pixbuf_loader_get_pixbuf (loader);
-      g_object_ref (pixbuf);
-    }
-  else
-    {
-      g_warning ("%s: %s", G_STRFUNC, error->message);
-      g_error_free (error);
-    }
-
-  g_object_unref (loader);
-
-  return pixbuf;
-}
-
-void
 gimp_selection_data_set_image (GtkSelectionData *selection,
-                               GdkAtom           atom,
                                GimpImage        *gimage)
 {
   gchar *id;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   id = g_strdup_printf ("%d", gimp_image_get_ID (gimage));
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) id, strlen (id) + 1);
 
   g_free (id);
@@ -547,19 +474,17 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
 
 void
 gimp_selection_data_set_component (GtkSelectionData *selection,
-                                   GdkAtom           atom,
                                    GimpImage        *gimage,
                                    GimpChannelType   channel)
 {
   gchar *id;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   id = g_strdup_printf ("%d:%d", gimp_image_get_ID (gimage), (gint) channel);
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) id, strlen (id) + 1);
 
   g_free (id);
@@ -604,18 +529,16 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
 
 void
 gimp_selection_data_set_item (GtkSelectionData *selection,
-                              GdkAtom           atom,
                               GimpItem         *item)
 {
   gchar *id;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GIMP_IS_ITEM (item));
 
   id = g_strdup_printf ("%d", gimp_item_get_ID (item));
 
-  gtk_selection_data_set (selection, atom,
+  gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) id, strlen (id) + 1);
 
   g_free (id);
@@ -649,19 +572,17 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
 
 void
 gimp_selection_data_set_viewable (GtkSelectionData *selection,
-                                  GdkAtom           atom,
                                   GimpViewable     *viewable)
 {
   const gchar *name;
 
   g_return_if_fail (selection != NULL);
-  g_return_if_fail (atom != GDK_NONE);
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   name = gimp_object_get_name (GIMP_OBJECT (viewable));
 
   if (name)
-    gtk_selection_data_set (selection, atom,
+    gtk_selection_data_set (selection, selection->target,
                             8, (const guchar *) name, strlen (name) + 1);
 }
 

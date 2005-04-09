@@ -76,6 +76,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
     case GIMP_DND_TYPE_SVG:
     case GIMP_DND_TYPE_SVG_XML:
     case GIMP_DND_TYPE_COMPONENT:
+    case GIMP_DND_TYPE_PIXBUF:
       break;
 
     default:
@@ -423,6 +424,25 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
                   tree_view_class->drop_component (tree_view,
                                                    image, component,
                                                    dest_viewable, drop_pos);
+
+                  success = TRUE;
+                }
+            }
+          break;
+
+        case GIMP_DND_TYPE_PIXBUF:
+          if (tree_view_class->drop_pixbuf)
+            {
+              GdkPixbuf *pixbuf;
+
+              pixbuf = gtk_selection_data_get_pixbuf (selection_data);
+
+              if (pixbuf)
+                {
+                  tree_view_class->drop_pixbuf (tree_view,
+                                                pixbuf,
+                                                dest_viewable, drop_pos);
+                  g_object_unref (pixbuf);
 
                   success = TRUE;
                 }

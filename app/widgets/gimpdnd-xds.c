@@ -102,8 +102,7 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
 void
 gimp_dnd_xds_save_image (GdkDragContext   *context,
                          GimpImage        *image,
-                         GtkSelectionData *selection,
-                         GdkAtom           atom)
+                         GtkSelectionData *selection)
 {
   PlugInProcDef *proc;
   GdkAtom        property = gdk_atom_intern ("XdndDirectSave0", FALSE);
@@ -143,11 +142,11 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                          uri, proc, GIMP_RUN_INTERACTIVE, FALSE,
                          &error) == GIMP_PDB_SUCCESS)
             {
-              gtk_selection_data_set (selection, atom, 8, "S", 1);
+              gtk_selection_data_set (selection, selection->target, 8, "S", 1);
             }
           else
             {
-              gtk_selection_data_set (selection, atom, 8, "E", 1);
+              gtk_selection_data_set (selection, selection->target, 8, "E", 1);
 
               if (error)
                 {
@@ -166,7 +165,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
     }
   else
     {
-      gtk_selection_data_set (selection, atom, 8, "E", 1);
+      gtk_selection_data_set (selection, selection->target, 8, "E", 1);
 
       g_message (_("The given filename does not have any known "
                    "file extension."));

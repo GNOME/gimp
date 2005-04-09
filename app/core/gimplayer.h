@@ -85,6 +85,18 @@ GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);
+GimpLayer     * gimp_layer_new_from_pixbuf     (GdkPixbuf            *pixbuf,
+                                                GimpImage            *dest_gimage,
+                                                GimpImageType         type,
+                                                const gchar          *name,
+                                                gdouble               opacity,
+                                                GimpLayerModeEffects  mode);
+GimpLayer     * gimp_layer_new_from_region     (PixelRegion          *region,
+                                                GimpImage            *dest_gimage,
+                                                GimpImageType         type,
+                                                const gchar          *name,
+                                                gdouble               opacity,
+                                                GimpLayerModeEffects  mode);
 
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpAddMaskType       mask_type);

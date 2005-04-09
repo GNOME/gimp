@@ -112,6 +112,11 @@ static void   gimp_display_shell_drop_component (GtkWidget       *widget,
                                                  GimpImage       *image,
                                                  GimpChannelType  component,
                                                  gpointer         data);
+static void   gimp_display_shell_drop_pixbuf    (GtkWidget       *widget,
+                                                 gint             x,
+                                                 gint             y,
+                                                 GdkPixbuf       *pixbuf,
+                                                 gpointer         data);
 
 
 /*  public functions  */
@@ -150,6 +155,9 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
                                shell);
   gimp_dnd_component_dest_add (GTK_WIDGET (shell),
                                gimp_display_shell_drop_component,
+                               shell);
+  gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (shell),
+                               gimp_display_shell_drop_pixbuf,
                                shell);
 }
 
@@ -508,6 +516,59 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       gimp_image_flush (dest_image);
 
       gimp_context_set_display (gimp_get_user_context (dest_image->gimp),
+                                shell->gdisp);
+    }
+}
+
+static void
+gimp_display_shell_drop_pixbuf (GtkWidget *widget,
+                                gint       x,
+                                gint       y,
+                                GdkPixbuf *pixbuf,
+                                gpointer   data)
+{
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *gimage = shell->gdisp->gimage;
+  GimpLayer        *new_layer;
+
+  D (g_print ("drop pixbuf on canvas\n"));
+
+  if (gimage->gimp->busy)
+    return;
+
+  new_layer =
+    gimp_layer_new_from_pixbuf (pixbuf, gimage,
+                                gimp_image_base_type_with_alpha (gimage),
+                                _("Dropped Buffer"),
+                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  if (new_layer)
+    {
+      GimpItem *new_item;
+      gint      x, y, width, height;
+      gint      off_x, off_y;
+
+      new_item = GIMP_ITEM (new_layer);
+
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_EDIT_PASTE,
+                                   _("Drop New Layer"));
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+
+      gimp_item_offsets (new_item, &off_x, &off_y);
+
+      off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
+      off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
+
+      gimp_item_translate (new_item, off_x, off_y, FALSE);
+
+      gimp_image_add_layer (gimage, new_layer, -1);
+
+      gimp_image_undo_group_end (gimage);
+
+      gimp_image_flush (gimage);
+
+      gimp_context_set_display (gimp_get_user_context (gimage->gimp),
                                 shell->gdisp);
     }
 }

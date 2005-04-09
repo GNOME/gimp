@@ -883,21 +883,100 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 			   gdouble               opacity,
 			   GimpLayerModeEffects  mode)
 {
-  GimpLayer     *new_layer;
-  PixelRegion    layerPR;
-  PixelRegion    bufPR;
-  GimpImageType  src_type;
-  gint           width;
-  gint           height;
+  PixelRegion bufPR;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  width  = tile_manager_width (tiles);
-  height = tile_manager_height (tiles);
+  pixel_region_init (&bufPR, tiles,
+		     0, 0,
+                     tile_manager_width (tiles),
+                     tile_manager_height (tiles),
+                     FALSE);
 
-  switch (tile_manager_bpp (tiles))
+  return gimp_layer_new_from_region (&bufPR, dest_gimage, type,
+                                     name, opacity, mode);
+}
+
+/**
+ * gimp_layer_new_from_pixbuf:
+ * @tiles:       The pixbuf to make the new layer from.
+ * @dest_gimage: The image the new layer will be added to.
+ * @type:        The #GimpImageType of the new layer.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
+ *
+ * Copies %pixbuf to a layer taking into consideration the
+ * possibility of transforming the contents to meet the requirements
+ * of the target image type
+ *
+ * Return value: The new layer.
+ **/
+GimpLayer *
+gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
+                            GimpImage            *dest_gimage,
+                            GimpImageType         type,
+                            const gchar          *name,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode)
+{
+  PixelRegion bufPR = { 0, };
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  bufPR.data      = gdk_pixbuf_get_pixels (pixbuf);
+  bufPR.rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  bufPR.x         = 0;
+  bufPR.y         = 0;
+  bufPR.w         = gdk_pixbuf_get_width (pixbuf);
+  bufPR.h         = gdk_pixbuf_get_height (pixbuf);
+  bufPR.bytes     = gdk_pixbuf_get_n_channels (pixbuf);
+
+  return gimp_layer_new_from_region (&bufPR, dest_gimage, type,
+                                     name, opacity, mode);
+}
+
+/**
+ * gimp_layer_new_from_region:
+ * @region:      A readable pixel region.
+ * @dest_gimage: The image the new layer will be added to.
+ * @type:        The #GimpImageType of the new layer.
+ * @name:        The new layer's name.
+ * @opacity:     The new layer's opacity.
+ * @mode:        The new layer's mode.
+ *
+ * Copies %region to a layer taking into consideration the
+ * possibility of transforming the contents to meet the requirements
+ * of the target image type
+ *
+ * Return value: The new layer.
+ **/
+GimpLayer *
+gimp_layer_new_from_region (PixelRegion          *region,
+                            GimpImage            *dest_gimage,
+                            GimpImageType         type,
+                            const gchar          *name,
+                            gdouble               opacity,
+                            GimpLayerModeEffects  mode)
+{
+  GimpLayer     *new_layer;
+  PixelRegion    layerPR;
+  GimpImageType  src_type;
+  gint           width;
+  gint           height;
+
+  g_return_val_if_fail (region != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_gimage), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  width  = region->w;
+  height = region->h;
+
+  switch (region->bytes)
     {
     case 1: src_type = GIMP_GRAY_IMAGE;  break;
     case 2: src_type = GIMP_GRAYA_IMAGE; break;
@@ -913,14 +992,10 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   if (! new_layer)
     {
-      g_message ("gimp_layer_new_from_tiles: could not allocate new layer");
+      g_message ("gimp_layer_new_from_region: could not allocate new layer");
       return NULL;
     }
 
-  /*  Configure the pixel regions  */
-  pixel_region_init (&bufPR, tiles,
-		     0, 0, width, height,
-                     FALSE);
   pixel_region_init (&layerPR, GIMP_DRAWABLE (new_layer)->tiles,
 		     0, 0, width, height,
 		     TRUE);
@@ -931,7 +1006,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
       switch (src_type)
         {
        case GIMP_RGB_IMAGE:
-          copy_region (&bufPR, &layerPR);
+          copy_region (region, &layerPR);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -943,13 +1018,13 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
       switch (src_type)
         {
         case GIMP_RGBA_IMAGE:
-          copy_region (&bufPR, &layerPR);
+          copy_region (region, &layerPR);
           break;
         case GIMP_RGB_IMAGE:
-          add_alpha_region (&bufPR, &layerPR);
+          add_alpha_region (region, &layerPR);
           break;
         case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+          gimp_layer_transform_color (dest_gimage, &layerPR, region,
                                       GIMP_DRAWABLE (new_layer), GIMP_GRAY);
           break;
         default:
@@ -962,7 +1037,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
       switch (src_type)
         {
         case GIMP_GRAY_IMAGE:
-          copy_region (&bufPR, &layerPR);
+          copy_region (region, &layerPR);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -974,14 +1049,14 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
       switch (src_type)
         {
         case GIMP_RGBA_IMAGE:
-          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+          gimp_layer_transform_color (dest_gimage, &layerPR, region,
                                       GIMP_DRAWABLE (new_layer), GIMP_RGB);
           break;
         case GIMP_GRAYA_IMAGE:
-          copy_region (&bufPR, &layerPR);
+          copy_region (region, &layerPR);
           break;
         case GIMP_GRAY_IMAGE:
-          add_alpha_region (&bufPR, &layerPR);
+          add_alpha_region (region, &layerPR);
           break;
         default:
           g_warning ("%s: unhandled type conversion", G_STRFUNC);
@@ -997,11 +1072,11 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
       switch (src_type)
         {
         case GIMP_RGBA_IMAGE:
-          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+          gimp_layer_transform_color (dest_gimage, &layerPR, region,
                                       GIMP_DRAWABLE (new_layer), GIMP_RGB);
           break;
         case GIMP_GRAYA_IMAGE:
-          gimp_layer_transform_color (dest_gimage, &layerPR, &bufPR,
+          gimp_layer_transform_color (dest_gimage, &layerPR, region,
                                       GIMP_DRAWABLE (new_layer), GIMP_GRAY);
           break;
         default:

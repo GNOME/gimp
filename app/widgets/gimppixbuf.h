@@ -1,11 +1,8 @@
 /* The GIMP -- an image manipulation program
- * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdnd-xds.c
- * Copyright (C) 2005  Sven Neumann <sven@gimp.org>
- *
- * Saving Files via Drag-and-Drop:
- * The Direct Save Protocol for the X Window System
+ * gimppixbuf.h
+ * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +19,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DND_XDS_H__
-#define __GIMP_DND_XDS_H__
+#ifndef __GIMP_PIXBUF_H__
+#define __GIMP_PIXBUF_H__
 
 
-void  gimp_dnd_xds_source_set (GdkDragContext   *context,
-                               GimpImage        *image);
-void  gimp_dnd_xds_save_image (GdkDragContext   *context,
-                               GimpImage        *image,
-                               GtkSelectionData *selection);
+GSList * gimp_pixbuf_get_formats (void);
+
+void     gimp_pixbuf_targets_add    (GtkTargetList *target_list,
+                                     guint          info,
+                                     gboolean       writable);
+void     gimp_pixbuf_targets_remove (GtkTargetList *target_list);
 
 
-#endif /* __GIMP_DND_XDS_H__ */
+#endif /* __GIMP_PIXBUF_H__ */

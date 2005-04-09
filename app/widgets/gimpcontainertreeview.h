@@ -103,6 +103,10 @@ struct _GimpContainerTreeViewClass
                                GimpChannelType          component,
                                GimpViewable            *dest_viewable,
                                GtkTreeViewDropPosition  drop_pos);
+  void     (* drop_pixbuf)    (GimpContainerTreeView   *tree_view,
+                               GdkPixbuf               *pixbuf,
+                               GimpViewable            *dest_viewable,
+                               GtkTreeViewDropPosition  drop_pos);
 };
 
 
