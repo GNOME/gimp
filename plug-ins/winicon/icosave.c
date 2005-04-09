@@ -641,7 +641,7 @@ ico_setup (MsIcon *ico,
   gint  i;
   gint  offset;
 
-  layers = gimp_image_get_layers(image, &num_icons);
+  layers = gimp_image_get_layers (image, &num_icons);
 
   /* Set up icon entries */
   for (i = 0; i < num_icons; i++)
@@ -740,59 +740,93 @@ ico_layers_too_big (gint32 image)
   return FALSE;
 }
 
-
-static void
-ico_free_color_item (gpointer data1,
-                     gpointer data2,
-                     gpointer data3)
-{
-  g_free (data1);
-
-  /* Shut up warnings: */
-  data2 = NULL;
-  data3 = NULL;
-}
-
 static gint
 ico_get_layer_num_colors (gint32    layer,
                           gboolean *uses_alpha_levels)
 {
   GimpPixelRgn    pixel_rgn;
-  gint            x, y, w, h, alpha, num_colors = 0;
-  guint32        *buffer = NULL, *color;
+  gint            w, h;
+  gint            bpp;
+  gint            num_colors = 0;
+  guint           num_pixels;
+  guchar         *buffer;
+  guchar         *src;
+  guint32        *colors;
+  guint32        *c;
   GHashTable     *hash;
   GimpDrawable   *drawable = gimp_drawable_get (layer);
 
   w = gimp_drawable_width (layer);
   h = gimp_drawable_height (layer);
-  buffer = g_new (gint32, w * h);
+
+  num_pixels = w * h;
+
+  bpp = gimp_drawable_bpp (layer);
+
+  buffer = src = g_new (guchar, num_pixels * bpp);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, w, h, FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&pixel_rgn, (guchar*) buffer, 0, 0, w, h);
+  gimp_pixel_rgn_get_rect (&pixel_rgn, buffer, 0, 0, w, h);
 
   gimp_drawable_detach (drawable);
 
   hash = g_hash_table_new (g_int_hash, g_int_equal);
   *uses_alpha_levels = FALSE;
 
-  for (y = 0; y < h; y++)
-    for (x = 0; x < w; x++)
-      {
-        color = g_new0 (guint32, 1);
-        *color = buffer[y * w + x];
-        alpha = ((guint8*) color)[3];
+  colors = c = g_new (guint32, num_pixels);
 
-        if (alpha != 0 && alpha != 255)
-          *uses_alpha_levels = TRUE;
+  switch (bpp)
+    {
+    case 1:
+      while (num_pixels--)
+        {
+          *c = *src;
+          g_hash_table_insert (hash, c, c);
+          src++;
+          c++;
+        }
+      break;
 
-        g_hash_table_insert (hash, color, color);
-      }
+    case 2:
+      while (num_pixels--)
+        {
+          *c = (src[1] << 8) | src[0];
+          if (src[1] != 0 && src[1] != 255)
+            *uses_alpha_levels = TRUE;
+          g_hash_table_insert (hash, c, c);
+          src += 2;
+          c++;
+        }
+      break;
+
+    case 3:
+      while (num_pixels--)
+        {
+          *c = (src[2] << 16) | (src[1] << 8) | src[0];
+          g_hash_table_insert (hash, c, c);
+          src += 3;
+          c++;
+        }
+      break;
+
+    case 4:
+      while (num_pixels--)
+        {
+          *c = (src[3] << 24) | (src[2] << 16) | (src[1] << 8) | src[0];
+          if (src[3] != 0 && src[3] != 255)
+            *uses_alpha_levels = TRUE;
+          g_hash_table_insert (hash, c, c);
+          src += 4;
+          c++;
+        }
+      break;
+    }
 
   num_colors = g_hash_table_size (hash);
 
-  g_hash_table_foreach (hash, ico_free_color_item, NULL);
   g_hash_table_destroy (hash);
 
+  g_free (colors);
   g_free (buffer);
 
   return num_colors;
@@ -806,9 +840,9 @@ ico_cmap_contains_black (guchar *cmap,
 
   for (i = 0; i < num_colors; i++)
     {
-      if ((cmap[3*i] == 0)   &&
-          (cmap[3*i+1] == 0) &&
-          (cmap[3*i+2] == 0))
+      if ((cmap[3 * i    ] == 0) &&
+          (cmap[3 * i + 1] == 0) &&
+          (cmap[3 * i + 2] == 0))
         {
           return TRUE;
         }
@@ -889,12 +923,8 @@ ico_image_get_reduced_buf (guint32   layer,
               gimp_drawable_detach (tmp);
 
               gimp_image_convert_indexed (tmp_image,
-                                          GIMP_FS_DITHER,
-                                          GIMP_MAKE_PALETTE,
-                                          (1 << bpp) - 1,
-                                          TRUE,
-                                          FALSE,
-                                          "dummy");
+                                          GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                          (1 << bpp) - 1, TRUE, FALSE, "dummy");
               g_free (cmap);
               cmap = gimp_image_get_colormap (tmp_image, num_colors);
             }
@@ -938,12 +968,6 @@ SaveICO (const gchar *filename,
     {
       g_message (_("Windows icons cannot be higher or wider than 255 pixels."));
       return GIMP_PDB_EXECUTION_ERROR;
-    }
-
-  if (gimp_image_base_type (image) != GIMP_RGB)
-    {
-      if (! gimp_image_convert_rgb (image))
-        return GIMP_PDB_EXECUTION_ERROR;
     }
 
   /* First, set up the icon specs dialog and show it: */

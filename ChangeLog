@@ -1,3 +1,9 @@
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/icosave.c: implement color counting without
+	changing the image-type to RGB. A save plug-in must not change the
+	image.
+
 2005-04-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/winicon/icodialog.c: rewrote preview code to use
