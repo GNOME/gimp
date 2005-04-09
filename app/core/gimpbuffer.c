@@ -286,9 +286,8 @@ gimp_buffer_new (TileManager *tiles,
 		 const gchar *name,
                  gboolean     copy_pixels)
 {
-  GimpBuffer  *buffer;
-  PixelRegion  srcPR, destPR;
-  gint         width, height;
+  GimpBuffer *buffer;
+  gint        width, height;
 
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -302,6 +301,8 @@ gimp_buffer_new (TileManager *tiles,
 
   if (copy_pixels)
     {
+      PixelRegion srcPR, destPR;
+
       buffer->tiles = tile_manager_new (width, height,
                                         tile_manager_bpp (tiles));
 
@@ -315,6 +316,41 @@ gimp_buffer_new (TileManager *tiles,
     }
 
   return buffer;
+}
+
+GimpBuffer *
+gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
+                             const gchar *name)
+{
+  TileManager *tiles;
+  guchar      *pixels;
+  PixelRegion  destPR;
+  gint         width;
+  gint         height;
+  gint         rowstride;
+  gint         channels;
+  gint         y;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  width     = gdk_pixbuf_get_width (pixbuf);
+  height    = gdk_pixbuf_get_height (pixbuf);
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  channels  = gdk_pixbuf_get_n_channels (pixbuf);
+
+  tiles = tile_manager_new (width, height, channels);
+
+  pixel_region_init (&destPR, tiles, 0, 0, width, height, TRUE);
+
+  for (y = 0, pixels = gdk_pixbuf_get_pixels (pixbuf);
+       y < height;
+       y++, pixels += rowstride)
+    {
+      pixel_region_set_row (&destPR, 0, y, width, pixels);
+   }
+
+  return gimp_buffer_new (tiles, name, FALSE);
 }
 
 gint

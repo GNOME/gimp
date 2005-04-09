@@ -1,3 +1,10 @@
+2005-04-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbuffer.[ch]: added gimp_buffer_new_from_pixbuf().
+
+	* app/widgets/gimpclipboard.c: removed
+	tile_manager_new_from_pixbuf() and base/ dependency.
+
 2005-04-09  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimppixbuf.c: #include <string.h> for strcmp, and

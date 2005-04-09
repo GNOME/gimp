@@ -24,9 +24,6 @@
 
 #include "widgets-types.h"
 
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpviewable.h"
@@ -197,40 +194,6 @@ gimp_clipboard_has_buffer (Gimp *gimp)
   return (gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE);
 }
 
-
-static TileManager *
-tile_manager_new_from_pixbuf (GdkPixbuf *pixbuf)
-{
-  TileManager *tiles;
-  guchar      *pixels;
-  PixelRegion  destPR;
-  gint         width;
-  gint         height;
-  gint         rowstride;
-  gint         channels;
-  gint         y;
-
-  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
-
-  width     = gdk_pixbuf_get_width (pixbuf);
-  height    = gdk_pixbuf_get_height (pixbuf);
-  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  channels  = gdk_pixbuf_get_n_channels (pixbuf);
-
-  tiles = tile_manager_new (width, height, channels);
-
-  pixel_region_init (&destPR, tiles, 0, 0, width, height, TRUE);
-
-  for (y = 0, pixels = gdk_pixbuf_get_pixels (pixbuf);
-       y < height;
-       y++, pixels += rowstride)
-    {
-      pixel_region_set_row (&destPR, 0, y, width, pixels);
-   }
-
-  return tiles;
-}
-
 /**
  * gimp_clipboard_get_buffer:
  * @gimp: pointer to #Gimp
@@ -274,11 +237,8 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 
           if (pixbuf)
             {
-              TileManager *tiles = tile_manager_new_from_pixbuf (pixbuf);
-
+              buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"));
               g_object_unref (pixbuf);
-
-              buffer = gimp_buffer_new (tiles, _("Clipboard"), FALSE);
             }
         }
 
