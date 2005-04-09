@@ -76,9 +76,10 @@ static Blob    * ink_pen_ellipse         (GimpInkOptions   *options,
 
 static void      time_smoother_add       (GimpInk          *ink,
                                           guint32           value);
-static gdouble   time_smoother_result    (GimpInk          *ink);
+static guint32   time_smoother_result    (GimpInk          *ink);
 static void      time_smoother_init      (GimpInk          *ink,
                                           guint32           initval);
+
 static void      dist_smoother_add       (GimpInk          *ink,
                                           gdouble           value);
 static gdouble   dist_smoother_result    (GimpInk          *ink);
@@ -298,11 +299,10 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   else
     {
       Blob    *blob;
-      gdouble  lasttime, thistime;
       gdouble  dist;
       gdouble  velocity;
-
-      lasttime = ink->last_time;
+      guint32  lasttime = ink->last_time;
+      guint32  thistime;
 
       time_smoother_add (ink, time);
       thistime = ink->last_time = time_smoother_result (ink);
@@ -519,43 +519,6 @@ ink_pen_ellipse (GimpInkOptions *options,
                             radmin * tcos);
 }
 
-static void
-dist_smoother_init (GimpInk *ink,
-                    gdouble  initval)
-{
-  gint i;
-
-  ink->dt_index = 0;
-
-  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
-    {
-      ink->dt_buffer[i] = initval;
-    }
-}
-
-static gdouble
-dist_smoother_result (GimpInk *ink)
-{
-  gint    i;
-  gdouble result = 0.0;
-
-  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
-    {
-      result += ink->dt_buffer[i];
-    }
-
-  return (result / (gdouble) DIST_SMOOTHER_BUFFER);
-}
-
-static void
-dist_smoother_add (GimpInk *ink,
-                   gdouble  value)
-{
-  ink->dt_buffer[ink->dt_index] = value;
-
-  if ((++ink->dt_index) == DIST_SMOOTHER_BUFFER)
-    ink->dt_index = 0;
-}
 
 static void
 time_smoother_init (GimpInk *ink,
@@ -566,37 +529,72 @@ time_smoother_init (GimpInk *ink,
   ink->ts_index = 0;
 
   for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
-    {
-      ink->ts_buffer[i] = initval;
-    }
+    ink->ts_buffer[i] = initval;
 }
 
-static gdouble
+static guint32
 time_smoother_result (GimpInk *ink)
 {
   gint    i;
   guint64 result = 0;
 
   for (i = 0; i < TIME_SMOOTHER_BUFFER; i++)
-    {
-      result += ink->ts_buffer[i];
-    }
+    result += ink->ts_buffer[i];
 
-#ifdef _MSC_VER
-  return (gdouble) (gint64) (result / TIME_SMOOTHER_BUFFER);
-#else
-  return (result / TIME_SMOOTHER_BUFFER);
-#endif
+  return (result / (guint64) TIME_SMOOTHER_BUFFER);
 }
 
 static void
 time_smoother_add (GimpInk *ink,
                    guint32  value)
 {
-  ink->ts_buffer[ink->ts_index] = value;
+  guint64 long_value = (guint64) value;
 
-  if ((++ink->ts_index) == TIME_SMOOTHER_BUFFER)
+  /*  handle wrap-around of time values  */
+  if (long_value < ink->ts_buffer[ink->ts_index])
+    long_value += (guint64) + G_MAXUINT32;
+
+  ink->ts_buffer[ink->ts_index++] = long_value;
+
+  ink->ts_buffer[ink->ts_index++] = value;
+
+  if (ink->ts_index == TIME_SMOOTHER_BUFFER)
     ink->ts_index = 0;
+}
+
+
+static void
+dist_smoother_init (GimpInk *ink,
+                    gdouble  initval)
+{
+  gint i;
+
+  ink->dt_index = 0;
+
+  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
+    ink->dt_buffer[i] = initval;
+}
+
+static gdouble
+dist_smoother_result (GimpInk *ink)
+{
+  gint    i;
+  gdouble result = 0.0;
+
+  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
+    result += ink->dt_buffer[i];
+
+  return (result / (gdouble) DIST_SMOOTHER_BUFFER);
+}
+
+static void
+dist_smoother_add (GimpInk *ink,
+                   gdouble  value)
+{
+  ink->dt_buffer[ink->dt_index++] = value;
+
+  if (ink->dt_index == DIST_SMOOTHER_BUFFER)
+    ink->dt_index = 0;
 }
 
 

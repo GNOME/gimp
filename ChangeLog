@@ -1,3 +1,8 @@
+2005-04-09  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpink.c: merged changes to the time-smoother code
+	from the HEAD branch. Fixes bug #164272.
+
 2005-04-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/gifload.c (GetCode): GetDataBlock returns -1 on
