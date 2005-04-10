@@ -1,3 +1,10 @@
+2005-04-10  Sven Neumann  <sven@gimp.org>
+
+	Merged from gimp-2-2 branch:
+
+	* plug-ins/print/print.c: reverted the previous change, it was wrong
+	(see bug #169909).
+
 2005-04-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-utils.c

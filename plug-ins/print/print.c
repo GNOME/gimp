@@ -433,7 +433,7 @@ run (const gchar      *name,
 	      close (pipefd[0]);
 	      close (pipefd[1]);
 	      execl ("/bin/sh", "/bin/sh", "-c",
-                     g_shell_quote (stp_get_output_to (vars)), NULL);
+                     stp_get_output_to (vars), NULL);
 	      /* NOTREACHED */
 	      exit (1);
 	    } else {
