@@ -72,8 +72,6 @@ typedef enum
   MIRROR
 } BorderMode;
 
-static GimpDrawable *drawable;
-
 static gchar * const channel_labels[] =
 {
   N_("Gr_ey"),
@@ -93,16 +91,20 @@ static gchar * const bmode_labels[] =
 /* Declare local functions. */
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+                   gint              nparams,
+                   const GimpParam  *param,
+                   gint             *nreturn_vals,
+                   GimpParam       **return_vals);
 
-static gboolean  dialog       (void);
+static gboolean  convmatrix_dialog (GimpDrawable  *drawable);
 
-static void      convmatrix   (void);
-static void      check_config (void);
+static void      convmatrix        (GimpDrawable  *drawable);
+static void      check_config      (GimpDrawable  *drawable);
 
+static gfloat    calcmatrix        (guchar       **srcrow,
+                                    gint           xoff,
+                                    gint           i,
+                                    GimpDrawable  *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -112,7 +114,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,    /* run_proc   */
 };
 
-static gint     bytes;
 static gboolean run_flag = FALSE;
 
 typedef struct
@@ -123,7 +124,7 @@ typedef struct
   gint       alpha_alg;
   BorderMode bmode;
   gint       channels[5];
-  gint       autoset;
+  gboolean   autoset;
 } config;
 
 static const config default_config =
@@ -140,7 +141,7 @@ static const config default_config =
   1,                 /* Alpha-handling algorithm */
   CLEAR,             /* border-mode */
   { 1, 1, 1, 1, 1 }, /* Channels mask */
-  0                  /* autoset */
+  FALSE              /* autoset */
 };
 
 static config my_config;
@@ -164,31 +165,31 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "argc_matrix", "The number of elements in the following array. Should be always 25." },
-    { GIMP_PDB_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
-    { GIMP_PDB_INT32, "alpha_alg", "Enable weighting by alpha channel" },
-    { GIMP_PDB_FLOAT, "divisor", "Divisor" },
-    { GIMP_PDB_FLOAT, "offset", "Offset" },
+    { GIMP_PDB_INT32,      "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,      "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE,   "drawable",    "Input drawable" },
+    { GIMP_PDB_INT32,      "argc_matrix", "The number of elements in the following array. Should be always 25." },
+    { GIMP_PDB_FLOATARRAY, "matrix",      "The 5x5 convolution matrix" },
+    { GIMP_PDB_INT32,      "alpha_alg",   "Enable weighting by alpha channel" },
+    { GIMP_PDB_FLOAT,      "divisor",     "Divisor" },
+    { GIMP_PDB_FLOAT,      "offset",      "Offset" },
 
-    { GIMP_PDB_INT32, "argc_channels", "The number of elements in following array. Should be always 5." },
-    { GIMP_PDB_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
-    { GIMP_PDB_INT32, "bmode", "Mode for treating image borders" }
+    { GIMP_PDB_INT32,      "argc_channels", "The number of elements in following array. Should be always 5." },
+    { GIMP_PDB_INT32ARRAY, "channels",      "Mask of the channels to be filtered" },
+    { GIMP_PDB_INT32,      "bmode",         "Mode for treating image borders" }
   };
 
   gimp_install_procedure ("plug_in_convmatrix",
-			  "A generic 5x5 convolution matrix",
-			  "",
-			  "Lauri Alanko",
-			  "Lauri Alanko",
-			  "1997",
-			  N_("_Convolution Matrix..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "A generic 5x5 convolution matrix",
+                          "",
+                          "Lauri Alanko",
+                          "Lauri Alanko",
+                          "1997",
+                          N_("_Convolution Matrix..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_convmatrix", "<Image>/Filters/Generic");
 }
@@ -200,10 +201,11 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[1];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint              x, y;
+  static GimpParam   values[1];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint               x, y;
+  GimpDrawable      *drawable;
 
   INIT_I18N ();
 
@@ -234,8 +236,8 @@ run (const gchar      *name,
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
-	{
-	  if (param[3].data.d_int32 != 25)
+        {
+          if (param[3].data.d_int32 != 25)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -246,12 +248,12 @@ run (const gchar      *name,
                   my_config.matrix[x][y]=param[4].data.d_floatarray[y*5+x];
             }
 
-	  my_config.alpha_alg = param[5].data.d_int32;
-	  my_config.divisor   = param[6].data.d_float;
-	  my_config.offset    = param[7].data.d_float;
+          my_config.alpha_alg = param[5].data.d_int32;
+          my_config.divisor   = param[6].data.d_float;
+          my_config.offset    = param[7].data.d_float;
 
 
-	  if (param[8].data.d_int32 != 5)
+          if (param[8].data.d_int32 != 5)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -261,53 +263,52 @@ run (const gchar      *name,
                 my_config.channels[y] = param[9].data.d_int32array[y];
             }
 
-	  my_config.bmode     = param[10].data.d_int32;
+          my_config.bmode     = param[10].data.d_int32;
 
-	  check_config ();
-	}
+          check_config (drawable);
+        }
     }
   else
     {
       gimp_get_data ("plug_in_convmatrix", &my_config);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	{
-	  /*  Oh boy. We get to do a dialog box, because we can't really
-	   *  expect the user to set us up with the right values using gdb.
-	   */
-	  check_config ();
+        {
+          /*  Oh boy. We get to do a dialog box, because we can't really
+           *  expect the user to set us up with the right values using gdb.
+           */
+          check_config (drawable);
 
-	  if (! dialog ())
-	    {
-	      /* The dialog was closed, or something similarly evil happened. */
-	      status = GIMP_PDB_EXECUTION_ERROR;
-	    }
-	}
+          if (! convmatrix_dialog (drawable))
+            {
+              /* The dialog was closed, or something similarly evil happened. */
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
     }
 
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Applying convolution"));
-	  gimp_tile_cache_ntiles (2 * (drawable->width /
-				       gimp_tile_width () + 1));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Applying convolution"));
+          gimp_tile_cache_ntiles (2 * (drawable->width /
+                                  gimp_tile_width () + 1));
+          convmatrix (drawable);
 
-	  convmatrix ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
-
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_convmatrix",
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_convmatrix",
                            &my_config, sizeof (my_config));
-	}
+        }
       else
-	{
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
 
       gimp_drawable_detach (drawable);
     }
@@ -323,10 +324,10 @@ run (const gchar      *name,
 
 static void
 my_get_row (GimpPixelRgn *PR,
-	    guchar       *dest,
-	    gint          x,
-	    gint          y,
-	    gint          w)
+            guchar       *dest,
+            gint          x,
+            gint          y,
+            gint          w)
 {
   gint width, height, bytes;
   gint i;
@@ -342,28 +343,28 @@ my_get_row (GimpPixelRgn *PR,
     case WRAP:
       /* Wrapped, so we get the proper row from the other side */
       while (y < 0) /* This is the _sure_ way to wrap. :) */
-	y += height;
+        y += height;
       while (y >= height)
-	y -= height;
+        y -= height;
       break;
 
     case CLEAR:
       /* Beyond borders, so set full transparent. */
       if (y < 0 || y >= height)
-	{
-	  memset (dest, 0, w * bytes);
-	  return; /* Done, so back. */
-	}
+        {
+          memset (dest, 0, w * bytes);
+          return; /* Done, so back. */
+        }
     case MIRROR:
       /* The border lines are _not_ duplicated in the mirror image */
       /* is this right? */
       while (y < 0 || y >= height)
-	{
-	  if (y < 0)
-	    y = -y; /* y=-y-1 */
-	  if (y >= height)
-	    y = 2 * height - y - 2; /* y=2*height-y-1 */
-	}
+        {
+          if (y < 0)
+            y = -y; /* y=-y-1 */
+          if (y >= height)
+            y = 2 * height - y - 2; /* y=2*height-y-1 */
+        }
       break;
 
     case EXTEND:
@@ -375,78 +376,78 @@ my_get_row (GimpPixelRgn *PR,
     {
     case CLEAR:
       if (x < 0)
-	{
-	  i = MIN (w, -x);
-	  memset (dest, 0, i * bytes);
-	  dest += i * bytes;
-	  w -= i;
-	  x += i;
-	}
+        {
+          i = MIN (w, -x);
+          memset (dest, 0, i * bytes);
+          dest += i * bytes;
+          w -= i;
+          x += i;
+        }
       if (w)
-	{
-	  i = MIN (w, width);
-	  gimp_pixel_rgn_get_row (PR, dest, x, y, i);
-	  dest += i * bytes;
-	  w -= i;
-	  x += i;
-	}
+        {
+          i = MIN (w, width);
+          gimp_pixel_rgn_get_row (PR, dest, x, y, i);
+          dest += i * bytes;
+          w -= i;
+          x += i;
+        }
       if (w)
-	memset (dest, 0, w * bytes);
+        memset (dest, 0, w * bytes);
       break;
 
     case WRAP:
       while (x < 0)
-	x += width;
+        x += width;
       i = MIN (w, width - x);
       gimp_pixel_rgn_get_row (PR, dest, x, y, i);
       w -= i;
       dest += i * bytes;
       x = 0;
       while (w)
-	{
-	  i = MIN (w, width);
-	  gimp_pixel_rgn_get_row (PR, dest, x, y, i);
-	  w -= i;
-	  dest += i * bytes;
-	}
+        {
+          i = MIN (w, width);
+          gimp_pixel_rgn_get_row (PR, dest, x, y, i);
+          w -= i;
+          dest += i * bytes;
+        }
       break;
 
     case EXTEND:
       if (x < 0)
-	{
-	  gimp_pixel_rgn_get_pixel (PR, dest, 0, y);
-	  x++;
-	  w--;
-	  dest += bytes;
+        {
+          gimp_pixel_rgn_get_pixel (PR, dest, 0, y);
+          x++;
+          w--;
+          dest += bytes;
 
-	  while (x < 0 && w)
-	    {
-	      for (i = 0; i < bytes; i++)
-		{
-		  *dest = *(dest - bytes);
-		  dest++;
-		}
-	      x++;
-	      w--;
-	    }
-	}
+          while (x < 0 && w)
+            {
+              for (i = 0; i < bytes; i++)
+                {
+                  *dest = *(dest - bytes);
+                  dest++;
+                }
+              x++;
+              w--;
+            }
+        }
       if (w && width - x > 0)
-	{
-	  i = MIN (w, width - x);
-	  gimp_pixel_rgn_get_row (PR, dest, x, y, i);
-	  w -= i;
-	  dest += i * bytes;
-	}
+        {
+          i = MIN (w, width - x);
+          gimp_pixel_rgn_get_row (PR, dest, x, y, i);
+          w -= i;
+          dest += i * bytes;
+        }
       while (w)
-	{
-	  for (i = 0; i < bytes; i++)
-	    {
-	      *dest= *(dest - bytes);
-	      dest++;
-	    }
-	  x++;
-	  w--;
-	}
+        {
+          for (i = 0; i < bytes; i++)
+            {
+              *dest= *(dest - bytes);
+              dest++;
+            }
+          x++;
+          w--;
+        }
       break;
 
     case MIRROR: /* Not yet handled */
@@ -455,9 +456,10 @@ my_get_row (GimpPixelRgn *PR,
 }
 
 static gfloat
-calcmatrix (guchar **srcrow,
-	    gint     xoff,
-	    gint     i)
+calcmatrix (guchar       **srcrow,
+            gint           xoff,
+            gint           i,
+            GimpDrawable  *drawable)
 {
   static gfloat matrixsum = 0;
   static gint bytes       = 0;
@@ -471,31 +473,31 @@ calcmatrix (guchar **srcrow,
     {
       bytes = drawable->bpp;
       for (y = 0; y < 5; y++)
-	for (x = 0; x < 5; x++)
-	  {
-	    temp = my_config.matrix[x][y];
-	    matrixsum += ABS (temp);
-	  }
+        for (x = 0; x < 5; x++)
+          {
+            temp = my_config.matrix[x][y];
+            matrixsum += ABS (temp);
+          }
     }
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
       {
-	temp = my_config.matrix[x][y];
-	if (i != (bytes - 1) && my_config.alpha_alg == 1)
-	  {
-	    temp *= srcrow[y][xoff + x * bytes +bytes - 1 - i];
-	    alphasum += ABS (temp);
-	  }
-	temp *= srcrow[y][xoff + x * bytes];
-	sum += temp;
+        temp = my_config.matrix[x][y];
+        if (i != (bytes - 1) && my_config.alpha_alg == 1)
+          {
+            temp *= srcrow[y][xoff + x * bytes +bytes - 1 - i];
+            alphasum += ABS (temp);
+          }
+        temp *= srcrow[y][xoff + x * bytes];
+        sum += temp;
       }
   sum /= my_config.divisor;
   if (i != (bytes - 1) && my_config.alpha_alg == 1)
     {
       if (alphasum != 0)
-	sum = sum * matrixsum / alphasum;
+        sum = sum * matrixsum / alphasum;
       else
-	sum = 0;
+        sum = 0;
       /* sum = srcrow[2][xoff + 2 * bytes] * my_config.matrix[2][2];*/
     }
   sum += my_config.offset;
@@ -504,12 +506,12 @@ calcmatrix (guchar **srcrow,
 }
 
 static void
-convmatrix (void)
+convmatrix (GimpDrawable *drawable)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, row, col;
   gint          w, h, i;
-  gint 		sx1, sy1, sx2, sy2;
+  gint          sx1, sy1, sx2, sy2;
   gint          x1, x2, y1, y2;
   guchar       *destrow[3];
   guchar       *srcrow[5];
@@ -517,6 +519,7 @@ convmatrix (void)
   gfloat        sum;
   gint          xoff;
   gint          chanmask[4];
+  gint          bytes;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -567,19 +570,19 @@ convmatrix (void)
       xoff = 0;
 
       for (col = sx1; col < sx2; col++)
-	for (i = 0; i < bytes; i++)
-	  {
-	    if (chanmask[i] <= 0)
-	      sum = srcrow[2][xoff + 2 * bytes];
-	    else
-	      sum = calcmatrix(srcrow, xoff, i);
+        for (i = 0; i < bytes; i++)
+          {
+            if (chanmask[i] <= 0)
+              sum = srcrow[2][xoff + 2 * bytes];
+            else
+              sum = calcmatrix(srcrow, xoff, i, drawable);
 
-	    destrow[2][xoff]= (guchar) CLAMP (sum, 0, 255);
-	    xoff++;
-	  }
+            destrow[2][xoff]= (guchar) CLAMP (sum, 0, 255);
+            xoff++;
+          }
 
       if (row > sy1 + 1)
-	gimp_pixel_rgn_set_row (&destPR, destrow[0], sx1, row - 2, w);
+        gimp_pixel_rgn_set_row (&destPR, destrow[0], sx1, row - 2, w);
 
       temprow = destrow[0];
       destrow[0] = destrow[1];
@@ -588,7 +591,7 @@ convmatrix (void)
       temprow = srcrow[0];
 
       for (i = 0; i < 4; i++)
-	srcrow[i] = srcrow[i + 1];
+        srcrow[i] = srcrow[i + 1];
 
       srcrow[4] = temprow;
       my_get_row (&srcPR, srcrow[4], sx1 - 2, row + 3, w + 4);
@@ -617,7 +620,7 @@ convmatrix (void)
 
 static void
 fprint (gfloat  f,
-	gchar  *buffer,
+        gchar  *buffer,
         gsize   len)
 {
   gint i, t;
@@ -625,14 +628,15 @@ fprint (gfloat  f,
   g_snprintf (buffer, len, "%.7f", f);
   buffer[len - 1] = '\0';
 
-  for (t = 0; t < len - 1 && buffer[t] != '.'; t++);
+  for (t = 0; t < len - 1 && buffer[t] != '.'; t++)
+      ;
 
   i = t + 1;
 
   while (buffer[i] != '\0')
     {
       if (buffer[i] != '0')
-	t = i + 1;
+        t = i + 1;
 
       i++;
     }
@@ -650,7 +654,7 @@ redraw_matrix (void)
     for (x = 0; x < 5; x++)
       {
         fprint (my_config.matrix[x][y], buffer, sizeof (buffer));
-	gtk_entry_set_text (GTK_ENTRY (my_widgets.matrix[x][y]), buffer);
+        gtk_entry_set_text (GTK_ENTRY (my_widgets.matrix[x][y]), buffer);
       }
 }
 
@@ -661,21 +665,21 @@ redraw_channels (void)
 
   for (i = 0; i < 5; i++)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.channels[i]),
-				  my_config.channels[i] > 0);
+                                  my_config.channels[i] > 0);
 }
 
 static void
 redraw_autoset (void)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.autoset),
-				my_config.autoset);
+                                my_config.autoset);
 }
 
 static void
 redraw_alpha_alg (void)
 {
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.alpha_alg),
-				my_config.alpha_alg > 0);
+                                my_config.alpha_alg > 0);
 }
 
 static void
@@ -718,46 +722,46 @@ check_matrix (void)
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
       {
-	sum += my_config.matrix[x][y];
-	if (my_config.matrix[x][y] != 0.0)
-	  valid = TRUE;
+        sum += my_config.matrix[x][y];
+        if (my_config.matrix[x][y] != 0.0)
+          valid = TRUE;
       }
 
   if (my_config.autoset)
     {
       if (sum > 0)
-	{
-	  my_config.offset = 0;
-	  my_config.divisor = sum;
-	}
+        {
+          my_config.offset = 0;
+          my_config.divisor = sum;
+        }
       else if (sum < 0)
-	{
-	  my_config.offset = 255;
-	  my_config.divisor = -sum;
-	}
+        {
+          my_config.offset = 255;
+          my_config.divisor = -sum;
+        }
       else
-	{
-	  my_config.offset = 128;
-	  /* The sum is 0, so this is probably some sort of
-	   * embossing filter. Should divisor be autoset to 1
-	   * or left undefined, ie. for the user to define? */
-	  my_config.divisor = 1;
-	}
+        {
+          my_config.offset = 128;
+          /* The sum is 0, so this is probably some sort of
+           * embossing filter. Should divisor be autoset to 1
+           * or left undefined, ie. for the user to define? */
+          my_config.divisor = 1;
+        }
       redraw_off_and_div ();
     }
   /* gtk_widget_set_sensitive(my_widgets.ok,valid); */
 }
 
 static void
-response_callback (GtkWidget *widget,
-                   gint       response_id,
-		   gpointer   data)
+response_callback (GtkWidget    *widget,
+                   gint          response_id,
+                   GimpDrawable *drawable)
 {
   switch (response_id)
     {
     case RESPONSE_RESET:
       my_config = default_config;
-      check_config ();
+      check_config (drawable);
       redraw_all ();
       break;
 
@@ -772,7 +776,7 @@ response_callback (GtkWidget *widget,
 
 /* Checks that the configuration is valid for the image type */
 static void
-check_config (void)
+check_config (GimpDrawable *drawable)
 {
   gint i;
 
@@ -796,7 +800,7 @@ check_config (void)
 
 static void
 entry_callback (GtkWidget *widget,
-		gpointer   data)
+                gpointer   data)
 {
   gfloat *value = (gfloat *) data;
 
@@ -815,7 +819,7 @@ entry_callback (GtkWidget *widget,
 
 static void
 my_toggle_callback (GtkWidget *widget,
-		    gpointer   data)
+                    gpointer   data)
 {
   gint val = GTK_TOGGLE_BUTTON (widget)->active;
 
@@ -828,10 +832,10 @@ my_toggle_callback (GtkWidget *widget,
     {
       gtk_widget_set_sensitive (my_widgets.bmode[CLEAR], val);
       if (val == 0 && my_config.bmode == CLEAR)
-	{
-	  my_config.bmode = EXTEND;
-	  redraw_bmode ();
-	}
+        {
+          my_config.bmode = EXTEND;
+          redraw_bmode ();
+        }
     }
   else if (widget == my_widgets.autoset)
     {
@@ -843,15 +847,15 @@ my_toggle_callback (GtkWidget *widget,
 
 static void
 my_bmode_callback (GtkWidget *widget,
-		   gpointer   data)
+                   gpointer   data)
 {
   my_config.bmode = GPOINTER_TO_INT (data) - 1;
 }
 
 static gboolean
-dialog (void)
+convmatrix_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_hbox;
   GtkWidget *table;
   GtkWidget *label;
@@ -866,33 +870,26 @@ dialog (void)
 
   gimp_ui_init ("convmatrix", FALSE);
 
-  dlg = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
-                         NULL, 0,
-			 gimp_standard_help_func, "plug-in-convmatrix",
+  dialog = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-convmatrix",
 
-			 GIMP_STOCK_RESET, RESPONSE_RESET,
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-					      RESPONSE_RESET,
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
-
-  g_signal_connect (dlg, "response",
-                    G_CALLBACK (response_callback),
-                    NULL);
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_hbox,
+                      TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
@@ -911,13 +908,13 @@ dialog (void)
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
       {
-	my_widgets.matrix[x][y] = entry = gtk_entry_new ();
-	gtk_widget_set_size_request (entry, 40, -1);
-	gtk_table_attach (GTK_TABLE (table), entry, x, x+1, y, y+1,
-			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_widget_show (entry);
+        my_widgets.matrix[x][y] = entry = gtk_entry_new ();
+        gtk_widget_set_size_request (entry, 40, -1);
+        gtk_table_attach (GTK_TABLE (table), entry, x, x+1, y, y+1,
+                          GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+        gtk_widget_show (entry);
 
-	g_signal_connect (entry, "changed",
+        g_signal_connect (entry, "changed",
                           G_CALLBACK (entry_callback),
                           &my_config.matrix[x][y]);
       }
@@ -1014,7 +1011,7 @@ dialog (void)
   for (i = 0; i < 3; i++)
     {
       my_widgets.bmode[i] = button =
-	gtk_radio_button_new_with_mnemonic (group, gettext (bmode_labels[i]));
+        gtk_radio_button_new_with_mnemonic (group, gettext (bmode_labels[i]));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -1036,10 +1033,10 @@ dialog (void)
   for (i = 0; i < 5; i++)
     {
       my_widgets.channels[i] = button =
-	gtk_check_button_new_with_mnemonic (gettext (channel_labels[i]));
+        gtk_check_button_new_with_mnemonic (gettext (channel_labels[i]));
 
       if (my_config.channels[i] < 0)
-	gtk_widget_set_sensitive (button, FALSE);
+        gtk_widget_set_sensitive (button, FALSE);
 
       gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -1056,11 +1053,18 @@ dialog (void)
 
   gtk_widget_show (main_hbox);
 
-  gtk_widget_show (dlg);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (response_callback),
+                    drawable);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
+
+  gtk_widget_show (dialog);
   redraw_all ();
 
   gtk_widget_set_sensitive (my_widgets.bmode[CLEAR],
-			    (my_config.alpha_alg > 0));
+                            (my_config.alpha_alg > 0));
 
   gtk_main ();
 

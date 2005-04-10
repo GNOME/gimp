@@ -1,3 +1,8 @@
+2005-04-10  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/convmatrix.c: preliminary cleanup before
+	implementing a preview.
+
 2005-04-10  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/drawable-commands.h: removed duplicate function
