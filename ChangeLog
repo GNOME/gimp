@@ -1,5 +1,10 @@
 2005-04-10  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/common/convmatrix.c: added a preview, but this plug-in
+	certainly need some more work.
+
+2005-04-10  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/convmatrix.c: preliminary cleanup before
 	implementing a preview.
 

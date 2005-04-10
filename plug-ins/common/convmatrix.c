@@ -98,7 +98,8 @@ static void run   (const gchar      *name,
 
 static gboolean  convmatrix_dialog (GimpDrawable  *drawable);
 
-static void      convmatrix        (GimpDrawable  *drawable);
+static void      convmatrix        (GimpDrawable  *drawable,
+                                    GimpPreview   *preview);
 static void      check_config      (GimpDrawable  *drawable);
 
 static gfloat    calcmatrix        (guchar       **srcrow,
@@ -296,7 +297,7 @@ run (const gchar      *name,
           gimp_progress_init (_("Applying convolution"));
           gimp_tile_cache_ntiles (2 * (drawable->width /
                                   gimp_tile_width () + 1));
-          convmatrix (drawable);
+          convmatrix (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -506,7 +507,8 @@ calcmatrix (guchar       **srcrow,
 }
 
 static void
-convmatrix (GimpDrawable *drawable)
+convmatrix (GimpDrawable *drawable,
+            GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height, row, col;
@@ -527,9 +529,19 @@ convmatrix (GimpDrawable *drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
-  w = sx2 - sx1;
-  h = sy2 - sy1;
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &sx1, &sy1);
+      gimp_preview_get_size (preview, &w, &h);
+      sx2 = sx1 + w;
+      sy2 = sy1 + h;
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
+      w = sx2 - sx1;
+      h = sy2 - sy1;
+    }
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
@@ -559,7 +571,9 @@ convmatrix (GimpDrawable *drawable)
   y2 = MIN (sy2 + 2, height);
   gimp_pixel_rgn_init (&srcPR, drawable,
                        x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, sx1, sy1, w, h, TRUE, TRUE);
+  gimp_pixel_rgn_init (&destPR, drawable,
+                       sx1, sy1, w, h,
+                       preview == NULL, TRUE);
 
   /* initialize source arrays */
   for (i = 0; i < 5; i++)
@@ -596,7 +610,7 @@ convmatrix (GimpDrawable *drawable)
       srcrow[4] = temprow;
       my_get_row (&srcPR, srcrow[4], sx1 - 2, row + 3, w + 4);
 
-      if (row % 10 == 0)
+      if ((row % 10 == 0) && !preview)
         gimp_progress_update ((double) (row - sy1) / h);
     }
 
@@ -609,9 +623,17 @@ convmatrix (GimpDrawable *drawable)
     gimp_pixel_rgn_set_row (&destPR, destrow[1], sx1, row - 1, w);
 
   /*  update the timred region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, sx1, sy1, sx2 - sx1, sy2 - sy1);
+  if (preview)
+    {
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &destPR);
+    }
+  else
+    {
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, sx1, sy1, sx2 - sx1, sy2 - sy1);
+    }
 }
 
 /***************************************************
@@ -856,6 +878,8 @@ static gboolean
 convmatrix_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *main_hbox;
   GtkWidget *table;
   GtkWidget *label;
@@ -886,10 +910,21 @@ convmatrix_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (convmatrix),
+                            drawable);
+
   main_hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_hbox,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_hbox),
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
@@ -917,6 +952,9 @@ convmatrix_dialog (GimpDrawable *drawable)
         g_signal_connect (entry, "changed",
                           G_CALLBACK (entry_callback),
                           &my_config.matrix[x][y]);
+        g_signal_connect_swapped (entry, "changed",
+                                  G_CALLBACK (gimp_preview_invalidate),
+                                  preview);
       }
 
   gtk_widget_show (table);
@@ -942,6 +980,9 @@ convmatrix_dialog (GimpDrawable *drawable)
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     &my_config.divisor);
+  g_signal_connect_swapped (entry, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
@@ -963,6 +1004,9 @@ convmatrix_dialog (GimpDrawable *drawable)
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     &my_config.offset);
+  g_signal_connect_swapped (entry, "changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
@@ -982,6 +1026,9 @@ convmatrix_dialog (GimpDrawable *drawable)
   g_signal_connect (button, "toggled",
                     G_CALLBACK (my_toggle_callback),
                     &my_config.autoset);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   my_widgets.alpha_alg = button =
     gtk_check_button_new_with_mnemonic (_("A_lpha-weighting"));
@@ -993,6 +1040,9 @@ convmatrix_dialog (GimpDrawable *drawable)
   g_signal_connect (button, "toggled",
                     G_CALLBACK (my_toggle_callback),
                     &my_config.alpha_alg);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (box);
   gtk_widget_show (vbox);
@@ -1019,6 +1069,9 @@ convmatrix_dialog (GimpDrawable *drawable)
       g_signal_connect (button, "toggled",
                         G_CALLBACK (my_bmode_callback),
                         GINT_TO_POINTER (i + 1));
+      g_signal_connect_swapped (button, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
     }
 
   gtk_widget_show (box);
@@ -1044,14 +1097,15 @@ convmatrix_dialog (GimpDrawable *drawable)
       g_signal_connect (button, "toggled",
                         G_CALLBACK (my_toggle_callback),
                         &my_config.channels[i]);
+      g_signal_connect_swapped (button, "toggled",
+                                G_CALLBACK (gimp_preview_invalidate),
+                                preview);
     }
 
   gtk_widget_show (box);
   gtk_widget_show (frame);
 
   gtk_widget_show (inbox);
-
-  gtk_widget_show (main_hbox);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (response_callback),
