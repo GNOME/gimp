@@ -1,5 +1,10 @@
 2005-04-10  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/drawable-commands.h: removed duplicate function
+	declarations (spotted by Karine Delvare).
+
+2005-04-10  Sven Neumann  <sven@gimp.org>
+
 	Merged from gimp-2-2 branch:
 
 	* plug-ins/print/print.c: reverted the previous change, it was wrong
