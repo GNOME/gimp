@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-06 23:37+0200\n"
-"PO-Revision-Date: 2005-04-06 23:37+0200\n"
+"PO-Revision-Date: 2005-04-10 17:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2149,7 +2149,7 @@ msgstr "_Numero di segmenti"
 
 #: ../plug-ins/common/blur.c:147
 msgid "_Blur"
-msgstr "_Sfoca"
+msgstr "_Sfocatura"
 
 #: ../plug-ins/common/blur.c:191 ../plug-ins/common/unsharp.c:428
 msgid "Blurring..."
@@ -3858,15 +3858,15 @@ msgstr "Y_2:"
 
 #: ../plug-ins/common/gauss.c:153
 msgid "_Gaussian Blur..."
-msgstr "Sfocatura _gaussiana..."
+msgstr "Sfocatura _Gaussiana..."
 
 #: ../plug-ins/common/gauss.c:409
 msgid "Gaussian Blur..."
-msgstr "Sfocatura gaussiana..."
+msgstr "Sfocatura Gaussiana..."
 
 #: ../plug-ins/common/gauss.c:457
 msgid "Gaussian Blur"
-msgstr "Sfocatura gaussiana"
+msgstr "Sfocatura Gaussiana"
 
 #. parameter settings
 #: ../plug-ins/common/gauss.c:485
@@ -5258,7 +5258,7 @@ msgstr "A_lfa:"
 
 #: ../plug-ins/common/noisify.c:151
 msgid "_Scatter RGB..."
-msgstr "Dis_persione RGB..."
+msgstr "Dispersione _RGB..."
 
 #: ../plug-ins/common/noisify.c:279
 msgid "Adding Noise..."
@@ -5270,7 +5270,7 @@ msgstr "Dispersione RGB"
 
 #: ../plug-ins/common/noisify.c:476
 msgid "Co_rrelated noise"
-msgstr "Disturbo co_rrelato"
+msgstr "Disturbo _correlato"
 
 #: ../plug-ins/common/noisify.c:491
 msgid "_Independent RGB"
@@ -5483,23 +5483,23 @@ msgstr "Immagine PIX Alias|Wavefront"
 
 #: ../plug-ins/common/pixelize.c:168
 msgid "_Pixelize..."
-msgstr "_Per punti..."
+msgstr "Effetto _pixel..."
 
 #: ../plug-ins/common/pixelize.c:270
 msgid "Pixelizing..."
-msgstr "Per punti..."
+msgstr "Effetto pixel..."
 
 #: ../plug-ins/common/pixelize.c:311
 msgid "Pixelize"
-msgstr "Per punti"
+msgstr "Effetto pixel"
 
 #: ../plug-ins/common/pixelize.c:345
 msgid "Pixel _Width:"
-msgstr "_Larghezza punti:"
+msgstr "_Larghezza pixel:"
 
 #: ../plug-ins/common/pixelize.c:350
 msgid "Pixel _Height:"
-msgstr "_Altezza punti:"
+msgstr "_Altezza pixel:"
 
 #: ../plug-ins/common/plasma.c:182
 msgid "_Plasma..."
@@ -5950,7 +5950,7 @@ msgstr "_Disturbo..."
 
 #: ../plug-ins/common/randomize.c:249
 msgid "_Pick..."
-msgstr "_Preleva..."
+msgstr "_Prelievo..."
 
 #: ../plug-ins/common/randomize.c:261
 msgid "_Slur..."
@@ -6239,7 +6239,7 @@ msgstr "Rimappa colorati..."
 
 #: ../plug-ins/common/scatter_hsv.c:109
 msgid "S_catter HSV..."
-msgstr "Dis_persione HSV..."
+msgstr "Dispersione _HSV..."
 
 #: ../plug-ins/common/scatter_hsv.c:204
 msgid "Scattering HSV..."
@@ -6321,7 +6321,7 @@ msgstr "secondi"
 
 #: ../plug-ins/common/sel_gauss.c:105
 msgid "_Selective Gaussian Blur..."
-msgstr "_Sfocatura selettiva Gaussiana..."
+msgstr "Sfocatura se_lettiva Gaussiana..."
 
 #: ../plug-ins/common/sel_gauss.c:185
 msgid "Selective Gaussian Blur..."
@@ -6891,19 +6891,19 @@ msgstr "La regione selezionata per il plug-in è vuota"
 
 #: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
-msgstr "Sparso..."
+msgstr "Di_ffusione..."
 
 #: ../plug-ins/common/spread.c:181
 msgid "Spreading..."
-msgstr "Spargimento..."
+msgstr "Diffusione..."
 
 #: ../plug-ins/common/spread.c:345
 msgid "Spread"
-msgstr "Sparso"
+msgstr "Diffusione"
 
 #: ../plug-ins/common/spread.c:368
 msgid "Spread Amount"
-msgstr "Ammontare dello spargimento"
+msgstr "Ammontare della diffusione"
 
 #: ../plug-ins/common/struc.c:1144
 msgid "_Apply Canvas..."
