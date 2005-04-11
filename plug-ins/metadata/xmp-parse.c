@@ -42,19 +42,21 @@
  * - write a decent scanner for finding <?xpacket...?> as recommended
  *   in the XMP specification (including support for UCS-2 and UCS-4)
  * - provide an API for passing unknown elements or tags to the caller
+ * - think about re-writing this using a better XML parser (expat?)
+ *   instead of GMarkupParser
  */
 
 #ifndef WITHOUT_GIMP
 #  include "config.h"
 #  include <string.h>
-#  include "xmp-parse.h"
 #  include "libgimp/stdplugins-intl.h"
 #else
 #  include <string.h>
-#  include "xmp-parse.h"
 #  define _(String) (String)
 #  define N_(String) (String)
 #endif
+#include "base64.h"
+#include "xmp-parse.h"
 
 GQuark
 xmp_parse_error_quark (void)
@@ -132,6 +134,8 @@ typedef enum
   STATE_INSIDE_STRUCT_ELEMENT,
   STATE_INSIDE_ALT,
   STATE_INSIDE_ALT_LI,
+  STATE_INSIDE_ALT_LI_RSC,
+  STATE_INSIDE_ALT_LI_RSC_IMG,
   STATE_INSIDE_BAG,
   STATE_INSIDE_BAG_LI,
   STATE_INSIDE_BAG_LI_RSC,
@@ -142,6 +146,7 @@ typedef enum
   STATE_AFTER_XMPMETA,
   STATE_AFTER_XPACKET,
   STATE_SKIPPING_UNKNOWN_ELEMENTS,
+  STATE_SKIPPING_IGNORED_ELEMENTS,
   STATE_ERROR
 } XMPParseState;
 
@@ -181,11 +186,45 @@ struct _XMPParseContext
   GMarkupParseContext *markup_context;
 };
 
+/* FIXME - debugging
+static const char *state_names[] =
+{
+  "START",
+  "INSIDE_XPACKET",
+  "INSIDE_XMPMETA",
+  "INSIDE_RDF",
+  "INSIDE_TOPLEVEL_DESC",
+  "INSIDE_PROPERTY",
+  "INSIDE_QDESC",
+  "INSIDE_QDESC_VALUE",
+  "INSIDE_QDESC_QUAL",
+  "INSIDE_STRUCT_ADD_NS",
+  "INSIDE_STRUCT",
+  "INSIDE_STRUCT_ELEMENT",
+  "INSIDE_ALT",
+  "INSIDE_ALT_LI",
+  "INSIDE_ALT_LI_RSC",
+  "INSIDE_ALT_LI_RSC_IMG",
+  "INSIDE_BAG",
+  "INSIDE_BAG_LI",
+  "INSIDE_BAG_LI_RSC",
+  "INSIDE_SEQ",
+  "INSIDE_SEQ_LI",
+  "INSIDE_SEQ_LI_RSC",
+  "AFTER_RDF",
+  "AFTER_XMPMETA",
+  "AFTER_XPACKET",
+  "SKIPPING_UNKNOWN_ELEMENTS",
+  "SKIPPING_IGNORED_ELEMENTS",
+  "ERROR",
+};
+*/
+
 static void
-parse_error (XMPParseContext     *context,
-             GError             **error,
-             XMPParseError        code,
-             const gchar         *format,
+parse_error (XMPParseContext  *context,
+             GError          **error,
+             XMPParseError     code,
+             const gchar      *format,
              ...)
 {
   GError  *tmp_error;
@@ -221,11 +260,11 @@ parse_error (XMPParseContext     *context,
 }
 
 static void
-parse_error_element (XMPParseContext     *context,
-                     GError             **error,
-                     const gchar         *expected_element,
-                     gboolean             optional,
-                     const gchar         *found_element)
+parse_error_element (XMPParseContext  *context,
+                     GError          **error,
+                     const gchar      *expected_element,
+                     gboolean          optional,
+                     const gchar      *found_element)
 {
   if (optional == TRUE)
     parse_error (context, error, XMP_ERROR_UNEXPECTED_ELEMENT,
@@ -238,28 +277,37 @@ parse_error_element (XMPParseContext     *context,
 }
 
 static void
-unknown_element (XMPParseContext     *context,
-                 GError             **error,
-                 const gchar         *element_name)
+unknown_element (XMPParseContext  *context,
+                 GError          **error,
+                 const gchar      *element_name)
 {
+  g_print ("XMP: SKIPPING %s\n", element_name); /* FIXME - debugging */
   if (context->flags & XMP_FLAG_NO_UNKNOWN_ELEMENTS)
     parse_error (context, error, XMP_ERROR_UNKNOWN_ELEMENT,
                  _("Unknown element <%s>"),
                  element_name);
   else
     {
+      context->saved_depth = context->depth;
       context->saved_state = context->state;
       context->state = STATE_SKIPPING_UNKNOWN_ELEMENTS;
-      context->saved_depth = context->depth;
     }
 }
 
 static void
-unknown_attribute (XMPParseContext     *context,
-                   GError             **error,
-                   const gchar         *element_name,
-                   const gchar         *attribute_name,
-                   const gchar         *attribute_value)
+ignore_element (XMPParseContext *context)
+{
+  context->saved_depth = context->depth;
+  context->saved_state = context->state;
+  context->state = STATE_SKIPPING_IGNORED_ELEMENTS;
+}
+
+static void
+unknown_attribute (XMPParseContext  *context,
+                   GError          **error,
+                   const gchar      *element_name,
+                   const gchar      *attribute_name,
+                   const gchar      *attribute_value)
 {
   if (context->flags & XMP_FLAG_NO_UNKNOWN_ATTRIBUTES)
     parse_error (context, error, XMP_ERROR_UNKNOWN_ATTRIBUTE,
@@ -373,10 +421,10 @@ new_property_in_ns (XMPParseContext  *context,
 }
 
 static void
-add_property_value (XMPParseContext  *context,
-                    XMPParseType      type,
-                    gchar            *name,
-                    gchar            *value)
+add_property_value (XMPParseContext *context,
+                    XMPParseType     type,
+                    gchar           *name,
+                    gchar           *value)
 {
   g_return_if_fail (context->property != NULL);
   if (type == XMP_PTYPE_TEXT || type == XMP_PTYPE_RESOURCE)
@@ -393,11 +441,16 @@ add_property_value (XMPParseContext  *context,
                                        sizeof (gchar *)
                                        * context->prop_max_value);
     }
-  if (type == XMP_PTYPE_ALT_LANG || type == XMP_PTYPE_STRUCTURE)
+  /* some types store a name and a value; most others store only a value */
+  if (type == XMP_PTYPE_ALT_LANG
+      || type == XMP_PTYPE_STRUCTURE
+      || type == XMP_PTYPE_ALT_THUMBS) /* for thumbnails, name is the size */
     {
       context->prop_cur_value++;
       context->prop_value[context->prop_cur_value] = name;
     }
+  else
+    g_assert (name == NULL);
   context->prop_cur_value++;
   context->prop_value[context->prop_cur_value] = value;
   context->prop_value[context->prop_cur_value + 1] = NULL;
@@ -405,8 +458,8 @@ add_property_value (XMPParseContext  *context,
 }
 
 static void
-update_property_value (XMPParseContext  *context,
-                       gchar            *value)
+update_property_value (XMPParseContext *context,
+                       gchar           *value)
 {
   g_return_if_fail (context->property != NULL);
   g_return_if_fail (context->prop_cur_value >= 0);
@@ -448,19 +501,27 @@ propagate_property (XMPParseContext  *context,
 
 /* called from the GMarkupParser */
 static void
-start_element_handler  (GMarkupParseContext *markup_context,
-                        const gchar         *element_name,
-                        const gchar        **attribute_names,
-                        const gchar        **attribute_values,
-                        gpointer             user_data,
-                        GError             **error)
+start_element_handler  (GMarkupParseContext  *markup_context,
+                        const gchar          *element_name,
+                        const gchar         **attribute_names,
+                        const gchar         **attribute_values,
+                        gpointer              user_data,
+                        GError              **error)
 {
   XMPParseContext *context = user_data;
   gint             attr;
 
   /*
-  printf ("[%02d/%02d] %d <%s>\n", context->state, context->saved_state,
-          context->depth, element_name);
+  g_print ("[%02d/%02d] %d <%s>\n", context->state, context->saved_state,
+           context->depth, element_name);
+  */
+  /* FIXME - debugging
+  g_print ("[%25s/%17s] %d <%s>\n",
+           state_names[context->state],
+           (context->saved_state == STATE_ERROR
+            ? "-"
+            : state_names[context->saved_state]),
+           context->depth, element_name);
   */
   context->depth++;
   for (attr = 0; attribute_names[attr] != NULL; ++attr)
@@ -643,7 +704,10 @@ start_element_handler  (GMarkupParseContext *markup_context,
 	  context->state = STATE_INSIDE_ALT_LI;
 	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
 	    {
-	      if (! strcmp (attribute_names[attr], "xml:lang"))
+	      if (! strcmp (attribute_names[attr], "rdf:parseType")
+                  && ! strcmp (attribute_values[attr], "Resource"))
+                context->state = STATE_INSIDE_ALT_LI_RSC;
+	      else if (! strcmp (attribute_names[attr], "xml:lang"))
                 add_property_value (context, XMP_PTYPE_ALT_LANG,
                                     g_strdup (attribute_values[attr]),
                                     NULL);
@@ -716,12 +780,25 @@ start_element_handler  (GMarkupParseContext *markup_context,
                              TRUE, element_name);
       break;
 
+    case STATE_INSIDE_ALT_LI_RSC:
+      /* store the thumbnail image and ignore the other elements */
+      if (! strcmp (element_name, "xapGImg:image")) /* FIXME */
+        context->state = STATE_INSIDE_ALT_LI_RSC_IMG;
+      else if (! strcmp (element_name, "xapGImg:format")
+               || ! strcmp (element_name, "xapGImg:width")
+               || ! strcmp (element_name, "xapGImg:height"))
+        ignore_element (context);
+      else
+        unknown_element (context, error, element_name);
+      break;
+
     case STATE_INSIDE_BAG_LI_RSC:
     case STATE_INSIDE_SEQ_LI_RSC:
       unknown_element (context, error, element_name);
       break;
 
     case STATE_SKIPPING_UNKNOWN_ELEMENTS:
+    case STATE_SKIPPING_IGNORED_ELEMENTS:
       break;
 
     default:
@@ -734,16 +811,24 @@ start_element_handler  (GMarkupParseContext *markup_context,
 
 /* called from the GMarkupParser */
 static void
-end_element_handler    (GMarkupParseContext *markup_context,
-                        const gchar         *element_name,
-                        gpointer             user_data,
-                        GError             **error)
+end_element_handler    (GMarkupParseContext  *markup_context,
+                        const gchar          *element_name,
+                        gpointer              user_data,
+                        GError              **error)
 {
   XMPParseContext *context = user_data;
 
   /*
-  printf ("[%02d/%02d] %d </%s>\n", context->state, context->saved_state,
-          context->depth, element_name);
+  g_print ("[%02d/%02d] %d </%s>\n", context->state, context->saved_state,
+           context->depth, element_name);
+  */
+  /* FIXME - debugging
+  g_print ("[%25s/%17s] %d </%s>\n",
+           state_names[context->state],
+           (context->saved_state == STATE_ERROR
+            ? "-"
+            : state_names[context->saved_state]),
+           context->depth, element_name);
   */
   switch (context->state)
     {
@@ -794,6 +879,14 @@ end_element_handler    (GMarkupParseContext *markup_context,
         update_property_value (context, g_strdup (""));
       break;
 
+    case STATE_INSIDE_ALT_LI_RSC:
+      context->state = STATE_INSIDE_ALT;
+      break;
+
+    case STATE_INSIDE_ALT_LI_RSC_IMG:
+      context->state = STATE_INSIDE_ALT_LI_RSC;
+      break;
+
     case STATE_INSIDE_BAG_LI:
     case STATE_INSIDE_BAG_LI_RSC:
       context->state = STATE_INSIDE_BAG;
@@ -821,6 +914,7 @@ end_element_handler    (GMarkupParseContext *markup_context,
       break;
 
     case STATE_SKIPPING_UNKNOWN_ELEMENTS:
+    case STATE_SKIPPING_IGNORED_ELEMENTS:
       if (context->depth == context->saved_depth)
         {
           /* resume normal processing */
@@ -841,11 +935,11 @@ end_element_handler    (GMarkupParseContext *markup_context,
 
 /* called from the GMarkupParser */
 static void
-text_handler           (GMarkupParseContext *markup_context,
-                        const gchar         *text,
-                        gsize                text_len,
-                        gpointer             user_data,
-                        GError             **error)
+text_handler           (GMarkupParseContext  *markup_context,
+                        const gchar          *text,
+                        gsize                 text_len,
+                        gpointer              user_data,
+                        GError              **error)
 {
   XMPParseContext *context = user_data;
 
@@ -865,6 +959,42 @@ text_handler           (GMarkupParseContext *markup_context,
         update_property_value (context, g_strndup (text, text_len));
       break;
 
+    case STATE_INSIDE_ALT_LI_RSC_IMG:
+      {
+        gint   max_size;
+        gchar *decoded;
+        gint   decoded_size;
+
+        /* g_print ("XMP: Pushing text:\n%s\n", text); */
+        max_size = text_len - text_len / 4 + 1;
+        decoded = g_malloc (max_size);
+        decoded_size = base64_decode (text, text_len, decoded, max_size);
+        if (decoded_size > 0)
+          {
+            /* FIXME: remove this debugging code */
+            /*
+            FILE *ttt;
+
+            ttt = fopen ("/tmp/xmp-thumb.jpg", "w");
+            fwrite (decoded, decoded_size, 1, ttt);
+            fclose (ttt);
+            */
+            g_print ("XMP: Thumb text len: %d (1/4 = %d)\nMax size: %d\nUsed size: %d\n", text_len, text_len / 4, max_size, decoded_size);
+          }
+        if (decoded_size > 0)
+          {
+            gint  *size_p;
+
+            size_p = g_new (gint, 1);
+            *size_p = decoded_size;
+            add_property_value (context, XMP_PTYPE_ALT_THUMBS,
+                                (char *) size_p, decoded);
+          }
+        else
+          add_property_value (context, XMP_PTYPE_ALT_THUMBS, 0, NULL);
+      }
+      break;
+
     case STATE_INSIDE_QDESC_VALUE:
       if (! is_whitespace_string (text))
         {
@@ -878,14 +1008,15 @@ text_handler           (GMarkupParseContext *markup_context,
 
     case STATE_INSIDE_QDESC_QUAL:
       /*
-      printf ("ignoring qualifier for part of \"%s\"[]: \"%.*s\"\n",
-	      context->property,
-	      (int)text_len, text);
+      g_print ("ignoring qualifier for part of \"%s\"[]: \"%.*s\"\n",
+	       context->property,
+	       (int)text_len, text);
       */
       /* FIXME: notify the user? add a way to collect qualifiers? */
       break;
 
     case STATE_SKIPPING_UNKNOWN_ELEMENTS:
+    case STATE_SKIPPING_IGNORED_ELEMENTS:
       break;
 
     default:
@@ -899,11 +1030,11 @@ text_handler           (GMarkupParseContext *markup_context,
 
 /* called from the GMarkupParser */
 static void
-passthrough_handler    (GMarkupParseContext *markup_context,
-                        const gchar         *passthrough_text,
-                        gsize                text_len,
-                        gpointer             user_data,
-                        GError             **error)
+passthrough_handler    (GMarkupParseContext  *markup_context,
+                        const gchar          *passthrough_text,
+                        gsize                 text_len,
+                        gpointer              user_data,
+                        GError              **error)
 {
   XMPParseContext *context = user_data;
 

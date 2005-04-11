@@ -58,6 +58,7 @@ typedef enum
   XMP_PTYPE_RESOURCE,       /* value in value[0] */
   XMP_PTYPE_ORDERED_LIST,   /* values in value[0..n] */
   XMP_PTYPE_UNORDERED_LIST, /* values in value[0..n] */
+  XMP_PTYPE_ALT_THUMBS,     /* values in value[0..n] */
   XMP_PTYPE_ALT_LANG,  /* lang in value[0,2..n*2], text in value[1,3..n*2+1] */
   XMP_PTYPE_STRUCTURE, /* ns prefix in name[0], ns uri in name[1], */
                     /* name in value[2,4..n*2+2], value in value[3,5..n*2+3] */

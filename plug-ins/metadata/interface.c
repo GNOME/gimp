@@ -188,8 +188,67 @@ update_icons (MetadataGui *mgui)
   gtk_tree_model_foreach (model, icon_foreach_func, mgui);
 }
 
+/* FIXME: temporary data structure for testing */
+typedef struct
+{
+  const gchar *schema;
+  const gchar *property_name;
+  GSList      *widget_list;
+} WidgetXRef;
+
 static void
-add_description_tab (GtkWidget    *notebook)
+entry_changed (GtkEntry *entry,
+               gpointer  user_data)
+{
+  WidgetXRef *xref = user_data;
+
+  g_print ("XMP: %s 0x%x 0x%x %s\n", xref->property_name, (int) entry, (int) user_data, gtk_entry_get_text (entry)); /* FIXME */
+}
+
+static void
+register_entry_xref (GtkWidget   *entry,
+                     const gchar *schema,
+                     const gchar *property_name)
+{
+  WidgetXRef *xref;
+
+  xref = g_new (WidgetXRef, 1);
+  xref->schema = schema;
+  xref->property_name = property_name;
+  xref->widget_list = g_slist_prepend (NULL, entry);
+  g_signal_connect (GTK_ENTRY (entry), "changed",
+		    G_CALLBACK (entry_changed), xref);
+}
+
+static void
+text_changed (GtkTextBuffer *text_buffer,
+             gpointer       user_data)
+{
+  WidgetXRef  *xref = user_data;
+  GtkTextIter  start;
+  GtkTextIter  end;
+
+  gtk_text_buffer_get_bounds (text_buffer, &start, &end);
+  g_print ("XMP: %s 0x%x 0x%x %s\n", xref->property_name, (int) text_buffer, (int) user_data, gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE)); /* FIXME */
+}
+
+static void
+register_text_xref (GtkTextBuffer *text_buffer,
+                    const gchar   *schema,
+                    const gchar   *property_name)
+{
+  WidgetXRef *xref;
+
+  xref = g_new (WidgetXRef, 1);
+  xref->schema = schema;
+  xref->property_name = property_name;
+  xref->widget_list = g_slist_prepend (NULL, text_buffer);
+  g_signal_connect (GTK_TEXT_BUFFER (text_buffer), "changed",
+		    G_CALLBACK (text_changed), xref);
+}
+
+static void
+add_description_tab (GtkWidget *notebook)
 {
   GtkWidget     *frame;
   GtkWidget     *table;
@@ -211,11 +270,13 @@ add_description_tab (GtkWidget    *notebook)
   /* gtk_widget_show (table); */
 
   entry = gtk_entry_new ();
+  register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "title");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Image _Title:"), 0.0, 0.5,
 			     entry, 1, FALSE);
 
   entry = gtk_entry_new ();
+  register_entry_xref (entry, XMP_SCHEMA_DUBLIN_CORE, "creator");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Author:"), 0.0, 0.5,
 			     entry, 1, FALSE);
@@ -232,13 +293,15 @@ add_description_tab (GtkWidget    *notebook)
                             "FIXME:\n"
                             "These widgets are currently disconnected from the XMP model.\n"
                             "Please use the Advanced tab.",
-                            -1); /*FIXME*/
+                            -1);
+  register_text_xref (text_buffer, XMP_SCHEMA_DUBLIN_CORE, "description");
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Description:"), 0.0, 0.5,
 			     scrolled_window, 1, FALSE);
 
   entry = gtk_entry_new ();
+  register_entry_xref (entry, XMP_SCHEMA_PHOTOSHOP, "CaptionWriter");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Description _Writer:"), 0.0, 0.5,
 			     entry, 1, FALSE);
@@ -251,6 +314,7 @@ add_description_tab (GtkWidget    *notebook)
 				  GTK_POLICY_AUTOMATIC);
   text_view = gtk_text_view_new ();
   text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
+  register_text_xref (text_buffer, XMP_SCHEMA_PDF, "Keywords");
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("_Keywords:"), 0.0, 0.5,
@@ -264,6 +328,7 @@ add_copyright_tab (GtkWidget *notebook)
 {
   GtkWidget *label;
 
+  /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
 			    gtk_label_new (_("Copyright")));
@@ -275,6 +340,7 @@ add_origin_tab (GtkWidget *notebook)
 {
   GtkWidget *label;
 
+  /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
 			    gtk_label_new (_("Origin")));
@@ -286,6 +352,7 @@ add_camera1_tab (GtkWidget *notebook)
 {
   GtkWidget *label;
 
+  /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
 			    gtk_label_new (_("Camera 1")));
@@ -297,10 +364,26 @@ add_camera2_tab (GtkWidget *notebook)
 {
   GtkWidget *label;
 
+  /* FIXME: add entries, cross-link with XMP model */
   label = gtk_label_new (_("Empty"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), label,
 			    gtk_label_new (_("Camera 2")));
   gtk_widget_show (label);
+}
+
+static void
+add_thumbnail_tab (GtkWidget *notebook)
+{
+  GdkPixbuf *default_thumb;
+  GtkWidget *image;
+
+  /* FIXME: link thumbnail with XMP model */
+  default_thumb = gtk_widget_render_icon (notebook, GIMP_STOCK_QUESTION,
+                                          (GtkIconSize) -1, "thumbnail");
+  image = gtk_image_new_from_pixbuf (default_thumb);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), image,
+			    gtk_label_new (_("Thumbnail")));
+  gtk_widget_show (image);
 }
 
 static void
@@ -625,6 +708,7 @@ metadata_dialog (gint32    image_ID,
   add_origin_tab (notebook);
   add_camera1_tab (notebook);
   add_camera2_tab (notebook);
+  add_thumbnail_tab (notebook);
   add_advanced_tab (notebook, xmp_model_get_tree_model (mgui.xmp_model));
 
   gtk_window_set_default_size (GTK_WINDOW (mgui.dlg), 400, 500);

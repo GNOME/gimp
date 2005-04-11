@@ -60,6 +60,12 @@ set_property (XMPParseContext     *context,
       printf ("\n");
       break;
 
+    case XMP_PTYPE_ALT_THUMBS:
+      for (i = 0; value[i] != NULL; i += 2)
+        printf ("\t%s:%s [size = %d] = \"...\"\n", ns_prefix, name,
+                *(int*)(value[i])); /* FIXME: show part of image */
+      break;
+
     case XMP_PTYPE_ALT_LANG:
       for (i = 0; value[i] != NULL; i += 2)
         printf ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,

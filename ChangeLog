@@ -1,3 +1,28 @@
+2005-04-11  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/metadata.c: Register plug_in_metadata_import
+	and plug_in_metadata_export in the PDB.
+
+	* plug-ins/metadata/Makefile.am
+	* plug-ins/metadata/base64.h
+	* plug-ins/metadata/base64.c: Added base64 decoder, needed for
+	reading the thumbnail images (base64 encoded inside XML element).
+	
+	* plug-ins/metadata/xmp-parse.h
+	* plug-ins/metadata/xmp-parse.c: Added XMP_PTYPE_ALT_THUMBS for
+	parsing a list of thumbnail images.  Decode and store the base64
+	encoded images.
+
+	* plug-ins/metadata/xmpdump.c
+	* plug-ins/metadata/xmp-model.h
+	* plug-ins/metadata/xmp-model.c: Added support for thumbnails,
+	defined global symbols for standard XMP schema URIs.
+
+	* plug-ins/metadata/interface.c: Preliminary support for widget
+	cross-references just for testing - it does not save anything yet.
+	Added thumbnail tab, although the thumbnail image is not displayed
+	yet.
+
 2005-04-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpclipboard.c: don't include "core/gimpviewable.h"

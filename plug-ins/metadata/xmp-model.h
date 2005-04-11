@@ -43,7 +43,7 @@ typedef enum
   XMP_TYPE_TEXT,                 /* TEXT */
   XMP_TYPE_TEXT_BAG,             /* UNORDERED_LIST */
   XMP_TYPE_TEXT_SEQ,             /* ORDERED_LIST */
-  XMP_TYPE_THUMBNAIL_ALT,        /* (?) */
+  XMP_TYPE_THUMBNAIL_ALT,        /* ALT_THUMBS */
   XMP_TYPE_URI,                  /* TEXT or RESOURCE (?) */
   XMP_TYPE_XPATH_BAG,            /* UNORDERED_LIST */
   XMP_TYPE_RESOURCE_EVENT_SEQ,   /* ORDERED_LIST */
@@ -94,6 +94,18 @@ typedef struct
   const gchar *name;
   XMPProperty *properties;
 } XMPSchema;
+
+/* URIs of standard XMP schemas (as of January 2004) */
+#define XMP_SCHEMA_DUBLIN_CORE "http://purl.org/dc/elements/1.1/"
+#define XMP_SCHEMA_XMP_BASIC   "http://ns.adobe.com/xap/1.0/"
+#define XMP_SCHEMA_XMP_RIGHTS  "http://ns.adobe.com/xap/1.0/rights/"
+#define XMP_SCHEMA_XMP_MM      "http://ns.adobe.com/xap/1.0/mm/"
+#define XMP_SCHEMA_XMP_BJ      "http://ns.adobe.com/xap/1.0/bj/"
+#define XMP_SCHEMA_XMP_TPG     "http://ns.adobe.com/xap/1.0/t/pg/"
+#define XMP_SCHEMA_PDF         "http://ns.adobe.com/pdf/1.3/"
+#define XMP_SCHEMA_PHOTOSHOP   "http://ns.adobe.com/photoshop/1.0/"
+#define XMP_SCHEMA_TIFF        "http://ns.adobe.com/tiff/1.0/"
+#define XMP_SCHEMA_EXIF        "http://ns.adobe.com/exif/1.0/"
 
 XMPModel     *xmp_model_new            (void);
 

@@ -277,46 +277,46 @@ static XMPProperty exif_properties[] =
 static XMPSchema xmp_schemas[] =
 {
   /* XMP schemas defined as of January 2004 */
-  { "http://purl.org/dc/elements/1.1/",     "dc",
-    "Dublin Core",                          dc_properties },
-  { "http://ns.adobe.com/xap/1.0/",         "xmp",
-    "XMP Basic",                            xmp_properties },
-  { "http://ns.adobe.com/xap/1.0/rights/",  "xmpRights",
-    "XMP Rights Management",                xmprights_properties },
-  { "http://ns.adobe.com/xap/1.0/mm/",      "xmpMM",
-    "XMP Media Management",                 xmpmm_properties },
-  { "http://ns.adobe.com/xap/1.0/bj/",      "xmpBJ",
-    "XMP Basic Job Ticket",                 xmpbj_properties },
-  { "http://ns.adobe.com/xap/1.0/t/pg/",    "xmpTPg",
-    "XMP Paged-Text",                       xmptpg_properties },
-  { "http://ns.adobe.com/pdf/1.3/",         "pdf",
-    "Adobe PDF",                            pdf_properties },
-  { "http://ns.adobe.com/photoshop/1.0/",   "photoshop",
-    "Photoshop",                            photoshop_properties },
-  { "http://ns.adobe.com/tiff/1.0/",        "tiff",
-    "EXIF (TIFF Properties)",               tiff_properties },
-  { "http://ns.adobe.com/exif/1.0/",        "exif",
-    "EXIF (EXIF-specific Properties)",      exif_properties },
+  { XMP_SCHEMA_DUBLIN_CORE,                             "dc",
+    "Dublin Core",                                      dc_properties },
+  { XMP_SCHEMA_XMP_BASIC,                               "xmp",
+    "XMP Basic",                                        xmp_properties },
+  { XMP_SCHEMA_XMP_RIGHTS,                              "xmpRights",
+    "XMP Rights Management",                            xmprights_properties },
+  { XMP_SCHEMA_XMP_MM,                                  "xmpMM",
+    "XMP Media Management",                             xmpmm_properties },
+  { XMP_SCHEMA_XMP_BJ,                                  "xmpBJ",
+    "XMP Basic Job Ticket",                             xmpbj_properties },
+  { XMP_SCHEMA_XMP_TPG,                                 "xmpTPg",
+    "XMP Paged-Text",                                   xmptpg_properties },
+  { XMP_SCHEMA_PDF,                                     "pdf",
+    "Adobe PDF",                                        pdf_properties },
+  { XMP_SCHEMA_PHOTOSHOP,                               "photoshop",
+    "Photoshop",                                        photoshop_properties },
+  { XMP_SCHEMA_TIFF,                                    "tiff",
+    "EXIF (TIFF Properties)",                           tiff_properties },
+  { XMP_SCHEMA_EXIF,                                    "exif",
+    "EXIF (EXIF-specific Properties)",                  exif_properties },
   /* XMP sub-types */
   { "http://ns.adobe.com/xmp/Identifier/qual/1.0/",     "xmpidq",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/g/img/",               "xapGImg",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/sType/Dimensions#",    "stDim",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/sType/ResourceEvent#", "stEvt",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/sType/ResourceRef#",   "stRef",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/sType/Version#",       "stVer",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   { "http://ns.adobe.com/xap/1.0/sType/Job#",           "stJob",
-    NULL,                                   NULL },
+    NULL,                                               NULL },
   /* other useful namespaces */
-  { "http://web.resource.org/cc/",          "cc",
-    "Creative Commons",                     NULL },
-  { "http://ns.adobe.com/iX/1.0/",          "iX",
-    NULL,                                   NULL },
+  { "http://web.resource.org/cc/",                      "cc",
+    "Creative Commons",                                 NULL },
+  { "http://ns.adobe.com/iX/1.0/",                      "iX",
+    NULL,                                               NULL },
   { NULL, NULL, NULL }
 };
 
@@ -792,6 +792,42 @@ parse_set_property (XMPParseContext     *context,
                           COL_XMP_WEIGHT_SET, FALSE,
                           -1);
       g_free (tmp_value);
+      g_free (tmp_name);
+      break;
+
+    case XMP_PTYPE_ALT_THUMBS:
+#ifdef DEBUG_XMP_PARSER
+      for (i = 0; value[i] != NULL; i += 2)
+        printf ("\t%s:%s [size:%d] = \"...\"\n", ns_prefix, name,
+                *(int *)(value[i]));
+      printf ("\n");
+#endif
+      if (property != NULL)
+        /* FIXME */;
+      else
+        {
+          property = g_new (XMPProperty, 1);
+          property->name = g_strdup (name);
+          property->type = XMP_TYPE_THUMBNAIL_ALT;
+          property->editable = TRUE;
+          xmp_model->custom_properties =
+            g_slist_prepend (xmp_model->custom_properties, property);
+        }
+
+      tmp_name = g_strconcat (name, " []", NULL);
+      gtk_tree_store_append (xmp_model->treestore, &child_iter, &iter);
+      gtk_tree_store_set (xmp_model->treestore, &child_iter,
+                          COL_XMP_NAME, tmp_name,
+                          COL_XMP_VALUE, "[FIXME: display thumbnails]",
+                          COL_XMP_VALUE_RAW, value,
+                          COL_XMP_TYPE_XREF, property,
+                          COL_XMP_WIDGET_XREF, NULL,
+                          COL_XMP_EDITABLE, property->editable,
+                          COL_XMP_EDIT_ICON, NULL,
+                          COL_XMP_VISIBLE, TRUE,
+                          COL_XMP_WEIGHT, PANGO_WEIGHT_NORMAL,
+                          COL_XMP_WEIGHT_SET, FALSE,
+                          -1);
       g_free (tmp_name);
       break;
 

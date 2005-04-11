@@ -34,7 +34,7 @@
 /* FIXME: uncomment when these are working
 #include "exif-decode.h"
 #include "exif-encode.h"
-#include "iptc-parse.h"
+#include "iptc-decode.h"
 */
 
 #define METADATA_PARASITE   "gimp-metadata"
@@ -77,16 +77,16 @@ query (void)
   static GimpParamDef decode_xmp_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
-    { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   },
+    { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   }
   };
 
   static GimpParamDef encode_xmp_args[] =
   {
-    { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
+    { GIMP_PDB_IMAGE,       "image",     "Input image"                  }
   };
   static GimpParamDef encode_xmp_return_vals[] =
   {
-    { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   },
+    { GIMP_PDB_STRING,      "xmp",       "XMP packet"                   }
   };
 
 /* FIXME: uncomment when these are working
@@ -94,17 +94,17 @@ query (void)
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_INT32,       "exif_size", "size of the EXIF block"       },
-    { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   },
+    { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   }
   };
 
   static GimpParamDef encode_exif_args[] =
   {
-    { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
+    { GIMP_PDB_IMAGE,       "image",     "Input image"                  }
   };
   static GimpParamDef encode_exif_return_vals[] =
   {
     { GIMP_PDB_INT32,       "exif_size", "size of the EXIF block"       },
-    { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   },
+    { GIMP_PDB_INT8ARRAY,   "exif",      "EXIF block"                   }
   };
 */
 
@@ -112,13 +112,13 @@ query (void)
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
-    { GIMP_PDB_STRING,      "property",  "XMP property name"            },
+    { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
   static GimpParamDef get_return_vals[] =
   {
     { GIMP_PDB_INT32,       "type",      "XMP property type"            },
     { GIMP_PDB_INT32,       "num_vals",  "number of values"             },
-    { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          },
+    { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          }
   };
 
   static GimpParamDef set_args[] =
@@ -128,18 +128,18 @@ query (void)
     { GIMP_PDB_STRING,      "property",  "XMP property name"            },
     { GIMP_PDB_INT32,       "type",      "XMP property type"            },
     { GIMP_PDB_INT32,       "num_vals",  "number of values"             },
-    { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          },
+    { GIMP_PDB_STRINGARRAY, "vals",      "XMP property values"          }
   };
 
   static GimpParamDef get_simple_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
-    { GIMP_PDB_STRING,      "property",  "XMP property name"            },
+    { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
   static GimpParamDef get_simple_return_vals[] =
   {
-    { GIMP_PDB_STRING,      "value",     "XMP property value"           },
+    { GIMP_PDB_STRING,      "value",     "XMP property value"           }
   };
 
   static GimpParamDef set_simple_args[] =
@@ -147,7 +147,7 @@ query (void)
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
     { GIMP_PDB_STRING,      "property",  "XMP property name"            },
-    { GIMP_PDB_STRING,      "value",     "XMP property value"           },
+    { GIMP_PDB_STRING,      "value",     "XMP property value"           }
   };
 
 /* FIXME: uncomment when these are working
@@ -155,16 +155,29 @@ query (void)
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "schema",    "XMP schema prefix or URI"     },
-    { GIMP_PDB_STRING,      "property",  "XMP property name"            },
+    { GIMP_PDB_STRING,      "property",  "XMP property name"            }
   };
 
   static GimpParamDef add_schema_args[] =
   {
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_STRING,      "prefix",    "XMP schema prefix"            },
-    { GIMP_PDB_STRING,      "uri",       "XMP schema URI"               },
+    { GIMP_PDB_STRING,      "uri",       "XMP schema URI"               }
   };
 */
+
+  static GimpParamDef import_args[] =
+  {
+    { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
+    { GIMP_PDB_STRING,      "filename",  "The name of the XMP file to import" }
+  };
+
+  static GimpParamDef export_args[] =
+  {
+    { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
+    { GIMP_PDB_STRING,      "filename",  "The name of the file to save the XMP packet in" },
+    { GIMP_PDB_INT32,       "overwrite", "Overwrite existing file: { FALSE (0), TRUE (1) }" }
+  };
 
   gimp_install_procedure ("plug_in_metadata_editor",
 			  "View and edit metadata (EXIF, IPTC, XMP)",
@@ -309,7 +322,37 @@ query (void)
                           G_N_ELEMENTS (set_simple_args), 0,
                           set_simple_args, NULL);
 
+  gimp_install_procedure ("plug_in_metadata_import",
+			  "Import XMP from a file into the current image",
+                          "Load an XMP packet from a file and import it into "
+                          "the current image.  This can be used to add a "
+                          "license statement or some other predefined "
+                          "metadata to an image",
+			  "Raphaël Quinet <raphael@gimp.org>",
+			  "Raphaël Quinet <raphael@gimp.org>",
+			  "2005",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (import_args), 0,
+                          import_args, NULL);
 
+  gimp_install_procedure ("plug_in_metadata_export",
+			  "Export XMP from the current image to a file",
+                          "Export the metadata associated with the current "
+                          "image into a file.  The metadata will be saved as "
+                          "an XMP packet.  If overwrite is TRUE, then any "
+                          "existing file will be overwritten without warning. "
+                          "If overwrite is FALSE, then an error will occur if "
+                          "the file already exists.",
+			  "Raphaël Quinet <raphael@gimp.org>",
+			  "Raphaël Quinet <raphael@gimp.org>",
+			  "2005",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (export_args), 0,
+                          export_args, NULL);
 }
 
 static void
@@ -361,12 +404,14 @@ run (const gchar      *name,
       gimp_parasite_free (parasite);
     }
 
-  /* If we have no metadata yet, try to find some XMP in the file (but
-   * ignore errors if nothing is found).  FIXME: This is a workaround
-   * until all file plug-ins do the right thing when loading their
-   * files.
+  /* If we have no metadata yet, try to find an XMP packet in the file
+   * (but ignore errors if nothing is found).
+   *
+   * FIXME: This is a workaround until all file plug-ins do the right
+   * thing when loading their files.
    */
-  if (xmp_model_is_empty (xmp_model))
+  if (xmp_model_is_empty (xmp_model)
+      && !! strcmp (name, "plug_in_metadata_decode_xmp"))
     {
       const gchar *filename;
       GError      *error = NULL;
@@ -407,10 +452,12 @@ run (const gchar      *name,
   else if (! strcmp (name, "plug_in_metadata_get"))
     {
       g_warning ("Not implemented yet\n"); /* FIXME */
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (! strcmp (name, "plug_in_metadata_set"))
     {
       g_warning ("Not implemented yet\n"); /* FIXME */
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (! strcmp (name, "plug_in_metadata_get_simple"))
     {
@@ -443,6 +490,34 @@ run (const gchar      *name,
       if (! xmp_model_set_scalar_property (xmp_model, schema_name,
                                            property_name, property_value))
         status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else if (! strcmp (name, "plug_in_metadata_import"))
+    {
+      const gchar *filename;
+      gchar       *buffer;
+      gssize       buffer_length;
+      GError      *error = NULL;
+
+      filename = param[1].data.d_string;
+      if (! g_file_get_contents (filename, &buffer, &buffer_length, &error))
+        {
+          g_error_free (error);
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+      else if (! xmp_model_parse_buffer (xmp_model, buffer, buffer_length,
+                                         TRUE, &error))
+        {
+          g_error_free (error);
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+      g_free (buffer);
+    }
+  else if (! strcmp (name, "plug_in_metadata_export"))
+    {
+      /* FIXME: this is easy to implement, but the first thing to do is */
+      /* to improve the code of export_dialog_response() in interface.c */
+      g_warning ("Not implemented yet\n");
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
   else
     {

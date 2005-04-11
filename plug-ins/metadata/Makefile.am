@@ -25,7 +25,9 @@ metadata_SOURCES = \
 	xmp-parse.h	\
 	xmp-parse.c	\
 	xmp-encode.h	\
-	xmp-encode.c	
+	xmp-encode.c	\
+	base64.h	\
+	base64.c
 #	exif-decode.h	\
 #	exif-decode.c	\
 #	exif-encode.h	\
@@ -37,7 +39,9 @@ noinst_PROGRAMS = xmpdump
 xmpdump_SOURCES = \
 	xmpdump.c	\
 	xmp-parse.h	\
-	xmp-parse.c	
+	xmp-parse.c	\
+	base64.h	\
+	base64.c
 
 INCLUDES = \
 	-I$(top_srcdir)	\
