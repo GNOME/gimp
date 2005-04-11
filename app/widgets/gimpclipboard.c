@@ -26,7 +26,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
-#include "core/gimpviewable.h"
 
 #include "gimpclipboard.h"
 #include "gimppixbuf.h"
@@ -42,10 +41,10 @@ typedef struct _GimpClipboard GimpClipboard;
 
 struct _GimpClipboard
 {
-  GSList          *pixbuf_formats;
+  GSList         *pixbuf_formats;
 
-  GtkTargetEntry  *target_entries;
-  gint             n_target_entries;
+  GtkTargetEntry *target_entries;
+  gint            n_target_entries;
 };
 
 
