@@ -213,6 +213,8 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (fuzzy_sel), coords))
     return;
 
+  gimp_tool_push_status (tool, _("Move the mouse to change threshold."));
+
   /*  calculate the region boundary  */
   fuzzy_sel->segs = gimp_fuzzy_select_tool_calculate (fuzzy_sel, gdisp,
                                                       &fuzzy_sel->num_segs);
@@ -230,7 +232,9 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
   GimpFuzzySelectTool  *fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   GimpSelectionOptions *options;
 
-  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
+
+  gimp_tool_pop_status (tool);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 

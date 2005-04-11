@@ -1,3 +1,8 @@
+2005-04-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpfuzzyselecttool.c: added a hint to the statusbar.
+	Closes bug #300125.
+
 2005-04-10  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/convmatrix.c: added a preview, but this plug-in
