@@ -478,7 +478,7 @@ gui_exit_callback (Gimp     *gimp,
 
   gimp_displays_delete (gimp);
 
-  gimp_tools_save (gimp);
+  gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
   gimp_tools_exit (gimp);
 
   return FALSE; /* continue exiting */

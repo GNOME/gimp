@@ -66,6 +66,7 @@ enum
   PROP_SAVE_DEVICE_STATUS,
   PROP_SAVE_SESSION_INFO,
   PROP_RESTORE_SESSION,
+  PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TIPS,
   PROP_SHOW_TOOL_TIPS,
   PROP_TEAROFF_MENUS,
@@ -166,6 +167,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
                                     "restore-session", RESTORE_SESSION_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
+                                    "save-tool-options",
+                                    SAVE_TOOL_OPTIONS_BLURB,
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
@@ -315,6 +321,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_RESTORE_SESSION:
       gui_config->restore_session = g_value_get_boolean (value);
       break;
+    case PROP_SAVE_TOOL_OPTIONS:
+      gui_config->save_tool_options = g_value_get_boolean (value);
+      break;
     case PROP_SHOW_TIPS:
       gui_config->show_tips = g_value_get_boolean (value);
       break;
@@ -422,6 +431,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_RESTORE_SESSION:
       g_value_set_boolean (value, gui_config->restore_session);
+      break;
+    case PROP_SAVE_TOOL_OPTIONS:
+      g_value_set_boolean (value, gui_config->save_tool_options);
       break;
     case PROP_SHOW_TIPS:
       g_value_set_boolean (value, gui_config->show_tips);

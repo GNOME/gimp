@@ -1,3 +1,23 @@
+2005-04-11  Michael Natterer  <mitch@gimp.org>
+
+	Let the user decide whether tool options are persistant or not as
+	suggested in bug #165078:
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpguiconfig.[ch]: added "gboolean save_tool_options".
+
+	* app/tools/gimp-tools.[ch]: implement the same logic as for
+	devicerc and essionrc: added gimp_tools_clear() which deletes the
+	stored tool options and added "save_tool_options" and
+	"always_save" parameters to gimp_tools_save(). Everything affects
+	just the primary tool options, *not* the separately saved presets
+	for each tool.
+
+	* app/gui/gui.c (gui_exit_callback): changed accordingly.
+
+	* app/dialogs/preferences-dialog.c: added GUI for the stuff above
+	in the style of the devicerc and seccionrc prefs GUIs.
+
 2005-04-11  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/base64.h

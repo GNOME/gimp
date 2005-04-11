@@ -20,13 +20,18 @@
 #define __GIMP_TOOLS_H__
 
 
-void   gimp_tools_init    (Gimp *gimp);
-void   gimp_tools_exit    (Gimp *gimp);
+void       gimp_tools_init              (Gimp      *gimp);
+void       gimp_tools_exit              (Gimp      *gimp);
 
-void   gimp_tools_restore (Gimp *gimp);
-void   gimp_tools_save    (Gimp *gimp);
+void       gimp_tools_restore           (Gimp      *gimp);
+void       gimp_tools_save              (Gimp      *gimp,
+                                         gboolean   save_tool_options,
+                                         gboolean   always_save);
 
-GList *gimp_tools_get_default_order (Gimp *gimp);
+gboolean   gimp_tools_clear             (Gimp      *gimp,
+                                         GError   **error);
+
+GList    * gimp_tools_get_default_order (Gimp      *gimp);
 
 
 #endif  /* __GIMP_TOOLS_H__ */

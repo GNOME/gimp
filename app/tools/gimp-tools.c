@@ -18,6 +18,13 @@
 
 #include "config.h"
 
+#include <errno.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -91,6 +98,11 @@ static void   gimp_tools_register (GType                   tool_type,
                                    const gchar            *help_data,
                                    const gchar            *stock_id,
                                    gpointer                data);
+
+
+/*  private variables  */
+
+static gboolean   tool_options_deleted = FALSE;
 
 
 /*  public functions  */
@@ -291,7 +303,6 @@ gimp_tools_restore (Gimp *gimp)
 
       if (tool_info->options_presets)
         {
-          gchar *filename;
           GList *list;
 
           filename = gimp_tool_options_build_filename (tool_info->tool_options,
@@ -314,7 +325,9 @@ gimp_tools_restore (Gimp *gimp)
 }
 
 void
-gimp_tools_save (Gimp *gimp)
+gimp_tools_save (Gimp     *gimp,
+                 gboolean  save_tool_options,
+                 gboolean  always_save)
 {
   GList *list;
   gchar *filename;
@@ -327,11 +340,11 @@ gimp_tools_save (Gimp *gimp)
     {
       GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
 
-      gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
+      if (save_tool_options && (! tool_options_deleted || always_save))
+        gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
 
       if (tool_info->options_presets)
         {
-          gchar *filename;
           gchar *header;
           gchar *footer;
 
@@ -360,6 +373,42 @@ gimp_tools_save (Gimp *gimp)
                                  "end of toolrc",
                                  NULL, NULL);
   g_free (filename);
+}
+
+gboolean
+gimp_tools_clear (Gimp    *gimp,
+                  GError **error)
+{
+  GList    *list;
+  gboolean  success = TRUE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpToolInfo *tool_info = GIMP_TOOL_INFO (list->data);
+      gchar        *filename;
+
+      filename = gimp_tool_options_build_filename (tool_info->tool_options,
+                                                   NULL);
+
+      if (g_unlink (filename) != 0 && errno != ENOENT)
+        {
+          g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+                       gimp_filename_to_utf8 (filename), g_strerror (errno));
+          success = FALSE;
+          break;
+        }
+
+      g_free (filename);
+    }
+
+  if (success)
+    tool_options_deleted = TRUE;
+
+  return success;
 }
 
 GList *

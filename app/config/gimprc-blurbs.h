@@ -274,6 +274,9 @@ N_("Remember the current tool, pattern, color, and brush across GIMP " \
 #define SAVE_SESSION_INFO_BLURB \
 N_("Save the positions and sizes of the main dialogs when the GIMP exits.")
 
+#define SAVE_TOOL_OPTIONS_BLURB \
+N_("Save the tool options when the GIMP exits.")
+
 #define SCRIPT_FU_PATH_BLURB \
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 

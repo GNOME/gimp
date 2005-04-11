@@ -47,6 +47,7 @@ struct _GimpGuiConfig
   gboolean             save_device_status;
   gboolean             save_session_info;
   gboolean             restore_session;
+  gboolean             save_tool_options;
   gboolean             show_tips;
   gboolean             show_tool_tips;
   gboolean             tearoff_menus;

@@ -53,6 +53,8 @@
 
 #include "menus/menus.h"
 
+#include "tools/gimp-tools.h"
+
 #include "gui/session.h"
 #include "gui/themes.h"
 
@@ -97,6 +99,10 @@ static void   prefs_session_clear_callback        (GtkWidget  *widget,
 static void   prefs_devices_save_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_devices_clear_callback        (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
                                                    Gimp       *gimp);
 
 
@@ -654,6 +660,40 @@ prefs_devices_clear_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (widget, FALSE);
 
       g_message (_("Your input device settings will be reset to "
+                   "default values the next time you start GIMP."));
+    }
+}
+
+static void
+prefs_tool_options_save_callback (GtkWidget *widget,
+                                  Gimp      *gimp)
+{
+  GtkWidget *clear_button;
+
+  gimp_tools_save (gimp, TRUE, TRUE);
+
+  clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
+
+  if (clear_button)
+    gtk_widget_set_sensitive (clear_button, TRUE);
+}
+
+static void
+prefs_tool_options_clear_callback (GtkWidget *widget,
+                                   Gimp      *gimp)
+{
+  GError *error = NULL;
+
+  if (! gimp_tools_clear (gimp, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (widget, FALSE);
+
+      g_message (_("Your tool options will be reset to "
                    "default values the next time you start GIMP."));
     }
 }
@@ -1596,6 +1636,31 @@ prefs_dialog_new (Gimp       *gimp,
 				     page_index++);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  /*  General  */
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "save-tool-options",
+                          _("_Save tool options on exit"),
+                          GTK_BOX (vbox2));
+
+  button = prefs_button_add (GTK_STOCK_SAVE,
+                             _("Save Tool Options _Now"),
+                             GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_tool_options_save_callback),
+                    gimp);
+
+  button2 = prefs_button_add (GIMP_STOCK_RESET,
+                              _("_Reset Saved Tool Options to "
+                                "Default Values"),
+                              GTK_BOX (vbox2));
+  g_signal_connect (button2, "clicked",
+                    G_CALLBACK (prefs_tool_options_clear_callback),
+                    gimp);
+
+  g_object_set_data (G_OBJECT (button), "clear-button", button2);
+
 
   /*  Snapping Distance  */
   vbox2 = prefs_frame_new (_("Guide and Grid Snapping"),
