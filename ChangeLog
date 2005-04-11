@@ -1,3 +1,9 @@
+2005-04-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_shade.c:  Fix typo responsible for
+	bug #300122, also revise env-mapping code to make it perform
+	better.
+
 2005-04-11  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/convmatrix.c: small cleanups, more will come.
