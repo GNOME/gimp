@@ -1,5 +1,11 @@
 2005-04-11  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/metadata/base64.h
+	* plug-ins/metadata/base64.c: Added implementation of
+	base64_decode(), use gsize or gssize for sizes.
+
+2005-04-11  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/metadata/metadata.c: Register plug_in_metadata_import
 	and plug_in_metadata_export in the PDB.
 

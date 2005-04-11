@@ -72,22 +72,23 @@ static const gint base64_6bits[256] =
  * - dest_size should be at least 3/4 of strlen (src) minus all CRLF
  * - returns the number of bytes stored in dest
  */
-gint
+gssize
 base64_decode (const gchar *src_b64,
-               guint        src_size,
+               gsize        src_size,
                gchar       *dest,
-               guint        dest_size)
+               gsize        dest_size)
 {
   gint32 decoded;
-  gint   i;
+  gssize i;
   gint   n;
   gint   bits;
 
   g_return_val_if_fail (src_b64 != NULL, -1);
+  g_return_val_if_fail (dest != NULL, -1);
   decoded = 0;
   n = 0;
-  bits = -3;
-  for (i = 0; src_size && (i + 3 <= dest_size); src_b64++, src_size--)
+  bits = 0;
+  for (i = 0; (src_size > 0) && (i + 3 <= dest_size); src_b64++, src_size--)
     {
       bits = base64_6bits[(int) *src_b64 & 0xff];
       if (bits < 0)
@@ -127,13 +128,56 @@ base64_decode (const gchar *src_b64,
   return i;
 }
 
-gint
+gssize
 base64_encode (const gchar *src,
-               guint        src_size,
+               gsize        src_size,
                gchar       *dest_b64,
-               guint        dest_size)
+               gsize        dest_size)
 {
-  /* FIXME: just index the base64_code string, 6 bits at a time */
-  g_warning ("not written yet\n");
-  return 1;
+  gint32 bits;
+  gssize i;
+  gint   n;
+
+  g_return_val_if_fail (src != NULL, -1);
+  g_return_val_if_fail (dest_b64 != NULL, -1);
+
+  n = 0;
+  bits = 0;
+  for (i = 0; (src_size > 0) && (i + 4 <= dest_size); src++, src_size--)
+    {
+      bits += *src;
+      if (++n == 3)
+        {
+          dest_b64[i++] = base64_code[(bits >> 18) & 0x3f];
+          dest_b64[i++] = base64_code[(bits >> 12) & 0x3f];
+          dest_b64[i++] = base64_code[(bits >> 6)  & 0x3f];
+          dest_b64[i++] = base64_code[bits         & 0x3f];
+          bits = 0;
+          n = 0;
+        }
+      else
+        {
+          bits <<= 8;
+        }
+    }
+  if ((n != 0) && (i + 4 <= dest_size))
+    {
+      if (n == 1)
+        {
+          dest_b64[i++] = base64_code[(bits >> 10) & 0x3f];
+          dest_b64[i++] = base64_code[(bits >> 4)  & 0x3f];
+          dest_b64[i++] = '=';
+          dest_b64[i++] = '=';
+	}
+      else
+        {
+          dest_b64[i++] = base64_code[(bits >> 18) & 0x3f];
+          dest_b64[i++] = base64_code[(bits >> 12) & 0x3f];
+          dest_b64[i++] = base64_code[(bits >> 6)  & 0x3f];
+          dest_b64[i++] = '=';
+	}
+    }
+  if (i < dest_size)
+    dest_b64[i] = 0;
+  return i;
 }

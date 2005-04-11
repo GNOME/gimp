@@ -25,15 +25,15 @@
 
 G_BEGIN_DECLS
 
-gint base64_decode (const gchar *src_b64,
-                    guint        src_size,
-                    gchar       *dest,
-                    guint        dest_size);
+gssize base64_decode (const gchar *src_b64,
+                      gsize        src_size,
+                      gchar       *dest,
+                      gsize        dest_size);
 
-gint base64_encode (const gchar *src,
-                    guint        src_size,
-                    gchar       *dest_b64,
-                    guint        dest_size);
+gssize base64_encode (const gchar *src,
+                      gsize        src_size,
+                      gchar       *dest_b64,
+                      gsize        dest_size);
 
 G_END_DECLS
 
