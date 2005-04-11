@@ -41,7 +41,6 @@
  * - remove channels selector (that's what the channels dialog is for)
  * - remove idiotic slowdowns
  * - clean up code
- * - preview
  * - optimize properly
  * - save & load matrices
  * - spiffy frontend for designing matrices
@@ -68,8 +67,7 @@ typedef enum
 {
   EXTEND,
   WRAP,
-  CLEAR,
-  MIRROR
+  CLEAR
 } BorderMode;
 
 static gchar * const channel_labels[] =
@@ -124,7 +122,7 @@ typedef struct
   gfloat     offset;
   gint       alpha_alg;
   BorderMode bmode;
-  gint       channels[5];
+  gboolean   channels[5];
   gboolean   autoset;
 } config;
 
@@ -141,7 +139,7 @@ static const config default_config =
   0,                 /* offset */
   1,                 /* Alpha-handling algorithm */
   CLEAR,             /* border-mode */
-  { 1, 1, 1, 1, 1 }, /* Channels mask */
+  { TRUE, TRUE, TRUE, TRUE, TRUE }, /* Channels mask */
   FALSE              /* autoset */
 };
 
@@ -356,17 +354,6 @@ my_get_row (GimpPixelRgn *PR,
           memset (dest, 0, w * bytes);
           return; /* Done, so back. */
         }
-    case MIRROR:
-      /* The border lines are _not_ duplicated in the mirror image */
-      /* is this right? */
-      while (y < 0 || y >= height)
-        {
-          if (y < 0)
-            y = -y; /* y=-y-1 */
-          if (y >= height)
-            y = 2 * height - y - 2; /* y=2*height-y-1 */
-        }
-      break;
 
     case EXTEND:
       y = CLAMP (y , 0 , height - 1);
@@ -451,8 +438,6 @@ my_get_row (GimpPixelRgn *PR,
         }
       break;
 
-    case MIRROR: /* Not yet handled */
-      break;
     }
 }
 
@@ -462,7 +447,7 @@ calcmatrix (guchar       **srcrow,
             gint           i,
             GimpDrawable  *drawable)
 {
-  static gfloat matrixsum = 0;
+  static gfloat matrixsum = 0; /* FIXME: this certainly breaks the preview */
   static gint bytes       = 0;
 
   gfloat sum      = 0;
@@ -520,7 +505,7 @@ convmatrix (GimpDrawable *drawable,
   guchar       *temprow;
   gfloat        sum;
   gint          xoff;
-  gint          chanmask[4];
+  gboolean      chanmask[4];
   gint          bytes;
 
   /* Get the input area. This is the bounding box of the selection in
@@ -586,10 +571,10 @@ convmatrix (GimpDrawable *drawable,
       for (col = sx1; col < sx2; col++)
         for (i = 0; i < bytes; i++)
           {
-            if (chanmask[i] <= 0)
-              sum = srcrow[2][xoff + 2 * bytes];
-            else
+            if (chanmask[i])
               sum = calcmatrix(srcrow, xoff, i, drawable);
+            else
+              sum = srcrow[2][xoff + 2 * bytes];
 
             destrow[2][xoff]= (guchar) CLAMP (sum, 0, 255);
             xoff++;
@@ -634,6 +619,10 @@ convmatrix (GimpDrawable *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, sx1, sy1, sx2 - sx1, sy2 - sy1);
     }
+  for (i = 0; i < 5; i++)
+    g_free (srcrow[i]);
+  for (i = 0; i < 3; i++)
+    g_free (destrow[i]);
 }
 
 /***************************************************
@@ -645,7 +634,7 @@ fprint (gfloat  f,
         gchar  *buffer,
         gsize   len)
 {
-  gint i, t;
+  guint i, t;
 
   g_snprintf (buffer, len, "%.7f", f);
   buffer[len - 1] = '\0';
@@ -687,7 +676,7 @@ redraw_channels (void)
 
   for (i = 0; i < 5; i++)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.channels[i]),
-                                  my_config.channels[i] > 0);
+                                  my_config.channels[i]);
 }
 
 static void
@@ -771,7 +760,6 @@ check_matrix (void)
         }
       redraw_off_and_div ();
     }
-  /* gtk_widget_set_sensitive(my_widgets.ok,valid); */
 }
 
 static void
@@ -803,18 +791,11 @@ check_config (GimpDrawable *drawable)
   gint i;
 
   for (i = 0; i < 5; i++)
-    if (my_config.channels[i] < 0)
-      my_config.channels[i] = 0;
-
-  if (gimp_drawable_is_rgb (drawable->drawable_id))
-    my_config.channels[0] = -1;
-  else if (gimp_drawable_is_gray (drawable->drawable_id))
-    for (i = 1; i < 4; i++)
-      my_config.channels[i] = -1;
+    my_config.channels[i] = FALSE;
+  my_config.alpha_alg = 0;
 
   if (!gimp_drawable_has_alpha (drawable->drawable_id))
     {
-      my_config.channels[4] = -1;
       my_config.alpha_alg   = -1;
       my_config.bmode       = EXTEND;
     }
@@ -828,27 +809,20 @@ entry_callback (GtkWidget *widget,
 
   *value = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
 
-#if 0
-  check_matrix ();
-#else
   if (widget == my_widgets.divisor)
     gtk_dialog_set_response_sensitive (GTK_DIALOG (gtk_widget_get_toplevel (widget)),
                                        GTK_RESPONSE_OK, (*value != 0.0));
   else if (widget != my_widgets.offset)
     check_matrix ();
-#endif
 }
 
 static void
 my_toggle_callback (GtkWidget *widget,
-                    gpointer   data)
+                    gboolean  *data)
 {
   gint val = GTK_TOGGLE_BUTTON (widget)->active;
 
-  if (val)
-    *(gint *) data = TRUE;
-  else
-    *(gint *) data = FALSE;
+  *data = val;
 
   if (widget == my_widgets.alpha_alg)
     {
@@ -1085,21 +1059,23 @@ convmatrix_dialog (GimpDrawable *drawable)
 
   for (i = 0; i < 5; i++)
     {
-      my_widgets.channels[i] = button =
-        gtk_check_button_new_with_mnemonic (gettext (channel_labels[i]));
+      if ((gimp_drawable_is_gray (drawable->drawable_id) && i==0) ||
+          (gimp_drawable_is_rgb  (drawable->drawable_id) && i>=1 && i<=3) ||
+          (gimp_drawable_has_alpha (drawable->drawable_id) && i==4))
+        {
+          my_widgets.channels[i] = button =
+            gtk_check_button_new_with_mnemonic (gettext (channel_labels[i]));
 
-      if (my_config.channels[i] < 0)
-        gtk_widget_set_sensitive (button, FALSE);
+          gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+          gtk_widget_show (button);
 
-      gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "toggled",
-                        G_CALLBACK (my_toggle_callback),
-                        &my_config.channels[i]);
-      g_signal_connect_swapped (button, "toggled",
-                                G_CALLBACK (gimp_preview_invalidate),
-                                preview);
+          g_signal_connect (button, "toggled",
+                            G_CALLBACK (my_toggle_callback),
+                            &my_config.channels[i]);
+          g_signal_connect_swapped (button, "toggled",
+                                    G_CALLBACK (gimp_preview_invalidate),
+                                    preview);
+        }
     }
 
   gtk_widget_show (box);

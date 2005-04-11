@@ -1,3 +1,7 @@
+2005-04-11  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/convmatrix.c: small cleanups, more will come.
+
 2005-04-11  Michael Natterer  <mitch@gimp.org>
 
 	Let the user decide whether tool options are persistant or not as
