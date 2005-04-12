@@ -586,12 +586,14 @@ gimp_image_dock_image_changed (GimpContext *context,
 			       GimpImage   *gimage,
 			       GimpDock    *dock)
 {
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
-  GimpContainer *container  = image_dock->image_container;
+  GimpImageDock *image_dock        = GIMP_IMAGE_DOCK (dock);
+  GimpContainer *image_container   = image_dock->image_container;
+  GimpContainer *display_container = image_dock->display_container;
 
-  if (gimage == NULL && ! gimp_container_is_empty (container))
+  if (gimage == NULL && ! gimp_container_is_empty (image_container))
     {
-      gimage = GIMP_IMAGE (gimp_container_get_child_by_index (container, 0));
+      gimage = GIMP_IMAGE (gimp_container_get_child_by_index (image_container,
+                                                              0));
 
       if (gimage)
 	{
@@ -606,7 +608,7 @@ gimp_image_dock_image_changed (GimpContext *context,
 	  g_signal_stop_emission_by_name (context, "image_changed");
 	}
     }
-  else if (gimage != NULL && ! gimp_container_is_empty (container))
+  else if (gimage != NULL && ! gimp_container_is_empty (display_container))
     {
       GimpObject *gdisp;
       GimpImage  *gdisp_gimage;
@@ -631,7 +633,7 @@ gimp_image_dock_image_changed (GimpContext *context,
         {
           GList *list;
 
-          for (list = GIMP_LIST (container)->list;
+          for (list = GIMP_LIST (display_container)->list;
                list;
                list = g_list_next (list))
             {

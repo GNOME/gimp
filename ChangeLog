@@ -1,3 +1,8 @@
+2005-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_image_changed):
+	don't use the image container as display container.
+
 2005-04-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdatafactory.[ch]: added gimp_data_factory_refresh().
