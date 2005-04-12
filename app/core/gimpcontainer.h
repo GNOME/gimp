@@ -103,6 +103,7 @@ void         gimp_container_thaw               (GimpContainer       *container);
 gboolean     gimp_container_frozen             (GimpContainer       *container);
 
 void         gimp_container_clear              (GimpContainer       *container);
+gboolean     gimp_container_is_empty           (const GimpContainer *container);
 gboolean     gimp_container_have               (const GimpContainer *container,
 						GimpObject          *object);
 void         gimp_container_foreach            (const GimpContainer *container,

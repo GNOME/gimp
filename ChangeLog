@@ -1,3 +1,13 @@
+2005-04-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcontainer.[ch]: added gimp_container_is_empty().
+
+	* app/core/gimpcontext.c
+	* app/core/gimpimage.c
+	* app/dialogs/palette-import-dialog.c
+	* app/text/gimptextlayer.c
+	* app/widgets/gimpimagedock.c: use the new function.
+
 2005-04-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-transform-utils.c

@@ -3259,7 +3259,7 @@ gimp_context_find_object (GimpContext   *context,
   if (object_name)
     object = gimp_container_get_child_by_name (container, object_name);
 
-  if (! object && gimp_container_num_children (container) > 0)
+  if (! object && ! gimp_container_is_empty (container))
     object = gimp_container_get_child_by_index (container, 0);
 
   if (! object)

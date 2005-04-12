@@ -245,7 +245,7 @@ palette_import_dialog_new (Gimp *gimp)
                     import_dialog);
 
   gtk_widget_set_sensitive (import_dialog->image_radio,
-			    gimp_container_num_children (gimp->images) > 0);
+                            ! gimp_container_is_empty (gimp->images));
 
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (import_dialog->image_radio));
 

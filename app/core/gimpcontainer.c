@@ -769,6 +769,14 @@ gimp_container_clear (GimpContainer *container)
 }
 
 gboolean
+gimp_container_is_empty (const GimpContainer *container)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+
+  return (container->num_children == 0);
+}
+
+gboolean
 gimp_container_have (const GimpContainer *container,
 		     GimpObject          *object)
 {

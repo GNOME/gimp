@@ -1497,7 +1497,7 @@ gimp_image_is_empty (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), TRUE);
 
-  return (gimp_container_num_children (gimage->layers) == 0);
+  return gimp_container_is_empty (gimage->layers);
 }
 
 GimpLayer *
