@@ -196,7 +196,7 @@ image_convert_indexed_invoker (Gimp         *gimp,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              if (! gimp->palette_factory->container->num_children)
+              if (gimp_container_is_empty (gimp->palette_factory->container))
                 gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 
               palette = (GimpPalette *)

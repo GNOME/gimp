@@ -50,6 +50,8 @@ static void    gimp_data_factory_init         (GimpDataFactory        *factory);
 
 static void    gimp_data_factory_finalize     (GObject                *object);
 
+static void    gimp_data_factory_data_load    (GimpDataFactory        *factory);
+
 static gint64  gimp_data_factory_get_memsize  (GimpObject             *object,
                                                gint64                 *gui_size);
 
@@ -197,14 +199,41 @@ void
 gimp_data_factory_data_init (GimpDataFactory *factory,
 			     gboolean         no_data /* FIXME */)
 {
-  gchar *path;
-  gchar *writable_path;
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
+  if (factory->gimp->be_verbose)
+    {
+      const gchar *name = gimp_object_get_name (GIMP_OBJECT (factory));
+
+      g_print ("%s: loading data\n", name ? name : "???");
+    }
+
+  gimp_container_freeze (factory->container);
+
+  gimp_data_factory_data_load (factory);
+
+  gimp_container_thaw (factory->container);
+}
+
+void
+gimp_data_factory_data_refresh (GimpDataFactory *factory)
+{
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   gimp_container_freeze (factory->container);
 
+  gimp_data_factory_data_save (factory);
   gimp_data_factory_data_free (factory);
+  gimp_data_factory_data_load (factory);
+
+  gimp_container_thaw (factory->container);
+}
+
+static void
+gimp_data_factory_data_load (GimpDataFactory *factory)
+{
+  gchar *path;
+  gchar *writable_path;
 
   g_object_get (factory->gimp->config,
                 factory->path_property_name,     &path,
@@ -246,8 +275,6 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   g_free (path);
   g_free (writable_path);
-
-  gimp_container_thaw (factory->container);
 }
 
 void
@@ -258,7 +285,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
-  if (gimp_container_num_children (factory->container) == 0)
+  if (gimp_container_is_empty (factory->container))
     return;
 
   writable_dir = gimp_data_factory_get_save_dir (factory);
@@ -308,7 +335,7 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
-  if (gimp_container_num_children (factory->container) == 0)
+  if (gimp_container_is_empty (factory->container))
     return;
 
   list = GIMP_LIST (factory->container);
@@ -486,9 +513,7 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
 
   if (! data->filename)
     {
-      gchar *writable_dir;
-
-      writable_dir = gimp_data_factory_get_save_dir (factory);
+      gchar *writable_dir = gimp_data_factory_get_save_dir (factory);
 
       if (! writable_dir)
         return FALSE;
@@ -554,10 +579,8 @@ gimp_data_factory_get_save_dir (GimpDataFactory *factory)
 
   for (list = writable_list; list; list = g_list_next (list))
     {
-      GList *found;
-
-      found = g_list_find_custom (path_list, list->data, (GCompareFunc) strcmp);
-
+      GList *found = g_list_find_custom (path_list,
+                                         list->data, (GCompareFunc) strcmp);
       if (found)
         {
           writable_dir = g_strdup (found->data);
@@ -598,11 +621,9 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
  insert:
   {
-    GimpBaseConfig *base_config;
+    GimpBaseConfig *base_config = GIMP_BASE_CONFIG (factory->gimp->config);
     GList          *data_list;
-    GError         *error = NULL;
-
-    base_config = GIMP_BASE_CONFIG (factory->gimp->config);
+    GError         *error       = NULL;
 
     data_list =
       (* factory->loader_entries[i].load_func) (file_data->filename,

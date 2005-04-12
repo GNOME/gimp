@@ -56,8 +56,7 @@ palettes_refresh_invoker (Gimp         *gimp,
                           GimpProgress *progress,
                           Argument     *args)
 {
-  gimp_data_factory_data_save (gimp->palette_factory);
-  gimp_data_factory_data_init (gimp->palette_factory, FALSE);
+  gimp_data_factory_data_refresh (gimp->palette_factory);
   return procedural_db_return_args (&palettes_refresh_proc, TRUE);
 }
 

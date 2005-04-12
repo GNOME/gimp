@@ -61,13 +61,8 @@ HELP
     $date = '2002';
 
     %invoke = (
-	code => <<'CODE'
-{
-  gimp_data_factory_data_save (gimp->pattern_factory);
-  gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
-}
-CODE
-    );
+        code => 'gimp_data_factory_data_refresh (gimp->pattern_factory);'
+    )
 }
 
 sub patterns_get_list {

@@ -59,8 +59,7 @@ brushes_refresh_invoker (Gimp         *gimp,
                          GimpProgress *progress,
                          Argument     *args)
 {
-  gimp_data_factory_data_save (gimp->brush_factory);
-  gimp_data_factory_data_init (gimp->brush_factory, FALSE);
+  gimp_data_factory_data_refresh (gimp->brush_factory);
   return procedural_db_return_args (&brushes_refresh_proc, TRUE);
 }
 

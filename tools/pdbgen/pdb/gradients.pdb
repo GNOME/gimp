@@ -37,13 +37,8 @@ HELP
     $date = '2002';
 
     %invoke = (
-	code => <<'CODE'
-{
-  gimp_data_factory_data_save (gimp->gradient_factory);
-  gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
-}
-CODE
-    );
+        code => 'gimp_data_factory_data_refresh (gimp->gradient_factory);'
+    )
 }
 
 sub gradients_get_list {

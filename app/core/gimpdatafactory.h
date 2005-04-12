@@ -90,6 +90,7 @@ GimpDataFactory * gimp_data_factory_new      (Gimp                             *
 
 void       gimp_data_factory_data_init         (GimpDataFactory  *factory,
 						gboolean          no_data);
+void       gimp_data_factory_data_refresh      (GimpDataFactory  *factory);
 void       gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void       gimp_data_factory_data_free         (GimpDataFactory  *factory);
 

@@ -56,8 +56,7 @@ gradients_refresh_invoker (Gimp         *gimp,
                            GimpProgress *progress,
                            Argument     *args)
 {
-  gimp_data_factory_data_save (gimp->gradient_factory);
-  gimp_data_factory_data_init (gimp->gradient_factory, FALSE);
+  gimp_data_factory_data_refresh (gimp->gradient_factory);
   return procedural_db_return_args (&gradients_refresh_proc, TRUE);
 }
 
