@@ -1,3 +1,9 @@
+2005-04-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-transform-utils.c
+	(gimp_transform_matrix_perspective): undo the "cosmetic changes"
+	of 2005-03-20. Fixes bug #300269.
+
 2005-04-12  Raphaël Quinet  <raphael@gimp.org>
 
 	* configure.in: updated test for libjpeg so that it requires

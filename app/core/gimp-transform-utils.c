@@ -255,19 +255,10 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
         trafo.coeff[1][2] = t_y1;
         trafo.coeff[2][0] = 0.0;
         trafo.coeff[2][1] = 0.0;
-        trafo.coeff[2][2] = 1.0;
       }
     else
       {
         gdouble det1, det2;
-
-        trafo.coeff[0][0] = t_x2 - t_x1 + trafo.coeff[2][0] * t_x2;
-        trafo.coeff[0][1] = t_x3 - t_x1 + trafo.coeff[2][1] * t_x3;
-        trafo.coeff[0][2] = t_x1;
-
-        trafo.coeff[1][0] = t_y2 - t_y1 + trafo.coeff[2][0] * t_y2;
-        trafo.coeff[1][1] = t_y3 - t_y1 + trafo.coeff[2][1] * t_y3;
-        trafo.coeff[1][2] = t_y1;
 
         det1 = dx3 * dy2 - dy3 * dx2;
         det2 = dx1 * dy2 - dy1 * dx2;
@@ -278,8 +269,16 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
 
         trafo.coeff[2][1] = (det2 == 0.0) ? 1.0 : det1 / det2;
 
-        trafo.coeff[2][2] = 1.0;
+        trafo.coeff[0][0] = t_x2 - t_x1 + trafo.coeff[2][0] * t_x2;
+        trafo.coeff[0][1] = t_x3 - t_x1 + trafo.coeff[2][1] * t_x3;
+        trafo.coeff[0][2] = t_x1;
+
+        trafo.coeff[1][0] = t_y2 - t_y1 + trafo.coeff[2][0] * t_y2;
+        trafo.coeff[1][1] = t_y3 - t_y1 + trafo.coeff[2][1] * t_y3;
+        trafo.coeff[1][2] = t_y1;
       }
+
+    trafo.coeff[2][2] = 1.0;
   }
 
   gimp_matrix3_mult (&trafo, matrix);
