@@ -196,16 +196,11 @@ image_convert_indexed_invoker (Gimp         *gimp,
               break;
 
             case GIMP_CUSTOM_PALETTE:
-              if (gimp_container_is_empty (gimp->palette_factory->container))
-                gimp_data_factory_data_init (gimp->palette_factory, FALSE);
-
               palette = (GimpPalette *)
                 gimp_container_get_child_by_name (gimp->palette_factory->container,
                                                   palette_name);
-
               if (palette == NULL)
                 success = FALSE;
-
               break;
 
             default:

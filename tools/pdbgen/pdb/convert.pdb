@@ -121,16 +121,11 @@ HELP
 	  break;
 
 	case GIMP_CUSTOM_PALETTE:
-	  if (gimp_container_is_empty (gimp->palette_factory->container))
-	    gimp_data_factory_data_init (gimp->palette_factory, FALSE);
-
           palette = (GimpPalette *)
             gimp_container_get_child_by_name (gimp->palette_factory->container,
                                               palette_name);
-
 	  if (palette == NULL)
 	    success = FALSE;
-
 	  break;
 
 	default:
@@ -151,9 +146,9 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpimage.h"
-	      "core/gimpimage-convert.h" "core/gimpdatafactory.h"
-	      "core/gimppalette.h");
+@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpdatafactory.h"
+              "core/gimpimage.h" "core/gimpimage-convert.h"
+              "core/gimppalette.h");
 
 @procs = qw(image_convert_rgb image_convert_grayscale image_convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

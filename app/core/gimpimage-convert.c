@@ -774,8 +774,7 @@ color_quicksort (const void *c1,
 void
 gimp_image_convert (GimpImage              *gimage,
                     GimpImageBaseType       new_type,
-                    /* The following three params used only for
-                     * new_type == GIMP_INDEXED
+                    /* The following are only used for new_type == GIMP_INDEXED
                      */
                     gint                    num_cols,
                     GimpConvertDitherType   dither,
@@ -798,10 +797,19 @@ gimp_image_convert (GimpImage              *gimage,
   g_return_if_fail (new_type != gimp_image_base_type (gimage));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (palette_type == GIMP_CUSTOM_PALETTE && custom_palette->n_colors < 1)
+  if (palette_type == GIMP_CUSTOM_PALETTE)
     {
-      g_message (_("Cannot convert image, palette is empty."));
-      return;
+      g_return_if_fail (custom_palette == NULL ||
+                        GIMP_IS_PALETTE (custom_palette));
+
+      if (! custom_palette)
+        palette_type = GIMP_MONO_PALETTE;
+
+      if (custom_palette->n_colors < 1)
+        {
+          g_message (_("Cannot convert image, palette is empty."));
+          return;
+        }
     }
 
   theCustomPalette = custom_palette;

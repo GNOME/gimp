@@ -577,21 +577,6 @@ gui_pdb_dialog_new (Gimp          *gimp,
     {
       GimpObject *object = NULL;
 
-#ifdef __GNUC__
-#warning FIXME: re-enable gimp->no_data case
-#endif
-#if 0
-      if (gimp->no_data)
-        {
-          static gboolean first_call = TRUE;
-
-          if (first_call)
-            gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
-
-          first_call = FALSE;
-        }
-#endif
-
       if (object_name && strlen (object_name))
         object = gimp_container_get_child_by_name (container, object_name);
 
