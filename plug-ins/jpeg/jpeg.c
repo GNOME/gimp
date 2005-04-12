@@ -102,7 +102,7 @@ query (void)
     { GIMP_PDB_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
     { GIMP_PDB_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
     { GIMP_PDB_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
-    { GIMP_PDB_INT32,    "progressive",  "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
+    { GIMP_PDB_INT32,    "progressive",  "Enable progressive jpeg image loading (0/1)" },
     { GIMP_PDB_STRING,   "comment",      "Image comment" },
     { GIMP_PDB_INT32,    "subsmp",       "The subsampling option number" },
     { GIMP_PDB_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
@@ -326,6 +326,7 @@ run (const gchar      *name,
       jsvals.preview        = DEFAULT_PREVIEW;
       jsvals.save_exif      = DEFAULT_EXIF;
       jsvals.save_thumbnail = DEFAULT_THUMBNAIL;
+      jsvals.save_xmp       = DEFAULT_XMP;
 
 #ifdef HAVE_EXIF
 
@@ -358,6 +359,7 @@ run (const gchar      *name,
               jsvals.preview        = save_vals->preview;
               jsvals.save_exif      = save_vals->save_exif;
               jsvals.save_thumbnail = save_vals->save_thumbnail;
+              jsvals.save_xmp       = save_vals->save_xmp;
 
               gimp_parasite_free (parasite);
             }
@@ -407,9 +409,7 @@ run (const gchar      *name,
                   jsvals.quality     = 100.0 * param[5].data.d_float;
                   jsvals.smoothing   = param[6].data.d_float;
                   jsvals.optimize    = param[7].data.d_int32;
-#ifdef HAVE_PROGRESSIVE_JPEG
                   jsvals.progressive = param[8].data.d_int32;
-#endif /* HAVE_PROGRESSIVE_JPEG */
                   jsvals.baseline    = param[11].data.d_int32;
                   jsvals.subsmp      = param[10].data.d_int32;
                   jsvals.restart     = param[12].data.d_int32;

@@ -40,59 +40,6 @@
 #include "jpeg-load.h"
 
 
-/* Read next byte */
-static guint
-jpeg_getc (j_decompress_ptr cinfo)
-{
-  struct jpeg_source_mgr *datasrc = cinfo->src;
-
-  if (datasrc->bytes_in_buffer == 0)
-    {
-      if (! (*datasrc->fill_input_buffer) (cinfo))
-        ERREXIT (cinfo, JERR_CANT_SUSPEND);
-    }
-  datasrc->bytes_in_buffer--;
-
-  return *datasrc->next_input_byte++;
-}
-
-/* We need our own marker parser, since early versions of libjpeg
- * don't keep a conventient list of the marker's that have been
- * seen. */
-
-/*
- * Marker processor for COM markers.
- * This replaces the library's built-in processor, which just skips the marker.
- * Note this code relies on a non-suspending data source.
- */
-static GString *local_image_comments = NULL;
-
-static boolean
-COM_handler (j_decompress_ptr cinfo)
-{
-  gint  length;
-  guint ch;
-
-  length = jpeg_getc (cinfo) << 8;
-  length += jpeg_getc (cinfo);
-  if (length < 2)
-    return FALSE;
-  length -= 2;                  /* discount the length word itself */
-
-  if (!local_image_comments)
-    local_image_comments = g_string_new (NULL);
-  else
-    g_string_append_c (local_image_comments, '\n');
-
-  while (length-- > 0)
-    {
-      ch = jpeg_getc (cinfo);
-      g_string_append_c (local_image_comments, ch);
-    }
-
-  return TRUE;
-}
-
 gint32
 load_image (const gchar *filename,
             GimpRunMode  runmode,
@@ -113,8 +60,9 @@ load_image (const gchar *filename,
   gint     tile_height;
   gint     scanlines;
   gint     i, start, end;
-
+  GString *local_image_comments = NULL;
   GimpParasite * volatile comment_parasite = NULL;
+  jpeg_saved_marker_ptr marker;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -167,9 +115,11 @@ load_image (const gchar *filename,
 
   jpeg_stdio_src (&cinfo, infile);
 
-  /* pw - step 2.1 let the lib know we want the comments. */
+  /* - step 2.1: tell the lib to save the comments */
+  jpeg_save_markers (&cinfo, JPEG_COM, 0xffff);
 
-  jpeg_set_marker_processor (&cinfo, JPEG_COM, COM_handler);
+  /* - step 2.2: tell the lib to save APP1 markers (may contain EXIF or XMP) */
+  jpeg_save_markers (&cinfo, JPEG_APP0 + 1, 0xffff);
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -180,30 +130,6 @@ load_image (const gchar *filename,
    *   (b) we passed TRUE to reject a tables-only JPEG file as an error.
    * See libjpeg.doc for more info.
    */
-
-  if (!preview)
-    {
-      /* if we had any comments then make a parasite for them */
-      if (local_image_comments && local_image_comments->len)
-        {
-          gchar *comment = local_image_comments->str;
-
-          g_string_free (local_image_comments, FALSE);
-
-          local_image_comments = NULL;
-
-          if (g_utf8_validate (comment, -1, NULL))
-            comment_parasite = gimp_parasite_new ("gimp-comment",
-                                                  GIMP_PARASITE_PERSISTENT,
-                                                  strlen (comment) + 1,
-                                                  comment);
-          g_free (comment);
-        }
-
-      /* Do not attach the "jpeg-save-options" parasite to the image
-       * because this conflics with the global defaults.  See bug #75398:
-       * http://bugzilla.gnome.org/show_bug.cgi?id=75398 */
-    }
 
   /* Step 4: set parameters for decompression */
 
@@ -345,6 +271,84 @@ load_image (const gchar *filename,
         }
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
+
+  /* Step 5.2: check for metadata (comments, markers containing EXIF or XMP) */
+  for (marker = cinfo.marker_list; marker; marker = marker->next)
+    {
+      if (marker->marker == JPEG_COM)
+        {
+          g_print ("jpeg-load: found image comment (%d bytes)\n",
+                   marker->data_length);
+          if (!local_image_comments)
+            local_image_comments = g_string_new_len (marker->data,
+                                                     marker->data_length);
+          else
+            {
+              g_string_append_c (local_image_comments, '\n');
+              g_string_append_len (local_image_comments,
+                                   marker->data, marker->data_length);
+            }
+        }
+      else if ((marker->marker == JPEG_APP0 + 1)
+               && (marker->data_length > 13)
+               && ! strcmp (JPEG_APP_HEADER_EXIF, marker->data))
+        {
+          /* FIXME: handle EXIF here once we don't use libexif anymore */
+          g_print ("jpeg-load: found EXIF block (%d bytes)\n",
+                   marker->data_length - sizeof (JPEG_APP_HEADER_EXIF));
+          /* Note: maybe split the loop to ensure that the EXIF block is */
+          /*       always parsed before any XMP packet */
+        }
+      else if ((marker->marker == JPEG_APP0 + 1)
+               && (marker->data_length > 37)
+               && ! strcmp (JPEG_APP_HEADER_XMP, marker->data))
+        {
+          GimpParam *return_vals;
+          gint       nreturn_vals;
+          gchar     *xmp_packet;
+
+          g_print ("jpeg-load: found XMP packet (%d bytes)\n",
+                   marker->data_length - sizeof (JPEG_APP_HEADER_XMP));
+          xmp_packet = g_strndup (marker->data + sizeof (JPEG_APP_HEADER_XMP),
+                                  marker->data_length - sizeof (JPEG_APP_HEADER_XMP));
+          /* FIXME: running this through the PDB is not very efficient */
+          return_vals = gimp_run_procedure ("plug_in_metadata_decode_xmp",
+                                            &nreturn_vals,
+                                            GIMP_PDB_IMAGE, image_ID,
+                                            GIMP_PDB_STRING, xmp_packet,
+                                            GIMP_PDB_END);
+          if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
+            {
+              g_warning ("JPEG - unable to decode XMP metadata packet");
+            }
+          gimp_destroy_params (return_vals, nreturn_vals);
+          g_free (xmp_packet);
+        }
+    }
+
+  if (!preview)
+    {
+      /* if we had any comments then make a parasite for them */
+      if (local_image_comments && local_image_comments->len)
+        {
+          gchar *comment = local_image_comments->str;
+
+          g_string_free (local_image_comments, FALSE);
+
+          local_image_comments = NULL;
+
+          if (g_utf8_validate (comment, -1, NULL))
+            comment_parasite = gimp_parasite_new ("gimp-comment",
+                                                  GIMP_PARASITE_PERSISTENT,
+                                                  strlen (comment) + 1,
+                                                  comment);
+          g_free (comment);
+        }
+
+      /* Do not attach the "jpeg-save-options" parasite to the image
+       * because this conflics with the global defaults.  See bug #75398:
+       * http://bugzilla.gnome.org/show_bug.cgi?id=75398 */
     }
 
   /* Step 6: while (scan lines remain to be read) */

@@ -962,11 +962,11 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg$(EXEEXT)'; LIBJPEG='-ljpeg'
-	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
-	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG, 1,
-                    [Define to 1 if jpeglib supports progressive JPEG.]),
-	  AC_MSG_WARN(JPEG library does not support progressive saving.))
+	AC_CHECK_LIB(jpeg, jpeg_save_markers,
+	JPEG='jpeg$(EXEEXT)'; LIBJPEG='-ljpeg',
+        [jpeg_ok=no
+        AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library is too old) ***)
+        AC_MSG_WARN(*** XJT plug-in will not be built (JPEG library is too old) ***)])
       else
 	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
         AC_MSG_WARN(*** XJT plug-in will not be built (JPEG header file not found) ***)

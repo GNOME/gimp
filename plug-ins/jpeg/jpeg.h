@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/* headers used in some APPn markers */
+#define JPEG_APP_HEADER_EXIF "Exif"
+#define JPEG_APP_HEADER_XMP  "http://ns.adobe.com/xap/1.0/"
+
 typedef struct my_error_mgr
 {
   struct jpeg_error_mgr pub;            /* "public" fields */
@@ -39,7 +43,6 @@ gboolean         undo_touched;
 gboolean         load_interactive;
 gint32           display_ID;
 gchar           *image_comment;
-
 
 gint32    load_image                    (const gchar   *filename,
                                          GimpRunMode    runmode,

@@ -1,3 +1,17 @@
+2005-04-12  Raphaël Quinet  <raphael@gimp.org>
+
+	* configure.in: updated test for libjpeg so that it requires
+	version 6b (27-Mar-1998) or later.
+
+	* plug-ins/jpeg/jpeg.h
+	* plug-ins/jpeg/jpeg.c
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.h
+	* plug-ins/jpeg/jpeg-save.c: added support for loading and saving
+	XMP packets in JPEG APP1 markers, simplified the code that reads
+	comments from COM markers and removed #ifdef HAVE_PROGRESSIVE_JPEG
+	because we require jpeg-6b, which includes progressive support.
+
 2005-04-11  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_shade.c:  Fix typo responsible for

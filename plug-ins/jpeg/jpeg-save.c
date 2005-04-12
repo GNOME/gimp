@@ -36,8 +36,6 @@
 
 #ifdef HAVE_EXIF
 #include <libexif/exif-data.h>
-
-#define MARKER_CODE_EXIF 0xE1
 #endif /* HAVE_EXIF */
 
 #include <libgimp/gimp.h>
@@ -314,12 +312,10 @@ save_image (const gchar *filename,
   cinfo.smoothing_factor = (gint) (jsvals.smoothing * 100);
   cinfo.optimize_coding = jsvals.optimize;
 
-#ifdef HAVE_PROGRESSIVE_JPEG
   if (jsvals.progressive)
     {
       jpeg_simple_progression (&cinfo);
     }
-#endif /* HAVE_PROGRESSIVE_JPEG */
 
   switch (jsvals.subsmp)
     {
@@ -469,7 +465,8 @@ save_image (const gchar *filename,
           exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
         }
 
-      jpeg_write_marker (&cinfo, MARKER_CODE_EXIF, exif_buf, exif_buf_len);
+      g_print ("jpeg-save: saving EXIF block (%d bytes)\n", exif_buf_len);
+      jpeg_write_marker (&cinfo, JPEG_APP0 + 1, exif_buf, exif_buf_len);
 
       if (exif_buf)
         free (exif_buf);
@@ -479,8 +476,38 @@ save_image (const gchar *filename,
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
     {
+      g_print ("jpeg-save: saving image comment (%d bytes)\n",
+               strlen (image_comment));
       jpeg_write_marker (&cinfo, JPEG_COM,
                          (guchar *) image_comment, strlen (image_comment));
+    }
+
+  /* Step 4.2: Write the XMP packet in an APP1 marker */
+  if (jsvals.save_xmp)
+    {
+      GimpParasite *parasite;
+
+      /* FIXME: temporary hack until the right thing is done by a library */
+      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-metadata");
+      if (parasite)
+        {
+          const gchar *xmp_data;
+          glong        xmp_data_size;
+          gchar       *app_block;
+
+          xmp_data = gimp_parasite_data (parasite) + 10;
+          xmp_data_size = gimp_parasite_data_size (parasite) - 10;
+          g_print ("jpeg-save: saving XMP packet (%d bytes)\n",
+                   (int) xmp_data_size);
+          app_block = g_malloc (sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
+          memcpy (app_block, JPEG_APP_HEADER_XMP,
+                  sizeof (JPEG_APP_HEADER_XMP));
+          memcpy (app_block + sizeof (JPEG_APP_HEADER_XMP), xmp_data,
+                  xmp_data_size);
+          jpeg_write_marker (&cinfo, JPEG_APP0 + 1, app_block,
+                             sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
+          g_free (app_block);
+        }
     }
 
   /* Step 5: while (scan lines remain to be written) */
@@ -748,7 +775,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 6, FALSE);
+  table = gtk_table_new (4, 7, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
@@ -828,10 +855,6 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.progressive);
 
-#ifndef HAVE_PROGRESSIVE_JPEG
-  gtk_widget_set_sensitive (toggle, FALSE);
-#endif
-
   toggle = gtk_check_button_new_with_label (_("Force baseline JPEG"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
@@ -877,6 +900,19 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.save_thumbnail);
 #endif /* HAVE_EXIF */
+
+  /* XMP metadata */
+  toggle = gtk_check_button_new_with_label (_("Save XMP data"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 5, 6, GTK_FILL, 0, 0, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_xmp);
+
+  /* FIXME: check if XMP packet exists, disable toggle if not */
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                jsvals.save_xmp);
 
   /* Subsampling */
   label = gtk_label_new (_("Subsampling:"));

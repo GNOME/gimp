@@ -18,11 +18,6 @@
 
 #define SCALE_WIDTH         125
 
-/* if you are not compiling this from inside the gimp tree, you have to  */
-/* take care yourself if your JPEG library supports progressive mode     */
-/* #undef HAVE_PROGRESSIVE_JPEG   if your library doesn't support it     */
-/* #define HAVE_PROGRESSIVE_JPEG  if your library knows how to handle it */
-
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
 #define DEFAULT_QUALITY     85.0
 #define DEFAULT_SMOOTHING   0.0
@@ -35,6 +30,7 @@
 #define DEFAULT_PREVIEW     FALSE
 #define DEFAULT_EXIF        TRUE
 #define DEFAULT_THUMBNAIL   FALSE
+#define DEFAULT_XMP         TRUE
 
 typedef struct
 {
@@ -49,6 +45,7 @@ typedef struct
   gboolean preview;
   gboolean save_exif;
   gboolean save_thumbnail;
+  gboolean save_xmp;
 } JpegSaveVals;
 
 JpegSaveVals     jsvals;
