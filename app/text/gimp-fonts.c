@@ -70,9 +70,6 @@ gimp_fonts_load (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_FONT_LIST (gimp->fonts));
 
-  if (gimp->no_fonts)
-    return;
-
   gimp_set_busy (gimp);
 
   gimp_container_freeze (GIMP_CONTAINER (gimp->fonts));

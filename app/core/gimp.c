@@ -882,7 +882,8 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the list of gimp fonts  */
   (* status_callback) (NULL, _("Fonts"), 0.5);
-  gimp_fonts_load (gimp);
+  if (! gimp->no_fonts)
+    gimp_fonts_load (gimp);
 
   /*  initialize the document history  */
   (* status_callback) (NULL, _("Documents"), 0.6);

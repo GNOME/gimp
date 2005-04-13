@@ -1,5 +1,18 @@
 2005-04-13  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.c: set GIMP_CONFIG_PARAM_CONFIRM on
+	the "font-path" property. Set GIMP_CONFIG_PARAM_IGNORE for
+	"font-path-writable".
+
+	* app/dialogs/preferences-dialog.c: don't use "font-path-writable".
+
+	* app/core/gimp.c (gimp_restore)
+	* app/text/gimp-fonts.c: handle --no-fonts similar to --no-data
+	and allow to load the fonts later by pressing "Refresh" in the
+	fonts dialog.
+
+2005-04-13  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c: register handler for the "GimpPaint" log domain.
 
 	* app/core/gimpdatafactory.c (gimp_data_factory_init): don't load
