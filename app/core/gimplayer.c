@@ -901,7 +901,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
 /**
  * gimp_layer_new_from_pixbuf:
- * @tiles:       The pixbuf to make the new layer from.
+ * @pixbuf:      The pixbuf to make the new layer from.
  * @dest_gimage: The image the new layer will be added to.
  * @type:        The #GimpImageType of the new layer.
  * @name:        The new layer's name.
