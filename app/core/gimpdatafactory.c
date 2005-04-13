@@ -197,20 +197,26 @@ gimp_data_factory_new (Gimp                             *gimp,
 
 void
 gimp_data_factory_data_init (GimpDataFactory *factory,
-			     gboolean         no_data /* FIXME */)
+			     gboolean         no_data)
 {
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
-  if (factory->gimp->be_verbose)
-    {
-      const gchar *name = gimp_object_get_name (GIMP_OBJECT (factory));
-
-      g_print ("%s: loading data\n", name ? name : "???");
-    }
-
+  /*  Freeze and thaw the container even if no_data,
+   *  this creates the standard data that serves as fallback.
+   */
   gimp_container_freeze (factory->container);
 
-  gimp_data_factory_data_load (factory);
+  if (! no_data)
+    {
+      if (factory->gimp->be_verbose)
+        {
+          const gchar *name = gimp_object_get_name (GIMP_OBJECT (factory));
+
+          g_print ("%s: loading data\n", name ? name : "???");
+        }
+
+      gimp_data_factory_data_load (factory);
+    }
 
   gimp_container_thaw (factory->container);
 }

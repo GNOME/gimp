@@ -816,12 +816,10 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         {
           GimpBrushCore *brush_core = GIMP_BRUSH_CORE (core);
 
-          if (! brush_core->brush_bound_segs)
+          if (! brush_core->brush_bound_segs && brush_core->main_brush)
             {
-              TempBuf     *mask;
-              PixelRegion  PR = { 0, };
-
-              mask = gimp_brush_get_mask (brush_core->main_brush);
+              TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
+              PixelRegion  PR   = { 0, };
 
               PR.data      = temp_buf_data (mask);
               PR.x         = 0;
@@ -915,9 +913,7 @@ gimp_paint_tool_color_picked (GimpColorTool      *color_tool,
 
   if (tool->gdisp)
     {
-      GimpContext *context;
-
-      context = gimp_get_user_context (tool->gdisp->gimage->gimp);
+      GimpContext *context = gimp_get_user_context (tool->gdisp->gimage->gimp);
 
       switch (color_tool->pick_mode)
         {
