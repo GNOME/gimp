@@ -354,6 +354,41 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_scale_to (GimpDisplayShell *shell,
+                             GimpZoomType      zoom_type,
+                             gdouble           x,
+                             gdouble           y)
+{
+  GimpDisplayConfig *config;
+  gdouble            scale;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  scale = shell->scale;
+
+  if (! shell->gdisp)
+    return;
+
+  x += shell->offset_x;
+  y += shell->offset_y;
+
+  x /= scale;
+  y /= scale;
+
+  scale = gimp_display_shell_scale_zoom_step (zoom_type, scale);
+
+  x *= scale;
+  y *= scale;
+
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
+  gimp_display_shell_scale_by_values (shell, scale,
+                                      x - (shell->disp_width  / 2),
+                                      y - (shell->disp_height / 2),
+                                      config->resize_windows_on_zoom);
+}
+
+void
 gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type,
                           gdouble           new_scale)

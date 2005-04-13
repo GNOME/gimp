@@ -1,3 +1,9 @@
+2005-04-13  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scale.[ch]: when using Ctrl-wheel
+	to zoom in/out, center on the mouse position (bug #79384).
+
 2005-04-13  Adi Attar  <aattar@cvs.gnome.org>
 
 	* configure.in: Added "xh" to ALL_LINGUAS.
