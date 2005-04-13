@@ -354,6 +354,7 @@
     <chapter id="app-plug-in-management">
       <title>Initialization &amp; Plug-In Management</title>
       <xi:include href="xml/plug-ins.xml" />
+      <xi:include href="xml/plug-ins-query.xml" />
       <xi:include href="xml/plug-in-def.xml" />
       <xi:include href="xml/plug-in-proc-def.xml" />
       <xi:include href="xml/plug-in-proc-frame.xml" />
@@ -653,6 +654,7 @@
       <xi:include href="xml/gimpcoloreditor.xml" />
       <xi:include href="xml/gimpdevicestatus.xml" />
       <xi:include href="xml/gimperrorconsole.xml" />
+      <xi:include href="xml/gimpsamplepointeditor.xml" />
       <xi:include href="xml/gimptooloptionseditor.xml" />
     </chapter>
 
@@ -757,6 +759,7 @@
       <xi:include href="xml/gimpcolordisplayeditor.xml" />
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
+      <xi:include href="xml/gimpcursorview.xml" />
       <xi:include href="xml/gimpdasheditor.xml" />
       <xi:include href="xml/gimpfgbgeditor.xml" />
       <xi:include href="xml/gimpfgbgview.xml" />
@@ -764,6 +767,7 @@
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
+      <xi:include href="xml/gimpimagepropview.xml" />
       <xi:include href="xml/gimpmessagebox.xml" />
       <xi:include href="xml/gimpprogressbox.xml" />
       <xi:include href="xml/gimpsizebox.xml" />
@@ -816,9 +820,10 @@
       <xi:include href="xml/gimpdialogfactory.xml" />
       <xi:include href="xml/gimpdnd.xml" />
       <xi:include href="xml/gimpdnd-xds.xml" />
-      <xi:include href="xml/gimphelp.xml" />
+      <xi:include href="xml/gimppixbuf.xml" />
       <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimpsessioninfo.xml" />
+      <xi:include href="xml/gimphelp.xml" />
       <xi:include href="xml/gimpwidgets-utils.xml" />
     </chapter>
 
@@ -966,6 +971,7 @@
       <xi:include href="xml/grid-dialog.xml" />
       <xi:include href="xml/image-merge-layers-dialog.xml" />
       <xi:include href="xml/image-new-dialog.xml" />
+      <xi:include href="xml/image-properties-dialog.xml" />
       <xi:include href="xml/image-scale-dialog.xml" />
       <xi:include href="xml/info-dialog.xml" />
       <xi:include href="xml/info-window.xml" />

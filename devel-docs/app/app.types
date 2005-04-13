@@ -67,6 +67,7 @@ gimp_convolve_tool_get_type
 gimp_core_config_get_type
 gimp_crop_options_get_type
 gimp_crop_tool_get_type
+gimp_cursor_view_get_type
 gimp_curves_tool_get_type
 gimp_dash_editor_get_type
 gimp_data_editor_get_type
@@ -131,6 +132,7 @@ gimp_image_get_type
 gimp_image_map_get_type
 gimp_image_map_options_get_type
 gimp_image_map_tool_get_type
+gimp_image_prop_view_get_type
 gimp_image_view_get_type
 gimp_imagefile_get_type
 gimp_ink_get_type
@@ -197,6 +199,7 @@ gimp_projection_get_type
 gimp_rc_get_type
 gimp_rect_select_tool_get_type
 gimp_rotate_tool_get_type
+gimp_sample_point_editor_get_type
 gimp_scale_combo_box_get_type
 gimp_scale_tool_get_type
 gimp_selection_editor_get_type

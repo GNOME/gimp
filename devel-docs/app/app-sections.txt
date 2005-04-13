@@ -345,6 +345,7 @@ GIMP_BRUSH_PIPE_GET_CLASS
 <TITLE>GimpBuffer</TITLE>
 GimpBuffer
 gimp_buffer_new
+gimp_buffer_new_from_pixbuf
 gimp_buffer_get_width
 gimp_buffer_get_height
 <SUBSECTION Standard>
@@ -424,6 +425,7 @@ gimp_container_get_type
 gimp_container_children_type
 gimp_container_policy
 gimp_container_num_children
+gimp_container_is_empty
 gimp_container_add
 gimp_container_remove
 gimp_container_insert
@@ -602,12 +604,13 @@ GimpDataFactoryLoaderEntry
 GimpDataFactory
 gimp_data_factory_new
 gimp_data_factory_data_init
-gimp_data_factory_data_save
-gimp_data_factory_data_save_single
-gimp_data_factory_data_delete
+gimp_data_factory_data_refresh
 gimp_data_factory_data_free
+gimp_data_factory_data_save
 gimp_data_factory_data_new
 gimp_data_factory_data_duplicate
+gimp_data_factory_data_save_single
+gimp_data_factory_data_delete
 gimp_data_factory_data_get_standard
 <SUBSECTION Standard>
 GimpDataFactoryClass
@@ -840,6 +843,8 @@ gimp_image_alpha_changed
 gimp_image_update
 gimp_image_update_guide
 gimp_image_update_sample_point
+gimp_image_sample_point_added
+gimp_image_sample_point_removed
 gimp_image_colormap_changed
 gimp_image_selection_control
 gimp_image_qmask_changed
@@ -1063,6 +1068,8 @@ GIMP_ITEM_UNDO_GET_CLASS
 <TITLE>GimpLayer</TITLE>
 GimpLayer
 gimp_layer_new
+gimp_layer_new_from_pixbuf
+gimp_layer_new_from_region
 gimp_layer_new_from_tiles
 gimp_layer_create_mask
 gimp_layer_add_mask
@@ -1797,6 +1804,7 @@ gimp_display_shell_scale_get_fraction
 gimp_display_shell_scale_setup
 gimp_display_shell_scale_set_dot_for_dot
 gimp_display_shell_scale
+gimp_display_shell_scale_to
 gimp_display_shell_scale_fit_in
 gimp_display_shell_scale_fit_to
 gimp_display_shell_scale_by_values
@@ -3126,6 +3134,9 @@ GIMP_PAINTBRUSH_TOOL_GET_CLASS
 <TITLE>GimpPaintTool</TITLE>
 GimpPaintTool
 gimp_paint_tool_enable_color_picker
+gimp_paint_tool_push_status
+gimp_paint_tool_pop_status
+gimp_paint_tool_replace_status
 <SUBSECTION Standard>
 GimpPaintToolClass
 GIMP_PAINT_TOOL
@@ -3204,6 +3215,7 @@ GIMP_RECTANGLE_OPTIONS_GET_CLASS
 <FILE>gimprectangletool</FILE>
 <TITLE>GimpRectangleTool</TITLE>
 GimpRectangleTool
+gimp_rectangle_tool_width_changed
 <SUBSECTION Standard>
 GimpRectangleToolClass
 GIMP_RECTANGLE_TOOL
@@ -4339,6 +4351,23 @@ gimp_controllers_get_keyboard
 </SECTION>
 
 <SECTION>
+<FILE>gimpcursorview</FILE>
+<TITLE>GimpCursorView</TITLE>
+GimpCursorView
+gimp_cursor_view_new
+gimp_cursor_view_update_cursor
+<SUBSECTION Standard>
+GimpCursorViewClass
+GIMP_CURSOR_VIEW
+GIMP_IS_CURSOR_VIEW
+GIMP_TYPE_CURSOR_VIEW
+gimp_cursor_view_get_type
+GIMP_CURSOR_VIEW_CLASS
+GIMP_IS_CURSOR_VIEW_CLASS
+GIMP_CURSOR_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdeviceinfo</FILE>
 GIMP_DEVICE_INFO_CONTEXT_MASK
 <TITLE>GimpDeviceInfo</TITLE>
@@ -4993,6 +5022,38 @@ gimp_navigation_view_get_type
 GIMP_NAVIGATION_VIEW_CLASS
 GIMP_IS_NAVIGATION_VIEW_CLASS
 GIMP_NAVIGATION_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsamplepointeditor</FILE>
+<TITLE>GimpSamplePointEditor</TITLE>
+GimpSamplePointEditor
+gimp_sample_point_editor_new
+<SUBSECTION Standard>
+GimpSamplePointEditorClass
+GIMP_SAMPLE_POINT_EDITOR
+GIMP_IS_SAMPLE_POINT_EDITOR
+GIMP_TYPE_SAMPLE_POINT_EDITOR
+gimp_sample_point_editor_get_type
+GIMP_SAMPLE_POINT_EDITOR_CLASS
+GIMP_IS_SAMPLE_POINT_EDITOR_CLASS
+GIMP_SAMPLE_POINT_EDITOR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpimagepropview</FILE>
+<TITLE>GimpImagePropView</TITLE>
+GimpImagePropView
+gimp_image_prop_view_new
+<SUBSECTION Standard>
+GimpImagePropViewClass
+GIMP_IMAGE_PROP_VIEW
+GIMP_IS_IMAGE_PROP_VIEW
+GIMP_TYPE_IMAGE_PROP_VIEW
+gimp_image_prop_view_get_type
+GIMP_IMAGE_PROP_VIEW_CLASS
+GIMP_IS_IMAGE_PROP_VIEW_CLASS
+GIMP_IMAGE_PROP_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6878,10 +6939,6 @@ dialogs_error_get
 dialogs_tips_get
 dialogs_quit_get
 dialogs_toolbox_get
-dialogs_dock_new
-dialogs_tool_options_get
-dialogs_device_status_get
-dialogs_error_console_get
 dialogs_brush_grid_view_new
 dialogs_brush_list_view_new
 dialogs_buffer_grid_view_new
@@ -6889,8 +6946,12 @@ dialogs_buffer_list_view_new
 dialogs_channel_list_view_new
 dialogs_color_editor_new
 dialogs_colormap_editor_new
+dialogs_cursor_view_new
+dialogs_device_status_new
+dialogs_dock_new
 dialogs_document_grid_view_new
 dialogs_document_list_view_new
+dialogs_error_console_new
 dialogs_font_grid_view_new
 dialogs_font_list_view_new
 dialogs_gradient_grid_view_new
@@ -6905,11 +6966,13 @@ dialogs_palette_list_view_new
 dialogs_path_list_view_new
 dialogs_pattern_grid_view_new
 dialogs_pattern_list_view_new
+dialogs_sample_point_editor_new
 dialogs_selection_editor_new
 dialogs_template_grid_view_new
 dialogs_template_list_view_new
 dialogs_tool_grid_view_new
 dialogs_tool_list_view_new
+dialogs_tool_options_new
 dialogs_undo_editor_new
 dialogs_vectors_list_view_new
 dialogs_brush_editor_get
@@ -6964,6 +7027,11 @@ quit_dialog_new
 </SECTION>
 
 <SECTION>
+<FILE>image-properties-dialog</FILE>
+image_properties_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>stroke-dialog</FILE>
 stroke_dialog_new
 </SECTION>
@@ -7014,15 +7082,6 @@ info_dialog_add_entry
 info_dialog_add_scale
 info_dialog_add_spinbutton
 info_dialog_add_sizeentry
-</SECTION>
-
-<SECTION>
-<FILE>info-window</FILE>
-info_window_create
-info_window_free
-info_window_update
-info_window_update_cursor
-info_window_follow_auto
 </SECTION>
 
 <SECTION>
@@ -7470,6 +7529,11 @@ plug_ins_image_types_parse
 </SECTION>
 
 <SECTION>
+<FILE>plug-ins-query</FILE>
+plug_ins_query
+</SECTION>
+
+<SECTION>
 <FILE>text-enums</FILE>
 GIMP_TYPE_TEXT_BOX_MODE
 GimpTextBoxMode
@@ -7578,6 +7642,7 @@ gimp_tool_motion_constrain
 gimp_tools_init
 gimp_tools_exit
 gimp_tools_save
+gimp_tools_clear
 gimp_tools_restore
 gimp_tools_get_default_order
 </SECTION>
@@ -7648,7 +7713,7 @@ GIMP_TARGET_LAYER_MASK
 GIMP_TARGET_NETSCAPE_URL
 GIMP_TARGET_PALETTE
 GIMP_TARGET_PATTERN
-GIMP_TARGET_PNG
+GIMP_TARGET_PIXBUF
 GIMP_TARGET_SVG
 GIMP_TARGET_SVG_XML
 GIMP_TARGET_TEMPLATE
@@ -7679,6 +7744,12 @@ gimp_dnd_component_source_add
 gimp_dnd_component_source_remove
 gimp_dnd_component_dest_add
 gimp_dnd_component_dest_remove
+GimpDndDropPixbufFunc
+GimpDndDragPixbufFunc
+gimp_dnd_pixbuf_source_add
+gimp_dnd_pixbuf_source_remove
+gimp_dnd_pixbuf_dest_add
+gimp_dnd_pixbuf_dest_remove
 GimpDndDropStreamFunc
 gimp_dnd_svg_dest_add
 gimp_dnd_svg_dest_remove
@@ -7702,15 +7773,10 @@ gimp_dnd_xds_save_image
 </SECTION>
 
 <SECTION>
-<FILE>gimphelp</FILE>
-gimp_help_show
-</SECTION>
-
-<SECTION>
-<FILE>gimppropwidgets</FILE>
-gimp_prop_color_button_new
-gimp_prop_paint_mode_menu_new
-gimp_prop_preview_new
+<FILE>gimppixbuf</FILE>
+gimp_pixbuf_get_formats
+gimp_pixbuf_targets_add
+gimp_pixbuf_targets_remove
 </SECTION>
 
 <SECTION>
@@ -7723,8 +7789,6 @@ gimp_selection_data_set_component
 gimp_selection_data_get_component
 gimp_selection_data_set_stream
 gimp_selection_data_get_stream
-gimp_selection_data_set_pixbuf
-gimp_selection_data_get_pixbuf
 gimp_selection_data_set_image
 gimp_selection_data_get_image
 gimp_selection_data_set_item
@@ -7739,6 +7803,18 @@ gimp_selection_data_get_buffer
 gimp_selection_data_get_imagefile
 gimp_selection_data_get_template
 gimp_selection_data_get_tool
+</SECTION>
+
+<SECTION>
+<FILE>gimphelp</FILE>
+gimp_help_show
+</SECTION>
+
+<SECTION>
+<FILE>gimppropwidgets</FILE>
+gimp_prop_color_button_new
+gimp_prop_paint_mode_menu_new
+gimp_prop_preview_new
 </SECTION>
 
 <SECTION>
@@ -8328,6 +8404,7 @@ image_crop_cmd_callback
 image_duplicate_cmd_callback
 image_merge_layers_cmd_callback
 image_flatten_image_cmd_callback
+image_properties_cmd_callback
 image_configure_grid_cmd_callback
 </SECTION>
 
@@ -8501,7 +8578,6 @@ view_shrink_wrap_cmd_callback
 view_dot_for_dot_cmd_callback
 view_scroll_horizontal_cmd_callback
 view_scroll_vertical_cmd_callback
-view_info_window_cmd_callback
 view_navigation_window_cmd_callback
 view_display_filters_cmd_callback
 view_toggle_grid_cmd_callback
