@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-COMMAND_PROTO(unselect_all_command);
+static void unselect_all_command_destruct(Command_t *command);
+static CmdExecuteValue_t unselect_all_command_execute(Command_t *command);
+
+/* COMMAND_PROTO(unselect_all_command); */
 
 static CommandClass_t unselect_all_command_class = {
    unselect_all_command_destruct,

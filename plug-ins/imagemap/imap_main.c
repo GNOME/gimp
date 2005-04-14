@@ -380,6 +380,7 @@ redraw_preview(void)
       preview_redraw(_preview);
 }
 
+#ifdef _NOT_READY_YET
 static void
 set_preview_gray(void)
 {
@@ -393,6 +394,7 @@ set_preview_color(void)
    _map_info.show_gray = FALSE;
    set_zoom(_zoom_factor);
 }
+#endif
 
 const char*
 get_image_name(void)
@@ -801,6 +803,7 @@ do_quit(void)
    check_if_changed(really_quit, NULL);
 }
 
+#ifdef _NOT_READY_YET_
 static void
 do_undo(void)
 {
@@ -820,6 +823,7 @@ do_redo(void)
    selection_thaw(_selection);
    preview_thaw();
 }
+#endif
 
 void
 save(void)
@@ -1028,11 +1032,13 @@ load(const gchar *filename)
    check_if_changed(really_load, (gpointer) tmp_filename);
 }
 
+#ifdef _NOT_READY_YET_
 static void
 toggle_area_list(void)
 {
    selection_toggle_visibility(_selection);
 }
+#endif
 
 static gboolean
 close_callback(GtkWidget *widget, gpointer data)
@@ -1264,6 +1270,8 @@ do_move_down(void)
   */
 }
 
+#ifdef _NOT_READY_YET_
+
 static Command_t*
 factory_toggle_area_list(void)
 {
@@ -1305,6 +1313,7 @@ factory_use_gimp_guides_dialog(void)
 {
    return gimp_guides_command_new(_shapes, _drawable);
 }
+#endif
 
 static Command_t*
 factory_move_up(void)

@@ -61,7 +61,7 @@ object_popup_prepend_menu(ObjectPopup_t *popup, gchar *label,
 void
 object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
 {
-   int position = object_get_position_in_list(obj) + 1;
+  /* int position = object_get_position_in_list(obj) + 1; */
 
    _current_obj = popup->obj = obj;
 #ifdef _TEMP_
