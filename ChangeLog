@@ -1,3 +1,10 @@
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c: use a GtkUIManager to construct the
+	toolbar.
+
+	* plug-ins/ifscompose/ifscompose.c: use gtk_action_set_sensitive().
+
 2005-04-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/dialogs/image-new-dialog.c

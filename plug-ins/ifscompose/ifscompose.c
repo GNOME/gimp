@@ -1149,22 +1149,15 @@ design_op_actions_update (void)
 
   act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
                                    "/ui/dummy-menubar/ifs-compose-menu/undo");
-  g_object_set (act,
-                "sensitive", undo_cur >= 0,
-                NULL);
+  gtk_action_set_sensitive (act, undo_cur >= 0);
 
   act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
                                    "/ui/dummy-menubar/ifs-compose-menu/redo");
-
-  g_object_set (act,
-                "sensitive", undo_cur != undo_num - 1,
-                NULL);
+  gtk_action_set_sensitive (act, undo_cur != undo_num - 1);
 
   act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
                                    "/ui/dummy-menubar/ifs-compose-menu/delete");
-  g_object_set (act,
-                "sensitive", ifsvals.num_elements > 2,
-                NULL);
+  gtk_action_set_sensitive (act, ifsvals.num_elements > 2);
 }
 
 static void

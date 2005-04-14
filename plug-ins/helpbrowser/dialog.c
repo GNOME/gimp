@@ -67,13 +67,21 @@ enum
 
 /*  local function prototypes  */
 
+static GtkUIManager * ui_manager_new (GtkWidget        *window);
 static void       browser_dialog_404 (HtmlDocument     *doc,
                                       const gchar      *url,
                                       const gchar      *message);
 
-static void       button_callback    (GtkWidget        *widget,
+static void       back_callback      (GtkAction        *action,
+                                      gpointer          data);
+static void       forward_callback   (GtkAction        *action,
+                                      gpointer          data);
+static void       index_callback     (GtkAction        *action,
+                                      gpointer          data);
+static void       close_callback     (GtkAction        *action,
                                       gpointer          data);
 static void       update_toolbar     (void);
+
 static void       combo_changed      (GtkWidget        *widget,
                                       gpointer          data);
 static void       drag_begin         (GtkWidget        *widget,
@@ -118,9 +126,8 @@ static const gchar  *eek_png_tag    = "<h1>Eeek!</h1>";
 static Queue        *queue          = NULL;
 static gchar        *current_ref    = NULL;
 
-static GtkWidget    *back_button    = NULL;
-static GtkWidget    *forward_button = NULL;
 static GtkWidget    *html           = NULL;
+static GtkUIManager *ui_manager     = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -135,10 +142,9 @@ browser_dialog_open (void)
 {
   GtkWidget       *window;
   GtkWidget       *vbox;
+  GtkWidget       *toolbar;
   GtkWidget       *hbox;
-  GtkWidget       *bbox;
   GtkWidget       *scroll;
-  GtkWidget       *button;
   GtkWidget       *drag_source;
   GtkWidget       *image;
   GtkWidget       *combo;
@@ -172,46 +178,11 @@ browser_dialog_open (void)
   gtk_container_add (GTK_CONTAINER (window), vbox);
   gtk_widget_show (vbox);
 
-  /*  buttons  */
-  bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_START);
-  gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
+  ui_manager = ui_manager_new (window);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_INDEX);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (button_callback),
-                    GINT_TO_POINTER (BUTTON_INDEX));
-
-  back_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_BACK);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (button_callback),
-                    GINT_TO_POINTER (BUTTON_BACK));
-
-  forward_button = button = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (button_callback),
-                    GINT_TO_POINTER (BUTTON_FORWARD));
-
-  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (bbox), button, TRUE);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            window);
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/help-browser-toolbar");
+  gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -221,6 +192,9 @@ browser_dialog_open (void)
   drag_source = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (hbox), drag_source, FALSE, FALSE, 4);
   gtk_widget_show (drag_source);
+
+  gimp_help_set_help_data (drag_source,
+                           _("Drag and drop this icon to a web browser"), NULL);
 
   gtk_drag_source_set (GTK_WIDGET (drag_source),
                        GDK_BUTTON1_MASK,
@@ -393,6 +367,57 @@ browser_dialog_load (const gchar *ref,
 
 /*  private functions  */
 
+static GtkUIManager *
+ui_manager_new (GtkWidget *window)
+{
+  static GtkActionEntry actions[] =
+  {
+    { "back", GTK_STOCK_GO_BACK,
+      NULL, NULL, N_("Go back one page"),
+      G_CALLBACK (back_callback) },
+
+    { "forward", GTK_STOCK_GO_FORWARD,
+      NULL, NULL, N_("Go forward one page"),
+      G_CALLBACK (forward_callback) },
+
+    { "index", GTK_STOCK_INDEX,
+      NULL, NULL, N_("Go to the index page"),
+      G_CALLBACK (index_callback) },
+
+    { "close", GTK_STOCK_CLOSE,
+      NULL, NULL, N_("Close the help browser"),
+      G_CALLBACK (close_callback) },
+  };
+
+  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
+  GtkActionGroup *group      = gtk_action_group_new ("Actions");
+
+  gtk_action_group_set_translation_domain (group, NULL);
+  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), window);
+
+  gtk_window_add_accel_group (GTK_WINDOW (window),
+                              gtk_ui_manager_get_accel_group (ui_manager));
+  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <toolbar name=\"help-browser-toolbar\">"
+                                     "    <toolitem action=\"back\" />"
+                                     "    <toolitem action=\"forward\" />"
+                                     "    <separator />"
+                                     "    <toolitem action=\"index\" />"
+                                     "    <separator />"
+                                     "    <toolitem action=\"close\" />"
+                                     "  </toolbar>"
+                                     "</ui>",
+                                     -1, NULL);
+
+  return ui_manager;
+}
+
 static void
 browser_dialog_404 (HtmlDocument *doc,
                     const gchar  *url,
@@ -423,45 +448,61 @@ browser_dialog_404 (HtmlDocument *doc,
 }
 
 static void
-button_callback (GtkWidget *widget,
-                 gpointer   data)
+back_callback (GtkAction *action,
+               gpointer   data)
 {
-  const gchar *ref;
+  const gchar *ref = queue_prev (queue);
 
-  switch (GPOINTER_TO_INT (data))
+  if (ref)
     {
-    case BUTTON_INDEX:
-      browser_dialog_load ("index.html", TRUE);
-      break;
-
-    case BUTTON_BACK:
-      if (!(ref = queue_prev (queue)))
-        return;
       browser_dialog_load (ref, FALSE);
       queue_move_prev (queue);
-      break;
-
-    case BUTTON_FORWARD:
-      if (!(ref = queue_next (queue)))
-        return;
-      browser_dialog_load (ref, FALSE);
-      queue_move_next (queue);
-      break;
-
-    default:
-      return;
     }
 
   update_toolbar ();
 }
 
 static void
+forward_callback (GtkAction *action,
+                  gpointer   data)
+{
+  const gchar *ref = queue_next (queue);
+
+  if (ref)
+    {
+      browser_dialog_load (ref, FALSE);
+      queue_move_next (queue);
+    }
+
+  update_toolbar ();
+}
+
+static void
+index_callback (GtkAction *action,
+                gpointer   data)
+{
+  browser_dialog_load ("index.html", TRUE);
+}
+
+static void
+close_callback (GtkAction *action,
+                gpointer   data)
+{
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
+static void
 update_toolbar (void)
 {
-  if (back_button)
-    gtk_widget_set_sensitive (back_button, queue_has_prev (queue));
-  if (forward_button)
-    gtk_widget_set_sensitive (forward_button, queue_has_next (queue));
+  GtkAction *action;
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-toolbar/back");
+  gtk_action_set_sensitive (action, queue_has_prev (queue));
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-toolbar/forward");
+  gtk_action_set_sensitive (action, queue_has_next (queue));
 }
 
 static void
@@ -489,7 +530,7 @@ drag_begin (GtkWidget      *widget,
             GdkDragContext *context,
             gpointer        data)
 {
-  gtk_drag_set_icon_stock (context, GTK_STOCK_JUMP_TO, -8, -8);
+  gtk_drag_set_icon_stock (context, GIMP_STOCK_WEB, -8, -8);
 }
 
 static void
@@ -515,18 +556,22 @@ title_changed (HtmlDocument *doc,
                const gchar  *new_title,
                gpointer      data)
 {
+  gchar *title = NULL;
+
   if (new_title)
     {
-      gchar *title = g_strstrip (g_strdup (new_title));
-
-      history_add (GTK_COMBO_BOX (data), current_ref, title);
-
-      g_free (title);
+      title = g_strstrip (g_strdup (new_title));
+      if (! strlen (title))
+        {
+          g_free (title);
+          title = NULL;
+        }
     }
-  else
-    {
-      history_add (GTK_COMBO_BOX (data), current_ref, _("Untitled"));
-    }
+
+  history_add (GTK_COMBO_BOX (data), current_ref,
+               title ? title : _("Untitled"));
+
+  g_free (title);
 }
 
 static void
@@ -558,9 +603,7 @@ request_url (HtmlDocument *doc,
 
   if (filename)
     {
-      gint fd;
-
-      fd = g_open (filename, O_RDONLY, 0);
+      gint fd = g_open (filename, O_RDONLY, 0);
 
       if (fd != -1)
         {
