@@ -1,5 +1,10 @@
 2005-04-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scale.[ch]: reduced code duplication.
+
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale_to): 
 	changed to keep the point under the mouse at the same location,
 	rather than to center it. Also added API docs.
@@ -32,7 +37,6 @@
 	* libgimp/gimpimage_pdb.[ch]
 	* app/pdb/image_cmds.c
 	* app/pdb/internal_procs.c: regenerated.
-
 
 2005-04-13  Sven Neumann  <sven@gimp.org>
 

@@ -875,12 +875,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             switch (direction)
               {
               case GDK_SCROLL_UP:
-                gimp_display_shell_scale_to (shell, GIMP_ZOOM_IN,
+                gimp_display_shell_scale_to (shell, GIMP_ZOOM_IN, 0.0,
                                              sevent->x, sevent->y);
                 break;
 
               case GDK_SCROLL_DOWN:
-                gimp_display_shell_scale_to (shell, GIMP_ZOOM_OUT,
+                gimp_display_shell_scale_to (shell, GIMP_ZOOM_OUT, 0.0,
                                              sevent->x, sevent->y);
                 break;
 
