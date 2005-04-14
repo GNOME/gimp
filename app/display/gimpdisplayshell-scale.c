@@ -359,19 +359,21 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
  * @zoom_type: whether to zoom in, our or to a specific scale
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
- * This function calls gimp_display_shell_scale_to() using the center
- * of the display as coordinates.
+ * This function calls gimp_display_shell_scale_to() using the
+ * position of the mouse pointer as coordinates.
  **/
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type,
                           gdouble           new_scale)
 {
+  gint x, y;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_to (shell, zoom_type, new_scale,
-                               shell->disp_width / 2.0,
-                               shell->disp_height / 2.0);
+  gtk_widget_get_pointer (GTK_WIDGET (shell), &x, &y);
+
+  gimp_display_shell_scale_to (shell, zoom_type, new_scale, x, y);
 }
 
 /**

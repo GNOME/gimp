@@ -1,5 +1,11 @@
 2005-04-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	changed to use the location of the pointer instead of the display
+	center. This is the behaviour requested in bug #79384.
+
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell-scale.[ch]: reduced code duplication.
 
