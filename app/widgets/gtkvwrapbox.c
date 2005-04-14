@@ -222,7 +222,7 @@ gtk_vwrap_box_size_request (GtkWidget      *widget,
 	  requisition->height = layout_height;
 	  requisition->width = layout_width;
 	}
-      
+
       /* g_print ("ratio for height %d width %d = %f\n",
 	 (gint) layout_height,
 	 (gint) layout_width,
@@ -233,7 +233,7 @@ gtk_vwrap_box_size_request (GtkWidget      *widget,
 
   requisition->width += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
   requisition->height += GTK_CONTAINER (wbox)->border_width * 2; /*<h2v-skip>*/
-  /* g_print ("choosen: height %d, width %d\n",
+  /* g_print ("chosen: height %d, width %d\n",
      requisition->height,
      requisition->width);
   */
@@ -249,7 +249,7 @@ reverse_list_col_children (GtkWrapBox       *wbox,
   GSList *slist = NULL;
   guint height = 0, col_height = area->height;
   GtkWrapBoxChild *child = *child_p;
-  
+
   *max_child_size = 0;
   *expand_line = FALSE;
   

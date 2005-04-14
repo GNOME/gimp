@@ -305,7 +305,7 @@ image_new_confirm_dialog (ImageNewDialog *data)
   config = GIMP_GUI_CONFIG (data->gimp->config);
   size = gimp_memsize_to_string (config->max_new_image_size);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                              _("An image of the choosen size will use more "
+                              _("An image of the chosen size will use more "
                                 "memory than what is configured as "
                                 "\"Maximum Image Size\" in the Preferences "
                                 "dialog (currently %s)."), size);

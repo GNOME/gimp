@@ -201,7 +201,7 @@ image_scale_confirm_large (ImageScaleDialog *dialog,
 
   size = gimp_memsize_to_string (max_memsize);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,
-                             _("Scaling the image to the choosen size will "
+                             _("Scaling the image to the chosen size will "
                                "make it use more memory than what is "
                                "configured as \"Maximum Image Size\" in the "
                                "Preferences dialog (currently %s)."), size);
@@ -216,7 +216,7 @@ image_scale_confirm_small (ImageScaleDialog *dialog)
   GtkWidget *widget = image_scale_confirm_dialog (dialog);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (widget)->box,
-                                     _("Scaling the image to the choosen size "
+                                     _("Scaling the image to the chosen size "
                                        "will shrink some layers completely "
                                        "away."));
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (widget)->box,

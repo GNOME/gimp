@@ -1,3 +1,10 @@
+2005-04-14  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/image-scale-dialog.c
+	* app/widgets/gtkhwrapbox.c
+	* app/widgets/gtkvwrapbox.c: s/choosen/chosen/g; fixes bug #300608.
+
 2005-04-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_set_property):
