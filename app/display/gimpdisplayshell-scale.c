@@ -317,15 +317,15 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
 #if 0
-  g_print ("offset_x:     %d\n"
-           "offset_y:     %d\n"
-           "disp_width:   %d\n"
-           "disp_height:  %d\n"
-           "disp_xoffset: %d\n"
-           "disp_yoffset: %d\n\n",
-           shell->offset_x, shell->offset_y,
-           shell->disp_width, shell->disp_height,
-           shell->disp_xoffset, shell->disp_yoffset);
+  g_printerr ("offset_x:     %d\n"
+              "offset_y:     %d\n"
+              "disp_width:   %d\n"
+              "disp_height:  %d\n"
+              "disp_xoffset: %d\n"
+              "disp_yoffset: %d\n\n",
+              shell->offset_x, shell->offset_y,
+              shell->disp_width, shell->disp_height,
+              shell->disp_xoffset, shell->disp_yoffset);
 #endif
 }
 
@@ -353,41 +353,19 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
     }
 }
 
-void
-gimp_display_shell_scale_to (GimpDisplayShell *shell,
-                             GimpZoomType      zoom_type,
-                             gdouble           x,
-                             gdouble           y)
-{
-  GimpDisplayConfig *config;
-  gdouble            scale;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  scale = shell->scale;
-
-  if (! shell->gdisp)
-    return;
-
-  x += shell->offset_x;
-  y += shell->offset_y;
-
-  x /= scale;
-  y /= scale;
-
-  scale = gimp_display_shell_scale_zoom_step (zoom_type, scale);
-
-  x *= scale;
-  y *= scale;
-
-  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
-
-  gimp_display_shell_scale_by_values (shell, scale,
-                                      x - (shell->disp_width  / 2),
-                                      y - (shell->disp_height / 2),
-                                      config->resize_windows_on_zoom);
-}
-
+/**
+ * gimp_display_shell_scale:
+ * @shell:     the #GimpDisplayShell
+ * @zoom_type: whether to zoom in, our or to a specific scale
+ * @new_scale: ignored unless @zoom_type == %GIMP_ZOOM_TO
+ *
+ * This function changes the scale (zoom) of the display shell. It
+ * either zooms in / out one step (%GIMP_ZOOM_IN / %GIMP_ZOOM_OUT) or
+ * it sets to the zoom ratio passed as @new_scale (%GIMP_ZOOM_TO).
+ *
+ * This function also changes the offsets so that the center of the
+ * displayed area stays in the middle.
+ **/
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
                           GimpZoomType      zoom_type,
@@ -423,6 +401,52 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   gimp_display_shell_scale_by_values (shell, scale,
                                       offset_x - (shell->disp_width  / 2),
                                       offset_y - (shell->disp_height / 2),
+                                      config->resize_windows_on_zoom);
+}
+
+/**
+ * gimp_display_shell_scale_to
+ * @shell:     the #GimpDisplayShell
+ * @zoom_type: whether to zoom in (%GIMP_ZOOM_IN) or out (%GIMP_ZOOM_OUT)
+ * @x:         x screen coordinate
+ * @y:         y screen coordinate
+ *
+ * This function changes the scale (zoom) of the display shell. It
+ * zooms in or out one step and changes the display offsets so that
+ * the point specified by @x and @y doesn't change it's position on
+ * screen (if possible). This is usually the location of the mouse.
+ **/
+void
+gimp_display_shell_scale_to (GimpDisplayShell *shell,
+                             GimpZoomType      zoom_type,
+                             gdouble           x,
+                             gdouble           y)
+{
+  GimpDisplayConfig *config;
+  gdouble            offset_x, offset_y;
+  gdouble            new_scale;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (zoom_type != GIMP_ZOOM_TO);
+
+  if (! shell->gdisp)
+    return;
+
+  offset_x = x + shell->offset_x;
+  offset_y = y + shell->offset_y;
+
+  offset_x /= shell->scale;
+  offset_y /= shell->scale;
+
+  new_scale = gimp_display_shell_scale_zoom_step (zoom_type, shell->scale);
+
+  offset_x *= new_scale;
+  offset_y *= new_scale;
+
+  config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
+
+  gimp_display_shell_scale_by_values (shell, new_scale,
+                                      offset_x - x, offset_y - y,
                                       config->resize_windows_on_zoom);
 }
 

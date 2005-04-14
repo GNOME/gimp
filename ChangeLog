@@ -1,3 +1,9 @@
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale_to): 
+	changed to keep the point under the mouse at the same location,
+	rather than to center it. Also added API docs.
+
 2005-04-14  Simon Budig  <simon@gimp.org>
 
 	Started a PDB api for vectors/strokes. Not yet functional, this
