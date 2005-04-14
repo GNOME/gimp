@@ -610,6 +610,48 @@ gimp_image_get_channels (gint32  image_ID,
 }
 
 /**
+ * gimp_image_get_vectors:
+ * @image_ID: The image.
+ * @num_vectors: The number of vectors contained in the image.
+ *
+ * Returns the list of vectors contained in the specified image.
+ *
+ * This procedure returns the list of vectors contained in the
+ * specified image.
+ *
+ * Returns: The list of vectors contained in the image.
+ *
+ * Since: GIMP 2.4
+ */
+gint *
+gimp_image_get_vectors (gint32  image_ID,
+			gint   *num_vectors)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint *vector_ids = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_vectors",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  *num_vectors = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_vectors = return_vals[1].data.d_int32;
+      vector_ids = g_new (gint32, *num_vectors);
+      memcpy (vector_ids, return_vals[2].data.d_int32array,
+	      *num_vectors * sizeof (gint32));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return vector_ids;
+}
+
+/**
  * gimp_image_get_active_drawable:
  * @image_ID: The image.
  *

@@ -43,4 +43,5 @@
     transform_tools
     undo
     unit
+    vectors
 );

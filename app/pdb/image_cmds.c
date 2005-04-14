@@ -67,6 +67,7 @@ static ProcRecord image_flip_proc;
 static ProcRecord image_rotate_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
+static ProcRecord image_get_vectors_proc;
 static ProcRecord image_get_active_drawable_proc;
 static ProcRecord image_unset_active_channel_proc;
 static ProcRecord image_get_floating_sel_proc;
@@ -133,6 +134,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_rotate_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
+  procedural_db_register (gimp, &image_get_vectors_proc);
   procedural_db_register (gimp, &image_get_active_drawable_proc);
   procedural_db_register (gimp, &image_unset_active_channel_proc);
   procedural_db_register (gimp, &image_get_floating_sel_proc);
@@ -1238,6 +1240,88 @@ static ProcRecord image_get_channels_proc =
   2,
   image_get_channels_outargs,
   { { image_get_channels_invoker } }
+};
+
+static Argument *
+image_get_vectors_invoker (Gimp         *gimp,
+                           GimpContext  *context,
+                           GimpProgress *progress,
+                           Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 num_vectors = 0;
+  gint32 *vector_ids = NULL;
+  GList *list = NULL;
+  gint i;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    {
+      list = GIMP_LIST (gimage->vectors)->list;
+      num_vectors = g_list_length (list);
+
+      if (num_vectors)
+        {
+          vector_ids = g_new (gint32, num_vectors);
+          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+            vector_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+        }
+    }
+
+  return_args = procedural_db_return_args (&image_get_vectors_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = num_vectors;
+      return_args[2].value.pdb_pointer = vector_ids;
+    }
+
+  return return_args;
+}
+
+static ProcArg image_get_vectors_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_vectors_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "num_vectors",
+    "The number of vectors contained in the image"
+  },
+  {
+    GIMP_PDB_INT32ARRAY,
+    "vector_ids",
+    "The list of vectors contained in the image"
+  }
+};
+
+static ProcRecord image_get_vectors_proc =
+{
+  "gimp_image_get_vectors",
+  "Returns the list of vectors contained in the specified image.",
+  "This procedure returns the list of vectors contained in the specified image.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  NULL,
+  GIMP_INTERNAL,
+  1,
+  image_get_vectors_inargs,
+  2,
+  image_get_vectors_outargs,
+  { { image_get_vectors_invoker } }
 };
 
 static Argument *

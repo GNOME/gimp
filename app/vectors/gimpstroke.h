@@ -38,6 +38,7 @@ typedef struct _GimpStrokeClass GimpStrokeClass;
 struct _GimpStroke
 {
   GimpObject  parent_instance;
+  gint        ID;
 
   GList      *anchors;
 
@@ -153,6 +154,10 @@ struct _GimpStrokeClass
 
 
 GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
+
+void         gimp_stroke_set_ID               (GimpStroke            *stroke,
+                                               gint                   id);
+gint         gimp_stroke_get_ID               (const GimpStroke      *stroke);
 
 
 /* accessing / modifying the anchors */

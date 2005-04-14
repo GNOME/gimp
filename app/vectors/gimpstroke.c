@@ -289,6 +289,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
 static void
 gimp_stroke_init (GimpStroke *stroke)
 {
+  stroke->ID      = 0;
   stroke->anchors = NULL;
   stroke->closed  = FALSE;
 }
@@ -380,6 +381,25 @@ gimp_stroke_get_memsize (GimpObject *object,
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
+
+void
+gimp_stroke_set_ID (GimpStroke *stroke,
+                    gint        id)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+  g_return_if_fail (stroke->ID == 0 /* we don't want changing IDs... */);
+
+  stroke->ID = id;
+}
+
+gint
+gimp_stroke_get_ID (const GimpStroke *stroke)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), -1);
+
+  return stroke->ID;
+}
+
 
 GimpAnchor *
 gimp_stroke_anchor_get (const GimpStroke *stroke,
@@ -965,6 +985,7 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
     }
 
   new_stroke->closed = stroke->closed;
+  /* we do *not* copy the ID! */
 
   return new_stroke;
 }

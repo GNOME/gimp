@@ -76,7 +76,7 @@ package Gimp::CodeGen::pdb;
 		    id_func => '(GimpLayerMask *) gimp_item_get_by_ID',
 		    id_ret_func => 'gimp_item_get_ID (GIMP_ITEM ($var))',
 		    check_func => '(GIMP_IS_LAYER_MASK ($var) && ! gimp_item_is_removed (GIMP_ITEM ($var)))' },
-    vectors    => { name => 'VECTORS',
+    vectors    => { name => 'PATH',
 		    type => 'GimpVectors *', 
 		    headers => [ qw("vectors/gimpvectors.h") ],
 		    id_func => '(GimpVectors *) gimp_item_get_by_ID',
@@ -87,7 +87,6 @@ package Gimp::CodeGen::pdb;
 		    headers => [ qw("libgimpbase/gimpbase.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
-    path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME
     status   => { name => 'STATUS'  , type => 'gpointer ' }, # ??? FIXME
 
     # Special cases

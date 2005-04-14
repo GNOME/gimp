@@ -61,6 +61,8 @@ gint*             gimp_image_get_layers               (gint32                ima
 						       gint                 *num_layers);
 gint*             gimp_image_get_channels             (gint32                image_ID,
 						       gint                 *num_channels);
+gint*             gimp_image_get_vectors              (gint32                image_ID,
+						       gint                 *num_vectors);
 gint32            gimp_image_get_active_drawable      (gint32                image_ID);
 gboolean          gimp_image_unset_active_channel     (gint32                image_ID);
 gint32            gimp_image_get_floating_sel         (gint32                image_ID);

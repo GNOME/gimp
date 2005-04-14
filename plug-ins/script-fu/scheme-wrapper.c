@@ -854,8 +854,13 @@ marshall_proc_db_call (LISP a)
           break;
 
         case GIMP_PDB_PATH:
-          return my_err ("Paths are currently unsupported as arguments",
-                         car (a));
+          if (!TYPEP (car (a), tc_flonum))
+            success = FALSE;
+          if (success)
+            {
+              args[i].type = GIMP_PDB_PATH;
+              args[i].data.d_int32 = get_c_long (car (a));
+            }
           break;
 
         case GIMP_PDB_PARASITE:
@@ -1126,7 +1131,8 @@ marshall_proc_db_call (LISP a)
               break;
 
             case GIMP_PDB_PATH:
-              return my_err ("Paths are currently unsupported as return values", NIL);
+              return_val = cons (flocons (values[i + 1].data.d_int32),
+                                 return_val);
               break;
 
             case GIMP_PDB_PARASITE:

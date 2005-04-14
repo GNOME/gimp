@@ -514,6 +514,12 @@ topmost to bottommost.
 HELP
 }
 
+sub image_get_vectors {
+    &image_list_proc('vector');
+
+    $since = '2.4';
+}
+
 sub image_unset_active_channel {
     $blurb = 'Unsets the active channel in the specified image.';
 
@@ -1562,6 +1568,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_resize image_resize_to_layers image_scale
 		   image_crop image_flip image_rotate
                    image_get_layers image_get_channels
+		   image_get_vectors
 		   image_get_active_drawable
                    image_unset_active_channel
                    image_get_floating_sel image_floating_sel_attached_to
@@ -1576,7 +1583,7 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_get_colormap image_set_colormap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..34,37..61]]);
+%exports = (app => [@procs], lib => [@procs[0..35,38..62]]);
 
 $desc = 'Image';
 

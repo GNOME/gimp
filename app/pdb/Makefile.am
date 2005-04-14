@@ -52,7 +52,8 @@ libapppdb_a_SOURCES = \
 	text_tool_cmds.c		\
 	transform_tools_cmds.c		\
 	undo_cmds.c			\
-	unit_cmds.c
+	unit_cmds.c			\
+	vectors_cmds.c
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\

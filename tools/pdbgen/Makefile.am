@@ -44,7 +44,8 @@ pdb_sources = \
 	pdb/text_tool.pdb		\
 	pdb/transform_tools.pdb		\
 	pdb/undo.pdb			\
-	pdb/unit.pdb
+	pdb/unit.pdb			\
+	pdb/vectors.pdb
 
 EXTRA_DIST = \
 	README		\

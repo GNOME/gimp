@@ -261,10 +261,11 @@ gimp_vectors_init (GimpVectors *vectors)
 {
   GimpItem *item = GIMP_ITEM (vectors);
 
-  item->visible         = FALSE;
-  vectors->strokes      = NULL;
-  vectors->freeze_count = 0;
-  vectors->precision    = 0.2;
+  item->visible           = FALSE;
+  vectors->strokes        = NULL;
+  vectors->last_stroke_ID = 0;
+  vectors->freeze_count   = 0;
+  vectors->precision      = 0.2;
 }
 
 static void
@@ -639,6 +640,7 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
     }
 
   dest_vectors->strokes = NULL;
+  dest_vectors->last_stroke_ID = 0;
 
   gimp_vectors_add_strokes (src_vectors, dest_vectors);
 
@@ -664,6 +666,8 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
   while (current_lstroke)
     {
       current_lstroke->data = gimp_stroke_duplicate (current_lstroke->data);
+      gimp_stroke_set_ID (current_lstroke->data,
+                          dest_vectors->last_stroke_ID++);
       current_lstroke = g_list_next (current_lstroke);
     }
 
@@ -672,8 +676,6 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
   gimp_vectors_thaw (dest_vectors);
 }
 
-
-/* Calling the virtual functions */
 
 void
 gimp_vectors_stroke_add (GimpVectors *vectors,
@@ -696,6 +698,7 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
   /*  Don't g_list_prepend() here.  See ChangeLog 2003-05-21 --Mitch  */
 
   vectors->strokes = g_list_append (vectors->strokes, stroke);
+  gimp_stroke_set_ID (stroke, vectors->last_stroke_ID++);
   g_object_ref (stroke);
 }
 
@@ -726,6 +729,21 @@ gimp_vectors_real_stroke_remove (GimpVectors *vectors,
       vectors->strokes = g_list_delete_link (vectors->strokes, list);
       g_object_unref (stroke);
     }
+}
+
+GimpStroke *
+gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
+                               gint               id)
+{
+  GList      *stroke;
+
+  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
+    {
+      if (gimp_stroke_get_ID (stroke->data) == id)
+        return stroke->data;
+    }
+
+  return NULL;
 }
 
 

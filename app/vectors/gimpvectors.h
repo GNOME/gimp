@@ -40,10 +40,10 @@ struct _GimpVectors
   GimpItem  parent_instance;
 
   GList    *strokes;            /* The List of GimpStrokes        */
+  gint      last_stroke_ID;
 
   gint      freeze_count;
   gdouble   precision;
-  /* Stuff missing */
 };
 
 struct _GimpVectorsClass
@@ -139,6 +139,8 @@ void            gimp_vectors_stroke_add         (GimpVectors        *vectors,
                                                  GimpStroke         *stroke);
 void            gimp_vectors_stroke_remove      (GimpVectors        *vectors,
                                                  GimpStroke         *stroke);
+GimpStroke    * gimp_vectors_stroke_get_by_ID   (const GimpVectors  *vectors,
+                                                 gint                id);
 GimpStroke    * gimp_vectors_stroke_get         (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
 

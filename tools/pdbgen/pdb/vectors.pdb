@@ -1,0 +1,73 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+sub pdb_misc {
+    $author = $copyright = 'Simon Budig';
+    $date = '2005';
+
+    $since = '2.4';
+}
+
+# The defs
+
+sub vectors_arg () {{
+    name => 'vectors',
+    type => 'vectors',
+    desc => 'The vectors object'
+}}
+
+sub vectors_get_strokes {
+    $blurb = 'List the strokes associated with the passed path.';
+
+    $help = <<'HELP';
+Returns an Array with the stroke-IDs associated with the passed path.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &vectors_arg );
+
+    @outargs = (
+	{ name => 'stroke_list', type => 'int32array',
+	  desc => 'List of the paths belonging to this image.',
+	  array => { name => 'num_strokes',
+		     desc => 'The number of strokes returned.' },
+	  init => 0 }
+    );
+
+    $invoke{code} = <<"CODE";
+{
+  stroke_list = NULL;
+  num_strokes = 0;
+}
+CODE
+}
+
+
+@headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
+              "core/gimpchannel-select.h"
+              "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
+              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
+              "gimp-intl.h");
+
+@procs = qw(vectors_get_strokes
+            );
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Paths';
+
+1;

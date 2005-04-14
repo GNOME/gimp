@@ -67,5 +67,6 @@
 #include <libgimp/gimptransformtools_pdb.h>
 #include <libgimp/gimpundo_pdb.h>
 #include <libgimp/gimpunit_pdb.h>
+#include <libgimp/gimpvectors_pdb.h>
 
 #endif /* __GIMP_PDB_H__ */
