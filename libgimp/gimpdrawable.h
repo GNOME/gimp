@@ -44,11 +44,11 @@ GimpDrawable * gimp_drawable_get                    (gint32         drawable_ID)
 void           gimp_drawable_detach                 (GimpDrawable  *drawable);
 void           gimp_drawable_flush                  (GimpDrawable  *drawable);
 GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
-                                                     gint           shadow,
+                                                     gboolean       shadow,
                                                      gint           row,
                                                      gint           col);
 GimpTile     * gimp_drawable_get_tile2              (GimpDrawable  *drawable,
-                                                     gint           shadow,
+                                                     gboolean       shadow,
                                                      gint           x,
                                                      gint           y);
 
