@@ -1,5 +1,15 @@
 2005-04-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_set_property):
+	don't call gimp_display_shell_scale() if the display isn't
+	completely setup yet.
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	hack around to find out whether we should pass the pointer location
+	or the center of the display to gimp_display_shell_scale_to().
+
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
 	changed to use the location of the pointer instead of the display
 	center. This is the behaviour requested in bug #79384.

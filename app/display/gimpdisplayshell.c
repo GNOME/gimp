@@ -431,8 +431,11 @@ gimp_display_shell_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SCALE:
-      gimp_display_shell_scale (shell,
-                                GIMP_ZOOM_TO, g_value_get_double (value));
+      if (shell->canvas)
+        gimp_display_shell_scale (shell,
+                                  GIMP_ZOOM_TO, g_value_get_double (value));
+      else
+        shell->scale = g_value_get_double (value);
       break;
     case PROP_UNIT:
       gimp_display_shell_set_unit (shell, g_value_get_int (value));
