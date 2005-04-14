@@ -1,3 +1,7 @@
+2005-04-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c: added a simple right-click menu.
+
 2005-04-14  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_cmd_unselect_all.c 

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2005 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *
  * dialog.c
@@ -54,13 +54,6 @@
 
 enum
 {
-  BUTTON_INDEX,
-  BUTTON_BACK,
-  BUTTON_FORWARD
-};
-
-enum
-{
   HISTORY_TITLE,
   HISTORY_REF
 };
@@ -84,6 +77,7 @@ static void       update_toolbar     (void);
 
 static void       combo_changed      (GtkWidget        *widget,
                                       gpointer          data);
+
 static void       drag_begin         (GtkWidget        *widget,
                                       GdkDragContext   *context,
                                       gpointer          data);
@@ -93,6 +87,9 @@ static void       drag_data_get      (GtkWidget        *widget,
                                       guint             info,
                                       guint             time,
                                       gpointer          data);
+
+static gboolean   button_press       (GtkWidget        *widget,
+                                      GdkEventButton   *event);
 
 static void       title_changed      (HtmlDocument     *doc,
                                       const gchar      *new_title,
@@ -262,6 +259,10 @@ browser_dialog_open (void)
                     G_CALLBACK (request_url),
                     NULL);
 
+  g_signal_connect (html, "button_press_event",
+                    G_CALLBACK (button_press),
+                    NULL);
+
   gtk_widget_grab_focus (html);
 
   gtk_widget_show (window);
@@ -372,6 +373,8 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
+    //    { "help-browser-menu", NULL, NULL },
+
     { "back", GTK_STOCK_GO_BACK,
       NULL, NULL, N_("Go back one page"),
       G_CALLBACK (back_callback) },
@@ -412,6 +415,15 @@ ui_manager_new (GtkWidget *window)
                                      "    <separator />"
                                      "    <toolitem action=\"close\" />"
                                      "  </toolbar>"
+                                     "</ui>",
+                                     -1, NULL);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <popup name=\"help-browser-popup\">"
+                                     "    <menuitem action=\"back\" />"
+                                     "    <menuitem action=\"forward\" />"
+                                     "  </popup>"
                                      "</ui>",
                                      -1, NULL);
 
@@ -549,6 +561,26 @@ drag_data_get (GtkWidget        *widget,
                           8,
                           current_ref,
                           strlen (current_ref));
+}
+
+static gboolean
+button_press (GtkWidget      *widget,
+              GdkEventButton *event)
+{
+  gtk_widget_grab_focus (widget);
+
+  if (event->button == 3 && event->type == GDK_BUTTON_PRESS)
+    {
+      GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager,
+                                                   "/help-browser-popup");
+
+      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+      gtk_menu_popup (GTK_MENU (menu),
+                      NULL, NULL, NULL, NULL,
+                      event->button, event->time);
+    }
+
+  return FALSE;
 }
 
 static void
