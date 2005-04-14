@@ -210,7 +210,7 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
 
 GimpTile *
 gimp_drawable_get_tile2 (GimpDrawable *drawable,
-			 gint          shadow,
+			 gboolean      shadow,
 			 gint          x,
 			 gint          y)
 {
