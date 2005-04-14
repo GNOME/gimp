@@ -371,7 +371,11 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gtk_widget_get_pointer (GTK_WIDGET (shell), &x, &y);
+  x = shell->disp_width  / 2;
+  y = shell->disp_height / 2;
+
+  if (shell->canvas)
+    gtk_widget_get_pointer (GTK_WIDGET (shell->canvas), &x, &y);
 
   gimp_display_shell_scale_to (shell, zoom_type, new_scale, x, y);
 }
