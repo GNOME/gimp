@@ -200,7 +200,7 @@ queue_list_next (Queue *h)
 {
   GList *result = NULL;
 
-  if (queue_has_next)
+  if (queue_has_next (h))
     {
       GList *list;
 
@@ -223,7 +223,7 @@ queue_list_prev (Queue *h)
 {
   GList *result = NULL;
 
-  if (queue_has_prev)
+  if (queue_has_prev (h))
     {
       GList *list;
 
