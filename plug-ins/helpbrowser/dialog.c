@@ -73,6 +73,7 @@ static void       index_callback     (GtkAction        *action,
                                       gpointer          data);
 static void       close_callback     (GtkAction        *action,
                                       gpointer          data);
+
 static void       update_toolbar     (void);
 
 static void       combo_changed      (GtkWidget        *widget,
@@ -423,7 +424,7 @@ ui_manager_new (GtkWidget *window)
   GError         *error      = NULL;
 
   gtk_action_group_set_translation_domain (group, NULL);
-  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), window);
+  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
                               gtk_ui_manager_get_accel_group (ui_manager));
@@ -490,12 +491,12 @@ static void
 back_callback (GtkAction *action,
                gpointer   data)
 {
-  const gchar *ref = queue_prev (queue);
+  const gchar *uri = queue_prev (queue, GPOINTER_TO_INT (data));
 
-  if (ref)
+  if (uri)
     {
-      browser_dialog_load (ref, FALSE);
-      queue_move_prev (queue);
+      browser_dialog_load (uri, FALSE);
+      queue_move_prev (queue, GPOINTER_TO_INT (data));
     }
 
   update_toolbar ();
@@ -505,12 +506,12 @@ static void
 forward_callback (GtkAction *action,
                   gpointer   data)
 {
-  const gchar *ref = queue_next (queue);
+  const gchar *uri = queue_next (queue, GPOINTER_TO_INT (data));
 
-  if (ref)
+  if (uri)
     {
-      browser_dialog_load (ref, FALSE);
-      queue_move_next (queue);
+      browser_dialog_load (uri, FALSE);
+      queue_move_next (queue, GPOINTER_TO_INT (data));
     }
 
   update_toolbar ();
@@ -527,25 +528,31 @@ static void
 close_callback (GtkAction *action,
                 gpointer   data)
 {
-  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_widget_destroy (gtk_widget_get_toplevel (html));
 }
 
 static GtkWidget *
-build_menu (GList *list)
+build_menu (GList     *list,
+            GCallback  callback)
 {
   GtkMenuShell *menu;
+  gint          i;
 
   if (! list)
     return NULL;
 
   menu = GTK_MENU_SHELL (gtk_menu_new ());
 
-  for (; list; list = g_list_next (list))
+  for (i = 0; list; list = g_list_next (list), i++)
     {
       GtkWidget *menu_item = gtk_menu_item_new_with_label (list->data);
 
       gtk_menu_shell_append (menu, menu_item);
       gtk_widget_show (menu_item);
+
+      g_signal_connect (menu_item, "activate",
+                        G_CALLBACK (callback),
+                        GINT_TO_POINTER (i));
     }
 
   g_list_free (list);
@@ -565,7 +572,8 @@ update_toolbar (void)
   gtk_action_set_sensitive (action, queue_has_prev (queue));
 
   gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
-                                 build_menu (queue_list_prev (queue)));
+                                 build_menu (queue_list_prev (queue),
+                                             G_CALLBACK (back_callback)));
 
   /*  update the forward button and its menu  */
 
@@ -573,8 +581,9 @@ update_toolbar (void)
                                       "/ui/help-browser-popup/forward");
   gtk_action_set_sensitive (action, queue_has_next (queue));
 
-  gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
-                                 build_menu (queue_list_next (queue)));
+  gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_next),
+                                 build_menu (queue_list_next (queue),
+                                             G_CALLBACK (forward_callback)));
 }
 
 static void

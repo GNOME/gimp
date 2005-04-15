@@ -1,3 +1,8 @@
+2005-04-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/helpbrowser/queue.[ch]: finished menu implementation.
+
 2005-04-15  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/helpbrowser/queue.c: call has_next/prev functions with

@@ -2,8 +2,8 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * The GIMP Help Browser
- * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
- *                    Michael Natterer <mitschel@cs.tu-berlin.de>
+ * Copyright (C) 1999-2005 Sven Neumann <sven@gimp.org>
+ *                         Michael Natterer <mitschel@cs.tu-berlin.de>
  *
  * queue.c - a history queue
  *
@@ -27,6 +27,7 @@
 #include <glib.h>
 
 #include "queue.h"
+
 
 struct _Queue
 {
@@ -83,25 +84,34 @@ queue_free (Queue *h)
 }
 
 void
-queue_move_prev (Queue *h)
+queue_move_prev (Queue *h,
+                 gint   skip)
 {
   if (!h || !h->queue || (h->current == g_list_first (h->queue)))
     return;
 
   h->current = g_list_previous (h->current);
+
+  while (h->current && skip--)
+    h->current = g_list_previous (h->current);
 }
 
 void
-queue_move_next (Queue *h)
+queue_move_next (Queue *h,
+                 gint   skip)
 {
   if (!h || !h->queue || (h->current == g_list_last (h->queue)))
     return;
 
   h->current = g_list_next (h->current);
+
+  while (h->current && skip--)
+    h->current = g_list_next (h->current);
 }
 
 const gchar *
-queue_prev (Queue *h)
+queue_prev (Queue *h,
+            gint   skip)
 {
   GList *p;
   Item  *item;
@@ -111,13 +121,20 @@ queue_prev (Queue *h)
 
   p = g_list_previous (h->current);
 
+  while (p && skip--)
+    p = g_list_previous (p);
+
+  if (!p)
+    return NULL;
+
   item = p->data;
 
   return (const gchar *) item->uri;
 }
 
 const gchar *
-queue_next (Queue *h)
+queue_next (Queue *h,
+            gint   skip)
 {
   GList *p;
   Item  *item;
@@ -126,6 +143,12 @@ queue_next (Queue *h)
     return NULL;
 
   p = g_list_next (h->current);
+
+  while (p && skip--)
+    p = g_list_next (p);
+
+  if (!p)
+    return NULL;
 
   item = p->data;
 

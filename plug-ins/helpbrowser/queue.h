@@ -34,10 +34,14 @@ void          queue_add       (Queue       *queue,
                                const gchar *uri);
 void          queue_set_title (Queue       *queue,
                                const gchar *title);
-const gchar * queue_prev      (Queue       *queue);
-const gchar * queue_next      (Queue       *queue);
-void          queue_move_prev (Queue       *queue);
-void          queue_move_next (Queue       *queue);
+const gchar * queue_prev      (Queue       *queue,
+                               gint         skip);
+const gchar * queue_next      (Queue       *queue,
+                               gint         skip);
+void          queue_move_prev (Queue       *queue,
+                               gint         skip);
+void          queue_move_next (Queue       *queue,
+                               gint         skip);
 gboolean      queue_has_next  (Queue       *queue);
 gboolean      queue_has_prev  (Queue       *queue);
 GList       * queue_list_prev (Queue       *queue);
