@@ -80,6 +80,7 @@ app/core/gimp-modules.c
 app/core/gimp-units.c
 app/core/gimp.c
 app/core/gimpbrush.c
+app/core/gimpbrush-load.c
 app/core/gimpbrushgenerated.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
