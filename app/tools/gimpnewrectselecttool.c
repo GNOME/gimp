@@ -95,7 +95,7 @@ gimp_new_rect_select_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-new-rect-select-tool",
                 _("New Rect Select"),
                 _("Select a Rectangular part of an image"),
-                N_("_New Rect Select"), "<shift>C",
+                N_("_New Rect Select"), NULL,
                 NULL, GIMP_HELP_TOOL_RECT_SELECT,
                 GIMP_STOCK_TOOL_RECT_SELECT,
                 data);
