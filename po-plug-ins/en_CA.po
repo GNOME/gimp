@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-12 16:40-0400\n"
-"PO-Revision-Date: 2005-04-12 14:31-0400\n"
+"POT-Creation-Date: 2005-04-14 22:33-0400\n"
+"PO-Revision-Date: 2005-04-14 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -392,7 +392,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
 #: ../plug-ins/gfig/gfig.c:786 ../plug-ins/gfli/gfli.c:710
-#: ../plug-ins/ifscompose/ifscompose.c:2405 ../plug-ins/jpeg/jpeg-save.c:257
+#: ../plug-ins/ifscompose/ifscompose.c:2398 ../plug-ins/jpeg/jpeg-save.c:257
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:215
 #: ../plug-ins/winicon/icosave.c:244 ../plug-ins/xjt/xjt.c:1265
 #: ../plug-ins/xjt/xjt.c:1700
@@ -3525,7 +3525,7 @@ msgid "Composing Images..."
 msgstr "Composing Images..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:528
+#: ../plug-ins/helpbrowser/dialog.c:604
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -7572,7 +7572,7 @@ msgstr "Basic Options"
 msgid "Step size:"
 msgstr "Step size:"
 
-#: ../plug-ins/common/warp.c:445 ../plug-ins/ifscompose/ifscompose.c:1215
+#: ../plug-ins/common/warp.c:445 ../plug-ins/ifscompose/ifscompose.c:1208
 msgid "Iterations:"
 msgstr "Iterations:"
 
@@ -9667,15 +9667,35 @@ msgstr ""
 "Parse error in '%s':\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:162
+#: ../plug-ins/helpbrowser/dialog.c:165
 msgid "GIMP Help browser"
 msgstr "GIMP Help browser"
 
-#: ../plug-ins/helpbrowser/dialog.c:414
+#: ../plug-ins/helpbrowser/dialog.c:194
+msgid "Drag and drop this icon to a web browser"
+msgstr "Drag and drop this icon to a web browser"
+
+#: ../plug-ins/helpbrowser/dialog.c:379
+msgid "Go back one page"
+msgstr "Go back one page"
+
+#: ../plug-ins/helpbrowser/dialog.c:383
+msgid "Go forward one page"
+msgstr "Go forward one page"
+
+#: ../plug-ins/helpbrowser/dialog.c:387
+msgid "Go to the index page"
+msgstr "Go to the index page"
+
+#: ../plug-ins/helpbrowser/dialog.c:391
+msgid "Close the help browser"
+msgstr "Close the help browser"
+
+#: ../plug-ins/helpbrowser/dialog.c:451
 msgid "Document not found"
 msgstr "Document not found"
 
-#: ../plug-ins/helpbrowser/dialog.c:416
+#: ../plug-ins/helpbrowser/dialog.c:453
 msgid "The requested URL could not be loaded:"
 msgstr "The requested URL could not be loaded:"
 
@@ -9781,59 +9801,59 @@ msgstr "Rotate / Scale"
 msgid "Stretch"
 msgstr "Stretch"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1181
+#: ../plug-ins/ifscompose/ifscompose.c:1174
 msgid "IFS Fractal Render Options"
 msgstr "IFS Fractal Render Options"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1202
+#: ../plug-ins/ifscompose/ifscompose.c:1195
 msgid "Max. Memory:"
 msgstr "Max. Memory:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1229
+#: ../plug-ins/ifscompose/ifscompose.c:1222
 msgid "Subdivide:"
 msgstr "Subdivide:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1242
+#: ../plug-ins/ifscompose/ifscompose.c:1235
 msgid "Spot Radius:"
 msgstr "Spot Radius:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1312
+#: ../plug-ins/ifscompose/ifscompose.c:1305
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
 msgstr "Rendering IFS (%d/%d)..."
 
-#: ../plug-ins/ifscompose/ifscompose.c:1330
+#: ../plug-ins/ifscompose/ifscompose.c:1323
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Copying IFS to image (%d/%d)..."
 
-#: ../plug-ins/ifscompose/ifscompose.c:1486
+#: ../plug-ins/ifscompose/ifscompose.c:1479
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2410
+#: ../plug-ins/ifscompose/ifscompose.c:2403
 #: ../plug-ins/metadata/interface.c:566 ../plug-ins/metadata/interface.c:576
 msgid "Save failed"
 msgstr "Save failed"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2491
-#: ../plug-ins/ifscompose/ifscompose.c:2504
+#: ../plug-ins/ifscompose/ifscompose.c:2484
+#: ../plug-ins/ifscompose/ifscompose.c:2497
 #: ../plug-ins/metadata/interface.c:461 ../plug-ins/metadata/interface.c:471
 #: ../plug-ins/metadata/interface.c:551
 msgid "Open failed"
 msgstr "Open failed"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2499
+#: ../plug-ins/ifscompose/ifscompose.c:2492
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "File '%s' doesn't seem to be an IFS Fractal file."
 
-#: ../plug-ins/ifscompose/ifscompose.c:2539
+#: ../plug-ins/ifscompose/ifscompose.c:2532
 msgid "Save as IFS Fraktal file"
 msgstr "Save as IFS Fractal file"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2574
+#: ../plug-ins/ifscompose/ifscompose.c:2567
 msgid "Open IFS Fraktal file"
 msgstr "Open IFS Fractal file"
 
@@ -10057,7 +10077,7 @@ msgstr "Send To Back"
 msgid "Unselect"
 msgstr "Unselect"
 
-#: ../plug-ins/imagemap/imap_cmd_unselect_all.c:53
+#: ../plug-ins/imagemap/imap_cmd_unselect_all.c:56
 msgid "Unselect All"
 msgstr "Unselect All"
 
@@ -10218,41 +10238,41 @@ msgstr "_Preview"
 msgid "_ImageMap..."
 msgstr "_ImageMap..."
 
-#: ../plug-ins/imagemap/imap_main.c:602
+#: ../plug-ins/imagemap/imap_main.c:604
 #: ../plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
 msgstr "<Untitled>"
 
-#: ../plug-ins/imagemap/imap_main.c:746
+#: ../plug-ins/imagemap/imap_main.c:748
 msgid "Some data has been changed!"
 msgstr "Some data has been changed!"
 
-#: ../plug-ins/imagemap/imap_main.c:747
+#: ../plug-ins/imagemap/imap_main.c:749
 msgid "Do you really want to discard your changes?"
 msgstr "Do you really want to discard your changes?"
 
-#: ../plug-ins/imagemap/imap_main.c:957
+#: ../plug-ins/imagemap/imap_main.c:961
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" saved."
 
-#: ../plug-ins/imagemap/imap_main.c:961
+#: ../plug-ins/imagemap/imap_main.c:965
 msgid "Couldn't save file:"
 msgstr "Couldn't save file:"
 
-#: ../plug-ins/imagemap/imap_main.c:974
+#: ../plug-ins/imagemap/imap_main.c:978
 msgid "Image size has changed."
 msgstr "Image size has changed."
 
-#: ../plug-ins/imagemap/imap_main.c:975
+#: ../plug-ins/imagemap/imap_main.c:979
 msgid "Resize area's?"
 msgstr "Resize area's?"
 
-#: ../plug-ins/imagemap/imap_main.c:1009
+#: ../plug-ins/imagemap/imap_main.c:1013
 msgid "Couldn't read file:"
 msgstr "Couldn't read file:"
 
-#: ../plug-ins/imagemap/imap_main.c:1056
+#: ../plug-ins/imagemap/imap_main.c:1062
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
