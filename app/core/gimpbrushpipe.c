@@ -49,10 +49,8 @@
 
 #include "base/temp-buf.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-header.h"
+#include "gimpbrush-load.h"
 #include "gimpbrushpipe.h"
-#include "gimppattern-header.h"
 
 #include "gimp-intl.h"
 

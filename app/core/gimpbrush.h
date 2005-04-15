@@ -23,10 +23,6 @@
 #include "gimpdata.h"
 
 
-#define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
-#define GIMP_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"
-
-
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
 #define GIMP_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
 #define GIMP_BRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))
@@ -71,13 +67,6 @@ GType       gimp_brush_get_type         (void) G_GNUC_CONST;
 GimpData  * gimp_brush_new              (const gchar      *name,
                                          gboolean          stingy_memory_use);
 GimpData  * gimp_brush_get_standard     (void);
-GList     * gimp_brush_load             (const gchar      *filename,
-                                         gboolean          stingy_memory_use,
-                                         GError          **error);
-
-GimpBrush * gimp_brush_load_brush       (gint              fd,
-                                         const gchar      *filename,
-                                         GError          **error);
 
 GimpBrush * gimp_brush_select_brush     (GimpBrush        *brush,
                                          GimpCoords       *last_coords,

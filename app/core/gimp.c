@@ -48,6 +48,7 @@
 #include "gimp-units.h"
 #include "gimp-utils.h"
 #include "gimpbrush.h"
+#include "gimpbrush-load.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "gimpbuffer.h"
@@ -547,6 +548,8 @@ gimp_real_initialize (Gimp               *gimp,
   {
     { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION,           FALSE },
     { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION,    FALSE },
+    { gimp_brush_load_abr,       GIMP_BRUSH_PS_FILE_EXTENSION,        FALSE },
+    { gimp_brush_load_abr,       GIMP_BRUSH_PSP_FILE_EXTENSION,       FALSE },
     { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION, TRUE  },
     { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION,      FALSE }
   };

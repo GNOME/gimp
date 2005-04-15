@@ -48,6 +48,8 @@ libappcore_a_sources = \
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\
+	gimpbrush-load.c		\
+	gimpbrush-load.h		\
 	gimpbrushgenerated.c		\
 	gimpbrushgenerated.h		\
 	gimpbrushpipe.c			\

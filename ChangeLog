@@ -1,3 +1,22 @@
+2005-04-15  Michael Natterer  <mitch@gimp.org>
+
+	Added loading of Photoshop brushes. Fixes bug #163047:
+
+	* app/core/Makefile.am
+	* app/core/gimpbrush-load.[ch]: new files holding all brush
+	loading code. Added .abr loader based on a patch by Adrian
+	Likins. Didn't add a new brush subclass as in the original patch,
+	but only a loading function which loads the brushes into standard
+	GimpBrush objects. Did misc fixes to the code, needs further
+	cleanup.
+
+	* app/core/gimpbrush.[ch]: removed brush loading code here.
+
+	* app/core/gimpbrushpipe.c: changed #includes accordingly.
+
+	* app/core/gimp.c (gimp_real_initialize): register the new load
+	functions and their extensions with the brush factory.
+
 2005-04-15  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpnewrectselecttool.c: NULLified the Keyboard
