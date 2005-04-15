@@ -25,17 +25,23 @@
 #ifndef _GIMP_HELP_QUEUE_H_
 #define _GIMP_HELP_QUEUE_H_
 
+
 typedef struct _Queue Queue;
 
 Queue       * queue_new       (void);
 void          queue_free      (Queue       *queue);
 void          queue_add       (Queue       *queue,
-                               const gchar *ref);
+                               const gchar *uri);
+void          queue_set_title (Queue       *queue,
+                               const gchar *title);
 const gchar * queue_prev      (Queue       *queue);
 const gchar * queue_next      (Queue       *queue);
 void          queue_move_prev (Queue       *queue);
 void          queue_move_next (Queue       *queue);
 gboolean      queue_has_next  (Queue       *queue);
 gboolean      queue_has_prev  (Queue       *queue);
+GList       * queue_list_prev (Queue       *queue);
+GList       * queue_list_next (Queue       *queue);
+
 
 #endif /* _GIMP_HELP_QUEUE_H_ */

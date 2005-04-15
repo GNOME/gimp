@@ -118,13 +118,15 @@ static gchar    * filename_from_uri  (const gchar      *uri);
 
 /*  private variables  */
 
-static const gchar  *eek_png_tag    = "<h1>Eeek!</h1>";
+static const gchar  *eek_png_tag  = "<h1>Eeek!</h1>";
 
-static Queue        *queue          = NULL;
-static gchar        *current_ref    = NULL;
+static Queue        *queue        = NULL;
+static gchar        *current_ref  = NULL;
 
-static GtkWidget    *html           = NULL;
-static GtkUIManager *ui_manager     = NULL;
+static GtkWidget    *html         = NULL;
+static GtkUIManager *ui_manager   = NULL;
+static GtkWidget    *button_prev  = NULL;
+static GtkWidget    *button_next  = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -145,6 +147,8 @@ browser_dialog_open (void)
   GtkWidget       *drag_source;
   GtkWidget       *image;
   GtkWidget       *combo;
+  GtkToolItem     *item;
+  GtkAction       *action;
   GtkListStore    *history;
   GtkCellRenderer *cell;
   gchar           *eek_png_path;
@@ -180,6 +184,28 @@ browser_dialog_open (void)
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/help-browser-toolbar");
   gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
+
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-popup/forward");
+  gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  button_next = GTK_WIDGET (item);
+
+  item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-popup/back");
+  gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  button_prev = GTK_WIDGET (item);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -394,6 +420,7 @@ ui_manager_new (GtkWidget *window)
 
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();
   GtkActionGroup *group      = gtk_action_group_new ("Actions");
+  GError         *error      = NULL;
 
   gtk_action_group_set_translation_domain (group, NULL);
   gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), window);
@@ -408,15 +435,15 @@ ui_manager_new (GtkWidget *window)
   gtk_ui_manager_add_ui_from_string (ui_manager,
                                      "<ui>"
                                      "  <toolbar name=\"help-browser-toolbar\">"
-                                     "    <toolitem action=\"back\" />"
-                                     "    <toolitem action=\"forward\" />"
-                                     "    <separator />"
                                      "    <toolitem action=\"index\" />"
                                      "    <separator />"
                                      "    <toolitem action=\"close\" />"
                                      "  </toolbar>"
                                      "</ui>",
-                                     -1, NULL);
+                                     -1, &error);
+
+  if (error)
+    g_warning ("error parsing ui: %s", error->message);
 
   gtk_ui_manager_add_ui_from_string (ui_manager,
                                      "<ui>"
@@ -503,18 +530,51 @@ close_callback (GtkAction *action,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
+static GtkWidget *
+build_menu (GList *list)
+{
+  GtkMenuShell *menu;
+
+  if (! list)
+    return NULL;
+
+  menu = GTK_MENU_SHELL (gtk_menu_new ());
+
+  for (; list; list = g_list_next (list))
+    {
+      GtkWidget *menu_item = gtk_menu_item_new_with_label (list->data);
+
+      gtk_menu_shell_append (menu, menu_item);
+      gtk_widget_show (menu_item);
+    }
+
+  g_list_free (list);
+
+  return GTK_WIDGET (menu);
+}
+
 static void
 update_toolbar (void)
 {
   GtkAction *action;
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-toolbar/back");
-  gtk_action_set_sensitive (action, queue_has_prev (queue));
+  /*  update the back button and its menu  */
 
   action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/help-browser-toolbar/forward");
+                                      "/ui/help-browser-popup/back");
+  gtk_action_set_sensitive (action, queue_has_prev (queue));
+
+  gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
+                                 build_menu (queue_list_prev (queue)));
+
+  /*  update the forward button and its menu  */
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/ui/help-browser-popup/forward");
   gtk_action_set_sensitive (action, queue_has_next (queue));
+
+  gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
+                                 build_menu (queue_list_next (queue)));
 }
 
 static void
@@ -602,6 +662,9 @@ title_changed (HtmlDocument *doc,
 
   history_add (GTK_COMBO_BOX (data), current_ref,
                title ? title : _("Untitled"));
+
+  if (title)
+    queue_set_title (queue, title);
 
   g_free (title);
 }
