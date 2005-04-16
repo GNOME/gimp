@@ -131,7 +131,8 @@ struct _GimpPlugInActionEntry
 };
 
 
-GType            gimp_action_group_get_type (void);
+GType            gimp_action_group_get_type (void) G_GNUC_CONST;
+
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
                                              const gchar           *name,
                                              const gchar           *label,

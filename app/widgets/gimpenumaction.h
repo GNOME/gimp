@@ -53,7 +53,8 @@ struct _GimpEnumActionClass
 };
 
 
-GType            gimp_enum_action_get_type (void);
+GType            gimp_enum_action_get_type (void) G_GNUC_CONST;
+
 GimpEnumAction * gimp_enum_action_new      (const gchar    *name,
                                             const gchar    *label,
                                             const gchar    *tooltip,

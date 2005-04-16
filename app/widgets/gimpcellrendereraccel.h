@@ -65,7 +65,8 @@ struct _GimpCellRendererAccelClass
 };
 
 
-GType             gimp_cell_renderer_accel_get_type (void);
+GType             gimp_cell_renderer_accel_get_type (void) G_GNUC_CONST;
+
 GtkCellRenderer * gimp_cell_renderer_accel_new      (void);
 
 void gimp_cell_renderer_accel_set_accelerator (GimpCellRendererAccel *accel,

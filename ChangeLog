@@ -1,3 +1,14 @@
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpaction.h
+	* app/widgets/gimpactiongroup.h
+	* app/widgets/gimpcellrendereraccel.h
+	* app/widgets/gimpenumaction.h
+	* app/widgets/gimppluginaction.h
+	* app/widgets/gimpstringaction.h
+	* app/widgets/gimpuimanager.h: declare get_type() function as
+	G_GNUC_CONST.
+
 2005-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/guides-new-percent.scm

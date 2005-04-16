@@ -52,7 +52,8 @@ struct _GimpStringActionClass
 };
 
 
-GType              gimp_string_action_get_type (void);
+GType              gimp_string_action_get_type (void) G_GNUC_CONST;
+
 GimpStringAction * gimp_string_action_new      (const gchar      *name,
                                                 const gchar      *label,
                                                 const gchar      *tooltip,

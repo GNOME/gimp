@@ -67,7 +67,8 @@ struct _GimpUIManagerClass
 };
 
 
-GType           gimp_ui_manager_get_type    (void);
+GType           gimp_ui_manager_get_type    (void) G_GNUC_CONST;
+
 GimpUIManager * gimp_ui_manager_new         (Gimp                   *gimp,
                                              const gchar            *name);
 
