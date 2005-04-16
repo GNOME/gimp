@@ -277,6 +277,7 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
   object_class->constructor = gimp_gradient_editor_constructor;
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
+  editor_class->title       = _("Gradient Editor");
 }
 
 static void

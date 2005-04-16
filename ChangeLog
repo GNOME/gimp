@@ -1,3 +1,18 @@
+2005-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdataeditor.[ch]: implement
+	GimpDocked::get_title() and add "(read only)" to the dialog's
+	title if the data is not editable. Fixes bug #164003.
+
+	(gimp_data_editor_real_set_data): call gimp_docked_title_changed()
+	when the editable state changes.
+
+	(struct GimpDataEditorClass): added "const gchar *title" member.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimppaletteeditor.c (class_init): set titles.
+
 2005-04-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbase.def: added gimp_desaturate_mode_get_type.

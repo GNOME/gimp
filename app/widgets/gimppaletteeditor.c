@@ -184,13 +184,14 @@ gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor  = gimp_palette_editor_constructor;
+  object_class->constructor = gimp_palette_editor_constructor;
 
-  gtk_object_class->destroy  = gimp_palette_editor_destroy;
+  gtk_object_class->destroy = gimp_palette_editor_destroy;
 
-  widget_class->unmap        = gimp_palette_editor_unmap;
+  widget_class->unmap       = gimp_palette_editor_unmap;
 
-  editor_class->set_data     = gimp_palette_editor_set_data;
+  editor_class->set_data    = gimp_palette_editor_set_data;
+  editor_class->title       = _("Palette Editor");
 }
 
 static void

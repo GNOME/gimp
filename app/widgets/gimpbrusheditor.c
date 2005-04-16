@@ -99,6 +99,7 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   editor_class->set_data = gimp_brush_editor_set_data;
+  editor_class->title    = _("Brush Editor");
 }
 
 static void

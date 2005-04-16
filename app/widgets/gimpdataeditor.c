@@ -73,6 +73,7 @@ static void       gimp_data_editor_dispose           (GObject        *object);
 static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
                                                       GList          *aux_info);
 static GList    * gimp_data_editor_get_aux_info      (GimpDocked     *docked);
+static gchar    * gimp_data_editor_get_title         (GimpDocked     *docked);
 
 static void       gimp_data_editor_real_set_data     (GimpDataEditor *editor,
                                                       GimpData       *data);
@@ -185,6 +186,7 @@ gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+  docked_iface->get_title    = gimp_data_editor_get_title;
 }
 
 static GObject *
@@ -329,10 +331,24 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
   return aux_info;
 }
 
+static gchar *
+gimp_data_editor_get_title (GimpDocked *docked)
+{
+  GimpDataEditor      *editor       = GIMP_DATA_EDITOR (docked);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_GET_CLASS (editor);
+
+  if (editor->data_editable)
+    return g_strdup (editor_class->title);
+  else
+    return g_strdup_printf (_("%s (read only)"), editor_class->title);
+}
+
 static void
 gimp_data_editor_real_set_data (GimpDataEditor *editor,
                                 GimpData       *data)
 {
+  gboolean editable;
+
   if (editor->data)
     {
       g_signal_handlers_disconnect_by_func (editor->data,
@@ -360,9 +376,15 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
       gtk_entry_set_text (GTK_ENTRY (editor->name_entry), "");
     }
 
-  editor->data_editable = (editor->data && editor->data->writable);
+  editable = (editor->data && editor->data->writable);
 
-  gtk_widget_set_sensitive (editor->name_entry, editor->data_editable);
+  if (editor->data_editable != editable)
+    {
+      editor->data_editable = editable;
+
+      gtk_widget_set_sensitive (editor->name_entry, editable);
+      gimp_docked_title_changed (GIMP_DOCKED (editor));
+    }
 }
 
 void

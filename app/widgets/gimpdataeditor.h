@@ -57,6 +57,8 @@ struct _GimpDataEditorClass
   /*  virtual functions  */
   void (* set_data) (GimpDataEditor *editor,
                      GimpData       *data);
+
+  const gchar *title;
 };
 
 
