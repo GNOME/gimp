@@ -28,7 +28,6 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimplist.h"
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
@@ -53,7 +52,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpVectors *vectors;
-  gint32 num_strokes;
+  gint32 num_strokes = 0;
   gint32 *stroke_list = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -62,8 +61,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      stroke_list = NULL;
-      num_strokes = 0;
+      /* nothing yet */
     }
 
   return_args = procedural_db_return_args (&vectors_get_strokes_proc, success);
