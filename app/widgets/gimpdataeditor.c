@@ -173,6 +173,8 @@ gimp_data_editor_init (GimpDataEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->name_entry, FALSE, FALSE, 0);
   gtk_widget_show (editor->name_entry);
 
+  gtk_widget_set_sensitive (editor->name_entry, FALSE);
+
   g_signal_connect (editor->name_entry, "activate",
 		    G_CALLBACK (gimp_data_editor_name_activate),
                     editor);

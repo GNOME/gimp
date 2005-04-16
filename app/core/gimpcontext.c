@@ -2225,6 +2225,8 @@ static void
 gimp_context_real_set_brush (GimpContext *context,
                              GimpBrush   *brush)
 {
+  GimpBaseConfig *base_config;
+
   if (! standard_brush)
     standard_brush = GIMP_BRUSH (gimp_brush_get_standard ());
 
@@ -2237,13 +2239,11 @@ gimp_context_real_set_brush (GimpContext *context,
       context->brush_name = NULL;
     }
 
+  base_config = GIMP_BASE_CONFIG (context->gimp->config);
+
   /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
-      GimpBaseConfig *base_config;
-
-      base_config = GIMP_BASE_CONFIG (context->gimp->config);
-
       /*  make sure the active brush is swapped before we get a new one...  */
       if (base_config->stingy_memory_use &&
           context->brush->mask           &&
@@ -2263,10 +2263,6 @@ gimp_context_real_set_brush (GimpContext *context,
 
   if (brush)
     {
-      GimpBaseConfig *base_config;
-
-      base_config = GIMP_BASE_CONFIG (context->gimp->config);
-
       g_object_ref (brush);
 
       g_signal_connect_object (brush, "name_changed",
@@ -2409,10 +2405,6 @@ gimp_context_real_set_pattern (GimpContext *context,
 
   if (pattern)
     {
-      GimpBaseConfig *base_config;
-
-      base_config = GIMP_BASE_CONFIG (context->gimp->config);
-
       g_object_ref (pattern);
 
       g_signal_connect_object (pattern, "name_changed",

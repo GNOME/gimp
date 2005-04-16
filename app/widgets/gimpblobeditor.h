@@ -22,7 +22,7 @@
 #define  __GIMP_BLOB_EDITOR_H__
 
 
-#include "gimpdataeditor.h"
+#include "gtk/gtkdrawingarea.h"
 
 
 #define GIMP_TYPE_BLOB_EDITOR            (gimp_blob_editor_get_type ())

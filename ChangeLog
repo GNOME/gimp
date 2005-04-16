@@ -1,5 +1,16 @@
 2005-04-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_real_set_brush)
+	(gimp_context_real_set_pattern): no need to get base_config twice
+	in the same function.
+
+	* app/widgets/gimpblobeditor.h: include the parent class.
+
+	* app/widgets/gimpdataeditor.c (gimp_data_editor_init): set the
+	name entry insensitive.
+
+2005-04-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdataeditor.[ch]: implement
 	GimpDocked::get_title() and add "(read only)" to the dialog's
 	title if the data is not editable. Fixes bug #164003.
