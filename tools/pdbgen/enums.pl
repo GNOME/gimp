@@ -82,6 +82,15 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_IMAGE_CLONE => '0',
 		       GIMP_PATTERN_CLONE => '1' }
 	},
+    GimpDesaturateMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_DESATURATE_LIGHTNESS
+			  GIMP_DESATURATE_LUMINOSITY GIMP_DESATURATE_AVERAGE) ],
+	  mapping => { GIMP_DESATURATE_LIGHTNESS => '0',
+		       GIMP_DESATURATE_LUMINOSITY => '1',
+		       GIMP_DESATURATE_AVERAGE => '2' }
+	},
     GimpDodgeBurnType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

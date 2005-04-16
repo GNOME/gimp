@@ -1,5 +1,33 @@
 2005-04-16  Sven Neumann  <sven@gimp.org>
 
+	Applied a patch (with minor modifications) from Karine Delvare
+	that makes it possible to choose between various ways to remove
+	color from a drawable (bug #155507):
+
+	* libgimpbase/gimpbaseenums.h: added new enum GimpDesaturateMode.
+
+	* libgimpbase/gimpbaseenums.c
+	* libgimp/gimpenums.c.tail
+	* plug-ins/pygimp/gimpenums.py
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimpdrawable-desaturate.[ch]: implement other formulas
+	to remove colors from a drawable.
+
+	* tools/pdbgen/pdb/color.pdb: let gimp_desaturate() call
+	gimp_drawable_desaturate() with GIMP_DESATURATE_LIGHTNESS so that
+	it behaves like it always did.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/desaturate-dialog.[ch]: new files that define a simple
+	dialog to choose a mode for desaturation.
+
+	* app/actions/drawable-actions.[ch]: use the new dialog.
+
+2005-04-16  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/vectors.pdb: let pdbgen create the code to
 	initialize the variables.
 

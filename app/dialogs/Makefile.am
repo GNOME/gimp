@@ -28,6 +28,8 @@ libappdialogs_a_sources = \
 	channel-options-dialog.h	\
 	convert-dialog.c		\
 	convert-dialog.h		\
+	desaturate-dialog.c		\
+	desaturate-dialog.h		\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\

@@ -35,6 +35,7 @@
 #include "core/gimpitemundo.h"
 #include "core/gimplayermask.h"
 
+#include "dialogs/desaturate-dialog.h"
 #include "dialogs/offset-dialog.h"
 
 #include "actions.h"
@@ -43,15 +44,30 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static void   desaturate_response (GtkWidget        *widget,
+                                   gint              response_id,
+                                   DesaturateDialog *dialog);
+
+
+/*  private variables  */
+
+static GimpDesaturateMode  desaturate_mode = GIMP_DESATURATE_LIGHTNESS;
+
+
 /*  public functions  */
 
 void
 drawable_desaturate_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
+  DesaturateDialog *dialog;
+  GimpImage        *gimage;
+  GimpDrawable     *drawable;
+  GtkWidget        *widget;
   return_if_no_drawable (gimage, drawable, data);
+  return_if_no_widget (widget, data);
 
   if (! gimp_drawable_is_rgb (drawable))
     {
@@ -59,8 +75,13 @@ drawable_desaturate_cmd_callback (GtkAction *action,
       return;
     }
 
-  gimp_drawable_desaturate (drawable);
-  gimp_image_flush (gimage);
+  dialog = desaturate_dialog_new (drawable, widget, desaturate_mode);
+
+  g_signal_connect (dialog->dialog, "response",
+                    G_CALLBACK (desaturate_response),
+                    dialog);
+
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -286,4 +307,27 @@ drawable_rotate_cmd_callback (GtkAction *action,
     }
 
   gimp_image_flush (gimage);
+}
+
+/*  private functions  */
+
+static void
+desaturate_response (GtkWidget        *widget,
+                     gint              response_id,
+                     DesaturateDialog *dialog)
+{
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GimpDrawable *drawable = dialog->drawable;
+      GimpImage    *gimage   = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      /*  remember for next invocation of the dialog  */
+      desaturate_mode = dialog->mode;
+
+      gimp_drawable_desaturate (drawable, desaturate_mode);
+
+      gimp_image_flush (gimage);
+    }
+
+  gtk_widget_destroy (dialog->dialog);
 }

@@ -132,6 +132,18 @@ typedef enum
 } GimpCloneType;
 
 
+#define GIMP_TYPE_DESATURATE_MODE (gimp_desaturate_mode_get_type ())
+
+GType gimp_desaturate_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DESATURATE_LIGHTNESS,   /*< desc="Lightness"  >*/
+  GIMP_DESATURATE_LUMINOSITY,  /*< desc="Luminosity" >*/
+  GIMP_DESATURATE_AVERAGE      /*< desc="Average"    >*/
+} GimpDesaturateMode;
+
+
 #define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
 
 GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;

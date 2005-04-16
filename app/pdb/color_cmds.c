@@ -515,7 +515,7 @@ desaturate_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        gimp_drawable_desaturate (drawable);
+        gimp_drawable_desaturate (drawable, GIMP_DESATURATE_LIGHTNESS);
     }
 
   return procedural_db_return_args (&desaturate_proc, success);

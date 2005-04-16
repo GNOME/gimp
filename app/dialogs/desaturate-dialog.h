@@ -16,12 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DRAWABLE_DESATURATE_H__
-#define __GIMP_DRAWABLE_DESATURATE_H__
+#ifndef __DESATURATE_DIALOG_H__
+#define __DESATURATE_DIALOG_H__
 
 
-void   gimp_drawable_desaturate (GimpDrawable       *drawable,
-                                 GimpDesaturateMode  mode);
+typedef struct _DesaturateDialog DesaturateDialog;
+
+struct _DesaturateDialog
+{
+  GtkWidget          *dialog;
+
+  GimpDrawable       *drawable;
+  GimpDesaturateMode  mode;
+};
 
 
-#endif  /*  __GIMP_DRAWABLE_DESATURATE_H__  */
+DesaturateDialog * desaturate_dialog_new (GimpDrawable       *drawable,
+                                          GtkWidget          *parent,
+                                          GimpDesaturateMode  mode);
+
+
+#endif /* __DESATURATE_DIALOG_H__ */

@@ -1,0 +1,99 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "dialogs-types.h"
+
+#include "core/gimplayer.h"
+
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpviewabledialog.h"
+
+#include "desaturate-dialog.h"
+
+#include "gimp-intl.h"
+
+
+/*  public functions  */
+
+DesaturateDialog *
+desaturate_dialog_new (GimpDrawable       *drawable,
+                       GtkWidget          *parent,
+                       GimpDesaturateMode  mode)
+{
+  DesaturateDialog *dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *frame;
+  GtkWidget        *button;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
+
+  dialog = g_new0 (DesaturateDialog, 1);
+
+  dialog->drawable = drawable;
+  dialog->mode     = mode;
+
+  dialog->dialog =
+    gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
+                              _("Desaturate"), "gimp-drawable-desaturate",
+                              GIMP_STOCK_CONVERT_GRAYSCALE,
+                              _("Remove colors"),
+                              parent,
+                              gimp_standard_help_func,
+                              GIMP_HELP_LAYER_DESATURATE,
+
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              _("Desaturate"),  GTK_RESPONSE_OK,
+
+                              NULL);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog->dialog),
+		     (GWeakNotify) g_free, dialog);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  frame =
+    gimp_enum_radio_frame_new (GIMP_TYPE_DESATURATE_MODE,
+                               gtk_label_new (_("Choose shade of gray based on:")),
+                               G_CALLBACK (gimp_radio_button_update),
+                               &dialog->mode,
+                               &button);
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), dialog->mode);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return dialog;
+}

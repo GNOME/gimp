@@ -42,7 +42,7 @@
 static GimpActionEntry drawable_actions[] =
 {
   { "drawable-desaturate", GIMP_STOCK_CONVERT_GRAYSCALE,
-    N_("_Desaturate"), NULL, NULL,
+    N_("_Desaturate..."), NULL, NULL,
     G_CALLBACK (drawable_desaturate_cmd_callback),
     GIMP_HELP_LAYER_DESATURATE },
 

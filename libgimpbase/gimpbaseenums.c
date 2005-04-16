@@ -276,6 +276,37 @@ gimp_clone_type_get_type (void)
 }
 
 GType
+gimp_desaturate_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DESATURATE_LIGHTNESS, "GIMP_DESATURATE_LIGHTNESS", "lightness" },
+    { GIMP_DESATURATE_LUMINOSITY, "GIMP_DESATURATE_LUMINOSITY", "luminosity" },
+    { GIMP_DESATURATE_AVERAGE, "GIMP_DESATURATE_AVERAGE", "average" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DESATURATE_LIGHTNESS, N_("Lightness"), NULL },
+    { GIMP_DESATURATE_LUMINOSITY, N_("Luminosity"), NULL },
+    { GIMP_DESATURATE_AVERAGE, N_("Average"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpDesaturateMode", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_dodge_burn_type_get_type (void)
 {
   static const GEnumValue values[] =
