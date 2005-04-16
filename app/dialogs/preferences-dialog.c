@@ -80,7 +80,7 @@ static void        prefs_response                 (GtkWidget  *widget,
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
-                                                   GtkWidget  *sizeentry);
+                                                   GtkWidget  *entry);
 static void   prefs_input_devices_dialog          (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
@@ -384,15 +384,12 @@ prefs_resolution_source_callback (GtkWidget *widget,
     }
   else
     {
-      GimpSizeEntry *sizeentry;
-
-      sizeentry = g_object_get_data (G_OBJECT (widget),
-                                     "monitor_resolution_sizeentry");
-
-      if (sizeentry)
+      GimpSizeEntry *entry = g_object_get_data (G_OBJECT (widget),
+                                                "monitor_resolution_sizeentry");
+      if (entry)
 	{
-	  xres = gimp_size_entry_get_refval (sizeentry, 0);
-	  yres = gimp_size_entry_get_refval (sizeentry, 1);
+	  xres = gimp_size_entry_get_refval (entry, 0);
+	  yres = gimp_size_entry_get_refval (entry, 1);
 	}
     }
 
@@ -405,19 +402,18 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
 static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
-				     GtkWidget *sizeentry)
+				     GtkWidget *entry)
 {
   GtkWidget *dialog;
   GtkWidget *notebook;
   GtkWidget *image;
 
-  dialog = gtk_widget_get_toplevel (sizeentry);
+  dialog = gtk_widget_get_toplevel (entry);
 
   notebook = g_object_get_data (G_OBJECT (dialog),   "notebook");
   image    = g_object_get_data (G_OBJECT (notebook), "image");
 
-  resolution_calibrate_dialog (sizeentry,
-                               gtk_image_get_pixbuf (GTK_IMAGE (image)));
+  resolution_calibrate_dialog (entry, gtk_image_get_pixbuf (GTK_IMAGE (image)));
 }
 
 static void
@@ -1199,11 +1195,10 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *hbox;
   GtkWidget         *button;
   GtkWidget         *button2;
-  GtkWidget         *patheditor;
   GtkWidget         *table;
   GtkWidget         *label;
   GtkWidget         *image;
-  GtkWidget         *sizeentry;
+  GtkWidget         *entry;
   GtkWidget         *calibrate_button;
   GSList            *group;
   GtkWidget         *editor;
@@ -1609,11 +1604,11 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  button = gimp_prop_file_chooser_button_new (object, "web-browser",
-                                              _("Select web browser"),
-                                              GTK_FILE_CHOOSER_ACTION_OPEN);
+  entry = gimp_prop_file_entry_new (object, "web-browser",
+                                    _("Select web browser"),
+                                    FALSE, FALSE);
 
-  prefs_widget_add_aligned (button, _("_Web browser to use:"),
+  prefs_widget_add_aligned (entry, _("_Web browser to use:"),
                             GTK_TABLE (table), 0, FALSE, size_group);
 #endif
 
@@ -1964,7 +1959,6 @@ prefs_dialog_new (Gimp       *gimp,
         GtkWidget        *scrolled_win;
         GtkListStore     *list_store;
         GtkWidget        *view;
-        GtkWidget        *entry;
         GtkTreeSelection *sel;
         gint              i;
 
@@ -2063,33 +2057,33 @@ prefs_dialog_new (Gimp       *gimp,
   {
     gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
-    sizeentry = gimp_prop_coordinates_new (object,
-                                           "monitor-xresolution",
-                                           "monitor-yresolution",
-                                           NULL,
-                                           pixels_per_unit,
-                                           GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                           0.0, 0.0,
-                                           TRUE);
+    entry = gimp_prop_coordinates_new (object,
+                                       "monitor-xresolution",
+                                       "monitor-yresolution",
+                                       NULL,
+                                       pixels_per_unit,
+                                       GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
+                                       0.0, 0.0,
+                                       TRUE);
 
     g_free (pixels_per_unit);
   }
 
-  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (entry), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
 				_("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
 				_("Vertical"), 0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
 				_("dpi"), 1, 4, 0.0);
 
   hbox = gtk_hbox_new (FALSE, 0);
 
-  gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 24);
-  gtk_widget_show (sizeentry);
-  gtk_widget_set_sensitive (sizeentry, ! display_config->monitor_res_from_gdk);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 24);
+  gtk_widget_show (entry);
+  gtk_widget_set_sensitive (entry, ! display_config->monitor_res_from_gdk);
 
   group = NULL;
 
@@ -2111,12 +2105,9 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry",
-                     sizeentry);
-  g_object_set_data (G_OBJECT (button), "set_sensitive",
-                     label);
-  g_object_set_data (G_OBJECT (button), "inverse_sensitive",
-                     sizeentry);
+  g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", entry);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", label);
+  g_object_set_data (G_OBJECT (button), "inverse_sensitive", entry);
 
   g_signal_connect (button, "toggled",
 		    G_CALLBACK (prefs_resolution_source_callback),
@@ -2144,12 +2135,11 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_set_sensitive (calibrate_button,
                             ! display_config->monitor_res_from_gdk);
 
-  g_object_set_data (G_OBJECT (sizeentry), "inverse_sensitive",
-                     calibrate_button);
+  g_object_set_data (G_OBJECT (entry), "inverse_sensitive", calibrate_button);
 
   g_signal_connect (calibrate_button, "clicked",
 		    G_CALLBACK (prefs_resolution_calibrate_callback),
-		    sizeentry);
+		    entry);
 
 
   /**********************/
@@ -2278,11 +2268,9 @@ prefs_dialog_new (Gimp       *gimp,
 				     page_index++);
 
   {
-    GimpContainer *controllers;
+    GimpContainer *controllers = gimp_controllers_get_list (gimp);
     GtkWidget     *notebook;
     GList         *list;
-
-    controllers = gimp_controllers_get_list (gimp);
 
     notebook = gtk_notebook_new ();
     gtk_notebook_set_scrollable (GTK_NOTEBOOK (notebook), TRUE);
@@ -2397,8 +2385,6 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {
-        GtkWidget *entry;
-
         entry = gimp_prop_file_entry_new (object, dirs[i].property_name,
                                           gettext (dirs[i].fs_label),
                                           TRUE, TRUE);
@@ -2473,6 +2459,8 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
       {
+        GtkWidget *editor;
+
 	vbox = prefs_notebook_append_page (gimp,
                                            GTK_NOTEBOOK (notebook),
 					   gettext (paths[i].label),
@@ -2484,12 +2472,12 @@ prefs_dialog_new (Gimp       *gimp,
 					   &child_iter,
 					   page_index++);
 
-	patheditor = gimp_prop_path_editor_new (object,
-                                                paths[i].path_property_name,
-                                                paths[i].writable_property_name,
-                                                gettext (paths[i].fs_label));
-	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
-	gtk_widget_show (patheditor);
+	editor = gimp_prop_path_editor_new (object,
+                                            paths[i].path_property_name,
+                                            paths[i].writable_property_name,
+                                            gettext (paths[i].fs_label));
+	gtk_container_add (GTK_CONTAINER (vbox), editor);
+	gtk_widget_show (editor);
       }
   }
 

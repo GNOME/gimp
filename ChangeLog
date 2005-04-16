@@ -1,3 +1,9 @@
+2005-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: use a GimpFileEntry to
+	configure the web-browser setting. GtkFileChooserButton just
+	doesn't work for it.
+
 2005-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: removed the "Close" button and
