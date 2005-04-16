@@ -96,6 +96,15 @@ Basic GIMP enumeration data types.
 @GIMP_IMAGE_CLONE: 
 @GIMP_PATTERN_CLONE: 
 
+<!-- ##### ENUM GimpDesaturateMode ##### -->
+<para>
+
+</para>
+
+@GIMP_DESATURATE_LIGHTNESS: 
+@GIMP_DESATURATE_LUMINOSITY: 
+@GIMP_DESATURATE_AVERAGE: 
+
 <!-- ##### ENUM GimpDodgeBurnType ##### -->
 <para>
 

@@ -20,6 +20,7 @@ GimpChannelType
 GimpCheckSize
 GimpCheckType
 GimpCloneType
+GimpDesaturateMode
 GimpDodgeBurnType
 GimpGradientType
 GimpIconType
@@ -46,6 +47,7 @@ GIMP_TYPE_CHANNEL_TYPE
 GIMP_TYPE_CHECK_SIZE
 GIMP_TYPE_CHECK_TYPE
 GIMP_TYPE_CLONE_TYPE
+GIMP_TYPE_DESATURATE_MODE
 GIMP_TYPE_DODGE_BURN_TYPE
 GIMP_TYPE_GRADIENT_TYPE
 GIMP_TYPE_ICON_TYPE
@@ -71,6 +73,7 @@ gimp_channel_type_get_type
 gimp_check_size_get_type
 gimp_check_type_get_type
 gimp_clone_type_get_type
+gimp_desaturate_mode_get_type
 gimp_dodge_burn_type_get_type
 gimp_gradient_type_get_type
 gimp_icon_type_get_type

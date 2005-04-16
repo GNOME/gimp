@@ -14,6 +14,7 @@ EXPORTS
 	gimp_data_directory
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
+	gimp_desaturate_mode_get_type
 	gimp_directory
 	gimp_dodge_burn_type_get_type
 	gimp_enum_get_desc

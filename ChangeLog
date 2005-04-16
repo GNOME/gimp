@@ -1,5 +1,9 @@
 2005-04-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbase.def: added gimp_desaturate_mode_get_type.
+
+2005-04-16  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: use a GimpFileEntry to
 	configure the web-browser setting. GtkFileChooserButton just
 	doesn't work for it.

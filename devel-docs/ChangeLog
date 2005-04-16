@@ -1,3 +1,8 @@
+2005-04-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbaseenums.sgml: added new enum.
+
 2005-04-13  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
