@@ -64,19 +64,24 @@ desaturate_dialog_new (GimpDrawable       *drawable,
                               GIMP_HELP_LAYER_DESATURATE,
 
                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              _("Desaturate"),  GTK_RESPONSE_OK,
 
                               NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
-
-  g_object_weak_ref (G_OBJECT (dialog->dialog),
-		     (GWeakNotify) g_free, dialog);
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
+                                  _("Desaturate"), GTK_RESPONSE_OK);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GIMP_STOCK_CONVERT_GRAYSCALE,
+                                                  GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog->dialog),
+		     (GWeakNotify) g_free, dialog);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

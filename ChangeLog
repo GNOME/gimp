@@ -1,5 +1,13 @@
 2005-04-16  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/desaturate-dialog.c: added an icon to the action
+	button.
+
+	* app/vectors/gimpvectors-import.c: reduce the number of string
+	comparisons by using switches on the first character.
+
+2005-04-16  Sven Neumann  <sven@gimp.org>
+
 	Applied a patch (with minor modifications) from Karine Delvare
 	that makes it possible to choose between various ways to remove
 	color from a drawable (bug #155507):

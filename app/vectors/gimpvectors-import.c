@@ -464,29 +464,36 @@ svg_handler_svg_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "x") == 0)
+      switch (*names[0])
         {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution, &x);
-        }
-      else if (strcmp (*names, "y") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution, &y);
-        }
-      else if (strcmp (*names, "width") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution, &w);
-        }
-      else if (strcmp (*names, "height") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution, &h);
-        }
-      else if (strcmp (*names, "viewBox") == 0)
-        {
-          viewbox = *values;
+        case 'x':
+          if (strcmp (*names, "x") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution, &x);
+          break;
+
+        case 'y':
+          if (strcmp (*names, "y") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution, &y);
+          break;
+
+        case 'w':
+          if (strcmp (*names, "width") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution, &w);
+          break;
+
+        case 'h':
+          if (strcmp (*names, "height") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution, &h);
+          break;
+
+        case 'v':
+          if (strcmp (*names, "viewBox") == 0)
+            viewbox = *values;
+          break;
         }
 
       names++;
@@ -576,20 +583,27 @@ svg_handler_path_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "id") == 0 && !path->id)
+      switch (*names[0])
         {
-          path->id = g_strdup (*values);
-        }
-      else if (strcmp (*names, "d") == 0 && !path->strokes)
-        {
-          path->strokes = parse_path_data (*values);
-        }
-      else if (strcmp (*names, "transform") == 0 && !handler->transform)
-        {
-          GimpMatrix3  matrix;
+        case 'i':
+          if (strcmp (*names, "id") == 0 && !path->id)
+            path->id = g_strdup (*values);
+          break;
 
-          if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        case 'd':
+          if (strcmp (*names, "d") == 0 && !path->strokes)
+            path->strokes = parse_path_data (*values);
+          break;
+
+        case 't':
+          if (strcmp (*names, "transform") == 0 && !handler->transform)
+            {
+              GimpMatrix3  matrix;
+
+              if (parse_svg_transform (*values, &matrix))
+                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+            }
+          break;
         }
 
       names++;
@@ -615,52 +629,61 @@ svg_handler_rect_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "id") == 0 && !path->id)
+      switch (*names[0])
         {
-          path->id = g_strdup (*values);
-        }
-      else if (strcmp (*names, "x") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &x);
-        }
-      else if (strcmp (*names, "y") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &y);
-        }
-      else if (strcmp (*names, "width") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &width);
-        }
-      else if (strcmp (*names, "height") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &height);
-        }
-      else if (strcmp (*names, "rx") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &rx);
-        }
-      else if (strcmp (*names, "ry") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &ry);
-        }
-      else if (strcmp (*names, "transform") == 0 && !handler->transform)
-        {
-          GimpMatrix3  matrix;
+        case 'i':
+          if (strcmp (*names, "id") == 0 && !path->id)
+            path->id = g_strdup (*values);
+          break;
 
-          if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        case 'x':
+          if (strcmp (*names, "x") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &x);
+          break;
+
+        case 'y':
+          if (strcmp (*names, "y") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &y);
+          break;
+
+        case 'w':
+          if (strcmp (*names, "width") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &width);
+          break;
+
+        case 'h':
+          if (strcmp (*names, "height") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &height);
+          break;
+
+        case 'r':
+          if (strcmp (*names, "rx") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &rx);
+          else if (strcmp (*names, "ry") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &ry);
+          break;
+
+        case 't':
+          if (strcmp (*names, "transform") == 0 && !handler->transform)
+            {
+              GimpMatrix3  matrix;
+
+              if (parse_svg_transform (*values, &matrix))
+                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+            }
+          break;
         }
 
       names++;
@@ -758,46 +781,48 @@ svg_handler_ellipse_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "id") == 0 && !path->id)
+      switch (*names[0])
         {
-          path->id = g_strdup (*values);
-        }
-      else if (strcmp (*names, "cx") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &center.x);
-        }
-      else if (strcmp (*names, "cy") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &center.y);
-        }
-      else if (strcmp (*names, "r") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &rx);
-        }
-      else if (strcmp (*names, "rx") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &rx);
-        }
-      else if (strcmp (*names, "ry") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &ry);
-        }
-      else if (strcmp (*names, "transform") == 0 && !handler->transform)
-        {
-          GimpMatrix3  matrix;
+        case 'i':
+          if (strcmp (*names, "id") == 0 && !path->id)
+            path->id = g_strdup (*values);
+          break;
 
-          if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        case 'c':
+          if (strcmp (*names, "cx") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &center.x);
+          else if (strcmp (*names, "cy") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &center.y);
+          break;
+
+        case 'r':
+          if (strcmp (*names, "r") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &rx);
+          else if (strcmp (*names, "rx") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &rx);
+          else if (strcmp (*names, "ry") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &ry);
+          break;
+
+        case 't':
+          if (strcmp (*names, "transform") == 0 && !handler->transform)
+            {
+              GimpMatrix3  matrix;
+
+              if (parse_svg_transform (*values, &matrix))
+                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+            }
+          break;
         }
 
       names++;
@@ -825,40 +850,44 @@ svg_handler_line_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "id") == 0 && !path->id)
+      switch (*names[0])
         {
-          path->id = g_strdup (*values);
-        }
-      else if (strcmp (*names, "x1") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &start.x);
-        }
-      else if (strcmp (*names, "y1") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &start.y);
-        }
-      else if (strcmp (*names, "x2") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->width, parser->image->xresolution,
-                            &end.x);
-        }
-      else if (strcmp (*names, "y2") == 0)
-        {
-          parse_svg_length (*values,
-                            handler->height, parser->image->yresolution,
-                            &end.y);
-        }
-      else if (strcmp (*names, "transform") == 0 && !handler->transform)
-        {
-          GimpMatrix3  matrix;
+        case 'i':
+          if (strcmp (*names, "id") == 0 && !path->id)
+            path->id = g_strdup (*values);
+          break;
 
-          if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        case 'x':
+          if (strcmp (*names, "x1") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &start.x);
+          else if (strcmp (*names, "x2") == 0)
+            parse_svg_length (*values,
+                              handler->width, parser->image->xresolution,
+                              &end.x);
+          break;
+
+        case 'y':
+          if (strcmp (*names, "y1") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &start.y);
+          else if (strcmp (*names, "y2") == 0)
+            parse_svg_length (*values,
+                              handler->height, parser->image->yresolution,
+                              &end.y);
+          break;
+
+        case 't':
+          if (strcmp (*names, "transform") == 0 && !handler->transform)
+            {
+              GimpMatrix3  matrix;
+
+              if (parse_svg_transform (*values, &matrix))
+                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+            }
+          break;
         }
 
       names++;
@@ -884,58 +913,67 @@ svg_handler_poly_start (SvgHandler   *handler,
 
   while (*names)
     {
-      if (strcmp (*names, "id") == 0 && !path->id)
+      switch (*names[0])
         {
-          path->id = g_strdup (*values);
-        }
-      else if (strcmp (*names, "points") == 0 && !points)
-        {
-          const gchar *p = *values;
-          const gchar *m = NULL;
-          const gchar *l = NULL;
-          gint         n = 0;
+        case 'i':
+          if (strcmp (*names, "id") == 0 && !path->id)
+            path->id = g_strdup (*values);
+          break;
 
-          while (*p)
+        case 'p':
+          if (strcmp (*names, "points") == 0 && !points)
             {
-              while (g_ascii_isspace (*p) || *p == ',')
-                p++;
+              const gchar *p = *values;
+              const gchar *m = NULL;
+              const gchar *l = NULL;
+              gint         n = 0;
 
-              switch (n)
+              while (*p)
                 {
-                case 0:
-                  m = p;
-                  break;
-                case 2:
-                  l = p;
-                  break;
+                  while (g_ascii_isspace (*p) || *p == ',')
+                    p++;
+
+                  switch (n)
+                    {
+                    case 0:
+                      m = p;
+                      break;
+                    case 2:
+                      l = p;
+                      break;
+                    }
+
+                  while (*p && !g_ascii_isspace (*p) && *p != ',')
+                    p++;
+
+                  n++;
                 }
 
-              while (*p && !g_ascii_isspace (*p) && *p != ',')
-                p++;
+              if ((n > 3) && (n % 2 == 0))
+                {
+                  points = g_string_sized_new (p - *values + 8);
 
-              n++;
+                  g_string_append_len (points, "M ", 2);
+                  g_string_append_len (points, m, l - m);
+
+                  g_string_append_len (points, "L ", 2);
+                  g_string_append_len (points, l, p - l);
+
+                  if (strcmp (handler->name, "polygon") == 0)
+                    g_string_append_c (points, 'Z');
+                }
             }
+          break;
 
-          if ((n > 3) && (n % 2 == 0))
+        case 't':
+          if (strcmp (*names, "transform") == 0 && !handler->transform)
             {
-              points = g_string_sized_new (p - *values + 8);
+              GimpMatrix3  matrix;
 
-              g_string_append_len (points, "M ", 2);
-              g_string_append_len (points, m, l - m);
-
-              g_string_append_len (points, "L ", 2);
-              g_string_append_len (points, l, p - l);
-
-              if (strcmp (handler->name, "polygon") == 0)
-                g_string_append_c (points, 'Z');
+              if (parse_svg_transform (*values, &matrix))
+                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
             }
-        }
-      else if (strcmp (*names, "transform") == 0 && !handler->transform)
-        {
-          GimpMatrix3  matrix;
-
-          if (parse_svg_transform (*values, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+          break;
         }
 
       names++;
@@ -1490,6 +1528,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 'l':
       /* lineto */
       if (ctx->param == 2 || final)
@@ -1504,6 +1543,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 'c':
       /* curveto */
       if (ctx->param == 6 || final)
@@ -1525,6 +1565,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 's':
       /* smooth curveto */
       if (ctx->param == 4 || final)
@@ -1546,6 +1587,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 'h':
       /* horizontal lineto */
       if (ctx->param == 1)
@@ -1558,6 +1600,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 'v':
       /* vertical lineto */
       if (ctx->param == 1)
@@ -1589,6 +1632,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 't':
       /* truetype quadratic bezier curveto */
       if (ctx->param == 2 || final)
@@ -1634,6 +1678,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     case 'a':
       if (ctx->param == 7 || final)
 	{
@@ -1648,6 +1693,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 	  ctx->param = 0;
 	}
       break;
+
     default:
       ctx->param = 0;
       break;
