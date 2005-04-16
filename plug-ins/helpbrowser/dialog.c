@@ -73,6 +73,8 @@ static void       index_callback     (GtkAction        *action,
                                       gpointer          data);
 static void       close_callback     (GtkAction        *action,
                                       gpointer          data);
+static void       online_callback    (GtkAction        *action,
+                                      gpointer          data);
 
 static void       update_toolbar     (void);
 
@@ -207,6 +209,12 @@ browser_dialog_open (void)
                                       "/ui/help-browser-popup/back");
   gtk_action_connect_proxy (action, GTK_WIDGET (item));
   button_prev = GTK_WIDGET (item);
+
+  item =
+    GTK_TOOL_ITEM (gtk_ui_manager_get_widget (ui_manager,
+                                              "/help-browser-toolbar/space"));
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, TRUE);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -414,8 +422,16 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Go to the index page"),
       G_CALLBACK (index_callback) },
 
+    { "online", GIMP_STOCK_WILBER,
+      "", NULL, N_("Visit the GIMP documentation website"),
+      G_CALLBACK (online_callback) },
+
     { "close", GTK_STOCK_CLOSE,
-      NULL, NULL, N_("Close the help browser"),
+      NULL, "<control>W", N_("Close the help browser"),
+      G_CALLBACK (close_callback) },
+
+    { "quit", GTK_STOCK_QUIT,
+      NULL, "<control>Q", N_("Close the help browser"),
       G_CALLBACK (close_callback) },
   };
 
@@ -437,14 +453,19 @@ ui_manager_new (GtkWidget *window)
                                      "<ui>"
                                      "  <toolbar name=\"help-browser-toolbar\">"
                                      "    <toolitem action=\"index\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"close\" />"
+                                     "    <separator name=\"space\" />"
+                                     "    <toolitem action=\"online\" />"
                                      "  </toolbar>"
+                                     "  <accelerator action=\"close\" />"
+                                     "  <accelerator action=\"quit\" />"
                                      "</ui>",
                                      -1, &error);
 
   if (error)
-    g_warning ("error parsing ui: %s", error->message);
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
 
   gtk_ui_manager_add_ui_from_string (ui_manager,
                                      "<ui>"
@@ -453,7 +474,13 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"forward\" />"
                                      "  </popup>"
                                      "</ui>",
-                                     -1, NULL);
+                                     -1, &error);
+
+  if (error)
+    {
+      g_warning ("error parsing ui: %s", error->message);
+      g_clear_error (&error);
+    }
 
   return ui_manager;
 }
@@ -522,6 +549,13 @@ index_callback (GtkAction *action,
                 gpointer   data)
 {
   browser_dialog_load ("index.html", TRUE);
+}
+
+static void
+online_callback (GtkAction *action,
+                 gpointer   data)
+{
+  load_remote_page ("http://www.gimp.org/docs/");
 }
 
 static void

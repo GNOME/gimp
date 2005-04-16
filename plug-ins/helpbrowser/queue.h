@@ -3,7 +3,7 @@
  *
  * The GIMP Help Browser
  * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
- *                    Michael Natterer <mitschel@cs.tu-berlin.de>
+ *                    Michael Natterer <mitch@gimp.org>
  *
  * queue.h - a history queue
  *
