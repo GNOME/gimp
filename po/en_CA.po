@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-14 22:32-0400\n"
-"PO-Revision-Date: 2005-04-14 14:29-0400\n"
+"POT-Creation-Date: 2005-04-16 14:00-0400\n"
+"PO-Revision-Date: 2005-04-16 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgstr ""
 "G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:95 ../app/core/gimp.c:868
+#: ../app/actions/actions.c:95 ../app/core/gimp.c:871
 #: ../app/dialogs/dialogs.c:144 ../app/dialogs/preferences-dialog.c:2428
 #: ../app/pdb/internal_procs.c:93
 msgid "Brushes"
@@ -237,7 +237,7 @@ msgid "File"
 msgstr "File"
 
 #. initialize the list of gimp fonts
-#: ../app/actions/actions.c:137 ../app/core/gimp.c:884
+#: ../app/actions/actions.c:137 ../app/core/gimp.c:887
 #: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2444
 #: ../app/pdb/internal_procs.c:129
 msgid "Fonts"
@@ -248,7 +248,7 @@ msgid "Gradient Editor"
 msgstr "Gradient Editor"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:143 ../app/core/gimp.c:880
+#: ../app/actions/actions.c:143 ../app/core/gimp.c:883
 #: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2440
 #: ../app/pdb/internal_procs.c:141
 msgid "Gradients"
@@ -278,14 +278,14 @@ msgid "Palette Editor"
 msgstr "Palette Editor"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:161 ../app/core/gimp.c:876
+#: ../app/actions/actions.c:161 ../app/core/gimp.c:879
 #: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2436
 #: ../app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:164 ../app/core/gimp.c:872
+#: ../app/actions/actions.c:164 ../app/core/gimp.c:875
 #: ../app/dialogs/dialogs.c:146 ../app/dialogs/preferences-dialog.c:2432
 #: ../app/pdb/internal_procs.c:186
 msgid "Patterns"
@@ -304,7 +304,7 @@ msgid "Select"
 msgstr "Select"
 
 #. initialize the template list
-#: ../app/actions/actions.c:176 ../app/core/gimp.c:893
+#: ../app/actions/actions.c:176 ../app/core/gimp.c:896
 #: ../app/dialogs/dialogs.c:160
 msgid "Templates"
 msgstr "Templates"
@@ -1029,8 +1029,8 @@ msgid "Remove dangling entries"
 msgstr "Remove dangling entries"
 
 #: ../app/actions/drawable-actions.c:45
-msgid "_Desaturate"
-msgstr "_Desaturate"
+msgid "_Desaturate..."
+msgstr "_Desaturate..."
 
 #: ../app/actions/drawable-actions.c:50
 msgid "_Equalize"
@@ -1077,19 +1077,19 @@ msgstr "Rotate _180 degrees"
 msgid "Rotate 90 degrees CC_W"
 msgstr "Rotate 90 degrees CC_W"
 
-#: ../app/actions/drawable-commands.c:58
+#: ../app/actions/drawable-commands.c:74
 msgid "Desaturate operates only on RGB color layers."
 msgstr "Desaturate operates only on RGB colour layers."
 
-#: ../app/actions/drawable-commands.c:76
+#: ../app/actions/drawable-commands.c:97
 msgid "Equalize does not operate on indexed layers."
 msgstr "Equalize does not operate on indexed layers."
 
-#: ../app/actions/drawable-commands.c:94
+#: ../app/actions/drawable-commands.c:115
 msgid "Invert does not operate on indexed layers."
 msgstr "Invert does not operate on indexed layers."
 
-#: ../app/actions/drawable-commands.c:114
+#: ../app/actions/drawable-commands.c:135
 msgid "White Balance operates only on RGB color layers."
 msgstr "White Balance operates only on RGB colour layers."
 
@@ -2712,11 +2712,11 @@ msgid "Open Text File (UTF-8)"
 msgstr "Open Text File (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:137
-#: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush.c:397
-#: ../app/core/gimpbrushgenerated.c:601 ../app/core/gimpbrushpipe.c:339
-#: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette.c:361
-#: ../app/core/gimppattern.c:329 ../app/tools/gimpimagemaptool.c:614
-#: ../app/xcf/xcf.c:291
+#: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:116
+#: ../app/core/gimpbrush-load.c:406 ../app/core/gimpbrushgenerated.c:601
+#: ../app/core/gimpbrushpipe.c:337 ../app/core/gimpgradient-load.c:63
+#: ../app/core/gimppalette.c:361 ../app/core/gimppattern.c:329
+#: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:291
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Could not open '%s' for reading: %s"
@@ -4488,86 +4488,86 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:644
+#: ../app/core/gimp.c:647
 msgid "Procedural Database"
 msgstr "Procedural Database"
 
-#: ../app/core/gimp.c:647
+#: ../app/core/gimp.c:650
 msgid "Plug-In Interpreters"
 msgstr "Plug-In Interpreters"
 
-#: ../app/core/gimp.c:653
+#: ../app/core/gimp.c:656
 msgid "Plug-In Environment"
 msgstr "Plug-In Environment"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:864
+#: ../app/core/gimp.c:867
 msgid "Looking for data files"
 msgstr "Looking for data files"
 
-#: ../app/core/gimp.c:864
+#: ../app/core/gimp.c:867
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the document history
-#: ../app/core/gimp.c:889
+#: ../app/core/gimp.c:892
 msgid "Documents"
 msgstr "Documents"
 
 #. initialize the module list
-#: ../app/core/gimp.c:897 ../app/dialogs/preferences-dialog.c:2456
+#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2456
 msgid "Modules"
 msgstr "Modules"
 
-#: ../app/core/gimpbrush.c:535
+#: ../app/core/gimpbrush-load.c:162
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Could not read %d bytes from '%s': %s"
 
-#: ../app/core/gimpbrush.c:555
+#: ../app/core/gimpbrush-load.c:182
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Fatal parse error in brush file '%s': Width = 0."
 
-#: ../app/core/gimpbrush.c:564
+#: ../app/core/gimpbrush-load.c:191
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Fatal parse error in brush file '%s': Height = 0."
 
-#: ../app/core/gimpbrush.c:573
+#: ../app/core/gimpbrush-load.c:200
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Fatal parse error in brush file '%s': Bytes = 0."
 
-#: ../app/core/gimpbrush.c:597
+#: ../app/core/gimpbrush-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fatal parse error in brush file '%s': Unknown depth %d."
 
-#: ../app/core/gimpbrush.c:610
+#: ../app/core/gimpbrush-load.c:237
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fatal parse error in brush file '%s': Unknown version %d."
 
-#: ../app/core/gimpbrush.c:626 ../app/core/gimpbrush.c:746
+#: ../app/core/gimpbrush-load.c:253 ../app/core/gimpbrush-load.c:373
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatal parse error in brush file '%s': File appears truncated."
 
-#: ../app/core/gimpbrush.c:634 ../app/core/gimpbrushgenerated.c:648
-#: ../app/core/gimpbrushpipe.c:355
+#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated.c:648
+#: ../app/core/gimpbrushpipe.c:353
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
-#: ../app/core/gimpbrush.c:641 ../app/core/gimpcontext.c:1296
+#: ../app/core/gimpbrush-load.c:268 ../app/core/gimpcontext.c:1296
 #: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:401
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Unnamed"
 
-#: ../app/core/gimpbrush.c:735
+#: ../app/core/gimpbrush-load.c:362
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4575,6 +4575,18 @@ msgid ""
 msgstr ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
+
+#: ../app/core/gimpbrush-load.c:419
+#, c-format
+msgid ""
+"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgstr ""
+"Fatal parse error in brush file '%s': unable to decode ABR format version %d."
+
+#: ../app/core/gimpbrush-load.c:436
+#, c-format
+msgid "Fatal parse error in brush file '%s'"
+msgstr "Fatal parse error in brush file '%s'"
 
 #: ../app/core/gimpbrushgenerated.c:614
 #, c-format
@@ -4600,8 +4612,8 @@ msgstr "Error while reading brush file '%s': %s"
 msgid "File is truncated"
 msgstr "File is truncated"
 
-#: ../app/core/gimpbrushpipe.c:370 ../app/core/gimpbrushpipe.c:390
-#: ../app/core/gimpbrushpipe.c:480
+#: ../app/core/gimpbrushpipe.c:368 ../app/core/gimpbrushpipe.c:388
+#: ../app/core/gimpbrushpipe.c:478
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatal parse error in brush file '%s': File is corrupt."
@@ -4766,7 +4778,8 @@ msgstr "No patterns available for this operation."
 msgid "Bucket Fill"
 msgstr "Bucket Fill"
 
-#: ../app/core/gimpdrawable-desaturate.c:65
+#: ../app/core/gimpdrawable-desaturate.c:97
+#: ../app/dialogs/desaturate-dialog.c:59 ../app/dialogs/desaturate-dialog.c:71
 msgid "Desaturate"
 msgstr "Desaturate"
 
@@ -5597,6 +5610,14 @@ msgstr "Converting to indexed..."
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Cannot convert to a palette with more than 256 colours."
 
+#: ../app/dialogs/desaturate-dialog.c:61
+msgid "Remove colors"
+msgstr "Remove colours"
+
+#: ../app/dialogs/desaturate-dialog.c:93
+msgid "Choose shade of gray based on:"
+msgstr "Choose shade of gray based on:"
+
 #: ../app/dialogs/dialogs-constructors.c:166 ../app/gui/gui.c:143
 msgid "GIMP Message"
 msgstr "GIMP Message"
@@ -5780,8 +5801,8 @@ msgid ""
 "%s)."
 msgstr ""
 "Scaling the image to the chosen size will make it use more memory than what "
-"is configured as \"Maximum Image Size\" in the Preferences dialogue (currently "
-"%s)."
+"is configured as \"Maximum Image Size\" in the Preferences dialogue "
+"(currently %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:219
 msgid ""
