@@ -204,7 +204,8 @@ STOCK_BUTTON_IMAGES = \
 	stock-video-24.png			\
 	stock-undo-history-24.png		\
 	stock-warning-24.png			\
-	stock-web-24.png
+	stock-web-24.png			\
+	stock-wilber-32.png
 
 STOCK_DND_IMAGES = \
 	stock-channel-32.png			\

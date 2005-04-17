@@ -1,5 +1,13 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.c
+	* themes/Default/images/Makefile.am: register a wilber in button size.
+
+	* plug-ins/helpbrowser/gimpthrobber.c: choose a slightly larger
+	icon than the configured size for toolbars.
+
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: added actions to zoom in/out.
 
 	* plug-ins/helpbrowser/gimpthrobberaction.[ch]: fixed handling of

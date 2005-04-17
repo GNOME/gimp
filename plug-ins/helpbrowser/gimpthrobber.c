@@ -166,10 +166,12 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
 
   style = gtk_tool_item_get_toolbar_style (tool_item);
 
+  icon_size = gtk_tool_item_get_icon_size (tool_item);
+
   if (style == GTK_TOOLBAR_TEXT)
     icon_size = GTK_ICON_SIZE_MENU;
   else
-    icon_size = gtk_tool_item_get_icon_size (tool_item);
+    icon_size = MIN (icon_size + 1, GTK_ICON_SIZE_BUTTON);
 
   icon = gtk_image_new_from_stock (button->priv->stock_id, icon_size);
   gtk_container_add (GTK_CONTAINER (button->priv->button), icon);
