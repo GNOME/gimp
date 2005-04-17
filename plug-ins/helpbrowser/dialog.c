@@ -45,6 +45,9 @@
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
+#include "gimpthrobber.h"
+#include "gimpthrobberaction.h"
+
 #include "dialog.h"
 #include "queue.h"
 #include "uri.h"
@@ -187,10 +190,6 @@ browser_dialog_open (void)
   toolbar = gtk_ui_manager_get_widget (ui_manager, "/help-browser-toolbar");
   gtk_box_pack_start (GTK_BOX (vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
-
-  item = gtk_separator_tool_item_new ();
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
-  gtk_widget_show (GTK_WIDGET (item));
 
   item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
@@ -408,8 +407,6 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
-    //    { "help-browser-menu", NULL, NULL },
-
     { "back", GTK_STOCK_GO_BACK,
       NULL, NULL, N_("Go back one page"),
       G_CALLBACK (back_callback) },
@@ -422,25 +419,32 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Go to the index page"),
       G_CALLBACK (index_callback) },
 
-    { "online", GIMP_STOCK_WILBER,
-      "", NULL, N_("Visit the GIMP documentation website"),
-      G_CALLBACK (online_callback) },
-
     { "close", GTK_STOCK_CLOSE,
-      NULL, "<control>W", N_("Close the help browser"),
+      NULL, "<control>W", NULL,
       G_CALLBACK (close_callback) },
 
     { "quit", GTK_STOCK_QUIT,
-      NULL, "<control>Q", N_("Close the help browser"),
+      NULL, "<control>Q", NULL,
       G_CALLBACK (close_callback) },
   };
 
   GtkUIManager   *ui_manager = gtk_ui_manager_new ();
   GtkActionGroup *group      = gtk_action_group_new ("Actions");
+  GtkAction      *action;
   GError         *error      = NULL;
 
   gtk_action_group_set_translation_domain (group, NULL);
   gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
+
+  action = gimp_throbber_action_new ("online",
+                                     _("Visit the GIMP documentation website"),
+                                     GIMP_STOCK_WILBER);
+  g_signal_connect_closure (action, "activate",
+                            g_cclosure_new (G_CALLBACK (online_callback),
+                                            NULL, NULL),
+                            FALSE);
+  gtk_action_group_add_action (group, action);
+  g_object_unref (action);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
                               gtk_ui_manager_get_accel_group (ui_manager));
@@ -555,7 +559,7 @@ static void
 online_callback (GtkAction *action,
                  gpointer   data)
 {
-  load_remote_page ("http://www.gimp.org/docs/");
+  load_remote_page ("http://docs.gimp.org/");
 }
 
 static void

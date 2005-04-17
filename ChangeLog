@@ -1,5 +1,14 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/gimpthrobber.[ch]
+	* plug-ins/helpbrowser/gimpthrobberaction.[ch]: new files
+	implementing a custom GtkToolItem and a GtkAction to use it.
+
+	* plug-ins/helpbrowser/dialog.c: use the new widget.
+
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpaction.h
 	* app/widgets/gimpactiongroup.h
 	* app/widgets/gimpcellrendereraccel.h

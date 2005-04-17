@@ -13,12 +13,16 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = helpbrowser
 
 helpbrowser_SOURCES = \
-	helpbrowser.c	\
-	dialog.c	\
-	dialog.h	\
-	queue.c		\
-	queue.h		\
-	uri.c		\
+	gimpthrobber.c		\
+	gimpthrobber.h		\
+	gimpthrobberaction.c	\
+	gimpthrobberaction.h	\
+	helpbrowser.c		\
+	dialog.c		\
+	dialog.h		\
+	queue.c			\
+	queue.h			\
+	uri.c			\
 	uri.h
 
 INCLUDES = \
