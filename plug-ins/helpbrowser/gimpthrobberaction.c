@@ -83,21 +83,25 @@ static void
 gimp_throbber_action_connect_proxy (GtkAction *action,
                                     GtkWidget *proxy)
 {
-  GParamSpec *pspec;
 
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (action),
-                                        "stock-id");
+  if (GIMP_IS_THROBBER (proxy))
+    {
+      GParamSpec *pspec;
 
-  gimp_throbber_action_sync_property (action, pspec, proxy);
-  g_signal_connect_object (action, "notify::stock-id",
-                           G_CALLBACK (gimp_throbber_action_sync_property),
-                           proxy, 0);
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (action),
+                                            "stock-id");
 
-  g_signal_connect_object (proxy, "clicked",
-                           G_CALLBACK (gtk_action_activate), action,
-                           G_CONNECT_SWAPPED);
+      gimp_throbber_action_sync_property (action, pspec, proxy);
+      g_signal_connect_object (action, "notify::stock-id",
+                               G_CALLBACK (gimp_throbber_action_sync_property),
+                               proxy, 0);
+
+      g_signal_connect_object (proxy, "clicked",
+                               G_CALLBACK (gtk_action_activate), action,
+                               G_CONNECT_SWAPPED);
+    }
 }
 
 static void
@@ -117,11 +121,13 @@ gimp_throbber_action_sync_property (GtkAction  *action,
 
 GtkAction *
 gimp_throbber_action_new (const gchar *name,
+                          const gchar *label,
                           const gchar *tooltip,
                           const gchar *stock_id)
 {
   return g_object_new (GIMP_TYPE_THROBBER_ACTION,
                        "name",     name,
+                       "label",    label,
                        "tooltip",  tooltip,
                        "stock-id", stock_id,
                        NULL);

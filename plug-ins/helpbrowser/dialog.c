@@ -74,6 +74,10 @@ static void       forward_callback   (GtkAction        *action,
                                       gpointer          data);
 static void       index_callback     (GtkAction        *action,
                                       gpointer          data);
+static void       zoom_in_callback   (GtkAction        *action,
+                                      gpointer          data);
+static void       zoom_out_callback  (GtkAction        *action,
+                                      gpointer          data);
 static void       close_callback     (GtkAction        *action,
                                       gpointer          data);
 static void       online_callback    (GtkAction        *action,
@@ -419,6 +423,14 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Go to the index page"),
       G_CALLBACK (index_callback) },
 
+    { "zoom-in", GTK_STOCK_ZOOM_IN,
+      NULL, NULL, NULL,
+      G_CALLBACK (zoom_in_callback) },
+
+    { "zoom-out", GTK_STOCK_ZOOM_OUT,
+      NULL, NULL, NULL,
+      G_CALLBACK (zoom_out_callback) },
+
     { "close", GTK_STOCK_CLOSE,
       NULL, "<control>W", NULL,
       G_CALLBACK (close_callback) },
@@ -437,6 +449,7 @@ ui_manager_new (GtkWidget *window)
   gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), NULL);
 
   action = gimp_throbber_action_new ("online",
+                                     "docs.gimp.org",
                                      _("Visit the GIMP documentation website"),
                                      GIMP_STOCK_WILBER);
   g_signal_connect_closure (action, "activate",
@@ -476,6 +489,9 @@ ui_manager_new (GtkWidget *window)
                                      "  <popup name=\"help-browser-popup\">"
                                      "    <menuitem action=\"back\" />"
                                      "    <menuitem action=\"forward\" />"
+                                     "    <separator />"
+                                     "    <menuitem action=\"zoom-in\" />"
+                                     "    <menuitem action=\"zoom-out\" />"
                                      "  </popup>"
                                      "</ui>",
                                      -1, &error);
@@ -553,6 +569,20 @@ index_callback (GtkAction *action,
                 gpointer   data)
 {
   browser_dialog_load ("index.html", TRUE);
+}
+
+static void
+zoom_in_callback (GtkAction  *action,
+                  gpointer  data)
+{
+  html_view_zoom_in (HTML_VIEW (html));
+}
+
+static void
+zoom_out_callback (GtkAction *action,
+                   gpointer   data)
+{
+  html_view_zoom_out (HTML_VIEW (html));
 }
 
 static void

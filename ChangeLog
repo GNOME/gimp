@@ -1,5 +1,12 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: added actions to zoom in/out.
+
+	* plug-ins/helpbrowser/gimpthrobberaction.[ch]: fixed handling of
+	overflow menu items.
+
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/Makefile.am
 	* plug-ins/helpbrowser/gimpthrobber.[ch]
 	* plug-ins/helpbrowser/gimpthrobberaction.[ch]: new files
