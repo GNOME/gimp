@@ -1,7 +1,8 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstock.c
-	* themes/Default/images/Makefile.am: register a wilber in button size.
+	* themes/Default/images/Makefile.am: register a wilber icon in
+	button size.
 
 	* plug-ins/helpbrowser/gimpthrobber.c: choose a slightly larger
 	icon than the configured size for toolbars.
