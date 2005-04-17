@@ -205,6 +205,7 @@ browser_dialog_open (void)
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/forward");
   gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  g_object_notify (G_OBJECT (action), "tooltip");
   button_next = GTK_WIDGET (item);
 
   item = g_object_new (GTK_TYPE_MENU_TOOL_BUTTON, NULL);
@@ -214,6 +215,7 @@ browser_dialog_open (void)
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/back");
   gtk_action_connect_proxy (action, GTK_WIDGET (item));
+  g_object_notify (G_OBJECT (action), "tooltip");
   button_prev = GTK_WIDGET (item);
 
   item =
@@ -274,7 +276,7 @@ browser_dialog_open (void)
   html  = html_view_new ();
   queue = queue_new ();
 
-  gtk_widget_set_size_request (html, -1, 210);
+  gtk_widget_set_size_request (html, -1, 200);
 
   scroll =
     gtk_scrolled_window_new (gtk_layout_get_hadjustment (GTK_LAYOUT (html)),
