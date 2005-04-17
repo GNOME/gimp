@@ -1641,7 +1641,7 @@ static char *readstr_upto(scheme *sc, char *delim) {
     c = inchar(sc);
     len = g_unichar_to_utf8(c, p);
     p += len;
-  } while (!is_one_of(delim, c));
+  } while (c && !is_one_of(delim, c));
 
   if(p==sc->strbuff+2 && c_prev=='\\')
     *p = '\0';
@@ -1771,24 +1771,12 @@ static pointer readstrexp(scheme *sc) {
 
 /* check c is in chars */
 static INLINE int is_one_of(char *s, gunichar c) {
-#if	0
-     if(c==EOF) return 1;
-     while (*s)
-          if (*s++ == c)
-               return (1);
-#else
-#if	1
+  if (c==EOF)
+     return 1;
+
   if (g_utf8_strchr(s, -1, c) != NULL)
      return (1);
-#else
-gchar *p;
 
-  p = NULL;
-  p = g_utf8_strchr(s, -1, c);
-  if (p != NULL)
-     return (1);
-#endif
-#endif
   return (0);
 }
 
