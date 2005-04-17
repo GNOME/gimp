@@ -419,9 +419,10 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * @climb_rate:     The spinbutton's climb rate.
  * @digits:         The spinbutton's number of decimal digits.
  *
- * This function is a shortcut for gtk_adjustment_new() and a subsequent
- * gtk_spin_button_new() and does some more initialisation stuff like
- * setting a standard minimum horizontal size.
+ * This function is a shortcut for gtk_adjustment_new() and a
+ * subsequent gtk_spin_button_new(). It also calls
+ * gtk_spin_button_set_numeric() so that non-numeric text cannot be
+ * entered.
  *
  * Returns: A #GtkSpinbutton and it's #GtkAdjustment.
  **/
@@ -443,6 +444,7 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
 				    climb_rate, digits);
+
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   return spinbutton;

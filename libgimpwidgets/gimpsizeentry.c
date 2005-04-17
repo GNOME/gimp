@@ -291,6 +291,7 @@ gimp_size_entry_new (gint                       number_of_fields,
   for (i = 0; i < number_of_fields; i++)
     {
       GimpSizeEntryField *gsef;
+      gint                digits;
 
       gsef = g_new0 (GimpSizeEntryField, 1);
       gse->fields = g_slist_append (gse->fields, gsef);
@@ -311,15 +312,16 @@ gimp_size_entry_new (gint                       number_of_fields,
 	(update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE) ? 0 : 3;
       gsef->stop_recursion    = 0;
 
-      gsef->value_adjustment = gtk_adjustment_new (gsef->value,
-						   gsef->min_value,
-						   gsef->max_value,
-						   1.0, 10.0, 0.0);
-      gsef->value_spinbutton =
-	gtk_spin_button_new (GTK_ADJUSTMENT (gsef->value_adjustment), 1.0,
-			     (unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
-			     (unit == GIMP_UNIT_PERCENT) ? 2 :
-			     GIMP_SIZE_ENTRY_DIGITS (unit));
+      digits = ((unit == GIMP_UNIT_PIXEL) ?
+                gsef->refval_digits : ((unit == GIMP_UNIT_PERCENT) ?
+                                       2 : GIMP_SIZE_ENTRY_DIGITS (unit)));
+
+      gsef->value_spinbutton = gimp_spin_button_new (&gsef->value_adjustment,
+                                                     gsef->value,
+                                                     gsef->min_value,
+                                                     gsef->max_value,
+                                                     1.0, 10.0, 0.0,
+                                                     1.0, digits);
 
       if (spinbutton_width > 0)
         {
@@ -342,14 +344,12 @@ gimp_size_entry_new (gint                       number_of_fields,
 
       if (gse->show_refval)
 	{
-	  gsef->refval_adjustment = gtk_adjustment_new (gsef->refval,
-							gsef->min_refval,
-							gsef->max_refval,
-							1.0, 10.0, 0.0);
-	  gsef->refval_spinbutton =
-	    gtk_spin_button_new (GTK_ADJUSTMENT (gsef->refval_adjustment),
-				 1.0,
-				 gsef->refval_digits);
+          gsef->refval_spinbutton =
+            gimp_spin_button_new (&gsef->refval_adjustment,
+                                  gsef->refval,
+                                  gsef->min_refval, gsef->max_refval,
+                                  1.0, 10.0, 0.0, 1.0, gsef->refval_digits);
+
 	  gtk_widget_set_size_request (gsef->refval_spinbutton,
 				       spinbutton_width, -1);
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,

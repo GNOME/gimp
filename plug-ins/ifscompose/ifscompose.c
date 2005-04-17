@@ -247,8 +247,6 @@ static ValuePair *value_pair_create       (gpointer   data,
                                            gboolean   create_scale,
                                            ValuePairType type);
 static void value_pair_update             (ValuePair *value_pair);
-static void value_pair_destroy_callback   (GtkWidget *widget,
-                                           ValuePair *value_pair);
 static void value_pair_scale_callback     (GtkAdjustment *adjustment,
                                            ValuePair *value_pair);
 
@@ -2114,48 +2112,35 @@ value_pair_create (gpointer      data,
   value_pair->data.d = data;
   value_pair->type   = type;
 
-  value_pair->adjustment =
-    gtk_adjustment_new (1.0, lower, upper,
-                        (upper-lower) / 100, (upper-lower) / 10,
-                        0.0);
-  /* We need to sink the adjustment, since we may not create a scale for
-   * it, so nobody will assume the initial refcount
-   */
-  g_object_ref (value_pair->adjustment);
-  gtk_object_sink (value_pair->adjustment);
+  value_pair->spin = gimp_spin_button_new (&value_pair->adjustment,
+                                           1.0, lower, upper,
+                                           (upper - lower) / 100,
+                                           (upper - lower) / 10,
+                                           0.0, 1.0, 3);
+  gtk_widget_set_size_request (value_pair->spin, 72, -1);
+
+  g_signal_connect (value_pair->adjustment, "value_changed",
+                    G_CALLBACK (value_pair_scale_callback),
+                    value_pair);
 
   if (create_scale)
     {
       value_pair->scale =
         gtk_hscale_new (GTK_ADJUSTMENT (value_pair->adjustment));
-      gtk_widget_ref (value_pair->scale);
 
       if (type == VALUE_PAIR_INT)
-          gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 0);
+        gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 0);
       else
-          gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 3);
+        gtk_scale_set_digits (GTK_SCALE (value_pair->scale), 3);
 
       gtk_scale_set_draw_value (GTK_SCALE (value_pair->scale), FALSE);
       gtk_range_set_update_policy (GTK_RANGE (value_pair->scale),
                                    GTK_UPDATE_DELAYED);
     }
   else
-    value_pair->scale = NULL;
-
-  /* We destroy the value pair when the spinbutton is destroyed, so
-   * we don't need to hold a refcount on the entry
-   */
-
-  value_pair->spin
-    = gtk_spin_button_new (GTK_ADJUSTMENT (value_pair->adjustment),
-                           1.0, 3);
-  gtk_widget_set_size_request (value_pair->spin, 72, -1);
-  g_signal_connect (value_pair->spin, "destroy",
-                    G_CALLBACK (value_pair_destroy_callback),
-                    value_pair);
-  g_signal_connect (value_pair->adjustment, "value_changed",
-                    G_CALLBACK (value_pair_scale_callback),
-                    value_pair);
+    {
+      value_pair->scale = NULL;
+    }
 
   return value_pair;
 }
@@ -2197,15 +2182,6 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 
   if (changed)
       val_changed_update ();
-}
-
-static void
-value_pair_destroy_callback (GtkWidget *widget,
-                             ValuePair *value_pair)
-{
-  if (value_pair->scale)
-    g_object_unref (value_pair->scale);
-  g_object_unref (value_pair->adjustment);
 }
 
 static void

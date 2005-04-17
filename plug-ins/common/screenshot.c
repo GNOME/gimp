@@ -846,8 +846,8 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  adj = gtk_adjustment_new (shootvals.select_delay, 0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 0, 0);
+  spinner = gimp_spin_button_new (&adj, shootvals.select_delay,
+                                  0.0, 100.0, 1.0, 5.0, 0.0, 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 

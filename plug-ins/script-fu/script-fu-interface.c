@@ -276,6 +276,7 @@ script_fu_interface (SFScript *script)
   for (i = script->image_based ? 2 : 0; i < script->num_args; i++)
     {
       GtkWidget *widget       = NULL;
+      GtkObject *adj;
       gchar     *label_text;
       gfloat     label_yalign = 0.5;
       gint      *ID_ptr       = NULL;
@@ -412,15 +413,16 @@ script_fu_interface (SFScript *script)
 
 	    case SF_SPINNER:
               left_align = TRUE;
-	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
-		gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value,
-				    script->arg_defaults[i].sfa_adjustment.lower,
-				    script->arg_defaults[i].sfa_adjustment.upper,
-				    script->arg_defaults[i].sfa_adjustment.step,
-				    script->arg_defaults[i].sfa_adjustment.page, 0);
-              widget = gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj,
-                                            0,
-                                            script->arg_defaults[i].sfa_adjustment.digits);
+              widget =
+                gimp_spin_button_new (&adj,
+                                      script->arg_values[i].sfa_adjustment.value,
+                                      script->arg_defaults[i].sfa_adjustment.lower,
+                                      script->arg_defaults[i].sfa_adjustment.upper,
+                                      script->arg_defaults[i].sfa_adjustment.step,
+                                      script->arg_defaults[i].sfa_adjustment.page,
+                                      0, 0,
+                                      script->arg_defaults[i].sfa_adjustment.digits);
+              script->arg_values[i].sfa_adjustment.adj = GTK_ADJUSTMENT (adj);
 	      break;
 	    }
 

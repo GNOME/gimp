@@ -1,5 +1,22 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.c: use gimp_spin_button_new() which
+	calls gtk_spin_button_set_numeric() for us. Part of a fix for bug
+	#300935.
+
+	* libgimpwidgets/gimpwidgets.c: improved the API docs for
+	gimp_spin_button_new().
+
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimplevelstool.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/winsnap/winsnap.c: use gimp_spin_button_new().
+
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: set a busy cursor while loading a
 	page. Offer drags as "text/uri-list" in addition to "_NETSCAPE_URL".
 

@@ -551,6 +551,7 @@ rcm_create_gray (void)
                                               0.0, 1.0, 0.0001, 0.001, 0.0);
 
   entry = gtk_spin_button_new (adj, 0.01, 4);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 

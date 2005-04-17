@@ -518,28 +518,22 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  data = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
-  tool->low_input = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (tool->low_input, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_spin_button_new (&data, 0, 0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
+  tool->low_input = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->low_input, "value_changed",
                     G_CALLBACK (levels_low_input_adjustment_update),
                     tool);
 
   /*  input gamma spin  */
-  data = gtk_adjustment_new (1, 0.1, 10, 0.01, 0.1, 1);
-  tool->gamma = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (tool->gamma, 0.5, 2);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_spin_button_new (&data, 1, 0.1, 10, 0.01, 0.1, 1, 0.5, 2);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, FALSE, 0);
   gimp_help_set_help_data (spinbutton, _("Gamma"), NULL);
   gtk_widget_show (spinbutton);
 
+  tool->gamma = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->gamma, "value_changed",
                     G_CALLBACK (levels_gamma_adjustment_update),
                     tool);
@@ -553,18 +547,14 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  data = gtk_adjustment_new (255, 0, 255, 1, 10, 10);
-  tool->high_input = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (tool->high_input, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_spin_button_new (&data, 255, 0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
+  tool->high_input = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->high_input, "value_changed",
                     G_CALLBACK (levels_high_input_adjustment_update),
                     tool);
-
 
   /*  Output levels frame  */
   frame = gimp_frame_new (_("Output Levels"));
@@ -612,27 +602,21 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  low output spin  */
-  data = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
-  tool->low_output = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (tool->low_output, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_spin_button_new (&data, 0, 0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
+  tool->low_output = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->low_output, "value_changed",
                     G_CALLBACK (levels_low_output_adjustment_update),
                     tool);
 
   /*  high output spin  */
-  data = gtk_adjustment_new (255, 0, 255, 1, 10, 10);
-  tool->high_output = GTK_ADJUSTMENT (data);
-
-  spinbutton = gtk_spin_button_new (tool->high_output, 0.5, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  spinbutton = gimp_spin_button_new (&data, 255, 0, 255, 1, 10, 10, 0.5, 0);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
+  tool->high_output = GTK_ADJUSTMENT (data);
   g_signal_connect (tool->high_output, "value_changed",
                     G_CALLBACK (levels_high_output_adjustment_update),
                     tool);
