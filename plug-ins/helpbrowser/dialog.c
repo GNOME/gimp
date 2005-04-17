@@ -58,14 +58,14 @@
 enum
 {
   HISTORY_TITLE,
-  HISTORY_REF
+  HISTORY_URI
 };
 
 /*  local function prototypes  */
 
 static GtkUIManager * ui_manager_new (GtkWidget        *window);
 static void       browser_dialog_404 (HtmlDocument     *doc,
-                                      const gchar      *url,
+                                      const gchar      *uri,
                                       const gchar      *message);
 
 static void       back_callback      (GtkAction        *action,
@@ -97,27 +97,28 @@ static void       drag_data_get      (GtkWidget        *widget,
                                       guint             info,
                                       guint             time,
                                       gpointer          data);
-
-static gboolean   button_press       (GtkWidget        *widget,
+static void       view_realize       (GtkWidget        *widget);
+static void       view_unrealize     (GtkWidget        *widget);
+static gboolean   view_button_press  (GtkWidget        *widget,
                                       GdkEventButton   *event);
 
 static void       title_changed      (HtmlDocument     *doc,
                                       const gchar      *new_title,
                                       gpointer          data);
 static void       link_clicked       (HtmlDocument     *doc,
-                                      const gchar      *url,
+                                      const gchar      *uri,
                                       gpointer          data);
 static gboolean   request_url        (HtmlDocument     *doc,
-                                      const gchar      *url,
+                                      const gchar      *uri,
                                       HtmlStream       *stream,
                                       GError          **error);
 static gboolean   io_handler         (GIOChannel       *io,
                                       GIOCondition      condition,
                                       gpointer          data);
-static void       load_remote_page   (const gchar      *ref);
+static void       load_remote_page   (const gchar      *uri);
 
 static void       history_add        (GtkComboBox      *combo,
-                                      const gchar      *ref,
+                                      const gchar      *uri,
                                       const gchar      *title);
 
 static gboolean   has_case_prefix    (const gchar      *haystack,
@@ -131,16 +132,18 @@ static gchar    * filename_from_uri  (const gchar      *uri);
 static const gchar  *eek_png_tag  = "<h1>Eeek!</h1>";
 
 static Queue        *queue        = NULL;
-static gchar        *current_ref  = NULL;
+static gchar        *current_uri  = NULL;
 
 static GtkWidget    *html         = NULL;
 static GtkUIManager *ui_manager   = NULL;
 static GtkWidget    *button_prev  = NULL;
 static GtkWidget    *button_next  = NULL;
+static GdkCursor    *busy_cursor  = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
-  { "_NETSCAPE_URL", 0, 0 },
+  { "text/uri-list", 0, 0 },
+  { "_NETSCAPE_URL", 0, 0 }
 };
 
 
@@ -271,7 +274,7 @@ browser_dialog_open (void)
   html  = html_view_new ();
   queue = queue_new ();
 
-  gtk_widget_set_size_request (GTK_WIDGET (html), -1, 200);
+  gtk_widget_set_size_request (html, -1, 210);
 
   scroll =
     gtk_scrolled_window_new (gtk_layout_get_hadjustment (GTK_LAYOUT (html)),
@@ -285,6 +288,17 @@ browser_dialog_open (void)
   gtk_container_add (GTK_CONTAINER (scroll), html);
   gtk_widget_show (html);
 
+  g_signal_connect (html, "realize",
+                    G_CALLBACK (view_realize),
+                    NULL);
+  g_signal_connect (html, "unrealize",
+                    G_CALLBACK (view_unrealize),
+                    NULL);
+
+  g_signal_connect (html, "button_press_event",
+                    G_CALLBACK (view_button_press),
+                    NULL);
+
   html_view_set_document (HTML_VIEW (html), html_document_new ());
 
   g_signal_connect (HTML_VIEW (html)->document, "title_changed",
@@ -295,10 +309,6 @@ browser_dialog_open (void)
                     NULL);
   g_signal_connect (HTML_VIEW (html)->document, "request_url",
                     G_CALLBACK (request_url),
-                    NULL);
-
-  g_signal_connect (html, "button_press_event",
-                    G_CALLBACK (button_press),
                     NULL);
 
   gtk_widget_grab_focus (html);
@@ -316,53 +326,53 @@ idle_jump_to_anchor (const gchar *anchor)
 }
 
 void
-browser_dialog_load (const gchar *ref,
+browser_dialog_load (const gchar *uri,
                      gboolean     add_to_queue)
 {
   HtmlDocument  *doc = HTML_VIEW (html)->document;
   GtkAdjustment *adj = gtk_layout_get_vadjustment (GTK_LAYOUT (html));
   gchar         *abs;
-  gchar         *new_ref;
+  gchar         *new_uri;
   gchar         *anchor;
   gchar         *tmp;
 
-  g_return_if_fail (ref != NULL);
+  g_return_if_fail (uri != NULL);
 
-  if (! current_ref)
+  if (! current_uri)
     {
       gchar *slash;
 
-      current_ref = g_strdup (ref);
+      current_uri = g_strdup (uri);
 
-      slash = strrchr (current_ref, '/');
+      slash = strrchr (current_uri, '/');
 
       if (slash)
         *slash = '\0';
     }
 
-  abs = uri_to_abs (ref, current_ref);
+  abs = uri_to_abs (uri, current_uri);
   if (! abs)
     return;
 
-  anchor = strchr (ref, '#');
+  anchor = strchr (uri, '#');
   if (anchor && anchor[0] && anchor[1])
     {
-      new_ref = g_strconcat (abs, anchor, NULL);
+      new_uri = g_strconcat (abs, anchor, NULL);
       anchor += 1;
     }
   else
     {
-      new_ref = g_strdup (abs);
+      new_uri = g_strdup (abs);
       anchor = NULL;
     }
 
   if (! has_case_prefix (abs, "file:/"))
     {
-      load_remote_page (ref);
+      load_remote_page (uri);
       return;
     }
 
-  tmp = uri_to_abs (current_ref, current_ref);
+  tmp = uri_to_abs (current_uri, current_uri);
   if (!tmp || strcmp (tmp, abs))
     {
       GError *error = NULL;
@@ -376,7 +386,12 @@ browser_dialog_load (const gchar *ref,
                          (GSourceFunc) idle_jump_to_anchor,
                          g_strdup (anchor), (GDestroyNotify) g_free);
 
-      if (! request_url (doc, abs, doc->current_stream, &error))
+      if (request_url (doc, abs, doc->current_stream, &error))
+        {
+          if (html->window)
+            gdk_window_set_cursor (html->window, busy_cursor);
+        }
+      else
         {
           browser_dialog_404 (doc, abs, error->message);
           g_error_free (error);
@@ -392,11 +407,11 @@ browser_dialog_load (const gchar *ref,
 
   g_free (tmp);
 
-  g_free (current_ref);
-  current_ref = new_ref;
+  g_free (current_uri);
+  current_uri = new_uri;
 
   if (add_to_queue)
-    queue_add (queue, new_ref);
+    queue_add (queue, new_uri);
 
   update_toolbar ();
 
@@ -507,7 +522,7 @@ ui_manager_new (GtkWidget *window)
 
 static void
 browser_dialog_404 (HtmlDocument *doc,
-                    const gchar  *url,
+                    const gchar  *uri,
                     const gchar  *message)
 {
   gchar *msg = g_strdup_printf
@@ -526,7 +541,7 @@ browser_dialog_404 (HtmlDocument *doc,
      _("Document not found"),
      eek_png_tag,
      _("The requested URL could not be loaded:"),
-     url,
+     uri,
      message);
 
   html_document_write_stream (doc, msg, strlen (msg));
@@ -666,7 +681,7 @@ combo_changed (GtkWidget *widget,
       GValue  value = { 0, };
 
       gtk_tree_model_get_value (gtk_combo_box_get_model (combo),
-                                &iter, HISTORY_REF, &value);
+                                &iter, HISTORY_URI, &value);
 
       browser_dialog_load (g_value_get_string (&value), TRUE);
 
@@ -690,19 +705,48 @@ drag_data_get (GtkWidget        *widget,
                guint             time,
                gpointer          data)
 {
-  if (! current_ref)
+  if (! current_uri)
     return;
 
-  gtk_selection_data_set (selection_data,
-                          selection_data->target,
-                          8,
-                          current_ref,
-                          strlen (current_ref));
+  if (selection_data->target == gdk_atom_intern ("text/uri-list", FALSE))
+    {
+      gchar *uris[2];
+
+      uris[0] = current_uri;
+      uris[1] = NULL;
+
+      gtk_selection_data_set_uris (selection_data, uris);
+    }
+  else if (selection_data->target == gdk_atom_intern ("_NETSCAPE_URL", FALSE))
+    {
+      gtk_selection_data_set (selection_data,
+                              selection_data->target,
+                              8, current_uri, strlen (current_uri));
+    }
+}
+
+static void
+view_realize (GtkWidget *widget)
+{
+  g_return_if_fail (busy_cursor == NULL);
+
+  busy_cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                            GDK_WATCH);
+}
+
+static void
+view_unrealize (GtkWidget *widget)
+{
+  if (busy_cursor)
+    {
+      gdk_cursor_unref (busy_cursor);
+      busy_cursor = NULL;
+    }
 }
 
 static gboolean
-button_press (GtkWidget      *widget,
-              GdkEventButton *event)
+view_button_press (GtkWidget      *widget,
+                   GdkEventButton *event)
 {
   gtk_widget_grab_focus (widget);
 
@@ -737,7 +781,7 @@ title_changed (HtmlDocument *doc,
         }
     }
 
-  history_add (GTK_COMBO_BOX (data), current_ref,
+  history_add (GTK_COMBO_BOX (data), current_uri,
                title ? title : _("Untitled"));
 
   if (title)
@@ -748,25 +792,25 @@ title_changed (HtmlDocument *doc,
 
 static void
 link_clicked (HtmlDocument *doc,
-              const gchar  *url,
+              const gchar  *uri,
               gpointer      data)
 {
-  browser_dialog_load (url, TRUE);
+  browser_dialog_load (uri, TRUE);
 }
 
 static gboolean
 request_url (HtmlDocument *doc,
-             const gchar  *url,
+             const gchar  *uri,
              HtmlStream   *stream,
              GError      **error)
 {
   gchar *abs;
   gchar *filename;
 
-  g_return_val_if_fail (url != NULL, TRUE);
+  g_return_val_if_fail (uri != NULL, TRUE);
   g_return_val_if_fail (stream != NULL, TRUE);
 
-  abs = uri_to_abs (url, current_ref);
+  abs = uri_to_abs (uri, current_uri);
   if (! abs)
     return TRUE;
 
@@ -821,10 +865,7 @@ io_handler (GIOChannel   *io,
         }
       else
 	{
-          html_stream_close (stream);
-          g_io_channel_unref (io);
-
-	  return FALSE;
+          goto error;
 	}
 
       if (condition & G_IO_HUP)
@@ -840,8 +881,12 @@ io_handler (GIOChannel   *io,
 
   if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL))
     {
+    error:
       html_stream_close (stream);
       g_io_channel_unref (io);
+
+      if (html->window)
+        gdk_window_set_cursor (html->window, NULL);
 
       return FALSE;
     }
@@ -850,7 +895,7 @@ io_handler (GIOChannel   *io,
 }
 
 static void
-load_remote_page (const gchar *ref)
+load_remote_page (const gchar *uri)
 {
   GimpParam *return_vals;
   gint       nreturn_vals;
@@ -858,14 +903,14 @@ load_remote_page (const gchar *ref)
   /*  try to call the user specified web browser */
   return_vals = gimp_run_procedure ("plug_in_web_browser",
                                     &nreturn_vals,
-                                    GIMP_PDB_STRING, ref,
+                                    GIMP_PDB_STRING, uri,
                                     GIMP_PDB_END);
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
 static void
 history_add (GtkComboBox *combo,
-             const gchar *ref,
+             const gchar *uri,
 	     const gchar *title)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (combo);
@@ -877,9 +922,9 @@ history_add (GtkComboBox *combo,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      gtk_tree_model_get_value (model, &iter, HISTORY_REF, &value);
+      gtk_tree_model_get_value (model, &iter, HISTORY_URI, &value);
 
-      if (strcmp (g_value_get_string (&value), ref) == 0)
+      if (strcmp (g_value_get_string (&value), uri) == 0)
         {
           gtk_list_store_move_after (GTK_LIST_STORE (model), &iter, NULL);
           g_value_unset (&value);
@@ -894,7 +939,7 @@ history_add (GtkComboBox *combo,
       gtk_list_store_prepend (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           HISTORY_TITLE, title,
-                          HISTORY_REF,   ref,
+                          HISTORY_URI,   uri,
                           -1);
     }
 

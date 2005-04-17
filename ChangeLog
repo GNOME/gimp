@@ -1,5 +1,10 @@
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: set a busy cursor while loading a
+	page. Offer drags as "text/uri-list" in addition to "_NETSCAPE_URL".
+
+2005-04-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpstock.c
 	* themes/Default/images/Makefile.am: register a wilber icon in
 	button size.
