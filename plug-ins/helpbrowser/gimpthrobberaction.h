@@ -32,7 +32,6 @@ G_BEGIN_DECLS
 #define GIMP_THROBBER_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_THROBBER_ACTION, GimpThrobberActionClass))
 
 
-
 typedef GtkAction       GimpThrobberAction;
 typedef GtkActionClass  GimpThrobberActionClass;
 

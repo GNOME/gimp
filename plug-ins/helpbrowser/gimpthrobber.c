@@ -39,31 +39,34 @@ enum
 };
 
 
-static void  gimp_throbber_class_init      (GimpThrobberClass *klass);
-static void  gimp_throbber_init            (GimpThrobber      *button);
+static void      gimp_throbber_class_init      (GimpThrobberClass *klass);
 
-static void  gimp_throbber_set_property         (GObject      *object,
-                                                 guint         prop_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
-static void  gimp_throbber_get_property         (GObject      *object,
-                                                 guint         prop_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
-static void  gimp_throbber_finalize             (GObject      *object);
+static void      gimp_throbber_init                 (GimpThrobber *button);
 
-static gboolean  gimp_throbber_create_menu_proxy (GtkToolItem *tool_item);
-static void  gimp_throbber_toolbar_reconfigured (GtkToolItem  *tool_item);
-static void  gimp_throbber_button_clicked       (GtkWidget    *widget,
-                                                 GimpThrobber *button);
+static void      gimp_throbber_set_property         (GObject      *object,
+                                                     guint         prop_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void      gimp_throbber_get_property         (GObject      *object,
+                                                     guint         prop_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
+static void      gimp_throbber_finalize             (GObject      *object);
 
-static void  gimp_throbber_construct_contents   (GtkToolItem  *tool_item);
+static gboolean  gimp_throbber_create_menu_proxy    (GtkToolItem  *tool_item);
+static void      gimp_throbber_toolbar_reconfigured (GtkToolItem  *tool_item);
+static void      gimp_throbber_button_clicked       (GtkWidget    *widget,
+                                                     GimpThrobber *button);
+
+static void      gimp_throbber_construct_contents   (GtkToolItem  *tool_item);
 
 
-static GObjectClass *parent_class = NULL;
+static GObjectClass *parent_class                    = NULL;
 static guint         toolbutton_signals[LAST_SIGNAL] = { 0 };
 
+
 #define GIMP_THROBBER_GET_PRIVATE(obj)(G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_THROBBER, GimpThrobberPrivate))
+
 
 struct _GimpThrobberPrivate
 {
@@ -142,9 +145,10 @@ gimp_throbber_init (GimpThrobber *button)
   gtk_tool_item_set_homogeneous (toolitem, TRUE);
 
   button->priv->button = g_object_new (GTK_TYPE_BUTTON,
-                                       "yalign", 0.0,
+                                       "yalign",         0.0,
+                                       "focus-on-click", FALSE,
                                        NULL);
-  gtk_button_set_focus_on_click (GTK_BUTTON (button->priv->button), FALSE);
+
   g_signal_connect_object (button->priv->button, "clicked",
                            G_CALLBACK (gimp_throbber_button_clicked),
                            button, 0);
@@ -157,7 +161,7 @@ static void
 gimp_throbber_construct_contents (GtkToolItem *tool_item)
 {
   GimpThrobber    *button = GIMP_THROBBER (tool_item);
-  GtkWidget       *icon;
+  GtkWidget       *image;
   GtkToolbarStyle  style;
   GtkIconSize      icon_size;
 
@@ -173,9 +177,9 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
   else
     icon_size = MIN (icon_size + 1, GTK_ICON_SIZE_BUTTON);
 
-  icon = gtk_image_new_from_stock (button->priv->stock_id, icon_size);
-  gtk_container_add (GTK_CONTAINER (button->priv->button), icon);
-  gtk_widget_show (icon);
+  image = gtk_image_new_from_stock (button->priv->stock_id, icon_size);
+  gtk_container_add (GTK_CONTAINER (button->priv->button), image);
+  gtk_widget_show (image);
 
   gtk_button_set_relief (GTK_BUTTON (button->priv->button),
                          gtk_tool_item_get_relief_style (tool_item));
@@ -258,15 +262,9 @@ gimp_throbber_toolbar_reconfigured (GtkToolItem *tool_item)
 GtkToolItem *
 gimp_throbber_new (const gchar *stock_id)
 {
-  GimpThrobber *button;
-
-  g_return_val_if_fail (stock_id != NULL, NULL);
-
-  button = g_object_new (GIMP_TYPE_THROBBER,
-                         "stock-id", stock_id,
-                         NULL);
-
-  return GTK_TOOL_ITEM (button);
+  return g_object_new (GIMP_TYPE_THROBBER,
+                       "stock-id", stock_id,
+                       NULL);
 }
 
 void
@@ -287,7 +285,7 @@ gimp_throbber_set_stock_id (GimpThrobber *button,
   g_free (old_stock_id);
 }
 
-G_CONST_RETURN gchar *
+const gchar *
 gimp_throbber_get_stock_id (GimpThrobber *button)
 {
   g_return_val_if_fail (GIMP_IS_THROBBER (button), NULL);

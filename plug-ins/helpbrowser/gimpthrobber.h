@@ -49,7 +49,7 @@ struct _GimpThrobberClass
   GtkToolItemClass parent_class;
 
   /* signal */
-  void  (* clicked) (GimpThrobber *tool_item);
+  void  (* clicked) (GimpThrobber *button);
 };
 
 GType         gimp_throbber_get_type      (void) G_GNUC_CONST;
