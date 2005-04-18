@@ -1,3 +1,9 @@
+2005-04-18  Sven Neumann  <neumann@jpk.com>
+
+	* app/core/gimpimage.c (gimp_image_real_colormap_changed):
+	invalidate layer previews when the colormap changes. Fixes
+	bug #301033.
+
 2005-04-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsamplepointeditor.[ch]: Connect to the
