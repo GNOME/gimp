@@ -17,9 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * Portions of this plug-in are copyright 1991-1992 Adobe Systems
- * Incorporated.  See the spot_PS*() functions for details.
  */
 
 /*
@@ -1628,8 +1625,6 @@ spot_PSdiamond (gdouble x,
           ((ax + ay) <= 1.23 ?  1 - ((ay * 0.76) + ax) :    /* to diamond (0.76 distort) */
            ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) -1)); /* back to dot */
 }
-
-/* end of Adobe Systems Incorporated copyrighted functions */
 
 
 /*************************************************************/
