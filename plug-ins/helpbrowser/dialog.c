@@ -620,19 +620,19 @@ static GtkWidget *
 build_menu (GList     *list,
             GCallback  callback)
 {
-  GtkMenuShell *menu;
-  gint          i;
+  GtkWidget *menu;
+  gint       i;
 
   if (! list)
     return NULL;
 
-  menu = GTK_MENU_SHELL (gtk_menu_new ());
+  menu = gtk_menu_new ();
 
-  for (i = 0; list; list = g_list_next (list), i++)
+  for (i = 0; list && i < 15; list = g_list_next (list), i++)
     {
       GtkWidget *menu_item = gtk_menu_item_new_with_label (list->data);
 
-      gtk_menu_shell_append (menu, menu_item);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       gtk_widget_show (menu_item);
 
       g_signal_connect (menu_item, "activate",
@@ -642,7 +642,7 @@ build_menu (GList     *list,
 
   g_list_free (list);
 
-  return GTK_WIDGET (menu);
+  return menu;
 }
 
 static void
