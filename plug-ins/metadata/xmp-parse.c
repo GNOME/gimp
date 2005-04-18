@@ -979,7 +979,7 @@ text_handler           (GMarkupParseContext  *markup_context,
             fwrite (decoded, decoded_size, 1, ttt);
             fclose (ttt);
             */
-            g_print ("XMP: Thumb text len: %d (1/4 = %d)\nMax size: %d\nUsed size: %d\n", text_len, text_len / 4, max_size, decoded_size);
+            g_print ("XMP: Thumb text len: %d (1/4 = %d)\nMax size: %d\nUsed size: %d\n", (int) text_len, (int) text_len / 4, max_size, decoded_size);
           }
         if (decoded_size > 0)
           {

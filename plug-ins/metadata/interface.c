@@ -202,7 +202,7 @@ entry_changed (GtkEntry *entry,
 {
   WidgetXRef *xref = user_data;
 
-  g_print ("XMP: %s 0x%x 0x%x %s\n", xref->property_name, (int) entry, (int) user_data, gtk_entry_get_text (entry)); /* FIXME */
+  g_print ("XMP: %s %p %p %s\n", xref->property_name, entry, user_data, gtk_entry_get_text (entry)); /* FIXME */
 }
 
 static void
@@ -229,7 +229,7 @@ text_changed (GtkTextBuffer *text_buffer,
   GtkTextIter  end;
 
   gtk_text_buffer_get_bounds (text_buffer, &start, &end);
-  g_print ("XMP: %s 0x%x 0x%x %s\n", xref->property_name, (int) text_buffer, (int) user_data, gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE)); /* FIXME */
+  g_print ("XMP: %s %p %p %s\n", xref->property_name, text_buffer, user_data, gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE)); /* FIXME */
 }
 
 static void

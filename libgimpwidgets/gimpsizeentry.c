@@ -27,10 +27,9 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gimpwidgetstypes.h"
+#include "gimpwidgets.h"
 
 #include "gimpsizeentry.h"
-#include "gimpunitmenu.h"
 
 
 #define SIZE_MAX_VALUE 500000.0

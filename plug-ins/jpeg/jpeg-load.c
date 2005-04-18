@@ -296,7 +296,7 @@ load_image (const gchar *filename,
         {
           /* FIXME: handle EXIF here once we don't use libexif anymore */
           g_print ("jpeg-load: found EXIF block (%d bytes)\n",
-                   marker->data_length - sizeof (JPEG_APP_HEADER_EXIF));
+                   (int) (marker->data_length - sizeof (JPEG_APP_HEADER_EXIF)));
           /* Note: maybe split the loop to ensure that the EXIF block is */
           /*       always parsed before any XMP packet */
         }
@@ -309,7 +309,7 @@ load_image (const gchar *filename,
           gchar     *xmp_packet;
 
           g_print ("jpeg-load: found XMP packet (%d bytes)\n",
-                   marker->data_length - sizeof (JPEG_APP_HEADER_XMP));
+                   (int) (marker->data_length - sizeof (JPEG_APP_HEADER_XMP)));
           xmp_packet = g_strndup (marker->data + sizeof (JPEG_APP_HEADER_XMP),
                                   marker->data_length - sizeof (JPEG_APP_HEADER_XMP));
           /* FIXME: running this through the PDB is not very efficient */

@@ -1,5 +1,16 @@
 2005-04-18  Manish Singh  <yosh@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.c: #include gimpwidgets.h for
+	gimp_spin_button_new().
+
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/metadata/interface.c
+	* plug-ins/metadata/xmp-parse.c: 64-bit safety for some of the
+	debugging g_prints.
+
+2005-04-18  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/newsprint.c: Redo comment for spot_PSsquare
 	and spot_PSdiamonds, since the code was not a derived work in
 	the copyright sense. It is a C implementation of the same

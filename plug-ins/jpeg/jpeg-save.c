@@ -477,7 +477,7 @@ save_image (const gchar *filename,
   if (image_comment && *image_comment)
     {
       g_print ("jpeg-save: saving image comment (%d bytes)\n",
-               strlen (image_comment));
+               (int) strlen (image_comment));
       jpeg_write_marker (&cinfo, JPEG_COM,
                          (guchar *) image_comment, strlen (image_comment));
     }
