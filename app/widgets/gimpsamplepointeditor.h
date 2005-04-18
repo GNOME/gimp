@@ -42,6 +42,9 @@ struct _GimpSamplePointEditor
 
   GtkWidget       *table;
   GtkWidget       *color_frames[4];
+
+  gboolean         dirty[4];
+  guint            dirty_idle_id;
 };
 
 struct _GimpSamplePointEditorClass
