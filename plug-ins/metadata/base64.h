@@ -33,7 +33,8 @@ gssize base64_decode (const gchar *src_b64,
 gssize base64_encode (const gchar *src,
                       gsize        src_size,
                       gchar       *dest_b64,
-                      gsize        dest_size);
+                      gsize        dest_size,
+                      gint         columns);
 
 G_END_DECLS
 

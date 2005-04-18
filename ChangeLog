@@ -1,3 +1,9 @@
+2005-04-18  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/base64.[ch]: Added parameter 'columns' to
+	base64_encode() to add optional line breaks in the output.
+	Improved documentation.
+
 2005-04-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: workaround a GTK+ bug to make the
@@ -420,7 +426,7 @@
 
 	* plug-ins/metadata/base64.h
 	* plug-ins/metadata/base64.c: Added implementation of
-	base64_decode(), use gsize or gssize for sizes.
+	base64_encode(), use gsize or gssize for sizes.
 
 2005-04-11  Raphaël Quinet  <raphael@gimp.org>
 

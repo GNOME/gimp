@@ -18,12 +18,13 @@
  * Boston, MA 02111-1307, USA.
  */
 
-/* Yet another implementation of base64 decoding.  I ended up writing this
- * because most of the implementations that I found required a null-terminated
- * buffer, some of the others did not ignore whitespace (especially those
- * written for HTTP usage) and the rest were not compatible with the LGPL.  Or
- * at least I haven't been able to find LGPL implementations.  Writing this
- * according to RFC 1521 did not take long anyway.
+/* Yet another implementation of base64 encoding and decoding.  I
+ * ended up writing this because most of the implementations that I
+ * found required a null-terminated buffer, some of the others did not
+ * ignore whitespace (especially those written for HTTP usage) and the
+ * rest were not compatible with the LGPL (some were GPL, not LGPL).
+ * Or at least I haven't been able to find LGPL implementations.
+ * Writing this according to RFC 1521 did not take long anyway.
  */
 
 #ifndef WITHOUT_GIMP
@@ -67,10 +68,27 @@ static const gint base64_6bits[256] =
   -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3
 }; /* -1: skip whitespace, -2: end of input, -3: error */
 
-/*
- * FIXME: update this comment...
- * - dest_size should be at least 3/4 of strlen (src) minus all CRLF
- * - returns the number of bytes stored in dest
+/**
+ * base64_decode:
+ * @src_b64: input buffer containing base64-encoded data
+ * @src_size: input buffer size (in bytes) or -1 if @src_b64 is nul-terminated
+ * @dest: buffer in which the decoded data should be stored
+ * @dest_size: size of the destination buffer
+ *
+ * Read base64-encoded data from the input buffer @src_b64 and write
+ * the decoded data into @dest.
+ *
+ * The base64 encoding uses 4 bytes for every 3 bytes of input, so
+ * @dest_size should be at least 3/4 of @src_size (or less if the
+ * input contains whitespace characters).  The base64 encoding has no
+ * reliable EOF marker, so this can cause additional data following
+ * the base64-encoded block to be misinterpreted if @src_size is not
+ * specified correctly.  The decoder will stop at the first nul byte
+ * or at the first '=' (padding byte) so you should ensure that one of
+ * these is present if you supply -1 for @src_size.  For more details
+ * about the base64 encoding, see RFC 1521.
+ *
+ * Returns: the number of bytes stored in @dest, or -1 if invalid data was found.
  */
 gssize
 base64_decode (const gchar *src_b64,
@@ -88,7 +106,7 @@ base64_decode (const gchar *src_b64,
   decoded = 0;
   n = 0;
   bits = 0;
-  for (i = 0; (src_size > 0) && (i + 3 <= dest_size); src_b64++, src_size--)
+  for (i = 0; (src_size != 0) && (i + 3 <= dest_size); src_b64++, src_size--)
     {
       bits = base64_6bits[(int) *src_b64 & 0xff];
       if (bits < 0)
@@ -128,22 +146,47 @@ base64_decode (const gchar *src_b64,
   return i;
 }
 
+/**
+ * base64_encode:
+ * @src: input buffer
+ * @src_size: input buffer size (in bytes) or -1 if @src is nul-terminated
+ * @dest_b64: buffer in which the base64 encoded data should be stored
+ * @dest_size: size of the destination buffer
+ * @columns: if > 0, add line breaks in the output after this many columns
+ *
+ * Read binary data from the input buffer @src and write
+ * base64-encoded data into @dest_b64.
+ *
+ * Since the base64 encoding uses 4 bytes for every 3 bytes of input,
+ * @dest_size should be at least 4/3 of @src_size, plus optional line
+ * breaks if @columns > 0 and up to two padding bytes at the end.  For
+ * more details about the base64 encoding, see RFC 1521.
+ *
+ * Returns: the number of bytes stored in @dest.
+ */
+/*
+ * FIXME: docs!
+ * if columns <= 0, no line breaks
+ */
 gssize
 base64_encode (const gchar *src,
                gsize        src_size,
                gchar       *dest_b64,
-               gsize        dest_size)
+               gsize        dest_size,
+               gint         columns)
 {
   gint32 bits;
   gssize i;
   gint   n;
+  gint   c;
 
   g_return_val_if_fail (src != NULL, -1);
   g_return_val_if_fail (dest_b64 != NULL, -1);
 
   n = 0;
   bits = 0;
-  for (i = 0; (src_size > 0) && (i + 4 <= dest_size); src++, src_size--)
+  c = 0;
+  for (i = 0; (src_size != 0) && (i + 4 <= dest_size); src++, src_size--)
     {
       bits += *src;
       if (++n == 3)
@@ -154,6 +197,15 @@ base64_encode (const gchar *src,
           dest_b64[i++] = base64_code[bits         & 0x3f];
           bits = 0;
           n = 0;
+          if (columns > 0)
+            {
+              c += 4;
+              if ((c >= columns) && (i < dest_size))
+                {
+                  dest_b64[i++] = '\n';
+                  c = 0;
+                }
+            }
         }
       else
         {
@@ -177,6 +229,8 @@ base64_encode (const gchar *src,
           dest_b64[i++] = '=';
 	}
     }
+  if ((columns > 0) && ((c != 0) || (n != 0)) && (i + 1 < dest_size))
+    dest_b64[i++] = '\n';
   if (i < dest_size)
     dest_b64[i] = 0;
   return i;
