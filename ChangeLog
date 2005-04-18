@@ -1,3 +1,8 @@
+2005-04-18  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/newsprint.c: Added comment to clarify the
+	copyright notice (bug #301076).
+
 2005-04-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_real_colormap_changed):

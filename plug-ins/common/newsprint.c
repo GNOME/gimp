@@ -1598,7 +1598,17 @@ spot_diamond (gdouble x,
           2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
 }
 
-/* The following functions were derived from a peice of PostScript by
+/* NOTICE: The following comment and the associated copyright notice
+ * were added on a previous version of this code.  They are related to
+ * 6 short lines of code that have been slightly modified and adapted
+ * for usage in the GIMP.  Such a short amount of code that is a
+ * simple translation of an algorithm into code is usually not
+ * considered to be copyrightable.  The restrictions in the copyright
+ * notice are therefore not applicable here, but we kept this notice
+ * for reference and for crediting the original authors.
+ *
+ * Old comment:
+ * The following functions were derived from a piece of PostScript by
  * Peter Fink and published in his book, "PostScript Screening: Adobe
  * Accurate Screens" (Adobe Press, 1992).  Adobe Systems Incorporated
  * allow its use, provided the following copyright message is present:
