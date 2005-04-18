@@ -17,9 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- * Portions of this plug-in are copyright 1991-1992 Adobe Systems
- * Incorporated.  See the spot_PS*() functions for details.
  */
 
 /*
@@ -1601,23 +1598,9 @@ spot_diamond (gdouble x,
           2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
 }
 
-/* The following functions were derived from a peice of PostScript by
- * Peter Fink and published in his book, "PostScript Screening: Adobe
- * Accurate Screens" (Adobe Press, 1992).  Adobe Systems Incorporated
- * allow its use, provided the following copyright message is present:
- *
- *  % Film Test Pages for Screenset Development
- *  % Copyright (c) 1991 and 1992 Adobe Systems Incorporated
- *  % All rights reserved.
- *  %
- *  % NOTICE: This code is copyrighted by Adobe Systems Incorporated, and
- *  % may not be reproduced for sale except by permission of Adobe Systems
- *  % Incorporated. Adobe Systems Incorporated grants permission to use
- *  % this code for the development of screen sets for use with Adobe
- *  % Accurate Screens software, as long as the copyright notice remains
- *  % intact.
- *  %
- *  % By Peter Fink 1991/1992
+/* The following two functions are implementations of algorithms
+ * described in "Postscript Screening: Adobe Accurate Screens"
+ * (Adobe Press, 1992) by Peter Fink.
  */
 
 /* Square (or Euclidean) dot.  Also very common. */
@@ -1633,8 +1616,7 @@ spot_PSsquare (gdouble x,
           1 - (ay * ay + ax * ax));
 }
 
-/* Diamond spot function, again from Peter Fink's PostScript
- * original.  Copyright as for previous function. */
+/* Diamond spot function */
 static gdouble
 spot_PSdiamond (gdouble x,
                 gdouble y)
@@ -1646,8 +1628,6 @@ spot_PSdiamond (gdouble x,
           ((ax + ay) <= 1.23 ?  1 - ((ay * 0.76) + ax) :    /* to diamond (0.76 distort) */
            ((ay - 1) * (ay - 1) + (ax - 1) * (ax - 1)) -1)); /* back to dot */
 }
-
-/* end of Adobe Systems Incorporated copyrighted functions */
 
 
 /*************************************************************/
