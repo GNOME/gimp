@@ -1,3 +1,10 @@
+2005-04-18  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/newsprint.c: Redo comment for spot_PSsquare
+	and spot_PSdiamonds, since the code was not a derived work in
+	the copyright sense. It is a C implementation of the same
+	algorithm.
+
 2005-04-18  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/newsprint.c: Added comment to clarify the

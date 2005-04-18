@@ -1598,33 +1598,9 @@ spot_diamond (gdouble x,
           2 * xy * xy - 4 * (xy - 1) * (xy - 1)) / 4;
 }
 
-/* NOTICE: The following comment and the associated copyright notice
- * were added on a previous version of this code.  They are related to
- * 6 short lines of code that have been slightly modified and adapted
- * for usage in the GIMP.  Such a short amount of code that is a
- * simple translation of an algorithm into code is usually not
- * considered to be copyrightable.  The restrictions in the copyright
- * notice are therefore not applicable here, but we kept this notice
- * for reference and for crediting the original authors.
- *
- * Old comment:
- * The following functions were derived from a piece of PostScript by
- * Peter Fink and published in his book, "PostScript Screening: Adobe
- * Accurate Screens" (Adobe Press, 1992).  Adobe Systems Incorporated
- * allow its use, provided the following copyright message is present:
- *
- *  % Film Test Pages for Screenset Development
- *  % Copyright (c) 1991 and 1992 Adobe Systems Incorporated
- *  % All rights reserved.
- *  %
- *  % NOTICE: This code is copyrighted by Adobe Systems Incorporated, and
- *  % may not be reproduced for sale except by permission of Adobe Systems
- *  % Incorporated. Adobe Systems Incorporated grants permission to use
- *  % this code for the development of screen sets for use with Adobe
- *  % Accurate Screens software, as long as the copyright notice remains
- *  % intact.
- *  %
- *  % By Peter Fink 1991/1992
+/* The following two functions are implementations of algorithms
+ * described in "Postscript Screening: Adobe Accurate Screens"
+ * (Adobe Press, 1992) by Peter Fink.
  */
 
 /* Square (or Euclidean) dot.  Also very common. */
@@ -1640,8 +1616,7 @@ spot_PSsquare (gdouble x,
           1 - (ay * ay + ax * ax));
 }
 
-/* Diamond spot function, again from Peter Fink's PostScript
- * original.  Copyright as for previous function. */
+/* Diamond spot function */
 static gdouble
 spot_PSdiamond (gdouble x,
                 gdouble y)
