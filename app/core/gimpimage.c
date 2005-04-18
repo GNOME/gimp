@@ -1023,11 +1023,13 @@ gimp_image_real_colormap_changed (GimpImage *gimage,
 {
   if (gimp_image_base_type (gimage) == GIMP_INDEXED)
     {
+      gimp_image_color_hash_invalidate (gimage, color_index);
+
       /* A colormap alteration affects the whole image */
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
 
-      gimp_image_color_hash_invalidate (gimage, color_index);
+      gimp_image_invalidate_layer_previews (gimage);
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
     }
 }
 
