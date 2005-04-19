@@ -1,3 +1,11 @@
+2005-04-19  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/images/gimp-color-hex-entry.png
+	* libgimpwidgets/images/gimp-color-scale.png
+	* libgimpwidgets/images/gimp-color-selection.png
+	* libgimpwidgets/images/gimp-file-entry.png: real screenshot for these
+	widgets.
+
 2005-04-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/visual-index.xml: added an XML header and a DOCTYPE
