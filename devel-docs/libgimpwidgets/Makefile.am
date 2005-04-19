@@ -39,7 +39,7 @@ HTML_IMAGES = \
 	$(srcdir)/images/gimp-*.png	
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
-content_files = visual_index.xml
+content_files = visual-index.xml
 
 # Other files to distribute
 extra_files =

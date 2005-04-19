@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY visual-index SYSTEM "visual_index.xml">
-]>
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
 <book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <bookinfo>
@@ -21,7 +20,7 @@
     </chapter>
     <chapter>
       <title>Widget Gallery</title>
-    &visual-index;
+      <xi:include href="visual-index.xml" />
     </chapter>
 
     <xi:include href="xml/gimpbutton.xml" />
