@@ -53,6 +53,7 @@ static ProcRecord levels_auto_proc;
 static ProcRecord levels_stretch_proc;
 static ProcRecord posterize_proc;
 static ProcRecord desaturate_proc;
+static ProcRecord desaturate_full_proc;
 static ProcRecord equalize_proc;
 static ProcRecord invert_proc;
 static ProcRecord curves_spline_proc;
@@ -72,6 +73,7 @@ register_color_procs (Gimp *gimp)
   procedural_db_register (gimp, &levels_stretch_proc);
   procedural_db_register (gimp, &posterize_proc);
   procedural_db_register (gimp, &desaturate_proc);
+  procedural_db_register (gimp, &desaturate_full_proc);
   procedural_db_register (gimp, &equalize_proc);
   procedural_db_register (gimp, &invert_proc);
   procedural_db_register (gimp, &curves_spline_proc);
@@ -545,6 +547,68 @@ static ProcRecord desaturate_proc =
   0,
   NULL,
   { { desaturate_invoker } }
+};
+
+static Argument *
+desaturate_full_invoker (Gimp         *gimp,
+                         GimpContext  *context,
+                         GimpProgress *progress,
+                         Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 desaturate_mode;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  desaturate_mode = args[1].value.pdb_int;
+  if (desaturate_mode < GIMP_DESATURATE_LIGHTNESS || desaturate_mode > GIMP_DESATURATE_AVERAGE)
+    success = FALSE;
+
+  if (success)
+    {
+      if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+          ! gimp_drawable_is_rgb (drawable))
+        success = FALSE;
+
+      if (success)
+        gimp_drawable_desaturate (drawable, (GimpDesaturateMode) desaturate_mode);
+    }
+
+  return procedural_db_return_args (&desaturate_full_proc, success);
+}
+
+static ProcArg desaturate_full_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_INT32,
+    "desaturate_mode",
+    "The formula to use to desaturate"
+  }
+};
+
+static ProcRecord desaturate_full_proc =
+{
+  "gimp_desaturate_full",
+  "Desaturate the contents of the specified drawable, with the specified formula.",
+  "This procedure desaturates the contents of the specified drawable, with the specified formula. This procedure only works on drawables of type RGB color.",
+  "Karine Delvare",
+  "Karine Delvare",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  desaturate_full_inargs,
+  0,
+  NULL,
+  { { desaturate_full_invoker } }
 };
 
 static Argument *

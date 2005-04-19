@@ -1,5 +1,16 @@
 2005-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/color.pdb: applied patch from Karine Delvare
+	which adds gimp_desaturate_full(). Fixes bug #155507.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpcolor_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: added the new symbol.
+
+2005-04-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-snap.c: bail out early if the coords are
 	out-of-image plus a border of the snapping epsilon, and not just
 	out-of-image. Fixes bug #169892.

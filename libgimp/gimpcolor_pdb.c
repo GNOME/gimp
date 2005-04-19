@@ -244,6 +244,43 @@ gimp_desaturate (gint32 drawable_ID)
 }
 
 /**
+ * gimp_desaturate_full:
+ * @drawable_ID: The drawable.
+ * @desaturate_mode: The formula to use to desaturate.
+ *
+ * Desaturate the contents of the specified drawable, with the
+ * specified formula.
+ *
+ * This procedure desaturates the contents of the specified drawable,
+ * with the specified formula. This procedure only works on drawables
+ * of type RGB color.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_desaturate_full (gint32             drawable_ID,
+		      GimpDesaturateMode desaturate_mode)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_desaturate_full",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, desaturate_mode,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_equalize:
  * @drawable_ID: The drawable.
  * @mask_only: Equalization option.

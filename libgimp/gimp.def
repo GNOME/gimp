@@ -91,6 +91,7 @@ EXPORTS
 	gimp_curves_spline
 	gimp_default_display
 	gimp_desaturate
+	gimp_desaturate_full
 	gimp_destroy_paramdefs
 	gimp_destroy_params
 	gimp_display_delete

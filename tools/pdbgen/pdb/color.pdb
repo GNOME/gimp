@@ -290,6 +290,39 @@ CODE
     );
 }
 
+sub desaturate_full {
+    $blurb = 'Desaturate the contents of the specified drawable, with the specified formula.';
+
+    $help = <<'HELP';
+This procedure desaturates the contents of the specified drawable, with the specified
+formula. This procedure only works on drawables of type RGB color.
+HELP
+
+    $author = $copyright = 'Karine Delvare';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = (
+        &drawable_arg,
+	{ name => 'desaturate_mode', type => 'enum GimpDesaturateMode',
+	  desc => 'The formula to use to desaturate' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-desaturate.h") ],
+	code => <<'CODE'
+{
+  if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
+      ! gimp_drawable_is_rgb (drawable))
+    success = FALSE;
+
+  if (success)
+    gimp_drawable_desaturate (drawable, (GimpDesaturateMode) desaturate_mode);
+}
+CODE
+    );
+}
+
 sub equalize {
     $blurb = 'Equalize the contents of the specified drawable.';
 
@@ -898,8 +931,9 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(brightness_contrast levels levels_auto levels_stretch posterize
-            desaturate equalize invert curves_spline curves_explicit
-            color_balance colorize histogram hue_saturation threshold);
+            desaturate desaturate_full equalize invert curves_spline
+            curves_explicit color_balance colorize histogram hue_saturation
+            threshold);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';

@@ -46,6 +46,8 @@ gboolean gimp_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_posterize           (gint32                drawable_ID,
 				   gint                  levels);
 gboolean gimp_desaturate          (gint32                drawable_ID);
+gboolean gimp_desaturate_full     (gint32                drawable_ID,
+				   GimpDesaturateMode    desaturate_mode);
 gboolean gimp_equalize            (gint32                drawable_ID,
 				   gboolean              mask_only);
 gboolean gimp_invert              (gint32                drawable_ID);
