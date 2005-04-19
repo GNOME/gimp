@@ -1,3 +1,15 @@
+2005-04-19  DindinX  <dindinx@gimp.org>
+
+	* devel-docs/libgimpwidgets/visual_index.xml: added this file so we
+	have a "visual widget gallery" in our docs.
+
+	* devel-docs/libgimpwidgets/Makefile.am
+	* devel-docs/libgimpwidgets/libgimpwidgets-docs.sgml: added
+	visual_index.xml.
+
+	* devel-docs/libgimpwidgets/images/gimp-*.png: placeholders for real
+	widget screenshots.
+
 2005-04-18  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.c: #include gimpwidgets.h for

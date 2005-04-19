@@ -35,10 +35,11 @@ IGNORE_HFILES = \
 IMAGES_DIR = $(top_srcdir)/themes/Default/images
 HTML_IMAGES = \
 	$(IMAGES_DIR)/stock-*.png	\
-	$(IMAGES_DIR)/tools/stock-*.png
+	$(IMAGES_DIR)/tools/stock-*.png \
+	$(srcdir)/images/gimp-*.png	
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
-content_files =
+content_files = visual_index.xml
 
 # Other files to distribute
 extra_files =

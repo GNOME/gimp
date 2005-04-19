@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY visual-index SYSTEM "visual_index.xml">
+]>
 <book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <bookinfo>
@@ -17,7 +18,11 @@
     <chapter id="libgimpwidgets-hierarchy">
       <title>Object Hierarchy</title>
       <xi:include href="xml/tree_index.sgml" />
-    </chapter>    
+    </chapter>
+    <chapter>
+      <title>Widget Gallery</title>
+    &visual-index;
+    </chapter>
 
     <xi:include href="xml/gimpbutton.xml" />
     <xi:include href="xml/gimpchainbutton.xml" />
