@@ -1,5 +1,13 @@
 2005-04-19  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/visual-index.xml: added an XML header and a DOCTYPE
+	declaration and specify an xml:base for the images.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml: specify a chapter id so
+	that we get a nicer filename for the generated HTML file.
+
+2005-04-19  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/libgimpwidgets-docs.sgml: fixed the build, use
 	XInclude to include visual-index.xml.

@@ -18,7 +18,7 @@
       <title>Object Hierarchy</title>
       <xi:include href="xml/tree_index.sgml" />
     </chapter>
-    <chapter>
+    <chapter id="libgimpwidgets-gallery">
       <title>Widget Gallery</title>
       <xi:include href="visual-index.xml" />
     </chapter>
