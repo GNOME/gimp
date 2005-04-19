@@ -2,7 +2,7 @@
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
-<para role="gallery" xml:base="images">
+<para role="gallery" xml:base="visual-index.xml">
 
   <link linkend="GimpButton">
     <inlinegraphic fileref="gimp-button.png" format="PNG"></inlinegraphic>

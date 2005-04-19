@@ -1,3 +1,14 @@
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: reordered a stock icon.
+
+	* libgimpwidgets/visual-index.xml: let the xml:base attribute
+	point to the file itself.
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: do nasty things with
+	xml:base attributes that seem to persuade the XSLT processor to
+	generate HTML that points to icon images.
+
 2005-04-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added new functions.
