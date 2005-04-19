@@ -5084,7 +5084,7 @@
 	* HACKING
 	* Makefile.am
 	* acinclude.m4
-	* autogen.sh: applied (modified) patch from RaphaÃ«l Quinet that
+	* autogen.sh: applied (modified) patch from Raphaël Quinet that
 	allows to build GIMP from CVS without having gtk-doc installed.
 	If you need to do this, pass --disable-gtk-doc to autogen.sh.
 
