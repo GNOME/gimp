@@ -78,6 +78,16 @@ Functions for manipulating color, including curves and histograms.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_desaturate_full ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@desaturate_mode: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_equalize ##### -->
 <para>
 

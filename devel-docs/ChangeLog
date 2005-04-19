@@ -1,10 +1,17 @@
+2005-04-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added new functions.
+
+	* libgimp/tmpl/gimpcolor.sgml
+	* libgimp/tmpl/gimpimage.sgml: regenerated.
+
 2005-04-19  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/images/gimp-color-hex-entry.png
 	* libgimpwidgets/images/gimp-color-scale.png
 	* libgimpwidgets/images/gimp-color-selection.png
-	* libgimpwidgets/images/gimp-file-entry.png: real screenshot for these
-	widgets.
+	* libgimpwidgets/images/gimp-file-entry.png: real screenshot for
+	these widgets.
 
 2005-04-19  Sven Neumann  <sven@gimp.org>
 
