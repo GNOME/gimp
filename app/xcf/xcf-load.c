@@ -847,12 +847,12 @@ xcf_load_layer (XcfInfo   *info,
   GimpLayerMask *layer_mask;
   guint32        hierarchy_offset;
   guint32        layer_mask_offset;
-  gboolean       apply_mask;
-  gboolean       edit_mask;
-  gboolean       show_mask;
+  gboolean       apply_mask = TRUE;
+  gboolean       edit_mask  = FALSE;
+  gboolean       show_mask  = FALSE;
   gboolean       active;
   gboolean       floating;
-  guint32        text_layer_flags;
+  guint32        text_layer_flags = 0;
   gint           width;
   gint           height;
   gint           type;

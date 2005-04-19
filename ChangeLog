@@ -1,3 +1,10 @@
+2005-04-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_layer): initialize text_layer_flags
+	with 0 so it doesn't contain random garbage if the text layer
+	flags in the XCF have default values (are not saved at all). Fixes
+	bug #301028. Initialize other stuff too for the sake of sanity.
+
 2005-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/color.pdb: applied patch from Karine Delvare
