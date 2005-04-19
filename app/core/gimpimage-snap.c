@@ -61,7 +61,7 @@ gimp_image_snap_x (GimpImage *gimage,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (x < 0 || x >= gimage->width)
+  if (x < -epsilon_x || x >= (gimage->width + epsilon_x))
     return FALSE;
 
   if (snap_to_guides)
@@ -165,7 +165,7 @@ gimp_image_snap_y (GimpImage *gimage,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas))
     return FALSE;
 
-  if (y < 0 || y >= gimage->height)
+  if (y < -epsilon_y || y >= (gimage->height + epsilon_y))
     return FALSE;
 
   if (snap_to_guides)
@@ -277,8 +277,8 @@ gimp_image_snap_point (GimpImage *gimage,
   if (! (snap_to_guides || snap_to_grid || snap_to_canvas || snap_to_vectors))
     return FALSE;
 
-  if (x < 0 || x >= gimage->width ||
-      y < 0 || y >= gimage->height)
+  if (x < -epsilon_x || x >= (gimage->width  + epsilon_x) ||
+      y < -epsilon_y || y >= (gimage->height + epsilon_y))
     {
       return FALSE;
     }

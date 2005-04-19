@@ -1,3 +1,9 @@
+2005-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-snap.c: bail out early if the coords are
+	out-of-image plus a border of the snapping epsilon, and not just
+	out-of-image. Fixes bug #169892.
+
 2005-04-18  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.c: #include gimpwidgets.h for
