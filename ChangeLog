@@ -1,3 +1,9 @@
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/common/mail.c (create_headers): set charset to UTF-8.
+
 2005-04-20  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:

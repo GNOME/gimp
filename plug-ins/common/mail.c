@@ -752,7 +752,7 @@ create_headers (FILE *mailpipe)
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
     {
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
-      fprintf (mailpipe, "Content-type: text/plain; charset=US-ASCII\n\n");
+      fprintf (mailpipe, "Content-type: text/plain; charset=UTF-8\n\n");
     }
   fprintf (mailpipe, mail_info.comment);
   fprintf (mailpipe, "\n\n");
