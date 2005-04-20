@@ -110,19 +110,16 @@ new_widget_info (const char *name,
   switch (size)
     {
     case SMALL:
-      gtk_widget_set_size_request (info->window,
-				   240, 75);
+      gtk_widget_set_size_request (info->window, 240, 75);
       break;
     case MEDIUM:
-      gtk_widget_set_size_request (info->window,
-				   240, 165);
+      gtk_widget_set_size_request (info->window, 240, 165);
       break;
     case LARGE:
-      gtk_widget_set_size_request (info->window,
-				   240, 240);
+      gtk_widget_set_size_request (info->window, 240, 240);
       break;
     default:
-	break;
+      break;
     }
 
   return info;
@@ -321,6 +318,51 @@ create_color_selection (void)
 }
 
 static WidgetInfo *
+create_dialog (void)
+{
+  WidgetInfo *info;
+  GtkWidget  *widget;
+  GtkWidget  *label;
+
+  widget = gimp_dialog_new ("Gimp Dialog",
+                            "gimp-dialog",
+                            NULL, 0, NULL, NULL,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                            NULL);
+
+  label = gtk_label_new ("Gimp Dialog");
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (widget)->vbox), label);
+  gtk_widget_show (label);
+  info = new_widget_info ("gimp-dialog", widget, MEDIUM);
+  info->include_decorations = TRUE;
+
+  return info;
+}
+
+static WidgetInfo *
+create_enum_combo_box (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *combo;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_TYPE);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 GIMP_BLUE_CHANNEL);
+  gtk_container_add (GTK_CONTAINER (align), combo);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Enum Combo Box"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-enum-combo-box", vbox, SMALL);
+}
+
+static WidgetInfo *
 create_file_entry (void)
 {
   GtkWidget *vbox;
@@ -356,6 +398,78 @@ create_frame (void)
 }
 
 static WidgetInfo *
+create_int_combo_box (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *combo;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  combo = gimp_int_combo_box_new ("Sobel",       1,
+                                  "Prewitt",      2,
+                                  "Gradient",     3,
+                                  "Roberts",      4,
+                                  "Differential", 5,
+                                  "Laplace",      6,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 1);
+
+  gtk_container_add (GTK_CONTAINER (align), combo);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Int Combo Box"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-int-combo-box", vbox, SMALL);
+}
+
+static WidgetInfo *
+create_memsize_entry (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *entry;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  entry = gimp_memsize_entry_new ((3 * 1024 + 512) * 1024,
+                                  0, 1024 * 1024 * 1024);
+  gtk_container_add (GTK_CONTAINER (align), entry);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Memsize Entry"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-memsize-entry", vbox, SMALL);
+}
+
+static WidgetInfo *
+create_offset_area (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *area;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (align), frame);
+  area = gimp_offset_area_new (100, 100);
+  gimp_offset_area_set_size (GIMP_OFFSET_AREA (area), 180, 160);
+  gimp_offset_area_set_offsets (GIMP_OFFSET_AREA (area), 30, 30);
+  gtk_container_add (GTK_CONTAINER (frame), area);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Offset Area"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-offset-area", vbox, LARGE);
+}
+
+static WidgetInfo *
 create_path_editor (void)
 {
   GtkWidget *vbox;
@@ -380,6 +494,91 @@ create_path_editor (void)
   return new_widget_info ("gimp-path-editor", vbox, ASIS);
 }
 
+static WidgetInfo *
+create_pick_button (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *button;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
+  button =  gimp_pick_button_new ();
+  gtk_container_add (GTK_CONTAINER (align), button);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Pick Button"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-pick-button", vbox, SMALL);
+}
+
+static gboolean
+area_realize (GimpPreviewArea *area)
+{
+  GdkPixbuf *pixbuf;
+
+  pixbuf = gdk_pixbuf_new_from_file ("../../data/images/wilber-wizard.png",
+                                     NULL);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (area), 0, 0,
+                          gdk_pixbuf_get_width (pixbuf),
+                          gdk_pixbuf_get_height (pixbuf),
+                          GIMP_RGBA_IMAGE,
+                          gdk_pixbuf_get_pixels (pixbuf),
+                          gdk_pixbuf_get_rowstride (pixbuf));
+  g_object_unref (pixbuf);
+
+  return FALSE;
+}
+
+static WidgetInfo *
+create_preview_area (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *area;
+  GtkWidget *align;
+  GdkPixbuf *pixbuf;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  area =  gimp_preview_area_new ();
+  g_signal_connect (area, "realize",
+                    G_CALLBACK (area_realize), NULL);
+  gtk_container_add (GTK_CONTAINER (align), area);
+  pixbuf = gdk_pixbuf_new_from_file ("../../data/images/wilber-wizard.png",
+                                     NULL);
+  gtk_widget_set_size_request (area,
+                               gdk_pixbuf_get_width (pixbuf),
+                               gdk_pixbuf_get_height (pixbuf));
+  g_object_unref (pixbuf);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Preview Area"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-preview-area", vbox, MEDIUM);
+}
+
+static WidgetInfo *
+create_unit_menu (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *menu;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 3);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  menu =  gimp_unit_menu_new ("%a - %y (%f\"", GIMP_UNIT_POINT,
+                              TRUE, TRUE, TRUE);
+  gtk_container_add (GTK_CONTAINER (align), menu);
+  gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Unit Menu"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-unit-menu", vbox, SMALL);
+}
+
 GList *
 get_all_widgets (void)
 {
@@ -392,9 +591,21 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_color_hex_entry ());
   retval = g_list_append (retval, create_color_scale ());
   retval = g_list_append (retval, create_color_selection ());
+  retval = g_list_append (retval, create_dialog ());
+  retval = g_list_append (retval, create_enum_combo_box ());
   retval = g_list_append (retval, create_file_entry ());
   retval = g_list_append (retval, create_frame ());
+  retval = g_list_append (retval, create_int_combo_box ());
+  retval = g_list_append (retval, create_memsize_entry ());
+  retval = g_list_append (retval, create_offset_area ());
   retval = g_list_append (retval, create_path_editor ());
+  retval = g_list_append (retval, create_pick_button ());
+  retval = g_list_append (retval, create_preview_area ());
+
+  /*
+   * The following doesn't work, we should init the unit system before.
+   * retval = g_list_append (retval, create_unit_menu ());
+   */
 
   return retval;
 }
