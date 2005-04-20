@@ -1,3 +1,24 @@
+2005-04-20  DindinX  <dindinx@gimp.org>
+
+	* tools/widgets.c: added all but the GimpPixmap widget.
+	The unit menu shot is also very buggy.
+
+	* libgimpwidgets/images/gimp-color-area.png
+	* libgimpwidgets/images/gimp-color-button.png
+	* libgimpwidgets/images/gimp-color-hex-entry.png
+	* libgimpwidgets/images/gimp-color-scale.png
+	* libgimpwidgets/images/gimp-color-selection.png
+	* libgimpwidgets/images/gimp-dialog.png
+	* libgimpwidgets/images/gimp-enum-combo-box.png
+	* libgimpwidgets/images/gimp-int-combo-box.png
+	* libgimpwidgets/images/gimp-memsize-entry.png
+	* libgimpwidgets/images/gimp-offset-area.png
+	* libgimpwidgets/images/gimp-path-editor.png
+	* libgimpwidgets/images/gimp-pick-button.png
+	* libgimpwidgets/images/gimp-preview-area.png
+	* libgimpwidgets/images/gimp-unit-menu.png: updated all
+	these files.
+
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/README.shooter: adapted for GIMP.

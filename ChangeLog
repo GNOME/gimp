@@ -1,24 +1,3 @@
-2005-04-20  DindinX  <dindinx@gimp.org>
-
-	* devel-docs/tools/widgets.c: added all but the GimpPixmap widget.
-	The unit menu shot is also very buggy.
-
-	* devel-docs/libgimpwidgets/images/gimp-color-area.png
-	* devel-docs/libgimpwidgets/images/gimp-color-button.png
-	* devel-docs/libgimpwidgets/images/gimp-color-hex-entry.png
-	* devel-docs/libgimpwidgets/images/gimp-color-scale.png
-	* devel-docs/libgimpwidgets/images/gimp-color-selection.png
-	* devel-docs/libgimpwidgets/images/gimp-dialog.png
-	* devel-docs/libgimpwidgets/images/gimp-enum-combo-box.png
-	* devel-docs/libgimpwidgets/images/gimp-int-combo-box.png
-	* devel-docs/libgimpwidgets/images/gimp-memsize-entry.png
-	* devel-docs/libgimpwidgets/images/gimp-offset-area.png
-	* devel-docs/libgimpwidgets/images/gimp-path-editor.png
-	* devel-docs/libgimpwidgets/images/gimp-pick-button.png
-	* devel-docs/libgimpwidgets/images/gimp-preview-area.png
-	* devel-docs/libgimpwidgets/images/gimp-unit-menu.png: updated all
-	these files.
-
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Lighting/images/Makefile.am
