@@ -1,5 +1,12 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* tools/Makefile.am
+	* tools/shooter.c
+	* tools/widgets.c: fixed includes and dependencies, expand the path
+	returned from gimp_config_build_data_path(), use common color code.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* tools/shooter.c: set an application name, pass the default
 	module path to gimp_module_db_load().
 
