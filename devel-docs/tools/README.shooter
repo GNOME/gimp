@@ -1,0 +1,13 @@
+The doc shooter is used to take screenshots of widgets for the GTK+
+reference manuals.  We use these images for both the headers of the
+images, and for the visual index of GNOME images.  They aren't part of
+the docs build.  Instead, the images are taken, and then copied by hand
+into gtk+/docs/reference/gtk/images/
+
+Ideally, the images should be taken once a release, and all images
+should be updated at the same time.  A simple theme should be used to
+take the screenshots, and in the future, we may include a gtkrc file in
+this directory for the shooter to use.  Currently, all shots are
+constrained to the same width.  Care should be taken when adding new
+widgets to keep this constraint.
+

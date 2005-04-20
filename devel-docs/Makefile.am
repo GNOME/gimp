@@ -8,7 +8,8 @@ SUBDIRS = \
 	libgimpmodule	\
 	libgimpthumb	\
 	libgimpwidgets	\
-	libgimp
+	libgimp		\
+	tools
 
 EXTRA_DIST = \
 	ChangeLog		\

@@ -1,5 +1,11 @@
 2005-04-20  DindinX  <dindinx@gimp.org>
 
+	* tools/*: new tools to generate screenshots for the widget gallery.
+	* Makefile.am: added the tools subdir.
+	* ../configure.in: modified accordingly.
+
+2005-04-20  DindinX  <dindinx@gimp.org>
+
 	* libgimpwidgets/images/gimp-button.png
 	* libgimpwidgets/images/gimp-chain-button.png
 	* libgimpwidgets/images/gimp-color-area.png
