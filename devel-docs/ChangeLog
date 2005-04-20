@@ -1,3 +1,18 @@
+2005-04-20  DindinX  <dindinx@gimp.org>
+
+	* tools/shooter.c: cleanup
+	* tools/widgets.c: cleanup and added two new widgets: frame and path
+	editor.
+
+	* libgimpwidgets/images/gimp-chain-button.png
+	* libgimpwidgets/images/gimp-color-button.png
+	* libgimpwidgets/images/gimp-color-hex-entry.png
+	* libgimpwidgets/images/gimp-color-scale.png
+	* libgimpwidgets/images/gimp-color-selection.png: updated.
+	
+	* libgimpwidgets/images/gimp-frame.png
+	* libgimpwidgets/images/gimp-path-editor.png: new shots.
+
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
 	* tools/Makefile.am: do not build doc-shooter by default.
