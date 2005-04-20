@@ -23,7 +23,7 @@ LDADDS = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)
 
-noinst_PROGRAMS = doc-shooter
+EXTRA_PROGRAMS = doc-shooter
 
 doc_shooter_SOURCES = \
 	shadow.c	\
