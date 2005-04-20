@@ -175,8 +175,7 @@ typedef struct
   gchar from[BUFFER_SIZE];
   gchar filename[BUFFER_SIZE];
   gint  encapsulation;
-}
-m_info;
+} m_info;
 
 
 static void   query (void);
@@ -186,16 +185,16 @@ static void   run   (const gchar      *name,
 		     gint             *nreturn_vals,
 		     GimpParam       **return_vals);
 
-static GimpPDBStatusType save_image (const gchar *filename,
-			             gint32       image_ID,
-			             gint32       drawable_ID,
-				     gint32       run_mode);
+static GimpPDBStatusType save_image   (const gchar *filename,
+                                       gint32       image_ID,
+                                       gint32       drawable_ID,
+                                       gint32       run_mode);
 
-static gint    save_dialog          (void);
-static void    mail_entry_callback  (GtkWidget     *widget,
-                                     gchar         *data);
-static void    mesg_body_callback   (GtkTextBuffer *buffer,
-                                     gpointer       data);
+static gboolean  save_dialog          (void);
+static void      mail_entry_callback  (GtkWidget     *widget,
+                                       gchar         *data);
+static void      mesg_body_callback   (GtkTextBuffer *buffer,
+                                       gpointer       data);
 
 static gboolean  valid_file     (const gchar *filename);
 static void      create_headers (FILE        *mailpipe);
@@ -299,7 +298,21 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  gimp_get_data (PLUG_IN_NAME, &mail_info);
-	  if (!save_dialog ())
+          if (! strlen (mail_info.filename))
+            {
+              gchar *filename = gimp_image_get_filename (image_ID);
+
+              if (filename)
+                {
+                  gchar *basename = g_path_get_basename (filename);
+
+                  g_strlcpy (mail_info.filename, basename, BUFFER_SIZE);
+                  g_free (basename);
+                  g_free (filename);
+                }
+            }
+
+	  if (! save_dialog ())
 	    status = GIMP_PDB_CANCEL;
 	  break;
 
@@ -465,10 +478,11 @@ cleanup:
 }
 
 
-static gint
+static gboolean
 save_dialog (void)
 {
   GtkWidget     *dlg;
+  GtkWidget     *main_vbox;
   GtkWidget     *entry;
   GtkWidget     *table;
   GtkWidget     *label;
@@ -477,6 +491,7 @@ save_dialog (void)
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
   gchar         *gump_from;
+  gint           row = 0;
   gboolean       run;
 
   gimp_ui_init ("mail", FALSE);
@@ -504,33 +519,75 @@ save_dialog (void)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
   /* table */
-  table = gtk_table_new (7, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+  table = gtk_table_new (5, 2, FALSE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
-  /* to: dialog */
+  /* Filename entry */
+  entry = gtk_entry_new ();
+  gtk_widget_set_size_request (entry, 200, -1);
+  gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
+  gtk_entry_set_text (GTK_ENTRY (entry), mail_info.filename);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+			     _("_Filename:"), 0.0, 0.5,
+			     entry, 1, FALSE);
+  g_signal_connect (entry, "changed",
+                    G_CALLBACK (mail_entry_callback),
+                    mail_info.filename);
+
+  /* Encapsulation label */
+  label = gtk_label_new (_("Encapsulation:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.2);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /* Encapsulation radiobuttons */
+  vbox = gimp_int_radio_group_new (FALSE, NULL,
+				   G_CALLBACK (gimp_radio_button_update),
+				   &mail_info.encapsulation,
+				   mail_info.encapsulation,
+
+				   _("_MIME"),     ENCAPSULATION_MIME,     NULL,
+				   _("_Uuencode"), ENCAPSULATION_UUENCODE, NULL,
+
+				   NULL);
+  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, row, row + 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (vbox);
+  row += 2;
+
+  /* To entry */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.receipt);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
 			     _("_Recipient:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.receipt);
 
+  gtk_widget_grab_focus (entry);
+
   /* From entry */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.from);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
 			     _("_Sender:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
@@ -542,7 +599,7 @@ save_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.subject);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
 			     _("S_ubject:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
@@ -554,37 +611,22 @@ save_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.comment);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
 			     _("Comm_ent:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.comment);
 
-  /* Filename entry */
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 200, -1);
-  gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
-  gtk_entry_set_text (GTK_ENTRY (entry), mail_info.filename);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("_Filename:"), 0.0, 0.5,
-			     entry, 1, FALSE);
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (mail_entry_callback),
-                    mail_info.filename);
 
-  /* comment  */
+  /* Body  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_table_attach (GTK_TABLE (table), scrolled_window,
-                    0, 2, 5, 6,
-                    GTK_EXPAND | GTK_FILL,
-                    GTK_EXPAND | GTK_FILL,
-                    0, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   text_buffer = gtk_text_buffer_new (NULL);
@@ -599,27 +641,6 @@ save_dialog (void)
   g_signal_connect (text_buffer, "changed",
                     G_CALLBACK (mesg_body_callback),
 		    NULL);
-
-  /* Encapsulation label */
-  label = gtk_label_new (_("Encapsulation:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.2);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /* Encapsulation radiobuttons */
-  vbox = gimp_int_radio_group_new (FALSE, NULL,
-				   G_CALLBACK (gimp_radio_button_update),
-				   &mail_info.encapsulation,
-				   mail_info.encapsulation,
-
-				   _("_Uuencode"), ENCAPSULATION_UUENCODE, NULL,
-				   _("_MIME"),     ENCAPSULATION_MIME,     NULL,
-
-				   NULL);
-  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 6, 8,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vbox);
 
   gtk_widget_show (dlg);
 
@@ -740,10 +761,9 @@ mesg_body_callback (GtkTextBuffer *buffer,
   GtkTextIter start_iter;
   GtkTextIter end_iter;
 
-  if (mesg_body)
-    g_free (mesg_body);
-
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+
+  g_free (mesg_body);
   mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 }
 
@@ -757,7 +777,9 @@ create_headers (FILE *mailpipe)
 
   fprintf (mailpipe, "To: %s \n", mail_info.receipt);
   fprintf (mailpipe, "Subject: %s \n", mail_info.subject);
-  fprintf (mailpipe, "From: %s \n", mail_info.from);
+  if (strlen (mail_info.from) > 0)
+    fprintf (mailpipe, "From: %s \n", mail_info.from);
+
   fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program %s\n", GIMP_VERSION);
 
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
@@ -772,11 +794,14 @@ create_headers (FILE *mailpipe)
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
     {
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
-      fprintf (mailpipe, "Content-type: text/plain; charset=US-ASCII\n\n");
+      fprintf (mailpipe, "Content-type: text/plain; charset=UTF-8\n\n");
     }
 
-  fprintf (mailpipe, mail_info.comment);
-  fprintf (mailpipe, "\n\n");
+  if (strlen (mail_info.comment) > 0)
+    {
+      fprintf (mailpipe, mail_info.comment);
+      fprintf (mailpipe, "\n\n");
+    }
 
   if (mesg_body)
     fprintf (mailpipe, mesg_body);
