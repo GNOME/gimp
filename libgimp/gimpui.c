@@ -136,17 +136,15 @@ gimp_ensure_modules (void)
 
   if (! module_db)
     {
-      gchar *load_inhibit;
-      gchar *module_path;
-
-      load_inhibit = gimp_get_module_load_inhibit ();
-      module_path  = gimp_gimprc_query ("module-path");
+      gchar *load_inhibit = gimp_get_module_load_inhibit ();
+      gchar *module_path  = gimp_gimprc_query ("module-path");
 
       module_db = gimp_module_db_new (FALSE);
+
       gimp_module_db_set_load_inhibit (module_db, load_inhibit);
       gimp_module_db_load (module_db, module_path);
 
-      g_free (load_inhibit);
       g_free (module_path);
+      g_free (load_inhibit);
     }
 }

@@ -1,5 +1,9 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpui.c (gimp_ensure_modules): cosmetics.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mail.c: set charset to UTF-8. Initialize the
 	filename from the image's filename. Don't set From: if the Sender
 	entry remains blank. Reordered dialog.
