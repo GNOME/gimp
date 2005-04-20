@@ -1,12 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
 INCLUDES = \
@@ -14,11 +13,10 @@ INCLUDES = \
 	$(GTK_CFLAGS)
 
 LDADDS = \
-	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
+	$(libgimpmodule)	\
 	$(libgimpmath)		\
-	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)

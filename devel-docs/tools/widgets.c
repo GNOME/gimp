@@ -2,19 +2,23 @@
 #include "config.h"
 
 #include <gdk/gdkx.h>
+#include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
+
 
 #include "widgets.h"
 
 
-#define SMALL_WIDTH  240
-#define SMALL_HEIGHT 75
-#define MEDIUM_WIDTH 240
+#define SMALL_WIDTH   240
+#define SMALL_HEIGHT   75
+#define MEDIUM_WIDTH  240
 #define MEDIUM_HEIGHT 165
-#define LARGE_WIDTH 240
-#define LARGE_HEIGHT 240
+#define LARGE_WIDTH   240
+#define LARGE_HEIGHT  240
 
 
 static gboolean
@@ -124,6 +128,13 @@ new_widget_info (const char *name,
   return info;
 }
 
+static void
+color_init (GimpRGB *rgb)
+{
+  gimp_rgb_parse_name (rgb, "goldenrod", -1);
+  gimp_rgb_set_alpha (rgb, 0.7);
+}
+
 static WidgetInfo *
 create_button (void)
 {
@@ -190,12 +201,10 @@ create_color_area (void)
   GtkWidget *align;
   GimpRGB    color;
 
+  color_init (&color);
+
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
-  color.r = 0.8;
-  color.g = 0.4;
-  color.b = 0.2;
-  color.a = 0.7;
   area = gimp_color_area_new (&color,
                               GIMP_COLOR_AREA_SMALL_CHECKS,
                               GDK_SHIFT_MASK);
@@ -218,12 +227,10 @@ create_color_button (void)
   GtkWidget *align;
   GimpRGB    color;
 
+  color_init (&color);
+
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
-  color.r = 0.8;
-  color.g = 0.4;
-  color.b = 0.2;
-  color.a = 0.7;
   button =  gimp_color_button_new ("Color Button",
                                    80, 20, &color,
                                    GIMP_COLOR_AREA_SMALL_CHECKS);
@@ -244,13 +251,11 @@ create_color_hex_entry (void)
   GtkWidget *align;
   GimpRGB    color;
 
+  color_init (&color);
+
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry = gimp_color_hex_entry_new ();
-  color.r = 0.8;
-  color.g = 0.4;
-  color.b = 0.2;
-  color.a = 0.7;
   gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (entry), &color);
   gtk_container_add (GTK_CONTAINER (align), entry);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
@@ -270,17 +275,14 @@ create_color_scale (void)
   GimpRGB    rgb;
   GimpHSV    hsv;
 
+  color_init (&rgb);
+  gimp_rgb_to_hsv (&rgb, &hsv);
+
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.8, 0.0);
   scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
                                 GIMP_COLOR_SELECTOR_HUE);
-  rgb.r = 0.8;
-  rgb.g = 0.4;
-  rgb.b = 0.2;
-  rgb.a = 0.7;
-  gimp_rgb_to_hsv (&rgb, &hsv);
-  gimp_color_scale_set_color (GIMP_COLOR_SCALE (scale),
-                              &rgb, &hsv);
+  gimp_color_scale_set_color (GIMP_COLOR_SCALE (scale), &rgb, &hsv);
   gtk_range_set_value (GTK_RANGE (scale), 40);
   gtk_container_add (GTK_CONTAINER (align), scale);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
@@ -299,13 +301,11 @@ create_color_selection (void)
   GtkWidget *align;
   GimpRGB    color;
 
+  color_init (&color);
+
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   selection = gimp_color_selection_new ();
-  color.r = 0.8;
-  color.g = 0.4;
-  color.b = 0.2;
-  color.a = 0.7;
   gimp_color_selection_set_show_alpha(GIMP_COLOR_SELECTION (selection),
                                       TRUE);
   gimp_color_selection_set_color  (GIMP_COLOR_SELECTION (selection),
@@ -361,18 +361,21 @@ create_path_editor (void)
   GtkWidget *vbox;
   GtkWidget *editor;
   GtkWidget *align;
+  gchar     *config = gimp_config_build_data_path ("patterns");
+  gchar     *path   = gimp_config_path_expand (config, TRUE, NULL);
 
   vbox = gtk_vbox_new (FALSE, 3);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  editor = gimp_path_editor_new ("Path Editor",
-                                 "/usr/local/share/gimp/2.0/patterns/:"
-                                 "~/.gimp-2.3/patterns");
+  editor = gimp_path_editor_new ("Path Editor", path);
   gtk_widget_set_size_request (editor, -1, 240);
   gtk_container_add (GTK_CONTAINER (align), editor);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Path Editor"),
                       FALSE, FALSE, 0);
+
+  g_free (path);
+  g_free (config);
 
   return new_widget_info ("gimp-path-editor", vbox, ASIS);
 }

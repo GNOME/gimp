@@ -12,7 +12,6 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -202,7 +201,6 @@ static void
 shooter_standard_help (const gchar *help_id,
                        gpointer     help_data)
 {
-  gimp_help (NULL, help_id);
 }
 
 static void
@@ -212,12 +210,14 @@ shooter_ensure_modules (void)
 
   if (! module_db)
     {
-      gchar *path = gimp_config_build_plug_in_path ("modules");
+      gchar *config = gimp_config_build_plug_in_path ("modules");
+      gchar *path   = gimp_config_path_expand (config, TRUE, NULL);
 
       module_db = gimp_module_db_new (FALSE);
-
       gimp_module_db_load (module_db, path);
+
       g_free (path);
+      g_free (config);
     }
 }
 
