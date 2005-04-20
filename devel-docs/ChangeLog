@@ -1,3 +1,13 @@
+2005-04-20  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/images/gimp-button.png
+	* libgimpwidgets/images/gimp-chain-button.png
+	* libgimpwidgets/images/gimp-color-area.png
+	* libgimpwidgets/images/gimp-color-button.png
+	* libgimpwidgets/images/gimp-color-hex-entry.png
+	* libgimpwidgets/images/gimp-color-scale.png
+	* libgimpwidgets/images/gimp-file-entry.png: updated.
+
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: reordered a stock icon.
