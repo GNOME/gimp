@@ -1,3 +1,8 @@
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/shooter.c: set an application name, pass the default
+	module path to gimp_module_db_load().
+
 2005-04-20  DindinX  <dindinx@gimp.org>
 
 	* tools/shooter.c: cleanup
