@@ -12,19 +12,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = helpbrowser
 
-helpbrowser_SOURCES = \
-	gimpthrobber.c		\
-	gimpthrobber.h		\
-	gimpthrobberaction.c	\
-	gimpthrobberaction.h	\
-	helpbrowser.c		\
-	dialog.c		\
-	dialog.h		\
-	queue.c			\
-	queue.h			\
-	uri.c			\
-	uri.h
-
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTKHTML2_CFLAGS)	\
@@ -41,3 +28,30 @@ LDADD = \
 	$(GTKHTML2_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+helpbrowser_sources = \
+	gimpthrobber.c		\
+	gimpthrobber.h		\
+	gimpthrobberaction.c	\
+	gimpthrobberaction.h	\
+	helpbrowser.c		\
+	dialog.c		\
+	dialog.h		\
+	queue.c			\
+	queue.h			\
+	uri.c			\
+	uri.h
+
+helpbrowser_built_sources = logo-pixbuf.h
+dialog.c: $(helpbrowser_built_sources)
+
+helpbrowser_SOURCES = \
+	$(helpbrowser_built_sources) $(helpbrowser_sources)
+
+
+$(srcdir)/logo-pixbuf.h: wilber-reading.png
+	$(GDK_PIXBUF_CSOURCE) --raw --name=logo_data $< > $(@F)
+
+EXTRA_DIST = wilber-reading.png
+
+CLEANFILES = logo-pixbuf.h

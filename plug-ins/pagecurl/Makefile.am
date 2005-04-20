@@ -68,4 +68,4 @@ pagecurl-icons.list: $(PAGECURL_IMAGES) Makefile.am
 	  done )
 
 $(srcdir)/pagecurl-icons.h: pagecurl-icons.list
-	gdk-pixbuf-csource --raw --build-list `cat pagecurl-icons.list` > $(@F)
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat pagecurl-icons.list` > $(@F)

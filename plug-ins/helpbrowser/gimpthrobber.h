@@ -24,6 +24,7 @@
 
 G_BEGIN_DECLS
 
+
 #define GIMP_TYPE_THROBBER            (gimp_throbber_get_type ())
 #define GIMP_THROBBER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_THROBBER, GimpThrobber))
 #define GIMP_THROBBER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_THROBBER, GimpThrobberClass))
@@ -58,6 +59,9 @@ GtkToolItem * gimp_throbber_new           (const gchar  *stock_id);
 void          gimp_throbber_set_stock_id  (GimpThrobber *button,
                                            const gchar  *stock_id);
 const gchar * gimp_throbber_get_stock_id  (GimpThrobber *button);
+void          gimp_throbber_set_image     (GimpThrobber *button,
+                                           GtkWidget    *image);
+GtkWidget   * gimp_throbber_get_image     (GimpThrobber *button);
 
 
 G_END_DECLS

@@ -52,6 +52,8 @@
 #include "queue.h"
 #include "uri.h"
 
+#include "logo-pixbuf.h"
+
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -160,10 +162,12 @@ browser_dialog_open (void)
   GtkWidget       *drag_source;
   GtkWidget       *image;
   GtkWidget       *combo;
+  GtkWidget       *button;
   GtkToolItem     *item;
   GtkAction       *action;
   GtkListStore    *history;
   GtkCellRenderer *cell;
+  GdkPixbuf       *pixbuf;
   gchar           *eek_png_path;
 
   gimp_ui_init ("helpbrowser", TRUE);
@@ -187,6 +191,10 @@ browser_dialog_open (void)
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  pixbuf = gdk_pixbuf_new_from_inline (-1, logo_data, FALSE, NULL);
+  gtk_window_set_icon (GTK_WINDOW (window), pixbuf);
+  g_object_unref (pixbuf);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -223,6 +231,11 @@ browser_dialog_open (void)
                                               "/help-browser-toolbar/space"));
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, TRUE);
+
+  button = gtk_ui_manager_get_widget (ui_manager,
+                                      "/help-browser-toolbar/online");
+  gimp_throbber_set_image (GIMP_THROBBER (button),
+                           gtk_image_new_from_pixbuf (pixbuf));
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

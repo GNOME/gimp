@@ -83,7 +83,7 @@ LDADD = \
 
 
 $(srcdir)/logo-pixbuf.h: logo.png
-	gdk-pixbuf-csource --raw --name=logo_data $< > $(@F)
+	$(GDK_PIXBUF_CSOURCE) --raw --name=logo_data $< > $(@F)
 
 EXTRA_DIST = \
 	README	\

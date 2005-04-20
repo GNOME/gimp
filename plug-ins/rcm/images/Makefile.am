@@ -20,4 +20,4 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	  done )
 
 $(srcdir)/rcm-stock-pixbufs.h: stock-icons.list
-	gdk-pixbuf-csource --raw --build-list `cat stock-icons.list` > $(@F)
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)

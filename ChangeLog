@@ -1,5 +1,24 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/Lighting/images/Makefile.am
+	* plug-ins/gfig/images/Makefile.am
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/imagemap/images/Makefile.am
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/rcm/images/Makefile.am: use $(GDK_PIXBUF_CSOURCE) as
+	defined by the configure script.
+
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/helpbrowser/wilber-reading.png: added icon.
+
+	* plug-ins/helpbrowser/gimpthrobber.[ch]: added API to set an image
+	to be used instead of the stock-id.
+
+	* plug-ins/helpbrowser/dialog.c: use the Reading Wilber icon for
+	the throbber and as window icon.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpstock.c
 	* themes/Default/images/Makefile.am: reverted the change to
 	register a wilber icon in button size; it broke the color selector.
