@@ -1,5 +1,11 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstock.c
+	* themes/Default/images/Makefile.am: reverted the change to
+	register a wilber icon in button size; it broke the color selector.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb-parse.c: fixed typos in comments.
 
 2005-04-20  Sven Neumann  <sven@gimp.org>
