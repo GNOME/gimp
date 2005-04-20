@@ -1,3 +1,7 @@
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am: do not build doc-shooter by default.
+
 2005-04-20  DindinX  <dindinx@gimp.org>
 
 	* tools/*: new tools to generate screenshots for the widget gallery.
