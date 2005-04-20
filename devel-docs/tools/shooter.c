@@ -56,7 +56,7 @@ add_border_to_shot (GdkPixbuf *pixbuf)
                            gdk_pixbuf_get_height (pixbuf) + 2);
 
   /* Fill with solid black */
-  gdk_pixbuf_fill (retval, 0xFF000000);
+  gdk_pixbuf_fill (retval, 0x000000FF);
 
   gdk_pixbuf_copy_area (pixbuf,
                         0, 0,
