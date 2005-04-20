@@ -1,5 +1,11 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* tools/README.shooter: adapted for GIMP.
+
+	* tools/Makefile.am (EXTRA_DIST): include it in the tarball.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* tools/Makefile.am
 	* tools/shooter.c
 	* tools/widgets.c: fixed includes and dependencies, expand the path

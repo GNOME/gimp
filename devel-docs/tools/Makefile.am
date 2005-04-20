@@ -32,6 +32,8 @@ doc_shooter_SOURCES = \
 
 doc_shooter_LDADD = $(LDADDS)
 
+EXTRA_DIST = README.shooter
+
 
 clean-local:
 	rm -f *.png
