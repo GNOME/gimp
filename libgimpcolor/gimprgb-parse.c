@@ -222,7 +222,7 @@ static const ColorEntry named_colors[] =
  * notation is a '#' immediately followed by either three or six
  * hexadecimal characters.
  *
- * This funcion does not touch the alpha component of @rgb.
+ * This function does not touch the alpha component of @rgb.
  *
  * Return value: %TRUE if @name was parsed successfully and @rgb has been
  *               set, %FALSE otherwise
@@ -258,7 +258,7 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
  * Attempts to parse a string describing a color in RGB value in
  * hexadecimal notation (optionally prefixed with a '#').
  *
- * This funcion does not touch the alpha component of @rgb.
+ * This function does not touch the alpha component of @rgb.
  *
  * Return value: %TRUE if @hex was parsed successfully and @rgb has been
  *               set, %FALSE otherwise
@@ -298,7 +298,7 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
  * (<code>##ff0000</code>) or a color name as parsed by
  * gimp_rgb_parse_name() (<code>red</code>).
  *
- * This funcion does not touch the alpha component of @rgb.
+ * This function does not touch the alpha component of @rgb.
  *
  * Return value: %TRUE if @css was parsed successfully and @rgb has been
  *               set, %FALSE otherwise

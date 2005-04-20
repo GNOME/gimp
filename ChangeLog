@@ -1,5 +1,9 @@
 2005-04-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb-parse.c: fixed typos in comments.
+
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpui.c (gimp_ensure_modules): cosmetics.
 
 2005-04-20  Sven Neumann  <sven@gimp.org>
