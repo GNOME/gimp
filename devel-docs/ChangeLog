@@ -35,6 +35,13 @@
 
 	* tools/Makefile.am: do not build doc-shooter by default.
 
+2005-04-20  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am
+	* tools/shooter.c
+	* tools/widgets.[ch]: some minor cleanups, removed unused includes,
+	made code multihead-safe.
+
 2005-04-20  DindinX  <dindinx@gimp.org>
 
 	* tools/*: new tools to generate screenshots for the widget gallery.
