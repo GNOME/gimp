@@ -1,40 +1,34 @@
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
-#include <gdk/gdkx.h>
-#include <stdio.h>
-#include <errno.h>
-#include <sys/wait.h>
+
+#include "config.h"
+
+#include <stdlib.h>
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include <X11/extensions/shape.h>
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <locale.h>
+#include <gdk/gdkx.h>
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets.h"
 #include "shadow.h"
 
-#define MAXIMUM_WM_REPARENTING_DEPTH 4
-#ifndef _
-#define _(x) (x)
-#endif
 
 static Window
-find_toplevel_window (Window xid)
+find_toplevel_window (Display *display,
+                      Window   xid)
 {
-  Window root, parent, *children;
-  int nchildren;
+  Window  root, parent, *children;
+  gint    nchildren;
 
   do
     {
-      if (XQueryTree ( gdk_x11_get_default_xdisplay (), xid, &root,
-		      &parent, &children, &nchildren) == 0)
+      if (XQueryTree (display, xid,
+                      &root, &parent, &children, &nchildren) == 0)
 	{
 	  g_warning ("Couldn't find window manager window");
 	  return 0;
@@ -72,18 +66,22 @@ static GdkPixbuf *
 remove_shaped_area (GdkPixbuf *pixbuf,
 		    Window     window)
 {
-  GdkPixbuf *retval;
+  Display    *display;
+  GdkPixbuf  *retval;
   XRectangle *rectangles;
-  int rectangle_count, rectangle_order;
-  int i;
+  gint        rectangle_count, rectangle_order;
+  gint        i;
 
   retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
 			   gdk_pixbuf_get_width (pixbuf),
 			   gdk_pixbuf_get_height (pixbuf));
-  
+
   gdk_pixbuf_fill (retval, 0);
-  rectangles = XShapeGetRectangles (  gdk_x11_get_default_xdisplay(), window,
-				    ShapeBounding, &rectangle_count, &rectangle_order);
+
+  display = gdk_x11_display_get_xdisplay (gdk_display_get_default ());
+
+  rectangles = XShapeGetRectangles (display, window, ShapeBounding,
+                                    &rectangle_count, &rectangle_order);
 
   for (i = 0; i < rectangle_count; i++)
     {
@@ -120,25 +118,25 @@ static GdkPixbuf *
 take_window_shot (Window   child,
 		  gboolean include_decoration)
 {
-  GdkWindow *window;
-  Display *disp;
-  Window w, xid;
-  gint x_orig, y_orig;
-  gint x = 0, y = 0;
-  gint width, height;
+  GdkDisplay *display;
+  GdkScreen  *screen;
+  GdkWindow  *window;
+  Window      xid;
+  gint        x_orig, y_orig;
+  gint        x = 0, y = 0;
+  gint        width, height;
+  GdkPixbuf  *tmp, *tmp2;
+  GdkPixbuf  *retval;
 
-  GdkPixbuf *tmp, *tmp2;
-  GdkPixbuf *retval;
-
-  disp =  gdk_x11_get_default_xdisplay ();
-  w = gdk_x11_get_default_root_xwindow ();
+  display = gdk_display_get_default ();
+  screen = gdk_screen_get_default ();
 
   if (include_decoration)
-    xid = find_toplevel_window (child);
+    xid = find_toplevel_window (gdk_x11_display_get_xdisplay (display), child);
   else
     xid = child;
 
-  window = gdk_window_foreign_new (xid);
+  window = gdk_window_foreign_new_for_display (display, xid);
 
   gdk_drawable_get_size (window, &width, &height);
   gdk_window_get_origin (window, &x_orig, &y_orig);
@@ -157,11 +155,11 @@ take_window_shot (Window   child,
       y_orig = 0;
     }
 
-  if (x_orig + width > gdk_screen_width ())
-    width = gdk_screen_width () - x_orig;
+  if (x_orig + width > gdk_screen_get_width (screen))
+    width = gdk_screen_get_width (screen) - x_orig;
 
-  if (y_orig + height > gdk_screen_height ())
-    height = gdk_screen_height () - y_orig;
+  if (y_orig + height > gdk_screen_get_height (screen))
+    height = gdk_screen_get_height (screen) - y_orig;
 
   tmp = gdk_pixbuf_get_from_drawable (NULL, window, NULL,
 				      x, y, 0, 0, width, height);
@@ -178,16 +176,17 @@ take_window_shot (Window   child,
   return retval;
 }
 
-int main (int argc, char **argv)
+int
+main (int argc, char **argv)
 {
-  GList *toplevels;
   GdkPixbuf *screenshot = NULL;
-  GList *node;
+  GList     *toplevels;
+  GList     *node;
 
   /* If there's no DISPLAY, we silently error out.  We don't want to break
    * headless builds. */
   if (! gtk_init_check (&argc, &argv))
-    return 0;
+    return EXIT_SUCCESS;
 
   gimp_stock_init ();
 
@@ -207,7 +206,7 @@ int main (int argc, char **argv)
       window = info->window->window;
 
       gtk_widget_show_now (info->window);
-      gtk_widget_draw (info->window, &(info->window->allocation));
+      gtk_widget_queue_draw (info->window);
 
       while (gtk_events_pending ())
 	{
@@ -228,5 +227,5 @@ int main (int argc, char **argv)
       gtk_widget_hide (info->window);
     }
 
-  return 0;
+  return EXIT_SUCCESS;
 }
