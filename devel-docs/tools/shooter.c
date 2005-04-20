@@ -12,11 +12,11 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
+#include "libgimp/gimp.h"
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
-#include "libgimp/gimp.h"
-#include "libgimpmodule/gimpmoduletypes.h"
-#include "libgimpmodule/gimpmoduledb.h"
 
 #include "widgets.h"
 #include "shadow.h"
@@ -56,7 +56,8 @@ add_border_to_shot (GdkPixbuf *pixbuf)
                            gdk_pixbuf_get_height (pixbuf) + 2);
 
   /* Fill with solid black */
-  gdk_pixbuf_fill (retval, 0xFF);
+  gdk_pixbuf_fill (retval, 0xFFFFFFFF);
+
   gdk_pixbuf_copy_area (pixbuf,
                         0, 0,
                         gdk_pixbuf_get_width (pixbuf),
@@ -174,6 +175,7 @@ take_window_shot (Window   child,
     tmp2 = add_border_to_shot (tmp);
 
   retval = create_shadowed_pixbuf (tmp2);
+
   g_object_unref (tmp);
   g_object_unref (tmp2);
 
@@ -210,9 +212,12 @@ shooter_ensure_modules (void)
 
   if (! module_db)
     {
+      gchar *path = gimp_config_build_plug_in_path ("modules");
+
       module_db = gimp_module_db_new (FALSE);
-      gimp_module_db_set_load_inhibit (module_db, NULL);
-      gimp_module_db_load (module_db, "");
+
+      gimp_module_db_load (module_db, path);
+      g_free (path);
     }
 }
 
@@ -223,12 +228,13 @@ main (int argc, char **argv)
   GList     *toplevels;
   GList     *node;
 
-  /* If there's no DISPLAY, we silently error out.  We don't want to break
-   * headless builds. */
+  g_set_application_name ("GIMP documention shooter");
+
+  /* If there's no DISPLAY, we silently error out.
+   * We don't want to break headless builds.
+   */
   if (! gtk_init_check (&argc, &argv))
     return EXIT_SUCCESS;
-
-  gimp_stock_init ();
 
   gimp_widgets_init (shooter_standard_help,
                      shooter_get_foreground,
@@ -240,10 +246,10 @@ main (int argc, char **argv)
 
   for (node = toplevels; node; node = g_list_next (node))
     {
-      GdkWindow *window;
+      GdkWindow  *window;
       WidgetInfo *info;
-      XID id;
-      char *filename;
+      XID         xid;
+      gchar      *filename;
 
       info = node->data;
 
@@ -265,11 +271,13 @@ main (int argc, char **argv)
           gtk_main_iteration ();
         }
 
-      id = gdk_x11_drawable_get_xid (GDK_DRAWABLE (window));
-      screenshot = take_window_shot (id, info->include_decorations);
-      filename = g_strdup_printf ("./%s.png", info->name);
+      xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (window));
+      screenshot = take_window_shot (xid, info->include_decorations);
+
+      filename = g_strdup_printf ("%s.png", info->name);
       gdk_pixbuf_save (screenshot, filename, "png", NULL, NULL);
       g_free(filename);
+
       gtk_widget_hide (info->window);
     }
 
