@@ -40,8 +40,6 @@ static void  gimp_int_store_finalize        (GObject           *object);
 static void  gimp_int_store_row_inserted    (GtkTreeModel      *model,
                                              GtkTreePath       *path,
                                              GtkTreeIter       *iter);
-static void  gimp_int_store_row_deleted     (GtkTreeModel      *model,
-                                             GtkTreePath       *path);
 static void  gimp_int_store_add_empty       (GimpIntStore      *store);
 
 
@@ -102,7 +100,6 @@ gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
   parent_iface = g_type_interface_peek_parent (iface);
 
   iface->row_inserted = gimp_int_store_row_inserted;
-  iface->row_deleted  = gimp_int_store_row_deleted;
 }
 
 static void
@@ -155,17 +152,6 @@ gimp_int_store_row_inserted (GtkTreeModel *model,
       gtk_tree_iter_free (store->empty_iter);
       store->empty_iter = NULL;
     }
-}
-
-static void
-gimp_int_store_row_deleted (GtkTreeModel *model,
-                            GtkTreePath  *path)
-{
-  if (parent_iface->row_deleted)
-    parent_iface->row_deleted (model, path);
-
-  if (gtk_tree_model_iter_n_children (model, NULL) == 0)
-    gimp_int_store_add_empty (GIMP_INT_STORE (model));
 }
 
 static void
