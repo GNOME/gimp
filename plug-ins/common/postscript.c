@@ -1544,9 +1544,18 @@ ps_open (const gchar      *filename,
   g_ptr_array_add (cmdA, g_strdup_printf ("-sDEVICE=%s", driver));
   g_ptr_array_add (cmdA, g_strdup_printf ("-r%d", resolution));
 
-  /* For PDF, we can't set geometry */
-  if (!is_pdf)
-    g_ptr_array_add (cmdA, g_strdup_printf ("-g%dx%d", width, height));
+  if (is_pdf)
+    {
+      /* Acrobat Reader honors CropBox over MediaBox, so let's match that
+       * behavior.
+       */
+      g_ptr_array_add (cmdA, g_strdup ("-dUseCropBox"));
+    }
+  else
+    {
+      /* For PDF, we can't set geometry */
+      g_ptr_array_add (cmdA, g_strdup_printf ("-g%dx%d", width, height));
+    }
 
   /* Antialiasing not available for PBM-device */
   if ((loadopt->pnm_type != 4) && (loadopt->textalpha != 1))
