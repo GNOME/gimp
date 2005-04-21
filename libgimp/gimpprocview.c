@@ -118,6 +118,7 @@ gimp_proc_view_new (const gchar     *name,
   if (blurb)
     {
       label = gtk_label_new (blurb);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -169,6 +170,7 @@ gimp_proc_view_new (const gchar     *name,
   if (help)
     {
       label = gtk_label_new (help);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -192,6 +194,7 @@ gimp_proc_view_new (const gchar     *name,
   if (author)
     {
       label = gtk_label_new (author);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
@@ -203,6 +206,7 @@ gimp_proc_view_new (const gchar     *name,
   if (date)
     {
       label = gtk_label_new (date);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
@@ -214,6 +218,7 @@ gimp_proc_view_new (const gchar     *name,
   if (copyright)
     {
       label = gtk_label_new (copyright);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
@@ -269,6 +274,7 @@ gimp_proc_view_create_params (GimpParamDef *params,
 
       /* description */
       label = gtk_label_new (params[i].description);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_size_group_add_widget (desc_group, label);
