@@ -1,3 +1,8 @@
+2005-04-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.[ch]: removed Close button from
+	dockables as suggested in bug #301348.
+
 2005-04-21  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/postscript.c: pass -dUseCropBox when loading PDF

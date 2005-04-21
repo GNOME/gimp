@@ -84,8 +84,6 @@ static void       gimp_dockable_get_title_area    (GimpDockable   *dockable,
 static gboolean   gimp_dockable_menu_button_press (GtkWidget      *button,
                                                    GdkEventButton *bevent,
                                                    GimpDockable   *dockable);
-static void       gimp_dockable_close_clicked     (GtkWidget      *button,
-                                                   GimpDockable   *dockable);
 static gboolean   gimp_dockable_show_menu         (GimpDockable   *dockable);
 static gboolean   gimp_dockable_blink_timeout     (GimpDockable   *dockable);
 
@@ -201,26 +199,6 @@ gimp_dockable_init (GimpDockable *dockable)
                     G_CALLBACK (gimp_dockable_menu_button_press),
                     dockable);
 
-  gtk_widget_push_composite_child ();
-  dockable->close_button = gtk_button_new ();
-  gtk_widget_pop_composite_child ();
-
-  GTK_WIDGET_UNSET_FLAGS (dockable->close_button, GTK_CAN_FOCUS);
-  gtk_widget_set_parent (dockable->close_button, GTK_WIDGET (dockable));
-  gtk_button_set_relief (GTK_BUTTON (dockable->close_button), GTK_RELIEF_NONE);
-  gtk_widget_show (dockable->close_button);
-
-  gimp_help_set_help_data (dockable->close_button, _("Close this Tab"),
-                           GIMP_HELP_DOCK_TAB_CLOSE);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_CLOSE, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (dockable->close_button), image);
-  gtk_widget_show (image);
-
-  g_signal_connect (dockable->close_button, "clicked",
-                    G_CALLBACK (gimp_dockable_close_clicked),
-                    dockable);
-
   gtk_drag_dest_set (GTK_WIDGET (dockable),
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
@@ -279,12 +257,6 @@ gimp_dockable_destroy (GtkObject *object)
       dockable->menu_button = NULL;
     }
 
-  if (dockable->close_button)
-    {
-      gtk_widget_unparent (dockable->close_button);
-      dockable->close_button = NULL;
-    }
-
   if (dockable->blink_timeout_id)
     {
       g_source_remove (dockable->blink_timeout_id);
@@ -302,15 +274,14 @@ gimp_dockable_size_request (GtkWidget      *widget,
   GtkContainer   *container = GTK_CONTAINER (widget);
   GtkBin         *bin       = GTK_BIN (widget);
   GimpDockable   *dockable  = GIMP_DOCKABLE (widget);
-
   GtkRequisition  child_requisition;
 
   requisition->width  = container->border_width * 2;
   requisition->height = container->border_width * 2;
 
-  if (dockable->close_button && GTK_WIDGET_VISIBLE (dockable->close_button))
+  if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
     {
-      gtk_widget_size_request (dockable->close_button, &child_requisition);
+      gtk_widget_size_request (dockable->menu_button, &child_requisition);
 
       if (! bin->child)
         requisition->width += child_requisition.width;
@@ -338,38 +309,17 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
   GtkRequisition  button_requisition = { 0, };
   GtkAllocation   child_allocation;
 
-  container = GTK_CONTAINER (widget);
-  bin       = GTK_BIN (widget);
-  dockable  = GIMP_DOCKABLE (widget);
-
   widget->allocation = *allocation;
 
-  if (dockable->close_button)
+  if (dockable->menu_button && GTK_WIDGET_VISIBLE (dockable->menu_button))
     {
-      gtk_widget_size_request (dockable->close_button, &button_requisition);
+      gtk_widget_size_request (dockable->menu_button, &button_requisition);
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
         child_allocation.x    = (allocation->x +
                                  allocation->width -
                                  container->border_width -
                                  button_requisition.width);
-      else
-        child_allocation.x    = allocation->x + container->border_width;
-
-      child_allocation.y      = allocation->y + container->border_width;
-      child_allocation.width  = button_requisition.width;
-      child_allocation.height = button_requisition.height;
-
-      gtk_widget_size_allocate (dockable->close_button, &child_allocation);
-    }
-
-  if (dockable->menu_button)
-    {
-      if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR)
-        child_allocation.x    = (allocation->x +
-                                 allocation->width -
-                                 container->border_width -
-                                 2 * button_requisition.width);
       else
         child_allocation.x    = (allocation->x + container->border_width +
                                  button_requisition.width);
@@ -381,7 +331,7 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
       gtk_widget_size_allocate (dockable->menu_button, &child_allocation);
     }
 
-  if (bin->child)
+  if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
     {
       child_allocation.x      = allocation->x + container->border_width;
       child_allocation.y      = allocation->y + container->border_width;
@@ -661,9 +611,6 @@ gimp_dockable_forall (GtkContainer *container,
     {
       if (dockable->menu_button)
         (* callback) (dockable->menu_button, callback_data);
-
-      if (dockable->close_button)
-        (* callback) (dockable->close_button, callback_data);
     }
 
   GTK_CONTAINER_CLASS (parent_class)->forall (container, include_internals,
@@ -929,12 +876,11 @@ gimp_dockable_get_title_area (GimpDockable *dockable,
   area->x      = widget->allocation.x + border;
   area->y      = widget->allocation.y + border;
   area->width  = (widget->allocation.width -
-                  2 * border -
-                  2 * dockable->close_button->allocation.width);
-  area->height = dockable->close_button->allocation.height;
+                  2 * border - dockable->menu_button->allocation.width);
+  area->height = dockable->menu_button->allocation.height;
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-    area->x += 2 * dockable->close_button->allocation.width;
+    area->x += dockable->menu_button->allocation.width;
 }
 
 static gboolean
@@ -948,13 +894,6 @@ gimp_dockable_menu_button_press (GtkWidget      *button,
     }
 
   return FALSE;
-}
-
-static void
-gimp_dockable_close_clicked (GtkWidget    *button,
-                             GimpDockable *dockable)
-{
-  gimp_dockbook_remove (dockable->dockbook, dockable);
 }
 
 static void

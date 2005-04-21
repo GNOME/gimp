@@ -53,7 +53,6 @@ struct _GimpDockable
   PangoLayout  *title_layout;
   GdkWindow    *title_window;
   GtkWidget    *menu_button;
-  GtkWidget    *close_button;
 
   guint         blink_timeout_id;
   gint          blink_counter;
