@@ -279,8 +279,8 @@ GType gimp_transform_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_FORWARD,   /*< desc="Forward (traditional)" >*/
-  GIMP_TRANSFORM_BACKWARD   /*< desc="Backward (corrective)" >*/
+  GIMP_TRANSFORM_FORWARD,   /*< desc="Forward" >*/
+  GIMP_TRANSFORM_BACKWARD   /*< desc="Backward" >*/
 } GimpTransformDirection;
 
 
