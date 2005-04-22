@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-04 01:07+0200\n"
-"PO-Revision-Date: 2005-04-03 14:11+0200\n"
+"POT-Creation-Date: 2005-04-22 11:55+0200\n"
+"PO-Revision-Date: 2005-04-22 12:32+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Selezione caratteri"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
@@ -303,7 +303,7 @@ msgstr "Blu"
 msgid "Gray"
 msgstr "Grigio"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:467
 msgid "Indexed"
 msgstr "Indicizzato"
 
@@ -326,15 +326,15 @@ msgstr "Grande"
 
 #: ../libgimpbase/gimpbaseenums.c:228
 msgid "Light Checks"
-msgstr "Controlli luci"
+msgstr "Scacchi chiari"
 
 #: ../libgimpbase/gimpbaseenums.c:229
 msgid "Mid-Tone Checks"
-msgstr "Controlli mezzi toni"
+msgstr "Scacchi medi"
 
 #: ../libgimpbase/gimpbaseenums.c:230
 msgid "Dark Checks"
-msgstr "Controlli ombre"
+msgstr "Scacchi scuri"
 
 #: ../libgimpbase/gimpbaseenums.c:231
 msgid "White Only"
@@ -356,157 +356,169 @@ msgstr "Sorgente immagine"
 msgid "Pattern source"
 msgstr "Sorgente motivo"
 
-#: ../libgimpbase/gimpbaseenums.c:290
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Lightness"
+msgstr "Lucentezza"
+
+#: ../libgimpbase/gimpbaseenums.c:292
+msgid "Luminosity"
+msgstr "Luminosità"
+
+#: ../libgimpbase/gimpbaseenums.c:293
+msgid "Average"
+msgstr "Media"
+
+#: ../libgimpbase/gimpbaseenums.c:321
 msgid "Dodge"
 msgstr "Scherma"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:322
 msgid "Burn"
 msgstr "Brucia"
 
-#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
 msgid "Linear"
 msgstr "Lineare"
 
-#: ../libgimpbase/gimpbaseenums.c:329
+#: ../libgimpbase/gimpbaseenums.c:360
 msgid "Bi-linear"
 msgstr "Bi-lineare"
 
-#: ../libgimpbase/gimpbaseenums.c:330
+#: ../libgimpbase/gimpbaseenums.c:361
 msgid "Radial"
 msgstr "Radiale"
 
-#: ../libgimpbase/gimpbaseenums.c:331
+#: ../libgimpbase/gimpbaseenums.c:362
 msgid "Square"
 msgstr "Quadratica"
 
-#: ../libgimpbase/gimpbaseenums.c:332
+#: ../libgimpbase/gimpbaseenums.c:363
 msgid "Conical (sym)"
 msgstr "Conica (simm.)"
 
-#: ../libgimpbase/gimpbaseenums.c:333
+#: ../libgimpbase/gimpbaseenums.c:364
 msgid "Conical (asym)"
 msgstr "Conica (asimm.)"
 
-#: ../libgimpbase/gimpbaseenums.c:334
+#: ../libgimpbase/gimpbaseenums.c:365
 msgid "Shaped (angular)"
 msgstr "Conformata (angolare)"
 
-#: ../libgimpbase/gimpbaseenums.c:335
+#: ../libgimpbase/gimpbaseenums.c:366
 msgid "Shaped (spherical)"
 msgstr "Conformata (sferica)"
 
-#: ../libgimpbase/gimpbaseenums.c:336
+#: ../libgimpbase/gimpbaseenums.c:367
 msgid "Shaped (dimpled)"
 msgstr "Conformata (curvata)"
 
-#: ../libgimpbase/gimpbaseenums.c:337
+#: ../libgimpbase/gimpbaseenums.c:368
 msgid "Spiral (cw)"
 msgstr "Spiraliforme (senso or.)"
 
-#: ../libgimpbase/gimpbaseenums.c:338
+#: ../libgimpbase/gimpbaseenums.c:369
 msgid "Spiral (ccw)"
 msgstr "Spiraliforme (senso a. or.)"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Stock ID"
 msgstr "ID blocco"
 
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:399
 msgid "Inline pixbuf"
 msgstr "Pixbuf inlinea"
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:400
 msgid "Image file"
 msgstr "File immagine"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:429
 msgid "RGB color"
 msgstr "Colore RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+#: ../libgimpbase/gimpbaseenums.c:430 ../libgimpbase/gimpbaseenums.c:465
 msgid "Grayscale"
 msgstr "Scala di grigi"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Indexed color"
 msgstr "Colore indicizzato"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:435
+#: ../libgimpbase/gimpbaseenums.c:466
 msgid "Grayscale-alpha"
 msgstr "Scala di grigi-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:437
+#: ../libgimpbase/gimpbaseenums.c:468
 msgid "Indexed-alpha"
 msgstr "Indicizzato-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:498
 msgid "None (Fastest)"
 msgstr "Nessuno (veloce)"
 
-#: ../libgimpbase/gimpbaseenums.c:469
+#: ../libgimpbase/gimpbaseenums.c:500
 msgid "Cubic"
 msgstr "Cubico"
 
-#: ../libgimpbase/gimpbaseenums.c:470
+#: ../libgimpbase/gimpbaseenums.c:501
 msgid "Lanczos (Best)"
 msgstr "Lanczos (migliore)"
 
-#: ../libgimpbase/gimpbaseenums.c:498
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "Constant"
 msgstr "Costante"
 
-#: ../libgimpbase/gimpbaseenums.c:499
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:559
 msgid "None"
 msgstr "Nessuno"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:560
 msgid "Sawtooth wave"
 msgstr "Onda a dente di sega"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:561
 msgid "Triangular wave"
 msgstr "Onda triangolare"
 
-#: ../libgimpbase/gimpbaseenums.c:558
+#: ../libgimpbase/gimpbaseenums.c:589
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:590
 msgid "Points"
 msgstr "Punti"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:619
 msgid "Shadows"
 msgstr "Scuri"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:620
 msgid "Midtones"
 msgstr "Mezzi toni"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:621
 msgid "Highlights"
 msgstr "Luminosi"
 
-#: ../libgimpbase/gimpbaseenums.c:618
-msgid "Forward (traditional)"
-msgstr "Avanti (tradizionale)"
+#: ../libgimpbase/gimpbaseenums.c:649
+msgid "Forward"
+msgstr "Avanti"
 
-#: ../libgimpbase/gimpbaseenums.c:619
-msgid "Backward (corrective)"
-msgstr "Indietro (correttivo)"
+#: ../libgimpbase/gimpbaseenums.c:650
+msgid "Backward"
+msgstr "Indietro"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -660,13 +672,13 @@ msgstr "valore non valido '%ld' per il token %s"
 msgid "while parsing token '%s': %s"
 msgstr "analizzando il token '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:515
+#: ../libgimpconfig/gimpconfig-iface.c:453
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
 #: ../libgimpconfig/gimpscanner.c:596
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
-#: ../libgimpconfig/gimpconfig-path.c:349
+#: ../libgimpconfig/gimpconfig-path.c:376
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere $(%s)"
@@ -998,7 +1010,7 @@ msgstr "Unità"
 msgid "Factor"
 msgstr "Fattore"
 
-#: ../libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:1003
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1007,15 +1019,15 @@ msgstr ""
 "permette \n"
 "di ripetere una data operazione \"casuale\""
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
 msgstr "_Nuovo seme"
 
-#: ../libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:1020
 msgid "Seed random number generator with a generated random number"
 msgstr "Generatore del seme di casualità con un numero generato casualmente"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Casualizza"
 
