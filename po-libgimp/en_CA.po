@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-16 14:01-0400\n"
-"PO-Revision-Date: 2005-04-16 20:02-0400\n"
+"POT-Creation-Date: 2005-04-22 04:20-0400\n"
+"PO-Revision-Date: 2005-04-22 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,7 +199,7 @@ msgstr "Font Selection"
 msgid "Gradient Selection"
 msgstr "Gradient Selection"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Empty)"
 
@@ -512,12 +512,12 @@ msgid "Highlights"
 msgstr "Highlights"
 
 #: ../libgimpbase/gimpbaseenums.c:649
-msgid "Forward (traditional)"
-msgstr "Forward (traditional)"
+msgid "Forward"
+msgstr "Forward"
 
 #: ../libgimpbase/gimpbaseenums.c:650
-msgid "Backward (corrective)"
-msgstr "Backward (corrective)"
+msgid "Backward"
+msgstr "Backward"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -1006,7 +1006,7 @@ msgstr "Unit"
 msgid "Factor"
 msgstr "Factor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:1003
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1014,15 +1014,15 @@ msgstr ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
 msgstr "_New Seed"
 
-#: ../libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:1020
 msgid "Seed random number generator with a generated random number"
 msgstr "Seed random number generator with a generated random number"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Randomize"
 
