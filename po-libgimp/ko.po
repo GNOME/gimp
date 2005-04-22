@@ -1,12 +1,12 @@
-# gimp-plug-ins ko.po
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# Sung-Hyun Nam <namsh@kldp.org>, 1999
+# po-libgimp/ko.po
+# Sung-Hyun Nam <namsh@kldp.org>, 1998-1999
+# Dongsu Jang <iolo@hellocity.net>, 2004-2005
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
-"PO-Revision-Date: 2003-06-05 07:55+0800\n"
+"POT-Creation-Date: 2005-04-22 03:29+0900\n"
+"PO-Revision-Date: 2005-04-18 01:03+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,10 +196,9 @@ msgstr "그라디언트 선택"
 
 #: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
-msgstr ""
+msgstr "(비어있음)"
 
 #: ../libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
 msgstr "무늬 선택"
 
@@ -213,73 +212,71 @@ msgstr "백분율"
 
 #: ../libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "작게"
 
 #: ../libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "중간"
 
 #: ../libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "크게"
 
 #: ../libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "밝은 격자"
 
 #: ../libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "중간톤 격자"
 
 #: ../libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "어두운 격자"
 
 #: ../libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "흰새만"
 
 #: ../libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "회색만"
 
 #: ../libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "검정"
+msgstr "검정색만"
 
 #: ../libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB 색상"
 
 #: ../libgimpbase/gimpbaseenums.c:92 ../libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "그레이스케일로 바꾸기"
+msgstr "그레이스케일"
 
 #: ../libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "색인된 컬러"
 
 #: ../libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-알파"
 
 #: ../libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "그레이스케일-알파"
 
 #: ../libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "색인됨"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "색인됨-알파"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -374,6 +371,8 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"올바른 홈 디렉토리를 결정할 수 없습니다.\n"
+"썸네일을 임시 파일용 폴더(%s)에 저장합니다."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -381,29 +380,25 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
 
 #: ../libgimpthumb/gimpthumbnail.c:919
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
+msgstr "%s의 썸네일을 만들 수 없습니다: %s"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:99
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "/전경색(_F)"
+msgstr "전경색(_F)"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:103
-#, fuzzy
 msgid "_Background Color"
-msgstr "/배경색(_B)"
+msgstr "배경색(_B)"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:107
-#, fuzzy
 msgid "Blac_k"
-msgstr "/검정색(_K)"
+msgstr "검정색(_K)"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:111
-#, fuzzy
 msgid "_White"
-msgstr "/흰색(_W)"
+msgstr "흰색(_W)"
 
 #: ../libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -480,13 +475,12 @@ msgid "Alpha"
 msgstr "알파"
 
 #: ../libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "HTML용 16진수 색상 표기"
+msgstr "HTML 및 CSS용 16진수 색상 표기"
 
 #: ../libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML 표기(_N):"
 
 #: ../libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -505,17 +499,14 @@ msgid "Select File"
 msgstr "파일 선택"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "킬로바이트"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
 msgstr "메가바이트"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "기가바이트"
 
@@ -536,16 +527,16 @@ msgstr ""
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "격자 크기"
 
 #: ../libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "격자 형태"
 
 #. toggle button to (des)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "미리보기(_P)"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -553,7 +544,7 @@ msgstr "고정점"
 
 #: ../libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "가운데(_E)"
 
 #: ../libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -585,7 +576,7 @@ msgstr "보임"
 
 #: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr ""
+msgstr "스트로크(_S)"
 
 #: ../libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
@@ -780,13 +771,12 @@ msgid "Black"
 msgstr "검정"
 
 #: ../modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "검정색 농도 (%):"
+msgstr "검정색 농도 (_P):"
 
 #: ../modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "컬러화된 잉크에서 추출할 검정색의 비율(%)."
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -807,9 +797,3 @@ msgstr "수채화"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "압력"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "세개의 16진수(_X):"
-
-#~ msgid "None"
-#~ msgstr "없음"
