@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 19:10+0000\n"
-"PO-Revision-Date: 2005-04-10 00:11+0200\n"
+"POT-Creation-Date: 2005-04-19 11:11+0000\n"
+"PO-Revision-Date: 2005-04-19 14:06+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -309,7 +309,7 @@ msgstr "Blauw"
 msgid "Gray"
 msgstr "Grijs"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:467
 msgid "Indexed"
 msgstr "Met index"
 
@@ -362,161 +362,174 @@ msgstr "Afbeeldingsbron"
 msgid "Pattern source"
 msgstr "Patroonbron"
 
-#: ../libgimpbase/gimpbaseenums.c:290
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Lightness"
+msgstr "Lichtheid"
+
+# lichtgevendheid/lichtheid
+#: ../libgimpbase/gimpbaseenums.c:292
+msgid "Luminosity"
+msgstr "Helderheid"
+
+#: ../libgimpbase/gimpbaseenums.c:293
+msgid "Average"
+msgstr "Gemiddelde"
+
+#: ../libgimpbase/gimpbaseenums.c:321
 msgid "Dodge"
 msgstr "Lichter"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:322
 msgid "Burn"
 msgstr "Donkerder"
 
-#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
 msgid "Linear"
 msgstr "Lineair"
 
-#: ../libgimpbase/gimpbaseenums.c:329
+#: ../libgimpbase/gimpbaseenums.c:360
 msgid "Bi-linear"
 msgstr "Bilineair"
 
-#: ../libgimpbase/gimpbaseenums.c:330
+#: ../libgimpbase/gimpbaseenums.c:361
 msgid "Radial"
 msgstr "Radiaal"
 
-#: ../libgimpbase/gimpbaseenums.c:331
+#: ../libgimpbase/gimpbaseenums.c:362
 msgid "Square"
 msgstr "Vierkant"
 
 # symmetrisch
-#: ../libgimpbase/gimpbaseenums.c:332
+#: ../libgimpbase/gimpbaseenums.c:363
 msgid "Conical (sym)"
 msgstr "Conisch (sym)"
 
 # asymmetrisch
-#: ../libgimpbase/gimpbaseenums.c:333
+#: ../libgimpbase/gimpbaseenums.c:364
 msgid "Conical (asym)"
 msgstr "Conisch (asym)"
 
-#: ../libgimpbase/gimpbaseenums.c:334
+#: ../libgimpbase/gimpbaseenums.c:365
 msgid "Shaped (angular)"
 msgstr "Naar vorm (hoekig)"
 
-#: ../libgimpbase/gimpbaseenums.c:335
+#: ../libgimpbase/gimpbaseenums.c:366
 msgid "Shaped (spherical)"
 msgstr "Naar vorm (rond)"
 
-#: ../libgimpbase/gimpbaseenums.c:336
+#: ../libgimpbase/gimpbaseenums.c:367
 msgid "Shaped (dimpled)"
 msgstr "Naar vorm (putjes)"
 
 # spiraalvormig/spiraal
-#: ../libgimpbase/gimpbaseenums.c:337
+#: ../libgimpbase/gimpbaseenums.c:368
 msgid "Spiral (cw)"
 msgstr "Spiraal (kloksgewijs)"
 
-#: ../libgimpbase/gimpbaseenums.c:338
+#: ../libgimpbase/gimpbaseenums.c:369
 msgid "Spiral (ccw)"
 msgstr "Spiraalvormig (antikloksgewijs)"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Stock ID"
 msgstr "Standaard ID"
 
 # vertalen?
 # inlijns pixbuf
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:399
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:400
 msgid "Image file"
 msgstr "Afbeelding"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:429
 msgid "RGB color"
 msgstr "RGB kleur"
 
-#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+#: ../libgimpbase/gimpbaseenums.c:430 ../libgimpbase/gimpbaseenums.c:465
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Indexed color"
 msgstr "Kleur met index"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "RGB-alpha"
 msgstr "RGB-alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:435
+#: ../libgimpbase/gimpbaseenums.c:466
 msgid "Grayscale-alpha"
 msgstr "Grijswaarden-alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:437
+#: ../libgimpbase/gimpbaseenums.c:468
 msgid "Indexed-alpha"
 msgstr "Met index en alpha"
 
-#: ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:498
 msgid "None (Fastest)"
 msgstr "Geen (snelste)"
 
-#: ../libgimpbase/gimpbaseenums.c:469
+#: ../libgimpbase/gimpbaseenums.c:500
 msgid "Cubic"
 msgstr "Kubisch"
 
-#: ../libgimpbase/gimpbaseenums.c:470
+#: ../libgimpbase/gimpbaseenums.c:501
 msgid "Lanczos (Best)"
 msgstr "Lanczos (beste)"
 
-#: ../libgimpbase/gimpbaseenums.c:498
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "Constant"
 msgstr "Constant"
 
-#: ../libgimpbase/gimpbaseenums.c:499
+#: ../libgimpbase/gimpbaseenums.c:530
 msgid "Incremental"
 msgstr "Oplopend"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:559
 msgid "None"
 msgstr "Geen"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:560
 msgid "Sawtooth wave"
 msgstr "Zaagtandgolf"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:561
 msgid "Triangular wave"
 msgstr "Driehoekige golf"
 
 # beeldpunten
-#: ../libgimpbase/gimpbaseenums.c:558
+#: ../libgimpbase/gimpbaseenums.c:589
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:590
 msgid "Points"
 msgstr "Punten"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:619
 msgid "Shadows"
 msgstr "Donkere kleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:620
 msgid "Midtones"
 msgstr "Middenkleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:621
 msgid "Highlights"
 msgstr "Lichtere kleuren"
 
-#: ../libgimpbase/gimpbaseenums.c:618
+#: ../libgimpbase/gimpbaseenums.c:649
 msgid "Forward (traditional)"
 msgstr "Voorwaarts (traditioneel)"
 
-#: ../libgimpbase/gimpbaseenums.c:619
+#: ../libgimpbase/gimpbaseenums.c:650
 msgid "Backward (corrective)"
 msgstr "Achterwaarts (corrigerend)"
 
@@ -588,7 +601,9 @@ msgstr "Stelt standaard RGB kleurprofiel in."
 
 #: ../libgimpconfig/gimpcolorconfig.c:46
 msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr "Stelt het CMYK kleurprofiel in dat gebruikt wordt om RGB en CMYK in elkaar om te zetten."
+msgstr ""
+"Stelt het CMYK kleurprofiel in dat gebruikt wordt om RGB en CMYK in elkaar "
+"om te zetten."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "Sets the color profile used when printing."
@@ -600,7 +615,8 @@ msgstr "Stelt in hoe kleuren worden geprojecteerd op uw monitor."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "Sets how colors are converted from workspace to simulation device."
-msgstr "Stelt in hoe kleuren worden omgezet van werkruimte naar simulatieapparaat."
+msgstr ""
+"Stelt in hoe kleuren worden omgezet van werkruimte naar simulatieapparaat."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -781,7 +797,8 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Kon geen geldige persoonlijke map vinden.\n"
-"Miniaturen zullen nu worden opgeslagen in de map voor tijdelijke bestanden (%s)."
+"Miniaturen zullen nu worden opgeslagen in de map voor tijdelijke bestanden (%"
+"s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -1029,7 +1046,7 @@ msgstr "Eenheid"
 msgid "Factor"
 msgstr "Factor"
 
-#: ../libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:1003
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1037,18 +1054,18 @@ msgstr ""
 "Gebruik deze waarde als bron voor de generering van willekeurige nummers. "
 "Hiermee kunt u een bepaalde \"willekeurige\" operatie herhalen."
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
 msgstr "_Nieuw brongetal"
 
-#: ../libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:1020
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gebruik een gegenereerd willekeurig nummer als bron voor de generering van "
 "een volgend willekeurig nummer."
 
 # Husselen zou misschien kunnen, maar willekeurig maken is wel goed zo.
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 
