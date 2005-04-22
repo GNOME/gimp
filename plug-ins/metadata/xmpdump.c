@@ -12,7 +12,7 @@ start_schema (XMPParseContext     *context,
               gpointer             user_data,
               GError             **error)
 {
-  printf ("Schema %s = \"%s\"\n", ns_prefix, ns_uri);
+  g_print ("Schema %s = \"%s\"\n", ns_prefix, ns_uri);
   return (gpointer) ns_prefix;
 }
 
@@ -22,7 +22,7 @@ end_schema (XMPParseContext     *context,
             gpointer             user_data,
             GError             **error)
 {
-  /* printf ("End of %s\n", user_ns_prefix); */
+  /* g_print ("End of %s\n", user_ns_prefix); */
 }
 
 static void
@@ -40,47 +40,47 @@ set_property (XMPParseContext     *context,
   switch (type)
     {
     case XMP_PTYPE_TEXT:
-      printf ("\t%s:%s = \"%s\"\n", ns_prefix, name,
-              value[0]);
+      g_print ("\t%s:%s = \"%s\"\n", ns_prefix, name,
+               value[0]);
       break;
 
     case XMP_PTYPE_RESOURCE:
-      printf ("\t%s:%s @ = \"%s\"\n", ns_prefix, name,
-              value[0]);
+      g_print ("\t%s:%s @ = \"%s\"\n", ns_prefix, name,
+               value[0]);
       break;
 
     case XMP_PTYPE_ORDERED_LIST:
     case XMP_PTYPE_UNORDERED_LIST:
-      printf ("\t%s:%s [] =", ns_prefix, name);
+      g_print ("\t%s:%s [] =", ns_prefix, name);
       for (i = 0; value[i] != NULL; i++)
         if (i == 0)
-          printf (" \"%s\"", value[i]);
+          g_print (" \"%s\"", value[i]);
       else
-          printf (", \"%s\"", value[i]);
-      printf ("\n");
+          g_print (", \"%s\"", value[i]);
+      g_print ("\n");
       break;
 
     case XMP_PTYPE_ALT_THUMBS:
       for (i = 0; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [size = %d] = \"...\"\n", ns_prefix, name,
-                *(int*)(value[i])); /* FIXME: show part of image */
+        g_print ("\t%s:%s [size = %d] = \"...\"\n", ns_prefix, name,
+                 *(int*)(value[i])); /* FIXME: show part of image */
       break;
 
     case XMP_PTYPE_ALT_LANG:
       for (i = 0; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
-                value[i], value[i + 1]);
+        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
+                 value[i], value[i + 1]);
       break;
 
     case XMP_PTYPE_STRUCTURE:
-      printf ("\tLocal schema %s = \"%s\"\n", value[0], value[1]);
+      g_print ("\tLocal schema %s = \"%s\"\n", value[0], value[1]);
       for (i = 2; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [%s] = \"%s\"\n", ns_prefix, name,
-                value[i], value[i + 1]);
+        g_print ("\t%s:%s [%s] = \"%s\"\n", ns_prefix, name,
+                 value[i], value[i + 1]);
       break;
 
     default:
-      printf ("\t%s:%s = ?\n", ns_prefix, name);
+      g_print ("\t%s:%s = ?\n", ns_prefix, name);
       break;
     }
 }
@@ -92,8 +92,8 @@ print_error (XMPParseContext *context,
 {
   gchar *filename = user_data;
 
-  fprintf (stderr, "While parsing XMP metadata in %s:\n%s\n",
-           filename, error->message);
+  g_printerr ("While parsing XMP metadata in %s:\n%s\n",
+              filename, error->message);
 }
 
 static XMPParser xmp_parser = {
@@ -111,7 +111,7 @@ scan_file (const gchar *filename)
   GError *error;
   XMPParseContext *context;
 
-  printf ("\nFile: %s\n", filename);
+  g_print ("\nFile: %s\n", filename);
   error = NULL;
   if (!g_file_get_contents (filename,
                             &contents,
@@ -157,7 +157,7 @@ main (int   argc,
     }
   else
     {
-      fprintf (stderr, "Usage:\n"
+      g_print ("Usage:\n"
                "\txmpdump file [file [...]]\n\n"
                "The file(s) given on the command line will be scanned "
                "for XMP metadata\n");

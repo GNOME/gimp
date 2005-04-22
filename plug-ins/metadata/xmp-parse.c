@@ -43,7 +43,7 @@
  *   in the XMP specification (including support for UCS-2 and UCS-4)
  * - provide an API for passing unknown elements or tags to the caller
  * - think about re-writing this using a better XML parser (expat?)
- *   instead of GMarkupParser
+ *   instead of the GMarkup parser
  */
 
 #ifndef WITHOUT_GIMP
@@ -116,7 +116,7 @@ xmp_parse_error_quark (void)
  * qualifiers (when <rdf:Description> is used deeper than at the top
  * level inside <rdf:RDF>).  In that case, QDESC_VALUE contains the
  * value of the property and QDESC_QUAL is used for each of the
- * optional qualifiers.
+ * optional qualifiers (which are currently ignored).
  */
 typedef enum
 {
@@ -186,7 +186,7 @@ struct _XMPParseContext
   GMarkupParseContext *markup_context;
 };
 
-/* FIXME - debugging
+#ifdef DEBUG_XMP_PARSER
 static const char *state_names[] =
 {
   "START",
@@ -218,8 +218,9 @@ static const char *state_names[] =
   "SKIPPING_IGNORED_ELEMENTS",
   "ERROR",
 };
-*/
+#endif
 
+/* report an error and propagate it */
 static void
 parse_error (XMPParseContext  *context,
              GError          **error,
@@ -228,37 +229,37 @@ parse_error (XMPParseContext  *context,
              ...)
 {
   GError  *tmp_error;
-  gchar   *s;
-  va_list  args;
-
-  va_start (args, format);
-  s = g_strdup_vprintf (format, args);
-  va_end (args);
 
   if (code == XMP_ERROR_NO_XPACKET)
-    tmp_error = g_error_new (XMP_PARSE_ERROR, code, _("Error: %s"), s);
+    tmp_error = g_error_new (XMP_PARSE_ERROR, code,
+                             _("Error: No XMP packet found"));
   else
     {
-      gint line_number;
-      gint char_number;
+      gchar   *s;
+      va_list  args;
+      gint     line_number;
+      gint     char_number;
 
+      va_start (args, format);
+      s = g_strdup_vprintf (format, args);
+      va_end (args);
       g_markup_parse_context_get_position (context->markup_context,
                                            &line_number,
                                            &char_number);
       tmp_error = g_error_new (XMP_PARSE_ERROR, code,
                                _("Error on line %d char %d: %s"),
                                line_number, char_number, s);
+      g_free (s);
     }
-  g_free (s);
 
   context->state = STATE_ERROR;
   if (context->parser->error)
-    (*context->parser->error) (context, tmp_error,
-                               context->user_data);
+    (*context->parser->error) (context, tmp_error, context->user_data);
 
   g_propagate_error (error, tmp_error);
 }
 
+/* report an error if an unexpected element is found in the wrong context */
 static void
 parse_error_element (XMPParseContext  *context,
                      GError          **error,
@@ -276,12 +277,15 @@ parse_error_element (XMPParseContext  *context,
                  expected_element, found_element);
 }
 
+/* skip an unknown element (unknown property) and its contents */
 static void
 unknown_element (XMPParseContext  *context,
                  GError          **error,
                  const gchar      *element_name)
 {
-  g_print ("XMP: SKIPPING %s\n", element_name); /* FIXME - debugging */
+#ifdef DEBUG_XMP_PARSER
+  g_print ("XMP: SKIPPING %s\n", element_name);
+#endif
   if (context->flags & XMP_FLAG_NO_UNKNOWN_ELEMENTS)
     parse_error (context, error, XMP_ERROR_UNKNOWN_ELEMENT,
                  _("Unknown element <%s>"),
@@ -294,6 +298,7 @@ unknown_element (XMPParseContext  *context,
     }
 }
 
+/* skip and element and all other elements that it may contain */
 static void
 ignore_element (XMPParseContext *context)
 {
@@ -302,6 +307,7 @@ ignore_element (XMPParseContext *context)
   context->state = STATE_SKIPPING_IGNORED_ELEMENTS;
 }
 
+/* skip an unknown attribute (or abort if flags forbid unknown attributes) */
 static void
 unknown_attribute (XMPParseContext  *context,
                    GError          **error,
@@ -313,6 +319,10 @@ unknown_attribute (XMPParseContext  *context,
     parse_error (context, error, XMP_ERROR_UNKNOWN_ATTRIBUTE,
                  _("Unknown attribute \"%s\"=\"%s\" in element <%s>"),
                  attribute_name, attribute_value, element_name);
+#ifdef DEBUG_XMP_PARSER
+  g_print ("skipping unknown attribute \"%s\"=\"%s\" in element <%s>\n",
+           attribute_name, attribute_value, element_name);
+#endif
 }
 
 static gboolean
@@ -329,6 +339,7 @@ is_whitespace_string (const gchar *string)
   return TRUE;
 }
 
+/* new namespace/schema seen - add it to the list of namespaces */
 static void
 push_namespace (XMPParseContext  *context,
                 const gchar      *uri,
@@ -356,6 +367,7 @@ push_namespace (XMPParseContext  *context,
     ns->ns_user_data = NULL;
 }
 
+/* free all namespaces that are deeper than the current element depth */
 static void
 pop_namespaces (XMPParseContext  *context,
                 GError          **error)
@@ -364,7 +376,6 @@ pop_namespaces (XMPParseContext  *context,
 
   if (context->namespaces == NULL)
     return;
-  /* free all namespaces that are deeper than the current element depth */
   ns = context->namespaces->data;
   while (ns->depth >= context->depth)
     {
@@ -383,6 +394,7 @@ pop_namespaces (XMPParseContext  *context,
     }
 }
 
+/* checks if an element name starts with the prefix of the given namespace */
 static gboolean
 has_ns_prefix (const gchar  *name,
                XMLNameSpace *ns)
@@ -393,6 +405,8 @@ has_ns_prefix (const gchar  *name,
           && (name[ns->prefix_len] == ':'));
 }
 
+/* add a new property to the schema referenced by its prefix */
+/* the value(s) of the property will be added later by add_property_value() */
 static XMLNameSpace *
 new_property_in_ns (XMPParseContext  *context,
                     const gchar      *element_name)
@@ -420,6 +434,10 @@ new_property_in_ns (XMPParseContext  *context,
   return NULL;
 }
 
+/* store a value for the current property - if the element containing the */
+/* value is being parsed but the actual value has not been seen yet, then */
+/* call this function with a NULL value so that its data structure is */
+/* allocated now; it will be updated later with update_property_value() */
 static void
 add_property_value (XMPParseContext *context,
                     XMPParseType     type,
@@ -454,9 +472,11 @@ add_property_value (XMPParseContext *context,
   context->prop_cur_value++;
   context->prop_value[context->prop_cur_value] = value;
   context->prop_value[context->prop_cur_value + 1] = NULL;
+  /* if value was NULL, then we must update it later */
   context->prop_missing_value = (value == NULL);
 }
 
+/* update a value that has been allocated but not stored yet */
 static void
 update_property_value (XMPParseContext *context,
                        gchar           *value)
@@ -468,6 +488,7 @@ update_property_value (XMPParseContext *context,
   context->prop_missing_value = FALSE;
 }
 
+/* invoke the 'set_property' callback and free the temporary structures */
 static void
 propagate_property (XMPParseContext  *context,
                     GError          **error)
@@ -511,18 +532,14 @@ start_element_handler  (GMarkupParseContext  *markup_context,
   XMPParseContext *context = user_data;
   gint             attr;
 
-  /*
-  g_print ("[%02d/%02d] %d <%s>\n", context->state, context->saved_state,
-           context->depth, element_name);
-  */
-  /* FIXME - debugging
+#ifdef DEBUG_XMP_PARSER
   g_print ("[%25s/%17s] %d <%s>\n",
            state_names[context->state],
            (context->saved_state == STATE_ERROR
             ? "-"
             : state_names[context->saved_state]),
            context->depth, element_name);
-  */
+#endif
   context->depth++;
   for (attr = 0; attribute_names[attr] != NULL; ++attr)
     if (g_str_has_prefix (attribute_names[attr], "xmlns:"))
@@ -818,18 +835,18 @@ end_element_handler    (GMarkupParseContext  *markup_context,
 {
   XMPParseContext *context = user_data;
 
+#ifdef DEBUG_XMP_PARSER
   /*
   g_print ("[%02d/%02d] %d </%s>\n", context->state, context->saved_state,
            context->depth, element_name);
   */
-  /* FIXME - debugging
   g_print ("[%25s/%17s] %d </%s>\n",
            state_names[context->state],
            (context->saved_state == STATE_ERROR
             ? "-"
             : state_names[context->saved_state]),
            context->depth, element_name);
-  */
+#endif
   switch (context->state)
     {
     case STATE_INSIDE_PROPERTY:
@@ -965,10 +982,13 @@ text_handler           (GMarkupParseContext  *markup_context,
         gchar *decoded;
         gint   decoded_size;
 
+#ifdef DEBUG_XMP_PARSER
         /* g_print ("XMP: Pushing text:\n%s\n", text); */
+#endif
         max_size = text_len - text_len / 4 + 1;
         decoded = g_malloc (max_size);
         decoded_size = base64_decode (text, text_len, decoded, max_size);
+#ifdef DEBUG_XMP_PARSER
         if (decoded_size > 0)
           {
             /* FIXME: remove this debugging code */
@@ -981,6 +1001,7 @@ text_handler           (GMarkupParseContext  *markup_context,
             */
             g_print ("XMP: Thumb text len: %d (1/4 = %d)\nMax size: %d\nUsed size: %d\n", (int) text_len, (int) text_len / 4, max_size, decoded_size);
           }
+#endif
         if (decoded_size > 0)
           {
             gint  *size_p;
@@ -1007,11 +1028,11 @@ text_handler           (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_QDESC_QUAL:
-      /*
+#ifdef DEBUG_XMP_PARSER
       g_print ("ignoring qualifier for part of \"%s\"[]: \"%.*s\"\n",
 	       context->property,
 	       (int)text_len, text);
-      */
+#endif
       /* FIXME: notify the user? add a way to collect qualifiers? */
       break;
 
@@ -1234,8 +1255,7 @@ xmp_parse_context_parse (XMPParseContext  *context,
             return g_markup_parse_context_parse (context->markup_context,
                                                  text + i, e - i + 1, error);
           }
-      parse_error (context, error, XMP_ERROR_NO_XPACKET,
-                       _("No XMP packet found"));
+      parse_error (context, error, XMP_ERROR_NO_XPACKET, NULL);
       return FALSE;
     }
   return g_markup_parse_context_parse (context->markup_context,
@@ -1263,7 +1283,6 @@ xmp_parse_context_end_parse (XMPParseContext  *context,
   g_return_val_if_fail (context->state != STATE_ERROR, FALSE);
 
   if (context->state == STATE_START)
-    parse_error (context, error, XMP_ERROR_NO_XPACKET,
-                 _("No XMP packet found"));
+    parse_error (context, error, XMP_ERROR_NO_XPACKET, NULL);
   return g_markup_parse_context_end_parse (context->markup_context, error);
 }

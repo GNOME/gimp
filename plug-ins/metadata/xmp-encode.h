@@ -1,4 +1,4 @@
-/* xmp-gen.h - generate XMP metadata from the tree model
+/* xmp-encode.h - generate XMP metadata from the tree model
  *
  * Copyright (C) 2005, Raphaël Quinet <raphael@gimp.org>
  *
@@ -17,20 +17,17 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-#ifndef XMP_GEN_H
-#define XMP_GEN_H
+#ifndef XMP_ENCODE_H
+#define XMP_ENCODE_H
 
 #include <glib.h>
 #include "xmp-model.h"
 
 G_BEGIN_DECLS
 
-gssize xmp_estimate_size  (XMPModel *xmp_model);
-
-gssize xmp_generate_block (XMPModel *xmp_model,
-                           gchar    *buffer,
-                           gssize    buffer_size);
+void xmp_generate_packet (XMPModel *xmp_model,
+                          GString  *buffer);
 
 G_END_DECLS
 
-#endif /* XMP_GEN_H */
+#endif /* XMP_ENCODE_H */

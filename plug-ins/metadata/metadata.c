@@ -526,29 +526,24 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gchar   *buffer;
-      gssize   buffer_size;
-      gssize   used_size;
+      GString *buffer;
 
       /* Generate the updated parasite and attach it to the image */
-      buffer_size = xmp_estimate_size (xmp_model);
-      buffer = g_new (gchar, buffer_size + METADATA_MARKER_LEN);
-      strcpy (buffer, METADATA_MARKER);
-      used_size = xmp_generate_block (xmp_model,
-                                      buffer + METADATA_MARKER_LEN,
-                                      buffer_size);
+      buffer = g_string_new (METADATA_MARKER);
+      xmp_generate_packet (xmp_model, buffer);
       parasite = gimp_parasite_new (METADATA_PARASITE,
                                     GIMP_PARASITE_PERSISTENT,
-                                    used_size + METADATA_MARKER_LEN,
-                                    (gpointer) buffer);
+                                    buffer->len,
+                                    (gpointer) buffer->str);
       gimp_image_parasite_attach (image_ID, parasite);
       if (! strcmp (name, "plug_in_metadata_encode_xmp"))
         {
           *nreturn_vals = 2;
           values[1].type = GIMP_PDB_STRING;
-          values[1].data.d_string = g_strdup (buffer + METADATA_MARKER_LEN);
+          values[1].data.d_string = g_strdup (buffer->str
+                                              + METADATA_MARKER_LEN);
         }
-      g_free (buffer);
+      g_string_free (buffer, TRUE);
       xmp_model_free (xmp_model);
     }
 

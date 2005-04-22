@@ -20,14 +20,16 @@ metadata_SOURCES = \
 	metadata.c	\
 	interface.h	\
 	interface.c	\
+	base64.h	\
+	base64.c	\
 	xmp-model.h	\
 	xmp-model.c	\
 	xmp-parse.h	\
 	xmp-parse.c	\
 	xmp-encode.h	\
 	xmp-encode.c	\
-	base64.h	\
-	base64.c
+	xmp-schemas.h	\
+	xmp-schemas.c	
 #	exif-decode.h	\
 #	exif-decode.c	\
 #	exif-encode.h	\
@@ -38,10 +40,10 @@ metadata_SOURCES = \
 noinst_PROGRAMS = xmpdump
 xmpdump_SOURCES = \
 	xmpdump.c	\
-	xmp-parse.h	\
-	xmp-parse.c	\
 	base64.h	\
-	base64.c
+	base64.c	\
+	xmp-parse.h	\
+	xmp-parse.c	
 
 INCLUDES = \
 	-I$(top_srcdir)	\
@@ -58,3 +60,13 @@ LDADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+# test program, not built by default
+
+TESTS = testbase64$(EXEEXT)
+
+EXTRA_PROGRAMS = testbase64
+testbase64_SOURCES = \
+	base64.h	\
+	base64.c	\
+	testbase64.c	

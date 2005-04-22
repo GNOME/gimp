@@ -50,7 +50,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "interface.h"
-#include "xmp-model.h"
+#include "xmp-schemas.h"
 #include "xmp-encode.h"
 
 
@@ -532,25 +532,21 @@ export_dialog_response (GtkWidget *dlg,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar  *filename;
-      gchar  *buffer;
-      gssize  buffer_length;
-      int    fd;
+      GString *buffer;
+      gchar   *filename;
+      int      fd;
+
+      buffer = g_string_new (NULL);
+      xmp_generate_packet (mgui->xmp_model, buffer);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));
-
-      /* FIXME: improve this code and rewrite the error handling */
-      buffer_length = xmp_estimate_size (mgui->xmp_model);
-      buffer = g_new (gchar, buffer_length);
-      xmp_generate_block (mgui->xmp_model, buffer, buffer_length);
-
       fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
       if (fd < 0)
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
                                    _("Open failed"),
                                    _("Cannot create file"));
-          g_free (buffer);
+          g_string_free (buffer, TRUE);
           g_free (filename);
           return;
         }
@@ -560,12 +556,12 @@ export_dialog_response (GtkWidget *dlg,
                strlen (buffer), filename);
       */
 
-      if (write (fd, buffer, strlen (buffer)) < 0)
+      if (write (fd, buffer->str, buffer->len) < 0)
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
                                    _("Save failed"),
                                    _("Some error occurred while saving"));
-          g_free (buffer);
+          g_string_free (buffer, TRUE);
           g_free (filename);
           return;
         }
@@ -575,12 +571,12 @@ export_dialog_response (GtkWidget *dlg,
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
                                    _("Save failed"),
                                    _("Could not close the file"));
-          g_free (buffer);
+          g_string_free (buffer, TRUE);
           g_free (filename);
           return;
         }
 
-      g_free (buffer);
+      g_string_free (buffer, TRUE);
       g_free (filename);
     }
 

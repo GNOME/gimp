@@ -21,9 +21,6 @@
 #include "config.h"
 
 #include <string.h>
-#ifdef DEBUG_XMP_PARSER
-#  include <stdio.h>
-#endif
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
@@ -31,6 +28,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "xmp-schemas.h"
 #include "xmp-parse.h"
 #include "xmp-model.h"
 
@@ -40,11 +38,12 @@
  * children of the schemas are the XMP properties.
  *
  * If the XMP file contains a schema that is not part of the XMP
- * specification, it will be included in the custom_schemas list and
- * the corresponding element in the tree will get a reference to that
- * list element instead of a reference to one of the static schema
- * definitions included below.  Same for custom properties inside a
- * known or custom schema.
+ * specification or a known extension (e.g., IPTC Core), it will be
+ * included in the custom_schemas list and the corresponding element
+ * in the tree will get a reference to that list element instead of a
+ * reference to one of the static schema definitions found in
+ * xmp-schemas.c.  Same for custom properties inside a known or custom
+ * schema.
  */
 struct _XMPModel
 {
@@ -52,272 +51,8 @@ struct _XMPModel
   GSList       *custom_schemas;
   GSList       *custom_properties;
 
-  XMPSchema    *current_schema;
-  GtkTreeIter   current_schema_iter;
-};
-
-static XMPProperty dc_properties[] =
-{
-  { "contributor",     XMP_TYPE_TEXT,               TRUE  },
-  { "coverage",        XMP_TYPE_TEXT,               TRUE  },
-  { "creator",         XMP_TYPE_TEXT_SEQ,           TRUE  },
-  { "date",            XMP_TYPE_DATE,               TRUE  },
-  { "description",     XMP_TYPE_LANG_ALT,           TRUE  },
-  { "format",          XMP_TYPE_MIME_TYPE,          XMP_AUTO_UPDATE },
-  { "identifier",      XMP_TYPE_TEXT,               TRUE  }, /*xmp:Identifier*/
-  { "language",        XMP_TYPE_LOCALE_BAG,         FALSE },
-  { "publisher",       XMP_TYPE_TEXT_BAG,           TRUE  },
-  { "relation",        XMP_TYPE_TEXT_BAG,           TRUE  },
-  { "rights",          XMP_TYPE_LANG_ALT,           TRUE  },
-  { "source",          XMP_TYPE_TEXT,               TRUE  },
-  { "subject",         XMP_TYPE_TEXT_BAG,           TRUE  },
-  { "title",           XMP_TYPE_LANG_ALT,           TRUE  },
-  { "type",            XMP_TYPE_TEXT_BAG,           TRUE  },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty xmp_properties[] =
-{
-  { "Advisory",        XMP_TYPE_XPATH_BAG,          TRUE  },
-  { "BaseURL",         XMP_TYPE_URI,                FALSE },
-  { "CreateDate",      XMP_TYPE_DATE,               TRUE  },
-  { "CreatorTool",     XMP_TYPE_TEXT,               FALSE },
-  { "Identifier",      XMP_TYPE_TEXT_BAG,           TRUE  },
-  { "MetadataDate",    XMP_TYPE_DATE,               XMP_AUTO_UPDATE },
-  { "ModifyDate",      XMP_TYPE_DATE,               XMP_AUTO_UPDATE },
-  { "NickName",        XMP_TYPE_TEXT,               TRUE  },
-  { "Thumbnails",      XMP_TYPE_THUMBNAIL_ALT,      TRUE  },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty xmprights_properties[] =
-{
-  { "Certificate",     XMP_TYPE_URI,                TRUE  },
-  { "Marked",          XMP_TYPE_BOOLEAN,            TRUE  },
-  { "Owner",           XMP_TYPE_TEXT_BAG,           TRUE  },
-  { "UsageTerms",      XMP_TYPE_LANG_ALT,           TRUE  },
-  { "WebStatement",    XMP_TYPE_URI,                TRUE  },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty xmpmm_properties[] =
-{
-  { "DerivedFrom",     XMP_TYPE_RESOURCE_REF,       FALSE },
-  { "DocumentID",      XMP_TYPE_URI,                FALSE },
-  { "History",         XMP_TYPE_RESOURCE_EVENT_SEQ, FALSE },
-  { "ManagedFrom",     XMP_TYPE_RESOURCE_REF,       FALSE },
-  { "Manager",         XMP_TYPE_TEXT,               FALSE },
-  { "ManageTo",        XMP_TYPE_URI,                FALSE },
-  { "ManageUI",        XMP_TYPE_URI,                FALSE },
-  { "ManagerVariant",  XMP_TYPE_TEXT,               FALSE },
-  { "RenditionClass",  XMP_TYPE_TEXT,               FALSE },
-  { "RenditionParams", XMP_TYPE_TEXT,               FALSE },
-  { "VersionID",       XMP_TYPE_TEXT,               FALSE },
-  { "Versions",        XMP_TYPE_TEXT_SEQ,           FALSE },
-  { "LastURL",         XMP_TYPE_URI,                FALSE }, /*deprecated*/
-  { "RenditionOf",     XMP_TYPE_RESOURCE_REF,       FALSE }, /*deprecated*/
-  { "SaveID",          XMP_TYPE_INTEGER,            FALSE }, /*deprecated*/
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty xmpbj_properties[] =
-{
-  { "JobRef",          XMP_TYPE_JOB_BAG,            TRUE  },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty xmptpg_properties[] =
-{
-  { "MaxPageSize",     XMP_TYPE_DIMENSIONS,         FALSE },
-  { "NPages",          XMP_TYPE_INTEGER,            FALSE },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty pdf_properties[] =
-{
-  { "Keywords",        XMP_TYPE_TEXT,               TRUE  },
-  { "PDFVersion",      XMP_TYPE_TEXT,               FALSE },
-  { "Producer",        XMP_TYPE_TEXT,               FALSE },
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty photoshop_properties[] =
-{
-  { "AuthorsPosition", XMP_TYPE_TEXT,               TRUE  },
-  { "CaptionWriter",   XMP_TYPE_TEXT,               TRUE  },
-  { "Category",        XMP_TYPE_TEXT,               TRUE  },/* 3 ascii chars */
-  { "City",            XMP_TYPE_TEXT,               TRUE  },
-  { "Country",         XMP_TYPE_TEXT,               TRUE  },
-  { "Credit",          XMP_TYPE_TEXT,               TRUE  },
-  { "DateCreated",     XMP_TYPE_DATE,               TRUE  },
-  { "Headline",        XMP_TYPE_TEXT,               TRUE  },
-  { "Instructions",    XMP_TYPE_TEXT,               TRUE  },
-  { "Source",          XMP_TYPE_TEXT,               TRUE  },
-  { "State",           XMP_TYPE_TEXT,               TRUE  },
-  { "SupplementalCategories",XMP_TYPE_TEXT,         TRUE  },
-  { "TransmissionReference",XMP_TYPE_TEXT,          TRUE  },
-  { "Urgency",         XMP_TYPE_INTEGER,            TRUE  },/* range: 1-8 */
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty tiff_properties[] =
-{
-  { "ImageWidth",      XMP_TYPE_INTEGER,            XMP_AUTO_UPDATE },
-  { "ImageLength",     XMP_TYPE_INTEGER,            XMP_AUTO_UPDATE },
-  { "BitsPerSample",   XMP_TYPE_INTEGER_SEQ,        FALSE },
-  { "Compression",     XMP_TYPE_INTEGER,            FALSE },/* 1 or 6 */
-  { "PhotometricInterpretation",XMP_TYPE_INTEGER,   FALSE },/* 2 or 6 */
-  { "Orientation",     XMP_TYPE_INTEGER,            FALSE },/* 1-8 */
-  { "SamplesPerPixel", XMP_TYPE_INTEGER,            FALSE },
-  { "PlanarConfiguration",XMP_TYPE_INTEGER,         FALSE },/* 1 or 2 */
-  { "YCbCrSubSampling",XMP_TYPE_INTEGER_SEQ,        FALSE },/* 2,1 or 2,2 */
-  { "YCbCrPositioning",XMP_TYPE_INTEGER,            FALSE },/* 1 or 2 */
-  { "XResolution",     XMP_TYPE_RATIONAL,           XMP_AUTO_UPDATE },
-  { "YResolution",     XMP_TYPE_RATIONAL,           XMP_AUTO_UPDATE },
-  { "ResolutionUnit",  XMP_TYPE_INTEGER,            XMP_AUTO_UPDATE },/*2or3*/
-  { "TransferFunction",XMP_TYPE_INTEGER_SEQ,        FALSE },/* 3 * 256 ints */
-  { "WhitePoint",      XMP_TYPE_RATIONAL_SEQ,       FALSE },
-  { "PrimaryChromaticities",XMP_TYPE_RATIONAL_SEQ,  FALSE },
-  { "YCbCrCoefficients",XMP_TYPE_RATIONAL_SEQ,      FALSE },
-  { "ReferenceBlackWhite",XMP_TYPE_RATIONAL_SEQ,    FALSE },
-  { "DateTime",        XMP_TYPE_DATE,               FALSE },/*xmp:ModifyDate*/
-  { "ImageDescription",XMP_TYPE_LANG_ALT,           TRUE  },/*dc:description*/
-  { "Make",            XMP_TYPE_TEXT,               FALSE },
-  { "Model",           XMP_TYPE_TEXT,               FALSE },
-  { "Software",        XMP_TYPE_TEXT,               FALSE },/*xmp:CreatorTool*/
-  { "Artist",          XMP_TYPE_TEXT,               TRUE  },/*dc:creator*/
-  { "Copyright",       XMP_TYPE_TEXT,               TRUE  },/*dc:rights*/
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPProperty exif_properties[] =
-{
-  { "ExifVersion",     XMP_TYPE_TEXT,               XMP_AUTO_UPDATE },/*"0210*/
-  { "FlashpixVersion", XMP_TYPE_TEXT,               FALSE },/* "0100" */
-  { "ColorSpace",      XMP_TYPE_INTEGER,            FALSE },/* 1 or -32768 */
-  { "ComponentsConfiguration",XMP_TYPE_INTEGER_SEQ, FALSE },/* 4 ints */
-  { "CompressedBitsPerPixel",XMP_TYPE_RATIONAL,     FALSE },
-  { "PixelXDimension", XMP_TYPE_INTEGER,            XMP_AUTO_UPDATE },
-  { "PixelYDimension", XMP_TYPE_INTEGER,            XMP_AUTO_UPDATE },
-  { "MakerNote",       XMP_TYPE_TEXT,               FALSE },/* base64 enc.? */
-  { "UserComment",     XMP_TYPE_TEXT,               TRUE  },
-  { "RelatedSoundFile",XMP_TYPE_TEXT,               FALSE },/* DOS 8.3 fname */
-  { "DateTimeOriginal",XMP_TYPE_DATE,               FALSE },
-  { "DateTimeDigitized",XMP_TYPE_DATE,              FALSE },
-  { "ExposureTime",    XMP_TYPE_RATIONAL,           FALSE },
-  { "FNumber",         XMP_TYPE_RATIONAL,           FALSE },
-  { "ExposureProgram", XMP_TYPE_INTEGER,            FALSE },/* 0-8 */
-  { "SpectralSensitivity",XMP_TYPE_TEXT,            FALSE },/* ? */
-  { "ISOSpeedRatings", XMP_TYPE_INTEGER_SEQ,        FALSE },
-  { "OECF",            XMP_TYPE_OECF_SFR,           FALSE },
-  { "ShutterSpeedValue",XMP_TYPE_RATIONAL,          FALSE },
-  { "ApertureValue",   XMP_TYPE_RATIONAL,           FALSE },
-  { "BrightnessValue", XMP_TYPE_RATIONAL,           FALSE },
-  { "ExposureBiasValue",XMP_TYPE_RATIONAL,          FALSE },
-  { "MaxApertureValue",XMP_TYPE_RATIONAL,           FALSE },
-  { "SubjectDistance", XMP_TYPE_RATIONAL,           FALSE },/* in meters */
-  { "MeteringMode",    XMP_TYPE_INTEGER,            FALSE },/* 0-6 or 255 */
-  { "LightSource",     XMP_TYPE_INTEGER,            FALSE },/* 0-3,17-22,255*/
-  { "Flash",           XMP_TYPE_FLASH,              FALSE },
-  { "FocalLength",     XMP_TYPE_RATIONAL,           FALSE },
-  { "SubjectArea",     XMP_TYPE_INTEGER_SEQ,        FALSE },
-  { "FlashEnergy",     XMP_TYPE_RATIONAL,           FALSE },
-  { "SpatialFrequencyResponse",XMP_TYPE_OECF_SFR,   FALSE },
-  { "FocalPlaneXResolution",XMP_TYPE_RATIONAL,      FALSE },
-  { "FocalPlaneYResolution",XMP_TYPE_RATIONAL,      FALSE },
-  { "FocalPlaneResolutionUnit",XMP_TYPE_INTEGER,    FALSE },/* unit: 2 or 3 */
-  { "SubjectLocation", XMP_TYPE_INTEGER_SEQ,        FALSE },/* 2 ints: X, Y */
-  { "ExposureIndex",   XMP_TYPE_RATIONAL,           FALSE },
-  { "SensingMethod",   XMP_TYPE_INTEGER,            FALSE },/* 1-8 */
-  { "FileSource",      XMP_TYPE_INTEGER,            FALSE },/* 3 */
-  { "SceneType",       XMP_TYPE_INTEGER,            FALSE },/* 1 */
-  { "CFAPattern",      XMP_TYPE_CFA_PATTERN,        FALSE },
-  { "CustomRendered",  XMP_TYPE_INTEGER,            FALSE },/* 0-1 */
-  { "ExposureMode",    XMP_TYPE_INTEGER,            FALSE },/* 0-2 */
-  { "WhiteBalance",    XMP_TYPE_INTEGER,            FALSE },/* 0-1 */
-  { "DigitalZoomRatio",XMP_TYPE_RATIONAL,           FALSE },
-  { "FocalLengthIn35mmFilm",XMP_TYPE_INTEGER,       FALSE },/* in mm */
-  { "SceneCaptureType",XMP_TYPE_INTEGER,            FALSE },/* 0-3 */
-  { "GainControl",     XMP_TYPE_INTEGER,            FALSE },/* 0-4 */
-  { "Contrast",        XMP_TYPE_INTEGER,            FALSE },/* 0-2 */
-  { "Saturation",      XMP_TYPE_INTEGER,            FALSE },/* 0-2 */
-  { "Sharpness",       XMP_TYPE_INTEGER,            FALSE },/* 0-2 */
-  { "DeviceSettingDescription",XMP_TYPE_DEVICE_SETTINGS, FALSE },
-  { "SubjectDistanceRange",XMP_TYPE_INTEGER,        FALSE },/* 0-3 */
-  { "ImageUniqueID",   XMP_TYPE_TEXT,               FALSE },/* 32 chars */
-  { "GPSVersionID",    XMP_TYPE_TEXT,               FALSE },/* "2.0.0.0" */
-  { "GPSLatitude",     XMP_TYPE_GPS_COORDINATE,     FALSE },
-  { "GPSLongitude",    XMP_TYPE_GPS_COORDINATE,     FALSE },
-  { "GPSAltitudeRef",  XMP_TYPE_INTEGER,            FALSE },/* 0-1 */
-  { "GPSAltitude",     XMP_TYPE_RATIONAL,           FALSE },/* in meters */
-  { "GPSTimeStamp",    XMP_TYPE_DATE,               FALSE },
-  { "GPSSatellites",   XMP_TYPE_TEXT,               FALSE },/* ? */
-  { "GPSStatus",       XMP_TYPE_TEXT,               FALSE },/* "A" or "V" */
-  { "GPSMeasureMode",  XMP_TYPE_INTEGER,            FALSE },/* 2-3 */
-  { "GPSDOP",          XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSSpeedRef",     XMP_TYPE_TEXT,               FALSE },/* "K","M","N" */
-  { "GPSSpeed",        XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSTrackRef",     XMP_TYPE_TEXT,               FALSE },/* "T" or "M"" */
-  { "GPSTrack",        XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSImgDirectionRef",XMP_TYPE_TEXT,             FALSE },/* "T" or "M"" */
-  { "GPSImgDirection", XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSMapDatum",     XMP_TYPE_TEXT,               FALSE },
-  { "GPSDestLatitude", XMP_TYPE_GPS_COORDINATE,     FALSE },
-  { "GPSDestLongitude",XMP_TYPE_GPS_COORDINATE,     FALSE },
-  { "GPSDestBearingRef",XMP_TYPE_TEXT,              FALSE },/* "T" or "M"" */
-  { "GPSDestBearing",  XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSDestDistanceRef",XMP_TYPE_TEXT,             FALSE },/* "K","M","N" */
-  { "GPSDestDistance", XMP_TYPE_RATIONAL,           FALSE },
-  { "GPSProcessingMethod",XMP_TYPE_TEXT,            FALSE },
-  { "GPSAreaInformation",XMP_TYPE_TEXT,             FALSE },
-  { "GPSDifferential", XMP_TYPE_INTEGER,            FALSE },/* 0-1 */
-  { NULL,              XMP_TYPE_UNKNOWN,            FALSE }
-};
-
-static XMPSchema xmp_schemas[] =
-{
-  /* XMP schemas defined as of January 2004 */
-  { XMP_SCHEMA_DUBLIN_CORE,                             "dc",
-    "Dublin Core",                                      dc_properties },
-  { XMP_SCHEMA_XMP_BASIC,                               "xmp",
-    "XMP Basic",                                        xmp_properties },
-  { XMP_SCHEMA_XMP_RIGHTS,                              "xmpRights",
-    "XMP Rights Management",                            xmprights_properties },
-  { XMP_SCHEMA_XMP_MM,                                  "xmpMM",
-    "XMP Media Management",                             xmpmm_properties },
-  { XMP_SCHEMA_XMP_BJ,                                  "xmpBJ",
-    "XMP Basic Job Ticket",                             xmpbj_properties },
-  { XMP_SCHEMA_XMP_TPG,                                 "xmpTPg",
-    "XMP Paged-Text",                                   xmptpg_properties },
-  { XMP_SCHEMA_PDF,                                     "pdf",
-    "Adobe PDF",                                        pdf_properties },
-  { XMP_SCHEMA_PHOTOSHOP,                               "photoshop",
-    "Photoshop",                                        photoshop_properties },
-  { XMP_SCHEMA_TIFF,                                    "tiff",
-    "EXIF (TIFF Properties)",                           tiff_properties },
-  { XMP_SCHEMA_EXIF,                                    "exif",
-    "EXIF (EXIF-specific Properties)",                  exif_properties },
-  /* XMP sub-types */
-  { "http://ns.adobe.com/xmp/Identifier/qual/1.0/",     "xmpidq",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/g/img/",               "xapGImg",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/sType/Dimensions#",    "stDim",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/sType/ResourceEvent#", "stEvt",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/sType/ResourceRef#",   "stRef",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/sType/Version#",       "stVer",
-    NULL,                                               NULL },
-  { "http://ns.adobe.com/xap/1.0/sType/Job#",           "stJob",
-    NULL,                                               NULL },
-  /* other useful namespaces */
-  { "http://web.resource.org/cc/",                      "cc",
-    "Creative Commons",                                 NULL },
-  { "http://ns.adobe.com/iX/1.0/",                      "iX",
-    NULL,                                               NULL },
-  { NULL, NULL, NULL }
+  XMPSchema    *cached_schema;
+  GtkTreeIter   cached_schema_iter;
 };
 
 /**
@@ -334,20 +69,20 @@ xmp_model_new (void)
   /* columns defined by the XMPModelColumns enum */
   xmp_model->treestore =
     gtk_tree_store_new (XMP_MODEL_NUM_COLUMNS,
-                        G_TYPE_STRING,   /* name */
-                        G_TYPE_STRING,   /* value as string (for viewing) */
-                        G_TYPE_POINTER,  /* value as array (from parser) */
-                        G_TYPE_POINTER,  /* XMPProperty or XMPSchema */
-                        G_TYPE_POINTER,  /* GtkWidget cross-reference */
-                        G_TYPE_INT,      /* editable? */
-                        GDK_TYPE_PIXBUF, /* edit icon */
-                        G_TYPE_BOOLEAN,  /* visible? */
-                        G_TYPE_INT,      /* font weight */
-                        G_TYPE_BOOLEAN   /* font weight set? */
+                        G_TYPE_STRING,   /* COL_XMP_NAME */
+                        G_TYPE_STRING,   /* COL_XMP_VALUE */
+                        G_TYPE_POINTER,  /* COL_XMP_VALUE_RAW */
+                        G_TYPE_POINTER,  /* COL_XMP_TYPE_XREF */
+                        G_TYPE_POINTER,  /* COL_XMP_WIDGET_XREF */
+                        G_TYPE_INT,      /* COL_XMP_EDITABLE */
+                        GDK_TYPE_PIXBUF, /* COL_XMP_EDIT_ICON */
+                        G_TYPE_BOOLEAN,  /* COL_XMP_VISIBLE */
+                        G_TYPE_INT,      /* COL_XMP_WEIGHT */
+                        G_TYPE_BOOLEAN   /* COL_XMP_WEIGHT_SET */
                         );
   xmp_model->custom_schemas = NULL;
   xmp_model->custom_properties = NULL;
-  xmp_model->current_schema = NULL;
+  xmp_model->cached_schema = NULL;
   return xmp_model;
 }
 
@@ -376,15 +111,21 @@ xmp_model_free (XMPModel *xmp_model)
         {
           if (gtk_tree_model_iter_children (model, &child, &iter))
             {
+              gchar **last_value_array = NULL;
+
               do
                 {
                   gtk_tree_model_get (model, &child,
                                       COL_XMP_VALUE_RAW, &value_array,
                                       -1);
-                  /* FIXME: this does not free everything */
-                  for (i = 0; value_array[i] != NULL; i++)
-                    g_free (value_array[i]);
-                  g_free (value_array);
+                  if (value_array != last_value_array)
+                    {
+                      /* FIXME: this does not free everything */
+                      for (i = 0; value_array[i] != NULL; i++)
+                        g_free (value_array[i]);
+                      g_free (value_array);
+                    }
+                  last_value_array = value_array;
                 }
               while (gtk_tree_model_iter_next (model, &child));
             }
@@ -420,34 +161,20 @@ static XMPSchema *
 find_xmp_schema (XMPModel    *xmp_model,
                  const gchar *schema_uri)
 {
-  int     i;
-  GSList *list;
+  int          i;
+  GSList      *list;
+  const gchar *c;
 
   /* check if we know about this schema (exact match for URI) */
   for (i = 0; xmp_schemas[i].uri != NULL; ++i)
     {
       if (! strcmp (xmp_schemas[i].uri, schema_uri))
         {
-#ifdef DEBUG_XMP_PARSER
+#ifdef DEBUG_XMP_MODEL
           if (xmp_schemas[i].name != NULL)
-            printf ("%s \t[%s]\n", xmp_schemas[i].name, xmp_schemas[i].uri);
+            g_print ("%s \t[%s]\n", xmp_schemas[i].name, xmp_schemas[i].uri);
           else
-            printf ("*** \t[%s]\n", xmp_schemas[i].uri);
-#endif
-          return &(xmp_schemas[i]);
-        }
-    }
-  /* try again but accept "http:" without "//", or missing "http://" */
-  for (i = 0; xmp_schemas[i].uri != NULL; ++i)
-    {
-      if (g_str_has_prefix (xmp_schemas[i].uri, "http://")
-          && ((! strcmp (xmp_schemas[i].uri + 7, schema_uri))
-              || (g_str_has_prefix (schema_uri, "http:")
-                  && ! strcmp (xmp_schemas[i].uri + 7, schema_uri + 5))
-              ))
-        {
-#ifdef DEBUG_XMP_PARSER
-          printf ("%s \t~~~[%s]\n", xmp_schemas[i].name, xmp_schemas[i].uri);
+            g_print ("(no name) \t[%s]\n", xmp_schemas[i].uri);
 #endif
           return &(xmp_schemas[i]);
         }
@@ -457,16 +184,58 @@ find_xmp_schema (XMPModel    *xmp_model,
     {
       if (! strcmp (((XMPSchema *)(list->data))->uri, schema_uri))
         {
-#ifdef DEBUG_XMP_PARSER
-          printf ("CUSTOM %s \t[%s]\n",
+#ifdef DEBUG_XMP_MODEL
+          g_print ("CUSTOM %s \t[%s]\n",
                   ((XMPSchema *)(list->data))->name,
                   ((XMPSchema *)(list->data))->uri);
 #endif
           return (XMPSchema *)(list->data);
         }
     }
-#ifdef DEBUG_XMP_PARSER
-  printf ("Unknown schema URI %s\n", schema_uri);
+  /* now check for some common errors and results of bad encoding: */
+  /* - check for "http:" without "//", or missing "http://" */
+  for (i = 0; xmp_schemas[i].uri != NULL; ++i)
+    {
+      if (g_str_has_prefix (xmp_schemas[i].uri, "http://")
+          && ((! strcmp (xmp_schemas[i].uri + 7, schema_uri))
+              || (g_str_has_prefix (schema_uri, "http:")
+                  && ! strcmp (xmp_schemas[i].uri + 7, schema_uri + 5))
+              ))
+        {
+#ifdef DEBUG_XMP_MODEL
+          g_print ("%s \t~~~[%s]\n", xmp_schemas[i].name, xmp_schemas[i].uri);
+#endif
+          return &(xmp_schemas[i]);
+        }
+    }
+  /* - check for errors such as "name (uri)" or "name (prefix, uri)"  */
+  for (c = schema_uri; *c; c++)
+    if ((*c == '(') || (*c == ' ') || (*c == ','))
+      {
+        int len;
+
+        c++;
+        while (*c == ' ')
+          c++;
+        if (! *c)
+          break;
+        for (len = 1; c[len]; len++)
+          if ((c[len] == ')') || (c[len] == ' '))
+            break;
+        for (i = 0; xmp_schemas[i].uri != NULL; ++i)
+          {
+            if (! strncmp (xmp_schemas[i].uri, c, len))
+              {
+#ifdef DEBUG_XMP_MODEL
+                g_print ("%s \t~~~[%s]\n", xmp_schemas[i].name,
+                         xmp_schemas[i].uri);
+#endif
+                return &(xmp_schemas[i]);
+              }
+          }
+      }
+#ifdef DEBUG_XMP_MODEL
+  g_print ("Unknown schema URI %s\n", schema_uri);
 #endif
   return NULL;
 }
@@ -490,13 +259,13 @@ find_xmp_schema_prefix (XMPModel    *xmp_model,
 
 /* make the next lookup a bit faster if the tree is not modified */
 static void
-save_iter_for_schema (XMPModel    *xmp_model,
+cache_iter_for_schema (XMPModel    *xmp_model,
                       XMPSchema   *schema,
                       GtkTreeIter *iter)
 {
-  xmp_model->current_schema = schema;
+  xmp_model->cached_schema = schema;
   if (iter != NULL)
-    memcpy (&(xmp_model->current_schema_iter), iter, sizeof (GtkTreeIter));
+    memcpy (&(xmp_model->cached_schema_iter), iter, sizeof (GtkTreeIter));
 }
 
 /* find the GtkTreeIter for the given schema and return TRUE if the schema was
@@ -508,16 +277,16 @@ find_iter_for_schema (XMPModel    *xmp_model,
 {
   XMPSchema *schema_xref;
 
-  if (schema == xmp_model->current_schema)
+  /* common case: return the cached iter */
+  if (schema == xmp_model->cached_schema)
     {
-      memcpy (iter, &(xmp_model->current_schema_iter), sizeof (GtkTreeIter));
+      memcpy (iter, &(xmp_model->cached_schema_iter), sizeof (GtkTreeIter));
       return TRUE;
     }
-  /* check where this schema has been stored in the tree */
+  /* find where this schema has been stored in the tree */
   if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (xmp_model->treestore),
                                        iter))
     return FALSE;
-
   do
     {
       gtk_tree_model_get (GTK_TREE_MODEL (xmp_model->treestore), iter,
@@ -525,7 +294,7 @@ find_iter_for_schema (XMPModel    *xmp_model,
                           -1);
       if (schema_xref == schema)
         {
-          save_iter_for_schema (xmp_model, schema, iter);
+          cache_iter_for_schema (xmp_model, schema, iter);
           return TRUE;
         }
     }
@@ -585,7 +354,7 @@ add_known_schema (XMPModel    *xmp_model,
                       COL_XMP_WEIGHT, PANGO_WEIGHT_BOLD,
                       COL_XMP_WEIGHT_SET, TRUE,
                       -1);
-  save_iter_for_schema (xmp_model, schema, iter);
+  cache_iter_for_schema (xmp_model, schema, iter);
 }
 
 /* called by the XMP parser - new schema */
@@ -621,7 +390,7 @@ parse_start_schema (XMPParseContext     *context,
   /* schemas with NULL names are special and should not go in the tree */
   if (schema->name == NULL)
     {
-      save_iter_for_schema (xmp_model, NULL, NULL);
+      cache_iter_for_schema (xmp_model, NULL, NULL);
       return schema;
     }
   /* if the schema is not in the tree yet, add it now */
@@ -641,8 +410,11 @@ parse_end_schema (XMPParseContext     *context,
 
   g_return_if_fail (xmp_model != NULL);
   g_return_if_fail (schema != NULL);
-  xmp_model->current_schema = NULL;
-  /* printf ("End of %s\n", schema->name); */
+  xmp_model->cached_schema = NULL;
+#ifdef DEBUG_XMP_MODEL
+  if (schema->name)
+    g_print ("End of %s\n", schema->name);
+#endif
 }
 
 /* called by the XMP parser - new property */
@@ -689,8 +461,8 @@ parse_set_property (XMPParseContext     *context,
   switch (type)
     {
     case XMP_PTYPE_TEXT:
-#ifdef DEBUG_XMP_PARSER
-      printf ("\t%s:%s = \"%s\"\n", ns_prefix, name, value[0]);
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s = \"%s\"\n", ns_prefix, name, value[0]);
 #endif
       if (property != NULL)
         /* FIXME */;
@@ -719,8 +491,8 @@ parse_set_property (XMPParseContext     *context,
       break;
 
     case XMP_PTYPE_RESOURCE:
-#ifdef DEBUG_XMP_PARSER
-      printf ("\t%s:%s @ = \"%s\"\n", ns_prefix, name,
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s @ = \"%s\"\n", ns_prefix, name,
               value[0]);
 #endif
       if (property != NULL)
@@ -753,14 +525,14 @@ parse_set_property (XMPParseContext     *context,
 
     case XMP_PTYPE_ORDERED_LIST:
     case XMP_PTYPE_UNORDERED_LIST:
-#ifdef DEBUG_XMP_PARSER
-      printf ("\t%s:%s [] =", ns_prefix, name);
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s [] =", ns_prefix, name);
       for (i = 0; value[i] != NULL; i++)
         if (i == 0)
-          printf (" \"%s\"", value[i]);
+          g_print (" \"%s\"", value[i]);
         else
-          printf (", \"%s\"", value[i]);
-      printf ("\n");
+          g_print (", \"%s\"", value[i]);
+      g_print ("\n");
 #endif
       if (property != NULL)
         /* FIXME */;
@@ -796,11 +568,11 @@ parse_set_property (XMPParseContext     *context,
       break;
 
     case XMP_PTYPE_ALT_THUMBS:
-#ifdef DEBUG_XMP_PARSER
+#ifdef DEBUG_XMP_MODEL
       for (i = 0; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [size:%d] = \"...\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [size:%d] = \"...\"\n", ns_prefix, name,
                 *(int *)(value[i]));
-      printf ("\n");
+      g_print ("\n");
 #endif
       if (property != NULL)
         /* FIXME */;
@@ -832,9 +604,9 @@ parse_set_property (XMPParseContext     *context,
       break;
 
     case XMP_PTYPE_ALT_LANG:
-#ifdef DEBUG_XMP_PARSER
+#ifdef DEBUG_XMP_MODEL
       for (i = 0; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [lang:%s] = \"%s\"\n", ns_prefix, name,
                 value[i], value[i + 1]);
 #endif
       if (property != NULL)
@@ -869,9 +641,9 @@ parse_set_property (XMPParseContext     *context,
       break;
 
     case XMP_PTYPE_STRUCTURE:
-#ifdef DEBUG_XMP_PARSER
+#ifdef DEBUG_XMP_MODEL
       for (i = 2; value[i] != NULL; i += 2)
-        printf ("\t%s:%s [%s] = \"%s\"\n", ns_prefix, name,
+        g_print ("\t%s:%s [%s] = \"%s\"\n", ns_prefix, name,
                 value[i], value[i + 1]);
 #endif
       if (property != NULL)
@@ -880,7 +652,7 @@ parse_set_property (XMPParseContext     *context,
         {
           property = g_new (XMPProperty, 1);
           property->name = g_strdup (name);
-          property->type = XMP_TYPE_UNKNOWN;
+          property->type = XMP_TYPE_GENERIC_STRUCTURE;
           property->editable = TRUE;
           xmp_model->custom_properties =
             g_slist_prepend (xmp_model->custom_properties, property);
@@ -906,8 +678,8 @@ parse_set_property (XMPParseContext     *context,
       break;
 
     default:
-#ifdef DEBUG_XMP_PARSER
-      printf ("\t%s:%s = ?\n", ns_prefix, name);
+#ifdef DEBUG_XMP_MODEL
+      g_print ("\t%s:%s = ?\n", ns_prefix, name);
 #endif
       break;
     }

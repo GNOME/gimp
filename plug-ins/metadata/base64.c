@@ -1,4 +1,4 @@
-/* base64.h - encode and decode base64 encoding according to RFC 1521
+/* base64.h - encode and decode base64 encoding according to RFC 2045
  *
  * Copyright (C) 2005, Raphaël Quinet <raphael@gimp.org>
  *
@@ -24,7 +24,7 @@
  * ignore whitespace (especially those written for HTTP usage) and the
  * rest were not compatible with the LGPL (some were GPL, not LGPL).
  * Or at least I haven't been able to find LGPL implementations.
- * Writing this according to RFC 1521 did not take long anyway.
+ * Writing this according to RFC 2045 did not take long anyway.
  */
 
 #ifndef WITHOUT_GIMP
@@ -86,7 +86,7 @@ static const gint base64_6bits[256] =
  * specified correctly.  The decoder will stop at the first nul byte
  * or at the first '=' (padding byte) so you should ensure that one of
  * these is present if you supply -1 for @src_size.  For more details
- * about the base64 encoding, see RFC 1521.
+ * about the base64 encoding, see RFC 2045, chapter 6.8.
  *
  * Returns: the number of bytes stored in @dest, or -1 if invalid data was found.
  */
@@ -160,13 +160,10 @@ base64_decode (const gchar *src_b64,
  * Since the base64 encoding uses 4 bytes for every 3 bytes of input,
  * @dest_size should be at least 4/3 of @src_size, plus optional line
  * breaks if @columns > 0 and up to two padding bytes at the end.  For
- * more details about the base64 encoding, see RFC 1521.
+ * more details about the base64 encoding, see RFC 2045, chapter 6.8.
+ * Note that RFC 2045 recommends setting @columns to 76.
  *
  * Returns: the number of bytes stored in @dest.
- */
-/*
- * FIXME: docs!
- * if columns <= 0, no line breaks
  */
 gssize
 base64_encode (const gchar *src,
@@ -175,10 +172,10 @@ base64_encode (const gchar *src,
                gsize        dest_size,
                gint         columns)
 {
-  gint32 bits;
-  gssize i;
-  gint   n;
-  gint   c;
+  guint32 bits;
+  gssize  i;
+  gint    n;
+  gint    c;
 
   g_return_val_if_fail (src != NULL, -1);
   g_return_val_if_fail (dest_b64 != NULL, -1);
@@ -188,7 +185,7 @@ base64_encode (const gchar *src,
   c = 0;
   for (i = 0; (src_size != 0) && (i + 4 <= dest_size); src++, src_size--)
     {
-      bits += *src;
+      bits += *(guchar *)src;
       if (++n == 3)
         {
           dest_b64[i++] = base64_code[(bits >> 18) & 0x3f];

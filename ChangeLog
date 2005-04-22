@@ -1,3 +1,33 @@
+2005-04-22  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-model.[ch]: Fixed crash occuring after a
+	double free of some structured XMP properties.  Added new type
+	XMP_TYPE_GENERIC_STRUCTURE for unknown structured properties.  Be
+	more tolerant in parsing incorrectly written schema URIs and try
+	to extract a valid URI from them.  Converted to use g_print().
+	Moved the definitions of standard XMP schemas from here...
+
+	* plug-ins/metadata/xmp-schemas.[ch]: ...to these new files.
+
+	* plug-ins/metadata/xmp-encode.[ch]: Rewritten using GString
+	instead of fixed buffers.
+
+	* plug-ins/metadata/metadata.c
+	* plug-ins/metadata/interface.c: Adapted to the new function
+	xmp_generate_block() using GString.
+
+	* plug-ins/metadata/base64.c (base64_encode): Fixed incorrect
+	encoding of bytes with the sign bit set.
+
+	* plug-ins/metadata/testbase64.c
+	* plug-ins/metadata/Makefile.am: Added xmp-schema.[ch] and test
+	program testbase64.c (testing base64 encoding and decoding).
+
+	* plug-ins/metadata/xmpdump.c: Converted to use g_print().
+
+	* plug-ins/metadata/xmp-parse.c: Added some #ifdef's around
+	debugging code, added more comments.
+
 2005-04-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbaseenums.h (GimpTransformDirection): removed

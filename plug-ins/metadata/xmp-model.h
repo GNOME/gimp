@@ -28,84 +28,24 @@ G_BEGIN_DECLS
 
 typedef struct _XMPModel XMPModel;
 
-/* known data types for XMP properties, as found in the XMP specification */
-typedef enum
-{
-  XMP_TYPE_BOOLEAN,              /* TEXT */
-  XMP_TYPE_DATE,                 /* TEXT */
-  XMP_TYPE_DIMENSIONS,           /* STRUCTURE */
-  XMP_TYPE_INTEGER,              /* TEXT */
-  XMP_TYPE_INTEGER_SEQ,          /* ORDERED_LIST */
-  XMP_TYPE_LANG_ALT,             /* ALT_LANG */
-  XMP_TYPE_LOCALE_BAG,           /* UNORDERED_LIST */
-  XMP_TYPE_REAL,                 /* TEXT */
-  XMP_TYPE_MIME_TYPE,            /* TEXT */
-  XMP_TYPE_TEXT,                 /* TEXT */
-  XMP_TYPE_TEXT_BAG,             /* UNORDERED_LIST */
-  XMP_TYPE_TEXT_SEQ,             /* ORDERED_LIST */
-  XMP_TYPE_THUMBNAIL_ALT,        /* ALT_THUMBS */
-  XMP_TYPE_URI,                  /* TEXT or RESOURCE (?) */
-  XMP_TYPE_XPATH_BAG,            /* UNORDERED_LIST */
-  XMP_TYPE_RESOURCE_EVENT_SEQ,   /* ORDERED_LIST */
-  XMP_TYPE_RESOURCE_REF,         /* TEXT */
-  XMP_TYPE_JOB_BAG,              /* UNORDERED_LIST */
-  XMP_TYPE_RATIONAL,             /* TEXT */
-  XMP_TYPE_RATIONAL_SEQ,         /* ORDERED_LIST */
-  XMP_TYPE_GPS_COORDINATE,       /* (?) */
-  XMP_TYPE_FLASH,                /* STRUCTURE */
-  XMP_TYPE_OECF_SFR,             /* (?) */
-  XMP_TYPE_CFA_PATTERN,          /* (?) */
-  XMP_TYPE_DEVICE_SETTINGS,      /* (?) */
-  XMP_TYPE_UNKNOWN
-} XMPType;
-
 /* columns used in the GtkTreeStore model holding the XMP metadata */
 typedef enum
 {
-  COL_XMP_NAME     = 0, /* G_TYPE_STRING */
-  COL_XMP_VALUE,        /* G_TYPE_STRING */
-  COL_XMP_VALUE_RAW,    /* G_TYPE_POINTER */
-  COL_XMP_TYPE_XREF,    /* G_TYPE_POINTER */
-  COL_XMP_WIDGET_XREF,  /* G_TYPE_POINTER */
-  COL_XMP_EDITABLE,     /* G_TYPE_INT */
-  COL_XMP_EDIT_ICON,    /* GDK_TYPE_PIXBUF */
-  COL_XMP_VISIBLE,      /* G_TYPE_BOOLEAN */
-  COL_XMP_WEIGHT,       /* G_TYPE_INT */
-  COL_XMP_WEIGHT_SET,   /* G_TYPE_BOOLEAN */
+  COL_XMP_NAME     = 0, /* G_TYPE_STRING   - name */
+  COL_XMP_VALUE,        /* G_TYPE_STRING   - value as string (for viewing) */
+  COL_XMP_VALUE_RAW,    /* G_TYPE_POINTER  - value as array (from parser) */
+  COL_XMP_TYPE_XREF,    /* G_TYPE_POINTER  - XMPProperty or XMPSchema */
+  COL_XMP_WIDGET_XREF,  /* G_TYPE_POINTER  - GtkWidget cross-reference */
+  COL_XMP_EDITABLE,     /* G_TYPE_INT      - editable? */
+  COL_XMP_EDIT_ICON,    /* GDK_TYPE_PIXBUF - edit icon */
+  COL_XMP_VISIBLE,      /* G_TYPE_BOOLEAN  - visible? */
+  COL_XMP_WEIGHT,       /* G_TYPE_INT      - font weight */
+  COL_XMP_WEIGHT_SET,   /* G_TYPE_BOOLEAN  - font weight set? */
   XMP_MODEL_NUM_COLUMNS
 } XMPModelColumns;
 
 /* special value for the COL_XMP_EDITABLE column.  not strictly boolean... */
 #define XMP_AUTO_UPDATE 2
-
-/* XMP properties referenced in the tree via COL_XMP_TYPE_XREF (depth 2) */
-typedef struct
-{
-  const gchar *name;
-  XMPType      type;
-  gboolean     editable;
-} XMPProperty;
-
-/* XMP schemas referenced in the tree via COL_XMP_TYPE_XREF (depth 1) */
-typedef struct
-{
-  const gchar *uri;
-  const gchar *prefix;
-  const gchar *name;
-  XMPProperty *properties;
-} XMPSchema;
-
-/* URIs of standard XMP schemas (as of January 2004) */
-#define XMP_SCHEMA_DUBLIN_CORE "http://purl.org/dc/elements/1.1/"
-#define XMP_SCHEMA_XMP_BASIC   "http://ns.adobe.com/xap/1.0/"
-#define XMP_SCHEMA_XMP_RIGHTS  "http://ns.adobe.com/xap/1.0/rights/"
-#define XMP_SCHEMA_XMP_MM      "http://ns.adobe.com/xap/1.0/mm/"
-#define XMP_SCHEMA_XMP_BJ      "http://ns.adobe.com/xap/1.0/bj/"
-#define XMP_SCHEMA_XMP_TPG     "http://ns.adobe.com/xap/1.0/t/pg/"
-#define XMP_SCHEMA_PDF         "http://ns.adobe.com/pdf/1.3/"
-#define XMP_SCHEMA_PHOTOSHOP   "http://ns.adobe.com/photoshop/1.0/"
-#define XMP_SCHEMA_TIFF        "http://ns.adobe.com/tiff/1.0/"
-#define XMP_SCHEMA_EXIF        "http://ns.adobe.com/exif/1.0/"
 
 XMPModel     *xmp_model_new            (void);
 
