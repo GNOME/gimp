@@ -1,3 +1,12 @@
+2005-04-22  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/winclipboard.c: removed winclipboard plug-in
+	from CVS. It is not any longer needed as long as GTK+ >= 2.6.5
+	is being used. Fixes bug #165219.
+
 2005-04-22  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-model.[ch]: Fixed crash occuring after a

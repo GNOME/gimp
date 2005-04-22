@@ -1,6 +1,10 @@
+2005-04-22  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed winclipboard.c.
+
 2005-04-22  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 
 2005-04-19  Gareth Owen  <gowen72@yahoo.com>
 
@@ -28,7 +32,7 @@
 
 2005-04-10  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 
 2005-04-09  Adam Weinberger  <adamw@gnome.org>
 
@@ -36,11 +40,11 @@
 
 2005-04-09  Josep Puigdemont i Casamajó  <josep.puigdemont@gmail.com>
 
-        * ca.po: Updated Catalan translation by Quim Perez i Noguer, et al.
+	* ca.po: Updated Catalan translation by Quim Perez i Noguer, et al.
 
 2005-04-07  Marco Ciampa  <ciampix@libero.it>
 
-        * it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 
 2005-04-06  Adam Weinberger  <adamw@gnome.org>
 
@@ -52,7 +56,7 @@
 
 2005-04-04  Marco Ciampa <ciampix@libero.it>
 
-        * it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 
 2005-04-01  Steve Murphy  <murf@e-tools.com>
 
@@ -285,7 +289,7 @@
 2004-11-21  David Lodge <dave@cirt.net>
 
 	* en_GB.po: Updated British translation.
-                                                                                
+
 2004-11-21  Vincent van Adrighem  <adrighem@gnome.org>
 
 	* nl.po: Translation updated by Tino Meinen.
@@ -452,7 +456,7 @@
 2004-10-19  David Lodge <dave@cirt.net>
 
 	* en_GB.po: Updated British English translation.
-                                                                                
+
 2004-10-19  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
@@ -468,7 +472,7 @@
 2004-10-17  David Lodge <dave@cirt.net>
 
 	* en_GB.po: Updated British English translation.
-                                                                                
+
 2004-10-16  Vincent van Adrighem  <adrighem@gnome.org>
 
 	* nl.po: Translation updated.
@@ -764,7 +768,7 @@
 
 2004-03-20  Robert Sedak  <robert.sedak@sk.htnet.hr>
 
-        * hr.po: Updated Croatian translation.
+	* hr.po: Updated Croatian translation.
 
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
@@ -924,7 +928,7 @@
 
 2003-01-27  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2004-01-27  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
@@ -1003,7 +1007,7 @@
 
 2003-01-07  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2004-01-06  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -1043,7 +1047,7 @@
 	
 2003-12-16  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-12-16  Danilo Šegan  <dsegan@gmx.net>
 
@@ -1097,7 +1101,7 @@
 
 2003-11-24  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-11-23  Sven Neumann  <sven@gimp.org>
 
@@ -1142,7 +1146,7 @@
 
 2003-11-12  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-11-11  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
@@ -1159,7 +1163,7 @@
 2003-11-07  Hasbullah Bin Pit <sebol@ikhlas.com>
 
 	* ms.po: Updated fix for bug #125360 by
-                MIMOS Open Source Development Group <ismas@mimos.my>
+	MIMOS Open Source Development Group <ismas@mimos.my>
 
 2003-11-05  Abel Cheung  <maddog@linux.org.hk>
 

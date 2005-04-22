@@ -130,7 +130,6 @@
     'waves' => { libdep => 'gtk', ui => 1 },
     'webbrowser' => { libdep => 'glib' },
     'whirlpinch' => { libdep => 'gtk', ui => 1 },
-    'winclipboard' => { libdep => 'glib', ui => 1, optional => 1 },
     'wind' => { libdep => 'gtk', ui => 1 },
     'winprint' => { libdep => 'glib', ui => 1, optional => 1 },
     'wmf' => { libdep => 'gtk', ui => 1, optional => 1 },

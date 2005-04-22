@@ -1381,7 +1381,6 @@ AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 ###########################################################
 
 if test x"$os_win32" = xyes; then
-  WINCLIPBOARD='winclipboard$(EXEEXT)'
   WINPRINT='winprint$(EXEEXT)'
 else
   MAIL='mail$(EXEEXT)'
@@ -1390,7 +1389,6 @@ fi
 
 AC_SUBST(MAIL)
 AC_SUBST(SCREENSHOT)
-AC_SUBST(WINCLIPBOARD)
 AC_SUBST(WINPRINT)
 AC_SUBST(WMF)
 

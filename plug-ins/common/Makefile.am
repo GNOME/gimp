@@ -160,7 +160,6 @@ libexec_PROGRAMS = \
 	waves \
 	webbrowser \
 	whirlpinch \
-	$(WINCLIPBOARD) \
 	wind \
 	$(WINPRINT) \
 	$(WMF) \
@@ -178,7 +177,6 @@ EXTRA_PROGRAMS = \
 	screenshot \
 	svg \
 	tiff \
-	winclipboard \
 	winprint \
 	wmf \
 	xpm
@@ -2101,22 +2099,6 @@ whirlpinch_LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-winclipboard_SOURCES = \
-	winclipboard.c
-
-winclipboard_LDADD = \
-	$(libgimpui)		\
-	$(libgimpconfig)	\
-	$(libgimpwidgets)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpmath)		\
-	$(libgimpbase)		\
-	$(LIBWINCLIPBOARD)		\
-	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
