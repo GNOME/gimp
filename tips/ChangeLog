@@ -1,3 +1,9 @@
+2005-04-22  Changwoo Ryu  <cwryu@debian.org>
+
+	* Makefile.am (tips_POFILES): Added ko.po.
+
+	* ko.po: Added Korean translation by Dongsu Jang.
+
 2005-03-31  Takeshi AIHANA <aihana@gnome.gr.jp>
 
 	* ja.po: Fixed a typo reported by

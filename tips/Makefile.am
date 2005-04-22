@@ -23,6 +23,7 @@ tips_POFILES = \
 	id.po		\
 	it.po		\
 	ja.po		\
+	ko.po		\
 	lt.po		\
 	ms.po		\
 	nb.po		\
