@@ -3,4 +3,5 @@ Makefile.in
 .deps
 .libs
 metadata
+testbase64
 xmpdump
