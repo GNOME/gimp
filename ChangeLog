@@ -8,7 +8,7 @@
 	* libgimpwidgets/gimpintstore.c: removed the "row_deleted" handler
 	which used to take care of reinserting the "Empty" item when the
 	last row gets deleted. This doesn't work any longer with GTK+ 2.6
-	and I see now way to make it work again. Fixes bug #301524.
+	and I see no way to make it work again. Fixes bug #301524.
 
 2005-04-22  Sven Neumann  <sven@gimp.org>
 
