@@ -1,3 +1,8 @@
+2005-04-23  Sven Neumann  <sven@gimp.org>
+
+	* tools/shooter.c
+	* tools/widgets.c: tweaked spacings.
+
 2005-04-20  DindinX  <dindinx@gimp.org>
 
 	* tools/widgets.c: added all but the GimpPixmap widget.

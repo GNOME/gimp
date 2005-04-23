@@ -91,18 +91,24 @@ remove_shaped_area (GdkPixbuf *pixbuf,
     {
       int y, x;
 
-      for (y = rectangles[i].y; y < rectangles[i].y + rectangles[i].height; y++)
+      for (y = rectangles[i].y;
+           y < rectangles[i].y + rectangles[i].height;
+           y++)
         {
-          guchar *src_pixels, *dest_pixels;
+          const guchar *src_pixels;
+          guchar       *dest_pixels;
 
           src_pixels = gdk_pixbuf_get_pixels (pixbuf) +
             y * gdk_pixbuf_get_rowstride (pixbuf) +
             rectangles[i].x * (gdk_pixbuf_get_has_alpha (pixbuf) ? 4 : 3);
+
           dest_pixels = gdk_pixbuf_get_pixels (retval) +
             y * gdk_pixbuf_get_rowstride (retval) +
             rectangles[i].x * 4;
 
-          for (x = rectangles[i].x; x < rectangles[i].x + rectangles[i].width; x++)
+          for (x = rectangles[i].x;
+               x < rectangles[i].x + rectangles[i].width;
+               x++)
             {
               *dest_pixels++ = *src_pixels ++;
               *dest_pixels++ = *src_pixels ++;

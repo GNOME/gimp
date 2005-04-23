@@ -26,18 +26,17 @@ adjust_size_callback (WidgetInfo *info)
 {
   Window toplevel;
   Window root;
-  gint tx;
-  gint ty;
-  guint twidth;
-  guint theight;
-  guint tborder_width;
-  guint tdepth;
-  guint target_width = 0;
-  guint target_height = 0;
+  gint   tx;
+  gint   ty;
+  guint  twidth;
+  guint  theight;
+  guint  tborder_width;
+  guint  tdepth;
+  guint  target_width = 0;
+  guint  target_height = 0;
 
   toplevel = GDK_WINDOW_XWINDOW (info->window->window);
-  XGetGeometry (GDK_WINDOW_XDISPLAY (info->window->window),
-                toplevel,
+  XGetGeometry (GDK_WINDOW_XDISPLAY (info->window->window), toplevel,
                 &root, &tx, &ty, &twidth, &theight, &tborder_width, &tdepth);
 
   switch (info->size)
@@ -84,39 +83,42 @@ new_widget_info (const char *name,
   WidgetInfo *info;
 
   info = g_new0 (WidgetInfo, 1);
-  info->name = g_strdup (name);
-  info->size = size;
+
+  info->name     = g_strdup (name);
+  info->size     = size;
+  info->no_focus = TRUE;
+
+
   if (GTK_IS_WINDOW (widget))
     {
       info->window = widget;
+
       gtk_window_set_resizable (GTK_WINDOW (info->window), FALSE);
-      info->include_decorations = FALSE;
       g_signal_connect_swapped (info->window, "realize",
                                 G_CALLBACK (realize_callback), info);
     }
   else
     {
       info->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-      info->include_decorations = FALSE;
-      gtk_widget_show_all (widget);
+
+      gtk_container_set_border_width (GTK_CONTAINER (info->window), 12);
       gtk_container_add (GTK_CONTAINER (info->window), widget);
-    }
-  info->no_focus = TRUE;
+      gtk_widget_show_all (widget);
+   }
 
   gtk_widget_set_app_paintable (info->window, TRUE);
   g_signal_connect (info->window, "focus", G_CALLBACK (gtk_true), NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (info->window), 12);
 
   switch (size)
     {
     case SMALL:
-      gtk_widget_set_size_request (info->window, 240, 75);
+      gtk_widget_set_size_request (info->window, SMALL_WIDTH, SMALL_HEIGHT);
       break;
     case MEDIUM:
-      gtk_widget_set_size_request (info->window, 240, 165);
+      gtk_widget_set_size_request (info->window, MEDIUM_WIDTH, MEDIUM_HEIGHT);
       break;
     case LARGE:
-      gtk_widget_set_size_request (info->window, 240, 240);
+      gtk_widget_set_size_request (info->window, LARGE_WIDTH, LARGE_HEIGHT);
       break;
     default:
       break;
@@ -138,7 +140,7 @@ create_button (void)
   GtkWidget *widget;
   GtkWidget *align;
 
-  widget = gimp_button_new();
+  widget = gimp_button_new ();
   gtk_container_add (GTK_CONTAINER (widget),
                      gtk_label_new_with_mnemonic ("_Button"));
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
@@ -157,10 +159,12 @@ create_chain_button (void)
   GtkWidget *chain;
   GtkWidget *separator;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.8);
   gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
   table = gtk_table_new (2, 5, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (align), table);
   chain = gimp_chain_button_new (GIMP_CHAIN_LEFT);
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
@@ -187,7 +191,7 @@ create_chain_button (void)
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_box_pack_end_defaults (GTK_BOX (vbox), gtk_label_new ("Chain Button"));
-  return new_widget_info ("gimp-chain-button", vbox, SMALL);
+  return new_widget_info ("gimp-chain-button", vbox, MEDIUM);
 }
 
 static WidgetInfo *
@@ -200,11 +204,9 @@ create_color_area (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
-  area = gimp_color_area_new (&color,
-                              GIMP_COLOR_AREA_SMALL_CHECKS,
-                              GDK_SHIFT_MASK);
+  area = gimp_color_area_new (&color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
   gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
   gtk_widget_set_size_request (area, -1, 25);
   gtk_container_add (GTK_CONTAINER (align), area);
@@ -226,7 +228,7 @@ create_color_button (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
   button =  gimp_color_button_new ("Color Button",
                                    80, 20, &color,
@@ -250,7 +252,7 @@ create_color_hex_entry (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry = gimp_color_hex_entry_new ();
   gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (entry), &color);
@@ -275,7 +277,7 @@ create_color_scale (void)
   color_init (&rgb);
   gimp_rgb_to_hsv (&rgb, &hsv);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.8, 0.0);
   scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
                                 GIMP_COLOR_SELECTOR_HUE);
@@ -300,13 +302,11 @@ create_color_selection (void)
 
   color_init (&color);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   selection = gimp_color_selection_new ();
-  gimp_color_selection_set_show_alpha(GIMP_COLOR_SELECTION (selection),
-                                      TRUE);
-  gimp_color_selection_set_color  (GIMP_COLOR_SELECTION (selection),
-                                   &color);
+  gimp_color_selection_set_show_alpha(GIMP_COLOR_SELECTION (selection), TRUE);
+  gimp_color_selection_set_color  (GIMP_COLOR_SELECTION (selection), &color);
   gtk_widget_set_size_request (selection, 400, -1);
   gtk_container_add (GTK_CONTAINER (align), selection);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
@@ -348,11 +348,10 @@ create_enum_combo_box (void)
   GtkWidget *combo;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_enum_combo_box_new (GIMP_TYPE_CHANNEL_TYPE);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 GIMP_BLUE_CHANNEL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), GIMP_BLUE_CHANNEL);
   gtk_container_add (GTK_CONTAINER (align), combo);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox),
@@ -369,7 +368,7 @@ create_file_entry (void)
   GtkWidget *entry;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   entry = gimp_file_entry_new ("File Entry",
                                "wilber.png",
@@ -404,7 +403,7 @@ create_int_combo_box (void)
   GtkWidget *combo;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   combo = gimp_int_combo_box_new ("Sobel",       1,
                                   "Prewitt",      2,
@@ -431,7 +430,7 @@ create_memsize_entry (void)
   GtkWidget *entry;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   entry = gimp_memsize_entry_new ((3 * 1024 + 512) * 1024,
                                   0, 1024 * 1024 * 1024);
@@ -452,7 +451,7 @@ create_offset_area (void)
   GtkWidget *area;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -478,7 +477,7 @@ create_path_editor (void)
   gchar     *config = gimp_config_build_data_path ("patterns");
   gchar     *path   = gimp_config_path_expand (config, TRUE, NULL);
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   editor = gimp_path_editor_new ("Path Editor", path);
   gtk_widget_set_size_request (editor, -1, 240);
@@ -501,7 +500,7 @@ create_pick_button (void)
   GtkWidget *button;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 1.0);
   button =  gimp_pick_button_new ();
   gtk_container_add (GTK_CONTAINER (align), button);
@@ -539,7 +538,7 @@ create_preview_area (void)
   GtkWidget *align;
   GdkPixbuf *pixbuf;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   area =  gimp_preview_area_new ();
   g_signal_connect (area, "realize",
@@ -566,7 +565,7 @@ create_unit_menu (void)
   GtkWidget *menu;
   GtkWidget *align;
 
-  vbox = gtk_vbox_new (FALSE, 3);
+  vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
   menu =  gimp_unit_menu_new ("%a - %y (%f\"", GIMP_UNIT_POINT,
                               TRUE, TRUE, TRUE);
