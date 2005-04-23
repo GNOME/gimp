@@ -6,6 +6,7 @@
 	* plug-ins/metadata/base64.[ch]: Added option to ignore invalid
 	characters in base64 encoded text.
 
+	* plug-ins/metadata/xmp-encode.c
 	* plug-ins/metadata/xmp-parse.c
 	* plug-ins/metadata/testbase64.c: Updated accordingly.
 
