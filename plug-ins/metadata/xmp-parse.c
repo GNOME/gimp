@@ -987,7 +987,8 @@ text_handler           (GMarkupParseContext  *markup_context,
 #endif
         max_size = text_len - text_len / 4 + 1;
         decoded = g_malloc (max_size);
-        decoded_size = base64_decode (text, text_len, decoded, max_size);
+        decoded_size = base64_decode (text, text_len, decoded, max_size,
+                                      FALSE);
 #ifdef DEBUG_XMP_PARSER
         if (decoded_size > 0)
           {

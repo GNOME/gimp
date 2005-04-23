@@ -1,3 +1,14 @@
+2005-04-23  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-schemas.[ch]: Added definition of
+	properties from IPTC Core XMP schema (Iptc4xmpCore).
+
+	* plug-ins/metadata/base64.[ch]: Added option to ignore invalid
+	characters in base64 encoded text.
+
+	* plug-ins/metadata/xmp-parse.c
+	* plug-ins/metadata/testbase64.c: Updated accordingly.
+
 2005-04-22  Sven Neumann  <sven@gimp.org>
 
 	* configure.in

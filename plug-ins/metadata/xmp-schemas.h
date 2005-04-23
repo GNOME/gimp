@@ -51,6 +51,7 @@ typedef enum
   XMP_TYPE_OECF_SFR,             /* (?) */
   XMP_TYPE_CFA_PATTERN,          /* (?) */
   XMP_TYPE_DEVICE_SETTINGS,      /* (?) */
+  XMP_TYPE_CONTACT_INFO,         /* STRUCTURE */
   XMP_TYPE_GENERIC_STRUCTURE,    /* STRUCTURE */
   XMP_TYPE_UNKNOWN
 } XMPType;

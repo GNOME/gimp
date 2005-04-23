@@ -74,6 +74,7 @@ static const gint base64_6bits[256] =
  * @src_size: input buffer size (in bytes) or -1 if @src_b64 is nul-terminated
  * @dest: buffer in which the decoded data should be stored
  * @dest_size: size of the destination buffer
+ * @ignore_errors: if #TRUE, skip all invalid characters (no data validation)
  *
  * Read base64-encoded data from the input buffer @src_b64 and write
  * the decoded data into @dest.
@@ -94,7 +95,8 @@ gssize
 base64_decode (const gchar *src_b64,
                gsize        src_size,
                gchar       *dest,
-               gsize        dest_size)
+               gsize        dest_size,
+               gboolean     ignore_errors)
 {
   gint32 decoded;
   gssize i;
@@ -111,8 +113,10 @@ base64_decode (const gchar *src_b64,
       bits = base64_6bits[(int) *src_b64 & 0xff];
       if (bits < 0)
         {
-          if (bits < -1)
+          if (bits == -2)
             break;
+          else if ((bits == -3) && !ignore_errors)
+            return -1;
           else
             continue;
         }
@@ -128,8 +132,6 @@ base64_decode (const gchar *src_b64,
           n = 0;
         }
     }
-  if (bits < -2)
-    return -1;
   if ((n == 3) && (i + 2 <= dest_size))
     {
       /* 3 source chars (+ 1 padding "=") => 16 bits of output (2 chars) */

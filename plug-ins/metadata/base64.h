@@ -28,7 +28,8 @@ G_BEGIN_DECLS
 gssize base64_decode (const gchar *src_b64,
                       gsize        src_size,
                       gchar       *dest,
-                      gsize        dest_size);
+                      gsize        dest_size,
+                      gboolean     ignore_errors);
 
 gssize base64_encode (const gchar *src,
                       gsize        src_size,
