@@ -1,3 +1,8 @@
+2005-04-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_thumb):
+	respect the selection (fixes bug #301523).
+
 2005-04-23  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-schemas.[ch]: Added definition of
