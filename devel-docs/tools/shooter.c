@@ -12,6 +12,7 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -241,6 +242,8 @@ main (int argc, char **argv)
    */
   if (! gtk_init_check (&argc, &argv))
     return EXIT_SUCCESS;
+
+  gtk_rc_add_default_file (gimp_gtkrc ());
 
   gimp_widgets_init (shooter_standard_help,
                      shooter_get_foreground,
