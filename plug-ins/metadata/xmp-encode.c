@@ -119,6 +119,7 @@ gen_property (GString            *buffer,
     case XMP_TYPE_OECF_SFR:
     case XMP_TYPE_CFA_PATTERN:
     case XMP_TYPE_DEVICE_SETTINGS:
+    case XMP_TYPE_CONTACT_INFO:
     case XMP_TYPE_GENERIC_STRUCTURE:
       if (value_array[0] && value_array[1]
           && !! strcmp (value_array[1], schema->uri))
