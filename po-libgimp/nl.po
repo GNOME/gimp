@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 11:11+0000\n"
-"PO-Revision-Date: 2005-04-19 14:06+0200\n"
+"POT-Creation-Date: 2005-04-23 11:21+0000\n"
+"PO-Revision-Date: 2005-04-23 15:14+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -204,7 +204,7 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Leeg)"
 
@@ -525,13 +525,15 @@ msgstr "Middenkleuren"
 msgid "Highlights"
 msgstr "Lichtere kleuren"
 
+# vooruit/heen/voorwaarts
 #: ../libgimpbase/gimpbaseenums.c:649
-msgid "Forward (traditional)"
-msgstr "Voorwaarts (traditioneel)"
+msgid "Forward"
+msgstr "Voorwaarts"
 
+# achteruit/terug/achterwaarts<
 #: ../libgimpbase/gimpbaseenums.c:650
-msgid "Backward (corrective)"
-msgstr "Achterwaarts (corrigerend)"
+msgid "Backward"
+msgstr "Achterwaarts"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -1225,3 +1227,9 @@ msgstr "Waterverf"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druk"
+
+#~ msgid "Forward (traditional)"
+#~ msgstr "Voorwaarts (traditioneel)"
+
+#~ msgid "Backward (corrective)"
+#~ msgstr "Achterwaarts (corrigerend)"
