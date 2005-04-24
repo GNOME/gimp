@@ -1,16 +1,21 @@
 2005-04-24  Sven Neumann  <sven@gimp.org>
 
+	* app/base/temp-buf.c (generate_unique_tmp_filename): removed the
+	local pid_t variable and the msvc definition for it.
+
+2005-04-24  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb
 	* app/pdb/fileops_cmds.c: spelling.
 
 2005-04-24  Hans Breuer  <hans@breuer.org>
 
 	* menus/makefile.msc : build menus with nmake, too
-	  menus/Makefile.am : added to EXTRA_DIST
+	* menus/Makefile.am : added to EXTRA_DIST
 
 	* **/makefile.msc app/gimpcore.def : updated
 
-	* app/base/tmp-buf.c : there is no pid_t with msvc so typedef one
+	* app/base/temp-buf.c : there is no pid_t with msvc so typedef one
 
 2005-04-23  Sven Neumann  <sven@gimp.org>
 

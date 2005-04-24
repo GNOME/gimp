@@ -32,9 +32,6 @@
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
-# ifdef _MSC_VER
-typedef int pid_t;
-# endif
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -630,18 +627,14 @@ static TempBuf *cached_in_memory = NULL;
 static gchar *
 generate_unique_tmp_filename (GimpBaseConfig *config)
 {
-  pid_t  pid;
   gchar *tmpdir;
   gchar *tmpfile;
   gchar *path;
 
   tmpdir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
 
-  pid = getpid ();
-
   tmpfile = g_strdup_printf ("gimp%d.%d",
-                             (gint) pid,
-                             tmp_file_index++);
+                             (gint) getpid (), tmp_file_index++);
 
   path = g_build_filename (tmpdir, tmpfile, NULL);
 
