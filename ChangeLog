@@ -1,3 +1,8 @@
+2005-04-24  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/pdb/fileops_cmds.c: spelling.
+
 2005-04-24  Hans Breuer  <hans@breuer.org>
 
 	* menus/makefile.msc : build menus with nmake, too

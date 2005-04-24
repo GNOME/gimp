@@ -600,7 +600,7 @@ register_magic_load_handler_invoker (Gimp         *gimp,
 
       if (! file_proc)
         {
-          g_message ("attempt to register non-existant load handler \"%s\"",
+          g_message ("attempt to register nonexistent load handler \"%s\"",
                      name);
           goto done;
         }
@@ -755,7 +755,7 @@ register_save_handler_invoker (Gimp         *gimp,
 
       if (! file_proc)
         {
-          g_message ("attempt to register non-existant save handler \"%s\"",
+          g_message ("attempt to register nonexistent save handler \"%s\"",
                      name);
           goto done;
         }
