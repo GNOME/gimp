@@ -48,6 +48,8 @@ STOCK_VARIABLES = \
 	stock_convert_grayscale_16		stock-convert-grayscale-16.png	\
 	stock_convert_indexed_16		stock-convert-indexed-16.png	\
 	stock_convert_rgb_16		stock-convert-rgb-16.png	\
+	stock_cursor_16		stock-cursor-16.png \
+	stock_cursor_24		stock-cursor-24.png \
 	stock_curve_free_16		stock-curve-free-16.png	\
 	stock_curve_smooth_16		stock-curve-smooth-16.png	\
 	stock_default_colors_12		stock-default-colors-12.png	\
@@ -151,6 +153,8 @@ STOCK_VARIABLES = \
 	stock_rotate_180_16		stock-rotate-180-16.png	\
 	stock_rotate_270_16		stock-rotate-270-16.png	\
 	stock_rotate_90_16		stock-rotate-90-16.png	\
+	stock_sample_point_16		stock-sample-point-16.png \
+	stock_sample_point_24		stock-sample-point-24.png \
 	stock_scale_16		stock-scale-16.png	\
 	stock_selection_16		stock-selection-16.png \
 	stock_selection_add_16		stock-selection-add-16.png	\

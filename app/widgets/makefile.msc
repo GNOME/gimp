@@ -63,6 +63,7 @@ OBJECTS = \
 	gimpcontrollerwheel.obj \
 	gimpcontrollers.obj \
 	gimpcursor.obj \
+	gimpcursorview.obj \
 	gimpdasheditor.obj \
 	gimpdataeditor.obj \
 	gimpdatafactoryview.obj \
@@ -71,6 +72,7 @@ OBJECTS = \
 	gimpdevicestatus.obj \
 	gimpdialogfactory.obj \
 	gimpdnd.obj \
+	gimpdnd-xds.obj \
 	gimpdock.obj \
 	gimpdockable.obj \
 	gimpdockbook.obj \
@@ -82,6 +84,7 @@ OBJECTS = \
 	gimperrorconsole.obj \
 	gimperrordialog.obj \
 	gimpfgbgeditor.obj \
+	gimpfgbgview.obj \
 	gimpfiledialog.obj \
 	gimpfileprocview.obj \
 	gimpfontview.obj \
@@ -95,6 +98,7 @@ OBJECTS = \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
+	gimpimagepropview.obj \
 	gimpimageview.obj \
 	gimpitemtreeview.obj \
 	gimplayertreeview.obj \
@@ -107,10 +111,12 @@ OBJECTS = \
 	gimppatternfactoryview.obj \
 	gimppatternselect.obj \
 	gimppdbdialog.obj \
+	gimppixbuf.obj \
 	gimppluginaction.obj \
 	gimpprogressbox.obj \
 	gimpprogressdialog.obj \
 	gimppropwidgets.obj \
+	gimpsamplepointeditor.obj \
 	gimpselectiondata.obj \
 	gimpselectioneditor.obj \
 	gimpsessioninfo.obj \

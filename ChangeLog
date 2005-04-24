@@ -1,3 +1,12 @@
+2005-04-24  Hans Breuer  <hans@breuer.org>
+
+	* menus/makefile.msc : build menus with nmake, too
+	  menus/Makefile.am : added to EXTRA_DIST
+
+	* **/makefile.msc app/gimpcore.def : updated
+
+	* app/base/tmp-buf.c : there is no pid_t with msvc so typedef one
+
 2005-04-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_thumb):

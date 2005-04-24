@@ -14,6 +14,7 @@ LT_RELEASE = $(PKG_VER)
 
 OBJECTS = \
 	gimp-composite.obj \
+	gimp-composite-altivec.obj \
 	gimp-composite-generic.obj \
 	gimp-composite-generic-installer.obj \
 	gimp-composite-mmx.obj \
@@ -33,6 +34,7 @@ mmx_sources = \
 PKG_LINK = \
 	..\base\appbase.lib \
 	$(GLIB_LIBS) \
+	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 
 INCLUDES = \

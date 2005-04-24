@@ -466,6 +466,7 @@ EXPORTS
 	gimp_marshal_VOID__INT
 	gimp_marshal_VOID__INT_INT
 	gimp_marshal_VOID__OBJECT
+	gimp_marshal_VOID__OBJECT_OBJECT
 	gimp_marshal_VOID__OBJECT_POINTER
 	gimp_marshal_VOID__POINTER
 	gimp_marshal_VOID__STRING
@@ -497,7 +498,6 @@ EXPORTS
 	gimp_palette_import_from_gradient
 	gimp_palette_import_from_image
 	gimp_palette_import_from_indexed_image
-	gimp_palette_set_n_columns
 	gimp_param_memsize_get_type
 	gimp_param_rgb_get_type
 	gimp_param_spec_rgb
@@ -733,3 +733,19 @@ gimp_image_get_channel_index
 gimp_image_get_save_proc
 gimp_lut_process
 gimp_progress_pulse
+gimp_image_find_sample_point
+gimp_image_move_sample_point
+gimp_image_remove_sample_point
+gimp_image_sample_point_ref
+gimp_image_sample_point_unref
+gimp_image_add_sample_point_at_pos
+gimp_gradient_segment_split_midpoint
+gimp_image_resize_layers_get_type
+gimp_image_resize_with_layers
+gimp_image_update_sample_point
+gimp_palette_set_columns
+gimp_vectors_warp_vectors
+gimp_buffer_new_from_pixbuf
+gimp_container_is_empty
+gimp_data_factory_data_refresh
+gimp_layer_new_from_pixbuf

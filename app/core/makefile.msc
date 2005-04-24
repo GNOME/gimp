@@ -40,6 +40,7 @@ OBJECTS = \
 	gimp-units.obj \
 	gimparea.obj \
 	gimpbrush.obj \
+	gimpbrush-load.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
 	gimpbuffer.obj \
@@ -92,11 +93,13 @@ OBJECTS = \
 	gimpimage-qmask.obj \
 	gimpimage-resize.obj \
 	gimpimage-rotate.obj \
+	gimpimage-sample-points.obj \
 	gimpimage-snap.obj \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
 	gimpimagefile.obj \
+	gimpinterpreterdb.obj \
 	gimpitem.obj \
 	gimpitem-linked.obj \
 	gimpitem-preview.obj \

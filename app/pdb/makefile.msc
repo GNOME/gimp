@@ -76,6 +76,7 @@ OBJECTS = \
 	transform_tools_cmds.obj \
 	undo_cmds.obj \
 	unit_cmds.obj \
+	vectors_cmds.obj \
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \

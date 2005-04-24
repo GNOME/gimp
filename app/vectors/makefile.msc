@@ -34,6 +34,7 @@ OBJECTS = \
 	gimpvectors.obj \
 	gimpvectors-compat.obj \
 	gimpvectors-preview.obj \
+	gimpvectors-warp.obj \
 
 all : \
 	$(PRJ_TOP)\config.h \

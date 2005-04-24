@@ -74,6 +74,8 @@ OBJECTS = \
 	gimppenciltool.obj \
 	gimpperspectivetool.obj \
 	gimpposterizetool.obj \
+	gimprectangleoptions.obj \
+	gimprectangletool.obj \
 	gimprectselecttool.obj \
 	gimprotatetool.obj \
 	gimpscaletool.obj \

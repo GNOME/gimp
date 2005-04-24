@@ -32,6 +32,9 @@
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
+# ifdef _MSC_VER
+typedef int pid_t;
+# endif
 #endif
 
 #include "libgimpbase/gimpbase.h"

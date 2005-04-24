@@ -1,0 +1,34 @@
+!IFNDEF XSLTPROC
+XSLTPROC = xsltproc
+!ENDIF
+
+menudata_in_files = \
+	dockable-menu.xml.in	\
+	image-menu.xml.in	\
+	toolbox-menu.xml.in
+
+menudata_built_files = $(menudata_in_files:.xml.in=.xml)
+
+MENUS = dockable image toolbox
+
+_MENUS = \
+	brushes buffers channels colormap-editor documents \
+	error-console file-open file-save fonts \
+	gradient-editor gradients \
+	images layers \
+	palette-editor palettes patterns qmask \
+	templates tool vectors
+
+EXTRA_DIST = \
+	$(menudata_DATA)		\
+	$(menudata_in_files)		\
+	dialogs-menuitems.xml		\
+	gtkuimanager.dtd		\
+	menus.xsl
+	
+
+sub-menus : makefile.msc
+	for %d in ($(MENUS)) do $(XSLTPROC) -o %d-menu.xml --xinclude menus.xsl %d-menu.xml.in 
+
+all : \
+	sub-menus

@@ -489,8 +489,8 @@ EXTRA_DEPS = pagecurl-icons.h
 !ENDIF
 
 !IFDEF EXTRA_png
-EXTRACFLAGS = -I$(PNG) -I$(ZLIB)
-EXTRALIBS = $(PNG)\libpng.lib $(ZLIB)\zlib.lib
+EXTRACFLAGS = $(PNG_CFLAGS)
+EXTRALIBS = $(PNG_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_print
@@ -503,8 +503,8 @@ OBJECTS = \
 !ENDIF
 
 !IFDEF EXTRA_psp
-EXTRACFLAGS = -I$(ZLIB)
-EXTRALIBS = $(ZLIB)\zlib.lib user32.lib
+EXTRACFLAGS = $(ZLIB_CFLAGS)
+EXTRALIBS = $(ZLIB_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_rcm
@@ -578,7 +578,7 @@ EXTRALIBS = $(RSVG_LIBS)
 
 !IFDEF EXTRA_tiff
 EXTRACFLAGS = -I$(TIFF)
-EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB)\zlib.lib user32.lib
+EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB_LIBS) user32.lib
 !ENDIF
 
 !IFDEF EXTRA_gimp_ace

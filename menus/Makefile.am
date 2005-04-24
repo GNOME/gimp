@@ -38,7 +38,8 @@ EXTRA_DIST = \
 	$(menudata_in_files)		\
 	dialogs-menuitems.xml		\
 	gtkuimanager.dtd		\
-	menus.xsl
+	menus.xsl			\
+	makefile.msc
 
 MAINTAINERCLEAN_FILES = $(menudata_built_files)
 

@@ -26,6 +26,7 @@ OBJECTS = \
 	plug-in-proc-def.obj \
 	plug-in-proc-frame.obj \
 	plug-in-progress.obj \
+	plug-ins-query.obj \
 	plug-in-rc.obj \
 	plug-in-run.obj \
 	plug-in-shm.obj \
