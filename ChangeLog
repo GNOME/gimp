@@ -1,3 +1,8 @@
+2005-04-25  Manish Singh  <yosh@gimp.org>
+
+	* plug-in/common/tiff.c: Only store compression types we can actually
+	handle in the save options parasite. Fixes bug #301557.
+
 2005-04-24  Sven Neumann  <sven@gimp.org>
 
 	* app/base/temp-buf.c (generate_unique_tmp_filename): removed the
