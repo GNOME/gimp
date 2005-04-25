@@ -1,3 +1,8 @@
+2005-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c (app_libs_init): call g_thread_init() only if
+	the GThread system is not already initialized.
+
 2005-04-25  Sven Neumann  <sven@gimp.org>
 
 	* app/file/gimprecentlist.c (gimp_recent_list_add_item): close the
