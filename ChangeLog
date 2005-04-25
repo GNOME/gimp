@@ -1,3 +1,8 @@
+2005-04-25  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/colortoalpha.c: update the preview continuously when
+	the color changes in the color selector.
+
 2005-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c (app_libs_init): call g_thread_init() only if
