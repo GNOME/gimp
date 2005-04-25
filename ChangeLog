@@ -1,5 +1,10 @@
 2005-04-25  Sven Neumann  <sven@gimp.org>
 
+	* app/file/gimprecentlist.c (gimp_recent_list_add_item): close the
+	file descriptor if we fail to obtain the lock (bug #151767).
+
+2005-04-25  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-proc-def.h: added a boolean flag to the
 	ProcDef struct to identify file procedures.
 
