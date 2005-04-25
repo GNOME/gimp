@@ -1,3 +1,10 @@
+2005-04-25  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/file/gimprecentlist.c (gimp_recent_list_add_item): close the
+	file descriptor if we fail to obtain the lock (bug #151767).
+
 2005-04-25  Manish Singh  <yosh@gimp.org>
 
 	* plug-in/common/tiff.c: Only store compression types we can actually

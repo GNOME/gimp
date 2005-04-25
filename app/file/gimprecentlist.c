@@ -578,6 +578,7 @@ gimp_recent_list_add_item (GimpRecentItem *item)
   else
     {
       g_warning ("Failed to lock:  %s", g_strerror (errno));
+      close (fd);
       return FALSE;
     }
 
