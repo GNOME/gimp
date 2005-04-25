@@ -44,6 +44,7 @@ struct _PlugInProcDef
   ProcRecord       db_info;
 
   /*  file proc specific members  */
+  gboolean         file_proc;
   gchar           *extensions;
   gchar           *prefixes;
   gchar           *magics;

@@ -1,3 +1,17 @@
+2005-04-25  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in-proc-def.h: added a boolean flag to the
+	ProcDef struct to identify file procedures.
+
+	* app/xcf/xcf.c: changed accordingly.
+
+	* app/plug-in/plug-ins.c: look at the new flag instead of checking
+	extensions, prefixes and magics being non-NULL. A file plug-in
+	doesn't necessarily have any of these fields set.
+
+	* app/plug-in/plug-in-rc.c: changed pluginrc format to contain an
+	extra section for file procedures. Moved all file related info there.
+
 2005-04-25  Manish Singh  <yosh@gimp.org>
 
 	* plug-in/common/tiff.c: Only store compression types we can actually

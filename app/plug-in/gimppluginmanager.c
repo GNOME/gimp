@@ -427,6 +427,8 @@ plug_ins_file_register_magic (Gimp        *gimp,
 
       if (strcmp (proc_def->db_info.name, name) == 0)
 	{
+          proc_def->file_proc = TRUE;
+
 	  if (proc_def->extensions != extensions)
 	    {
               if (proc_def->extensions)
@@ -1041,7 +1043,7 @@ plug_ins_add_to_db (Gimp        *gimp,
     {
       proc_def = list->data;
 
-      if (proc_def->extensions || proc_def->prefixes || proc_def->magics)
+      if (proc_def->file_proc)
         {
           Argument args[4];
 
