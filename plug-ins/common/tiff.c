@@ -672,7 +672,22 @@ load_image (const gchar *filename)
       if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
         save_vals.compression = COMPRESSION_NONE;
       else
-        save_vals.compression = tmp;
+        {
+          switch (tmp)
+            {
+            case COMPRESSION_NONE:
+            case COMPRESSION_LZW:
+            case COMPRESSION_PACKBITS:
+            case COMPRESSION_DEFLATE:
+            case COMPRESSION_JPEG:
+              save_vals.compression = tmp;
+              break;
+
+            default:
+              save_vals.compression = COMPRESSION_NONE;
+              break;
+            }
+        }
 
       parasite = gimp_parasite_new ("tiff-save-options", 0,
                                     sizeof (save_vals), &save_vals);
