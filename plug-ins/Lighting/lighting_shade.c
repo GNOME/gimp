@@ -489,7 +489,7 @@ get_ray_color_ref (GimpVector3 *position)
 
   if (mapvals.transparent_background && heights[1][x] == 0)
     {
-      gimp_rgb_set_alpha (&color, 0.0);
+      gimp_rgb_set_alpha (&color_sum, 0.0);
     }
   else
     {

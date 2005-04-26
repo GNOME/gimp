@@ -1,3 +1,9 @@
+2005-04-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_shade.c: fix typo messing
+	up transparent backgrounds, backported from HEAD where
+	it fixed bug #300122, this change should fix bug #302075.
+
 2005-04-25  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
