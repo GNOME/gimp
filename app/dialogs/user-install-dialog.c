@@ -141,29 +141,29 @@ tree_items[] =
   },
   {
     FALSE, "pluginrc",
-    N_("Plug-ins and extensions are external programs run "
-       "by the GIMP which provide additional functionality.  "
-       "These programs are searched for at run-time and "
-       "information about their functionality and mod-times "
-       "is cached in this file.  This file is intended to "
-       "be GIMP-readable only, and should not be edited."),
+    N_("Plug-ins and extensions are external programs which "
+       "provide additional functionality to GIMP.  These "
+       "programs are searched for at run-time and information "
+       "about their functionality is cached in this file.  "
+       "This file is intended to be written by GIMP only, "
+       "and should not be edited."),
     TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "menurc",
-    N_("Key shortcuts can be dynamically redefined in The GIMP. "
+    N_("Key shortcuts can be dynamically redefined. "
        "The menurc is a dump of your configuration so it can. "
        "be remembered for the next session.  You may edit this "
        "file if you wish, but it is much easier to define the "
-       "keys from within The GIMP.  Deleting this file will "
+       "keys from within GIMP.  Deleting this file will "
        "restore the default shortcuts."),
     TREE_ITEM_DO_NOTHING
   },
   {
     FALSE, "sessionrc",
     N_("The sessionrc is used to store what dialog windows were "
-       "open the last time you quit The GIMP.  You can configure "
-       "The GIMP to reopen these dialogs at the saved position."),
+       "open the last time you quit GIMP.  You can configure "
+       "GIMP to reopen these dialogs at the saved position."),
     TREE_ITEM_DO_NOTHING
   },
   {
@@ -184,64 +184,61 @@ tree_items[] =
   {
     TRUE, "brushes",
     N_("This folder is used to store user defined brushes. "
-       "The GIMP checks this folder in addition to the system-wide "
-       "GIMP brushes installation when searching for "
-       "brushes."),
+       "GIMP checks this folder in addition to the system-wide "
+       "brushes installation."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "fonts",
-    N_("This folder is used to store fonts you only want "
-       "visible in the GIMP. The GIMP checks this folder in "
-       "addition to the system-wide GIMP fonts installation "
-       "when searching for fonts. Use this only if you really "
-       "want to have GIMP-only fonts, otherwise put things "
+    N_("This folder is used to store fonts you only want to be "
+       "visible in GIMP. GIMP checks this folder in addition to "
+       "the system-wide fonts installation. Use this only if you really "
+       "want to have fonts available in GIMP only, otherwise put them "
        "in your global font directory."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "gradients",
     N_("This folder is used to store user defined gradients.  "
-       "The GIMP checks this folder in addition to the system-wide "
-       "GIMP gradients installation when searching for gradients."),
+       "GIMP checks this folder in addition to the system-wide "
+       "gradients installation."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "palettes",
     N_("This folder is used to store user defined palettes.  "
-       "The GIMP checks this folder in addition to the system-wide "
-       "GIMP palettes installation when searching for palettes."),
+       "GIMP checks this folder in addition to the system-wide "
+       "palettes installation."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "patterns",
     N_("This folder is used to store user defined patterns.  "
-       "The GIMP checks this folder in addition to the system-wide "
-       "GIMP patterns installation when searching for patterns."),
+       "GIMP checks this folder in addition to the system-wide "
+       "patterns installation when searching for patterns."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "plug-ins",
     N_("This folder is used to store user created, temporary, "
-       "or otherwise non-system-supported plug-ins.  The GIMP "
+       "or otherwise non-system-supported plug-ins.  GIMP "
        "checks this folder in addition to the system-wide "
-       "GIMP plug-in folder when searching for plug-ins."),
+       "plug-in folder."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "modules",
     N_("This folder is used to store user created, temporary, "
-       "or otherwise non-system-supported DLL modules.  The "
-       "GIMP checks this folder in addition to the system-wide "
-       "GIMP module folder when searching for modules to load "
-       "during initialization."),
+       "or otherwise non-system-supported DLL modules.  GIMP "
+       "checks this folder in addition to the system-wide "
+       "module folder."),
     TREE_ITEM_MKDIR
   },
   {
     TRUE, "interpreters",
     N_("This folder is used to store configuration for user "
        "created, temporary, or otherwise non-system-supported "
-       "plug-in interpreters.  The GIMP checks this folder in "
+       "plug-in interpreters.  GIMP checks this folder in "
        "addition to the system-wide GIMP interpreters folder "
        "when searching for plug-in interpreter configuration "
        "files."),
@@ -251,7 +248,7 @@ tree_items[] =
     TRUE, "environ",
     N_("This folder is used to store user created, temporary, "
        "or otherwise non-system-supported additions to the "
-       "plug-in environment.  The GIMP checks this folder in "
+       "plug-in environment.  GIMP checks this folder in "
        "addition to the system-wide GIMP environment folder "
        "when searching for plug-in environment modification "
        "files."),
@@ -260,9 +257,8 @@ tree_items[] =
   {
     TRUE, "scripts",
     N_("This folder is used to store user created and installed "
-       "scripts.  The GIMP checks this folder in addition to "
-       "the systemwide GIMP scripts folder when searching for "
-       "scripts."),
+       "scripts.  GIMP checks this folder in addition to "
+       "the systemwide scripts folder."),
     TREE_ITEM_MKDIR
   },
   {
@@ -277,11 +273,7 @@ tree_items[] =
   },
   {
     TRUE, "tmp",
-    N_("This folder is used to temporarily store undo buffers "
-       "to reduce memory usage.  If The GIMP is unceremoniously "
-       "killed, files of the form: gimp<#>.<#> may persist in "
-       "this folder.  These files are useless across GIMP "
-       "sessions and can be destroyed with impunity."),
+    N_("This folder is used for temporary files."),
     TREE_ITEM_MKDIR
   },
   {
