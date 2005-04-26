@@ -49,7 +49,7 @@ static void        run                    (const gchar       *name,
                                            gint              *nreturn_vals,
                                            GimpParam        **return_vals);
 
-inline static void color_to_alpha         (GimpRGB           *src,
+static inline void color_to_alpha         (GimpRGB           *src,
                                            const GimpRGB     *color);
 static void        to_alpha_func          (const guchar      *src,
                                            guchar            *dest,
@@ -200,7 +200,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-inline static void
+static inline void
 color_to_alpha (GimpRGB       *src,
                 const GimpRGB *color)
 {

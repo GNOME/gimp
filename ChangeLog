@@ -1,7 +1,12 @@
+2005-04-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colortoalpha.c: use the standard order of
+	"static" and "inline" qualifiers.
+
 2005-04-25  DindinX  <dindinx@gimp.org>
 
-	* plug-ins/common/colortoalpha.c: update the preview continuously when
-	the color changes in the color selector.
+	* plug-ins/common/colortoalpha.c: update the preview continuously
+	when the color changes in the color selector.
 
 2005-04-25  Michael Natterer  <mitch@gimp.org>
 
