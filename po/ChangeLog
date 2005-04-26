@@ -1,3 +1,8 @@
+2005-04-26  Sven Neumann  <sven@gimp.org>
+
+	* ko.po: marked an invallid translation as fuzzy (invalid
+	according to msgfmt).
+
 2005-04-26  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: Updated Czech translation. Fixed some problems.
