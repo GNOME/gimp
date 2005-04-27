@@ -207,10 +207,20 @@ gimp_color_config_finalize (GObject *object)
 {
   GimpColorConfig *color_config = GIMP_COLOR_CONFIG (object);
 
-  g_free (color_config->rgb_profile);
-  g_free (color_config->cmyk_profile);
-  g_free (color_config->display_profile);
-  g_free (color_config->printer_profile);
+  if (color_config->rgb_profile)
+    g_free (color_config->rgb_profile);
+
+  if (color_config->cmyk_profile)
+    g_free (color_config->cmyk_profile);
+
+  if (color_config->display_profile)
+    g_free (color_config->display_profile);
+
+  if (color_config->printer_profile)
+    g_free (color_config->printer_profile);
+
+  if (color_config->display_module)
+    g_free (color_config->display_module);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

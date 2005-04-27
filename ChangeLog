@@ -1,5 +1,18 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpunitstore.c: don't call va_arg() too often.
+
+	* libgimpconfig/gimpcolorconfig.c (gimp_color_config_finalize):
+	free the string allocated for the display module.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: plugged a small memleak.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: added more standard keybindings.
 
 2005-04-27  Sven Neumann  <sven@gimp.org>

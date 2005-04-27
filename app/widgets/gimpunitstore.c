@@ -465,11 +465,12 @@ gimp_unit_store_set_pixel_values (GimpUnitStore *store,
 
   va_start (args, first_value);
 
-  for (i = 0; i < store->num_values; i++)
+  for (i = 0; i < store->num_values; )
     {
       store->values[i] = first_value;
 
-      first_value = va_arg (args, gdouble);
+      if (++i < store->num_values)
+        first_value = va_arg (args, gdouble);
     }
 
   va_end (args);
@@ -498,11 +499,12 @@ gimp_unit_store_set_resolutions  (GimpUnitStore *store,
 
   va_start (args, first_resolution);
 
-  for (i = 0; i < store->num_values; i++)
+  for (i = 0; i < store->num_values; )
     {
       store->resolutions[i] = first_resolution;
 
-      first_resolution = va_arg (args, gdouble);
+      if (++i < store->num_values)
+        first_resolution = va_arg (args, gdouble);
     }
 
   va_end (args);
@@ -542,12 +544,13 @@ gimp_unit_store_get_values (GimpUnitStore *store,
 
   va_start (args, first_value);
 
-  for (i = 0; i < store->num_values; i++)
+  for (i = 0; i < store->num_values; )
     {
       if (first_value)
         *first_value = gimp_unit_store_get_value (store, unit, i);
 
-      first_value = va_arg (args, gdouble *);
+      if (++i < store->num_values)
+        first_value = va_arg (args, gdouble *);
     }
 
   va_end (args);
