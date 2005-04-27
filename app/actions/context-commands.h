@@ -45,6 +45,26 @@ void   context_background_blue_cmd_callback (GtkAction *action,
                                              gint       value,
                                              gpointer   data);
 
+void   context_foreground_hue_cmd_callback  (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_foreground_saturation_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_foreground_value_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+
+void   context_background_hue_cmd_callback  (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_background_saturation_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_background_value_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+
 void   context_opacity_cmd_callback         (GtkAction *action,
                                              gint       value,
                                              gpointer   data);

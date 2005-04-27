@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -192,6 +193,126 @@ context_background_blue_cmd_callback (GtkAction *action,
                                  color.b,
                                  0.0, 1.0,
                                  0.01, 0.1, FALSE);
+  gimp_context_set_background (context, &color);
+}
+
+void
+context_foreground_hue_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.h = action_select_value ((GimpActionSelectType) value,
+                               hsv.h,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_foreground_saturation_cmd_callback (GtkAction *action,
+                                            gint       value,
+                                            gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.s = action_select_value ((GimpActionSelectType) value,
+                               hsv.s,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_foreground_value_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.v = action_select_value ((GimpActionSelectType) value,
+                               hsv.v,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_background_hue_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.h = action_select_value ((GimpActionSelectType) value,
+                               hsv.h,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
+  gimp_context_set_background (context, &color);
+}
+
+void
+context_background_saturation_cmd_callback (GtkAction *action,
+                                            gint       value,
+                                            gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.s = action_select_value ((GimpActionSelectType) value,
+                               hsv.s,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
+  gimp_context_set_background (context, &color);
+}
+
+void
+context_background_value_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  GimpHSV      hsv;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  gimp_rgb_to_hsv (&color, &hsv);
+  hsv.v = action_select_value ((GimpActionSelectType) value,
+                               hsv.v,
+                               0.0, 1.0,
+                               0.01, 0.1, FALSE);
+  gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_background (context, &color);
 }
 
