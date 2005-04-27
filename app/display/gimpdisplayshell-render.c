@@ -322,6 +322,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   RenderInfo     info;
   GimpImageType  type;
 
+  g_return_if_fail (w > 0 && h > 0);
+
   render_image_init_info (&info, shell, x, y, w, h);
 
   type = gimp_projection_get_image_type (shell->gdisp->gimage->projection);
@@ -448,7 +450,7 @@ render_image_indexed (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -461,8 +463,6 @@ render_image_indexed (RenderInfo *info)
 	{
 	  const guchar *src  = info->src;
 	  guchar       *dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -477,16 +477,22 @@ render_image_indexed (RenderInfo *info)
 	    }
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -508,7 +514,7 @@ render_image_indexed_a (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -524,8 +530,6 @@ render_image_indexed_a (RenderInfo *info)
           guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -557,16 +561,22 @@ render_image_indexed_a (RenderInfo *info)
 	      }
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -583,7 +593,7 @@ render_image_gray (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -596,8 +606,6 @@ render_image_gray (RenderInfo *info)
 	{
 	  const guchar *src  = info->src;
 	  guchar       *dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -612,16 +620,22 @@ render_image_gray (RenderInfo *info)
 	    }
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -639,7 +653,7 @@ render_image_gray_a (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -655,8 +669,6 @@ render_image_gray_a (RenderInfo *info)
           guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -680,16 +692,22 @@ render_image_gray_a (RenderInfo *info)
 	    }
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -706,7 +724,7 @@ render_image_rgb (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -717,21 +735,25 @@ render_image_rgb (RenderInfo *info)
 	}
       else
 	{
-	  g_return_if_fail (info->src != NULL);
-
           memcpy (info->dest, info->src, 3 * info->w);
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -749,7 +771,7 @@ render_image_rgb_a (RenderInfo *info)
 
   info->src = render_image_tile_fault (info);
 
-  for (; y < ye; y++)
+  while (TRUE)
     {
       gint error =
         RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
@@ -765,8 +787,6 @@ render_image_rgb_a (RenderInfo *info)
           guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
@@ -797,16 +817,22 @@ render_image_rgb_a (RenderInfo *info)
 	    }
 	}
 
+      if (++y == ye)
+        break;
+
       info->dest += info->dest_bpl;
 
-      initial = FALSE;
-
-      if (error >= 1 && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
+
 	  initial = TRUE;
 	}
+      else
+        {
+          initial = FALSE;
+        }
     }
 }
 
@@ -892,23 +918,23 @@ static guchar *
 render_image_tile_fault (RenderInfo *info)
 {
   Tile         *tile;
-  const guchar *data;
+  const guchar *src;
   const guchar *scale;
   guchar       *dest;
   gint          width;
   gint          tilex;
   gint          step;
   gint          bpp = info->src_bpp;
-  gint          x, b;
+  gint          x;
 
   tile = tile_manager_get_tile (info->src_tiles,
 				info->src_x, info->src_y, TRUE, FALSE);
 
   g_return_val_if_fail (tile != NULL, tile_buf);
 
-  data = tile_data_pointer (tile,
-			    info->src_x % TILE_WIDTH,
-			    info->src_y % TILE_HEIGHT);
+  src = tile_data_pointer (tile,
+                           info->src_x % TILE_WIDTH,
+                           info->src_y % TILE_HEIGHT);
   scale = info->scale;
   dest  = tile_buf;
 
@@ -917,17 +943,28 @@ render_image_tile_fault (RenderInfo *info)
 
   tilex = info->src_x / TILE_WIDTH;
 
-  while (width--)
+  do
     {
-      for (b = 0; b < bpp; b++)
-	*dest++ = data[b];
+      const guchar *s = src;
+
+      switch (bpp)
+        {
+        case 4:
+          *dest++ = *s++;
+        case 3:
+          *dest++ = *s++;
+        case 2:
+          *dest++ = *s++;
+        case 1:
+          *dest++ = *s++;
+        }
 
       step = *scale++;
 
       if (step != 0)
 	{
 	  x += step;
-	  data += step * bpp;
+	  src += step * bpp;
 
 	  if ((x >> tile_shift) != tilex)
 	    {
@@ -939,12 +976,13 @@ render_image_tile_fault (RenderInfo *info)
 
               g_return_val_if_fail (tile != NULL, tile_buf);
 
-	      data = tile_data_pointer (tile,
+	      src = tile_data_pointer (tile,
                                         x % TILE_WIDTH,
                                         info->src_y % TILE_HEIGHT);
 	    }
 	}
     }
+  while (--width);
 
   tile_release (tile, FALSE);
 

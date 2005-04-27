@@ -1,3 +1,7 @@
+2005-04-28  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: spare a few CPU cycles.
+
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c (tile_manager_get_tile): removed
