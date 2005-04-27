@@ -134,15 +134,11 @@ tile_manager_get_tile (TileManager *tm,
 		       gint         wantread,
 		       gint         wantwrite)
 {
-  gint tile_num;
-
   g_return_val_if_fail (tm != NULL, NULL);
 
-  tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
-  if (tile_num < 0)
-    return NULL;
-
-  return tile_manager_get (tm, tile_num, wantread, wantwrite);
+  return tile_manager_get (tm,
+                           tile_manager_get_tile_num (tm, xpixel, ypixel),
+                           wantread, wantwrite);
 }
 
 Tile *

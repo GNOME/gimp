@@ -1,5 +1,13 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c (tile_manager_get_tile): removed
+	redundant check.
+
+	* app/display/gimpdisplayshell-render.c: don't access the next
+	tile if we are at the end of the render loop anyway.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: removed unused byte_order
 	variables.
 

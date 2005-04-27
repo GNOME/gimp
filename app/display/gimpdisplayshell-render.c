@@ -481,7 +481,7 @@ render_image_indexed (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -561,7 +561,7 @@ render_image_indexed_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -616,7 +616,7 @@ render_image_gray (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -684,7 +684,7 @@ render_image_gray_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -726,7 +726,7 @@ render_image_rgb (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -801,7 +801,7 @@ render_image_rgb_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1)
+      if (error >= 1 && y + 1 < ye)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -904,7 +904,7 @@ render_image_tile_fault (RenderInfo *info)
   tile = tile_manager_get_tile (info->src_tiles,
 				info->src_x, info->src_y, TRUE, FALSE);
 
-  g_return_val_if_fail (tile != NULL);
+  g_return_val_if_fail (tile != NULL, tile_buf);
 
   data = tile_data_pointer (tile,
 			    info->src_x % TILE_WIDTH,
@@ -937,8 +937,7 @@ render_image_tile_fault (RenderInfo *info)
 	      tile = tile_manager_get_tile (info->src_tiles,
                                             x, info->src_y, TRUE, FALSE);
 
-	      if (! tile)
-		return tile_buf;
+              g_return_val_if_fail (tile != NULL, tile_buf);
 
 	      data = tile_data_pointer (tile,
                                         x % TILE_WIDTH,
