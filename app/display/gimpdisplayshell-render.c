@@ -64,7 +64,6 @@ struct _RenderInfo
   gint              dest_bpp;
   gint              dest_bpl;
   gint              dest_width;
-  gint              byte_order;
 };
 
 
@@ -321,31 +320,21 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GdkRectangle     *highlight)
 {
   RenderInfo     info;
-  GimpImageType  image_type;
+  GimpImageType  type;
 
   render_image_init_info (&info, shell, x, y, w, h);
 
-  image_type = gimp_projection_get_image_type (shell->gdisp->gimage->projection);
+  type = gimp_projection_get_image_type (shell->gdisp->gimage->projection);
 
-  if ((image_type < GIMP_RGB_IMAGE) || (image_type > GIMP_INDEXEDA_IMAGE))
-    {
-      g_message ("unknown gimage projection type: %d", image_type);
-      return;
-    }
-
-  if ((info.dest_bpp < 1) || (info.dest_bpp > 4))
-    {
-      g_message ("unsupported destination bytes per pixel: %d", info.dest_bpp);
-      return;
-    }
+  g_return_if_fail ((info.dest_bpp >= 1) && (info.dest_bpp <= 4));
 
   /* Currently, only RGBA and GRAYA projection types are used - the rest
    * are in case of future need.  -- austin, 28th Nov 1998.
    */
-  if (image_type != GIMP_RGBA_IMAGE && image_type != GIMP_GRAYA_IMAGE)
-    g_warning ("using untested projection type %d", image_type);
+  if (G_UNLIKELY (type != GIMP_RGBA_IMAGE && type != GIMP_GRAYA_IMAGE))
+    g_warning ("using untested projection type %d", type);
 
-  (* render_funcs[image_type]) (&info);
+  (* render_funcs[type]) (&info);
 
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
@@ -447,10 +436,9 @@ static void
 render_image_indexed (RenderInfo *info)
 {
   const guchar *cmap;
-  gint          byte_order;
   gint          y, ye;
   gint          x, xe;
-  gboolean      initial;
+  gboolean      initial = TRUE;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
 
@@ -458,8 +446,6 @@ render_image_indexed (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -509,10 +495,9 @@ render_image_indexed_a (RenderInfo *info)
 {
   const guint  *alpha = info->alpha;
   const guchar *cmap;
-  gint          byte_order;
   gint          y, ye;
   gint          x, xe;
-  gboolean      initial;
+  gboolean      initial = TRUE;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
   alpha = info->alpha;
@@ -521,8 +506,6 @@ render_image_indexed_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -590,17 +573,14 @@ render_image_indexed_a (RenderInfo *info)
 static void
 render_image_gray (RenderInfo *info)
 {
-  gint      byte_order;
   gint      y, ye;
   gint      x, xe;
-  gboolean  initial;
+  gboolean  initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -649,17 +629,14 @@ static void
 render_image_gray_a (RenderInfo *info)
 {
   const guint *alpha = info->alpha;
-  gint         byte_order;
   gint         y, ye;
   gint         x, xe;
-  gboolean     initial;
+  gboolean     initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -719,17 +696,14 @@ render_image_gray_a (RenderInfo *info)
 static void
 render_image_rgb (RenderInfo *info)
 {
-  gint      byte_order;
   gint      y, ye;
   gint      xe;
-  gboolean  initial;
+  gboolean  initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -765,17 +739,14 @@ static void
 render_image_rgb_a (RenderInfo *info)
 {
   const guint *alpha = info->alpha;
-  gint         byte_order;
   gint         y, ye;
   gint         x, xe;
-  gint         initial;
+  gint         initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
@@ -864,7 +835,6 @@ render_image_init_info (RenderInfo       *info,
   info->dest_bpp   = 3;
   info->dest_bpl   = info->dest_bpp * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
   info->dest_width = info->w * info->dest_bpp;
-  info->byte_order = GDK_MSB_FIRST;
   info->scale      = render_image_accelerate_scaling (w,
                                                       info->x, info->scalex);
   info->alpha      = NULL;
@@ -932,10 +902,9 @@ render_image_tile_fault (RenderInfo *info)
   gint          x, b;
 
   tile = tile_manager_get_tile (info->src_tiles,
-				info->src_x, info->src_y,
-				TRUE, FALSE);
-  if (!tile)
-    return NULL;
+				info->src_x, info->src_y, TRUE, FALSE);
+
+  g_return_val_if_fail (tile != NULL);
 
   data = tile_data_pointer (tile,
 			    info->src_x % TILE_WIDTH,
@@ -954,6 +923,7 @@ render_image_tile_fault (RenderInfo *info)
 	*dest++ = data[b];
 
       step = *scale++;
+
       if (step != 0)
 	{
 	  x += step;
@@ -965,10 +935,9 @@ render_image_tile_fault (RenderInfo *info)
 	      tilex += 1;
 
 	      tile = tile_manager_get_tile (info->src_tiles,
-                                            x, info->src_y,
-                                            TRUE, FALSE);
+                                            x, info->src_y, TRUE, FALSE);
 
-	      if (!tile)
+	      if (! tile)
 		return tile_buf;
 
 	      data = tile_data_pointer (tile,

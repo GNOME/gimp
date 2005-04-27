@@ -1,5 +1,10 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: removed unused byte_order
+	variables.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-colormap.[ch]: declared the return value of
 	gimp_image_get_colormap() as const.
 
