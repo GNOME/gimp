@@ -442,23 +442,23 @@ ui_manager_new (GtkWidget *window)
   static GtkActionEntry actions[] =
   {
     { "back", GTK_STOCK_GO_BACK,
-      NULL, NULL, N_("Go back one page"),
+      NULL, "<alt>Left", N_("Go back one page"),
       G_CALLBACK (back_callback) },
 
     { "forward", GTK_STOCK_GO_FORWARD,
-      NULL, NULL, N_("Go forward one page"),
+      NULL, "<alt>Right", N_("Go forward one page"),
       G_CALLBACK (forward_callback) },
 
     { "index", GTK_STOCK_INDEX,
-      NULL, NULL, N_("Go to the index page"),
+      NULL, "<alt>Home", N_("Go to the index page"),
       G_CALLBACK (index_callback) },
 
     { "zoom-in", GTK_STOCK_ZOOM_IN,
-      NULL, NULL, NULL,
+      NULL, "<control>plus", NULL,
       G_CALLBACK (zoom_in_callback) },
 
     { "zoom-out", GTK_STOCK_ZOOM_OUT,
-      NULL, NULL, NULL,
+      NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback) },
 
     { "close", GTK_STOCK_CLOSE,
@@ -519,6 +519,7 @@ ui_manager_new (GtkWidget *window)
                                      "  <popup name=\"help-browser-popup\">"
                                      "    <menuitem action=\"back\" />"
                                      "    <menuitem action=\"forward\" />"
+                                     "    <menuitem action=\"index\" />"
                                      "    <separator />"
                                      "    <menuitem action=\"zoom-in\" />"
                                      "    <menuitem action=\"zoom-out\" />"

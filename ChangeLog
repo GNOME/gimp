@@ -1,5 +1,9 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: added more standard keybindings.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/metadata/metadata.c: don't mark the menu identifier for
 	translation.
 
