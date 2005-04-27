@@ -1,3 +1,9 @@
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: use the same terms for the
+	checkerboard parameters as used in the GimpPreviewArea popup menu
+	(bug #302141).
+
 2005-04-26  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/user-install-dialog.c: reviewed strings, simplified

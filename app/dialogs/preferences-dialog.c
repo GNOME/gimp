@@ -2045,10 +2045,10 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "transparency-type", 0, 0,
-                            _("Transparency _type:"),
+                            _("_Check Style:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
-                            _("Check _size:"),
+                            _("Check _Size:"),
                             GTK_TABLE (table), 1, size_group);
 
   vbox2 = prefs_frame_new (_("Get Monitor Resolution"),
