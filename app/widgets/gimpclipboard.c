@@ -129,7 +129,7 @@ gimp_clipboard_init (Gimp *gimp)
 
               for (type = mime_types; *type; type++)
                 {
-                  gchar *mime_type = *type;
+                  const gchar *mime_type = *type;
 
                   if (gimp->be_verbose)
                     g_print ("GimpClipboard: writable pixbuf format: %s\n",
@@ -262,7 +262,13 @@ gimp_clipboard_get (Gimp *gimp)
 static void
 gimp_clipboard_free (GimpClipboard *gimp_clip)
 {
+  gint i;
+
   g_slist_free (gimp_clip->pixbuf_formats);
+
+  for (i = 0; i < gimp_clip->n_target_entries; i++)
+    g_free (gimp_clip->target_entries[i].target);
+
   g_free (gimp_clip->target_entries);
   g_free (gimp_clip);
 }

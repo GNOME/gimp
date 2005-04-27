@@ -1,5 +1,13 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpclipboard.c (gimp_clipboard_free): free all
+	memory allocated for GimpClipboard.
+
+	* libgimpwidgets/gimppatheditor.c (gimp_path_editor_set_path):
+	always free old_path.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpunitstore.c: don't call va_arg() too often.
 
 	* libgimpconfig/gimpcolorconfig.c (gimp_color_config_finalize):

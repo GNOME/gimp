@@ -370,11 +370,13 @@ gimp_path_editor_set_path (GimpPathEditor *editor,
 
   old_path = gimp_path_editor_get_path (editor);
 
-  if (old_path == path || (old_path && path && ! strcmp (old_path, path)))
+  if (old_path && path && strcmp (old_path, path) == 0)
     {
       g_free (old_path);
       return;
     }
+
+  g_free (old_path);
 
   path_list = gimp_path_parse (path, 16, TRUE, NULL);
 
