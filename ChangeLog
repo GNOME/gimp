@@ -1,5 +1,12 @@
 2005-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-colormap.[ch]: declared the return value of
+	gimp_image_get_colormap() as const.
+
+	* app/display/gimpdisplayshell-render.c: added some const qualifiers.
+
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpclipboard.c (gimp_clipboard_free): free all
 	memory allocated for GimpClipboard.
 

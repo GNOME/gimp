@@ -446,14 +446,11 @@ gimp_display_shell_render_highlight (GimpDisplayShell *shell,
 static void
 render_image_indexed (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
-  guchar *cmap;
-  gulong  val;
-  gint    byte_order;
-  gint    y, ye;
-  gint    x, xe;
-  gint    initial;
+  const guchar *cmap;
+  gint          byte_order;
+  gint          y, ye;
+  gint          x, xe;
+  gboolean      initial;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
 
@@ -467,8 +464,8 @@ render_image_indexed (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0))
 	{
@@ -476,19 +473,20 @@ render_image_indexed (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+	  const guchar *src  = info->src;
+	  guchar       *dest = info->dest;
 
 	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
-	      val = src[INDEXED_PIX] * 3;
+              guint  val = src[INDEXED_PIX] * 3;
+
 	      src += 1;
 
-	      dest[0] = cmap[val+0];
-	      dest[1] = cmap[val+1];
-	      dest[2] = cmap[val+2];
+	      dest[0] = cmap[val + 0];
+	      dest[1] = cmap[val + 1];
+	      dest[2] = cmap[val + 2];
 	      dest += 3;
 	    }
 	}
@@ -509,18 +507,12 @@ render_image_indexed (RenderInfo *info)
 static void
 render_image_indexed_a (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
-  guint  *alpha;
-  guchar *cmap;
-  gulong  r, g, b;
-  gulong  val;
-  guint   a;
-  gint    dark_light;
-  gint    byte_order;
-  gint    y, ye;
-  gint    x, xe;
-  gint    initial;
+  const guint  *alpha = info->alpha;
+  const guchar *cmap;
+  gint          byte_order;
+  gint          y, ye;
+  gint          x, xe;
+  gboolean      initial;
 
   cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
   alpha = info->alpha;
@@ -535,8 +527,8 @@ render_image_indexed_a (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0) && (y & check_mod))
 	{
@@ -544,8 +536,9 @@ render_image_indexed_a (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+          const guchar *src  = info->src;
+          guchar       *dest = info->dest;
+          guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
@@ -553,8 +546,9 @@ render_image_indexed_a (RenderInfo *info)
 
 	  for (x = info->x; x < xe; x++)
 	    {
-	      a = alpha[src[ALPHA_I_PIX]];
-	      val = src[INDEXED_PIX] * 3;
+	      guint r, g, b, a = alpha[src[ALPHA_I_PIX]];
+              guint val        = src[INDEXED_PIX] * 3;
+
 	      src += 2;
 
 	      if (dark_light & 0x1)
@@ -596,13 +590,10 @@ render_image_indexed_a (RenderInfo *info)
 static void
 render_image_gray (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
-  gulong  val;
-  gint    byte_order;
-  gint    y, ye;
-  gint    x, xe;
-  gint    initial;
+  gint      byte_order;
+  gint      y, ye;
+  gint      x, xe;
+  gboolean  initial;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -614,8 +605,8 @@ render_image_gray (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0))
 	{
@@ -623,14 +614,15 @@ render_image_gray (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+	  const guchar *src  = info->src;
+	  guchar       *dest = info->dest;
 
 	  g_return_if_fail (src != NULL);
 
 	  for (x = info->x; x < xe; x++)
 	    {
-	      val = src[GRAY_PIX];
+	      guint val = src[GRAY_PIX];
+
 	      src += 1;
 
 	      dest[0] = val;
@@ -656,18 +648,11 @@ render_image_gray (RenderInfo *info)
 static void
 render_image_gray_a (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
-  guint  *alpha;
-  gulong  val;
-  guint   a;
-  gint    dark_light;
-  gint    byte_order;
-  gint    y, ye;
-  gint    x, xe;
-  gint    initial;
-
-  alpha = info->alpha;
+  const guint *alpha = info->alpha;
+  gint         byte_order;
+  gint         y, ye;
+  gint         x, xe;
+  gboolean     initial;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -679,8 +664,8 @@ render_image_gray_a (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0) && (y & check_mod))
 	{
@@ -688,8 +673,9 @@ render_image_gray_a (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+	  const guchar *src  = info->src;
+	  guchar       *dest = info->dest;
+          guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
@@ -697,11 +683,14 @@ render_image_gray_a (RenderInfo *info)
 
 	  for (x = info->x; x < xe; x++)
 	    {
-	      a = alpha[src[ALPHA_G_PIX]];
+	      guint a = alpha[src[ALPHA_G_PIX]];
+              guint val;
+
 	      if (dark_light & 0x1)
 		val = render_blend_dark_check[(a | src[GRAY_PIX])];
 	      else
 		val = render_blend_light_check[(a | src[GRAY_PIX])];
+
 	      src += 2;
 
 	      dest[0] = val;
@@ -730,10 +719,10 @@ render_image_gray_a (RenderInfo *info)
 static void
 render_image_rgb (RenderInfo *info)
 {
-  gint    byte_order;
-  gint    y, ye;
-  gint    xe;
-  gint    initial;
+  gint      byte_order;
+  gint      y, ye;
+  gint      xe;
+  gboolean  initial;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -745,8 +734,8 @@ render_image_rgb (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0))
 	{
@@ -775,18 +764,11 @@ render_image_rgb (RenderInfo *info)
 static void
 render_image_rgb_a (RenderInfo *info)
 {
-  guchar *src;
-  guchar *dest;
-  guint  *alpha;
-  gulong  r, g, b;
-  guint   a;
-  gint    dark_light;
-  gint    byte_order;
-  gint    y, ye;
-  gint    x, xe;
-  gint    initial;
-
-  alpha = info->alpha;
+  const guint *alpha = info->alpha;
+  gint         byte_order;
+  gint         y, ye;
+  gint         x, xe;
+  gint         initial;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -798,8 +780,8 @@ render_image_rgb_a (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      gint error = RINT (floor ((y + 1) / info->scaley)
-                         - floor (y / info->scaley));
+      gint error =
+        RINT (floor ((y + 1) / info->scaley) - floor (y / info->scaley));
 
       if (!initial && (error == 0) && (y & check_mod))
 	{
@@ -807,8 +789,9 @@ render_image_rgb_a (RenderInfo *info)
 	}
       else
 	{
-	  src = info->src;
-	  dest = info->dest;
+	  const guchar *src  = info->src;
+	  guchar       *dest = info->dest;
+          guint         dark_light;
 
 	  dark_light = (y >> check_shift) + (info->x >> check_shift);
 
@@ -816,7 +799,8 @@ render_image_rgb_a (RenderInfo *info)
 
 	  for (x = info->x; x < xe; x++)
 	    {
-	      a = alpha[src[ALPHA_PIX]];
+              guint r, g, b, a = alpha[src[ALPHA_PIX]];
+
 	      if (dark_light & 0x1)
 		{
 		  r = render_blend_dark_check[(a | src[RED_PIX])];
@@ -937,15 +921,15 @@ render_image_accelerate_scaling (gint    width,
 static guchar *
 render_image_tile_fault (RenderInfo *info)
 {
-  Tile   *tile;
-  guchar *data;
-  guchar *dest;
-  guchar *scale;
-  gint    width;
-  gint    tilex;
-  gint    step;
-  gint    bpp = info->src_bpp;
-  gint    x, b;
+  Tile         *tile;
+  const guchar *data;
+  const guchar *scale;
+  guchar       *dest;
+  gint          width;
+  gint          tilex;
+  gint          step;
+  gint          bpp = info->src_bpp;
+  gint          x, b;
 
   tile = tile_manager_get_tile (info->src_tiles,
 				info->src_x, info->src_y,

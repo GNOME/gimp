@@ -33,7 +33,7 @@
 #include "gimp-intl.h"
 
 
-guchar *
+const guchar *
 gimp_image_get_colormap (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
