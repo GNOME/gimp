@@ -1,3 +1,11 @@
+2005-04-27  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* tools/pdbgen/pdb/image.pdb: plugged a small memleak.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2005-04-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/Lighting/lighting_shade.c: fix typo messing
