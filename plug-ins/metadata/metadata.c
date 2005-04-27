@@ -194,8 +194,7 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (editor_args), 0,
                           editor_args, NULL);
-  gimp_plugin_menu_register ("plug_in_metadata_editor",
-                             N_("<Image>/File/Info"));
+  gimp_plugin_menu_register ("plug_in_metadata_editor", "<Image>/File/Info");
   gimp_plugin_icon_register ("plug_in_metadata_editor",
                              GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_PROPERTIES);
   /* FIXME: The GNOME HIG recommends using the accel Alt+Return for this */
