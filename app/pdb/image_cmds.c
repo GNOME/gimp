@@ -3768,6 +3768,8 @@ image_set_filename_invoker (Gimp         *gimp,
             g_free (tmp);
           else
             success = FALSE;
+
+          g_free (utf8);
         }
       else
         success = FALSE;

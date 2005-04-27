@@ -1277,6 +1277,8 @@ CODE1
         g_free (tmp);
       else
         success = FALSE;
+
+      g_free (utf8);
     }
   else
     success = FALSE;
