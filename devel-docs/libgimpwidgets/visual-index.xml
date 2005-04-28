@@ -52,9 +52,6 @@
   <link linkend="GimpPickButton">
     <inlinegraphic fileref="gimp-pick-button.png" format="PNG"></inlinegraphic>
   </link>
-  <link linkend="GimpPixmap">
-    <inlinegraphic fileref="gimp-pixmap.png" format="PNG"></inlinegraphic>
-  </link>
   <link linkend="GimpPreviewArea">
     <inlinegraphic fileref="gimp-preview-area.png" format="PNG"></inlinegraphic>
   </link>
