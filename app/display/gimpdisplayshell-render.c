@@ -743,7 +743,7 @@ render_image_rgb (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (error && y + 1 < ye)
+      if (error)
 	{
 	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
@@ -961,7 +961,7 @@ render_image_tile_fault (RenderInfo *info)
 
       step = *scale++;
 
-      if (step != 0)
+      if (step)
 	{
 	  x += step;
 	  src += step * bpp;
@@ -977,8 +977,8 @@ render_image_tile_fault (RenderInfo *info)
               g_return_val_if_fail (tile != NULL, tile_buf);
 
 	      src = tile_data_pointer (tile,
-                                        x % TILE_WIDTH,
-                                        info->src_y % TILE_HEIGHT);
+                                       x % TILE_WIDTH,
+                                       info->src_y % TILE_HEIGHT);
 	    }
 	}
     }
