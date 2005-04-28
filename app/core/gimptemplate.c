@@ -448,10 +448,10 @@ gimp_template_create_image (Gimp         *gimp,
                           _("Background"),
 			  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-  gimp_image_add_layer (gimage, layer, 0);
+  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+                              context, template->fill_type);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer), context,
-                              template->fill_type);
+  gimp_image_add_layer (gimage, layer, 0);
 
   gimp_image_undo_enable (gimage);
   gimp_image_clean_all (gimage);

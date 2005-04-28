@@ -1,5 +1,10 @@
 2005-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptemplate.c (gimp_template_create_image): fill the
+	layer before adding it to the image.
+
+2005-04-28  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c (render_image_rgb): fixed
 	an oversight from yesterday's changes.
 
