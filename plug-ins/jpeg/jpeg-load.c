@@ -455,10 +455,10 @@ load_image (const gchar *filename,
    * warnings occurred (test whether jerr.num_warnings is nonzero).
    */
 
-  /* Tell the GIMP to display the image.
+  /* Detach from the drawable and add it to the image.
    */
+  gimp_drawable_detach (drawable);
   gimp_image_add_layer (image_ID, layer_ID, 0);
-  gimp_drawable_flush (drawable);
 
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
      there was no image. */
