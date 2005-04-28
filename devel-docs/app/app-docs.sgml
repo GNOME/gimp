@@ -965,6 +965,7 @@
       <xi:include href="xml/about-dialog.xml" />
       <xi:include href="xml/channel-options-dialog.xml" />
       <xi:include href="xml/convert-dialog.xml" />
+      <xi:include href="xml/desaturate-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
       <xi:include href="xml/file-open-location-dialog.xml" />
       <xi:include href="xml/file-save-dialog.xml" />

@@ -1,5 +1,10 @@
 2005-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated.
+
+2005-04-28  Sven Neumann  <sven@gimp.org>
+
 	* tools/Makefile.am
 	* tools/units.[ch]: added a very basic GimpUnit implementation.
 

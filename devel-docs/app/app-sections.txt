@@ -264,8 +264,6 @@ GIMP_BRUSH_PIXMAP_FILE_EXTENSION
 GimpBrush
 gimp_brush_new
 gimp_brush_get_standard
-gimp_brush_load
-gimp_brush_load_brush
 gimp_brush_select_brush
 gimp_brush_want_null_motion
 gimp_brush_get_mask
@@ -290,6 +288,18 @@ GIMP_BRUSH_GET_CLASS
 GBRUSH_FILE_VERSION
 GBRUSH_MAGIC
 BrushHeader
+</SECTION>
+
+<SECTION>
+<FILE>gimpbrush-load</FILE>
+<TITLE>GimpBrush-load</TITLE>
+GIMP_BRUSH_FILE_EXTENSION
+GIMP_BRUSH_PIXMAP_FILE_EXTENSION
+GIMP_BRUSH_PS_FILE_EXTENSION
+GIMP_BRUSH_PSP_FILE_EXTENSION
+gimp_brush_load
+gimp_brush_load_brush
+gimp_brush_load_abr
 </SECTION>
 
 <SECTION>
@@ -3583,6 +3593,8 @@ GIMP_BEZIER_STROKE_GET_CLASS
 <FILE>gimpstroke</FILE>
 <TITLE>GimpStroke</TITLE>
 GimpStroke
+gimp_stroke_set_ID
+gimp_stroke_get_ID
 gimp_stroke_anchor_get
 gimp_stroke_nearest_point_get
 gimp_stroke_anchor_get_next
@@ -3646,6 +3658,7 @@ gimp_vectors_stroke_remove
 gimp_vectors_stroke_get
 gimp_vectors_stroke_get_next
 gimp_vectors_stroke_get_length
+gimp_vectors_stroke_get_by_ID
 gimp_vectors_get_length
 gimp_vectors_get_distance
 gimp_vectors_interpolate
@@ -6996,6 +7009,12 @@ dialogs_get_toolbox
 </SECTION>
 
 <SECTION>
+<FILE>desaturate-dialog</FILE>
+DesaturateDialog
+desaturate_dialog_new
+</SECTION>
+
+<SECTION>
 <FILE>image-new-dialog</FILE>
 image_new_dialog_new
 image_new_dialog_set
@@ -8216,9 +8235,15 @@ context_colors_swap_cmd_callback
 context_foreground_red_cmd_callback
 context_foreground_green_cmd_callback
 context_foreground_blue_cmd_callback
+context_foreground_hue_cmd_callback
+context_foreground_saturation_cmd_callback
+context_foreground_value_cmd_callback
 context_background_red_cmd_callback
 context_background_green_cmd_callback
 context_background_blue_cmd_callback
+context_background_hue_cmd_callback
+context_background_saturation_cmd_callback
+context_background_value_cmd_callback
 context_opacity_cmd_callback
 context_paint_mode_cmd_callback
 context_tool_select_cmd_callback
