@@ -52,7 +52,7 @@ static GimpUnit      gimp_units_initialized = 0;
 
 /*  not a unit at all but kept here to have the strings in one place
  */
-static GimpUnitDef gimp_unit_percent =
+static const GimpUnitDef gimp_unit_percent =
 {
   0.0, 0, "percent", "%", "%",  N_("percent"), N_("percent")
 };

@@ -1,5 +1,10 @@
 2005-04-28  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpunit.c
+	* libgimp/gimpunitcache.c: built-in units are const.
+
+2005-04-28  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: spare a few CPU cycles.
 
 2005-04-27  Sven Neumann  <sven@gimp.org>

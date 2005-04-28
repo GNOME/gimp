@@ -49,7 +49,7 @@ typedef struct
 
 /*  these are the built-in units
  */
-static GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
+static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 {
   /* pseudo unit */
   { FALSE,  0.0, 0, "pixels",      "px", "px", N_("pixel"),      N_("pixels") },
@@ -65,7 +65,7 @@ static GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
 
 /*  not a unit at all but kept here to have the strings in one place
  */
-static GimpUnitDef gimp_unit_percent =
+static const GimpUnitDef gimp_unit_percent =
 {
   FALSE,    0.0, 0, "percent",     "%",  "%",  N_("percent"),    N_("percent")
 };
