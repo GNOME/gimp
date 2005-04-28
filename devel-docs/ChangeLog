@@ -1,3 +1,11 @@
+2005-04-28  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am
+	* tools/units.[ch]: added a very basic GimpUnit implementation.
+
+	* tools/shooter.c
+	* tools/widgets.c: initialize the units and enable GimpUnitMenu.
+
 2005-04-23  Sven Neumann  <sven@gimp.org>
 
 	* tools/shooter.c: read the GIMP gtkrc file.

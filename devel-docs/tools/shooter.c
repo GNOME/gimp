@@ -18,8 +18,9 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
 
-#include "widgets.h"
 #include "shadow.h"
+#include "units.h"
+#include "widgets.h"
 
 
 static Window
@@ -245,11 +246,12 @@ main (int argc, char **argv)
 
   gtk_rc_add_default_file (gimp_gtkrc ());
 
+  units_init ();
+
   gimp_widgets_init (shooter_standard_help,
                      shooter_get_foreground,
                      shooter_get_background,
                      shooter_ensure_modules);
-
 
   toplevels = get_all_widgets ();
 

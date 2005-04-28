@@ -567,8 +567,7 @@ create_unit_menu (void)
 
   vbox = gtk_vbox_new (FALSE, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
-  menu =  gimp_unit_menu_new ("%a - %y (%f\"", GIMP_UNIT_POINT,
-                              TRUE, TRUE, TRUE);
+  menu =  gimp_unit_menu_new ("%p", GIMP_UNIT_MM, TRUE, FALSE, FALSE);
   gtk_container_add (GTK_CONTAINER (align), menu);
   gtk_box_pack_start (GTK_BOX (vbox), align, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox),
@@ -600,11 +599,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_path_editor ());
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
-
-  /*
-   * The following doesn't work, we should init the unit system before.
-   * retval = g_list_append (retval, create_unit_menu ());
-   */
+  retval = g_list_append (retval, create_unit_menu ());
 
   return retval;
 }

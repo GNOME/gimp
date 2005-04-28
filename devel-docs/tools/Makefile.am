@@ -27,6 +27,8 @@ doc_shooter_SOURCES = \
 	shadow.c	\
 	shadow.h	\
 	shooter.c	\
+	units.c		\
+	units.h		\
 	widgets.c	\
 	widgets.h
 
