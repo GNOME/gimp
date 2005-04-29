@@ -62,13 +62,16 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
                       gint32     layer,
                       gint       layer_num)
 {
+  static GtkSizeGroup *size = NULL;
+
   GtkWidget *hbox;
+  GtkWidget *vbox;
   GtkWidget *alignment;
   GtkWidget *combo;
 
   hbox = gtk_hbox_new (FALSE, 6);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0, 0);
+  alignment = gtk_alignment_new (1.0, 0.5, 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
   gtk_widget_show (alignment);
 
@@ -84,6 +87,15 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
   gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
   gtk_widget_show (icon_preview);
 
+  if (! size)
+    size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  gtk_size_group_add_widget (size, alignment);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
                                   _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
                                   _("8 bpp, 1-bit alpha, 256-slot palette"), 8,
@@ -96,7 +108,8 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
                     hbox);
 
   g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   return hbox;
@@ -146,11 +159,11 @@ ico_specs_dialog_new (gint num_layers)
 
   scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
   gtk_widget_show (scrolledwindow);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),

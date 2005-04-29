@@ -1,5 +1,10 @@
 2005-04-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icodialog.c
+	* plug-ins/winicon/icosave.c: changed dialog layout.
+
+2005-04-29  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: declared function array as const.
 
 	* libgimp/gimpenums.c.tail: regenerated.

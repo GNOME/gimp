@@ -169,8 +169,8 @@ ico_show_icon_dialog (gint32  image_ID,
 
   /* Scale the thing to approximately fit its content, but not too large ... */
   gtk_window_set_default_size (GTK_WINDOW (dialog),
-                               500,
-                               120 + (num_layers > 4 ? 400 : num_layers * 100));
+                               -1,
+                               120 + (num_layers > 4 ? 500 : num_layers * 120));
 
   icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
 
