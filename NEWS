@@ -6,8 +6,19 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
-Changes in GIMP 2.2.6
-=====================
+Bugs fixed in GIMP 2.2.7
+========================
+- update layer previews on colormap changes (bug #301033)
+- fixed loading of text layers from XCF files (bug #301028)
+- when loading a PDF, honor CropBox over MediaBox (bug #301432)
+- fixed incompatibility of GimpIntStore with GTK+ 2.6 (bug #301524)
+- fixed navigation popup in plug-in previews (bug #301523)
+- fixed handling of compression types in TIFF plug-in (bug #301557)
+- fixed bug in Lighting Effects plug-in (bug #302075)
+
+
+Bugs fixed in GIMP 2.2.6
+========================
 - reverted change to the print plug-in (see bug #169909)
 
 
