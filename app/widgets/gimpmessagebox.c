@@ -144,6 +144,7 @@ gimp_message_box_init (GimpMessageBox *box)
       GtkWidget *label = g_object_new (GTK_TYPE_LABEL,
                                        "wrap",       TRUE,
                                        "selectable", TRUE,
+                                       "can-focus",  FALSE,
                                        "xalign",     0.0,
                                        "yalign",     0.5,
                                        NULL);
