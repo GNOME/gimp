@@ -117,7 +117,7 @@ print ENUMFILE <<CODE;
 
 typedef GType (* GimpGetTypeFunc) (void);
 
-static GimpGetTypeFunc get_type_funcs[] =
+static const GimpGetTypeFunc get_type_funcs[] =
 {
 CODE
 
@@ -164,12 +164,10 @@ print ENUMFILE <<CODE;
 void
 _gimp_enums_init (void)
 {
-  GimpGetTypeFunc *funcs;
-  gint             i;
+  const GimpGetTypeFunc *funcs = get_type_funcs;
+  gint                   i;
 
-  for (i = 0, funcs = get_type_funcs;
-       i < G_N_ELEMENTS (get_type_funcs);
-       i++, funcs++)
+  for (i = 0; i < G_N_ELEMENTS (get_type_funcs); i++, funcs++)
     {
       GType type = (*funcs) ();
 
