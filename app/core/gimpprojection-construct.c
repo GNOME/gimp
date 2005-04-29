@@ -29,6 +29,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
@@ -93,71 +94,58 @@ gimp_projection_construct (GimpProjection *proj,
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
 #if 0
-  gint xoff;
-  gint yoff;
+  GimpImage *gimage = proj->gimage;
 
-  /*  set the construct flag, used to determine if anything
-   *  has been written to the gimage raw image yet.
-   */
-  gimage->construct_flag = FALSE;
-
-  if (gimage->layers)
+  if ((gimp_container_num_children (gimage->layers) == 1)) /* a single layer */
     {
-      gimp_item_offsets (GIMP_ITEM (gimage->layers->data), &xoff, &yoff);
-    }
+      GimpDrawable *layer;
 
-  if ((gimage->layers) &&                         /* There's a layer.      */
-      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */
-      (gimp_drawable_has_alpha (GIMP_DRAWABLE (gimage->layers->data))) &&
-                                                  /* It's !flat.           */
-      (gimp_item_get_visible (GIMP_ITEM (gimage->layers->data))) &&
-                                                  /* It's visible.         */
-      (gimp_item_width  (GIMP_ITEM (gimage->layers->data)) ==
-       gimage->width) &&
-      (gimp_item_height (GIMP_ITEM (gimage->layers->data)) ==
-       gimage->height) &&                         /* Covers all.           */
-      (!gimp_drawable_is_indexed (GIMP_DRAWABLE (gimage->layers->data))) &&
-                                                  /* Not indexed.          */
-      (((GimpLayer *)(gimage->layers->data))->opacity == GIMP_OPACITY_OPAQUE)
-                                                  /* Opaque                */
-      )
-    {
-      gint xoff;
-      gint yoff;
+      layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (gimage->layers,
+                                                                0));
+      if (gimp_drawable_has_alpha (layer)                          &&
+          (gimp_item_get_visible (GIMP_ITEM (layer)))              &&
+          (gimp_item_width (GIMP_ITEM (layer))  == gimage->width)  &&
+          (gimp_item_height (GIMP_ITEM (layer)) == gimage->height) &&
+          (! gimp_drawable_is_indexed (layer))                     &&
+          (gimp_layer_get_opacity (GIMP_LAYER (layer)) == GIMP_OPACITY_OPAQUE))
+        {
+          gint xoff;
+          gint yoff;
 
-      gimp_item_offsets (GIMP_ITEM (gimage->layers->data), &xoff, &yoff);
+          gimp_item_offsets (GIMP_ITEM (layer), &xoff, &yoff);
 
-      if ((xoff==0) && (yoff==0)) /* Starts at 0,0         */
-	{
-	  PixelRegion srcPR, destPR;
-	  gpointer    pr;
+          if (xoff == 0 && yoff == 0)
+            {
+              PixelRegion srcPR, destPR;
+              gpointer    pr;
 
-	  g_warning("Can use cow-projection hack.  Yay!");
+              g_printerr ("Can use cow-projection hack.  Yay!");
 
-	  pixel_region_init (&srcPR, gimp_drawable_data
-			     (GIMP_DRAWABLE (gimage->layers->data)),
-			     x, y, w,h, FALSE);
-	  pixel_region_init (&destPR,
-			     gimp_image_projection (gimage),
-			     x, y, w,h, TRUE);
+              pixel_region_init (&srcPR, gimp_drawable_data (layer),
+                                 x, y, w,h, FALSE);
+              pixel_region_init (&destPR, gimp_projection_get_tiles (proj),
+                                 x, y, w,h, TRUE);
 
-	  for (pr = pixel_regions_register (2, &srcPR, &destPR);
-	       pr != NULL;
-	       pr = pixel_regions_process (pr))
-	    {
-	      tile_manager_map_over_tile (destPR.tiles,
-					  destPR.curtile, srcPR.curtile);
-	    }
+              for (pr = pixel_regions_register (2, &srcPR, &destPR);
+                   pr != NULL;
+                   pr = pixel_regions_process (pr))
+                {
+                  tile_manager_map_over_tile (destPR.tiles,
+                                              destPR.curtile, srcPR.curtile);
+                }
 
-	  gimage->construct_flag = TRUE;
-	  gimp_image_construct_channels (gimage, x, y, w, h);
+              proj->construct_flag = TRUE;
 
-	  return;
+              gimp_projection_construct_channels (proj, x, y, w, h);
+
+              return;
+            }
 	}
     }
-#else
-  proj->construct_flag = FALSE;
 #endif
+
+  proj->construct_flag = FALSE;
+
 
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible

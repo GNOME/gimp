@@ -1,3 +1,8 @@
+2005-04-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprojection-construct.c: save COW projection code from
+	bit-rotting. It can now be enabled again (but is definitely broken).
+
 2005-04-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/clothify.py: don't reset the passed
