@@ -117,22 +117,15 @@ gimp_projection_construct (GimpProjection *proj,
           if (xoff == 0 && yoff == 0)
             {
               PixelRegion srcPR, destPR;
-              gpointer    pr;
 
-              g_printerr ("Can use cow-projection hack.  Yay!");
+              g_printerr ("cow-projection!");
 
               pixel_region_init (&srcPR, gimp_drawable_data (layer),
                                  x, y, w,h, FALSE);
               pixel_region_init (&destPR, gimp_projection_get_tiles (proj),
                                  x, y, w,h, TRUE);
 
-              for (pr = pixel_regions_register (2, &srcPR, &destPR);
-                   pr != NULL;
-                   pr = pixel_regions_process (pr))
-                {
-                  tile_manager_map_over_tile (destPR.tiles,
-                                              destPR.curtile, srcPR.curtile);
-                }
+              copy_region (&srcPR, &destPR);
 
               proj->construct_flag = TRUE;
 
@@ -145,7 +138,6 @@ gimp_projection_construct (GimpProjection *proj,
 #endif
 
   proj->construct_flag = FALSE;
-
 
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible

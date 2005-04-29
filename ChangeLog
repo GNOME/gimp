@@ -1,5 +1,11 @@
 2005-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection-construct.c (gimp_projection_construct):
+	use copy_region() instead of using tile_manager_map_over_tile()
+	directly.
+
+2005-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpmessagebox.c (gimp_message_box_init): unset
 	"can-focus" on the message labels. Fixes bug #302400.
 
