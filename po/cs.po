@@ -1,4 +1,3 @@
-# Czech translation of GIMP.
 # Copyright (C) 2001, 2003, 2005 Free Software Foundation, Inc.
 # Copyright (C) 2003, 2004 Miloslav Trmac <mitr@volny.cz>
 # Stanislav Brabec <utx@penguin.cz>, 1998-2001.
@@ -10,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-26 21:24+0200\n"
-"PO-Revision-Date: 2005-04-26 21:16+0200\n"
+"POT-Creation-Date: 2005-04-29 20:04+0200\n"
+"PO-Revision-Date: 2005-04-29 15:24+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -727,7 +726,7 @@ msgstr "P_rohodit Barvy"
 #: app/actions/data-commands.c:79 app/core/gimpimage.c:1285
 #: app/core/gimppalette-import.c:219 app/core/gimppalette.c:523
 #: app/core/gimppalette.c:634 app/dialogs/palette-import-dialog.c:684
-#: app/pdb/image_cmds.c:3760
+#: app/pdb/image_cmds.c:3762
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -1795,7 +1794,7 @@ msgstr "_Vodítka"
 
 #: app/actions/image-actions.c:65 app/actions/image-actions.c:70
 msgid "_New..."
-msgstr "_Nové..."
+msgstr "_Nový..."
 
 #: app/actions/image-actions.c:75
 msgid "Can_vas Size..."
@@ -4086,7 +4085,7 @@ msgstr "Dvojitě čárkovaná"
 
 #: app/core/core-enums.c:414 app/core/core-enums.c:469
 msgid "Solid"
-msgstr "Pevná"
+msgstr "Plná"
 
 #: app/core/core-enums.c:441
 msgid "Stroke line"
@@ -5714,7 +5713,7 @@ msgstr "Nastavit mřížku"
 
 #: app/dialogs/grid-dialog.c:82
 msgid "Configure Image Grid"
-msgstr "Nastavit mřížku obrázků"
+msgstr "Nastavit mřížku obrázku"
 
 #: app/dialogs/image-merge-layers-dialog.c:60
 msgid "Merge Layers"
@@ -6405,7 +6404,7 @@ msgstr "Panel nástrojů"
 #: app/dialogs/preferences-dialog.c:1663 app/dialogs/preferences-dialog.c:1760
 #: app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
-msgstr "Zobrazování"
+msgstr "Vzhled"
 
 #: app/dialogs/preferences-dialog.c:1667
 msgid "Show _foreground & background color"
@@ -6535,7 +6534,7 @@ msgstr "Veliko_st polí šachovnice:"
 
 #: app/dialogs/preferences-dialog.c:1928
 msgid "Get Monitor Resolution"
-msgstr "Rozlišení monitoru získat"
+msgstr "Získat rozlišení monitoru"
 
 #: app/dialogs/preferences-dialog.c:1970
 #, c-format
@@ -6635,7 +6634,7 @@ msgstr "Spotřeba zdrojů"
 
 #: app/dialogs/preferences-dialog.c:2199
 msgid "Minimal number of _undo levels:"
-msgstr "Minimální počet _úrovní zpětných úprav:"
+msgstr "Minimální počet _kroků zpět:"
 
 #: app/dialogs/preferences-dialog.c:2202
 msgid "Maximum undo _memory:"
@@ -7222,7 +7221,7 @@ msgstr "Vytvořit _novou uživatelskou instalaci"
 
 #: app/dialogs/user-install-dialog.c:851
 msgid "Personal GIMP Folder"
-msgstr "Osobní adresář GIMP"
+msgstr "Osobní adresář pro GIMP"
 
 #: app/dialogs/user-install-dialog.c:852
 msgid "Click \"Continue\" to create your personal GIMP folder."
@@ -7694,11 +7693,11 @@ msgstr "2D transformace..."
 msgid "Blending..."
 msgstr "Mísení..."
 
-#: app/pdb/image_cmds.c:3756 app/text/gimptext-parasite.c:168
+#: app/pdb/image_cmds.c:3758 app/text/gimptext-parasite.c:168
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v kódování UTF-8)"
 
-#: app/pdb/image_cmds.c:3898
+#: app/pdb/image_cmds.c:3900
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -10188,7 +10187,7 @@ msgstr "Vzdálenost: %0.6f"
 
 #: app/widgets/gimpgrideditor.c:219
 msgid "Line _Style:"
-msgstr "_Styl řádku:"
+msgstr "_Styl mřížky:"
 
 #: app/widgets/gimpgrideditor.c:223
 msgid "Change grid foreground color"
@@ -10298,12 +10297,12 @@ msgstr "Zachovat průhlednost"
 msgid "Empty Layer"
 msgstr "Prázdná vrstva"
 
-#: app/widgets/gimpmessagebox.c:461
+#: app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Zpráva se opakuje %dkrát."
 
-#: app/widgets/gimpmessagebox.c:463
+#: app/widgets/gimpmessagebox.c:464
 msgid "Message repeated once."
 msgstr "Zpráva se opakuje jednou."
 
