@@ -2,7 +2,7 @@
 # Copyright © 1998-2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
-# Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-19 19:04+0000\n"
-"PO-Revision-Date: 2005-04-19 22:22+0100\n"
+"POT-Creation-Date: 2005-04-24 11:13+0000\n"
+"PO-Revision-Date: 2005-04-24 18:03+0200\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,7 +97,7 @@ msgstr "No utilizar las funciones de aceleración especiales de la CPU"
 
 #: ../app/main.c:161
 msgid "Use an alternate sessionrc file"
-msgstr "Usar un archivo sessionrc alternativo"
+msgstr "Usar un archivo «sessionrc» alternativo"
 
 #: ../app/main.c:166
 msgid "Use an alternate user gimprc file"
@@ -117,7 +117,7 @@ msgstr "El procedimiento con el que se procesarán los comandos en lotes"
 
 #: ../app/main.c:186
 msgid "Send messages to console instead of using a dialog"
-msgstr "Evnicar las advertencias a la consola en vez de usar un diálogo"
+msgstr "Enviar las advertencias a la consola en vez de usar un diálogo"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:192
@@ -1056,7 +1056,7 @@ msgstr "In_vertir"
 
 #: ../app/actions/drawable-actions.c:60
 msgid "_White Balance"
-msgstr "_Balance de blanco"
+msgstr "_Balance de blancos"
 
 #: ../app/actions/drawable-actions.c:65
 msgid "_Offset..."
@@ -1105,7 +1105,7 @@ msgstr "La inversión no funciona con capas indexadas."
 
 #: ../app/actions/drawable-commands.c:135
 msgid "White Balance operates only on RGB color layers."
-msgstr "El balance de blanco sólo funciona sobre capas con color RGB."
+msgstr "El balance de blancos sólo funciona sobre capas con color RGB."
 
 #: ../app/actions/edit-actions.c:61
 msgid "_Edit"
@@ -1509,7 +1509,6 @@ msgstr "_RGB"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (tono en _sentido anti-horario)"
 
-# en H-S-V la saturación es la S. FVD
 #: ../app/actions/gradient-editor-actions.c:288
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (tono en sentido _horario)"
@@ -2650,7 +2649,7 @@ msgstr "D_uplicar la plantilla..."
 
 #: ../app/actions/templates-actions.c:59
 msgid "Duplicate the selected template"
-msgstr "Duplicar las plantilla seleccionada"
+msgstr "Duplicar la plantilla seleccionada"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
@@ -2871,7 +2870,7 @@ msgstr "_Restablecer visibilidad y orden"
 
 #: ../app/actions/tools-actions.c:82
 msgid "Reset tool order and visibility"
-msgstr "Restablecer el orden y visibilidad de la herramienta"
+msgstr "Restablecer el orden y la visibilidad de la herramienta"
 
 #: ../app/actions/tools-actions.c:90
 msgid "_Show in Toolbox"
@@ -3446,7 +3445,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid "Specifies how the area around the image should be drawn."
-msgstr "Especifica como debería ser dibujada el área alrededor de la imagen."
+msgstr "Especifica cómo debe dibujarse el área alrededor de la imagen."
 
 #: ../app/config/gimprc-blurbs.h:26
 msgid ""
@@ -3454,7 +3453,7 @@ msgid ""
 "color."
 msgstr ""
 "Establece el color de desplazamiento del lienzo usado si el modo de "
-"desplazamiento está definido como personalizado."
+"desplazamiento está definido como color personalizado."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "Ask for confirmation before closing an image without saving."
@@ -3464,7 +3463,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Sets the pixel format of cursors the GIMP will use."
-msgstr "Establece el formato de píxel de los cursores que El Gimp usará."
+msgstr "Establece el formato de píxel de los cursores que utilizará El Gimp."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the mode of cursor the GIMP will use."
@@ -3489,9 +3488,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:76
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr ""
-"Esto es la distancia en píxeles desde donde el ajuste a la rejilla y la guía "
-"se activa."
+msgstr "Esto es la distancia en píxeles a partir del que se activa el ajuste a la rejilla y la guía."
 
 #: ../app/config/gimprc-blurbs.h:80
 msgid ""
@@ -3984,7 +3981,6 @@ msgstr ""
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Obtiene el tamaño de las vistas previas en el Histórico de deshacer."
 
-# es necesaria la coma. FVD
 #: ../app/config/gimprc-blurbs.h:423
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Cuando se encuentre activado, pulsando F1 se abrirá el visor de ayuda."
@@ -4040,7 +4036,7 @@ msgstr "Usar paleta optimizada para web"
 
 #: ../app/core/core-enums.c:87
 msgid "Use black and white (1-bit) palette"
-msgstr "Usar paleta en blanco/negro (1-bit)"
+msgstr "Usar paleta en blanco y negro (1-bit)"
 
 #: ../app/core/core-enums.c:88
 msgid "Use custom palette"
@@ -4677,8 +4673,8 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr ""
-"Error fatal de análisis en el archivo de pincel «%s»: Forma de pincel de "
-"El Gimp desconocida."
+"Error fatal de análisis en el archivo de pincel «%s»: Forma de pincel de El "
+"Gimp desconocida."
 
 #: ../app/core/gimpbrushgenerated.c:750
 #, c-format
@@ -5906,7 +5902,8 @@ msgid ""
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
 "Una imagen del tamaño elegido usará más memoria de la que está configurada "
-"como «Tamaño máximo de la imagen» en el diálogo Preferencias (actualmente %s)."
+"como «Tamaño máximo de la imagen» en el diálogo Preferencias (actualmente %"
+"s)."
 
 #: ../app/dialogs/image-scale-dialog.c:164
 msgid "Confirm Scaling"
@@ -6211,8 +6208,8 @@ msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Sus opciones de herramientas se restablecerán a los valores predeterminados la "
-"próxima vez que inicie El Gimp."
+"Sus opciones de herramientas se restablecerán a los valores predeterminados "
+"la próxima vez que inicie El Gimp."
 
 #: ../app/dialogs/preferences-dialog.c:1111
 msgid "Show _menubar"
@@ -6429,7 +6426,8 @@ msgstr "Guardar las opciones de herramientas _ahora"
 #: ../app/dialogs/preferences-dialog.c:1650
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr ""
-"R_estaurar las opciones de herramientas guardadas a los valores predeterminados"
+"R_estaurar las opciones de herramientas guardadas a los valores "
+"predeterminados"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1661
@@ -7130,9 +7128,9 @@ msgid ""
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
 msgstr ""
-"Esta carpeta se utiliza para almacenar los pinceles definidos por el usuario. "
-"El Gimp revisa esta carpeta además de la instalación global de pinceles de El "
-"Gimp cuando está buscando pinceles."
+"Esta carpeta se utiliza para almacenar los pinceles definidos por el "
+"usuario. El Gimp revisa esta carpeta además de la instalación global de "
+"pinceles de El Gimp cuando está buscando pinceles."
 
 #: ../app/dialogs/user-install-dialog.c:194
 msgid ""
@@ -7644,8 +7642,6 @@ msgstr "escala de grises"
 msgid "indexed-empty"
 msgstr "indexado-vacío"
 
-# Esta y las anteriores por coherencia con el original en cuanto a la
-# inicial minúscula. FVD
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "indexed"
 msgstr "indexado"
@@ -7794,33 +7790,33 @@ msgstr "Desenfoque"
 msgid "Sharpen"
 msgstr "Enfoque"
 
-#: ../app/pdb/color_cmds.c:140 ../app/tools/gimpbrightnesscontrasttool.c:85
+#: ../app/pdb/color_cmds.c:142 ../app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Brillo-Contraste"
 
-#: ../app/pdb/color_cmds.c:458 ../app/tools/gimpposterizetool.c:78
+#: ../app/pdb/color_cmds.c:460 ../app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Posterizar"
 
-#: ../app/pdb/color_cmds.c:747 ../app/pdb/color_cmds.c:873
+#: ../app/pdb/color_cmds.c:811 ../app/pdb/color_cmds.c:937
 #: ../app/tools/gimpcurvestool.c:136
 msgid "Curves"
 msgstr "Curvas"
 
-#: ../app/pdb/color_cmds.c:993 ../app/tools/gimpcolorbalancetool.c:95
+#: ../app/pdb/color_cmds.c:1057 ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance"
 msgstr "Balance de color"
 
 # Por coherencia con las siguientes. FVD
-#: ../app/pdb/color_cmds.c:1113 ../app/tools/gimpcolorizetool.c:96
+#: ../app/pdb/color_cmds.c:1177 ../app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Colorear"
 
-#: ../app/pdb/color_cmds.c:1385 ../app/tools/gimphuesaturationtool.c:115
+#: ../app/pdb/color_cmds.c:1449 ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-Saturation"
 msgstr "Tono-Saturación"
 
-#: ../app/pdb/color_cmds.c:1492 ../app/tools/gimpthresholdtool.c:89
+#: ../app/pdb/color_cmds.c:1556 ../app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Umbral B/N"
 
@@ -8231,7 +8227,6 @@ msgstr "Proporción fija"
 msgid "Transform layer"
 msgstr "Transformar capa"
 
-# Podría ser Dirección de transformación o algo así. FVD
 #: ../app/tools/tools-enums.c:142
 msgid "Transform selection"
 msgstr "Transformar selección"
@@ -8337,7 +8332,6 @@ msgstr "Ajustar el brillo y el contraste"
 msgid "B_rightness-Contrast..."
 msgstr "_Brillo-Contraste"
 
-# no podía ser 'ajusta' en tercera persona. FVD
 #: ../app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
 msgstr "Ajustar el brillo y el contraste"
@@ -8801,7 +8795,6 @@ msgstr "Mueva el ratón para cambiar el umbral."
 msgid "Histogram Scale"
 msgstr "Escala del histograma"
 
-# No podía ser 'ajusta' en tercera persona. FVD
 #: ../app/tools/gimphuesaturationtool.c:116
 msgid "Adjust hue and saturation"
 msgstr "Ajustar el tono y la saturación"
@@ -8951,7 +8944,6 @@ msgstr "Ajustar los niveles de color"
 msgid "Load Levels"
 msgstr "Cargar niveles"
 
-# error garrafal, corregido. FVD
 #: ../app/tools/gimplevelstool.c:218
 msgid "Load levels settings from file"
 msgstr "Leer la configuración de los niveles desde un archivo"
@@ -9043,7 +9035,6 @@ msgstr "Medida de distancias y ángulos"
 msgid "Distance:"
 msgstr "Distancia:"
 
-# galicismo (?) FVD
 #: ../app/tools/gimpmoveoptions.c:169
 msgid "Pick a layer or guide"
 msgstr "Escoger una capa o guía"
@@ -9056,7 +9047,6 @@ msgstr "Mover la capa actual"
 msgid "Move selection"
 msgstr "Mover la selección"
 
-# galicismo (?) FVD
 #: ../app/tools/gimpmoveoptions.c:178
 msgid "Pick a path"
 msgstr "Escoger una ruta"
@@ -9339,7 +9329,6 @@ msgstr "Centro Y:"
 msgid "Scale"
 msgstr "Redimensionar"
 
-# Ahora es coherente. FVD
 #: ../app/tools/gimpscaletool.c:92
 msgid "Scale the layer or selection"
 msgstr "Escalar la capa o la selección"
@@ -9383,8 +9372,7 @@ msgstr "Bordes suavizados"
 
 #: ../app/tools/gimpselectionoptions.c:150
 msgid "Allow completely transparent regions to be selected"
-msgstr ""
-"Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr "Permitir seleccionar las regiones completamente transparentes"
 
 #: ../app/tools/gimpselectionoptions.c:156
 msgid "Base selection on all visible layers"
@@ -9575,7 +9563,6 @@ msgstr "Aplicar umbral"
 msgid "Threshold does not operate on indexed layers."
 msgstr "El umbral no funciona sobre capas indexadas."
 
-# Podría ser Dirección de transformación o algo así. FVD
 #: ../app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
 msgstr "Dirección de la transformación"
@@ -9586,7 +9573,7 @@ msgstr "Interpolación:"
 
 #: ../app/tools/gimptransformoptions.c:347
 msgid "Supersampling"
-msgstr "Supermuestreo"
+msgstr "Sobremuestreo"
 
 #. the clip resulting image toggle button
 #: ../app/tools/gimptransformoptions.c:352
@@ -10407,13 +10394,9 @@ msgstr ""
 msgid "You can drop dockable dialogs here."
 msgstr "Puede soltar los diálogos empotrables aquí."
 
-#: ../app/widgets/gimpdockable.c:197
+#: ../app/widgets/gimpdockable.c:195
 msgid "Configure this tab"
 msgstr "Configurar esta solapa"
-
-#: ../app/widgets/gimpdockable.c:213
-msgid "Close this Tab"
-msgstr "Cerrar esta solapa"
 
 #: ../app/widgets/gimperrorconsole.c:235 ../app/widgets/gimperrordialog.c:252
 #, c-format
@@ -11026,7 +11009,7 @@ msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:171
 msgid "Black & white"
-msgstr "Negro y blanco"
+msgstr "Blanco y negro"
 
 #: ../app/widgets/widgets-enums.c:172
 msgid "Fancy"
@@ -11174,3 +11157,6 @@ msgstr "Asegúrese de que la caja de herramientas está visible"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No se ha podido iniciar «%s»: %s"
+
+#~ msgid "Close this Tab"
+#~ msgstr "Cerrar esta solapa"
