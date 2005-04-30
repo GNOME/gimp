@@ -613,7 +613,12 @@ ReadImage (FILE     *fd,
             /* compressed image (either RLE8 or RLE4) */
 	    while (ypos >= 0 && xpos <= width)
 	      {
-		ReadOK (fd, buffer, 2);
+                if (!ReadOK (fd, buffer, 2)) 
+                  {
+                    g_message (_("The bitmap ends unexpectedly."));
+                    break;
+                  }
+
 		if ((guchar) buffer[0] != 0)
 		  /* Count + Color - record */
 		  {
@@ -647,7 +652,11 @@ ReadImage (FILE     *fd,
 		    for (j = 0; j < n; j += (8 / bpp))
 		      {
                         /* read the next byte in the record */
-                        ReadOK (fd, &v, 1);
+                        if (!ReadOK (fd, &v, 1))
+                          {
+                            g_message (_("The bitmap ends unexpectedly."));
+                            break;
+                          }
                         total_bytes_read++;
 
                         /* read all pixels from that byte */
@@ -692,7 +701,11 @@ ReadImage (FILE     *fd,
 		if (((guchar) buffer[0]==0) && ((guchar) buffer[1]==2))
 		  /* Deltarecord */
 		  {
-		    ReadOK (fd, buffer, 2);
+                    if (!ReadOK (fd, buffer, 2))
+                      {
+                        g_message (_("The bitmap ends unexpectedly."));
+                        break;
+                      }
 		    xpos += (guchar) buffer[0];
 		    ypos -= (guchar) buffer[1];
 		  }
