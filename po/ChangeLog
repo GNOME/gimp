@@ -1,3 +1,8 @@
+2005-01-02  Roman Joost	<romanofski@gimp.org>
+	
+	* de.po: fixed ambigious mnemonics for "Bild" and "Bearbeiten"
+	menuitems spotted by Christian Theune
+
 2005-04-29  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: Minor fix.

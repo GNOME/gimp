@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-28 18:35+0100\n"
-"PO-Revision-Date: 2005-01-04 16:59+0100\n"
+"PO-Revision-Date: 2005-04-29 12:35+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1127,7 +1127,7 @@ msgstr "Der Weißabgleich funktioniert nur bei RGB Ebenen."
 
 #: app/actions/edit-actions.c:61
 msgid "_Edit"
-msgstr "_Bearbeiten"
+msgstr "Bearbeite_n"
 
 #: app/actions/edit-actions.c:62
 msgid "_Buffer"
@@ -1862,7 +1862,7 @@ msgstr "_Graustufen"
 
 #: app/actions/image-actions.c:133
 msgid "_Indexed..."
-msgstr "_Indiziert"
+msgstr "I_ndiziert"
 
 #: app/actions/image-commands.c:192
 msgid "Set Image Canvas Size"
@@ -2561,15 +2561,15 @@ msgstr "Auswahl in Kanal speichern"
 
 #: app/actions/select-actions.c:104
 msgid "_Stroke Selection..."
-msgstr "Auswahl _nachziehen"
+msgstr "Auswahl nach_ziehen"
 
 #: app/actions/select-actions.c:105
 msgid "Stroke selection..."
-msgstr "Auswahl nachziehen"
+msgstr "Auswahl nachziehen..."
 
 #: app/actions/select-actions.c:110
 msgid "_Stroke Selection"
-msgstr "Auswahl _nachziehen"
+msgstr "Auswahl nach_ziehen"
 
 #: app/actions/select-actions.c:111
 msgid "Stroke selection with last values"
@@ -2937,7 +2937,7 @@ msgstr "Pfad nach ganz unten absenken"
 
 #: app/actions/vectors-actions.c:112
 msgid "Stro_ke Path..."
-msgstr "Pfad _nachziehen..."
+msgstr "_Pfad nachziehen..."
 
 #: app/actions/vectors-actions.c:113
 msgid "Stroke path..."
@@ -2945,7 +2945,7 @@ msgstr "Pfad nachziehen..."
 
 #: app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
-msgstr "Pfad _nachziehen"
+msgstr "_Pfad nachziehen"
 
 #: app/actions/vectors-actions.c:119
 msgid "Stroke path with last values"
