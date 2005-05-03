@@ -568,7 +568,10 @@ def _interact(func_name, start_params):
                 progress.set_text(" ")
 
             if fraction is not None:
-                progress.set_fraction(fraction)
+		if fraction < 0:
+		    progress.pulse()
+		else:
+		    progress.set_fraction(fraction)
 
             while gtk.events_pending():
                 gtk.main_iteration()
