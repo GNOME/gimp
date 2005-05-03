@@ -1,3 +1,10 @@
+2005-05-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolordisplayeditor.h: include the parent class,
+	not gimpeditor.h
+
+	* app/widgets/gimpcolordisplayeditor.c: include gimpeditor.h here
+
 2005-05-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py (progress_update): special case

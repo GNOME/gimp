@@ -23,7 +23,7 @@
 #define __GIMP_COLOR_DISPLAY_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include <gtk/gtkvbox.h>
 
 
 #define GIMP_TYPE_COLOR_DISPLAY_EDITOR            (gimp_color_display_editor_get_type ())

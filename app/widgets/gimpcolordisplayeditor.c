@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "gimpcolordisplayeditor.h"
+#include "gimpeditor.h"
 
 #include "gimp-intl.h"
 
