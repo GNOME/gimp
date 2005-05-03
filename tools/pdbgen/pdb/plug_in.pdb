@@ -372,30 +372,8 @@ HELP
 
           if (! strcmp (procedure_name, proc_def->db_info.name))
             {
-              if (proc_def->icon_data)
-                {
-                  g_free (proc_def->icon_data);
-                  proc_def->icon_data_length = -1;
-                  proc_def->icon_data        = NULL;
-                }
-
-              proc_def->icon_type = icon_type;
-
-              switch (proc_def->icon_type)
-                {
-                case GIMP_ICON_TYPE_STOCK_ID:
-                case GIMP_ICON_TYPE_IMAGE_FILE:
-                  proc_def->icon_data_length = -1;
-                  proc_def->icon_data        = g_strdup (icon_data);
-                  break;
-
-                case GIMP_ICON_TYPE_INLINE_PIXBUF:
-                  proc_def->icon_data_length = icon_data_length;
-                  proc_def->icon_data        = g_memdup (icon_data,
-                                                         icon_data_length);
-                  break;
-                }
-
+              plug_in_proc_def_set_icon (proc_def, icon_type,
+                                         icon_data, icon_data_length);
               break;
             }
         }

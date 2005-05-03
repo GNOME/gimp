@@ -1,3 +1,13 @@
+2005-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-def.[ch] (plug_in_proc_def_set_icon):
+	new function.
+
+	* tools/pdbgen/pdb/plug_in.pdb: removed the same code here and use
+	the new function.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2005-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolordisplayeditor.h: include the parent class,

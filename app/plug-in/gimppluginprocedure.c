@@ -169,6 +169,41 @@ plug_in_proc_def_get_label (const PlugInProcDef *proc_def,
   return label;
 }
 
+void
+plug_in_proc_def_set_icon (PlugInProcDef *proc_def,
+                           GimpIconType   icon_type,
+                           const gchar   *icon_data,
+                           gint           icon_data_length)
+{
+  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (icon_type == -1 || icon_data != NULL);
+  g_return_if_fail (icon_type == -1 || icon_data_length > 0);
+
+  if (proc_def->icon_data)
+    {
+      g_free (proc_def->icon_data);
+      proc_def->icon_data_length = -1;
+      proc_def->icon_data        = NULL;
+    }
+
+  proc_def->icon_type = icon_type;
+
+  switch (proc_def->icon_type)
+    {
+    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_IMAGE_FILE:
+      proc_def->icon_data_length = -1;
+      proc_def->icon_data        = g_strdup (icon_data);
+      break;
+
+    case GIMP_ICON_TYPE_INLINE_PIXBUF:
+      proc_def->icon_data_length = icon_data_length;
+      proc_def->icon_data        = g_memdup (icon_data,
+                                             icon_data_length);
+      break;
+    }
+}
+
 const gchar *
 plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def)
 {
