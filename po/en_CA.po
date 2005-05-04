@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-27 15:43-0400\n"
-"PO-Revision-Date: 2005-04-27 14:29-0400\n"
+"POT-Creation-Date: 2005-05-04 01:27-0400\n"
+"PO-Revision-Date: 2005-05-04 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6972,8 +6972,8 @@ msgid ""
 "position."
 msgstr ""
 "The sessionrc is used to store what dialogue windows were open the last time "
-"you quit GIMP.  You can configure GIMP to reopen these dialogues at the saved "
-"position."
+"you quit GIMP.  You can configure GIMP to reopen these dialogues at the "
+"saved position."
 
 #: ../app/dialogs/user-install-dialog.c:171
 msgid ""
@@ -7012,8 +7012,8 @@ msgid ""
 msgstr ""
 "This folder is used to store fonts you want to be visible only in GIMP. GIMP "
 "checks this folder in addition to the system-wide fonts installation. Use "
-"this only if you really want to have fonts available in GIMP only. Otherwise, "
-"put them in your global font directory."
+"this only if you really want to have fonts available in GIMP only. "
+"Otherwise, put them in your global font directory."
 
 #: ../app/dialogs/user-install-dialog.c:202
 msgid ""
@@ -9743,44 +9743,44 @@ msgstr "Clipboard"
 msgid "Add the current color to the color history"
 msgstr "Add the current colour to the colour history"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:177
+#: ../app/widgets/gimpcolordisplayeditor.c:178
 msgid "Available Filters"
 msgstr "Available Filters"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:204
+#: ../app/widgets/gimpcolordisplayeditor.c:205
 msgid "Add the selected filter to the list of active filters."
 msgstr "Add the selected filter to the list of active filters."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:221
+#: ../app/widgets/gimpcolordisplayeditor.c:222
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Remove the selected filter from the list of active filters."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:235
+#: ../app/widgets/gimpcolordisplayeditor.c:236
 msgid "Move the selected filter up"
 msgstr "Move the selected filter up"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:244
+#: ../app/widgets/gimpcolordisplayeditor.c:245
 msgid "Move the selected filter down"
 msgstr "Move the selected filter down"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:289
+#: ../app/widgets/gimpcolordisplayeditor.c:290
 msgid "Active Filters"
 msgstr "Active Filters"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:323
 msgid "Reset the selected filter to default values"
 msgstr "Reset the selected filter to default values"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:543
+#: ../app/widgets/gimpcolordisplayeditor.c:544
 #, c-format
 msgid "Configure selected filter: %s"
 msgstr "Configure selected filter: %s"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:550
+#: ../app/widgets/gimpcolordisplayeditor.c:551
 msgid "No filter selected"
 msgstr "No filter selected"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:554
+#: ../app/widgets/gimpcolordisplayeditor.c:555
 msgid "Configure selected filter"
 msgstr "Configure selected filter"
 
@@ -10530,12 +10530,12 @@ msgstr "Keep transparency"
 msgid "Empty Layer"
 msgstr "Empty Layer"
 
-#: ../app/widgets/gimpmessagebox.c:461
+#: ../app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Message repeated %d times."
 
-#: ../app/widgets/gimpmessagebox.c:463
+#: ../app/widgets/gimpmessagebox.c:464
 msgid "Message repeated once."
 msgstr "Message repeated once."
 
@@ -10714,11 +10714,10 @@ msgstr ""
 #: ../app/widgets/gimptoolbox.c:829
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
-"The arrows swap colors. Double click to open the color selection dialog."
+"The arrows swap colors. Click to open the color selection dialog."
 msgstr ""
-"Foreground & background colours.  The black and white squares reset "
-"colours.  The arrows swap colours. Double click to open the colour selection "
-"dialogue."
+"Foreground & background colours.  The black and white squares reset colours.  "
+"The arrows swap colours. Click to open the colour selection dialogue."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."

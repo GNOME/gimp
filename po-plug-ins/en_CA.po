@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-23 14:54-0400\n"
-"PO-Revision-Date: 2005-04-23 14:31-0400\n"
+"POT-Creation-Date: 2005-05-04 02:04-0400\n"
+"PO-Revision-Date: 2005-05-04 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -388,7 +388,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
 #: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
 #: ../plug-ins/common/spheredesigner.c:2091 ../plug-ins/common/sunras.c:504
-#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1914
+#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
 #: ../plug-ins/gfig/gfig.c:786 ../plug-ins/gfli/gfli.c:710
@@ -1259,7 +1259,7 @@ msgstr "Unsupported or invalid bitdepth."
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
 #: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
-#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:880
+#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
@@ -1268,6 +1268,11 @@ msgstr "Unsupported or invalid bitdepth."
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Background"
+
+#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
+#: ../plug-ins/bmp/bmpread.c:706
+msgid "The bitmap ends unexpectedly."
+msgstr "The bitmap ends unexpectedly."
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
 #: ../plug-ins/common/pcx.c:573
@@ -1289,7 +1294,7 @@ msgstr "Cannot operate on unknown image types."
 #: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
-#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1920
+#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
 #: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
@@ -2452,7 +2457,7 @@ msgstr "From:"
 msgid "Color to Alpha Color Picker"
 msgstr "Colour to Alpha Colour Picker"
 
-#: ../plug-ins/common/colortoalpha.c:425
+#: ../plug-ins/common/colortoalpha.c:426
 msgid "to alpha"
 msgstr "to alpha"
 
@@ -3525,7 +3530,7 @@ msgid "Composing Images..."
 msgstr "Composing Images..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:800
+#: ../plug-ins/helpbrowser/dialog.c:801
 msgid "Untitled"
 msgstr "Untitled"
 
@@ -7103,16 +7108,16 @@ msgstr "Threshold:"
 msgid "TIFF image"
 msgstr "TIFF image"
 
-#: ../plug-ins/common/tiff.c:882
+#: ../plug-ins/common/tiff.c:897
 #, c-format
 msgid "Page %d"
 msgstr "Page %d"
 
-#: ../plug-ins/common/tiff.c:898
+#: ../plug-ins/common/tiff.c:913
 msgid "TIFF Channel"
 msgstr "TIFF Channel"
 
-#: ../plug-ins/common/tiff.c:907
+#: ../plug-ins/common/tiff.c:922
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7124,7 +7129,7 @@ msgstr ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 
-#: ../plug-ins/common/tiff.c:2080
+#: ../plug-ins/common/tiff.c:2095
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7132,40 +7137,40 @@ msgstr ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 
-#: ../plug-ins/common/tiff.c:2284
+#: ../plug-ins/common/tiff.c:2299
 msgid "Save as TIFF"
 msgstr "Save as TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2303
+#: ../plug-ins/common/tiff.c:2318
 msgid "Compression"
 msgstr "Compression"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2322
 msgid "_None"
 msgstr "_None"
 
-#: ../plug-ins/common/tiff.c:2308
+#: ../plug-ins/common/tiff.c:2323
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2309
+#: ../plug-ins/common/tiff.c:2324
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/common/tiff.c:2310
+#: ../plug-ins/common/tiff.c:2325
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2311
+#: ../plug-ins/common/tiff.c:2326
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2320
+#: ../plug-ins/common/tiff.c:2335
 msgid "Save _color values from transparent pixels"
 msgstr "Save _colour values from transparent pixels"
 
-#: ../plug-ins/common/tiff.c:2336 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2351 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Comment:"
 
@@ -9683,11 +9688,11 @@ msgstr "Go to the index page"
 msgid "Visit the GIMP documentation website"
 msgstr "Visit the GIMP documentation website"
 
-#: ../plug-ins/helpbrowser/dialog.c:556
+#: ../plug-ins/helpbrowser/dialog.c:557
 msgid "Document not found"
 msgstr "Document not found"
 
-#: ../plug-ins/helpbrowser/dialog.c:558
+#: ../plug-ins/helpbrowser/dialog.c:559
 msgid "The requested URL could not be loaded:"
 msgstr "The requested URL could not be loaded:"
 
@@ -10720,10 +10725,6 @@ msgstr "_Export XMP"
 msgid "Propert_ies"
 msgstr "Propert_ies"
 
-#: ../plug-ins/metadata/metadata.c:198
-msgid "<Image>/File/Info"
-msgstr "<Image>/File/Info"
-
 #: ../plug-ins/metadata/xmp-parse.c:235
 msgid "Error: No XMP packet found"
 msgstr "Error: No XMP packet found"
@@ -11700,27 +11701,27 @@ msgstr "A network error occurred: %s"
 msgid "Downloading unknown amount of image data..."
 msgstr "Downloading unknown amount of image data..."
 
-#: ../plug-ins/winicon/icodialog.c:87
+#: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alpha, 2-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:88
+#: ../plug-ins/winicon/icodialog.c:100
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alpha, 16-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:89
+#: ../plug-ins/winicon/icodialog.c:101
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alpha, 256-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:90
+#: ../plug-ins/winicon/icodialog.c:102
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alpha, no palette"
 
-#: ../plug-ins/winicon/icodialog.c:115
+#: ../plug-ins/winicon/icodialog.c:128
 msgid "Save as Windows Icon"
 msgstr "Save as Windows Icon"
 
-#: ../plug-ins/winicon/icodialog.c:141
+#: ../plug-ins/winicon/icodialog.c:154
 msgid "Icon details"
 msgstr "Icon details"
 
