@@ -826,9 +826,9 @@ toolbox_create_color_area (GimpToolbox *toolbox,
   gtk_widget_show (col_area);
 
   gimp_help_set_help_data
-    (col_area, _("Foreground & background colors.  The black and white squares "
-                 "reset colors.  The arrows swap colors. Double click to open "
-                 "the color selection dialog."), NULL);
+    (col_area, _("Foreground & background colors.  The black and white "
+                 "squares reset colors.  The arrows swap colors. Click "
+                 "to open the color selection dialog."), NULL);
 
   return frame;
 }

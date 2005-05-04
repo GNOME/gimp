@@ -1,3 +1,10 @@
+2005-05-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfgbgeditor.c (gimp_fg_bg_editor_button_press):
+	emit "color-clicked" on first click.
+
+	* app/widgets/gimptoolbox.c: changed tooltip accordingly.
+
 2005-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc-def.[ch] (plug_in_proc_def_set_icon):

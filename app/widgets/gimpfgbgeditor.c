@@ -53,8 +53,8 @@ enum
 typedef enum
 {
   INVALID_AREA,
-  FORE_AREA,
-  BACK_AREA,
+  FOREGROUND_AREA,
+  BACKGROUND_AREA,
   SWAP_AREA,
   DEFAULT_AREA
 } FgBgTarget;
@@ -429,10 +429,10 @@ gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
   gint rect_h = editor->rect_height;
 
   if (x > 0 && x < rect_w && y > 0 && y < rect_h)
-    return FORE_AREA;
+    return FOREGROUND_AREA;
   else if (x > (width - rect_w)  && x < width  &&
 	   y > (height - rect_h) && y < height)
-    return BACK_AREA;
+    return BACKGROUND_AREA;
   else if (x > 0      && x < (width - rect_w) &&
 	   y > rect_h && y < height)
     return DEFAULT_AREA;
@@ -458,20 +458,18 @@ gimp_fg_bg_editor_button_press (GtkWidget      *widget,
 
       switch (target)
         {
-        case FORE_AREA:
+        case FOREGROUND_AREA:
           if (editor->active_color != GIMP_ACTIVE_COLOR_FOREGROUND)
             gimp_fg_bg_editor_set_active (editor,
                                           GIMP_ACTIVE_COLOR_FOREGROUND);
-          else
-            editor->click_target = FORE_AREA;
+          editor->click_target = FOREGROUND_AREA;
           break;
 
-        case BACK_AREA:
+        case BACKGROUND_AREA:
           if (editor->active_color != GIMP_ACTIVE_COLOR_BACKGROUND)
             gimp_fg_bg_editor_set_active (editor,
                                           GIMP_ACTIVE_COLOR_BACKGROUND);
-          else
-            editor->click_target = BACK_AREA;
+          editor->click_target = BACKGROUND_AREA;
           break;
 
         case SWAP_AREA:
@@ -507,12 +505,12 @@ gimp_fg_bg_editor_button_release (GtkWidget      *widget,
         {
           switch (target)
             {
-            case FORE_AREA:
+            case FOREGROUND_AREA:
               g_signal_emit (editor, editor_signals[COLOR_CLICKED], 0,
                              GIMP_ACTIVE_COLOR_FOREGROUND);
               break;
 
-            case BACK_AREA:
+            case BACKGROUND_AREA:
               g_signal_emit (editor, editor_signals[COLOR_CLICKED], 0,
                              GIMP_ACTIVE_COLOR_BACKGROUND);
               break;
@@ -538,7 +536,7 @@ gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
   FgBgTarget      target = gimp_fg_bg_editor_target (editor, x, y);
 
-  if (target == FORE_AREA || target == BACK_AREA)
+  if (target == FOREGROUND_AREA || target == BACKGROUND_AREA)
     {
       gdk_drag_status (context, GDK_ACTION_COPY, time);
 
@@ -648,11 +646,11 @@ gimp_fg_bg_editor_drop_color (GtkWidget     *widget,
     {
       switch (gimp_fg_bg_editor_target (editor, x, y))
         {
-        case FORE_AREA:
+        case FOREGROUND_AREA:
           gimp_context_set_foreground (editor->context, color);
           break;
 
-        case BACK_AREA:
+        case BACKGROUND_AREA:
           gimp_context_set_background (editor->context, color);
           break;
 
