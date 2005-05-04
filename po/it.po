@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-02 16:43+0200\n"
-"PO-Revision-Date: 2005-05-02 16:59+0200\n"
+"POT-Creation-Date: 2005-05-04 02:54+0200\n"
+"PO-Revision-Date: 2005-05-04 02:55+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3304,7 +3304,7 @@ msgstr "Normale"
 
 #: ../app/base/base-enums.c:109
 msgid "Dissolve"
-msgstr "Dissolvenza"
+msgstr "Dissolvi"
 
 #: ../app/base/base-enums.c:110
 msgid "Behind"
@@ -3312,15 +3312,15 @@ msgstr "Dietro"
 
 #: ../app/base/base-enums.c:111
 msgid "Multiply"
-msgstr "Multipla"
+msgstr "Moltiplica"
 
 #: ../app/base/base-enums.c:112
 msgid "Screen"
-msgstr "Screen"
+msgstr "Schermo"
 
 #: ../app/base/base-enums.c:113
 msgid "Overlay"
-msgstr "Sovrapposta"
+msgstr "Sovrapponi"
 
 #: ../app/base/base-enums.c:114
 msgid "Difference"
@@ -3328,7 +3328,7 @@ msgstr "Differenza"
 
 #: ../app/base/base-enums.c:115
 msgid "Addition"
-msgstr "Aggiunta"
+msgstr "Somma"
 
 #: ../app/base/base-enums.c:117
 msgid "Darken only"
@@ -3353,11 +3353,11 @@ msgstr "Colore"
 
 #: ../app/base/base-enums.c:123
 msgid "Divide"
-msgstr "Divisione"
+msgstr "Dividi"
 
 #: ../app/base/base-enums.c:124
 msgid "Dodge"
-msgstr "Scherma"
+msgstr "Evita"
 
 #: ../app/base/base-enums.c:125
 msgid "Burn"
@@ -3373,11 +3373,11 @@ msgstr "Luce debole"
 
 #: ../app/base/base-enums.c:128
 msgid "Grain extract"
-msgstr "Estrazione grani"
+msgstr "Estrazione grana"
 
 #: ../app/base/base-enums.c:129
 msgid "Grain merge"
-msgstr "Fusione grani"
+msgstr "Fusione grana"
 
 #: ../app/base/base-enums.c:130
 msgid "Color erase"
@@ -7050,7 +7050,12 @@ msgid ""
 "functionality to GIMP.  These programs are searched for at run-time and "
 "information about their functionality is cached in this file.  This file is "
 "intended to be written by GIMP only, and should not be edited."
-msgstr "I plugin e le estensioni sono programmi esterni che aggiungono funzionalità a Gimp. Questi programmi vengono cercati all'avvio del programma e le relative informazioni sulle funzionalità sono memorizzate in questo file. Perciò esso è destinato alla scrittura solamente da parte di Gimp e non dovrebbe essere modificato."
+msgstr ""
+"I plugin e le estensioni sono programmi esterni che aggiungono funzionalità "
+"a Gimp. Questi programmi vengono cercati all'avvio del programma e le "
+"relative informazioni sulle funzionalità sono memorizzate in questo file. "
+"Perciò esso è destinato alla scrittura solamente da parte di Gimp e non "
+"dovrebbe essere modificato."
 
 #: ../app/dialogs/user-install-dialog.c:154
 msgid ""
@@ -7058,14 +7063,22 @@ msgid ""
 "configuration so it can. be remembered for the next session.  You may edit "
 "this file if you wish, but it is much easier to define the keys from within "
 "GIMP.  Deleting this file will restore the default shortcuts."
-msgstr "I tasti scorciatoia possono essere ridefiniti dinamicamente. Il file menurc è una copia delle vostre configurazioni perciò può essere utilizzato la volta successiva. Potete modificare questo file come volete ma è molto più semplice definire i tasti da GIMP. Cancellando questo file verranno ripristinate le scorciatoie predefinite."
+msgstr ""
+"I tasti scorciatoia possono essere ridefiniti dinamicamente. Il file menurc "
+"è una copia delle vostre configurazioni perciò può essere utilizzato la "
+"volta successiva. Potete modificare questo file come volete ma è molto più "
+"semplice definire i tasti da GIMP. Cancellando questo file verranno "
+"ripristinate le scorciatoie predefinite."
 
 #: ../app/dialogs/user-install-dialog.c:164
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
 "position."
-msgstr "Il file sessionrc viene utilizzato per memorizzare quali finestre erano aperte all'ultima uscita da GIMP. Potete configurare GIMP per riaprire queste finestre nella stessa posizione."
+msgstr ""
+"Il file sessionrc viene utilizzato per memorizzare quali finestre erano "
+"aperte all'ultima uscita da GIMP. Potete configurare GIMP per riaprire "
+"queste finestre nella stessa posizione."
 
 #: ../app/dialogs/user-install-dialog.c:171
 msgid ""
@@ -7091,7 +7104,9 @@ msgstr ""
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
-msgstr "Questa cartella serve per contenere i pennelli definiti dall'utente. Gimp legge questa cartella, oltre a quella dei pennelli di sistema."
+msgstr ""
+"Questa cartella serve per contenere i pennelli definiti dall'utente. Gimp "
+"legge questa cartella, oltre a quella dei pennelli di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:193
 msgid ""
@@ -7099,40 +7114,55 @@ msgid ""
 "checks this folder in addition to the system-wide fonts installation. Use "
 "this only if you really want to have fonts available in GIMP only, otherwise "
 "put them in your global font directory."
-msgstr "Questa cartella serve per immagazzinare i caratteri che si vuole siano resi visibili solamente a GIMP. GIMP controlla questa cartella, oltre a quella di sistema dei caratteri di GIMP. Usare questa cartella solamente se si è assolutamente certi di voler avere dei caratteri solo per GIMP, altrimenti posizionateli nella cartella dei caratteri globale."
+msgstr ""
+"Questa cartella serve per immagazzinare i caratteri che si vuole siano resi "
+"visibili solamente a GIMP. GIMP controlla questa cartella, oltre a quella di "
+"sistema dei caratteri di GIMP. Usare questa cartella solamente se si è "
+"assolutamente certi di voler avere dei caratteri solo per GIMP, altrimenti "
+"posizionateli nella cartella dei caratteri globale."
 
 #: ../app/dialogs/user-install-dialog.c:202
 msgid ""
 "This folder is used to store user defined gradients.  GIMP checks this "
 "folder in addition to the system-wide gradients installation."
-msgstr "Questa cartella serve per contenere i gradienti definiti dall'utente. GIMP controlla questa cartella, oltre a quella dei gradienti di sistema."
+msgstr ""
+"Questa cartella serve per contenere i gradienti definiti dall'utente. GIMP "
+"controlla questa cartella, oltre a quella dei gradienti di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:209
 msgid ""
 "This folder is used to store user defined palettes.  GIMP checks this folder "
 "in addition to the system-wide palettes installation."
-msgstr "Questa cartella serve a contenere le tavolozze definite dall'utente. GIMP controlla questa cartella, oltre a quella di sistema delle tavolozze."
+msgstr ""
+"Questa cartella serve a contenere le tavolozze definite dall'utente. GIMP "
+"controlla questa cartella, oltre a quella di sistema delle tavolozze."
 
 #: ../app/dialogs/user-install-dialog.c:216
 msgid ""
 "This folder is used to store user defined patterns.  GIMP checks this folder "
 "in addition to the system-wide patterns installation when searching for "
 "patterns."
-msgstr "Questa cartella serve a contenere i motivi definiti dall'utente. GIMP controlla questa cartella, oltre a quella dei motivi di sistema."
+msgstr ""
+"Questa cartella serve a contenere i motivi definiti dall'utente. GIMP "
+"controlla questa cartella, oltre a quella dei motivi di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  GIMP checks this folder in addition to the "
 "system-wide plug-in folder."
-msgstr "Questa cartella serve a contenere i plug-in definiti dall'utente. GIMP controlla questa cartella, oltre a quella per i plug-in di sistema."
+msgstr ""
+"Questa cartella serve a contenere i plug-in definiti dall'utente. GIMP "
+"controlla questa cartella, oltre a quella per i plug-in di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:231
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported DLL modules.  GIMP checks this folder in addition to the "
 "system-wide module folder."
-msgstr "Questa cartella serve per contenere moduli DLL dell'utente o comunque non di sistema. GIMP controlla questa cartella, oltre a quella di sistema."
+msgstr ""
+"Questa cartella serve per contenere moduli DLL dell'utente o comunque non di "
+"sistema. GIMP controlla questa cartella, oltre a quella di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:239
 msgid ""
@@ -7140,7 +7170,10 @@ msgid ""
 "otherwise non-system-supported plug-in interpreters.  GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
-msgstr "Questa cartella serve a contenere la configurazione per gli interpreti plug-in definiti dall'utente, temporanei o comunque non di sistema. GIMP controlla questa cartella, oltre a quella di ambiente di sistema."
+msgstr ""
+"Questa cartella serve a contenere la configurazione per gli interpreti plug-"
+"in definiti dall'utente, temporanei o comunque non di sistema. GIMP "
+"controlla questa cartella, oltre a quella di ambiente di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:249
 msgid ""
@@ -7148,13 +7181,19 @@ msgid ""
 "system-supported additions to the plug-in environment.  GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
-msgstr "Questa cartella serve a contenere aggiunte utente o comunque non di sistema, all'ambiente dei plug-in. GIMP controlla questa cartella, oltre a quella di ambiente di sistema dei plug-in."
+msgstr ""
+"Questa cartella serve a contenere aggiunte utente o comunque non di sistema, "
+"all'ambiente dei plug-in. GIMP controlla questa cartella, oltre a quella di "
+"ambiente di sistema dei plug-in."
 
 #: ../app/dialogs/user-install-dialog.c:259
 msgid ""
 "This folder is used to store user created and installed scripts.  GIMP "
 "checks this folder in addition to the systemwide scripts folder."
-msgstr "Questa cartella serve a contenere gli script creati ed installati dall'utente. GIMP controlla questa cartella, oltre a quella per gli script di sistema."
+msgstr ""
+"Questa cartella serve a contenere gli script creati ed installati "
+"dall'utente. GIMP controlla questa cartella, oltre a quella per gli script "
+"di sistema."
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
@@ -9829,44 +9868,44 @@ msgstr "Appunti"
 msgid "Add the current color to the color history"
 msgstr "Aggiungi il colore corrente allo cronologia colori"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:177
+#: ../app/widgets/gimpcolordisplayeditor.c:178
 msgid "Available Filters"
 msgstr "Filtri disponibili"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:204
+#: ../app/widgets/gimpcolordisplayeditor.c:205
 msgid "Add the selected filter to the list of active filters."
 msgstr "Aggiungi il filtro selezionato all'elenco dei filtri attivi."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:221
+#: ../app/widgets/gimpcolordisplayeditor.c:222
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Togli il filtro selezionato dall'elenco dei filtri attivi."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:235
+#: ../app/widgets/gimpcolordisplayeditor.c:236
 msgid "Move the selected filter up"
 msgstr "Sposta il filtro selezionato in alto"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:244
+#: ../app/widgets/gimpcolordisplayeditor.c:245
 msgid "Move the selected filter down"
 msgstr "Sposta il filtro selezionato in basso"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:289
+#: ../app/widgets/gimpcolordisplayeditor.c:290
 msgid "Active Filters"
 msgstr "Filtri attivi"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:323
 msgid "Reset the selected filter to default values"
 msgstr "Reimposta il filtro selezionato sui valori predefiniti"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:543
+#: ../app/widgets/gimpcolordisplayeditor.c:544
 #, c-format
 msgid "Configure selected filter: %s"
 msgstr "Configura il filtro selezionato: %s"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:550
+#: ../app/widgets/gimpcolordisplayeditor.c:551
 msgid "No filter selected"
 msgstr "Nessun filtro selezionato"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:554
+#: ../app/widgets/gimpcolordisplayeditor.c:555
 msgid "Configure selected filter"
 msgstr "Configura il filtro selezionato"
 
@@ -10801,11 +10840,8 @@ msgstr ""
 #: ../app/widgets/gimptoolbox.c:829
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
-"The arrows swap colors. Double click to open the color selection dialog."
-msgstr ""
-"Colori di primo piano e sfondo. I quadrati neri e bianchi reimpostano i "
-"colori. Le frecce scambiano i colori. Doppio clic per la finestra di "
-"selezione colore."
+"The arrows swap colors. Click to open the color selection dialog."
+msgstr "Colori di primo piano e sfondo. I quadrati neri e bianchi reimpostano i colori. Le frecce scambiano i colori. Fare clic per aprire la finestra di selezione colore."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
