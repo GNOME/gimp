@@ -1,3 +1,17 @@
+2005-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-def.[ch] (plug_in_proc_def_find): new
+	function which finds a proc_def in a GSList by its procedure name.
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-ins.c
+	* tools/pdbgen/pdb/plug_in.pdb: use it instead of iterating and
+	comparing manually.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+	* app/plug-in/plug-in-def.c: minor cleanups.
+
 2005-05-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfgbgeditor.c (gimp_fg_bg_editor_button_press):

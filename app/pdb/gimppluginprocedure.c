@@ -105,6 +105,23 @@ plug_in_proc_def_free (PlugInProcDef *proc_def)
   g_free (proc_def);
 }
 
+PlugInProcDef *
+plug_in_proc_def_find (GSList      *list,
+                       const gchar *proc_name)
+{
+  GSList *l;
+
+  for (l = list; l; l = g_slist_next (l))
+    {
+      PlugInProcDef *proc_def = l->data;
+
+      if (! strcmp (proc_name, proc_def->db_info.name))
+        return proc_def;
+    }
+
+  return NULL;
+}
+
 const ProcRecord *
 plug_in_proc_def_get_proc (const PlugInProcDef *proc_def)
 {

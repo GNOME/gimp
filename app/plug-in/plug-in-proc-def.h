@@ -59,6 +59,9 @@ struct _PlugInProcDef
 PlugInProcDef    * plug_in_proc_def_new          (void);
 void               plug_in_proc_def_free         (PlugInProcDef       *proc_def);
 
+PlugInProcDef    * plug_in_proc_def_find         (GSList              *list,
+                                                  const gchar         *proc_name);
+
 const ProcRecord * plug_in_proc_def_get_proc     (const PlugInProcDef *proc_def);
 const gchar      * plug_in_proc_def_get_progname (const PlugInProcDef *proc_def);
 gchar            * plug_in_proc_def_get_label    (const PlugInProcDef *proc_def,

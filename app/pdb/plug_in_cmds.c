@@ -342,39 +342,14 @@ plugin_menu_register_invoker (Gimp         *gimp,
       if (gimp->current_plug_in)
         {
           PlugInProcDef *proc_def = NULL;
-          GSList        *list;
 
           if (gimp->current_plug_in->plug_in_def)
-            {
-              for (list = gimp->current_plug_in->plug_in_def->proc_defs;
-                   list;
-                   list = g_slist_next (list))
-                {
-                  PlugInProcDef *pd = list->data;
-
-                  if (! strcmp (procedure_name, pd->db_info.name))
-                    {
-                      proc_def = pd;
-                      break;
-                    }
-                }
-            }
+            proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
+                                              procedure_name);
 
           if (! proc_def)
-            {
-              for (list = gimp->current_plug_in->temp_proc_defs;
-                   list;
-                   list = g_slist_next (list))
-                {
-                  PlugInProcDef *pd = list->data;
-
-                  if (! strcmp (procedure_name, pd->db_info.name))
-                    {
-                      proc_def = pd;
-                      break;
-                    }
-                }
-            }
+            proc_def = plug_in_proc_def_find (gimp->current_plug_in->temp_proc_defs,
+                                              procedure_name);
 
           if (proc_def)
             {
@@ -587,23 +562,15 @@ plugin_icon_register_invoker (Gimp         *gimp,
     {
       if (gimp->current_plug_in && gimp->current_plug_in->query)
         {
-          GSList *list;
+          PlugInProcDef *proc_def;
 
-          for (list = gimp->current_plug_in->plug_in_def->proc_defs;
-               list;
-               list = g_slist_next (list))
-            {
-              PlugInProcDef *proc_def = list->data;
+          proc_def = plug_in_proc_def_find (gimp->current_plug_in->plug_in_def->proc_defs,
+                                            procedure_name);
 
-              if (! strcmp (procedure_name, proc_def->db_info.name))
-                {
-                  plug_in_proc_def_set_icon (proc_def, icon_type,
-                                             icon_data, icon_data_length);
-                  break;
-                }
-            }
-
-          if (! list)
+          if (proc_def)
+            plug_in_proc_def_set_icon (proc_def, icon_type,
+                                       icon_data, icon_data_length);
+          else
             success = FALSE;
         }
       else

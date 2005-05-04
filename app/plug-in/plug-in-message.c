@@ -570,7 +570,6 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   PlugInDef     *plug_in_def = NULL;
   PlugInProcDef *proc_def    = NULL;
   ProcRecord    *proc        = NULL;
-  GSList        *tmp         = NULL;
   gchar         *prog        = NULL;
   gboolean       valid_utf8  = FALSE;
   gint           i;
@@ -675,42 +674,29 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       plug_in_def = plug_in->plug_in_def;
       prog        = plug_in_def->prog;
 
-      tmp = plug_in_def->proc_defs;
+      proc_def = plug_in_proc_def_find (plug_in_def->proc_defs,
+                                        proc_install->name);
+      if (proc_def)
+        {
+          plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
+                                                   proc_def);
+          plug_in_proc_def_free (proc_def);
+        }
       break;
 
     case GIMP_TEMPORARY:
       plug_in_def = NULL;
       prog        = "none";
 
-      tmp = plug_in->temp_proc_defs;
+      proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs,
+                                        proc_install->name);
+      if (proc_def)
+        {
+          plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
+                                                    proc_def);
+          plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
+        }
       break;
-    }
-
-  while (tmp)
-    {
-      proc_def = tmp->data;
-      tmp = tmp->next;
-
-      if (strcmp (proc_def->db_info.name, proc_install->name) == 0)
-	{
-          switch (proc_install->type)
-            {
-            case GIMP_PLUGIN:
-            case GIMP_EXTENSION:
-              plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
-                                                       proc_def);
-              plug_in_proc_def_free (proc_def);
-              break;
-
-            case GIMP_TEMPORARY:
-              plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                        proc_def);
-              plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
-              break;
-            }
-
-	  break;
-	}
     }
 
   proc_def = plug_in_proc_def_new ();
@@ -792,21 +778,15 @@ static void
 plug_in_handle_proc_uninstall (PlugIn          *plug_in,
                                GPProcUninstall *proc_uninstall)
 {
-  GSList *tmp;
+  PlugInProcDef *proc_def;
 
-  for (tmp = plug_in->temp_proc_defs; tmp; tmp = g_slist_next (tmp))
+  proc_def = plug_in_proc_def_find (plug_in->temp_proc_defs,
+                                    proc_uninstall->name);
+  if (proc_def)
     {
-      PlugInProcDef *proc_def;
-
-      proc_def = tmp->data;
-
-      if (! strcmp (proc_def->db_info.name, proc_uninstall->name))
-	{
-	  plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                    proc_def);
-	  plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
-	  break;
-	}
+      plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
+                                                proc_def);
+      plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
     }
 }
 

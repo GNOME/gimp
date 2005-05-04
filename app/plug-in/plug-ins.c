@@ -411,7 +411,8 @@ plug_ins_file_register_magic (Gimp        *gimp,
                               const gchar *prefixes,
                               const gchar *magics)
 {
-  GSList *list;
+  PlugInProcDef *proc_def;
+  GSList        *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -421,49 +422,44 @@ plug_ins_file_register_magic (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  for (; list; list = list->next)
+  proc_def = plug_in_proc_def_find (list, name);
+
+  if (proc_def)
     {
-      PlugInProcDef *proc_def = list->data;
+      proc_def->file_proc = TRUE;
 
-      if (strcmp (proc_def->db_info.name, name) == 0)
-	{
-          proc_def->file_proc = TRUE;
+      if (proc_def->extensions != extensions)
+        {
+          if (proc_def->extensions)
+            g_free (proc_def->extensions);
+          proc_def->extensions = g_strdup (extensions);
+        }
 
-	  if (proc_def->extensions != extensions)
-	    {
-              if (proc_def->extensions)
-                g_free (proc_def->extensions);
-	      proc_def->extensions = g_strdup (extensions);
-	    }
+      proc_def->extensions_list =
+        plug_ins_extensions_parse (proc_def->extensions);
 
-	  proc_def->extensions_list =
-            plug_ins_extensions_parse (proc_def->extensions);
+      if (proc_def->prefixes != prefixes)
+        {
+          if (proc_def->prefixes)
+            g_free (proc_def->prefixes);
+          proc_def->prefixes = g_strdup (prefixes);
+        }
 
-	  if (proc_def->prefixes != prefixes)
-	    {
-              if (proc_def->prefixes)
-                g_free (proc_def->prefixes);
-	      proc_def->prefixes = g_strdup (prefixes);
-	    }
+      proc_def->prefixes_list =
+        plug_ins_extensions_parse (proc_def->prefixes);
 
-	  proc_def->prefixes_list =
-            plug_ins_extensions_parse (proc_def->prefixes);
+      if (proc_def->magics != magics)
+        {
+          if (proc_def->magics)
+            g_free (proc_def->magics);
+          proc_def->magics = g_strdup (magics);
+        }
 
-	  if (proc_def->magics != magics)
-	    {
-              if (proc_def->magics)
-                g_free (proc_def->magics);
-	      proc_def->magics = g_strdup (magics);
-	    }
-
-	  proc_def->magics_list =
-            plug_ins_extensions_parse (proc_def->magics);
-
-	  return proc_def;
-	}
+      proc_def->magics_list =
+        plug_ins_extensions_parse (proc_def->magics);
     }
 
-  return NULL;
+  return proc_def;
 }
 
 PlugInProcDef *
@@ -471,7 +467,8 @@ plug_ins_file_register_mime (Gimp        *gimp,
                              const gchar *name,
                              const gchar *mime_type)
 {
-  GSList *list;
+  PlugInProcDef *proc_def;
+  GSList        *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -482,21 +479,16 @@ plug_ins_file_register_mime (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  for (; list; list = list->next)
+  proc_def = plug_in_proc_def_find (list, name);
+
+  if (proc_def)
     {
-      PlugInProcDef *proc_def = list->data;
-
-      if (strcmp (proc_def->db_info.name, name) == 0)
-	{
-          if (proc_def->mime_type)
-            g_free (proc_def->mime_type);
-          proc_def->mime_type = g_strdup (mime_type);
-
-          return proc_def;
-        }
+      if (proc_def->mime_type)
+        g_free (proc_def->mime_type);
+      proc_def->mime_type = g_strdup (mime_type);
     }
 
-  return NULL;
+  return proc_def;
 }
 
 PlugInProcDef *
@@ -504,7 +496,8 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
                                      const gchar *load_proc,
                                      const gchar *thumb_proc)
 {
-  GSList *list;
+  PlugInProcDef *proc_def;
+  GSList        *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (load_proc, NULL);
@@ -515,21 +508,16 @@ plug_ins_file_register_thumb_loader (Gimp        *gimp,
   else
     list = gimp->plug_in_proc_defs;
 
-  for (; list; list = list->next)
+  proc_def = plug_in_proc_def_find (list, load_proc);
+
+  if (proc_def)
     {
-      PlugInProcDef *proc_def = list->data;
-
-      if (strcmp (proc_def->db_info.name, load_proc) == 0)
-        {
-          if (proc_def->thumb_loader)
-            g_free (proc_def->thumb_loader);
-          proc_def->thumb_loader = g_strdup (thumb_proc);
-
-          return proc_def;
-        }
+      if (proc_def->thumb_loader)
+        g_free (proc_def->thumb_loader);
+      proc_def->thumb_loader = g_strdup (thumb_proc);
     }
 
-  return NULL;
+  return proc_def;
 }
 
 void

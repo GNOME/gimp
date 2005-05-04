@@ -56,12 +56,8 @@ plug_in_def_free (PlugInDef *plug_in_def,
   g_free (plug_in_def->help_domain_uri);
 
   if (free_proc_defs)
-    {
-      GSList *list;
-
-      for (list = plug_in_def->proc_defs; list; list = list->next)
-	plug_in_proc_def_free ((PlugInProcDef *) list->data);
-    }
+    g_slist_foreach (plug_in_def->proc_defs, (GFunc) plug_in_proc_def_free,
+                     NULL);
 
   if (plug_in_def->proc_defs)
     g_slist_free (plug_in_def->proc_defs);
@@ -78,8 +74,7 @@ plug_in_def_add_proc_def (PlugInDef     *plug_in_def,
   proc_def->mtime = plug_in_def->mtime;
   proc_def->prog  = g_strdup (plug_in_def->prog);
 
-  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs,
-                                           proc_def);
+  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs, proc_def);
 }
 
 void
