@@ -24,15 +24,12 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 (define (tiny-fu-make-cmap-array palette)
-  (let (
-       (num-colours)
-       (colour)
-       (cmap)
-       (i 0)
-       )
-
-    (set! num-colours (car (gimp-palette-get-info palette)))
-    (set! cmap (cons-array (* num-colours 3) 'byte))
+  (let* (
+        (num-colours (car (gimp-palette-get-info palette)))
+        (cmap (cons-array (* num-colours 3) 'byte))
+        (colour)
+        (i 0)
+        )
 
     (while (< i num-colours)
       (set! colour (car (gimp-palette-entry-get-color palette i)))
