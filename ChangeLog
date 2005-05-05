@@ -1,3 +1,15 @@
+2005-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpgradienteditor.c (control_draw)
+	(control_draw_normal_handle)
+	(control_draw_middle_handle): changed handle colors to be always
+	black and white. Fixes bug #303118. Also changed the handle bar's
+	background and the handles' outlines to theme colors which should
+	make the handles distinguishable from the background for all
+	themes.
+
+	Various unrelated cleanups.
+
 2005-05-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc-def.[ch] (plug_in_proc_def_find): new
