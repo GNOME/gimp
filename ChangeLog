@@ -1,3 +1,9 @@
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/icoload.[ch]
+	* plug-ins/winicon/main.c: code cleanup, prepare for thumbnail
+	loading.
+
 2005-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/layers-actions.c

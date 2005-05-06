@@ -154,7 +154,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          image_ID = LoadICO (param[1].data.d_string);
+          image_ID = ico_load_image (param[1].data.d_string);
 
           if (image_ID != -1)
             {
