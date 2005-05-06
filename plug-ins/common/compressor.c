@@ -670,10 +670,11 @@ find_extension (const Compressor *compressor,
 
   while (TRUE)
     {
-      if (!ext || ext[1] == '\0' || strchr (ext, '/'))
+      if (!ext || ext[1] == '\0' || strchr (ext, G_DIR_SEPARATOR))
         {
           return NULL;
         }
+
       if (0 == g_ascii_strcasecmp (ext, compressor->xcf_extension))
         {
           return ".xcf";  /* we've found it */

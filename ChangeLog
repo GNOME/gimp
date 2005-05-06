@@ -1,3 +1,10 @@
+2005-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/compressor.c: use G_DIR_SEPARATOR instead of '/'.
+
+	* plug-ins/common/mail.c: ditto. Fixed some coding style issues.
+	Special case .bz2 files just as .gz ones.
+
 2005-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-merge.c: removed redundant casts.

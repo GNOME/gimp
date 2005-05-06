@@ -407,7 +407,7 @@ save_image (const gchar *filename,
 			 image_ID,
 			 drawable_ID,
 			 tmpname,
-			 tmpname) && valid_file (tmpname)) )
+			 tmpname) && valid_file (tmpname)))
     {
       goto error;
     }
@@ -654,15 +654,9 @@ save_dialog (void)
 static gboolean
 valid_file (const gchar *filename)
 {
-  int stat_res;
   struct stat buf;
 
-  stat_res = g_stat (filename, &buf);
-
-  if ((0 == stat_res) && (buf.st_size > 0))
-    return TRUE;
-  else
-    return FALSE;
+  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
 }
 
 static gchar *
@@ -699,7 +693,7 @@ find_content_type (const gchar *filename)
 
   while (type_mappings[i])
     {
-      if (strcmp (ext, type_mappings[i]) == 0)
+      if (g_ascii_strcasecmp (ext, type_mappings[i]) == 0)
 	{
 	  return g_strdup (type_mappings[i + 1]);
 	}
@@ -724,7 +718,7 @@ find_extension (const gchar *filename)
 
   while (TRUE)
     {
-      if (!ext || ext[1] == 0 || strchr (ext, '/'))
+      if (!ext || ext[1] == '\0' || strchr (ext, G_DIR_SEPARATOR))
 	{
 	  g_message (_("some sort of error with the file extension "
                        "or lack thereof"));
@@ -732,7 +726,8 @@ find_extension (const gchar *filename)
 	  return NULL;
 	}
 
-      if (0 != strcmp(ext,".gz"))
+      if (0 != g_ascii_strcasecmp (ext, ".gz") &&
+          0 != g_ascii_strcasecmp (ext, ".bz2"))
 	{
 	  return ext;
 	}
@@ -782,7 +777,7 @@ create_headers (FILE *mailpipe)
 
   fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program %s\n", GIMP_VERSION);
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+  if (mail_info.encapsulation == ENCAPSULATION_MIME)
     {
       fprintf (mailpipe, "MIME-Version: 1.0\n");
       fprintf (mailpipe, "Content-type: multipart/mixed; "
@@ -791,7 +786,7 @@ create_headers (FILE *mailpipe)
 
   fprintf (mailpipe, "\n\n");
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+  if (mail_info.encapsulation == ENCAPSULATION_MIME)
     {
       fprintf (mailpipe, "--GUMP-MIME-boundary\n");
       fprintf (mailpipe, "Content-type: text/plain; charset=UTF-8\n\n");
@@ -808,7 +803,7 @@ create_headers (FILE *mailpipe)
 
   fprintf (mailpipe, "\n\n");
 
-  if (mail_info.encapsulation == ENCAPSULATION_MIME )
+  if (mail_info.encapsulation == ENCAPSULATION_MIME)
     {
       gchar *content = find_content_type (mail_info.filename);
 
@@ -933,12 +928,12 @@ sane_dup2 (gint fd1,
 {
   gint ret;
 
-retry:
+ retry:
   ret = dup2 (fd1, fd2);
 
   if (ret < 0 && errno == EINTR)
     goto retry;
-  
+
   return ret;
 }
 
