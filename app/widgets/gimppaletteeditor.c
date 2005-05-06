@@ -309,32 +309,26 @@ gimp_palette_editor_constructor (GType                  type,
 
   editor = GIMP_PALETTE_EDITOR (object);
 
-  editor->edit_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-edit-color", NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-edit-color", NULL);
 
-  editor->new_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-new-color-fg",
-                                   "palette-editor-new-color-bg",
-                                   GDK_CONTROL_MASK,
-                                   NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-new-color-fg",
+                                 "palette-editor-new-color-bg",
+                                 GDK_CONTROL_MASK,
+                                 NULL);
 
-  editor->delete_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-delete-color", NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-delete-color", NULL);
 
-  editor->zoom_out_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-zoom-out", NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-zoom-out", NULL);
 
-  editor->zoom_in_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-zoom-in", NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-zoom-in", NULL);
 
-  editor->zoom_all_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
-                                   "palette-editor-zoom-all", NULL);
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
+                                 "palette-editor-zoom-all", NULL);
 
   return object;
 }

@@ -20,6 +20,16 @@
 #define __GRADIENT_EDITOR_COMMANDS_H__
 
 
+enum
+{
+  GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT,
+  GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT,
+  GRADIENT_EDITOR_COLOR_FOREGROUND,
+  GRADIENT_EDITOR_COLOR_BACKGROUND,
+  GRADIENT_EDITOR_COLOR_FIRST_CUSTOM
+};
+
+
 void   gradient_editor_left_color_cmd_callback      (GtkAction *action,
                                                      gpointer   data);
 void   gradient_editor_load_left_cmd_callback       (GtkAction *action,

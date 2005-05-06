@@ -110,6 +110,8 @@ static GObject * gimp_gradient_editor_constructor   (GType               type,
                                                      guint               n_params,
                                                      GObjectConstructParam *params);
 
+static void   gimp_gradient_editor_destroy          (GtkObject          *object);
+static void   gimp_gradient_editor_unmap            (GtkWidget          *widget);
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
 
@@ -210,12 +212,12 @@ static void      control_draw_normal_handle       (GimpGradientEditor *editor,
                                                    GdkPixmap          *pixmap,
                                                    gdouble             pos,
                                                    gint                height,
-                                                   GtkStateType        state);
+                                                   gboolean            selected);
 static void      control_draw_middle_handle       (GimpGradientEditor *editor,
                                                    GdkPixmap          *pixmap,
                                                    gdouble             pos,
                                                    gint                height,
-                                                   GtkStateType        state);
+                                                   gboolean            selected);
 static void      control_draw_handle              (GdkPixmap          *pixmap,
                                                    GdkGC              *border_gc,
                                                    GdkGC              *fill_gc,
@@ -275,12 +277,18 @@ gimp_gradient_editor_get_type (void)
 static void
 gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 {
-  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
+  GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
+  GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor = gimp_gradient_editor_constructor;
+
+  gtk_object_class->destroy = gimp_gradient_editor_destroy;
+
+  widget_class->unmap       = gimp_gradient_editor_unmap;
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
   editor_class->title       = _("Gradient Editor");
@@ -451,11 +459,39 @@ gimp_gradient_editor_constructor (GType                  type,
 }
 
 static void
+gimp_gradient_editor_destroy (GtkObject *object)
+{
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (object);
+
+  if (editor->color_dialog)
+    gtk_dialog_response (GTK_DIALOG (editor->color_dialog),
+                         GTK_RESPONSE_CANCEL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_gradient_editor_unmap (GtkWidget *widget)
+{
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (widget);
+
+  if (editor->color_dialog)
+    gtk_dialog_response (GTK_DIALOG (editor->color_dialog),
+                         GTK_RESPONSE_CANCEL);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
+
+static void
 gimp_gradient_editor_set_data (GimpDataEditor *editor,
                                GimpData       *data)
 {
   GimpGradientEditor *gradient_editor = GIMP_GRADIENT_EDITOR (editor);
   GimpData           *old_data;
+
+  if (gradient_editor->color_dialog)
+    gtk_dialog_response (GTK_DIALOG (gradient_editor->color_dialog),
+                         GTK_RESPONSE_CANCEL);
 
   old_data = gimp_data_editor_get_data (editor);
 
@@ -463,7 +499,6 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
     g_signal_handlers_disconnect_by_func (old_data,
                                           gimp_gradient_editor_gradient_dirty,
                                           gradient_editor);
-
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
 
@@ -474,13 +509,6 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
 
   gimp_view_set_viewable (GIMP_VIEW (gradient_editor->preview),
                           GIMP_VIEWABLE (data));
-
-  if (gradient_editor->color_dialog)
-    {
-      gtk_widget_destroy (gradient_editor->color_dialog);
-      gradient_editor->color_dialog = NULL;
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-    }
 
   gtk_widget_set_sensitive (gradient_editor->control, editor->data_editable);
 
@@ -1721,7 +1749,7 @@ control_draw (GimpGradientEditor *editor,
   gdouble                 g_pos;
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
-  GtkStateType            handle_state;
+  gboolean                selected;
 
   /* Clear the pixmap */
 
@@ -1742,25 +1770,25 @@ control_draw (GimpGradientEditor *editor,
 
   /* Draw handles */
 
-  handle_state = GTK_STATE_NORMAL;
+  selected = FALSE;
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
       if (seg == editor->control_sel_l)
-        handle_state = GTK_STATE_SELECTED;
+        selected = TRUE;
 
       control_draw_normal_handle (editor, pixmap, seg->left, height,
-                                  handle_state);
+                                  selected);
       control_draw_middle_handle (editor, pixmap, seg->middle, height,
-                                  handle_state);
+                                  selected);
 
       /* Draw right handle only if this is the last segment */
       if (seg->next == NULL)
         control_draw_normal_handle (editor, pixmap, seg->right, height,
-                                    handle_state);
+                                    selected);
 
       if (seg == editor->control_sel_r)
-        handle_state = GTK_STATE_NORMAL;
+        selected = FALSE;
     }
 
   /* Draw the handle which is closest to the mouse position */
@@ -1769,11 +1797,9 @@ control_draw (GimpGradientEditor *editor,
 
   seg_get_closest_handle (gradient, CLAMP (g_pos, 0.0, 1.0), &seg, &handle);
 
-  handle_state = GTK_STATE_NORMAL;
-
-  if (seg && seg_in_selection (gradient, seg,
-                               editor->control_sel_l, editor->control_sel_r))
-    handle_state = GTK_STATE_SELECTED;
+  selected = (seg &&
+              seg_in_selection (gradient, seg,
+                                editor->control_sel_l, editor->control_sel_r));
 
   switch (handle)
     {
@@ -1781,24 +1807,23 @@ control_draw (GimpGradientEditor *editor,
       if (seg)
         {
           control_draw_normal_handle (editor, pixmap, seg->left, height,
-                                      handle_state);
+                                      selected);
         }
       else
         {
           seg = gimp_gradient_segment_get_last (gradient->segments);
 
-          if (seg == editor->control_sel_r)
-            handle_state = GTK_STATE_SELECTED;
+          selected = (seg == editor->control_sel_r);
 
           control_draw_normal_handle (editor, pixmap, seg->right, height,
-                                      handle_state);
+                                      selected);
         }
 
       break;
 
     case GRAD_DRAG_MIDDLE:
       control_draw_middle_handle (editor, pixmap, seg->middle, height,
-                                  handle_state);
+                                  selected);
       break;
 
     default:
@@ -1811,8 +1836,10 @@ control_draw_normal_handle (GimpGradientEditor *editor,
                             GdkPixmap          *pixmap,
                             gdouble             pos,
                             gint                height,
-                            GtkStateType        state)
+                            gboolean            selected)
 {
+  GtkStateType state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+
   control_draw_handle (pixmap,
                        editor->control->style->text_aa_gc[state],
                        editor->control->style->black_gc,
@@ -1824,8 +1851,10 @@ control_draw_middle_handle (GimpGradientEditor *editor,
                             GdkPixmap          *pixmap,
                             gdouble             pos,
                             gint                height,
-                            GtkStateType        state)
+                            gboolean            selected)
 {
+  GtkStateType state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+
   control_draw_handle (pixmap,
                        editor->control->style->text_aa_gc[state],
                        editor->control->style->white_gc,

@@ -1,3 +1,26 @@
+2005-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/gradient-editor-commands.h: added enum for the
+	"load_color" actions.
+
+	* app/actions/gradient-editor-actions.c
+	* app/actions/gradient-editor-commands.c: use the new enum instead
+	of magic values, cleanup.
+
+	* app/actions/palette-editor-commands.c: cleanup.
+
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpdataeditor.c: cleanup.
+
+	* app/widgets/gimpgradienteditor.c: added GtkObject::destroy() and
+	GtkWidget::unmap() implementations which destroy the color dialog.
+	Destroy color dialogs by cancelling them via gtk_dialog_response(),
+	so temporarily changed colors are restored correctly. Refactored
+	my last commit below a bit. Various cleanups.
+
+	* app/widgets/gimppaletteeditor.[ch]: no need to remember the
+	buttons in the GimpPaletteEditor struct.
+
 2005-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c

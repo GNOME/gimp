@@ -56,7 +56,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
   GimpPalette       *palette;
 
-  if (! (data_editor->data && data_editor->data_editable && editor->color))
+  if (! (data_editor->data_editable && editor->color))
     return;
 
   palette = GIMP_PALETTE (data_editor->data);
@@ -71,7 +71,7 @@ palette_editor_edit_color_cmd_callback (GtkAction *action,
                                GTK_WIDGET (editor),
                                gimp_dialog_factory_from_name ("toplevel"),
                                "gimp-palette-editor-color-dialog",
-                               (const GimpRGB *) &editor->color->color,
+                               &editor->color->color,
                                FALSE, FALSE);
 
       g_signal_connect (editor->color_dialog, "destroy",
@@ -101,7 +101,7 @@ palette_editor_new_color_cmd_callback (GtkAction *action,
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
 
-  if (data_editor->data && data_editor->data_editable)
+  if (data_editor->data_editable)
     {
       GimpPalette *palette = GIMP_PALETTE (data_editor->data);
       GimpContext *context;
@@ -125,7 +125,7 @@ palette_editor_delete_color_cmd_callback (GtkAction *action,
   GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
   GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
 
-  if (data_editor->data && data_editor->data_editable && editor->color)
+  if (data_editor->data_editable && editor->color)
     {
       GimpPalette *palette = GIMP_PALETTE (data_editor->data);
 

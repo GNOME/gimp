@@ -124,7 +124,7 @@ gradient_editor_load_left_cmd_callback (GtkAction *action,
 
   switch (value)
     {
-    case 0: /* Fetch from left neighbor's right endpoint */
+    case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (editor->control_sel_l->prev != NULL)
 	seg = editor->control_sel_l->prev;
       else
@@ -133,20 +133,20 @@ gradient_editor_load_left_cmd_callback (GtkAction *action,
       color = seg->right_color;
       break;
 
-    case 1: /* Fetch from right endpoint */
+    case GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT:
       color = editor->control_sel_r->right_color;
       break;
 
-    case 2: /* Fetch from FG color */
+    case GRADIENT_EDITOR_COLOR_FOREGROUND:
       gimp_context_get_foreground (context, &color);
       break;
 
-    case 3: /* Fetch from BG color */
+    case GRADIENT_EDITOR_COLOR_BACKGROUND:
       gimp_context_get_background (context, &color);
       break;
 
     default: /* Load a color */
-      color = editor->saved_colors[value - 4];
+      color = editor->saved_colors[value - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 
@@ -228,7 +228,7 @@ gradient_editor_load_right_cmd_callback (GtkAction *action,
 
   switch (value)
     {
-    case 0: /* Fetch from right neighbor's left endpoint */
+    case GRADIENT_EDITOR_COLOR_NEIGHBOR_ENDPOINT:
       if (editor->control_sel_r->next != NULL)
 	seg = editor->control_sel_r->next;
       else
@@ -237,20 +237,20 @@ gradient_editor_load_right_cmd_callback (GtkAction *action,
       color = seg->left_color;
       break;
 
-    case 1: /* Fetch from left endpoint */
+    case GRADIENT_EDITOR_COLOR_OTHER_ENDPOINT:
       color = editor->control_sel_l->left_color;
       break;
 
-    case 2: /* Fetch from FG color */
+    case GRADIENT_EDITOR_COLOR_FOREGROUND:
       gimp_context_get_foreground (context, &color);
       break;
 
-    case 3: /* Fetch from BG color */
+    case GRADIENT_EDITOR_COLOR_BACKGROUND:
       gimp_context_get_background (context, &color);
       break;
 
     default: /* Load a color */
-      color = editor->saved_colors[value - 4];
+      color = editor->saved_colors[value - GRADIENT_EDITOR_COLOR_FIRST_CUSTOM];
       break;
     }
 

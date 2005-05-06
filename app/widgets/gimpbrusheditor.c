@@ -232,16 +232,14 @@ static void
 gimp_brush_editor_set_data (GimpDataEditor *editor,
                             GimpData       *data)
 {
-  GimpBrushEditor         *brush_editor;
-  GimpBrushGeneratedShape  shape = GIMP_BRUSH_GENERATED_CIRCLE;
-  gdouble                  radius   = 0.0;
-  gint                     spikes   = 2;
-  gdouble                  hardness = 0.0;
-  gdouble                  ratio    = 0.0;
-  gdouble                  angle    = 0.0;
-  gdouble                  spacing  = 0.0;
-
-  brush_editor = GIMP_BRUSH_EDITOR (editor);
+  GimpBrushEditor         *brush_editor = GIMP_BRUSH_EDITOR (editor);
+  GimpBrushGeneratedShape  shape        = GIMP_BRUSH_GENERATED_CIRCLE;
+  gdouble                  radius       = 0.0;
+  gint                     spikes       = 2;
+  gdouble                  hardness     = 0.0;
+  gdouble                  ratio        = 0.0;
+  gdouble                  angle        = 0.0;
+  gdouble                  spacing      = 0.0;
 
   if (editor->data)
     g_signal_handlers_disconnect_by_func (editor->data,
@@ -363,7 +361,6 @@ static void
 gimp_brush_editor_update_brush_shape (GtkWidget       *widget,
                                       GimpBrushEditor *editor)
 {
-  GimpBrushGeneratedShape shape;
   GimpBrushGenerated *brush;
 
   if (! GIMP_IS_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data))
@@ -371,12 +368,16 @@ gimp_brush_editor_update_brush_shape (GtkWidget       *widget,
 
   brush = GIMP_BRUSH_GENERATED (GIMP_DATA_EDITOR (editor)->data);
 
-  shape = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                              "gimp-item-data"));
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      GimpBrushGeneratedShape shape;
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
-      gimp_brush_generated_get_shape (brush) != shape)
-    gimp_brush_generated_set_shape (brush, shape);
+      shape = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-item-data"));
+
+      if (gimp_brush_generated_get_shape (brush) != shape)
+        gimp_brush_generated_set_shape (brush, shape);
+    }
 }
 
 static void

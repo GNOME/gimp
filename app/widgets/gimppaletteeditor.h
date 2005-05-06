@@ -43,13 +43,6 @@ struct _GimpPaletteEditor
   GtkWidget        *color_name;
   GtkAdjustment    *columns_data;
 
-  GtkWidget        *edit_button;
-  GtkWidget        *new_button;
-  GtkWidget        *delete_button;
-  GtkWidget        *zoom_out_button;
-  GtkWidget        *zoom_in_button;
-  GtkWidget        *zoom_all_button;
-
   GtkWidget        *color_dialog;
 
   GimpPaletteEntry *color;
