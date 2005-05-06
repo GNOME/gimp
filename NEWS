@@ -15,6 +15,9 @@ Bugs fixed in GIMP 2.2.7
 - fixed navigation popup in plug-in previews (bug #301523)
 - fixed handling of compression types in TIFF plug-in (bug #301557)
 - fixed bug in Lighting Effects plug-in (bug #302075)
+- fixed focus issues in message dialogs (bug #302400)
+- fixed bug in SSE2 assembly for Lighten Only layer mode (bug #164061)
+- fixed resize-window-on-zoom feature (bug #164281)
 
 
 Bugs fixed in GIMP 2.2.6

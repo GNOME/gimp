@@ -456,11 +456,15 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
                                     gint              offset_y,
                                     gboolean          resize_window)
 {
-  Gimp *gimp;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp = shell->gdisp->gimage->gimp;
+  /*  Abort early if the values are all setup already. We don't
+   *  want to inadvertently resize the window (bug #164281).
+   */
+  if (shell->scale    == scale    &&
+      shell->offset_x == offset_x &&
+      shell->offset_y == offset_y)
+    return;
 
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
