@@ -666,6 +666,9 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                     GtkTreeViewDropPosition *return_drop_pos,
                                     GdkDragAction           *return_drag_action)
 {
+  /* If we are dropping a new layer, check if the destionation image
+   * has a floating selection.
+   */
   if  (src_type == GIMP_DND_TYPE_URI_LIST     ||
        src_type == GIMP_DND_TYPE_TEXT_PLAIN   ||
        src_type == GIMP_DND_TYPE_NETSCAPE_URL ||
@@ -673,28 +676,10 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
        src_type == GIMP_DND_TYPE_PIXBUF       ||
        GIMP_IS_DRAWABLE (src_viewable))
     {
-      GimpLayer *dest_layer = GIMP_LAYER (dest_viewable);
       GimpImage *dest_image = GIMP_ITEM_TREE_VIEW (tree_view)->gimage;
 
       if (gimp_image_floating_sel (dest_image))
         return FALSE;
-
-      if (dest_layer)
-        {
-          if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (dest_layer)) &&
-              drop_pos == GTK_TREE_VIEW_DROP_AFTER)
-            return FALSE;
-
-          if (GIMP_IS_LAYER (src_viewable))
-            {
-              GimpLayer *src_layer  = GIMP_LAYER (src_viewable);
-              GimpImage *src_image  = gimp_item_get_image (GIMP_ITEM (src_layer));
-
-              if (src_image == dest_image &&
-                  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (src_layer)))
-                return FALSE;
-            }
-        }
     }
 
   return GIMP_CONTAINER_TREE_VIEW_CLASS (parent_class)->drop_possible (tree_view,

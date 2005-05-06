@@ -392,7 +392,6 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       alpha      = FALSE;    /*  alpha channel present  */
   gboolean       indexed    = FALSE;    /*  is indexed             */
   gboolean       preserve   = FALSE;
-  gboolean       next_alpha = FALSE;
   gboolean       text_layer = FALSE;
   GList         *next       = NULL;
   GList         *prev       = NULL;
@@ -422,9 +421,6 @@ layers_actions_update (GimpActionGroup *group,
               next = g_list_next (list);
             }
 
-          if (next)
-            next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
-
           if (layer)
             text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
         }
@@ -450,10 +446,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-select-previous", layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-next",     layer && !fs && !ac && next);
 
-  SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && alpha && prev);
-  SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && alpha && prev);
-  SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next && next_alpha);
-  SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next && next_alpha);
+  SET_SENSITIVE ("layers-raise",           layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-raise-to-top",    layer && !fs && !ac && prev);
+  SET_SENSITIVE ("layers-lower",           layer && !fs && !ac && next);
+  SET_SENSITIVE ("layers-lower-to-bottom", layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",        layer &&  fs && !ac);
   SET_SENSITIVE ("layers-merge-down",    layer && !fs && !ac && next);
@@ -467,7 +463,7 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-crop",            layer && sel);
 
-  SET_SENSITIVE ("layers-alpha-add", layer && !fs && !alpha);
+  SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
 
   SET_SENSITIVE ("layers-preserve-transparency", layer);
   SET_ACTIVE    ("layers-preserve-transparency", preserve);

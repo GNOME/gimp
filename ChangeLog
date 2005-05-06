@@ -1,3 +1,14 @@
+2005-05-06  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/core/gimpimage.c (gimp_image_position_layer)
+	* app/widgets/gimplayertreeview.c (gimp_layer_tree_view_drop_possible):
+	drop the limitation that layers not at the bottom of the stack
+	have to have an alpha channel. Allow the user to move the
+	background layer up in the stack or reposition it using DND.
+
+	* tips/gimp-tips.xml.in: changed the relevant tip and some more.
+
 2005-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/compressor.c: use G_DIR_SEPARATOR instead of '/'.

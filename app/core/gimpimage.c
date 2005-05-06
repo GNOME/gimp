@@ -3003,14 +3003,13 @@ gimp_image_position_layer (GimpImage   *gimage,
                            gboolean     push_undo,
                            const gchar *undo_desc)
 {
-  gint index;
-  gint num_layers;
+  gint  index;
+  gint  num_layers;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  index = gimp_container_get_child_index (gimage->layers,
-                                          GIMP_OBJECT (layer));
+  index = gimp_container_get_child_index (gimage->layers, GIMP_OBJECT (layer));
   if (index < 0)
     return FALSE;
 
@@ -3020,23 +3019,6 @@ gimp_image_position_layer (GimpImage   *gimage,
 
   if (new_index == index)
     return TRUE;
-
-  /* check if we want to move it below a bottom layer without alpha */
-  if (new_index == num_layers - 1)
-    {
-      GimpLayer *tmp;
-
-      tmp = (GimpLayer *) gimp_container_get_child_by_index (gimage->layers,
-                                                             num_layers - 1);
-
-      if (new_index == num_layers - 1 &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (tmp)))
-        {
-          g_message (_("Layer '%s' has no alpha. Layer was placed above it."),
-                     GIMP_OBJECT (tmp)->name);
-          new_index--;
-        }
-    }
 
   if (push_undo)
     gimp_image_undo_push_layer_reposition (gimage, undo_desc, layer);
