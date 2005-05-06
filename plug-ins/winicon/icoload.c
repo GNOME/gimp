@@ -46,14 +46,21 @@
 #define B_VAL_GIMP(p) ((guchar *)(p))[2]
 
 
-static gint       ico_read_int8  (FILE *fp, guint8 *data, gint count);
-static gint       ico_read_int16 (FILE *fp, guint16 *data, gint count);
-static gint       ico_read_int32 (FILE *fp, guint32 *data, gint count);
-static gboolean   ico_init       (const gchar *filename, MsIcon *ico);
-static void       ico_read_entry (MsIcon *ico, MsIconEntry* entry);
-static void       ico_read_data  (MsIcon *ico, gint icon_num);
-static void       ico_load       (MsIcon *ico);
-static gint32     ico_to_gimp    (MsIcon *ico);
+static gint       ico_read_int8  (FILE        *fp,
+                                  guint8      *data,
+                                  gint         count);
+static gint       ico_read_int16 (FILE        *fp,
+                                  guint16     *data,
+                                  gint         count);
+static gint       ico_read_int32 (FILE        *fp,
+                                  guint32     *data,
+                                  gint         count);
+static gboolean   ico_init       (const gchar *filename,
+                                  MsIcon      *ico);
+static void       ico_read_entry (MsIcon      *ico,
+                                  MsIconEntry *entry);
+static void       ico_read_data  (MsIcon      *ico,
+                                  gint         icon_num);
 
 
 static gint
@@ -108,6 +115,7 @@ ico_read_int8 (FILE   *fp,
       bytes = fread ((gchar *) data, sizeof (gchar), count, fp);
       if (bytes <= 0) /* something bad happened */
         break;
+
       count -= bytes;
       data += bytes;
     }
@@ -153,8 +161,8 @@ static void
 ico_read_entry (MsIcon      *ico,
                 MsIconEntry *entry)
 {
-  if (!ico || !entry)
-    return;
+  g_return_if_fail (ico != NULL);
+  g_return_if_fail (entry != NULL);
 
   ico->cp += ico_read_int8 (ico->fp, &entry->width, 1);
   ico->cp += ico_read_int8 (ico->fp, &entry->height, 1);
@@ -182,8 +190,7 @@ ico_read_data (MsIcon *ico,
   MsIconEntry *entry;
   gint length;
 
-  if (!ico)
-    return;
+  g_return_if_fail (ico != NULL);
 
   D(("Reading data for icon %i ------------------------------\n", icon_num));
 
@@ -241,30 +248,6 @@ ico_read_data (MsIcon *ico,
   D(("  length of and_map: %i\n", length));
 }
 
-
-static void
-ico_load (MsIcon *ico)
-{
-  gint i;
-
-  if (!ico)
-    return;
-
-  ico->cp += ico_read_int16 (ico->fp, &ico->icon_count, 1);
-  ico->icon_dir  = g_new0 (MsIconEntry, ico->icon_count);
-  ico->icon_data = g_new0 (MsIconData, ico->icon_count);
-
-  D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
-         ico->filename, ico->icon_count));
-
-  for (i = 0; i < ico->icon_count; i++)
-    ico_read_entry (ico, &ico->icon_dir[i]);
-
-  for (i = 0; i < ico->icon_count; i++)
-    ico_read_data (ico, i);
-}
-
-
 gint
 ico_get_bit_from_data (const guint8 *data,
                        gint          line_width,
@@ -309,7 +292,6 @@ ico_get_nibble_from_data (const guint8 *data,
 
   return result;
 }
-
 
 gint
 ico_get_byte_from_data (guint8 *data,
@@ -465,51 +447,15 @@ ico_load_layer (gint32  image,
   return layer;
 }
 
-static gint32
-ico_to_gimp (MsIcon *ico)
-{
-  gint32 image;
-  gint32 first_layer;
-  gint   max_w, max_h;
-  gint   i;
-
-  /* Do a quick scan of the icons in the file to find the
-     largest icon contained ... */
-
-  max_w = 0; max_h = 0;
-
-  for (i = 0; i < ico->icon_count; i++)
-    {
-      if (ico->icon_dir[i].width > max_w)
-        max_w = ico->icon_dir[i].width;
-
-      if (ico->icon_dir[i].height > max_h)
-        max_h = ico->icon_dir[i].height;
-    }
-
-  /* Allocate the Gimp image */
-
-  image = gimp_image_new (max_w, max_h, GIMP_RGB);
-  gimp_image_set_filename (image, ico->filename);
-
-  /* Scan icons again and set up a layer for each icon */
-  first_layer = ico_load_layer (image, ico, 0);
-  for (i = 1; i < ico->icon_count; i++)
-    ico_load_layer (image, ico, i);
-
-  gimp_image_set_active_layer (image, first_layer);
-
-  D(("*** icon successfully loaded.\n\n"));
-
-  return image;
-}
-
-
 gint32
 ico_load_image (const gchar *filename)
 {
-  gint32  image_ID;
   MsIcon  ico;
+  gint32  image;
+  gint32  layer;
+  gint    width  = 0;
+  gint    height = 0;
+  gint    i;
 
   gimp_progress_init (NULL);
   gimp_progress_set_text (_("Opening '%s'..."),
@@ -518,15 +464,49 @@ ico_load_image (const gchar *filename)
   if (! ico_init (filename, &ico))
     return -1;
 
-  ico_load (&ico);
+  ico.cp += ico_read_int16 (ico.fp, &ico.icon_count, 1);
+  ico.icon_dir  = g_new0 (MsIconEntry, ico.icon_count);
+  ico.icon_data = g_new0 (MsIconData, ico.icon_count);
 
-  image_ID = ico_to_gimp (&ico);
+  D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
+         ico.filename, ico.icon_count));
+
+  for (i = 0; i < ico.icon_count; i++)
+    ico_read_entry (&ico, &ico.icon_dir[i]);
+
+  /* Do a quick scan of the icons in the file to find the largest icon */
+  for (i = 0; i < ico.icon_count; i++)
+    {
+      if (ico.icon_dir[i].width > width)
+        width = ico.icon_dir[i].width;
+
+      if (ico.icon_dir[i].height > height)
+        height = ico.icon_dir[i].height;
+    }
+
+  for (i = 0; i < ico.icon_count; i++)
+    ico_read_data (&ico, i);
+
+  if (width < 1 || height < 1)
+    return -1;
+
+  image = gimp_image_new (width, height, GIMP_RGB);
+  gimp_image_set_filename (image, ico.filename);
+
+  /* Scan icons again and set up a layer for each icon */
+  layer = ico_load_layer (image, &ico, 0);
+  for (i = 1; i < ico.icon_count; i++)
+    ico_load_layer (image, &ico, i);
+
+  gimp_image_set_active_layer (image, layer);
+
+  D(("*** icon successfully loaded.\n\n"));
 
   gimp_progress_update (1.0);
 
   ico_cleanup (&ico);
 
-  return image_ID;
+  return image;
 }
 
 gint32
