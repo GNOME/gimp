@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-29 20:04+0200\n"
-"PO-Revision-Date: 2005-04-29 15:24+0200\n"
+"POT-Creation-Date: 2005-05-06 21:33+0200\n"
+"PO-Revision-Date: 2005-05-05 16:54+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,9 +27,9 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"GIMP není správně nainstalován pro aktuálního uživatele. Uživatelská\n"
+"GIMP není pro aktuálního uživatele správně nainstalován. Uživatelská\n"
 "instalace byla přeskočena, protože byl použit přepínač '--no-interface'.\n"
-"Uživatelskou instalaci provedete spuštěním GIMP bez přepínače '--no-"
+"Uživatelskou instalaci provedete spuštěním GIMPu bez přepínače '--no-"
 "interface'."
 
 #: app/app_procs.c:290
@@ -1437,7 +1437,7 @@ msgstr "Barva _levého koncového bodu..."
 
 #: app/actions/gradient-editor-actions.c:68
 msgid "R_ight Endpoint's Color..."
-msgstr "Barvy _pravého koncového bodu..."
+msgstr "Barva _pravého koncového bodu..."
 
 #: app/actions/gradient-editor-actions.c:108
 msgid "Ble_nd Endpoints' Colors"
@@ -1453,17 +1453,17 @@ msgstr "Pravého koncového bodu _levého souseda"
 
 #: app/actions/gradient-editor-actions.c:148
 msgid "_Right Endpoint"
-msgstr "_Pravý koncový bod"
+msgstr "_Pravého koncového bodu"
 
 #: app/actions/gradient-editor-actions.c:153
 #: app/actions/gradient-editor-actions.c:201
 msgid "_FG Color"
-msgstr "Barva po_předí"
+msgstr "Barvy po_předí"
 
 #: app/actions/gradient-editor-actions.c:158
 #: app/actions/gradient-editor-actions.c:206
 msgid "_BG Color"
-msgstr "Barva po_zadí"
+msgstr "Barvy po_zadí"
 
 #: app/actions/gradient-editor-actions.c:191
 msgid "_Right Neighbor's Left Endpoint"
@@ -1471,7 +1471,7 @@ msgstr "Levého koncového bodu _pravého souseda"
 
 #: app/actions/gradient-editor-actions.c:196
 msgid "_Left Endpoint"
-msgstr "_Levý koncový bod"
+msgstr "_Levého koncového bodu"
 
 #: app/actions/gradient-editor-actions.c:245
 msgid "_Linear"
@@ -1522,13 +1522,13 @@ msgstr "Přiblížit"
 
 #: app/actions/gradient-editor-actions.c:307
 msgid "Zoom Out"
-msgstr "Vzdálit"
+msgstr "Oddálit"
 
 #: app/actions/gradient-editor-actions.c:308
 #: app/actions/palette-editor-actions.c:84 app/actions/view-actions.c:210
 #: app/widgets/widgets-enums.c:354
 msgid "Zoom out"
-msgstr "Vzdálit"
+msgstr "Oddálit"
 
 #: app/actions/gradient-editor-actions.c:313
 msgid "Zoom All"
@@ -1541,11 +1541,11 @@ msgstr "Zvětšit vše"
 
 #: app/actions/gradient-editor-actions.c:589
 msgid "_Blending Function for Segment"
-msgstr "Funkce _mísení pro segment"
+msgstr "Způsob _mísení v segmentu"
 
 #: app/actions/gradient-editor-actions.c:591
 msgid "Coloring _Type for Segment"
-msgstr "_Typ vybarvení pro segment"
+msgstr "_Způsob vybarvení segmentu"
 
 #: app/actions/gradient-editor-actions.c:594
 msgid "_Flip Segment"
@@ -1569,7 +1569,7 @@ msgstr "_Odstranit segment"
 
 #: app/actions/gradient-editor-actions.c:604
 msgid "Re-_center Segment's Midpoint"
-msgstr "Pře_centrovat středový bod segmentu"
+msgstr "Vy_centrovat středový bod segmentu"
 
 #: app/actions/gradient-editor-actions.c:606
 msgid "Re-distribute _Handles in Segment"
@@ -1577,11 +1577,11 @@ msgstr "Přerozdělit _řídicí body v segmentu"
 
 #: app/actions/gradient-editor-actions.c:611
 msgid "_Blending Function for Selection"
-msgstr "Funkce _mísení pro výběr"
+msgstr "Způsob _mísení ve výběru"
 
 #: app/actions/gradient-editor-actions.c:613
 msgid "Coloring _Type for Selection"
-msgstr "_Typ vybarvení pro výběr"
+msgstr "_Způsob vybarvení výběru"
 
 #: app/actions/gradient-editor-actions.c:616
 msgid "_Flip Selection"
@@ -1605,7 +1605,7 @@ msgstr "_Odstranit výběr"
 
 #: app/actions/gradient-editor-actions.c:626
 msgid "Re-_center Midpoints in Selection"
-msgstr "Pře_centrovat středové body ve výběru"
+msgstr "Vy_centrovat středové body ve výběru"
 
 #: app/actions/gradient-editor-actions.c:628
 msgid "Re-distribute _Handles in Selection"
@@ -2195,7 +2195,7 @@ msgstr "_Přiblížit"
 
 #: app/actions/palette-editor-actions.c:83 app/actions/view-actions.c:209
 msgid "Zoom _Out"
-msgstr "Vz_dálit"
+msgstr "Od_dálit"
 
 #: app/actions/palette-editor-actions.c:89
 msgid "Zoom _All"
@@ -3000,7 +3000,7 @@ msgstr "_Zobrazení"
 
 #: app/actions/view-actions.c:64
 msgid "_Zoom"
-msgstr "_Zvětšení"
+msgstr "_Přiblížení"
 
 #: app/actions/view-actions.c:65
 msgid "_Padding Color"
@@ -3170,7 +3170,7 @@ msgstr "Jiný (%s) ..."
 #: app/actions/view-actions.c:601
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "_Zvětšení (%s)"
+msgstr "_Přiblížení (%s)"
 
 #: app/actions/view-commands.c:572
 msgid "Set Canvas Padding Color"
@@ -3619,7 +3619,7 @@ msgid ""
 "zooming into and out of images."
 msgstr ""
 "Je-li povoleno, bude okno obrázku automaticky měnit svou velikost při "
-"zvětšování a zmenšování obrázků."
+"přibližování a oddalování obrázků."
 
 #: app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -6433,11 +6433,11 @@ msgstr "_Rychlost běhu čar:"
 #. Zoom & Resize Behavior
 #: app/dialogs/preferences-dialog.c:1710
 msgid "Zoom & Resize Behavior"
-msgstr "Chování zvětšování a změny velikosti"
+msgstr "Chování přibližování a změny velikosti"
 
 #: app/dialogs/preferences-dialog.c:1714
 msgid "Resize window on _zoom"
-msgstr "Měnit velikost okna dle _zvětšení"
+msgstr "Měnit velikost okna dle _přiblížení"
 
 #: app/dialogs/preferences-dialog.c:1717
 msgid "Resize window on image _size change"
@@ -6449,7 +6449,7 @@ msgstr "Přizpůsobit velikosti okna"
 
 #: app/dialogs/preferences-dialog.c:1725
 msgid "Initial zoom _ratio:"
-msgstr "_Počáteční zvětšení:"
+msgstr "_Počáteční přiblížení:"
 
 #. Mouse Cursors
 #: app/dialogs/preferences-dialog.c:1729
@@ -6498,11 +6498,11 @@ msgstr "Standardní"
 
 #: app/dialogs/preferences-dialog.c:1806
 msgid "Show zoom percentage"
-msgstr "Zobrazovat procento zvětšení"
+msgstr "Zobrazovat procento přiblížení"
 
 #: app/dialogs/preferences-dialog.c:1807
 msgid "Show zoom ratio"
-msgstr "Zobrazovat poměr zvětšení"
+msgstr "Zobrazovat poměr přiblížení"
 
 #: app/dialogs/preferences-dialog.c:1808
 msgid "Show image size"
@@ -7378,7 +7378,7 @@ msgstr "Vlastní barva"
 
 #: app/display/gimpdisplayshell.c:943
 msgid "Zoom image when window size changes"
-msgstr "Změnit měřítko obrázku při změně veliosti okna"
+msgstr "Změnit přiblížení obrázku při změně velikosti okna"
 
 #: app/display/gimpdisplayshell.c:963
 msgid "Toggle Quick Mask"
@@ -7444,21 +7444,21 @@ msgstr "Nastavit filtry barevného zobrazení"
 msgid "Layer Select"
 msgstr "Vrstva výběru"
 
-#: app/display/gimpdisplayshell-scale.c:537
+#: app/display/gimpdisplayshell-scale.c:541
 msgid "Zoom Ratio"
-msgstr "Zvětšení"
+msgstr "Přiblížení"
 
-#: app/display/gimpdisplayshell-scale.c:539
+#: app/display/gimpdisplayshell-scale.c:543
 msgid "Select Zoom Ratio"
-msgstr "Vyberte zvětšení"
+msgstr "Vyberte přiblížení"
 
-#: app/display/gimpdisplayshell-scale.c:574
+#: app/display/gimpdisplayshell-scale.c:578
 msgid "Zoom Ratio:"
-msgstr "Zvětšení:"
+msgstr "Přiblížení:"
 
-#: app/display/gimpdisplayshell-scale.c:601
+#: app/display/gimpdisplayshell-scale.c:605
 msgid "Zoom:"
-msgstr "Zvětšení:"
+msgstr "Přiblížení:"
 
 #: app/display/gimpdisplayshell-title.c:234
 msgid "RGB-empty"
@@ -8799,7 +8799,7 @@ msgstr "Lupa"
 
 #: app/tools/gimpmagnifytool.c:96
 msgid "Zoom in & out"
-msgstr "Přiblížení nebo vzdálení"
+msgstr "Přiblížení nebo oddálení"
 
 #: app/tools/gimpmagnifytool.c:97
 msgid "M_agnify"
@@ -10102,12 +10102,12 @@ msgstr "Přípony"
 
 #: app/widgets/gimpgradienteditor.c:362
 msgid "Instant update"
-msgstr "Rychlá aktualizace"
+msgstr "Okamžitá aktualizace"
 
 #: app/widgets/gimpgradienteditor.c:619
 #, c-format
 msgid "Zoom factor: %d:1"
-msgstr "Poměr zvětšení: %d:1"
+msgstr "Poměr přiblížení: %d:1"
 
 #: app/widgets/gimpgradienteditor.c:622
 #, c-format
