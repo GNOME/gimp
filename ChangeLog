@@ -1,3 +1,7 @@
+2005-05-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-merge.c: removed redundant casts.
+
 2005-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/gradient-editor-commands.h: added enum for the

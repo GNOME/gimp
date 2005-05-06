@@ -242,7 +242,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
   count = 0;
   while (merge_list)
     {
-      layer = (GimpLayer *) merge_list->data;
+      layer = merge_list->data;
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
@@ -383,7 +383,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
-      layer = (GimpLayer *) reverse_list->data;
+      layer = reverse_list->data;
       position =
         gimp_container_num_children (gimage->layers) -
         gimp_container_get_child_index (gimage->layers, GIMP_OBJECT (layer));
@@ -403,7 +403,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
     {
       GimpLayerModeEffects  mode;
 
-      layer = (GimpLayer *) reverse_list->data;
+      layer = reverse_list->data;
 
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
@@ -465,6 +465,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
                        operation);
 
       gimp_image_remove_layer (gimage, layer);
+
       reverse_list = g_slist_next (reverse_list);
     }
 
@@ -476,7 +477,7 @@ gimp_image_merge_layers (GimpImage     *gimage,
       list = GIMP_LIST (gimage->layers)->list;
       while (list)
         {
-          layer = (GimpLayer *) list->data;
+          layer = list->data;
 
           list = g_list_next (list);
           gimp_image_remove_layer (gimage, layer);
@@ -529,7 +530,7 @@ gimp_image_merge_visible_vectors (GimpImage *gimage)
        list;
        list = g_list_next (list))
     {
-      vectors = (GimpVectors *) list->data;
+      vectors = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (vectors)))
         merge_list = g_slist_append (merge_list, vectors);
