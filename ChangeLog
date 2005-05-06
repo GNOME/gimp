@@ -1,3 +1,10 @@
+2005-05-06  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-sse2.c
+	(gimp_composite_lighten_rgba8_rgba8_rgba8_sse2): applied a patch
+	from Joao S. O. Bueno Calligaris that changes the SSE2 code to
+	load the proper register. Fixes bug #164061.
+
 2005-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.c (control_draw)

@@ -590,7 +590,7 @@ gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
   uint128 *B = (uint128 *) _op->B;
   gulong n_pixels = _op->n_pixels;
 
-  asm volatile ("movq    %0,%%mm0"     :  : "m" (*rgba8_alpha_mask_64) : "%mm0");
+  asm volatile ("movdqu    %0,%%xmm0"  :  : "m" (*rgba8_alpha_mask_64) : "%xmm0");
 
   for (; n_pixels >= 4; n_pixels -= 4)
     {
