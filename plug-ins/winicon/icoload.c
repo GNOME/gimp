@@ -484,9 +484,6 @@ ico_load_image (const gchar *filename)
         height = ico.icon_dir[i].height;
     }
 
-  for (i = 0; i < ico.icon_count; i++)
-    ico_read_data (&ico, i);
-
   if (width < 1 || height < 1)
     return -1;
 
@@ -494,6 +491,9 @@ ico_load_image (const gchar *filename)
   gimp_image_set_filename (image, ico.filename);
 
   /* Scan icons again and set up a layer for each icon */
+  for (i = 0; i < ico.icon_count; i++)
+    ico_read_data (&ico, i);
+
   layer = ico_load_layer (image, &ico, 0);
   for (i = 1; i < ico.icon_count; i++)
     ico_load_layer (image, &ico, i);
@@ -514,6 +514,70 @@ ico_load_thumbnail_image (const gchar *filename,
                           gint        *width,
                           gint        *height)
 {
-  /*  FIXME: implement thumbnail loading (bug #158191)  */
-  return -1;
+  MsIcon  ico;
+  gint32  image;
+  gint32  layer;
+  gint    w     = 0;
+  gint    h     = 0;
+  gint    match = 0;
+  gint    i;
+
+  gimp_progress_init (NULL);
+  gimp_progress_set_text (_("Opening thumbnail for '%s'..."),
+                          gimp_filename_to_utf8 (filename));
+
+  if (! ico_init (filename, &ico))
+    return -1;
+
+  ico.cp += ico_read_int16 (ico.fp, &ico.icon_count, 1);
+  ico.icon_dir  = g_new0 (MsIconEntry, ico.icon_count);
+  ico.icon_data = g_new0 (MsIconData, ico.icon_count);
+
+  D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
+         ico.filename, ico.icon_count));
+
+  for (i = 0; i < ico.icon_count; i++)
+    ico_read_entry (&ico, &ico.icon_dir[i]);
+
+  /* Do a quick scan of the icons in the file to find the best match */
+  for (i = 0; i < ico.icon_count; i++)
+    {
+      if ((ico.icon_dir[i].width  > w && w < *width) ||
+          (ico.icon_dir[i].height > h && h < *height))
+        {
+          w = ico.icon_dir[i].width;
+          h = ico.icon_dir[i].height;
+
+          match = i;
+        }
+    }
+
+  if (w < 1 || h < 1)
+    return -1;
+
+  ico_read_data (&ico, match);
+
+  image = gimp_image_new (w, h, GIMP_RGB);
+  layer = ico_load_layer (image, &ico, match);
+
+  /* Do a quick scan of the icons in the file to find the largest icon */
+  for (i = 0, w = 0, h = 0; i < ico.icon_count; i++)
+    {
+      if (ico.icon_dir[i].width > w)
+        w = ico.icon_dir[i].width;
+
+      if (ico.icon_dir[i].height > h)
+        h = ico.icon_dir[i].height;
+    }
+
+  *width  = w;
+  *height = h;
+
+  D(("*** thumbnail successfully loaded.\n\n"));
+
+  gimp_progress_update (1.0);
+
+  ico_cleanup (&ico);
+
+  return image;
 }

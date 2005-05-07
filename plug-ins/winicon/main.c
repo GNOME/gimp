@@ -69,6 +69,18 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
 
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"      }
+  };
+  static GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"               },
+    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"     },
+    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"    }
+  };
+
   static GimpParamDef save_args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
@@ -96,6 +108,21 @@ query (void)
                                     "ico",
                                     "",
                                     "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+
+  gimp_install_procedure ("file_ico_load_thumb",
+                          "Loads a preview from an Windows ICO file",
+                          "",
+                          "Dom Lachowicz, Sven Neumann",
+                          "Sven Neumann <sven@gimp.org>",
+                          "2005",
+			  NULL,
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+
+  gimp_register_thumbnail_loader ("file_ico_load", "file_ico_load_thumb");
 
   gimp_install_procedure ("file_ico_save",
                           "Saves files in Windows ICO file format",
@@ -161,6 +188,38 @@ run (const gchar      *name,
               *nreturn_vals = 2;
               values[1].type         = GIMP_PDB_IMAGE;
               values[1].data.d_image = image_ID;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
+    }
+  else if (strcmp (name, "file_ico_load_thumb") == 0)
+    {
+      if (nparams < 2)
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
+      else
+        {
+          const gchar *filename = param[0].data.d_string;
+          gint         width    = param[1].data.d_int32;
+          gint         height   = param[1].data.d_int32;
+          gint32       image_ID;
+
+          image_ID = ico_load_thumbnail_image (filename, &width, &height);
+
+          if (image_ID != -1)
+            {
+	      *nreturn_vals = 4;
+
+	      values[1].type         = GIMP_PDB_IMAGE;
+	      values[1].data.d_image = image_ID;
+	      values[2].type         = GIMP_PDB_INT32;
+	      values[2].data.d_int32 = width;
+	      values[3].type         = GIMP_PDB_INT32;
+	      values[3].data.d_int32 = height;
             }
           else
             {
@@ -253,7 +312,6 @@ ico_alloc_map (gint  width,
 
   return map;
 }
-
 
 void
 ico_cleanup (MsIcon *ico)
