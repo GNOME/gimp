@@ -1,3 +1,9 @@
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/tools/gimpselectiontool.c.
+
+	* de.po: updated german translation.
+
 2005-05-04  Peteris Krisjanis <pecisk@gmail.com>
 
 	* lv.po: Updated Latvian translation by

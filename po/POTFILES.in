@@ -284,6 +284,7 @@ app/tools/gimprectselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
 app/tools/gimpselectionoptions.c
+app/tools/gimpselectiontool.c
 app/tools/gimpsheartool.c
 app/tools/gimpsmudgetool.c
 app/tools/gimptextoptions.c
