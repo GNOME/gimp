@@ -1,3 +1,10 @@
+2005-05-07  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: Fix a typo reported in bug #303379.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-commands.c (edit_undo_clear_cmd_callback): tell

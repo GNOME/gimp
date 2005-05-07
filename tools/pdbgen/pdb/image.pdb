@@ -367,7 +367,7 @@ sub image_scale {
     $blurb = 'Scale the image to the specified extents.';
 
     $help = <<'HELP';
-This procedure scales the image so that it's new width and height are equal to
+This procedure scales the image so that its new width and height are equal to
 the supplied parameters. Offsets are also provided which describe the position
 of the previous image's content. No bounds checking is currently provided, so
 don't supply parameters that are out of bounds. All channels within the image

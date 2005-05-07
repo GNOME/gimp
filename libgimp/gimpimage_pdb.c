@@ -384,14 +384,14 @@ gimp_image_resize_to_layers (gint32 image_ID)
  *
  * Scale the image to the specified extents.
  *
- * This procedure scales the image so that it's new width and height
- * are equal to the supplied parameters. Offsets are also provided
- * which describe the position of the previous image's content. No
- * bounds checking is currently provided, so don't supply parameters
- * that are out of bounds. All channels within the image are scaled
- * according to the specified parameters; this includes the image
- * selection mask. All layers within the image are repositioned
- * according to the specified offsets.
+ * This procedure scales the image so that its new width and height are
+ * equal to the supplied parameters. Offsets are also provided which
+ * describe the position of the previous image's content. No bounds
+ * checking is currently provided, so don't supply parameters that are
+ * out of bounds. All channels within the image are scaled according to
+ * the specified parameters; this includes the image selection mask.
+ * All layers within the image are repositioned according to the
+ * specified offsets.
  *
  * Returns: TRUE on success.
  */
