@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -98,6 +99,9 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   GimpImage *gimage;
   GtkWidget *widget;
   GtkWidget *dialog;
+  gchar     *size;
+  guint64    memsize;
+  guint64    guisize;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
@@ -125,6 +129,20 @@ edit_undo_clear_cmd_callback (GtkAction *action,
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Really clear image's undo history?"));
+
+  memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack),
+                                     &guisize);
+  memsize += guisize;
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack),
+                                      &guisize);
+  memsize += guisize;
+
+  size = gimp_memsize_to_string (memsize);
+
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Clearing the undo history of this "
+                               "image will gain %s of memory."), size);
+  g_free (size);
 
   gtk_widget_show (dialog);
 }

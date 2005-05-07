@@ -1,5 +1,10 @@
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/edit-commands.c (edit_undo_clear_cmd_callback): tell
+	the user how much memory will be freed by clearing the undo history.
+
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimppainttool.[ch]
 	* app/tools/gimptool.[ch]: unified tool and paint-tool statusbar APIs.
 
