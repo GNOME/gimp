@@ -1,3 +1,7 @@
+2005-05-07  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd.c: add comments describing thumbnail resource.
+
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/winicon/icoload.c

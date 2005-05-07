@@ -613,7 +613,7 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 {
   if ( (ID < 0x0bb6) && (ID >0x07d0) )
     {
-      IFDBG printf ("\t\tPath data is irrelevant to GIMP at this time.\n");
+      IFDBG printf ("\t\tThe psd plugin does not currently support reading path data.\n");
       throwchunk(Size, fd, "dispatch_res path throw");
       (*offset) += Size;
     }
@@ -885,6 +885,29 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 			psd_image.resolution.vRes / 65536.0);
 	} break;
 
+      case 0x0409:
+	/* DATA LAYOUT for thumbail resource */
+	/* 4 bytes     format             (1 = jfif, 0 = raw) */
+	/* 4 bytes     width              width of thumbnail  */
+	/* 4 bytes     height             height of thumbnail */
+	/* 4 bytes     widthbytes         for validation only?*/
+	/* 4 bytes     size               for validation only?*/
+	/* 4 bytes     compressed size    for validation only?*/
+	/* 2 bytes     bits per pixel     Always 24?          */
+	/* 2 bytes     planes             Always 1?           */
+	/* size bytes  data               JFIF (or raw) data  */
+	IFDBG printf("\t\t<Photoshop 4.0 style thumbnail (BGR)>  unhandled\n");
+	/* for resource 0x0409 we have to swap the r and b channels
+	   after decoding */
+	throwchunk(Size, fd, "dispatch_res");
+	(*offset) += Size;
+	break;
+      case 0x040C:
+	/* See above */
+	IFDBG printf("\t\t<Photoshop 5.0 style thumbnail (RGB)> unhandled\n");
+	throwchunk(Size, fd, "dispatch_res");
+	(*offset) += Size;
+	break;
       case 0x03e9:
       case 0x03f1:
       case 0x03f3:
