@@ -872,7 +872,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                 options->interpolation,
                                 options->supersample,
                                 options->recursion_level,
-                                options->resize,
+                                options->clip,
                                 progress);
 
   if (GIMP_IS_LAYER (active_item) &&
@@ -887,7 +887,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            options->interpolation,
                            options->supersample,
                            options->recursion_level,
-                           options->resize,
+                           options->clip,
                            progress);
     }
 
@@ -896,7 +896,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     case GIMP_TRANSFORM_TYPE_LAYER:
     case GIMP_TRANSFORM_TYPE_SELECTION:
       {
-        GimpTransformResize resize = options->resize;
+        gboolean clip_result = options->clip;
 
         /*  always clip the selction and unfloated channels
          *  so they keep their size
@@ -905,9 +905,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
           {
             if (GIMP_IS_CHANNEL (active_item) &&
                 tile_manager_bpp (tr_tool->original) == 1)
-              {
-                resize = GIMP_TRANSFORM_SIZE_CLIP;
-              }
+              clip_result = TRUE;
 
             ret =
               gimp_drawable_transform_tiles_affine (GIMP_DRAWABLE (active_item),
@@ -918,7 +916,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                     options->interpolation,
                                                     options->supersample,
                                                     options->recursion_level,
-                                                    resize,
+                                                    clip_result,
                                                     progress);
           }
       }
@@ -931,7 +929,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                            options->interpolation,
                            options->supersample,
                            options->recursion_level,
-                           options->resize,
+                           options->clip,
                            progress);
       break;
     }
