@@ -220,7 +220,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
   /*  if we are changing displays, pop the statusbar of the old one  */
   if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
     }
 
   mtool->function = CREATING;
@@ -342,8 +342,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
       if (gimp_tool_control_is_active (tool->control))
 	{
-	  gimp_tool_pop_status (tool);
-	  gimp_tool_push_status (tool, " ");
+	  gimp_tool_replace_status (tool, gdisp, " ");
         }
       else
         {
@@ -685,7 +684,7 @@ gimp_measure_tool_halt (GimpMeasureTool *mtool)
   if (mtool->dialog)
     gtk_widget_destroy (mtool->dialog);
 
-  gimp_tool_pop_status (tool);
+  gimp_tool_pop_status (tool, tool->gdisp);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (mtool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (mtool));
@@ -814,8 +813,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *mtool,
                   unit_width, unit_height);
     }
 
-  gimp_tool_pop_status (GIMP_TOOL (mtool));
-  gimp_tool_push_status (GIMP_TOOL (mtool), buf);
+  gimp_tool_replace_status (GIMP_TOOL (mtool), gdisp, buf);
 
   if (mtool->dialog)
     {

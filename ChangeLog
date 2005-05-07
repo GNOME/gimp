@@ -1,5 +1,26 @@
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimptool.[ch]: unified tool and paint-tool statusbar APIs.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimpvectortool.c: changed accordingly.
+
+	* app/tools/gimpselectiontool.c: give more hints in the statusbar.
+	Some of the selection tools should probably override these.
+
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppreviewcache.c: minor code cleanup.
 
 2005-05-07  Sven Neumann  <sven@gimp.org>

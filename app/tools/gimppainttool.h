@@ -59,14 +59,5 @@ GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
 void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
                                              GimpColorPickMode  mode);
 
-void    gimp_paint_tool_push_status         (GimpTool          *tool,
-                                             GimpDisplay       *gdisp,
-                                             const gchar       *message);
-void    gimp_paint_tool_replace_status      (GimpTool          *tool,
-                                             GimpDisplay       *gdisp,
-                                             const gchar       *message);
-void    gimp_paint_tool_pop_status          (GimpTool          *tool,
-                                             GimpDisplay       *gdisp);
-
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

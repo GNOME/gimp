@@ -295,7 +295,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
               gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
-              gimp_tool_push_status_length (tool, _("Move Guide: "),
+              gimp_tool_push_status_length (tool, gdisp,
+                                            _("Move Guide: "),
                                             SWAP_ORIENT (move->guide_orientation),
                                             move->guide_position);
 
@@ -384,7 +385,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
       gboolean delete_guide = FALSE;
       gint     x, y, width, height;
 
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
 
       gimp_tool_control_set_scroll_lock (tool->control, FALSE);
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -561,17 +562,17 @@ gimp_move_tool_motion (GimpTool        *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
 
       if (delete_guide)
         {
-          gimp_tool_push_status (tool,
+          gimp_tool_push_status (tool, gdisp,
                                  move->guide ?
                                  _("Remove Guide") : _("Cancel Guide"));
         }
       else
         {
-          gimp_tool_push_status_length (tool,
+          gimp_tool_push_status_length (tool, gdisp,
                                         move->guide ?
                                         _("Move Guide: ") : _("Add Guide: "),
                                         SWAP_ORIENT (move->guide_orientation),

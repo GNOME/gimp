@@ -146,17 +146,24 @@ void          gimp_tool_cursor_update      (GimpTool            *tool,
                                             GimpDisplay         *gdisp);
 
 void          gimp_tool_push_status        (GimpTool            *tool,
+                                            GimpDisplay         *gdisp,
                                             const gchar         *message);
 void          gimp_tool_push_status_coords (GimpTool            *tool,
+                                            GimpDisplay         *gdisp,
                                             const gchar         *title,
                                             gdouble              x,
                                             const gchar         *separator,
                                             gdouble              y);
 void          gimp_tool_push_status_length (GimpTool            *tool,
+                                            GimpDisplay         *gdisp,
                                             const gchar         *title,
                                             GimpOrientationType  axis,
                                             gdouble              value);
-void          gimp_tool_pop_status         (GimpTool            *tool);
+void          gimp_tool_replace_status     (GimpTool            *tool,
+                                            GimpDisplay         *gdisp,
+                                            const gchar         *message);
+void          gimp_tool_pop_status         (GimpTool            *tool,
+                                            GimpDisplay         *gdisp);
 
 void          gimp_tool_set_cursor         (GimpTool            *tool,
                                             GimpDisplay         *gdisp,

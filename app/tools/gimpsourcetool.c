@@ -253,8 +253,8 @@ gimp_clone_tool_oper_update (GimpTool        *tool,
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
       GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable == NULL)
     {
-      gimp_paint_tool_replace_status (tool, gdisp,
-                                      _("Ctrl-Click to set a clone source."));
+      gimp_tool_replace_status (tool, gdisp,
+                                _("Ctrl-Click to set a clone source."));
     }
 }
 

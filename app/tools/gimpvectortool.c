@@ -264,7 +264,7 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_vector_tool_set_vectors (vector_tool, NULL);
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
       break;
 
     default:
@@ -1245,9 +1245,9 @@ gimp_vector_tool_status_update (GimpTool    *tool,
       }
 
       if (status)
-        gimp_tool_push_status (tool, status);
+        gimp_tool_push_status (tool, gdisp, status);
       else
-        gimp_tool_pop_status (tool);
+        gimp_tool_pop_status (tool, gdisp);
     }
 }
 

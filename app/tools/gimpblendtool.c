@@ -201,7 +201,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (tool, _("Blend: "), 0, ", ", 0);
+  gimp_tool_push_status_coords (tool, gdisp, _("Blend: "), 0, ", ", 0);
 
   /*  Start drawing the blend tool  */
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
@@ -226,7 +226,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   gimage = gdisp->gimage;
 
-  gimp_tool_pop_status (tool);
+  gimp_tool_pop_status (tool, gdisp);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -294,9 +294,8 @@ gimp_blend_tool_motion (GimpTool        *tool,
                                   &blend_tool->endx, &blend_tool->endy);
     }
 
-  gimp_tool_pop_status (tool);
-
-  gimp_tool_push_status_coords (tool,
+  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_push_status_coords (tool, gdisp,
                                 _("Blend: "),
                                 blend_tool->endx - blend_tool->startx,
                                 ", ",

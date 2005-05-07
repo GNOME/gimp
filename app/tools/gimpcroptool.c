@@ -314,7 +314,7 @@ gimp_crop_tool_button_release (GimpTool        *tool,
   GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_control_halt (tool->control);
-  gimp_tool_pop_status (tool);
+  gimp_tool_pop_status (tool, gdisp);
 
   if (! (state & GDK_BUTTON3_MASK))
     {
@@ -493,9 +493,8 @@ gimp_crop_tool_motion (GimpTool        *tool,
       crop->function == RESIZING_LEFT ||
       crop->function == RESIZING_RIGHT)
     {
-      gimp_tool_pop_status (tool);
-
-      gimp_tool_push_status_coords (tool,
+      gimp_tool_pop_status (tool, gdisp);
+      gimp_tool_push_status_coords (tool, gdisp,
                                     _("Crop: "),
                                     crop->x2 - crop->x1,
                                     " x ",
@@ -980,7 +979,7 @@ crop_start (GimpCropTool *crop,
     }
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (tool, _("Crop: "), 0, " x ", 0);
+  gimp_tool_push_status_coords (tool, tool->gdisp, _("Crop: "), 0, " x ", 0);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->gdisp);
 }

@@ -460,7 +460,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (GIMP_TOOL (edit_select),
+  gimp_tool_push_status_coords (GIMP_TOOL (edit_select), gdisp,
                                 _("Move: "), 0, ", ", 0);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), gdisp);
@@ -481,7 +481,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   /*  resume the current selection  */
   gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
 
-  gimp_tool_pop_status (tool);
+  gimp_tool_pop_status (tool, gdisp);
 
   /*  Stop and free the selection core  */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (edit_select));
@@ -726,9 +726,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   /********************************************************************/
   /********************************************************************/
 
-  gimp_tool_pop_status (tool);
-
-  gimp_tool_push_status_coords (tool,
+  gimp_tool_pop_status (tool, gdisp);
+  gimp_tool_push_status_coords (tool, gdisp,
                                 _("Move: "),
                                 edit_select->cumlx,
                                 ", ",

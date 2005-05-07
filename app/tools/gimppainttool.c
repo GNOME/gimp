@@ -288,39 +288,6 @@ gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 }
 
-void
-gimp_paint_tool_push_status (GimpTool    *tool,
-                             GimpDisplay *gdisp,
-                             const gchar *message)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                       G_OBJECT_TYPE_NAME (tool), message);
-}
-
-void
-gimp_paint_tool_replace_status (GimpTool    *tool,
-                                GimpDisplay *gdisp,
-                                const gchar *message)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar),
-                          G_OBJECT_TYPE_NAME (tool), message);
-}
-
-void
-gimp_paint_tool_pop_status (GimpTool    *tool,
-                            GimpDisplay *gdisp)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
-                      G_OBJECT_TYPE_NAME (tool));
-}
-
-
 static void
 gimp_paint_tool_control (GimpTool       *tool,
 			 GimpToolAction  action,
@@ -352,9 +319,7 @@ gimp_paint_tool_control (GimpTool       *tool,
 
         for (list = display_list; list; list = g_slist_next (list))
           {
-            GimpDisplay *tmp_disp;
-
-            tmp_disp = (GimpDisplay *) list->data;
+            GimpDisplay *tmp_disp = list->data;
 
             if (tmp_disp != gdisp && tmp_disp->gimage == gdisp->gimage)
               {
@@ -670,7 +635,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
   if (gimp_draw_tool_is_active (draw_tool))
     gimp_draw_tool_stop (draw_tool);
 
-  gimp_paint_tool_pop_status (tool, gdisp);
+  gimp_tool_pop_status (tool, gdisp);
 
   if (tool->gdisp          &&
       tool->gdisp != gdisp &&
@@ -738,16 +703,15 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
               g_snprintf (status_str, sizeof (status_str), format_str, dist);
             }
 
-          gimp_paint_tool_push_status (tool, gdisp, status_str);
+          gimp_tool_push_status (tool, gdisp, status_str);
 
           paint_tool->draw_line = TRUE;
         }
       else
         {
           if (gdisp == tool->gdisp)
-            gimp_paint_tool_push_status (tool, gdisp,
-                                         _("Press Shift to "
-                                           "draw a straight line."));
+            gimp_tool_push_status (tool, gdisp,
+                                   _("Press Shift to draw a straight line."));
 
           paint_tool->draw_line = FALSE;
         }

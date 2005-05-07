@@ -268,7 +268,8 @@ gimp_color_tool_button_press (GimpTool        *tool,
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 
-      gimp_tool_push_status_coords (tool, _("Move Sample Point: "),
+      gimp_tool_push_status_coords (tool, gdisp,
+                                    _("Move Sample Point: "),
                                     color_tool->sample_point_x,
                                     ", ",
                                     color_tool->sample_point_y);
@@ -309,7 +310,7 @@ gimp_color_tool_button_release (GimpTool        *tool,
     {
       gint x, y, width, height;
 
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
 
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -429,18 +430,18 @@ gimp_color_tool_motion (GimpTool        *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-      gimp_tool_pop_status (tool);
+      gimp_tool_pop_status (tool, gdisp);
 
       if (delete_point)
         {
-          gimp_tool_push_status (tool,
+          gimp_tool_push_status (tool, gdisp,
                                  color_tool->sample_point ?
                                  _("Remove Sample Point") :
                                  _("Cancel Sample Point"));
         }
       else
         {
-          gimp_tool_push_status_coords (tool,
+          gimp_tool_push_status_coords (tool, gdisp,
                                         color_tool->sample_point ?
                                         _("Move Sample Point: ") :
                                         _("Add Sample Point: "),

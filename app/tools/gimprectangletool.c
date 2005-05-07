@@ -369,7 +369,7 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   options = GIMP_RECTANGLE_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_control_halt (tool->control);
-  gimp_tool_pop_status (tool);
+  gimp_tool_pop_status (tool, gdisp);
 
   if (! (state & GDK_BUTTON3_MASK))
     {
@@ -811,9 +811,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       rectangle->function == RECT_RESIZING_UPPER_LEFT ||
       rectangle->function == RECT_RESIZING_LOWER_RIGHT)
     {
-      gimp_tool_pop_status (tool);
-
-      gimp_tool_push_status_coords (tool,
+      gimp_tool_pop_status (tool, gdisp);
+      gimp_tool_push_status_coords (tool, gdisp,
                                     _("Rectangle: "),
                                     rectangle->x2 - rectangle->x1,
                                     " x ",
@@ -1169,12 +1168,13 @@ rectangle_recalc (GimpRectangleTool *rectangle)
 static void
 rectangle_tool_start (GimpRectangleTool *rectangle)
 {
-  GimpTool         *tool  = GIMP_TOOL (rectangle);
+  GimpTool *tool = GIMP_TOOL (rectangle);
 
   rectangle_recalc (rectangle);
 
   /* initialize the statusbar display */
-  gimp_tool_push_status_coords (tool, _("Rectangle: "), 0, " x ", 0);
+  gimp_tool_push_status_coords (tool, tool->gdisp,
+                                _("Rectangle: "), 0, " x ", 0);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->gdisp);
 }

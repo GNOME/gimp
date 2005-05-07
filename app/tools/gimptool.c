@@ -536,72 +536,90 @@ gimp_tool_cursor_update (GimpTool        *tool,
 
 void
 gimp_tool_push_status (GimpTool    *tool,
+                       GimpDisplay *gdisp,
                        const gchar *message)
 {
-  GimpStatusbar *statusbar;
+  GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
-  g_return_if_fail (message != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  statusbar =
-    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_statusbar_push (statusbar, G_OBJECT_TYPE_NAME (tool), message);
+  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
+                       G_OBJECT_TYPE_NAME (tool),
+                       message);
 }
 
 void
 gimp_tool_push_status_coords (GimpTool    *tool,
+                              GimpDisplay *gdisp,
                               const gchar *title,
                               gdouble      x,
                               const gchar *separator,
                               gdouble      y)
 {
-  GimpStatusbar *statusbar;
+  GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
-  g_return_if_fail (title != NULL);
-  g_return_if_fail (separator != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  statusbar =
-    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_statusbar_push_coords (statusbar, G_OBJECT_TYPE_NAME (tool),
+  gimp_statusbar_push_coords (GIMP_STATUSBAR (shell->statusbar),
+                              G_OBJECT_TYPE_NAME (tool),
                               title, x, separator, y);
 }
 
 void
 gimp_tool_push_status_length (GimpTool            *tool,
+                              GimpDisplay         *gdisp,
                               const gchar         *title,
                               GimpOrientationType  axis,
                               gdouble              value)
 {
-  GimpStatusbar *statusbar;
+  GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
-  g_return_if_fail (title != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  statusbar =
-    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_statusbar_push_length (statusbar, G_OBJECT_TYPE_NAME (tool),
+  gimp_statusbar_push_length (GIMP_STATUSBAR (shell->statusbar),
+                              G_OBJECT_TYPE_NAME (tool),
                               title, axis, value);
 }
 
 void
-gimp_tool_pop_status (GimpTool *tool)
+gimp_tool_replace_status (GimpTool    *tool,
+                          GimpDisplay *gdisp,
+                          const gchar *message)
 {
-  GimpStatusbar *statusbar;
+  GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (tool->gdisp));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
-  statusbar =
-    GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  gimp_statusbar_pop (statusbar, G_OBJECT_TYPE_NAME (tool));
+  gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar),
+                          G_OBJECT_TYPE_NAME (tool),
+                          message);
+}
+
+void
+gimp_tool_pop_status (GimpTool    *tool,
+                      GimpDisplay *gdisp)
+{
+  GimpDisplayShell *shell;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
+                      G_OBJECT_TYPE_NAME (tool));
 }
 
 void

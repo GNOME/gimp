@@ -19,11 +19,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -162,7 +158,7 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
                                         GdkModifierType  state,
                                         GimpDisplay     *gdisp)
 {
-  GimpSelectionTool    *sel_tool = GIMP_SELECTION_TOOL (tool);
+  GimpSelectionTool *sel_tool = GIMP_SELECTION_TOOL (tool);
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords,
                                                 time, state, gdisp);
@@ -171,24 +167,6 @@ gimp_new_rect_select_tool_button_press (GimpTool        *tool,
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
       return;
-    }
-
-  switch (sel_tool->op)
-    {
-    case SELECTION_ADD:
-      gimp_tool_push_status (tool, _("Selection: ADD"));
-      break;
-    case SELECTION_SUBTRACT:
-      gimp_tool_push_status (tool, _("Selection: SUBTRACT"));
-      break;
-    case SELECTION_INTERSECT:
-      gimp_tool_push_status (tool, _("Selection: INTERSECT"));
-      break;
-    case SELECTION_REPLACE:
-      gimp_tool_push_status (tool, _("Selection: REPLACE"));
-      break;
-    default:
-      break;
     }
 }
 
