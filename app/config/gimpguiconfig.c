@@ -172,7 +172,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
                                     "save-tool-options",
                                     SAVE_TOOL_OPTIONS_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
                                     "show-tips", SHOW_TIPS_BLURB,

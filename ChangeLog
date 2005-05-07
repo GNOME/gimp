@@ -1,3 +1,9 @@
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.c: changed the default value for
+	"save-tool-options" to FALSE. This is a major source of confusion;
+	let's try if disabling it is an improvement.
+
 2005-05-07  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c: add comments describing thumbnail resource.
