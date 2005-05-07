@@ -116,7 +116,7 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold", NULL,
-                                   1.0, 15.0, 5.0,
+                                   1.0, 15.0, 8.0,
                                    0);
 }
 
@@ -191,7 +191,6 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *table;
   GtkWidget *button;
   gchar     *str;
 
@@ -213,18 +212,6 @@ gimp_magnify_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   g_free (str);
-
-  /*  window threshold */
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  gimp_prop_scale_entry_new (config, "threshold",
-                             GTK_TABLE (table), 0, 0,
-                             _("Threshold:"),
-                             1.0, 3.0, 1,
-                             FALSE, 0.0, 0.0);
 
   return vbox;
 }

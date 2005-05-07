@@ -43,7 +43,7 @@ struct _GimpTransformOptions
   GimpInterpolationType     interpolation;
   gboolean                  supersample;
   gint                      recursion_level;
-  gboolean                  clip;
+  GimpTransformResize       resize;
   GimpTransformPreviewType  preview_type;
   GimpTransformGridType     grid_type;
   gint                      grid_size;

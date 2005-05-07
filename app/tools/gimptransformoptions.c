@@ -49,7 +49,7 @@ enum
   PROP_INTERPOLATION,
   PROP_SUPERSAMPLE,
   PROP_RECURSION_LEVEL,
-  PROP_CLIP,
+  PROP_RESIZE,
   PROP_PREVIEW_TYPE,
   PROP_GRID_TYPE,
   PROP_GRID_SIZE,
@@ -159,10 +159,11 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
-                                    "clip", NULL,
-                                    FALSE,
-                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RESIZE,
+                                 "resize", NULL,
+                                 GIMP_TYPE_TRANSFORM_RESIZE,
+                                 GIMP_TRANSFORM_SIZE_ADJUST,
+                                 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PREVIEW_TYPE,
                                  "preview-type", NULL,
                                  GIMP_TYPE_TRANSFORM_PREVIEW_TYPE,
@@ -212,8 +213,8 @@ gimp_transform_options_set_property (GObject      *object,
     case PROP_RECURSION_LEVEL:
       options->recursion_level = g_value_get_int (value);
       break;
-    case PROP_CLIP:
-      options->clip = g_value_get_boolean (value);
+    case PROP_RESIZE:
+      options->resize = g_value_get_enum (value);
       break;
     case PROP_PREVIEW_TYPE:
       options->preview_type = g_value_get_enum (value);
@@ -261,8 +262,8 @@ gimp_transform_options_get_property (GObject    *object,
     case PROP_RECURSION_LEVEL:
       g_value_set_int (value, options->recursion_level);
       break;
-    case PROP_CLIP:
-      g_value_set_boolean (value, options->clip);
+    case PROP_RESIZE:
+      g_value_set_enum (value, options->resize);
       break;
     case PROP_PREVIEW_TYPE:
       g_value_set_enum (value, options->preview_type);
@@ -312,6 +313,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   GtkWidget            *table;
   GtkWidget            *combo;
   GtkWidget            *button;
+  gint                  row = 0;
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -324,41 +326,33 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_reorder_child (GTK_BOX (hbox), label, 0);
   gtk_widget_show (label);
 
-  frame = gimp_prop_enum_radio_frame_new (config, "direction",
-                                          _("Transform Direction"), 0, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  /*  the interpolation menu  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  combo = gimp_prop_enum_combo_box_new (config, "direction", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Direction:"), 0.0, 0.5, combo, 1, FALSE);
 
-  label = gtk_label_new (_("Interpolation:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  combo = gimp_prop_enum_combo_box_new (config, "resize", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Size:"), 0.0, 0.5, combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Interpolation:"), 0.0, 0.5, combo, 1, FALSE);
 
-  /*  the supersample toggle button  */
   button = gimp_prop_check_button_new (config, "supersample",
                                        _("Supersampling"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /*  the clip resulting image toggle button  */
-  button = gimp_prop_check_button_new (config, "clip", _("Clip result"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  the preview frame  */
   frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  the preview type menu  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
   gtk_widget_show (hbox);
