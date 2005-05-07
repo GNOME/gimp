@@ -1,5 +1,9 @@
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppreviewcache.c: minor code cleanup.
+
+2005-05-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpselectionoptions.c: added modifier keys to the
 	tooltips of the selection mode buttons.
 

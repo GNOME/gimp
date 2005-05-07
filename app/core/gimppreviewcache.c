@@ -42,8 +42,8 @@ static gint
 preview_cache_compare (gconstpointer  a,
 		       gconstpointer  b)
 {
-  TempBuf *buf1 = (TempBuf *) a;
-  TempBuf *buf2 = (TempBuf *) b;
+  const TempBuf *buf1 = a;
+  const TempBuf *buf2 = b;
 
   if (buf1->width > buf2->width && buf1->height > buf2->height)
     return -1;
@@ -55,13 +55,13 @@ static void
 preview_cache_find_exact (gpointer data,
 			  gpointer udata)
 {
-  TempBuf        *buf     = (TempBuf *) data;
-  PreviewNearest *nearest = (PreviewNearest *) udata;
+  TempBuf        *buf     = data;
+  PreviewNearest *nearest = udata;
 
   if (nearest->buf)
     return;
 
-  if (buf->width  == nearest->width && buf->height == nearest->height)
+  if (buf->width == nearest->width && buf->height == nearest->height)
     {
       nearest->buf = buf;
       return;
@@ -72,10 +72,10 @@ static void
 preview_cache_find_biggest (gpointer data,
 			    gpointer udata)
 {
-  TempBuf        *buf     = (TempBuf *) data;
-  PreviewNearest *nearest = (PreviewNearest *) udata;
+  TempBuf        *buf     = data;
+  PreviewNearest *nearest = udata;
 
-  if (buf->width  >= nearest->width && buf->height >= nearest->height)
+  if (buf->width >= nearest->width && buf->height >= nearest->height)
     {
       /* Ok we could make the preview out of this one...
        * If we already have it are these bigger dimensions?
@@ -111,8 +111,7 @@ preview_cache_remove_smallest (GSList **plist)
 	{
 	  TempBuf *this = list->data;
 
-	  if ((smallest->height * smallest->width) >
-              (this->height * this->width))
+	  if (smallest->height * smallest->width > this->height * this->width)
 	    {
 	      smallest = this;
 	    }
