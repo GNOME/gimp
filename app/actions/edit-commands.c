@@ -107,7 +107,8 @@ edit_undo_clear_cmd_callback (GtkAction *action,
 
   dialog = gimp_message_dialog_new (_("Clear Undo History"), GIMP_STOCK_WARNING,
                                     widget, 0,
-                                    gimp_standard_help_func, NULL,
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_EDIT_UNDO_CLEAR,
 
                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                     GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
