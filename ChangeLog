@@ -1,5 +1,11 @@
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: removed the GUI for the
+	"default-threshold" preference.
+
+	* app/tools/gimpmagnifyoptions.c: removed the GUI for the
+	Threshold option; it was more confusing than useful.
+
 	* app/config/gimpguiconfig.c: changed the default value for
 	"save-tool-options" to FALSE. This is a major source of confusion;
 	let's try if disabling it is an improvement.

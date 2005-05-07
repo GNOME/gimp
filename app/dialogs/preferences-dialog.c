@@ -1666,15 +1666,6 @@ prefs_dialog_new (Gimp       *gimp,
                          _("_Snap distance:"),
                          GTK_TABLE (table), 0, size_group);
 
-  /*  Contiguous Regions  */
-  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
-                           GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
-
-  prefs_spin_button_add (object, "default-threshold", 1.0, 5.0, 0,
-                         _("Default _threshold:"),
-                         GTK_TABLE (table), 0, size_group);
-
   /*  Scaling  */
   vbox2 = prefs_frame_new (_("Scaling"), GTK_CONTAINER (vbox), FALSE);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
