@@ -345,6 +345,33 @@ gimp_selection_options_reset (GimpToolOptions *tool_options)
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
+static const gchar *
+gimp_selection_options_get_modifier (GimpChannelOps operation)
+{
+  GdkModifierType mod = 0;
+
+  switch (operation)
+    {
+    case GIMP_CHANNEL_OP_ADD:
+      mod = GDK_SHIFT_MASK;
+      break;
+
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      mod = GDK_CONTROL_MASK;
+      break;
+
+    case GIMP_CHANNEL_OP_REPLACE:
+      mod = 0;
+      break;
+
+    case GIMP_CHANNEL_OP_INTERSECT:
+      mod = GDK_CONTROL_MASK | GDK_SHIFT_MASK;
+      break;
+    }
+
+  return gimp_get_mod_string (mod);
+}
+
 GtkWidget *
 gimp_selection_options_gui (GimpToolOptions *tool_options)
 {
@@ -359,17 +386,45 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   {
     GtkWidget *hbox;
     GtkWidget *label;
+    GList     *children;
     GList     *list;
+    gint       i;
 
     hbox = gimp_prop_enum_stock_box_new (config, "operation",
                                          "gimp-selection", 0, 0);
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    list = gtk_container_get_children (GTK_CONTAINER (hbox));
-    gtk_box_reorder_child (GTK_BOX (hbox), GTK_WIDGET (list->next->next->data),
-                           0);
-    g_list_free (list);
+    children = gtk_container_get_children (GTK_CONTAINER (hbox));
+
+    /*  add modifier keys to the tooltips  */
+    for (list = children, i = 0; list; list = list->next, i++)
+      {
+        GtkWidget       *button   = list->data;
+        GtkTooltipsData *data     = gtk_tooltips_data_get (button);
+        const gchar     *modifier = gimp_selection_options_get_modifier (i);
+
+        if (! modifier)
+          continue;
+
+        if (data && data->tip_text)
+          {
+            gchar *tip = g_strdup_printf ("%s  %s", data->tip_text, modifier);
+
+            gimp_help_set_help_data (button, tip, NULL);
+            g_free (tip);
+          }
+        else
+          {
+            gimp_help_set_help_data (button, modifier, NULL);
+          }
+      }
+
+    /*  move GIMP_CHANNEL_OP_REPLACE to the front  */
+    gtk_box_reorder_child (GTK_BOX (hbox),
+                           GTK_WIDGET (children->next->next->data), 0);
+
+    g_list_free (children);
 
     label = gtk_label_new (_("Mode:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
