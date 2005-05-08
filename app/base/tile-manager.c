@@ -32,9 +32,17 @@
 #include "tile-swap.h"
 
 
-static gint  tile_manager_get_tile_num (TileManager *tm,
-                                        gint         xpixel,
-                                        gint         ypixel);
+static inline gint
+tile_manager_get_tile_num (TileManager *tm,
+		           gint         xpixel,
+		           gint         ypixel)
+{
+  if ((xpixel < 0) || (xpixel >= tm->width) ||
+      (ypixel < 0) || (ypixel >= tm->height))
+    return -1;
+
+  return (ypixel / TILE_HEIGHT) * tm->ntile_cols + (xpixel / TILE_WIDTH);
+}
 
 
 TileManager *
@@ -115,7 +123,6 @@ tile_manager_unref (TileManager *tm)
       g_free (tm);
     }
 }
-
 
 void
 tile_manager_set_validate_proc (TileManager      *tm,
@@ -331,7 +338,6 @@ tile_manager_invalidate_tiles (TileManager *tm,
     }
 }
 
-
 void
 tile_invalidate_tile (Tile        **tile_ptr,
 		      TileManager  *tm,
@@ -349,7 +355,6 @@ tile_invalidate_tile (Tile        **tile_ptr,
 
   tile_invalidate (tile_ptr, tm, tile_num);
 }
-
 
 void
 tile_invalidate (Tile        **tile_ptr,
@@ -403,7 +408,6 @@ tile_invalidate (Tile        **tile_ptr,
 leave:
   TILE_MUTEX_UNLOCK (tile);
 }
-
 
 void
 tile_manager_map_tile (TileManager *tm,
@@ -520,18 +524,6 @@ tile_manager_map (TileManager *tm,
 #ifdef DEBUG_TILE_MANAGER
   g_printerr ("}\n");
 #endif
-}
-
-static gint
-tile_manager_get_tile_num (TileManager *tm,
-		           gint         xpixel,
-		           gint         ypixel)
-{
-  if ((xpixel < 0) || (xpixel >= tm->width) ||
-      (ypixel < 0) || (ypixel >= tm->height))
-    return -1;
-
-  return (ypixel / TILE_HEIGHT) * tm->ntile_cols + (xpixel / TILE_WIDTH);
 }
 
 void
@@ -664,7 +656,6 @@ tile_manager_get_tile_coordinates (TileManager *tm,
   *x = TILE_WIDTH * (tl->tile_num % tm->ntile_cols);
   *y = TILE_HEIGHT * (tl->tile_num / tm->ntile_cols);
 }
-
 
 void
 tile_manager_map_over_tile (TileManager *tm,

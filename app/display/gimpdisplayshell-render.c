@@ -973,8 +973,8 @@ render_image_tile_fault (RenderInfo *info)
 
 	      tile = tile_manager_get_tile (info->src_tiles,
                                             x, info->src_y, TRUE, FALSE);
-
-              g_return_val_if_fail (tile != NULL, tile_buf);
+	      if (!tile)
+		return tile_buf;
 
 	      src = tile_data_pointer (tile,
                                        x % TILE_WIDTH,
