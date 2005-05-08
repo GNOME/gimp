@@ -94,8 +94,7 @@ layer_options_dialog_new (GimpImage    *gimage,
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-		     (GWeakNotify) g_free,
-		     options);
+		     (GWeakNotify) g_free, options);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
                                            GTK_RESPONSE_OK,
@@ -120,10 +119,8 @@ layer_options_dialog_new (GimpImage    *gimage,
                              _("Layer _Name:"), 0.0, 0.5,
                              options->name_entry, 1, FALSE);
 
+  gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry), layer_name);
-
-  if (layer)
-    gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
 
   if (! layer)
     {
