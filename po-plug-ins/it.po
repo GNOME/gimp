@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-22 11:57+0200\n"
-"PO-Revision-Date: 2005-04-22 13:28+0200\n"
+"POT-Creation-Date: 2005-05-08 17:26+0200\n"
+"PO-Revision-Date: 2005-05-08 17:28+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -387,7 +387,7 @@ msgstr "_Frattali"
 #: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
 #: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
 #: ../plug-ins/common/spheredesigner.c:2091 ../plug-ins/common/sunras.c:504
-#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1914
+#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
 #: ../plug-ins/gfig/gfig.c:786 ../plug-ins/gfli/gfli.c:710
@@ -424,7 +424,7 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
 #: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1778
+#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
 #: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
@@ -436,7 +436,7 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
 #: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:127 ../plug-ins/xjt/xjt.c:2524
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1215,13 +1215,13 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1784 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
 #: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:510
+#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
 #: ../plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
@@ -1261,9 +1261,9 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
 #: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
-#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:880
+#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
@@ -1272,6 +1272,11 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Sfondo"
+
+#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
+#: ../plug-ins/bmp/bmpread.c:706
+msgid "The bitmap ends unexpectedly."
+msgstr "La bitmap termina in maniera inaspettata."
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
 #: ../plug-ins/common/pcx.c:573
@@ -1293,7 +1298,7 @@ msgstr "Impossibile operare su immagini di tipo sconosciuto."
 #: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
-#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1920
+#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
 #: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
@@ -2459,7 +2464,7 @@ msgstr "Da:"
 msgid "Color to Alpha Color Picker"
 msgstr "Colore a contagocce colore alfa"
 
-#: ../plug-ins/common/colortoalpha.c:425
+#: ../plug-ins/common/colortoalpha.c:426
 msgid "to alpha"
 msgstr "ad alfa"
 
@@ -3538,7 +3543,7 @@ msgid "Composing Images..."
 msgstr "Composizione immagini..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:800
+#: ../plug-ins/helpbrowser/dialog.c:801
 msgid "Untitled"
 msgstr "Senza nome"
 
@@ -4777,11 +4782,11 @@ msgstr "_Oggetto:"
 msgid "Comm_ent:"
 msgstr "Comm_ento:"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:723
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "estensione del file errata o mancante"
 
-#: ../plug-ins/common/mail.c:955
+#: ../plug-ins/common/mail.c:950
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Impossibile eseguire sendmail (%s)"
@@ -7119,16 +7124,16 @@ msgstr "Soglia:"
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
-#: ../plug-ins/common/tiff.c:882
+#: ../plug-ins/common/tiff.c:897
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/tiff.c:898
+#: ../plug-ins/common/tiff.c:913
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
-#: ../plug-ins/common/tiff.c:907
+#: ../plug-ins/common/tiff.c:922
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7140,7 +7145,7 @@ msgstr ""
 "bit, perciò convertirà l'immagine per voi. A causa della conversione alcune "
 "informazioni andranno perse."
 
-#: ../plug-ins/common/tiff.c:2080
+#: ../plug-ins/common/tiff.c:2095
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7148,40 +7153,40 @@ msgstr ""
 "Il formato TIFF supporta solo commenti nella\n"
 "codifica ASCII a 7bit. Nessun commento salvato."
 
-#: ../plug-ins/common/tiff.c:2284
+#: ../plug-ins/common/tiff.c:2299
 msgid "Save as TIFF"
 msgstr "Salva come TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2303
+#: ../plug-ins/common/tiff.c:2318
 msgid "Compression"
 msgstr "Compressione"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2322
 msgid "_None"
 msgstr "_Nessuna"
 
-#: ../plug-ins/common/tiff.c:2308
+#: ../plug-ins/common/tiff.c:2323
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2309
+#: ../plug-ins/common/tiff.c:2324
 msgid "_Pack Bits"
 msgstr "_Pack bits"
 
-#: ../plug-ins/common/tiff.c:2310
+#: ../plug-ins/common/tiff.c:2325
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2311
+#: ../plug-ins/common/tiff.c:2326
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2320
+#: ../plug-ins/common/tiff.c:2335
 msgid "Save _color values from transparent pixels"
 msgstr "Salva valori _colore dai punti trasparenti"
 
-#: ../plug-ins/common/tiff.c:2336 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2351 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Commento:"
 
@@ -7776,14 +7781,6 @@ msgstr "Angolo _vortice:"
 #: ../plug-ins/common/whirlpinch.c:577
 msgid "_Pinch amount:"
 msgstr "Ammontare _punta:"
-
-#: ../plug-ins/common/winclipboard.c:105
-msgid "Copy to Clipboard"
-msgstr "Copia negli appunti"
-
-#: ../plug-ins/common/winclipboard.c:279
-msgid "Copying..."
-msgstr "Copia..."
 
 #: ../plug-ins/common/wind.c:181
 msgid "Wi_nd..."
@@ -9722,11 +9719,11 @@ msgstr "Vai all'indice"
 msgid "Visit the GIMP documentation website"
 msgstr "Visita il sito di documentazione di GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:556
+#: ../plug-ins/helpbrowser/dialog.c:557
 msgid "Document not found"
 msgstr "Documento non trovato"
 
-#: ../plug-ins/helpbrowser/dialog.c:558
+#: ../plug-ins/helpbrowser/dialog.c:559
 msgid "The requested URL could not be loaded:"
 msgstr "L'URL richiesto non può essere caricato:"
 
@@ -9864,14 +9861,14 @@ msgid "Transformation %s"
 msgstr "Trasformazione %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2379
-#: ../plug-ins/metadata/interface.c:566 ../plug-ins/metadata/interface.c:576
+#: ../plug-ins/metadata/interface.c:562 ../plug-ins/metadata/interface.c:572
 msgid "Save failed"
 msgstr "Salvataggio fallito"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2460
 #: ../plug-ins/ifscompose/ifscompose.c:2473
 #: ../plug-ins/metadata/interface.c:461 ../plug-ins/metadata/interface.c:471
-#: ../plug-ins/metadata/interface.c:551
+#: ../plug-ins/metadata/interface.c:547
 msgid "Open failed"
 msgstr "Apertura fallita"
 
@@ -10516,7 +10513,7 @@ msgstr "_Mantieni l'orientamento"
 msgid "JPEG preview"
 msgstr "Anteprima JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575
+#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Apertura miniatura per '%s'..."
@@ -10728,31 +10725,31 @@ msgstr "Avanzate"
 msgid "Import XMP from file"
 msgstr "Importa XMP da file"
 
-#: ../plug-ins/metadata/interface.c:552
+#: ../plug-ins/metadata/interface.c:548
 msgid "Cannot create file"
 msgstr "Impossibile creare il file"
 
-#: ../plug-ins/metadata/interface.c:567
+#: ../plug-ins/metadata/interface.c:563
 msgid "Some error occurred while saving"
 msgstr "Errori durante il salvataggio"
 
-#: ../plug-ins/metadata/interface.c:577
+#: ../plug-ins/metadata/interface.c:573
 msgid "Could not close the file"
 msgstr "Impossibile chiudere il file"
 
-#: ../plug-ins/metadata/interface.c:599
+#: ../plug-ins/metadata/interface.c:595
 msgid "Export XMP to file"
 msgstr "Esportazione XMP su file"
 
-#: ../plug-ins/metadata/interface.c:665
+#: ../plug-ins/metadata/interface.c:661
 msgid "Image Properties"
 msgstr "Proprietà dell'immagine"
 
-#: ../plug-ins/metadata/interface.c:669
+#: ../plug-ins/metadata/interface.c:665
 msgid "_Import XMP"
 msgstr "_Importa XMP"
 
-#: ../plug-ins/metadata/interface.c:670
+#: ../plug-ins/metadata/interface.c:666
 msgid "_Export XMP"
 msgstr "_Esporta XMP"
 
@@ -10760,75 +10757,66 @@ msgstr "_Esporta XMP"
 msgid "Propert_ies"
 msgstr "Propr_ietà"
 
-#: ../plug-ins/metadata/metadata.c:198
-msgid "<Image>/File/Info"
-msgstr "<Image>/File/Informazioni"
+#: ../plug-ins/metadata/xmp-parse.c:235
+msgid "Error: No XMP packet found"
+msgstr "Errore: nessun pacchetto XMP trovato"
 
-#: ../plug-ins/metadata/xmp-parse.c:239
-#, c-format
-msgid "Error: %s"
-msgstr "Errore: %s"
-
-#: ../plug-ins/metadata/xmp-parse.c:249
+#: ../plug-ins/metadata/xmp-parse.c:250
 #, c-format
 msgid "Error on line %d char %d: %s"
 msgstr "Errore alla riga %d carattere %d: %s"
 
-#: ../plug-ins/metadata/xmp-parse.c:271
+#: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
 msgstr "Testo atteso o elemento opzionale <%s>, trovato invece <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:275
+#: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
 msgstr "Atteso elemento <%s>, trovato invece <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:287
+#: ../plug-ins/metadata/xmp-parse.c:291
 #, c-format
 msgid "Unknown element <%s>"
 msgstr "Elemento sconosciuto <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:314
+#: ../plug-ins/metadata/xmp-parse.c:320
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
 msgstr "Attributo sconosciuto \"%s\"=\"%s\" nell'elemento <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:589
+#: ../plug-ins/metadata/xmp-parse.c:606
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
 msgstr "Richiesto attributo rdf:about mancante in <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:806
+#: ../plug-ins/metadata/xmp-parse.c:823
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
 msgstr "Gli elementi annidati (<%s>) non sono permessi in questo contesto"
 
-#: ../plug-ins/metadata/xmp-parse.c:928
+#: ../plug-ins/metadata/xmp-parse.c:945
 #, c-format
 msgid "End of element <%s> not expected in this context"
 msgstr "Fine dell'elemento <%s> non attesa in questo contesto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1025
+#: ../plug-ins/metadata/xmp-parse.c:1047
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr "L'elemento corrente (<%s>) non può contenere testo"
 
-#: ../plug-ins/metadata/xmp-parse.c:1050
+#: ../plug-ins/metadata/xmp-parse.c:1072
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr "I pacchetti XMP devono cominciare con <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1064
+#: ../plug-ins/metadata/xmp-parse.c:1086
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr "I pacchetti XMP devono finire con <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1077
+#: ../plug-ins/metadata/xmp-parse.c:1099
 msgid "XMP cannot contain XML comments or processing instructions"
 msgstr "XMP non può contenere commenti XML o istruzioni di processo"
-
-#: ../plug-ins/metadata/xmp-parse.c:1238 ../plug-ins/metadata/xmp-parse.c:1267
-msgid "No XMP packet found"
-msgstr "Nessun pacchetto XMP trovato"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
@@ -11751,40 +11739,41 @@ msgstr "Si è verificato un errore di rete: %s"
 msgid "Downloading unknown amount of image data..."
 msgstr "Scaricamento quantità di dati immagine sconosciuta..."
 
-#: ../plug-ins/winicon/icodialog.c:87
+#: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, 2-colori tavolozza"
 
-#: ../plug-ins/winicon/icodialog.c:88
+#: ../plug-ins/winicon/icodialog.c:100
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, 16-colori tavolozza"
 
-#: ../plug-ins/winicon/icodialog.c:89
+#: ../plug-ins/winicon/icodialog.c:101
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, 256-colori tavolozza"
 
-#: ../plug-ins/winicon/icodialog.c:90
+#: ../plug-ins/winicon/icodialog.c:102
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alfa, senza tavolozza"
 
-#: ../plug-ins/winicon/icodialog.c:115
+#: ../plug-ins/winicon/icodialog.c:128
 msgid "Save as Windows Icon"
 msgstr "Salva come icona di Windows"
 
-#: ../plug-ins/winicon/icodialog.c:141
+#: ../plug-ins/winicon/icodialog.c:154
 msgid "Icon details"
 msgstr "Dettagli icona"
 
-#: ../plug-ins/winicon/icoload.c:384
+#: ../plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
 #: ../plug-ins/winicon/icosave.c:969
 msgid "Windows icons cannot be higher or wider than 255 pixels."
-msgstr "Le icone di Windows non possono esser più alte o più larghe di 256 punti."
+msgstr ""
+"Le icone di Windows non possono esser più alte o più larghe di 256 punti."
 
-#: ../plug-ins/winicon/main.c:87 ../plug-ins/winicon/main.c:106
+#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
 msgstr "Icona Microsoft Windows"
 

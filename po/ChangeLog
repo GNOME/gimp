@@ -1,3 +1,7 @@
+2005-05-08  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: Updated italian translation.
+
 2005-05-07  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/tools/gimpselectiontool.c.
