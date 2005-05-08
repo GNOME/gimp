@@ -1,3 +1,9 @@
+2005-05-08  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpbaseconfig.c: limit the tile-cache-size to
+	G_MAXULONG or GIMP_MAX_MEMSIZE, whatever is smaller. Fixes
+	bug #303371.
+
 2005-05-07  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb: Fix a typo reported in bug #303379.
