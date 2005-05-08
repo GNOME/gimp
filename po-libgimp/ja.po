@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2005-02-17 12:25+0900\n"
 "Last-Translator: Tadashi Jokagi <elf2000@users.sourceforge.net>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -199,7 +199,7 @@ msgstr "フォント選択"
 msgid "Gradient Selection"
 msgstr "グラデーション選択"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(空)"
 

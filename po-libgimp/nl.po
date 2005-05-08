@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2004-11-18 02:35+0100\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -204,7 +204,7 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Leeg)"
 

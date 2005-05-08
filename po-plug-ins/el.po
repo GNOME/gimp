@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-10 02:11+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2004-10-22 15:51+0300\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <nls@tux.hellug.gr>\n"
@@ -310,8 +310,8 @@ msgstr "Κλείσιμο"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1056
 #: ../plug-ins/Lighting/lighting_ui.c:369
 #: ../plug-ins/common/CML_explorer.c:168 ../plug-ins/common/align_layers.c:416
-#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3019
-#: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/psp.c:416
+#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3028
+#: ../plug-ins/common/postscript.c:3040 ../plug-ins/common/psp.c:416
 #: ../plug-ins/fits/fits.c:1012
 msgid "None"
 msgstr "Κανένα"
@@ -417,7 +417,7 @@ msgstr "Μορφές"
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/raw.c:517
 #: ../plug-ins/common/raw.c:544 ../plug-ins/common/spheredesigner.c:2088
 #: ../plug-ins/common/sunras.c:513 ../plug-ins/common/tga.c:1030
-#: ../plug-ins/common/tiff.c:1810 ../plug-ins/common/xbm.c:996
+#: ../plug-ins/common/tiff.c:1825 ../plug-ins/common/xbm.c:996
 #: ../plug-ins/common/xwd.c:577 ../plug-ins/fits/fits.c:450
 #: ../plug-ins/flame/flame.c:443 ../plug-ins/gfig/gfig.c:783
 #: ../plug-ins/gfli/gfli.c:715 ../plug-ins/ifscompose/ifscompose.c:2395
@@ -1179,7 +1179,7 @@ msgstr "Δε βρέθηκε το αντικείμενο στην αποθήκη"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1070
-#: ../plug-ins/common/postscript.c:3183
+#: ../plug-ins/common/postscript.c:3192
 msgid "Rotation"
 msgstr "Περιστροφή"
 
@@ -1394,7 +1394,7 @@ msgstr ""
 #: ../plug-ins/common/png.c:808 ../plug-ins/common/pnm.c:517
 #: ../plug-ins/common/psd.c:2174 ../plug-ins/common/raw.c:677
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:925
-#: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:833
+#: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:848
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/winclipboard.c:579
 #: ../plug-ins/common/xbm.c:867 ../plug-ins/faxg3/faxg3.c:465
 #: ../plug-ins/fits/fits.c:506 ../plug-ins/gfig/gfig-dialog.c:1286
@@ -1426,7 +1426,7 @@ msgstr "%s για άγνωστο τύπο ενεργοποίησης"
 #: ../plug-ins/common/png.c:1185 ../plug-ins/common/pnm.c:814
 #: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1341
 #: ../plug-ins/common/sunras.c:518 ../plug-ins/common/tga.c:1035
-#: ../plug-ins/common/tiff.c:1815 ../plug-ins/common/xbm.c:1001
+#: ../plug-ins/common/tiff.c:1830 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
 #: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:977
@@ -2519,7 +2519,7 @@ msgstr "Έγκριση:"
 msgid "_Elevation:"
 msgstr "Επιλογή:"
 
-#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3137
+#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3146
 #, fuzzy
 msgid "_X offset:"
 msgstr "Μετατόπιση Χ:"
@@ -2530,7 +2530,7 @@ msgid ""
 "button."
 msgstr ""
 
-#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3146
+#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3155
 #, fuzzy
 msgid "_Y offset:"
 msgstr "Μετατόπιση"
@@ -2989,12 +2989,12 @@ msgid "Re_d"
 msgstr "Κό_κκινο"
 
 #
-#: ../plug-ins/common/convmatrix.c:89 ../plug-ins/common/newsprint.c:363
+#: ../plug-ins/common/convmatrix.c:89 ../plug-ins/common/newsprint.c:360
 msgid "_Green"
 msgstr "Πρά_σινο:"
 
 #
-#: ../plug-ins/common/convmatrix.c:90 ../plug-ins/common/newsprint.c:371
+#: ../plug-ins/common/convmatrix.c:90 ../plug-ins/common/newsprint.c:368
 msgid "_Blue"
 msgstr "_Μπλε:"
 
@@ -3654,7 +3654,7 @@ msgid "Destripe"
 msgstr "Διαγραφή"
 
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/gtm.c:578
-#: ../plug-ins/common/postscript.c:2958 ../plug-ins/common/postscript.c:3119
+#: ../plug-ins/common/postscript.c:2967 ../plug-ins/common/postscript.c:3128
 #: ../plug-ins/common/raw.c:985 ../plug-ins/common/smooth_palette.c:429
 #: ../plug-ins/common/tile.c:417 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3771,7 +3771,7 @@ msgid "_Smear"
 msgstr "Έξυπνη"
 
 #: ../plug-ins/common/displace.c:398 ../plug-ins/common/edge.c:742
-#: ../plug-ins/common/fractaltrace.c:735 ../plug-ins/common/newsprint.c:408
+#: ../plug-ins/common/fractaltrace.c:735 ../plug-ins/common/newsprint.c:405
 #: ../plug-ins/common/ripple.c:562
 msgid "_Black"
 msgstr "_Μαύρο"
@@ -3917,8 +3917,8 @@ msgid "Engrave"
 msgstr "σημαντικό"
 
 #: ../plug-ins/common/engrave.c:238 ../plug-ins/common/film.c:1203
-#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2967
-#: ../plug-ins/common/postscript.c:3128 ../plug-ins/common/raw.c:998
+#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2976
+#: ../plug-ins/common/postscript.c:3137 ../plug-ins/common/raw.c:998
 #: ../plug-ins/common/smooth_palette.c:434 ../plug-ins/common/tile.c:421
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -5731,7 +5731,7 @@ msgstr "Εστίαση"
 msgid "Blur Parameters"
 msgstr "Παράμετροι"
 
-#: ../plug-ins/common/mblur.c:956 ../plug-ins/common/newsprint.c:1012
+#: ../plug-ins/common/mblur.c:956 ../plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Γωνία:"
 
@@ -5981,145 +5981,145 @@ msgstr "Ανίχνευση"
 msgid "_Amount:"
 msgstr "Μετρητής:"
 
-#: ../plug-ins/common/newsprint.c:135
+#: ../plug-ins/common/newsprint.c:132
 #, fuzzy
 msgid "Round"
 msgstr "Ιδιότητες του Ήχου"
 
-#: ../plug-ins/common/newsprint.c:144
+#: ../plug-ins/common/newsprint.c:141
 msgid "Line"
 msgstr "Γραμμή"
 
-#: ../plug-ins/common/newsprint.c:153
+#: ../plug-ins/common/newsprint.c:150
 msgid "Diamond"
 msgstr "Ρόμβος"
 
-#: ../plug-ins/common/newsprint.c:161
+#: ../plug-ins/common/newsprint.c:158
 msgid "PS Square (Euclidean Dot)"
 msgstr ""
 
-#: ../plug-ins/common/newsprint.c:170
+#: ../plug-ins/common/newsprint.c:167
 #, fuzzy
 msgid "PS Diamond"
 msgstr "Ρόμβος"
 
-#: ../plug-ins/common/newsprint.c:342
+#: ../plug-ins/common/newsprint.c:339
 #, fuzzy
 msgid "_Grey"
 msgstr "Γκρί"
 
-#: ../plug-ins/common/newsprint.c:355
+#: ../plug-ins/common/newsprint.c:352
 #, fuzzy
 msgid "R_ed"
 msgstr "Κόκκινο"
 
-#: ../plug-ins/common/newsprint.c:384
+#: ../plug-ins/common/newsprint.c:381
 #, fuzzy
 msgid "C_yan"
 msgstr "Κυανό"
 
-#: ../plug-ins/common/newsprint.c:392
+#: ../plug-ins/common/newsprint.c:389
 #, fuzzy
 msgid "Magen_ta"
 msgstr "Μωβ"
 
-#: ../plug-ins/common/newsprint.c:400
+#: ../plug-ins/common/newsprint.c:397
 #, fuzzy
 msgid "_Yellow"
 msgstr "Κίτρινο"
 
-#: ../plug-ins/common/newsprint.c:421
+#: ../plug-ins/common/newsprint.c:418
 #, fuzzy
 msgid "Intensity"
 msgstr "Πυκνότητα"
 
-#: ../plug-ins/common/newsprint.c:537
+#: ../plug-ins/common/newsprint.c:534
 #, fuzzy
 msgid "Newsprin_t..."
 msgstr "Επίπεδο πάχνης:"
 
-#: ../plug-ins/common/newsprint.c:638
+#: ../plug-ins/common/newsprint.c:635
 #, fuzzy
 msgid "Newsprint..."
 msgstr "Επίπεδο πάχνης:"
 
-#: ../plug-ins/common/newsprint.c:1042
+#: ../plug-ins/common/newsprint.c:1039
 #, fuzzy
 msgid "_Spot function:"
 msgstr "Συναρτήσεις Υποστήριξης:"
 
-#: ../plug-ins/common/newsprint.c:1199
+#: ../plug-ins/common/newsprint.c:1196
 #, fuzzy
 msgid "Newsprint"
 msgstr "Επίπεδο πάχνης:"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1243
+#: ../plug-ins/common/newsprint.c:1240
 msgid "Resolution"
 msgstr "Ανάλυση"
 
-#: ../plug-ins/common/newsprint.c:1262
+#: ../plug-ins/common/newsprint.c:1259
 #, fuzzy
 msgid "_Input SPI:"
 msgstr "Είσοδος:"
 
-#: ../plug-ins/common/newsprint.c:1276
+#: ../plug-ins/common/newsprint.c:1273
 #, fuzzy
 msgid "O_utput LPI:"
 msgstr "Έξοδος"
 
 #
-#: ../plug-ins/common/newsprint.c:1289
+#: ../plug-ins/common/newsprint.c:1286
 #, fuzzy
 msgid "C_ell size:"
 msgstr "Μέγεθος σε Εικ/χεία:"
 
 #
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1302 ../plug-ins/gflare/gflare.c:562
+#: ../plug-ins/common/newsprint.c:1299 ../plug-ins/gflare/gflare.c:562
 msgid "Screen"
 msgstr "Οθόνη"
 
-#: ../plug-ins/common/newsprint.c:1321
+#: ../plug-ins/common/newsprint.c:1318
 msgid "B_lack pullout (%):"
 msgstr ""
 
-#: ../plug-ins/common/newsprint.c:1343
+#: ../plug-ins/common/newsprint.c:1340
 #, fuzzy
 msgid "Separate to:"
 msgstr "Ξεχωριστό Αρχείο:"
 
-#: ../plug-ins/common/newsprint.c:1347
+#: ../plug-ins/common/newsprint.c:1344
 #, fuzzy
 msgid "_RGB"
 msgstr "GKB"
 
-#: ../plug-ins/common/newsprint.c:1364
+#: ../plug-ins/common/newsprint.c:1361
 #, fuzzy
 msgid "C_MYK"
 msgstr "PCM"
 
-#: ../plug-ins/common/newsprint.c:1381
+#: ../plug-ins/common/newsprint.c:1378
 #, fuzzy
 msgid "I_ntensity"
 msgstr "Πυκνότητα"
 
-#: ../plug-ins/common/newsprint.c:1406
+#: ../plug-ins/common/newsprint.c:1403
 #, fuzzy
 msgid "_Lock channels"
 msgstr "Κανάλια"
 
-#: ../plug-ins/common/newsprint.c:1419
+#: ../plug-ins/common/newsprint.c:1416
 #, fuzzy
 msgid "_Factory defaults"
 msgstr "Εξ' ορισμού ρυθμίσεις"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1445 ../plug-ins/gfig/gfig-dialog.c:1258
+#: ../plug-ins/common/newsprint.c:1442 ../plug-ins/gfig/gfig-dialog.c:1258
 msgid "Antialiasing"
 msgstr "Εξομάλυνση"
 
-#: ../plug-ins/common/newsprint.c:1453
+#: ../plug-ins/common/newsprint.c:1450
 #, fuzzy
 msgid "O_versample:"
 msgstr "Επιγράμμηση"
@@ -6743,70 +6743,70 @@ msgstr "Εκτύπωση στο τρέχον αρχείο"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:1622
+#: ../plug-ins/common/postscript.c:1631
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:1652
+#: ../plug-ins/common/postscript.c:1661
 #, fuzzy, c-format
 msgid "Error starting ghostscript: %s"
 msgstr "σφάλμα κατά την εγγραφή προσωρινού αρχείου"
 
-#: ../plug-ins/common/postscript.c:2472 ../plug-ins/common/postscript.c:2605
-#: ../plug-ins/common/postscript.c:2757 ../plug-ins/common/postscript.c:2886
+#: ../plug-ins/common/postscript.c:2481 ../plug-ins/common/postscript.c:2614
+#: ../plug-ins/common/postscript.c:2766 ../plug-ins/common/postscript.c:2895
 #: ../plug-ins/common/sunras.c:1454 ../plug-ins/common/sunras.c:1562
 #: ../plug-ins/fits/fits.c:826 ../plug-ins/fits/fits.c:950
 #, fuzzy
 msgid "Write error occurred"
 msgstr "Συνέβει ένα σφάλμα CORBA.\n"
 
-#: ../plug-ins/common/postscript.c:2913
+#: ../plug-ins/common/postscript.c:2922
 #, fuzzy
 msgid "Load PostScript"
 msgstr "Άνοιγμα ενός Python Script.."
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:2933
+#: ../plug-ins/common/postscript.c:2942
 #, fuzzy
 msgid "Rendering"
 msgstr "3D Rendering"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:2949 ../plug-ins/common/svg.c:882
+#: ../plug-ins/common/postscript.c:2958 ../plug-ins/common/svg.c:882
 #: ../plug-ins/common/wmf.c:669 ../plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Ανάλυση:"
 
-#: ../plug-ins/common/postscript.c:2977
+#: ../plug-ins/common/postscript.c:2986
 msgid "Pages:"
 msgstr "Σελίδες:"
 
-#: ../plug-ins/common/postscript.c:2983
+#: ../plug-ins/common/postscript.c:2992
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:2985
+#: ../plug-ins/common/postscript.c:2994
 msgid "Try Bounding Box"
 msgstr ""
 
 #
 #. Colouring
-#: ../plug-ins/common/postscript.c:2998
+#: ../plug-ins/common/postscript.c:3007
 #, fuzzy
 msgid "Coloring"
 msgstr "Χρώμα"
 
-#: ../plug-ins/common/postscript.c:3002
+#: ../plug-ins/common/postscript.c:3011
 msgid "B/W"
 msgstr ""
 
-#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:411
+#: ../plug-ins/common/postscript.c:3012 ../plug-ins/rcm/rcm_dialog.c:411
 msgid "Gray"
 msgstr "Γκρι"
 
 #
-#: ../plug-ins/common/postscript.c:3004 ../plug-ins/common/xpm.c:469
+#: ../plug-ins/common/postscript.c:3013 ../plug-ins/common/xpm.c:469
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/imagemap/imap_menu.c:306
@@ -6814,90 +6814,90 @@ msgstr "Γκρι"
 msgid "Color"
 msgstr "Χρώμα"
 
-#: ../plug-ins/common/postscript.c:3005 ../plug-ins/fits/fits.c:1000
+#: ../plug-ins/common/postscript.c:3014 ../plug-ins/fits/fits.c:1000
 msgid "Automatic"
 msgstr "Αυτόματο"
 
-#: ../plug-ins/common/postscript.c:3015
+#: ../plug-ins/common/postscript.c:3024
 #, fuzzy
 msgid "Text antialiasing"
 msgstr "Εξομάλυνση"
 
-#: ../plug-ins/common/postscript.c:3020 ../plug-ins/common/postscript.c:3032
+#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/postscript.c:3041
 #, fuzzy
 msgid "Weak"
 msgstr "Εβδομάδα"
 
-#: ../plug-ins/common/postscript.c:3021 ../plug-ins/common/postscript.c:3033
+#: ../plug-ins/common/postscript.c:3030 ../plug-ins/common/postscript.c:3042
 #, fuzzy
 msgid "Strong"
 msgstr "Αλφαριθμητικό"
 
-#: ../plug-ins/common/postscript.c:3027
+#: ../plug-ins/common/postscript.c:3036
 #, fuzzy
 msgid "Graphic antialiasing"
 msgstr "Εξομάλυνση"
 
-#: ../plug-ins/common/postscript.c:3079
+#: ../plug-ins/common/postscript.c:3088
 #, fuzzy
 msgid "Save as PostScript"
 msgstr "PS (Postscript)"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3103
+#: ../plug-ins/common/postscript.c:3112
 #, fuzzy
 msgid "Image Size"
 msgstr "Μέγεθος Εικόνας:"
 
-#: ../plug-ins/common/postscript.c:3152
+#: ../plug-ins/common/postscript.c:3161
 #, fuzzy
 msgid "_Keep aspect ratio"
 msgstr "Διατήρηση αναλογιών"
 
-#: ../plug-ins/common/postscript.c:3158
+#: ../plug-ins/common/postscript.c:3167
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3167
+#: ../plug-ins/common/postscript.c:3176
 msgid "Unit"
 msgstr "Μονάδα"
 
-#: ../plug-ins/common/postscript.c:3171
+#: ../plug-ins/common/postscript.c:3180
 msgid "_Inch"
 msgstr "_Ίντσα"
 
-#: ../plug-ins/common/postscript.c:3172
+#: ../plug-ins/common/postscript.c:3181
 #, fuzzy
 msgid "_Millimeter"
 msgstr "χιλιοστά"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3198
+#: ../plug-ins/common/postscript.c:3207
 msgid "Output"
 msgstr "Έξοδος"
 
 #
-#: ../plug-ins/common/postscript.c:3204
+#: ../plug-ins/common/postscript.c:3213
 #, fuzzy
 msgid "_PostScript level 2"
 msgstr "Εκτυπωτής PostScript"
 
-#: ../plug-ins/common/postscript.c:3213
+#: ../plug-ins/common/postscript.c:3222
 #, fuzzy
 msgid "_Encapsulated PostScript"
 msgstr "Encapsulated Postscript"
 
 #
-#: ../plug-ins/common/postscript.c:3222
+#: ../plug-ins/common/postscript.c:3231
 #, fuzzy
 msgid "P_review"
 msgstr "Προεπισκόπηση"
 
 #
-#: ../plug-ins/common/postscript.c:3243
+#: ../plug-ins/common/postscript.c:3252
 #, fuzzy
 msgid "Preview _size:"
 msgstr "Προεπισκόπηση:"
@@ -8352,17 +8352,17 @@ msgstr "Κατώφλι:"
 msgid "TIFF image"
 msgstr "Κανάλι"
 
-#: ../plug-ins/common/tiff.c:835
+#: ../plug-ins/common/tiff.c:850
 #, fuzzy, c-format
 msgid "Page %d"
 msgstr "Πλαίσιο"
 
-#: ../plug-ins/common/tiff.c:850
+#: ../plug-ins/common/tiff.c:865
 #, fuzzy
 msgid "TIFF Channel"
 msgstr "Κανάλι"
 
-#: ../plug-ins/common/tiff.c:859
+#: ../plug-ins/common/tiff.c:874
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -8370,52 +8370,52 @@ msgid ""
 "this conversion."
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:1955
+#: ../plug-ins/common/tiff.c:1970
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2104
+#: ../plug-ins/common/tiff.c:2119
 msgid "Save as TIFF"
 msgstr "Αποθήκευση ως TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2118
+#: ../plug-ins/common/tiff.c:2133
 msgid "Compression"
 msgstr "Συμπίεση"
 
 #
-#: ../plug-ins/common/tiff.c:2122
+#: ../plug-ins/common/tiff.c:2137
 #, fuzzy
 msgid "_None"
 msgstr "Κανένα"
 
-#: ../plug-ins/common/tiff.c:2123
+#: ../plug-ins/common/tiff.c:2138
 msgid "_LZW"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2124
+#: ../plug-ins/common/tiff.c:2139
 #, fuzzy
 msgid "_Pack Bits"
 msgstr "Πακέτα"
 
 #
-#: ../plug-ins/common/tiff.c:2125
+#: ../plug-ins/common/tiff.c:2140
 #, fuzzy
 msgid "_Deflate"
 msgstr "Διαγραφή"
 
-#: ../plug-ins/common/tiff.c:2126
+#: ../plug-ins/common/tiff.c:2141
 msgid "_JPEG"
 msgstr ""
 
-#: ../plug-ins/common/tiff.c:2135
+#: ../plug-ins/common/tiff.c:2150
 msgid "Save _color values from transparent pixels"
 msgstr ""
 
 #
-#: ../plug-ins/common/tiff.c:2151 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2166 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Σχόλιο:"
 

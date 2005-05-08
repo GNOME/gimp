@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -199,7 +199,7 @@ msgstr "Din selecţie"
 msgid "Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr ""
 

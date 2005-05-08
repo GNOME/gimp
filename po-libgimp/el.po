@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2004-10-22 01:09+0300\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.forthnet.gr>\n"
 "Language-Team:  <nls@tux.hellug.gr>\n"
@@ -205,7 +205,7 @@ msgstr "Επιλογή Γραμματοσειράς"
 msgid "Gradient Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Άδειο)"
 

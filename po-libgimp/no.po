@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2004-12-04 17:15+0100\n"
 "Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
 "Language-Team: Norwegian Bokmål<i18n-no@lister.ping.uio.no>\n"
@@ -200,7 +200,7 @@ msgstr "Skrifttypevalg"
 msgid "Gradient Selection"
 msgstr "Graderingsvalg"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Tomt)"
 

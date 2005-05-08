@@ -18,6 +18,7 @@ Bugs fixed in GIMP 2.2.7
 - fixed focus issues in message dialogs (bug #302400)
 - fixed bug in SSE2 assembly for Lighten Only layer mode (bug #164061)
 - fixed resize-window-on-zoom feature (bug #164281)
+- corrected upper limit of tile-cache-size (bug #303371)
 
 
 Bugs fixed in GIMP 2.2.6

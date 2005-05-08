@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2004-12-17 04:32+0200\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -196,7 +196,7 @@ msgstr "Kirjasimen valinta"
 msgid "Gradient Selection"
 msgstr "Väriliu'un valinta"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(tyhjä)"
 

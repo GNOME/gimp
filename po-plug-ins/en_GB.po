@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-10 02:11+0200\n"
+"POT-Creation-Date: 2005-05-08 12:28+0200\n"
 "PO-Revision-Date: 2005-02-15 23:46+0100\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
@@ -284,8 +284,8 @@ msgstr "Cosine"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1056
 #: ../plug-ins/Lighting/lighting_ui.c:369
 #: ../plug-ins/common/CML_explorer.c:168 ../plug-ins/common/align_layers.c:416
-#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3019
-#: ../plug-ins/common/postscript.c:3031 ../plug-ins/common/psp.c:416
+#: ../plug-ins/common/align_layers.c:447 ../plug-ins/common/postscript.c:3028
+#: ../plug-ins/common/postscript.c:3040 ../plug-ins/common/psp.c:416
 #: ../plug-ins/fits/fits.c:1012
 msgid "None"
 msgstr "None"
@@ -388,7 +388,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/raw.c:517
 #: ../plug-ins/common/raw.c:544 ../plug-ins/common/spheredesigner.c:2088
 #: ../plug-ins/common/sunras.c:513 ../plug-ins/common/tga.c:1030
-#: ../plug-ins/common/tiff.c:1810 ../plug-ins/common/xbm.c:996
+#: ../plug-ins/common/tiff.c:1825 ../plug-ins/common/xbm.c:996
 #: ../plug-ins/common/xwd.c:577 ../plug-ins/fits/fits.c:450
 #: ../plug-ins/flame/flame.c:443 ../plug-ins/gfig/gfig.c:783
 #: ../plug-ins/gfli/gfli.c:715 ../plug-ins/ifscompose/ifscompose.c:2395
@@ -1058,7 +1058,7 @@ msgstr "Object Z position in XYZ space"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1070
-#: ../plug-ins/common/postscript.c:3183
+#: ../plug-ins/common/postscript.c:3192
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1254,7 +1254,7 @@ msgstr "Unrecognised or invalid BMP compression format."
 #: ../plug-ins/common/png.c:808 ../plug-ins/common/pnm.c:517
 #: ../plug-ins/common/psd.c:2174 ../plug-ins/common/raw.c:677
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:925
-#: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:833
+#: ../plug-ins/common/tga.c:929 ../plug-ins/common/tiff.c:848
 #: ../plug-ins/common/tile.c:266 ../plug-ins/common/winclipboard.c:579
 #: ../plug-ins/common/xbm.c:867 ../plug-ins/faxg3/faxg3.c:465
 #: ../plug-ins/fits/fits.c:506 ../plug-ins/gfig/gfig-dialog.c:1286
@@ -1285,7 +1285,7 @@ msgstr "Cannot operate on unknown image types."
 #: ../plug-ins/common/png.c:1185 ../plug-ins/common/pnm.c:814
 #: ../plug-ins/common/postscript.c:1128 ../plug-ins/common/psd_save.c:1341
 #: ../plug-ins/common/sunras.c:518 ../plug-ins/common/tga.c:1035
-#: ../plug-ins/common/tiff.c:1815 ../plug-ins/common/xbm.c:1001
+#: ../plug-ins/common/tiff.c:1830 ../plug-ins/common/xbm.c:1001
 #: ../plug-ins/common/xpm.c:628 ../plug-ins/common/xwd.c:582
 #: ../plug-ins/fits/fits.c:455 ../plug-ins/gfli/gfli.c:682
 #: ../plug-ins/sgi/sgi.c:545 ../plug-ins/winicon/icosave.c:977
@@ -2211,7 +2211,7 @@ msgstr "_Azimuth:"
 msgid "_Elevation:"
 msgstr "_Elevation:"
 
-#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3137
+#: ../plug-ins/common/bumpmap.c:993 ../plug-ins/common/postscript.c:3146
 msgid "_X offset:"
 msgstr "_X offset:"
 
@@ -2223,7 +2223,7 @@ msgstr ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 
-#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3146
+#: ../plug-ins/common/bumpmap.c:1007 ../plug-ins/common/postscript.c:3155
 msgid "_Y offset:"
 msgstr "_Y offset:"
 
@@ -2634,11 +2634,11 @@ msgstr "Gr_ey"
 msgid "Re_d"
 msgstr "Re_d"
 
-#: ../plug-ins/common/convmatrix.c:89 ../plug-ins/common/newsprint.c:363
+#: ../plug-ins/common/convmatrix.c:89 ../plug-ins/common/newsprint.c:360
 msgid "_Green"
 msgstr "_Green"
 
-#: ../plug-ins/common/convmatrix.c:90 ../plug-ins/common/newsprint.c:371
+#: ../plug-ins/common/convmatrix.c:90 ../plug-ins/common/newsprint.c:368
 msgid "_Blue"
 msgstr "_Blue"
 
@@ -3195,7 +3195,7 @@ msgid "Destripe"
 msgstr "Destripe"
 
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/gtm.c:578
-#: ../plug-ins/common/postscript.c:2958 ../plug-ins/common/postscript.c:3119
+#: ../plug-ins/common/postscript.c:2967 ../plug-ins/common/postscript.c:3128
 #: ../plug-ins/common/raw.c:985 ../plug-ins/common/smooth_palette.c:429
 #: ../plug-ins/common/tile.c:417 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3292,7 +3292,7 @@ msgid "_Smear"
 msgstr "_Smear"
 
 #: ../plug-ins/common/displace.c:398 ../plug-ins/common/edge.c:742
-#: ../plug-ins/common/fractaltrace.c:735 ../plug-ins/common/newsprint.c:408
+#: ../plug-ins/common/fractaltrace.c:735 ../plug-ins/common/newsprint.c:405
 #: ../plug-ins/common/ripple.c:562
 msgid "_Black"
 msgstr "_Black"
@@ -3406,8 +3406,8 @@ msgid "Engrave"
 msgstr "Engrave"
 
 #: ../plug-ins/common/engrave.c:238 ../plug-ins/common/film.c:1203
-#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2967
-#: ../plug-ins/common/postscript.c:3128 ../plug-ins/common/raw.c:998
+#: ../plug-ins/common/gtm.c:594 ../plug-ins/common/postscript.c:2976
+#: ../plug-ins/common/postscript.c:3137 ../plug-ins/common/raw.c:998
 #: ../plug-ins/common/smooth_palette.c:434 ../plug-ins/common/tile.c:421
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -4926,7 +4926,7 @@ msgstr "_Zoom"
 msgid "Blur Parameters"
 msgstr "Blur Parameters"
 
-#: ../plug-ins/common/mblur.c:956 ../plug-ins/common/newsprint.c:1012
+#: ../plug-ins/common/mblur.c:956 ../plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Angle:"
 
@@ -5136,122 +5136,122 @@ msgstr "Neon Detection"
 msgid "_Amount:"
 msgstr "_Amount:"
 
-#: ../plug-ins/common/newsprint.c:135
+#: ../plug-ins/common/newsprint.c:132
 msgid "Round"
 msgstr "Round"
 
-#: ../plug-ins/common/newsprint.c:144
+#: ../plug-ins/common/newsprint.c:141
 msgid "Line"
 msgstr "Line"
 
-#: ../plug-ins/common/newsprint.c:153
+#: ../plug-ins/common/newsprint.c:150
 msgid "Diamond"
 msgstr "Diamond"
 
-#: ../plug-ins/common/newsprint.c:161
+#: ../plug-ins/common/newsprint.c:158
 msgid "PS Square (Euclidean Dot)"
 msgstr "PS Square (Euclidean Dot)"
 
-#: ../plug-ins/common/newsprint.c:170
+#: ../plug-ins/common/newsprint.c:167
 msgid "PS Diamond"
 msgstr "PS Diamond"
 
-#: ../plug-ins/common/newsprint.c:342
+#: ../plug-ins/common/newsprint.c:339
 msgid "_Grey"
 msgstr "_Grey"
 
-#: ../plug-ins/common/newsprint.c:355
+#: ../plug-ins/common/newsprint.c:352
 msgid "R_ed"
 msgstr "R_ed"
 
-#: ../plug-ins/common/newsprint.c:384
+#: ../plug-ins/common/newsprint.c:381
 msgid "C_yan"
 msgstr "C_yan"
 
-#: ../plug-ins/common/newsprint.c:392
+#: ../plug-ins/common/newsprint.c:389
 msgid "Magen_ta"
 msgstr "Magen_ta"
 
-#: ../plug-ins/common/newsprint.c:400
+#: ../plug-ins/common/newsprint.c:397
 msgid "_Yellow"
 msgstr "_Yellow"
 
-#: ../plug-ins/common/newsprint.c:421
+#: ../plug-ins/common/newsprint.c:418
 msgid "Intensity"
 msgstr "Intensity"
 
-#: ../plug-ins/common/newsprint.c:537
+#: ../plug-ins/common/newsprint.c:534
 msgid "Newsprin_t..."
 msgstr "Newsprin_t..."
 
-#: ../plug-ins/common/newsprint.c:638
+#: ../plug-ins/common/newsprint.c:635
 msgid "Newsprint..."
 msgstr "Newsprint..."
 
-#: ../plug-ins/common/newsprint.c:1042
+#: ../plug-ins/common/newsprint.c:1039
 msgid "_Spot function:"
 msgstr "_Spot function:"
 
-#: ../plug-ins/common/newsprint.c:1199
+#: ../plug-ins/common/newsprint.c:1196
 msgid "Newsprint"
 msgstr "Newsprint"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1243
+#: ../plug-ins/common/newsprint.c:1240
 msgid "Resolution"
 msgstr "Resolution"
 
-#: ../plug-ins/common/newsprint.c:1262
+#: ../plug-ins/common/newsprint.c:1259
 msgid "_Input SPI:"
 msgstr "_Input SPI:"
 
-#: ../plug-ins/common/newsprint.c:1276
+#: ../plug-ins/common/newsprint.c:1273
 msgid "O_utput LPI:"
 msgstr "O_utput LPI:"
 
-#: ../plug-ins/common/newsprint.c:1289
+#: ../plug-ins/common/newsprint.c:1286
 msgid "C_ell size:"
 msgstr "C_ell size:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1302 ../plug-ins/gflare/gflare.c:562
+#: ../plug-ins/common/newsprint.c:1299 ../plug-ins/gflare/gflare.c:562
 msgid "Screen"
 msgstr "Screen"
 
-#: ../plug-ins/common/newsprint.c:1321
+#: ../plug-ins/common/newsprint.c:1318
 msgid "B_lack pullout (%):"
 msgstr "B_lack pullout (%):"
 
-#: ../plug-ins/common/newsprint.c:1343
+#: ../plug-ins/common/newsprint.c:1340
 msgid "Separate to:"
 msgstr "Separate to:"
 
-#: ../plug-ins/common/newsprint.c:1347
+#: ../plug-ins/common/newsprint.c:1344
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../plug-ins/common/newsprint.c:1364
+#: ../plug-ins/common/newsprint.c:1361
 msgid "C_MYK"
 msgstr "C_MYK"
 
-#: ../plug-ins/common/newsprint.c:1381
+#: ../plug-ins/common/newsprint.c:1378
 msgid "I_ntensity"
 msgstr "I_ntensity"
 
-#: ../plug-ins/common/newsprint.c:1406
+#: ../plug-ins/common/newsprint.c:1403
 msgid "_Lock channels"
 msgstr "_Lock channels"
 
-#: ../plug-ins/common/newsprint.c:1419
+#: ../plug-ins/common/newsprint.c:1416
 msgid "_Factory defaults"
 msgstr "_Factory defaults"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1445 ../plug-ins/gfig/gfig-dialog.c:1258
+#: ../plug-ins/common/newsprint.c:1442 ../plug-ins/gfig/gfig-dialog.c:1258
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: ../plug-ins/common/newsprint.c:1453
+#: ../plug-ins/common/newsprint.c:1450
 msgid "O_versample:"
 msgstr "O_versample:"
 
@@ -5777,64 +5777,64 @@ msgstr "Could not interpret '%s'"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript save cannot handle images with alpha channels"
 
-#: ../plug-ins/common/postscript.c:1622
+#: ../plug-ins/common/postscript.c:1631
 #, c-format
 msgid "Error starting ghostscript (%s)"
 msgstr "Error starting ghostscript (%s)"
 
-#: ../plug-ins/common/postscript.c:1652
+#: ../plug-ins/common/postscript.c:1661
 #, c-format
 msgid "Error starting ghostscript: %s"
 msgstr "Error starting ghostscript: %s"
 
-#: ../plug-ins/common/postscript.c:2472 ../plug-ins/common/postscript.c:2605
-#: ../plug-ins/common/postscript.c:2757 ../plug-ins/common/postscript.c:2886
+#: ../plug-ins/common/postscript.c:2481 ../plug-ins/common/postscript.c:2614
+#: ../plug-ins/common/postscript.c:2766 ../plug-ins/common/postscript.c:2895
 #: ../plug-ins/common/sunras.c:1454 ../plug-ins/common/sunras.c:1562
 #: ../plug-ins/fits/fits.c:826 ../plug-ins/fits/fits.c:950
 msgid "Write error occurred"
 msgstr "Write error occurred"
 
-#: ../plug-ins/common/postscript.c:2913
+#: ../plug-ins/common/postscript.c:2922
 msgid "Load PostScript"
 msgstr "Load PostScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:2933
+#: ../plug-ins/common/postscript.c:2942
 msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:2949 ../plug-ins/common/svg.c:882
+#: ../plug-ins/common/postscript.c:2958 ../plug-ins/common/svg.c:882
 #: ../plug-ins/common/wmf.c:669 ../plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Resolution:"
 
-#: ../plug-ins/common/postscript.c:2977
+#: ../plug-ins/common/postscript.c:2986
 msgid "Pages:"
 msgstr "Pages:"
 
-#: ../plug-ins/common/postscript.c:2983
+#: ../plug-ins/common/postscript.c:2992
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:2985
+#: ../plug-ins/common/postscript.c:2994
 msgid "Try Bounding Box"
 msgstr "Try Bounding Box"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:2998
+#: ../plug-ins/common/postscript.c:3007
 msgid "Coloring"
 msgstr "Colouring"
 
-#: ../plug-ins/common/postscript.c:3002
+#: ../plug-ins/common/postscript.c:3011
 msgid "B/W"
 msgstr "B/W"
 
-#: ../plug-ins/common/postscript.c:3003 ../plug-ins/rcm/rcm_dialog.c:411
+#: ../plug-ins/common/postscript.c:3012 ../plug-ins/rcm/rcm_dialog.c:411
 msgid "Gray"
 msgstr "Grey"
 
-#: ../plug-ins/common/postscript.c:3004 ../plug-ins/common/xpm.c:469
+#: ../plug-ins/common/postscript.c:3013 ../plug-ins/common/xpm.c:469
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/imagemap/imap_menu.c:306
@@ -5842,40 +5842,40 @@ msgstr "Grey"
 msgid "Color"
 msgstr "Colour"
 
-#: ../plug-ins/common/postscript.c:3005 ../plug-ins/fits/fits.c:1000
+#: ../plug-ins/common/postscript.c:3014 ../plug-ins/fits/fits.c:1000
 msgid "Automatic"
 msgstr "Automatic"
 
-#: ../plug-ins/common/postscript.c:3015
+#: ../plug-ins/common/postscript.c:3024
 msgid "Text antialiasing"
 msgstr "Text antialiasing"
 
-#: ../plug-ins/common/postscript.c:3020 ../plug-ins/common/postscript.c:3032
+#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/postscript.c:3041
 msgid "Weak"
 msgstr "Weak"
 
-#: ../plug-ins/common/postscript.c:3021 ../plug-ins/common/postscript.c:3033
+#: ../plug-ins/common/postscript.c:3030 ../plug-ins/common/postscript.c:3042
 msgid "Strong"
 msgstr "Strong"
 
-#: ../plug-ins/common/postscript.c:3027
+#: ../plug-ins/common/postscript.c:3036
 msgid "Graphic antialiasing"
 msgstr "Graphic antialiasing"
 
-#: ../plug-ins/common/postscript.c:3079
+#: ../plug-ins/common/postscript.c:3088
 msgid "Save as PostScript"
 msgstr "Save as PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3103
+#: ../plug-ins/common/postscript.c:3112
 msgid "Image Size"
 msgstr "Image Size"
 
-#: ../plug-ins/common/postscript.c:3152
+#: ../plug-ins/common/postscript.c:3161
 msgid "_Keep aspect ratio"
 msgstr "_Keep aspect ratio"
 
-#: ../plug-ins/common/postscript.c:3158
+#: ../plug-ins/common/postscript.c:3167
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5884,36 +5884,36 @@ msgstr ""
 "without changing the aspect ratio."
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3167
+#: ../plug-ins/common/postscript.c:3176
 msgid "Unit"
 msgstr "Unit"
 
-#: ../plug-ins/common/postscript.c:3171
+#: ../plug-ins/common/postscript.c:3180
 msgid "_Inch"
 msgstr "_Inch"
 
-#: ../plug-ins/common/postscript.c:3172
+#: ../plug-ins/common/postscript.c:3181
 msgid "_Millimeter"
 msgstr "_Millimetre"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3198
+#: ../plug-ins/common/postscript.c:3207
 msgid "Output"
 msgstr "Output"
 
-#: ../plug-ins/common/postscript.c:3204
+#: ../plug-ins/common/postscript.c:3213
 msgid "_PostScript level 2"
 msgstr "_PostScript level 2"
 
-#: ../plug-ins/common/postscript.c:3213
+#: ../plug-ins/common/postscript.c:3222
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
-#: ../plug-ins/common/postscript.c:3222
+#: ../plug-ins/common/postscript.c:3231
 msgid "P_review"
 msgstr "P_review"
 
-#: ../plug-ins/common/postscript.c:3243
+#: ../plug-ins/common/postscript.c:3252
 msgid "Preview _size:"
 msgstr "Preview _size:"
 
@@ -7131,16 +7131,16 @@ msgstr "Threshold:"
 msgid "TIFF image"
 msgstr "TIFF image"
 
-#: ../plug-ins/common/tiff.c:835
+#: ../plug-ins/common/tiff.c:850
 #, c-format
 msgid "Page %d"
 msgstr "Page %d"
 
-#: ../plug-ins/common/tiff.c:850
+#: ../plug-ins/common/tiff.c:865
 msgid "TIFF Channel"
 msgstr "TIFF Channel"
 
-#: ../plug-ins/common/tiff.c:859
+#: ../plug-ins/common/tiff.c:874
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7152,7 +7152,7 @@ msgstr ""
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 
-#: ../plug-ins/common/tiff.c:1955
+#: ../plug-ins/common/tiff.c:1970
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7160,40 +7160,40 @@ msgstr ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 
-#: ../plug-ins/common/tiff.c:2104
+#: ../plug-ins/common/tiff.c:2119
 msgid "Save as TIFF"
 msgstr "Save as TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2118
+#: ../plug-ins/common/tiff.c:2133
 msgid "Compression"
 msgstr "Compression"
 
-#: ../plug-ins/common/tiff.c:2122
+#: ../plug-ins/common/tiff.c:2137
 msgid "_None"
 msgstr "_None"
 
-#: ../plug-ins/common/tiff.c:2123
+#: ../plug-ins/common/tiff.c:2138
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2124
+#: ../plug-ins/common/tiff.c:2139
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/common/tiff.c:2125
+#: ../plug-ins/common/tiff.c:2140
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2126
+#: ../plug-ins/common/tiff.c:2141
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2135
+#: ../plug-ins/common/tiff.c:2150
 msgid "Save _color values from transparent pixels"
 msgstr "Save _colour values from transparent pixels"
 
-#: ../plug-ins/common/tiff.c:2151 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2166 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Comment:"
 
