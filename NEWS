@@ -61,4 +61,10 @@ Changes in GIMP 2.3
 - moved cursor info out of the Info window into a dockable
 - moved remaining bits of the Info Window to a new Image Properties dialog
 - build and install gimp-console by default
+- allow to drag and drop image data into GIMP
+- use the statusbar more to display hints and info about the tool state
+- resurrected --no-data functionality
+- improved Helpbrowser plug-in
+- allow to choose between different algorithms for Desaturate
+- added thumbnail loader to Winicon plug-in
 - lots of bug-fixes

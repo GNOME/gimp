@@ -1005,7 +1005,7 @@
 	* app/config/gimpguiconfig.[ch]: added "gboolean save_tool_options".
 
 	* app/tools/gimp-tools.[ch]: implement the same logic as for
-	devicerc and essionrc: added gimp_tools_clear() which deletes the
+	devicerc and sessionrc: added gimp_tools_clear() which deletes the
 	stored tool options and added "save_tool_options" and
 	"always_save" parameters to gimp_tools_save(). Everything affects
 	just the primary tool options, *not* the separately saved presets
