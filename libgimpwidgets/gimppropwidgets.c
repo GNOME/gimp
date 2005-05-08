@@ -1564,7 +1564,7 @@ gimp_prop_entry_new (GObject     *config,
                 NULL);
 
   entry = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (entry), value);
+  gtk_entry_set_text (GTK_ENTRY (entry), value ? value : "");
 
   g_free (value);
 
@@ -1625,7 +1625,7 @@ gimp_prop_entry_notify (GObject    *config,
                                    gimp_prop_entry_callback,
                                    config);
 
-  gtk_entry_set_text (GTK_ENTRY (entry), value);
+  gtk_entry_set_text (GTK_ENTRY (entry), value ? value : "");
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_entry_callback,
