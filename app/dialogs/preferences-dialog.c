@@ -39,8 +39,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontrollers.h"
-#include "widgets/gimpcontrollereditor.h"
+#include "widgets/gimpcontrollerlist.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
@@ -2258,32 +2257,9 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
-  {
-    GimpContainer *controllers = gimp_controllers_get_list (gimp);
-    GtkWidget     *notebook;
-    GList         *list;
-
-    notebook = gtk_notebook_new ();
-    gtk_notebook_set_scrollable (GTK_NOTEBOOK (notebook), TRUE);
-    gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook));
-    gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
-    gtk_widget_show (notebook);
-
-    for (list = GIMP_LIST (controllers)->list;
-         list;
-         list = g_list_next (list))
-      {
-        GimpControllerInfo *info = list->data;
-        GtkWidget          *editor;
-
-        editor = gimp_controller_editor_new (info);
-        gtk_container_set_border_width (GTK_CONTAINER (editor), 4);
-        gtk_notebook_append_page (GTK_NOTEBOOK (notebook), editor,
-                                  gimp_prop_label_new (G_OBJECT (info),
-                                                       "name"));
-        gtk_widget_show (editor);
-      }
-  }
+  vbox2 = gimp_controller_list_new (gimp);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
+  gtk_widget_show (vbox2);
 
 
   /***********************/

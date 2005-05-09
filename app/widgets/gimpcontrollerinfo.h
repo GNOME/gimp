@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcontrollerinfo.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2005 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,7 +24,7 @@
 #define __GIMP_CONTROLLER_INFO_H__
 
 
-#include "core/gimpobject.h"
+#include "core/gimpviewable.h"
 
 
 #define GIMP_TYPE_CONTROLLER_INFO            (gimp_controller_info_get_type ())
@@ -39,7 +39,7 @@ typedef struct _GimpControllerInfoClass GimpControllerInfoClass;
 
 struct _GimpControllerInfo
 {
-  GimpObject      parent_instance;
+  GimpViewable    parent_instance;
 
   gboolean        enabled;
   gboolean        debug_events;
@@ -50,7 +50,7 @@ struct _GimpControllerInfo
 
 struct _GimpControllerInfoClass
 {
-  GimpObjectClass parent_class;
+  GimpViewableClass  parent_class;
 
   gboolean (* event_mapped) (GimpControllerInfo        *info,
                              GimpController            *controller,
@@ -59,11 +59,13 @@ struct _GimpControllerInfoClass
 };
 
 
-GType    gimp_controller_info_get_type    (void) G_GNUC_CONST;
+GType    gimp_controller_info_get_type        (void) G_GNUC_CONST;
 
-void     gimp_controller_info_set_enabled (GimpControllerInfo *info,
-                                           gboolean            enabled);
-gboolean gimp_controller_info_get_enabled (GimpControllerInfo *info);
+GimpControllerInfo * gimp_controller_info_new (GType               type);
+
+void     gimp_controller_info_set_enabled     (GimpControllerInfo *info,
+                                               gboolean            enabled);
+gboolean gimp_controller_info_get_enabled     (GimpControllerInfo *info);
 
 
 #endif /* __GIMP_CONTROLLER_INFO_H__ */

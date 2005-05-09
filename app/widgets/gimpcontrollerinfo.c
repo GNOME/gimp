@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcontrollerinfo.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2004-2005 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -90,7 +90,7 @@ static gboolean gimp_controller_info_event (GimpController            *controlle
                                             GimpControllerInfo        *info);
 
 
-static GimpObjectClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
 static guint  info_signals[LAST_SIGNAL] = { 0 };
 
@@ -121,7 +121,7 @@ gimp_controller_info_get_type (void)
         NULL   /* iface_data     */
       };
 
-      controller_type = g_type_register_static (GIMP_TYPE_OBJECT,
+      controller_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
                                                 "GimpControllerInfo",
                                                 &controller_info, 0);
 
@@ -405,6 +405,32 @@ gimp_controller_info_deserialize_property (GimpConfig *config,
   return TRUE;
 }
 
+
+/*  public functions  */
+
+GimpControllerInfo *
+gimp_controller_info_new (GType type)
+{
+  GimpControllerClass *controller_class;
+  GimpController      *controller;
+  GimpControllerInfo  *info;
+
+  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_CONTROLLER), NULL);
+
+  controller_class = g_type_class_ref (type);
+
+  controller = gimp_controller_new (type);
+  info = g_object_new (GIMP_TYPE_CONTROLLER_INFO,
+                       "name",       controller_class->name,
+                       "controller", controller,
+                       NULL);
+  g_object_unref (controller);
+
+  g_type_class_unref (controller_class);
+
+  return info;
+}
+
 void
 gimp_controller_info_set_enabled (GimpControllerInfo *info,
                                   gboolean            enabled)
@@ -422,6 +448,9 @@ gimp_controller_info_get_enabled (GimpControllerInfo *info)
 
   return info->enabled;
 }
+
+
+/*  private functions  */
 
 static gboolean
 gimp_controller_info_event (GimpController            *controller,
