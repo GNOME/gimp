@@ -1,5 +1,9 @@
 2005-05-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/Makefile.am: removed traces of plug-ins/common,
+
+2005-05-09  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.c: inline tile_manager_get_tile_num().
 
 	* app/display/gimpdisplayshell-render.c (render_image_tile_fault):

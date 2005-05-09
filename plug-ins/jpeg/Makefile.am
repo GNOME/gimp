@@ -16,16 +16,10 @@ AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = \
-	mkgen.pl	\
-	plugin-defs.pl
-
 INCLUDES = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(EXIF_CFLAGS)	\
-	$(SVG_CFLAGS)	\
-	$(WMF_CFLAGS)	\
 	-I$(includedir)
 
 libexec_PROGRAMS = $(JPEG)
@@ -56,4 +50,3 @@ jpeg_LDADD = \
 	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
-
