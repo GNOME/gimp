@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-28 13:56+0200\n"
-"PO-Revision-Date: 2005-04-05 21:52+0200\n"
+"POT-Creation-Date: 2005-05-09 22:39+0200\n"
+"PO-Revision-Date: 2005-05-09 22:40+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -435,7 +435,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
 #: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1778
+#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
 #: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
@@ -447,7 +447,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
 #: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:127 ../plug-ins/xjt/xjt.c:2524
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1226,13 +1226,13 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1784 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
 #: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:510
+#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
 #: ../plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
@@ -1272,7 +1272,7 @@ msgstr "Nicht unterstütze oder ungültige Farbtiefe."
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
 #: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
 #: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
@@ -1283,6 +1283,11 @@ msgstr "Nicht unterstütze oder ungültige Farbtiefe."
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Hintergrund"
+
+#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
+#: ../plug-ins/bmp/bmpread.c:706
+msgid "The bitmap ends unexpectedly."
+msgstr "Die Bitmap endet unerwartet."
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
 #: ../plug-ins/common/pcx.c:573
@@ -4269,7 +4274,7 @@ msgstr "Palettenübersicht..."
 
 #: ../plug-ins/common/grid.c:145
 msgid "_Grid..."
-msgstr "Hilfslinien..."
+msgstr "_Gitter..."
 
 #: ../plug-ins/common/grid.c:238
 msgid "Drawing Grid..."
@@ -4803,12 +4808,12 @@ msgstr "_Betreff:"
 msgid "Comm_ent:"
 msgstr "_Kommentar:"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:723
 msgid "some sort of error with the file extension or lack thereof"
 msgstr ""
 "Irgendein Fehler mit der Dateinamenerweiterung (oder das Fehlen derselben)"
 
-#: ../plug-ins/common/mail.c:955
+#: ../plug-ins/common/mail.c:950
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Sendmail (%s) konnte nicht gestartet werden"
@@ -7185,40 +7190,40 @@ msgstr ""
 "Das TIFF-Dateiformat unterstützt Kommentare nur\n"
 "in 7-Bit-ASCII-Kodierung. Es wurde kein Kommentar gespeichert."
 
-#: ../plug-ins/common/tiff.c:2299
+#: ../plug-ins/common/tiff.c:2258
 msgid "Save as TIFF"
 msgstr "Als TIFF speichern"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2318
+#: ../plug-ins/common/tiff.c:2277
 msgid "Compression"
 msgstr "Kompression"
 
-#: ../plug-ins/common/tiff.c:2322
+#: ../plug-ins/common/tiff.c:2281
 msgid "_None"
 msgstr "Kei_n"
 
-#: ../plug-ins/common/tiff.c:2323
+#: ../plug-ins/common/tiff.c:2282
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2324
+#: ../plug-ins/common/tiff.c:2283
 msgid "_Pack Bits"
 msgstr "_Bits packen"
 
-#: ../plug-ins/common/tiff.c:2325
+#: ../plug-ins/common/tiff.c:2284
 msgid "_Deflate"
 msgstr "_Entpacken"
 
-#: ../plug-ins/common/tiff.c:2326
+#: ../plug-ins/common/tiff.c:2285
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2335
+#: ../plug-ins/common/tiff.c:2294
 msgid "Save _color values from transparent pixels"
 msgstr "_Farbwerte aus transparenten Pixeln speichern"
 
-#: ../plug-ins/common/tiff.c:2351 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2310 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -10576,7 +10581,7 @@ msgstr "Orientierung _beibehalten"
 msgid "JPEG preview"
 msgstr "JPEG Vorschau"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575
+#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Öffne Vorschau für '%s'..."
@@ -11796,31 +11801,31 @@ msgstr "Es ist ein Netzwerkfehler aufgetreten: %s"
 msgid "Downloading unknown amount of image data..."
 msgstr "Eine unbekannte Größe an Bilddaten werden heruntergeladen..."
 
-#: ../plug-ins/winicon/icodialog.c:87
+#: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-Bit Alpha, 2-Slot Palette"
 
-#: ../plug-ins/winicon/icodialog.c:88
+#: ../plug-ins/winicon/icodialog.c:100
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-Bit Alpha, 16-Slot Palette"
 
-#: ../plug-ins/winicon/icodialog.c:89
+#: ../plug-ins/winicon/icodialog.c:101
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-Bit Alpha, 256-Slot Palette"
 
-#: ../plug-ins/winicon/icodialog.c:90
+#: ../plug-ins/winicon/icodialog.c:102
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-Bit Alpha, keine Palette"
 
-#: ../plug-ins/winicon/icodialog.c:115
+#: ../plug-ins/winicon/icodialog.c:128
 msgid "Save as Windows Icon"
 msgstr "Als Microsoft Icon sichern"
 
-#: ../plug-ins/winicon/icodialog.c:141
+#: ../plug-ins/winicon/icodialog.c:154
 msgid "Icon details"
 msgstr "Symbolinformationen"
 
-#: ../plug-ins/winicon/icoload.c:384
+#: ../plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
 msgstr "Symbol Nr. %i"
@@ -11830,7 +11835,7 @@ msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 "Microsoft Windows Symbole dürfen nicht höher oder breiter als 255 Pixel sein."
 
-#: ../plug-ins/winicon/main.c:87 ../plug-ins/winicon/main.c:106
+#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
 msgstr "Microsoft-Windows-Symbol"
 
