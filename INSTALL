@@ -5,7 +5,7 @@ There are some basic steps to building and installing The GIMP.
 
 GIMP 2.3 replaces earlier GIMP 2.x versions. It is advised that you
 uninstall them before installing GIMP 2.3. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.4, you have to
+older GIMP 2.x installation in parallel to GIMP 2.3, you have to
 choose a separate prefix which is not in your default library search
 path.
 

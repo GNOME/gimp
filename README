@@ -1,28 +1,20 @@
-The GNU Image Manipulation Program Version 2.2
+The GNU Image Manipulation Program Version 2.3
 ----------------------------------------------
 
-This is version 2.2 of The GIMP. Version 2.2 is an update on GIMP 2.0.
-GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
-scripts written for GIMP 2.0 will continue to work and don't need to
-be changed nor recompiled to be used with GIMP 2.2.  We do however
-hope that plug-in authors will update their plug-ins for GIMP 2.2 and
-adapt the GUI changes we did with this version.
+This is an unstable development version of GIMP. Please realize that
+this is in no way a final product. A lot of new features are
+incomplete and some things may even be completely broken. If you need
+to get work done, please use the stable version, GIMP 2.2.
 
-GIMP 2.2 replaces GIMP 2.0. It is advised that you uninstall GIMP 2.0
-before installing GIMP 2.2. If you want to keep GIMP 2.0 installed in
-parallel to GIMP 2.2, you have to choose a separate prefix which is
-not in your default library search path.
+GIMP 2.3 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.3. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.3, you have to
+choose a separate prefix which is not in your default library search
+path.
 
-This code has already seen quite some testing but a lot has changed
-since version GIMP 2.0 and we could very well have introduced new
-bugs. If you find any , make sure you report them at bugzilla.gnome.org
-(after checking that it isn't reported already).
-
-The GIMP 2.2 API is guaranteed to be backward compatible (source and
-binary) with the GIMP 2.0 API. If you find that your 2.0 plug-in break
-when used with the GIMP 2.2 libraries, or if you cannot compile a GIMP
-2.0 plug-in against the GIMP 2.2 header files, please report that as a
-bug.
+If you think you found a bug in this version, please make sure that it
+hasn't been reported earlier and that it is not just new stuff that is
+still being worked on and obviously not quite finished yet.
 
 If you want to hack on The GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.
