@@ -93,7 +93,7 @@ static void   load_tiles    (TIFF         *tif,
                              gboolean      is_bw,
                              gint          extra);
 
-static void   read_separate (guchar       *source,
+static void   read_separate (const guchar *source,
                              channel_data *channel,
                              gushort       bps,
                              gushort       photomet,
@@ -104,7 +104,7 @@ static void   read_separate (guchar       *source,
                              gboolean      alpha,
                              gint          extra,
                              gint          sample);
-static void   read_16bit    (guchar       *source,
+static void   read_16bit    (const guchar *source,
                              channel_data *channel,
                              gushort       photomet,
                              gint          startcol,
@@ -114,7 +114,7 @@ static void   read_16bit    (guchar       *source,
                              gboolean      alpha,
                              gint          extra,
                              gint          align);
-static void   read_8bit     (guchar       *source,
+static void   read_8bit     (const guchar *source,
                              channel_data *channel,
                              gushort       photomet,
                              gint          startcol,
@@ -124,14 +124,14 @@ static void   read_8bit     (guchar       *source,
                              gboolean      alpha,
                              gint          extra,
                              gint          align);
-static void   read_bw       (guchar       *source,
+static void   read_bw       (const guchar *source,
                              channel_data *channel,
                              gint          startcol,
                              gint          startrow,
                              gint          rows,
                              gint          cols,
                              gint          align);
-static void   read_default  (guchar       *source,
+static void   read_default  (const guchar *source,
                              channel_data *channel,
                              gushort       bps,
                              gushort       photomet,
@@ -143,20 +143,20 @@ static void   read_default  (guchar       *source,
                              gint          extra,
                              gint          align);
 
-static gboolean  save_image             (const gchar *filename,
-                                         gint32       image,
-                                         gint32       drawable,
-                                         gint32       orig_image);
-static void      byte2bit               (guchar      *byteline,
-                                         gint         width,
-                                         guchar      *bitline,
-                                         gboolean     invert);
+static gboolean  save_image             (const gchar  *filename,
+                                         gint32        image,
+                                         gint32        drawable,
+                                         gint32        orig_image);
 
-static gboolean  save_dialog            (gboolean     alpha);
+static gboolean  save_dialog            (gboolean      alpha);
 
-static void      comment_entry_callback (GtkWidget   *widget,
-                                         gpointer     data);
+static void      comment_entry_callback (GtkWidget    *widget,
+                                         gpointer      data);
 
+static void      byte2bit               (const guchar *byteline,
+                                         gint          width,
+                                         guchar       *bitline,
+                                         gboolean      invert);
 static void      fill_bit2byte          (void);
 
 
@@ -1226,7 +1226,7 @@ load_lines (TIFF         *tif,
 }
 
 static void
-read_16bit (guchar       *source,
+read_16bit (const guchar *source,
             channel_data *channel,
             gushort       photomet,
             gint          startrow,
@@ -1398,7 +1398,7 @@ read_16bit (guchar       *source,
 }
 
 static void
-read_8bit (guchar       *source,
+read_8bit (const guchar *source,
            channel_data *channel,
            gushort       photomet,
            gint          startrow,
@@ -1563,7 +1563,7 @@ read_8bit (guchar       *source,
 }
 
 static void
-read_bw (guchar       *source,
+read_bw (const guchar *source,
          channel_data *channel,
          gint          startrow,
          gint          startcol,
@@ -1619,7 +1619,7 @@ read_bw (guchar       *source,
   }
 
 static void
-read_default (guchar       *source,
+read_default (const guchar *source,
               channel_data *channel,
               gushort       bps,
               gushort       photomet,
@@ -1799,7 +1799,7 @@ read_default (guchar       *source,
 }
 
 static void
-read_separate (guchar       *source,
+read_separate (const guchar *source,
                channel_data *channel,
                gushort       bps,
                gushort       photomet,
@@ -1982,7 +1982,7 @@ save_image (const gchar *filename,
         {
           is_bw = (memcmp (cmap, bw_map, 6) == 0);
           photometric = PHOTOMETRIC_MINISWHITE;
-  
+
           if (!is_bw)
             {
               is_bw = (memcmp (cmap, wb_map, 6) == 0);
@@ -2243,47 +2243,6 @@ save_image (const gchar *filename,
   return TRUE;
 }
 
-/* Convert n bytes of 0/1 to a line of bits */
-static void
-byte2bit (guchar   *byteline,
-          gint      width,
-          guchar   *bitline,
-          gboolean  invert)
-{
-  guchar bitval;
-  guchar rest[8];
-
-  while (width >= 8)
-    {
-      bitval = 0;
-      if (*(byteline++)) bitval |= 0x80;
-      if (*(byteline++)) bitval |= 0x40;
-      if (*(byteline++)) bitval |= 0x20;
-      if (*(byteline++)) bitval |= 0x10;
-      if (*(byteline++)) bitval |= 0x08;
-      if (*(byteline++)) bitval |= 0x04;
-      if (*(byteline++)) bitval |= 0x02;
-      if (*(byteline++)) bitval |= 0x01;
-      *(bitline++) = invert ? ~bitval : bitval;
-      width -= 8;
-    }
-  if (width > 0)
-    {
-      memset (rest, 0, 8);
-      memcpy (rest, byteline, width);
-      bitval = 0;
-      byteline = rest;
-      if (*(byteline++)) bitval |= 0x80;
-      if (*(byteline++)) bitval |= 0x40;
-      if (*(byteline++)) bitval |= 0x20;
-      if (*(byteline++)) bitval |= 0x10;
-      if (*(byteline++)) bitval |= 0x08;
-      if (*(byteline++)) bitval |= 0x04;
-      if (*(byteline++)) bitval |= 0x02;
-      *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
-    }
-}
-
 static gboolean
 save_dialog (gboolean alpha)
 {
@@ -2381,6 +2340,47 @@ comment_entry_callback (GtkWidget *widget,
 
   g_free (image_comment);
   image_comment = g_strdup (text);
+}
+
+/* Convert n bytes of 0/1 to a line of bits */
+static void
+byte2bit (const guchar *byteline,
+          gint          width,
+          guchar       *bitline,
+          gboolean      invert)
+{
+  guchar bitval;
+  guchar rest[8];
+
+  while (width >= 8)
+    {
+      bitval = 0;
+      if (*(byteline++)) bitval |= 0x80;
+      if (*(byteline++)) bitval |= 0x40;
+      if (*(byteline++)) bitval |= 0x20;
+      if (*(byteline++)) bitval |= 0x10;
+      if (*(byteline++)) bitval |= 0x08;
+      if (*(byteline++)) bitval |= 0x04;
+      if (*(byteline++)) bitval |= 0x02;
+      if (*(byteline++)) bitval |= 0x01;
+      *(bitline++) = invert ? ~bitval : bitval;
+      width -= 8;
+    }
+  if (width > 0)
+    {
+      memset (rest, 0, 8);
+      memcpy (rest, byteline, width);
+      bitval = 0;
+      byteline = rest;
+      if (*(byteline++)) bitval |= 0x80;
+      if (*(byteline++)) bitval |= 0x40;
+      if (*(byteline++)) bitval |= 0x20;
+      if (*(byteline++)) bitval |= 0x10;
+      if (*(byteline++)) bitval |= 0x08;
+      if (*(byteline++)) bitval |= 0x04;
+      if (*(byteline++)) bitval |= 0x02;
+      *bitline = invert ? ~bitval & (0xff << (8 - width)) : bitval;
+    }
 }
 
 static void

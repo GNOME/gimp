@@ -1,3 +1,7 @@
+2005-05-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c: sprinkled some const qualifiers.
+
 2005-05-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am
