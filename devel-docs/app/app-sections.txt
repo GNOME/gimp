@@ -3144,9 +3144,6 @@ GIMP_PAINTBRUSH_TOOL_GET_CLASS
 <TITLE>GimpPaintTool</TITLE>
 GimpPaintTool
 gimp_paint_tool_enable_color_picker
-gimp_paint_tool_push_status
-gimp_paint_tool_pop_status
-gimp_paint_tool_replace_status
 <SUBSECTION Standard>
 GimpPaintToolClass
 GIMP_PAINT_TOOL
@@ -3416,6 +3413,7 @@ gimp_tool_cursor_update
 gimp_tool_push_status
 gimp_tool_push_status_coords
 gimp_tool_push_status_length
+gimp_tool_replace_status
 gimp_tool_pop_status
 gimp_tool_set_cursor
 <SUBSECTION Standard>
