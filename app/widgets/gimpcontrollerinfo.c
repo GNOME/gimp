@@ -449,6 +449,17 @@ gimp_controller_info_get_enabled (GimpControllerInfo *info)
   return info->enabled;
 }
 
+void
+gimp_controller_info_set_event_snooper (GimpControllerInfo         *info,
+                                        GimpControllerEventSnooper  snooper,
+                                        gpointer                    snooper_data)
+{
+  g_return_if_fail (GIMP_IS_CONTROLLER_INFO (info));
+
+  info->snooper      = snooper;
+  info->snooper_data = snooper_data;
+}
+
 
 /*  private functions  */
 
@@ -465,29 +476,38 @@ gimp_controller_info_event (GimpController            *controller,
   event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
 
   if (info->debug_events)
-    g_print ("Received '%s' (class '%s')\n"
-             "    controller event '%s (%s)'\n",
-             controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
-             event_name, event_blurb);
-
-  switch (event->any.type)
     {
-    case GIMP_CONTROLLER_EVENT_TRIGGER:
-      if (info->debug_events)
-        g_print ("    (trigger event)\n");
-      break;
+      g_print ("Received '%s' (class '%s')\n"
+               "    controller event '%s (%s)'\n",
+               controller->name, GIMP_CONTROLLER_GET_CLASS (controller)->name,
+               event_name, event_blurb);
 
-    case GIMP_CONTROLLER_EVENT_VALUE:
-      if (info->debug_events)
+      switch (event->any.type)
         {
+        case GIMP_CONTROLLER_EVENT_TRIGGER:
+          g_print ("    (trigger event)\n");
+          break;
+
+        case GIMP_CONTROLLER_EVENT_VALUE:
           if (G_VALUE_HOLDS_DOUBLE (&event->value.value))
             g_print ("    (value event, value = %f)\n",
                      g_value_get_double (&event->value.value));
           else
             g_print ("    (value event, unhandled type '%s')\n",
                      g_type_name (event->value.value.g_type));
+          break;
         }
-      break;
+    }
+
+  if (info->snooper)
+    {
+      if (info->snooper (info, controller, event, info->snooper_data))
+        {
+          if (info->debug_events)
+            g_print ("    intercepted by event snooper\n\n");
+
+          return TRUE;
+        }
     }
 
   if (! info->enabled)

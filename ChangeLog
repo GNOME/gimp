@@ -1,3 +1,13 @@
+2005-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollerinfo.[ch]: added API to set an event
+	snooper which, if set, receives any controller event first, even
+	if event dispatching is disabled for the controller.
+
+	* app/widgets/gimpcontrollereditor.[ch]: use the new API to
+	implement a "Grab Event" button, which takes the next event from
+	the controller and selects it in the event mapping tree view.
+
 2005-05-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollerlist.[ch]: some more stuff: up/down

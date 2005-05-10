@@ -44,6 +44,7 @@ struct _GimpControllerEditor
 
   GtkTreeSelection   *sel;
 
+  GtkWidget          *grab_button;
   GtkWidget          *edit_button;
   GtkWidget          *delete_button;
 

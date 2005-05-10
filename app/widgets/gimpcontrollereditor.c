@@ -85,6 +85,8 @@ static void gimp_controller_editor_row_activated  (GtkTreeView          *tv,
                                                    GtkTreeViewColumn    *column,
                                                    GimpControllerEditor *editor);
 
+static void gimp_controller_editor_grab_toggled   (GtkWidget            *button,
+                                                   GimpControllerEditor *editor);
 static void gimp_controller_editor_edit_clicked   (GtkWidget            *button,
                                                    GimpControllerEditor *editor);
 static void gimp_controller_editor_delete_clicked (GtkWidget            *button,
@@ -380,6 +382,15 @@ gimp_controller_editor_constructor (GType                  type,
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  editor->grab_button = gtk_check_button_new_with_mnemonic (_("_Grab Event"));
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (editor->grab_button), FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->grab_button, TRUE, TRUE, 0);
+  gtk_widget_show (editor->grab_button);
+
+  g_signal_connect (editor->grab_button, "toggled",
+                    G_CALLBACK (gimp_controller_editor_grab_toggled),
+                    editor);
+
   editor->edit_button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
   gtk_box_pack_start (GTK_BOX (hbox), editor->edit_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->edit_button);
@@ -447,6 +458,8 @@ gimp_controller_editor_finalize (GObject *object)
 
   if (editor->info)
     {
+      gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
+
       g_object_unref (editor->info);
       editor->info = NULL;
     }
@@ -514,6 +527,8 @@ gimp_controller_editor_sel_changed (GtkTreeSelection     *sel,
 
   gtk_widget_set_sensitive (editor->edit_button,   edit_sensitive);
   gtk_widget_set_sensitive (editor->delete_button, delete_sensitive);
+
+  gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
 }
 
 static void
@@ -526,6 +541,77 @@ gimp_controller_editor_row_activated (GtkTreeView          *tv,
     gtk_button_clicked (GTK_BUTTON (editor->edit_button));
 }
 
+static gboolean
+gimp_controller_editor_snooper (GimpControllerInfo        *info,
+                                GimpController            *controller,
+                                const GimpControllerEvent *event,
+                                gpointer                   user_data)
+{
+  GimpControllerEditor *editor = GIMP_CONTROLLER_EDITOR (user_data);
+  GtkTreeModel         *model;
+  GtkTreeIter           iter;
+  gboolean              iter_valid;
+  const gchar          *event_name;
+
+  gtk_tree_selection_get_selected (editor->sel, &model, &iter);
+
+  event_name = gimp_controller_get_event_name (info->controller,
+                                               event->any.event_id);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar *list_name;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_EVENT, &list_name,
+                          -1);
+
+      if (! strcmp (list_name, event_name))
+        {
+          GtkTreeView *view;
+          GtkTreePath *path;
+
+          view = gtk_tree_selection_get_tree_view (editor->sel);
+
+          gtk_tree_selection_select_iter (editor->sel, &iter);
+
+          path = gtk_tree_model_get_path (model, &iter);
+          gtk_tree_view_scroll_to_cell (view, path, NULL, FALSE, 0.0, 0.0);
+          gtk_tree_view_set_cursor (view, path, NULL, FALSE);
+          gtk_tree_path_free (path);
+
+          gtk_widget_grab_focus (GTK_WIDGET (view));
+
+          g_free (list_name);
+          break;
+        }
+
+      g_free (list_name);
+    }
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->grab_button), FALSE);
+
+  return TRUE;
+}
+
+static void
+gimp_controller_editor_grab_toggled (GtkWidget            *button,
+                                     GimpControllerEditor *editor)
+{
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+    {
+      gimp_controller_info_set_event_snooper (editor->info,
+                                              gimp_controller_editor_snooper,
+                                              editor);
+    }
+  else
+    {
+      gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
+    }
+}
+
 static void
 gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                      GimpControllerEditor *editor)
@@ -534,6 +620,8 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
   GtkTreeIter   iter;
   gchar        *event_name  = NULL;
   gchar        *action_name = NULL;
+
+  gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
 
   if (gtk_tree_selection_get_selected (editor->sel, &model, &iter))
     gtk_tree_model_get (model, &iter,
@@ -610,6 +698,8 @@ gimp_controller_editor_delete_clicked (GtkWidget            *button,
   GtkTreeModel *model;
   GtkTreeIter   iter;
   gchar        *event_name = NULL;
+
+  gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
 
   if (gtk_tree_selection_get_selected (editor->sel, &model, &iter))
     gtk_tree_model_get (model, &iter,
