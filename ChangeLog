@@ -1,3 +1,19 @@
+2005-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollerlist.[ch]: some more stuff: up/down
+	buttons, remember the dialogs' size and positions, misc stuff.
+
+	* app/widgets/gimpcontrollereditor.c
+	(gimp_controller_editor_edit_clicked): use a GimpViewableDialog
+	now that GimpControllerInfo is a GimpViewable.
+
+	* app/dialogs/dialogs.c: added a foreign entry for the controller
+	editor dialog. Allow the controller editors and its event mapping
+	dialogs to exist multiple times.
+
+	* app/dialogs/preferences-dialog.c (prefs_notebook_append_page):
+	create the pages' event boxes with input-only windows.
+
 2005-05-09  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-sse2.c: Repaired a latent bug in
@@ -26,7 +42,7 @@
 	adding/removing controllers using two lists of available/active
 	controllers. Work in progress...
 
-	* app/widgets/gimpcontrollerinfo.[ch]: derive it from GimpVieable
+	* app/widgets/gimpcontrollerinfo.[ch]: derive it from GimpViewable
 	so it can have an icon (unfinished). Added convenience constructor
 	gimp_controller_info_new().
 

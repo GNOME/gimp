@@ -54,6 +54,8 @@ struct _GimpControllerList
   GtkWidget          *add_button;
   GtkWidget          *remove_button;
   GtkWidget          *edit_button;
+  GtkWidget          *up_button;
+  GtkWidget          *down_button;
 };
 
 struct _GimpControllerListClass

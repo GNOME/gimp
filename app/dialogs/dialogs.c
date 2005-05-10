@@ -44,9 +44,9 @@ GimpDialogFactory *global_dock_factory    = NULL;
 GimpDialogFactory *global_toolbox_factory = NULL;
 
 
-#define FOREIGN(id,remember_size) \
+#define FOREIGN(id,singleton,remember_size) \
   { id, NULL, NULL, NULL, NULL, \
-    NULL, 0, TRUE,  TRUE, remember_size, FALSE }
+    NULL, 0, singleton,  TRUE, remember_size, FALSE }
 
 #define TOPLEVEL(id,new_func,singleton,session_managed,remember_size) \
   { id, NULL, NULL, NULL, NULL, \
@@ -56,30 +56,31 @@ GimpDialogFactory *global_toolbox_factory = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   /*  foreign toplevels without constructor  */
-  FOREIGN ("gimp-brightness-contrast-tool-dialog", FALSE),
-  FOREIGN ("gimp-color-picker-tool-dialog",        TRUE),
-  FOREIGN ("gimp-colorize-tool-dialog",            FALSE),
-  FOREIGN ("gimp-crop-tool-dialog",                FALSE),
-  FOREIGN ("gimp-curves-tool-dialog",              TRUE),
-  FOREIGN ("gimp-color-balance-tool-dialog",       FALSE),
-  FOREIGN ("gimp-hue-saturation-tool-dialog",      FALSE),
-  FOREIGN ("gimp-levels-tool-dialog",              TRUE),
-  FOREIGN ("gimp-measure-tool-dialog",             FALSE),
-  FOREIGN ("gimp-posterize-tool-dialog",           FALSE),
-  FOREIGN ("gimp-rotate-tool-dialog",              FALSE),
-  FOREIGN ("gimp-scale-tool-dialog",               FALSE),
-  FOREIGN ("gimp-shear-tool-dialog",               FALSE),
-  FOREIGN ("gimp-text-tool-dialog",                TRUE),
-  FOREIGN ("gimp-threshold-tool-dialog",           FALSE),
-  FOREIGN ("gimp-perspective-tool-dialog",         FALSE),
+  FOREIGN ("gimp-brightness-contrast-tool-dialog", TRUE,  FALSE),
+  FOREIGN ("gimp-color-picker-tool-dialog",        TRUE,  TRUE),
+  FOREIGN ("gimp-colorize-tool-dialog",            TRUE,  FALSE),
+  FOREIGN ("gimp-crop-tool-dialog",                TRUE,  FALSE),
+  FOREIGN ("gimp-curves-tool-dialog",              TRUE,  TRUE),
+  FOREIGN ("gimp-color-balance-tool-dialog",       TRUE,  FALSE),
+  FOREIGN ("gimp-hue-saturation-tool-dialog",      TRUE,  FALSE),
+  FOREIGN ("gimp-levels-tool-dialog",              TRUE,  TRUE),
+  FOREIGN ("gimp-measure-tool-dialog",             TRUE,  FALSE),
+  FOREIGN ("gimp-posterize-tool-dialog",           TRUE,  FALSE),
+  FOREIGN ("gimp-rotate-tool-dialog",              TRUE,  FALSE),
+  FOREIGN ("gimp-scale-tool-dialog",               TRUE,  FALSE),
+  FOREIGN ("gimp-shear-tool-dialog",               TRUE,  FALSE),
+  FOREIGN ("gimp-text-tool-dialog",                TRUE,  TRUE),
+  FOREIGN ("gimp-threshold-tool-dialog",           TRUE,  FALSE),
+  FOREIGN ("gimp-perspective-tool-dialog",         TRUE,  FALSE),
 
-  FOREIGN ("gimp-toolbox-color-dialog",            FALSE),
-  FOREIGN ("gimp-gradient-editor-color-dialog",    FALSE),
-  FOREIGN ("gimp-palette-editor-color-dialog",     FALSE),
-  FOREIGN ("gimp-colormap-editor-color-dialog",    FALSE),
+  FOREIGN ("gimp-toolbox-color-dialog",            TRUE,  FALSE),
+  FOREIGN ("gimp-gradient-editor-color-dialog",    TRUE,  FALSE),
+  FOREIGN ("gimp-palette-editor-color-dialog",     TRUE,  FALSE),
+  FOREIGN ("gimp-colormap-editor-color-dialog",    TRUE,  FALSE),
 
-  FOREIGN ("gimp-keyboard-shortcuts-dialog",       TRUE),
-  FOREIGN ("gimp-controller-action-dialog",        TRUE),
+  FOREIGN ("gimp-keyboard-shortcuts-dialog",       TRUE,  TRUE),
+  FOREIGN ("gimp-controller-editor-dialog",        FALSE, TRUE),
+  FOREIGN ("gimp-controller-action-dialog",        FALSE, TRUE),
 
   /*  ordinary toplevels  */
   TOPLEVEL ("gimp-image-new-dialog",

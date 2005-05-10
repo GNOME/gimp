@@ -38,6 +38,7 @@
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
+#include "gimpviewabledialog.h"
 
 #include "gimp-intl.h"
 
@@ -546,16 +547,19 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       GtkWidget *view;
 
       editor->edit_dialog =
-        gimp_dialog_new (_("Select Controller Event Action"),
-                         "gimp-controller-action-dialog",
-                         GTK_WIDGET (editor), 0,
-                         gimp_standard_help_func,
-                         GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+        gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info),
+                                  _("Select Controller Event Action"),
+                                  "gimp-controller-action-dialog",
+                                  GIMP_STOCK_EDIT,
+                                  _("Select Controller Event Action"),
+                                  GTK_WIDGET (editor),
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                                  NULL);
 
       g_object_add_weak_pointer (G_OBJECT (editor->edit_dialog),
                                  (gpointer) &editor->edit_dialog);

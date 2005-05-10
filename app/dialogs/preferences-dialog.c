@@ -711,6 +711,7 @@ prefs_notebook_append_page (Gimp          *gimp,
   GdkPixbuf *small_pixbuf = NULL;
 
   event_box = gtk_event_box_new ();
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
   gtk_notebook_append_page (notebook, event_box, NULL);
   gtk_widget_show (event_box);
 

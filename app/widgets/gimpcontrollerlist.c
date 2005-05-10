@@ -36,6 +36,7 @@
 #include "core/gimpcontainer.h"
 
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
 #include "gimpcontrollereditor.h"
 #include "gimpcontrollerlist.h"
 #include "gimpcontrollerinfo.h"
@@ -108,6 +109,10 @@ static void gimp_controller_list_edit_clicked    (GtkWidget          *button,
                                                   GimpControllerList *list);
 static void gimp_controller_list_edit_destroy    (GtkWidget          *widget,
                                                   GimpControllerInfo *info);
+static void gimp_controller_list_up_clicked      (GtkWidget          *button,
+                                                  GimpControllerList *list);
+static void gimp_controller_list_down_clicked    (GtkWidget          *button,
+                                                  GimpControllerList *list);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -171,6 +176,9 @@ gimp_controller_list_init (GimpControllerList *list)
   GtkCellRenderer   *cell;
   GtkWidget         *vbox;
   GtkWidget         *image;
+  GtkIconSize        icon_size;
+  gint               icon_width;
+  gint               icon_height;
   GType             *controller_types;
   gint               n_controller_types;
   gint               i;
@@ -209,6 +217,8 @@ gimp_controller_list_init (GimpControllerList *list)
                                        "stock-id", COLUMN_ICON,
                                        NULL);
 
+  g_object_get (cell, "stock-size", &icon_size, NULL);
+
   cell = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, cell, TRUE);
   gtk_tree_view_column_set_attributes (column, cell,
@@ -241,7 +251,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
       gtk_list_store_append (list->src, &iter);
       gtk_list_store_set (list->src, &iter,
-                          COLUMN_ICON, "foobar",
+                          COLUMN_ICON, "gimp-info",
                           COLUMN_NAME, controller_class->name,
                           COLUMN_TYPE, controller_types[i],
                           -1);
@@ -292,26 +302,11 @@ gimp_controller_list_init (GimpControllerList *list)
 
   g_object_add_weak_pointer (G_OBJECT (list->remove_button),
                              (gpointer) &list->remove_button);
-}
 
-static GObject *
-gimp_controller_list_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
-{
-  GObject            *object;
-  GimpControllerList *list;
+  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (gtk_widget_get_screen (GTK_WIDGET (list))),
+                                     icon_size, &icon_width, &icon_height);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  list = GIMP_CONTROLLER_LIST (object);
-
-  g_assert (GIMP_IS_GIMP (list->gimp));
-
-  list->dest =
-    gimp_container_tree_view_new (gimp_controllers_get_list (list->gimp),
-                                  NULL,
-                                  GIMP_VIEW_SIZE_SMALL, 0);
+  list->dest = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
   gtk_tree_view_column_set_title (GIMP_CONTAINER_TREE_VIEW (list->dest)->main_column,
                                   _("Active Controllers"));
   gtk_tree_view_set_headers_visible (GIMP_CONTAINER_TREE_VIEW (list->dest)->view,
@@ -334,7 +329,44 @@ gimp_controller_list_constructor (GType                  type,
                             G_CALLBACK (gimp_controller_list_edit_clicked),
                             NULL,
                             list);
+  list->up_button =
+    gimp_editor_add_button (GIMP_EDITOR (list->dest),
+                            GTK_STOCK_GO_UP,
+                            _("Move the selected controller up"),
+                            NULL,
+                            G_CALLBACK (gimp_controller_list_up_clicked),
+                            NULL,
+                            list);
+  list->down_button =
+    gimp_editor_add_button (GIMP_EDITOR (list->dest),
+                            GTK_STOCK_GO_DOWN,
+                            _("Move the selected controller down"),
+                            NULL,
+                            G_CALLBACK (gimp_controller_list_down_clicked),
+                            NULL,
+                            list);
+
   gtk_widget_set_sensitive (list->edit_button, FALSE);
+  gtk_widget_set_sensitive (list->up_button,   FALSE);
+  gtk_widget_set_sensitive (list->down_button, FALSE);
+}
+
+static GObject *
+gimp_controller_list_constructor (GType                  type,
+                                  guint                  n_params,
+                                  GObjectConstructParam *params)
+{
+  GObject            *object;
+  GimpControllerList *list;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  list = GIMP_CONTROLLER_LIST (object);
+
+  g_assert (GIMP_IS_GIMP (list->gimp));
+
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (list->dest),
+                                     gimp_controllers_get_list (list->gimp));
 
   return object;
 }
@@ -446,15 +478,18 @@ gimp_controller_list_select_item (GimpContainerView  *view,
                                   gpointer            insert_data,
                                   GimpControllerList *list)
 {
+  gboolean selected;
+
   list->dest_info = GIMP_CONTROLLER_INFO (viewable);
 
-  if (list->remove_button)
-    gtk_widget_set_sensitive (list->remove_button,
-                              GIMP_IS_CONTROLLER_INFO (list->dest_info));
+  selected = GIMP_IS_CONTROLLER_INFO (list->dest_info);
 
-  if (list->edit_button)
-    gtk_widget_set_sensitive (list->edit_button,
-                              GIMP_IS_CONTROLLER_INFO (list->dest_info));
+  if (list->remove_button)
+    gtk_widget_set_sensitive (list->remove_button, selected);
+
+  gtk_widget_set_sensitive (list->edit_button, selected);
+  gtk_widget_set_sensitive (list->up_button,   selected);
+  gtk_widget_set_sensitive (list->down_button, selected);
 }
 
 static void
@@ -495,6 +530,10 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
   container = gimp_controllers_get_list (list->gimp);
   gimp_container_add (container, GIMP_OBJECT (info));
   g_object_unref (info);
+
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (list->dest),
+                                   GIMP_VIEWABLE (info));
+  gimp_controller_list_edit_clicked (NULL, list);
 }
 
 static void
@@ -512,7 +551,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   GtkWidget *editor;
 
   dialog = g_object_get_data (G_OBJECT (list->dest_info),
-                              "gimp-controller-editor");
+                              "gimp-controller-editor-dialog");
 
   if (dialog)
     {
@@ -522,16 +561,20 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info),
                                      _("Configure Controller"),
-                                     "gimp-controller-editor",
+                                     "gimp-controller-editor-dialog",
                                      GIMP_STOCK_EDIT,
                                      _("Configure Input Controller"),
                                      GTK_WIDGET (list),
                                      gimp_standard_help_func,
-                                     "FIXME",
+                                     GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                      NULL);
+
+  gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
+                                   "gimp-controller-editor-dialog",
+                                   dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
@@ -542,12 +585,21 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), editor);
   gtk_widget_show (editor);
 
-  g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor",
+  g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor-dialog",
                      dialog);
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (gimp_controller_list_edit_destroy),
                            G_OBJECT (list->dest_info), 0);
+
+  g_signal_connect_object (list, "destroy",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (dialog),
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (list, "unmap",
+                           G_CALLBACK (gtk_widget_destroy),
+                           G_OBJECT (dialog),
+                           G_CONNECT_SWAPPED);
 
   gtk_widget_show (dialog);
 }
@@ -556,5 +608,39 @@ static void
 gimp_controller_list_edit_destroy (GtkWidget          *widget,
                                    GimpControllerInfo *info)
 {
-  g_object_set_data (G_OBJECT (info), "gimp-controller-editor", NULL);
+  g_object_set_data (G_OBJECT (info), "gimp-controller-editor-dialog", NULL);
+}
+
+static void
+gimp_controller_list_up_clicked (GtkWidget          *button,
+                                 GimpControllerList *list)
+{
+  GimpContainer *container;
+  gint           index;
+
+  container = gimp_controllers_get_list (list->gimp);
+
+  index = gimp_container_get_child_index (container,
+                                          GIMP_OBJECT (list->dest_info));
+
+  if (index > 0)
+    gimp_container_reorder (container, GIMP_OBJECT (list->dest_info),
+                            index - 1);
+}
+
+static void
+gimp_controller_list_down_clicked (GtkWidget          *button,
+                                   GimpControllerList *list)
+{
+  GimpContainer *container;
+  gint           index;
+
+  container = gimp_controllers_get_list (list->gimp);
+
+  index = gimp_container_get_child_index (container,
+                                          GIMP_OBJECT (list->dest_info));
+
+  if (index < gimp_container_num_children (container) - 1)
+    gimp_container_reorder (container, GIMP_OBJECT (list->dest_info),
+                            index + 1);
 }
