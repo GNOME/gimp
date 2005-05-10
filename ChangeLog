@@ -1,3 +1,14 @@
+2005-05-09  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-sse2.c: Repaired a latent bug in
+	gimp_composite_lighten_rgba8_rgba8_rgba8_sse2 where setting up
+	the alpha masks were not done correctly.  A redundant (better?)
+	fix to bug #164061
+
+	Use movntq instructions to avoid processor cache pollution.
+
+	Some adjustments to register allocation specifications.
+
 2005-05-09  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/grid.c: use the correct bounds for the spinners.

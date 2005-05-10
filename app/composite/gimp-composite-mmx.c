@@ -1315,11 +1315,7 @@ gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *_op)
                     "\t" pminub(mm3, mm2, mm4) "\n"
                     "\tpand    %%mm0, %%mm2\n"
                     "\tpor     %%mm2, %%mm1\n"
-#if 1
                     "\tmovq    %%mm1, %0\n"
-#else
-                    "\tmovntq  %%mm1, %0\n"
-#endif
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
                     : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4");
