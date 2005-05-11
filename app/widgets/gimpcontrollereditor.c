@@ -53,6 +53,7 @@ enum
 {
   COLUMN_EVENT,
   COLUMN_BLURB,
+  COLUMN_STOCK_ID,
   COLUMN_ACTION,
   NUM_COLUMNS
 };
@@ -171,6 +172,7 @@ gimp_controller_editor_constructor (GType                  type,
   GimpControllerInfo   *info;
   GimpController       *controller;
   GimpControllerClass  *controller_class;
+  GimpUIManager        *ui_manager;
   GtkListStore         *store;
   GtkWidget            *frame;
   GtkWidget            *vbox;
@@ -180,6 +182,8 @@ gimp_controller_editor_constructor (GType                  type,
   GtkWidget            *tv;
   GtkWidget            *sw;
   GtkWidget            *entry;
+  GtkTreeViewColumn    *column;
+  GtkCellRenderer      *cell;
   GParamSpec          **property_specs;
   guint                 n_property_specs;
   gint                  n_events;
@@ -322,6 +326,7 @@ gimp_controller_editor_constructor (GType                  type,
   store = gtk_list_store_new (NUM_COLUMNS,
                               G_TYPE_STRING,
                               G_TYPE_STRING,
+                              G_TYPE_STRING,
                               G_TYPE_STRING);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   g_object_unref (store);
@@ -345,6 +350,8 @@ gimp_controller_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_controller_editor_sel_changed),
                     editor);
 
+  ui_manager = gimp_ui_managers_from_name ("<Image>")->data;
+
   n_events = gimp_controller_get_n_events (controller);
 
   for (i = 0; i < n_events; i++)
@@ -353,18 +360,33 @@ gimp_controller_editor_constructor (GType                  type,
       const gchar *event_name;
       const gchar *event_blurb;
       const gchar *event_action;
+      gchar       *stock_id = NULL;
 
       event_name  = gimp_controller_get_event_name  (controller, i);
       event_blurb = gimp_controller_get_event_blurb (controller, i);
 
       event_action = g_hash_table_lookup (info->mapping, event_name);
 
+      if (event_action)
+        {
+          GtkAction *action;
+
+          action = gimp_ui_manager_find_action (ui_manager, NULL, event_action);
+
+          if (action)
+            g_object_get (action, "stock-id", &stock_id, NULL);
+        }
+
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                          COLUMN_EVENT,  event_name,
-                          COLUMN_BLURB,  event_blurb,
-                          COLUMN_ACTION, event_action,
+                          COLUMN_EVENT,    event_name,
+                          COLUMN_BLURB,    event_blurb,
+                          COLUMN_STOCK_ID, stock_id,
+                          COLUMN_ACTION,   event_action,
                           -1);
+
+      if (stock_id)
+        g_free (stock_id);
     }
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 0,
@@ -372,11 +394,22 @@ gimp_controller_editor_constructor (GType                  type,
                                                gtk_cell_renderer_text_new (),
                                                "text", COLUMN_BLURB,
                                                NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 2,
-                                               _("Action"),
-                                               gtk_cell_renderer_text_new (),
-                                               "text", COLUMN_ACTION,
-                                               NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Action"));
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), column);
+
+  cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, cell,
+                                       "stock-id", COLUMN_STOCK_ID,
+                                       NULL);
+
+  cell = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, cell, TRUE);
+  gtk_tree_view_column_set_attributes (column, cell,
+                                       "text", COLUMN_ACTION,
+                                       NULL);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -391,6 +424,11 @@ gimp_controller_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_controller_editor_grab_toggled),
                     editor);
 
+  gimp_help_set_help_data (editor->grab_button,
+                           _("Select the next event arriving from "
+                             "the controller"),
+                           NULL);
+
   editor->edit_button = gtk_button_new_from_stock (GIMP_STOCK_EDIT);
   gtk_box_pack_start (GTK_BOX (hbox), editor->edit_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->edit_button);
@@ -399,6 +437,10 @@ gimp_controller_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_controller_editor_edit_clicked),
                     editor);
 
+  gimp_help_set_help_data (editor->edit_button,
+                           _("Assign an action to the selected event"),
+                           NULL);
+
   editor->delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_box_pack_start (GTK_BOX (hbox), editor->delete_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->delete_button);
@@ -406,6 +448,10 @@ gimp_controller_editor_constructor (GType                  type,
   g_signal_connect (editor->delete_button, "clicked",
                     G_CALLBACK (gimp_controller_editor_delete_clicked),
                     editor);
+
+  gimp_help_set_help_data (editor->delete_button,
+                           _("Remove the action from the selected event"),
+                           NULL);
 
   gtk_widget_set_sensitive (editor->edit_button,   FALSE);
   gtk_widget_set_sensitive (editor->delete_button, FALSE);
@@ -712,7 +758,8 @@ gimp_controller_editor_delete_clicked (GtkWidget            *button,
       g_free (event_name);
 
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          COLUMN_ACTION, NULL,
+                          COLUMN_STOCK_ID, NULL,
+                          COLUMN_ACTION,   NULL,
                           -1);
     }
 }
@@ -738,11 +785,13 @@ gimp_controller_editor_edit_response (GtkWidget            *dialog,
       GtkTreeModel *model;
       GtkTreeIter   iter;
       gchar        *event_name  = NULL;
+      gchar        *stock_id    = NULL;
       gchar        *action_name = NULL;
 
       if (gtk_tree_selection_get_selected (editor->edit_sel, &model, &iter))
         gtk_tree_model_get (model, &iter,
-                            GIMP_ACTION_VIEW_COLUMN_NAME, &action_name,
+                            GIMP_ACTION_VIEW_COLUMN_STOCK_ID, &stock_id,
+                            GIMP_ACTION_VIEW_COLUMN_NAME,     &action_name,
                             -1);
 
       if (gtk_tree_selection_get_selected (editor->sel, &model, &iter))
@@ -757,11 +806,13 @@ gimp_controller_editor_edit_response (GtkWidget            *dialog,
                                g_strdup (action_name));
 
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                              COLUMN_ACTION, action_name,
+                              COLUMN_STOCK_ID, stock_id,
+                              COLUMN_ACTION,   action_name,
                               -1);
         }
 
       g_free (event_name);
+      g_free (stock_id);
       g_free (action_name);
     }
 

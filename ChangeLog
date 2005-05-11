@@ -1,3 +1,12 @@
+2005-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_find_action): allow
+	to pass a NULL group_name and iterate all action groups to find
+	the action in that case.
+
+	* app/widgets/gimpcontrollereditor.c: show the action's stock icon
+	in the "Action" column, using above function.
+
 2005-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplay.c: added a read-only property to access

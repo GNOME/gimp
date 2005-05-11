@@ -469,17 +469,38 @@ gimp_ui_manager_find_action (GimpUIManager *manager,
                              const gchar   *action_name)
 {
   GimpActionGroup *group;
+  GtkAction       *action = NULL;
 
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
-  g_return_val_if_fail (group_name != NULL, NULL);
   g_return_val_if_fail (action_name != NULL, NULL);
 
-  group = gimp_ui_manager_get_action_group (manager, group_name);
+  if (group_name)
+    {
+      group = gimp_ui_manager_get_action_group (manager, group_name);
 
-  if (group)
-    return gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+      if (group)
+        action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                              action_name);
+    }
+  else
+    {
+      GList *list;
 
-  return NULL;
+      for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+           list;
+           list = g_list_next (list))
+        {
+          group = list->data;
+
+          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                                action_name);
+
+          if (action)
+            break;
+        }
+    }
+
+  return action;
 }
 
 void
