@@ -1,3 +1,13 @@
+2005-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):
+	also zoom on mouse position if the event originates from the canvas
+	(see bug #79384).
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): replaced a g_warning()
+	with g_return_if_fail().
+
 2005-05-11  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: reset the vector tool to Design

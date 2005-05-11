@@ -458,11 +458,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   static GimpToolInfo *space_shaded_tool = NULL;
 
-  if (! canvas->window)
-    {
-      g_warning ("%s: called unrealized", G_STRFUNC);
-      return FALSE;
-    }
+  g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
 
   /*  are we in destruction?  */
   if (! shell->gdisp || ! shell->gdisp->shell)

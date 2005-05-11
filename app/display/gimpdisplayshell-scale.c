@@ -361,7 +361,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
  *
  * This function calls gimp_display_shell_scale_to(). It tries to be
  * smart whether to use the position of the mouse pointer or the
- * center of the display as coordinates.+
+ * center of the display as coordinates.
  **/
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
@@ -377,9 +377,23 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   x = shell->disp_width  / 2;
   y = shell->disp_height / 2;
 
+  /*  Center on the mouse position instead of the display center,
+   *  if one of the following conditions is fulfilled:
+   *
+   *   (1) there's no current event (the action was triggered by an
+   *       input controller)
+   *   (2) the event originates from the canvas (a scroll event)
+   *   (3) the event originates from the shell (a key press event)
+   *
+   *  Basically the only situation where we don't want to center on
+   *  mouse position is if the action is being called from a menu.
+   */
+
   event = gtk_get_current_event ();
 
-  if (! event || gtk_get_event_widget (event) == GTK_WIDGET (shell))
+  if (! event ||
+      gtk_get_event_widget (event) == shell->canvas ||
+      gtk_get_event_widget (event) == GTK_WIDGET (shell))
     {
       gtk_widget_get_pointer (shell->canvas, &x, &y);
     }
