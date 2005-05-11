@@ -49,7 +49,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static gboolean   jpeg_query (const gchar *msg,
+static gboolean   jpeg_query (const gchar *primary,
+                              const gchar *secondary,
                               const gchar *cancel_label,
                               const gchar *ok_label);
 
@@ -85,44 +86,43 @@ jpeg_apply_exif_data_to_image (const gchar   *filename,
     {
       gint orient = exif_get_short (entry->data, byte_order);
 
-      if (load_interactive && orient > 1 && orient <= 8)
-        if (jpeg_query (_("According to the EXIF data, this image is rotated. "
-                          "Would you like GIMP to rotate it into the standard "
-                          "orientation?"),
-                        _("_Keep Orientation"), GIMP_STOCK_TOOL_ROTATE))
-          {
-            switch (orient)
-              {
-              case 1: /* standard orientation, do nothing */
-                break;
-              case 2: /* flipped right-left */
-                gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
-                break;
-              case 3: /* rotated 180 */
-                break;
-              case 4: /* flipped top-bottom */
-                gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
-                break;
-              case 5: /* flipped diagonally around '\' */
-                gimp_image_rotate (image_ID, GIMP_ROTATE_90);
-                gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
-                break;
-              case 6: /* 90 CW */
-                gimp_image_rotate (image_ID, GIMP_ROTATE_90);
-                break;
-              case 7: /* flipped diagonally around '/' */
-                gimp_image_rotate (image_ID, GIMP_ROTATE_90);
-                gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
-                break;
-              case 8: /* 90 CCW */
-                gimp_image_rotate (image_ID, GIMP_ROTATE_270);
-                break;
-              default: /* can't happen */
-                break;
-              }
+      if (load_interactive && orient > 1 && orient <= 8 &&
+          jpeg_query (_("According to the EXIF data, this image is rotated."),
+                      _("Would you like GIMP to rotate it into the standard "
+                        "orientation?"),
+                      _("_Keep Orientation"), GIMP_STOCK_TOOL_ROTATE))
+        {
+          switch (orient)
+            {
+            case 1:  /* standard orientation, do nothing */
+              break;
+            case 2:  /* flipped right-left               */
+              gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
+              break;
+            case 3:  /* rotated 180                      */
+              break;
+            case 4:  /* flipped top-bottom               */
+              gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
+              break;
+            case 5:  /* flipped diagonally around '\'    */
+              gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+              gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
+              break;
+            case 6:  /* 90 CW                            */
+              gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+              break;
+            case 7:  /* flipped diagonally around '/'    */
+              gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+              gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
+              break;
+            case 8:  /* 90 CCW                           */
+              gimp_image_rotate (image_ID, GIMP_ROTATE_270);
+              break;
+            default: /* can't happen                     */
+              break;
+            }
         }
     }
-
 
   exif_data_unref (exif_data);
 }
@@ -224,7 +224,8 @@ jpeg_setup_exif_for_save (ExifData      *exif_data,
 
 
 static gboolean
-jpeg_query (const gchar *msg,
+jpeg_query (const gchar *primary,
+            const gchar *secondary,
             const gchar *cancel_label,
             const gchar *ok_label)
 {
@@ -235,7 +236,11 @@ jpeg_query (const gchar *msg,
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_QUESTION,
                                    GTK_BUTTONS_NONE,
-                                   "%s", msg);
+                                   "%s", primary);
+
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            "%s", secondary);
+
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           cancel_label, GTK_RESPONSE_CANCEL,
