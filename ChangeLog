@@ -1,3 +1,8 @@
+2005-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplay.c: added a read-only property to access
+	the display-shell w/o having to include gimpdisplay.h.
+
 2005-05-11  Michael Natterer  <mitch@gimp.org>
 
 	Some dock refactoring which separates the docking logic from

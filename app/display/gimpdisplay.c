@@ -45,7 +45,8 @@ enum
 {
   PROP_0,
   PROP_ID,
-  PROP_IMAGE
+  PROP_IMAGE,
+  PROP_SHELL
 };
 
 
@@ -151,6 +152,12 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_IMAGE,
                                                         G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_SHELL,
+                                   g_param_spec_object ("shell",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DISPLAY_SHELL,
+                                                        G_PARAM_READABLE));
 }
 
 static void
@@ -192,6 +199,7 @@ gimp_display_set_property (GObject      *object,
       gdisp->ID = g_value_get_int (value);
       break;
     case PROP_IMAGE:
+    case PROP_SHELL:
       g_assert_not_reached ();
       break;
     default:
@@ -215,6 +223,9 @@ gimp_display_get_property (GObject    *object,
       break;
     case PROP_IMAGE:
       g_value_set_object (value, gdisp->gimage);
+      break;
+    case PROP_SHELL:
+      g_value_set_object (value, gdisp->shell);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
