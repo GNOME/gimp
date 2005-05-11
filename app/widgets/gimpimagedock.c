@@ -37,20 +37,24 @@
 #include "gimpuimanager.h"
 
 
-static void      gimp_image_dock_class_init      (GimpImageDockClass    *klass);
-static void      gimp_image_dock_init            (GimpImageDock         *dock);
+static void      gimp_image_dock_class_init   (GimpImageDockClass    *klass);
+static void      gimp_image_dock_init         (GimpImageDock         *dock);
 
-static GObject * gimp_image_dock_constructor     (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
+static GObject * gimp_image_dock_constructor  (GType                  type,
+                                               guint                  n_params,
+                                               GObjectConstructParam *params);
 
-static void      gimp_image_dock_destroy         (GtkObject             *object);
+static void      gimp_image_dock_destroy      (GtkObject             *object);
 
-static void      gimp_image_dock_display_changed (GimpContext           *context,
-                                                  GimpObject            *display,
-                                                  GimpImageDock         *dock);
-static void      gimp_image_dock_image_flush     (GimpImage             *image,
-                                                  GimpImageDock         *dock);
+static void      gimp_image_dock_display_changed  (GimpContext       *context,
+                                                   GimpObject        *display,
+                                                   GimpImageDock     *dock);
+static void      gimp_image_dock_image_flush      (GimpImage         *image,
+                                                   GimpImageDock     *dock);
+
+static void      gimp_image_dock_notify_transient (GimpConfig        *config,
+                                                   GParamSpec        *pspec,
+                                                   GimpDock          *dock);
 
 
 static GimpDockClass *parent_class = NULL;
@@ -142,6 +146,11 @@ gimp_image_dock_constructor (GType                  type,
 			   G_CALLBACK (gimp_image_dock_display_changed),
 			   dock, 0);
 
+  g_signal_connect_object (GIMP_DOCK (dock)->context->gimp->config,
+                           "notify::transient-docks",
+			   G_CALLBACK (gimp_image_dock_notify_transient),
+			   dock, 0);
+
   return object;
 }
 
@@ -197,5 +206,22 @@ gimp_image_dock_image_flush (GimpImage     *image,
 
       if (display)
         gimp_ui_manager_update (dock->ui_manager, display);
+    }
+}
+
+static void
+gimp_image_dock_notify_transient (GimpConfig *config,
+                                  GParamSpec *pspec,
+                                  GimpDock   *dock)
+{
+  if (GIMP_GUI_CONFIG (config)->transient_docks)
+    {
+      gimp_image_dock_display_changed (dock->context,
+                                       gimp_context_get_display (dock->context),
+                                       GIMP_IMAGE_DOCK (dock));
+    }
+  else
+    {
+      gtk_window_set_transient_for (GTK_WINDOW (dock), NULL);
     }
 }

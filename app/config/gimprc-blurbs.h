@@ -350,9 +350,10 @@ N_("Sets the swap file location. The gimp uses a tile based memory " \
 N_("When enabled, menus can be torn off.")
 
 #define TRANSIENT_DOCKS_BLURB \
-N_("When enabled, dock windows (the toolbox and palettes) are transient " \
-   "transient to the active image window. With most window managers this " \
-   "keeps the dock windows above the image window.")
+N_("When enabled, dock windows (the toolbox and palettes) are set to be " \
+   "transient to the active image window. Most window managers will " \
+   "keep the dock windows above the image window then, but it may also " \
+   "have other effects.")
 
 #define CAN_CHANGE_ACCELS_BLURB \
 N_("When enabled, you can change keyboard shortcuts for menu items " \

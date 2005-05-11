@@ -270,11 +270,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  DOCK_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
-                                 0);
+                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
                                     "transient-docks", TRANSIENT_DOCKS_BLURB,
                                     FALSE,
-                                    GIMP_CONFIG_PARAM_RESTART);
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                                  "cursor-format", CURSOR_FORMAT_BLURB,
                                  GIMP_TYPE_CURSOR_FORMAT,

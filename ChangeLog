@@ -1,5 +1,10 @@
 2005-05-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimagedock.c: request notification about changes
+	to the "transient-docks" preference and react accordingly.
+
+2005-05-12  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpguiconfig.[ch]
 	* app/config/gimprc-blurbs.h: added new gimprc option
 	"transient-docks".
