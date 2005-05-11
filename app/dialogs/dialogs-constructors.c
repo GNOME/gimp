@@ -52,9 +52,9 @@
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrameditor.h"
-#include "widgets/gimpimagedock.h"
 #include "widgets/gimpimageview.h"
 #include "widgets/gimplayertreeview.h"
+#include "widgets/gimpmenudock.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppatternfactoryview.h"
 #include "widgets/gimpsamplepointeditor.h"
@@ -196,9 +196,9 @@ dialogs_dock_new (GimpDialogFactory *factory,
 		  GimpContext       *context,
                   gint               preview_size)
 {
-  return gimp_image_dock_new (factory,
-                              context->gimp->images,
-                              context->gimp->displays);
+  return gimp_menu_dock_new (factory,
+                             context->gimp->images,
+                             context->gimp->displays);
 }
 
 

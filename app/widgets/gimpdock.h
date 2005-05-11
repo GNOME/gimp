@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,6 @@ struct _GimpDock
   GimpDialogFactory *dialog_factory;
   GimpContext       *context;
 
-  GimpUIManager     *ui_manager;
-  GQuark             image_flush_handler_id;
-
   GtkWidget         *main_vbox;
   GtkWidget         *vbox;
 
@@ -68,8 +65,6 @@ struct _GimpDockClass
                             GimpDockbook   *dockbook);
   void    (* book_removed) (GimpDock       *dock,
                             GimpDockbook   *dockbook);
-
-  const gchar *ui_manager_name;
 };
 
 

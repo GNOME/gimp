@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.c
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
@@ -40,10 +39,8 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
-#include "gimpmenufactory.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -97,12 +94,6 @@ static void        gimp_dock_real_book_added   (GimpDock              *dock,
 static void        gimp_dock_real_book_removed (GimpDock              *dock,
                                                 GimpDockbook          *dockbook);
 
-static void        gimp_dock_display_changed   (GimpContext           *context,
-                                                GimpObject            *display,
-                                                GimpDock              *dock);
-static void        gimp_dock_image_flush       (GimpImage             *image,
-                                                GimpDock              *dock);
-
 static GtkWidget * gimp_dock_separator_new            (GimpDock       *dock);
 static void        gimp_dock_separator_drag_leave     (GtkWidget      *widget,
                                                        GdkDragContext *context,
@@ -124,10 +115,7 @@ static gboolean    gimp_dock_separator_drag_drop      (GtkWidget      *widget,
 
 static GtkWindowClass *parent_class              = NULL;
 static guint           dock_signals[LAST_SIGNAL] = { 0 };
-static GtkTargetEntry  dialog_target_table[]     =
-{
-  GIMP_TARGET_DIALOG
-};
+static GtkTargetEntry  dialog_target_table[]     = { GIMP_TARGET_DIALOG };
 
 
 GType
@@ -201,8 +189,6 @@ gimp_dock_class_init (GimpDockClass *klass)
   klass->book_added             = gimp_dock_real_book_added;
   klass->book_removed           = gimp_dock_real_book_removed;
 
-  klass->ui_manager_name        = "<Dock>";
-
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
@@ -215,14 +201,14 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("default_height",
+                                           g_param_spec_int ("default-height",
                                                              NULL, NULL,
                                                              -1,
                                                              G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("separator_height",
+                                           g_param_spec_int ("separator-height",
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
@@ -235,7 +221,8 @@ gimp_dock_init (GimpDock *dock)
 {
   GtkWidget *separator;
 
-  dock->context = NULL;
+  dock->context        = NULL;
+  dock->dialog_factory = NULL;
 
   gtk_window_set_role (GTK_WINDOW (dock), "gimp-dock");
   gtk_window_set_resizable (GTK_WINDOW (dock), TRUE);
@@ -261,7 +248,6 @@ gimp_dock_constructor (GType                  type,
   GObject       *object;
   GimpDock      *dock;
   GimpGuiConfig *config;
-  GtkAccelGroup *accel_group;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -273,26 +259,6 @@ gimp_dock_constructor (GType                  type,
   config = GIMP_GUI_CONFIG (dock->context->gimp->config);
 
   gimp_window_set_hint (GTK_WINDOW (dock), config->dock_window_hint);
-
-  dock->ui_manager =
-    gimp_menu_factory_manager_new (dock->dialog_factory->menu_factory,
-                                   GIMP_DOCK_GET_CLASS (dock)->ui_manager_name,
-                                   dock,
-                                   config->tearoff_menus);
-
-  accel_group =
-    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock->ui_manager));
-
-  gtk_window_add_accel_group (GTK_WINDOW (object), accel_group);
-
-  dock->image_flush_handler_id =
-    gimp_container_add_handler (dock->context->gimp->images, "flush",
-                                G_CALLBACK (gimp_dock_image_flush),
-                                dock);
-
-  g_signal_connect_object (dock->context, "display-changed",
-			   G_CALLBACK (gimp_dock_display_changed),
-			   dock, 0);
 
   return object;
 }
@@ -349,19 +315,6 @@ gimp_dock_destroy (GtkObject *object)
   while (dock->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->dockbooks->data));
 
-  if (dock->image_flush_handler_id)
-    {
-      gimp_container_remove_handler (dock->context->gimp->images,
-                                     dock->image_flush_handler_id);
-      dock->image_flush_handler_id = 0;
-    }
-
-  if (dock->ui_manager)
-    {
-      g_object_unref (dock->ui_manager);
-      dock->ui_manager = NULL;
-    }
-
   if (dock->context)
     {
       g_object_unref (dock->context);
@@ -375,9 +328,9 @@ static gboolean
 gimp_dock_delete_event (GtkWidget   *widget,
                         GdkEventAny *event)
 {
-  GimpDock *dock = GIMP_DOCK (widget);
-  GList    *list;
+  GimpDock *dock   = GIMP_DOCK (widget);
   gboolean  retval = FALSE;
+  GList    *list;
   gint      n;
 
   for (list = dock->dockbooks, n = 0; list; list = list->next)
@@ -445,20 +398,18 @@ static void
 gimp_dock_style_set (GtkWidget *widget,
                      GtkStyle  *prev_style)
 {
-  GimpDock *dock;
+  GimpDock *dock = GIMP_DOCK (widget);
   GList    *children;
   GList    *list;
   gint      default_height;
   gint      separator_height;
 
-  dock = GIMP_DOCK (widget);
-
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "default_height",   &default_height,
-                        "separator_height", &separator_height,
+                        "default-height",   &default_height,
+                        "separator-height", &separator_height,
                         NULL);
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
@@ -712,27 +663,6 @@ gimp_dock_remove_book (GimpDock     *dock,
 
 
 /*  private functions  */
-
-static void
-gimp_dock_display_changed (GimpContext *context,
-                           GimpObject  *display,
-                           GimpDock    *dock)
-{
-  gimp_ui_manager_update (dock->ui_manager, display);
-}
-
-static void
-gimp_dock_image_flush (GimpImage *image,
-                       GimpDock  *dock)
-{
-  if (image == gimp_context_get_image (dock->context))
-    {
-      GimpObject *display = gimp_context_get_display (dock->context);
-
-      if (display)
-        gimp_ui_manager_update (dock->ui_manager, display);
-    }
-}
 
 static GtkWidget *
 gimp_dock_separator_new (GimpDock *dock)

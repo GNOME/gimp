@@ -173,6 +173,8 @@ libappwidgets_a_sources = \
 	gimpitemtreeview.h		\
 	gimplayertreeview.c		\
 	gimplayertreeview.h		\
+	gimpmenudock.c			\
+	gimpmenudock.h			\
 	gimpmenufactory.c		\
 	gimpmenufactory.h		\
 	gimpmessagebox.c		\

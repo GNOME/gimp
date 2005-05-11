@@ -24,7 +24,7 @@
 
 #include "actions-types.h"
 
-#include "widgets/gimpimagedock.h"
+#include "widgets/gimpmenudock.h"
 
 #include "actions.h"
 #include "dock-commands.h"
@@ -94,8 +94,8 @@ dock_toggle_image_menu_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (GIMP_IS_IMAGE_DOCK (widget))
-    gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (widget), active);
+  if (GIMP_IS_MENU_DOCK (widget))
+    gimp_menu_dock_set_show_image_menu (GIMP_MENU_DOCK (widget), active);
 }
 
 void
@@ -111,6 +111,6 @@ dock_toggle_auto_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (GIMP_IS_IMAGE_DOCK (widget))
-    gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (widget), active);
+  if (GIMP_IS_MENU_DOCK (widget))
+    gimp_menu_dock_set_auto_follow_active (GIMP_MENU_DOCK (widget), active);
 }

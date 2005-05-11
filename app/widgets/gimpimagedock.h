@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpimagedock.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,36 +38,21 @@ typedef struct _GimpImageDockClass   GimpImageDockClass;
 
 struct _GimpImageDock
 {
-  GimpDock         parent_instance;
+  GimpDock       parent_instance;
 
-  GimpContainer   *image_container;
-  GimpContainer   *display_container;
-
-  gboolean         show_image_menu;
-  gboolean         auto_follow_active;
-
-  GtkWidget       *image_combo;
-  GtkWidget       *auto_button;
-
-  guint            update_title_idle_id;
+  GimpUIManager *ui_manager;
+  GQuark         image_flush_handler_id;
 };
 
 struct _GimpImageDockClass
 {
-  GimpDockClass parent_class;
+  GimpDockClass  parent_class;
+
+  const gchar   *ui_manager_name;
 };
 
 
-GType       gimp_image_dock_get_type (void) G_GNUC_CONST;
-
-GtkWidget * gimp_image_dock_new      (GimpDialogFactory *dialog_factory,
-				      GimpContainer     *image_container,
-                                      GimpContainer     *display_container);
-
-void        gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,
-						    gboolean       show);
-void        gimp_image_dock_set_show_image_menu    (GimpImageDock *image_dock,
-						    gboolean       show);
+GType   gimp_image_dock_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_IMAGE_DOCK_H__ */

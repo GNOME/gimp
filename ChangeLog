@@ -1,3 +1,28 @@
+2005-05-11  Michael Natterer  <mitch@gimp.org>
+
+	Some dock refactoring which separates the docking logic from
+	active image and UI manager stuff:
+
+	* app/widgets/gimpmenudock.[ch]: new widget renamed from
+	GimpImageDock, zero changes except the name change.
+
+	* app/widgets/gimpimagedock.[ch]: new widget derived from
+	GimpDock. Keeps the UI manager.
+
+	* app/widgets/gimpdock.[ch]: removed the UI manager. GimpDock only
+	contains the basic docking logic again.
+
+	* app/widgets/gimpmenudock.[ch]
+	* app/widgets/gimptoolbox.[ch]: derive them from GimpImageDock.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/actions/dialogs-commands.c
+	* app/actions/dock-actions.c
+	* app/actions/dock-commands.c
+	* app/actions/dockable-commands.c
+	* app/dialogs/dialogs-constructors.c: changed accordingly.
+
 2005-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c (gimp_display_shell_scale):

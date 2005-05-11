@@ -31,7 +31,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
-#include "widgets/gimpimagedock.h"
+#include "widgets/gimpmenudock.h"
 
 #include "dialogs/dialogs.h"
 
@@ -176,7 +176,7 @@ dialogs_create_dock (GdkScreen   *screen,
 
   dock = gimp_dialog_factory_dock_new (global_dock_factory, screen);
 
-  gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock), show_image_menu);
+  gimp_menu_dock_set_show_image_menu (GIMP_MENU_DOCK (dock), show_image_menu);
 
   dockbook = gimp_dockbook_new (global_dock_factory->menu_factory);
 

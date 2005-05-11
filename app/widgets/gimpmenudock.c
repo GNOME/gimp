@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimagedock.c
+ * gimpmenudock.c
  * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -37,12 +37,12 @@
 #include "core/gimptoolinfo.h"
 
 #include "gimpdialogfactory.h"
-#include "gimpimagedock.h"
 #include "gimpcontainercombobox.h"
 #include "gimpcontainerview.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
+#include "gimpmenudock.h"
 #include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
@@ -52,50 +52,50 @@
 #define DEFAULT_MENU_PREVIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
 
-static void   gimp_image_dock_class_init          (GimpImageDockClass *klass);
-static void   gimp_image_dock_init                (GimpImageDock      *dock);
+static void   gimp_menu_dock_class_init          (GimpMenuDockClass *klass);
+static void   gimp_menu_dock_init                (GimpMenuDock      *dock);
 
-static GObject * gimp_image_dock_constructor   (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void   gimp_image_dock_destroy                 (GtkObject      *object);
+static GObject * gimp_menu_dock_constructor   (GType                  type,
+                                               guint                  n_params,
+                                               GObjectConstructParam *params);
+static void   gimp_menu_dock_destroy                 (GtkObject      *object);
 
-static void   gimp_image_dock_style_set               (GtkWidget      *widget,
-                                                       GtkStyle       *prev_style);
+static void   gimp_menu_dock_style_set               (GtkWidget      *widget,
+                                                      GtkStyle       *prev_style);
 
-static void   gimp_image_dock_setup                   (GimpDock       *dock,
-                                                       const GimpDock *template);
-static void   gimp_image_dock_set_aux_info            (GimpDock       *dock,
-                                                       GList          *aux_info);
-static GList *gimp_image_dock_get_aux_info            (GimpDock       *dock);
-static void   gimp_image_dock_book_added              (GimpDock       *dock,
-                                                       GimpDockbook   *dockbook);
-static void   gimp_image_dock_book_removed            (GimpDock       *dock,
-                                                       GimpDockbook   *dockbook);
+static void   gimp_menu_dock_setup                   (GimpDock       *dock,
+                                                      const GimpDock *template);
+static void   gimp_menu_dock_set_aux_info            (GimpDock       *dock,
+                                                      GList          *aux_info);
+static GList *gimp_menu_dock_get_aux_info            (GimpDock       *dock);
+static void   gimp_menu_dock_book_added              (GimpDock       *dock,
+                                                      GimpDockbook   *dockbook);
+static void   gimp_menu_dock_book_removed            (GimpDock       *dock,
+                                                      GimpDockbook   *dockbook);
 
-static void   gimp_image_dock_dockbook_changed        (GimpDockbook   *dockbook,
-                                                       GimpDockable   *dockable,
-                                                       GimpImageDock  *dock);
-static void   gimp_image_dock_update_title            (GimpImageDock  *dock);
+static void   gimp_menu_dock_dockbook_changed        (GimpDockbook   *dockbook,
+                                                      GimpDockable   *dockable,
+                                                      GimpMenuDock   *dock);
+static void   gimp_menu_dock_update_title            (GimpMenuDock   *dock);
 
-static void   gimp_image_dock_factory_display_changed (GimpContext    *context,
-                                                       GimpObject     *display,
-                                                       GimpDock       *dock);
-static void   gimp_image_dock_factory_image_changed   (GimpContext    *context,
-                                                       GimpImage      *gimage,
-                                                       GimpDock       *dock);
-static void   gimp_image_dock_image_changed           (GimpContext    *context,
-                                                       GimpImage      *gimage,
-                                                       GimpDock       *dock);
-static void   gimp_image_dock_auto_clicked            (GtkWidget      *widget,
-                                                       GimpDock       *dock);
+static void   gimp_menu_dock_factory_display_changed (GimpContext    *context,
+                                                      GimpObject     *display,
+                                                      GimpDock       *dock);
+static void   gimp_menu_dock_factory_image_changed   (GimpContext    *context,
+                                                      GimpImage      *gimage,
+                                                      GimpDock       *dock);
+static void   gimp_menu_dock_image_changed           (GimpContext    *context,
+                                                      GimpImage      *gimage,
+                                                      GimpDock       *dock);
+static void   gimp_menu_dock_auto_clicked            (GtkWidget      *widget,
+                                                      GimpDock       *dock);
 
 
 static GimpDockClass *parent_class = NULL;
 
 
 GType
-gimp_image_dock_get_type (void)
+gimp_menu_dock_get_type (void)
 {
   static GType dock_type = 0;
 
@@ -103,19 +103,19 @@ gimp_image_dock_get_type (void)
     {
       static const GTypeInfo dock_info =
       {
-        sizeof (GimpImageDockClass),
+        sizeof (GimpMenuDockClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_image_dock_class_init,
+        (GClassInitFunc) gimp_menu_dock_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpImageDock),
+        sizeof (GimpMenuDock),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_image_dock_init,
+        (GInstanceInitFunc) gimp_menu_dock_init,
       };
 
-      dock_type = g_type_register_static (GIMP_TYPE_DOCK,
-                                          "GimpImageDock",
+      dock_type = g_type_register_static (GIMP_TYPE_IMAGE_DOCK,
+                                          "GimpMenuDock",
                                           &dock_info, 0);
     }
 
@@ -123,7 +123,7 @@ gimp_image_dock_get_type (void)
 }
 
 static void
-gimp_image_dock_class_init (GimpImageDockClass *klass)
+gimp_menu_dock_class_init (GimpMenuDockClass *klass)
 {
   GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
@@ -132,17 +132,17 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor = gimp_image_dock_constructor;
+  object_class->constructor = gimp_menu_dock_constructor;
 
-  gtk_object_class->destroy = gimp_image_dock_destroy;
+  gtk_object_class->destroy = gimp_menu_dock_destroy;
 
-  widget_class->style_set   = gimp_image_dock_style_set;
+  widget_class->style_set   = gimp_menu_dock_style_set;
 
-  dock_class->setup         = gimp_image_dock_setup;
-  dock_class->set_aux_info  = gimp_image_dock_set_aux_info;
-  dock_class->get_aux_info  = gimp_image_dock_get_aux_info;
-  dock_class->book_added    = gimp_image_dock_book_added;
-  dock_class->book_removed  = gimp_image_dock_book_removed;
+  dock_class->setup         = gimp_menu_dock_setup;
+  dock_class->set_aux_info  = gimp_menu_dock_set_aux_info;
+  dock_class->get_aux_info  = gimp_menu_dock_get_aux_info;
+  dock_class->book_added    = gimp_menu_dock_book_added;
+  dock_class->book_removed  = gimp_menu_dock_book_removed;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("minimal-width",
@@ -160,7 +160,7 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 }
 
 static void
-gimp_image_dock_init (GimpImageDock *dock)
+gimp_menu_dock_init (GimpMenuDock *dock)
 {
   GtkWidget *hbox;
 
@@ -195,7 +195,7 @@ gimp_image_dock_init (GimpImageDock *dock)
   gtk_widget_show (dock->auto_button);
 
   g_signal_connect (dock->auto_button, "clicked",
-                    G_CALLBACK (gimp_image_dock_auto_clicked),
+                    G_CALLBACK (gimp_menu_dock_auto_clicked),
                     dock);
 
   gimp_help_set_help_data (dock->auto_button,
@@ -205,24 +205,24 @@ gimp_image_dock_init (GimpImageDock *dock)
 }
 
 static GObject *
-gimp_image_dock_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+gimp_menu_dock_constructor (GType                  type,
+                            guint                  n_params,
+                            GObjectConstructParam *params)
 {
-  GObject       *object;
-  GimpImageDock *dock;
+  GObject      *object;
+  GimpMenuDock *dock;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  dock = GIMP_IMAGE_DOCK (object);
+  dock = GIMP_MENU_DOCK (object);
 
   return object;
 }
 
 static void
-gimp_image_dock_destroy (GtkObject *object)
+gimp_menu_dock_destroy (GtkObject *object)
 {
-  GimpImageDock *dock = GIMP_IMAGE_DOCK (object);
+  GimpMenuDock *dock = GIMP_MENU_DOCK (object);
 
   if (dock->update_title_idle_id)
     {
@@ -245,20 +245,20 @@ gimp_image_dock_destroy (GtkObject *object)
 }
 
 static void
-gimp_image_dock_style_set (GtkWidget *widget,
-                           GtkStyle  *prev_style)
+gimp_menu_dock_style_set (GtkWidget *widget,
+                          GtkStyle  *prev_style)
 {
-  GimpImageDock *image_dock;
-  gint           minimal_width;
-  GtkIconSize    menu_preview_size;
-  GdkScreen     *screen;
-  gint           menu_preview_width  = 18;
-  gint           menu_preview_height = 18;
-  gint           focus_line_width;
-  gint           focus_padding;
-  gint           ythickness;
+  GimpMenuDock *menu_dock;
+  gint          minimal_width;
+  GtkIconSize   menu_preview_size;
+  GdkScreen    *screen;
+  gint          menu_preview_width  = 18;
+  gint          menu_preview_height = 18;
+  gint          focus_line_width;
+  gint          focus_padding;
+  gint          ythickness;
 
-  image_dock = GIMP_IMAGE_DOCK (widget);
+  menu_dock = GIMP_MENU_DOCK (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
@@ -268,25 +268,25 @@ gimp_image_dock_style_set (GtkWidget *widget,
                         "menu_preview_size", &menu_preview_size,
                         NULL);
 
-  screen = gtk_widget_get_screen (image_dock->image_combo);
+  screen = gtk_widget_get_screen (menu_dock->image_combo);
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      menu_preview_size,
                                      &menu_preview_width,
                                      &menu_preview_height);
 
-  gtk_widget_style_get (image_dock->auto_button,
+  gtk_widget_style_get (menu_dock->auto_button,
                         "focus_line_width", &focus_line_width,
                         "focus_padding",    &focus_padding,
                         NULL);
 
-  ythickness = image_dock->auto_button->style->ythickness;
+  ythickness = menu_dock->auto_button->style->ythickness;
 
   gtk_widget_set_size_request (widget, minimal_width, -1);
 
-  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (image_dock->image_combo),
+  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (menu_dock->image_combo),
                                         menu_preview_height, 1);
 
-  gtk_widget_set_size_request (image_dock->auto_button, -1,
+  gtk_widget_set_size_request (menu_dock->auto_button, -1,
                                menu_preview_height +
                                2 * (1 /* CHILD_SPACING */ +
                                     ythickness            +
@@ -295,21 +295,21 @@ gimp_image_dock_style_set (GtkWidget *widget,
 }
 
 static void
-gimp_image_dock_setup (GimpDock       *dock,
-                       const GimpDock *template)
+gimp_menu_dock_setup (GimpDock       *dock,
+                      const GimpDock *template)
 {
-  if (GIMP_IS_IMAGE_DOCK (template))
+  if (GIMP_IS_MENU_DOCK (template))
     {
       gboolean auto_follow_active;
       gboolean show_image_menu;
 
-      auto_follow_active = GIMP_IMAGE_DOCK (template)->auto_follow_active;
-      show_image_menu    = GIMP_IMAGE_DOCK (template)->show_image_menu;
+      auto_follow_active = GIMP_MENU_DOCK (template)->auto_follow_active;
+      show_image_menu    = GIMP_MENU_DOCK (template)->show_image_menu;
 
-      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
-                                              auto_follow_active);
-      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
-                                           show_image_menu);
+      gimp_menu_dock_set_auto_follow_active (GIMP_MENU_DOCK (dock),
+                                             auto_follow_active);
+      gimp_menu_dock_set_show_image_menu (GIMP_MENU_DOCK (dock),
+                                          show_image_menu);
     }
 }
 
@@ -317,13 +317,13 @@ gimp_image_dock_setup (GimpDock       *dock,
 #define AUX_INFO_FOLLOW_ACTIVE_IMAGE "follow-active-image"
 
 static void
-gimp_image_dock_set_aux_info (GimpDock *dock,
-                              GList    *aux_info)
+gimp_menu_dock_set_aux_info (GimpDock *dock,
+                             GList    *aux_info)
 {
-  GimpImageDock *image_dock  = GIMP_IMAGE_DOCK (dock);
-  GList         *list;
-  gboolean       menu_shown  = image_dock->show_image_menu;
-  gboolean       auto_follow = image_dock->auto_follow_active;
+  GimpMenuDock *menu_dock   = GIMP_MENU_DOCK (dock);
+  GList        *list;
+  gboolean      menu_shown  = menu_dock->show_image_menu;
+  gboolean      auto_follow = menu_dock->auto_follow_active;
 
   for (list = aux_info; list; list = g_list_next (list))
     {
@@ -339,27 +339,27 @@ gimp_image_dock_set_aux_info (GimpDock *dock,
         }
     }
 
-  if (menu_shown != image_dock->show_image_menu)
-    gimp_image_dock_set_show_image_menu (image_dock, menu_shown);
+  if (menu_shown != menu_dock->show_image_menu)
+    gimp_menu_dock_set_show_image_menu (menu_dock, menu_shown);
 
-  if (auto_follow != image_dock->auto_follow_active)
-    gimp_image_dock_set_auto_follow_active (image_dock, auto_follow);
+  if (auto_follow != menu_dock->auto_follow_active)
+    gimp_menu_dock_set_auto_follow_active (menu_dock, auto_follow);
 }
 
 static GList *
-gimp_image_dock_get_aux_info (GimpDock *dock)
+gimp_menu_dock_get_aux_info (GimpDock *dock)
 {
-  GimpImageDock      *image_dock = GIMP_IMAGE_DOCK (dock);
-  GList              *aux_info   = NULL;
+  GimpMenuDock       *menu_dock = GIMP_MENU_DOCK (dock);
+  GList              *aux_info  = NULL;
   GimpSessionInfoAux *aux;
 
   aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
-                                   image_dock->show_image_menu ?
+                                   menu_dock->show_image_menu ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
   aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
-                                   image_dock->auto_follow_active ?
+                                   menu_dock->auto_follow_active ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
@@ -367,47 +367,47 @@ gimp_image_dock_get_aux_info (GimpDock *dock)
 }
 
 static void
-gimp_image_dock_book_added (GimpDock     *dock,
-                            GimpDockbook *dockbook)
+gimp_menu_dock_book_added (GimpDock     *dock,
+                           GimpDockbook *dockbook)
 {
   g_signal_connect (dockbook, "dockable_added",
-                    G_CALLBACK (gimp_image_dock_dockbook_changed),
+                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
   g_signal_connect (dockbook, "dockable_removed",
-                    G_CALLBACK (gimp_image_dock_dockbook_changed),
+                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
   g_signal_connect (dockbook, "dockable_reordered",
-                    G_CALLBACK (gimp_image_dock_dockbook_changed),
+                    G_CALLBACK (gimp_menu_dock_dockbook_changed),
                     dock);
 
-  gimp_image_dock_update_title (GIMP_IMAGE_DOCK (dock));
+  gimp_menu_dock_update_title (GIMP_MENU_DOCK (dock));
 
   GIMP_DOCK_CLASS (parent_class)->book_added (dock, dockbook);
 }
 
 static void
-gimp_image_dock_book_removed (GimpDock     *dock,
-                              GimpDockbook *dockbook)
+gimp_menu_dock_book_removed (GimpDock     *dock,
+                             GimpDockbook *dockbook)
 {
   g_signal_handlers_disconnect_by_func (dockbook,
-                                        gimp_image_dock_dockbook_changed,
+                                        gimp_menu_dock_dockbook_changed,
                                         dock);
 
-  gimp_image_dock_update_title (GIMP_IMAGE_DOCK (dock));
+  gimp_menu_dock_update_title (GIMP_MENU_DOCK (dock));
 
   GIMP_DOCK_CLASS (parent_class)->book_removed (dock, dockbook);
 }
 
 GtkWidget *
-gimp_image_dock_new (GimpDialogFactory *dialog_factory,
-                     GimpContainer     *image_container,
-                     GimpContainer     *display_container)
+gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
+                    GimpContainer     *image_container,
+                    GimpContainer     *display_container)
 {
-  GimpImageDock *image_dock;
-  GimpContext   *context;
-  GdkScreen     *screen;
-  gint           menu_preview_width;
-  gint           menu_preview_height;
+  GimpMenuDock *menu_dock;
+  GimpContext  *context;
+  GdkScreen    *screen;
+  gint          menu_preview_width;
+  gint          menu_preview_height;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
@@ -416,15 +416,15 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   context = gimp_context_new (dialog_factory->context->gimp,
                               "Dock Context", NULL);
 
-  image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK,
-                             "context",        context,
-                             "dialog-factory", dialog_factory,
-                             NULL);
+  menu_dock = g_object_new (GIMP_TYPE_MENU_DOCK,
+                            "context",        context,
+                            "dialog-factory", dialog_factory,
+                            NULL);
 
-  image_dock->image_container   = image_container;
-  image_dock->display_container = display_container;
+  menu_dock->image_container   = image_container;
+  menu_dock->display_container = display_container;
 
-  gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (menu_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
 
   gimp_context_define_properties (context,
@@ -434,7 +434,7 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 				  FALSE);
   gimp_context_set_parent (context, dialog_factory->context);
 
-  if (image_dock->auto_follow_active)
+  if (menu_dock->auto_follow_active)
     {
       if (gimp_context_get_display (dialog_factory->context))
         gimp_context_copy_property (dialog_factory->context, context,
@@ -445,74 +445,74 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
     }
 
   g_signal_connect_object (dialog_factory->context, "display_changed",
-			   G_CALLBACK (gimp_image_dock_factory_display_changed),
-			   image_dock,
+			   G_CALLBACK (gimp_menu_dock_factory_display_changed),
+			   menu_dock,
 			   0);
   g_signal_connect_object (dialog_factory->context, "image_changed",
-			   G_CALLBACK (gimp_image_dock_factory_image_changed),
-			   image_dock,
+			   G_CALLBACK (gimp_menu_dock_factory_image_changed),
+			   menu_dock,
 			   0);
 
   g_signal_connect_object (context, "image_changed",
-			   G_CALLBACK (gimp_image_dock_image_changed),
-			   image_dock,
+			   G_CALLBACK (gimp_menu_dock_image_changed),
+			   menu_dock,
 			   0);
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (image_dock));
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu_dock));
   gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
                                      DEFAULT_MENU_PREVIEW_SIZE,
                                      &menu_preview_width,
                                      &menu_preview_height);
 
-  g_object_set (image_dock->image_combo,
+  g_object_set (menu_dock->image_combo,
                 "container", image_container,
                 "context",   context,
                 NULL);
 
-  return GTK_WIDGET (image_dock);
+  return GTK_WIDGET (menu_dock);
 }
 
 void
-gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,
-					gboolean       auto_follow_active)
+gimp_menu_dock_set_auto_follow_active (GimpMenuDock *menu_dock,
+                                       gboolean      auto_follow_active)
 {
-  g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
+  g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_dock->auto_button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (menu_dock->auto_button),
 				auto_follow_active ? TRUE : FALSE);
 }
 
 void
-gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
-				     gboolean       show)
+gimp_menu_dock_set_show_image_menu (GimpMenuDock *menu_dock,
+                                    gboolean      show)
 {
-  g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
+  g_return_if_fail (GIMP_IS_MENU_DOCK (menu_dock));
 
   if (show)
-    gtk_widget_show (image_dock->image_combo->parent);
+    gtk_widget_show (menu_dock->image_combo->parent);
   else
-    gtk_widget_hide (image_dock->image_combo->parent);
+    gtk_widget_hide (menu_dock->image_combo->parent);
 
-  image_dock->show_image_menu = show ? TRUE : FALSE;
+  menu_dock->show_image_menu = show ? TRUE : FALSE;
 }
 
 static void
-gimp_image_dock_dockbook_changed (GimpDockbook  *dockbook,
-                                  GimpDockable  *dockable,
-                                  GimpImageDock *dock)
+gimp_menu_dock_dockbook_changed (GimpDockbook *dockbook,
+                                 GimpDockable *dockable,
+                                 GimpMenuDock *dock)
 {
-  gimp_image_dock_update_title (dock);
+  gimp_menu_dock_update_title (dock);
 }
 
 static gboolean
-gimp_image_dock_update_title_idle (GimpImageDock *image_dock)
+gimp_menu_dock_update_title_idle (GimpMenuDock *menu_dock)
 {
   GString *title;
   GList   *list;
 
   title = g_string_new (NULL);
 
-  for (list = GIMP_DOCK (image_dock)->dockbooks;
+  for (list = GIMP_DOCK (menu_dock)->dockbooks;
        list;
        list = g_list_next (list))
     {
@@ -538,57 +538,57 @@ gimp_image_dock_update_title_idle (GimpImageDock *image_dock)
         g_string_append (title, " | ");
     }
 
-  gtk_window_set_title (GTK_WINDOW (image_dock), title->str);
+  gtk_window_set_title (GTK_WINDOW (menu_dock), title->str);
 
   g_string_free (title, TRUE);
 
-  image_dock->update_title_idle_id = 0;
+  menu_dock->update_title_idle_id = 0;
 
   return FALSE;
 }
 
 static void
-gimp_image_dock_update_title (GimpImageDock *image_dock)
+gimp_menu_dock_update_title (GimpMenuDock *menu_dock)
 {
-  if (image_dock->update_title_idle_id)
-    g_source_remove (image_dock->update_title_idle_id);
+  if (menu_dock->update_title_idle_id)
+    g_source_remove (menu_dock->update_title_idle_id);
 
-  image_dock->update_title_idle_id =
-    g_idle_add ((GSourceFunc) gimp_image_dock_update_title_idle,
-                image_dock);
+  menu_dock->update_title_idle_id =
+    g_idle_add ((GSourceFunc) gimp_menu_dock_update_title_idle,
+                menu_dock);
 }
 
 static void
-gimp_image_dock_factory_display_changed (GimpContext *context,
-                                         GimpObject  *display,
-                                         GimpDock    *dock)
+gimp_menu_dock_factory_display_changed (GimpContext *context,
+                                        GimpObject  *display,
+                                        GimpDock    *dock)
 {
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
+  GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
-  if (display && image_dock->auto_follow_active)
+  if (display && menu_dock->auto_follow_active)
     gimp_context_set_display (dock->context, display);
 }
 
 static void
-gimp_image_dock_factory_image_changed (GimpContext *context,
-				       GimpImage   *gimage,
-				       GimpDock    *dock)
+gimp_menu_dock_factory_image_changed (GimpContext *context,
+                                      GimpImage   *gimage,
+                                      GimpDock    *dock)
 {
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
+  GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
   /*  won't do anything if we already set the display above  */
-  if (gimage && image_dock->auto_follow_active)
+  if (gimage && menu_dock->auto_follow_active)
     gimp_context_set_image (dock->context, gimage);
 }
 
 static void
-gimp_image_dock_image_changed (GimpContext *context,
-			       GimpImage   *gimage,
-			       GimpDock    *dock)
+gimp_menu_dock_image_changed (GimpContext *context,
+                              GimpImage   *gimage,
+                              GimpDock    *dock)
 {
-  GimpImageDock *image_dock        = GIMP_IMAGE_DOCK (dock);
-  GimpContainer *image_container   = image_dock->image_container;
-  GimpContainer *display_container = image_dock->display_container;
+  GimpMenuDock  *menu_dock         = GIMP_MENU_DOCK (dock);
+  GimpContainer *image_container   = menu_dock->image_container;
+  GimpContainer *display_container = menu_dock->display_container;
 
   if (gimage == NULL && ! gimp_container_is_empty (image_container))
     {
@@ -666,14 +666,14 @@ gimp_image_dock_image_changed (GimpContext *context,
 }
 
 static void
-gimp_image_dock_auto_clicked (GtkWidget *widget,
-			      GimpDock  *dock)
+gimp_menu_dock_auto_clicked (GtkWidget *widget,
+                             GimpDock  *dock)
 {
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
+  GimpMenuDock *menu_dock = GIMP_MENU_DOCK (dock);
 
-  gimp_toggle_button_update (widget, &image_dock->auto_follow_active);
+  gimp_toggle_button_update (widget, &menu_dock->auto_follow_active);
 
-  if (image_dock->auto_follow_active)
+  if (menu_dock->auto_follow_active)
     {
       if (gimp_context_get_display (dock->dialog_factory->context))
         gimp_context_copy_property (dock->dialog_factory->context,

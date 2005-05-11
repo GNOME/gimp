@@ -26,7 +26,7 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpimagedock.h"
+#include "widgets/gimpmenudock.h"
 
 #include "actions.h"
 #include "dock-actions.h"
@@ -84,8 +84,8 @@ void
 dock_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GtkWidget *widget    = action_data_get_widget (data);
-  GtkWidget *toplevel  = NULL;
+  GtkWidget *widget   = action_data_get_widget (data);
+  GtkWidget *toplevel = NULL;
 
   if (widget)
     toplevel = gtk_widget_get_toplevel (widget);
@@ -95,15 +95,15 @@ dock_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,active) \
         gimp_action_group_set_action_visible (group, action, (active) != 0)
 
-  if (GIMP_IS_IMAGE_DOCK (toplevel))
+  if (GIMP_IS_MENU_DOCK (toplevel))
     {
-      GimpImageDock *image_dock = GIMP_IMAGE_DOCK (toplevel);
+      GimpMenuDock *menu_dock = GIMP_MENU_DOCK (toplevel);
 
       SET_VISIBLE ("dock-show-image-menu",    TRUE);
       SET_VISIBLE ("dock-auto-follow-active", TRUE);
 
-      SET_ACTIVE ("dock-show-image-menu",    image_dock->show_image_menu);
-      SET_ACTIVE ("dock-auto-follow-active", image_dock->auto_follow_active);
+      SET_ACTIVE ("dock-show-image-menu",    menu_dock->show_image_menu);
+      SET_ACTIVE ("dock-auto-follow-active", menu_dock->auto_follow_active);
     }
   else
     {

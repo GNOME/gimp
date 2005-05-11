@@ -121,7 +121,7 @@ static void        toolbox_paste_received        (GtkClipboard   *clipboard,
 
 /*  local variables  */
 
-static GimpDockClass *parent_class = NULL;
+static GimpImageDockClass *parent_class = NULL;
 
 
 GType
@@ -144,7 +144,7 @@ gimp_toolbox_get_type (void)
         (GInstanceInitFunc) gimp_toolbox_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_DOCK,
+      type = g_type_register_static (GIMP_TYPE_IMAGE_DOCK,
                                      "GimpToolbox",
                                      &type_info, 0);
     }
@@ -155,22 +155,23 @@ gimp_toolbox_get_type (void)
 static void
 gimp_toolbox_class_init (GimpToolboxClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GtkWidgetClass     *widget_class     = GTK_WIDGET_CLASS (klass);
+  GimpDockClass      *dock_class       = GIMP_DOCK_CLASS (klass);
+  GimpImageDockClass *image_dock_class = GIMP_IMAGE_DOCK_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor   = gimp_toolbox_constructor;
+  object_class->constructor         = gimp_toolbox_constructor;
 
-  widget_class->delete_event  = gimp_toolbox_delete_event;
-  widget_class->size_allocate = gimp_toolbox_size_allocate;
-  widget_class->style_set     = gimp_toolbox_style_set;
+  widget_class->delete_event        = gimp_toolbox_delete_event;
+  widget_class->size_allocate       = gimp_toolbox_size_allocate;
+  widget_class->style_set           = gimp_toolbox_style_set;
 
-  dock_class->book_added      = gimp_toolbox_book_added;
-  dock_class->book_removed    = gimp_toolbox_book_removed;
+  dock_class->book_added            = gimp_toolbox_book_added;
+  dock_class->book_removed          = gimp_toolbox_book_removed;
 
-  dock_class->ui_manager_name = "<Toolbox>";
+  image_dock_class->ui_manager_name = "<Toolbox>";
 
   gtk_widget_class_install_style_property
     (widget_class, g_param_spec_enum ("tool-icon-size",
@@ -227,7 +228,7 @@ gimp_toolbox_constructor (GType                  type,
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
 
-  manager = GTK_UI_MANAGER (GIMP_DOCK (toolbox)->ui_manager);
+  manager = GTK_UI_MANAGER (GIMP_IMAGE_DOCK (toolbox)->ui_manager);
 
   toolbox->menu_bar = gtk_ui_manager_get_widget (manager, "/toolbox-menubar");
 
@@ -749,7 +750,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      if (GIMP_DOCK (toolbox)->ui_manager)
+      if (GIMP_IMAGE_DOCK (toolbox)->ui_manager)
         {
           GtkAction   *action;
           const gchar *identifier;
@@ -764,7 +765,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          action = gimp_ui_manager_find_action (GIMP_DOCK (toolbox)->ui_manager,
+          action = gimp_ui_manager_find_action (GIMP_IMAGE_DOCK (toolbox)->ui_manager,
                                                 "tools", name);
 
           g_free (name);

@@ -29,9 +29,9 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
-#include "widgets/gimpimagedock.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "dialogs/dialogs.h"
