@@ -64,7 +64,11 @@ Changes in GIMP 2.3
 - allow to drag and drop image data into GIMP
 - use the statusbar more to display hints and info about the tool state
 - resurrected --no-data functionality
-- improved Helpbrowser plug-in
+- zoom to the cursor position instead of the display center
+- some improvements to the Helpbrowser plug-in
+- load PS brushes in the .abr format
 - allow to choose between different algorithms for Desaturate
 - added thumbnail loader to Winicon plug-in
-- lots of bug-fixes
+- improved configuration of input controllers
+- added an option to make the dock windows transient to the active image display
+- lots of code cleanup and bug-fixes
