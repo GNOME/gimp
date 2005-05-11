@@ -1426,7 +1426,10 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
   gint          border_x, border_y;
   gboolean      resize = FALSE;
 
-  g_return_if_fail (GTK_WIDGET_REALIZED (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (! GTK_WIDGET_REALIZED (shell))
+    return;
 
   widget = GTK_WIDGET (shell);
   screen = gtk_widget_get_screen (widget);

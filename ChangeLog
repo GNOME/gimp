@@ -1,3 +1,10 @@
+2005-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):
+	return silently instead of warning if the window hasn't been
+	realized. This happens as part of the setup process if
+	"resize-windows-on-zoom" is selected in the prefs.
+
 2005-05-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontrollerinfo.[ch]: added API to set an event
