@@ -172,6 +172,19 @@ gimp_image_dock_display_changed (GimpContext   *context,
                                  GimpImageDock *dock)
 {
   gimp_ui_manager_update (dock->ui_manager, display);
+
+  if (GIMP_GUI_CONFIG (context->gimp->config)->transient_docks)
+    {
+      GtkWindow *parent = NULL;
+
+      if (display)
+        g_object_get (display, "shell", &parent, NULL);
+
+      gtk_window_set_transient_for (GTK_WINDOW (dock), parent);
+
+      if (parent)
+        g_object_unref (parent);
+    }
 }
 
 static void

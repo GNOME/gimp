@@ -159,9 +159,6 @@ N_("Sets the text to appear in image window status bars.")
 #define IMAGE_TITLE_FORMAT_BLURB \
 N_("Sets the text to appear in image window titles.")
 
-#define INFO_WINDOW_PER_DISPLAY_BLURB \
-N_("When enabled, the GIMP will use a different info window per image view.")
-
 #define INITIAL_ZOOM_TO_FIT_BLURB \
 N_("When enabled, this will ensure that the full image is visible after a " \
    "file is opened, otherwise it will be displayed with a scale of 1:1.")
@@ -351,6 +348,11 @@ N_("Sets the swap file location. The gimp uses a tile based memory " \
 
 #define TEAROFF_MENUS_BLURB \
 N_("When enabled, menus can be torn off.")
+
+#define TRANSIENT_DOCKS_BLURB \
+N_("When enabled, dock windows (the toolbox and palettes) are transient " \
+   "transient to the active image window. With most window managers this " \
+   "keeps the dock windows above the image window.")
 
 #define CAN_CHANGE_ACCELS_BLURB \
 N_("When enabled, you can change keyboard shortcuts for menu items " \

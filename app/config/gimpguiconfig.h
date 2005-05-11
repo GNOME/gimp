@@ -42,7 +42,7 @@ struct _GimpGuiConfig
 
   gint                 default_threshold;
   gboolean             move_tool_changes_active;
-  gboolean             info_window_per_display;
+  gboolean             info_window_per_display;  /*  unused  */
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             save_session_info;
@@ -69,6 +69,7 @@ struct _GimpGuiConfig
   gchar               *web_browser;
   GimpWindowHint       toolbox_window_hint;
   GimpWindowHint       dock_window_hint;
+  gboolean             transient_docks;
   GimpCursorFormat     cursor_format;
 
   gint                 last_tip;  /* saved in sessionrc */

@@ -2287,8 +2287,13 @@ prefs_dialog_new (Gimp       *gimp,
                             GTK_TABLE (table), 0, size_group);
 
   prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
-                            _("Hint for the _docks:"),
+                            _("Hint for other _docks:"),
                             GTK_TABLE (table), 1, size_group);
+
+  prefs_check_button_add (object, "transient-docks",
+                          _("Toolbox and other docks are transient "
+                            "to the active display"),
+                          GTK_BOX (vbox2));
 
   vbox2 = prefs_frame_new (_("Focus"),
                            GTK_CONTAINER (vbox), FALSE);

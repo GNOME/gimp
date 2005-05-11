@@ -1,3 +1,24 @@
+2005-05-12  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added new gimprc option
+	"transient-docks".
+	
+	* app/widgets/gimpimagedock.c (gimp_image_dock_display_changed):
+	as an experiment
+	, obey the "transient-docks" preference and set
+	the dock window transient to the active display shell. Please
+	comment on the behaviour you observe.
+
+	* app/dialogs/preferences-dialog.c (prefs_dialog_new): added a
+	view on the new gimprc property.
+
+	* app/config/gimpguiconfig.[ch]: set the IGNORE flag on the
+	"info-window-per-display" property; it isn't used any longer.
+
+	* app/config/gimpconfig-dump.c (dump_gimprc_system): don't dump
+	properties that have the GIMP_CONFIG_PARAM_IGNORE flag set.
+
 2005-05-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_query): split the message into

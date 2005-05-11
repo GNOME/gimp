@@ -88,6 +88,7 @@ enum
   PROP_WEB_BROWSER,
   PROP_TOOLBOX_WINDOW_HINT,
   PROP_DOCK_WINDOW_HINT,
+  PROP_TRANSIENT_DOCKS,
   PROP_CURSOR_FORMAT
 };
 
@@ -147,9 +148,9 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                                     "info-window-per-display",
-                                    INFO_WINDOW_PER_DISPLAY_BLURB,
+                                    NULL,
                                     FALSE,
-                                    GIMP_CONFIG_PARAM_RESTART);
+                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
@@ -269,7 +270,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  DOCK_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
-                                 GIMP_CONFIG_PARAM_RESTART);
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
+                                    "transient-docks", TRANSIENT_DOCKS_BLURB,
+                                    FALSE,
+                                    GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                                  "cursor-format", CURSOR_FORMAT_BLURB,
                                  GIMP_TYPE_CURSOR_FORMAT,
@@ -391,6 +396,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_DOCK_WINDOW_HINT:
       gui_config->dock_window_hint = g_value_get_enum (value);
       break;
+    case PROP_TRANSIENT_DOCKS:
+      gui_config->transient_docks = g_value_get_boolean (value);
+      break;
     case PROP_CURSOR_FORMAT:
       gui_config->cursor_format = g_value_get_enum (value);
       break;
@@ -497,6 +505,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_DOCK_WINDOW_HINT:
       g_value_set_enum (value, gui_config->dock_window_hint);
+      break;
+    case PROP_TRANSIENT_DOCKS:
+      g_value_set_boolean (value, gui_config->transient_docks);
       break;
     case PROP_CURSOR_FORMAT:
       g_value_set_enum (value, gui_config->cursor_format);
