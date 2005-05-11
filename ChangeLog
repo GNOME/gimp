@@ -1,3 +1,11 @@
+2005-05-11  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: reset the vector tool to Design
+	mode whenever a new vectors object gets connected to the tool.
+
+	Attempt to fix #300663, please report there if you like / dislike
+	the new behaviour.
+
 2005-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_shrink_wrap):

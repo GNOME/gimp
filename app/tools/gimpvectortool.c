@@ -1570,6 +1570,10 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                                 gimp_vector_tool_stroke_vectors,
                                                 tool);
         }
+
+      if (options->edit_mode != GIMP_VECTOR_MODE_DESIGN)
+        g_object_set (options, "vectors-edit-mode",
+                      GIMP_VECTOR_MODE_DESIGN, NULL);
     }
 
   vector_tool->vectors    = vectors;
