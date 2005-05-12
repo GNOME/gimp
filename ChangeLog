@@ -1,5 +1,9 @@
 2005-05-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdialogfactory.c: refactoring.
+
+2005-05-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpimagedock.c: request notification about changes
 	to the "transient-docks" preference and react accordingly.
 

@@ -100,6 +100,9 @@ static void   gimp_dialog_factories_unset_busy_foreach(gconstpointer      key,
                                                        GimpDialogFactory *factory,
                                                        gpointer           data);
 
+static GtkWidget *
+              gimp_dialog_factory_get_toolbox     (GimpDialogFactory *toolbox_factory);
+
 
 static GimpObjectClass *parent_class = NULL;
 
@@ -1085,13 +1088,10 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
 
   if (ensure_visibility && toggle_state != GIMP_DIALOG_HIDE_ALL)
     {
-      GList *list;
+      GtkWidget *toolbox = gimp_dialog_factory_get_toolbox (toolbox_factory);
 
-      for (list = toolbox_factory->open_dialogs; list; list = list->next)
-        {
-          if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
-            gtk_window_present (GTK_WINDOW (list->data));
-        }
+      if (toolbox)
+        gtk_window_present (GTK_WINDOW (toolbox));
 
       return;
     }
@@ -1464,4 +1464,19 @@ gimp_dialog_factories_unset_busy_foreach (gconstpointer      key,
             gdk_window_set_cursor (widget->window, NULL);
         }
     }
+}
+
+/*  The only toplevel widget in the toolbox factory is the toolbox  */
+static GtkWidget *
+gimp_dialog_factory_get_toolbox (GimpDialogFactory *toolbox_factory)
+{
+  GList *list;
+
+  for (list = toolbox_factory->open_dialogs; list; list = list->next)
+    {
+      if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
+        return list->data;
+    }
+
+  return NULL;
 }
