@@ -478,13 +478,24 @@ procedural_db_query_invoker (Gimp         *gimp,
 
   if (success)
     {
-      regcomp (&pdb_query.name_regex, name, 0);
-      regcomp (&pdb_query.blurb_regex, blurb, 0);
-      regcomp (&pdb_query.help_regex, help, 0);
-      regcomp (&pdb_query.author_regex, author, 0);
-      regcomp (&pdb_query.copyright_regex, copyright, 0);
-      regcomp (&pdb_query.date_regex, date, 0);
-      regcomp (&pdb_query.proc_type_regex, proc_type, 0);
+      success = FALSE;
+
+      if (regcomp (&pdb_query.name_regex, name, 0))
+        goto free_name;
+      if (regcomp (&pdb_query.blurb_regex, blurb, 0))
+        goto free_blurb;
+      if (regcomp (&pdb_query.help_regex, help, 0))
+        goto free_help;
+      if (regcomp (&pdb_query.author_regex, author, 0))
+        goto free_author;
+      if (regcomp (&pdb_query.copyright_regex, copyright, 0))
+        goto free_copyright;
+      if (regcomp (&pdb_query.date_regex, date, 0))
+        goto free_date;
+      if (regcomp (&pdb_query.proc_type_regex, proc_type, 0))
+        goto free_proc_type;
+
+      success = TRUE;
 
       pdb_query.gimp            = gimp;
       pdb_query.list_of_procs   = NULL;
@@ -499,13 +510,20 @@ procedural_db_query_invoker (Gimp         *gimp,
       g_hash_table_foreach (gimp->procedural_compat_ht,
                             procedural_db_query_entry, &pdb_query);
 
-      regfree (&pdb_query.name_regex);
-      regfree (&pdb_query.blurb_regex);
-      regfree (&pdb_query.help_regex);
-      regfree (&pdb_query.author_regex);
-      regfree (&pdb_query.copyright_regex);
-      regfree (&pdb_query.date_regex);
-      regfree (&pdb_query.proc_type_regex);
+      free_proc_type:
+        regfree (&pdb_query.proc_type_regex);
+      free_date:
+        regfree (&pdb_query.date_regex);
+      free_copyright:
+        regfree (&pdb_query.copyright_regex);
+      free_author:
+        regfree (&pdb_query.author_regex);
+      free_help:
+        regfree (&pdb_query.help_regex);
+      free_blurb:
+        regfree (&pdb_query.blurb_regex);
+      free_name:
+        regfree (&pdb_query.name_regex);
     }
 
   return_args = procedural_db_return_args (&procedural_db_query_proc, success);
