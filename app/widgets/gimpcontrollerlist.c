@@ -45,6 +45,7 @@
 #include "gimpcontrollers.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
+#include "gimpmessagedialog.c"
 #include "gimppropwidgets.h"
 #include "gimpuimanager.h"
 #include "gimpviewabledialog.h"
@@ -540,7 +541,76 @@ static void
 gimp_controller_list_remove_clicked (GtkWidget          *button,
                                      GimpControllerList *list)
 {
-  g_message ("TODO: implement remove");
+  GtkWidget *dialog;
+  gchar     *primary;
+  gchar     *secondary;
+
+#define RESPONSE_DISABLE 1
+
+  dialog = gimp_message_dialog_new (_("Remove Controller?"),
+                                    GIMP_STOCK_WARNING,
+                                    GTK_WIDGET (list), GTK_DIALOG_MODAL,
+                                    NULL, NULL,
+
+                                    _("Disable Controller"), RESPONSE_DISABLE,
+                                    GTK_STOCK_CANCEL,        GTK_RESPONSE_CANCEL,
+                                    _("Remove Controller"),  GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           RESPONSE_DISABLE,
+                                           -1);
+
+  primary =
+    g_strdup_printf (_("Remove Controller '%s'?"),
+                     gimp_object_get_name (GIMP_OBJECT (list->dest_info)));
+
+  secondary =
+    g_strdup_printf (_("Removing this controller from the list of "
+                       "active controllers will permanently delete "
+                       "all event mappings you have configured.\n\n"
+                       "Selecting \"Disable Controller\" will disable "
+                       "the controller without removing it."));
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     primary);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             secondary);
+
+  g_free (primary);
+  g_free (secondary);
+
+  switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
+    {
+    case RESPONSE_DISABLE:
+      gimp_controller_info_set_enabled (list->dest_info, FALSE);
+      break;
+
+    case GTK_RESPONSE_OK:
+      {
+        GtkWidget     *editor_dialog;
+        GimpContainer *container;
+
+        editor_dialog = g_object_get_data (G_OBJECT (list->dest_info),
+                                           "gimp-controller-editor-dialog");
+
+        if (editor_dialog)
+          gtk_dialog_response (GTK_DIALOG (editor_dialog),
+                               GTK_RESPONSE_DELETE_EVENT);
+
+        container = gimp_controllers_get_list (list->gimp);
+        gimp_container_remove (container, GIMP_OBJECT (list->dest_info));
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 static void

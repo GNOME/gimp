@@ -1,3 +1,13 @@
+2005-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontrollerlist.c
+	(gimp_controller_list_remove_clicked): implement removing of
+	controllers, confirmed by a dialog.
+
+	* app/widgets/gimpcontrollereditor.c
+	(gimp_controller_editor_edit_clicked): set an alternative button
+	order for the event mapping dialog.
+
 2005-05-12  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: reset the vector tool to Design

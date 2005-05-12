@@ -695,6 +695,11 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
 
                                   NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (editor->edit_dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       g_object_add_weak_pointer (G_OBJECT (editor->edit_dialog),
                                  (gpointer) &editor->edit_dialog);
 
