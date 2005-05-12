@@ -269,8 +269,8 @@ WriteBMP (const gchar *filename,
          *    ------ * ------- * ------ = ------
          *     inch    2.54 cm     m       inch
          */
-        Bitmap_Head.biXPels = (long int) xresolution * 100.0 / 2.54;
-        Bitmap_Head.biYPels = (long int) yresolution * 100.0 / 2.54;
+        Bitmap_Head.biXPels = (long int) (xresolution * 100.0 / 2.54);
+        Bitmap_Head.biYPels = (long int) (yresolution * 100.0 / 2.54);
       }
   }
 
