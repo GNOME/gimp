@@ -10,8 +10,7 @@
 	"transient-docks".
 	
 	* app/widgets/gimpimagedock.c (gimp_image_dock_display_changed):
-	as an experiment
-	, obey the "transient-docks" preference and set
+	as an experiment, obey the "transient-docks" preference and set
 	the dock window transient to the active display shell. Please
 	comment on the behaviour you observe.
 
