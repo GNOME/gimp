@@ -4299,6 +4299,22 @@ GIMP_CONTROLLER_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcontrollerlist</FILE>
+<TITLE>GimpControllerList</TITLE>
+GimpControllerList
+gimp_controller_list_new
+<SUBSECTION Standard>
+GimpControllerListClass
+GIMP_CONTROLLER_LIST
+GIMP_IS_CONTROLLER_LIST
+GIMP_TYPE_CONTROLLER_LIST
+gimp_controller_list_get_type
+GIMP_CONTROLLER_LIST_CLASS
+GIMP_IS_CONTROLLER_LIST_CLASS
+GIMP_CONTROLLER_LIST_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpcontrollerkeyboard</FILE>
 <TITLE>GimpControllerKeyboard</TITLE>
 GimpControllerKeyboard
@@ -4336,8 +4352,11 @@ GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 <FILE>gimpcontrollerinfo</FILE>
 <TITLE>GimpControllerInfo</TITLE>
 GimpControllerInfo
+GimpControllerEventSnooper
+gimp_controller_info_new
 gimp_controller_info_set_enabled
 gimp_controller_info_get_enabled
+gimp_controller_info_set_event_snooper
 <SUBSECTION Standard>
 GimpControllerInfoClass
 GIMP_CONTROLLER_INFO
@@ -4836,9 +4855,6 @@ GIMP_HISTOGRAM_VIEW_GET_CLASS
 <FILE>gimpimagedock</FILE>
 <TITLE>GimpImageDock</TITLE>
 GimpImageDock
-gimp_image_dock_new
-gimp_image_dock_set_auto_follow_active
-gimp_image_dock_set_show_image_menu
 <SUBSECTION Standard>
 GimpImageDockClass
 GIMP_IMAGE_DOCK
@@ -4848,6 +4864,24 @@ gimp_image_dock_get_type
 GIMP_IMAGE_DOCK_CLASS
 GIMP_IS_IMAGE_DOCK_CLASS
 GIMP_IMAGE_DOCK_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpmenudock</FILE>
+<TITLE>GimpMenuDock</TITLE>
+GimpMenuDock
+gimp_menu_dock_new
+gimp_menu_dock_set_auto_follow_active
+gimp_menu_dock_set_show_image_menu
+<SUBSECTION Standard>
+GimpMenuDockClass
+GIMP_MENU_DOCK
+GIMP_IS_MENU_DOCK
+GIMP_TYPE_MENU_DOCK
+gimp_menu_dock_get_type
+GIMP_MENU_DOCK_CLASS
+GIMP_IS_MENU_DOCK_CLASS
+GIMP_MENU_DOCK_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -7436,6 +7470,7 @@ plug_in_proc_def_get_stock_id
 plug_in_proc_def_get_pixbuf
 plug_in_proc_def_get_help_id
 plug_in_proc_def_get_sensitive
+plug_in_proc_def_find
 </SECTION>
 
 <SECTION>

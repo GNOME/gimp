@@ -629,6 +629,7 @@
       <title>Additional Input Controller Management</title>
       <xi:include href="xml/gimpcontrollers.xml" />
       <xi:include href="xml/gimpcontrollereditor.xml" />
+      <xi:include href="xml/gimpcontrollerlist.xml" />
       <xi:include href="xml/gimpcontrollerinfo.xml" />
       <xi:include href="xml/gimpcontrollerkeyboard.xml" />
       <xi:include href="xml/gimpcontrollerwheel.xml" />
@@ -638,6 +639,7 @@
       <title>Dock Windows &amp; Widgets</title>
       <xi:include href="xml/gimpdock.xml" />
       <xi:include href="xml/gimpimagedock.xml" />
+      <xi:include href="xml/gimpmenudock.xml" />
       <xi:include href="xml/gimptoolbox.xml" />
       <xi:include href="xml/gimptoolbox-dnd.xml" />
       <xi:include href="xml/gimptoolbox-color-area.xml" />
