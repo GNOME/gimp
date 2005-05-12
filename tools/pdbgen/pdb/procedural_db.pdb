@@ -187,16 +187,21 @@ HELP
 
     &std_pdb_misc;
 
-    my $regcomp = ""; my $free = ""; $once = 0;
+    my $regcomp = ""; $once = 0;
     foreach (qw(name blurb help author copyright date proc_type)) {
 	push @inargs, { name => $_, type => 'string', no_validate => 1,
 			desc => "The regex for procedure $_" };
 
-	$regcomp .= ' ' x 2 if $once;
-	$regcomp .= "regcomp (&pdb_query.${_}_regex, $_, 0);\n";
+	$regcomp .= ' ' x 2 if $once++;
+	$regcomp .= "if (regcomp (&pdb_query.${_}_regex, $_, 0))\n";
+	$regcomp .= "    goto free_${_};\n";
+    }
 
+    my $free = ""; $once = 0;
+    foreach (qw(proc_type date copyright author help blurb name)) {
 	$free .= ' ' x 2 if $once++;
-	$free .= "regfree (&pdb_query.${_}_regex);\n";
+	$free .= "free_${_}:\n";
+	$free .= "    regfree (&pdb_query.${_}_regex);\n";
     }
     chop $free;
 
@@ -220,7 +225,12 @@ HELP
 	vars => [ 'PDBQuery pdb_query' ],
 	code => <<CODE
 {
+  success = FALSE;
+
   $regcomp
+
+  success = TRUE;
+
   pdb_query.gimp            = gimp;
   pdb_query.list_of_procs   = NULL;
   pdb_query.num_procs       = 0;

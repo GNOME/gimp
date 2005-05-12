@@ -1,5 +1,12 @@
 2005-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/procedural_db.pdb (procedural_db_query): don't
+	crash on invalid regular expressions.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
+2005-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontrollerlist.c
 	(gimp_controller_list_remove_clicked): implement removing of
 	controllers, confirmed by a dialog.
