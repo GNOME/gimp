@@ -72,10 +72,18 @@ plug_ins_query (Gimp          *gimp,
   g_return_val_if_fail (realname_strs != NULL, 0);
   g_return_val_if_fail (time_ints != NULL, 0);
 
-  if (search_str && strlen (search_str))
-    regcomp (&sregex, search_str, REG_ICASE);
-  else
+  *menu_strs     = NULL;
+  *accel_strs    = NULL;
+  *prog_strs     = NULL;
+  *types_strs    = NULL;
+  *realname_strs = NULL;
+  *time_ints     = NULL;
+
+  if (search_str && ! strlen (search_str))
     search_str = NULL;
+
+  if (search_str && regcomp (&sregex, search_str, REG_ICASE))
+    return 0;
 
   /* count number of plugin entries, then allocate arrays of correct size
    * where we can store the strings.
