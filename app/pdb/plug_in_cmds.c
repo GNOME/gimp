@@ -76,12 +76,12 @@ plugins_query_invoker (Gimp         *gimp,
   Argument *return_args;
   gchar *search_str;
   gint32 num_plugins = 0;
-  gchar **menu_strs;
-  gchar **accel_strs;
-  gchar **prog_strs;
-  gchar **types_strs;
-  gint32 *time_ints;
-  gchar **realname_strs;
+  gchar **menu_strs = NULL;
+  gchar **accel_strs = NULL;
+  gchar **prog_strs = NULL;
+  gchar **types_strs = NULL;
+  gint32 *time_ints = NULL;
+  gchar **realname_strs = NULL;
   GSList *list;
   GSList *matched = NULL;
   gint i = 0;
@@ -89,87 +89,88 @@ plugins_query_invoker (Gimp         *gimp,
 
   search_str = (gchar *) args[0].value.pdb_pointer;
 
-  if (search_str && strlen (search_str))
-    regcomp (&sregex, search_str, REG_ICASE);
-  else
+  if (search_str && ! strlen (search_str))
     search_str = NULL;
 
-  /* count number of plugin entries, then allocate arrays of correct size
-   * where we can store the strings.
-   */
-
-  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
+  if (! (search_str && regcomp (&sregex, search_str, REG_ICASE)))
     {
-      PlugInProcDef *proc_def = list->data;
+      /* count number of plugin entries, then allocate arrays of correct size
+       * where we can store the strings.
+       */
 
-      if (proc_def->prog && proc_def->menu_paths)
+      for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
         {
-          gchar *name;
+          PlugInProcDef *proc_def = list->data;
+
+          if (proc_def->prog && proc_def->menu_paths)
+                {
+              gchar *name;
+
+              if (proc_def->menu_label)
+                {
+                  name = proc_def->menu_label;
+                }
+              else
+                {
+                  name = strrchr (proc_def->menu_paths->data, '/');
+
+                  if (name)
+                    name = name + 1;
+                  else
+                    name = proc_def->menu_paths->data;
+                }
+
+              name = gimp_strip_uline (name);
+
+              if (! search_str || ! match_strings (&sregex, name))
+                {
+                  num_plugins++;
+                  matched = g_slist_prepend (matched, proc_def);
+                }
+
+              g_free (name);
+            }
+        }
+
+      menu_strs     = g_new (gchar *, num_plugins);
+      accel_strs    = g_new (gchar *, num_plugins);
+      prog_strs     = g_new (gchar *, num_plugins);
+      types_strs    = g_new (gchar *, num_plugins);
+      realname_strs = g_new (gchar *, num_plugins);
+      time_ints     = g_new (gint   , num_plugins);
+
+      matched = g_slist_reverse (matched);
+
+      for (list = matched; list; list = g_slist_next (list))
+        {
+          PlugInProcDef *proc_def = list->data;
+          ProcRecord    *proc_rec = &proc_def->db_info;
+          gchar         *name;
 
           if (proc_def->menu_label)
-            {
-              name = proc_def->menu_label;
-            }
+            name = g_strdup_printf ("%s/%s",
+                                    (gchar *) proc_def->menu_paths->data,
+                                    proc_def->menu_label);
           else
-            {
-              name = strrchr (proc_def->menu_paths->data, '/');
+            name = g_strdup (proc_def->menu_paths->data);
 
-              if (name)
-                name = name + 1;
-              else
-                name = proc_def->menu_paths->data;
-            }
-
-          name = gimp_strip_uline (name);
-
-          if (! search_str || ! match_strings (&sregex, name))
-            {
-              num_plugins++;
-              matched = g_slist_prepend (matched, proc_def);
-            }
+          menu_strs[i]     = gimp_strip_uline (name);
+          accel_strs[i]    = NULL;
+          prog_strs[i]     = g_strdup (proc_def->prog);
+          types_strs[i]    = g_strdup (proc_def->image_types);
+          realname_strs[i] = g_strdup (proc_rec->name);
+          time_ints[i]     = proc_def->mtime;
 
           g_free (name);
+
+          i++;
         }
-    }
 
-  menu_strs     = g_new (gchar *, num_plugins);
-  accel_strs    = g_new (gchar *, num_plugins);
-  prog_strs     = g_new (gchar *, num_plugins);
-  types_strs    = g_new (gchar *, num_plugins);
-  realname_strs = g_new (gchar *, num_plugins);
-  time_ints     = g_new (gint   , num_plugins);
+      g_slist_free (matched);
 
-  matched = g_slist_reverse (matched);
-
-  for (list = matched; list; list = g_slist_next (list))
-    {
-      PlugInProcDef *proc_def = list->data;
-      ProcRecord    *proc_rec = &proc_def->db_info;
-      gchar         *name;
-
-      if (proc_def->menu_label)
-        name = g_strdup_printf ("%s/%s",
-                                (gchar *) proc_def->menu_paths->data,
-                                proc_def->menu_label);
-      else
-        name = g_strdup (proc_def->menu_paths->data);
-
-      menu_strs[i]     = gimp_strip_uline (name);
-      accel_strs[i]    = NULL;
-      prog_strs[i]     = g_strdup (proc_def->prog);
-      types_strs[i]    = g_strdup (proc_def->image_types);
-      realname_strs[i] = g_strdup (proc_rec->name);
-      time_ints[i]     = proc_def->mtime;
-
-      g_free (name);
-
-      i++;
-    }
-
-  g_slist_free (matched);
-
-  if (search_str)
-    regfree (&sregex);
+      if (search_str)
+        regfree (&sregex);
+   }
 
   return_args = procedural_db_return_args (&plugins_query_proc, TRUE);
 

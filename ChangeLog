@@ -1,5 +1,12 @@
 2005-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/plug_in.pdb (plug_ins_query): don't
+	crash on invalid regular expressions.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2005-05-13  Michael Natterer  <mitch@gimp.org>
+
 	Merged from HEAD branch:
 
 	* tools/pdbgen/pdb/procedural_db.pdb (procedural_db_query): don't
