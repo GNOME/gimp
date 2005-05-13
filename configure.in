@@ -832,22 +832,23 @@ AC_SUBST(HAVE_GLIBC_REGEX)
 # Check for select and fdset
 ############################
 
-AC_MSG_CHECKING([fd_set and sys/select])
-AC_TRY_COMPILE([#include <sys/types.h>],
-        [fd_set readMask, writeMask;], gimp_ok=yes, gimp_ok=no)
-if test $gimp_ok = no; then
-    AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
-    if test $gimp_ok = yes; then
-        AC_DEFINE(HAVE_SYS_SELECT_H, 1,
-                  [Define to 1 if you have the <sys/select.h> header.])
-    fi
+if test x"$os_win32" != xyes; then
+  AC_MSG_CHECKING([fd_set and sys/select])
+  AC_TRY_COMPILE([#include <sys/types.h>],
+	  [fd_set readMask, writeMask;], gimp_ok=yes, gimp_ok=no)
+  if test $gimp_ok = no; then
+      AC_EGREP_HEADER(fd_mask, sys/select.h, gimp_ok=yes)
+      if test $gimp_ok = yes; then
+	  AC_DEFINE(HAVE_SYS_SELECT_H, 1,
+		    [Define to 1 if you have the <sys/select.h> header.])
+      fi
+  fi
+  AC_MSG_RESULT($gimp_ok)
+  if test $gimp_ok = no; then
+      AC_DEFINE(NO_FD_SET, 1,
+		[Define to 1 if you don't have the fd_set typedef.])
+  fi
 fi
-AC_MSG_RESULT($gimp_ok)
-if test $gimp_ok = no; then
-    AC_DEFINE(NO_FD_SET, 1,
-              [Define to 1 if you don't have the fd_set function.])
-fi
-
 
 #############################
 # Threads and multi processor 

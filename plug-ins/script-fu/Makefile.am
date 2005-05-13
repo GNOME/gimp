@@ -11,7 +11,7 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 mwindows = -mwindows
-WINSOCK_LIBS = -lwsock32
+WINSOCK_LIBS = -lws2_32
 endif
 
 AM_LDFLAGS = $(mwindows)

@@ -1,3 +1,24 @@
+2005-05-13  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Don't bother looking for fd_set on Win32, we won't
+	find it in sys/types.h or (the nonexistent) sys/select.h
+	anyway. (It's in winsock2.h.)
+
+	* plug-ins/common/xpm.c: Include gdkconfig.h for GDK_WINDOWING_WIN32.
+
+	* plug-ins/script-fu/script-fu-server.c: Give it a chance to work
+	on Win32 by covering for the differences between the WinSock and
+	Unix socket APIs. Use recv() and send() instead of read() and
+	write() on sockets. On Win32, use closesocket() for sockets
+	instead of close(). Don't use perror() or look at errno after
+	socket API errors on Win32. No EINTR failure mode with WinSock 2.
+	(print_socket_api_error): New function. On Unix, just call
+	perror(). On Win32, call WSAGetLastError() and produce an
+	appropriate error message on stderr.
+
+	* plug-ins/script-fu/Makefile.am (WINSOCK_LIBS): Link with the
+	winsock2 library, as we compile with the winsock2 header.
+
 2005-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/gtkrc
