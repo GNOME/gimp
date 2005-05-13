@@ -164,10 +164,4 @@ const guint8 * procedural_db_get_data      (Gimp                *gimp,
                                             gint32              *bytes);
 
 
-/* "type" should really be a GimpPDBArgType, but we can cope with
- *  out-of-range values.
- */
-const gchar  * pdb_type_name (gint type); /* really exists in _cmds.c file */
-
-
 #endif  /*  __PROCEDURAL_DB_H__  */

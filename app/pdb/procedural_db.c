@@ -50,6 +50,13 @@ struct _PDBData
 };
 
 
+/*  local function prototypes  */
+
+gchar * procedural_db_type_name (GimpPDBArgType type);
+
+
+/*  public functions  */
+
 void
 procedural_db_init (Gimp *gimp)
 {
@@ -272,11 +279,18 @@ procedural_db_execute (Gimp         *gimp,
         {
           if (args[i].arg_type != procedure->args[i].arg_type)
             {
+              gchar *expected;
+              gchar *got;
+
+              expected = procedural_db_type_name (procedure->args[i].arg_type);
+              got      = procedural_db_type_name (args[i].arg_type);
+
               g_message (_("PDB calling error for procedure '%s':\n"
                            "Argument #%d type mismatch (expected %s, got %s)"),
-                         procedure->name, i + 1,
-                         pdb_type_name (procedure->args[i].arg_type),
-                         pdb_type_name (args[i].arg_type));
+                         procedure->name, i + 1, expected, got);
+
+              g_free (expected);
+              g_free (got);
 
               return_args = g_new (Argument, 1);
               return_args->arg_type      = GIMP_PDB_STATUS;
@@ -384,12 +398,20 @@ procedural_db_run_proc (Gimp         *gimp,
 
       if (proc->args[i].arg_type != params[i].arg_type)
         {
-          g_message (_("PDB calling error for procedure '%s':\n"
-                       "Argument #%d type mismatch (expected %s, got %s)"),
-                     proc->name, i + 1,
-                     pdb_type_name (proc->args[i].arg_type),
-                     pdb_type_name (params[i].arg_type));
+          gchar *expected;
+          gchar *got;
+
+          expected = procedural_db_type_name (proc->args[i].arg_type);
+          got      = procedural_db_type_name (params[i].arg_type);
+
           g_free (params);
+
+         g_message (_("PDB calling error for procedure '%s':\n"
+                       "Argument #%d type mismatch (expected %s, got %s)"),
+                    proc->name, i + 1, expected, got);
+
+          g_free (expected);
+          g_free (got);
 
           *nreturn_vals = 0;
           return NULL;
@@ -641,4 +663,21 @@ procedural_db_get_data (Gimp        *gimp,
     }
 
   return NULL;
+}
+
+
+/*  private functions  */
+
+gchar *
+procedural_db_type_name (GimpPDBArgType type)
+{
+  const gchar *name;
+
+  if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, type,
+                             &name, NULL, NULL, NULL))
+    {
+      return  g_strdup_printf ("(PDB type %d unknown)", type);
+    }
+
+  return g_strdup (name);
 }

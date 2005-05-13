@@ -1,3 +1,16 @@
+2005-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.h
+	* tools/pdbgen/pdb/procedural_db.pdb: removed pdb_type_name()
+	uglyness.
+
+	* app/pdb/procedural_db.c: add private function
+	procedural_db_type_name() instead which uses gimp_enum_get_value()
+	and always returns a newly allocated string. Use it for the error
+	messages.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2005-05-13  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/dbbrowser/gimpprocbrowser.c

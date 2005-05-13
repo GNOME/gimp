@@ -317,21 +317,6 @@ procedural_db_print_entry (gpointer key,
   g_string_free (buf, TRUE);
 }
 
-/* This really doesn't belong here, but it depends on our generated type_str
- * array.
- */
-const char *
-pdb_type_name (gint type)
-{
-  if (type >= 0 && type <= GIMP_PDB_END)
-    return type_str[type];
-  else
-    return g_strdup_printf ("(PDB type %d unknown)", type);
-   /* Yeah, we leak the memory.  But then you shouldn't try and
-    * get the name of a PDB type that doesn't exist, should you.
-    */
-}
-
 static Argument *
 procedural_db_temp_name_invoker (Gimp         *gimp,
                                  GimpContext  *context,
