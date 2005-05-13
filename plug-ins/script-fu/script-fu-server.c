@@ -26,7 +26,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
-#include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
 
@@ -34,14 +33,14 @@
 #include <winsock2.h>
 #else
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#endif
-
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif /* HAVE_SYS_SELECT_H */
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <errno.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -53,6 +52,11 @@
 #include "siod-wrapper.h"
 #include "script-fu-server.h"
 
+#ifdef G_OS_WIN32
+#define CLOSESOCKET(fd) closesocket(fd)
+#else
+#define CLOSESOCKET(fd) close(fd)
+#endif
 
 #define COMMAND_HEADER  3
 #define RESPONSE_HEADER 4
@@ -93,7 +97,7 @@
 #define CMD_LEN_H_BYTE  1
 #define CMD_LEN_L_BYTE  2
 
-#define ERROR           1
+#define ERROR_BYTE      1
 #define RSP_LEN_H_BYTE  2
 #define RSP_LEN_L_BYTE  3
 
@@ -136,7 +140,7 @@ static gboolean  server_interface   (void);
 static void      response_callback  (GtkWidget   *widget,
                                      gint         response_id,
 				     gpointer     data);
-
+static void      print_socket_api_error (const gchar *api_name);
 
 /*
  *  Local variables
@@ -248,7 +252,7 @@ script_fu_server_read_fd (gpointer key,
 
           server_log ("Server: disconnect from host %s.\n", (gchar *) value);
 
-          close (fd);
+          CLOSESOCKET (fd);
 
           /*  Invalidate the file descriptor for pending commands
               from the disconnected client.  */
@@ -291,7 +295,7 @@ script_fu_server_listen (gint timeout)
 
   if (select (FD_SETSIZE, &fds, NULL, NULL, tvp) < 0)
     {
-      perror ("select");
+      print_socket_api_error ("select");
       return;
     }
 
@@ -307,7 +311,7 @@ script_fu_server_listen (gint timeout)
 
       if (new < 0)
         {
-          perror ("accept");
+          print_socket_api_error ("accept");
           return;
         }
 
@@ -335,7 +339,7 @@ server_start (gint         port,
 
   if (listen (server_sock, 5) < 0)
     {
-      perror ("listen");
+      print_socket_api_error ("listen");
       return;
     }
 
@@ -415,24 +419,24 @@ execute_command (SFCommand *cmd)
     }
 
   buffer[MAGIC_BYTE]     = MAGIC;
-  buffer[ERROR]          = error ? TRUE : FALSE;
+  buffer[ERROR_BYTE]     = error ? TRUE : FALSE;
   buffer[RSP_LEN_H_BYTE] = (guchar) (response_len >> 8);
   buffer[RSP_LEN_L_BYTE] = (guchar) (response_len & 0xFF);
 
   /*  Write the response to the client  */
   for (i = 0; i < RESPONSE_HEADER; i++)
-    if (cmd->filedes > 0 && write (cmd->filedes, buffer + i, 1) < 0)
+    if (cmd->filedes > 0 && send (cmd->filedes, buffer + i, 1, 0) < 0)
       {
 	/*  Write error  */
-	perror ("write");
+	print_socket_api_error ("send");
 	return FALSE;
       }
 
   for (i = 0; i < response_len; i++)
-    if (cmd->filedes > 0 && write (cmd->filedes, response + i, 1) < 0)
+    if (cmd->filedes > 0 && send (cmd->filedes, response + i, 1, 0) < 0)
       {
 	/*  Write error  */
-	perror ("write");
+	print_socket_api_error ("send");
 	return FALSE;
       }
 
@@ -453,13 +457,14 @@ read_from_client (gint filedes)
 
   for (i = 0; i < COMMAND_HEADER;)
     {
-      nbytes = read (filedes, buffer + i, COMMAND_HEADER - i);
+      nbytes = recv (filedes, buffer + i, COMMAND_HEADER - i, 0);
 
       if (nbytes < 0)
         {
+#ifndef G_OS_WIN32
           if (errno == EINTR)
             continue;
-
+#endif
           server_log ("Error reading command header.\n");
           return -1;
         }
@@ -481,13 +486,14 @@ read_from_client (gint filedes)
 
   for (i = 0; i < command_len;)
     {
-      nbytes = read (filedes, command + i, command_len - i);
+      nbytes = recv (filedes, command + i, command_len - i, 0);
 
       if (nbytes <= 0)
         {
+#ifndef G_OS_WIN32
           if (nbytes < 0 && errno == EINTR)
             continue;
-
+#endif
            server_log ("Error reading command.  Read %d out of %d bytes.\n",
                        i, command_len);
            g_free (command);
@@ -542,7 +548,7 @@ make_socket (guint port)
         }
       else
         {
-          perror ("Can't initialize the Winsock DLL");
+          print_socket_api_error ("WSAStartup");
           gimp_quit ();
         }
     }
@@ -552,7 +558,7 @@ make_socket (guint port)
   sock = socket (PF_INET, SOCK_STREAM, 0);
   if (sock < 0)
     {
-      perror ("socket");
+      print_socket_api_error ("socket");
       gimp_quit ();
     }
 
@@ -565,7 +571,7 @@ make_socket (guint port)
 
   if (bind (sock, (struct sockaddr *) &name, sizeof (name)) < 0)
     {
-      perror ("bind");
+      print_socket_api_error ("bind");
       gimp_quit ();
     }
 
@@ -601,7 +607,7 @@ script_fu_server_shutdown_fd (gpointer key,
 static void
 server_quit (void)
 {
-  close (server_sock);
+  CLOSESOCKET (server_sock);
 
   if (clients)
     {
@@ -699,4 +705,182 @@ response_callback (GtkWidget *widget,
     }
 
   gtk_widget_destroy (widget);
+}
+
+static void
+print_socket_api_error (const gchar *api_name)
+{
+#ifdef G_OS_WIN32
+  /* Yes, this functionality really belongs to GLib. */
+  const gchar *emsg;
+  gchar unk[100];
+  int number = WSAGetLastError ();
+
+  switch (number)
+    {
+    case WSAEINTR:
+      emsg = "Interrupted function call";
+      break;
+    case WSAEACCES:
+      emsg = "Permission denied";
+      break;
+    case WSAEFAULT:
+      emsg = "Bad address";
+      break;
+    case WSAEINVAL:
+      emsg = "Invalid argument";
+      break;
+    case WSAEMFILE:
+      emsg = "Too many open sockets";
+      break;
+    case WSAEWOULDBLOCK:
+      emsg = "Resource temporarily unavailable";
+      break;
+    case WSAEINPROGRESS:
+      emsg = "Operation now in progress";
+      break;
+    case WSAEALREADY:
+      emsg = "Operation already in progress";
+      break;
+    case WSAENOTSOCK:
+      emsg = "Socket operation on nonsocket";
+      break;
+    case WSAEDESTADDRREQ:
+      emsg = "Destination address required";
+      break;
+    case WSAEMSGSIZE:
+      emsg = "Message too long";
+      break;
+    case WSAEPROTOTYPE:
+      emsg = "Protocol wrong type for socket";
+      break;
+    case WSAENOPROTOOPT:
+      emsg = "Bad protocol option";
+      break;
+    case WSAEPROTONOSUPPORT:
+      emsg = "Protocol not supported";
+      break;
+    case WSAESOCKTNOSUPPORT:
+      emsg = "Socket type not supported";
+      break;
+    case WSAEOPNOTSUPP:
+      emsg = "Operation not supported on transport endpoint";
+      break;
+    case WSAEPFNOSUPPORT:
+      emsg = "Protocol family not supported";
+      break;
+    case WSAEAFNOSUPPORT:
+      emsg = "Address family not supported by protocol family";
+      break;
+    case WSAEADDRINUSE:
+      emsg = "Address already in use";
+      break;
+    case WSAEADDRNOTAVAIL:
+      emsg = "Address not available";
+      break;
+    case WSAENETDOWN:
+      emsg = "Network interface is not configured";
+      break;
+    case WSAENETUNREACH:
+      emsg = "Network is unreachable";
+      break;
+    case WSAENETRESET:
+      emsg = "Network dropped connection on reset";
+      break;
+    case WSAECONNABORTED:
+      emsg = "Software caused connection abort";
+      break;
+    case WSAECONNRESET:
+      emsg = "Connection reset by peer";
+      break;
+    case WSAENOBUFS:
+      emsg = "No buffer space available";
+      break;
+    case WSAEISCONN:
+      emsg = "Socket is already connected";
+      break;
+    case WSAENOTCONN:
+      emsg = "Socket is not connected";
+      break;
+    case WSAESHUTDOWN:
+      emsg = "Can't send after socket shutdown";
+      break;
+    case WSAETIMEDOUT:
+      emsg = "Connection timed out";
+      break;
+    case WSAECONNREFUSED:
+      emsg = "Connection refused";
+      break;
+    case WSAEHOSTDOWN:
+      emsg = "Host is down";
+      break;
+    case WSAEHOSTUNREACH:
+      emsg = "Host is unreachable";
+      break;
+    case WSAEPROCLIM:
+      emsg = "Too many processes";
+      break;
+    case WSASYSNOTREADY:
+      emsg = "Network subsystem is unavailable";
+      break;
+    case WSAVERNOTSUPPORTED:
+      emsg = "Winsock.dll version out of range";
+      break;
+    case WSANOTINITIALISED:
+      emsg = "Successful WSAStartup not yet performed";
+      break;
+    case WSAEDISCON:
+      emsg = "Graceful shutdown in progress";
+      break;
+    case WSATYPE_NOT_FOUND:
+      emsg = "Class type not found";
+      break;
+    case WSAHOST_NOT_FOUND:
+      emsg = "Host not found";
+      break;
+    case WSATRY_AGAIN:
+      emsg = "Nonauthoritative host not found";
+      break;
+    case WSANO_RECOVERY:
+      emsg = "This is a nonrecoverable error";
+      break;
+    case WSANO_DATA:
+      emsg = "Valid name, no data record of requested type";
+      break;
+    case WSA_INVALID_HANDLE:
+      emsg = "Specified event object handle is invalid";
+      break;
+    case WSA_INVALID_PARAMETER:
+      emsg = "One or more parameters are invalid";
+      break;
+    case WSA_IO_INCOMPLETE:
+      emsg = "Overlapped I/O event object not in signaled state";
+      break;
+    case WSA_NOT_ENOUGH_MEMORY:
+      emsg = "Insufficient memory available";
+      break;
+    case WSA_OPERATION_ABORTED:
+      emsg = "Overlapped operation aborted";
+      break;
+    case WSAEINVALIDPROCTABLE:
+      emsg = "Invalid procedure table from service provider";
+      break;
+    case WSAEINVALIDPROVIDER:
+      emsg = "Invalid service provider version number";
+      break;
+    case WSAEPROVIDERFAILEDINIT:
+      emsg = "Unable to initialize a service provider";
+      break;
+    case WSASYSCALLFAILURE:
+      emsg = "System call failure";
+      break;
+    default:
+      sprintf (unk, "Unknown WinSock error %d", number);
+      emsg = unk;
+      break;
+    }
+  fprintf (stderr, "%s failed: %s\n", api_name, emsg);
+#else
+  perror (api_name);
+#endif
 }

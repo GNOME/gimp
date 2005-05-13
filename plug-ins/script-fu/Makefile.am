@@ -9,7 +9,7 @@ libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
 
 if OS_WIN32
 mwindows = -mwindows
-WINSOCK_LIBS = -lwsock32
+WINSOCK_LIBS = -lws2_32
 endif
 
 AM_LDFLAGS = $(mwindows)
