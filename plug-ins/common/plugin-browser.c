@@ -65,14 +65,14 @@ typedef struct
 {
   GtkWidget   *dialog;
 
+  GtkWidget   *search_entry;
+  GtkWidget   *count_label;
+  GtkWidget   *proc_box;
+
   GtkTreeView *list_view;
   GtkTreeView *tree_view;
 
-  GtkWidget   *count_label;
-  GtkWidget   *search_entry;
-  GtkWidget   *proc_box;
-
-  gint         num_plugins;
+  guint        search_timeout_id;
 } PluginBrowser;
 
 typedef struct
@@ -99,6 +99,8 @@ static void   run        (const gchar      *name,
 static GtkWidget * browser_dialog_new             (void);
 static void        browser_dialog_response        (GtkWidget        *widget,
                                                    gint              response_id,
+                                                   PluginBrowser    *browser);
+static void        browser_entry_changed          (GtkEditable      *editable,
                                                    PluginBrowser    *browser);
 static void        browser_list_selection_changed (GtkTreeSelection *selection,
                                                    PluginBrowser    *browser);
@@ -373,20 +375,15 @@ insert_into_tree_view (PluginBrowser *browser,
 }
 
 static void
-get_plugin_info (PluginBrowser *browser,
-                 const gchar   *search_text)
+browser_search (PluginBrowser *browser,
+                const gchar   *search_text)
 {
   GimpParam    *return_vals;
   gint          nreturn_vals;
-  gchar       **menu_strs;
-  gchar       **accel_strs;
-  gchar       **prog_strs;
-  gchar       **types_strs;
-  gchar       **realname_strs;
-  gint         *time_ints;
+  gint          num_plugins;
+  gchar        *str;
   GtkListStore *list_store;
   GtkTreeStore *tree_store;
-  GtkTreeIter   iter;
 
   if (! search_text)
     search_text = "";
@@ -400,34 +397,44 @@ get_plugin_info (PluginBrowser *browser,
                                     GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    num_plugins = return_vals[1].data.d_int32;
+  else
+    num_plugins = 0;
+
+  if (num_plugins == 1)
+    str = g_strdup (_("1 Plug-In Interface"));
+  else
+    str = g_strdup_printf (_("%d Plug-In Interfaces"), num_plugins);
+
+  gtk_label_set_text (GTK_LABEL (browser->count_label), str);
+  g_free (str);
+
+  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (browser->list_view));
+  gtk_list_store_clear (list_store);
+
+  tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
+  gtk_tree_store_clear (tree_store);
+
+  if (num_plugins > 0)
     {
-      gchar *str;
-      gint   loop;
+      GtkTreeSelection  *sel;
+      GtkTreeIter        iter;
+      gchar            **menu_strs;
+      gchar            **accel_strs;
+      gchar            **prog_strs;
+      gchar            **types_strs;
+      gchar            **realname_strs;
+      gint              *time_ints;
+      gint               i;
 
-      browser->num_plugins = return_vals[1].data.d_int32;
-      menu_strs            = return_vals[2].data.d_stringarray;
-      accel_strs           = return_vals[4].data.d_stringarray;
-      prog_strs            = return_vals[6].data.d_stringarray;
-      types_strs           = return_vals[8].data.d_stringarray;
-      time_ints            = return_vals[10].data.d_int32array;
-      realname_strs        = return_vals[12].data.d_stringarray;
+      menu_strs     = return_vals[2].data.d_stringarray;
+      accel_strs    = return_vals[4].data.d_stringarray;
+      prog_strs     = return_vals[6].data.d_stringarray;
+      types_strs    = return_vals[8].data.d_stringarray;
+      time_ints     = return_vals[10].data.d_int32array;
+      realname_strs = return_vals[12].data.d_stringarray;
 
-      if (browser->num_plugins == 1)
-        str = g_strdup (_("1 Plug-In Interface"));
-      else
-        str = g_strdup_printf (_("%d Plug-In Interfaces"),
-                               browser->num_plugins);
-
-      gtk_label_set_text (GTK_LABEL (browser->count_label), str);
-      g_free (str);
-
-      list_store = GTK_LIST_STORE (gtk_tree_view_get_model (browser->list_view));
-      gtk_list_store_clear (list_store);
-
-      tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
-      gtk_tree_store_clear (tree_store);
-
-      for (loop = 0; loop < return_vals[1].data.d_int32; loop++)
+      for (i = 0; i < num_plugins; i++)
         {
           PInfo     *pinfo;
           gchar     *name;
@@ -436,16 +443,14 @@ get_plugin_info (PluginBrowser *browser,
           time_t     tx;
           int        ret;
 
-          name = strrchr (menu_strs[loop], '/');
+          name = strrchr (menu_strs[i], '/');
 
           if (name)
             name = name + 1;
           else
-            name = menu_strs[loop];
+            name = menu_strs[i];
 
-          pinfo = g_new0 (PInfo, 1);
-
-          tx = time_ints[loop];
+          tx = time_ints[i];
           if (tx)
             {
               const gchar *format = "%c";  /* gcc workaround to avoid warning */
@@ -463,21 +468,25 @@ get_plugin_info (PluginBrowser *browser,
                 }
             }
           else
-            strcpy (xtimestr,"");
+            {
+              strcpy (xtimestr, "");
+            }
 
-          pinfo->menu     = g_strdup (menu_strs[loop]);
-          pinfo->accel    = g_strdup (accel_strs[loop]);
-          pinfo->prog     = g_strdup (prog_strs[loop]);
-          pinfo->types    = g_strdup (types_strs[loop]);
-          pinfo->instime  = time_ints[loop];
-          pinfo->realname = g_strdup (realname_strs[loop]);
+          pinfo = g_new0 (PInfo, 1);
+
+          pinfo->menu     = g_strdup (menu_strs[i]);
+          pinfo->accel    = g_strdup (accel_strs[i]);
+          pinfo->prog     = g_strdup (prog_strs[i]);
+          pinfo->types    = g_strdup (types_strs[i]);
+          pinfo->instime  = time_ints[i];
+          pinfo->realname = g_strdup (realname_strs[i]);
 
           gtk_list_store_append (list_store, &iter);
           gtk_list_store_set (list_store, &iter,
                               LIST_NAME_COLUMN,        name,
                               LIST_DATE_COLUMN,        xtimestr,
-                              LIST_PATH_COLUMN,        menu_strs[loop],
-                              LIST_IMAGE_TYPES_COLUMN, types_strs[loop],
+                              LIST_PATH_COLUMN,        menu_strs[i],
+                              LIST_IMAGE_TYPES_COLUMN, types_strs[i],
                               LIST_PINFO_COLUMN,       pinfo,
                               -1);
 
@@ -485,8 +494,8 @@ get_plugin_info (PluginBrowser *browser,
           insert_into_tree_view (browser,
                                  name,
                                  xtimestr,
-                                 menu_strs[loop],
-                                 types_strs[loop],
+                                 menu_strs[i],
+                                 types_strs[i],
                                  pinfo);
         }
 
@@ -500,22 +509,32 @@ get_plugin_info (PluginBrowser *browser,
                                             TREE_PATH_NAME_COLUMN,
                                             GTK_SORT_ASCENDING);
 
-      if (browser->num_plugins)
-        {
-          GtkTreeSelection *sel =
-            gtk_tree_view_get_selection (GTK_TREE_VIEW (browser->list_view));
+      sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (browser->list_view));
 
-          gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store),
-                                         &iter);
-          gtk_tree_selection_select_iter (sel, &iter);
-        }
-      else
-        {
-          gimp_proc_box_show_message (browser->proc_box, _("No matches"));
-        }
+      gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store),
+                                     &iter);
+      gtk_tree_selection_select_iter (sel, &iter);
+    }
+  else
+    {
+      gimp_proc_box_show_message (browser->proc_box, _("No matches"));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+static gboolean
+browser_search_timeout (gpointer data)
+{
+  PluginBrowser *browser     = data;
+  const gchar   *search_text = NULL;
+
+  search_text = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
+  browser_search (browser, search_text);
+
+  browser->search_timeout_id = 0;
+
+  return FALSE;
 }
 
 static GtkWidget *
@@ -537,16 +556,14 @@ browser_dialog_new (void)
 
   browser = g_new0 (PluginBrowser, 1);
 
-  /* the dialog box */
-  browser->dialog =
-    gimp_dialog_new (_("Plug-In Browser"), "plugindetails",
-                     NULL, 0,
-                     gimp_standard_help_func, "plug-in-plug-in-details",
+  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), "plugindetails",
+                                     NULL, 0,
+                                     gimp_standard_help_func,
+                                     "plug-in-plug-in-details",
 
-                     _("Search by _Name"), GTK_RESPONSE_OK,
-                     GTK_STOCK_CLOSE,      GTK_RESPONSE_CLOSE,
+                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-                     NULL);
+                                     NULL);
 
   g_signal_connect (browser->dialog, "response",
                     G_CALLBACK (browser_dialog_response),
@@ -566,10 +583,25 @@ browser_dialog_new (void)
   gtk_paned_pack1 (GTK_PANED (paned), vbox, FALSE, TRUE);
   gtk_widget_show (vbox);
 
-  browser->count_label = gtk_label_new ("0 Plug-In Interfaces");
-  gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), browser->count_label, FALSE, FALSE, 0);
-  gtk_widget_show (browser->count_label);
+  /* search entry */
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("_Search:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  browser->search_entry = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), browser->search_entry, TRUE, TRUE, 0);
+  gtk_widget_show (browser->search_entry);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), browser->search_entry);
+
+  g_signal_connect (browser->search_entry, "changed",
+                    G_CALLBACK (browser_entry_changed),
+                    browser);
 
   /* left = notebook */
 
@@ -707,22 +739,12 @@ browser_dialog_new (void)
   gtk_widget_show (swindow);
   gtk_widget_show (notebook);
 
-  /* search entry & details button */
+  /* number of matches */
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Search:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  browser->search_entry = gtk_entry_new ();
-  gtk_entry_set_activates_default (GTK_ENTRY (browser->search_entry), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), browser->search_entry, TRUE, TRUE, 0);
-  gtk_widget_show (browser->search_entry);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), browser->search_entry);
+  browser->count_label = gtk_label_new ("0 Plug-In Interfaces");
+  gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), browser->count_label, FALSE, FALSE, 0);
+  gtk_widget_show (browser->count_label);
 
   /* right = description */
 
@@ -733,7 +755,7 @@ browser_dialog_new (void)
   gtk_widget_show (browser->proc_box);
 
   /* now build the list */
-  browser_dialog_response (NULL, GTK_RESPONSE_OK, browser);
+  browser_search (browser, NULL);
 
   gtk_widget_show (browser->dialog);
 
@@ -751,20 +773,19 @@ browser_dialog_response (GtkWidget     *widget,
                          gint           response_id,
                          PluginBrowser *browser)
 {
-  const gchar *search_text = NULL;
+  gtk_widget_destroy (browser->dialog);
+  gtk_main_quit ();
+}
 
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      search_text = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
-      get_plugin_info (browser, search_text);
-      break;
+static void
+browser_entry_changed (GtkEditable   *editable,
+                       PluginBrowser *browser)
+{
+  if (browser->search_timeout_id)
+    g_source_remove (browser->search_timeout_id);
 
-    default:
-      gtk_widget_destroy (browser->dialog);
-      gtk_main_quit ();
-      break;
-    }
+  browser->search_timeout_id =
+    g_timeout_add (100, browser_search_timeout, browser);
 }
 
 static void

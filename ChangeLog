@@ -1,3 +1,10 @@
+2005-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: implement typeahead search
+	and get rid of the search buttons in the action area. Cleaned up
+	dialog layout and code. Fixes bug #301287.
+
 2005-05-13  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Don't bother looking for fd_set on Win32, we won't
