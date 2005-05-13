@@ -1,5 +1,12 @@
 2005-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: s/GimpImageDock/GimpMenuDock/ (Renaming this
+	widget apparently was an incompatible change, gtkrc-wise, but I
+	think we can live with that...).
+
+2005-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-ins-query.c (plug_ins_query): don't crash on
 	invalid regular expressions.
 
