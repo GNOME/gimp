@@ -1,3 +1,14 @@
+2005-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/Makefile.am
+	* app/pdb/procedural-db-query.[ch]: new files containing all the
+	evil string matching and DB dump code.
+
+	* tools/pdbgen/pdb/procedural_db.pdb: removed the evilness here
+	and use the new functions.
+
+	* app/pdb/procedural_db_cmds.c: regenerated.
+
 2005-05-14  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-generic.c:

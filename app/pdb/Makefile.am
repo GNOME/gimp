@@ -7,6 +7,8 @@ libapppdb_a_SOURCES = \
 	pdb_glue.h			\
 	procedural_db.c			\
 	procedural_db.h			\
+	procedural-db-query.c		\
+	procedural-db-query.h		\
 	\
 	internal_procs.c		\
 	internal_procs.h		\
