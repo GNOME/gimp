@@ -748,10 +748,10 @@ gimp_pdb_proc_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_INTERNAL, "GIMP_INTERNAL", NULL },
-    { GIMP_PLUGIN, "GIMP_PLUGIN", NULL },
-    { GIMP_EXTENSION, "GIMP_EXTENSION", NULL },
-    { GIMP_TEMPORARY, "GIMP_TEMPORARY", NULL },
+    { GIMP_INTERNAL, N_("Internal GIMP procedure"), NULL },
+    { GIMP_PLUGIN, N_("GIMP Plug-In"), NULL },
+    { GIMP_EXTENSION, N_("GIMP Extension"), NULL },
+    { GIMP_TEMPORARY, N_("Temporary Procedure"), NULL },
     { 0, NULL, NULL }
   };
 

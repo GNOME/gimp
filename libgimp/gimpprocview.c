@@ -39,13 +39,11 @@
 
 /*  local function prototypes  */
 
-static GtkWidget   * gimp_proc_view_create_params (GimpParamDef    *params,
-                                                   gint             n_params,
-                                                   GtkSizeGroup    *name_group,
-                                                   GtkSizeGroup    *type_group,
-                                                   GtkSizeGroup    *desc_group);
-static const gchar * GimpPDBArgType_to_string     (GimpPDBArgType   type);
-static const gchar * GimpPDBProcType_to_string    (GimpPDBProcType  type);
+static GtkWidget * gimp_proc_view_create_params (GimpParamDef *params,
+                                                 gint          n_params,
+                                                 GtkSizeGroup *name_group,
+                                                 GtkSizeGroup *type_group,
+                                                 GtkSizeGroup *desc_group);
 
 
 /*  public functions  */
@@ -72,6 +70,7 @@ gimp_proc_view_new (const gchar     *name,
   GtkSizeGroup *name_group;
   GtkSizeGroup *type_group;
   GtkSizeGroup *desc_group;
+  const gchar  *type_str;
   gint          row;
 
   if (blurb     && strlen (blurb) < 2)     blurb     = NULL;
@@ -97,7 +96,11 @@ gimp_proc_view_new (const gchar     *name,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new (GimpPDBProcType_to_string (type));
+  if (! gimp_enum_get_value (GIMP_TYPE_PDB_PROC_TYPE, type,
+                             NULL, NULL, &type_str, NULL))
+    type_str = "UNKNOWN";
+
+  label = gtk_label_new (type_str);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
@@ -240,10 +243,8 @@ gimp_proc_view_create_params (GimpParamDef *params,
                               GtkSizeGroup *type_group,
                               GtkSizeGroup *desc_group)
 {
-  GtkWidget   *table;
-  GtkWidget   *label;
-  const gchar *type;
-  gint         i;
+  GtkWidget *table;
+  gint       i;
 
   table = gtk_table_new (n_params, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -251,6 +252,10 @@ gimp_proc_view_create_params (GimpParamDef *params,
 
   for (i = 0; i < n_params; i++)
     {
+      GtkWidget   *label;
+      const gchar *type;
+      gchar       *upper;
+
       /* name */
       label = gtk_label_new (params[i].name);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
@@ -260,8 +265,15 @@ gimp_proc_view_create_params (GimpParamDef *params,
       gtk_widget_show (label);
 
       /* type */
-      type = GimpPDBArgType_to_string (params[i].type);
-      label = gtk_label_new (type);
+      if (! gimp_enum_get_value (GIMP_TYPE_PDB_ARG_TYPE, params[i].type,
+                                 NULL, &type, NULL, NULL))
+        upper = g_strdup ("UNKNOWN");
+      else
+        upper = g_ascii_strup (type, -1);
+
+      label = gtk_label_new (upper);
+      g_free (upper);
+
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_FAMILY, "monospace",
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
@@ -284,49 +296,4 @@ gimp_proc_view_create_params (GimpParamDef *params,
     }
 
   return table;
-}
-
-static const gchar *
-GimpPDBArgType_to_string (GimpPDBArgType type)
-{
-  switch (type)
-    {
-    case GIMP_PDB_INT32:       return "INT32";
-    case GIMP_PDB_INT16:       return "INT16";
-    case GIMP_PDB_INT8:        return "INT8";
-    case GIMP_PDB_FLOAT:       return "FLOAT";
-    case GIMP_PDB_STRING:      return "STRING";
-    case GIMP_PDB_INT32ARRAY:  return "INT32ARRAY";
-    case GIMP_PDB_INT16ARRAY:  return "INT16ARRAY";
-    case GIMP_PDB_INT8ARRAY:   return "INT8ARRAY";
-    case GIMP_PDB_FLOATARRAY:  return "FLOATARRAY";
-    case GIMP_PDB_STRINGARRAY: return "STRINGARRAY";
-    case GIMP_PDB_COLOR:       return "COLOR";
-    case GIMP_PDB_REGION:      return "REGION";
-    case GIMP_PDB_DISPLAY:     return "DISPLAY";
-    case GIMP_PDB_IMAGE:       return "IMAGE";
-    case GIMP_PDB_LAYER:       return "LAYER";
-    case GIMP_PDB_CHANNEL:     return "CHANNEL";
-    case GIMP_PDB_DRAWABLE:    return "DRAWABLE";
-    case GIMP_PDB_SELECTION:   return "SELECTION";
-    case GIMP_PDB_BOUNDARY:    return "BOUNDARY";
-    case GIMP_PDB_PATH:        return "PATH";
-    case GIMP_PDB_PARASITE:    return "PARASITE";
-    case GIMP_PDB_STATUS:      return "STATUS";
-    case GIMP_PDB_END:         return "END";
-    default:                   return "UNKNOWN?";
-    }
-}
-
-static const gchar *
-GimpPDBProcType_to_string (GimpPDBProcType type)
-{
-  switch (type)
-    {
-    case GIMP_INTERNAL:  return _("Internal GIMP procedure");
-    case GIMP_PLUGIN:    return _("GIMP Plug-In");
-    case GIMP_EXTENSION: return _("GIMP Extension");
-    case GIMP_TEMPORARY: return _("Temporary Procedure");
-    default:             return "UNKNOWN";
-    }
 }

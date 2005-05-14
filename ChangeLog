@@ -1,3 +1,15 @@
+2005-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpbaseenums.[ch]: register descriptions for the
+	GimpPDBProcType enum.
+
+	* plug-ins/dbbrowser/gimpprocview.c
+	* tools/pdbgen/pdb/procedural_db.pdb: get rid of all selfmade
+	enum->string mapping. Get the strings from the GType system instead.
+
+	* app/pdb/procedural_db_cmds.c
+	* libgimp/gimpproceduraldb_pdb.c: regenerated.
+
 2005-05-13  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-sse2.c:

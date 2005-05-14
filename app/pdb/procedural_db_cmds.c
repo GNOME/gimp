@@ -22,15 +22,15 @@
 
 #include <glib/gstdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <glib-object.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "gimp-intl.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>
@@ -41,7 +41,6 @@
 #define COMPAT_BLURB "This procedure is deprecated! Use '%s' instead."
 
 
-/*  Query structure  */
 typedef struct _PDBQuery PDBQuery;
 
 struct _PDBQuery
@@ -75,40 +74,6 @@ struct _PDBStrings
   gchar    *date;
 };
 
-static gchar *proc_type_str[] =
-{
-  N_("Internal GIMP procedure"),
-  N_("GIMP Plug-In"),
-  N_("GIMP Extension"),
-  N_("Temporary Procedure")
-};
-
-static const gchar * const type_str[] =
-{
-  "GIMP_PDB_INT32",
-  "GIMP_PDB_INT16",
-  "GIMP_PDB_INT8",
-  "GIMP_PDB_FLOAT",
-  "GIMP_PDB_STRING",
-  "GIMP_PDB_INT32ARRAY",
-  "GIMP_PDB_INT16ARRAY",
-  "GIMP_PDB_INT8ARRAY",
-  "GIMP_PDB_FLOATARRAY",
-  "GIMP_PDB_STRINGARRAY",
-  "GIMP_PDB_COLOR",
-  "GIMP_PDB_REGION",
-  "GIMP_PDB_DISPLAY",
-  "GIMP_PDB_IMAGE",
-  "GIMP_PDB_LAYER",
-  "GIMP_PDB_CHANNEL",
-  "GIMP_PDB_DRAWABLE",
-  "GIMP_PDB_SELECTION",
-  "GIMP_PDB_BOUNDARY",
-  "GIMP_PDB_PATH",
-  "GIMP_PDB_PARASITE",
-  "GIMP_PDB_STATUS",
-  "GIMP_PDB_END"
-};
 
 static ProcRecord procedural_db_temp_name_proc;
 static ProcRecord procedural_db_dump_proc;
@@ -174,11 +139,13 @@ procedural_db_query_entry (gpointer key,
                            gpointer value,
                            gpointer user_data)
 {
-  PDBQuery    *pdb_query = user_data;
-  GList       *list;
-  ProcRecord  *proc;
-  const gchar *proc_name;
-  PDBStrings   strings;
+  PDBQuery     *pdb_query = user_data;
+  GList        *list;
+  ProcRecord   *proc;
+  const gchar  *proc_name;
+  PDBStrings    strings;
+  GEnumClass   *enum_class;
+  GimpEnumDesc *type_desc;
 
   proc_name = key;
 
@@ -194,14 +161,17 @@ procedural_db_query_entry (gpointer key,
 
   get_pdb_strings (&strings, proc, pdb_query->querying_compat);
 
+  enum_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
+  type_desc = gimp_enum_get_desc (enum_class, proc->proc_type);
+  g_type_class_unref  (enum_class);
+
   if (! match_strings (&pdb_query->name_regex,      proc_name)         &&
       ! match_strings (&pdb_query->blurb_regex,     strings.blurb)     &&
       ! match_strings (&pdb_query->help_regex,      strings.help)      &&
       ! match_strings (&pdb_query->author_regex,    strings.author)    &&
       ! match_strings (&pdb_query->copyright_regex, strings.copyright) &&
       ! match_strings (&pdb_query->date_regex,      strings.date)      &&
-      ! match_strings (&pdb_query->proc_type_regex,
-                       proc_type_str[(gint) proc->proc_type]))
+      ! match_strings (&pdb_query->proc_type_regex, type_desc->value_desc))
     {
       pdb_query->num_procs++;
       pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
@@ -253,6 +223,8 @@ procedural_db_print_entry (gpointer key,
                            gpointer user_data)
 {
   ProcRecord *procedure;
+  GEnumClass *arg_class;
+  GEnumClass *proc_class;
   GString    *buf;
   GList      *list;
   FILE       *file;
@@ -262,10 +234,16 @@ procedural_db_print_entry (gpointer key,
   list = (GList *) value;
   file = (FILE *) user_data;
 
+  arg_class  = g_type_class_ref (GIMP_TYPE_PDB_ARG_TYPE);
+  proc_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
+
   buf = g_string_new ("");
 
   while (list)
     {
+      GEnumValue   *arg_value;
+      GimpEnumDesc *type_desc;
+
       num++;
       procedure = (ProcRecord*) list->data;
       list = list->next;
@@ -280,20 +258,25 @@ procedural_db_print_entry (gpointer key,
       else
         output_string (file, procedure->name);
 
+      type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
+
       output_string (file, procedure->blurb);
       output_string (file, procedure->help);
       output_string (file, procedure->author);
       output_string (file, procedure->copyright);
       output_string (file, procedure->date);
-      output_string (file, proc_type_str[(int) procedure->proc_type]);
+      output_string (file, type_desc->value_desc);
 
       fprintf (file, "( ");
       for (i = 0; i < procedure->num_args; i++)
         {
           fprintf (file, "( ");
 
-          output_string (file, procedure->args[i].name );
-          output_string (file, type_str[procedure->args[i].arg_type]);
+          arg_value = g_enum_get_value (arg_class,
+                                        procedure->args[i].arg_type);
+
+          output_string (file, procedure->args[i].name);
+          output_string (file, arg_value->value_name);
           output_string (file, procedure->args[i].description);
 
           fprintf (file, " ) ");
@@ -304,8 +287,12 @@ procedural_db_print_entry (gpointer key,
       for (i = 0; i < procedure->num_values; i++)
         {
           fprintf (file, "( ");
-          output_string (file, procedure->values[i].name );
-          output_string (file, type_str[procedure->values[i].arg_type]);
+
+          arg_value = g_enum_get_value (arg_class,
+                                        procedure->values[i].arg_type);
+
+          output_string (file, procedure->values[i].name);
+          output_string (file, arg_value->value_name);
           output_string (file, procedure->values[i].description);
 
           fprintf (file, " ) ");
@@ -315,6 +302,9 @@ procedural_db_print_entry (gpointer key,
     }
 
   g_string_free (buf, TRUE);
+
+  g_type_class_unref (arg_class);
+  g_type_class_unref (proc_class);
 }
 
 static Argument *
@@ -557,7 +547,7 @@ static ProcArg procedural_db_query_inargs[] =
   {
     GIMP_PDB_STRING,
     "proc_type",
-    "The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension' }"
+    "The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-In', 'GIMP Extension', 'Temporary Procedure' }"
   }
 };
 

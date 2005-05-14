@@ -337,10 +337,10 @@ GType gimp_pdb_proc_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_INTERNAL,
-  GIMP_PLUGIN,
-  GIMP_EXTENSION,
-  GIMP_TEMPORARY
+  GIMP_INTERNAL,   /*< desc="Internal GIMP procedure" >*/
+  GIMP_PLUGIN,     /*< desc="GIMP Plug-In" >*/
+  GIMP_EXTENSION,  /*< desc="GIMP Extension" >*/
+  GIMP_TEMPORARY   /*< desc="Temporary Procedure" >*/
 } GimpPDBProcType;
 
 
