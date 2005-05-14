@@ -57,6 +57,9 @@ lib/gimpui.def
 lib/libgimpwidgets-@GIMP_API_VERSION@.dll.a
 lib/gimpwidgets-@GIMP_API_VERSION@.lib
 lib/gimpwidgets.def
+lib/pkgconfig/gimp-2.0.pc
+lib/pkgconfig/gimpui-2.0.pc
+lib/pkgconfig/gimpthumb-2.0.pc
 include/gimp-@GIMP_API_VERSION@
 man/man1/gimptool-@GIMP_TOOL_VERSION@.1
 EOF
