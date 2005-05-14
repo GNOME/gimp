@@ -1,3 +1,8 @@
+2005-05-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/gimpenums.py: reverted a change that I had
+	committed accidentally.
+
 2005-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]: register descriptions for the
