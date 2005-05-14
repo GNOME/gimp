@@ -89,8 +89,8 @@ gimp_composite_convert_any_any_any_generic (GimpCompositeContext *ctx)
 {
   int i;
   int j;
-  char *D = ctx->D;
-  char *A = ctx->A;
+  unsigned char *D = ctx->D;
+  unsigned char *A = ctx->A;
   int bpp_A = gimp_composite_pixel_bpp[ctx->pixelformat_A];
   int bpp_D = gimp_composite_pixel_bpp[ctx->pixelformat_D];
 
@@ -375,8 +375,8 @@ gimp_composite_hue_any_any_any_generic (GimpCompositeContext * ctx)
   guint bytes2 = gimp_composite_pixel_bpp[ctx->pixelformat_B];
   const guint has_alpha1 = HAS_ALPHA(bytes1);
   const guint has_alpha2 = HAS_ALPHA(bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   if (bytes1 > 2)
     {
@@ -443,8 +443,8 @@ gimp_composite_saturation_any_any_any_generic (GimpCompositeContext * ctx)
   guint bytes2 = gimp_composite_pixel_bpp[ctx->pixelformat_B];
   const guint has_alpha1 = HAS_ALPHA(bytes1);
   const guint has_alpha2 = HAS_ALPHA(bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   if (bytes1 > 2) {
     /*  assumes inputs are only 4 byte RGBA pixels  */
@@ -502,8 +502,8 @@ gimp_composite_value_any_any_any_generic (GimpCompositeContext * ctx)
   guint bytes2 = gimp_composite_pixel_bpp[ctx->pixelformat_B];
   const guint has_alpha1 = HAS_ALPHA(bytes1);
   const guint has_alpha2 = HAS_ALPHA(bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   if (bytes1 > 2) {
     /*  assumes inputs are only 4 byte RGBA pixels  */
@@ -562,8 +562,8 @@ gimp_composite_color_only_any_any_any_generic (GimpCompositeContext * ctx)
   guint bytes2 = gimp_composite_pixel_bpp[ctx->pixelformat_B];
   const guint has_alpha1 = HAS_ALPHA(bytes1);
   const guint has_alpha2 = HAS_ALPHA(bytes2);
-  guint r1, g1, b1;
-  guint r2, g2, b2;
+  gint r1, g1, b1;
+  gint r2, g2, b2;
 
   if (bytes1 > 2) {
     /*  assumes inputs are only 4 byte RGBA pixels  */

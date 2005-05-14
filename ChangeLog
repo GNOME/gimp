@@ -1,3 +1,12 @@
+2005-05-14  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-generic.c:
+	Fixed signedness problems is calls to gimp_rgb_to_hsv_int() and the like.
+	
+	* app/composite/gimp-composite-mmx.c:
+	Small fixes to register clobber lists.
+	Added gimp_composite_subtract_va8_va8_va8_mmx.
+
 2005-05-14  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.0 development release.

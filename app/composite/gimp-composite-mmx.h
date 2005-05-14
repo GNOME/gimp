@@ -13,7 +13,7 @@ extern gboolean gimp_composite_mmx_install (void);
 /*
  * Rummage through the compile-time environment to ensure this file
  * can actually be compiled like we expect it to.  If all is okay,
- * define the manifest constant COMPILE_IS_OKAY.
+ * define the manifest constant COMPILE_MMX_IS_OKAY.
  */
 #if !defined(__INTEL_COMPILER) || defined(USE_INTEL_COMPILER_ANYWAY)
 #if defined(USE_MMX)
@@ -57,5 +57,7 @@ extern void gimp_composite_swap_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *ctx
 extern void gimp_composite_valueonly_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *ctx);
 
 extern void gimp_composite_addition_va8_va8_va8_mmx (GimpCompositeContext *ctx);
+extern void gimp_composite_subtract_va8_va8_va8_mmx (GimpCompositeContext *ctx);
+/*extern void gimp_composite_multiply_va8_va8_va8_mmx (GimpCompositeContext *ctx);*/
 #endif /* COMPILE_IS_OKAY */
 #endif
