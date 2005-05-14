@@ -1,3 +1,9 @@
+2005-05-13  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-sse2.c:
+	Updated with proper register clobber lists.  Some code clean-up
+	(removing dead code, commented out code).
+
 2005-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/procedural_db.h

@@ -186,7 +186,7 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu      %%xmm2,%0\n"
                     : "=m" (*D)
                     : "m" (*A), "m" (*B)
-                    : "%xmm1", "%xmm2", "%xmm3", "%xmm4");
+                    : "%xmm2", "%xmm3");
       A++;
       B++;
       D++;
@@ -198,12 +198,13 @@ gimp_composite_darken_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
   for (; n_pixels >= 2; n_pixels -= 2)
     {
-      asm volatile ("  movq       %1, %%mm2\n"
-                    "\tpminub     %2, %%mm2\n"
-                    "\tmovntq  %%mm2, %0\n"
+      asm volatile ("  movq   %1,%%mm2\n"
+                    "\tmovq   %2,%%mm3\n"
+                    "\tpminub %%mm3,%%mm2\n"
+                    "\tmovntq %%mm2,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b)
-                    : "%mm1", "%mm2", "%mm3", "%mm4");
+                    : "%mm2", "%mm3");
       a++;
       b++;
       d++;
@@ -609,7 +610,6 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
    */
   for (; op.n_pixels >= 16; op.n_pixels -= 16)
     {
-#ifdef __OPTIMIZE__
       asm volatile ("  movdqu      %0,%%xmm0\n"
                     "\tmovdqu      %1,%%xmm1\n"
                     "\tmovdqu      %2,%%xmm2\n"
@@ -618,40 +618,11 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu      %5,%%xmm5\n"
                     "\tmovdqu      %6,%%xmm6\n"
                     "\tmovdqu      %7,%%xmm7\n"
-
-                    "\tmovdqu      %%xmm0,%1\n"
-                    "\tmovdqu      %%xmm1,%0\n"
-                    "\tmovdqu      %%xmm2,%3\n"
-                    "\tmovdqu      %%xmm3,%2\n"
-                    "\tmovdqu      %%xmm4,%5\n"
-                    "\tmovdqu      %%xmm5,%4\n"
-                    "\tmovdqu      %%xmm6,%7\n"
-                    "\tmovdqu      %%xmm7,%6\n"
-                    : "+m" (op.A[0]), "+m" (op.B[0]),
-                      "+m" (op.A[1]), "+m" (op.B[1]),
-                      "+m" (op.A[2]), "+m" (op.B[2]),
-                      "+m" (op.A[3]), "+m" (op.B[3])
-                    : /* empty */
-                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
-                    );
-#else
-      asm volatile ("  movdqu      %0,%%xmm0\n"
-                    "\tmovdqu      %1,%%xmm1\n"
-                    "\tmovdqu      %2,%%xmm2\n"
-                    "\tmovdqu      %3,%%xmm3\n"
-                    : "+m" (op.A[0]), "+m" (op.B[0]),
-                      "+m" (op.A[1]), "+m" (op.B[1])
-                    : /* empty */
-                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
-                    );
-
-      asm volatile ("\tmovdqu      %4,%%xmm4\n"
-                    "\tmovdqu      %5,%%xmm5\n"
-                    "\tmovdqu      %6,%%xmm6\n"
-                    "\tmovdqu      %7,%%xmm7\n"
-                    : "+m" (op.A[2]), "+m" (op.B[2]),
-                      "+m" (op.A[3]), "+m" (op.B[3])
-                    : /* empty */
+                    :
+                    : "m" (op.A[0]), "m" (op.B[0]),
+                      "m" (op.A[1]), "m" (op.B[1]),
+                      "m" (op.A[2]), "m" (op.B[2]),
+                      "m" (op.A[3]), "m" (op.B[3])
                     : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
                     );
 
@@ -659,22 +630,16 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovdqu      %%xmm1,%0\n"
                     "\tmovdqu      %%xmm2,%3\n"
                     "\tmovdqu      %%xmm3,%2\n"
-                    : "+m" (op.A[0]), "+m" (op.B[0]),
-                      "+m" (op.A[1]), "+m" (op.B[1])
-                    : /* empty */
-                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
-                    );
-
-      asm volatile ("\tmovdqu      %%xmm4,%5\n"
+                    "\tmovdqu      %%xmm4,%5\n"
                     "\tmovdqu      %%xmm5,%4\n"
                     "\tmovdqu      %%xmm6,%7\n"
                     "\tmovdqu      %%xmm7,%6\n"
-                    : "+m" (op.A[2]), "+m" (op.B[2]),
-                      "+m" (op.A[3]), "+m" (op.B[3])
+                    : "=m" (op.A[0]), "=m" (op.B[0]),
+                      "=m" (op.A[1]), "=m" (op.B[1]),
+                      "=m" (op.A[2]), "=m" (op.B[2]),
+                      "=m" (op.A[3]), "=m" (op.B[3])
                     : /* empty */
-                    : "%xmm0", "%xmm1", "%xmm2", "%xmm3", "%xmm4", "%xmm5", "%xmm6", "%xmm7"
                     );
-#endif
       op.A += 64;
       op.B += 64;
     }
@@ -714,7 +679,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
                     "\tmovd   %%mm2,%1\n"
                     : "+m" (*op.A), "+m" (*op.B)
                     : /* empty */
-                    : "%mm1", "%mm2", "%mm3", "%mm4");
+                    : "%mm3", "%mm4");
     }
 
   asm("emms");
