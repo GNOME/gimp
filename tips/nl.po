@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 18:35+0000\n"
+"POT-Creation-Date: 2005-05-14 17:18+0200\n"
 "PO-Revision-Date: 2005-04-10 00:13+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -100,6 +100,45 @@ msgstr ""
 "slepen."
 
 #: ../tips/gimp-tips.xml.in.h:10
+#, fuzzy
+msgid ""
+"GIMP allows you to undo most changes to the image, so feel free to "
+"experiment."
+msgstr ""
+"De GIMP kan de meeste wijzigingen aan de afbeelding ongedaan maken, dus wees "
+"vrij om te experimenteren."
+
+#: ../tips/gimp-tips.xml.in.h:11
+#, fuzzy
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"De GIMP ondersteunt instant gzipcompressie. Voeg <tt>.gz</tt> (of <tt>.bz2</"
+"tt> als u bzip2 hebt geïnstalleerd) aan de bestandsnaam toe en uw afbeelding "
+"zal gecomprimeerd worden opgeslagen. Uiteraard kunt u ook gecomprimeerde "
+"afbeeldingen openen."
+
+#: ../tips/gimp-tips.xml.in.h:12
+#, fuzzy
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"Gebruik lagen om structuur in uw afbeelding aan te brengen. U kunt lagen "
+"zien als een stapel dia's of filters, zodat u door ze heen kunt kijken om "
+"een totaalbeeld te krijgen."
+
+#: ../tips/gimp-tips.xml.in.h:13
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+msgstr ""
+
+#: ../tips/gimp-tips.xml.in.h:14
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -112,7 +151,7 @@ msgstr ""
 "kleurzwemen in de foto zitten, kunt u deze verwijderen met het gereedschap "
 "Curves (Laag-&gt;Kleuren-&gt;Curves)."
 
-#: ../tips/gimp-tips.xml.in.h:11
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -123,7 +162,7 @@ msgstr ""
 "in verloopstand gebruiken, maar bijvoorbeeld ook de gum of het "
 "smeergereedschap."
 
-#: ../tips/gimp-tips.xml.in.h:12
+#: ../tips/gimp-tips.xml.in.h:16
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -132,7 +171,7 @@ msgstr ""
 "<tt>Tab</tt> drukken om de gereedschapskist en andere dialoogvensters te "
 "verbergen."
 
-#: ../tips/gimp-tips.xml.in.h:13
+#: ../tips/gimp-tips.xml.in.h:17
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -142,7 +181,7 @@ msgstr ""
 "sommige gevallen zult u alle lagen moeten samenvoegen (Afbeelding/Pletten) "
 "om de plug-in op de hele afbeelding toe te passen."
 
-#: ../tips/gimp-tips.xml.in.h:14
+#: ../tips/gimp-tips.xml.in.h:18
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -156,7 +195,7 @@ msgstr ""
 "Alphakanaal toevoegen) of de lagen samen te voegen (Afbeelding-&gt;"
 "Afbeelding Pletten)."
 
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:19
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -166,47 +205,6 @@ msgstr ""
 "het selecteren de <tt>Shift</tt>-toets ingedrukt te houden. Door de "
 "<tt>Ctrl</tt>-toets ingedrukt te houden, trekt u de nieuwe van de bestaande "
 "selectie af."
-
-#: ../tips/gimp-tips.xml.in.h:16
-msgid ""
-"The GIMP can undo most changes to the image, so feel free to experiment."
-msgstr ""
-"De GIMP kan de meeste wijzigingen aan de afbeelding ongedaan maken, dus wees "
-"vrij om te experimenteren."
-
-#: ../tips/gimp-tips.xml.in.h:17
-msgid ""
-"The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
-"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
-"will be saved compressed. Of course loading compressed images works too."
-msgstr ""
-"De GIMP ondersteunt instant gzipcompressie. Voeg <tt>.gz</tt> (of <tt>.bz2</"
-"tt> als u bzip2 hebt geïnstalleerd) aan de bestandsnaam toe en uw afbeelding "
-"zal gecomprimeerd worden opgeslagen. Uiteraard kunt u ook gecomprimeerde "
-"afbeeldingen openen."
-
-#: ../tips/gimp-tips.xml.in.h:18
-msgid ""
-"The GIMP uses layers to let you organize your image. Think of them as a "
-"stack of slides or filters, such that looking through them you see a "
-"composite of their contents."
-msgstr ""
-"Gebruik lagen om structuur in uw afbeelding aan te brengen. U kunt lagen "
-"zien als een stapel dia's of filters, zodat u door ze heen kunt kijken om "
-"een totaalbeeld te krijgen."
-
-#: ../tips/gimp-tips.xml.in.h:19
-msgid ""
-"The layer named &quot;Background&quot; is special because it lacks "
-"transparency. This prevents you from moving the layer up in the stack. You "
-"may add transparency to it by right-clicking in the Layers dialog and "
-"selecting &quot;Add Alpha Channel&quot;."
-msgstr ""
-"De laag met de naam &quot;Achtergrond&quot; is een speciaal geval omdat het "
-"geen transparantie bezit. Hierdoor kunt u geen laagmasker toevoegen of deze "
-"laag hoger in de stapel plaatsen. U kunt transparantie toevoegen door met de "
-"rechtermuisknop te klikken in het dialoogvenster Lagen en dan het menu-item "
-"&quot;Alphakanaal toevoegen&quot; te selecteren."
 
 #: ../tips/gimp-tips.xml.in.h:20
 msgid ""
@@ -236,8 +234,9 @@ msgstr ""
 "hoeken van 15 graden beperkt blijven."
 
 #: ../tips/gimp-tips.xml.in.h:22
+#, fuzzy
 msgid ""
-"When you save an image to work on it again later, try using XCF, the GIMP's "
+"When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -287,8 +286,9 @@ msgstr ""
 "alleen die laag bevat."
 
 #: ../tips/gimp-tips.xml.in.h:27
+#, fuzzy
 msgid ""
-"You can drag and drop many things in the GIMP. For example, dragging a color "
+"You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
@@ -378,6 +378,18 @@ msgstr ""
 "Klik op de knop &quot;Snelmasker&quot; linksonder in het weergavevenster. "
 "Verander uw selectie door in de afbeelding te schilderen en klik opnieuw op "
 "de knop om terug te schakelen naar een normale selectie."
+
+#~ msgid ""
+#~ "The layer named &quot;Background&quot; is special because it lacks "
+#~ "transparency. This prevents you from moving the layer up in the stack. "
+#~ "You may add transparency to it by right-clicking in the Layers dialog and "
+#~ "selecting &quot;Add Alpha Channel&quot;."
+#~ msgstr ""
+#~ "De laag met de naam &quot;Achtergrond&quot; is een speciaal geval omdat "
+#~ "het geen transparantie bezit. Hierdoor kunt u geen laagmasker toevoegen "
+#~ "of deze laag hoger in de stapel plaatsen. U kunt transparantie toevoegen "
+#~ "door met de rechtermuisknop te klikken in het dialoogvenster Lagen en dan "
+#~ "het menu-item &quot;Alphakanaal toevoegen&quot; te selecteren."
 
 #~ msgid ""
 #~ "The file selection dialog box has command-line completion with <tt>Tab</"

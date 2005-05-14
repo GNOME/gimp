@@ -118,10 +118,6 @@
 # 
 # (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
-#   This is a colon-separated list of folders to search.
-# 
-# (font-path-writable "${gimp_dir}/fonts")
-
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
@@ -264,7 +260,8 @@
 # (color-management
 #     (mode display)
 #     (display-rendering-intent perceptual)
-#     (simulation-rendering-intent perceptual))
+#     (simulation-rendering-intent perceptual)
+#     (display-module "CdisplayLcms"))
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
@@ -440,6 +437,7 @@
 #     (show-layer-boundary yes)
 #     (show-guides yes)
 #     (show-grid no)
+#     (show-sample-points yes)
 #     (padding-mode default)
 #     (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
 
@@ -455,6 +453,7 @@
 #     (show-layer-boundary no)
 #     (show-guides no)
 #     (show-grid no)
+#     (show-sample-points no)
 #     (padding-mode custom)
 #     (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
 
@@ -478,11 +477,6 @@
 # 
 # (move-tool-changes-active no)
 
-# When enabled, the GIMP will use a different info window per image view. 
-# Possible values are yes and no.
-# 
-# (info-window-per-display no)
-
 # When enabled, the GIMP will not save if the image is unchanged since
 # opening it.  Possible values are yes and no.
 # 
@@ -502,6 +496,10 @@
 # values are yes and no.
 # 
 # (restore-session yes)
+
+# Save the tool options when the GIMP exits.  Possible values are yes and no.
+# 
+# (save-tool-options no)
 
 # Enable to display a handy GIMP tip on startup.  Possible values are yes and
 # no.
@@ -616,6 +614,13 @@
 # are normal, utility and keep-above.
 # 
 # (dock-window-hint normal)
+
+# When enabled, dock windows (the toolbox and palettes) are set to be
+# transient to the active image window. Most window managers will keep the
+# dock windows above the image window then, but it may also have other
+# effects.  Possible values are yes and no.
+# 
+# (transient-docks no)
 
 # Sets the pixel format of cursors the GIMP will use.  Possible values are
 # bitmap and pixbuf.

@@ -159,7 +159,6 @@ search.
 Where to look for fonts.  This is a colon-separated list of folders to search.
 
 .TP
-(font-path-writable "${gimp_dir}/fonts")
 
   This is a colon-separated list of folders to search.
 
@@ -325,7 +324,8 @@ system colors allocated for the GIMP.  This is an integer value.
 (color-management
     (mode display)
     (display-rendering-intent perceptual)
-    (simulation-rendering-intent perceptual))
+    (simulation-rendering-intent perceptual)
+    (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
 
@@ -574,6 +574,7 @@ large, extra-large, huge, enormous and gigantic.
     (show-layer-boundary yes)
     (show-guides yes)
     (show-grid no)
+    (show-sample-points yes)
     (padding-mode default)
     (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
 
@@ -589,6 +590,7 @@ Sets the default settings for the image view.  This is a parameter list.
     (show-layer-boundary no)
     (show-guides no)
     (show-grid no)
+    (show-sample-points no)
     (padding-mode custom)
     (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
 
@@ -619,10 +621,9 @@ path is being picked. This used to be the default behaviour in older versions.
  Possible values are yes and no.
 
 .TP
-(info-window-per-display no)
 
-When enabled, the GIMP will use a different info window per image view. 
-Possible values are yes and no.
+The info-window-per-display property has no description.  Possible values are
+yes and no.
 
 .TP
 (trust-dirty-flag no)
@@ -647,6 +648,11 @@ Possible values are yes and no.
 
 Let GIMP try to restore your last saved session on each startup.  Possible
 values are yes and no.
+
+.TP
+(save-tool-options no)
+
+Save the tool options when the GIMP exits.  Possible values are yes and no.
 
 .TP
 (show-tips yes)
@@ -781,6 +787,14 @@ normal, utility and keep-above.
 The window type hint that is set on dock windows. This may affect the way your
 window manager decorates and handles dock windows.  Possible values are
 normal, utility and keep-above.
+
+.TP
+(transient-docks no)
+
+When enabled, dock windows (the toolbox and palettes) are set to be transient
+to the active image window. Most window managers will keep the dock windows
+above the image window then, but it may also have other effects.  Possible
+values are yes and no.
 
 .TP
 (cursor-format pixbuf)
