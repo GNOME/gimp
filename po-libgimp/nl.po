@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-23 11:21+0000\n"
-"PO-Revision-Date: 2005-04-23 15:14+0200\n"
+"POT-Creation-Date: 2005-05-15 11:25+0000\n"
+"PO-Revision-Date: 2005-05-15 18:39+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -534,6 +534,22 @@ msgstr "Voorwaarts"
 #: ../libgimpbase/gimpbaseenums.c:650
 msgid "Backward"
 msgstr "Achterwaarts"
+
+#: ../libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Interne GIMP procedure"
+
+#: ../libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "GIMP Plug-in"
+
+#: ../libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "GIMP extensie"
+
+#: ../libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Tijdelijke procedure"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format

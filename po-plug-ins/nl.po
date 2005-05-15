@@ -1,19 +1,20 @@
 # Dutch translation of The GIMP's plug-in strings.
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Branko Collin <collin@xs4all.nl>, 2001-2004.
-# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+# Branko Collin <collin@xs4all.nl>, 2001, 2002, 2003, 2004.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005
 # -------------------------------------------------
-# bumpmap           bumpprojectie/bultprojectie
+# bumpmap           bumpprojectie/bultprojectie/bumpmap
 # hue               hue/kleurtoon
 # luminosity        helderheid
+# saturation        verzadiging
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-21 19:12+0000\n"
-"PO-Revision-Date: 2005-04-22 02:25+0200\n"
+"POT-Creation-Date: 2005-05-15 11:25+0000\n"
+"PO-Revision-Date: 2005-05-15 18:39+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
-"Language-Team: Dutch <vertaling@nl.linux.org>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -396,7 +397,7 @@ msgstr "Fractals"
 #: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
 #: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
 #: ../plug-ins/common/spheredesigner.c:2091 ../plug-ins/common/sunras.c:504
-#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1914
+#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
 #: ../plug-ins/gfig/gfig.c:786 ../plug-ins/gfli/gfli.c:710
@@ -434,7 +435,7 @@ msgstr "Sla fractalparameters op"
 #: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
 #: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1778
+#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
 #: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
@@ -446,7 +447,7 @@ msgstr "Sla fractalparameters op"
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
 #: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:127 ../plug-ins/xjt/xjt.c:2524
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1238,13 +1239,13 @@ msgstr "Foutieve kleurenkaart"
 #: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1784 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
-#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
+#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:341
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:510
+#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
 #: ../plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
@@ -1286,9 +1287,9 @@ msgstr "Aantal kleuren (%d) is niet ondersteund!"
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
 #: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
-#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:880
+#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
@@ -1297,6 +1298,11 @@ msgstr "Aantal kleuren (%d) is niet ondersteund!"
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Achtergrond"
+
+#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
+#: ../plug-ins/bmp/bmpread.c:706
+msgid "The bitmap ends unexpectedly."
+msgstr ""
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
 #: ../plug-ins/common/pcx.c:573
@@ -1319,8 +1325,8 @@ msgstr "Kan niet werken met onbekende afbeeldingstypen."
 #: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
-#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1920
-#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
+#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
+#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:622
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:978
@@ -1338,103 +1344,76 @@ msgid "_RLE encoded"
 msgstr "_RL-gecodeerd"
 
 #: ../plug-ins/common/AlienMap2.c:140
-#, fuzzy
 msgid "_Modify red channel"
-msgstr "Verander het _rood/kleurtoon-kanaal"
+msgstr "Het _rode kanaal aanpassen"
 
 #: ../plug-ins/common/AlienMap2.c:140
-#, fuzzy
 msgid "_Modify hue channel"
-msgstr "Verander het _rood/kleurtoon-kanaal"
+msgstr "Het _kleurtoon kanaal aanpassen"
 
 #: ../plug-ins/common/AlienMap2.c:141
-#, fuzzy
 msgid "Mo_dify green channel"
-msgstr "Verander het _rood/kleurtoon-kanaal"
+msgstr "Het _groene kanaal aanpassen"
 
 #: ../plug-ins/common/AlienMap2.c:141
-#, fuzzy
 msgid "Mo_dify saturation channel"
-msgstr "Verander het _groen/verzadiging-kanaal"
+msgstr "Het _verzadiging kanaal aanpassen"
 
 #: ../plug-ins/common/AlienMap2.c:142
-#, fuzzy
 msgid "Mod_ify blue channel"
-msgstr "Verander het _rood/kleurtoon-kanaal"
+msgstr "Het _blauwe kanaal aanpassen"
 
 #: ../plug-ins/common/AlienMap2.c:142
-#, fuzzy
 msgid "Mod_ify luminosity channel"
-msgstr "Verander _blauw/helderheid-kanaal"
+msgstr "Het _helderheid kanaal aanpassen"
 
-# What does 'R/H' stand for? Red/Hue?
 #: ../plug-ins/common/AlienMap2.c:147
-#, fuzzy
 msgid "Red _frequency:"
-msgstr "R/H-_frequentie:"
+msgstr "Roof _frequentie:"
 
-# What does 'R/H' stand for? Red/Hue?
 #: ../plug-ins/common/AlienMap2.c:147
-#, fuzzy
 msgid "Hue _frequency:"
-msgstr "R/H-_frequentie:"
+msgstr "Kleurtoon _frequentie:"
 
-# What does 'G/S' stand for? Green/Saturation?
 #: ../plug-ins/common/AlienMap2.c:148
-#, fuzzy
 msgid "Green fr_equency:"
-msgstr "G/S-fr_equentie:"
+msgstr "Groen fr_equentie:"
 
-# What is the Dutch translation of this phrase?
 #: ../plug-ins/common/AlienMap2.c:148
-#, fuzzy
 msgid "Saturation fr_equency:"
-msgstr "Saturation:"
+msgstr "Verzadiging fr_equentie:"
 
-# What does 'B/L' stand for? Blue/Luminance?
 #: ../plug-ins/common/AlienMap2.c:149
-#, fuzzy
 msgid "Blue freq_uency:"
-msgstr "B/L-freq_uentie:"
+msgstr "Blauw freq_uentie:"
 
 #: ../plug-ins/common/AlienMap2.c:149
-#, fuzzy
 msgid "Luminosity freq_uency:"
-msgstr "Helderheidsdrempel:"
+msgstr "Helderheid freq_uentie:"
 
-# What does 'R/H' stand for? Red/Hue?
 #: ../plug-ins/common/AlienMap2.c:151
-#, fuzzy
 msgid "Red _phaseshift:"
-msgstr "R/H-f_aseverschuiving:"
+msgstr "Rood f_aseverschuiving:"
 
-# What does 'R/H' stand for? Red/Hue?
 #: ../plug-ins/common/AlienMap2.c:151
-#, fuzzy
 msgid "Hue _phaseshift:"
-msgstr "R/H-f_aseverschuiving:"
+msgstr "Kleurtoon f_aseverschuiving:"
 
-# What does 'G/S' stand for? Green/Saturation?
 #: ../plug-ins/common/AlienMap2.c:152
-#, fuzzy
 msgid "Green ph_aseshift:"
-msgstr "G/S-fa_severschuiving:"
+msgstr "Groen fa_severschuiving:"
 
-# What is the Dutch translation of this phrase?
 #: ../plug-ins/common/AlienMap2.c:152
-#, fuzzy
 msgid "Saturation ph_aseshift:"
-msgstr "Saturation:"
+msgstr "Verzadiging fa_severschuiving:"
 
 #: ../plug-ins/common/AlienMap2.c:153
-#, fuzzy
 msgid "Blue pha_seshift:"
-msgstr "B/L-fase_verschuiving:"
+msgstr "Blauw fase_verschuiving:"
 
 #: ../plug-ins/common/AlienMap2.c:153
-#, fuzzy
 msgid "Luminosity pha_seshift:"
-msgstr "Helderheidsdrempel:"
+msgstr "Helderheid fase_verschuiving:"
 
 #: ../plug-ins/common/AlienMap2.c:188
 msgid "Alien Map _2..."
@@ -1446,7 +1425,7 @@ msgstr "Alien-projectie: bezig met omvormen..."
 
 #: ../plug-ins/common/AlienMap2.c:393
 msgid "AlienMap2"
-msgstr "Alien-projectie 2"
+msgstr "Alien-projectie2"
 
 #: ../plug-ins/common/AlienMap2.c:438 ../plug-ins/common/AlienMap2.c:462
 #: ../plug-ins/common/AlienMap2.c:486
@@ -1871,7 +1850,6 @@ msgid "# of subranges:"
 msgstr "Aantal deelbereiken:"
 
 #: ../plug-ins/common/CML_explorer.c:1642
-#, fuzzy
 msgid "P(ower factor):"
 msgstr "P (machtsfactor):"
 
@@ -1892,7 +1870,6 @@ msgid "Plot a graph of the settings"
 msgstr "Maak een grafiek van de instellingen"
 
 #: ../plug-ins/common/CML_explorer.c:1726
-#, fuzzy
 msgid "Ch. sensitivity:"
 msgstr "Kanaalgevoeligheid:"
 
@@ -1981,9 +1958,8 @@ msgid "_Format:"
 msgstr "Font:"
 
 #: ../plug-ins/common/align_layers.c:133
-#, fuzzy
 msgid "Align _Visible Layers..."
-msgstr "Zichtbare lagen uitlijnen"
+msgstr "_Zichtbare lagen uitlijnen..."
 
 #: ../plug-ins/common/align_layers.c:171
 msgid "There are not enough layers to align."
@@ -2121,27 +2097,27 @@ msgstr ""
 
 #: ../plug-ins/common/animoptimize.c:427
 msgid "UnOptimizing Animation..."
-msgstr "Bezig met ontoptimaliseren animatie..."
+msgstr "Animatie ontoptimaliseren..."
 
 #: ../plug-ins/common/animoptimize.c:430
 msgid "Removing Animation Background..."
-msgstr "Animatieachtergrond verwijderen (bezig)..."
+msgstr "Animatieachtergrond verwijderen..."
 
 #: ../plug-ins/common/animoptimize.c:433
 msgid "Finding Animation Background..."
-msgstr "Vinden animatieachtergrond (bezig)..."
+msgstr "Animatieachtergrond vinden..."
 
 #: ../plug-ins/common/animoptimize.c:437
 msgid "Optimizing Animation..."
-msgstr "Bezig met optimaliseren animatie..."
+msgstr "Animatie optimaliseren..."
 
 #: ../plug-ins/common/apply_lens.c:110
 msgid "Apply _Lens..."
-msgstr ""
+msgstr "_Lens toepassen..."
 
 #: ../plug-ins/common/apply_lens.c:177
 msgid "Applying lens..."
-msgstr "Bezig met toepassen lens..."
+msgstr "Toepassen van lens..."
 
 #: ../plug-ins/common/apply_lens.c:389
 msgid "Lens Effect"
@@ -2164,23 +2140,20 @@ msgid "_Make surroundings transparent"
 msgstr "Omgeving _transparant maken"
 
 #: ../plug-ins/common/apply_lens.c:468
-#, fuzzy
 msgid "_Lens refraction index:"
 msgstr "_Lensbrekingsindex:"
 
 #: ../plug-ins/common/autocrop.c:85
-#, fuzzy
 msgid "_Autocrop Image"
-msgstr "Volledige afbeelding"
+msgstr "Afbeelding _automatisch bijsnijden"
 
 #: ../plug-ins/common/autocrop.c:99
-#, fuzzy
 msgid "_Autocrop Layer"
-msgstr "Ezelsoor"
+msgstr "Laag _automatisch bijsnijden"
 
 #: ../plug-ins/common/autocrop.c:146
 msgid "Cropping..."
-msgstr "Bezig met snijden..."
+msgstr "Bijsnijden..."
 
 #: ../plug-ins/common/autostretch_hsv.c:80
 #, fuzzy
@@ -2299,9 +2272,8 @@ msgstr "Co_mpenseren voor donker worden"
 # How to translate 'bumpmap'?
 #. Invert bumpmap
 #: ../plug-ins/common/bumpmap.c:924
-#, fuzzy
 msgid "I_nvert bumpmap"
-msgstr "_Keer bumpmap om"
+msgstr "_Bumpmap omkeren"
 
 # How to translate 'bumpmap'?
 #. Tile bumpmap
@@ -2326,7 +2298,7 @@ msgstr "Verschuiving _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
+msgstr "De verschuiving kan worden aangepast door de vooruitblik te slepen met de middelste muisknop."
 
 #: ../plug-ins/common/bumpmap.c:1005 ../plug-ins/common/postscript.c:3157
 msgid "_Y offset:"
@@ -2336,28 +2308,26 @@ msgstr "Verschuiving _Y:"
 msgid "_Waterlevel:"
 msgstr "_Waterniveau:"
 
-# What is the correct Dutch translation of this phrase?
+# omgeving/ambient
 #: ../plug-ins/common/bumpmap.c:1031
 msgid "A_mbient:"
 msgstr "A_mbient:"
 
 #: ../plug-ins/common/c_astretch.c:78
-#, fuzzy
 msgid "_Stretch Contrast"
-msgstr "Bezig met het contrast op te rekken..."
+msgstr "Contrast _oprekken..."
 
 #: ../plug-ins/common/c_astretch.c:112
 msgid "Auto-Stretching Contrast..."
-msgstr "Bezig met het contrast op te rekken..."
+msgstr "Contrast automatisch oprekken..."
 
 #: ../plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: ../plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon..."
-msgstr "Striptekening"
+msgstr "_Striptekening..."
 
 #: ../plug-ins/common/cartoon.c:229 ../plug-ins/common/dog.c:245
 #: ../plug-ins/common/gauss.c:427 ../plug-ins/common/neon.c:221
@@ -2562,7 +2532,7 @@ msgstr "Van:"
 msgid "Color to Alpha Color Picker"
 msgstr "Kleur naar alpha kleurkiezer"
 
-#: ../plug-ins/common/colortoalpha.c:425
+#: ../plug-ins/common/colortoalpha.c:426
 msgid "to alpha"
 msgstr "naar alpha"
 
@@ -2682,13 +2652,10 @@ msgstr "Blauwheid_cb709f:"
 msgid "Redness_cr709f:"
 msgstr "Roodheid_cr709f:"
 
-# What is the Dutch translation of the term 'Compose'?
 #: ../plug-ins/common/compose.c:313
-#, fuzzy
 msgid "C_ompose..."
-msgstr "Bezig met samenstellen..."
+msgstr "_Samenstellen..."
 
-# What is the Dutch translation of the term 'Decompose'?
 #: ../plug-ins/common/compose.c:346
 #, fuzzy
 msgid "R_ecompose"
@@ -3433,19 +3400,19 @@ msgstr "Andere opties"
 msgid "_X displacement"
 msgstr "_X-verplaatsing"
 
-# Plukken
+# Plukken/knijpen
 #: ../plug-ins/common/displace.c:140
 msgid "_Pinch"
-msgstr ""
+msgstr "_Knijpen"
 
 #: ../plug-ins/common/displace.c:141
 msgid "_Y displacement"
 msgstr "_Y-verplaatsing"
 
-# Kolken
+# Kolken/draaikolk
 #: ../plug-ins/common/displace.c:141
 msgid "_Whirl"
-msgstr ""
+msgstr "_Draaikolk"
 
 #: ../plug-ins/common/displace.c:186
 msgid "_Displace..."
@@ -3689,7 +3656,7 @@ msgid "Composing Images..."
 msgstr "Bezig afbeeldingen samen te stellen..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:800
+#: ../plug-ins/helpbrowser/dialog.c:801
 msgid "Untitled"
 msgstr "Naamloos"
 
@@ -3855,11 +3822,13 @@ msgstr "Huidig:"
 msgid "_Filter Pack..."
 msgstr "Bezig Filterpak toe te passen..."
 
+# FP=filterpak
 #: ../plug-ins/common/fp.c:374
 #, fuzzy
 msgid "FP can only be used on RGB images."
 msgstr "Kan alleen op RGB-tekengebieden werken."
 
+# FP=filterpak
 #: ../plug-ins/common/fp.c:384
 msgid "FP can only be run interactively."
 msgstr ""
@@ -4109,7 +4078,7 @@ msgstr "Beschrijving:"
 
 #: ../plug-ins/common/gee.c:92
 msgid "Gee-_Slime"
-msgstr ""
+msgstr "Gee-_Slime"
 
 #: ../plug-ins/common/gee.c:150
 msgid "GEE-SLIME"
@@ -4618,9 +4587,10 @@ msgstr "_Guillotine..."
 msgid "Guillotine..."
 msgstr "Guillotine..."
 
+# header voor C-broncode
 #: ../plug-ins/common/header.c:73
 msgid "C source code header"
-msgstr ""
+msgstr "C-broncode header"
 
 #: ../plug-ins/common/hot.c:208
 msgid "_Hot..."
@@ -4633,7 +4603,7 @@ msgstr "Heet..."
 # Is there a Dutch translation for 'hot scanning'?
 #: ../plug-ins/common/hot.c:561
 msgid "Hot"
-msgstr "Hot"
+msgstr "Heet"
 
 #: ../plug-ins/common/hot.c:596
 msgid "Create _New layer"
@@ -4969,11 +4939,11 @@ msgstr "_Onderwerp:"
 msgid "Comm_ent:"
 msgstr "Op_merking:"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:723
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "een soort fout met de bestandsextensie of gebrek daaraan"
 
-#: ../plug-ins/common/mail.c:955
+#: ../plug-ins/common/mail.c:950
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Kon sendmail niet starten (%s)"
@@ -4996,7 +4966,7 @@ msgstr "Tweede doelkleur"
 
 #: ../plug-ins/common/mapcolor.c:149
 msgid "Adjust _FG-BG"
-msgstr ""
+msgstr "_VG-AG aanpassen"
 
 #: ../plug-ins/common/mapcolor.c:167
 #, fuzzy
@@ -6028,7 +5998,7 @@ msgstr "Z/W"
 msgid "Gray"
 msgstr "Grijs"
 
-#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:464
+#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:466
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1413
@@ -6128,15 +6098,16 @@ msgstr "Photoshop-afbeelding"
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
-msgstr ""
+msgstr "Kon '%s' niet opslaan. Het psd-bestandsformaat ondersteunt geen afbeelding die meer dat 30000 pixels breed of hoog zijn."
 
 #: ../plug-ins/common/psd_save.c:1318
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
-msgstr ""
+msgstr "Kon '%s' niet opslaan. Het psd-bestandsformaat ondersteunt geen afbeeldingen met lagen die meer dan 30000 pixels breed of hoog zijn."
 
+# Paint Shop Pro-afbeelding
 #: ../plug-ins/common/psp.c:354
 msgid "Paint Shop Pro image"
 msgstr "Paint Shop Pro afbeelding"
@@ -6878,13 +6849,12 @@ msgid "Sobel Edge Detecting..."
 msgstr "Sobel-randdetectie..."
 
 #: ../plug-ins/common/softglow.c:138
-#, fuzzy
 msgid "_Softglow..."
-msgstr "Verschuiven..."
+msgstr "_Zachte gloed..."
 
 #: ../plug-ins/common/softglow.c:629
 msgid "Softglow"
-msgstr ""
+msgstr "Zachte gloed"
 
 #: ../plug-ins/common/softglow.c:664
 #, fuzzy
@@ -7158,14 +7128,12 @@ msgid "Amount:"
 msgstr "Hoeveelheid:"
 
 #: ../plug-ins/common/spheredesigner.c:2710
-#, fuzzy
 msgid "Exp.:"
-msgstr "Exp:"
+msgstr "Exp.:"
 
 #: ../plug-ins/common/spheredesigner.c:2717
-#, fuzzy
 msgid "Texture Transformations"
-msgstr "Transformatie %s"
+msgstr "Textuurtransformaties"
 
 #: ../plug-ins/common/spheredesigner.c:2740
 msgid "Scale Y:"
@@ -7188,37 +7156,32 @@ msgid "Rotate Z:"
 msgstr "Draaien Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2774
-#, fuzzy
 msgid "Position X:"
-msgstr "Positie"
+msgstr "Positie X:"
 
 #: ../plug-ins/common/spheredesigner.c:2781
-#, fuzzy
 msgid "Position Y:"
-msgstr "Positie"
+msgstr "Positie Y:"
 
 #: ../plug-ins/common/spheredesigner.c:2788
-#, fuzzy
 msgid "Position Z:"
-msgstr "Positie"
+msgstr "Positie Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2936
 msgid "Rendering Sphere..."
 msgstr "Renderen bol (bezig)"
 
 #: ../plug-ins/common/spheredesigner.c:2993
-#, fuzzy
 msgid "Sphere _Designer..."
-msgstr "Bolontwerper"
+msgstr "Bol_ontwerper..."
 
 #: ../plug-ins/common/spheredesigner.c:3050
 msgid "Region selected for plug-in is empty"
 msgstr ""
 
 #: ../plug-ins/common/spread.c:98
-#, fuzzy
 msgid "Sp_read..."
-msgstr "Verspreiden..."
+msgstr "Ve_rspreiden..."
 
 #: ../plug-ins/common/spread.c:181
 msgid "Spreading..."
@@ -7233,9 +7196,8 @@ msgid "Spread Amount"
 msgstr "Afstand"
 
 #: ../plug-ins/common/struc.c:1144
-#, fuzzy
 msgid "_Apply Canvas..."
-msgstr "Canvas toepassen..."
+msgstr "Canvas _toepassen..."
 
 #: ../plug-ins/common/struc.c:1225
 msgid "Applying Canvas..."
@@ -7246,28 +7208,24 @@ msgid "Apply Canvas"
 msgstr "Canvas toepassen"
 
 #: ../plug-ins/common/struc.c:1293
-#, fuzzy
 msgid "_Top-right"
-msgstr "Rechtsboven"
+msgstr "Rechts_boven"
 
 #: ../plug-ins/common/struc.c:1294
-#, fuzzy
 msgid "Top-_left"
-msgstr "Linksboven"
+msgstr "_Linksboven"
 
 #: ../plug-ins/common/struc.c:1295
-#, fuzzy
 msgid "_Bottom-left"
-msgstr "Linksonder"
+msgstr "Links_onder"
 
 #: ../plug-ins/common/struc.c:1296
-#, fuzzy
 msgid "Bottom-_right"
-msgstr "Rechtsonder"
+msgstr "_Rechtsonder"
 
 #: ../plug-ins/common/sunras.c:211 ../plug-ins/common/sunras.c:231
 msgid "SUN Rasterfile image"
-msgstr ""
+msgstr "SUN rasterbestand"
 
 #: ../plug-ins/common/sunras.c:385
 #, c-format
@@ -7461,16 +7419,16 @@ msgstr "Drempel:"
 msgid "TIFF image"
 msgstr "TIFF-kanaal"
 
-#: ../plug-ins/common/tiff.c:882
+#: ../plug-ins/common/tiff.c:897
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/tiff.c:898
+#: ../plug-ins/common/tiff.c:913
 msgid "TIFF Channel"
 msgstr "TIFF-kanaal"
 
-#: ../plug-ins/common/tiff.c:907
+#: ../plug-ins/common/tiff.c:922
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7482,7 +7440,7 @@ msgstr ""
 "8 bits; de afbeelding zal voor u worden omgezet, waarbij informatie verloren "
 "gaat."
 
-#: ../plug-ins/common/tiff.c:2080
+#: ../plug-ins/common/tiff.c:2095
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7490,40 +7448,40 @@ msgstr ""
 "Het TIFF-formaat ondersteunt slechts commentaren in 7-bits ASCII. Geen "
 "commentaar opgeslagen."
 
-#: ../plug-ins/common/tiff.c:2284
+#: ../plug-ins/common/tiff.c:2258
 msgid "Save as TIFF"
 msgstr "Opslaan als TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2303
+#: ../plug-ins/common/tiff.c:2277
 msgid "Compression"
 msgstr "Compressie"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2281
 msgid "_None"
 msgstr "_Geen"
 
-#: ../plug-ins/common/tiff.c:2308
+#: ../plug-ins/common/tiff.c:2282
 msgid "_LZW"
 msgstr "LZW"
 
-#: ../plug-ins/common/tiff.c:2309
+#: ../plug-ins/common/tiff.c:2283
 msgid "_Pack Bits"
 msgstr "Pack Bits"
 
-#: ../plug-ins/common/tiff.c:2310
+#: ../plug-ins/common/tiff.c:2284
 msgid "_Deflate"
 msgstr "Deflate"
 
-#: ../plug-ins/common/tiff.c:2311
+#: ../plug-ins/common/tiff.c:2285
 msgid "_JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/common/tiff.c:2320
+#: ../plug-ins/common/tiff.c:2294
 msgid "Save _color values from transparent pixels"
 msgstr "Kleurwaarden van transparante pixels opslaan"
 
-#: ../plug-ins/common/tiff.c:2336 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2310 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Opmerking:"
 
@@ -7558,6 +7516,7 @@ msgstr "Alle tegels"
 msgid "Region selected for filter is empty."
 msgstr ""
 
+# betegelen
 #. Get the preview image
 #: ../plug-ins/common/tileit.c:363
 msgid "TileIt"
@@ -7570,14 +7529,12 @@ msgid "Flip"
 msgstr "Spiegelen"
 
 #: ../plug-ins/common/tileit.c:459
-#, fuzzy
 msgid "A_ll tiles"
-msgstr "Alle tegels"
+msgstr "A_lle tegels"
 
 #: ../plug-ins/common/tileit.c:473
-#, fuzzy
 msgid "Al_ternate tiles"
-msgstr "Afwisselende tegels"
+msgstr "Af_wisselende tegels"
 
 #: ../plug-ins/common/tileit.c:487
 #, fuzzy
@@ -7586,7 +7543,7 @@ msgstr "Expliciete tegel"
 
 #: ../plug-ins/common/tileit.c:493
 msgid "Ro_w:"
-msgstr "Rij:"
+msgstr "Ri_j:"
 
 #: ../plug-ins/common/tileit.c:517
 msgid "Col_umn:"
@@ -7594,17 +7551,16 @@ msgstr "Kolom:"
 
 #: ../plug-ins/common/tileit.c:569
 msgid "O_pacity:"
-msgstr "Ondoorzichtigheid:"
+msgstr "_Ondoorzichtigheid:"
 
 #. Lower frame saying howmany segments
 #: ../plug-ins/common/tileit.c:578
-#, fuzzy
 msgid "Number of Segments"
-msgstr "_Aantal segmenten:"
+msgstr "Aantal segmenten:"
 
 #: ../plug-ins/common/tiler.c:64
 msgid "_Make Seamless"
-msgstr ""
+msgstr "_Naadloos maken"
 
 #: ../plug-ins/common/tiler.c:320
 msgid "Tiler..."
@@ -7704,9 +7660,8 @@ msgstr ""
 "voorbeeld dient."
 
 #: ../plug-ins/common/uniteditor.c:149
-#, fuzzy
 msgid "_Unit Editor"
-msgstr "Eenheidseditor"
+msgstr "_Eenheidseditor"
 
 #: ../plug-ins/common/uniteditor.c:208
 msgid "New Unit"
@@ -7714,31 +7669,31 @@ msgstr "Nieuwe eenheid"
 
 #: ../plug-ins/common/uniteditor.c:237
 msgid "_ID:"
-msgstr "ID:"
+msgstr "_ID:"
 
 #: ../plug-ins/common/uniteditor.c:248
 msgid "_Factor:"
-msgstr "Factor:"
+msgstr "_Factor:"
 
 #: ../plug-ins/common/uniteditor.c:258
 msgid "_Digits:"
-msgstr "Cijfers:"
+msgstr "_Cijfers:"
 
 #: ../plug-ins/common/uniteditor.c:270
 msgid "_Symbol:"
-msgstr "Symbool:"
+msgstr "_Symbool:"
 
 #: ../plug-ins/common/uniteditor.c:282
 msgid "_Abbreviation:"
-msgstr "Afkorting:"
+msgstr "_Afkorting:"
 
 #: ../plug-ins/common/uniteditor.c:294
 msgid "Si_ngular:"
-msgstr "Enkelvoud:"
+msgstr "_Enkelvoud:"
 
 #: ../plug-ins/common/uniteditor.c:306
 msgid "_Plural:"
-msgstr "Meervoud:"
+msgstr "_Meervoud:"
 
 #: ../plug-ins/common/uniteditor.c:342
 msgid "Unit factor must not be 0."
@@ -7753,9 +7708,8 @@ msgid "Unit Editor"
 msgstr "Eenheidseditor"
 
 #: ../plug-ins/common/unsharp.c:139
-#, fuzzy
 msgid "_Unsharp Mask..."
-msgstr "Onscherp masker"
+msgstr "_Onscherp masker..."
 
 #: ../plug-ins/common/unsharp.c:464
 msgid "Merging..."
@@ -7767,44 +7721,43 @@ msgstr "Onscherp masker"
 
 #: ../plug-ins/common/video.c:39
 msgid "_Staggered"
-msgstr "Zigzag"
+msgstr "_Zigzag"
 
 #: ../plug-ins/common/video.c:40
 msgid "_Large staggered"
-msgstr "Groot zigzag"
+msgstr "_Groot zigzag"
 
 #: ../plug-ins/common/video.c:41
 msgid "S_triped"
-msgstr "Gestreept"
+msgstr "Ges_treept"
 
 #: ../plug-ins/common/video.c:42
 msgid "_Wide-striped"
-msgstr "Breed-gestreept"
+msgstr "_Breed-gestreept"
 
 #: ../plug-ins/common/video.c:43
 msgid "Lo_ng-staggered"
-msgstr "Lang-zigzag"
+msgstr "La_ng-zigzag"
 
 #: ../plug-ins/common/video.c:44
 msgid "_3x3"
-msgstr "3x3"
+msgstr "_3x3"
 
 #: ../plug-ins/common/video.c:45
 msgid "Larg_e 3x3"
-msgstr "Groot 3x3"
+msgstr "Gr_oot 3x3"
 
 #: ../plug-ins/common/video.c:46
 msgid "_Hex"
-msgstr "Hex"
+msgstr "_Hex"
 
 #: ../plug-ins/common/video.c:47
 msgid "_Dots"
-msgstr "Stippen"
+msgstr "_Stippen"
 
 #: ../plug-ins/common/video.c:1812
-#, fuzzy
 msgid "Vi_deo..."
-msgstr "Video/RGB..."
+msgstr "Vi_deo..."
 
 #: ../plug-ins/common/video.c:1884
 msgid "Video/RGB..."
@@ -7816,81 +7769,72 @@ msgstr "Video"
 
 #. frame for the radio buttons
 #: ../plug-ins/common/video.c:2035
-#, fuzzy
 msgid "Video Pattern"
-msgstr "Patroon"
+msgstr "Videopatroon"
 
 #: ../plug-ins/common/video.c:2079
 msgid "_Additive"
-msgstr "Toegevoegd"
+msgstr "_Toegevoegd"
 
 #: ../plug-ins/common/video.c:2089
 msgid "_Rotated"
-msgstr "Gedraaid"
+msgstr "Ged_raaid"
 
 #: ../plug-ins/common/vinvert.c:81
-#, fuzzy
 msgid "_Value Invert"
-msgstr "Waarde omkeren..."
+msgstr "_Waarde-omkeren"
 
 #: ../plug-ins/common/vinvert.c:123
 msgid "Value Invert..."
 msgstr "Waarde omkeren..."
 
 #: ../plug-ins/common/vpropagate.c:190
-#, fuzzy
 msgid "More _white (larger value)"
-msgstr "Meer wit (hogere waarde)"
+msgstr "Meer _wit (hogere waarde)"
 
 #: ../plug-ins/common/vpropagate.c:193
-#, fuzzy
 msgid "More blac_k (smaller value)"
-msgstr "Meer zwart (lagere waarde)"
+msgstr "Meer _zwart (lagere waarde)"
 
 #: ../plug-ins/common/vpropagate.c:196
-#, fuzzy
 msgid "_Middle value to peaks"
-msgstr "Middenwaarde naar pieken"
+msgstr "_Middenwaarde naar pieken"
 
 #: ../plug-ins/common/vpropagate.c:199
-#, fuzzy
 msgid "_Foreground to peaks"
-msgstr "Voorgrond naar pieken"
+msgstr "_Voorgrond naar pieken"
 
 #: ../plug-ins/common/vpropagate.c:202
-#, fuzzy
 msgid "O_nly foreground"
-msgstr "Alleen voorgrond"
+msgstr "A_lleen voorgrond"
 
 #: ../plug-ins/common/vpropagate.c:205
-#, fuzzy
 msgid "Only b_ackground"
-msgstr "Alleen achtergrond"
+msgstr "Alleen _achtergrond"
 
+# ondoorzichtiger
 #: ../plug-ins/common/vpropagate.c:208
 #, fuzzy
 msgid "Mor_e opaque"
 msgstr "Meer ondoorzichtig"
 
+# transparanter
 #: ../plug-ins/common/vpropagate.c:211
 #, fuzzy
 msgid "More t_ransparent"
 msgstr "Meer transparant"
 
 #: ../plug-ins/common/vpropagate.c:239
-#, fuzzy
 msgid "_Value Propagate..."
-msgstr "Waarde doorgeven"
+msgstr "_Waarde doorgeven..."
 
 #: ../plug-ins/common/vpropagate.c:251
-#, fuzzy
 msgid "E_rode"
-msgstr "Modus"
+msgstr "Ver_weerd"
 
 #: ../plug-ins/common/vpropagate.c:263
-#, fuzzy
 msgid "_Dilate"
-msgstr "Deflate"
+msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:473
 msgid "Value Propagating..."
@@ -8147,13 +8091,12 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/common/whirlpinch.c:153
-#, fuzzy
 msgid "W_hirl and Pinch..."
-msgstr "Draaien en knijpen"
+msgstr "Draaikolk en knijpen..."
 
 #: ../plug-ins/common/whirlpinch.c:196
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "Gebied dat door plug-in wordt beïnvloed is leeg"
 
 #: ../plug-ins/common/whirlpinch.c:344
 msgid "Whirling and Pinching..."
@@ -8172,15 +8115,6 @@ msgstr "Draaiingshoek:"
 #, fuzzy
 msgid "_Pinch amount:"
 msgstr "Knijphoeveelheid:"
-
-#: ../plug-ins/common/winclipboard.c:105
-#, fuzzy
-msgid "Copy to Clipboard"
-msgstr "<Image>/Bewerken/Naar klembord kopiëren"
-
-#: ../plug-ins/common/winclipboard.c:279
-msgid "Copying..."
-msgstr "Kopiëren ..."
 
 #: ../plug-ins/common/wind.c:181
 #, fuzzy
@@ -8208,7 +8142,7 @@ msgstr "Stijl"
 
 #: ../plug-ins/common/wind.c:922
 msgid "_Wind"
-msgstr "Wind"
+msgstr "_Wind"
 
 #: ../plug-ins/common/wind.c:923
 msgid "_Blast"
@@ -8216,11 +8150,11 @@ msgstr "Vlaag"
 
 #: ../plug-ins/common/wind.c:946
 msgid "_Left"
-msgstr "Links"
+msgstr "_Links"
 
 #: ../plug-ins/common/wind.c:947
 msgid "_Right"
-msgstr "Rechts"
+msgstr "_Rechts"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
@@ -8255,14 +8189,12 @@ msgid "Higher values increase the magnitude of the effect"
 msgstr "Hogere waarden verhogen de sterkte van het effect"
 
 #: ../plug-ins/common/winprint.c:224
-#, fuzzy
 msgid "_Print"
-msgstr "Afdrukken"
+msgstr "Af_drukken"
 
 #: ../plug-ins/common/winprint.c:236
-#, fuzzy
 msgid "Page Setup"
-msgstr "Instelling"
+msgstr "Paginainstelling"
 
 #: ../plug-ins/common/winprint.c:341
 #, c-format
@@ -8451,31 +8383,30 @@ msgstr "Schrijf extra maskerbestand"
 msgid "_Mask file extension:"
 msgstr "Extensie van maskerbestand:"
 
-#: ../plug-ins/common/xpm.c:168 ../plug-ins/common/xpm.c:193
+#: ../plug-ins/common/xpm.c:170 ../plug-ins/common/xpm.c:195
 msgid "X PixMap image"
 msgstr "X PixMap afbeelding"
 
-#: ../plug-ins/common/xpm.c:349
+#: ../plug-ins/common/xpm.c:351
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Fout bij het openen van bestand '%s'"
 
-#: ../plug-ins/common/xpm.c:354
+#: ../plug-ins/common/xpm.c:356
 msgid "XPM file invalid"
 msgstr "XPM-bestand ongeldig"
 
-#: ../plug-ins/common/xpm.c:769
+#: ../plug-ins/common/xpm.c:771
 msgid "Save as XPM"
 msgstr "Opslaan als XPM"
 
-#: ../plug-ins/common/xpm.c:790
-#, fuzzy
+#: ../plug-ins/common/xpm.c:792
 msgid "_Alpha threshold:"
-msgstr "Alphadrempel:"
+msgstr "_Alphadrempel:"
 
 #: ../plug-ins/common/xwd.c:271 ../plug-ins/common/xwd.c:291
 msgid "X window dump"
-msgstr ""
+msgstr "X window dump"
 
 #: ../plug-ins/common/xwd.c:423
 #, c-format
@@ -8523,50 +8454,47 @@ msgstr "IJverig snijden..."
 msgid "Nothing to crop."
 msgstr "Niets te snijden."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:140
 msgid "Procedure Browser"
 msgstr "Procedure-verkenner"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-#: ../plug-ins/dbbrowser/plugin-browser.c:546
-msgid "Search by _Name"
-msgstr "Zoeken op naam"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-#, fuzzy
-msgid "Search by _Description"
-msgstr "Beschrijving:"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-#: ../plug-ins/dbbrowser/plugin-browser.c:716
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:181
+#: ../plug-ins/dbbrowser/plugin-browser.c:592
 msgid "_Search:"
-msgstr "Zoeken:"
+msgstr "_Zoeken:"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
-#: ../plug-ins/dbbrowser/plugin-browser.c:395
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:195
+msgid "by name"
+msgstr "op naam"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:196
+msgid "by description"
+msgstr "op omschrijving"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:404
+#: ../plug-ins/dbbrowser/plugin-browser.c:392
 msgid "Searching by name - please wait"
-msgstr "Zoeken op naam - wacht A.U.B."
+msgstr "Zoeken op naam - een ogenblik geduld"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "Zoeken op omschrijving - wacht A.U.B."
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:427
+msgid "Searching by description - please wait"
+msgstr "Zoeken op omschrijving - een ogenblik geduld"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:436
 msgid "Searching - please wait"
-msgstr "Zoeken - wacht a.u.b."
+msgstr "Zoeken - een ogenblik geduld"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
-#, fuzzy
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:443
 msgid "1 Procedure"
-msgstr "Tijdelijke procedure"
+msgstr "1 procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
-#, fuzzy, c-format
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:445
+#, c-format
 msgid "%d Procedures"
-msgstr "Tijdelijke procedure"
+msgstr "%d procedures"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
-#: ../plug-ins/dbbrowser/plugin-browser.c:514
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:495
+#: ../plug-ins/dbbrowser/plugin-browser.c:520
 msgid "No matches"
 msgstr "Geen overeenkomsten"
 
@@ -8576,99 +8504,82 @@ msgstr "Geen overeenkomsten"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:135 ../plug-ins/gflare/gflare.c:2677
+#: ../plug-ins/dbbrowser/gimpprocview.c:138 ../plug-ins/gflare/gflare.c:2677
 #: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
 #: ../plug-ins/gflare/gflare.c:3750
 msgid "Parameters"
 msgstr "Parameters"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
-msgstr ""
+msgstr "Teruggeefwaardes"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 #, fuzzy
 msgid "Additional Information"
 msgstr "Ruimtelijke transformatie"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Auteur:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr "Interne GIMP-procedure"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "GIMP-plug-in"
-
-# 'extensie' or 'uitbreiding'? (IOW, is Extension a name or a common noun?)
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "GIMP-extensie"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr "Tijdelijke procedure"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:149
+#: ../plug-ins/dbbrowser/plugin-browser.c:151
 #, fuzzy
 msgid "_Plug-In Browser"
 msgstr "DB-browser"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:416
+#: ../plug-ins/dbbrowser/plugin-browser.c:405
 #, fuzzy
 msgid "1 Plug-In Interface"
 msgstr "Aantal plug-in-interfaces: %d"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:418
+#: ../plug-ins/dbbrowser/plugin-browser.c:407
 #, fuzzy, c-format
 msgid "%d Plug-In Interfaces"
 msgstr "Aantal plug-in-interfaces: %d"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:542
+#: ../plug-ins/dbbrowser/plugin-browser.c:559
 #, fuzzy
 msgid "Plug-In Browser"
 msgstr "DB-browser"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:593
+#: ../plug-ins/dbbrowser/plugin-browser.c:625
 msgid "Name"
 msgstr "Naam"
 
 # What does 'Ins' mean?
-#: ../plug-ins/dbbrowser/plugin-browser.c:601
-#: ../plug-ins/dbbrowser/plugin-browser.c:670
+#: ../plug-ins/dbbrowser/plugin-browser.c:633
+#: ../plug-ins/dbbrowser/plugin-browser.c:702
 #, fuzzy
 msgid "Insertion Date"
 msgstr "Datum"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:609
+#: ../plug-ins/dbbrowser/plugin-browser.c:641
 msgid "Menu Path"
 msgstr "Menupad"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:617
-#: ../plug-ins/dbbrowser/plugin-browser.c:679
+#: ../plug-ins/dbbrowser/plugin-browser.c:649
+#: ../plug-ins/dbbrowser/plugin-browser.c:711
 msgid "Image Types"
 msgstr "Afbeeldingstypen"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:641
+#: ../plug-ins/dbbrowser/plugin-browser.c:673
 msgid "List View"
 msgstr "Lijstweergave"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:661
+#: ../plug-ins/dbbrowser/plugin-browser.c:693
 msgid "Menu Path/Name"
 msgstr "Menupad/naam"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:702
+#: ../plug-ins/dbbrowser/plugin-browser.c:734
 #, fuzzy
 msgid "Tree View"
 msgstr "Boomweergave"
@@ -8703,7 +8614,7 @@ msgstr "Laad FITS-bestand"
 
 #: ../plug-ins/fits/fits.c:983
 msgid "Replacement for undefined pixels"
-msgstr ""
+msgstr "Vervanging voor ongedefinieerde pixels"
 
 #: ../plug-ins/fits/fits.c:988 ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/gfig/gfig-dialog.c:1421
@@ -8711,7 +8622,6 @@ msgid "White"
 msgstr "Wit"
 
 #: ../plug-ins/fits/fits.c:995
-#, fuzzy
 msgid "Pixel value scaling"
 msgstr "Pixelwaardeschaling"
 
@@ -8724,9 +8634,8 @@ msgid "Image Composing"
 msgstr "Afbeelding samenstellen"
 
 #: ../plug-ins/flame/flame.c:133
-#, fuzzy
 msgid "_Flame..."
-msgstr "Vlam"
+msgstr "_Vlam..."
 
 #: ../plug-ins/flame/flame.c:227
 msgid "Drawing Flame..."
@@ -10189,15 +10098,15 @@ msgstr "Naar de indexpagina gaan"
 
 #: ../plug-ins/helpbrowser/dialog.c:483
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "Bekijk de documentatie op de website van GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:556
+#: ../plug-ins/helpbrowser/dialog.c:557
 msgid "Document not found"
 msgstr "Document niet gevonden"
 
-#: ../plug-ins/helpbrowser/dialog.c:558
+#: ../plug-ins/helpbrowser/dialog.c:559
 msgid "The requested URL could not be loaded:"
-msgstr ""
+msgstr "De gevraagde URL kon niet worden geladen:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:347
 #, fuzzy
@@ -10345,14 +10254,14 @@ msgid "Transformation %s"
 msgstr "Transformatie %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2379
-#: ../plug-ins/metadata/interface.c:566 ../plug-ins/metadata/interface.c:576
+#: ../plug-ins/metadata/interface.c:562 ../plug-ins/metadata/interface.c:572
 msgid "Save failed"
 msgstr "Opslaan is mislukt"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2460
 #: ../plug-ins/ifscompose/ifscompose.c:2473
 #: ../plug-ins/metadata/interface.c:461 ../plug-ins/metadata/interface.c:471
-#: ../plug-ins/metadata/interface.c:551
+#: ../plug-ins/metadata/interface.c:547
 msgid "Open failed"
 msgstr "Openen is mislukt"
 
@@ -10921,7 +10830,7 @@ msgstr "URL"
 
 #: ../plug-ins/imagemap/imap_selection.c:400
 msgid "ALT Text"
-msgstr ""
+msgstr "ALT tekst"
 
 #: ../plug-ins/imagemap/imap_selection.c:410
 msgid "Target"
@@ -10984,13 +10893,16 @@ msgstr "Exportvooruitblik"
 msgid "EXIF data will be ignored."
 msgstr "EXIF data zal worden genegeerd."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:89
-msgid ""
-"According to the EXIF data, this image is rotated. Would you like GIMP to "
-"rotate it into the standard orientation?"
+#: ../plug-ins/jpeg/jpeg-exif.c:90
+msgid "According to the EXIF data, this image is rotated."
+msgstr "Volgens de EXIF gegevens is deze afbeelding geroteerd."
+
+# moet GIMP de afbeelding draaien naar de standaard orientatie?
+#: ../plug-ins/jpeg/jpeg-exif.c:91
+msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-exif.c:92
+#: ../plug-ins/jpeg/jpeg-exif.c:93
 msgid "_Keep Orientation"
 msgstr "Oriëntatie _behouden"
 
@@ -10998,7 +10910,7 @@ msgstr "Oriëntatie _behouden"
 msgid "JPEG preview"
 msgstr "JPEG-vooruitblik"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575
+#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
 #, fuzzy, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Bezig '%s' te openen..."
@@ -11168,26 +11080,23 @@ msgstr ""
 
 #: ../plug-ins/metadata/interface.c:107
 msgid "Property"
-msgstr ""
+msgstr "Eigenschap"
 
 #: ../plug-ins/metadata/interface.c:260 ../plug-ins/metadata/interface.c:262
-#, fuzzy
 msgid "Description"
-msgstr "Beschrijving:"
+msgstr "Omschrijving:"
 
 #: ../plug-ins/metadata/interface.c:275
-#, fuzzy
 msgid "Image _Title:"
-msgstr "Afbeeldings_type:"
+msgstr "Afbeeldings_titel:"
 
 #: ../plug-ins/metadata/interface.c:281
 msgid "_Author:"
 msgstr "_Auteur:"
 
 #: ../plug-ins/metadata/interface.c:306
-#, fuzzy
 msgid "Description _Writer:"
-msgstr "Beschrijving:"
+msgstr "Omschrijving _schrijver:"
 
 #: ../plug-ins/metadata/interface.c:320
 msgid "_Keywords:"
@@ -11227,112 +11136,100 @@ msgstr "Geavanceerd"
 msgid "Import XMP from file"
 msgstr ""
 
-#: ../plug-ins/metadata/interface.c:552
+#: ../plug-ins/metadata/interface.c:548
 msgid "Cannot create file"
 msgstr "Kan geen bestand aanmaken"
 
-#: ../plug-ins/metadata/interface.c:567
+#: ../plug-ins/metadata/interface.c:563
 msgid "Some error occurred while saving"
 msgstr "Er was een fout bij het opslaan"
 
 # afsluiten/sluiten
-#: ../plug-ins/metadata/interface.c:577
+#: ../plug-ins/metadata/interface.c:573
 msgid "Could not close the file"
 msgstr "Kon het bestand niet sluiten"
 
-#: ../plug-ins/metadata/interface.c:599
+#: ../plug-ins/metadata/interface.c:595
 #, fuzzy
 msgid "Export XMP to file"
 msgstr "Exportvooruitblik"
 
-#: ../plug-ins/metadata/interface.c:665
+#: ../plug-ins/metadata/interface.c:661
 #, fuzzy
 msgid "Image Properties"
 msgstr "Afbeeldingsvooruitblik"
 
-#: ../plug-ins/metadata/interface.c:669
+#: ../plug-ins/metadata/interface.c:665
 msgid "_Import XMP"
-msgstr ""
+msgstr "XMP i_mporteren"
 
-#: ../plug-ins/metadata/interface.c:670
-#, fuzzy
+#: ../plug-ins/metadata/interface.c:666
 msgid "_Export XMP"
-msgstr "Exportvooruitblik"
+msgstr "XMP E_xporteren"
 
 #: ../plug-ins/metadata/metadata.c:192
-#, fuzzy
 msgid "Propert_ies"
-msgstr "Tekstuureigenschappen"
+msgstr "_Eigenschappen"
 
-#: ../plug-ins/metadata/metadata.c:198
-#, fuzzy
-msgid "<Image>/File/Info"
-msgstr "<Image>/Bestand/Afdrukken"
+#: ../plug-ins/metadata/xmp-parse.c:235
+msgid "Error: No XMP packet found"
+msgstr "Fout: geen XMP-pakket gevonden"
 
-#: ../plug-ins/metadata/xmp-parse.c:239
-#, c-format
-msgid "Error: %s"
-msgstr "Fout: %s"
-
-#: ../plug-ins/metadata/xmp-parse.c:249
+#: ../plug-ins/metadata/xmp-parse.c:250
 #, c-format
 msgid "Error on line %d char %d: %s"
 msgstr "Fout op regel %d teken %d: %s"
 
-#: ../plug-ins/metadata/xmp-parse.c:271
+#: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:275
+#: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Verwachtte element <%s>, in plaats daarvan <%s> gevonden"
 
-#: ../plug-ins/metadata/xmp-parse.c:287
+#: ../plug-ins/metadata/xmp-parse.c:291
 #, c-format
 msgid "Unknown element <%s>"
-msgstr ""
+msgstr "Onbekend element <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:314
+#: ../plug-ins/metadata/xmp-parse.c:320
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-msgstr ""
+msgstr "Onbekend attribuut \"%s\"=\"%s\" in element <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:589
+#: ../plug-ins/metadata/xmp-parse.c:606
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:806
+#: ../plug-ins/metadata/xmp-parse.c:823
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:928
+#: ../plug-ins/metadata/xmp-parse.c:945
 #, c-format
 msgid "End of element <%s> not expected in this context"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:1025
+#: ../plug-ins/metadata/xmp-parse.c:1047
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:1050
+#: ../plug-ins/metadata/xmp-parse.c:1072
 msgid "XMP packets must start with <?xpacket begin=...?>"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:1064
+#: ../plug-ins/metadata/xmp-parse.c:1086
 msgid "XMP packets must end with <?xpacket end=...?>"
 msgstr ""
 
-#: ../plug-ins/metadata/xmp-parse.c:1077
+#: ../plug-ins/metadata/xmp-parse.c:1099
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
-
-#: ../plug-ins/metadata/xmp-parse.c:1238 ../plug-ins/metadata/xmp-parse.c:1267
-msgid "No XMP packet found"
 msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
@@ -11376,9 +11273,8 @@ msgid "Current gradient (reversed)"
 msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:584
-#, fuzzy
 msgid "Current gradient"
-msgstr "Aangepast verloop"
+msgstr "Huidige verloop"
 
 #: ../plug-ins/pagecurl/pagecurl.c:589
 #, fuzzy
@@ -12017,7 +11913,9 @@ msgstr "Uitvoer aanpassen..."
 #: ../plug-ins/print/gimp_main_window.c:1463
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr "Kleurbalans, helderheid, contrast, verzadiging en kleurbenaderingsalgoritme aanpassen"
+msgstr ""
+"Kleurbalans, helderheid, contrast, verzadiging en kleurbenaderingsalgoritme "
+"aanpassen"
 
 #: ../plug-ins/print/gimp_main_window.c:1497
 #, fuzzy
@@ -12291,33 +12189,33 @@ msgstr "schrijffout vond plaats"
 msgid "Downloading unknown amount of image data..."
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:87
+#: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:88
+#: ../plug-ins/winicon/icodialog.c:100
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:89
+#: ../plug-ins/winicon/icodialog.c:101
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:90
+#: ../plug-ins/winicon/icodialog.c:102
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
-#: ../plug-ins/winicon/icodialog.c:115
+#: ../plug-ins/winicon/icodialog.c:128
 #, fuzzy
 msgid "Save as Windows Icon"
 msgstr "Opslaan als GIcon"
 
-#: ../plug-ins/winicon/icodialog.c:141
+#: ../plug-ins/winicon/icodialog.c:154
 #, fuzzy
 msgid "Icon details"
 msgstr "Verzamelingsdetails"
 
-#: ../plug-ins/winicon/icoload.c:384
+#: ../plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
 msgstr ""
@@ -12326,7 +12224,7 @@ msgstr ""
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 
-#: ../plug-ins/winicon/main.c:87 ../plug-ins/winicon/main.c:106
+#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
 msgstr ""
 
@@ -12421,6 +12319,43 @@ msgstr "Fout: kan XJT-eigenschapsbestand '%s' niet lezen."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
+
+#, fuzzy
+#~ msgid "Copy to Clipboard"
+#~ msgstr "<Image>/Bewerken/Naar klembord kopiëren"
+
+#~ msgid "Copying..."
+#~ msgstr "Kopiëren ..."
+
+#~ msgid "Search by _Name"
+#~ msgstr "Zoeken op naam"
+
+#, fuzzy
+#~ msgid "Search by _Description"
+#~ msgstr "Beschrijving:"
+
+#~ msgid "Searching by blurb - please wait"
+#~ msgstr "Zoeken op omschrijving - wacht A.U.B."
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Interne GIMP-procedure"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "GIMP-plug-in"
+
+# 'extensie' or 'uitbreiding'? (IOW, is Extension a name or a common noun?)
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMP-extensie"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Tijdelijke procedure"
+
+#, fuzzy
+#~ msgid "<Image>/File/Info"
+#~ msgstr "<Image>/Bestand/Afdrukken"
+
+#~ msgid "Error: %s"
+#~ msgstr "Fout: %s"
 
 #~ msgid "On Edges:"
 #~ msgstr "Op randen:"
