@@ -1,3 +1,12 @@
+2005-05-14  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-altivec-test.c: reverted to working
+	versions.  Currently, if you regenerate the installers and
+	testers, only those that work on your current machine will be
+	generated properly.
+
+
 2005-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/Makefile.am
@@ -14,9 +23,11 @@
 	* app/composite/gimp-composite-generic.c:
 	Fixed signedness problems is calls to gimp_rgb_to_hsv_int() and the like.
 	
-	* app/composite/gimp-composite-mmx.c:
+	* app/composite/gimp-composite-mmx.[ch]:
 	Small fixes to register clobber lists.
 	Added gimp_composite_subtract_va8_va8_va8_mmx.
+
+	Regenerated
 
 2005-05-14  Sven Neumann  <sven@gimp.org>
 
