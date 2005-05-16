@@ -457,7 +457,8 @@ load_image (const gchar *filename,
 
   /* Detach from the drawable and add it to the image.
    */
-  gimp_drawable_detach (drawable);
+  if (!preview)
+    gimp_drawable_detach (drawable);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
