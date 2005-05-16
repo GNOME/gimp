@@ -62,6 +62,7 @@ static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
 
 static GdkAtom * gimp_clipboard_wait_for_targets (gint             *n_targets);
 static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
+static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
 
 
 void
@@ -194,6 +195,24 @@ gimp_clipboard_has_buffer (Gimp *gimp)
 }
 
 /**
+ * gimp_clipboard_has_svg:
+ * @gimp: pointer to #Gimp
+ *
+ * Tests if there's SVG data in %GDK_SELECTION_CLIPBOARD.
+ * This is done in a main-loop similar to
+ * gtk_clipboard_wait_is_text_available(). The same caveats apply here.
+ *
+ * Return value: %TRUE if there's SVG data in the clipboard, %FALSE otherwise
+ **/
+gboolean
+gimp_clipboard_has_svg (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  return (gimp_clipboard_wait_for_svg (gimp) != GDK_NONE);
+}
+
+/**
  * gimp_clipboard_get_buffer:
  * @gimp: pointer to #Gimp
  *
@@ -248,6 +267,57 @@ gimp_clipboard_get_buffer (Gimp *gimp)
     buffer = g_object_ref (gimp->global_buffer);
 
   return buffer;
+}
+
+/**
+ * gimp_clipboard_get_svg:
+ * @gimp: pointer to #Gimp
+ *
+ * Retrieves SVG data from %GDK_SELECTION_CLIPBOARD.
+ *
+ * The returned data needs to be freed when it's no longer
+ * needed.
+ *
+ * Return value: a reference to a #GimpBuffer or %NULL if there's no
+ *               image data
+ **/
+guchar *
+gimp_clipboard_get_svg (Gimp  *gimp,
+                        gsize *svg_size)
+{
+  GtkClipboard *clipboard;
+  GdkAtom       atom;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (svg_size != NULL, NULL);
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard                                                      &&
+      gtk_clipboard_get_owner (clipboard)         != G_OBJECT (gimp) &&
+      (atom = gimp_clipboard_wait_for_svg (gimp)) != GDK_NONE)
+    {
+      GtkSelectionData *data;
+
+      data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+      if (data)
+        {
+          guchar *svg;
+
+          svg = (guchar *) gimp_selection_data_get_stream (data, svg_size);
+
+          if (svg)
+            svg = g_memdup (svg, *svg_size);
+
+          gtk_selection_data_free (data);
+
+          return svg;
+        }
+    }
+
+  return NULL;
 }
 
 
@@ -400,6 +470,41 @@ gimp_clipboard_wait_for_buffer (Gimp *gimp)
 
           if (result != GDK_NONE)
             break;
+        }
+
+      g_free (targets);
+    }
+
+  return result;
+}
+
+static GdkAtom
+gimp_clipboard_wait_for_svg (Gimp *gimp)
+{
+  GdkAtom *targets;
+  gint     n_targets;
+  GdkAtom  result = GDK_NONE;
+
+  targets = gimp_clipboard_wait_for_targets (&n_targets);
+
+  if (targets)
+    {
+      GdkAtom svg_atom     = gdk_atom_intern ("image/svg",     FALSE);
+      GdkAtom svg_xml_atom = gdk_atom_intern ("image/svg+xml", FALSE);
+      gint    i;
+
+      for (i = 0; i < n_targets; i++)
+        {
+          if (targets[i] == svg_atom)
+            {
+              result = svg_atom;
+              break;
+            }
+          else if (targets[i] == svg_xml_atom)
+            {
+              result = svg_xml_atom;
+              break;
+            }
         }
 
       g_free (targets);

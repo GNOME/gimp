@@ -35,6 +35,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
+#include "vectors/gimpvectors-import.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -309,24 +311,45 @@ static void
 edit_paste (GimpDisplay *gdisp,
             gboolean     paste_into)
 {
-  GimpBuffer *buffer = gimp_clipboard_get_buffer (gdisp->gimage->gimp);
+  guchar *svg;
+  gsize   svg_size;
 
-  if (buffer)
+  svg = gimp_clipboard_get_svg (gdisp->gimage->gimp, &svg_size);
+
+  if (svg)
     {
-      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-      gint              x, y;
-      gint              width, height;
-
-      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
-
-      if (gimp_edit_paste (gdisp->gimage,
-                           gimp_image_active_drawable (gdisp->gimage),
-                           buffer, paste_into, x, y, width, height))
-	{
+      if (gimp_vectors_import_buffer (gdisp->gimage, svg, svg_size,
+                                      TRUE, TRUE, -1, NULL))
+        {
           gimp_image_flush (gdisp->gimage);
-	}
+        }
 
-      g_object_unref (buffer);
+      g_free (svg);
+    }
+  else
+    {
+      GimpBuffer *buffer;
+
+      buffer = gimp_clipboard_get_buffer (gdisp->gimage->gimp);
+
+      if (buffer)
+        {
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+          gint              x, y;
+          gint              width, height;
+
+          gimp_display_shell_untransform_viewport (shell,
+                                                   &x, &y, &width, &height);
+
+          if (gimp_edit_paste (gdisp->gimage,
+                               gimp_image_active_drawable (gdisp->gimage),
+                               buffer, paste_into, x, y, width, height))
+            {
+              gimp_image_flush (gdisp->gimage);
+            }
+
+          g_object_unref (buffer);
+        }
     }
 }
 

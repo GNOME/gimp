@@ -1,3 +1,11 @@
+2005-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpclipboard.[ch]: added gimp_clipboard_has_svg()
+	and gimp_clipboard_get_svg().
+
+	* app/actions/edit-commands.c (edit_paste_cmd_callback): enabled
+	pasting of SVG data using gimp_vectors_import_buffer().
+
 2005-05-14  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-altivec-installer.c
