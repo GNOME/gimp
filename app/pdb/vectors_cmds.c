@@ -53,7 +53,9 @@ vectors_get_strokes_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpVectors *vectors;
   gint32 num_strokes = 0;
-  gint32 *stroke_list = NULL;
+  gint32 *stroke_ids = NULL;
+  gint i;
+  GimpStroke *cur_stroke = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
@@ -61,7 +63,21 @@ vectors_get_strokes_invoker (Gimp         *gimp,
 
   if (success)
     {
-      /* nothing yet */
+      num_strokes = gimp_vectors_get_n_strokes (vectors);
+
+      if (num_strokes)
+        {
+          stroke_ids = g_new (gint32, num_strokes);
+
+          for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+               cur_stroke;
+               cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+            {
+              stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+              g_printerr ("%d ", gimp_stroke_get_ID (cur_stroke));
+            }
+          g_printerr ("\n");
+        }
     }
 
   return_args = procedural_db_return_args (&vectors_get_strokes_proc, success);
@@ -69,7 +85,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
   if (success)
     {
       return_args[1].value.pdb_int = num_strokes;
-      return_args[2].value.pdb_pointer = stroke_list;
+      return_args[2].value.pdb_pointer = stroke_ids;
     }
 
   return return_args;
@@ -93,8 +109,8 @@ static ProcArg vectors_get_strokes_outargs[] =
   },
   {
     GIMP_PDB_INT32ARRAY,
-    "stroke_list",
-    "List of the paths belonging to this image."
+    "stroke_ids",
+    "List of the strokes belonging to the path."
   }
 };
 

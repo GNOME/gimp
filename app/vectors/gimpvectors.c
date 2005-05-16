@@ -731,19 +731,12 @@ gimp_vectors_real_stroke_remove (GimpVectors *vectors,
     }
 }
 
-GimpStroke *
-gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
-                               gint               id)
+gint
+gimp_vectors_get_n_strokes (const GimpVectors *vectors)
 {
-  GList      *stroke;
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
 
-  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
-    {
-      if (gimp_stroke_get_ID (stroke->data) == id)
-        return stroke->data;
-    }
-
-  return NULL;
+  return g_list_length (vectors->strokes);
 }
 
 
@@ -784,6 +777,23 @@ gimp_vectors_real_stroke_get (const GimpVectors *vectors,
     }
 
   return minstroke;
+}
+
+GimpStroke *
+gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
+                               gint               id)
+{
+  GList      *stroke;
+
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+
+  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
+    {
+      if (gimp_stroke_get_ID (stroke->data) == id)
+        return stroke->data;
+    }
+
+  return NULL;
 }
 
 

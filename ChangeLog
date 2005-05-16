@@ -1,3 +1,12 @@
+2005-05-17  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]: added gimp_vectors_get_n_strokes ();
+	* tools/pdbgen/pdb/vectors.pdb: Attempt to fill an array with IDs,
+	does not yet work.
+
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.c: regenerated.
+
 2005-05-16  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/jpeg/jpeg-load.c: Don't detach from drawable if

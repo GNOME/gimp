@@ -42,18 +42,36 @@ HELP
     @inargs = ( &vectors_arg );
 
     @outargs = (
-	{ name => 'stroke_list', type => 'int32array',
-	  desc => 'List of the paths belonging to this image.',
+	{ name => 'stroke_ids', type => 'int32array',
+	  desc => 'List of the strokes belonging to the path.',
 	  array => { name => 'num_strokes',
-		     desc => 'The number of strokes returned.', init => 1 },
+		     desc => 'The number of strokes returned.',
+		     init => 1 },
 	  init => 1 }
     );
 
-    $invoke{code} = <<"CODE";
+    %invoke = (
+        vars => ['gint i', 'GimpStroke *cur_stroke = NULL'],
+	code => <<"CODE"
 {
-  /* nothing yet */
+  num_strokes = gimp_vectors_get_n_strokes (vectors);
+
+  if (num_strokes)
+    {
+      stroke_ids = g_new (gint32, num_strokes);
+
+      for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+           cur_stroke;
+	   cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+	{
+	  stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
+	  g_printerr ("%d ", gimp_stroke_get_ID (cur_stroke));
+	}
+      g_printerr ("\\n");
+    }
 }
 CODE
+    );
 }
 
 

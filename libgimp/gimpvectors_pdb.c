@@ -37,7 +37,7 @@
  * Returns an Array with the stroke-IDs associated with the passed
  * path.
  *
- * Returns: List of the paths belonging to this image.
+ * Returns: List of the strokes belonging to the path.
  *
  * Since: GIMP 2.4
  */
@@ -47,7 +47,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint *stroke_list = NULL;
+  gint *stroke_ids = NULL;
 
   return_vals = gimp_run_procedure ("gimp_vectors_get_strokes",
 				    &nreturn_vals,
@@ -59,12 +59,12 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_strokes = return_vals[1].data.d_int32;
-      stroke_list = g_new (gint32, *num_strokes);
-      memcpy (stroke_list, return_vals[2].data.d_int32array,
+      stroke_ids = g_new (gint32, *num_strokes);
+      memcpy (stroke_ids, return_vals[2].data.d_int32array,
 	      *num_strokes * sizeof (gint32));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return stroke_list;
+  return stroke_ids;
 }
