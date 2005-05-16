@@ -1,3 +1,8 @@
+2005-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_buffer): check
+	encoding being not NULL before accessing it; added gtk-doc comment.
+
 2005-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpclipboard.[ch]: added gimp_clipboard_has_svg()

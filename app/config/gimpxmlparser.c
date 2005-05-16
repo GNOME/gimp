@@ -226,6 +226,17 @@ gimp_xml_parser_parse_io_channel (GimpXmlParser  *parser,
     }
 }
 
+/**
+ * gimp_xml_parser_parse_buffer:
+ * @parser: a #GimpXmlParser
+ * @buffer: a string buffer
+ * @len: the number of byes in @buffer or -1 if @buffer is nul-terminated
+ * @error: return location for possible errors
+ *
+ * This function uses the given @parser to parse the XML in @buffer.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
 gboolean
 gimp_xml_parser_parse_buffer (GimpXmlParser  *parser,
                               const gchar    *buffer,
@@ -243,24 +254,27 @@ gimp_xml_parser_parse_buffer (GimpXmlParser  *parser,
   if (len < 0)
     len = strlen (buffer);
 
-  if (parse_encoding (buffer, len, &encoding))
+  if (parse_encoding (buffer, len, &encoding) && encoding)
     {
       if (g_ascii_strcasecmp (encoding, "UTF-8") &&
           g_ascii_strcasecmp (encoding, "UTF8"))
         {
           conv = g_convert (buffer, len, "UTF-8", encoding, NULL, &len, error);
-
-          g_free (encoding);
-
           if (! conv)
-            return FALSE;
+            {
+              g_free (encoding);
+              return FALSE;
+            }
         }
+
+      g_free (encoding);
     }
 
   success = g_markup_parse_context_parse (parser->context,
                                           conv ? conv : buffer, len, error);
 
-  g_free (conv);
+  if (conv)
+    g_free (conv);
 
   return success;
 }
