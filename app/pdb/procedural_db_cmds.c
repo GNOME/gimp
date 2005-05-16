@@ -84,7 +84,7 @@ static ProcRecord procedural_db_temp_name_proc =
 {
   "gimp_procedural_db_temp_name",
   "Generates a unique temporary PDB name.",
-  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
+  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is mainly used by the interactive popup dialogs to generate a PDB entry name.",
   "Andy Thomas",
   "Andy Thomas",
   "1998",

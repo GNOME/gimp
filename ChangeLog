@@ -1,3 +1,10 @@
+2005-05-16  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/procedural_db.pdb: fixed typo in API docs.
+
+	* app/pdb/procedural_db_cmds.c
+	* libgimp/gimpproceduraldb_pdb.c: regenerated.
+
 2005-05-16  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpxmlparser.c (gimp_xml_parser_parse_buffer): check
