@@ -25,14 +25,14 @@
  * Convert the low 8bit byte of the src to 16bit words in dst.
  */
 #define mmx_low_bytes_to_words(src,dst,zero) \
-         "\tmovq      %%"#src", %%"#dst"; " \
+         "\tmovq      %%"#src", %%"#dst"\n" \
          "\tpunpcklbw %%"#zero", %%"#dst"\n"
 
 /*
  * Convert the high 8bit byte of the src to 16bit words in dst.
  */
 #define mmx_high_bytes_to_words(src,dst,zero) \
-         "\tmovq      %%"#src", %%"#dst"; " \
+         "\tmovq      %%"#src", %%"#dst"\n" \
          "\tpunpckhbw %%"#zero", %%"#dst"\n"
 
 #define xmm_low_bytes_to_words(src,dst,zero) \
@@ -65,18 +65,18 @@
  * (high-order bit of each word is cleared)
  * Clobbers eax, ecx edx
  */
-#define pdivwX(dividend,divisor,quotient) "movd %%" #dividend ",%%eax; " \
-                                          "movd %%" #divisor  ",%%ecx; " \
-                                          "xorl %%edx,%%edx; "           \
-                                          "divw %%cx; "                  \
-                                          "roll $16, %%eax; "            \
-                                          "roll $16, %%ecx; "            \
-                                          "xorl %%edx,%%edx; "           \
-                                          "divw %%cx; "                  \
-                                          "btr $15, %%eax; "             \
-                                          "roll $16, %%eax; "            \
-                                          "btr $15, %%eax; "             \
-                                          "movd %%eax,%%" #quotient ";"
+#define pdivwX(dividend,divisor,quotient) "movd %%" #dividend ",%%eax\n" \
+                                          "movd %%" #divisor  ",%%ecx\n" \
+                                          "xorl %%edx,%%edx\n"           \
+                                          "divw %%cx\n"                  \
+                                          "roll $16, %%eax\n"            \
+                                          "roll $16, %%ecx\n"            \
+                                          "xorl %%edx,%%edx\n"           \
+                                          "divw %%cx\n"                  \
+                                          "btr $15, %%eax\n"             \
+                                          "roll $16, %%eax\n"            \
+                                          "btr $15, %%eax\n"             \
+                                          "movd %%eax,%%" #quotient "\n"
 
 
 

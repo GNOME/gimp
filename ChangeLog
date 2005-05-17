@@ -1,3 +1,19 @@
+2005-05-17  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-sse2.c:
+	Trying to be more flexible in register use so the compiler can do
+	reloads without running out of registers when using optimisation
+	modes other than 2.
+
+	Avoid the message "error: can't find a register in class
+	`GENERAL_REGS' while reloading `asm'"
+
+	* app/composite/gimp-composite-x86.h
+	Use more newlines in asm() macros to ensure that gcc gets the
+	instruction count correct.  This is partially complete as of this
+	commit.
+
+	
 2005-05-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.3.1.
