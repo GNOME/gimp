@@ -4,3 +4,4 @@ Makefile.in
 .libs
 kernelgen
 gimp-remote-2.3
+test-clipboard
