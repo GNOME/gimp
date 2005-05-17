@@ -28,6 +28,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimplist.h"
 #include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
@@ -36,11 +37,13 @@
 #include "vectors/gimpvectors.h"
 
 static ProcRecord vectors_get_strokes_proc;
+static ProcRecord vectors_stroke_translate_proc;
 
 void
 register_vectors_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &vectors_get_strokes_proc);
+  procedural_db_register (gimp, &vectors_stroke_translate_proc);
 }
 
 static Argument *
@@ -54,7 +57,7 @@ vectors_get_strokes_invoker (Gimp         *gimp,
   GimpVectors *vectors;
   gint32 num_strokes = 0;
   gint32 *stroke_ids = NULL;
-  gint i;
+  gint i = 0;
   GimpStroke *cur_stroke = NULL;
 
   vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -74,9 +77,8 @@ vectors_get_strokes_invoker (Gimp         *gimp,
                cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
             {
               stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
-              g_printerr ("%d ", gimp_stroke_get_ID (cur_stroke));
+              i++;
             }
-          g_printerr ("\n");
         }
     }
 
@@ -129,4 +131,93 @@ static ProcRecord vectors_get_strokes_proc =
   2,
   vectors_get_strokes_outargs,
   { { vectors_get_strokes_invoker } }
+};
+
+static Argument *
+vectors_stroke_translate_invoker (Gimp         *gimp,
+                                  GimpContext  *context,
+                                  GimpProgress *progress,
+                                  Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gint32 offx;
+  gint32 offy;
+  GimpStroke *stroke;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  offx = args[2].value.pdb_int;
+
+  offy = args[3].value.pdb_int;
+
+  if (success)
+    {
+      GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (!stroke)
+        {
+          success = FALSE;
+        }
+      else
+        {
+          /* need to figure out how undo is supposed to work */
+
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                       _("Modify Path"));
+          gimp_vectors_freeze (vectors);
+          gimp_stroke_translate (stroke, offx, offy);
+          gimp_vectors_thaw (vectors);
+          gimp_image_undo_group_end (gimage);
+        }
+    }
+
+  return procedural_db_return_args (&vectors_stroke_translate_proc, success);
+}
+
+static ProcArg vectors_stroke_translate_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke_id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offx",
+    "Offset in x direction"
+  },
+  {
+    GIMP_PDB_INT32,
+    "offy",
+    "Offset in y direction"
+  }
+};
+
+static ProcRecord vectors_stroke_translate_proc =
+{
+  "gimp_vectors_stroke_translate",
+  "return coordinates along the given stroke.",
+  "Returns a lot of coordinates along the passed stroke.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  4,
+  vectors_stroke_translate_inargs,
+  0,
+  NULL,
+  { { vectors_stroke_translate_invoker } }
 };

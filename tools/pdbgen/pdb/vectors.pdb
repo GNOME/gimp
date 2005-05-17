@@ -30,6 +30,14 @@ sub vectors_arg () {{
     desc => 'The vectors object'
 }}
 
+sub stroke_arg () {
+   &vectors_arg,
+   {
+     name => 'stroke_id',
+     type => 'int32',
+     desc => 'The stroke ID'
+   }}
+
 sub vectors_get_strokes {
     $blurb = 'List the strokes associated with the passed path.';
 
@@ -51,7 +59,7 @@ HELP
     );
 
     %invoke = (
-        vars => ['gint i', 'GimpStroke *cur_stroke = NULL'],
+        vars => ['gint i = 0', 'GimpStroke *cur_stroke = NULL'],
 	code => <<"CODE"
 {
   num_strokes = gimp_vectors_get_n_strokes (vectors);
@@ -65,22 +73,66 @@ HELP
 	   cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
 	{
 	  stroke_ids[i] = gimp_stroke_get_ID (cur_stroke);
-	  g_printerr ("%d ", gimp_stroke_get_ID (cur_stroke));
+	  i++;
 	}
-      g_printerr ("\\n");
     }
 }
 CODE
     );
 }
 
+sub vectors_stroke_translate {
+    $blurb = 'return coordinates along the given stroke.';
+
+    $help = <<'HELP';
+Returns a lot of coordinates along the passed stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg );
+    foreach (qw(x y)) {
+        push @inargs, { name => "off$_", type => 'int32',
+                        desc => "Offset in $_ direction" }
+    }
+
+    %invoke = (
+	vars => [ 'GimpStroke *stroke' ],
+        code => <<"CODE"
+{
+  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (vectors));
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (!stroke)
+    {
+      success = FALSE;
+    }
+  else
+    {
+      /* need to figure out how undo is supposed to work */
+
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                                   _("Modify Path"));
+      gimp_vectors_freeze (vectors);
+      gimp_stroke_translate (stroke, offx, offy);
+      gimp_vectors_thaw (vectors);
+      gimp_image_undo_group_end (gimage);
+    }
+}
+CODE
+    );
+}
+
+    
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
+              "core/gimpimage-undo.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
               "gimp-intl.h");
 
 @procs = qw(vectors_get_strokes
+            vectors_stroke_translate
             );
 %exports = (app => [@procs], lib => [@procs]);
 

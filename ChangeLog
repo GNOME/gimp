@@ -1,5 +1,16 @@
 2005-05-17  Simon Budig  <simon@gimp.org>
 
+	* tools/pdbgen/pdb/vectors.pdb: Make gimp_vectors_get_strokes()
+	work, add gimp_vectors_stroke_translate()  (I am not sure if this
+	stays in the API, I am currently testing undo and freeze/thaw
+	issues...)
+
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
+2005-05-17  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpvectors.[ch]: added gimp_vectors_get_n_strokes ();
 	* tools/pdbgen/pdb/vectors.pdb: Attempt to fill an array with IDs,
 	does not yet work.

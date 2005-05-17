@@ -68,3 +68,43 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 
   return stroke_ids;
 }
+
+/**
+ * gimp_vectors_stroke_translate:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @offx: Offset in x direction.
+ * @offy: Offset in y direction.
+ *
+ * return coordinates along the given stroke.
+ *
+ * Returns a lot of coordinates along the passed stroke.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_translate (gint32 vectors_ID,
+			       gint   stroke_id,
+			       gint   offx,
+			       gint   offy)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_vectors_stroke_translate",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_INT32, offx,
+				    GIMP_PDB_INT32, offy,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

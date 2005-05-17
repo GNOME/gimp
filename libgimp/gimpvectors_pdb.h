@@ -29,8 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint* gimp_vectors_get_strokes (gint32  vectors_ID,
-				gint   *num_strokes);
+gint*    gimp_vectors_get_strokes      (gint32  vectors_ID,
+					gint   *num_strokes);
+gboolean gimp_vectors_stroke_translate (gint32  vectors_ID,
+					gint    stroke_id,
+					gint    offx,
+					gint    offy);
 
 
 G_END_DECLS
