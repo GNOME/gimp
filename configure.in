@@ -2,13 +2,13 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.54)
 
-# Making releases:
+# Making releases on the stable branch:
 #   GIMP_MICRO_VERSION += 1;
 #   GIMP_INTERFACE_AGE += 1;
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [3])
-m4_define([gimp_micro_version], [0])
+m4_define([gimp_micro_version], [1])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
