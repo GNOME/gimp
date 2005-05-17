@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-06 14:49+0200\n"
-"PO-Revision-Date: 2005-04-05 22:03+0200\n"
+"POT-Creation-Date: 2005-05-17 18:45+0200\n"
+"PO-Revision-Date: 2005-05-17 18:47+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -195,7 +195,7 @@ msgstr "Schriftenauswahl"
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
-#: libgimp/gimpmenu.c:450 libgimpwidgets/gimpintstore.c:181
+#: libgimp/gimpmenu.c:450 libgimpwidgets/gimpintstore.c:167
 msgid "(Empty)"
 msgstr "(Leer)"
 
@@ -298,7 +298,7 @@ msgstr "Blau"
 msgid "Gray"
 msgstr "Grau"
 
-#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:436
+#: libgimpbase/gimpbaseenums.c:164 libgimpbase/gimpbaseenums.c:467
 msgid "Indexed"
 msgstr "Indiziert"
 
@@ -351,157 +351,185 @@ msgstr "Bildquelle"
 msgid "Pattern source"
 msgstr "Musterquelle"
 
-#: libgimpbase/gimpbaseenums.c:290
+#: libgimpbase/gimpbaseenums.c:291
+msgid "Lightness"
+msgstr "Helligkeit"
+
+#: libgimpbase/gimpbaseenums.c:292
+msgid "Luminosity"
+msgstr "Leuchtkraft"
+
+#: libgimpbase/gimpbaseenums.c:293
+msgid "Average"
+msgstr "Durchschnitt"
+
+#: libgimpbase/gimpbaseenums.c:321
 msgid "Dodge"
 msgstr "Abwedeln"
 
-#: libgimpbase/gimpbaseenums.c:291
+#: libgimpbase/gimpbaseenums.c:322
 msgid "Burn"
 msgstr "Nachbelichten"
 
-#: libgimpbase/gimpbaseenums.c:328 libgimpbase/gimpbaseenums.c:468
+#: libgimpbase/gimpbaseenums.c:359 libgimpbase/gimpbaseenums.c:499
 msgid "Linear"
 msgstr "Linear"
 
-#: libgimpbase/gimpbaseenums.c:329
+#: libgimpbase/gimpbaseenums.c:360
 msgid "Bi-linear"
 msgstr "Bi-Linear"
 
-#: libgimpbase/gimpbaseenums.c:330
+#: libgimpbase/gimpbaseenums.c:361
 msgid "Radial"
 msgstr "Kreisförmig"
 
-#: libgimpbase/gimpbaseenums.c:331
+#: libgimpbase/gimpbaseenums.c:362
 msgid "Square"
 msgstr "Quadratisch"
 
-#: libgimpbase/gimpbaseenums.c:332
+#: libgimpbase/gimpbaseenums.c:363
 msgid "Conical (sym)"
 msgstr "Konisch (symmetrisch)"
 
-#: libgimpbase/gimpbaseenums.c:333
+#: libgimpbase/gimpbaseenums.c:364
 msgid "Conical (asym)"
 msgstr "Konisch (asymmetrisch)"
 
-#: libgimpbase/gimpbaseenums.c:334
+#: libgimpbase/gimpbaseenums.c:365
 msgid "Shaped (angular)"
 msgstr "Formangepaßt (winklig)"
 
-#: libgimpbase/gimpbaseenums.c:335
+#: libgimpbase/gimpbaseenums.c:366
 msgid "Shaped (spherical)"
 msgstr "Formangepaßt (sphärisch)"
 
-#: libgimpbase/gimpbaseenums.c:336
+#: libgimpbase/gimpbaseenums.c:367
 msgid "Shaped (dimpled)"
 msgstr "Formangepaßt (dimpled)"
 
-#: libgimpbase/gimpbaseenums.c:337
+#: libgimpbase/gimpbaseenums.c:368
 msgid "Spiral (cw)"
 msgstr "Spirale (rechtsdrehend)"
 
-#: libgimpbase/gimpbaseenums.c:338
+#: libgimpbase/gimpbaseenums.c:369
 msgid "Spiral (ccw)"
 msgstr "Spirale (rechtsdrehend)"
 
-#: libgimpbase/gimpbaseenums.c:367
+#: libgimpbase/gimpbaseenums.c:398
 msgid "Stock ID"
 msgstr "Stock-ID"
 
-#: libgimpbase/gimpbaseenums.c:368
+#: libgimpbase/gimpbaseenums.c:399
 msgid "Inline pixbuf"
 msgstr "Inline pixbuf"
 
-#: libgimpbase/gimpbaseenums.c:369
+#: libgimpbase/gimpbaseenums.c:400
 msgid "Image file"
 msgstr "Bildgröße"
 
-#: libgimpbase/gimpbaseenums.c:398
+#: libgimpbase/gimpbaseenums.c:429
 msgid "RGB color"
 msgstr "RGB Farben"
 
-#: libgimpbase/gimpbaseenums.c:399 libgimpbase/gimpbaseenums.c:434
+#: libgimpbase/gimpbaseenums.c:430 libgimpbase/gimpbaseenums.c:465
 msgid "Grayscale"
 msgstr "Graustufen"
 
-#: libgimpbase/gimpbaseenums.c:400
+#: libgimpbase/gimpbaseenums.c:431
 msgid "Indexed color"
 msgstr "Indizierte Farben"
 
-#: libgimpbase/gimpbaseenums.c:432
+#: libgimpbase/gimpbaseenums.c:463
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:433
+#: libgimpbase/gimpbaseenums.c:464
 msgid "RGB-alpha"
 msgstr "RGB-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:435
+#: libgimpbase/gimpbaseenums.c:466
 msgid "Grayscale-alpha"
 msgstr "Graustufen-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:437
+#: libgimpbase/gimpbaseenums.c:468
 msgid "Indexed-alpha"
 msgstr "Indiziert-Alpha"
 
-#: libgimpbase/gimpbaseenums.c:467
+#: libgimpbase/gimpbaseenums.c:498
 msgid "None (Fastest)"
 msgstr "Keine (am schnellsten)"
 
-#: libgimpbase/gimpbaseenums.c:469
+#: libgimpbase/gimpbaseenums.c:500
 msgid "Cubic"
 msgstr "Kubisch"
 
-#: libgimpbase/gimpbaseenums.c:470
+#: libgimpbase/gimpbaseenums.c:501
 msgid "Lanczos (Best)"
 msgstr "Lanczos (am Besten)"
 
-#: libgimpbase/gimpbaseenums.c:498
+#: libgimpbase/gimpbaseenums.c:529
 msgid "Constant"
 msgstr "Konstant"
 
-#: libgimpbase/gimpbaseenums.c:499
+#: libgimpbase/gimpbaseenums.c:530
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: libgimpbase/gimpbaseenums.c:528
+#: libgimpbase/gimpbaseenums.c:559
 msgid "None"
 msgstr "Keine"
 
-#: libgimpbase/gimpbaseenums.c:529
+#: libgimpbase/gimpbaseenums.c:560
 msgid "Sawtooth wave"
 msgstr "Sägezahnwelle"
 
-#: libgimpbase/gimpbaseenums.c:530
+#: libgimpbase/gimpbaseenums.c:561
 msgid "Triangular wave"
 msgstr "Dreieckswelle"
 
-#: libgimpbase/gimpbaseenums.c:558
+#: libgimpbase/gimpbaseenums.c:589
 msgid "Pixels"
 msgstr "Pixel"
 
-#: libgimpbase/gimpbaseenums.c:559
+#: libgimpbase/gimpbaseenums.c:590
 msgid "Points"
 msgstr "Punkte"
 
-#: libgimpbase/gimpbaseenums.c:588
+#: libgimpbase/gimpbaseenums.c:619
 msgid "Shadows"
 msgstr "Schatten"
 
-#: libgimpbase/gimpbaseenums.c:589
+#: libgimpbase/gimpbaseenums.c:620
 msgid "Midtones"
 msgstr "Mitten"
 
-#: libgimpbase/gimpbaseenums.c:590
+#: libgimpbase/gimpbaseenums.c:621
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: libgimpbase/gimpbaseenums.c:618
-msgid "Forward (traditional)"
-msgstr "Vorwärts (Traditionell)"
+#: libgimpbase/gimpbaseenums.c:649
+msgid "Forward"
+msgstr "Weiter"
 
-#: libgimpbase/gimpbaseenums.c:619
-msgid "Backward (corrective)"
-msgstr "Rückwärts (Korrigierend)"
+#: libgimpbase/gimpbaseenums.c:650
+msgid "Backward"
+msgstr "Zurück"
+
+#: libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Interne GIMP-Prozedur"
+
+#: libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "GIMP-Plugin"
+
+#: libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "GIMP-Erweiterung"
+
+#: libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Temporäre Prozedur"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -657,12 +685,12 @@ msgstr "ungültiger Wert »%ld« für Symbol %s"
 msgid "while parsing token '%s': %s"
 msgstr "beim Verarbeiten von %s: %s"
 
-#: libgimpconfig/gimpconfig-iface.c:454 libgimpconfig/gimpconfig-iface.c:467
+#: libgimpconfig/gimpconfig-iface.c:453 libgimpconfig/gimpconfig-iface.c:466
 #: libgimpconfig/gimpscanner.c:515 libgimpconfig/gimpscanner.c:596
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
 
-#: libgimpconfig/gimpconfig-path.c:349
+#: libgimpconfig/gimpconfig-path.c:376
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} konnte nicht nicht expandiert werden"
@@ -986,7 +1014,7 @@ msgstr "Einheit"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1001
+#: libgimpwidgets/gimpwidgets.c:1003
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -994,15 +1022,15 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:1005
+#: libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
 msgstr "_Neu Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:1018
+#: libgimpwidgets/gimpwidgets.c:1020
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
-#: libgimpwidgets/gimpwidgets.c:1022
+#: libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Zufällig"
 
@@ -1155,3 +1183,4 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
+
