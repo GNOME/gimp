@@ -719,7 +719,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  the vbox containing all widgets  */
 
-  main_vbox = gtk_vbox_new (FALSE, 0);
+  main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
   shell->menubar =
@@ -756,7 +756,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  another vbox for everything except the statusbar  */
   disp_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (disp_vbox), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), disp_vbox, TRUE, TRUE, 0);
   gtk_widget_show (disp_vbox);
 

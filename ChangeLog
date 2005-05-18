@@ -1,5 +1,12 @@
 2005-05-18  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-appearance.c
+	* app/display/gimpdisplayshell.c: removed the 2px border and
+	replaced it with a 1px spacing in the main vbox. Makes the screen
+	edges active when working in fullscreen mode (bug #165774).
+
+2005-05-18  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.c: hack around with gtk+ widget
 	styles to get rid of the menubar padding in fullscreen mode.

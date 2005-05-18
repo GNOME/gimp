@@ -91,15 +91,12 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
                                      gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkContainer       *vbox;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   options = GET_OPTIONS (shell);
 
   g_object_set (options, "show-menubar", show, NULL);
-
-  vbox = GTK_CONTAINER (shell->qmask_button->parent->parent);
 
   if (shell->menubar)
     {
@@ -108,11 +105,6 @@ gimp_display_shell_set_show_menubar (GimpDisplayShell *shell,
       else
         gtk_widget_hide (shell->menubar);
     }
-
-  if (options->show_menubar || options->show_statusbar)
-    gtk_container_set_border_width (vbox, 2);
-  else
-    gtk_container_set_border_width (vbox, 0);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-menubar", show);
 
@@ -235,7 +227,6 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
                                        gboolean          show)
 {
   GimpDisplayOptions *options;
-  GtkContainer       *vbox;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -243,17 +234,10 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  vbox = GTK_CONTAINER (shell->qmask_button->parent->parent);
-
   if (show)
     gtk_widget_show (shell->statusbar);
   else
     gtk_widget_hide (shell->statusbar);
-
-  if (options->show_menubar || options->show_statusbar)
-    gtk_container_set_border_width (vbox, 2);
-  else
-    gtk_container_set_border_width (vbox, 0);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-statusbar", show);
 
