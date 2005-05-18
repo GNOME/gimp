@@ -25,6 +25,9 @@
 
 
 GArray * gimp_dash_pattern_from_preset (GimpDashPreset  preset);
+GArray * gimp_dash_pattern_from_value  (const GValue   *value);
+void     gimp_dash_pattern_set_value   (GArray         *pattern,
+                                        GValue         *value);
 
 
 #endif  /*  __GIMP_DASH_PATTERN_H__  */

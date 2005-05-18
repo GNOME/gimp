@@ -55,16 +55,21 @@ enum
 };
 
 
-static void   gimp_stroke_options_class_init   (GimpStrokeOptionsClass *klass);
+static void   gimp_stroke_options_class_init    (GimpStrokeOptionsClass *klass);
 
-static void   gimp_stroke_options_set_property (GObject         *object,
-                                                guint            property_id,
-                                                const GValue    *value,
-                                                GParamSpec      *pspec);
-static void   gimp_stroke_options_get_property (GObject         *object,
-                                                guint            property_id,
-                                                GValue          *value,
-                                                GParamSpec      *pspec);
+static void   gimp_stroke_options_set_property  (GObject           *object,
+                                                 guint              property_id,
+                                                 const GValue      *value,
+                                                 GParamSpec        *pspec);
+static void   gimp_stroke_options_get_property  (GObject           *object,
+                                                 guint              property_id,
+                                                 GValue            *value,
+                                                 GParamSpec        *pspec);
+
+static void   gimp_stroke_options_set_dash_info (GimpStrokeOptions *options,
+                                                 GArray            *pattern,
+                                                 GimpDashPreset     preset);
+
 
 static guint  stroke_options_signals[LAST_SIGNAL] = { 0 };
 
@@ -201,42 +206,9 @@ gimp_stroke_options_set_property (GObject      *object,
       options->dash_offset = g_value_get_double (value);
       break;
     case PROP_DASH_INFO:
-      {
-        GValueArray *val_array;
-        GValue      *item;
-        gint         i;
-        gdouble      val;
-
-        if (options->dash_info)
-          g_array_free (options->dash_info, TRUE);
-
-        val_array = g_value_get_boxed (value);
-        if (val_array == NULL || val_array->n_values == 0)
-          {
-            options->dash_info = NULL;
-          }
-        else
-          {
-            options->dash_info = g_array_sized_new (FALSE, FALSE,
-                                                    sizeof (gdouble),
-                                                    val_array->n_values);
-
-            for (i=0; i < val_array->n_values; i++)
-              {
-                item = g_value_array_get_nth (val_array, i);
-
-                g_return_if_fail (G_VALUE_HOLDS_DOUBLE (item));
-
-                val = g_value_get_double (item);
-
-                options->dash_info = g_array_append_val (options->dash_info,
-                                                         val);
-              }
-          }
-        g_signal_emit (options,
-                       stroke_options_signals [DASH_INFO_CHANGED], 0,
-                       GIMP_DASH_CUSTOM);
-      }
+      gimp_stroke_options_set_dash_info (options,
+                                         gimp_dash_pattern_from_value (value),
+                                         GIMP_DASH_CUSTOM);
       break;
 
     default:
@@ -280,33 +252,7 @@ gimp_stroke_options_get_property (GObject    *object,
       g_value_set_double (value, options->dash_offset);
       break;
     case PROP_DASH_INFO:
-      {
-        GValueArray *val_array;
-        GValue       item = { 0, };
-        gint         i;
-
-        g_value_init (&item, G_TYPE_DOUBLE);
-
-        if (options->dash_info == NULL || options->dash_info->len == 0)
-          {
-            g_value_set_boxed (value, NULL);
-          }
-        else
-          {
-            val_array = g_value_array_new (options->dash_info->len);
-
-            for (i=0; i < options->dash_info->len; i++)
-              {
-                g_value_set_double (&item, g_array_index (options->dash_info,
-                                                          gdouble,
-                                                          i));
-
-                g_value_array_append (val_array, &item);
-              }
-
-            g_value_set_boxed (value, val_array);
-          }
-      }
+      gimp_dash_pattern_set_value (options->dash_info, value);
       break;
 
     default:
@@ -322,13 +268,24 @@ gimp_stroke_options_set_dash_preset (GimpStrokeOptions *options,
   if (preset == GIMP_DASH_CUSTOM)
     return;
 
-  if (options->dash_info != NULL)
+  gimp_stroke_options_set_dash_info (options,
+                                     gimp_dash_pattern_from_preset (preset),
+                                     preset);
+
+  g_object_notify (G_OBJECT (options), "dash-info");
+}
+
+static void
+gimp_stroke_options_set_dash_info (GimpStrokeOptions *options,
+                                   GArray            *pattern,
+                                   GimpDashPreset     preset)
+{
+  if (options->dash_info)
     g_array_free (options->dash_info, TRUE);
 
-  options->dash_info = gimp_dash_pattern_from_preset (preset);
+  options->dash_info = pattern;
 
   g_signal_emit (options,
                  stroke_options_signals [DASH_INFO_CHANGED], 0,
                  preset);
-  g_object_notify (G_OBJECT (options), "dash-info");
 }

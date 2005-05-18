@@ -1,5 +1,10 @@
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdashpattern.[ch]
+	* app/core/gimpstrokeoptions.c: moved more code to the new files.
+
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/gimpdashpattern.[ch]: new files with coode split out of
 	gimpstrokeoptions.c.

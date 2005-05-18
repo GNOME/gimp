@@ -107,3 +107,67 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
 
   return pattern;
 }
+
+GArray *
+gimp_dash_pattern_from_value (const GValue *value)
+{
+  GValueArray *val_array;
+
+  g_return_val_if_fail (G_VALUE_HOLDS_BOXED (value), NULL);
+
+  val_array = g_value_get_boxed (value);
+  if (val_array == NULL || val_array->n_values == 0)
+    {
+      return NULL;
+    }
+  else
+    {
+      GArray *pattern;
+      gint    i;
+
+      pattern = g_array_sized_new (FALSE, FALSE,
+                                   sizeof (gdouble), val_array->n_values);
+
+      for (i = 0; i < val_array->n_values; i++)
+        {
+          GValue *item = g_value_array_get_nth (val_array, i);
+          gdouble val;
+
+          g_return_val_if_fail (G_VALUE_HOLDS_DOUBLE (item), NULL);
+
+          val = g_value_get_double (item);
+
+          pattern = g_array_append_val (pattern, val);
+        }
+
+      return pattern;
+    }
+}
+
+void
+gimp_dash_pattern_set_value (GArray *pattern,
+                             GValue *value)
+{
+  g_return_if_fail (G_VALUE_HOLDS_BOXED (value));
+
+  if (pattern == NULL || pattern->len == 0)
+    {
+      g_value_set_boxed (value, NULL);
+    }
+  else
+    {
+      GValueArray *val_array = g_value_array_new (pattern->len);
+      GValue       item      = { 0, };
+      gint         i;
+
+      g_value_init (&item, G_TYPE_DOUBLE);
+
+      for (i = 0; i < pattern->len; i++)
+        {
+          g_value_set_double (&item, g_array_index (pattern, gdouble, i));
+          g_value_array_append (val_array, &item);
+        }
+
+      g_value_set_boxed (value, val_array);
+    }
+}
