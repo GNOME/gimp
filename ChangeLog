@@ -1,5 +1,10 @@
 2005-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* tools/test-clipboard.c: implemented pasting.
+	s/mime-type/target/g because that's what it is.
+
+2005-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* tools/test-clipboard.c: cleanup.
 
 2005-05-18  Michael Natterer  <mitch@gimp.org>

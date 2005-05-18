@@ -6,14 +6,26 @@
  * Use this code for whatever you like.
  */
 
+#include "config.h"
+
+#include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <gtk/gtk.h>
 
 
 static void   test_clipboard_list_targets  (GtkClipboard     *clipboard);
 static void   test_clipboard_copy          (GtkClipboard     *clipboard,
-                                            const gchar      *mime_type,
+                                            const gchar      *target,
+                                            const gchar      *filename);
+static void   test_clipboard_paste         (GtkClipboard     *clipboard,
+                                            const gchar      *target,
                                             const gchar      *filename);
 static void   test_clipboard_copy_callback (GtkClipboard     *clipboard,
                                             GtkSelectionData *selection,
@@ -31,7 +43,7 @@ main (gint   argc,
 
   /*  options  */
   static gboolean  list_targets   = FALSE;
-  static gchar    *mime_type      = NULL;
+  static gchar    *target         = NULL;
   static gchar    *copy_filename  = NULL;
   static gchar    *paste_filename = NULL;
 
@@ -43,9 +55,9 @@ main (gint   argc,
       "List the targets offered by the clipboard", NULL
     },
     {
-      "mime-type", 'm', 0,
-      G_OPTION_ARG_STRING, &mime_type,
-      "The mime-type", "<mime-type>"
+      "target", 't', 0,
+      G_OPTION_ARG_STRING, &target,
+      "The target format to copy or paste", "<target>"
     },
     {
       "copy", 'c', 0,
@@ -97,19 +109,19 @@ main (gint   argc,
 
   if (copy_filename)
     {
-      if (! mime_type)
-        g_printerr ("Usage: %s -m <mime-type> -c <file>\n", argv[0]);
+      if (! target)
+        g_printerr ("Usage: %s -t <target> -c <file>\n", argv[0]);
 
-      test_clipboard_copy (clipboard, mime_type, copy_filename);
+      test_clipboard_copy (clipboard, target, copy_filename);
       return EXIT_SUCCESS;
     }
 
   if (paste_filename)
     {
-      if (! mime_type)
-        g_printerr ("Usage: %s -m <mime-type> -p <file>\n", argv[0]);
+      if (! target)
+        g_printerr ("Usage: %s -t <target> -p <file>\n", argv[0]);
 
-      g_printerr ("unimplemented\n");
+      test_clipboard_paste (clipboard, target, paste_filename);
       return EXIT_FAILURE;
     }
 
@@ -148,22 +160,54 @@ test_clipboard_list_targets (GtkClipboard *clipboard)
 
 static void
 test_clipboard_copy (GtkClipboard *clipboard,
-                     const gchar  *mime_type,
+                     const gchar  *target,
                      const gchar  *filename)
 {
-  GtkTargetEntry target;
+  GtkTargetEntry entry;
 
-  target.target = g_strdup (mime_type);
-  target.flags  = 0;
-  target.info   = 1;
+  entry.target = g_strdup (target);
+  entry.flags  = 0;
+  entry.info   = 1;
 
-  if (! gtk_clipboard_set_with_data (clipboard, &target, 1,
+  if (! gtk_clipboard_set_with_data (clipboard, &entry, 1,
                                      test_clipboard_copy_callback,
                                      NULL,
-                                     (gpointer) filename))
+                                     g_strdup (filename)))
     g_error ("gtk_clipboard_set_with_data");
 
   gtk_main ();
+}
+
+static void
+test_clipboard_paste (GtkClipboard *clipboard,
+                     const gchar  *target,
+                     const gchar  *filename)
+{
+  GtkSelectionData *data;
+
+  data = gtk_clipboard_wait_for_contents (clipboard,
+                                          gdk_atom_intern (target,
+                                                           FALSE));
+  if (data)
+    {
+      gsize bytes;
+      gint  fd;
+
+      fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+      if (fd < 0)
+        g_error ("open: %s", g_strerror (errno));
+
+      bytes = data->length * data->format / 8;
+
+      if (write (fd, data->data, bytes) < bytes)
+        g_error ("write: %s", g_strerror (errno));
+
+      if (close (fd) < 0)
+        g_error ("close: %s", g_strerror (errno));
+
+      gtk_selection_data_free (data);
+    }
 }
 
 static void
@@ -179,6 +223,8 @@ test_clipboard_copy_callback (GtkClipboard     *clipboard,
 
   if (! g_file_get_contents (filename, &buf, &buf_size, &error))
     g_error ("g_file_get_contents: %s", error->message);
+
+  g_free (filename);
 
   gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) buf, buf_size);
