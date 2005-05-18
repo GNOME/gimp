@@ -1,3 +1,7 @@
+2005-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added libgimpwidgets/gimpbrowser.c
+
 2005-05-17  Hendrik Brandt  <heb@gnome-de.org>
 
 	* de.po: Updated German translation.
