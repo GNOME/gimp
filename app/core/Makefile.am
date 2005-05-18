@@ -70,6 +70,8 @@ libappcore_a_sources = \
 	gimpcontext.h			\
 	gimpcoords.c			\
 	gimpcoords.h			\
+	gimpdashpattern.c		\
+	gimpdashpattern.h		\
 	gimpdata.c			\
 	gimpdata.h			\
 	gimpdatafactory.c		\

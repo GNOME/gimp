@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimpdashpattern.h"
 #include "gimpmarshal.h"
 #include "gimpstrokeoptions.h"
 
@@ -318,82 +319,13 @@ void
 gimp_stroke_options_set_dash_preset (GimpStrokeOptions *options,
                                      GimpDashPreset     preset)
 {
-  GArray *new_pattern;
-  gdouble dash;
-  gint    i;
-
   if (preset == GIMP_DASH_CUSTOM)
     return;
 
-  new_pattern = g_array_new (FALSE, FALSE, sizeof (gdouble));
-
-  switch (preset)
-    {
-      case GIMP_DASH_LINE:
-        break;
-      case GIMP_DASH_LONG_DASH:
-        dash = 9.0; g_array_append_val (new_pattern, dash);
-        dash = 3.0; g_array_append_val (new_pattern, dash);
-        break;
-      case GIMP_DASH_MEDIUM_DASH:
-        dash = 6.0; g_array_append_val (new_pattern, dash);
-        dash = 6.0; g_array_append_val (new_pattern, dash);
-        break;
-      case GIMP_DASH_SHORT_DASH:
-        dash = 3.0; g_array_append_val (new_pattern, dash);
-        dash = 9.0; g_array_append_val (new_pattern, dash);
-        break;
-      case GIMP_DASH_SPARSE_DOTS:
-        for (i = 0; i < 2; i++)
-          {
-            dash = 1.0; g_array_append_val (new_pattern, dash);
-            dash = 5.0; g_array_append_val (new_pattern, dash);
-          }
-        break;
-      case GIMP_DASH_NORMAL_DOTS:
-        for (i = 0; i < 3; i++)
-          {
-            dash = 1.0; g_array_append_val (new_pattern, dash);
-            dash = 3.0; g_array_append_val (new_pattern, dash);
-          }
-        break;
-      case GIMP_DASH_DENSE_DOTS:
-        for (i = 0; i < 12; i++)
-          {
-            dash = 1.0; g_array_append_val (new_pattern, dash);
-          }
-        break;
-      case GIMP_DASH_STIPPLES:
-        for (i = 0; i < 24; i++)
-          {
-            dash = 0.5; g_array_append_val (new_pattern, dash);
-          }
-        break;
-      case GIMP_DASH_DASH_DOT:
-        dash = 7.0; g_array_append_val (new_pattern, dash);
-        dash = 2.0; g_array_append_val (new_pattern, dash);
-        dash = 1.0; g_array_append_val (new_pattern, dash);
-        dash = 2.0; g_array_append_val (new_pattern, dash);
-        break;
-      case GIMP_DASH_DASH_DOT_DOT:
-        dash = 7.0; g_array_append_val (new_pattern, dash);
-        for (i=0; i < 5; i++)
-          {
-            dash = 1.0; g_array_append_val (new_pattern, dash);
-          }
-        break;
-      default:
-        g_printerr ("Unknown Dash pattern: %d\n", preset);
-    }
-
   if (options->dash_info != NULL)
     g_array_free (options->dash_info, TRUE);
-  options->dash_info = NULL;
 
-  if (new_pattern->len >= 2)
-    options->dash_info = new_pattern;
-  else
-    g_array_free (new_pattern, TRUE);
+  options->dash_info = gimp_dash_pattern_from_preset (preset);
 
   g_signal_emit (options,
                  stroke_options_signals [DASH_INFO_CHANGED], 0,

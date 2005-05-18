@@ -1,3 +1,11 @@
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/gimpdashpattern.[ch]: new files with coode split out of
+	gimpstrokeoptions.c.
+
+	* app/core/gimpstrokeoptions.c: use gimp_dash_pattern_from_preset().
+
 2005-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* tools/test-clipboard.c: don't allow copy and paste at the same
