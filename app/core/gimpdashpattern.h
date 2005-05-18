@@ -24,10 +24,13 @@
 #define __GIMP_DASH_PATTERN_H__
 
 
-GArray * gimp_dash_pattern_from_preset (GimpDashPreset  preset);
-GArray * gimp_dash_pattern_from_value  (const GValue   *value);
-void     gimp_dash_pattern_value_set   (GArray         *pattern,
-                                        GValue         *value);
+GArray * gimp_dash_pattern_from_preset   (GimpDashPreset  preset);
+GArray * gimp_dash_pattern_from_segments (const gboolean *segments,
+                                          gint            n_segments,
+                                          gdouble         dash_length);
+GArray * gimp_dash_pattern_from_value    (const GValue   *value);
+void     gimp_dash_pattern_value_set     (GArray         *pattern,
+                                          GValue         *value);
 
 
 #endif  /*  __GIMP_DASH_PATTERN_H__  */

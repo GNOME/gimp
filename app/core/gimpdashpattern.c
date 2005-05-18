@@ -109,6 +109,46 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
 }
 
 GArray *
+gimp_dash_pattern_from_segments (const gboolean *segments,
+                                 gint            n_segments,
+                                 gdouble         dash_length)
+{
+  GArray   *pattern;
+  gint      i;
+  gint      count;
+  gboolean  state;
+
+  g_return_val_if_fail (segments != NULL || n_segments == 0, NULL);
+
+  pattern = g_array_new (FALSE, FALSE, sizeof (gdouble));
+
+  for (i = 0, count = 0, state = TRUE; i <= n_segments; i++)
+    {
+      if (i < n_segments && segments[i] == state)
+        {
+          count++;
+        }
+      else
+        {
+          gdouble l = (dash_length * count) / n_segments;
+
+          pattern = g_array_append_val (pattern, l);
+
+          count = 1;
+          state = ! state;
+        }
+    }
+
+  if (pattern->len < 2)
+    {
+      g_array_free (pattern, TRUE);
+      return NULL;
+    }
+
+  return pattern;
+}
+
+GArray *
 gimp_dash_pattern_from_value (const GValue *value)
 {
   GValueArray *val_array;

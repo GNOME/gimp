@@ -1,3 +1,9 @@
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdashpattern.[ch]
+	* app/widgets/gimpdasheditor.c: moved code out of GimpDashEditor
+	to gimpdashpattern.c.
+
 2005-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/dbbrowser/Makefile.am

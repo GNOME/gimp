@@ -28,6 +28,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpdashpattern.h"
 #include "core/gimpstrokeoptions.h"
 
 #include "gimpdasheditor.h"
@@ -520,60 +521,17 @@ update_segments_from_options (GimpDashEditor *editor)
 static void
 update_options_from_segments (GimpDashEditor *editor)
 {
-  gint      i, count = 0;
-  gboolean  state;
-  GArray   *dash_array;
+  GArray *dash_info;
 
-  dash_array = g_array_new (FALSE, FALSE, sizeof (gdouble));
+  dash_info = gimp_dash_pattern_from_segments (editor->segments,
+                                               editor->n_segments,
+                                               editor->dash_length);
 
-  state = TRUE;
+  g_object_set (G_OBJECT (editor->stroke_options),
+                "dash-info", dash_info,
+                NULL);
 
-  for (i = 0; i <= editor->n_segments; i++)
-    {
-      if (i < editor->n_segments && editor->segments[i] == state)
-        {
-          count++;
-        }
-      else
-        {
-          gdouble l = (editor->dash_length * count) / editor->n_segments;
-          dash_array = g_array_append_val (dash_array, l);
-
-          count = 1;
-          state = ! state;
-        }
-    }
-
-  if (dash_array->len > 1)
-    {
-      GValueArray *val_array;
-      GValue       item = { 0, };
-
-      val_array = g_value_array_new (dash_array->len);
-
-      g_value_init (&item, G_TYPE_DOUBLE);
-
-      for (i = 0; i < dash_array->len; i++)
-        {
-          g_value_set_double (&item,
-                              g_array_index (dash_array, gdouble, i));
-          g_value_array_append (val_array, &item);
-        }
-
-      g_object_set (editor->stroke_options,
-                    "dash-info", val_array,
-                    NULL);
-
-      g_value_array_free (val_array);
-    }
-  else
-    {
-      g_object_set (editor->stroke_options,
-                    "dash-info", NULL,
-                    NULL);
-    }
-
-  g_array_free (dash_array, TRUE);
+  g_array_free (dash_info, TRUE);
 }
 
 static void
