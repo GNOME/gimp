@@ -1,5 +1,10 @@
 2005-05-18  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.c (file_open_dialog_show): set the
+	file dialogs transient for the parent window (display or toolbox).
+
+2005-05-18  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-snap.c: fix compilation on IRIX (bug #304685).
 
 2005-05-18  Sven Neumann  <sven@gimp.org>

@@ -407,6 +407,8 @@ file_open_dialog_show (GtkWidget   *parent,
           GIMP_FILE_DIALOG (dialog)->gimage = NULL;
         }
 
+      gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+
       gtk_window_present (GTK_WINDOW (dialog));
     }
 }
@@ -430,6 +432,9 @@ file_save_dialog_show (GimpImage   *gimage,
 
       if (dialog)
         {
+          gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                        GTK_WINDOW (parent));
+
           g_object_set_data_full (G_OBJECT (gimage),
                                   "gimp-file-save-dialog", dialog,
                                   (GDestroyNotify) gtk_widget_destroy);
