@@ -1,5 +1,9 @@
 2005-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* tools/test-clipboard.c: cleanup.
+
+2005-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* tools/Makefile.am
 	* tools/test-clipboard.c: new file, a test hack for clipboard
 	debugging.

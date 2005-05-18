@@ -81,12 +81,6 @@ main (gint   argc,
       return EXIT_FAILURE;
     }
 
-  if (argc < 1)
-    {
-      g_printerr ("Usage: %s -m <mime-type> -c <file>\n", argv[0]);
-      return -1;
-    }
-
   gtk_init (&argc, &argv);
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
@@ -104,7 +98,7 @@ main (gint   argc,
   if (copy_filename)
     {
       if (! mime_type)
-        g_printerr ("Usage: %s -m <mime-type> -p <file>\n", argv[0]);
+        g_printerr ("Usage: %s -m <mime-type> -c <file>\n", argv[0]);
 
       test_clipboard_copy (clipboard, mime_type, copy_filename);
       return EXIT_SUCCESS;
@@ -113,7 +107,7 @@ main (gint   argc,
   if (paste_filename)
     {
       if (! mime_type)
-        g_printerr ("Usage: %s -m <mime-type> -c <file>\n", argv[0]);
+        g_printerr ("Usage: %s -m <mime-type> -p <file>\n", argv[0]);
 
       g_printerr ("unimplemented\n");
       return EXIT_FAILURE;
