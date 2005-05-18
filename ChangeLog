@@ -1,12 +1,17 @@
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdasheditor.c: use code from gimpdashpattern.c
+	instead of duplicating it.
+
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdashpattern.[ch]
 	* app/core/gimpstrokeoptions.c: moved more code to the new files.
 
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/Makefile.am
-	* app/core/gimpdashpattern.[ch]: new files with coode split out of
+	* app/core/gimpdashpattern.[ch]: new files with code split out of
 	gimpstrokeoptions.c.
 
 	* app/core/gimpstrokeoptions.c: use gimp_dash_pattern_from_preset().

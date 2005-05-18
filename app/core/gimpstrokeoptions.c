@@ -252,7 +252,7 @@ gimp_stroke_options_get_property (GObject    *object,
       g_value_set_double (value, options->dash_offset);
       break;
     case PROP_DASH_INFO:
-      gimp_dash_pattern_set_value (options->dash_info, value);
+      gimp_dash_pattern_value_set (options->dash_info, value);
       break;
 
     default:

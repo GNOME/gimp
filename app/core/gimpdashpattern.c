@@ -145,7 +145,7 @@ gimp_dash_pattern_from_value (const GValue *value)
 }
 
 void
-gimp_dash_pattern_set_value (GArray *pattern,
+gimp_dash_pattern_value_set (GArray *pattern,
                              GValue *value)
 {
   g_return_if_fail (G_VALUE_HOLDS_BOXED (value));
