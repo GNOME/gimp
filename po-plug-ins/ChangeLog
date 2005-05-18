@@ -1,3 +1,7 @@
+2005-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added plug-ins/dbbrowser/gimpbrowser.c
+
 2005-05-18  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.

@@ -150,6 +150,7 @@ plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
 plug-ins/common/zealouscrop.c
+plug-ins/dbbrowser/gimpbrowser.c
 plug-ins/dbbrowser/gimpprocbrowser.c
 plug-ins/dbbrowser/gimpprocview.c
 plug-ins/dbbrowser/plugin-browser.c
