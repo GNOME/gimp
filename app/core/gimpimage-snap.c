@@ -412,7 +412,10 @@ gimp_image_snap_point (GimpImage *gimage,
     {
       GimpVectors *vectors = gimp_image_get_active_vectors (gimage);
       GimpStroke  *stroke  = NULL;
-      GimpCoords   coords  = { x, y, 0, 0, 0 };
+      GimpCoords   coords  = { 0, 0, 0, 0, 0 };
+
+      coords.x = x;
+      coords.y = y;
 
       while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
         {

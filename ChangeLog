@@ -1,5 +1,9 @@
 2005-05-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-snap.c: fix compilation on IRIX (bug #304685).
+
+2005-05-18  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-appearance.c
 	* app/display/gimpdisplayshell.c: removed the 2px border and
 	replaced it with a 1px spacing in the main vbox. Makes the screen
