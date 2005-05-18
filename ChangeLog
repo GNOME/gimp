@@ -1,3 +1,20 @@
+2005-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/gimpbrowser.[ch]: removed again...
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetsmarshal.list
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpbrowser.[ch]: ...and added here.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: changed accordingly.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c: fixed searching by help.
+
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdasheditor.c: use code from gimpdashpattern.c

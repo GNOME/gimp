@@ -1,29 +1,33 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpbrowser.h
  * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #ifndef __GIMP_BROWSER_H__
 #define __GIMP_BROWSER_H__
 
-
 #include <gtk/gtkhpaned.h>
+
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
 
 
 #define GIMP_TYPE_BROWSER            (gimp_browser_get_type ())
@@ -34,8 +38,7 @@
 #define GIMP_BROWSER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BROWSER, GimpBrowserClass))
 
 
-typedef struct _GimpBrowser       GimpBrowser;
-typedef struct _GimpBrowserClass  GimpBrowserClass;
+typedef struct _GimpBrowserClass GimpBrowserClass;
 
 struct _GimpBrowser
 {
@@ -59,6 +62,7 @@ struct _GimpBrowserClass
   GtkHPanedClass  parent_class;
 
   void (* search) (GimpBrowser *browser,
+                   const gchar *search_string,
                    gint         search_type);
 };
 
@@ -77,5 +81,7 @@ void        gimp_browser_set_widget       (GimpBrowser *browser,
 void        gimp_browser_show_message     (GimpBrowser *browser,
                                            const gchar *message);
 
+
+G_END_DECLS
 
 #endif  /*  __GIMP_BROWSER_H__  */

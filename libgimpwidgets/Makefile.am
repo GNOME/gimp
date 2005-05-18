@@ -63,6 +63,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
+	gimpbrowser.c		\
+	gimpbrowser.h		\
 	gimpbutton.c		\
 	gimpbutton.h		\
 	gimpcellrenderercolor.c	\
@@ -162,6 +164,7 @@ libgimpwidgets_2_0_la_SOURCES = 		\
 libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
 	gimpwidgetstypes.h	\
+	gimpbrowser.h		\
 	gimpbutton.h		\
 	gimpcellrenderercolor.h	\
 	gimpcellrenderertoggle.h\

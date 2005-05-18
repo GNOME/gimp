@@ -26,6 +26,7 @@
 
 #include <libgimpwidgets/gimpwidgetstypes.h>
 
+#include <libgimpwidgets/gimpbrowser.h>
 #include <libgimpwidgets/gimpbutton.h>
 #include <libgimpwidgets/gimpcellrenderercolor.h>
 #include <libgimpwidgets/gimpcellrenderertoggle.h>

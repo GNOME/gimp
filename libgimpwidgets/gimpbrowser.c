@@ -1,22 +1,23 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpbrowser.c
  * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -25,17 +26,13 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include "gimpwidgetstypes.h"
 
 #include "gimpbrowser.h"
+#include "gimpintcombobox.h"
+#include "gimpwidgetsmarshal.h"
 
-#include "libgimp/stdplugins-intl.h"
-
-
-#define DBL_LIST_WIDTH 250
-#define DBL_WIDTH      (DBL_LIST_WIDTH + 400)
-#define DBL_HEIGHT     250
+#include "libgimp/libgimp-intl.h"
 
 
 enum
@@ -101,8 +98,9 @@ gimp_browser_class_init (GimpBrowserClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpBrowserClass, search),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__INT,
-                  G_TYPE_NONE, 1,
+                  _gimp_widgets_marshal_VOID__STRING_INT,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_STRING,
                   G_TYPE_INT);
 
   gtk_object_class->destroy = gimp_browser_destroy;
@@ -306,13 +304,21 @@ static gboolean
 gimp_browser_search_timeout (gpointer data)
 {
   GimpBrowser *browser = GIMP_BROWSER (data);
+  const gchar *search_string;
 
   GDK_THREADS_ENTER();
+
+  search_string = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
+
+  if (! search_string)
+    search_string = "";
+
   g_signal_emit (browser, browser_signals[SEARCH], 0,
-                 browser->search_type);
-  GDK_THREADS_LEAVE();
+                 search_string, browser->search_type);
 
   browser->search_timeout_id = 0;
+
+  GDK_THREADS_LEAVE();
 
   return FALSE;
 }

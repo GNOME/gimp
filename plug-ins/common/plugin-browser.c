@@ -31,7 +31,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpbrowser.h"
 #include "gimpprocview.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -374,21 +373,16 @@ insert_into_tree_view (PluginBrowser *browser,
 
 static void
 browser_search (GimpBrowser   *gimp_browser,
+                const gchar   *search_text,
                 gint           search_type,
                 PluginBrowser *browser)
 {
-  const gchar  *search_text;
   GimpParam    *return_vals;
   gint          nreturn_vals;
   gint          num_plugins;
   gchar        *str;
   GtkListStore *list_store;
   GtkTreeStore *tree_store;
-
-  search_text = gtk_entry_get_text (GTK_ENTRY (gimp_browser->search_entry));
-
-  if (! search_text)
-    search_text = "";
 
   gimp_browser_show_message (GIMP_BROWSER (browser->browser),
                              _("Searching by name - please wait"));
@@ -708,7 +702,7 @@ browser_dialog_new (void)
                                DBL_WIDTH - DBL_LIST_WIDTH, -1);
 
   /* now build the list */
-  browser_search (GIMP_BROWSER (browser->browser), 0, browser);
+  browser_search (GIMP_BROWSER (browser->browser), "", 0, browser);
 
   gtk_widget_show (browser->dialog);
 

@@ -32,7 +32,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpbrowser.h"
 #include "gimpprocbrowser.h"
 #include "gimpprocview.h"
 
@@ -102,6 +101,7 @@ static void       browser_row_activated     (GtkTreeView       *treeview,
 static void       browser_show_procedure    (GimpDBBrowser     *browser,
                                              gchar             *proc_name);
 static void       browser_search            (GimpBrowser       *browser,
+                                             const gchar       *query_text,
                                              gint               search_type,
                                              GimpDBBrowser     *db_browser);
 static void       browser_response          (GtkWidget         *widget,
@@ -231,7 +231,8 @@ gimp_proc_browser_dialog_new (gboolean                     scheme_names,
   browser->return_vals    = NULL;
 
   /* first search (all procedures) */
-  browser_search (GIMP_BROWSER (browser->browser), SEARCH_TYPE_ALL, browser);
+  browser_search (GIMP_BROWSER (browser->browser), "", SEARCH_TYPE_ALL,
+                  browser);
 
   return browser->dialog;
 }
@@ -314,15 +315,13 @@ browser_show_procedure (GimpDBBrowser *browser,
 
 static void
 browser_search (GimpBrowser   *gimp_browser,
+                const gchar   *query_text,
                 gint           search_type,
                 GimpDBBrowser *browser)
 {
-  const gchar  *query_text;
-  gchar       **proc_list;
-  gint          num_procs;
-  gchar        *str;
-
-  query_text = gtk_entry_get_text (GTK_ENTRY (gimp_browser->search_entry));
+  gchar **proc_list;
+  gint    num_procs;
+  gchar  *str;
 
   if (search_type == SEARCH_TYPE_NAME)
     {
@@ -354,6 +353,14 @@ browser_search (GimpBrowser   *gimp_browser,
                                  _("Searching by description - please wait"));
 
       gimp_procedural_db_query (".*", query_text, ".*", ".*", ".*", ".*", ".*",
+                                &num_procs, &proc_list);
+    }
+  else if (search_type == SEARCH_TYPE_HELP)
+    {
+      gimp_browser_show_message (GIMP_BROWSER (browser->browser),
+                                 _("Searching by help - please wait"));
+
+      gimp_procedural_db_query (".*", ".*", query_text, ".*", ".*", ".*", ".*",
                                 &num_procs, &proc_list);
     }
   else if (search_type == SEARCH_TYPE_AUTHOR)
