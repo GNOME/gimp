@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-21 19:12+0000\n"
-"PO-Revision-Date: 2005-04-29 11:01+0100\n"
+"POT-Creation-Date: 2005-05-14 19:27+0000\n"
+"PO-Revision-Date: 2005-05-14 23:01+0100\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "_Parámetros"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:708
 msgid "Fractal Parameters"
-msgstr "Parámetros"
+msgstr "Parámetros de fractal"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:721
 msgid "XMIN:"
@@ -397,7 +397,7 @@ msgstr "_Fractales"
 #: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
 #: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
 #: ../plug-ins/common/spheredesigner.c:2091 ../plug-ins/common/sunras.c:504
-#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1914
+#: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
 #: ../plug-ins/gfig/gfig.c:786 ../plug-ins/gfli/gfli.c:710
@@ -434,7 +434,7 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
 #: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1778
+#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
 #: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
@@ -446,7 +446,7 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
 #: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:127 ../plug-ins/xjt/xjt.c:2524
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1228,13 +1228,13 @@ msgstr "Mapa de colores malo"
 #: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1784 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
-#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
+#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:341
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:510
+#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
 #: ../plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
@@ -1274,9 +1274,9 @@ msgstr "Profundidad de bits no soportada o no válida."
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
 #: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
-#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:880
+#: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
@@ -1285,6 +1285,11 @@ msgstr "Profundidad de bits no soportada o no válida."
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Fondo"
+
+#: ../plug-ins/bmp/bmpread.c:618 ../plug-ins/bmp/bmpread.c:657
+#: ../plug-ins/bmp/bmpread.c:706
+msgid "The bitmap ends unexpectedly."
+msgstr "El mapa de bits finaliza inesperadamente."
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
 #: ../plug-ins/common/pcx.c:573
@@ -1306,8 +1311,8 @@ msgstr "No puede operar sobre tipos de imagen desconocidos."
 #: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
-#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1920
-#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
+#: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
+#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:622
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:978
@@ -1707,7 +1712,7 @@ msgstr "_Avanzado"
 # //R :-?
 #: ../plug-ins/common/CML_explorer.c:1320
 msgid "Channel Independent Parameters"
-msgstr "Parámetros de canales independientes"
+msgstr "Parámetros independientes del canal"
 
 #: ../plug-ins/common/CML_explorer.c:1342
 msgid "Initial value:"
@@ -2478,7 +2483,7 @@ msgstr "Desde:"
 msgid "Color to Alpha Color Picker"
 msgstr "Selector de color para «De color a alfa»"
 
-#: ../plug-ins/common/colortoalpha.c:425
+#: ../plug-ins/common/colortoalpha.c:426
 msgid "to alpha"
 msgstr "a alfa"
 
@@ -2607,10 +2612,13 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
+"Sólo puede ejecutar 'Recomponer' si la imagen activa fue producida "
+"originalmente por 'Descomponer'."
 
 #: ../plug-ins/common/compose.c:406
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
+msgstr "Ocurrió un error analizando el parásito 'dato-descompuesto': se "
+"encontraron muy pocas capas"
 
 #: ../plug-ins/common/compose.c:436
 #, c-format
@@ -2645,7 +2653,7 @@ msgstr "La imagen no es en tonos de gris (bpp=%d)"
 
 #: ../plug-ins/common/compose.c:647
 msgid "Unable to recompose, source layer not found"
-msgstr ""
+msgstr "No se puede recomponer, no se encontró la capa fuente"
 
 #: ../plug-ins/common/compose.c:1272
 msgid "Compose"
@@ -3359,7 +3367,7 @@ msgstr "_Polar"
 
 #: ../plug-ins/common/displace.c:444
 msgid "Edge Behavior"
-msgstr ""
+msgstr "Comportamiento del borde"
 
 #: ../plug-ins/common/displace.c:450 ../plug-ins/common/edge.c:728
 #: ../plug-ins/common/ripple.c:562 ../plug-ins/common/waves.c:273
@@ -3554,7 +3562,7 @@ msgid "Composing Images..."
 msgstr "Componiendo imágenes..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:800
+#: ../plug-ins/helpbrowser/dialog.c:801
 msgid "Untitled"
 msgstr "Sin título"
 
@@ -3914,21 +3922,21 @@ msgstr "_RLE"
 
 #: ../plug-ins/common/gbr.c:129 ../plug-ins/common/gbr.c:150
 msgid "GIMP brush"
-msgstr "Brocha GIMP"
+msgstr "PincEl Gimp"
 
 #: ../plug-ins/common/gbr.c:366 ../plug-ins/common/gbr.c:378
 msgid "Unsupported brush format"
-msgstr "Formato de brocha no soportado"
+msgstr "Formato de pincel no soportado"
 
 #: ../plug-ins/common/gbr.c:389
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "Error en el archivo de brochas «%s» de El GIMP."
+msgstr "Error en el archivo de pinceles «%s» de El Gimp."
 
 #: ../plug-ins/common/gbr.c:397
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Cadena UTF-8 inválida en el archivo de brocha «%s»"
+msgstr "Cadena UTF-8 inválida en el archivo de pincel «%s»"
 
 # # //R ¿Con subrayado?
 #: ../plug-ins/common/gbr.c:403 ../plug-ins/common/gih.c:497
@@ -3938,11 +3946,11 @@ msgstr "Sin nombre"
 
 #: ../plug-ins/common/gbr.c:574
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "Las brochas de El GIMP son EN TONOS DE GRIS o bien en RGBA"
+msgstr "Los pinceles de El Gimp son en TONOS DE GRIS o bien en RGBA"
 
 #: ../plug-ins/common/gbr.c:658
 msgid "Save as Brush"
-msgstr "Guardar como brocha"
+msgstr "Guardar como pincel"
 
 #. attach labels
 #: ../plug-ins/common/gbr.c:683 ../plug-ins/common/grid.c:770
@@ -3964,7 +3972,7 @@ msgstr "¡Oh! Viscoso"
 
 #: ../plug-ins/common/gee.c:156 ../plug-ins/common/gee_zoom.c:189
 msgid "Thank you for choosing GIMP"
-msgstr "Gracias por elegir a El GIMP"
+msgstr "Gracias por elegir a El Gimp"
 
 #: ../plug-ins/common/gee.c:164
 msgid ""
@@ -4145,7 +4153,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:205 ../plug-ins/common/gih.c:226
 msgid "GIMP brush (animated)"
-msgstr "Brocha Gimp (animada)"
+msgstr "Pincel Gimp (animado)"
 
 #: ../plug-ins/common/gih.c:319
 #, c-format
@@ -4154,19 +4162,19 @@ msgstr "La capa %s no tiene canal alfa, saltada. "
 
 #: ../plug-ins/common/gih.c:490
 msgid "Error in GIMP brush pipe file."
-msgstr "Error en el archivo de tubo de brochas de El GIMP."
+msgstr "Error en el archivo de tubo de pinceles de El Gimp."
 
 #: ../plug-ins/common/gih.c:556
 msgid "GIMP brush file appears to be corrupted."
-msgstr "El archivo de brochas de El GIMP parece defectuoso."
+msgstr "El archivo de pinceles de El Gimp parece defectuoso."
 
 #: ../plug-ins/common/gih.c:702
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "No se ha podido cargar una brocha en el tubo; renunciando."
+msgstr "No se ha podido cargar un pincel en el tubo; renunciando."
 
 #: ../plug-ins/common/gih.c:865
 msgid "Save as Brush Pipe"
-msgstr "Guardar como tubo de brochas"
+msgstr "Guardar como tubo de pinceles"
 
 #: ../plug-ins/common/gih.c:893
 msgid "Spacing (percent):"
@@ -4324,7 +4332,7 @@ msgstr "Tabla HTML"
 
 #: ../plug-ins/common/gtm.c:395
 msgid "GIMP Table Magic"
-msgstr "Tabla mágica de El GIMP"
+msgstr "Tabla mágica de El Gimp"
 
 #: ../plug-ins/common/gtm.c:420
 msgid "Warning"
@@ -4799,11 +4807,11 @@ msgstr "A_sunto:"
 msgid "Comm_ent:"
 msgstr "C_omentario:"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:723
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "Se produjo un error con la extensión del archivo o bien falta la misma"
 
-#: ../plug-ins/common/mail.c:955
+#: ../plug-ins/common/mail.c:950
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "No se ha podido iniciar sendmail (%s)"
@@ -5582,11 +5590,11 @@ msgstr "Guardar como PNG"
 
 #: ../plug-ins/common/png.c:1589
 msgid "_Load defaults"
-msgstr "_Cargar predeterminados"
+msgstr "_Cargar predet."
 
 #: ../plug-ins/common/png.c:1590
 msgid "_Save defaults"
-msgstr "_Guardar predeterminados"
+msgstr "_Guardar predet."
 
 #: ../plug-ins/common/png.c:1618
 msgid "_Interlacing (Adam7)"
@@ -5830,7 +5838,7 @@ msgstr "B/N"
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:464
+#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:466
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1413
@@ -5876,7 +5884,7 @@ msgid ""
 "without changing the aspect ratio."
 msgstr ""
 "Si se activa la imagen resultante será redimensionada de manera que quepa en "
-"el tamaño dado sin cambiar la razón de aspecto."
+"el tamaño dado sin cambiar la proporción."
 
 #. Unit
 #: ../plug-ins/common/postscript.c:3178
@@ -6627,7 +6635,7 @@ msgstr "_Moteado..."
 
 #: ../plug-ins/common/sparkle.c:222
 msgid "Region selected for filter is empty"
-msgstr ""
+msgstr "La región seleccionada para el filtro está vacía"
 
 #: ../plug-ins/common/sparkle.c:298
 msgid "Sparkling..."
@@ -6918,7 +6926,7 @@ msgstr "_Diseñador de esferas..."
 
 #: ../plug-ins/common/spheredesigner.c:3050
 msgid "Region selected for plug-in is empty"
-msgstr ""
+msgstr "La región seleccionada para el complemento está vacía"
 
 #: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
@@ -7061,11 +7069,11 @@ msgstr "Altura:"
 
 #: ../plug-ins/common/svg.c:844 ../plug-ins/common/wmf.c:627
 msgid "_X ratio:"
-msgstr "Ratio _X:"
+msgstr "Proporción _X:"
 
 #: ../plug-ins/common/svg.c:866 ../plug-ins/common/wmf.c:649
 msgid "_Y ratio:"
-msgstr "Ratio _Y:"
+msgstr "Proporción _Y:"
 
 #: ../plug-ins/common/svg.c:880 ../plug-ins/common/wmf.c:663
 msgid "Constrain aspect ratio"
@@ -7086,7 +7094,7 @@ msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar los elementos de la ruta del SVG para que puedan ser utilizados con "
-"la herramienta de ruta de El GIMP"
+"la herramienta de ruta de El Gimp"
 
 #: ../plug-ins/common/svg.c:930
 msgid "Merge imported paths"
@@ -7149,16 +7157,16 @@ msgstr "Umbral:"
 msgid "TIFF image"
 msgstr "Imagen TIFF"
 
-#: ../plug-ins/common/tiff.c:882
+#: ../plug-ins/common/tiff.c:897
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../plug-ins/common/tiff.c:898
+#: ../plug-ins/common/tiff.c:913
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/common/tiff.c:907
+#: ../plug-ins/common/tiff.c:922
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7166,11 +7174,11 @@ msgid ""
 "this conversion."
 msgstr ""
 "Advertencia:\n"
-"La imagen que esta cargando tiene 16 bits por canal. El GIMP sólo puede "
+"La imagen que esta cargando tiene 16 bits por canal. El Gimp sólo puede "
 "manejar 8 bits, por lo cual será convertida para usted. Debido a esta "
 "conversión se perderá información."
 
-#: ../plug-ins/common/tiff.c:2080
+#: ../plug-ins/common/tiff.c:2095
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7178,40 +7186,40 @@ msgstr ""
 "El formato TIFF sólo soporta comentarios en \n"
 "codificación ASCII de 7 bits. No se guardará ningún comentario."
 
-#: ../plug-ins/common/tiff.c:2284
+#: ../plug-ins/common/tiff.c:2258
 msgid "Save as TIFF"
 msgstr "Guardar como TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2303
+#: ../plug-ins/common/tiff.c:2277
 msgid "Compression"
 msgstr "Compresión"
 
-#: ../plug-ins/common/tiff.c:2307
+#: ../plug-ins/common/tiff.c:2281
 msgid "_None"
 msgstr "_Ninguno"
 
-#: ../plug-ins/common/tiff.c:2308
+#: ../plug-ins/common/tiff.c:2282
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2309
+#: ../plug-ins/common/tiff.c:2283
 msgid "_Pack Bits"
 msgstr "_Paquetes de bits"
 
-#: ../plug-ins/common/tiff.c:2310
+#: ../plug-ins/common/tiff.c:2284
 msgid "_Deflate"
 msgstr "_Desinflar"
 
-#: ../plug-ins/common/tiff.c:2311
+#: ../plug-ins/common/tiff.c:2285
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2320
+#: ../plug-ins/common/tiff.c:2294
 msgid "Save _color values from transparent pixels"
 msgstr "Guardar los valores de los _colores de los píxeles transparentes"
 
-#: ../plug-ins/common/tiff.c:2336 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2310 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Comentario:"
 
@@ -7242,7 +7250,7 @@ msgstr "Baldosas _pequeñas..."
 
 #: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
-msgstr ""
+msgstr "La región seleccionada para el filtro está vacía."
 
 #. Get the preview image
 #: ../plug-ins/common/tileit.c:363
@@ -7301,7 +7309,7 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Una definición de unidad sólo será guardada antes de que salga de El GIMP si "
+"Una definición de unidad sólo se guardará antes de que salga de El Gimp si "
 "esta columna está activada. "
 
 #: ../plug-ins/common/uniteditor.c:94
@@ -7312,8 +7320,8 @@ msgstr "Id"
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
-"Esta cadena será usada para identificar una unidad en los archivos de "
-"configuración de El GIMP."
+"Esta cadena se usará para identificar una unidad en los archivos de "
+"configuración de El Gimp."
 
 #: ../plug-ins/common/uniteditor.c:96
 msgid "Factor"
@@ -7793,7 +7801,7 @@ msgstr "_Remolino y aspiración"
 
 #: ../plug-ins/common/whirlpinch.c:196
 msgid "Region affected by plug-in is empty"
-msgstr ""
+msgstr "La región afectada por el complemento está vacía"
 
 #: ../plug-ins/common/whirlpinch.c:344
 msgid "Whirling and Pinching..."
@@ -7810,14 +7818,6 @@ msgstr "Án_gulo del remolino:"
 #: ../plug-ins/common/whirlpinch.c:577
 msgid "_Pinch amount:"
 msgstr "Cantidad de _pellizcos:"
-
-#: ../plug-ins/common/winclipboard.c:105
-msgid "Copy to Clipboard"
-msgstr "Copiar al portapapeles"
-
-#: ../plug-ins/common/winclipboard.c:279
-msgid "Copying..."
-msgstr "Copiando..."
 
 #: ../plug-ins/common/wind.c:181
 msgid "Wi_nd..."
@@ -7971,7 +7971,7 @@ msgstr "Imagen X BitMap"
 
 #: ../plug-ins/common/xbm.c:239
 msgid "Created with The GIMP"
-msgstr "Creado con El GIMP"
+msgstr "Creado con El Gimp"
 
 #: ../plug-ins/common/xbm.c:799
 #, c-format
@@ -8076,24 +8076,24 @@ msgstr "Esc_ribir archivo de máscara extra"
 msgid "_Mask file extension:"
 msgstr "Extensión del archivo de _máscara:"
 
-#: ../plug-ins/common/xpm.c:168 ../plug-ins/common/xpm.c:193
+#: ../plug-ins/common/xpm.c:170 ../plug-ins/common/xpm.c:195
 msgid "X PixMap image"
 msgstr "Imagen X PixMap"
 
-#: ../plug-ins/common/xpm.c:349
+#: ../plug-ins/common/xpm.c:351
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Ocurrió un error al abrir el archivo «%s»"
 
-#: ../plug-ins/common/xpm.c:354
+#: ../plug-ins/common/xpm.c:356
 msgid "XPM file invalid"
 msgstr "Archivo XPM inválido"
 
-#: ../plug-ins/common/xpm.c:769
+#: ../plug-ins/common/xpm.c:771
 msgid "Save as XPM"
 msgstr "Guardar como XPM"
 
-#: ../plug-ins/common/xpm.c:790
+#: ../plug-ins/common/xpm.c:792
 msgid "_Alpha threshold:"
 msgstr "Umbral de _alfa:"
 
@@ -8143,48 +8143,47 @@ msgstr "ZealousCropping™.."
 msgid "Nothing to crop."
 msgstr "Nada para recortar."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:140
 msgid "Procedure Browser"
 msgstr "Examinador de procedimientos"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-#: ../plug-ins/dbbrowser/plugin-browser.c:546
-msgid "Search by _Name"
-msgstr "Buscar por _nombre"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr "Buscar por _descripción"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-#: ../plug-ins/dbbrowser/plugin-browser.c:716
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:181
+#: ../plug-ins/dbbrowser/plugin-browser.c:592
 msgid "_Search:"
 msgstr "B_uscar:"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
-#: ../plug-ins/dbbrowser/plugin-browser.c:395
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:195
+msgid "by name"
+msgstr "por nombre"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:196
+msgid "by description"
+msgstr "por descripción"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:404
+#: ../plug-ins/dbbrowser/plugin-browser.c:392
 msgid "Searching by name - please wait"
-msgstr "Buscando por nombre - aguarde"
+msgstr "Buscando por nombre - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "Buscando por descripción - aguarde"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:427
+msgid "Searching by description - please wait"
+msgstr "Buscando por descripción - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:436
 msgid "Searching - please wait"
-msgstr "Buscando - aguarde"
+msgstr "Buscando - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:443
 msgid "1 Procedure"
 msgstr "1 procedimiento"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:445
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedimientos"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
-#: ../plug-ins/dbbrowser/plugin-browser.c:514
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:495
+#: ../plug-ins/dbbrowser/plugin-browser.c:520
 msgid "No matches"
 msgstr "Sin coincidencias"
 
@@ -8194,92 +8193,76 @@ msgstr "Sin coincidencias"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:135 ../plug-ins/gflare/gflare.c:2677
+#: ../plug-ins/dbbrowser/gimpprocview.c:138 ../plug-ins/gflare/gflare.c:2677
 #: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
 #: ../plug-ins/gflare/gflare.c:3750
 msgid "Parameters"
 msgstr "Parámetros"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
 msgstr "Valores de retorno"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Información adicional"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Fecha:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr "Procedimiento interno de El GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "Complemento de El GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "Extensión de El GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr "Procedimiento temporal"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:149
+#: ../plug-ins/dbbrowser/plugin-browser.c:151
 msgid "_Plug-In Browser"
 msgstr "Explorador de _complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:416
+#: ../plug-ins/dbbrowser/plugin-browser.c:405
 msgid "1 Plug-In Interface"
 msgstr "1 interfaz de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:418
+#: ../plug-ins/dbbrowser/plugin-browser.c:407
 #, c-format
 msgid "%d Plug-In Interfaces"
 msgstr "%d interfaces de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:542
+#: ../plug-ins/dbbrowser/plugin-browser.c:559
 msgid "Plug-In Browser"
 msgstr "Visor de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:593
+#: ../plug-ins/dbbrowser/plugin-browser.c:625
 msgid "Name"
 msgstr "Nombre"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:601
-#: ../plug-ins/dbbrowser/plugin-browser.c:670
+#: ../plug-ins/dbbrowser/plugin-browser.c:633
+#: ../plug-ins/dbbrowser/plugin-browser.c:702
 msgid "Insertion Date"
 msgstr "Fecha de inserción"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:609
+#: ../plug-ins/dbbrowser/plugin-browser.c:641
 msgid "Menu Path"
 msgstr "Camino en el menú"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:617
-#: ../plug-ins/dbbrowser/plugin-browser.c:679
+#: ../plug-ins/dbbrowser/plugin-browser.c:649
+#: ../plug-ins/dbbrowser/plugin-browser.c:711
 msgid "Image Types"
 msgstr "Tipos de imágenes"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:641
+#: ../plug-ins/dbbrowser/plugin-browser.c:673
 msgid "List View"
 msgstr "Vista en lista"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:661
+#: ../plug-ins/dbbrowser/plugin-browser.c:693
 msgid "Menu Path/Name"
 msgstr "Camino en el menú/Nombre"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:702
+#: ../plug-ins/dbbrowser/plugin-browser.c:734
 msgid "Tree View"
 msgstr "Vista en árbol"
 
@@ -8313,7 +8296,7 @@ msgstr "Cargar archivos FITS"
 
 #: ../plug-ins/fits/fits.c:983
 msgid "Replacement for undefined pixels"
-msgstr ""
+msgstr "Reemplazo para los píxeles no definidos"
 
 #: ../plug-ins/fits/fits.c:988 ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/gfig/gfig-dialog.c:1421
@@ -8849,7 +8832,7 @@ msgstr "Fallo al escribir el archivo de GDestello «%s»: %s"
 #.
 #: ../plug-ins/gflare/gflare.c:2293
 msgid "GFlare"
-msgstr "Destello de El GIMP"
+msgstr "Destello de El Gimp"
 
 #: ../plug-ins/gflare/gflare.c:2350
 msgid "A_uto update preview"
@@ -8897,7 +8880,7 @@ msgstr "S_elector"
 
 #: ../plug-ins/gflare/gflare.c:2991
 msgid "New GFlare"
-msgstr "Nuevo destello de El GIMP"
+msgstr "Nuevo destello [GFlare]"
 
 #: ../plug-ins/gflare/gflare.c:2994
 msgid "Enter a name for the new GFlare"
@@ -8910,7 +8893,7 @@ msgstr "¡El nombre «%s» ya está usado!"
 
 #: ../plug-ins/gflare/gflare.c:3070
 msgid "Copy GFlare"
-msgstr "Copiar destello de El GIMP"
+msgstr "Copiar destello [GFlare]"
 
 #: ../plug-ins/gflare/gflare.c:3073
 msgid "Enter a name for the copied GFlare"
@@ -8923,11 +8906,11 @@ msgstr "¡El nombre «%s» ya está usado!"
 
 #: ../plug-ins/gflare/gflare.c:3126
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "¡No se puede borrar! Al menos debe haber un destello de El GIMP."
+msgstr "¡No se puede borrar! Al menos debe haber un destello [GFlare]."
 
 #: ../plug-ins/gflare/gflare.c:3136
 msgid "Delete GFlare"
-msgstr "Borrar destello de El GIMP"
+msgstr "Borrar destello [GFlare]"
 
 #: ../plug-ins/gflare/gflare.c:3208
 #, c-format
@@ -8936,7 +8919,7 @@ msgstr "no se encuentra %s en gflares_list"
 
 #: ../plug-ins/gflare/gflare.c:3249
 msgid "GFlare Editor"
-msgstr "Editor de destellos de El GIMP"
+msgstr "Editor de destellos [GFlare]"
 
 #: ../plug-ins/gflare/gflare.c:3253
 msgid "Rescan Gradients"
@@ -9083,11 +9066,11 @@ msgstr "¡Sólo se pueden grabar los dibujables!"
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
-msgstr "Guardar la brocha"
+msgstr "Guardar el pincel"
 
 #: ../plug-ins/gimpressionist/brush.c:488
 msgid "_Brush"
-msgstr "_Brocha"
+msgstr "_Pincel"
 
 #: ../plug-ins/gimpressionist/brush.c:525
 #: ../plug-ins/print/gimp_color_window.c:407
@@ -9096,7 +9079,7 @@ msgstr "Gamma:"
 
 #: ../plug-ins/gimpressionist/brush.c:543
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "Cambia el gamma (brillo) de la Brocha seleccionada"
+msgstr "Cambia el gamma (brillo) del pincel seleccionado"
 
 #: ../plug-ins/gimpressionist/brush.c:551
 msgid "Select:"
@@ -9104,11 +9087,11 @@ msgstr "Seleccionar:"
 
 #: ../plug-ins/gimpressionist/brush.c:580
 msgid "Aspect ratio:"
-msgstr "Razón de aspecto:"
+msgstr "Proporción:"
 
 #: ../plug-ins/gimpressionist/brush.c:584
 msgid "Specifies the aspect ratio of the brush"
-msgstr "Especifica la razón de aspecto de la brocha"
+msgstr "Especifica la proporción del pincel"
 
 #: ../plug-ins/gimpressionist/brush.c:593
 #: ../plug-ins/gimpressionist/paper.c:188
@@ -9127,20 +9110,20 @@ msgstr "Co_lor:"
 
 #: ../plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
-msgstr "P_romedio bajo la brocha"
+msgstr "P_romedio bajo el pincel"
 
 #: ../plug-ins/gimpressionist/color.c:54
 msgid "C_enter of brush"
-msgstr "C_entro de la brocha"
+msgstr "C_entro del pincel"
 
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
-"Se calcula el color con el promedio de todos los píxeles bajo la brocha"
+"Se calcula el color con el promedio de todos los píxeles bajo el pincel"
 
 #: ../plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
-msgstr "Se toma el color del píxel bajo el centro de la brocha"
+msgstr "Se toma el color del píxel bajo el centro del pincel"
 
 #: ../plug-ins/gimpressionist/color.c:76
 msgid "Color _noise:"
@@ -9247,7 +9230,7 @@ msgstr "Un valor de fianza para selecciones adaptativas"
 
 #: ../plug-ins/gimpressionist/gimp.c:79
 msgid "_GIMPressionist..."
-msgstr "El GIMPresionista"
+msgstr "El Gimpresionista"
 
 #: ../plug-ins/gimpressionist/gimp.c:350
 msgid "Painting..."
@@ -9255,7 +9238,7 @@ msgstr "Pintando..."
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:117
 msgid "The GIMPressionist"
-msgstr "El GIMPresionista"
+msgstr "El Gimpresionista"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:196
 msgid "Gimpressionist"
@@ -9275,7 +9258,7 @@ msgstr "Direcciones:"
 
 #: ../plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "El número de direcciones (es decir brochas) a usar"
+msgstr "El número de direcciones (p.e. pinceles) a usar"
 
 #: ../plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
@@ -9600,7 +9583,7 @@ msgstr "Tamaños:"
 
 #: ../plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
-msgstr "La cantidad de tamaños de brochas a utilizar"
+msgstr "La cantidad de tamaños de pinceles a utilizar"
 
 #: ../plug-ins/gimpressionist/size.c:103
 msgid "Minimum size:"
@@ -9608,7 +9591,7 @@ msgstr "Tamaño mínimo:"
 
 #: ../plug-ins/gimpressionist/size.c:107
 msgid "The smallest brush to create"
-msgstr "La menor brocha a crear"
+msgstr "El menor pincel que crear"
 
 #: ../plug-ins/gimpressionist/size.c:115
 msgid "Maximum size:"
@@ -9616,7 +9599,7 @@ msgstr "Tamaño máximo:"
 
 #: ../plug-ins/gimpressionist/size.c:119
 msgid "The largest brush to create"
-msgstr "La mayor brocha a crear"
+msgstr "El mayor pincel que crear"
 
 #: ../plug-ins/gimpressionist/size.c:133
 msgid "Size:"
@@ -9718,11 +9701,11 @@ msgstr ""
 
 #: ../plug-ins/help/domain.c:177
 msgid "The GIMP help files are not installed."
-msgstr "Los archivos de ayuda del El GIMP no están instalados."
+msgstr "Los archivos de ayuda del El Gimp no están instalados."
 
 #: ../plug-ins/help/domain.c:179
 msgid "There is a problem with the GIMP help files."
-msgstr "Existe un problema con los archivos de ayuda de El GIMP."
+msgstr "Existe un problema con los archivos de ayuda de El Gimp."
 
 #: ../plug-ins/help/domain.c:184
 msgid "Please check your installation."
@@ -9744,33 +9727,33 @@ msgstr ""
 
 #: ../plug-ins/helpbrowser/dialog.c:186
 msgid "GIMP Help browser"
-msgstr "Visor de ayuda de El GIMP"
+msgstr "Visor de ayuda de El Gimp"
 
 #: ../plug-ins/helpbrowser/dialog.c:250
 msgid "Drag and drop this icon to a web browser"
-msgstr ""
+msgstr "Arrastrar y soltar este icono en un navegador web"
 
 #: ../plug-ins/helpbrowser/dialog.c:445
 msgid "Go back one page"
-msgstr ""
+msgstr "Retroceder una página"
 
 #: ../plug-ins/helpbrowser/dialog.c:449
 msgid "Go forward one page"
-msgstr ""
+msgstr "Avanzar una página"
 
 #: ../plug-ins/helpbrowser/dialog.c:453
 msgid "Go to the index page"
-msgstr ""
+msgstr "Ir a la página índice"
 
 #: ../plug-ins/helpbrowser/dialog.c:483
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "Visitar la web de documentación de El Gimp"
 
-#: ../plug-ins/helpbrowser/dialog.c:556
+#: ../plug-ins/helpbrowser/dialog.c:557
 msgid "Document not found"
 msgstr "Documento no encontrado"
 
-#: ../plug-ins/helpbrowser/dialog.c:558
+#: ../plug-ins/helpbrowser/dialog.c:559
 msgid "The requested URL could not be loaded:"
 msgstr "No se ha podido cargar la URL solicitada:"
 
@@ -9908,14 +9891,14 @@ msgid "Transformation %s"
 msgstr "Transformación %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2379
-#: ../plug-ins/metadata/interface.c:566 ../plug-ins/metadata/interface.c:576
+#: ../plug-ins/metadata/interface.c:562 ../plug-ins/metadata/interface.c:572
 msgid "Save failed"
 msgstr "El guardado ha fallado"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2460
 #: ../plug-ins/ifscompose/ifscompose.c:2473
 #: ../plug-ins/metadata/interface.c:461 ../plug-ins/metadata/interface.c:471
-#: ../plug-ins/metadata/interface.c:551
+#: ../plug-ins/metadata/interface.c:547
 msgid "Open failed"
 msgstr "Ha fallado la apertura"
 
@@ -10001,7 +9984,7 @@ msgstr "Editar objeto"
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
 msgid "Use Gimp Guides"
-msgstr "Usar la guías de El GIMP"
+msgstr "Usar las guías de El Gimp"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
 msgid "Al_ternate"
@@ -10544,13 +10527,15 @@ msgstr "Vista previa de la exportación"
 msgid "EXIF data will be ignored."
 msgstr "Los datos EXIF se ignorarán."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:89
-msgid ""
-"According to the EXIF data, this image is rotated. Would you like GIMP to "
-"rotate it into the standard orientation?"
-msgstr ""
+#: ../plug-ins/jpeg/jpeg-exif.c:90
+msgid "According to the EXIF data, this image is rotated."
+msgstr "De acuerdo con los datos EXIF, esta imagen está rotada."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:92
+#: ../plug-ins/jpeg/jpeg-exif.c:91
+msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgstr "¿Desea que El Gimp la rote hacia su dirección estándar?"
+
+#: ../plug-ins/jpeg/jpeg-exif.c:93
 msgid "_Keep Orientation"
 msgstr "_Mantener orientación"
 
@@ -10558,7 +10543,7 @@ msgstr "_Mantener orientación"
 msgid "JPEG preview"
 msgstr "Vista previa JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575
+#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Abriendo miniatura de «%s»..."
@@ -10770,31 +10755,31 @@ msgstr "Avanzado"
 msgid "Import XMP from file"
 msgstr "Importar XMP desde el archivo"
 
-#: ../plug-ins/metadata/interface.c:552
+#: ../plug-ins/metadata/interface.c:548
 msgid "Cannot create file"
 msgstr "No se puede crear el archivo"
 
-#: ../plug-ins/metadata/interface.c:567
+#: ../plug-ins/metadata/interface.c:563
 msgid "Some error occurred while saving"
 msgstr "Ocurrió un error durante la escritura"
 
-#: ../plug-ins/metadata/interface.c:577
+#: ../plug-ins/metadata/interface.c:573
 msgid "Could not close the file"
 msgstr "No se ha podido cerrar el archivo"
 
-#: ../plug-ins/metadata/interface.c:599
+#: ../plug-ins/metadata/interface.c:595
 msgid "Export XMP to file"
 msgstr "Exportar XMP a un archivo"
 
-#: ../plug-ins/metadata/interface.c:665
+#: ../plug-ins/metadata/interface.c:661
 msgid "Image Properties"
 msgstr "Propiedades de la imagen"
 
-#: ../plug-ins/metadata/interface.c:669
+#: ../plug-ins/metadata/interface.c:665
 msgid "_Import XMP"
 msgstr "_Importar XMP"
 
-#: ../plug-ins/metadata/interface.c:670
+#: ../plug-ins/metadata/interface.c:666
 msgid "_Export XMP"
 msgstr "_Exportar XMP"
 
@@ -10802,75 +10787,66 @@ msgstr "_Exportar XMP"
 msgid "Propert_ies"
 msgstr "Prop_iedades"
 
-#: ../plug-ins/metadata/metadata.c:198
-msgid "<Image>/File/Info"
-msgstr ""
+#: ../plug-ins/metadata/xmp-parse.c:235
+msgid "Error: No XMP packet found"
+msgstr "Error: No se encontró un paquete XMP"
 
-#: ../plug-ins/metadata/xmp-parse.c:239
-#, c-format
-msgid "Error: %s"
-msgstr "Error: %s"
-
-#: ../plug-ins/metadata/xmp-parse.c:249
+#: ../plug-ins/metadata/xmp-parse.c:250
 #, c-format
 msgid "Error on line %d char %d: %s"
 msgstr "Error en la línea %d letra %d: %s"
 
-#: ../plug-ins/metadata/xmp-parse.c:271
+#: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Se esperaba el texto o elemento opcional <%s>, se encontró en cambio <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:275
+#: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
-msgstr ""
+msgstr "Se esperaba el elemento <%s>, se encontró en cambio <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:287
+#: ../plug-ins/metadata/xmp-parse.c:291
 #, c-format
 msgid "Unknown element <%s>"
-msgstr ""
+msgstr "Elemento <%s> desconocido"
 
-#: ../plug-ins/metadata/xmp-parse.c:314
+#: ../plug-ins/metadata/xmp-parse.c:320
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-msgstr ""
+msgstr "Atributo \"%s\"=\"%s\" desconocido en el elemento <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:589
+#: ../plug-ins/metadata/xmp-parse.c:606
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
-msgstr ""
+msgstr "No se encuentra el atributo requerido rdf:about en <%s>"
 
-#: ../plug-ins/metadata/xmp-parse.c:806
+#: ../plug-ins/metadata/xmp-parse.c:823
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
+msgstr "No se permiten elementos anidados (<%s>) en este contexto"
 
-#: ../plug-ins/metadata/xmp-parse.c:928
+#: ../plug-ins/metadata/xmp-parse.c:945
 #, c-format
 msgid "End of element <%s> not expected in this context"
-msgstr ""
+msgstr "No se esperaba el final del elemento <%s> en este contexto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1025
+#: ../plug-ins/metadata/xmp-parse.c:1047
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
-msgstr ""
+msgstr "El elemento actual (<%s>) no puede contener texto"
 
-#: ../plug-ins/metadata/xmp-parse.c:1050
+#: ../plug-ins/metadata/xmp-parse.c:1072
 msgid "XMP packets must start with <?xpacket begin=...?>"
-msgstr ""
+msgstr "Los paquetes XMP deben empezar con <?xpacket begin=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1064
+#: ../plug-ins/metadata/xmp-parse.c:1086
 msgid "XMP packets must end with <?xpacket end=...?>"
-msgstr ""
+msgstr "Los paquetes XMP deben terminar con <?xpacket end=...?>"
 
-#: ../plug-ins/metadata/xmp-parse.c:1077
+#: ../plug-ins/metadata/xmp-parse.c:1099
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
-
-#: ../plug-ins/metadata/xmp-parse.c:1238 ../plug-ins/metadata/xmp-parse.c:1267
-msgid "No XMP packet found"
-msgstr ""
+msgstr "XMP no puede contener comentarios XML o instrucciones de proceso"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
@@ -11775,13 +11751,13 @@ msgstr "Fallo al escribir %s en «%s»: %s"
 #: ../plug-ins/uri/uri-backend-wget.c:229
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr ""
+msgstr "wget finalizó inesperadamente en el URI «%s»"
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:167
 #, c-format
 msgid "(timeout is %s seconds)"
-msgstr ""
+msgstr "(expiración son %s segundos)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:195
@@ -11796,33 +11772,33 @@ msgstr "Ocurrió un error de red: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:284
 msgid "Downloading unknown amount of image data..."
-msgstr ""
+msgstr "Descargando una cantidad desconocida de datos de imagen..."
 
-#: ../plug-ins/winicon/icodialog.c:87
+#: ../plug-ins/winicon/icodialog.c:99
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alpha, 2-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:88
+#: ../plug-ins/winicon/icodialog.c:100
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alpha, 16-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:89
+#: ../plug-ins/winicon/icodialog.c:101
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alpha, 256-slot palette"
 
-#: ../plug-ins/winicon/icodialog.c:90
+#: ../plug-ins/winicon/icodialog.c:102
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alpha, no palette"
 
-#: ../plug-ins/winicon/icodialog.c:115
+#: ../plug-ins/winicon/icodialog.c:128
 msgid "Save as Windows Icon"
 msgstr "Guardar como icono de Windows"
 
-#: ../plug-ins/winicon/icodialog.c:141
+#: ../plug-ins/winicon/icodialog.c:154
 msgid "Icon details"
 msgstr "Detalles del icono"
 
-#: ../plug-ins/winicon/icoload.c:384
+#: ../plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
 msgstr "Icono #%i"
@@ -11832,7 +11808,7 @@ msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr ""
 "Los iconos de Windows no pueden ser mayores o más anchos de 255píxeles."
 
-#: ../plug-ins/winicon/main.c:87 ../plug-ins/winicon/main.c:106
+#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
 msgstr "Icono de Microsoft Windows"
 

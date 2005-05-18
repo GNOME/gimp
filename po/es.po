@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-24 11:13+0000\n"
-"PO-Revision-Date: 2005-04-24 18:03+0200\n"
+"POT-Creation-Date: 2005-05-18 03:15+0000\n"
+"PO-Revision-Date: 2005-05-18 12:49+0200\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,11 +22,11 @@ msgstr ""
 "X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../app/app_procs.c:133
+#: ../app/app_procs.c:134
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Esta ventana de consola se cerrará en diez segundos)\n"
 
-#: ../app/app_procs.c:227
+#: ../app/app_procs.c:228
 msgid ""
 "GIMP is not properly installed for the current user.\n"
 "User installation was skipped because the '--no-interface' flag was used.\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Para realizar la instalación de usuario ejecute El Gimp sin el modificador\n"
 "«--no-interface»."
 
-#: ../app/app_procs.c:278
+#: ../app/app_procs.c:279
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -51,7 +51,7 @@ msgstr ""
 "Para prevenir la pérdida de datos, compruebe la ubicación y los permisos del "
 "directorio de intercambio definido en sus preferencias (actualmente es «%s»)."
 
-#: ../app/app_procs.c:333 ../app/core/gimppalette-import.c:442
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:442
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "La apertura de «%s» ha fallado: %s"
@@ -141,7 +141,7 @@ msgstr "Hacer todas las advertencias fatales"
 msgid "Output a gimprc file with default settings"
 msgstr "Sacar un archivo gimprc con la configuración predeterminada"
 
-#: ../app/main.c:248 ../app/widgets/gimptoolbox.c:565
+#: ../app/main.c:248 ../app/widgets/gimptoolbox.c:566
 msgid "The GIMP"
 msgstr "El Gimp"
 
@@ -189,16 +189,16 @@ msgstr ""
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:95 ../app/core/gimp.c:871
-#: ../app/dialogs/dialogs.c:144 ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/dialogs.c:145 ../app/dialogs/preferences-dialog.c:2387
 #: ../app/pdb/internal_procs.c:93
 msgid "Brushes"
 msgstr "Pinceles"
 
-#: ../app/actions/actions.c:98 ../app/dialogs/dialogs.c:156
+#: ../app/actions/actions.c:98 ../app/dialogs/dialogs.c:157
 msgid "Buffers"
 msgstr "Búferes"
 
-#: ../app/actions/actions.c:101 ../app/dialogs/dialogs.c:169
+#: ../app/actions/actions.c:101 ../app/dialogs/dialogs.c:170
 msgid "Channels"
 msgstr "Canales"
 
@@ -226,7 +226,7 @@ msgstr "Empotrable"
 msgid "Dockable"
 msgstr "Empotrable"
 
-#: ../app/actions/actions.c:122 ../app/dialogs/dialogs.c:158
+#: ../app/actions/actions.c:122 ../app/dialogs/dialogs.c:159
 msgid "Document History"
 msgstr "Historial del documento"
 
@@ -239,7 +239,7 @@ msgstr "Dibujable"
 msgid "Edit"
 msgstr "Editar"
 
-#: ../app/actions/actions.c:131 ../app/dialogs/dialogs.c:133
+#: ../app/actions/actions.c:131 ../app/dialogs/dialogs.c:134
 msgid "Error Console"
 msgstr "Consola de errores"
 
@@ -249,19 +249,19 @@ msgstr "Archivo"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:137 ../app/core/gimp.c:887
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2430
+#: ../app/dialogs/dialogs.c:153 ../app/dialogs/preferences-dialog.c:2403
 #: ../app/pdb/internal_procs.c:129
 msgid "Fonts"
 msgstr "Tipografías"
 
-#: ../app/actions/actions.c:140 ../app/dialogs/dialogs.c:215
-#: ../app/widgets/gimpgradienteditor.c:280
+#: ../app/actions/actions.c:140 ../app/dialogs/dialogs.c:216
+#: ../app/widgets/gimpgradienteditor.c:294
 msgid "Gradient Editor"
 msgstr "Editor de degradados"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:143 ../app/core/gimp.c:883
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/dialogs.c:149 ../app/dialogs/preferences-dialog.c:2399
 #: ../app/pdb/internal_procs.c:141
 msgid "Gradients"
 msgstr "Degradados"
@@ -276,35 +276,35 @@ msgid "Image"
 msgstr "Imagen"
 
 #. list & grid views
-#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:142
+#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:143
 msgid "Images"
 msgstr "Imágenes"
 
-#: ../app/actions/actions.c:155 ../app/dialogs/dialogs.c:165
+#: ../app/actions/actions.c:155 ../app/dialogs/dialogs.c:166
 #: ../app/dialogs/resize-dialog.c:281
 msgid "Layers"
 msgstr "Capas"
 
-#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:219
+#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:220
 #: ../app/widgets/gimppaletteeditor.c:194
 msgid "Palette Editor"
 msgstr "Editor de paleta"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:161 ../app/core/gimp.c:879
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2422
+#: ../app/dialogs/dialogs.c:151 ../app/dialogs/preferences-dialog.c:2395
 #: ../app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "Paletas"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:164 ../app/core/gimp.c:875
-#: ../app/dialogs/dialogs.c:146 ../app/dialogs/preferences-dialog.c:2418
+#: ../app/dialogs/dialogs.c:147 ../app/dialogs/preferences-dialog.c:2391
 #: ../app/pdb/internal_procs.c:186
 msgid "Patterns"
 msgstr "Patrones"
 
-#: ../app/actions/actions.c:167 ../app/dialogs/preferences-dialog.c:2434
+#: ../app/actions/actions.c:167 ../app/dialogs/preferences-dialog.c:2407
 msgid "Plug-Ins"
 msgstr "Complementos"
 
@@ -318,7 +318,7 @@ msgstr "Seleccionar"
 
 #. initialize the template list
 #: ../app/actions/actions.c:176 ../app/core/gimp.c:896
-#: ../app/dialogs/dialogs.c:160
+#: ../app/dialogs/dialogs.c:161
 msgid "Templates"
 msgstr "Plantillas"
 
@@ -326,16 +326,16 @@ msgstr "Plantillas"
 msgid "Text Editor"
 msgstr "Editor de textos"
 
-#: ../app/actions/actions.c:182 ../app/dialogs/dialogs.c:125
+#: ../app/actions/actions.c:182 ../app/dialogs/dialogs.c:126
 #: ../app/dialogs/preferences-dialog.c:1624 ../app/gui/gui.c:404
 msgid "Tool Options"
 msgstr "Opciones de herramienta"
 
-#: ../app/actions/actions.c:185 ../app/dialogs/dialogs.c:154
+#: ../app/actions/actions.c:185 ../app/dialogs/dialogs.c:155
 msgid "Tools"
 msgstr "Herramientas"
 
-#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:173
+#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:174
 #: ../app/pdb/internal_procs.c:177 ../app/pdb/internal_procs.c:216
 #: ../app/tools/gimpvectortool.c:154
 msgid "Paths"
@@ -582,7 +582,7 @@ msgstr "Nuevo canal de color"
 #: ../app/actions/channels-commands.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:823 ../app/widgets/gimptoolbox-dnd.c:280
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:280
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia del canal %s"
@@ -653,12 +653,12 @@ msgid "_Tool"
 msgstr "_Herramienta"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1691
+#: ../app/dialogs/preferences-dialog.c:1682
 msgid "_Brush"
 msgstr "_Pincel"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:78
-#: ../app/dialogs/preferences-dialog.c:1694
+#: ../app/dialogs/preferences-dialog.c:1685
 msgid "_Pattern"
 msgstr "_Patrón"
 
@@ -669,7 +669,7 @@ msgstr "_Paleta"
 # Es Degradado
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:226
-#: ../app/dialogs/preferences-dialog.c:1697
+#: ../app/dialogs/preferences-dialog.c:1688
 msgid "_Gradient"
 msgstr "_Degradado"
 
@@ -714,8 +714,8 @@ msgstr "In_tercambiar los colores"
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
-#: ../app/widgets/gimplayertreeview.c:780 ../app/widgets/gimptoolbox-dnd.c:146
-#: ../app/widgets/gimptoolbox.c:1045
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:146
+#: ../app/widgets/gimptoolbox.c:1046
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -728,7 +728,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1331
 #: ../app/core/gimppalette-import.c:220 ../app/core/gimppalette.c:518
 #: ../app/core/gimppalette.c:629 ../app/dialogs/palette-import-dialog.c:692
-#: ../app/pdb/image_cmds.c:3836 ../app/widgets/gimpdnd-xds.c:83
+#: ../app/pdb/image_cmds.c:3838 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Sin nombre"
 
@@ -1119,7 +1119,7 @@ msgstr "_Búfer"
 msgid "_Undo"
 msgstr "Des_hacer"
 
-#: ../app/actions/edit-actions.c:66 ../app/dialogs/dialogs.c:189
+#: ../app/actions/edit-actions.c:66 ../app/dialogs/dialogs.c:190
 #: ../app/pdb/internal_procs.c:210
 msgid "Undo"
 msgstr "Deshacer"
@@ -1203,35 +1203,40 @@ msgstr "De_shacer %s"
 msgid "_Redo %s"
 msgstr "_Rehacer %s"
 
-#: ../app/actions/edit-commands.c:104
+#: ../app/actions/edit-commands.c:110
 msgid "Clear Undo History"
 msgstr "Vaciar historial de deshacer"
 
-#: ../app/actions/edit-commands.c:127
+#: ../app/actions/edit-commands.c:134
 msgid "Really clear image's undo history?"
 msgstr "¿Seguro que quiere vaciar el histórico de deshacer de la imagen?"
 
-#: ../app/actions/edit-commands.c:215
+#: ../app/actions/edit-commands.c:146
+#, c-format
+msgid "Clearing the undo history of this image will gain %s of memory."
+msgstr "Al limpiar el historial de deshacer de esta imagen se recuperarán %s de memoria."
+
+#: ../app/actions/edit-commands.c:236
 msgid "Cut Named"
 msgstr "Cortar (con nombre)"
 
-#: ../app/actions/edit-commands.c:218 ../app/actions/edit-commands.c:238
+#: ../app/actions/edit-commands.c:239 ../app/actions/edit-commands.c:259
 msgid "Enter a name for this buffer"
 msgstr "Ponga un nombre a este búfer"
 
-#: ../app/actions/edit-commands.c:235
+#: ../app/actions/edit-commands.c:256
 msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
-#: ../app/actions/edit-commands.c:342
+#: ../app/actions/edit-commands.c:384
 msgid "There is no active layer or channel to cut from."
 msgstr "No hay una capa o canal activo desde donde cortar."
 
-#: ../app/actions/edit-commands.c:354 ../app/actions/edit-commands.c:391
+#: ../app/actions/edit-commands.c:396 ../app/actions/edit-commands.c:433
 msgid "(Unnamed Buffer)"
 msgstr "(Búfer sin nombre)"
 
-#: ../app/actions/edit-commands.c:379
+#: ../app/actions/edit-commands.c:421
 msgid "There is no active layer or channel to copy from."
 msgstr "No hay una capa o canal activo desde donde se pueda copiar."
 
@@ -1413,204 +1418,204 @@ msgstr "_Recargar la lista de tipografías"
 msgid "Rescan font list"
 msgstr "Recargar la lista de tipografías"
 
-#: ../app/actions/gradient-editor-actions.c:46
+#: ../app/actions/gradient-editor-actions.c:45
 msgid "Gradient Editor Menu"
 msgstr "Menú del editor de degradado"
 
-#: ../app/actions/gradient-editor-actions.c:50
+#: ../app/actions/gradient-editor-actions.c:49
 msgid "_Load Left Color From"
 msgstr "_Cargar color izquierdo desde"
 
-#: ../app/actions/gradient-editor-actions.c:52
+#: ../app/actions/gradient-editor-actions.c:51
 msgid "_Save Left Color To"
 msgstr "G_uardar color izquierdo en"
 
-#: ../app/actions/gradient-editor-actions.c:55
+#: ../app/actions/gradient-editor-actions.c:54
 msgid "Load Right Color Fr_om"
 msgstr "Cargar color derecho _desde"
 
-#: ../app/actions/gradient-editor-actions.c:57
+#: ../app/actions/gradient-editor-actions.c:56
 msgid "Sa_ve Right Color To"
 msgstr "G_uardar color derecho en"
 
-#: ../app/actions/gradient-editor-actions.c:63
+#: ../app/actions/gradient-editor-actions.c:62
 msgid "L_eft Endpoint's Color..."
 msgstr "Color del punto final izqui_erdo..."
 
-#: ../app/actions/gradient-editor-actions.c:68
+#: ../app/actions/gradient-editor-actions.c:67
 msgid "R_ight Endpoint's Color..."
 msgstr "Color del punto f_inal derecho..."
 
-#: ../app/actions/gradient-editor-actions.c:108
+#: ../app/actions/gradient-editor-actions.c:107
 msgid "Ble_nd Endpoints' Colors"
 msgstr "Mezclar colores de los pu_ntos finales"
 
-#: ../app/actions/gradient-editor-actions.c:113
+#: ../app/actions/gradient-editor-actions.c:112
 msgid "Blend Endpoints' Opacit_y"
 msgstr "Mezclar opacidad de los puntos f_inales"
 
-#: ../app/actions/gradient-editor-actions.c:143
+#: ../app/actions/gradient-editor-actions.c:142
 msgid "_Left Neighbor's Right Endpoint"
 msgstr "Punto final derecho del vecino _izquierdo"
 
-#: ../app/actions/gradient-editor-actions.c:148
+#: ../app/actions/gradient-editor-actions.c:147
 msgid "_Right Endpoint"
 msgstr "Color del punto final _derecho"
 
-#: ../app/actions/gradient-editor-actions.c:153
-#: ../app/actions/gradient-editor-actions.c:201
+#: ../app/actions/gradient-editor-actions.c:152
+#: ../app/actions/gradient-editor-actions.c:200
 msgid "_FG Color"
 msgstr "Color _PP"
 
-#: ../app/actions/gradient-editor-actions.c:158
-#: ../app/actions/gradient-editor-actions.c:206
+#: ../app/actions/gradient-editor-actions.c:157
+#: ../app/actions/gradient-editor-actions.c:205
 msgid "_BG Color"
 msgstr "Color _SP"
 
-#: ../app/actions/gradient-editor-actions.c:191
+#: ../app/actions/gradient-editor-actions.c:190
 msgid "_Right Neighbor's Left Endpoint"
 msgstr "Punto final izquierdo del vecino de_recho"
 
-#: ../app/actions/gradient-editor-actions.c:196
+#: ../app/actions/gradient-editor-actions.c:195
 msgid "_Left Endpoint"
 msgstr "Color del punto final _izquierdo"
 
-#: ../app/actions/gradient-editor-actions.c:245
+#: ../app/actions/gradient-editor-actions.c:244
 msgid "_Linear"
 msgstr "_Lineal"
 
-#: ../app/actions/gradient-editor-actions.c:250
+#: ../app/actions/gradient-editor-actions.c:249
 msgid "_Curved"
 msgstr "_Curvado"
 
-#: ../app/actions/gradient-editor-actions.c:255
+#: ../app/actions/gradient-editor-actions.c:254
 msgid "_Sinusoidal"
 msgstr "_Sinusoidal"
 
-#: ../app/actions/gradient-editor-actions.c:260
+#: ../app/actions/gradient-editor-actions.c:259
 msgid "Spherical (i_ncreasing)"
 msgstr "Esférica (i_ncremental)"
 
-#: ../app/actions/gradient-editor-actions.c:265
+#: ../app/actions/gradient-editor-actions.c:264
 msgid "Spherical (_decreasing)"
 msgstr "Esférica (_decreciente)"
 
-#: ../app/actions/gradient-editor-actions.c:270
-#: ../app/actions/gradient-editor-actions.c:293
+#: ../app/actions/gradient-editor-actions.c:269
+#: ../app/actions/gradient-editor-actions.c:292
 msgid "(Varies)"
 msgstr "(Variaciones)"
 
-#: ../app/actions/gradient-editor-actions.c:278
+#: ../app/actions/gradient-editor-actions.c:277
 #: ../app/actions/image-actions.c:128
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../app/actions/gradient-editor-actions.c:283
+#: ../app/actions/gradient-editor-actions.c:282
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (tono en _sentido anti-horario)"
 
-#: ../app/actions/gradient-editor-actions.c:288
+#: ../app/actions/gradient-editor-actions.c:287
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (tono en sentido _horario)"
 
-#: ../app/actions/gradient-editor-actions.c:301
+#: ../app/actions/gradient-editor-actions.c:300
 msgid "Zoom In"
 msgstr "Aumentar"
 
-#: ../app/actions/gradient-editor-actions.c:302
+#: ../app/actions/gradient-editor-actions.c:301
 #: ../app/actions/palette-editor-actions.c:78
 #: ../app/actions/view-actions.c:228 ../app/widgets/widgets-enums.c:353
 msgid "Zoom in"
 msgstr "Aumentar"
 
-#: ../app/actions/gradient-editor-actions.c:307
+#: ../app/actions/gradient-editor-actions.c:306
 msgid "Zoom Out"
 msgstr "Disminuir"
 
-#: ../app/actions/gradient-editor-actions.c:308
+#: ../app/actions/gradient-editor-actions.c:307
 #: ../app/actions/palette-editor-actions.c:84
 #: ../app/actions/view-actions.c:222 ../app/widgets/widgets-enums.c:354
 msgid "Zoom out"
 msgstr "Disminuir"
 
-#: ../app/actions/gradient-editor-actions.c:313
+#: ../app/actions/gradient-editor-actions.c:312
 msgid "Zoom All"
 msgstr "Aumentar todo"
 
-#: ../app/actions/gradient-editor-actions.c:314
+#: ../app/actions/gradient-editor-actions.c:313
 #: ../app/actions/palette-editor-actions.c:90
 msgid "Zoom all"
 msgstr "Aumentar todo"
 
-#: ../app/actions/gradient-editor-actions.c:589
+#: ../app/actions/gradient-editor-actions.c:588
 msgid "_Blending Function for Segment"
 msgstr "/Función de _mezcla para el segmento"
 
-#: ../app/actions/gradient-editor-actions.c:591
+#: ../app/actions/gradient-editor-actions.c:590
 msgid "Coloring _Type for Segment"
 msgstr "_Tipo de coloreado para el segmento"
 
-#: ../app/actions/gradient-editor-actions.c:594
+#: ../app/actions/gradient-editor-actions.c:593
 msgid "_Flip Segment"
 msgstr "In_vertir segmento simétricamente"
 
-#: ../app/actions/gradient-editor-actions.c:596
+#: ../app/actions/gradient-editor-actions.c:595
 msgid "_Replicate Segment..."
 msgstr "_Replicar segmento..."
 
-#: ../app/actions/gradient-editor-actions.c:598
+#: ../app/actions/gradient-editor-actions.c:597
 msgid "Split Segment at _Midpoint"
 msgstr "Partir segmento por la _mitad"
 
-#: ../app/actions/gradient-editor-actions.c:600
+#: ../app/actions/gradient-editor-actions.c:599
 msgid "Split Segment _Uniformly..."
 msgstr "Partir segmento _uniformemente..."
 
-#: ../app/actions/gradient-editor-actions.c:602
+#: ../app/actions/gradient-editor-actions.c:601
 msgid "_Delete Segment"
 msgstr "B_orrar segmento"
 
-#: ../app/actions/gradient-editor-actions.c:604
+#: ../app/actions/gradient-editor-actions.c:603
 msgid "Re-_center Segment's Midpoint"
 msgstr "Re-_centrar punto medio del segmento"
 
-#: ../app/actions/gradient-editor-actions.c:606
+#: ../app/actions/gradient-editor-actions.c:605
 msgid "Re-distribute _Handles in Segment"
 msgstr "Redistribuir los _tiradores en el segmento"
 
-#: ../app/actions/gradient-editor-actions.c:611
+#: ../app/actions/gradient-editor-actions.c:610
 msgid "_Blending Function for Selection"
 msgstr "Función de m_ezcla para la selección"
 
-#: ../app/actions/gradient-editor-actions.c:613
+#: ../app/actions/gradient-editor-actions.c:612
 msgid "Coloring _Type for Selection"
 msgstr "_Tipo de coloreado para la selección"
 
-#: ../app/actions/gradient-editor-actions.c:616
+#: ../app/actions/gradient-editor-actions.c:615
 msgid "_Flip Selection"
 msgstr "_Invertir selección simétricamente"
 
-#: ../app/actions/gradient-editor-actions.c:618
+#: ../app/actions/gradient-editor-actions.c:617
 msgid "_Replicate Selection..."
 msgstr "_Replicar selección..."
 
-#: ../app/actions/gradient-editor-actions.c:620
+#: ../app/actions/gradient-editor-actions.c:619
 msgid "Split Segments at _Midpoints"
 msgstr "Partir segmentos por la _mitad"
 
-#: ../app/actions/gradient-editor-actions.c:622
+#: ../app/actions/gradient-editor-actions.c:621
 msgid "Split Segments _Uniformly..."
 msgstr "Partir segmentos _uniformemente..."
 
-#: ../app/actions/gradient-editor-actions.c:624
+#: ../app/actions/gradient-editor-actions.c:623
 msgid "_Delete Selection"
 msgstr "Bo_rrar selección"
 
-#: ../app/actions/gradient-editor-actions.c:626
+#: ../app/actions/gradient-editor-actions.c:625
 msgid "Re-_center Midpoints in Selection"
 msgstr "Re-_centrar puntos medios en la selección"
 
-#: ../app/actions/gradient-editor-actions.c:628
+#: ../app/actions/gradient-editor-actions.c:627
 msgid "Re-distribute _Handles in Selection"
 msgstr "Redistribuir los _tiradores en la selección"
 
@@ -2139,7 +2144,7 @@ msgstr "Editar atributos de capa"
 #: ../app/actions/layers-commands.c:234 ../app/actions/layers-commands.c:236
 #: ../app/actions/layers-commands.c:293 ../app/actions/layers-commands.c:297
 #: ../app/widgets/gimpdrawabletreeview.c:416
-#: ../app/widgets/gimplayertreeview.c:887
+#: ../app/widgets/gimplayertreeview.c:872
 msgid "New Layer"
 msgstr "Capa nueva"
 
@@ -2731,7 +2736,7 @@ msgstr "Abrir archivo de texto (UTF-8)"
 #: ../app/core/gimpbrush-load.c:406 ../app/core/gimpbrushgenerated.c:601
 #: ../app/core/gimpbrushpipe.c:337 ../app/core/gimpgradient-load.c:63
 #: ../app/core/gimppalette.c:361 ../app/core/gimppattern.c:329
-#: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:291
+#: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "No se ha podido abrir «%s» para lectura: %s"
@@ -3004,7 +3009,7 @@ msgstr "E_xportar ruta..."
 msgid "Path to Sele_ction"
 msgstr "Ruta a sele_cción"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1878
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1882
 msgid "Path to selection"
 msgstr "Ruta a selección"
 
@@ -3053,7 +3058,7 @@ msgstr "Opciones de ruta nueva"
 msgid "Path to Selection"
 msgstr "Ruta a selección"
 
-#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectortool.c:1908
+#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectortool.c:1912
 #: ../app/vectors/gimpvectors.c:238
 msgid "Stroke Path"
 msgstr "Trazar ruta"
@@ -3394,7 +3399,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
 #: ../app/core/gimppalette.c:562 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:613 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:348
+#: ../app/xcf/xcf.c:350
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para escritura: %s"
@@ -3488,7 +3493,9 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:76
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Esto es la distancia en píxeles a partir del que se activa el ajuste a la rejilla y la guía."
+msgstr ""
+"Esto es la distancia en píxeles a partir del cual se activa el ajuste a la "
+"rejilla y la guía."
 
 #: ../app/config/gimprc-blurbs.h:80
 msgid ""
@@ -3547,12 +3554,6 @@ msgstr ""
 "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: ../app/config/gimprc-blurbs.h:163
-msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr ""
-"Cuando se encuentre activado El Gimp utilizará una ventana de información "
-"diferente por cada vista de imagen."
-
-#: ../app/config/gimprc-blurbs.h:166
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -3560,27 +3561,27 @@ msgstr ""
 "Cuando se encuentre activado esto asegurará que la imagen se vea completa "
 "después de abrirse, de otro modo será mostrada con una escala de 1:1."
 
-#: ../app/config/gimprc-blurbs.h:170
+#: ../app/config/gimprc-blurbs.h:167
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Instala un mapa de color privado; podría ser muy útil en las pantallas de 8 "
 "bits (256 colores)."
 
-#: ../app/config/gimprc-blurbs.h:173
+#: ../app/config/gimprc-blurbs.h:170
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
 
-#: ../app/config/gimprc-blurbs.h:180
+#: ../app/config/gimprc-blurbs.h:177
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "Cuántos nombres de archivos de imágenes abiertas recientemente se deben "
 "mantener en el menú Archivo."
 
-#: ../app/config/gimprc-blurbs.h:183
+#: ../app/config/gimprc-blurbs.h:180
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -3588,7 +3589,7 @@ msgstr ""
 "Velocidad de las hormigas marchantes en el contorno de la selección. Este "
 "valor está en milisegundos (menos tiempo indica una marcha mas rápida)."
 
-#: ../app/config/gimprc-blurbs.h:187
+#: ../app/config/gimprc-blurbs.h:184
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -3596,11 +3597,11 @@ msgstr ""
 "El Gimp advertirá al usuario si realiza un intento de crear una imagen que "
 "podría requerir más memoria que el tamaño especificado aquí."
 
-#: ../app/config/gimprc-blurbs.h:191
+#: ../app/config/gimprc-blurbs.h:188
 msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "Cuando se encuentre activado El Gimp mostrará mnemónicos en los menús."
 
-#: ../app/config/gimprc-blurbs.h:194
+#: ../app/config/gimprc-blurbs.h:191
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
@@ -3608,7 +3609,7 @@ msgstr ""
 "Generalmente sólo es importante para pantallas de 8 bits, esto define la "
 "cantidad mínima de colores del sistema reservados para El Gimp."
 
-#: ../app/config/gimprc-blurbs.h:205
+#: ../app/config/gimprc-blurbs.h:202
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3618,7 +3619,7 @@ msgstr ""
 "establece a 0, se fuerza una consulta al servidor X para obtener la "
 "resolución horizontal y vertical."
 
-#: ../app/config/gimprc-blurbs.h:210
+#: ../app/config/gimprc-blurbs.h:207
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3628,7 +3629,7 @@ msgstr ""
 "establece a 0, se fuerza una consulta al servidor X para obtener la "
 "resolución horizontal y vertical."
 
-#: ../app/config/gimprc-blurbs.h:215
+#: ../app/config/gimprc-blurbs.h:212
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
@@ -3638,7 +3639,7 @@ msgstr ""
 "cuando una capa o ruta se escoge. Esto se usa para ser el comportamiento "
 "predeterminado en las versiones más antiguas."
 
-#: ../app/config/gimprc-blurbs.h:220
+#: ../app/config/gimprc-blurbs.h:217
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -3646,7 +3647,7 @@ msgstr ""
 "Establece el tamaño de la vista previa de la navegación disponible en la "
 "esquina inferior izquierda de la ventana de la imagen."
 
-#: ../app/config/gimprc-blurbs.h:224
+#: ../app/config/gimprc-blurbs.h:221
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
@@ -3655,7 +3656,7 @@ msgstr ""
 "«--enable-mp» esto define cuántos procesadores debería utilizar El Gimp "
 "simultáneamente."
 
-#: ../app/config/gimprc-blurbs.h:238
+#: ../app/config/gimprc-blurbs.h:235
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -3669,7 +3670,7 @@ msgstr ""
 "debería ser más preciso, pero puede ser más lento.  Perversamente en algunos "
 "servidores X al activarse esta opción se obtiene un pintado más rápido."
 
-#: ../app/config/gimprc-blurbs.h:251
+#: ../app/config/gimprc-blurbs.h:248
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -3679,7 +3680,7 @@ msgstr ""
 "canales. Es estupendo disponer de las vistas previas en el diálogo de capas "
 "y canales, pero pueden ralentizar el trabajo con imágenes grandes."
 
-#: ../app/config/gimprc-blurbs.h:256
+#: ../app/config/gimprc-blurbs.h:253
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -3687,7 +3688,7 @@ msgstr ""
 "Establece el tamaño de la vista previa usado para las vistas preliminares de "
 "las capas y los canales en los diálogos nuevos creados."
 
-#: ../app/config/gimprc-blurbs.h:260
+#: ../app/config/gimprc-blurbs.h:257
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
@@ -3695,7 +3696,7 @@ msgstr ""
 "Cuando se encuentre activado, la ventana de la imagen se redimensionará "
 "automáticamente cuando cambie el tamaño físico de la imagen."
 
-#: ../app/config/gimprc-blurbs.h:264
+#: ../app/config/gimprc-blurbs.h:261
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
@@ -3703,30 +3704,30 @@ msgstr ""
 "Cuando se encuentre activado, la ventana de la imagen se redimensionará "
 "automáticamente al ampliar o reducir las imágenes."
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:265
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Permitir a El Gimp intentar restaurar la última sesión guardada en cada "
 "inicio."
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:268
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Recordar la herramienta, el patrón, el color y los pinceles actuales entre "
 "distintas sesiones de El Gimp."
 
-#: ../app/config/gimprc-blurbs.h:275
+#: ../app/config/gimprc-blurbs.h:272
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 "Guardar las posiciones y tamaños de los diálogos principales al salir de El "
 "GIMP."
 
-#: ../app/config/gimprc-blurbs.h:278
+#: ../app/config/gimprc-blurbs.h:275
 msgid "Save the tool options when the GIMP exits."
 msgstr "Guardar las opciones de herramientas al salir de El Gimp."
 
-#: ../app/config/gimprc-blurbs.h:284
+#: ../app/config/gimprc-blurbs.h:281
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -3734,7 +3735,7 @@ msgstr ""
 "Cuando está habilitado todas la herramientas de pintura mostrarán una vista "
 "previa del contorno de el pincel actual."
 
-#: ../app/config/gimprc-blurbs.h:288
+#: ../app/config/gimprc-blurbs.h:285
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -3744,7 +3745,7 @@ msgstr ""
 "a la página de ayuda relacionada. Sin ese botón, la página de ayuda puede "
 "verse al pulsar F1."
 
-#: ../app/config/gimprc-blurbs.h:293
+#: ../app/config/gimprc-blurbs.h:290
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
@@ -3752,7 +3753,7 @@ msgstr ""
 "Cuando se encuentre activado, el cursor se mostrará sobre la imagen cuando "
 "se use una herramienta de pintura."
 
-#: ../app/config/gimprc-blurbs.h:297
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -3761,7 +3762,7 @@ msgstr ""
 "Esto también puede ser activado con el comando «Ver->Mostrar la barra de "
 "estado»."
 
-#: ../app/config/gimprc-blurbs.h:301
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -3769,7 +3770,7 @@ msgstr ""
 "Cuando está activado las reglas están visibles de forma predeterminada. Esto "
 "también puede ser activado con el comando «Ver->Mostrar las reglas»."
 
-#: ../app/config/gimprc-blurbs.h:305
+#: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -3778,7 +3779,7 @@ msgstr ""
 "predeterminada. Esto también puede ser activado con el comando «Ver->Mostrar "
 "las barras de desplazamiento»."
 
-#: ../app/config/gimprc-blurbs.h:309
+#: ../app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -3787,7 +3788,7 @@ msgstr ""
 "Esto también puede ser activado con el comando «Ver->Mostrar la barra de "
 "estado»."
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:310
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -3795,7 +3796,7 @@ msgstr ""
 "Cuando está activado la selección es visible de forma predeterminada. Esto "
 "también puede ser activado con el comando «Ver->Mostrar la selección»."
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:314
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -3804,7 +3805,7 @@ msgstr ""
 "predeterminada. Esto también puede ser activado con el comando «Ver->Mostrar "
 "el límite de la capa»."
 
-#: ../app/config/gimprc-blurbs.h:321
+#: ../app/config/gimprc-blurbs.h:318
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -3812,7 +3813,7 @@ msgstr ""
 "Cuando está activado las reglas están visibles de forma predeterminada. Esto "
 "también puede ser activado con el comando «Ver->Mostrar las reglas»."
 
-#: ../app/config/gimprc-blurbs.h:325
+#: ../app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -3820,7 +3821,7 @@ msgstr ""
 "Cuando está activado la rejilla es visible de forma predeterminada. Esto "
 "también puede ser activado con el comando «Ver->Mostrar la rejilla»."
 
-#: ../app/config/gimprc-blurbs.h:329
+#: ../app/config/gimprc-blurbs.h:326
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -3829,15 +3830,15 @@ msgstr ""
 "predeterminada. Esto también puede activarse con el comando «Ver->Mostrar "
 "puntos de muestra»."
 
-#: ../app/config/gimprc-blurbs.h:333
+#: ../app/config/gimprc-blurbs.h:330
 msgid "Enable to display a handy GIMP tip on startup."
 msgstr "Activa la visualización de un útil consejo de El Gimp al iniciar."
 
-#: ../app/config/gimprc-blurbs.h:336
+#: ../app/config/gimprc-blurbs.h:333
 msgid "Enable to display tooltips."
 msgstr "Activa la visualización de los consejos de las herramientas."
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:336
 msgid ""
 "There is always a tradeoff between memory usage and speed.  In most cases, "
 "the GIMP opts for speed over memory.  However, if memory is a big issue, try "
@@ -3847,7 +3848,7 @@ msgstr ""
 "los casos, El Gimp opta por la velocidad por encima de la memoria. Sin "
 "embargo, si la memoria es un gran problema intente activar esta opción."
 
-#: ../app/config/gimprc-blurbs.h:344
+#: ../app/config/gimprc-blurbs.h:341
 msgid ""
 "Sets the swap file location. The gimp uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3865,11 +3866,22 @@ msgstr ""
 "creado en un directorio que está montado sobre NFS. Por estas razones quizá "
 "sea conveniente colocar su archivo de intercambio en «/tmp»."
 
-#: ../app/config/gimprc-blurbs.h:353
+#: ../app/config/gimprc-blurbs.h:350
 msgid "When enabled, menus can be torn off."
 msgstr "Cuando se encuentre activado, los menús podrán ser separados."
 
-#: ../app/config/gimprc-blurbs.h:356
+#: ../app/config/gimprc-blurbs.h:353
+msgid ""
+"When enabled, dock windows (the toolbox and palettes) are set to be "
+"transient to the active image window. Most window managers will keep the "
+"dock windows above the image window then, but it may also have other effects."
+msgstr "Cuando se encuentre activado, se establecerán las ventanas "
+"empotrables (la caja de herramientas y las paletas) como dependientes "
+"de la ventana de imagen activa. La mayoría de los gestores de ventanas "
+"mantendrán entonces las ventanas empotrables encima de la ventana "
+"de imagen, pero esto podría tener también otros efectos. "
+
+#: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -3878,16 +3890,16 @@ msgstr ""
 "elementos del menú presionando una combinación de teclas mientras el "
 "elemento del menú está seleccionado."
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:363
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr "Guardar las combinaciones de teclas modificadas al salir de El Gimp."
 
-#: ../app/config/gimprc-blurbs.h:363
+#: ../app/config/gimprc-blurbs.h:366
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 "Restaurar las combinaciones de teclas guardadas en cada inicio de El Gimp."
 
-#: ../app/config/gimprc-blurbs.h:366
+#: ../app/config/gimprc-blurbs.h:369
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -3900,7 +3912,7 @@ msgstr ""
 "permanecer, por lo tanto es mejor si este directorio no está compartido con "
 "otros usuarios."
 
-#: ../app/config/gimprc-blurbs.h:378
+#: ../app/config/gimprc-blurbs.h:381
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -3909,7 +3921,7 @@ msgstr ""
 "Tenga en cuenta que El Gimp no puede crear miniaturas si las vistas previas "
 "de capa están desactivadas."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -3918,7 +3930,7 @@ msgstr ""
 "archivo que se está previsualizando es más pequeño que el tamaño establecido "
 "aquí."
 
-#: ../app/config/gimprc-blurbs.h:386
+#: ../app/config/gimprc-blurbs.h:389
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -3931,7 +3943,7 @@ msgstr ""
 "Gimp utilice más memoria. Normalmente, un tamaño de caché más pequeño causa "
 "que El Gimp utilice más espacio de intercambio y menos memoria."
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:400
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -3940,16 +3952,16 @@ msgstr ""
 "podría afectar la forma en que su administrador de ventanas decora y maneja "
 "la ventana de la caja de herramientas."
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:404
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
-#: ../app/config/gimprc-blurbs.h:404
+#: ../app/config/gimprc-blurbs.h:407
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:410
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
@@ -3957,7 +3969,7 @@ msgstr ""
 "Cuando se encuentre activado El Gimp no guardará la imagen si no fue "
 "modificada desde que se la abrió."
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:414
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -3966,7 +3978,7 @@ msgstr ""
 "niveles de deshacer se mantienen disponibles hasta que se alcanza el límite "
 "de niveles de deshacer."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:418
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -3977,15 +3989,15 @@ msgstr ""
 "configuración sólo pueden deshacerse tantos niveles deshacer como este "
 "configurado."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:423
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Obtiene el tamaño de las vistas previas en el Histórico de deshacer."
 
-#: ../app/config/gimprc-blurbs.h:423
+#: ../app/config/gimprc-blurbs.h:426
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Cuando se encuentre activado, pulsando F1 se abrirá el visor de ayuda."
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:429
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -4000,7 +4012,7 @@ msgstr ""
 
 #: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:160 ../app/gui/session.c:157
-#: ../app/plug-in/plug-in-rc.c:180
+#: ../app/plug-in/plug-in-rc.c:204
 msgid "fatal parse error"
 msgstr "Error fatal de análisis"
 
@@ -4055,7 +4067,7 @@ msgid "White"
 msgstr "Blanco"
 
 #. Transparency
-#: ../app/core/core-enums.c:166 ../app/dialogs/preferences-dialog.c:2044
+#: ../app/core/core-enums.c:166 ../app/dialogs/preferences-dialog.c:2035
 msgid "Transparency"
 msgstr "Transparencia"
 
@@ -4164,11 +4176,11 @@ msgstr "Círculo"
 msgid "Diamond"
 msgstr "Diamante"
 
-#: ../app/core/core-enums.c:422 ../app/dialogs/preferences-dialog.c:2076
+#: ../app/core/core-enums.c:422 ../app/dialogs/preferences-dialog.c:2067
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../app/core/core-enums.c:423 ../app/dialogs/preferences-dialog.c:2078
+#: ../app/core/core-enums.c:423 ../app/dialogs/preferences-dialog.c:2069
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -4575,7 +4587,7 @@ msgid "Documents"
 msgstr "Documentos"
 
 #. initialize the module list
-#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2442
+#: ../app/core/gimp.c:900 ../app/dialogs/preferences-dialog.c:2415
 msgid "Modules"
 msgstr "Módulos"
 
@@ -4777,7 +4789,7 @@ msgstr "Definir la opacidad del canal"
 msgid "Selection Mask"
 msgstr "Máscara de selección"
 
-#: ../app/core/gimpchannel-select.c:55 ../app/tools/gimprectselecttool.c:96
+#: ../app/core/gimpchannel-select.c:55 ../app/tools/gimprectselecttool.c:95
 msgid "Rect Select"
 msgstr "Selección rectangular"
 
@@ -5034,7 +5046,7 @@ msgstr "Añadir una guía horizontal"
 msgid "Add Vertical Guide"
 msgstr "Añadir una guía vertical"
 
-#: ../app/core/gimpimage-guides.c:143 ../app/tools/gimpmovetool.c:570
+#: ../app/core/gimpimage-guides.c:143 ../app/tools/gimpmovetool.c:571
 msgid "Remove Guide"
 msgstr "Eliminar la guía"
 
@@ -5064,11 +5076,11 @@ msgstr "Combinar hacia abajo"
 msgid "There are not enough visible layers for a merge down."
 msgstr "No hay suficientes capas visibles para combinar hacia abajo."
 
-#: ../app/core/gimpimage-merge.c:543
+#: ../app/core/gimpimage-merge.c:544
 msgid "Merge Visible Paths"
 msgstr "Combinar las rutas visibles"
 
-#: ../app/core/gimpimage-merge.c:580
+#: ../app/core/gimpimage-merge.c:581
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "No hay suficientes capas visibles para hacer una combinación. Deben haber "
@@ -5086,7 +5098,7 @@ msgstr "Desactivar la máscara rápida"
 msgid "Add Sample_Point"
 msgstr "Añadir _punto de muestra"
 
-#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:438
+#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:439
 msgid "Remove Sample Point"
 msgstr "Eliminar punto de muestra"
 
@@ -5159,88 +5171,83 @@ msgstr "La capa ya se encuentra en la parte más baja."
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta la parte más baja"
 
-#: ../app/core/gimpimage.c:3035
-#, c-format
-msgid "Layer '%s' has no alpha. Layer was placed above it."
-msgstr "La capa «%s» no tiene alfa. La capa fue colocada encima de ésta."
-
-#: ../app/core/gimpimage.c:3087
+#: ../app/core/gimpimage.c:3069
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:3131 ../app/core/gimpimage.c:3142
+#: ../app/core/gimpimage.c:3113 ../app/core/gimpimage.c:3124
 msgid "Remove Channel"
 msgstr "Eliminar el canal"
 
-#: ../app/core/gimpimage.c:3189
+#: ../app/core/gimpimage.c:3171
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado más alto."
 
-#: ../app/core/gimpimage.c:3194
+#: ../app/core/gimpimage.c:3176
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: ../app/core/gimpimage.c:3211
+#: ../app/core/gimpimage.c:3193
 msgid "Channel is already on top."
 msgstr "El canal ya está en la cima."
 
-#: ../app/core/gimpimage.c:3216
+#: ../app/core/gimpimage.c:3198
 msgid "Raise Channel to Top"
 msgstr "Elevar el canal hasta lo alto"
 
-#: ../app/core/gimpimage.c:3233
+#: ../app/core/gimpimage.c:3215
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender más."
 
-#: ../app/core/gimpimage.c:3238
+#: ../app/core/gimpimage.c:3220
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: ../app/core/gimpimage.c:3258
+#: ../app/core/gimpimage.c:3240
 msgid "Channel is already on the bottom."
 msgstr "El canal ya está en el fondo."
 
-#: ../app/core/gimpimage.c:3263
+#: ../app/core/gimpimage.c:3245
 msgid "Lower Channel to Bottom"
 msgstr "Bajar el canal hasta lo más bajo"
 
-#: ../app/core/gimpimage.c:3338
+#: ../app/core/gimpimage.c:3320
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:3383
+#: ../app/core/gimpimage.c:3365
 msgid "Remove Path"
 msgstr "Eliminar la ruta"
 
-#: ../app/core/gimpimage.c:3427
+#: ../app/core/gimpimage.c:3409
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: ../app/core/gimpimage.c:3432
+#: ../app/core/gimpimage.c:3414
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: ../app/core/gimpimage.c:3449
+#: ../app/core/gimpimage.c:3431
 msgid "Path is already on top."
 msgstr "La ruta ya está en la cima."
 
-#: ../app/core/gimpimage.c:3454
+#: ../app/core/gimpimage.c:3436
 msgid "Raise Path to Top"
 msgstr "Elevar la ruta hasta el principio"
 
-#: ../app/core/gimpimage.c:3471
+#: ../app/core/gimpimage.c:3453
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: ../app/core/gimpimage.c:3476
+#: ../app/core/gimpimage.c:3458
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: ../app/core/gimpimage.c:3496
+#: ../app/core/gimpimage.c:3478
 msgid "Path is already on the bottom."
 msgstr "La ruta ya está en el fondo."
 
-#: ../app/core/gimpimage.c:3501
+#: ../app/core/gimpimage.c:3483
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta hasta el fondo"
 
@@ -5607,9 +5614,9 @@ msgstr "Fondo"
 msgid "pixel"
 msgstr "píxel"
 
-#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:801
-#: ../app/tools/gimpmeasuretool.c:917 ../app/tools/gimpmeasuretool.c:969
-#: ../app/tools/gimpmeasuretool.c:995 ../app/tools/gimppainttool.c:723
+#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:800
+#: ../app/tools/gimpmeasuretool.c:915 ../app/tools/gimpmeasuretool.c:967
+#: ../app/tools/gimpmeasuretool.c:993 ../app/tools/gimppainttool.c:688
 msgid "pixels"
 msgstr "píxeles"
 
@@ -5690,7 +5697,7 @@ msgstr "Conversión de color indexado"
 msgid "Convert Image to Indexed Colors"
 msgstr "Convertir la imagen a colores indexados"
 
-#: ../app/dialogs/convert-dialog.c:161 ../app/dialogs/dialogs.c:177
+#: ../app/dialogs/convert-dialog.c:161 ../app/dialogs/dialogs.c:178
 msgid "Colormap"
 msgstr "Mapa de colores"
 
@@ -5735,71 +5742,71 @@ msgstr "Seleccionar un poco de gris basado en:"
 msgid "GIMP Message"
 msgstr "Mensaje de El Gimp"
 
-#: ../app/dialogs/dialogs.c:129
+#: ../app/dialogs/dialogs.c:130
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: ../app/dialogs/dialogs.c:129
+#: ../app/dialogs/dialogs.c:130
 msgid "Device Status"
 msgstr "Estado del dispositivo"
 
-#: ../app/dialogs/dialogs.c:133
+#: ../app/dialogs/dialogs.c:134
 msgid "Errors"
 msgstr "Errores"
 
-#: ../app/dialogs/dialogs.c:137
+#: ../app/dialogs/dialogs.c:138
 msgid "Cursor"
 msgstr "Cursor"
 
-#: ../app/dialogs/dialogs.c:137
+#: ../app/dialogs/dialogs.c:138
 msgid "Cursor Info"
 msgstr "Información del cursor"
 
-#: ../app/dialogs/dialogs.c:158
+#: ../app/dialogs/dialogs.c:159
 msgid "History"
 msgstr "Historial"
 
-#: ../app/dialogs/dialogs.c:160
+#: ../app/dialogs/dialogs.c:161
 msgid "Image Templates"
 msgstr "Plantillas de imágenes"
 
-#: ../app/dialogs/dialogs.c:181
+#: ../app/dialogs/dialogs.c:182
 msgid "Histogram"
 msgstr "Histograma"
 
-#: ../app/dialogs/dialogs.c:185
+#: ../app/dialogs/dialogs.c:186
 msgid "Selection"
 msgstr "Selección"
 
-#: ../app/dialogs/dialogs.c:185
+#: ../app/dialogs/dialogs.c:186
 msgid "Selection Editor"
 msgstr "Editor de selección"
 
-#: ../app/dialogs/dialogs.c:189
+#: ../app/dialogs/dialogs.c:190
 msgid "Undo History"
 msgstr "Historial de deshacer"
 
-#: ../app/dialogs/dialogs.c:193
+#: ../app/dialogs/dialogs.c:194
 msgid "Sample Points"
 msgstr "Puntos de muestra"
 
-#: ../app/dialogs/dialogs.c:199
+#: ../app/dialogs/dialogs.c:200
 msgid "Navigation"
 msgstr "Navegación"
 
-#: ../app/dialogs/dialogs.c:199
+#: ../app/dialogs/dialogs.c:200
 msgid "Display Navigation"
 msgstr "Navegación de la vista"
 
-#: ../app/dialogs/dialogs.c:205
+#: ../app/dialogs/dialogs.c:206
 msgid "FG/BG"
 msgstr "PP/SP"
 
-#: ../app/dialogs/dialogs.c:205
+#: ../app/dialogs/dialogs.c:206
 msgid "FG/BG Color"
 msgstr "Color PP/SP"
 
-#: ../app/dialogs/dialogs.c:211 ../app/widgets/gimpbrusheditor.c:102
+#: ../app/dialogs/dialogs.c:212 ../app/widgets/gimpbrusheditor.c:102
 msgid "Brush Editor"
 msgstr "Editor de pinceles"
 
@@ -5881,7 +5888,7 @@ msgid "Create a New Image"
 msgstr "Crear una imagen nueva"
 
 #: ../app/dialogs/image-new-dialog.c:141
-#: ../app/dialogs/preferences-dialog.c:1765
+#: ../app/dialogs/preferences-dialog.c:1756
 msgid "_Template:"
 msgstr "Plan_tilla:"
 
@@ -5934,8 +5941,8 @@ msgstr "¿Es eso lo que quiere hacer?"
 #. General
 #: ../app/dialogs/info-dialog.c:377 ../app/dialogs/preferences-dialog.c:1582
 #: ../app/dialogs/preferences-dialog.c:1636
-#: ../app/dialogs/preferences-dialog.c:1822
-#: ../app/widgets/gimpcontrollereditor.c:196
+#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/widgets/gimpcontrollereditor.c:203
 msgid "General"
 msgstr "General"
 
@@ -5951,27 +5958,27 @@ msgstr "Iniciar máscara de capa a:"
 msgid "In_vert Mask"
 msgstr "In_vertir la máscara"
 
-#: ../app/dialogs/layer-options-dialog.c:120
+#: ../app/dialogs/layer-options-dialog.c:119
 msgid "Layer _Name:"
 msgstr "_Nombre de la capa:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:131 ../app/tools/gimpcroptool.c:1051
-#: ../app/tools/gimpmeasuretool.c:959 ../app/tools/gimpselectionoptions.c:530
+#: ../app/dialogs/layer-options-dialog.c:128 ../app/tools/gimpcroptool.c:1050
+#: ../app/tools/gimpmeasuretool.c:957 ../app/tools/gimpselectionoptions.c:585
 msgid "Width:"
 msgstr "Anchura:"
 
-#: ../app/dialogs/layer-options-dialog.c:137 ../app/tools/gimpcroptool.c:1055
-#: ../app/tools/gimpmeasuretool.c:985 ../app/tools/gimpscaletool.c:166
-#: ../app/tools/gimpselectionoptions.c:538
+#: ../app/dialogs/layer-options-dialog.c:134 ../app/tools/gimpcroptool.c:1054
+#: ../app/tools/gimpmeasuretool.c:983 ../app/tools/gimpscaletool.c:166
+#: ../app/tools/gimpselectionoptions.c:593
 msgid "Height:"
 msgstr "Altura:"
 
-#: ../app/dialogs/layer-options-dialog.c:194
+#: ../app/dialogs/layer-options-dialog.c:191
 msgid "Layer Fill Type"
 msgstr "Tipo de relleno de la capa"
 
-#: ../app/dialogs/layer-options-dialog.c:209
+#: ../app/dialogs/layer-options-dialog.c:206
 msgid "Set Name from _Text"
 msgstr "Establecer el nombre desde el _texto"
 
@@ -6044,7 +6051,7 @@ msgid "Location:"
 msgstr "Ubicación:"
 
 #: ../app/dialogs/module-dialog.c:505
-#: ../app/widgets/gimpcontrollereditor.c:241
+#: ../app/widgets/gimpcontrollereditor.c:248
 msgid "State:"
 msgstr "Estado:"
 
@@ -6162,16 +6169,16 @@ msgstr "_Intervalo:"
 msgid "Preview"
 msgstr "Vista previa"
 
-#: ../app/dialogs/preferences-dialog.c:296
+#: ../app/dialogs/preferences-dialog.c:295
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "Necesitará reiniciar El Gimp para que los siguientes cambios tengan efecto:"
 
-#: ../app/dialogs/preferences-dialog.c:496
+#: ../app/dialogs/preferences-dialog.c:495
 msgid "Configure Keyboard Shortcuts"
 msgstr "Configurar combinaciones de teclas"
 
-#: ../app/dialogs/preferences-dialog.c:546
+#: ../app/dialogs/preferences-dialog.c:545
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
@@ -6179,7 +6186,7 @@ msgstr ""
 "Para editar una combinación de teclas, pulse en la fila correspondiente y "
 "teclee un acelerador nuevo, o pulse la tecla de retroceso para borrar."
 
-#: ../app/dialogs/preferences-dialog.c:590
+#: ../app/dialogs/preferences-dialog.c:589
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -6187,7 +6194,7 @@ msgstr ""
 "Sus combinaciones de teclas se restablecerán a los valores de fábrica la "
 "próxima vez que inicie El Gimp."
 
-#: ../app/dialogs/preferences-dialog.c:624
+#: ../app/dialogs/preferences-dialog.c:623
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -6195,7 +6202,7 @@ msgstr ""
 "Su configuración de ventanas se restablecerá al valor de fábrica la próxima "
 "vez que inicie El Gimp."
 
-#: ../app/dialogs/preferences-dialog.c:658
+#: ../app/dialogs/preferences-dialog.c:657
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -6203,7 +6210,7 @@ msgstr ""
 "Su configuración de dispositivos de entrada se restablecerá a los valores de "
 "fábrica la siguiente vez que inicie El Gimp."
 
-#: ../app/dialogs/preferences-dialog.c:692
+#: ../app/dialogs/preferences-dialog.c:691
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -6260,7 +6267,7 @@ msgid "Preferences"
 msgstr "Preferencias"
 
 #: ../app/dialogs/preferences-dialog.c:1326
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2423
 msgid "Environment"
 msgstr "Entorno"
 
@@ -6438,462 +6445,457 @@ msgstr "Ajuste de la rejilla y la guía"
 msgid "_Snap distance:"
 msgstr "Distancia del a_juste:"
 
-#. Contiguous Regions
-#: ../app/dialogs/preferences-dialog.c:1670
-msgid "Finding Contiguous Regions"
-msgstr "Encontrando regiones continuas"
-
-#: ../app/dialogs/preferences-dialog.c:1675
-msgid "Default _threshold:"
-msgstr "Umbral prede_terminado:"
-
 #. Scaling
-#: ../app/dialogs/preferences-dialog.c:1679
+#: ../app/dialogs/preferences-dialog.c:1670
 msgid "Scaling"
 msgstr "Escalado"
 
-#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/preferences-dialog.c:1674
 msgid "Default _interpolation:"
 msgstr "_Interpolación predeterminada:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1687
+#: ../app/dialogs/preferences-dialog.c:1678
 msgid "Paint Options Shared Between Tools"
 msgstr "Opciones de pintado compartidas entre las herramientas"
 
-#: ../app/dialogs/preferences-dialog.c:1700
+#: ../app/dialogs/preferences-dialog.c:1691
 msgid "Move Tool"
 msgstr "Herramienta mover"
 
-#: ../app/dialogs/preferences-dialog.c:1704
+#: ../app/dialogs/preferences-dialog.c:1695
 msgid "Change current layer or path"
 msgstr "Cambiar la capa actual o ruta"
 
-#: ../app/dialogs/preferences-dialog.c:1717
+#: ../app/dialogs/preferences-dialog.c:1708
 msgid "Toolbox"
 msgstr "Caja de herramientas"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1727
-#: ../app/dialogs/preferences-dialog.c:1885
+#: ../app/dialogs/preferences-dialog.c:1718
+#: ../app/dialogs/preferences-dialog.c:1876
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: ../app/dialogs/preferences-dialog.c:1731
+#: ../app/dialogs/preferences-dialog.c:1722
 msgid "Show _foreground & background color"
 msgstr "Mostrar color de _fondo y primer plano"
 
-#: ../app/dialogs/preferences-dialog.c:1735
+#: ../app/dialogs/preferences-dialog.c:1726
 msgid "Show active _brush, pattern & gradient"
 msgstr "Mostrar _pinceles, patrones y degradados activos"
 
-#: ../app/dialogs/preferences-dialog.c:1739
+#: ../app/dialogs/preferences-dialog.c:1730
 msgid "Show active _image"
 msgstr "Mostrar imagen _activa"
 
-#: ../app/dialogs/preferences-dialog.c:1749
+#: ../app/dialogs/preferences-dialog.c:1740
 msgid "Default New Image"
 msgstr "Imagen nueva predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:1752
+#: ../app/dialogs/preferences-dialog.c:1743
 msgid "Default Image"
 msgstr "Imagen predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:1787
+#: ../app/dialogs/preferences-dialog.c:1778
 msgid "Default Image Grid"
 msgstr "Rejilla de imagen predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:1790
+#: ../app/dialogs/preferences-dialog.c:1781
 msgid "Default Grid"
 msgstr "Rejilla predeterminada"
 
-#: ../app/dialogs/preferences-dialog.c:1810
+#: ../app/dialogs/preferences-dialog.c:1801
 msgid "Image Windows"
 msgstr "Ventanas de imagen"
 
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1816
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Usar «p_unto por punto» por omisión"
 
-#: ../app/dialogs/preferences-dialog.c:1831
+#: ../app/dialogs/preferences-dialog.c:1822
 msgid "Marching _ants speed:"
 msgstr "Velocid_ad del «desfile de hormigas»:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1835
+#: ../app/dialogs/preferences-dialog.c:1826
 msgid "Zoom & Resize Behavior"
 msgstr "Comportamiento de la redimensión y la ampliación"
 
-#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1830
 msgid "Resize window on _zoom"
 msgstr "Redimensionar la ventana al a_mpliar"
 
-#: ../app/dialogs/preferences-dialog.c:1842
+#: ../app/dialogs/preferences-dialog.c:1833
 msgid "Resize window on image _size change"
 msgstr "Redimen_sionar la ventana al cambiar el tamaño de la imagen"
 
-#: ../app/dialogs/preferences-dialog.c:1848
+#: ../app/dialogs/preferences-dialog.c:1839
 msgid "Fit to window"
 msgstr "Ajustar a la ventana"
 
-#: ../app/dialogs/preferences-dialog.c:1850
+#: ../app/dialogs/preferences-dialog.c:1841
 msgid "Initial zoom _ratio:"
 msgstr "_Proporción de ampliación inicial:"
 
 #. Mouse Cursors
-#: ../app/dialogs/preferences-dialog.c:1854
+#: ../app/dialogs/preferences-dialog.c:1845
 msgid "Mouse Cursors"
 msgstr "Cursores del ratón"
 
-#: ../app/dialogs/preferences-dialog.c:1858
+#: ../app/dialogs/preferences-dialog.c:1849
 msgid "Show _brush outline"
 msgstr "Mostrar el contorno del _pincel"
 
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1852
 msgid "Show paint _tool cursor"
 msgstr "Mostrar el cursor de la herramienta de _pintura"
 
-#: ../app/dialogs/preferences-dialog.c:1867
+#: ../app/dialogs/preferences-dialog.c:1858
 msgid "Cursor _mode:"
 msgstr "_Modo del cursor:"
 
-#: ../app/dialogs/preferences-dialog.c:1870
+#: ../app/dialogs/preferences-dialog.c:1861
 msgid "Cursor re_ndering:"
 msgstr "Re_nderizado del cursor:"
 
-#: ../app/dialogs/preferences-dialog.c:1882
+#: ../app/dialogs/preferences-dialog.c:1873
 msgid "Image Window Appearance"
 msgstr "Apariencia de la ventana de la imagen"
 
-#: ../app/dialogs/preferences-dialog.c:1893
+#: ../app/dialogs/preferences-dialog.c:1884
 msgid "Default Appearance in Normal Mode"
 msgstr "Apariencia predeterminada en el modo normal"
 
-#: ../app/dialogs/preferences-dialog.c:1898
+#: ../app/dialogs/preferences-dialog.c:1889
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Apariencia predeterminada en el modo de pantalla completa"
 
-#: ../app/dialogs/preferences-dialog.c:1907
+#: ../app/dialogs/preferences-dialog.c:1898
 msgid "Image Title & Statusbar Format"
 msgstr "Formato del título de imagen y la barra de estado"
 
-#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:1901
 msgid "Title & Status"
 msgstr "Título y estado"
 
-#: ../app/dialogs/preferences-dialog.c:1928
+#: ../app/dialogs/preferences-dialog.c:1919
 msgid "Current format"
 msgstr "Formato actual"
 
-#: ../app/dialogs/preferences-dialog.c:1929
+#: ../app/dialogs/preferences-dialog.c:1920
 msgid "Default format"
 msgstr "Formato predeterminado"
 
-#: ../app/dialogs/preferences-dialog.c:1930
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "Show zoom percentage"
 msgstr "Mostrar el porcentaje de ampliación"
 
-#: ../app/dialogs/preferences-dialog.c:1931
+#: ../app/dialogs/preferences-dialog.c:1922
 msgid "Show zoom ratio"
 msgstr "Mostrar la relación de ampliación"
 
-#: ../app/dialogs/preferences-dialog.c:1932
+#: ../app/dialogs/preferences-dialog.c:1923
 msgid "Show image size"
 msgstr "Mostrar el tamaño de imagen"
 
-#: ../app/dialogs/preferences-dialog.c:1945
+#: ../app/dialogs/preferences-dialog.c:1936
 msgid "Image Title Format"
 msgstr "Formato del título de imagen"
 
-#: ../app/dialogs/preferences-dialog.c:1947
+#: ../app/dialogs/preferences-dialog.c:1938
 msgid "Image Statusbar Format"
 msgstr "Formato de la barra de estado de la imagen"
 
-#: ../app/dialogs/preferences-dialog.c:2032
+#: ../app/dialogs/preferences-dialog.c:2023
 msgid "Display"
 msgstr "Pantalla"
 
-#: ../app/dialogs/preferences-dialog.c:2048
-msgid "Transparency _type:"
-msgstr "Tipo de _transparencia:"
+#: ../app/dialogs/preferences-dialog.c:2039
+msgid "_Check Style:"
+msgstr "Estilo de la _cuadrícula:"
 
-#: ../app/dialogs/preferences-dialog.c:2051
-msgid "Check _size:"
+#: ../app/dialogs/preferences-dialog.c:2042
+msgid "Check _Size:"
 msgstr "Ta_maño de la cuadrícula:"
 
-#: ../app/dialogs/preferences-dialog.c:2054
+#: ../app/dialogs/preferences-dialog.c:2045
 msgid "Get Monitor Resolution"
 msgstr "Obtener la resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
-#: ../app/dialogs/preferences-dialog.c:2058
+#: ../app/dialogs/preferences-dialog.c:2049
 #: ../app/widgets/gimpcursorview.c:125 ../app/widgets/gimpgrideditor.c:267
 #: ../app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "píxeles"
 
-#: ../app/dialogs/preferences-dialog.c:2080
+#: ../app/dialogs/preferences-dialog.c:2071
 #: ../app/widgets/gimpimagepropview.c:314
 msgid "dpi"
 msgstr "ppp"
 
-#: ../app/dialogs/preferences-dialog.c:2096
+#: ../app/dialogs/preferences-dialog.c:2087
 #, c-format
 msgid "From _windowing system (currently %d x %d dpi)"
 msgstr "Desde el sistema de _ventanas (actualmente %d x %d ppp)"
 
-#: ../app/dialogs/preferences-dialog.c:2116
+#: ../app/dialogs/preferences-dialog.c:2107
 msgid "_Manually"
 msgstr "_Manualmente"
 
-#: ../app/dialogs/preferences-dialog.c:2131
+#: ../app/dialogs/preferences-dialog.c:2122
 msgid "C_alibrate..."
 msgstr "C_alibrar..."
 
-#: ../app/dialogs/preferences-dialog.c:2150
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Color Management"
 msgstr "Gestión del color"
 
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2161
 msgid "_RGB Profile:"
 msgstr "Perfil _RGB:"
 
-#: ../app/dialogs/preferences-dialog.c:2171
+#: ../app/dialogs/preferences-dialog.c:2162
 msgid "Select RGB color profile"
 msgstr "Seleccionar el perfil de color RGB"
 
-#: ../app/dialogs/preferences-dialog.c:2172
+#: ../app/dialogs/preferences-dialog.c:2163
 msgid "_CMYK Profile:"
 msgstr "Perfil _CMYK:"
 
-#: ../app/dialogs/preferences-dialog.c:2173
+#: ../app/dialogs/preferences-dialog.c:2164
 msgid "Select CMYK color profile"
 msgstr "Seleccionar el perfil de color CMYK"
 
-#: ../app/dialogs/preferences-dialog.c:2174
+#: ../app/dialogs/preferences-dialog.c:2165
 msgid "_Monitor Profile:"
 msgstr "Perfil del _monitor:"
 
-#: ../app/dialogs/preferences-dialog.c:2175
+#: ../app/dialogs/preferences-dialog.c:2166
 msgid "Select monitor color profile"
 msgstr "Seleccione el perfil de color del monitor"
 
-#: ../app/dialogs/preferences-dialog.c:2176
+#: ../app/dialogs/preferences-dialog.c:2167
 msgid "_Printer Profile:"
 msgstr "Perfil de la im_presora:"
 
-#: ../app/dialogs/preferences-dialog.c:2177
+#: ../app/dialogs/preferences-dialog.c:2168
 msgid "Select printer color profile"
 msgstr "Seleccione el perfil de color de la impresora"
 
-#: ../app/dialogs/preferences-dialog.c:2185
+#: ../app/dialogs/preferences-dialog.c:2176
 msgid "_Mode of operation:"
 msgstr "_Modo de operación:"
 
-#: ../app/dialogs/preferences-dialog.c:2188
+#: ../app/dialogs/preferences-dialog.c:2179
 msgid "_Display Rendering Intent:"
 msgstr "_Mostrar intento de renderizado:"
 
-#: ../app/dialogs/preferences-dialog.c:2191
+#: ../app/dialogs/preferences-dialog.c:2182
 msgid "_Softproof Rendering Intent:"
 msgstr "_Intento de renderizado de prueba:"
 
-#: ../app/dialogs/preferences-dialog.c:2214
+#: ../app/dialogs/preferences-dialog.c:2205
 msgid "Input Devices"
 msgstr "Dispositivos de entrada"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2224
+#: ../app/dialogs/preferences-dialog.c:2215
 msgid "Extended Input Devices"
 msgstr "Dispositivos de entrada extendidos"
 
-#: ../app/dialogs/preferences-dialog.c:2228
+#: ../app/dialogs/preferences-dialog.c:2219
 msgid "Configure E_xtended Input Devices..."
 msgstr "Configurar los dispositivos de entrada e_xtendidos"
 
-#: ../app/dialogs/preferences-dialog.c:2235
+#: ../app/dialogs/preferences-dialog.c:2226
 msgid "_Save input device settings on exit"
 msgstr "Guardar la configuración del dispositivo de entrada al _salir"
 
-#: ../app/dialogs/preferences-dialog.c:2239
+#: ../app/dialogs/preferences-dialog.c:2230
 msgid "Save Input Device Settings _Now"
 msgstr "Guardar la configuración del dispositivo de entrada _ahora"
 
-#: ../app/dialogs/preferences-dialog.c:2246
+#: ../app/dialogs/preferences-dialog.c:2237
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Restablecer la configuración guardada del dispositivo de entrada a los "
 "valores de fábrica"
 
-#: ../app/dialogs/preferences-dialog.c:2261
+#: ../app/dialogs/preferences-dialog.c:2252
 msgid "Additional Input Controllers"
 msgstr "Controles adicionales de entrada"
 
-#: ../app/dialogs/preferences-dialog.c:2264
+#: ../app/dialogs/preferences-dialog.c:2255
 msgid "Input Controllers"
 msgstr "Controladores de entrada"
 
-#: ../app/dialogs/preferences-dialog.c:2303
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "Window Management"
 msgstr "Administración de la ventana"
 
-#: ../app/dialogs/preferences-dialog.c:2312
+#: ../app/dialogs/preferences-dialog.c:2280
 msgid "Window Manager Hints"
 msgstr "Hints del administrador de ventanas"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2286
 msgid "Hint for the _toolbox:"
 msgstr "Hint para la caja de herramien_tas:"
 
-#: ../app/dialogs/preferences-dialog.c:2322
-msgid "Hint for the _docks:"
-msgstr "Hint para e_mpotrables:"
+#: ../app/dialogs/preferences-dialog.c:2290
+msgid "Hint for other _docks:"
+msgstr "Hint para otros e_mpotrables:"
 
-#: ../app/dialogs/preferences-dialog.c:2325
+#: ../app/dialogs/preferences-dialog.c:2294
+msgid "Toolbox and other docks are transient to the active display"
+msgstr "La caja de herramientas y otros empotrables dependerán de la vista activa"
+
+#: ../app/dialogs/preferences-dialog.c:2298
 msgid "Focus"
 msgstr "Foco"
 
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2302
 msgid "Activate the _focused image"
 msgstr "Activar la imagen con el _foco"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2333
+#: ../app/dialogs/preferences-dialog.c:2306
 msgid "Window Positions"
 msgstr "Posiciones de las ventanas"
 
-#: ../app/dialogs/preferences-dialog.c:2336
+#: ../app/dialogs/preferences-dialog.c:2309
 msgid "_Save window positions on exit"
 msgstr "G_uardar posiciones de ventanas al salir"
 
-#: ../app/dialogs/preferences-dialog.c:2340
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "Save Window Positions _Now"
 msgstr "Guardar las posiciones de las ventanas _ahora"
 
-#: ../app/dialogs/preferences-dialog.c:2347
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr ""
 "R_estaurar la posiciones de ventana guardadas a los valores predeterminados"
 
-#: ../app/dialogs/preferences-dialog.c:2362
+#: ../app/dialogs/preferences-dialog.c:2335
 msgid "Folders"
 msgstr "Carpetas"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2353
 msgid "Temp folder:"
 msgstr "Carpeta temporal:"
 
-#: ../app/dialogs/preferences-dialog.c:2380
+#: ../app/dialogs/preferences-dialog.c:2353
 msgid "Select Temp Folder"
 msgstr "Seleccionar las carpetas de temas"
 
-#: ../app/dialogs/preferences-dialog.c:2381
-#: ../app/dialogs/user-install-dialog.c:1428
+#: ../app/dialogs/preferences-dialog.c:2354
+#: ../app/dialogs/user-install-dialog.c:1420
 msgid "Swap folder:"
 msgstr "Carpeta de intercambio:"
 
-#: ../app/dialogs/preferences-dialog.c:2381
+#: ../app/dialogs/preferences-dialog.c:2354
 msgid "Select Swap Folder"
 msgstr "Seleccionar la carpeta de intercambio"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2387
 msgid "Brush Folders"
 msgstr "Carpetas de pinceles"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2389
 msgid "Select Brush Folders"
 msgstr "Seleccionar la carpeta de pinceles"
 
-#: ../app/dialogs/preferences-dialog.c:2418
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "Pattern Folders"
 msgstr "Carpetas de patrones"
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2393
 msgid "Select Pattern Folders"
 msgstr "Seleccionar la carpeta de patrones"
 
-#: ../app/dialogs/preferences-dialog.c:2422
+#: ../app/dialogs/preferences-dialog.c:2395
 msgid "Palette Folders"
 msgstr "Carpetas de paletas"
 
-#: ../app/dialogs/preferences-dialog.c:2424
+#: ../app/dialogs/preferences-dialog.c:2397
 msgid "Select Palette Folders"
 msgstr "Seleccionar las carpetas de paletas"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2399
 msgid "Gradient Folders"
 msgstr "Carpetas de degradados"
 
-#: ../app/dialogs/preferences-dialog.c:2428
+#: ../app/dialogs/preferences-dialog.c:2401
 msgid "Select Gradient Folders"
 msgstr "Seleccionar las carpetas de degradados"
 
-#: ../app/dialogs/preferences-dialog.c:2430
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Font Folders"
 msgstr "Carpetas de tipografías"
 
-#: ../app/dialogs/preferences-dialog.c:2432
+#: ../app/dialogs/preferences-dialog.c:2405
 msgid "Select Font Folders"
 msgstr "Seleccionar las carpetas de tipografías"
 
-#: ../app/dialogs/preferences-dialog.c:2434
+#: ../app/dialogs/preferences-dialog.c:2407
 msgid "Plug-In Folders"
 msgstr "Carpetas de complementos"
 
-#: ../app/dialogs/preferences-dialog.c:2436
+#: ../app/dialogs/preferences-dialog.c:2409
 msgid "Select Plug-In Folders"
 msgstr "Seleccionar las carpetas de complementos"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2411
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ../app/dialogs/preferences-dialog.c:2438
+#: ../app/dialogs/preferences-dialog.c:2411
 msgid "Script-Fu Folders"
 msgstr "Carpetas de scripts-fu"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2413
 msgid "Select Script-Fu Folders"
 msgstr "Seleccionar la carpeta de script-fu"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "Module Folders"
 msgstr "Carpetas de módulos"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "Select Module Folders"
 msgstr "Seleccionar las carpetas de módulos"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Interpreters"
 msgstr "Intérpretes"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Interpreter Folders"
 msgstr "Carpetas del intérprete"
 
-#: ../app/dialogs/preferences-dialog.c:2448
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "Select Interpreter Folders"
 msgstr "Seleccionar las carpetas de los intérpretes"
 
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2423
 msgid "Environment Folders"
 msgstr "Carpetas de entorno"
 
-#: ../app/dialogs/preferences-dialog.c:2452
+#: ../app/dialogs/preferences-dialog.c:2425
 msgid "Select Environment Folders"
 msgstr "Seleccionar las carpetas de entorno"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "Themes"
 msgstr "Temas"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2427
 msgid "Theme Folders"
 msgstr "Carpetas de temas"
 
-#: ../app/dialogs/preferences-dialog.c:2456
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "Select Theme Folders"
 msgstr "Seleccionar las carpetas de temas"
 
@@ -7067,24 +7069,23 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:144
 msgid ""
-"Plug-ins and extensions are external programs run by the GIMP which provide "
-"additional functionality.  These programs are searched for at run-time and "
-"information about their functionality and mod-times is cached in this file.  "
-"This file is intended to be GIMP-readable only, and should not be edited."
-msgstr ""
-"Los complementos y los añadidos son programas externos ejecutados por El "
-"GIMP que proporcionan funcionalidades adicionales. Estos programas se buscan "
-"en tiempo de ejecución, y se almacena la información acerca de su función y "
-"fechas de modificación en este archivo para conseguir un inicio de El Gimp "
-"más rápido. Este archivo sólo debe ser leído por El Gimp, y no debe ser "
-"editado."
+"Plug-ins and extensions are external programs which provide additional "
+"functionality to GIMP.  These programs are searched for at run-time and "
+"information about their functionality is cached in this file.  This file is "
+"intended to be written by GIMP only, and should not be edited."
+msgstr "Los complementos y las extensiones son programas externos ejecutados "
+"por El GIMP que proporcionan funcionalidades adicionales. Estos programas "
+"se buscan en tiempo de ejecución, y se almacena la información acerca de "
+"su función y fechas de modificación en este archivo para conseguir un "
+"inicio de El Gimp más rápido. Este archivo sólo debe ser escrito "
+"por El Gimp, y no debe ser editado."
 
 #: ../app/dialogs/user-install-dialog.c:154
 msgid ""
-"Key shortcuts can be dynamically redefined in The GIMP. The menurc is a dump "
-"of your configuration so it can. be remembered for the next session.  You "
-"may edit this file if you wish, but it is much easier to define the keys "
-"from within The GIMP.  Deleting this file will restore the default shortcuts."
+"Key shortcuts can be dynamically redefined. The menurc is a dump of your "
+"configuration so it can. be remembered for the next session.  You may edit "
+"this file if you wish, but it is much easier to define the keys from within "
+"GIMP.  Deleting this file will restore the default shortcuts."
 msgstr ""
 "Las combinaciones de teclas pueden ser redefinidas de forma dinámica en El "
 "GIMP. «menurc» es un volcado de su configuración para que pueda ser "
@@ -7095,8 +7096,8 @@ msgstr ""
 #: ../app/dialogs/user-install-dialog.c:164
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
-"you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
-"the saved position."
+"you quit GIMP.  You can configure GIMP to reopen these dialogs at the saved "
+"position."
 msgstr ""
 "«sessionrc» se utiliza para almacenar qué ventanas de diálogo estaban "
 "abiertas la última vez que salió de El Gimp. Puede configurar El Gimp para "
@@ -7124,98 +7125,87 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:186
 msgid ""
-"This folder is used to store user defined brushes. The GIMP checks this "
-"folder in addition to the system-wide GIMP brushes installation when "
-"searching for brushes."
-msgstr ""
-"Esta carpeta se utiliza para almacenar los pinceles definidos por el "
-"usuario. El Gimp revisa esta carpeta además de la instalación global de "
-"pinceles de El Gimp cuando está buscando pinceles."
+"This folder is used to store user defined brushes. GIMP checks this folder "
+"in addition to the system-wide brushes installation."
+msgstr "Esta carpeta se utiliza para almacenar los pinceles definidos por el "
+"usuario. El Gimp revisa esta carpeta además de la instalación global de pinceles."
 
-#: ../app/dialogs/user-install-dialog.c:194
+#: ../app/dialogs/user-install-dialog.c:193
 msgid ""
-"This folder is used to store fonts you only want visible in the GIMP. The "
-"GIMP checks this folder in addition to the system-wide GIMP fonts "
-"installation when searching for fonts. Use this only if you really want to "
-"have GIMP-only fonts, otherwise put things in your global font directory."
-msgstr ""
-"Esta carpeta se utiliza para almacenar las tipografías que desea que sean "
-"visibles sólo en El Gimp. El Gimp revisa esta carpeta además de la carpeta "
-"global del sistema de la instalación de tipografías cuando está buscando "
-"tipografías. Sólo utilice esta carpeta si realmente quiere tener tipografías "
-"exclusivas para El Gimp, de otro modo póngalas en su directorio de "
-"tipografías global."
+"This folder is used to store fonts you only want to be visible in GIMP. GIMP "
+"checks this folder in addition to the system-wide fonts installation. Use "
+"this only if you really want to have fonts available in GIMP only, otherwise "
+"put them in your global font directory."
+msgstr "Esta carpeta se utiliza para almacenar las tipografías que desea que "
+"sean visibles sólo en El Gimp. El Gimp revisa esta carpeta además de la "
+"instalación de tipografías global del sistema. Utilice esta carpeta solamente "
+"si realmente quiere tener tipografías exclusivas para El Gimp, de otro modo "
+"póngalas en su directorio de tipografías global."
 
-#: ../app/dialogs/user-install-dialog.c:204
+#: ../app/dialogs/user-install-dialog.c:202
 msgid ""
-"This folder is used to store user defined gradients.  The GIMP checks this "
-"folder in addition to the system-wide GIMP gradients installation when "
-"searching for gradients."
+"This folder is used to store user defined gradients.  GIMP checks this "
+"folder in addition to the system-wide gradients installation."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los degradados definidos por el "
 "usuario. El Gimp revisa esta carpeta junto con la instalación global de "
-"degradados de El Gimp cuando está buscando degradados."
+"degradados."
 
-#: ../app/dialogs/user-install-dialog.c:211
+#: ../app/dialogs/user-install-dialog.c:209
 msgid ""
-"This folder is used to store user defined palettes.  The GIMP checks this "
-"folder in addition to the system-wide GIMP palettes installation when "
-"searching for palettes."
+"This folder is used to store user defined palettes.  GIMP checks this folder "
+"in addition to the system-wide palettes installation."
 msgstr ""
 "Esta carpeta se utiliza para almacenar las paletas definidas por el usuario. "
-"El Gimp revisa esta carpeta junto con la instalación global de paletas de El "
-"GIMP cuando está buscando paletas."
+"El Gimp revisa esta carpeta junto con la instalación global de paletas."
 
-#: ../app/dialogs/user-install-dialog.c:218
+#: ../app/dialogs/user-install-dialog.c:216
 msgid ""
-"This folder is used to store user defined patterns.  The GIMP checks this "
-"folder in addition to the system-wide GIMP patterns installation when "
-"searching for patterns."
+"This folder is used to store user defined patterns.  GIMP checks this folder "
+"in addition to the system-wide patterns installation when searching for "
+"patterns."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los patrones definidos por el "
-"usuario. El Gimp revisa esta carpeta junto con la instalación global de "
-"patrones de El Gimp cuando está buscando patrones."
+"usuario. El Gimp revisa esta carpeta además de la instalación global de "
+"patrones."
 
-#: ../app/dialogs/user-install-dialog.c:225
+#: ../app/dialogs/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
-"system-supported plug-ins.  The GIMP checks this folder in addition to the "
-"system-wide GIMP plug-in folder when searching for plug-ins."
+"system-supported plug-ins.  GIMP checks this folder in addition to the "
+"system-wide plug-in folder."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los complementos temporales o no "
 "soportadas por el sistema, creadas por el usuario. El Gimp revisa esta "
-"carpeta junto con la carpeta global de complementos de El Gimp cuando está "
-"buscando complementos."
+"carpeta además de la carpeta global de complementos. "
 
-#: ../app/dialogs/user-install-dialog.c:233
+#: ../app/dialogs/user-install-dialog.c:231
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
-"system-supported DLL modules.  The GIMP checks this folder in addition to "
-"the system-wide GIMP module folder when searching for modules to load during "
-"initialization."
+"system-supported DLL modules.  GIMP checks this folder in addition to the "
+"system-wide module folder."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los módulos DLL temporales o no "
 "soportados por el sistema creados por el usuario. El Gimp revisa esta "
-"carpeta junto con la carpeta global de módulos de El Gimp cuando está "
-"buscando los módulos que se cargan durante el inicio."
+"carpeta además de la carpeta global de módulos. "
 
-#: ../app/dialogs/user-install-dialog.c:242
+#: ../app/dialogs/user-install-dialog.c:239
 msgid ""
 "This folder is used to store configuration for user created, temporary, or "
-"otherwise non-system-supported plug-in interpreters.  The GIMP checks this "
+"otherwise non-system-supported plug-in interpreters.  GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los intérpretes de complementos "
 "temporales o no soportados por el sistema, creados por el usuario. El Gimp "
-"revisa esta carpeta junto con la carpeta global de intérpretes de El Gimp "
-"cuando está buscando los intérpretes de los archivos de configuración de los "
-"complementos."
+"revisa esta carpeta además de la carpeta global de intérpretes de El Gimp "
+"cuando está buscando los archivos de configuración de los intérpretes "
+"de complementos."
 
-#: ../app/dialogs/user-install-dialog.c:252
+#: ../app/dialogs/user-install-dialog.c:249
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
-"system-supported additions to the plug-in environment.  The GIMP checks this "
+"system-supported additions to the plug-in environment.  GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
 msgstr ""
@@ -7225,76 +7215,66 @@ msgstr ""
 "del sistema cuando está buscando archivos de modificación del entorno de "
 "complementos."
 
-#: ../app/dialogs/user-install-dialog.c:262
+#: ../app/dialogs/user-install-dialog.c:259
 msgid ""
-"This folder is used to store user created and installed scripts.  The GIMP "
-"checks this folder in addition to the systemwide GIMP scripts folder when "
-"searching for scripts."
+"This folder is used to store user created and installed scripts.  GIMP "
+"checks this folder in addition to the systemwide scripts folder."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los guiones creados e instalados por "
 "el usuario. El Gimp revisa esta carpeta junto con la carpeta global de "
-"guiones de El Gimp cuando está buscando guiones."
+"guiones."
 
-#: ../app/dialogs/user-install-dialog.c:270
+#: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
 msgstr "En esta carpeta se buscan las plantillas de las imágenes."
 
-#: ../app/dialogs/user-install-dialog.c:275
+#: ../app/dialogs/user-install-dialog.c:271
 msgid "This folder is searched for user-installed themes."
 msgstr ""
 "Esta carpeta se utiliza para buscar los temas\n"
 "instalados por el usuario."
 
-#: ../app/dialogs/user-install-dialog.c:280
-msgid ""
-"This folder is used to temporarily store undo buffers to reduce memory "
-"usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
-"<#> may persist in this folder.  These files are useless across GIMP "
-"sessions and can be destroyed with impunity."
-msgstr ""
-"Esta carpeta se utiliza para almacenar temporalmente los búferes de deshacer "
-"para reducir el uso de memoria.  Si El Gimp  se cierra de forma anormal los "
-"archivos del tipo gimp<#>.<#> pueden quedar guardados en esta carpeta.  "
-"Estos archivos son inútiles en distintas sesiones de El Gimp y pueden ser "
-"destruidos sin problemas."
+#: ../app/dialogs/user-install-dialog.c:276
+msgid "This folder is used for temporary files."
+msgstr "Esta se utiliza para los archivos temporales."
 
-#: ../app/dialogs/user-install-dialog.c:289
+#: ../app/dialogs/user-install-dialog.c:281
 msgid "This folder is used to store tool options."
 msgstr "Esta carpeta se utiliza para guardar las opciones de las herramientas."
 
-#: ../app/dialogs/user-install-dialog.c:294
+#: ../app/dialogs/user-install-dialog.c:286
 msgid "This folder is used to store parameter files for the Curves tool."
 msgstr ""
 "Esta carpeta se utiliza para almacenar los archivos de parámetros para la "
 "«Herramienta de Curvas»."
 
-#: ../app/dialogs/user-install-dialog.c:299
+#: ../app/dialogs/user-install-dialog.c:291
 msgid "This folder is used to store parameter files for the Levels tool."
 msgstr ""
 "Esta carpeta es utilizada para almacenar los archivos de parámetros para la "
 "herramienta de niveles."
 
-#: ../app/dialogs/user-install-dialog.c:395
+#: ../app/dialogs/user-install-dialog.c:387
 msgid "Installation successful.  Click \"Continue\" to proceed."
 msgstr "Instalación exitosa.  Presione «Continuar» para comenzar."
 
-#: ../app/dialogs/user-install-dialog.c:401
+#: ../app/dialogs/user-install-dialog.c:393
 msgid "Installation failed.  Contact system administrator."
 msgstr ""
 "La instalación ha fallado.  Póngase en contacto con el administrador del "
 "sistema."
 
-#: ../app/dialogs/user-install-dialog.c:621
+#: ../app/dialogs/user-install-dialog.c:613
 msgid "GIMP User Installation"
 msgstr "Instalación de usuario de El Gimp"
 
-#: ../app/dialogs/user-install-dialog.c:626
+#: ../app/dialogs/user-install-dialog.c:618
 msgid "Continue"
 msgstr "Continuar"
 
 #. GPL_PAGE
 #. version number
-#: ../app/dialogs/user-install-dialog.c:782
+#: ../app/dialogs/user-install-dialog.c:774
 #, c-format
 msgid ""
 "Welcome to\n"
@@ -7303,12 +7283,12 @@ msgstr ""
 "Bienvenido a\n"
 "la instalación de usuario de El Gimp %d.%d"
 
-#: ../app/dialogs/user-install-dialog.c:788
+#: ../app/dialogs/user-install-dialog.c:780
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
 "Pulse en «Continuar» para iniciar la instalación de usuario de El Gimp."
 
-#: ../app/dialogs/user-install-dialog.c:795
+#: ../app/dialogs/user-install-dialog.c:787
 msgid ""
 "<b>The GIMP - GNU Image Manipulation Program</b>\n"
 "Copyright (C) 1995-2004\n"
@@ -7318,7 +7298,7 @@ msgstr ""
 "Copyright © 1995-2004\n"
 "Spencer Kimball, Peter Mattis y el equipo de desarrollo de El Gimp."
 
-#: ../app/dialogs/user-install-dialog.c:805
+#: ../app/dialogs/user-install-dialog.c:797
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -7330,7 +7310,7 @@ msgstr ""
 "Free Software Foundation; tanto en la versión 2 de la licencia, o (a su "
 "elección) cualquier versión posterior."
 
-#: ../app/dialogs/user-install-dialog.c:811
+#: ../app/dialogs/user-install-dialog.c:803
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -7342,7 +7322,7 @@ msgstr ""
 "garantizar la CONVENIENCIA PARA UN PROPÓSITO PARTICULAR. Véase la Licencia "
 "Pública General de GNU para más detalles."
 
-#: ../app/dialogs/user-install-dialog.c:817
+#: ../app/dialogs/user-install-dialog.c:809
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
@@ -7352,37 +7332,37 @@ msgstr ""
 "junto con este programa. Si no ha sido así escriba a la Free Software "
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,USA."
 
-#: ../app/dialogs/user-install-dialog.c:829
+#: ../app/dialogs/user-install-dialog.c:821
 msgid "Migrate User Settings"
 msgstr "Migrar configuración de usuario"
 
-#: ../app/dialogs/user-install-dialog.c:830
+#: ../app/dialogs/user-install-dialog.c:822
 msgid "Click \"Continue\" to proceed with the user installation."
 msgstr "Pulse «Continuar» para proceder con la instalación de usuario."
 
-#: ../app/dialogs/user-install-dialog.c:834
+#: ../app/dialogs/user-install-dialog.c:826
 #, c-format
 msgid "It seems you have used GIMP %s before."
 msgstr "Parece que ha usado El Gimp %s antes."
 
-#: ../app/dialogs/user-install-dialog.c:836
+#: ../app/dialogs/user-install-dialog.c:828
 #, c-format
 msgid "_Migrate GIMP %s user settings"
 msgstr "_Migrar la configuración de usuario de El Gimp %s"
 
-#: ../app/dialogs/user-install-dialog.c:845
+#: ../app/dialogs/user-install-dialog.c:837
 msgid "Do a _fresh user installation"
 msgstr "Hacer una instalación de usuario _fresca"
 
-#: ../app/dialogs/user-install-dialog.c:876
+#: ../app/dialogs/user-install-dialog.c:868
 msgid "Personal GIMP Folder"
 msgstr "Carpeta personal de El Gimp"
 
-#: ../app/dialogs/user-install-dialog.c:877
+#: ../app/dialogs/user-install-dialog.c:869
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Pulse en «Continuar» para crear su carpeta personal de El Gimp."
 
-#: ../app/dialogs/user-install-dialog.c:921
+#: ../app/dialogs/user-install-dialog.c:913
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
@@ -7391,7 +7371,7 @@ msgstr ""
 "Para una instalación correcta de El Gimp es necesario crear una carpeta "
 "llamada «<b>%s</b>»."
 
-#: ../app/dialogs/user-install-dialog.c:928
+#: ../app/dialogs/user-install-dialog.c:920
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
@@ -7400,45 +7380,45 @@ msgstr ""
 "los archivos o subdirectorios en el árbol para obtener más información "
 "acerca del elemento seleccionado."
 
-#: ../app/dialogs/user-install-dialog.c:1016
+#: ../app/dialogs/user-install-dialog.c:1008
 msgid "User Installation Log"
 msgstr "Informe de la instalación de usuario"
 
-#: ../app/dialogs/user-install-dialog.c:1017
+#: ../app/dialogs/user-install-dialog.c:1009
 msgid "Please wait while your personal GIMP folder is being created..."
 msgstr "Aguarde mientras se crea su carpeta personal de El Gimp..."
 
-#: ../app/dialogs/user-install-dialog.c:1024
+#: ../app/dialogs/user-install-dialog.c:1016
 msgid "GIMP Performance Tuning"
 msgstr "Ajustes del rendimiento de El Gimp"
 
-#: ../app/dialogs/user-install-dialog.c:1025
+#: ../app/dialogs/user-install-dialog.c:1017
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Presione «Continuar» para aceptar los ajustes de arriba."
 
-#: ../app/dialogs/user-install-dialog.c:1030
+#: ../app/dialogs/user-install-dialog.c:1022
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Para obtener un rendimiento óptimo de El Gimp podrían tener que ajustarse "
 "algunas opciones.</b>"
 
-#: ../app/dialogs/user-install-dialog.c:1090
+#: ../app/dialogs/user-install-dialog.c:1082
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copiando el archivo «%s» desde «%s»..."
 
-#: ../app/dialogs/user-install-dialog.c:1109
+#: ../app/dialogs/user-install-dialog.c:1101
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creando la carpeta «%s»..."
 
-#: ../app/dialogs/user-install-dialog.c:1123
+#: ../app/dialogs/user-install-dialog.c:1115
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "No se puede crear la carpeta «%s»: %s"
 
-#: ../app/dialogs/user-install-dialog.c:1387
+#: ../app/dialogs/user-install-dialog.c:1379
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7449,11 +7429,11 @@ msgstr ""
 "quepa en memoria. Considere la cantidad de memoria que usan otros procesos "
 "en ejecución."
 
-#: ../app/dialogs/user-install-dialog.c:1400
+#: ../app/dialogs/user-install-dialog.c:1392
 msgid "Tile cache size:"
 msgstr "Tamaño del caché de mosaico:"
 
-#: ../app/dialogs/user-install-dialog.c:1412
+#: ../app/dialogs/user-install-dialog.c:1404
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7466,7 +7446,7 @@ msgstr ""
 "(varios cientos de Mib). En un sistema UNIX, debería usar el directorio "
 "temporal global del sistema («/tmp» ó «/var/tmp»)."
 
-#: ../app/dialogs/user-install-dialog.c:1423
+#: ../app/dialogs/user-install-dialog.c:1415
 msgid "Select swap dir"
 msgstr "Seleccionar la carpeta de intercambio"
 
@@ -7592,7 +7572,7 @@ msgid "Drop New Path"
 msgstr "Borrar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:853
+#: ../app/widgets/gimplayertreeview.c:838
 msgid "Dropped Buffer"
 msgstr "Búfer descartado"
 
@@ -7610,19 +7590,19 @@ msgstr "Configuración de los filtros de colores de la pantalla"
 msgid "Layer Select"
 msgstr "Selección de capas"
 
-#: ../app/display/gimpdisplayshell-scale.c:585
+#: ../app/display/gimpdisplayshell-scale.c:603
 msgid "Zoom Ratio"
 msgstr "Relación de aumento"
 
-#: ../app/display/gimpdisplayshell-scale.c:587
+#: ../app/display/gimpdisplayshell-scale.c:605
 msgid "Select Zoom Ratio"
 msgstr "Seleccione la relación de aumento"
 
-#: ../app/display/gimpdisplayshell-scale.c:627
+#: ../app/display/gimpdisplayshell-scale.c:645
 msgid "Zoom Ratio:"
 msgstr "Relación de aumento:"
 
-#: ../app/display/gimpdisplayshell-scale.c:654
+#: ../app/display/gimpdisplayshell-scale.c:672
 msgid "Zoom:"
 msgstr "Aumento:"
 
@@ -7850,7 +7830,7 @@ msgstr "Transformación 2D..."
 msgid "Blending..."
 msgstr "Mezclando..."
 
-#: ../app/pdb/image_cmds.c:3973
+#: ../app/pdb/image_cmds.c:3975
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7981,7 +7961,7 @@ msgstr "Procedimientos de herramientas de transformación"
 msgid "Units"
 msgstr "Unidades"
 
-#: ../app/pdb/procedural_db.c:254
+#: ../app/pdb/procedural_db.c:261
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7990,7 +7970,7 @@ msgstr ""
 "Error de llamada PDB:\n"
 "No se encuentra el procedimiento «%s»"
 
-#: ../app/pdb/procedural_db.c:275 ../app/pdb/procedural_db.c:387
+#: ../app/pdb/procedural_db.c:288 ../app/pdb/procedural_db.c:409
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7998,22 +7978,6 @@ msgid ""
 msgstr ""
 "Error de llamada a PDB para el procedimiento «%s»: \n"
 "Tipo de argumento desconocido #%d (se esperaba %s, se obtuvo %s)"
-
-#: ../app/pdb/procedural_db_cmds.c:80
-msgid "Internal GIMP procedure"
-msgstr "Procedimiento interno de El Gimp"
-
-#: ../app/pdb/procedural_db_cmds.c:81
-msgid "GIMP Plug-In"
-msgstr "Extensión de El Gimp"
-
-#: ../app/pdb/procedural_db_cmds.c:82
-msgid "GIMP Extension"
-msgstr "Añadido de El Gimp"
-
-#: ../app/pdb/procedural_db_cmds.c:83
-msgid "Temporary Procedure"
-msgstr "Procedimiento temporal"
 
 #: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
@@ -8040,17 +8004,17 @@ msgstr ""
 "GIMP. Sería conveniente que guardase todas sus imágenes y reinicie El Gimp, "
 "para no arriesgarse."
 
-#: ../app/plug-in/plug-in-rc.c:173
+#: ../app/plug-in/plug-in-rc.c:197
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Ignorando «%s»: Versión de protocolo de El Gimp incorrecta."
 
-#: ../app/plug-in/plug-in-rc.c:429
+#: ../app/plug-in/plug-in-rc.c:446
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valor inválido «%s» para el tipo de icono"
 
-#: ../app/plug-in/plug-in-rc.c:444
+#: ../app/plug-in/plug-in-rc.c:461
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valor inválido «%ld» para el tipo de icono"
@@ -8302,8 +8266,7 @@ msgstr "Profundidad máxima:"
 
 #: ../app/tools/gimpblendoptions.c:301
 #: ../app/tools/gimpbucketfilloptions.c:294
-#: ../app/tools/gimpmagnifyoptions.c:225
-#: ../app/tools/gimpselectionoptions.c:467
+#: ../app/tools/gimpselectionoptions.c:522
 msgid "Threshold:"
 msgstr "Umbral:"
 
@@ -8320,7 +8283,7 @@ msgid "Blend: Invalid for indexed images."
 msgstr "Mezcla: No válido para imágenes indexadas."
 
 #. initialize the statusbar display
-#: ../app/tools/gimpblendtool.c:204 ../app/tools/gimpblendtool.c:300
+#: ../app/tools/gimpblendtool.c:204 ../app/tools/gimpblendtool.c:299
 msgid "Blend: "
 msgstr "Mezcla: "
 
@@ -8382,7 +8345,7 @@ msgid "Fill similar colors"
 msgstr "Rellenar colores similares"
 
 #: ../app/tools/gimpbucketfilloptions.c:260
-#: ../app/tools/gimpselectionoptions.c:439
+#: ../app/tools/gimpselectionoptions.c:494
 msgid "Finding Similar Colors"
 msgstr "Buscando colores similares"
 
@@ -8392,8 +8355,8 @@ msgstr "Rellenar áreas transparentes"
 
 #: ../app/tools/gimpbucketfilloptions.c:282
 #: ../app/tools/gimpcolorpickeroptions.c:177
-#: ../app/tools/gimpselectionoptions.c:455
-#: ../app/tools/gimpselectionoptions.c:503
+#: ../app/tools/gimpselectionoptions.c:510
+#: ../app/tools/gimpselectionoptions.c:558
 msgid "Sample merged"
 msgstr "Muestra combinada"
 
@@ -8521,7 +8484,7 @@ msgstr "_Luminosidad:"
 msgid "Sample average"
 msgstr "Muestra ponderada"
 
-#: ../app/tools/gimpcoloroptions.c:192 ../app/tools/gimpselectionoptions.c:417
+#: ../app/tools/gimpcoloroptions.c:192 ../app/tools/gimpselectionoptions.c:472
 #: ../app/widgets/gimpbrusheditor.c:153
 msgid "Radius:"
 msgstr "Radio:"
@@ -8555,15 +8518,15 @@ msgstr "_Recoge-color"
 msgid "Color Picker Information"
 msgstr "Información del recoge-color"
 
-#: ../app/tools/gimpcolortool.c:271 ../app/tools/gimpcolortool.c:445
+#: ../app/tools/gimpcolortool.c:272 ../app/tools/gimpcolortool.c:446
 msgid "Move Sample Point: "
 msgstr "Mover punto de muestra: "
 
-#: ../app/tools/gimpcolortool.c:439
+#: ../app/tools/gimpcolortool.c:440
 msgid "Cancel Sample Point"
 msgstr "Cancelar punto de muestra"
 
-#: ../app/tools/gimpcolortool.c:446
+#: ../app/tools/gimpcolortool.c:447
 msgid "Add Sample Point: "
 msgstr "Añadir punto de muestra: "
 
@@ -8582,7 +8545,7 @@ msgid "Convolve Type  %s"
 msgstr "Tipo de convolución  %s"
 
 #. tool toggle
-#: ../app/tools/gimpcropoptions.c:186 ../app/tools/gimpmagnifyoptions.c:207
+#: ../app/tools/gimpcropoptions.c:186 ../app/tools/gimpmagnifyoptions.c:206
 #: ../app/tools/gimpmoveoptions.c:215
 #, c-format
 msgid "Tool Toggle  %s"
@@ -8618,31 +8581,31 @@ msgid "_Crop & Resize"
 msgstr "_Recortar y redimensionar"
 
 #. initialize the statusbar display
-#: ../app/tools/gimpcroptool.c:499 ../app/tools/gimpcroptool.c:983
+#: ../app/tools/gimpcroptool.c:498 ../app/tools/gimpcroptool.c:982
 msgid "Crop: "
 msgstr "Recortar: "
 
-#: ../app/tools/gimpcroptool.c:1010
+#: ../app/tools/gimpcroptool.c:1009
 msgid "Crop & Resize Information"
 msgstr "Información de recorte y cambio de tamaño"
 
-#: ../app/tools/gimpcroptool.c:1034
+#: ../app/tools/gimpcroptool.c:1033
 msgid "Origin X:"
 msgstr "Origen X:"
 
-#: ../app/tools/gimpcroptool.c:1038
+#: ../app/tools/gimpcroptool.c:1037
 msgid "Origin Y:"
 msgstr "Origen Y:"
 
-#: ../app/tools/gimpcroptool.c:1076 ../app/widgets/gimpbrusheditor.c:194
+#: ../app/tools/gimpcroptool.c:1075 ../app/widgets/gimpbrusheditor.c:194
 msgid "Aspect ratio:"
 msgstr "Proporción:"
 
-#: ../app/tools/gimpcroptool.c:1087
+#: ../app/tools/gimpcroptool.c:1086
 msgid "From selection"
 msgstr "Desde la selección"
 
-#: ../app/tools/gimpcroptool.c:1095
+#: ../app/tools/gimpcroptool.c:1094
 msgid "Auto shrink"
 msgstr "Auto encoger"
 
@@ -8721,12 +8684,12 @@ msgid "Exposure:"
 msgstr "Exposición:"
 
 #: ../app/tools/gimpeditselectiontool.c:262
-#: ../app/tools/gimpeditselectiontool.c:1203
+#: ../app/tools/gimpeditselectiontool.c:1202
 msgid "Move Floating Selection"
 msgstr "Mover la selección flotante"
 
 #: ../app/tools/gimpeditselectiontool.c:464
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:731
 msgid "Move: "
 msgstr "Mover: "
 
@@ -8881,7 +8844,7 @@ msgstr "Ajuste"
 msgid "Size:"
 msgstr "Tamaño:"
 
-#: ../app/tools/gimpinkoptions-gui.c:78 ../app/tools/gimpmeasuretool.c:933
+#: ../app/tools/gimpinkoptions-gui.c:78 ../app/tools/gimpmeasuretool.c:931
 #: ../app/tools/gimprotatetool.c:169 ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
 msgstr "Ángulo:"
@@ -8990,7 +8953,7 @@ msgstr "Niveles de salida"
 msgid "Adjust levels automatically"
 msgstr "Ajustar los niveles automáticamente"
 
-#: ../app/tools/gimpmagnifyoptions.c:202
+#: ../app/tools/gimpmagnifyoptions.c:201
 msgid "Auto-resize window"
 msgstr "Auto-redimensionar ventana"
 
@@ -9027,11 +8990,11 @@ msgid "Add Guides"
 msgstr "Añadir guías"
 
 #. tool->gdisp->shell
-#: ../app/tools/gimpmeasuretool.c:889
+#: ../app/tools/gimpmeasuretool.c:887
 msgid "Measure Distances and Angles"
 msgstr "Medida de distancias y ángulos"
 
-#: ../app/tools/gimpmeasuretool.c:907
+#: ../app/tools/gimpmeasuretool.c:905
 msgid "Distance:"
 msgstr "Distancia:"
 
@@ -9063,15 +9026,15 @@ msgstr "Mover capas y selecciones"
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../app/tools/gimpmovetool.c:298 ../app/tools/gimpmovetool.c:576
+#: ../app/tools/gimpmovetool.c:299 ../app/tools/gimpmovetool.c:577
 msgid "Move Guide: "
 msgstr "Mover la guía:"
 
-#: ../app/tools/gimpmovetool.c:570
+#: ../app/tools/gimpmovetool.c:571
 msgid "Cancel Guide"
 msgstr "Cancelar la guía"
 
-#: ../app/tools/gimpmovetool.c:576
+#: ../app/tools/gimpmovetool.c:577
 msgid "Add Guide: "
 msgstr "Añadir guía:"
 
@@ -9089,7 +9052,7 @@ msgid "Opacity:"
 msgstr "Opacidad:"
 
 #: ../app/tools/gimppaintoptions-gui.c:107
-#: ../app/tools/gimpselectionoptions.c:374
+#: ../app/tools/gimpselectionoptions.c:429
 #: ../app/widgets/gimpbrushselect.c:214 ../app/widgets/gimplayertreeview.c:330
 msgid "Mode:"
 msgstr "Modo:"
@@ -9145,7 +9108,7 @@ msgstr "Longitud:"
 msgid "Use color from gradient"
 msgstr "Utilizar color desde el degradado"
 
-#: ../app/tools/gimppainttool.c:749
+#: ../app/tools/gimppainttool.c:714
 msgid "Press Shift to draw a straight line."
 msgstr "Pulse Mayúsculas para dibujar una línea recta."
 
@@ -9254,8 +9217,7 @@ msgstr "Fijar"
 msgid "Center"
 msgstr "Centrado"
 
-#. initialize the statusbar display
-#: ../app/tools/gimprectangletool.c:817 ../app/tools/gimprectangletool.c:1177
+#: ../app/tools/gimprectangletool.c:816 ../app/tools/gimprectangletool.c:1177
 msgid "Rectangle: "
 msgstr "Rectángulo: "
 
@@ -9277,31 +9239,15 @@ msgstr "X"
 msgid "Y"
 msgstr "Y"
 
-#: ../app/tools/gimprectselecttool.c:97
+#: ../app/tools/gimprectselecttool.c:96
 msgid "Select rectangular regions"
 msgstr "Seleccionar regiones rectangulares"
 
-#: ../app/tools/gimprectselecttool.c:98
+#: ../app/tools/gimprectselecttool.c:97
 msgid "_Rect Select"
 msgstr "Selección _rectangular"
 
-#: ../app/tools/gimprectselecttool.c:226
-msgid "Selection: ADD"
-msgstr "Selección: AÑADIR"
-
-#: ../app/tools/gimprectselecttool.c:229
-msgid "Selection: SUBTRACT"
-msgstr "Selección: SUSTRAER"
-
-#: ../app/tools/gimprectselecttool.c:232
-msgid "Selection: INTERSECT"
-msgstr "Selección: INTERSECTAR"
-
-#: ../app/tools/gimprectselecttool.c:235
-msgid "Selection: REPLACE"
-msgstr "Selección: REEMPLAZAR"
-
-#: ../app/tools/gimprectselecttool.c:414
+#: ../app/tools/gimprectselecttool.c:394
 msgid "Selection: "
 msgstr "Selección: "
 
@@ -9383,25 +9329,41 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 "Utilizar todas las capas visibles cuando se está achicando la selección"
 
-#: ../app/tools/gimpselectionoptions.c:382 ../app/tools/gimptextoptions.c:458
+#: ../app/tools/gimpselectionoptions.c:437 ../app/tools/gimptextoptions.c:458
 msgid "Antialiasing"
 msgstr "Alisado"
 
-#: ../app/tools/gimpselectionoptions.c:400
+#: ../app/tools/gimpselectionoptions.c:455
 msgid "Feather edges"
 msgstr "Difuminar los bordes"
 
-#: ../app/tools/gimpselectionoptions.c:426
+#: ../app/tools/gimpselectionoptions.c:481
 msgid "Show interactive boundary"
 msgstr "Mostrar los límites interactivamente"
 
-#: ../app/tools/gimpselectionoptions.c:449
+#: ../app/tools/gimpselectionoptions.c:504
 msgid "Select transparent areas"
 msgstr "Seleccionar las áreas transparentes"
 
-#: ../app/tools/gimpselectionoptions.c:489
+#: ../app/tools/gimpselectionoptions.c:544
 msgid "Auto shrink selection"
 msgstr "Encoger selección automáticamente"
+
+#: ../app/tools/gimpselectiontool.c:257
+msgid "Move the selection mask"
+msgstr "Mover la máscara de selección"
+
+#: ../app/tools/gimpselectiontool.c:261
+msgid "Move the selected pixels"
+msgstr "Mover los píxeles seleccionados"
+
+#: ../app/tools/gimpselectiontool.c:265
+msgid "Move a copy of the selected pixels"
+msgstr "Mover una copia de los píxeles seleccionados"
+
+#: ../app/tools/gimpselectiontool.c:269
+msgid "Anchor the floating selection"
+msgstr "Anclar la selección flotante"
 
 # Viendo el programa, parece más bien "cizalla". FVD
 #: ../app/tools/gimpsheartool.c:98
@@ -9763,11 +9725,11 @@ msgstr "Pulse para abrir la ruta."
 msgid "Click to make this node angular."
 msgstr "Pulse para hacer este nodo angular."
 
-#: ../app/tools/gimpvectortool.c:1736
+#: ../app/tools/gimpvectortool.c:1740
 msgid "Delete Anchors"
 msgstr "Borrar anclas"
 
-#: ../app/tools/gimpvectortool.c:1903
+#: ../app/tools/gimpvectortool.c:1907
 msgid "There is no active layer or channel to stroke to"
 msgstr "No hay una capa o canal activo donde se pueda trazar"
 
@@ -9835,7 +9797,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:328
-#: ../app/widgets/gimpcontrollereditor.c:373
+#: ../app/widgets/gimpcontrollereditor.c:399
 msgid "Action"
 msgstr "Acción"
 
@@ -9920,7 +9882,7 @@ msgstr "Reordenar el canal"
 msgid "Empty Channel"
 msgstr "Canal vacío"
 
-#: ../app/widgets/gimpclipboard.c:239
+#: ../app/widgets/gimpclipboard.c:258
 msgid "Clipboard"
 msgstr "Portapapeles"
 
@@ -9928,44 +9890,44 @@ msgstr "Portapapeles"
 msgid "Add the current color to the color history"
 msgstr "Añadir el color actual al historial de colores"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:177
+#: ../app/widgets/gimpcolordisplayeditor.c:178
 msgid "Available Filters"
 msgstr "Filtros disponibles"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:204
+#: ../app/widgets/gimpcolordisplayeditor.c:205
 msgid "Add the selected filter to the list of active filters."
 msgstr "Añadir el filtro seleccionado a la lista de filtros activos."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:221
+#: ../app/widgets/gimpcolordisplayeditor.c:222
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Eliminar el filtro seleccionado de la lista de filtros activos."
 
-#: ../app/widgets/gimpcolordisplayeditor.c:235
+#: ../app/widgets/gimpcolordisplayeditor.c:236
 msgid "Move the selected filter up"
 msgstr "Mover el filtro seleccionado hacia arriba"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:244
+#: ../app/widgets/gimpcolordisplayeditor.c:245
 msgid "Move the selected filter down"
 msgstr "Mover el filtro seleccionado hacia abajo"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:289
+#: ../app/widgets/gimpcolordisplayeditor.c:290
 msgid "Active Filters"
 msgstr "Filtros activos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:322
+#: ../app/widgets/gimpcolordisplayeditor.c:323
 msgid "Reset the selected filter to default values"
 msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:543
+#: ../app/widgets/gimpcolordisplayeditor.c:544
 #, c-format
 msgid "Configure selected filter: %s"
 msgstr "Configurar el filtro seleccionado: %s"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:550
+#: ../app/widgets/gimpcolordisplayeditor.c:551
 msgid "No filter selected"
 msgstr "No hay ningún filtro seleccionado"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:554
+#: ../app/widgets/gimpcolordisplayeditor.c:555
 msgid "Configure selected filter"
 msgstr "Configurar el filtro seleccionado"
 
@@ -10045,23 +10007,40 @@ msgstr "Vistas previas diminutas"
 msgid "Larger Previews"
 msgstr "Vistas previas enormes"
 
-#: ../app/widgets/gimpcontrollereditor.c:209
+#: ../app/widgets/gimpcontrollereditor.c:216
 msgid "Dump events from this controller"
 msgstr "Volcar eventos desde este controlador"
 
-#: ../app/widgets/gimpcontrollereditor.c:214
+#: ../app/widgets/gimpcontrollereditor.c:221
 msgid "Enable this controller"
 msgstr "Activar este controlador"
 
-#: ../app/widgets/gimpcontrollereditor.c:235
+#: ../app/widgets/gimpcontrollereditor.c:242
 msgid "Name:"
 msgstr "Nombre:"
 
-#: ../app/widgets/gimpcontrollereditor.c:368
+#: ../app/widgets/gimpcontrollereditor.c:393
 msgid "Event"
 msgstr "Evento"
 
-#: ../app/widgets/gimpcontrollereditor.c:549
+#: ../app/widgets/gimpcontrollereditor.c:418
+msgid "_Grab Event"
+msgstr "_Capturar un evento"
+
+#: ../app/widgets/gimpcontrollereditor.c:428
+msgid "Select the next event arriving from the controller"
+msgstr "Seleccionar el siguiente evento que llega desde el controlador"
+
+#: ../app/widgets/gimpcontrollereditor.c:441
+msgid "Assign an action to the selected event"
+msgstr "Asignar una acción al evento seleccionado"
+
+#: ../app/widgets/gimpcontrollereditor.c:453
+msgid "Remove the action from the selected event"
+msgstr "Eliminar la acción del evento seleccionado"
+
+#: ../app/widgets/gimpcontrollereditor.c:685
+#: ../app/widgets/gimpcontrollereditor.c:688
 msgid "Select Controller Event Action"
 msgstr "Seleccionar un controlador de acción de evento"
 
@@ -10342,15 +10321,15 @@ msgstr "Rueda del ratón"
 msgid "Mouse Wheel Events"
 msgstr "Eventos de la rueda del ratón"
 
-#: ../app/widgets/gimpdataeditor.c:209
+#: ../app/widgets/gimpdataeditor.c:208
 msgid "Save"
 msgstr "Guardar"
 
-#: ../app/widgets/gimpdataeditor.c:217
+#: ../app/widgets/gimpdataeditor.c:216
 msgid "Revert"
 msgstr "Revertir"
 
-#: ../app/widgets/gimpdataeditor.c:345
+#: ../app/widgets/gimpdataeditor.c:344
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (sólo lectura)"
@@ -10373,15 +10352,15 @@ msgstr "Fondo: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "El archivo dado no tiene una extensión conocida."
 
-#: ../app/widgets/gimpdock.c:389 ../app/widgets/gimpdock.c:400
+#: ../app/widgets/gimpdock.c:342 ../app/widgets/gimpdock.c:353
 msgid "Close all tabs?"
 msgstr "¿Desea cerrar todas las solapas?"
 
-#: ../app/widgets/gimpdock.c:395
+#: ../app/widgets/gimpdock.c:348
 msgid "Close all Tabs"
 msgstr "Cerrar todas las solapas"
 
-#: ../app/widgets/gimpdock.c:402
+#: ../app/widgets/gimpdock.c:355
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
@@ -10390,7 +10369,7 @@ msgstr ""
 "Esta ventana tiene %d solapas abiertas. Al cerrar la ventana se cerrarán "
 "también todas sus solapas."
 
-#: ../app/widgets/gimpdock.c:760
+#: ../app/widgets/gimpdock.c:690
 msgid "You can drop dockable dialogs here."
 msgstr "Puede soltar los diálogos empotrables aquí."
 
@@ -10457,94 +10436,94 @@ msgstr "Tipo de archivo"
 msgid "Extensions"
 msgstr "Extensiones"
 
-#: ../app/widgets/gimpgradienteditor.c:385
+#: ../app/widgets/gimpgradienteditor.c:399
 msgid "Instant update"
 msgstr "Actualización instantánea"
 
-#: ../app/widgets/gimpgradienteditor.c:711
+#: ../app/widgets/gimpgradienteditor.c:746
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Factor de aumento: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:714
+#: ../app/widgets/gimpgradienteditor.c:749
 #, c-format
 msgid "Displaying [%0.6f, %0.6f]"
 msgstr "Mostrando [%0.6f, %0.6f]"
 
-#: ../app/widgets/gimpgradienteditor.c:906
+#: ../app/widgets/gimpgradienteditor.c:944
 #, c-format
 msgid "Position: %0.6f"
 msgstr "Posición: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:908
+#: ../app/widgets/gimpgradienteditor.c:946
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:911
+#: ../app/widgets/gimpgradienteditor.c:949
 #, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:913
+#: ../app/widgets/gimpgradienteditor.c:951
 #, c-format
 msgid "Intensity: %0.3f    Opacity: %0.3f"
 msgstr "Intensidad: %0.3f    Opacidad: %0.3f"
 
-#: ../app/widgets/gimpgradienteditor.c:946
-#: ../app/widgets/gimpgradienteditor.c:981
+#: ../app/widgets/gimpgradienteditor.c:984
+#: ../app/widgets/gimpgradienteditor.c:1019
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:954
+#: ../app/widgets/gimpgradienteditor.c:992
 msgid "Foreground color set to:"
 msgstr "Color de frente establecido a:"
 
-#: ../app/widgets/gimpgradienteditor.c:986
+#: ../app/widgets/gimpgradienteditor.c:1024
 #, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
 msgstr "(%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:990
+#: ../app/widgets/gimpgradienteditor.c:1028
 msgid "Background color set to:"
 msgstr "Color de fondo establecido a:"
 
-#: ../app/widgets/gimpgradienteditor.c:1193
-#: ../app/widgets/gimpgradienteditor.c:1259
+#: ../app/widgets/gimpgradienteditor.c:1231
+#: ../app/widgets/gimpgradienteditor.c:1297
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sArrastrar: mover y comprimir"
 
-#: ../app/widgets/gimpgradienteditor.c:1199
+#: ../app/widgets/gimpgradienteditor.c:1237
 msgid "Drag: move"
 msgstr "Arrastrar: mover"
 
-#: ../app/widgets/gimpgradienteditor.c:1206
-#: ../app/widgets/gimpgradienteditor.c:1220
-#: ../app/widgets/gimpgradienteditor.c:1234
-#: ../app/widgets/gimpgradienteditor.c:1256
+#: ../app/widgets/gimpgradienteditor.c:1244
+#: ../app/widgets/gimpgradienteditor.c:1258
+#: ../app/widgets/gimpgradienteditor.c:1272
+#: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sPulsar: extender selección"
 
-#: ../app/widgets/gimpgradienteditor.c:1212
-#: ../app/widgets/gimpgradienteditor.c:1226
+#: ../app/widgets/gimpgradienteditor.c:1250
+#: ../app/widgets/gimpgradienteditor.c:1264
 msgid "Click: select"
 msgstr "Pulsar: seleccionar"
 
-#: ../app/widgets/gimpgradienteditor.c:1240
-#: ../app/widgets/gimpgradienteditor.c:1264
+#: ../app/widgets/gimpgradienteditor.c:1278
+#: ../app/widgets/gimpgradienteditor.c:1302
 msgid "Click: select    Drag: move"
 msgstr "Pulsar: seleccionar    Arrastrar: mover"
 
-#: ../app/widgets/gimpgradienteditor.c:1486
-#: ../app/widgets/gimpgradienteditor.c:1494
+#: ../app/widgets/gimpgradienteditor.c:1524
+#: ../app/widgets/gimpgradienteditor.c:1532
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Posición del tirador: %0.6f"
 
-#: ../app/widgets/gimpgradienteditor.c:1511
+#: ../app/widgets/gimpgradienteditor.c:1549
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Distancia: %0.6f"
@@ -10630,17 +10609,6 @@ msgstr "Percentil:"
 msgid "Channel:"
 msgstr "Canal:"
 
-#: ../app/widgets/gimpimagedock.c:191
-msgid "Auto"
-msgstr "Auto"
-
-#: ../app/widgets/gimpimagedock.c:202
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
-msgstr ""
-"Cuando está activado el diálogo automáticamente sigue a la imagen en la que "
-"está trabajando."
-
 #: ../app/widgets/gimpimagepropview.c:179
 msgid "Pixel dimensions:"
 msgstr "Dimensiones en píxeles:"
@@ -10715,21 +10683,21 @@ msgstr "Reordenar la capa"
 msgid "Keep transparency"
 msgstr "Mantener transparencia"
 
-#: ../app/widgets/gimplayertreeview.c:893
+#: ../app/widgets/gimplayertreeview.c:878
 msgid "Empty Layer"
 msgstr "Capa vacía"
 
-#: ../app/widgets/gimpmessagebox.c:461
+#: ../app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Mensaje repetido %d veces."
 
-#: ../app/widgets/gimpmessagebox.c:463
+#: ../app/widgets/gimpmessagebox.c:464
 msgid "Message repeated once."
 msgstr "Mensaje repetido una vez."
 
 #: ../app/widgets/gimppaletteeditor.c:269
-#: ../app/widgets/gimppaletteeditor.c:1011
+#: ../app/widgets/gimppaletteeditor.c:1005
 msgid "Undefined"
 msgstr "Indefinido"
 
@@ -10902,14 +10870,14 @@ msgstr ""
 "El degradado activo.\n"
 "Pulse para abrir el diálogo de degradados."
 
-#: ../app/widgets/gimptoolbox.c:829
+#: ../app/widgets/gimptoolbox.c:830
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
-"The arrows swap colors. Double click to open the color selection dialog."
+"The arrows swap colors. Click to open the color selection dialog."
 msgstr ""
 "Colores de frente y fondo.  Los cuadrados blancos y negros reinician los "
-"colores.  Las flechas intercambian los colores. Pulse dos veces para abrir "
-"el diálogo de selección de colores."
+"colores.  Las flechas intercambian los colores. Pulse para abrir el "
+"diálogo de selección de colores."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -10923,11 +10891,11 @@ msgstr "Recuperar opciones desde..."
 msgid "Delete saved options..."
 msgstr "Borrar las opciones guardadas..."
 
-#: ../app/widgets/gimpuimanager.c:674
+#: ../app/widgets/gimpuimanager.c:695
 msgid "Your GIMP installation is incomplete:"
 msgstr "Su instalación de El Gimp está incompleta:"
 
-#: ../app/widgets/gimpuimanager.c:676
+#: ../app/widgets/gimpuimanager.c:697
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr ""
 "Asegúrese de que los archivos XML del menú están instalados correctamente."
@@ -11095,7 +11063,7 @@ msgstr "Cadena UTF-8 inválida en el archivo XCF"
 
 #: ../app/xcf/xcf-save.c:157 ../app/xcf/xcf-save.c:167
 #: ../app/xcf/xcf-save.c:177 ../app/xcf/xcf-save.c:187
-#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:342
+#: ../app/xcf/xcf-save.c:211 ../app/xcf/xcf.c:344
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Ocurrió un error al guardar el archivo CXF: %s"
@@ -11110,11 +11078,11 @@ msgstr "Ocurrió un error al escribir XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 
-#: ../app/xcf/xcf.c:86 ../app/xcf/xcf.c:143
+#: ../app/xcf/xcf.c:86 ../app/xcf/xcf.c:144
 msgid "GIMP XCF image"
 msgstr "Imagen XCF de Gimp"
 
-#: ../app/xcf/xcf.c:282
+#: ../app/xcf/xcf.c:284
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
@@ -11157,6 +11125,70 @@ msgstr "Asegúrese de que la caja de herramientas está visible"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "No se ha podido iniciar «%s»: %s"
+
+#~ msgid ""
+#~ "When enabled, the GIMP will use a different info window per image view."
+#~ msgstr ""
+#~ "Cuando se encuentre activado El Gimp utilizará una ventana de información "
+#~ "diferente por cada vista de imagen."
+
+#~ msgid "Layer '%s' has no alpha. Layer was placed above it."
+#~ msgstr "La capa «%s» no tiene alfa. La capa fue colocada encima de ésta."
+
+#~ msgid "Finding Contiguous Regions"
+#~ msgstr "Encontrando regiones continuas"
+
+#~ msgid "Default _threshold:"
+#~ msgstr "Umbral prede_terminado:"
+
+#~ msgid "Transparency _type:"
+#~ msgstr "Tipo de _transparencia:"
+
+#~ msgid ""
+#~ "This folder is used to temporarily store undo buffers to reduce memory "
+#~ "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
+#~ "<#> may persist in this folder.  These files are useless across GIMP "
+#~ "sessions and can be destroyed with impunity."
+#~ msgstr ""
+#~ "Esta carpeta se utiliza para almacenar temporalmente los búferes de "
+#~ "deshacer para reducir el uso de memoria.  Si El Gimp  se cierra de forma "
+#~ "anormal los archivos del tipo gimp<#>.<#> pueden quedar guardados en esta "
+#~ "carpeta.  Estos archivos son inútiles en distintas sesiones de El Gimp y "
+#~ "pueden ser destruidos sin problemas."
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Procedimiento interno de El Gimp"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "Extensión de El Gimp"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "Añadido de El Gimp"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Procedimiento temporal"
+
+#~ msgid "Selection: ADD"
+#~ msgstr "Selección: AÑADIR"
+
+#~ msgid "Selection: SUBTRACT"
+#~ msgstr "Selección: SUSTRAER"
+
+#~ msgid "Selection: INTERSECT"
+#~ msgstr "Selección: INTERSECTAR"
+
+#~ msgid "Selection: REPLACE"
+#~ msgstr "Selección: REEMPLAZAR"
+
+#~ msgid "Auto"
+#~ msgstr "Auto"
+
+#~ msgid ""
+#~ "When enabled the dialog automatically follows the image you are working "
+#~ "on."
+#~ msgstr ""
+#~ "Cuando está activado el diálogo automáticamente sigue a la imagen en la "
+#~ "que está trabajando."
 
 #~ msgid "Close this Tab"
 #~ msgstr "Cerrar esta solapa"
