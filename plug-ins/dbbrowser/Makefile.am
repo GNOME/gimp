@@ -20,8 +20,8 @@ noinst_LTLIBRARIES = libgimpprocbrowser.la
 libexec_PROGRAMS = plugin-browser procedure-browser
 
 libgimpprocbrowser_la_SOURCES = \
-	gimpprocbox.c		\
-	gimpprocbox.h		\
+	gimpbrowser.c		\
+	gimpbrowser.h		\
 	gimpprocbrowser.c	\
 	gimpprocbrowser.h	\
 	gimpprocview.c		\
