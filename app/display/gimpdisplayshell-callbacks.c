@@ -203,6 +203,9 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         fullscreen = gimp_display_shell_get_fullscreen (shell);
 
+        gtk_widget_set_name (GTK_WIDGET (shell->menubar),
+                             fullscreen ? "gimp-menubar-fullscreen" : NULL);
+
         options = fullscreen ? shell->fullscreen_options : shell->options;
 
         gimp_display_shell_set_show_menubar       (shell,

@@ -120,6 +120,14 @@ static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
 
 static GtkWindowClass *parent_class = NULL;
 
+static const gchar *display_rc_style =
+  "style \"fullscreen-menubar-style\"\n"
+  "{\n"
+  "  GtkMenuBar::shadow-type      = none\n"
+  "  GtkMenuBar::internal-padding = 0\n"
+  "}\n"
+  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"";
+
 
 GType
 gimp_display_shell_get_type (void)
@@ -209,6 +217,8 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                          TRUE, FALSE,
                                                          GIMP_UNIT_PIXEL,
                                                          G_PARAM_READWRITE));
+
+  gtk_rc_parse_string (display_rc_style);
 }
 
 static void

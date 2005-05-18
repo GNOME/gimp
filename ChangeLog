@@ -1,3 +1,9 @@
+2005-05-18  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c: hack around with gtk+ widget
+	styles to get rid of the menubar padding in fullscreen mode.
+
 2005-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* tools/test-clipboard.c: implemented pasting.
