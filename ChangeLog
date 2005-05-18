@@ -1,5 +1,10 @@
 2005-05-19  Michael Natterer  <mitch@gimp.org>
 
+	* tools/test-clipboard.c: don't allow copy and paste at the same
+	time, fixed exit codes.
+
+2005-05-19  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/dbbrowser/Makefile.am
 	* plug-ins/dbbrowser/gimpprocbox.[ch]: removed.
 

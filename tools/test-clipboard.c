@@ -107,10 +107,19 @@ main (gint   argc,
       return EXIT_SUCCESS;
     }
 
+  if (copy_filename && paste_filename)
+    {
+      g_printerr ("Can't copy and paste at the same time\n");
+      return EXIT_FAILURE;
+    }
+
   if (copy_filename)
     {
       if (! target)
-        g_printerr ("Usage: %s -t <target> -c <file>\n", argv[0]);
+        {
+          g_printerr ("Usage: %s -t <target> -c <file>\n", argv[0]);
+          return EXIT_FAILURE;
+        }
 
       test_clipboard_copy (clipboard, target, copy_filename);
       return EXIT_SUCCESS;
@@ -119,10 +128,13 @@ main (gint   argc,
   if (paste_filename)
     {
       if (! target)
-        g_printerr ("Usage: %s -t <target> -p <file>\n", argv[0]);
+        {
+          g_printerr ("Usage: %s -t <target> -p <file>\n", argv[0]);
+          return EXIT_FAILURE;
+        }
 
       test_clipboard_paste (clipboard, target, paste_filename);
-      return EXIT_FAILURE;
+      return EXIT_SUCCESS;
     }
 
   return EXIT_SUCCESS;
