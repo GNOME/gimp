@@ -1,3 +1,8 @@
+2005-05-19  Manish Singh  <yosh@gimp.org>
+
+	* app/config/test-config.c: Add casts to G_OBJECT() for
+	gimp_config_diff().
+
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorscales.c: removed the hex entry from the

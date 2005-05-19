@@ -121,7 +121,9 @@ main (int   argc,
   g_object_set (grid2, "xspacing", 20.0, NULL);
 
   g_print (" Creating a diff between the two ...");
-  for (list = gimp_config_diff (grid, grid2, 0); list; list = list->next)
+  for (list = gimp_config_diff (G_OBJECT (grid), G_OBJECT (grid2), 0);
+       list;
+       list = list->next)
     {
       GParamSpec *pspec = list->data;
 
@@ -158,7 +160,7 @@ main (int   argc,
     }
   else
     {
-      GList *diff = gimp_config_diff (grid, grid2, 0);
+      GList *diff = gimp_config_diff (G_OBJECT (grid), G_OBJECT (grid2), 0);
 
       if (diff)
         {
