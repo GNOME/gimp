@@ -1,5 +1,15 @@
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorscales.c: removed the hex entry from the
+	GimpColorScales widget.
+
+	* libgimpwidgets/gimpcolorselection.c: added it here instead.
+
+	* app/widgets/gimpcoloreditor.[ch]: and here, next to the FG/BG
+	editor.
+
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpstrokeoptions.[ch]: renamed property "miter" to
 	"miter-limit" and added a description to be used as a tooltip in
 	the stroke editor.

@@ -76,6 +76,8 @@ static void   gimp_color_editor_fg_bg_notify    (GtkWidget         *widget,
 static void   gimp_color_editor_color_picked    (GtkWidget         *widget,
                                                  const GimpRGB     *rgb,
                                                  GimpColorEditor   *editor);
+static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
+                                                 GimpColorEditor   *editor);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -135,6 +137,8 @@ static void
 gimp_color_editor_init (GimpColorEditor *editor)
 {
   GtkWidget   *notebook;
+  GtkWidget   *hbox;
+  GtkWidget   *vbox;
   gint         content_spacing;
   gint         button_spacing;
   GtkIconSize  button_icon_size;
@@ -229,14 +233,34 @@ gimp_color_editor_init (GimpColorEditor *editor)
                       editor);
   }
 
+  hbox = gtk_hbox_new (TRUE, 6);
+  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   /*  FG/BG editor  */
   editor->fg_bg = gimp_fg_bg_editor_new (NULL);
   gtk_widget_set_size_request (editor->fg_bg, -1, 48);
-  gtk_box_pack_start (GTK_BOX (editor), editor->fg_bg, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, TRUE, TRUE, 0);
   gtk_widget_show (editor->fg_bg);
 
   g_signal_connect (editor->fg_bg, "notify::active-color",
                     G_CALLBACK (gimp_color_editor_fg_bg_notify),
+                    editor);
+
+  /* The hex triplet entry */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  editor->hex_entry = gimp_color_hex_entry_new ();
+  gimp_help_set_help_data (editor->hex_entry,
+                           _("Hexadecimal color notation "
+                             "as used in HTML and CSS"), NULL);
+  gtk_box_pack_end (GTK_BOX (vbox), editor->hex_entry, FALSE, FALSE, 0);
+  gtk_widget_show (editor->hex_entry);
+
+  g_signal_connect (editor->hex_entry, "color_changed",
+                    G_CALLBACK (gimp_color_editor_entry_changed),
                     editor);
 }
 
@@ -390,9 +414,6 @@ gimp_color_editor_destroy (GtkObject *object)
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-
-/*  public functions  */
-
 GtkWidget *
 gimp_color_editor_new (GimpContext *context)
 {
@@ -422,7 +443,36 @@ gimp_color_editor_style_set (GtkWidget *widget,
 }
 
 
-/*  public functions  */
+static void
+gimp_color_editor_set_color (GimpColorEditor *editor,
+                             const GimpRGB   *rgb)
+{
+  GimpHSV hsv;
+
+  gimp_rgb_to_hsv (rgb, &hsv);
+
+  g_signal_handlers_block_by_func (editor->notebook,
+                                   gimp_color_editor_color_changed,
+                                   editor);
+
+  gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
+                                 rgb, &hsv);
+
+  g_signal_handlers_unblock_by_func (editor->notebook,
+                                     gimp_color_editor_color_changed,
+                                     editor);
+
+  g_signal_handlers_block_by_func (editor->hex_entry,
+                                   gimp_color_editor_entry_changed,
+                                   editor);
+
+  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry),
+                                  rgb);
+
+  g_signal_handlers_unblock_by_func (editor->hex_entry,
+                                     gimp_color_editor_entry_changed,
+                                     editor);
+}
 
 static void
 gimp_color_editor_fg_changed (GimpContext     *context,
@@ -430,22 +480,7 @@ gimp_color_editor_fg_changed (GimpContext     *context,
                               GimpColorEditor *editor)
 {
   if (! editor->edit_bg)
-    {
-      GimpHSV hsv;
-
-      gimp_rgb_to_hsv (rgb, &hsv);
-
-      g_signal_handlers_block_by_func (editor->notebook,
-                                       gimp_color_editor_color_changed,
-                                       editor);
-
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
-                                     rgb, &hsv);
-
-      g_signal_handlers_unblock_by_func (editor->notebook,
-                                         gimp_color_editor_color_changed,
-                                         editor);
-    }
+    gimp_color_editor_set_color (editor, rgb);
 }
 
 static void
@@ -454,22 +489,7 @@ gimp_color_editor_bg_changed (GimpContext     *context,
                               GimpColorEditor *editor)
 {
   if (editor->edit_bg)
-    {
-      GimpHSV hsv;
-
-      gimp_rgb_to_hsv (rgb, &hsv);
-
-      g_signal_handlers_block_by_func (editor->notebook,
-                                       gimp_color_editor_color_changed,
-                                       editor);
-
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (editor->notebook),
-                                     rgb, &hsv);
-
-      g_signal_handlers_unblock_by_func (editor->notebook,
-                                         gimp_color_editor_color_changed,
-                                         editor);
-    }
+    gimp_color_editor_set_color (editor, rgb);
 }
 
 static void
@@ -505,6 +525,17 @@ gimp_color_editor_color_changed (GimpColorSelector *selector,
                                              editor);
         }
     }
+
+  g_signal_handlers_block_by_func (editor->hex_entry,
+                                   gimp_color_editor_entry_changed,
+                                   editor);
+
+  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (editor->hex_entry),
+                                  rgb);
+
+  g_signal_handlers_unblock_by_func (editor->hex_entry,
+                                     gimp_color_editor_entry_changed,
+                                     editor);
 }
 
 static void
@@ -575,5 +606,22 @@ gimp_color_editor_color_picked (GtkWidget       *widget,
         gimp_context_set_background (editor->context, rgb);
       else
         gimp_context_set_foreground (editor->context, rgb);
+    }
+}
+
+static void
+gimp_color_editor_entry_changed (GimpColorHexEntry *entry,
+                                 GimpColorEditor   *editor)
+{
+  GimpRGB  rgb;
+
+  gimp_color_hex_entry_get_color (entry, &rgb);
+
+  if (editor->context)
+    {
+      if (editor->edit_bg)
+        gimp_context_set_background (editor->context, &rgb);
+      else
+        gimp_context_set_foreground (editor->context, &rgb);
     }
 }

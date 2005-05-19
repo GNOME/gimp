@@ -50,8 +50,14 @@ typedef enum
 {
   UPDATE_NOTEBOOK  = 1 << 0,
   UPDATE_SCALES    = 1 << 1,
-  UPDATE_NEW_COLOR = 1 << 2
+  UPDATE_ENTRY     = 1 << 2,
+  UPDATE_COLOR     = 1 << 3
 } UpdateType;
+
+#define UPDATE_ALL (UPDATE_NOTEBOOK | \
+                    UPDATE_SCALES   | \
+                    UPDATE_ENTRY    | \
+                    UPDATE_COLOR)
 
 enum
 {
@@ -74,6 +80,8 @@ static void   gimp_color_selection_notebook_changed  (GimpColorSelector  *select
 static void   gimp_color_selection_scales_changed    (GimpColorSelector  *selector,
                                                       const GimpRGB      *rgb,
                                                       const GimpHSV      *hsv,
+                                                      GimpColorSelection *selection);
+static void   gimp_color_selection_entry_changed     (GimpColorHexEntry  *entry,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_channel_changed   (GimpColorSelector  *selector,
                                                       GimpColorSelectorChannel channel,
@@ -141,6 +149,9 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkWidget *main_hbox;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *entry;
 
   selection->show_alpha = TRUE;
 
@@ -259,6 +270,29 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_signal_connect (selection->scales, "color_changed",
                     G_CALLBACK (gimp_color_selection_scales_changed),
                     selection);
+
+  /* The hex triplet entry */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_end (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  entry = gimp_color_hex_entry_new ();
+  gimp_help_set_help_data (entry,
+                           _("Hexadecimal color notation "
+                             "as used in HTML and CSS"), NULL);
+  gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry);
+
+  label = gtk_label_new_with_mnemonic (_("HTML _Notation:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
+  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  g_object_set_data (G_OBJECT (selection), "color-hex-entry", entry);
+
+  g_signal_connect (entry, "color_changed",
+                    G_CALLBACK (gimp_color_selection_entry_changed),
+                    selection);
 }
 
 /**
@@ -340,10 +374,7 @@ gimp_color_selection_set_color (GimpColorSelection *selection,
   selection->rgb = *color;
   gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
 
-  gimp_color_selection_update (selection,
-                               UPDATE_NOTEBOOK   |
-                               UPDATE_SCALES     |
-                               UPDATE_NEW_COLOR);
+  gimp_color_selection_update (selection, UPDATE_ALL);
 
   gimp_color_selection_color_changed (selection);
 }
@@ -458,7 +489,8 @@ gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
   selection->hsv = *hsv;
   selection->rgb = *rgb;
 
-  gimp_color_selection_update (selection, UPDATE_SCALES | UPDATE_NEW_COLOR);
+  gimp_color_selection_update (selection,
+                               UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
   gimp_color_selection_color_changed (selection);
 }
 
@@ -471,7 +503,21 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
   selection->rgb = *rgb;
   selection->hsv = *hsv;
 
-  gimp_color_selection_update (selection, UPDATE_NOTEBOOK | UPDATE_NEW_COLOR);
+  gimp_color_selection_update (selection,
+                               UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
+  gimp_color_selection_color_changed (selection);
+}
+
+static void
+gimp_color_selection_entry_changed (GimpColorHexEntry  *entry,
+                                    GimpColorSelection *selection)
+{
+  gimp_color_hex_entry_get_color (entry, &selection->rgb);
+
+  gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
+
+  gimp_color_selection_update (selection,
+                               UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_COLOR);
   gimp_color_selection_color_changed (selection);
 }
 
@@ -493,7 +539,8 @@ gimp_color_selection_new_color_changed (GtkWidget          *widget,
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &selection->rgb);
   gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
 
-  gimp_color_selection_update (selection, UPDATE_NOTEBOOK | UPDATE_SCALES);
+  gimp_color_selection_update (selection,
+                               UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_ENTRY);
   gimp_color_selection_color_changed (selection);
 }
 
@@ -531,7 +578,24 @@ gimp_color_selection_update (GimpColorSelection *selection,
                                          selection);
     }
 
-  if (update & UPDATE_NEW_COLOR)
+  if (update & UPDATE_ENTRY)
+    {
+      GimpColorHexEntry *entry;
+
+      entry = g_object_get_data (G_OBJECT (selection), "color-hex-entry");
+
+      g_signal_handlers_block_by_func (entry,
+                                       gimp_color_selection_entry_changed,
+                                       selection);
+
+      gimp_color_hex_entry_set_color (entry, &selection->rgb);
+
+      g_signal_handlers_unblock_by_func (entry,
+                                         gimp_color_selection_entry_changed,
+                                         selection);
+    }
+
+  if (update & UPDATE_COLOR)
     {
       g_signal_handlers_block_by_func (selection->new_color,
                                        gimp_color_selection_new_color_changed,

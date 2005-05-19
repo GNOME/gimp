@@ -36,7 +36,6 @@
 
 #include "gimpcolorscale.h"
 #include "gimpcolorscales.h"
-#include "gimpcolorhexentry.h"
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -56,7 +55,6 @@ struct _GimpColorScales
   GtkWidget         *toggles[7];
   GtkWidget         *sliders[7];
   GtkObject         *slider_data[7];
-  GtkWidget         *hex_entry;
 };
 
 struct _GimpColorScalesClass
@@ -86,9 +84,6 @@ static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
 static void   gimp_color_scales_toggle_update  (GtkWidget         *widget,
                                                 GimpColorScales   *scales);
 static void   gimp_color_scales_scale_update   (GtkAdjustment     *adjustment,
-                                                GimpColorScales   *scales);
-
-static void   gimp_color_scales_entry_changed  (GimpColorHexEntry *entry,
                                                 GimpColorScales   *scales);
 
 
@@ -145,8 +140,6 @@ gimp_color_scales_init (GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GtkWidget         *table;
-  GtkWidget         *hbox;
-  GtkWidget         *label;
   GSList            *group;
   gint               i;
 
@@ -232,27 +225,6 @@ gimp_color_scales_init (GimpColorScales *scales)
 			G_CALLBACK (gimp_color_scales_scale_update),
 			scales);
     }
-
-  /* The hex triplet entry */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_end (GTK_BOX (scales), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  scales->hex_entry = gimp_color_hex_entry_new ();
-  gimp_help_set_help_data (scales->hex_entry,
-                           _("Hexadecimal color notation "
-                             "as used in HTML and CSS"), NULL);
-  gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, TRUE, TRUE, 0);
-  gtk_widget_show (scales->hex_entry);
-
-  label = gtk_label_new_with_mnemonic (_("HTML _Notation:"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), scales->hex_entry);
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  g_signal_connect (scales->hex_entry, "color_changed",
-                    G_CALLBACK (gimp_color_scales_entry_changed),
-                    scales);
 }
 
 static void
@@ -375,17 +347,6 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
       gimp_color_scale_set_color (GIMP_COLOR_SCALE (scales->sliders[i]),
                                   &selector->rgb, &selector->hsv);
     }
-
-  g_signal_handlers_block_by_func (scales->hex_entry,
-                                   gimp_color_scales_entry_changed,
-                                   scales);
-
-  gimp_color_hex_entry_set_color (GIMP_COLOR_HEX_ENTRY (scales->hex_entry),
-                                                        &selector->rgb);
-
-  g_signal_handlers_unblock_by_func (scales->hex_entry,
-                                     gimp_color_scales_entry_changed,
-                                     scales);
 }
 
 static void
@@ -462,20 +423,6 @@ gimp_color_scales_scale_update (GtkAdjustment   *adjustment,
     }
 
   gimp_color_scales_update_scales (scales, i);
-
-  gimp_color_selector_color_changed (selector);
-}
-
-static void
-gimp_color_scales_entry_changed (GimpColorHexEntry *entry,
-                                 GimpColorScales   *scales)
-{
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-
-  gimp_color_hex_entry_get_color (entry, &selector->rgb);
-
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
-  gimp_color_scales_update_scales (scales, -1);
 
   gimp_color_selector_color_changed (selector);
 }
