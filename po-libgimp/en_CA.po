@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-22 04:20-0400\n"
-"PO-Revision-Date: 2005-04-22 20:02-0400\n"
+"POT-Creation-Date: 2005-05-19 14:10-0400\n"
+"PO-Revision-Date: 2005-05-19 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -283,17 +283,17 @@ msgstr "Replace the current selection"
 msgid "Intersect with the current selection"
 msgstr "Intersect with the current selection"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:161
 #: ../libgimpwidgets/gimpcolorselect.c:352
 msgid "Red"
 msgstr "Red"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:162
 #: ../libgimpwidgets/gimpcolorselect.c:353
 msgid "Green"
 msgstr "Green"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:163
 #: ../libgimpwidgets/gimpcolorselect.c:354
 msgid "Blue"
 msgstr "Blue"
@@ -306,7 +306,7 @@ msgstr "Gray"
 msgid "Indexed"
 msgstr "Indexed"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:164
 #: ../libgimpwidgets/gimpcolorselect.c:355
 msgid "Alpha"
 msgstr "Alpha"
@@ -519,6 +519,22 @@ msgstr "Forward"
 msgid "Backward"
 msgstr "Backward"
 
+#: ../libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Internal GIMP procedure"
+
+#: ../libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "GIMP Plug-In"
+
+#: ../libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "GIMP Extension"
+
+#: ../libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Temporary Procedure"
+
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
@@ -622,7 +638,7 @@ msgid "Relative Colorimetric"
 msgstr "Relative Colourimetric"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorscales.c:159
 #: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Saturation"
@@ -784,6 +800,10 @@ msgstr "Failed to create thumbnail folder '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Could not create thumbnail for %s: %s"
 
+#: ../libgimpwidgets/gimpbrowser.c:130
+msgid "_Search:"
+msgstr "_Search:"
+
 #: ../libgimpwidgets/gimpcolorbutton.c:99
 msgid "_Foreground Color"
 msgstr "_Foreground Colour"
@@ -800,69 +820,69 @@ msgstr "Blac_k"
 msgid "_White"
 msgstr "_White"
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:128
 msgid "Scales"
 msgstr "Scales"
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorscales.c:148
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorscales.c:149
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorscales.c:150
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorscales.c:151
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorscales.c:152
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorscales.c:153
 #: ../libgimpwidgets/gimpcolorselect.c:345
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpcolorscales.c:161
+#: ../libgimpwidgets/gimpcolorscales.c:154
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorscales.c:158
 #: ../libgimpwidgets/gimpcolorselect.c:349
 msgid "Hue"
 msgstr "Hue"
 
-#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorscales.c:160
 #: ../libgimpwidgets/gimpcolorselect.c:351
 msgid "Value"
 msgstr "Value"
 
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Hexadecimal colour notation as used in HTML and CSS"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr "HTML _Notation:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:214
 msgid "Current:"
 msgstr "Current:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:236
 msgid "Old:"
 msgstr "Old:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:281
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Hexadecimal colour notation as used in HTML and CSS"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "HTML _Notation:"
+msgstr "HTML _Notation:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"

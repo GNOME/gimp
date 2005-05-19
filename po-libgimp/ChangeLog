@@ -1,3 +1,7 @@
+2005-05-19  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2005-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added libgimpwidgets/gimpbrowser.c

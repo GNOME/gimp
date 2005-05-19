@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-04 02:04-0400\n"
-"PO-Revision-Date: 2005-05-04 14:31-0400\n"
+"POT-Creation-Date: 2005-05-19 14:10-0400\n"
+"PO-Revision-Date: 2005-05-19 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -425,7 +425,7 @@ msgstr "Save Fractal Parameters"
 #: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
 #: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
-#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1778
+#: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
 #: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
@@ -435,9 +435,9 @@ msgstr "Save Fractal Parameters"
 #: ../plug-ins/fits/fits.c:333 ../plug-ins/flame/flame.c:412
 #: ../plug-ins/gfig/gfig.c:429 ../plug-ins/gfli/gfli.c:422
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
-#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
+#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:841
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
-#: ../plug-ins/winicon/icoload.c:127 ../plug-ins/xjt/xjt.c:2524
+#: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1211,13 +1211,13 @@ msgstr "Bad colourmap"
 #: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
-#: ../plug-ins/common/psd.c:1784 ../plug-ins/common/raw.c:645
+#: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
-#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
+#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:341
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
-#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:510
+#: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
 #: ../plug-ins/xjt/xjt.c:3309
 #, c-format
 msgid "Opening '%s'..."
@@ -1257,14 +1257,14 @@ msgstr "Unsupported or invalid bitdepth."
 #: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
 #: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
-#: ../plug-ins/common/psd.c:2192 ../plug-ins/common/raw.c:680
+#: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
 #: ../plug-ins/common/tga.c:922 ../plug-ins/common/tiff.c:895
 #: ../plug-ins/common/tile.c:262 ../plug-ins/common/xbm.c:862
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
-#: ../plug-ins/jpeg/jpeg-load.c:707 ../plug-ins/sgi/sgi.c:368
+#: ../plug-ins/jpeg/jpeg-load.c:708 ../plug-ins/sgi/sgi.c:368
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Background"
@@ -1295,7 +1295,7 @@ msgstr "Cannot operate on unknown image types."
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
 #: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
-#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
+#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:622
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:978
@@ -4769,11 +4769,11 @@ msgstr "S_ubject:"
 msgid "Comm_ent:"
 msgstr "Comm_ent:"
 
-#: ../plug-ins/common/mail.c:729
+#: ../plug-ins/common/mail.c:723
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "some sort of error with the file extension or lack thereof"
 
-#: ../plug-ins/common/mail.c:955
+#: ../plug-ins/common/mail.c:950
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Could not start sendmail (%s)"
@@ -5795,7 +5795,7 @@ msgstr "B/W"
 msgid "Gray"
 msgstr "Gray"
 
-#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:464
+#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:466
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1413
@@ -7137,40 +7137,40 @@ msgstr ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 
-#: ../plug-ins/common/tiff.c:2299
+#: ../plug-ins/common/tiff.c:2258
 msgid "Save as TIFF"
 msgstr "Save as TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2318
+#: ../plug-ins/common/tiff.c:2277
 msgid "Compression"
 msgstr "Compression"
 
-#: ../plug-ins/common/tiff.c:2322
+#: ../plug-ins/common/tiff.c:2281
 msgid "_None"
 msgstr "_None"
 
-#: ../plug-ins/common/tiff.c:2323
+#: ../plug-ins/common/tiff.c:2282
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2324
+#: ../plug-ins/common/tiff.c:2283
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/common/tiff.c:2325
+#: ../plug-ins/common/tiff.c:2284
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2326
+#: ../plug-ins/common/tiff.c:2285
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2335
+#: ../plug-ins/common/tiff.c:2294
 msgid "Save _color values from transparent pixels"
 msgstr "Save _colour values from transparent pixels"
 
-#: ../plug-ins/common/tiff.c:2351 ../plug-ins/common/xbm.c:1201
+#: ../plug-ins/common/tiff.c:2310 ../plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Comment:"
 
@@ -8020,24 +8020,24 @@ msgstr "W_rite extra mask file"
 msgid "_Mask file extension:"
 msgstr "_Mask file extension:"
 
-#: ../plug-ins/common/xpm.c:168 ../plug-ins/common/xpm.c:193
+#: ../plug-ins/common/xpm.c:170 ../plug-ins/common/xpm.c:195
 msgid "X PixMap image"
 msgstr "X PixMap image"
 
-#: ../plug-ins/common/xpm.c:349
+#: ../plug-ins/common/xpm.c:351
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Error opening file '%s'"
 
-#: ../plug-ins/common/xpm.c:354
+#: ../plug-ins/common/xpm.c:356
 msgid "XPM file invalid"
 msgstr "XPM file invalid"
 
-#: ../plug-ins/common/xpm.c:769
+#: ../plug-ins/common/xpm.c:771
 msgid "Save as XPM"
 msgstr "Save as XPM"
 
-#: ../plug-ins/common/xpm.c:790
+#: ../plug-ins/common/xpm.c:792
 msgid "_Alpha threshold:"
 msgstr "_Alpha threshold:"
 
@@ -8087,48 +8087,82 @@ msgstr "ZealousCropping(tm)..."
 msgid "Nothing to crop."
 msgstr "Nothing to crop."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Procedure Browser"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-#: ../plug-ins/dbbrowser/plugin-browser.c:546
-msgid "Search by _Name"
-msgstr "Search by _Name"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "by name"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr "Search by _Description"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "by description"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-#: ../plug-ins/dbbrowser/plugin-browser.c:716
-msgid "_Search:"
-msgstr "_Search:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "by help"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
-#: ../plug-ins/dbbrowser/plugin-browser.c:395
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "by author"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "by copyright"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "by date"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "by type"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
+#: ../plug-ins/dbbrowser/plugin-browser.c:388
 msgid "Searching by name - please wait"
 msgstr "Searching by name - please wait"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "Searching by blurb - please wait"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
+msgid "Searching by description - please wait"
+msgstr "Searching by description - please wait"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Searching by help - please wait"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Searching by author - please wait"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Searching by copyright - please wait"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Searching by date - please wait"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Searching by type - please wait"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Searching - please wait"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "1 Procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Procedures"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
-#: ../plug-ins/dbbrowser/plugin-browser.c:514
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
+#: ../plug-ins/dbbrowser/plugin-browser.c:517
 msgid "No matches"
 msgstr "No matches"
 
@@ -8138,92 +8172,76 @@ msgstr "No matches"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:135 ../plug-ins/gflare/gflare.c:2677
+#: ../plug-ins/dbbrowser/gimpprocview.c:138 ../plug-ins/gflare/gflare.c:2677
 #: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
 #: ../plug-ins/gflare/gflare.c:3750
 msgid "Parameters"
 msgstr "Parameters"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
 msgstr "Return Values"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Additional Information"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Author:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Date:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr "Internal GIMP procedure"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "GIMP Plug-In"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "GIMP Extension"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr "Temporary Procedure"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:149
+#: ../plug-ins/dbbrowser/plugin-browser.c:145
 msgid "_Plug-In Browser"
 msgstr "_Plug-In Browser"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:416
+#: ../plug-ins/dbbrowser/plugin-browser.c:401
 msgid "1 Plug-In Interface"
 msgstr "1 Plug-In Interface"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:418
+#: ../plug-ins/dbbrowser/plugin-browser.c:403
 #, c-format
 msgid "%d Plug-In Interfaces"
 msgstr "%d Plug-In Interfaces"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:542
+#: ../plug-ins/dbbrowser/plugin-browser.c:541
 msgid "Plug-In Browser"
 msgstr "Plug-In Browser"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:593
+#: ../plug-ins/dbbrowser/plugin-browser.c:584
 msgid "Name"
 msgstr "Name"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:601
-#: ../plug-ins/dbbrowser/plugin-browser.c:670
+#: ../plug-ins/dbbrowser/plugin-browser.c:592
+#: ../plug-ins/dbbrowser/plugin-browser.c:661
 msgid "Insertion Date"
 msgstr "Insertion Date"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:609
+#: ../plug-ins/dbbrowser/plugin-browser.c:600
 msgid "Menu Path"
 msgstr "Menu Path"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:617
-#: ../plug-ins/dbbrowser/plugin-browser.c:679
+#: ../plug-ins/dbbrowser/plugin-browser.c:608
+#: ../plug-ins/dbbrowser/plugin-browser.c:670
 msgid "Image Types"
 msgstr "Image Types"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:641
+#: ../plug-ins/dbbrowser/plugin-browser.c:632
 msgid "List View"
 msgstr "List View"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:661
+#: ../plug-ins/dbbrowser/plugin-browser.c:652
 msgid "Menu Path/Name"
 msgstr "Menu Path/Name"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:702
+#: ../plug-ins/dbbrowser/plugin-browser.c:693
 msgid "Tree View"
 msgstr "Tree View"
 
@@ -10465,15 +10483,15 @@ msgstr "Export Preview"
 msgid "EXIF data will be ignored."
 msgstr "EXIF data will be ignored."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:89
-msgid ""
-"According to the EXIF data, this image is rotated. Would you like GIMP to "
-"rotate it into the standard orientation?"
-msgstr ""
-"According to the EXIF data, this image is rotated. Would you like GIMP to "
-"rotate it into the standard orientation?"
+#: ../plug-ins/jpeg/jpeg-exif.c:90
+msgid "According to the EXIF data, this image is rotated."
+msgstr "According to the EXIF data, this image is rotated."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:92
+#: ../plug-ins/jpeg/jpeg-exif.c:91
+msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgstr "Would you like GIMP to rotate it into the standard orientation?"
+
+#: ../plug-ins/jpeg/jpeg-exif.c:93
 msgid "_Keep Orientation"
 msgstr "_Keep Orientation"
 
@@ -10481,7 +10499,7 @@ msgstr "_Keep Orientation"
 msgid "JPEG preview"
 msgstr "JPEG preview"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575
+#: ../plug-ins/jpeg/jpeg-load.c:576 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Opening thumbnail for '%s'..."
@@ -11725,7 +11743,7 @@ msgstr "Save as Windows Icon"
 msgid "Icon details"
 msgstr "Icon details"
 
-#: ../plug-ins/winicon/icoload.c:384
+#: ../plug-ins/winicon/icoload.c:340
 #, c-format
 msgid "Icon #%i"
 msgstr "Icon #%i"
@@ -11734,7 +11752,7 @@ msgstr "Icon #%i"
 msgid "Windows icons cannot be higher or wider than 255 pixels."
 msgstr "Windows icons cannot be higher or wider than 255 pixels."
 
-#: ../plug-ins/winicon/main.c:87 ../plug-ins/winicon/main.c:106
+#: ../plug-ins/winicon/main.c:99 ../plug-ins/winicon/main.c:133
 msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows icon"
 

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2005-02-02 16:49-0400\n"
+"POT-Creation-Date: 2005-05-19 14:12-0400\n"
+"PO-Revision-Date: 2005-05-19 16:49-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canadian <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,34 +97,32 @@ msgstr ""
 "off the image with the Move tool."
 
 #: ../tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
-"The GIMP can undo most changes to the image, so feel free to experiment."
+"GIMP allows you to undo most changes to the image, so feel free to "
+"experiment."
 
 #: ../tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
-"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
-"will be saved compressed. Of course loading compressed images works too."
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course, loading compressed images works too."
 
 #: ../tips/gimp-tips.xml.in.h:12
-#, fuzzy
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"The GIMP uses layers to let you organize your image. Think of them as a "
-"stack of slides or filters, such that looking through them you see a "
-"composite of their contents."
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
 
 #: ../tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -132,6 +130,9 @@ msgid ""
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
+"If a layer's name in the Layers dialogue is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer-&gt;Transparency-&gt;Add Alpha Channel."
 
 #: ../tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -222,14 +223,13 @@ msgstr ""
 "constrained to 15 degree angles."
 
 #: ../tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
-"When you save an image to work on it again later, try using XCF, the GIMP's "
+"When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -271,15 +271,14 @@ msgstr ""
 "This will create a new image containing only that layer."
 
 #: ../tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
-"You can drag and drop many things in the GIMP. For example, dragging a "
-"colour from the toolbox or from a colour palette and dropping it into an "
-"image will fill the current image or selection with that colour."
+"You can drag and drop many things in GIMP. For example, dragging a colour "
+"from the toolbox or from a colour palette and dropping it into an image will "
+"fill the current image or selection with that colour."
 
 #: ../tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -356,14 +355,3 @@ msgstr ""
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
-
-#~ msgid ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialog and "
-#~ "selecting &quot;Add Alpha Channel&quot;."
-#~ msgstr ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialogue "
-#~ "and selecting &quot;Add Alpha Channel&quot;."
