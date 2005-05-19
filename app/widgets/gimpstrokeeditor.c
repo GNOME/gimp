@@ -44,20 +44,20 @@ static void      gimp_stroke_editor_class_init   (GimpStrokeEditorClass *klass);
 static GObject * gimp_stroke_editor_constructor  (GType                  type,
                                                   guint                  n_params,
                                                   GObjectConstructParam *params);
-static void      gimp_stroke_editor_set_property (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
-static void      gimp_stroke_editor_get_property (GObject         *object,
-                                                  guint            property_id,
-                                                  GValue          *value,
-                                                  GParamSpec      *pspec);
-static void      gimp_stroke_editor_finalize     (GObject         *object);
-static gboolean  gimp_stroke_editor_paint_button (GtkWidget       *widget,
-                                                  GdkEventExpose  *event,
-                                                  gpointer         data);
-static void      gimp_stroke_editor_dash_preset  (GtkWidget       *widget,
-                                                  gpointer         data);
+static void      gimp_stroke_editor_set_property (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
+static void      gimp_stroke_editor_get_property (GObject           *object,
+                                                  guint              property_id,
+                                                  GValue            *value,
+                                                  GParamSpec        *pspec);
+static void      gimp_stroke_editor_finalize     (GObject           *object);
+static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
+                                                  GdkEventExpose    *event,
+                                                  gpointer           data);
+static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
+                                                  GimpStrokeOptions *options);
 
 
 
@@ -354,11 +354,14 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
 }
 
 static void
-gimp_stroke_editor_dash_preset (GtkWidget *widget,
-                                gpointer   data)
+gimp_stroke_editor_dash_preset (GtkWidget         *widget,
+                                GimpStrokeOptions *options)
 {
   gint value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
-    gimp_stroke_options_set_dash_preset (GIMP_STROKE_OPTIONS (data), value);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
+      value != GIMP_DASH_CUSTOM)
+    {
+      gimp_stroke_options_set_dash_pattern (options, value, NULL);
+    }
 }

@@ -486,23 +486,12 @@ update_segments_from_options (GimpDashEditor *editor)
 static void
 update_options_from_segments (GimpDashEditor *editor)
 {
-  GArray *pattern;
-  GValue  value = { 0, };
+  GArray *pattern = gimp_dash_pattern_from_segments (editor->segments,
+                                                     editor->n_segments,
+                                                     editor->dash_length);
 
-  pattern = gimp_dash_pattern_from_segments (editor->segments,
-                                             editor->n_segments,
-                                             editor->dash_length);
-
-  g_value_init (&value, G_TYPE_VALUE_ARRAY);
-
-  gimp_dash_pattern_value_set (pattern, &value);
-
-  g_array_free (pattern, TRUE);
-
-  g_object_set_property (G_OBJECT (editor->stroke_options),
-                         "dash-info", &value);
-
-  g_value_unset (&value);
+  gimp_stroke_options_set_dash_pattern (editor->stroke_options,
+                                        GIMP_DASH_CUSTOM, pattern);
 }
 
 static void

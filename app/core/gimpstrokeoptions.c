@@ -66,10 +66,6 @@ static void   gimp_stroke_options_get_property  (GObject           *object,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
 
-static void   gimp_stroke_options_set_dash_info (GimpStrokeOptions *options,
-                                                 GArray            *pattern,
-                                                 GimpDashPreset     preset);
-
 
 static guint  stroke_options_signals[LAST_SIGNAL] = { 0 };
 
@@ -206,9 +202,9 @@ gimp_stroke_options_set_property (GObject      *object,
       options->dash_offset = g_value_get_double (value);
       break;
     case PROP_DASH_INFO:
-      gimp_stroke_options_set_dash_info (options,
-                                         gimp_dash_pattern_from_value (value),
-                                         GIMP_DASH_CUSTOM);
+      gimp_stroke_options_set_dash_pattern (options,
+                                            GIMP_DASH_CUSTOM,
+                                            gimp_dash_pattern_from_value (value));
       break;
 
     default:
@@ -261,29 +257,34 @@ gimp_stroke_options_get_property (GObject    *object,
     }
 }
 
+/**
+ * gimp_stroke_options_set_dash_pattern:
+ * @options: a #GimpStrokeOptions object
+ * @preset: a value out of the #GimpDashPreset enum
+ * @pattern: a #GArray or %NULL if @preset is not %GIMP_DASH_CUSTOM
+ *
+ * Sets the dash pattern. Either a @preset is passed and @pattern is
+ * %NULL or @preset is %GIMP_DASH_CUSTOM and @pattern is the #GArray
+ * to use as the dash pattern. Note that this function takes ownership
+ * of the passed pattern.
+ */
 void
-gimp_stroke_options_set_dash_preset (GimpStrokeOptions *options,
-                                     GimpDashPreset     preset)
+gimp_stroke_options_set_dash_pattern (GimpStrokeOptions *options,
+                                      GimpDashPreset     preset,
+                                      GArray            *pattern)
 {
-  if (preset == GIMP_DASH_CUSTOM)
-    return;
+  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
+  g_return_if_fail (preset == GIMP_DASH_CUSTOM || pattern == NULL);
 
-  gimp_stroke_options_set_dash_info (options,
-                                     gimp_dash_pattern_from_preset (preset),
-                                     preset);
+  if (preset != GIMP_DASH_CUSTOM)
+    pattern = gimp_dash_pattern_from_preset (preset);
 
-  g_object_notify (G_OBJECT (options), "dash-info");
-}
-
-static void
-gimp_stroke_options_set_dash_info (GimpStrokeOptions *options,
-                                   GArray            *pattern,
-                                   GimpDashPreset     preset)
-{
   if (options->dash_info)
     g_array_free (options->dash_info, TRUE);
 
   options->dash_info = pattern;
+
+  g_object_notify (G_OBJECT (options), "dash-info");
 
   g_signal_emit (options,
                  stroke_options_signals [DASH_INFO_CHANGED], 0,
