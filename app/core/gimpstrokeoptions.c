@@ -32,6 +32,8 @@
 #include "gimpmarshal.h"
 #include "gimpstrokeoptions.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -41,7 +43,7 @@ enum
   PROP_UNIT,
   PROP_CAP_STYLE,
   PROP_JOIN_STYLE,
-  PROP_MITER,
+  PROP_MITER_LIMIT,
   PROP_ANTIALIAS,
   PROP_DASH_UNIT,
   PROP_DASH_OFFSET,
@@ -144,8 +146,12 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                  "join-style", NULL,
                                  GIMP_TYPE_JOIN_STYLE, GIMP_JOIN_MITER,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER,
-                                   "miter", NULL,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MITER_LIMIT,
+                                   "miter-limit",
+                                   _("Convert a mitered join to a bevelled "
+                                     "join if the miter would extend to a "
+                                     "distance of more than miter-limit * "
+                                     "line-width from the actual join point."),
                                    0.0, 100.0, 10.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -192,8 +198,8 @@ gimp_stroke_options_set_property (GObject      *object,
     case PROP_JOIN_STYLE:
       options->join_style = g_value_get_enum (value);
       break;
-    case PROP_MITER:
-      options->miter = g_value_get_double (value);
+    case PROP_MITER_LIMIT:
+      options->miter_limit = g_value_get_double (value);
       break;
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
@@ -238,8 +244,8 @@ gimp_stroke_options_get_property (GObject    *object,
     case PROP_JOIN_STYLE:
       g_value_set_enum (value, options->join_style);
       break;
-    case PROP_MITER:
-      g_value_set_double (value, options->miter);
+    case PROP_MITER_LIMIT:
+      g_value_set_double (value, options->miter_limit);
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);

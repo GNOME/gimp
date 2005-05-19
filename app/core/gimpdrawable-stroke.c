@@ -253,7 +253,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
   gimp_scan_convert_stroke (scan_convert, width,
                             options->join_style,
                             options->cap_style,
-                            options->miter,
+                            options->miter_limit,
                             options->dash_offset,
                             options->dash_info);
 

@@ -232,7 +232,7 @@ gimp_stroke_editor_constructor (GType                   type,
                              _("_Join style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
-  gimp_prop_scale_entry_new (G_OBJECT (editor->options), "miter",
+  gimp_prop_scale_entry_new (G_OBJECT (editor->options), "miter-limit",
                              GTK_TABLE (table), 0, row++,
                              _("_Miter limit:"),
                              1.0, 1.0, 1,
@@ -284,7 +284,7 @@ gimp_stroke_editor_constructor (GType                   type,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Dash preset:"), 0.0, 0.5,
-                             box, 2, TRUE);
+                             box, 2, FALSE);
 
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
@@ -296,7 +296,7 @@ gimp_stroke_editor_constructor (GType                   type,
 
   button = gimp_prop_check_button_new (G_OBJECT (editor->options), "antialias",
                                        _("_Antialiasing"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 2, row, row + 1,
+  gtk_table_attach (GTK_TABLE (table), button, 0, 3, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
   row++;

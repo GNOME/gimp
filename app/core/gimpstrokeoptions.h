@@ -48,7 +48,7 @@ struct _GimpStrokeOptions
   GimpCapStyle     cap_style;
   GimpJoinStyle    join_style;
 
-  gdouble          miter;
+  gdouble          miter_limit;
 
   gboolean         antialias;
 
