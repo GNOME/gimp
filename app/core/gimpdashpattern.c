@@ -148,6 +148,51 @@ gimp_dash_pattern_from_segments (const gboolean *segments,
   return pattern;
 }
 
+void
+gimp_dash_pattern_segments_set (GArray   *pattern,
+                                gboolean *segments,
+                                gint      n_segments)
+{
+  gdouble   factor;
+  gdouble   sum;
+  gint      i, j;
+  gboolean  paint;
+
+  g_return_if_fail (segments != NULL || n_segments == 0);
+
+  if (pattern == NULL || pattern->len <= 1)
+    {
+      for (i = 0; i < n_segments; i++)
+        segments[i] = TRUE;
+
+      return;
+    }
+
+  for (i = 0, sum = 0; i < pattern->len ; i++)
+    {
+      sum += g_array_index (pattern, gdouble, i);
+    }
+
+  factor = ((gdouble) n_segments) / sum;
+
+  j = 0;
+  sum = g_array_index (pattern, gdouble, j) * factor;
+  paint = TRUE;
+
+  for (i = 0; i < n_segments ; i++)
+    {
+      while (j < pattern->len && sum <= i)
+        {
+          paint = ! paint;
+          j++;
+          sum += g_array_index (pattern, gdouble, j) * factor;
+        }
+
+      segments[i] = paint;
+    }
+}
+
+
 GArray *
 gimp_dash_pattern_from_value (const GValue *value)
 {

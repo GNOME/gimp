@@ -472,11 +472,6 @@ gimp_dash_editor_shift_left (GimpDashEditor *editor)
 static void
 update_segments_from_options (GimpDashEditor *editor)
 {
-  gdouble   factor, sum = 0;
-  gint      i, j;
-  gboolean  paint;
-  GArray   *dash_info;
-
   if (editor->stroke_options == NULL || editor->segments == NULL)
     return;
 
@@ -484,54 +479,30 @@ update_segments_from_options (GimpDashEditor *editor)
 
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 
-  dash_info = editor->stroke_options->dash_info;
-
-  if (dash_info == NULL || dash_info->len <= 1)
-    {
-      for (i = 0; i < editor->n_segments; i++)
-        editor->segments[i] = TRUE;
-
-      return;
-    }
-
-  for (i = 0; i < dash_info->len ; i++)
-    {
-      sum += g_array_index (dash_info, gdouble, i);
-    }
-
-  factor = ((gdouble) editor->n_segments) / sum;
-
-  j = 0;
-  sum = g_array_index (dash_info, gdouble, j) * factor;
-  paint = TRUE;
-
-  for (i = 0; i < editor->n_segments ; i++)
-    {
-      while (j < dash_info->len && sum <= i)
-        {
-          paint = ! paint;
-          j++;
-          sum += g_array_index (dash_info, gdouble, j) * factor;
-        }
-
-      editor->segments[i] = paint;
-    }
+  gimp_dash_pattern_segments_set (editor->stroke_options->dash_info,
+                                  editor->segments, editor->n_segments);
 }
 
 static void
 update_options_from_segments (GimpDashEditor *editor)
 {
-  GArray *dash_info;
+  GArray *pattern;
+  GValue  value = { 0, };
 
-  dash_info = gimp_dash_pattern_from_segments (editor->segments,
-                                               editor->n_segments,
-                                               editor->dash_length);
+  pattern = gimp_dash_pattern_from_segments (editor->segments,
+                                             editor->n_segments,
+                                             editor->dash_length);
 
-  g_object_set (G_OBJECT (editor->stroke_options),
-                "dash-info", dash_info,
-                NULL);
+  g_value_init (&value, G_TYPE_VALUE_ARRAY);
 
-  g_array_free (dash_info, TRUE);
+  gimp_dash_pattern_value_set (pattern, &value);
+
+  g_array_free (pattern, TRUE);
+
+  g_object_set_property (G_OBJECT (editor->stroke_options),
+                         "dash-info", &value);
+
+  g_value_unset (&value);
 }
 
 static void

@@ -1,6 +1,12 @@
 2005-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdashpattern.[ch]
+	* app/widgets/gimpdasheditor.c: moved more code out of
+	GimpDashEditor to gimpdashpattern.c. Fixed bug in last commit.
+
+2005-05-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdashpattern.[ch]
 	* app/widgets/gimpdasheditor.c: moved code out of GimpDashEditor
 	to gimpdashpattern.c.
 

@@ -25,9 +25,14 @@
 
 
 GArray * gimp_dash_pattern_from_preset   (GimpDashPreset  preset);
+
 GArray * gimp_dash_pattern_from_segments (const gboolean *segments,
                                           gint            n_segments,
                                           gdouble         dash_length);
+void     gimp_dash_pattern_segments_set  (GArray         *pattern,
+                                          gboolean       *segments,
+                                          gint            n_segments);
+
 GArray * gimp_dash_pattern_from_value    (const GValue   *value);
 void     gimp_dash_pattern_value_set     (GArray         *pattern,
                                           GValue         *value);
