@@ -1,5 +1,11 @@
 2005-05-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorbutton.c (gimp_color_button_clicked):
+	made the color selection dialog transient to the window that
+	contains the color button.
+
+2005-05-20  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcoloreditor.c: moved the color picker button out
 	of the row of notebook switching buttons next to the hex entry.
 

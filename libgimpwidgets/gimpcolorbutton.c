@@ -327,7 +327,7 @@ gimp_color_button_clicked (GtkButton *button)
 
       dialog = color_button->dialog =
         gimp_dialog_new (color_button->title, COLOR_SELECTION_KEY,
-                         GTK_WIDGET (button), 0,
+                         gtk_widget_get_toplevel (GTK_WIDGET (button)), 0,
                          gimp_color_button_help_func, NULL,
 
                          GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -338,9 +338,9 @@ gimp_color_button_clicked (GtkButton *button)
 
 	gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
 						 RESPONSE_RESET,
-                                                GTK_RESPONSE_OK,
-                                       	 GTK_RESPONSE_CANCEL,
-                                                -1);
+                                                 GTK_RESPONSE_OK,
+                                                 GTK_RESPONSE_CANCEL,
+                                                 -1);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (gimp_color_button_dialog_response),
