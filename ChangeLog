@@ -1,5 +1,10 @@
 2005-05-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcoloreditor.c: moved the color picker button out
+	of the row of notebook switching buttons next to the hex entry.
+
+2005-05-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorselection.c: put the hex entry above the
 	color history again.
 

@@ -139,6 +139,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   GtkWidget   *notebook;
   GtkWidget   *hbox;
   GtkWidget   *vbox;
+  GtkWidget   *button;
   gint         content_spacing;
   gint         button_spacing;
   GtkIconSize  button_icon_size;
@@ -220,26 +221,12 @@ gimp_color_editor_init (GimpColorEditor *editor)
                         editor);
     }
 
-  /*  The color picker  */
-  {
-    GtkWidget *button;
-
-    button = gimp_pick_button_new ();
-    gtk_box_pack_start (GTK_BOX (editor->hbox), button, TRUE, TRUE, 0);
-    gtk_widget_show (button);
-
-    g_signal_connect (button, "color_picked",
-                      G_CALLBACK (gimp_color_editor_color_picked),
-                      editor);
-  }
-
   hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  FG/BG editor  */
   editor->fg_bg = gimp_fg_bg_editor_new (NULL);
-  gtk_widget_set_size_request (editor->fg_bg, -1, 48);
   gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, TRUE, TRUE, 0);
   gtk_widget_show (editor->fg_bg);
 
@@ -247,11 +234,20 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     G_CALLBACK (gimp_color_editor_fg_bg_notify),
                     editor);
 
-  /* The hex triplet entry */
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 3);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  /*  The color picker  */
+  button = gimp_pick_button_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "color_picked",
+                    G_CALLBACK (gimp_color_editor_color_picked),
+                    editor);
+
+  /*  The hex triplet entry  */
   editor->hex_entry = gimp_color_hex_entry_new ();
   gimp_help_set_help_data (editor->hex_entry,
                            _("Hexadecimal color notation "
