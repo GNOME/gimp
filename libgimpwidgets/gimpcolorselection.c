@@ -273,7 +273,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
 
   /* The hex triplet entry */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_end (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   entry = gimp_color_hex_entry_new ();

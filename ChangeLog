@@ -1,3 +1,11 @@
+2005-05-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorselection.c: put the hex entry above the
+	color history again.
+
+	* libgimpwidgets/gimpcolorscales.c: do not allocate row spacing
+	for the alpha row if it isn't visible.
+
 2005-05-19  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.c (save_image): don't do pointer arithmetic
