@@ -6,6 +6,7 @@ _libs
 .libs
 .deps
 *.la
+gimpwidgetsenums.c
 gimpwidgetsmarshal.h
 gimpwidgetsmarshal.c
 test-preview-area

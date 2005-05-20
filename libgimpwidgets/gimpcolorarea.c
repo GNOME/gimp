@@ -42,10 +42,24 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_TYPE
+};
+
 
 static void     gimp_color_area_class_init    (GimpColorAreaClass *klass);
 static void     gimp_color_area_init          (GimpColorArea      *area);
 
+static void     gimp_color_area_get_property  (GObject            *object,
+                                               guint               property_id,
+                                               GValue             *value,
+                                               GParamSpec         *pspec);
+static void     gimp_color_area_set_property  (GObject            *object,
+                                               guint               property_id,
+                                               const GValue       *value,
+                                               GParamSpec         *pspec);
 static void     gimp_color_area_finalize      (GObject            *object);
 
 static void     gimp_color_area_size_allocate (GtkWidget          *widget,
@@ -124,6 +138,8 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->get_property       = gimp_color_area_get_property;
+  object_class->set_property       = gimp_color_area_set_property;
   object_class->finalize           = gimp_color_area_finalize;
 
   widget_class->size_allocate      = gimp_color_area_size_allocate;
@@ -135,21 +151,32 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   widget_class->drag_data_get      = gimp_color_area_drag_data_get;
 
   klass->color_changed             = NULL;
+
+  /**
+   * GimpColorArea:type:
+   *
+   * The type of the color area.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_TYPE,
+                                   g_param_spec_enum ("type", NULL, NULL,
+                                                      GIMP_TYPE_COLOR_AREA_TYPE,
+                                                      GIMP_COLOR_AREA_FLAT,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_color_area_init (GimpColorArea *area)
 {
-  area->buf       = NULL;
-  area->width     = 0;
-  area->height    = 0;
-  area->rowstride = 0;
+  area->buf         = NULL;
+  area->width       = 0;
+  area->height      = 0;
+  area->rowstride   = 0;
+  area->draw_border = FALSE;
 
-  area->type      = GIMP_COLOR_AREA_FLAT;
   gimp_rgba_set (&area->color, 0.0, 0.0, 0.0, 1.0);
-
-  area->draw_border  = FALSE;
-  area->needs_render = TRUE;
 }
 
 static void
@@ -164,6 +191,46 @@ gimp_color_area_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_color_area_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpColorArea *area = GIMP_COLOR_AREA (object);
+
+  switch (property_id)
+    {
+    case PROP_TYPE:
+      g_value_set_enum (value, area->type);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_area_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpColorArea *area = GIMP_COLOR_AREA (object);
+
+  switch (property_id)
+    {
+    case PROP_TYPE:
+      gimp_color_area_set_type (area, g_value_get_enum (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -249,10 +316,11 @@ gimp_color_area_new (const GimpRGB     *color,
 
   g_return_val_if_fail (color != NULL, NULL);
 
-  area = g_object_new (GIMP_TYPE_COLOR_AREA, NULL);
+  area = g_object_new (GIMP_TYPE_COLOR_AREA,
+                       "type", type,
+                       NULL);
 
   area->color = *color;
-  area->type  = type;
 
   gtk_drag_dest_set (GTK_WIDGET (area),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -358,6 +426,8 @@ gimp_color_area_set_type (GimpColorArea     *area,
 
   area->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (area));
+
+  g_object_notify (G_OBJECT (area), "type");
 }
 
 /**

@@ -23,6 +23,7 @@ EXPORTS
 	gimp_color_area_set_color
 	gimp_color_area_set_draw_border
 	gimp_color_area_set_type
+	gimp_color_area_type_get_type
 	gimp_color_button_get_color
 	gimp_color_button_get_type
 	gimp_color_button_get_update

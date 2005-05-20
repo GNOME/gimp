@@ -62,6 +62,7 @@ lib_LTLIBRARIES = libgimpwidgets-2.0.la
 libgimpwidgets_2_0_la_sources = \
 	gimpwidgets.c		\
 	gimpwidgets.h		\
+	gimpwidgetsenums.h	\
 	gimpwidgetstypes.h	\
 	gimpbrowser.c		\
 	gimpbrowser.h		\
@@ -147,6 +148,7 @@ libgimpwidgets_2_0_la_sources = \
 	gimpwidgets-private.h
 
 libgimpwidgets_2_0_la_built_sources = \
+	gimpwidgetsenums.c	\
 	gimpwidgetsmarshal.c	\
 	gimpwidgetsmarshal.h
 
@@ -163,6 +165,7 @@ libgimpwidgets_2_0_la_SOURCES = 		\
 
 libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h		\
+	gimpwidgetsenums.h	\
 	gimpwidgetstypes.h	\
 	gimpbrowser.h		\
 	gimpbutton.h		\
@@ -223,19 +226,30 @@ libgimpwidgets_2_0_la_DEPENDENCIES = $(gimpwidgets_def)
 # rules to generate built sources
 #
 # setup autogeneration dependancies
-gen_sources = xgen-gwmh xgen-gwmc
+gen_sources = xgen-wec xgen-wmh xgen-wmc
 CLEANFILES = $(gen_sources)
 
+$(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpwidgetstypes.h\"\n" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n    }\n\n  return type;\n}\n" \
+		$(srcdir)/gimpwidgetsenums.h > xgen-wec \
+	&& cp xgen-wec $(@F) \
+	&& rm -f xgen-wec
+
 $(srcdir)/gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
-	$(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header >> xgen-gwmh \
-	&& (cmp -s xgen-gwmh $(@F) || cp xgen-gwmh $(@F)) \
-	&& rm -f xgen-gwmh xgen-gwmh~
+	$(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header >> xgen-wmh \
+	&& (cmp -s xgen-wmh $(@F) || cp xgen-wmh $(@F)) \
+	&& rm -f xgen-wmh xgen-wmh~
 
 $(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
-	echo "#include \"gimpwidgetsmarshal.h\"" >> xgen-gwmc \
-	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-gwmc \
-	&& cp xgen-gwmc $(@F) \
-	&& rm -f xgen-gwmc xgen-gwmc~
+	echo "#include \"gimpwidgetsmarshal.h\"" >> xgen-wmc \
+	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-wmc \
+	&& cp xgen-wmc $(@F) \
+	&& rm -f xgen-wmc xgen-wmc~
 
 
 #

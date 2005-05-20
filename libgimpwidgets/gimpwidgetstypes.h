@@ -24,35 +24,11 @@
 
 #include <libgimpbase/gimpbasetypes.h>
 
+#include <libgimpwidgets/gimpwidgetsenums.h>
+
 G_BEGIN_DECLS
 
 /* For information look into the html documentation */
-
-
-typedef enum
-{
-  GIMP_COLOR_AREA_FLAT = 0,
-  GIMP_COLOR_AREA_SMALL_CHECKS,
-  GIMP_COLOR_AREA_LARGE_CHECKS
-} GimpColorAreaType;
-
-typedef enum
-{
-  GIMP_COLOR_SELECTOR_HUE,
-  GIMP_COLOR_SELECTOR_SATURATION,
-  GIMP_COLOR_SELECTOR_VALUE,
-  GIMP_COLOR_SELECTOR_RED,
-  GIMP_COLOR_SELECTOR_GREEN,
-  GIMP_COLOR_SELECTOR_BLUE,
-  GIMP_COLOR_SELECTOR_ALPHA
-} GimpColorSelectorChannel;
-
-typedef enum
-{
-  GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
-  GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,
-  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
-} GimpSizeEntryUpdatePolicy;
 
 
 typedef struct _GimpBrowser            GimpBrowser;
