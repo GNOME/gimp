@@ -127,6 +127,7 @@ app/core/gimppattern.c
 app/core/gimppdbprogress.c
 app/core/gimpprogress.c
 app/core/gimpselection.c
+app/core/gimpstrokeoptions.c
 app/core/gimptemplate.c
 app/core/gimpunit.c
 
@@ -218,6 +219,7 @@ app/pdb/selection_cmds.c
 app/pdb/selection_tools_cmds.c
 app/pdb/transform_tools_cmds.c
 app/pdb/undo_cmds.c
+app/pdb/vectors_cmds.c
 
 app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
@@ -319,6 +321,7 @@ app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerkeyboard.c
+app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpcursorview.c
 app/widgets/gimpdataeditor.c
@@ -342,6 +345,7 @@ app/widgets/gimpimagedock.c
 app/widgets/gimpimagepropview.c
 app/widgets/gimpitemtreeview.c
 app/widgets/gimplayertreeview.c
+app/widgets/gimpmenudock.c
 app/widgets/gimpmessagebox.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppdbdialog.c
