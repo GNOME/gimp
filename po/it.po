@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-20 12:51+0200\n"
-"PO-Revision-Date: 2005-05-20 16:59+0200\n"
+"POT-Creation-Date: 2005-05-20 17:42+0200\n"
+"PO-Revision-Date: 2005-05-20 17:52+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4097,7 +4097,7 @@ msgstr "Disegno con uno strumento"
 
 #: ../app/core/core-enums.c:286
 msgid "Miter"
-msgstr "Angolo"
+msgstr "Spigolo"
 
 #: ../app/core/core-enums.c:287 ../app/core/core-enums.c:317
 msgid "Round"
@@ -5575,6 +5575,12 @@ msgstr "Selezione fluttuante"
 #: ../app/core/gimpselection.c:839
 msgid "Floated Layer"
 msgstr "Livello fluttuante"
+
+#: ../app/core/gimpstrokeoptions.c:151
+msgid ""
+"Convert a mitered join to a bevelled join if the miter would extend to a "
+"distance of more than miter-limit * line-width from the actual join point."
+msgstr "Converte una connessione a spigolo in una smussata se lo spigolo si estende fino ad una distanza superiore al limite-spigolo * spessore-linea dall'attuale punto di connessione."
 
 #: ../app/core/gimptemplate.c:156
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -7951,6 +7957,10 @@ msgstr ""
 msgid "Free Select"
 msgstr "Selezione libera"
 
+#: ../app/pdb/vectors_cmds.c:173
+msgid "Modify Path"
+msgstr "Modifica tracciato"
+
 #: ../app/plug-in/plug-in.c:563 ../app/plug-in/plug-in.c:596
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
@@ -9862,6 +9872,7 @@ msgid "Add the selected filter to the list of active filters."
 msgstr "Aggiungi il filtro selezionato all'elenco dei filtri attivi."
 
 #: ../app/widgets/gimpcolordisplayeditor.c:222
+#: ../app/widgets/gimpcontrollerlist.c:297
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Togli il filtro selezionato dall'elenco dei filtri attivi."
 
@@ -9894,7 +9905,7 @@ msgstr "Nessun filtro selezionato"
 msgid "Configure selected filter"
 msgstr "Configura il filtro selezionato"
 
-#: ../app/widgets/gimpcoloreditor.c:257
+#: ../app/widgets/gimpcoloreditor.c:253
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Notazione di colore esadecimale come si usa in HTML e CSS"
 
@@ -10151,6 +10162,90 @@ msgstr "Eventi tastiera"
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Pronto"
+
+#: ../app/widgets/gimpcontrollerlist.c:212
+msgid "Available Controllers"
+msgstr "Controllori disponibili"
+
+#: ../app/widgets/gimpcontrollerlist.c:277
+msgid "Create a controller of the selected type."
+msgstr "Crea una nuovo controllore del tipo selezionato."
+
+#: ../app/widgets/gimpcontrollerlist.c:312
+msgid "Active Controllers"
+msgstr "Controller attivi"
+
+#: ../app/widgets/gimpcontrollerlist.c:328
+msgid "Configure the selected controller"
+msgstr "Configura il controller selezionato"
+
+#: ../app/widgets/gimpcontrollerlist.c:336
+msgid "Move the selected controller up"
+msgstr "Sposta il controller selezionato in alto"
+
+#: ../app/widgets/gimpcontrollerlist.c:344
+msgid "Move the selected controller down"
+msgstr "Sposta il controller selezionato in basso"
+
+#: ../app/widgets/gimpcontrollerlist.c:516
+msgid ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+msgstr ""
+"Ci può essere solo un controllore di tastiera attivo.\n"
+"\n"
+"C'è già un controllore di tastiera nella lista dei controllori attivi."
+
+#: ../app/widgets/gimpcontrollerlist.c:524
+msgid ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+msgstr ""
+"Ci può essere solo un controllore di rotella attivo.\n"
+"\n"
+"C'è già un controllore di rotella nella lista dei controllori attivi.\""
+
+#: ../app/widgets/gimpcontrollerlist.c:550
+msgid "Remove Controller?"
+msgstr "Rimuovere il controllore?"
+
+#: ../app/widgets/gimpcontrollerlist.c:555
+msgid "Disable Controller"
+msgstr "Disabilita controllore"
+
+#: ../app/widgets/gimpcontrollerlist.c:557
+msgid "Remove Controller"
+msgstr "Rimuovi controllore"
+
+#: ../app/widgets/gimpcontrollerlist.c:568
+#, c-format
+msgid "Remove Controller '%s'?"
+msgstr "Rimuovere controllore '%s'?"
+
+#: ../app/widgets/gimpcontrollerlist.c:572
+msgid ""
+"Removing this controller from the list of active controllers will "
+"permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without "
+"removing it."
+msgstr ""
+"Rimuovendo questo controllore dall'elenco dei controllori attivi si "
+"cancellerà permnanentemente tutta la mappatura degli eventi che sono stati "
+"configurati.\n"
+"\n"
+"Selezionando \"Disabilita controllore\" si disabiliterà il controllore senza "
+"rimuoverlo."
+
+#: ../app/widgets/gimpcontrollerlist.c:633
+msgid "Configure Controller"
+msgstr "Configura controllore"
+
+#: ../app/widgets/gimpcontrollerlist.c:636
+msgid "Configure Input Controller"
+msgstr "Configura controllore di ingresso"
 
 #: ../app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10651,6 +10746,17 @@ msgstr "Mantieni la trasparenza"
 msgid "Empty Layer"
 msgstr "Livello vuoto"
 
+#: ../app/widgets/gimpmenudock.c:191
+msgid "Auto"
+msgstr "Auto"
+
+#: ../app/widgets/gimpmenudock.c:202
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
+msgstr ""
+"Se abilitata la finestra di dialogo seguirà automaticamente l'immagine su "
+"cui si sta lavorando."
+
 #: ../app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
@@ -10712,7 +10818,7 @@ msgstr "Stile _unione:"
 
 #: ../app/widgets/gimpstrokeeditor.c:237
 msgid "_Miter limit:"
-msgstr "Rapporto u_nione:"
+msgstr "Li_mite spigolo:"
 
 #: ../app/widgets/gimpstrokeeditor.c:244
 msgid "Dash pattern:"
