@@ -153,7 +153,7 @@ gimp_color_scales_init (GimpColorScales *scales)
     N_("_B"),
     N_("_A")
   };
-  static const gchar *slider_tips[7] =
+  static const gchar *slider_tips[] =
   {
     N_("Hue"),
     N_("Saturation"),
@@ -173,6 +173,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   table = gtk_table_new (7, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 2, 3); /* hsv <-> rgb   */
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 3); /* rgb <-> alpha */
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
@@ -269,8 +270,10 @@ gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
 
   table = gtk_widget_get_parent (scale);
   if (GTK_IS_TABLE (table))
-    gtk_table_set_row_spacing (GTK_TABLE (table), 5, /* rgb <-> alpha */
-                               show_alpha ? 3 : 0);
+    {
+      gtk_table_set_row_spacing (GTK_TABLE (table), 5, /* rgb <-> alpha */
+                                 show_alpha ? 3 : 0);
+    }
 
   if (show_alpha)
     {

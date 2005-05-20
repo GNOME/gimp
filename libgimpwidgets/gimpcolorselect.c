@@ -344,15 +344,14 @@ gimp_color_select_init (GimpColorSelect *select)
     {
       N_("_H"), N_("_S"), N_("_V"), N_("_R"), N_("_G"), N_("_B")
     };
-    static const gchar *tips[7] =
+    static const gchar *tips[] =
     {
       N_("Hue"),
       N_("Saturation"),
       N_("Value"),
       N_("Red"),
       N_("Green"),
-      N_("Blue"),
-      N_("Alpha")
+      N_("Blue")
     };
 
     for (channel = GIMP_COLOR_SELECTOR_HUE;
