@@ -1,3 +1,7 @@
+2005-05-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorbutton.c: started to add object properties.
+
 2005-05-20  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): Fix ytpo
