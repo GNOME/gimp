@@ -1,3 +1,8 @@
+2005-05-20  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/uri/uri-backend-wget.c (uri_backend_load_image): Fix ytpo
+	in wget command line so it actually works.
+
 2005-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdashpattern.c: don't include "libgimpbase/gimpbase.h"
