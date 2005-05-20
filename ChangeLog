@@ -1,3 +1,7 @@
+2005-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdashpattern.c: don't include "libgimpbase/gimpbase.h"
+
 2005-05-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorbutton.c (gimp_color_button_clicked):
