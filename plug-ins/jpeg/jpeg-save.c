@@ -495,7 +495,7 @@ save_image (const gchar *filename,
           glong        xmp_data_size;
           gchar       *app_block;
 
-          xmp_data = gimp_parasite_data (parasite) + 10;
+          xmp_data = ((const gchar *)gimp_parasite_data (parasite)) + 10;
           xmp_data_size = gimp_parasite_data_size (parasite) - 10;
           g_print ("jpeg-save: saving XMP packet (%d bytes)\n",
                    (int) xmp_data_size);
