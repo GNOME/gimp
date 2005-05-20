@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-13 09:37+0200\n"
-"PO-Revision-Date: 2005-05-12 22:36+0200\n"
+"POT-Creation-Date: 2005-05-20 12:51+0200\n"
+"PO-Revision-Date: 2005-05-20 12:52+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1213,42 +1213,42 @@ msgstr "Ann_ulla %s"
 msgid "_Redo %s"
 msgstr "_Ripeti %s"
 
-#: ../app/actions/edit-commands.c:108
+#: ../app/actions/edit-commands.c:110
 msgid "Clear Undo History"
 msgstr "Cancella cronologia annullamenti"
 
-#: ../app/actions/edit-commands.c:132
+#: ../app/actions/edit-commands.c:134
 msgid "Really clear image's undo history?"
 msgstr "Cancellare la cronologia annullamenti?"
 
-#: ../app/actions/edit-commands.c:144
+#: ../app/actions/edit-commands.c:146
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "La cancellazione della cronologia degli annullamenti di quest'immagine "
 "libererà %s di memoria."
 
-#: ../app/actions/edit-commands.c:234
+#: ../app/actions/edit-commands.c:236
 msgid "Cut Named"
 msgstr "Taglia con nome"
 
-#: ../app/actions/edit-commands.c:237 ../app/actions/edit-commands.c:257
+#: ../app/actions/edit-commands.c:239 ../app/actions/edit-commands.c:259
 msgid "Enter a name for this buffer"
 msgstr "Inserisci un nome per questo buffer"
 
-#: ../app/actions/edit-commands.c:254
+#: ../app/actions/edit-commands.c:256
 msgid "Copy Named"
 msgstr "Copia con nome"
 
-#: ../app/actions/edit-commands.c:361
+#: ../app/actions/edit-commands.c:384
 msgid "There is no active layer or channel to cut from."
 msgstr "Non c'è un livello o un canale attivo da cui tagliare."
 
-#: ../app/actions/edit-commands.c:373 ../app/actions/edit-commands.c:410
+#: ../app/actions/edit-commands.c:396 ../app/actions/edit-commands.c:433
 msgid "(Unnamed Buffer)"
 msgstr "(buffer senza nome)"
 
-#: ../app/actions/edit-commands.c:398
+#: ../app/actions/edit-commands.c:421
 msgid "There is no active layer or channel to copy from."
 msgstr "Non c'è un livello o un canale attivo da cui copiare"
 
@@ -1402,11 +1402,11 @@ msgstr "Apri immagine come livello"
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:472
+#: ../app/actions/file-commands.c:477
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:521
+#: ../app/actions/file-commands.c:526
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -5541,7 +5541,7 @@ msgstr "Attendere..."
 
 #: ../app/core/gimpselection.c:183 ../app/tools/gimpeditselectiontool.c:258
 msgid "Move Selection"
-msgstr "Muovi selezione"
+msgstr "Sposta selezione"
 
 #: ../app/core/gimpselection.c:202
 msgid "Sharpen Selection"
@@ -7484,11 +7484,11 @@ msgstr "Scacchi scuri"
 msgid "Custom color"
 msgstr "Colore personalizzato"
 
-#: ../app/display/gimpdisplayshell.c:903
+#: ../app/display/gimpdisplayshell.c:912
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: ../app/display/gimpdisplayshell.c:923
+#: ../app/display/gimpdisplayshell.c:932
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
@@ -7929,7 +7929,7 @@ msgstr "Procedure di strumenti di trasformazione"
 msgid "Units"
 msgstr "Unità"
 
-#: ../app/pdb/procedural_db.c:254
+#: ../app/pdb/procedural_db.c:261
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7938,7 +7938,7 @@ msgstr ""
 "errore di chiamata PDB:\n"
 "procedura '%s' non trovata"
 
-#: ../app/pdb/procedural_db.c:275 ../app/pdb/procedural_db.c:387
+#: ../app/pdb/procedural_db.c:288 ../app/pdb/procedural_db.c:409
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7946,22 +7946,6 @@ msgid ""
 msgstr ""
 "Errore di chiamata PDB per la procedura '%s':\n"
 "Argomento #%d di tipo sbagliato (aspettato %s, ottenuto %s)"
-
-#: ../app/pdb/procedural_db_cmds.c:80
-msgid "Internal GIMP procedure"
-msgstr "Procedure Interne di GIMP"
-
-#: ../app/pdb/procedural_db_cmds.c:81
-msgid "GIMP Plug-In"
-msgstr "GIMP plug-in"
-
-#: ../app/pdb/procedural_db_cmds.c:82
-msgid "GIMP Extension"
-msgstr "Versione di GIMP"
-
-#: ../app/pdb/procedural_db_cmds.c:83
-msgid "Temporary Procedure"
-msgstr "Procedure temporanee"
 
 #: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
@@ -8188,7 +8172,7 @@ msgstr "Progetta"
 
 #: ../app/tools/tools-enums.c:173 ../app/tools/gimpmovetool.c:116
 msgid "Move"
-msgstr "Muovi"
+msgstr "Sposta"
 
 #: ../app/tools/tools-enums.c:202
 msgid "Outline"
@@ -9861,7 +9845,7 @@ msgstr "Ordina canale"
 msgid "Empty Channel"
 msgstr "Svuota canale"
 
-#: ../app/widgets/gimpclipboard.c:239
+#: ../app/widgets/gimpclipboard.c:258
 msgid "Clipboard"
 msgstr "Appunti"
 
@@ -9909,6 +9893,10 @@ msgstr "Nessun filtro selezionato"
 #: ../app/widgets/gimpcolordisplayeditor.c:555
 msgid "Configure selected filter"
 msgstr "Configura il filtro selezionato"
+
+#: ../app/widgets/gimpcoloreditor.c:257
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Notazione di colore esadecimale come si usa in HTML e CSS"
 
 #: ../app/widgets/gimpcolorframe.c:254
 msgid "Index:"
