@@ -27,6 +27,21 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 @gimpcolorarea: the object which received the signal.
 
+<!-- ##### ARG GimpColorArea:color ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorArea:drag-mask ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorArea:type ##### -->
+<para>
+
+</para>
+
 <!-- ##### ENUM GimpColorAreaType ##### -->
 <para>
 

@@ -34,6 +34,26 @@ color, the "color_changed" signal is emitted.
 
 @gimpcolorbutton: the object which received the signal.
 
+<!-- ##### ARG GimpColorButton:color ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorButton:continuous-update ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorButton:title ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorButton:type ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_color_button_new ##### -->
 <para>
 

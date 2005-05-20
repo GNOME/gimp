@@ -23,6 +23,7 @@
       <xi:include href="visual-index.xml" />
     </chapter>
 
+    <xi:include href="xml/gimpbrowser.xml" />
     <xi:include href="xml/gimpbutton.xml" />
     <xi:include href="xml/gimpchainbutton.xml" />
     <xi:include href="xml/gimpcolorarea.xml" />

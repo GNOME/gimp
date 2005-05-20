@@ -1,3 +1,14 @@
+2005-05-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpcolorarea.sgml
+	* libgimpwidgets/tmpl/gimpcolorbutton.sgml: updated.
+
+	* libgimpwidgets/tmpl/gimpbrowser.sgml: new file.
+
+	* tools/widgets.c: added GimpBrowser, changed widget packing.
+
 2005-05-12  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

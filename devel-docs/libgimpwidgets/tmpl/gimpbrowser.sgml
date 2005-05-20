@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+GimpBrowser
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpBrowser ##### -->
+<para>
+
+</para>
+
+@parent_instance: 
+@left_vbox: 
+@search_entry: 
+@search_timeout_id: 
+@search_type_combo: 
+@search_type: 
+@count_label: 
+@right_vbox: 
+
+<!-- ##### FUNCTION gimp_browser_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_browser_add_search_types ##### -->
+<para>
+
+</para>
+
+@browser: 
+@first_type_label: 
+@first_type_id: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION gimp_browser_set_widget ##### -->
+<para>
+
+</para>
+
+@browser: 
+@widget: 
+
+
+<!-- ##### FUNCTION gimp_browser_show_message ##### -->
+<para>
+
+</para>
+
+@browser: 
+@message: 
+
+

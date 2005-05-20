@@ -1,4 +1,23 @@
 <SECTION>
+<FILE>gimpbrowser</FILE>
+<TITLE>GimpBrowser</TITLE>
+GimpBrowser
+gimp_browser_new
+gimp_browser_add_search_types
+gimp_browser_set_widget
+gimp_browser_show_message
+<SUBSECTION Standard>
+GimpBrowserClass
+GIMP_BROWSER
+GIMP_IS_BROWSER
+GIMP_TYPE_BROWSER
+gimp_browser_get_type
+GIMP_BROWSER_CLASS
+GIMP_IS_BROWSER_CLASS
+GIMP_BROWSER_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpbutton</FILE>
 <TITLE>GimpButton</TITLE>
 GimpButton
@@ -87,6 +106,8 @@ GimpColorAreaClass
 GIMP_COLOR_AREA_CLASS
 GIMP_IS_COLOR_AREA_CLASS
 GIMP_COLOR_AREA_GET_CLASS
+GIMP_TYPE_COLOR_AREA_TYPE
+gimp_color_area_type_get_type
 </SECTION>
 
 <SECTION>
