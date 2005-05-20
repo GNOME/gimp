@@ -1,5 +1,10 @@
 2005-05-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorarea.c
+	* libgimpwidgets/gimpcolorbutton.c: more object properties.
+
+2005-05-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgetsenums.h
 	* libgimpwidgets/gimpwidgetstypes.h: moved enums to a new file and

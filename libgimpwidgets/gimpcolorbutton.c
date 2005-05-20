@@ -64,7 +64,10 @@ enum
 enum
 {
   PROP_0,
-  PROP_TITLE
+  PROP_TITLE,
+  PROP_COLOR,
+  PROP_TYPE,
+  PROP_UPDATE
 };
 
 
@@ -104,7 +107,7 @@ static void     gimp_color_button_help_func         (const gchar     *help_id,
                                                      gpointer         help_data);
 
 
-static GtkActionEntry actions[] =
+static const GtkActionEntry actions[] =
 {
   { "color-button-popup", NULL,
     "Color Button Menu", NULL, NULL,
@@ -169,6 +172,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class     = GTK_BUTTON_CLASS (klass);
+  GimpRGB         color;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -195,6 +199,8 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   klass->color_changed             = NULL;
   klass->get_action_type           = gimp_color_button_get_action_type;
 
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
   /**
    * GimpColorButton:title:
    *
@@ -207,6 +213,44 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  /**
+   * GimpColorButton:color:
+   *
+   * The color displayed in the button's color area.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_rgb ("color", NULL, NULL,
+                                                        &color,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  /**
+   * GimpColorButton:type:
+   *
+   * The type of the button's color area.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_TYPE,
+                                   g_param_spec_enum ("type", NULL, NULL,
+                                                      GIMP_TYPE_COLOR_AREA_TYPE,
+                                                      GIMP_COLOR_AREA_FLAT,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+  /**
+   * GimpColorButton:continuous-update:
+   *
+   * The update policy of the color button.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_UPDATE,
+                                   g_param_spec_boolean ("continuous-update",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -215,15 +259,15 @@ gimp_color_button_init (GimpColorButton      *button,
 {
   GtkActionGroup *group;
   GtkUIManager   *ui_manager;
-  GimpRGB         color;
   gint            i;
 
-  button->continuous_update = FALSE;
-  button->title             = NULL;
-  button->dialog            = NULL;
+  button->title  = NULL;
+  button->dialog = NULL;
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-  button->color_area = gimp_color_area_new (&color, FALSE, GDK_BUTTON2_MASK);
+  button->color_area = g_object_new (GIMP_TYPE_COLOR_AREA,
+                                     "drag-mask", GDK_BUTTON2_MASK,
+                                     NULL);
+
   g_signal_connect (button->color_area, "color_changed",
                     G_CALLBACK (gimp_color_button_area_changed),
                     button);
@@ -305,6 +349,18 @@ gimp_color_button_get_property (GObject    *object,
       g_value_set_string (value, button->title);
       break;
 
+    case PROP_COLOR:
+      g_object_get_property (G_OBJECT (button->color_area), "color", value);
+      break;
+
+    case PROP_TYPE:
+      g_object_get_property (G_OBJECT (button->color_area), "type", value);
+      break;
+
+    case PROP_UPDATE:
+      g_value_set_boolean (value, button->continuous_update);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -324,6 +380,18 @@ gimp_color_button_set_property (GObject      *object,
     case PROP_TITLE:
       g_free (button->title);
       button->title = g_value_dup_string (value);
+      break;
+
+    case PROP_COLOR:
+      g_object_set_property (G_OBJECT (button->color_area), "color", value);
+      break;
+
+    case PROP_TYPE:
+      g_object_set_property (G_OBJECT (button->color_area), "type", value);
+      break;
+
+    case PROP_UPDATE:
+      gimp_color_button_set_update (button, g_value_get_boolean (value));
       break;
 
     default:
@@ -493,12 +561,11 @@ gimp_color_button_new (const gchar       *title,
 
   button = g_object_new (GIMP_TYPE_COLOR_BUTTON,
                          "title", title,
+                         "type",  type,
+                         "color", color,
                          NULL);
 
   gtk_widget_set_size_request (GTK_WIDGET (button->color_area), width, height);
-
-  gimp_color_area_set_type (GIMP_COLOR_AREA (button->color_area), type);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (button->color_area), color);
 
   return GTK_WIDGET (button);
 }
@@ -518,6 +585,8 @@ gimp_color_button_set_color (GimpColorButton *button,
   g_return_if_fail (color != NULL);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (button->color_area), color);
+
+  g_object_notify (G_OBJECT (button), "color");
 }
 
 /**
@@ -568,6 +637,8 @@ gimp_color_button_set_type (GimpColorButton   *button,
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (button));
 
   gimp_color_area_set_type (GIMP_COLOR_AREA (button->color_area), type);
+
+  g_object_notify (G_OBJECT (button), "type");
 }
 
 /**
@@ -624,6 +695,8 @@ gimp_color_button_set_update (GimpColorButton *button,
               gimp_color_button_set_color (button, &color);
             }
         }
+
+      g_object_notify (G_OBJECT (button), "continuous-update");
     }
 }
 

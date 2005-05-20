@@ -45,28 +45,30 @@ enum
 enum
 {
   PROP_0,
-  PROP_TYPE
+  PROP_COLOR,
+  PROP_TYPE,
+  PROP_DRAG_MASK
 };
 
 
-static void     gimp_color_area_class_init    (GimpColorAreaClass *klass);
-static void     gimp_color_area_init          (GimpColorArea      *area);
+static void     gimp_color_area_class_init     (GimpColorAreaClass *klass);
+static void     gimp_color_area_init           (GimpColorArea      *area);
 
-static void     gimp_color_area_get_property  (GObject            *object,
-                                               guint               property_id,
-                                               GValue             *value,
-                                               GParamSpec         *pspec);
-static void     gimp_color_area_set_property  (GObject            *object,
-                                               guint               property_id,
-                                               const GValue       *value,
-                                               GParamSpec         *pspec);
-static void     gimp_color_area_finalize      (GObject            *object);
+static void      gimp_color_area_get_property  (GObject            *object,
+                                                guint               property_id,
+                                                GValue             *value,
+                                                GParamSpec         *pspec);
+static void      gimp_color_area_set_property  (GObject            *object,
+                                                guint               property_id,
+                                                const GValue       *value,
+                                                GParamSpec         *pspec);
+static void      gimp_color_area_finalize      (GObject            *object);
 
-static void     gimp_color_area_size_allocate (GtkWidget          *widget,
-                                               GtkAllocation      *allocation);
-static gboolean gimp_color_area_expose        (GtkWidget          *widget,
-                                               GdkEventExpose     *event);
-static void     gimp_color_area_render        (GimpColorArea      *area);
+static void      gimp_color_area_size_allocate (GtkWidget          *widget,
+                                                GtkAllocation      *allocation);
+static gboolean  gimp_color_area_expose        (GtkWidget          *widget,
+                                                GdkEventExpose     *event);
+static void      gimp_color_area_render        (GimpColorArea      *area);
 
 static void  gimp_color_area_drag_begin         (GtkWidget        *widget,
 						 GdkDragContext   *context);
@@ -126,6 +128,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpRGB         color;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -152,6 +155,20 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 
   klass->color_changed             = NULL;
 
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+
+  /**
+   * GimpColorArea:color:
+   *
+   * The color displayed in the color area.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   gimp_param_spec_rgb ("color", NULL, NULL,
+                                                        &color,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
   /**
    * GimpColorArea:type:
    *
@@ -165,6 +182,19 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                                       GIMP_COLOR_AREA_FLAT,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+  /**
+   * GimpColorArea:drag-type:
+   *
+   * The event_mask that should trigger drags.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_DRAG_MASK,
+                                   g_param_spec_flags ("drag-mask", NULL, NULL,
+                                                       GDK_TYPE_MODIFIER_TYPE,
+                                                       0,
+                                                       G_PARAM_WRITABLE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -176,7 +206,12 @@ gimp_color_area_init (GimpColorArea *area)
   area->rowstride   = 0;
   area->draw_border = FALSE;
 
-  gimp_rgba_set (&area->color, 0.0, 0.0, 0.0, 1.0);
+  gtk_drag_dest_set (GTK_WIDGET (area),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
 }
 
 static void
@@ -203,6 +238,10 @@ gimp_color_area_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_COLOR:
+      g_value_set_boxed (value, &area->color);
+      break;
+
     case PROP_TYPE:
       g_value_set_enum (value, area->type);
       break;
@@ -219,12 +258,28 @@ gimp_color_area_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (object);
+  GimpColorArea   *area = GIMP_COLOR_AREA (object);
+  GdkModifierType  drag_mask;
 
   switch (property_id)
     {
+    case PROP_COLOR:
+      gimp_color_area_set_color (area, g_value_get_boxed (value));
+      break;
+
     case PROP_TYPE:
       gimp_color_area_set_type (area, g_value_get_enum (value));
+      break;
+
+    case PROP_DRAG_MASK:
+      drag_mask = g_value_get_flags (value) & (GDK_BUTTON1_MASK |
+                                               GDK_BUTTON2_MASK |
+                                               GDK_BUTTON3_MASK);
+      if (drag_mask)
+        gtk_drag_source_set (GTK_WIDGET (area),
+                             drag_mask,
+                             &target, 1,
+                             GDK_ACTION_COPY | GDK_ACTION_MOVE);
       break;
 
     default:
@@ -312,32 +367,11 @@ gimp_color_area_new (const GimpRGB     *color,
 		     GimpColorAreaType  type,
 		     GdkModifierType    drag_mask)
 {
-  GimpColorArea *area;
-
-  g_return_val_if_fail (color != NULL, NULL);
-
-  area = g_object_new (GIMP_TYPE_COLOR_AREA,
-                       "type", type,
+  return g_object_new (GIMP_TYPE_COLOR_AREA,
+                       "color",     color,
+                       "type",      type,
+                       "drag-mask", drag_mask,
                        NULL);
-
-  area->color = *color;
-
-  gtk_drag_dest_set (GTK_WIDGET (area),
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     &target, 1,
-                     GDK_ACTION_COPY);
-
-  drag_mask &= (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK);
-
-  if (drag_mask)
-    gtk_drag_source_set (GTK_WIDGET (area),
-			 drag_mask,
-			 &target, 1,
-			 GDK_ACTION_COPY | GDK_ACTION_MOVE);
-
-  return GTK_WIDGET (area);
 }
 
 /**
@@ -369,6 +403,8 @@ gimp_color_area_set_color (GimpColorArea *area,
 
   area->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (area));
+
+  g_object_notify (G_OBJECT (area), "color");
 
   g_signal_emit (area, gimp_color_area_signals[COLOR_CHANGED], 0);
 }
