@@ -73,7 +73,7 @@ static void        convert_dialog_palette_changed (GimpContext      *context,
 
 /*  defaults  */
 
-static GimpConvertDitherType   saved_dither_type  = GIMP_FS_DITHER;
+static GimpConvertDitherType   saved_dither_type  = GIMP_NO_DITHER;
 static gboolean                saved_alpha_dither = FALSE;
 static gboolean                saved_remove_dups  = TRUE;
 static gint                    saved_num_colors   = 256;

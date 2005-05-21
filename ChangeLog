@@ -1,3 +1,9 @@
+2005-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/convert-dialog.c: 
+	* libgimp/gimpexport.c (export_convert_indexed): changed default
+	dithering to GIMP_NO_DITHER (bug #303063).
+
 2005-05-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorarea.c
