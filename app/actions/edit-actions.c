@@ -240,7 +240,7 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-cut",          drawable);
   SET_SENSITIVE ("edit-copy",         drawable);
   SET_SENSITIVE ("edit-copy-visible", gimage);
-  SET_SENSITIVE ("edit-paste",        gimage);
+  /*             "edit-paste" is always enabled  */
   SET_SENSITIVE ("edit-paste-into",   gimage);
 
   SET_SENSITIVE ("edit-named-cut",    drawable);

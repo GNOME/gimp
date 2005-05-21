@@ -62,4 +62,6 @@
 
   </menubar>
 
+  <accelerator action="edit-paste"/>
+
 </ui>

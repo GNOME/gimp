@@ -189,10 +189,12 @@ void
 edit_paste_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
-  GimpDisplay *gdisp;
-  return_if_no_display (gdisp, data);
+  GimpDisplay *gdisp = action_data_get_display (data);
 
-  edit_paste (gdisp, FALSE);
+  if (gdisp)
+    edit_paste (gdisp, FALSE);
+  else
+    edit_paste_as_new_cmd_callback (action, data);
 }
 
 void

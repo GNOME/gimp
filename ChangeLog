@@ -1,7 +1,19 @@
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
-	* app/widgets/gimpuimanager.c: improved reporting of errors
-	while parsing the menu definitions.
+	Allow to paste a new image using Ctrl-V (bug 169477):
+
+	* menus/toolbox-menu.xml.in: added an accelerator for "edit-paste".
+
+	* app/actions/edit-actions.c: keep "edit-paste" always enabled,
+	even if no image is present.
+
+	* app/actions/edit-commands.c (edit_paste_cmd_callback): forward
+	to "edit-paste-as-new" if we are being called from the toolbox.
+	
+2005-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpuimanager.c: improved reporting of errors while
+	parsing the menu definitions.
 
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
