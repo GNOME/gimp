@@ -254,3 +254,29 @@ gimp_dash_pattern_value_set (GArray *pattern,
       g_value_set_boxed (value, val_array);
     }
 }
+
+GArray *
+gimp_dash_pattern_copy (GArray *pattern)
+{
+  if (pattern)
+    {
+      GArray *copy;
+      gint    i;
+
+      copy = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), pattern->len);
+
+      for (i = 0; i < pattern->len; i++)
+        copy = g_array_append_val (copy, g_array_index (pattern, gdouble, i));
+
+      return copy;
+    }
+
+  return NULL;
+}
+
+void
+gimp_dash_pattern_free (GArray *pattern)
+{
+  if (pattern)
+    g_array_free (pattern, TRUE);
+}

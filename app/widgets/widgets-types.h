@@ -193,6 +193,7 @@ typedef struct _GimpViewRendererVectors      GimpViewRendererVectors;
 /*  cell renderers  */
 
 typedef struct _GimpCellRendererAccel        GimpCellRendererAccel;
+typedef struct _GimpCellRendererDashes       GimpCellRendererDashes;
 typedef struct _GimpCellRendererViewable     GimpCellRendererViewable;
 
 

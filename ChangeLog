@@ -1,10 +1,23 @@
+2005-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdashpattern.[ch]: added utility functions to copy
+	and to free a dash pattern.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h 
+	* app/widgets/gimpcellrendererdashes.[ch]: added a simple cell
+	renderer to visualize a dash pattern.
+
+	* app/widgets/gimpstrokeeditor.c: show previews of the dash
+	presets in the combo-box.
+
 2005-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* tools/test-clipboard.c (main): NULL terminate the options array.
 
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
-	Allow to paste a new image using Ctrl-V (bug 169477):
+	Allow to paste a new image using Ctrl-V (bug #169477):
 
 	* menus/toolbox-menu.xml.in: added an accelerator for "edit-paste".
 
@@ -229,7 +242,6 @@
 	instruction count correct.  This is partially complete as of this
 	commit.
 
-	
 2005-05-17  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.3.1.

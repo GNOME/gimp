@@ -25,8 +25,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpdashpattern.h"
 #include "core/gimpstrokeoptions.h"
 
+#include "gimpcellrendererdashes.h"
 #include "gimpdasheditor.h"
 #include "gimpstrokeeditor.h"
 
@@ -59,6 +61,8 @@ static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
 static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
                                                   GimpStrokeOptions *options);
 
+static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
+                                                  GtkComboBox       *box);
 
 
 static GtkVBoxClass *parent_class = NULL;
@@ -178,6 +182,7 @@ gimp_stroke_editor_constructor (GType                   type,
   GtkWidget        *expander;
   GtkWidget        *dash_editor;
   GtkWidget        *button;
+  GtkCellRenderer  *cell;
   GObject          *object;
   gint              row = 0;
 
@@ -286,6 +291,13 @@ gimp_stroke_editor_constructor (GType                   type,
                              _("Dash preset:"), 0.0, 0.5,
                              box, 2, FALSE);
 
+  cell = gimp_cell_renderer_dashes_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (box), cell, FALSE);
+  gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
+                                 "pattern", GIMP_INT_STORE_USER_DATA);
+
+  gimp_stroke_editor_combo_fill (editor->options, GTK_COMBO_BOX (box));
+
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
@@ -363,5 +375,72 @@ gimp_stroke_editor_dash_preset (GtkWidget         *widget,
       value != GIMP_DASH_CUSTOM)
     {
       gimp_stroke_options_set_dash_pattern (options, value, NULL);
+    }
+}
+
+static void
+gimp_stroke_editor_combo_update (GtkTreeModel      *model,
+                                 GParamSpec        *pspec,
+                                 GimpStrokeOptions *options)
+{
+  GtkTreeIter  iter;
+
+  if (gimp_int_store_lookup_by_value  (model, GIMP_DASH_CUSTOM, &iter))
+    {
+      GArray *pattern;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_INT_STORE_USER_DATA, &pattern,
+                          -1);
+      gimp_dash_pattern_free (pattern);
+
+      pattern = gimp_dash_pattern_copy (options->dash_info);
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          GIMP_INT_STORE_USER_DATA, pattern,
+                          -1);
+    }
+}
+
+static void
+gimp_stroke_editor_combo_fill (GimpStrokeOptions *options,
+                               GtkComboBox       *box)
+{
+  GtkTreeModel *model = gtk_combo_box_get_model (box);
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      GArray *pattern;
+      gint    value;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_INT_STORE_VALUE, &value,
+                          -1);
+
+      if (value == GIMP_DASH_CUSTOM)
+        {
+          pattern = gimp_dash_pattern_copy (options->dash_info);
+
+          g_signal_connect_object (options, "notify::dash-info",
+                                   G_CALLBACK (gimp_stroke_editor_combo_update),
+                                   model, G_CONNECT_SWAPPED);
+        }
+      else
+        {
+          pattern = gimp_dash_pattern_from_preset (value);
+        }
+
+      if (pattern)
+        {
+          gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                              GIMP_INT_STORE_USER_DATA, pattern,
+                              -1);
+
+          g_object_weak_ref (G_OBJECT (box),
+                             (GWeakNotify) gimp_dash_pattern_free, pattern);
+        }
     }
 }
