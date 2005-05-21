@@ -1,5 +1,10 @@
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpuimanager.c: improved reporting of errors
+	while parsing the menu definitions.
+
+2005-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/convert-dialog.c: 
 	* libgimp/gimpexport.c (export_convert_indexed): changed default
 	dithering to GIMP_NO_DITHER (bug #303063).

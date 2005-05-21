@@ -691,11 +691,23 @@ gimp_ui_manager_entry_ensure (GimpUIManager *manager,
 
       if (! gimp_ui_manager_entry_load (manager, entry, &error))
         {
-          g_message ("%s\n\n%s\n\n%s",
-                     _("Your GIMP installation is incomplete:"),
-                     error->message,
-                     _("Plase make sure the menu XML files are correctly "
-                       "installed."));
+          if (error->domain == G_FILE_ERROR &&
+              error->code == G_FILE_ERROR_EXIST)
+            {
+              g_message ("%s\n\n%s\n\n%s",
+                         _("Your GIMP installation is incomplete:"),
+                         error->message,
+                         _("Plase make sure the menu XML files are correctly "
+                           "installed."));
+            }
+          else
+            {
+              g_message (_("There was an error parsing the menu definition "
+                           "from %s: %s"),
+                         gimp_filename_to_utf8 (entry->basename),
+                         error->message);
+            }
+
           g_clear_error (&error);
           return NULL;
         }
