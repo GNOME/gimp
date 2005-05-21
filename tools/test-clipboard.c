@@ -68,7 +68,8 @@ main (gint   argc,
       "paste", 'p', 0,
       G_OPTION_ARG_STRING, &paste_filename,
       "Paste clipoard into <file>", "<file>"
-    }
+    },
+    { NULL }
   };
 
   context = g_option_context_new (NULL);

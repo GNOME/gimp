@@ -1,3 +1,7 @@
+2005-05-21  Michael Natterer  <mitch@gimp.org>
+
+	* tools/test-clipboard.c (main): NULL terminate the options array.
+
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
 	Allow to paste a new image using Ctrl-V (bug 169477):
