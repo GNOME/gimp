@@ -29,6 +29,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
@@ -140,29 +141,10 @@ gimp_color_scales_init (GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   GtkWidget         *table;
+  GEnumClass        *enum_class;
   GSList            *group;
   gint               i;
 
-  static const gchar *toggle_titles[] =
-  {
-    N_("_H"),
-    N_("_S"),
-    N_("_V"),
-    N_("_R"),
-    N_("_G"),
-    N_("_B"),
-    N_("_A")
-  };
-  static const gchar *slider_tips[] =
-  {
-    N_("Hue"),
-    N_("Saturation"),
-    N_("Value"),
-    N_("Red"),
-    N_("Green"),
-    N_("Blue"),
-    N_("Alpha")
-  };
   static gdouble slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
   static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
   static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
@@ -179,11 +161,17 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
+
   group = NULL;
 
-  for (i = 0; i < 7; i++)
+  for (i = GIMP_COLOR_SELECTOR_HUE; i <= GIMP_COLOR_SELECTOR_ALPHA; i++)
     {
-      if (i == 6)
+      GimpEnumDesc *enum_desc;
+
+      enum_desc = gimp_enum_get_desc (enum_class, i);
+
+      if (i == GIMP_COLOR_SELECTOR_ALPHA)
 	{
 	  scales->toggles[i] = NULL;
 	}
@@ -199,7 +187,7 @@ gimp_color_scales_init (GimpColorScales *scales)
             gtk_widget_show (scales->toggles[i]);
 
 	  gimp_help_set_help_data (scales->toggles[i],
-				   gettext (slider_tips[i]), NULL);
+				   gettext (enum_desc->value_help), NULL);
 
 	  g_signal_connect (scales->toggles[i], "toggled",
 			    G_CALLBACK (gimp_color_scales_toggle_update),
@@ -208,13 +196,13 @@ gimp_color_scales_init (GimpColorScales *scales)
 
       scales->slider_data[i] =
         gimp_color_scale_entry_new (GTK_TABLE (table), 1, i,
-                                    gettext (toggle_titles[i]),
+                                    gettext (enum_desc->value_desc),
                                     -1, -1,
                                     slider_initial_vals[i],
                                     0.0, slider_max_vals[i],
                                     1.0, slider_incs[i],
                                     0,
-                                    gettext (slider_tips[i]),
+                                    gettext (enum_desc->value_help),
                                     NULL);
 
       scales->sliders[i] = GIMP_SCALE_ENTRY_SCALE (scales->slider_data[i]);
@@ -225,6 +213,8 @@ gimp_color_scales_init (GimpColorScales *scales)
 			G_CALLBACK (gimp_color_scales_scale_update),
 			scales);
     }
+
+  g_type_class_unref (enum_class);
 }
 
 static void

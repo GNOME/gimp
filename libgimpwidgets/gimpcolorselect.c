@@ -27,6 +27,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
@@ -338,30 +339,22 @@ gimp_color_select_init (GimpColorSelect *select)
   /*  channel toggles  */
   {
     GimpColorSelectorChannel  channel;
+    GEnumClass               *enum_class;
     GSList                   *group = NULL;
 
-    static const gchar *labels[] =
-    {
-      N_("_H"), N_("_S"), N_("_V"), N_("_R"), N_("_G"), N_("_B")
-    };
-    static const gchar *tips[] =
-    {
-      N_("Hue"),
-      N_("Saturation"),
-      N_("Value"),
-      N_("Red"),
-      N_("Green"),
-      N_("Blue")
-    };
+    enum_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
 
     for (channel = GIMP_COLOR_SELECTOR_HUE;
          channel < GIMP_COLOR_SELECTOR_ALPHA;
          channel++)
       {
-        GtkWidget *button;
+        GimpEnumDesc *enum_desc;
+        GtkWidget    *button;
+
+        enum_desc = gimp_enum_get_desc (enum_class, channel);
 
         button = gtk_radio_button_new_with_mnemonic (group,
-                                                     gettext (labels[channel]));
+                                                     gettext (enum_desc->value_desc));
         group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
         gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
         gtk_box_pack_start (GTK_BOX (select->toggle_box), button,
@@ -374,12 +367,14 @@ gimp_color_select_init (GimpColorSelect *select)
         if (channel == GIMP_COLOR_SELECTOR_HUE)
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-        gimp_help_set_help_data (button, gettext (tips[channel]), NULL);
+        gimp_help_set_help_data (button, gettext (enum_desc->value_help), NULL);
 
         g_signal_connect (button, "toggled",
                           G_CALLBACK (gimp_color_select_channel_toggled),
                           select);
       }
+
+    g_type_class_unref (enum_class);
   }
 }
 

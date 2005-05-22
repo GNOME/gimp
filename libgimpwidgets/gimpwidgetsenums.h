@@ -38,16 +38,22 @@ typedef enum
 } GimpColorAreaType;
 
 
-typedef enum  /*< skip >*/
+#define GIMP_TYPE_COLOR_SELECTOR_CHANNEL (gimp_color_selector_channel_get_type ())
+
+GType gimp_color_selector_channel_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
-  GIMP_COLOR_SELECTOR_HUE,
-  GIMP_COLOR_SELECTOR_SATURATION,
-  GIMP_COLOR_SELECTOR_VALUE,
-  GIMP_COLOR_SELECTOR_RED,
-  GIMP_COLOR_SELECTOR_GREEN,
-  GIMP_COLOR_SELECTOR_BLUE,
-  GIMP_COLOR_SELECTOR_ALPHA
+  GIMP_COLOR_SELECTOR_HUE,        /*< desc="_H", help="Hue"        >*/
+  GIMP_COLOR_SELECTOR_SATURATION, /*< desc="_S", help="Saturation" >*/
+  GIMP_COLOR_SELECTOR_VALUE,      /*< desc="_V", help="Value"      >*/
+  GIMP_COLOR_SELECTOR_RED,        /*< desc="_R", help="Red"        >*/
+  GIMP_COLOR_SELECTOR_GREEN,      /*< desc="_G", help="Green"      >*/
+  GIMP_COLOR_SELECTOR_BLUE,       /*< desc="_B", help="Blue"       >*/
+  GIMP_COLOR_SELECTOR_ALPHA       /*< desc="_A", help="Alpha"      >*/
 } GimpColorSelectorChannel;
+
+
 
 typedef enum  /*< skip >*/
 {

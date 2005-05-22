@@ -1,3 +1,18 @@
+2005-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/Makefile.am: changed gimpwidgetsenums.c rule to
+	include the bits for "desc" and "help" support.
+
+	* libgimpwidgets/gimpwidgetsenums.h: added "desc" and "help"
+	strings for the GimpColorSelectorChannel enum.
+
+	* libgimpwidgets/gimpwidgetsenums.c: added to CVS because it
+	contains translatable strings now.
+
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c: removed duplicated arrays of
+	strings here and get them from the type system.
+
 2005-05-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-mkenums (parse_trigraph): use quotewords() from
