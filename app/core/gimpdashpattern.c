@@ -130,7 +130,7 @@ gimp_dash_pattern_from_segments (const gboolean *segments,
         {
           gdouble l = (dash_length * count) / n_segments;
 
-          pattern = g_array_append_val (pattern, l);
+          g_array_append_val (pattern, l);
 
           count = 1;
           state = ! state;
@@ -220,7 +220,7 @@ gimp_dash_pattern_from_value (const GValue *value)
 
           val = g_value_get_double (item);
 
-          pattern = g_array_append_val (pattern, val);
+          g_array_append_val (pattern, val);
         }
 
       return pattern;
@@ -266,7 +266,7 @@ gimp_dash_pattern_copy (GArray *pattern)
       copy = g_array_sized_new (FALSE, FALSE, sizeof (gdouble), pattern->len);
 
       for (i = 0; i < pattern->len; i++)
-        copy = g_array_append_val (copy, g_array_index (pattern, gdouble, i));
+        g_array_append_val (copy, g_array_index (pattern, gdouble, i));
 
       return copy;
     }

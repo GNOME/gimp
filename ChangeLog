@@ -1,3 +1,10 @@
+2005-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdashpattern.c: minor cleanup.
+
+	* app/widgets/gimpcellrendererdashes.c: don't draw a background,
+	draw the dash pattern twice, use the correct widget state.
+
 2005-05-21  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/metadata/metadata.c (run): don't do pointer arithmetic

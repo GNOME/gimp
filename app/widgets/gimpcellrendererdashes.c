@@ -30,11 +30,11 @@
 #include "gimpcellrendererdashes.h"
 
 
-#define DASHES_WIDTH   72
-#define DASHES_HEIGHT   6
+#define DASHES_WIDTH   96
+#define DASHES_HEIGHT   4
 
 #define N_SEGMENTS     24
-#define BLOCK_WIDTH    (DASHES_WIDTH / N_SEGMENTS)
+#define BLOCK_WIDTH    (DASHES_WIDTH / (2 * N_SEGMENTS))
 
 
 enum
@@ -231,16 +231,36 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
                                   GtkCellRendererState  flags)
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
+  GtkStateType            state;
   GdkRectangle            rect;
   gint                    x, y;
 
+  if (!cell->sensitive)
+    {
+      state = GTK_STATE_INSENSITIVE;
+    }
+  else if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED)
+    {
+      if (GTK_WIDGET_HAS_FOCUS (widget))
+	state = GTK_STATE_SELECTED;
+      else
+	state = GTK_STATE_ACTIVE;
+    }
+  else if ((flags & GTK_CELL_RENDERER_PRELIT) == GTK_CELL_RENDERER_PRELIT &&
+	   GTK_WIDGET_STATE (widget) == GTK_STATE_PRELIGHT)
+    {
+      state = GTK_STATE_PRELIGHT;
+    }
+  else
+    {
+      if (GTK_WIDGET_STATE (widget) == GTK_STATE_INSENSITIVE)
+	state = GTK_STATE_INSENSITIVE;
+      else
+	state = GTK_STATE_NORMAL;
+    }
+
   gimp_dash_pattern_segments_set (dashes->pattern,
                                   dashes->segments, N_SEGMENTS);
-
-  gdk_rectangle_intersect (cell_area, expose_area, &rect);
-  gdk_draw_rectangle (window,
-                      widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
-                      rect.x, rect.y, rect.width, rect.height);
 
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
 
@@ -257,7 +277,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 
           gdk_rectangle_intersect (&rect, expose_area, &rect);
           gdk_draw_rectangle (widget->window,
-                              widget->style->text_gc[GTK_STATE_NORMAL], TRUE,
+                              widget->style->text_gc[state], TRUE,
                               rect.x, rect.y, rect.width, rect.height);
         }
     }
