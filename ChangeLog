@@ -9,6 +9,8 @@
 	* libgimpwidgets/gimpwidgetsenums.c: added to CVS because it
 	contains translatable strings now.
 
+	* libgimpwidgets/gimpwidgets.def: changed accordingly.
+
 	* libgimpwidgets/gimpcolorscales.c
 	* libgimpwidgets/gimpcolorselect.c: removed duplicated arrays of
 	strings here and get them from the type system.
