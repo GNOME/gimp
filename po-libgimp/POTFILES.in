@@ -44,6 +44,7 @@ libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
+libgimpwidgets/gimpwidgetsenums.c
 
 modules/cdisplay_colorblind.c
 modules/cdisplay_gamma.c
