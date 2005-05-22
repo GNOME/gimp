@@ -140,24 +140,27 @@ get_prefix (gchar slash)
   if (path == NULL)
     path = g_find_program_in_path ("gimp.exe");
   
-  r = strrchr (path, G_DIR_SEPARATOR);
-  if (r != NULL)
+  if (path != NULL)
     {
-      *r = '\0';
-      if (strlen (path) >= 4 &&
-	  g_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
+      r = strrchr (path, G_DIR_SEPARATOR);
+      if (r != NULL)
 	{
-	  r[-4] = '\0';
-	  prefix = path;
-#ifdef G_OS_WIN32
-	  if (slash == '/')
+	  *r = '\0';
+	  if (strlen (path) >= 4 &&
+	      g_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
 	    {
-	      /* Use forward slashes, less quoting trouble in Makefiles */
-	      while ((p = strchr (prefix, '\\')) != NULL)
-		*p = '/';
-	    }
+	      r[-4] = '\0';
+	      prefix = path;
+#ifdef G_OS_WIN32
+	      if (slash == '/')
+		{
+		  /* Use forward slashes, less quoting trouble in Makefiles */
+		  while ((p = strchr (prefix, '\\')) != NULL)
+		    *p = '/';
+		}
 #endif
-	  return prefix;
+	      return prefix;
+	    }
 	}
     }
 
