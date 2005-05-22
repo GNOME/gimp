@@ -1,3 +1,8 @@
+2005-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* tools/test-clipboard.c: added --selection-type option which
+	allows operating on any of PRIMARY, SECONDARY and CLIPBOARD.
+
 2005-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdashpattern.[ch]: added utility functions to copy

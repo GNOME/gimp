@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -20,17 +21,59 @@
 #include <gtk/gtk.h>
 
 
-static void   test_clipboard_list_targets  (GtkClipboard     *clipboard);
-static void   test_clipboard_copy          (GtkClipboard     *clipboard,
-                                            const gchar      *target,
-                                            const gchar      *filename);
-static void   test_clipboard_paste         (GtkClipboard     *clipboard,
-                                            const gchar      *target,
-                                            const gchar      *filename);
-static void   test_clipboard_copy_callback (GtkClipboard     *clipboard,
-                                            GtkSelectionData *selection,
-                                            guint             info,
-                                            gpointer          data);
+static gboolean test_clipboard_parse_selection (const gchar       *option_name,
+                                                const gchar       *value,
+                                                gpointer           data,
+                                                GError           **error);
+static void     test_clipboard_list_targets    (GtkClipboard      *clipboard);
+static void     test_clipboard_copy            (GtkClipboard      *clipboard,
+                                                const gchar       *target,
+                                                const gchar       *filename);
+static void     test_clipboard_paste           (GtkClipboard      *clipboard,
+                                                const gchar       *target,
+                                                const gchar       *filename);
+static void     test_clipboard_copy_callback   (GtkClipboard      *clipboard,
+                                                GtkSelectionData  *selection,
+                                                guint              info,
+                                                gpointer           data);
+
+
+static GdkAtom   option_selection_type = GDK_SELECTION_CLIPBOARD;
+static gboolean  option_list_targets   = FALSE;
+static gchar    *option_target         = NULL;
+static gchar    *option_copy_filename  = NULL;
+static gchar    *option_paste_filename = NULL;
+
+static const GOptionEntry main_entries[] =
+{
+  {
+    "selection-type", 's', 0,
+    G_OPTION_ARG_CALLBACK, test_clipboard_parse_selection,
+    "Selection type (primary|secondary|clipboard)",
+    "<type>"
+  },
+  {
+    "list-targets", 'l', 0,
+    G_OPTION_ARG_NONE, &option_list_targets,
+    "List the targets offered by the clipboard", NULL
+  },
+  {
+    "target", 't', 0,
+    G_OPTION_ARG_STRING, &option_target,
+    "The target format to copy or paste", "<target>"
+  },
+  {
+    "copy", 'c', 0,
+    G_OPTION_ARG_STRING, &option_copy_filename,
+    "Copy <file> to clipboard", "<file>"
+  },
+  {
+    "paste", 'p', 0,
+    G_OPTION_ARG_STRING, &option_paste_filename,
+    "Paste clipoard into <file>", "<file>"
+  },
+  { NULL }
+};
 
 
 gint
@@ -40,37 +83,6 @@ main (gint   argc,
   GOptionContext *context;
   GtkClipboard   *clipboard;
   GError         *error = NULL;
-
-  /*  options  */
-  static gboolean  list_targets   = FALSE;
-  static gchar    *target         = NULL;
-  static gchar    *copy_filename  = NULL;
-  static gchar    *paste_filename = NULL;
-
-  static const GOptionEntry main_entries[] =
-  {
-    {
-      "list-targets", 'l', 0,
-      G_OPTION_ARG_NONE, &list_targets,
-      "List the targets offered by the clipboard", NULL
-    },
-    {
-      "target", 't', 0,
-      G_OPTION_ARG_STRING, &target,
-      "The target format to copy or paste", "<target>"
-    },
-    {
-      "copy", 'c', 0,
-      G_OPTION_ARG_STRING, &copy_filename,
-      "Copy <file> to clipboard", "<file>"
-    },
-    {
-      "paste", 'p', 0,
-      G_OPTION_ARG_STRING, &paste_filename,
-      "Paste clipoard into <file>", "<file>"
-    },
-    { NULL }
-  };
 
   context = g_option_context_new (NULL);
   g_option_context_add_main_entries (context, main_entries, NULL);
@@ -97,48 +109,66 @@ main (gint   argc,
   gtk_init (&argc, &argv);
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                             GDK_SELECTION_CLIPBOARD);
+                                             option_selection_type);
 
   if (! clipboard)
     g_error ("gtk_clipboard_get_for_display");
 
-  if (list_targets)
+  if (option_list_targets)
     {
       test_clipboard_list_targets (clipboard);
       return EXIT_SUCCESS;
     }
 
-  if (copy_filename && paste_filename)
+  if (option_copy_filename && option_paste_filename)
     {
       g_printerr ("Can't copy and paste at the same time\n");
       return EXIT_FAILURE;
     }
 
-  if (copy_filename)
+  if (option_copy_filename)
     {
-      if (! target)
+      if (! option_target)
         {
           g_printerr ("Usage: %s -t <target> -c <file>\n", argv[0]);
           return EXIT_FAILURE;
         }
 
-      test_clipboard_copy (clipboard, target, copy_filename);
+      test_clipboard_copy (clipboard, option_target, option_copy_filename);
       return EXIT_SUCCESS;
     }
 
-  if (paste_filename)
+  if (option_paste_filename)
     {
-      if (! target)
+      if (! option_target)
         {
           g_printerr ("Usage: %s -t <target> -p <file>\n", argv[0]);
           return EXIT_FAILURE;
         }
 
-      test_clipboard_paste (clipboard, target, paste_filename);
+      test_clipboard_paste (clipboard, option_target, option_paste_filename);
       return EXIT_SUCCESS;
     }
 
   return EXIT_SUCCESS;
+}
+
+static gboolean
+test_clipboard_parse_selection (const gchar  *option_name,
+                                const gchar  *value,
+                                gpointer      data,
+                                GError      **error)
+{
+  if (! strcmp (value, "primary"))
+    option_selection_type = GDK_SELECTION_PRIMARY;
+  else if (! strcmp (value, "secondary"))
+    option_selection_type = GDK_SELECTION_SECONDARY;
+  else if (! strcmp (value, "clipboard"))
+    option_selection_type = GDK_SELECTION_CLIPBOARD;
+  else
+    return FALSE;
+
+  return TRUE;
 }
 
 static void
