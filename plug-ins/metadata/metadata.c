@@ -391,7 +391,7 @@ run (const gchar      *name,
       if (!! strncmp (gimp_parasite_data (parasite),
                       METADATA_MARKER, METADATA_MARKER_LEN)
           || ! xmp_model_parse_buffer (xmp_model,
-                                       gimp_parasite_data (parasite)
+                                       (const gchar *)gimp_parasite_data (parasite)
                                        + METADATA_MARKER_LEN,
                                        gimp_parasite_data_size (parasite)
                                        - METADATA_MARKER_LEN,
