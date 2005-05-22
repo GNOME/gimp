@@ -360,8 +360,8 @@ gimp_dash_preset_get_type (void)
     { GIMP_DASH_NORMAL_DOTS, N_("Normal dots"), NULL },
     { GIMP_DASH_DENSE_DOTS, N_("Dense dots"), NULL },
     { GIMP_DASH_STIPPLES, N_("Stipples"), NULL },
-    { GIMP_DASH_DASH_DOT, N_("Dash dot..."), NULL },
-    { GIMP_DASH_DASH_DOT_DOT, N_("Dash dot dot..."), NULL },
+    { GIMP_DASH_DASH_DOT, N_("Dash, dot"), NULL },
+    { GIMP_DASH_DASH_DOT_DOT, N_("Dash, dot, dot"), NULL },
     { 0, NULL, NULL }
   };
 

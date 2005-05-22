@@ -176,17 +176,17 @@ GType gimp_dash_preset_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_DASH_CUSTOM,       /*< desc="Custom"          >*/
-  GIMP_DASH_LINE,         /*< desc="Line"            >*/
-  GIMP_DASH_LONG_DASH,    /*< desc="Long dashes"     >*/
-  GIMP_DASH_MEDIUM_DASH,  /*< desc="Medium dashes"   >*/
-  GIMP_DASH_SHORT_DASH,   /*< desc="Short dashes"    >*/
-  GIMP_DASH_SPARSE_DOTS,  /*< desc="Sparse dots"     >*/
-  GIMP_DASH_NORMAL_DOTS,  /*< desc="Normal dots"     >*/
-  GIMP_DASH_DENSE_DOTS,   /*< desc="Dense dots"      >*/
-  GIMP_DASH_STIPPLES,     /*< desc="Stipples"        >*/
-  GIMP_DASH_DASH_DOT,     /*< desc="Dash dot..."     >*/
-  GIMP_DASH_DASH_DOT_DOT  /*< desc="Dash dot dot..." >*/
+  GIMP_DASH_CUSTOM,       /*< desc="Custom"         >*/
+  GIMP_DASH_LINE,         /*< desc="Line"           >*/
+  GIMP_DASH_LONG_DASH,    /*< desc="Long dashes"    >*/
+  GIMP_DASH_MEDIUM_DASH,  /*< desc="Medium dashes"  >*/
+  GIMP_DASH_SHORT_DASH,   /*< desc="Short dashes"   >*/
+  GIMP_DASH_SPARSE_DOTS,  /*< desc="Sparse dots"    >*/
+  GIMP_DASH_NORMAL_DOTS,  /*< desc="Normal dots"    >*/
+  GIMP_DASH_DENSE_DOTS,   /*< desc="Dense dots"     >*/
+  GIMP_DASH_STIPPLES,     /*< desc="Stipples"       >*/
+  GIMP_DASH_DASH_DOT,     /*< desc="Dash, dot"      >*/
+  GIMP_DASH_DASH_DOT_DOT  /*< desc="Dash, dot, dot" >*/
 } GimpDashPreset;
 
 

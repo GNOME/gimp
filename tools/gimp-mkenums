@@ -8,6 +8,8 @@
 # from the enumeration. To allow i18n of the description, the
 # value is by default put into the N_() macro. 
 
+use Text::ParseWords;
+
 # gimp-mkenums
 # Information about the current enumeration
 my $flags;			# Is enumeration a bitmask?
@@ -25,7 +27,7 @@ sub parse_trigraph {
     my $opts = shift;
     my @opts;
 
-    for $opt (split /\s*,\s*/, $opts) {
+    for $opt (quotewords(",", true, $opts)) {
 	$opt =~ s/^\s*//;
 	$opt =~ s/\s*$//;
         my ($key,$val) = $opt =~ /(\w+)(?:=(.+))?/;
@@ -34,6 +36,8 @@ sub parse_trigraph {
     }
     @opts;
 }
+
+
 sub parse_entries {
     my $file = shift;
     my $file_name = shift;

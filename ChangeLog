@@ -1,5 +1,14 @@
 2005-05-22  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-mkenums (parse_trigraph): use quotewords() from
+	Text::ParseWords to split the trigraph. This function correctly
+	deals with commas inside quotes.
+
+	* app/core/core-enums.[ch]: tweaked descriptions in the
+	GimpDashPreset enum.
+
+2005-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdashpattern.c: minor cleanup.
 
 	* app/widgets/gimpcellrendererdashes.c: don't draw a background,
