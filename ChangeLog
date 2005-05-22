@@ -1,3 +1,8 @@
+2005-05-23  Tor Lillqvist  <tml@novell.com>
+
+	* gimptool-win32.c.in (get_prefix): Don't crash if gimp.exe isn't
+	found in PATH either.
+
 2005-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/Makefile.am: changed gimpwidgetsenums.c rule to
