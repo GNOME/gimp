@@ -32,6 +32,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <gdk/gdkkeysyms.h>
+
 #if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
 
@@ -371,6 +373,7 @@ select_window_x11 (GdkScreen *screen)
   gint        buttons;
   gint        mask        = ButtonPressMask | ButtonReleaseMask;
   gint        x, y, w, h;
+  gboolean    cancel = FALSE;
 
   x_dpy = GDK_SCREEN_XDISPLAY (screen);
   x_scr = GDK_SCREEN_XNUMBER (screen);
@@ -418,10 +421,13 @@ select_window_x11 (GdkScreen *screen)
       return 0;
     }
 
-  while ((x_win == None) || (buttons != 0))
+  XGrabKeyboard (x_dpy, x_root, False,
+                 GrabModeAsync, GrabModeAsync, CurrentTime);
+
+  while (! cancel && ((x_win == None) || (buttons != 0)))
     {
       XAllowEvents (x_dpy, SyncPointer, CurrentTime);
-      XWindowEvent (x_dpy, x_root, mask, &x_event);
+      XWindowEvent (x_dpy, x_root, mask | KeyPressMask, &x_event);
 
       switch (x_event.type)
         {
@@ -480,11 +486,31 @@ select_window_x11 (GdkScreen *screen)
             }
           break;
 
+        case KeyPress:
+          {
+            guint *keyvals;
+            gint   n;
+
+            if (gdk_keymap_get_entries_for_keycode (NULL, x_event.xkey.keycode,
+                                                    NULL, &keyvals, &n))
+              {
+                gint i;
+
+                for (i = 0; i < n && ! cancel; i++)
+                  if (keyvals[i] == GDK_Escape)
+                    cancel = TRUE;
+
+                g_free (keyvals);
+              }
+          }
+          break;
+
         default:
-          g_assert_not_reached ();
+          break;
         }
     }
 
+  XUngrabKeyboard (x_dpy, CurrentTime);
   XUngrabPointer (x_dpy, CurrentTime);
   XFreeCursor (x_dpy, x_cursor);
 
@@ -883,6 +909,9 @@ shoot_dialog (GdkScreen **screen)
      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
        {
          shootvals.window_id = select_window (*screen);
+
+         if (! shootvals.window_id)
+           return FALSE;
        }
    }
 

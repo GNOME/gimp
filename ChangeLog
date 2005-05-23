@@ -1,5 +1,10 @@
 2005-05-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c (select_window_x11): also grab the
+	keyboard and allow to cancel the operation using the Escape key.
+
+2005-05-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: always apply the selected delay.
 
 2005-05-23  Sven Neumann  <sven@gimp.org>
