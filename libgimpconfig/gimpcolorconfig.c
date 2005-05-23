@@ -261,6 +261,7 @@ gimp_color_config_set_property (GObject      *object,
       color_config->simulation_intent = g_value_get_enum (value);
       break;
     case PROP_DISPLAY_MODULE:
+      g_free (color_config->display_module);
       color_config->display_module = g_value_dup_string (value);
       break;
 #if 0
