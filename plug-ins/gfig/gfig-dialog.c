@@ -374,7 +374,7 @@ gfig_dialog (void)
                     vbox);
 
   /* foreground color button in Stroke frame*/
-  gfig_context->fg_color = g_new (GimpRGB, 1);
+  gfig_context->fg_color = g_new0 (GimpRGB, 1);
   gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
                                                     SEL_BUTTON_WIDTH,
                                                     SEL_BUTTON_HEIGHT,
@@ -442,7 +442,7 @@ gfig_dialog (void)
                             empty_label, NULL);
 
   /* A page for the fill color button */
-  gfig_context->bg_color = g_new (GimpRGB, 1);
+  gfig_context->bg_color = g_new0 (GimpRGB, 1);
   gfig_context->bg_color_button = gimp_color_button_new ("Background",
                                            SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
                                            gfig_context->bg_color,

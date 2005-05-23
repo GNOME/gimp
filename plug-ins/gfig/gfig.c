@@ -150,7 +150,7 @@ run (const gchar      *name,
   gint               pwidth, pheight;
   INIT_I18N ();
 
-  gfig_context = g_new (GFigContext, 1);
+  gfig_context = g_new0 (GFigContext, 1);
   gfig_context->show_background = TRUE;
   gfig_context->selected_obj = NULL;
 
