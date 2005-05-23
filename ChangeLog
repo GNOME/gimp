@@ -1,3 +1,12 @@
+2005-05-23  Sven Neumann  <neumann@jpk.com>
+
+	* app/widgets/gimpcellrendererdashes.[ch]: we don't actually need to
+	keep a pointer to the dashes array.
+	(gimp_cell_renderer_dashes_render): respect horizontal padding.
+
+	* app/widgets/gimpstrokeeditor.c: added 2 pixels horizontal
+	padding for the dashes cell-renderer.
+
 2005-05-23  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/helpbrowser/Makefile.am: added the missing -mwindows

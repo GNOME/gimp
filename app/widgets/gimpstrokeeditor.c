@@ -291,7 +291,9 @@ gimp_stroke_editor_constructor (GType                   type,
                              _("Dash preset:"), 0.0, 0.5,
                              box, 2, FALSE);
 
-  cell = gimp_cell_renderer_dashes_new ();
+  cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,
+                       "xpad", 2,
+                       NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (box), cell, FALSE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
                                  "pattern", GIMP_INT_STORE_USER_DATA);

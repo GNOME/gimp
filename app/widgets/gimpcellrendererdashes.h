@@ -40,7 +40,6 @@ struct _GimpCellRendererDashes
 {
   GtkCellRenderer   parent_instance;
 
-  GArray           *pattern;
   gboolean         *segments;
 };
 

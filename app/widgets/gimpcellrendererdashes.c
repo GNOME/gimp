@@ -120,13 +120,12 @@ gimp_cell_renderer_dashes_class_init (GimpCellRendererDashesClass *klass)
 
   g_object_class_install_property (object_class, PROP_PATTERN,
                                    g_param_spec_pointer ("pattern", NULL, NULL,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_WRITABLE));
 }
 
 static void
 gimp_cell_renderer_dashes_init (GimpCellRendererDashes *dashes)
 {
-  dashes->pattern  = NULL;
   dashes->segments = g_new0 (gboolean, N_SEGMENTS);
 }
 
@@ -146,18 +145,7 @@ gimp_cell_renderer_dashes_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (object);
-
-  switch (param_id)
-    {
-    case PROP_PATTERN:
-      g_value_set_pointer (value, dashes->pattern);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-      break;
-    }
+  G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
 }
 
 static void
@@ -171,7 +159,8 @@ gimp_cell_renderer_dashes_set_property (GObject      *object,
   switch (param_id)
     {
     case PROP_PATTERN:
-      dashes->pattern = g_value_get_pointer (value);
+      gimp_dash_pattern_segments_set (g_value_get_pointer (value),
+                                      dashes->segments, N_SEGMENTS);
       break;
 
     default:
@@ -233,9 +222,10 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStateType            state;
   GdkRectangle            rect;
+  gint                    width;
   gint                    x, y;
 
-  if (!cell->sensitive)
+  if (! cell->sensitive)
     {
       state = GTK_STATE_INSENSITIVE;
     }
@@ -259,20 +249,20 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 	state = GTK_STATE_NORMAL;
     }
 
-  gimp_dash_pattern_segments_set (dashes->pattern,
-                                  dashes->segments, N_SEGMENTS);
-
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
+  width = cell_area->width - 2 * cell->xpad;
 
-  for (x = 0; x < cell_area->width + BLOCK_WIDTH; x += BLOCK_WIDTH)
+  for (x = 0; x < width + BLOCK_WIDTH; x += BLOCK_WIDTH)
     {
       guint index = ((guint) x / BLOCK_WIDTH) % N_SEGMENTS;
 
       if (dashes->segments[index])
         {
-          rect.x      = cell_area->x + x;
+          GdkRectangle  rect;
+
+          rect.x      = cell_area->x + cell->xpad + x;
           rect.y      = y;
-          rect.width  = BLOCK_WIDTH;
+          rect.width  = MIN (BLOCK_WIDTH, width - x);
           rect.height = DASHES_HEIGHT;
 
           gdk_rectangle_intersect (&rect, expose_area, &rect);
