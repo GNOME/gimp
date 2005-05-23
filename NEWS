@@ -17,10 +17,12 @@ Changes in CVS (not released yet)
 - made file and color selection dialogs transient to their parent windows
 - moved browser widget from Procedure Browser plug-in to libgimpwidgets
 - allow more search types in the Procedure Browser
-- reduced size of the Colors dockable by packing widgets more compactly
+- reduced size of the Colors dockable by moving the hex entry down
 - added object properties to GimpColorArea and GimpColorButton
 - changed default for RGB->Indexed conversion to not to any dithering
 - allow to paste a new image using Ctrl-V on the toolbox
+- show previews of dash presets in Stroke Options dialog
+- Escape key cancels the window selection in the Screenshot plug-in
 - bug fixes and code cleanup
 
 
