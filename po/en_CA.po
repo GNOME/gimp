@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 14:08-0400\n"
-"PO-Revision-Date: 2005-05-19 14:29-0400\n"
+"POT-Creation-Date: 2005-05-23 13:05-0400\n"
+"PO-Revision-Date: 2005-05-23 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1204,27 +1204,27 @@ msgstr "Really clear image's undo history?"
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Clearing the undo history of this image will gain %s of memory."
 
-#: ../app/actions/edit-commands.c:236
+#: ../app/actions/edit-commands.c:238
 msgid "Cut Named"
 msgstr "Cut Named"
 
-#: ../app/actions/edit-commands.c:239 ../app/actions/edit-commands.c:259
+#: ../app/actions/edit-commands.c:241 ../app/actions/edit-commands.c:261
 msgid "Enter a name for this buffer"
 msgstr "Enter a name for this buffer"
 
-#: ../app/actions/edit-commands.c:256
+#: ../app/actions/edit-commands.c:258
 msgid "Copy Named"
 msgstr "Copy Named"
 
-#: ../app/actions/edit-commands.c:384
+#: ../app/actions/edit-commands.c:386
 msgid "There is no active layer or channel to cut from."
 msgstr "There is no active layer or channel to cut from."
 
-#: ../app/actions/edit-commands.c:396 ../app/actions/edit-commands.c:433
+#: ../app/actions/edit-commands.c:398 ../app/actions/edit-commands.c:435
 msgid "(Unnamed Buffer)"
 msgstr "(Unnamed Buffer)"
 
-#: ../app/actions/edit-commands.c:421
+#: ../app/actions/edit-commands.c:423
 msgid "There is no active layer or channel to copy from."
 msgstr "There is no active layer or channel to copy from."
 
@@ -4102,12 +4102,12 @@ msgid "Stipples"
 msgstr "Stipples"
 
 #: ../app/core/core-enums.c:363
-msgid "Dash dot..."
-msgstr "Dash dot..."
+msgid "Dash, dot"
+msgstr "Dash, dot"
 
 #: ../app/core/core-enums.c:364
-msgid "Dash dot dot..."
-msgstr "Dash dot dot..."
+msgid "Dash, dot, dot"
+msgstr "Dash, dot, dot"
 
 #: ../app/core/core-enums.c:392
 msgid "Circle"
@@ -5483,6 +5483,14 @@ msgstr "Float Selection"
 #: ../app/core/gimpselection.c:839
 msgid "Floated Layer"
 msgstr "Floated Layer"
+
+#: ../app/core/gimpstrokeoptions.c:151
+msgid ""
+"Convert a mitered join to a bevelled join if the miter would extend to a "
+"distance of more than miter-limit * line-width from the actual join point."
+msgstr ""
+"Convert a mitered join to a bevelled join if the miter would extend to a "
+"distance of more than (miter-limit * line-width) from the actual join point."
 
 #: ../app/core/gimptemplate.c:156
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -7834,6 +7842,10 @@ msgstr ""
 msgid "Free Select"
 msgstr "Free Select"
 
+#: ../app/pdb/vectors_cmds.c:173
+msgid "Modify Path"
+msgstr "Modify Path"
+
 #: ../app/plug-in/plug-in.c:563 ../app/plug-in/plug-in.c:596
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
@@ -9734,6 +9746,7 @@ msgid "Add the selected filter to the list of active filters."
 msgstr "Add the selected filter to the list of active filters."
 
 #: ../app/widgets/gimpcolordisplayeditor.c:222
+#: ../app/widgets/gimpcontrollerlist.c:297
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Remove the selected filter from the list of active filters."
 
@@ -9766,7 +9779,7 @@ msgstr "No filter selected"
 msgid "Configure selected filter"
 msgstr "Configure selected filter"
 
-#: ../app/widgets/gimpcoloreditor.c:257
+#: ../app/widgets/gimpcoloreditor.c:253
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimal colour notation as used in HTML and CSS"
 
@@ -10023,6 +10036,89 @@ msgstr "Keyboard Events"
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Ready"
+
+#: ../app/widgets/gimpcontrollerlist.c:212
+msgid "Available Controllers"
+msgstr "Available Controllers"
+
+#: ../app/widgets/gimpcontrollerlist.c:277
+msgid "Create a controller of the selected type."
+msgstr "Create a controller of the selected type."
+
+#: ../app/widgets/gimpcontrollerlist.c:312
+msgid "Active Controllers"
+msgstr "Active Controllers"
+
+#: ../app/widgets/gimpcontrollerlist.c:328
+msgid "Configure the selected controller"
+msgstr "Configure the selected controller"
+
+#: ../app/widgets/gimpcontrollerlist.c:336
+msgid "Move the selected controller up"
+msgstr "Move the selected controller up"
+
+#: ../app/widgets/gimpcontrollerlist.c:344
+msgid "Move the selected controller down"
+msgstr "Move the selected controller down"
+
+#: ../app/widgets/gimpcontrollerlist.c:516
+msgid ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+msgstr ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+
+#: ../app/widgets/gimpcontrollerlist.c:524
+msgid ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+msgstr ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+
+#: ../app/widgets/gimpcontrollerlist.c:550
+msgid "Remove Controller?"
+msgstr "Remove Controller?"
+
+#: ../app/widgets/gimpcontrollerlist.c:555
+msgid "Disable Controller"
+msgstr "Disable Controller"
+
+#: ../app/widgets/gimpcontrollerlist.c:557
+msgid "Remove Controller"
+msgstr "Remove Controller"
+
+#: ../app/widgets/gimpcontrollerlist.c:568
+#, c-format
+msgid "Remove Controller '%s'?"
+msgstr "Remove Controller '%s'?"
+
+#: ../app/widgets/gimpcontrollerlist.c:572
+msgid ""
+"Removing this controller from the list of active controllers will "
+"permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without "
+"removing it."
+msgstr ""
+"Removing this controller from the list of active controllers will "
+"permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without "
+"removing it."
+
+#: ../app/widgets/gimpcontrollerlist.c:633
+msgid "Configure Controller"
+msgstr "Configure Controller"
+
+#: ../app/widgets/gimpcontrollerlist.c:636
+msgid "Configure Input Controller"
+msgstr "Configure Input Controller"
 
 #: ../app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10523,6 +10619,16 @@ msgstr "Keep transparency"
 msgid "Empty Layer"
 msgstr "Empty Layer"
 
+#: ../app/widgets/gimpmenudock.c:191
+msgid "Auto"
+msgstr "Auto"
+
+#: ../app/widgets/gimpmenudock.c:202
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
+msgstr ""
+"When enabled, the dialogue automatically follows the image you are working on."
+
 #: ../app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
@@ -10566,35 +10672,35 @@ msgstr "%d x %d dpi"
 msgid "%d dpi"
 msgstr "%d dpi"
 
-#: ../app/widgets/gimpstrokeeditor.c:196
+#: ../app/widgets/gimpstrokeeditor.c:201
 msgid "Line Width:"
 msgstr "Line Width:"
 
-#: ../app/widgets/gimpstrokeeditor.c:207
+#: ../app/widgets/gimpstrokeeditor.c:212
 msgid "_Line Style"
 msgstr "_Line Style"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Cap style:"
 msgstr "_Cap style:"
 
-#: ../app/widgets/gimpstrokeeditor.c:232
+#: ../app/widgets/gimpstrokeeditor.c:237
 msgid "_Join style:"
 msgstr "_Join style:"
 
-#: ../app/widgets/gimpstrokeeditor.c:237
+#: ../app/widgets/gimpstrokeeditor.c:242
 msgid "_Miter limit:"
 msgstr "_Mitre limit:"
 
-#: ../app/widgets/gimpstrokeeditor.c:244
+#: ../app/widgets/gimpstrokeeditor.c:249
 msgid "Dash pattern:"
 msgstr "Dash pattern:"
 
-#: ../app/widgets/gimpstrokeeditor.c:286
+#: ../app/widgets/gimpstrokeeditor.c:291
 msgid "Dash preset:"
 msgstr "Dash preset:"
 
-#: ../app/widgets/gimpstrokeeditor.c:298
+#: ../app/widgets/gimpstrokeeditor.c:312
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -10725,13 +10831,18 @@ msgstr "Restore options from..."
 msgid "Delete saved options..."
 msgstr "Delete saved options..."
 
-#: ../app/widgets/gimpuimanager.c:695
+#: ../app/widgets/gimpuimanager.c:698
 msgid "Your GIMP installation is incomplete:"
 msgstr "Your GIMP installation is incomplete:"
 
-#: ../app/widgets/gimpuimanager.c:697
+#: ../app/widgets/gimpuimanager.c:700
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr "Plase make sure the menu XML files are correctly installed."
+
+#: ../app/widgets/gimpuimanager.c:705
+#, c-format
+msgid "There was an error parsing the menu definition from %s: %s"
+msgstr "There was an error parsing the menu definition from %s: %s"
 
 #: ../app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -10949,3 +11060,9 @@ msgstr "Could not connect to GIMP."
 #: ../tools/gimp-remote.c:197
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Make sure that the Toolbox is visible!"
+
+#. if execv and execvp return, there was an error
+#: ../tools/gimp-remote.c:298
+#, c-format
+msgid "Couldn't start '%s': %s"
+msgstr "Could not start '%s': %s"
