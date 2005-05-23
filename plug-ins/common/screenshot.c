@@ -324,8 +324,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ( (shootvals.shoot_type == SHOOT_ROOT || shootvals.shoot_type == SHOOT_WINDOW)
-           && shootvals.select_delay > 0)
+      if (shootvals.select_delay > 0)
 	shoot_delay (shootvals.select_delay);
 
       image_ID = shoot (screen);
@@ -883,9 +882,6 @@ shoot_dialog (GdkScreen **screen)
 
      if (shootvals.shoot_type != SHOOT_ROOT && ! shootvals.window_id)
        {
-/*          if (shootvals.select_delay > 0) */
-/*            shoot_delay (shootvals.select_delay); */
-
          shootvals.window_id = select_window (*screen);
        }
    }

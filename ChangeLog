@@ -1,4 +1,8 @@
-2005-05-23  Sven Neumann  <neumann@jpk.com>
+2005-05-23  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/screenshot.c: always apply the selected delay.
+
+2005-05-23  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcellrendererdashes.[ch]: we don't actually need to
 	keep a pointer to the dashes array.
