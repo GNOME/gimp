@@ -316,8 +316,7 @@ gimp_color_select_init (GimpColorSelect *select)
 
   select->z_color = gimp_preview_area_new ();
   gtk_widget_set_size_request (select->z_color,
-                               GIMP_COLOR_SELECTOR_BAR_SIZE,
-                               GIMP_COLOR_SELECTOR_SIZE);
+                               GIMP_COLOR_SELECTOR_BAR_SIZE, -1);
   gtk_widget_set_events (select->z_color, COLOR_AREA_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), select->z_color);
   gtk_widget_show (select->z_color);

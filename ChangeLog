@@ -1,5 +1,10 @@
 2005-05-24  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorselect.c: only set a horizontal size
+	request on the vertical color bar.
+
+2005-05-24  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpcolorconfig.c (gimp_color_config_set_property):
 	plugged a small memleak.
 
