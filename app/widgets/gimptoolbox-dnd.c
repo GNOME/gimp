@@ -352,7 +352,7 @@ gimp_toolbox_drop_pixbuf (GtkWidget *widget,
 
   new_layer =
     gimp_layer_new_from_pixbuf (pixbuf, new_image,
-                                gimp_image_base_type_with_alpha (new_image),
+                                GIMP_IMAGE_TYPE_FROM_BASE_TYPE (base_type),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
