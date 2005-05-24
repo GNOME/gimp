@@ -1,6 +1,10 @@
+2005-05-24  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES) added et.po (Estonian).
+
 2005-05-24  Priit Laes  <plaes@cvs.gnome.org>
 
-	* et.po: Translation updated by "Last-Translator: Olle Niit\n".
+	* et.po: Translation updated by "Last-Translator: Olle Niit".
 
 2005-05-19  Adam Weinberger  <adamw@gnome.org>
 
@@ -8,7 +12,7 @@
 
 2005-05-12  Priit Laes  <plaes@cvs.gnome.org>
 
-	* et.po: Translation added by "Last-Translator: Olle Niit\n".
+	* et.po: Translation added by "Last-Translator: Olle Niit".
 
 2005-05-12  Miloslav Trmac  <mitr@volny.cz>
 
