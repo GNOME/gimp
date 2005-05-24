@@ -1,5 +1,10 @@
 2005-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptoolbox-dnd.c: implemented dropping of pixbufs.
+	Bail out early from all callbacks if gimp->busy is TRUE.
+
+2005-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* tools/test-clipboard.c: added --store option which tries to
 	store a file in the clipboard manager, improved error reporting.
 

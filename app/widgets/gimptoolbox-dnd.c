@@ -75,6 +75,11 @@ static void   gimp_toolbox_drop_component (GtkWidget       *widget,
                                            GimpImage       *image,
                                            GimpChannelType  component,
                                            gpointer         data);
+static void   gimp_toolbox_drop_pixbuf    (GtkWidget       *widget,
+                                           gint             x,
+                                           gint             y,
+                                           GdkPixbuf       *pixbuf,
+                                           gpointer         data);
 
 
 /*  public functions  */
@@ -114,6 +119,9 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
   gimp_dnd_component_dest_add (toolbox->tool_wbox,
                                gimp_toolbox_drop_component,
                                dock->context);
+  gimp_dnd_pixbuf_dest_add    (toolbox->tool_wbox,
+                               gimp_toolbox_drop_pixbuf,
+                               dock->context);
 }
 
 
@@ -128,6 +136,9 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
 {
   GimpContext *context = GIMP_CONTEXT (data);
   GList       *list;
+
+  if (context->gimp->busy)
+    return;
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -159,6 +170,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                             GimpViewable *viewable,
                             gpointer      data)
 {
+  GimpContext       *context = GIMP_CONTEXT (data);
   GimpDrawable      *drawable;
   GimpItem          *item;
   GimpImage         *gimage;
@@ -169,6 +181,9 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gint               off_x, off_y;
   gint               bytes;
   GimpImageBaseType  type;
+
+  if (context->gimp->busy)
+    return;
 
   drawable = GIMP_DRAWABLE (viewable);
   item     = GIMP_ITEM (viewable);
@@ -225,6 +240,9 @@ gimp_toolbox_drop_tool (GtkWidget    *widget,
 {
   GimpContext *context = GIMP_CONTEXT (data);
 
+  if (context->gimp->busy)
+    return;
+
   gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));
 }
 
@@ -251,11 +269,15 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
                              GimpChannelType  component,
                              gpointer         data)
 {
+  GimpContext *context = GIMP_CONTEXT (data);
   GimpChannel *channel;
   GimpImage   *new_image;
   GimpLayer   *new_layer;
   const gchar *desc;
   gchar       *name;
+
+  if (context->gimp->busy)
+    return;
 
   new_image = gimp_create_image (image->gimp,
                                  gimp_image_get_width  (image),
@@ -280,6 +302,59 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
   name = g_strdup_printf (_("%s Channel Copy"), desc);
   gimp_object_set_name (GIMP_OBJECT (new_layer), name);
   g_free (name);
+
+  gimp_image_add_layer (new_image, new_layer, 0);
+
+  gimp_image_undo_enable (new_image);
+
+  gimp_create_display (new_image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  g_object_unref (new_image);
+}
+
+static void
+gimp_toolbox_drop_pixbuf (GtkWidget *widget,
+                          gint       x,
+                          gint       y,
+                          GdkPixbuf *pixbuf,
+                          gpointer   data)
+{
+  GimpContext       *context = GIMP_CONTEXT (data);
+  GimpImageBaseType  base_type;
+  GimpImage         *new_image;
+  GimpLayer         *new_layer;
+
+  if (context->gimp->busy)
+    return;
+
+  switch (gdk_pixbuf_get_n_channels (pixbuf))
+    {
+    case 1:
+    case 2:
+      base_type = GIMP_GRAY;
+      break;
+
+    case 3:
+    case 4:
+      base_type = GIMP_RGB;
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
+    }
+
+  new_image = gimp_create_image (context->gimp,
+                                 gdk_pixbuf_get_width  (pixbuf),
+                                 gdk_pixbuf_get_height (pixbuf),
+                                 base_type, FALSE);
+
+  gimp_image_undo_disable (new_image);
+
+  new_layer =
+    gimp_layer_new_from_pixbuf (pixbuf, new_image,
+                                gimp_image_base_type_with_alpha (new_image),
+                                _("Dropped Buffer"),
+                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (new_image, new_layer, 0);
 
