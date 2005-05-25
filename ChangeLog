@@ -1,3 +1,10 @@
+2005-05-25  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* libgimpwidgets/gimpoffsetarea.c (gimp_offset_area_expose_event):
+	correctly handle very small target sizes.
+
 2005-05-23  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/helpbrowser/Makefile.am: added the missing -mwindows
