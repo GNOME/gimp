@@ -1,3 +1,11 @@
+2005-05-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockable.c: ellipsize the dockable title if it
+	is too wide.
+
+	* app/widgets/gimpstrokeeditor.c: added mnemonic for the presets
+	combo.
+
 2005-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox-dnd.c: implemented dropping of pixbufs.

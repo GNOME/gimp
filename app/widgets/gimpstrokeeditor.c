@@ -288,7 +288,7 @@ gimp_stroke_editor_constructor (GType                   type,
   box = gimp_enum_combo_box_new (GIMP_TYPE_DASH_PRESET);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash preset:"), 0.0, 0.5,
+                             _("Dash _preset:"), 0.0, 0.5,
                              box, 2, FALSE);
 
   cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,

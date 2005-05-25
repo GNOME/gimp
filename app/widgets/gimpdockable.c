@@ -356,6 +356,10 @@ gimp_dockable_size_allocate (GtkWidget     *widget,
 
       gdk_window_move_resize (dockable->title_window,
                               area.x, area.y, area.width, area.height);
+
+      if (dockable->title_layout)
+        pango_layout_set_width (dockable->title_layout,
+                                PANGO_SCALE * area.width);
     }
 }
 
@@ -515,8 +519,12 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 
               dockable->title_layout = gtk_widget_create_pango_layout (widget,
                                                                        title);
-
               g_free (title);
+
+              pango_layout_set_width (dockable->title_layout,
+                                      PANGO_SCALE * title_area.width);
+              pango_layout_set_ellipsize (dockable->title_layout,
+                                          PANGO_ELLIPSIZE_END);
             }
 
           pango_layout_get_pixel_size (dockable->title_layout,
