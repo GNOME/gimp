@@ -1,5 +1,10 @@
 2005-05-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpoffsetarea.c (gimp_offset_area_expose_event):
+	correctly handle very small target sizes.
+
+2005-05-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpclipboard.[ch]: fixed gtk-doc comments.
 
 2005-05-25  Michael Natterer  <mitch@gimp.org>

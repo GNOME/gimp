@@ -461,17 +461,24 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 	  h = widget->allocation.height + 2;
 	}
 
+      w = MAX (w, 1);
+      h = MAX (h, 1);
+
       if (pixbuf)
         {
-          GdkGC *gc = gdk_gc_new (widget->window);
+          GdkGC *gc   = gdk_gc_new (widget->window);
+          gint   line = MIN (3, MIN (w, h));
 
           gdk_gc_set_function (gc, GDK_INVERT);
-          gdk_gc_set_line_attributes (gc, 3,
+          gdk_gc_set_line_attributes (gc, line,
                                       GDK_LINE_SOLID, GDK_CAP_BUTT,
                                       GDK_JOIN_ROUND);
 
           gdk_draw_rectangle (widget->window, gc, FALSE,
-                              x + 1, y + 1, w - 3, h - 3);
+                              x + line / 2,
+                              y + line / 2,
+                              MAX (w - line, 1),
+                              MAX (h - line, 1));
 
           g_object_unref (gc);
        }
