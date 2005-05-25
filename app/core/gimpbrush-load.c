@@ -268,9 +268,9 @@ gimp_brush_load_brush (gint          fd,
     name = g_strdup (_("Unnamed"));
 
   brush = g_object_new (GIMP_TYPE_BRUSH,
-                        "name", name,
+                        "name",      name,
+                        "mime-type", "image/x-gimp-gbr",
                         NULL);
-
   g_free (name);
 
   brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
@@ -532,7 +532,9 @@ gimp_brush_load_abr_brush (FILE         *file,
         g_free (tmp);
 
         brush = g_object_new (GIMP_TYPE_BRUSH,
-                              "name", name,
+                              "name",      name,
+                              /*  FIXME: MIME type!!  */
+                              "mime-type", "application/x-photoshop-abr",
                               NULL);
 
         g_free (name);

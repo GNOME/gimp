@@ -349,7 +349,8 @@ gimp_brush_pipe_load (const gchar  *filename,
                           gimp_filename_to_utf8 (filename));
 
       pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
-                           "name", utf8,
+                           "name",      utf8,
+                           "mime-type", "image/x-gimp-gih",
                            NULL);
 
       g_free (utf8);

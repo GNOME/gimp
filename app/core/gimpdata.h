@@ -50,6 +50,7 @@ struct _GimpData
   GimpViewable  parent_instance;
 
   gchar        *filename;
+  GQuark        mime_type;
   guint         writable  : 1;
   guint         deletable : 1;
   guint         dirty     : 1;
@@ -93,6 +94,8 @@ void          gimp_data_set_filename     (GimpData     *data,
                                           gboolean      deletable);
 void          gimp_data_create_filename  (GimpData     *data,
 					  const gchar  *dest_dir);
+
+const gchar * gimp_data_get_mime_type    (GimpData     *data);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data,
                                           gboolean      stingy_memory_use);

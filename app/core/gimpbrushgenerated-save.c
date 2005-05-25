@@ -552,6 +552,7 @@ gimp_brush_generated_new (const gchar             *name,
 
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED,
                         "name",         name,
+                        "mime-type",    "application/x-gimp-brush-generated",
                         "shape",        shape,
                         "radius",       radius,
                         "spikes",       spikes,

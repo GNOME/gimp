@@ -40,20 +40,28 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
 
   switch (preset)
     {
+    case GIMP_DASH_CUSTOM:
+      g_warning ("GIMP_DASH_CUSTOM passed to gimp_dash_pattern_from_preset()");
+      break;
+
     case GIMP_DASH_LINE:
       break;
+
     case GIMP_DASH_LONG_DASH:
       dash = 9.0; g_array_append_val (pattern, dash);
       dash = 3.0; g_array_append_val (pattern, dash);
       break;
+
     case GIMP_DASH_MEDIUM_DASH:
       dash = 6.0; g_array_append_val (pattern, dash);
       dash = 6.0; g_array_append_val (pattern, dash);
       break;
+
     case GIMP_DASH_SHORT_DASH:
       dash = 3.0; g_array_append_val (pattern, dash);
       dash = 9.0; g_array_append_val (pattern, dash);
       break;
+
     case GIMP_DASH_SPARSE_DOTS:
       for (i = 0; i < 2; i++)
         {
@@ -61,6 +69,7 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
           dash = 5.0; g_array_append_val (pattern, dash);
         }
       break;
+
     case GIMP_DASH_NORMAL_DOTS:
       for (i = 0; i < 3; i++)
         {
@@ -68,24 +77,28 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
           dash = 3.0; g_array_append_val (pattern, dash);
         }
       break;
+
     case GIMP_DASH_DENSE_DOTS:
       for (i = 0; i < 12; i++)
         {
           dash = 1.0; g_array_append_val (pattern, dash);
         }
       break;
+
     case GIMP_DASH_STIPPLES:
       for (i = 0; i < 24; i++)
         {
           dash = 0.5; g_array_append_val (pattern, dash);
         }
       break;
+
     case GIMP_DASH_DASH_DOT:
       dash = 7.0; g_array_append_val (pattern, dash);
       dash = 2.0; g_array_append_val (pattern, dash);
       dash = 1.0; g_array_append_val (pattern, dash);
       dash = 2.0; g_array_append_val (pattern, dash);
       break;
+
     case GIMP_DASH_DASH_DOT_DOT:
       dash = 7.0; g_array_append_val (pattern, dash);
       for (i=0; i < 5; i++)
@@ -93,8 +106,6 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
           dash = 1.0; g_array_append_val (pattern, dash);
         }
       break;
-    case GIMP_DASH_CUSTOM:
-      g_warning ("GIMP_DASH_CUSTOM passed to gimp_dash_pattern_from_preset()");
     }
 
   if (pattern->len < 2)

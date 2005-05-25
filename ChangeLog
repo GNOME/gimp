@@ -1,3 +1,19 @@
+2005-05-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.[ch]: added MIME type as a construct property
+	to GimpData.
+
+	* app/core/gimpbrush-load.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: set the MIME type when loading a data
+	object from file. MIME types needs review and GimpPalette isn't
+	quite done yet...
+
+	* app/core/gimpdashpattern.c: cosmetics.
+
 2005-05-25  Nathan Summers  <rock@gimp.org>
 
 	* app/sanity.c (sanity_check_filename_encoding): made the

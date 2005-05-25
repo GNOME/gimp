@@ -76,7 +76,9 @@ gimp_gradient_load (const gchar  *filename,
       return NULL;
     }
 
-  gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
+  gradient = g_object_new (GIMP_TYPE_GRADIENT,
+                           "mime-type", "application/x-gimp-gradient",
+                           NULL);
 
   fgets (line, 1024, file);
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
@@ -325,7 +327,8 @@ svg_parser_start_element (GMarkupParseContext  *context,
         }
 
       parser->gradient = g_object_new (GIMP_TYPE_GRADIENT,
-                                       "name", name,
+                                       "name",      name,
+                                       "mime-type", "image/svg+xml",
                                        NULL);
     }
   else if (parser->gradient && strcmp (element_name, "stop") == 0)

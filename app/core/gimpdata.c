@@ -51,12 +51,26 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_MIME_TYPE
+};
+
 
 static void    gimp_data_class_init   (GimpDataClass *klass);
 static void    gimp_data_init         (GimpData      *data,
                                        GimpDataClass *data_class);
 
 static void    gimp_data_finalize     (GObject       *object);
+static void    gimp_data_set_property (GObject       *object,
+                                       guint          property_id,
+                                       const GValue  *value,
+                                       GParamSpec    *pspec);
+static void    gimp_data_get_property (GObject       *object,
+                                       guint          property_id,
+                                       GValue        *value,
+                                       GParamSpec    *pspec);
 
 static void    gimp_data_name_changed (GimpObject    *object);
 static gint64  gimp_data_get_memsize  (GimpObject    *object,
@@ -116,6 +130,8 @@ gimp_data_class_init (GimpDataClass *klass)
                   G_TYPE_NONE, 0);
 
   object_class->finalize          = gimp_data_finalize;
+  object_class->set_property      = gimp_data_set_property;
+  object_class->get_property      = gimp_data_get_property;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
   gimp_object_class->get_memsize  = gimp_data_get_memsize;
@@ -124,6 +140,13 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->save                     = NULL;
   klass->get_extension            = NULL;
   klass->duplicate                = NULL;
+
+  g_object_class_install_property (object_class, PROP_MIME_TYPE,
+				   g_param_spec_string ("mime-type",
+							NULL, NULL,
+							NULL,
+							G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -131,6 +154,7 @@ gimp_data_init (GimpData      *data,
                 GimpDataClass *data_class)
 {
   data->filename     = NULL;
+  data->mime_type    = 0;
   data->writable     = TRUE;
   data->deletable    = TRUE;
   data->dirty        = TRUE;
@@ -156,6 +180,49 @@ gimp_data_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_data_set_property (GObject      *object,
+                        guint         property_id,
+                        const GValue *value,
+                        GParamSpec   *pspec)
+{
+  GimpData *data = GIMP_DATA (object);
+
+  switch (property_id)
+    {
+    case PROP_MIME_TYPE:
+      if (g_value_get_string (value))
+        data->mime_type = g_quark_from_string (g_value_get_string (value));
+      else
+        data->mime_type = 0;
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_data_get_property (GObject    *object,
+                        guint       property_id,
+                        GValue     *value,
+                        GParamSpec *pspec)
+{
+  GimpData *data = GIMP_DATA (object);
+
+  switch (property_id)
+    {
+    case PROP_MIME_TYPE:
+      g_value_set_string (value, g_quark_to_string (data->mime_type));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -459,6 +526,14 @@ gimp_data_create_filename (GimpData    *data,
   gimp_data_set_filename (data, fullpath, TRUE, TRUE);
 
   g_free (fullpath);
+}
+
+const gchar *
+gimp_data_get_mime_type (GimpData *data)
+{
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+
+  return g_quark_to_string (data->mime_type);
 }
 
 /**

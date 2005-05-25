@@ -390,7 +390,8 @@ gimp_pattern_load (const gchar  *filename,
     name = g_strdup (_("Unnamed"));
 
   pattern = g_object_new (GIMP_TYPE_PATTERN,
-                          "name", name,
+                          "name",      name,
+                          "mime-type", "image/x-gimp-pat",
                           NULL);
 
   g_free (name);
@@ -461,7 +462,8 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
     name = g_filename_display_basename (filename);
 
   pattern = g_object_new (GIMP_TYPE_PATTERN,
-                          "name", name,
+                          "name",      name,
+                          "mime-type", NULL, /* FIXME!! */
                           NULL);
   g_free (name);
 

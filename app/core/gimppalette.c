@@ -388,7 +388,9 @@ gimp_palette_load (const gchar  *filename,
       return NULL;
     }
 
-  palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
+  palette = g_object_new (GIMP_TYPE_PALETTE,
+                          "mime-type", "application/x-gimp-palette",
+                          NULL);
 
   if (! fgets (str, sizeof (str), file))
     {
