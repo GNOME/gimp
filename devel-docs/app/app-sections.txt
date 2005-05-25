@@ -1395,10 +1395,22 @@ GIMP_STROKE_DESC_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpdashpattern</FILE>
+<TITLE>GimpDashPattern</TITLE>
+gimp_dash_pattern_from_preset
+gimp_dash_pattern_from_segments
+gimp_dash_pattern_segments_set
+gimp_dash_pattern_from_value
+gimp_dash_pattern_value_set
+gimp_dash_pattern_copy
+gimp_dash_pattern_free
+</SECTION>
+
+<SECTION>
 <FILE>gimpstrokeoptions</FILE>
 <TITLE>GimpStrokeOptions</TITLE>
 GimpStrokeOptions
-gimp_stroke_options_set_dash_preset
+gimp_stroke_options_set_dash_pattern
 <SUBSECTION Standard>
 GimpStrokeOptionsClass
 GIMP_STROKE_OPTIONS
@@ -1499,6 +1511,7 @@ GimpViewable
 gimp_viewable_invalidate_preview
 gimp_viewable_size_changed
 gimp_viewable_calc_preview_size
+gimp_viewable_get_size
 gimp_viewable_get_preview_size
 gimp_viewable_get_popup_size
 gimp_viewable_get_preview
@@ -3659,6 +3672,7 @@ gimp_vectors_stroke_get_length
 gimp_vectors_stroke_get_by_ID
 gimp_vectors_get_length
 gimp_vectors_get_distance
+gimp_vectors_get_n_strokes
 gimp_vectors_interpolate
 gimp_vectors_bounds
 gimp_vectors_make_bezier
@@ -3911,6 +3925,22 @@ gimp_cell_renderer_accel_get_type
 GIMP_CELL_RENDERER_ACCEL_CLASS
 GIMP_IS_CELL_RENDERER_ACCEL_CLASS
 GIMP_CELL_RENDERER_ACCEL_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcellrendererdashes</FILE>
+<TITLE>GimpCellRendererDashes</TITLE>
+GimpCellRendererDashes
+gimp_cell_renderer_dashes_new
+<SUBSECTION Standard>
+GimpCellRendererDashesClass
+GIMP_CELL_RENDERER_DASHES
+GIMP_IS_CELL_RENDERER_DASHES
+GIMP_TYPE_CELL_RENDERER_DASHES
+gimp_cell_renderer_dashes_get_type
+GIMP_CELL_RENDERER_DASHES_CLASS
+GIMP_IS_CELL_RENDERER_DASHES_CLASS
+GIMP_CELL_RENDERER_DASHES_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -7412,7 +7442,6 @@ procedural_db_destroy_args
 procedural_db_set_data
 procedural_db_get_data
 procedural_db_free_data
-pdb_type_name
 </SECTION>
 
 <SECTION>
@@ -7422,6 +7451,13 @@ GimpDebugWrapFlag
 plug_in_debug_init
 plug_in_debug_exit
 plug_in_debug_argv
+</SECTION>
+
+<SECTION>
+<FILE>procedural-db-query</FILE>
+procedural_db_dump
+procedural_db_query
+procedural_db_proc_info
 </SECTION>
 
 <SECTION>
@@ -7470,6 +7506,7 @@ plug_in_proc_def_get_stock_id
 plug_in_proc_def_get_pixbuf
 plug_in_proc_def_get_help_id
 plug_in_proc_def_get_sensitive
+plug_in_proc_def_set_icon
 plug_in_proc_def_find
 </SECTION>
 
@@ -7726,6 +7763,8 @@ gimp_clipboard_init
 gimp_clipboard_exit
 gimp_clipboard_has_buffer
 gimp_clipboard_get_buffer
+gimp_clipboard_has_svg
+gimp_clipboard_get_svg
 </SECTION>
 
 <SECTION>

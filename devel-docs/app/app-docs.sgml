@@ -277,6 +277,7 @@
       <xi:include href="xml/gimp-transform-utils.xml" />
       <xi:include href="xml/gimparea.xml" />
       <xi:include href="xml/gimpcoords.xml" />
+      <xi:include href="xml/gimpdashpattern.xml" />
       <xi:include href="xml/gimpinterpreterdb.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
@@ -803,6 +804,7 @@
     <chapter id="app-widgets-cell-renderers">
       <title>Cell Renderers for GtkTreeView</title>
       <xi:include href="xml/gimpcellrendereraccel.xml" />
+      <xi:include href="xml/gimpcellrendererdashes.xml" />
       <xi:include href="xml/gimpcellrendererviewable.xml" />
     </chapter>
 
