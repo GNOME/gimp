@@ -54,6 +54,9 @@ enum
 enum
 {
   PROP_0,
+  PROP_FILENAME,
+  PROP_WRITABLE,
+  PROP_DELETABLE,
   PROP_MIME_TYPE
 };
 
@@ -141,9 +144,23 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->get_extension            = NULL;
   klass->duplicate                = NULL;
 
+  g_object_class_install_property (object_class, PROP_FILENAME,
+				   g_param_spec_string ("filename", NULL, NULL,
+							NULL,
+							G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_WRITABLE,
+				   g_param_spec_boolean ("writable", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_WRITABLE,
+				   g_param_spec_boolean ("deletable", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_MIME_TYPE,
-				   g_param_spec_string ("mime-type",
-							NULL, NULL,
+				   g_param_spec_string ("mime-type", NULL, NULL,
 							NULL,
 							G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -192,6 +209,21 @@ gimp_data_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_FILENAME:
+      gimp_data_set_filename (data,
+                              g_value_get_string (value),
+                              data->writable,
+                              data->deletable);
+      break;
+
+    case PROP_WRITABLE:
+      data->writable = g_value_get_boolean (value);
+      break;
+
+    case PROP_DELETABLE:
+      data->deletable = g_value_get_boolean (value);
+      break;
+
     case PROP_MIME_TYPE:
       if (g_value_get_string (value))
         data->mime_type = g_quark_from_string (g_value_get_string (value));
@@ -215,6 +247,18 @@ gimp_data_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_FILENAME:
+      g_value_set_string (value, data->filename);
+      break;
+
+    case PROP_WRITABLE:
+      g_value_set_boolean (value, data->writable);
+      break;
+
+    case PROP_DELETABLE:
+      g_value_set_boolean (value, data->deletable);
+      break;
+
     case PROP_MIME_TYPE:
       g_value_set_string (value, g_quark_to_string (data->mime_type));
       break;

@@ -1,5 +1,9 @@
 2005-05-26  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdata.c: added more properties.
+
+2005-05-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdata.[ch]: added MIME type as a construct property
 	to GimpData.
 
