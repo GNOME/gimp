@@ -1,3 +1,7 @@
+2005-05-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpclipboard.[ch]: fixed gtk-doc comments.
+
 2005-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.[ch]: added virtual function

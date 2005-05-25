@@ -272,24 +272,24 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 /**
  * gimp_clipboard_get_svg:
  * @gimp: pointer to #Gimp
+ * @svg_length: returns the size of the SVG stream in bytes
  *
  * Retrieves SVG data from %GDK_SELECTION_CLIPBOARD.
  *
- * The returned data needs to be freed when it's no longer
- * needed.
+ * The returned data needs to be freed when it's no longer needed.
  *
  * Return value: a reference to a #GimpBuffer or %NULL if there's no
  *               image data
  **/
 guchar *
 gimp_clipboard_get_svg (Gimp  *gimp,
-                        gsize *svg_size)
+                        gsize *svg_length)
 {
   GtkClipboard *clipboard;
   GdkAtom       atom;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (svg_size != NULL, NULL);
+  g_return_val_if_fail (svg_length != NULL, NULL);
 
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
@@ -306,10 +306,10 @@ gimp_clipboard_get_svg (Gimp  *gimp,
         {
           guchar *svg;
 
-          svg = (guchar *) gimp_selection_data_get_stream (data, svg_size);
+          svg = (guchar *) gimp_selection_data_get_stream (data, svg_length);
 
           if (svg)
-            svg = g_memdup (svg, *svg_size);
+            svg = g_memdup (svg, *svg_length);
 
           gtk_selection_data_free (data);
 
