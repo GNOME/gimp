@@ -136,6 +136,9 @@ static void     gimp_image_name_changed          (GimpObject     *object);
 static gint64   gimp_image_get_memsize           (GimpObject     *object,
                                                   gint64         *gui_size);
 
+static gboolean gimp_image_get_size              (GimpViewable   *viewable,
+                                                  gint           *width,
+                                                  gint           *height);
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
 static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
@@ -472,6 +475,7 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class->get_memsize      = gimp_image_get_memsize;
 
   viewable_class->default_stock_id    = "gimp-image";
+  viewable_class->get_size            = gimp_image_get_size;
   viewable_class->invalidate_preview  = gimp_image_invalidate_preview;
   viewable_class->size_changed        = gimp_image_size_changed;
   viewable_class->get_preview_size    = gimp_image_get_preview_size;
@@ -991,6 +995,19 @@ gimp_image_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gboolean
+gimp_image_get_size (GimpViewable *viewable,
+                     gint         *width,
+                     gint         *height)
+{
+  GimpImage *image = GIMP_IMAGE (viewable);
+
+  *width  = image->width;
+  *height = image->height;
+
+  return TRUE;
 }
 
 static void

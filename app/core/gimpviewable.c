@@ -80,6 +80,12 @@ static void    gimp_viewable_real_get_preview_size   (GimpViewable  *viewable,
                                                       gboolean       dot_for_dot,
                                                       gint          *width,
                                                       gint          *height);
+static gboolean gimp_viewable_real_get_popup_size    (GimpViewable  *viewable,
+                                                      gint           width,
+                                                      gint           height,
+                                                      gboolean       dot_for_dot,
+                                                      gint          *popup_width,
+                                                      gint          *popup_height);
 static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
                                                       gchar        **tooltip);
 static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
@@ -175,8 +181,9 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;
 
+  klass->get_size                = NULL;
   klass->get_preview_size        = gimp_viewable_real_get_preview_size;
-  klass->get_popup_size          = NULL;
+  klass->get_popup_size          = gimp_viewable_real_get_popup_size;
   klass->get_preview             = NULL;
   klass->get_new_preview         = NULL;
   klass->get_pixbuf              = NULL;
@@ -302,6 +309,30 @@ gimp_viewable_real_get_preview_size (GimpViewable *viewable,
 {
   *width  = size;
   *height = size;
+}
+
+static gboolean
+gimp_viewable_real_get_popup_size (GimpViewable *viewable,
+                                   gint          width,
+                                   gint          height,
+                                   gboolean      dot_for_dot,
+                                   gint         *popup_width,
+                                   gint         *popup_height)
+{
+  gint w, h;
+
+  if (gimp_viewable_get_size (viewable, &w, &h))
+    {
+      if (w > width || h > height)
+        {
+          *popup_width  = w;
+          *popup_height = h;
+
+          return TRUE;
+        }
+    }
+
+  return FALSE;
 }
 
 static GdkPixbuf *
@@ -496,6 +527,29 @@ gimp_viewable_calc_preview_size (gint       aspect_width,
   if (scaling_up)    *scaling_up    = (xratio > 1.0) || (yratio > 1.0);
 }
 
+gboolean
+gimp_viewable_get_size (GimpViewable  *viewable,
+                        gint          *width,
+                        gint          *height)
+{
+  GimpViewableClass *viewable_class;
+  gboolean           retval = FALSE;
+  gint               w      = 0;
+  gint               h      = 0;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
+
+  if (viewable_class->get_size)
+    retval = viewable_class->get_size (viewable, &w, &h);
+
+  if (width)  *width  = w;
+  if (height) *height = h;
+
+  return retval;
+}
+
 /**
  * gimp_viewable_get_preview_size:
  * @viewable:    the object for which to calculate the preview size.
@@ -562,58 +616,52 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
                               gint         *popup_width,
                               gint         *popup_height)
 {
-  GimpViewableClass *viewable_class;
+  gint w, h;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
-  viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
-
-  if (viewable_class->get_popup_size)
+  if (GIMP_VIEWABLE_GET_CLASS (viewable)->get_popup_size (viewable,
+                                                          width, height,
+                                                          dot_for_dot,
+                                                          &w, &h))
     {
-      gint w, h;
+      if (w < 1) w = 1;
+      if (h < 1) h = 1;
 
-      if (viewable_class->get_popup_size (viewable,
-                                          width, height, dot_for_dot,
-                                          &w, &h))
+      /*  limit the popup to 2 * GIMP_VIEWABLE_MAX_POPUP_SIZE
+       *  on each axis.
+       */
+      if ((w > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)) ||
+          (h > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)))
         {
-          if (w < 1) w = 1;
-          if (h < 1) h = 1;
-
-          /*  limit the popup to 2 * GIMP_VIEWABLE_MAX_POPUP_SIZE
-           *  on each axis.
-           */
-          if ((w > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)) ||
-              (h > (2 * GIMP_VIEWABLE_MAX_POPUP_SIZE)))
-            {
-              gimp_viewable_calc_preview_size (w, h,
-                                               2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
-                                               2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
-                                               dot_for_dot, 1.0, 1.0,
-                                               &w, &h, NULL);
-            }
-
-          /*  limit the number of pixels to
-           *  GIMP_VIEWABLE_MAX_POPUP_SIZE ^ 2
-           */
-          if ((w * h) > SQR (GIMP_VIEWABLE_MAX_POPUP_SIZE))
-            {
-              gdouble factor;
-
-              factor = sqrt (((gdouble) (w * h) /
-                              (gdouble) SQR (GIMP_VIEWABLE_MAX_POPUP_SIZE)));
-
-              w = RINT ((gdouble) w / factor);
-              h = RINT ((gdouble) h / factor);
-            }
-
-          if (w < 1) w = 1;
-          if (h < 1) h = 1;
-
-          if (popup_width)  *popup_width  = w;
-          if (popup_height) *popup_height = h;
-
-          return TRUE;
+          gimp_viewable_calc_preview_size (w, h,
+                                           2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
+                                           2 * GIMP_VIEWABLE_MAX_POPUP_SIZE,
+                                           dot_for_dot, 1.0, 1.0,
+                                           &w, &h, NULL);
         }
+
+      /*  limit the number of pixels to
+       *  GIMP_VIEWABLE_MAX_POPUP_SIZE ^ 2
+       */
+      if ((w * h) > SQR (GIMP_VIEWABLE_MAX_POPUP_SIZE))
+        {
+          gdouble factor;
+
+          factor = sqrt (((gdouble) (w * h) /
+                          (gdouble) SQR (GIMP_VIEWABLE_MAX_POPUP_SIZE)));
+
+          w = RINT ((gdouble) w / factor);
+          h = RINT ((gdouble) h / factor);
+        }
+
+      if (w < 1) w = 1;
+      if (h < 1) h = 1;
+
+      if (popup_width)  *popup_width  = w;
+      if (popup_height) *popup_height = h;
+
+      return TRUE;
     }
 
   return FALSE;

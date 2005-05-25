@@ -90,6 +90,8 @@ static void        gimp_view_update_callback      (GimpViewRenderer *renderer,
 
 static GimpViewable * gimp_view_drag_viewable     (GtkWidget        *widget,
                                                    gpointer          data);
+static GdkPixbuf    * gimp_view_drag_pixbuf       (GtkWidget        *widget,
+                                                   gpointer          data);
 
 
 
@@ -587,6 +589,9 @@ gimp_view_real_set_viewable (GimpView     *view,
           if (gimp_dnd_viewable_source_remove (GTK_WIDGET (view),
                                                G_TYPE_FROM_INSTANCE (view->viewable)))
             {
+              if (gimp_viewable_get_size (view->viewable, NULL, NULL))
+                gimp_dnd_pixbuf_source_remove (GTK_WIDGET (view));
+
               gtk_drag_source_unset (GTK_WIDGET (view));
             }
         }
@@ -601,6 +606,11 @@ gimp_view_real_set_viewable (GimpView     *view,
           gimp_dnd_viewable_source_add (GTK_WIDGET (view),
                                         viewable_type,
                                         gimp_view_drag_viewable,
+                                        NULL);
+
+          if (gimp_viewable_get_size (viewable, NULL, NULL))
+            gimp_dnd_pixbuf_source_add (GTK_WIDGET (view),
+                                        gimp_view_drag_pixbuf,
                                         NULL);
         }
     }
@@ -805,4 +815,18 @@ gimp_view_drag_viewable (GtkWidget *widget,
                          gpointer   data)
 {
   return GIMP_VIEW (widget)->viewable;
+}
+
+static GdkPixbuf *
+gimp_view_drag_pixbuf (GtkWidget *widget,
+                       gpointer   data)
+{
+  GimpViewable *viewable = GIMP_VIEW (widget)->viewable;
+  gint          width;
+  gint          height;
+
+  if (viewable && gimp_viewable_get_size (viewable, &width, &height))
+    return gimp_viewable_get_new_pixbuf (viewable, width, height);
+
+  return NULL;
 }

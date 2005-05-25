@@ -215,12 +215,7 @@ gimp_brush_pipe_get_popup_size (GimpViewable   *viewable,
                                 gint           *popup_width,
                                 gint           *popup_height)
 {
-  GimpBrush *brush = GIMP_BRUSH (viewable);
-
-  *popup_width  = brush->mask->width;
-  *popup_height = brush->mask->height;
-
-  return TRUE;
+  return gimp_viewable_get_size (viewable, popup_width, popup_height);
 }
 
 static GimpBrush *

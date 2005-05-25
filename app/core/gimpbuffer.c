@@ -41,6 +41,9 @@ static void      gimp_buffer_finalize         (GObject         *object);
 static gint64    gimp_buffer_get_memsize      (GimpObject      *object,
                                                gint64          *gui_size);
 
+static gboolean  gimp_buffer_get_size         (GimpViewable    *viewable,
+                                               gint            *width,
+                                               gint            *height);
 static void      gimp_buffer_get_preview_size (GimpViewable    *viewable,
                                                gint             size,
                                                gboolean         is_popup,
@@ -105,6 +108,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   gimp_object_class->get_memsize   = gimp_buffer_get_memsize;
 
   viewable_class->default_stock_id = "gtk-paste";
+  viewable_class->get_size         = gimp_buffer_get_size;
   viewable_class->get_preview_size = gimp_buffer_get_preview_size;
   viewable_class->get_popup_size   = gimp_buffer_get_popup_size;
   viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
@@ -135,16 +139,27 @@ static gint64
 gimp_buffer_get_memsize (GimpObject *object,
                          gint64     *gui_size)
 {
-  GimpBuffer *buffer;
+  GimpBuffer *buffer  = GIMP_BUFFER (object);
   gint64      memsize = 0;
-
-  buffer = GIMP_BUFFER (object);
 
   if (buffer->tiles)
     memsize += tile_manager_get_memsize (buffer->tiles, FALSE);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gboolean
+gimp_buffer_get_size (GimpViewable *viewable,
+                      gint         *width,
+                      gint         *height)
+{
+  GimpBuffer *buffer = GIMP_BUFFER (viewable);
+
+  *width  = gimp_buffer_get_width (buffer);
+  *height = gimp_buffer_get_height (buffer);
+
+  return TRUE;
 }
 
 static void

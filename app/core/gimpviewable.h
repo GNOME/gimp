@@ -64,6 +64,9 @@ struct _GimpViewableClass
   void        (* size_changed)       (GimpViewable  *viewable);
 
   /*  virtual functions  */
+  gboolean    (* get_size)           (GimpViewable  *viewable,
+                                      gint          *width,
+                                      gint          *height);
   void        (* get_preview_size)   (GimpViewable  *viewable,
                                       gint           size,
                                       gboolean       is_popup,
@@ -109,6 +112,9 @@ void        gimp_viewable_calc_preview_size  (gint           aspect_width,
                                               gint          *return_height,
                                               gboolean      *scaling_up);
 
+gboolean    gimp_viewable_get_size           (GimpViewable  *viewable,
+                                              gint          *width,
+                                              gint          *height);
 void        gimp_viewable_get_preview_size   (GimpViewable  *viewable,
                                               gint           size,
                                               gboolean       popup,

@@ -1,5 +1,39 @@
 2005-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpviewable.[ch]: added virtual function
+	GimpViewable::get_size() and public API gimp_viewable_get_size()
+	which return width and height and a boolean indicating if the
+	viewable has a size at all.
+	Added default implementation of GimpViewable::get_popup_size()
+	using the new get_size() API.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage.c
+	* app/core/gimppattern.c: implement GimpViewable::get_size().
+
+	* app/core/gimpbrush.c
+	* app/core/gimppattern.c: removed GimpViewable::get_popup_size()
+	implementations, the default one is good enough.
+
+	* app/core/gimpbrushpipe.c (gimp_brush_pipe_get_popup_size):
+	redirect to gimp_viewable_get_size() instead of duplicating its
+	return values.
+
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpview.c: allow pixbuf dragging out of any
+	viewable that has a size.
+
+	* app/widgets/gimpdrawabletreeview.c: removed pixbuf dragging code
+	here.
+
+	* app/widgets/gimpdnd.c: set gimp busy around encoding/decoding
+	pixbufs into/from GtkSelectionData, because it can be a time
+	consuming operation.
+
+2005-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_pixbuf): fixed
 	type of the dropped layer.
 

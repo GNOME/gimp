@@ -52,12 +52,9 @@ static void        gimp_brush_finalize              (GObject        *object);
 static gint64      gimp_brush_get_memsize           (GimpObject     *object,
                                                      gint64         *gui_size);
 
-static gboolean    gimp_brush_get_popup_size        (GimpViewable   *viewable,
-                                                     gint            width,
-                                                     gint            height,
-                                                     gboolean        dot_for_dot,
-                                                     gint           *popup_width,
-                                                     gint           *popup_height);
+static gboolean    gimp_brush_get_size              (GimpViewable   *viewable,
+                                                     gint           *width,
+                                                     gint           *height);
 static TempBuf   * gimp_brush_get_new_preview       (GimpViewable   *viewable,
                                                      gint            width,
                                                      gint            height);
@@ -130,7 +127,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   gimp_object_class->get_memsize   = gimp_brush_get_memsize;
 
   viewable_class->default_stock_id = "gimp-tool-paintbrush";
-  viewable_class->get_popup_size   = gimp_brush_get_popup_size;
+  viewable_class->get_size         = gimp_brush_get_size;
   viewable_class->get_new_preview  = gimp_brush_get_new_preview;
   viewable_class->get_description  = gimp_brush_get_description;
 
@@ -192,24 +189,16 @@ gimp_brush_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_brush_get_popup_size (GimpViewable *viewable,
-                           gint          width,
-                           gint          height,
-                           gboolean      dot_for_dot,
-                           gint         *popup_width,
-                           gint         *popup_height)
+gimp_brush_get_size (GimpViewable *viewable,
+                     gint         *width,
+                     gint         *height)
 {
   GimpBrush *brush = GIMP_BRUSH (viewable);
 
-  if (brush->mask->width > width || brush->mask->height > height)
-    {
-      *popup_width  = brush->mask->width;
-      *popup_height = brush->mask->height;
+  *width  = brush->mask->width;
+  *height = brush->mask->height;
 
-      return TRUE;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 static TempBuf *

@@ -51,8 +51,6 @@ static GObject * gimp_drawable_tree_view_constructor (GType             type,
                                                       guint             n_params,
                                                       GObjectConstructParam *params);
 
-static void     gimp_drawable_tree_view_set_container (GimpContainerView *view,
-                                                       GimpContainer     *container);
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
 						     GimpViewable      *item,
 						     gpointer           insert_data);
@@ -79,10 +77,6 @@ static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
 static void   gimp_drawable_tree_view_floating_selection_changed
                                                  (GimpImage            *gimage,
                                                   GimpDrawableTreeView *view);
-
-static GdkPixbuf * gimp_drawable_tree_view_drag_pixbuf
-                                                 (GtkWidget            *widget,
-                                                  gpointer              data);
 
 static void   gimp_drawable_tree_view_new_pattern_dropped
                                                  (GtkWidget            *widget,
@@ -201,36 +195,11 @@ gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
 {
   parent_view_iface = g_type_interface_peek_parent (view_iface);
 
-  view_iface->set_container = gimp_drawable_tree_view_set_container;
-  view_iface->select_item   = gimp_drawable_tree_view_select_item;
+  view_iface->select_item = gimp_drawable_tree_view_select_item;
 }
 
 
 /*  GimpContainerView methods  */
-
-static void
-gimp_drawable_tree_view_set_container (GimpContainerView *view,
-                                       GimpContainer     *container)
-{
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GimpContainer         *old_container;
-
-  old_container = gimp_container_view_get_container (GIMP_CONTAINER_VIEW (view));
-
-  if (old_container && ! container)
-    {
-      gimp_dnd_pixbuf_source_remove (GTK_WIDGET (tree_view->view));
-    }
-
-  parent_view_iface->set_container (view, container);
-
-  if (! old_container && container)
-    {
-      gimp_dnd_pixbuf_source_add (GTK_WIDGET (tree_view->view),
-                                  gimp_drawable_tree_view_drag_pixbuf,
-                                  tree_view);
-    }
-}
 
 static gboolean
 gimp_drawable_tree_view_select_item (GimpContainerView *view,
@@ -376,30 +345,6 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *gimage
   /*  update button states  */
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
                                    (GimpViewable *) item);
-}
-
-static GdkPixbuf *
-gimp_drawable_tree_view_drag_pixbuf (GtkWidget *widget,
-                                     gpointer   data)
-{
-  GimpItemTreeView *view   = GIMP_ITEM_TREE_VIEW (data);
-  GimpImage        *gimage = view->gimage;
-  GimpItem         *item;
-  GdkPixbuf        *pixbuf = NULL;
-
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
-
-  if (item)
-    {
-      pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (item),
-                                         gimp_item_width (item),
-                                         gimp_item_height (item));
-
-      if (pixbuf)
-        g_object_ref (pixbuf);
-    }
-
-  return pixbuf;
 }
 
 static void

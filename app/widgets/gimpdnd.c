@@ -1462,8 +1462,12 @@ gimp_dnd_get_pixbuf_data (GtkWidget        *widget,
 
   if (pixbuf)
     {
+      gimp_set_busy (the_dnd_gimp);
+
       gtk_selection_data_set_pixbuf (selection, pixbuf);
       g_object_unref (pixbuf);
+
+      gimp_unset_busy (the_dnd_gimp);
     }
 }
 
@@ -1477,7 +1481,11 @@ gimp_dnd_set_pixbuf_data (GtkWidget        *widget,
 {
   GdkPixbuf *pixbuf;
 
+  gimp_set_busy (the_dnd_gimp);
+
   pixbuf = gtk_selection_data_get_pixbuf (selection);
+
+  gimp_unset_busy (the_dnd_gimp);
 
   if (! pixbuf)
     return FALSE;

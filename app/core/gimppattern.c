@@ -65,12 +65,9 @@ static void       gimp_pattern_finalize        (GObject          *object);
 static gint64     gimp_pattern_get_memsize     (GimpObject       *object,
                                                 gint64           *gui_size);
 
-static gboolean   gimp_pattern_get_popup_size  (GimpViewable     *viewable,
-                                                gint              width,
-                                                gint              height,
-                                                gboolean          dot_for_dot,
-                                                gint             *popup_width,
-                                                gint             *popup_heigh);
+static gboolean   gimp_pattern_get_size        (GimpViewable     *viewable,
+                                                gint             *width,
+                                                gint             *height);
 static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
                                                 gint              width,
                                                 gint              height);
@@ -132,7 +129,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   gimp_object_class->get_memsize   = gimp_pattern_get_memsize;
 
   viewable_class->default_stock_id = "gimp-tool-bucket-fill";
-  viewable_class->get_popup_size   = gimp_pattern_get_popup_size;
+  viewable_class->get_size         = gimp_pattern_get_size;
   viewable_class->get_new_preview  = gimp_pattern_get_new_preview;
   viewable_class->get_description  = gimp_pattern_get_description;
 
@@ -175,24 +172,16 @@ gimp_pattern_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_pattern_get_popup_size (GimpViewable *viewable,
-                             gint          width,
-                             gint          height,
-                             gboolean      dot_for_dot,
-                             gint         *popup_width,
-                             gint         *popup_height)
+gimp_pattern_get_size (GimpViewable *viewable,
+                       gint         *width,
+                       gint         *height)
 {
   GimpPattern *pattern = GIMP_PATTERN (viewable);
 
-  if (pattern->mask->width > width || pattern->mask->height > height)
-    {
-      *popup_width  = pattern->mask->width;
-      *popup_height = pattern->mask->height;
+  *width  = pattern->mask->width;
+  *height = pattern->mask->height;
 
-      return TRUE;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 static TempBuf *

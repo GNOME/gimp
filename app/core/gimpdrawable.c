@@ -71,6 +71,9 @@ static void       gimp_drawable_finalize           (GObject           *object);
 static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
                                                     gint64            *gui_size);
 
+static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
+                                                    gint              *width,
+                                                    gint              *height);
 static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
@@ -230,6 +233,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
 
+  viewable_class->get_size           = gimp_drawable_get_size;
   viewable_class->invalidate_preview = gimp_drawable_invalidate_preview;
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
@@ -304,6 +308,19 @@ gimp_drawable_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gboolean
+gimp_drawable_get_size (GimpViewable *viewable,
+                        gint         *width,
+                        gint         *height)
+{
+  GimpItem *item = GIMP_ITEM (viewable);
+
+  *width  = item->width;
+  *height = item->height;
+
+  return TRUE;
 }
 
 static void

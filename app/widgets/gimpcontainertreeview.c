@@ -98,6 +98,8 @@ static void gimp_container_tree_view_renderer_update  (GimpViewRenderer       *r
 
 static GimpViewable * gimp_container_tree_view_drag_viewable (GtkWidget       *widget,
                                                               gpointer         data);
+static GdkPixbuf    * gimp_container_tree_view_drag_pixbuf   (GtkWidget       *widget,
+                                                              gpointer         data);
 
 
 static GimpContainerBoxClass      *parent_class      = NULL;
@@ -476,6 +478,9 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
           if (gimp_dnd_viewable_source_remove (GTK_WIDGET (tree_view->view),
                                                old_container->children_type))
             {
+              if (GIMP_VIEWABLE_CLASS (g_type_class_peek (old_container->children_type))->get_size)
+                gimp_dnd_pixbuf_source_remove (GTK_WIDGET (tree_view->view));
+
               gtk_drag_source_unset (GTK_WIDGET (tree_view->view));
             }
 
@@ -494,6 +499,11 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
           gimp_dnd_viewable_source_add (GTK_WIDGET (tree_view->view),
                                         container->children_type,
                                         gimp_container_tree_view_drag_viewable,
+                                        tree_view);
+
+          if (GIMP_VIEWABLE_CLASS (g_type_class_peek (container->children_type))->get_size)
+            gimp_dnd_pixbuf_source_add (GTK_WIDGET (tree_view->view),
+                                        gimp_container_tree_view_drag_pixbuf,
                                         tree_view);
         }
 
@@ -1084,4 +1094,19 @@ gimp_container_tree_view_drag_viewable (GtkWidget *widget,
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
 
   return tree_view->dnd_viewable;
+}
+
+static GdkPixbuf *
+gimp_container_tree_view_drag_pixbuf (GtkWidget *widget,
+                                      gpointer   data)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (data);
+  GimpViewable          *viewable  = tree_view->dnd_viewable;
+  gint                   width;
+  gint                   height;
+
+  if (viewable && gimp_viewable_get_size (viewable, &width, &height))
+    return gimp_viewable_get_new_pixbuf (viewable, width, height);
+
+  return NULL;
 }
