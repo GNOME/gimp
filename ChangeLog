@@ -1,3 +1,9 @@
+2005-05-25  Nathan Summers  <rock@gimp.org>
+
+	* app/sanity.c (sanity_check_filename_encoding): made the
+	G_FILENAME_ENCODING not or incorrectly set error message more
+	idiomatic.
+
 2005-05-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpoffsetarea.c (gimp_offset_area_expose_event):

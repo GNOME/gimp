@@ -211,8 +211,8 @@ sanity_check_filename_encoding (void)
         (_("The name of the directory holding the GIMP user configuration "
            "cannot be converted to UTF-8: "
            "%s\n\n"
-           "Most probably your filesystem stores files in an encoding "
-           "different from UTF-8 and you didn't tell GLib about this. "
+           "Your filesystem probably stores files in an encoding "
+           "other than UTF-8 and you didn't tell GLib about this. "
            "Please set the environment variable G_FILENAME_ENCODING."),
          error->message);
 
