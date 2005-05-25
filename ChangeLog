@@ -1,3 +1,8 @@
+2005-05-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_pixbuf): fixed
+	type of the dropped layer.
+
 2005-05-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockable.c: ellipsize the dockable title if it

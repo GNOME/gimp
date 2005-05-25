@@ -318,24 +318,20 @@ gimp_toolbox_drop_pixbuf (GtkWidget *widget,
                           GdkPixbuf *pixbuf,
                           gpointer   data)
 {
-  GimpContext       *context = GIMP_CONTEXT (data);
-  GimpImageBaseType  base_type;
-  GimpImage         *new_image;
-  GimpLayer         *new_layer;
+  GimpContext   *context = GIMP_CONTEXT (data);
+  GimpImageType  image_type;
+  GimpImage     *new_image;
+  GimpLayer     *new_layer;
 
   if (context->gimp->busy)
     return;
 
   switch (gdk_pixbuf_get_n_channels (pixbuf))
     {
-    case 1:
-    case 2:
-      base_type = GIMP_GRAY;
-      break;
-
-    case 3:
-    case 4:
-      base_type = GIMP_RGB;
+    case 1: image_type = GIMP_GRAY_IMAGE;  break;
+    case 2: image_type = GIMP_GRAYA_IMAGE; break;
+    case 3: image_type = GIMP_RGB_IMAGE;   break;
+    case 4: image_type = GIMP_RGBA_IMAGE;  break;
       break;
 
     default:
@@ -346,13 +342,13 @@ gimp_toolbox_drop_pixbuf (GtkWidget *widget,
   new_image = gimp_create_image (context->gimp,
                                  gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
-                                 base_type, FALSE);
+                                 GIMP_IMAGE_TYPE_BASE_TYPE (image_type),
+                                 FALSE);
 
   gimp_image_undo_disable (new_image);
 
   new_layer =
-    gimp_layer_new_from_pixbuf (pixbuf, new_image,
-                                GIMP_IMAGE_TYPE_FROM_BASE_TYPE (base_type),
+    gimp_layer_new_from_pixbuf (pixbuf, new_image, image_type,
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
