@@ -1,10 +1,22 @@
+2005-05-26  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/channel-options-dialog.c: fixed capitalization,
+	removed trailing whitespace.
+
+	* app/actions/channels-commands.c (channels_new_channel_response):
+	also set the channel color if creating the channel by duplicating
+	the selection.
+
+	* app/actions/channels-commands.c
+	* app/actions/qmask-commands.c: added mnemonics.
+
 2005-05-26  Nathan Summers  <rock@gimp.org>
 
 	* app/dialogs/channel-options-dialog.[ch]: added an "initialize from
-	selection" option to the new channel dialog
+	selection" option to the new channel dialog.
 
 	* app/actions/channels-commands.c
-	* app/actions/qmask-commands.c: modified accordingly
+	* app/actions/qmask-commands.c: modified accordingly.
 
 2005-05-26  Sven Neumann  <sven@gimp.org>
 

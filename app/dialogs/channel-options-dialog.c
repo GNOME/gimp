@@ -141,13 +141,14 @@ channel_options_dialog_new (GimpImage     *gimage,
       options->name_entry = gtk_entry_new ();
       gtk_entry_set_activates_default (GTK_ENTRY (options->name_entry), TRUE);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Channel Name:"), 0.0, 0.5,
+                                 _("Channel _Name:"), 0.0, 0.5,
                                  options->name_entry, 2, FALSE);
 
       gtk_entry_set_text (GTK_ENTRY (options->name_entry), channel_name);
     }
 
-  opacity_adj = gimp_scale_entry_new (GTK_TABLE (table), 0, channel_name ? 1 : 0,
+  opacity_adj = gimp_scale_entry_new (GTK_TABLE (table),
+                                      0, channel_name ? 1 : 0,
                                       opacity_label, 100, -1,
                                       channel_color->a * 100.0,
                                       0.0, 100.0, 1.0, 10.0, 1,
@@ -168,14 +169,14 @@ channel_options_dialog_new (GimpImage     *gimage,
 
   if (show_from_sel)
     {
-      options->save_sel_checkbutton = gtk_check_button_new_with_mnemonic (_("_Initialize From Selection"));
+      options->save_sel_checkbutton =
+        gtk_check_button_new_with_mnemonic (_("Initialize from _selection"));
 
-      gtk_box_pack_start (GTK_BOX (vbox), options->save_sel_checkbutton, 
+      gtk_box_pack_start (GTK_BOX (vbox), options->save_sel_checkbutton,
 		          FALSE, FALSE, 0);
       gtk_widget_show (options->save_sel_checkbutton);
     }
-  else
-    options->save_sel_checkbutton = NULL;
+
   return options;
 }
 

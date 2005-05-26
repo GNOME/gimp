@@ -109,7 +109,7 @@ qmask_configure_cmd_callback (GtkAction *action,
                                         _("Edit Quick Mask Attributes"),
                                         GIMP_HELP_QMASK_EDIT,
                                         _("Edit Quick Mask Color"),
-                                        _("Mask Opacity:"),
+                                        _("_Mask Opacity:"),
 					FALSE);
 
   g_signal_connect (options->dialog, "response",

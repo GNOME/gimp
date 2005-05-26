@@ -89,7 +89,7 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                         _("Edit Channel Attributes"),
                                         GIMP_HELP_CHANNEL_EDIT,
                                         _("Edit Channel Color"),
-                                        _("Fill Opacity:"),
+                                        _("_Fill Opacity:"),
 					FALSE);
 
   g_signal_connect (options->dialog, "response",
@@ -122,7 +122,7 @@ channels_new_cmd_callback (GtkAction *action,
                                         _("New Channel Options"),
                                         GIMP_HELP_CHANNEL_NEW,
                                         _("New Channel Color"),
-                                        _("Fill Opacity:"),
+                                        _("_Fill Opacity:"),
 					TRUE);
 
   g_signal_connect (options->dialog, "response",
@@ -337,15 +337,15 @@ channels_new_channel_response (GtkWidget            *widget,
 
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (options->save_sel_checkbutton)))
 	{
-	  GimpChannel *selection;
+	  GimpChannel *selection = gimp_image_get_mask (options->gimage);
 
-	  selection = gimp_image_get_mask(options->gimage);
-	  
-	  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                      GIMP_TYPE_CHANNEL,
-                                      FALSE));
+	  new_channel =
+            GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
+                                               GIMP_TYPE_CHANNEL,
+                                               FALSE));
 
 	  gimp_object_set_name (GIMP_OBJECT (new_channel), channel_name);
+          gimp_channel_set_color (new_channel, &channel_color, FALSE);
 	}
       else
         {
@@ -354,7 +354,7 @@ channels_new_channel_response (GtkWidget            *widget,
                                           options->gimage->height,
                                           channel_name,
                                           &channel_color);
-	
+
           gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
                                       options->context,
                                       GIMP_TRANSPARENT_FILL);
