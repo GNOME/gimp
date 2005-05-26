@@ -1533,6 +1533,9 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 
           gdk_region_get_rectangles (old, &rects, &num_rects);
 
+          gdk_region_destroy (old);
+          gdk_region_destroy (new);
+
           for (i = 0; i < num_rects; i++)
             gimp_display_update_area (shell->gdisp, TRUE,
                                       rects[i].x,
