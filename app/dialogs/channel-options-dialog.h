@@ -27,6 +27,7 @@ struct _ChannelOptionsDialog
   GtkWidget   *dialog;
   GtkWidget   *name_entry;
   GtkWidget   *color_panel;
+  GtkWidget   *save_sel_checkbutton;
 
   GimpImage   *gimage;
   GimpContext *context;
@@ -46,7 +47,8 @@ ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *gimage,
                                                    const gchar   *desc,
                                                    const gchar   *help_id,
                                                    const gchar   *color_label,
-                                                   const gchar   *opacity_label);
+                                                   const gchar   *opacity_label,
+						   gboolean       show_from_sel);
 
 
 #endif /* __CHANNEL_OPTIONS_DIALOG_H__ */

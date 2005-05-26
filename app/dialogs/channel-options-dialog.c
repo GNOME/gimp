@@ -60,7 +60,8 @@ channel_options_dialog_new (GimpImage     *gimage,
                             const gchar   *desc,
                             const gchar   *help_id,
                             const gchar   *color_label,
-                            const gchar   *opacity_label)
+                            const gchar   *opacity_label,
+			    gboolean       show_from_sel)
 {
   ChannelOptionsDialog *options;
   GimpViewable         *viewable;
@@ -165,6 +166,16 @@ channel_options_dialog_new (GimpImage     *gimage,
 		    G_CALLBACK (channel_options_color_changed),
 		    opacity_adj);
 
+  if (show_from_sel)
+    {
+      options->save_sel_checkbutton = gtk_check_button_new_with_mnemonic (_("_Initialize From Selection"));
+
+      gtk_box_pack_start (GTK_BOX (vbox), options->save_sel_checkbutton, 
+		          FALSE, FALSE, 0);
+      gtk_widget_show (options->save_sel_checkbutton);
+    }
+  else
+    options->save_sel_checkbutton = NULL;
   return options;
 }
 
