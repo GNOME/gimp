@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-14 19:27+0000\n"
-"PO-Revision-Date: 2005-05-14 23:01+0100\n"
+"POT-Creation-Date: 2005-05-19 19:28+0000\n"
+"PO-Revision-Date: 2005-05-22 22:37+0100\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -444,7 +444,7 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/fits/fits.c:333 ../plug-ins/flame/flame.c:412
 #: ../plug-ins/gfig/gfig.c:429 ../plug-ins/gfli/gfli.c:422
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
-#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
+#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:841
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
@@ -1281,7 +1281,7 @@ msgstr "Profundidad de bits no soportada o no válida."
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
-#: ../plug-ins/jpeg/jpeg-load.c:707 ../plug-ins/sgi/sgi.c:368
+#: ../plug-ins/jpeg/jpeg-load.c:708 ../plug-ins/sgi/sgi.c:368
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Fondo"
@@ -2617,8 +2617,9 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:406
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Ocurrió un error analizando el parásito 'dato-descompuesto': se "
-"encontraron muy pocas capas"
+msgstr ""
+"Ocurrió un error analizando el parásito 'dato-descompuesto': se encontraron "
+"muy pocas capas"
 
 #: ../plug-ins/common/compose.c:436
 #, c-format
@@ -8143,47 +8144,82 @@ msgstr "ZealousCropping™.."
 msgid "Nothing to crop."
 msgstr "Nada para recortar."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:140
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Examinador de procedimientos"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:181
-#: ../plug-ins/dbbrowser/plugin-browser.c:592
-msgid "_Search:"
-msgstr "B_uscar:"
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:195
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
 msgid "by name"
 msgstr "por nombre"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:196
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
 msgid "by description"
 msgstr "por descripción"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:404
-#: ../plug-ins/dbbrowser/plugin-browser.c:392
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "por ayuda"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "por autor"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "por copyright"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "por fecha"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "por tipo"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
+#: ../plug-ins/dbbrowser/plugin-browser.c:388
 msgid "Searching by name - please wait"
 msgstr "Buscando por nombre - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:427
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
 msgid "Searching by description - please wait"
 msgstr "Buscando por descripción - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:436
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Buscando por ayuda - espere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Buscando por autor - espere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Buscando por copyright - espere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Buscando por fecha - espere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Buscando por tipo - espere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Buscando - espere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:443
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "1 procedimiento"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:445
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedimientos"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:495
-#: ../plug-ins/dbbrowser/plugin-browser.c:520
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
+#: ../plug-ins/dbbrowser/plugin-browser.c:517
 msgid "No matches"
 msgstr "Sin coincidencias"
 
@@ -8219,50 +8255,50 @@ msgstr "Fecha:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:151
+#: ../plug-ins/dbbrowser/plugin-browser.c:145
 msgid "_Plug-In Browser"
 msgstr "Explorador de _complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:405
+#: ../plug-ins/dbbrowser/plugin-browser.c:401
 msgid "1 Plug-In Interface"
 msgstr "1 interfaz de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:407
+#: ../plug-ins/dbbrowser/plugin-browser.c:403
 #, c-format
 msgid "%d Plug-In Interfaces"
 msgstr "%d interfaces de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:559
+#: ../plug-ins/dbbrowser/plugin-browser.c:541
 msgid "Plug-In Browser"
 msgstr "Visor de complementos"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:625
+#: ../plug-ins/dbbrowser/plugin-browser.c:584
 msgid "Name"
 msgstr "Nombre"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:633
-#: ../plug-ins/dbbrowser/plugin-browser.c:702
+#: ../plug-ins/dbbrowser/plugin-browser.c:592
+#: ../plug-ins/dbbrowser/plugin-browser.c:661
 msgid "Insertion Date"
 msgstr "Fecha de inserción"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:641
+#: ../plug-ins/dbbrowser/plugin-browser.c:600
 msgid "Menu Path"
 msgstr "Camino en el menú"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:649
-#: ../plug-ins/dbbrowser/plugin-browser.c:711
+#: ../plug-ins/dbbrowser/plugin-browser.c:608
+#: ../plug-ins/dbbrowser/plugin-browser.c:670
 msgid "Image Types"
 msgstr "Tipos de imágenes"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:673
+#: ../plug-ins/dbbrowser/plugin-browser.c:632
 msgid "List View"
 msgstr "Vista en lista"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:693
+#: ../plug-ins/dbbrowser/plugin-browser.c:652
 msgid "Menu Path/Name"
 msgstr "Camino en el menú/Nombre"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:734
+#: ../plug-ins/dbbrowser/plugin-browser.c:693
 msgid "Tree View"
 msgstr "Vista en árbol"
 
@@ -10543,7 +10579,7 @@ msgstr "_Mantener orientación"
 msgid "JPEG preview"
 msgstr "Vista previa JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
+#: ../plug-ins/jpeg/jpeg-load.c:576 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr "Abriendo miniatura de «%s»..."
@@ -11900,3 +11936,6 @@ msgstr "Error: No se ha podido leer el archivo de propiedades XJT «%s»."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: El archivo de propiedades XJT «%s» está vacío."
+
+#~ msgid "_Search:"
+#~ msgstr "B_uscar:"
