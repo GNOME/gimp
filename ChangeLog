@@ -1,3 +1,11 @@
+2005-05-26  Nathan Summers  <rock@gimp.org>
+
+	* app/dialogs/channel-options-dialog.[ch]: added an "initialize from
+	selection" option to the new channel dialog
+
+	* app/actions/channels-commands.c
+	* app/actions/qmask-commands.c: modified accordingly
+
 2005-05-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.c: added more properties.
