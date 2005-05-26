@@ -340,6 +340,22 @@ idle_jump_to_anchor (const gchar *anchor)
   return FALSE;
 }
 
+static gboolean
+idle_scroll_to_pos (gpointer data)
+{
+  gint offset = GPOINTER_TO_INT (data);
+
+  if (html)
+    {
+      GtkAdjustment *adj = gtk_layout_get_vadjustment (GTK_LAYOUT (html));
+
+      gtk_adjustment_set_value (adj,
+                                (gdouble) offset / (1 << 16) * adj->upper);
+    }
+
+  return FALSE;
+}
+
 void
 browser_dialog_load (const gchar *uri,
                      gboolean     add_to_queue)
@@ -569,11 +585,16 @@ static void
 back_callback (GtkAction *action,
                gpointer   data)
 {
-  const gchar *uri = queue_prev (queue, GPOINTER_TO_INT (data));
+  gdouble      pos;
+  const gchar *uri = queue_prev (queue, GPOINTER_TO_INT (data), &pos);
 
   if (uri)
     {
       browser_dialog_load (uri, FALSE);
+
+      g_idle_add ((GSourceFunc) idle_scroll_to_pos,
+                  GINT_TO_POINTER ((gint) (pos * (1 << 16))));
+
       queue_move_prev (queue, GPOINTER_TO_INT (data));
     }
 
@@ -584,11 +605,16 @@ static void
 forward_callback (GtkAction *action,
                   gpointer   data)
 {
-  const gchar *uri = queue_next (queue, GPOINTER_TO_INT (data));
+  gdouble      pos;
+  const gchar *uri = queue_next (queue, GPOINTER_TO_INT (data), &pos);
 
   if (uri)
     {
       browser_dialog_load (uri, FALSE);
+
+      g_idle_add ((GSourceFunc) idle_scroll_to_pos,
+                  GINT_TO_POINTER ((gint) (pos * (1 << 16))));
+
       queue_move_next (queue, GPOINTER_TO_INT (data));
     }
 
@@ -811,6 +837,11 @@ link_clicked (HtmlDocument *doc,
               const gchar  *uri,
               gpointer      data)
 {
+  GtkAdjustment *adj = gtk_layout_get_vadjustment (GTK_LAYOUT (html));
+
+  if (adj->upper > 0.0)
+    queue_set_scroll_offset (queue, adj->value / adj->upper);
+
   browser_dialog_load (uri, TRUE);
 }
 

@@ -37,8 +37,9 @@ struct _Queue
 
 typedef struct
 {
-  gchar *uri;
-  gchar *title;
+  gchar   *uri;
+  gchar   *title;
+  gdouble  pos;
 } Item;
 
 
@@ -110,8 +111,9 @@ queue_move_next (Queue *h,
 }
 
 const gchar *
-queue_prev (Queue *h,
-            gint   skip)
+queue_prev (Queue   *h,
+            gint     skip,
+            gdouble *pos)
 {
   GList *p;
   Item  *item;
@@ -129,12 +131,16 @@ queue_prev (Queue *h,
 
   item = p->data;
 
+  if (pos)
+    *pos = item->pos;
+
   return (const gchar *) item->uri;
 }
 
 const gchar *
-queue_next (Queue *h,
-            gint   skip)
+queue_next (Queue   *h,
+            gint     skip,
+            gdouble *pos)
 {
   GList *p;
   Item  *item;
@@ -151,6 +157,9 @@ queue_next (Queue *h,
     return NULL;
 
   item = p->data;
+
+  if (pos)
+    *pos = item->pos;
 
   return (const gchar *) item->uri;
 }
@@ -199,6 +208,23 @@ queue_set_title (Queue       *h,
 
   item->title = g_strdup (title);
 }
+
+void
+queue_set_scroll_offset (Queue   *h,
+                         gdouble  pos)
+{
+  Item *item;
+
+  g_return_if_fail (h != NULL);
+
+  if (! h->current || ! h->current->data)
+    return;
+
+  item = h->current->data;
+
+  item->pos = pos;
+}
+
 
 gboolean
 queue_has_next (Queue *h)
