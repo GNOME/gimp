@@ -1,5 +1,10 @@
 2005-05-26  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_set_highlight):
+	destroy the regions allocated here.
+
+2005-05-26  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/channel-options-dialog.c: fixed capitalization,
 	removed trailing whitespace.
 
@@ -33,7 +38,7 @@
 	* app/core/gimpgradient-load.c
 	* app/core/gimppalette.c
 	* app/core/gimppattern.c: set the MIME type when loading a data
-	object from file. MIME types needs review and GimpPalette isn't
+	object from file. MIME types need review and GimpPalette isn't
 	quite done yet...
 
 	* app/core/gimpdashpattern.c: cosmetics.
