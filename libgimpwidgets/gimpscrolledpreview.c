@@ -132,7 +132,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                             GIMP_PREVIEW (preview)->width,
                             GIMP_PREVIEW (preview)->width);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_h_scroll),
                     preview);
 
@@ -147,7 +147,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                             GIMP_PREVIEW (preview)->height,
                             GIMP_PREVIEW (preview)->height);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_v_scroll),
                     preview);
 
@@ -463,7 +463,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       g_signal_connect (area, "event",
                         G_CALLBACK (gimp_scrolled_preview_nav_popup_event),
                         preview);
-      g_signal_connect_after (area, "expose_event",
+      g_signal_connect_after (area, "expose-event",
                               G_CALLBACK (gimp_scrolled_preview_nav_popup_expose),
                               preview);
 

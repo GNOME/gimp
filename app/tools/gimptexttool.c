@@ -804,7 +804,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
     gimp_text_editor_set_text (GIMP_TEXT_EDITOR (text_tool->editor),
                                text_tool->text->text, -1);
 
-  g_signal_connect_object (text_tool->editor, "text_changed",
+  g_signal_connect_object (text_tool->editor, "text-changed",
                            G_CALLBACK (gimp_text_tool_text_changed),
                            text_tool, 0);
 
@@ -986,7 +986,7 @@ gimp_text_tool_set_image (GimpTextTool *text_tool,
       g_object_add_weak_pointer (G_OBJECT (text_tool->image),
                                  (gpointer *) &text_tool->image);
 
-      g_signal_connect_object (text_tool->image, "active_layer_changed",
+      g_signal_connect_object (text_tool->image, "active-layer-changed",
                                G_CALLBACK (gimp_text_tool_layer_changed),
                                text_tool, 0);
 

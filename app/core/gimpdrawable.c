@@ -221,7 +221,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_INT);
 
   gimp_drawable_signals[ALPHA_CHANGED] =
-    g_signal_new ("alpha_changed",
+    g_signal_new ("alpha-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDrawableClass, alpha_changed),

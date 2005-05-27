@@ -444,16 +444,16 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                                     GIMP_CONTEXT_PROP_IMAGE);
     }
 
-  g_signal_connect_object (dialog_factory->context, "display_changed",
+  g_signal_connect_object (dialog_factory->context, "display-changed",
 			   G_CALLBACK (gimp_menu_dock_factory_display_changed),
 			   menu_dock,
 			   0);
-  g_signal_connect_object (dialog_factory->context, "image_changed",
+  g_signal_connect_object (dialog_factory->context, "image-changed",
 			   G_CALLBACK (gimp_menu_dock_factory_image_changed),
 			   menu_dock,
 			   0);
 
-  g_signal_connect_object (context, "image_changed",
+  g_signal_connect_object (context, "image-changed",
 			   G_CALLBACK (gimp_menu_dock_image_changed),
 			   menu_dock,
 			   0);
@@ -605,7 +605,7 @@ gimp_menu_dock_image_changed (GimpContext *context,
 	  /*  stop the emission of the original signal (the emission of
 	   *  the recursive signal is finished)
 	   */
-	  g_signal_stop_emission_by_name (context, "image_changed");
+	  g_signal_stop_emission_by_name (context, "image-changed");
 	}
     }
   else if (gimage != NULL && ! gimp_container_is_empty (display_container))

@@ -106,7 +106,7 @@ error_console_save_cmd_callback (GtkAction *action,
   g_signal_connect (chooser, "response",
 		    G_CALLBACK (error_console_save_response),
 		    console);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (chooser, "delete-event",
 		    G_CALLBACK (gtk_true),
 		    NULL);
 

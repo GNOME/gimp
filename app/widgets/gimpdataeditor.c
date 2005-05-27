@@ -177,7 +177,7 @@ gimp_data_editor_init (GimpDataEditor *editor)
   g_signal_connect (editor->name_entry, "activate",
 		    G_CALLBACK (gimp_data_editor_name_activate),
                     editor);
-  g_signal_connect (editor->name_entry, "focus_out_event",
+  g_signal_connect (editor->name_entry, "focus-out-event",
 		    G_CALLBACK (gimp_data_editor_name_focus_out),
                     editor);
 }
@@ -365,7 +365,7 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
     {
       g_object_ref (editor->data);
 
-      g_signal_connect (editor->data, "name_changed",
+      g_signal_connect (editor->data, "name-changed",
                         G_CALLBACK (gimp_data_editor_data_name_changed),
                         editor);
 

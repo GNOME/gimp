@@ -167,10 +167,10 @@ gimp_brush_select_constructor (GType                  type,
   gimp_context_set_opacity    (dialog->context, select->initial_opacity);
   gimp_context_set_paint_mode (dialog->context, select->initial_mode);
 
-  g_signal_connect (dialog->context, "opacity_changed",
+  g_signal_connect (dialog->context, "opacity-changed",
                     G_CALLBACK (gimp_brush_select_opacity_changed),
                     dialog);
-  g_signal_connect (dialog->context, "paint_mode_changed",
+  g_signal_connect (dialog->context, "paint-mode-changed",
                     G_CALLBACK (gimp_brush_select_mode_changed),
                     dialog);
 
@@ -204,7 +204,7 @@ gimp_brush_select_constructor (GType                  type,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (select->opacity_data, "value_changed",
+  g_signal_connect (select->opacity_data, "value-changed",
                     G_CALLBACK (gimp_brush_select_opacity_update),
                     select);
 
@@ -225,7 +225,7 @@ gimp_brush_select_constructor (GType                  type,
   if (select->spacing >= 0)
     gtk_adjustment_set_value (spacing_adj, select->spacing);
 
-  g_signal_connect (spacing_adj, "value_changed",
+  g_signal_connect (spacing_adj, "value-changed",
                     G_CALLBACK (gimp_brush_select_spacing_update),
                     select);
 

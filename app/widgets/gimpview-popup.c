@@ -110,7 +110,7 @@ gimp_view_popup_show (GtkWidget      *widget,
       popup->button_y += widget->allocation.y;
     }
 
-  g_signal_connect (widget, "button_release_event",
+  g_signal_connect (widget, "button-release-event",
                     G_CALLBACK (gimp_view_popup_button_release),
                     popup);
   g_signal_connect (widget, "unmap",

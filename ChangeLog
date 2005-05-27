@@ -1,7 +1,6 @@
 2005-05-27  Sven Neumann  <sven@gimp.org>
 
-	* (lots of files): Use the canonical form for signal names in lots
-	of places (but by far not all).
+	* (lots of files): Use the canonical form for signal names.
 	
 2005-05-27  Sven Neumann  <sven@gimp.org>
 

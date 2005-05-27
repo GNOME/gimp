@@ -155,7 +155,7 @@ channel_options_dialog_new (GimpImage     *gimage,
                                       TRUE, 0.0, 0.0,
                                       NULL, NULL);
 
-  g_signal_connect (opacity_adj, "value_changed",
+  g_signal_connect (opacity_adj, "value-changed",
 		    G_CALLBACK (channel_options_opacity_update),
 		    options->color_panel);
 
@@ -163,7 +163,7 @@ channel_options_dialog_new (GimpImage     *gimage,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel);
 
-  g_signal_connect (options->color_panel, "color_changed",
+  g_signal_connect (options->color_panel, "color-changed",
 		    G_CALLBACK (channel_options_color_changed),
 		    opacity_adj);
 

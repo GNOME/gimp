@@ -272,7 +272,7 @@ gimp_toolbox_constructor (GType                  type,
 
   if (! list)  /* all devices have cursor */
     {
-      g_signal_connect (toolbox, "motion_notify_event",
+      g_signal_connect (toolbox, "motion-notify-event",
 			G_CALLBACK (toolbox_check_device),
 			context->gimp);
 
@@ -746,7 +746,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_toggled),
 			tool_info);
 
-      g_signal_connect (button, "button_press_event",
+      g_signal_connect (button, "button-press-event",
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
@@ -782,7 +782,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
               accel_group =
                 gtk_accel_group_from_accel_closure (accel_closure);
 
-              g_signal_connect_object (accel_group, "accel_changed",
+              g_signal_connect_object (accel_group, "accel-changed",
                                        G_CALLBACK (gimp_toolbox_button_accel_changed),
                                        button, 0);
 

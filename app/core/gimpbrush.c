@@ -114,7 +114,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   brush_signals[SPACING_CHANGED] =
-    g_signal_new ("spacing_changed",
+    g_signal_new ("spacing-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),

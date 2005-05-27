@@ -173,7 +173,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                       TRUE, TRUE, content_spacing);
   gtk_widget_show (editor->notebook);
 
-  g_signal_connect (editor->notebook, "color_changed",
+  g_signal_connect (editor->notebook, "color-changed",
                     G_CALLBACK (gimp_color_editor_color_changed),
                     editor);
 
@@ -255,7 +255,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
   gtk_box_pack_end (GTK_BOX (vbox), editor->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (editor->hex_entry);
 
-  g_signal_connect (editor->hex_entry, "color_changed",
+  g_signal_connect (editor->hex_entry, "color-changed",
                     G_CALLBACK (gimp_color_editor_entry_changed),
                     editor);
 }
@@ -377,10 +377,10 @@ gimp_color_editor_set_context (GimpDocked  *docked,
 
       editor->context = g_object_ref (context);
 
-      g_signal_connect (editor->context, "foreground_changed",
+      g_signal_connect (editor->context, "foreground-changed",
 			G_CALLBACK (gimp_color_editor_fg_changed),
 			editor);
-      g_signal_connect (editor->context, "background_changed",
+      g_signal_connect (editor->context, "background-changed",
 			G_CALLBACK (gimp_color_editor_bg_changed),
 			editor);
 

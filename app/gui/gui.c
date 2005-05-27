@@ -370,7 +370,7 @@ gui_restore_callback (Gimp               *gimp,
                     G_CALLBACK (gui_show_help_button_notify),
                     gimp);
 
-  g_signal_connect (gimp_get_user_context (gimp), "display_changed",
+  g_signal_connect (gimp_get_user_context (gimp), "display-changed",
 		    G_CALLBACK (gui_display_changed),
 		    gimp);
 

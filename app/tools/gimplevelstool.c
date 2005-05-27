@@ -480,7 +480,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (tool->input_area, "event",
                     G_CALLBACK (levels_input_area_event),
                     tool);
-  g_signal_connect_after (tool->input_area, "expose_event",
+  g_signal_connect_after (tool->input_area, "expose-event",
                           G_CALLBACK (levels_input_area_expose),
                           tool);
 
@@ -523,7 +523,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (spinbutton);
 
   tool->low_input = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->low_input, "value_changed",
+  g_signal_connect (tool->low_input, "value-changed",
                     G_CALLBACK (levels_low_input_adjustment_update),
                     tool);
 
@@ -534,7 +534,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (spinbutton);
 
   tool->gamma = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->gamma, "value_changed",
+  g_signal_connect (tool->gamma, "value-changed",
                     G_CALLBACK (levels_gamma_adjustment_update),
                     tool);
 
@@ -552,7 +552,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (spinbutton);
 
   tool->high_input = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->high_input, "value_changed",
+  g_signal_connect (tool->high_input, "value-changed",
                     G_CALLBACK (levels_high_input_adjustment_update),
                     tool);
 
@@ -580,7 +580,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (tool->output_area, "event",
                     G_CALLBACK (levels_output_area_event),
                     tool);
-  g_signal_connect_after (tool->output_area, "expose_event",
+  g_signal_connect_after (tool->output_area, "expose-event",
                           G_CALLBACK (levels_output_area_expose),
                           tool);
 
@@ -607,7 +607,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (spinbutton);
 
   tool->low_output = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->low_output, "value_changed",
+  g_signal_connect (tool->low_output, "value-changed",
                     G_CALLBACK (levels_low_output_adjustment_update),
                     tool);
 
@@ -617,7 +617,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (spinbutton);
 
   tool->high_output = GTK_ADJUSTMENT (data);
-  g_signal_connect (tool->high_output, "value_changed",
+  g_signal_connect (tool->high_output, "value-changed",
                     G_CALLBACK (levels_high_output_adjustment_update),
                     tool);
 

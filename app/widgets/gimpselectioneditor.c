@@ -141,7 +141,7 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->preview);
   gtk_widget_show (editor->preview);
 
-  g_signal_connect (editor->preview, "button_press_event",
+  g_signal_connect (editor->preview, "button-press-event",
                     G_CALLBACK (gimp_selection_preview_button_press),
                     editor);
 
@@ -214,7 +214,7 @@ gimp_selection_editor_set_image (GimpImageEditor *image_editor,
 
   if (gimage)
     {
-      g_signal_connect (gimage, "mask_changed",
+      g_signal_connect (gimage, "mask-changed",
                         G_CALLBACK (gimp_selection_editor_mask_changed),
                         editor);
 

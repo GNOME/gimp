@@ -185,7 +185,7 @@ gimp_action_view_button_press (GtkWidget      *widget,
       g_object_set_data_full (G_OBJECT (tree_view), "start_editing_path",
                               path, (GDestroyNotify) gtk_tree_path_free);
 
-      g_signal_stop_emission_by_name (tree_view, "button_press_event");
+      g_signal_stop_emission_by_name (tree_view, "button-press-event");
 
       closure = g_cclosure_new_object (G_CALLBACK (idle_start_editing),
                                        G_OBJECT (tree_view));
@@ -345,7 +345,7 @@ gimp_action_view_new (GimpUIManager *manager,
 
   if (show_shortcuts)
     {
-      g_signal_connect (view, "button_press_event",
+      g_signal_connect (view, "button-press-event",
                         G_CALLBACK (gimp_action_view_button_press),
                         NULL);
 

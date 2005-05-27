@@ -213,7 +213,7 @@ gimp_undo_editor_set_image (GimpImageEditor *image_editor,
       if (gimp_image_undo_is_enabled (image_editor->gimage))
         gimp_undo_editor_fill (editor);
 
-      g_signal_connect (image_editor->gimage, "undo_event",
+      g_signal_connect (image_editor->gimage, "undo-event",
 			G_CALLBACK (gimp_undo_editor_undo_event),
 			editor);
     }

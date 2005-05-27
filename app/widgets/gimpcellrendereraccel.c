@@ -436,7 +436,7 @@ gimp_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
 
   accel->grab_widget = widget;
 
-  g_signal_connect (widget, "key_press_event",
+  g_signal_connect (widget, "key-press-event",
                     G_CALLBACK (grab_key_callback),
                     accel);
 

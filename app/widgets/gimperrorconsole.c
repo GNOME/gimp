@@ -128,7 +128,7 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_container_add (GTK_CONTAINER (scrolled_window), console->text_view);
   gtk_widget_show (console->text_view);
 
-  g_signal_connect (console->text_view, "button_press_event",
+  g_signal_connect (console->text_view, "button-press-event",
 		    G_CALLBACK (gimp_error_console_button_press),
 		    console);
 

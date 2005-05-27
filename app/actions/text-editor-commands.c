@@ -83,7 +83,7 @@ text_editor_load_cmd_callback (GtkAction *action,
   g_signal_connect (chooser, "response",
                     G_CALLBACK (text_editor_load_response),
                     editor);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (chooser, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
 

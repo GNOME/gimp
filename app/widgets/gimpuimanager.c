@@ -840,7 +840,7 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
       if (! GPOINTER_TO_INT (g_object_get_qdata (G_OBJECT (widget->parent),
                                                  quark_key_press_connected)))
         {
-          g_signal_connect (widget->parent, "key_press_event",
+          g_signal_connect (widget->parent, "key-press-event",
                             G_CALLBACK (gimp_ui_manager_item_key_press),
                             manager);
 

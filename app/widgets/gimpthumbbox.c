@@ -344,7 +344,7 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (box), ebox);
   gtk_widget_show (ebox);
 
-  g_signal_connect (ebox, "button_press_event",
+  g_signal_connect (ebox, "button-press-event",
                     G_CALLBACK (gimp_thumb_box_ebox_button_press),
                     box);
 
@@ -370,16 +370,16 @@ gimp_thumb_box_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (button), label);
   gtk_widget_show (label);
 
-  g_signal_connect (button, "button_press_event",
+  g_signal_connect (button, "button-press-event",
                     G_CALLBACK (gtk_true),
                     NULL);
-  g_signal_connect (button, "button_release_event",
+  g_signal_connect (button, "button-release-event",
                     G_CALLBACK (gtk_true),
                     NULL);
-  g_signal_connect (button, "enter_notify_event",
+  g_signal_connect (button, "enter-notify-event",
                     G_CALLBACK (gtk_true),
                     NULL);
-  g_signal_connect (button, "leave_notify_event",
+  g_signal_connect (button, "leave-notify-event",
                     G_CALLBACK (gtk_true),
                     NULL);
 
@@ -394,7 +394,7 @@ gimp_thumb_box_new (Gimp *gimp)
 
   box->imagefile = gimp_imagefile_new (gimp, NULL);
 
-  g_signal_connect (box->imagefile, "info_changed",
+  g_signal_connect (box->imagefile, "info-changed",
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
                     box);
 

@@ -586,10 +586,10 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
     {
       g_object_ref (context);
 
-      g_signal_connect_swapped (context, "foreground_changed",
+      g_signal_connect_swapped (context, "foreground-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 editor);
-      g_signal_connect_swapped (context, "background_changed",
+      g_signal_connect_swapped (context, "background-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 editor);
     }

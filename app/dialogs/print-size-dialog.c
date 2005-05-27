@@ -278,10 +278,10 @@ print_size_dialog_new (GimpImage              *image,
   gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
   g_list_free (focus_chain);
 
-  g_signal_connect (private->size_entry, "value_changed",
+  g_signal_connect (private->size_entry, "value-changed",
 		    G_CALLBACK (print_size_dialog_size_changed),
 		    private);
-  g_signal_connect (private->resolution_entry, "value_changed",
+  g_signal_connect (private->resolution_entry, "value-changed",
 		    G_CALLBACK (print_size_dialog_resolution_changed),
 		    private);
 

@@ -131,7 +131,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_resizable (GTK_WINDOW (tips_dialog), TRUE);
 
-  g_signal_connect (tips_dialog, "delete_event",
+  g_signal_connect (tips_dialog, "delete-event",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
 

@@ -510,7 +510,7 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
       /*  connect button_press_event after DND so we can keep the list from
        *  selecting the item on button2
        */
-      g_signal_connect (tree_view->view, "button_press_event",
+      g_signal_connect (tree_view->view, "button-press-event",
                         G_CALLBACK (gimp_container_tree_view_button_press),
                         tree_view);
     }

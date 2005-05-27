@@ -376,7 +376,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                                             GRAD_SCROLLBAR_PAGE_SIZE,
                                             1.0);
 
-  g_signal_connect (editor->scroll_data, "value_changed",
+  g_signal_connect (editor->scroll_data, "value-changed",
                     G_CALLBACK (gradient_editor_scrollbar_update),
                     editor);
   g_signal_connect (editor->scroll_data, "changed",

@@ -270,7 +270,7 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
 
   t_tool->histogram_box = GIMP_HISTOGRAM_BOX (box);
 
-  g_signal_connect (t_tool->histogram_box->view, "range_changed",
+  g_signal_connect (t_tool->histogram_box->view, "range-changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
                     t_tool);
 

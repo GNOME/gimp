@@ -551,7 +551,7 @@ gimp_text_options_editor_new (GimpTextOptions *options,
   gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
                                   options->base_dir);
 
-  g_signal_connect_object (editor, "dir_changed",
+  g_signal_connect_object (editor, "dir-changed",
                            G_CALLBACK (gimp_text_options_dir_changed),
                            options, 0);
   g_signal_connect_object (options, "notify::base-direction",

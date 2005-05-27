@@ -157,7 +157,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
 
   gimp_scale_entry_set_logarithmic (GTK_OBJECT (editor->radius_data), TRUE);
 
-  g_signal_connect (editor->radius_data, "value_changed",
+  g_signal_connect (editor->radius_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -170,7 +170,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (editor->spikes_data, "value_changed",
+  g_signal_connect (editor->spikes_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -183,7 +183,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (editor->hardness_data, "value_changed",
+  g_signal_connect (editor->hardness_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -196,7 +196,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (editor->aspect_ratio_data,"value_changed",
+  g_signal_connect (editor->aspect_ratio_data,"value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -209,7 +209,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (editor->angle_data, "value_changed",
+  g_signal_connect (editor->angle_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 
@@ -223,7 +223,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                                           _("Percentage of width of brush"),
                                           NULL));
 
-  g_signal_connect (editor->spacing_data, "value_changed",
+  g_signal_connect (editor->spacing_data, "value-changed",
                     G_CALLBACK (gimp_brush_editor_update_brush),
                     editor);
 }

@@ -163,7 +163,7 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
   gtk_widget_show (editor->view);
 
-  g_signal_connect (editor->view, "marker_changed",
+  g_signal_connect (editor->view, "marker-changed",
                     G_CALLBACK (gimp_navigation_editor_marker_changed),
                     editor);
   g_signal_connect (editor->view, "zoom",
@@ -214,7 +214,7 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
 
   if (context)
     {
-      g_signal_connect (context, "display_changed",
+      g_signal_connect (context, "display-changed",
                         G_CALLBACK (gimp_navigation_editor_context_changed),
                         editor);
 
@@ -279,7 +279,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor));
       gtk_widget_show (GTK_WIDGET (editor));
 
-      g_signal_connect (editor->view, "button_release_event",
+      g_signal_connect (editor->view, "button-release-event",
                         G_CALLBACK (gimp_navigation_editor_button_release),
                         shell);
     }
@@ -415,7 +415,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       editor->zoom_adjustment =
         GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -8.0, 8.0, 0.5, 1.0, 0.0));
 
-      g_signal_connect (editor->zoom_adjustment, "value_changed",
+      g_signal_connect (editor->zoom_adjustment, "value-changed",
                         G_CALLBACK (gimp_navigation_editor_zoom_adj_changed),
                         editor);
 

@@ -90,7 +90,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
   g_signal_connect (chooser, "response",
                     G_CALLBACK (gradients_save_as_pov_ray_response),
                     gradient);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (chooser, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
 

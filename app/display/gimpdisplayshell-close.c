@@ -160,7 +160,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 
   box = GIMP_MESSAGE_DIALOG (dialog)->box;
 
-  g_signal_connect_object (gimage, "name_changed",
+  g_signal_connect_object (gimage, "name-changed",
                            G_CALLBACK (gimp_display_shell_close_name_changed),
                            box, 0);
 

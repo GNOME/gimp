@@ -852,7 +852,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                *  position when hidden/shown within this(!) session.
                */
               if (entry->session_managed)
-                g_signal_connect (dialog, "configure_event",
+                g_signal_connect (dialog, "configure-event",
                                   G_CALLBACK (gimp_dialog_factory_set_user_pos),
                                   NULL);
             }
@@ -904,7 +904,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
            *  dialog needs GDK_HINT_USER_POS so it keeps its
            *  position when hidden/shown within this(!) session.
            */
-          g_signal_connect (dialog, "configure_event",
+          g_signal_connect (dialog, "configure-event",
                             G_CALLBACK (gimp_dialog_factory_set_user_pos),
                             NULL);
 
@@ -920,7 +920,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                            G_CONNECT_SWAPPED);
 
   if (entry && entry->session_managed && toplevel)
-    g_signal_connect_object (dialog, "configure_event",
+    g_signal_connect_object (dialog, "configure-event",
                              G_CALLBACK (gimp_dialog_factory_dialog_configure),
                              factory,
                              0);

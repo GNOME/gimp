@@ -258,7 +258,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (data, "value_changed",
+  g_signal_connect (data, "value-changed",
                     G_CALLBACK (colorize_hue_adj_update),
                     col_tool);
 
@@ -272,7 +272,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (col_tool->saturation_data, "value_changed",
+  g_signal_connect (col_tool->saturation_data, "value-changed",
                     G_CALLBACK (colorize_saturation_adj_update),
                     col_tool);
 
@@ -286,7 +286,7 @@ gimp_colorize_tool_dialog (GimpImageMapTool *image_map_tool)
   slider = GIMP_SCALE_ENTRY_SCALE (data);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  g_signal_connect (data, "value_changed",
+  g_signal_connect (data, "value-changed",
                     G_CALLBACK (colorize_lightness_adj_update),
                     col_tool);
 }

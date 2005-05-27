@@ -149,7 +149,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                            _("The active brush.\n"
                              "Click to open the Brush Dialog."), NULL);
 
-  g_signal_connect_object (context, "brush_changed",
+  g_signal_connect_object (context, "brush-changed",
                            G_CALLBACK (gimp_view_set_viewable),
                            brush_view,
                            G_CONNECT_SWAPPED);
@@ -180,7 +180,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                            _("The active pattern.\n"
                              "Click to open the Pattern Dialog."), NULL);
 
-  g_signal_connect_object (context, "pattern_changed",
+  g_signal_connect_object (context, "pattern-changed",
                            G_CALLBACK (gimp_view_set_viewable),
                            pattern_view,
                            G_CONNECT_SWAPPED);
@@ -211,7 +211,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                            _("The active gradient.\n"
                              "Click to open the Gradient Dialog."), NULL);
 
-  g_signal_connect_object (context, "gradient_changed",
+  g_signal_connect_object (context, "gradient-changed",
                            G_CALLBACK (gimp_view_set_viewable),
                            gradient_view,
                            G_CONNECT_SWAPPED);

@@ -219,11 +219,11 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->palette);
   gtk_widget_show (editor->palette);
 
-  g_signal_connect_after (editor->palette, "size_allocate",
+  g_signal_connect_after (editor->palette, "size-allocate",
                           G_CALLBACK (gimp_colormap_preview_size_allocate),
                           editor);
 
-  g_signal_connect (editor->palette, "button_press_event",
+  g_signal_connect (editor->palette, "button-press-event",
                     G_CALLBACK (gimp_colormap_preview_button_press),
                     editor);
 
@@ -246,7 +246,7 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                              _("Color index:"), 0.0, 0.5,
                              editor->index_spinbutton, 1, TRUE);
 
-  g_signal_connect (editor->index_adjustment, "value_changed",
+  g_signal_connect (editor->index_adjustment, "value-changed",
                     G_CALLBACK (gimp_colormap_adjustment_changed),
                     editor);
 
@@ -256,7 +256,7 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                              _("HTML notation:"), 0.0, 0.5,
                              editor->color_entry, 1, TRUE);
 
-  g_signal_connect (editor->color_entry, "color_changed",
+  g_signal_connect (editor->color_entry, "color-changed",
                     G_CALLBACK (gimp_colormap_hex_entry_changed),
                     editor);
 }
@@ -348,10 +348,10 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
 
   if (gimage)
     {
-      g_signal_connect (gimage, "mode_changed",
+      g_signal_connect (gimage, "mode-changed",
                         G_CALLBACK (gimp_colormap_image_mode_changed),
                         editor);
-      g_signal_connect (gimage, "colormap_changed",
+      g_signal_connect (gimage, "colormap-changed",
                         G_CALLBACK (gimp_colormap_image_colormap_changed),
                         editor);
 

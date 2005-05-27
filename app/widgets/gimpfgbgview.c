@@ -322,10 +322,10 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
     {
       g_object_ref (context);
 
-      g_signal_connect_swapped (context, "foreground_changed",
+      g_signal_connect_swapped (context, "foreground-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 view);
-      g_signal_connect_swapped (context, "background_changed",
+      g_signal_connect_swapped (context, "background-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 view);
     }

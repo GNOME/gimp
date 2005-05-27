@@ -150,7 +150,7 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
                      dialog->selection);
   gtk_widget_show (dialog->selection);
 
-  g_signal_connect (dialog->selection, "color_changed",
+  g_signal_connect (dialog->selection, "color-changed",
                     G_CALLBACK (gimp_color_dialog_color_changed),
                     dialog);
 
@@ -204,7 +204,7 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
 			G_CALLBACK (gimp_color_history_color_clicked),
 			dialog);
 
-      g_signal_connect (dialog->history[i], "color_changed",
+      g_signal_connect (dialog->history[i], "color-changed",
 			G_CALLBACK (gimp_color_history_color_changed),
 			GINT_TO_POINTER (i));
     }

@@ -302,7 +302,7 @@ gimp_tool_options_editor_new (Gimp            *gimp,
 
   user_context = gimp_get_user_context (gimp);
 
-  g_signal_connect_object (user_context, "tool_changed",
+  g_signal_connect_object (user_context, "tool-changed",
                            G_CALLBACK (gimp_tool_options_editor_tool_changed),
                            editor,
                            0);

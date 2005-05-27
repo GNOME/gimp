@@ -173,7 +173,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->box));
 
-  g_signal_connect_swapped (view, "range_changed",
+  g_signal_connect_swapped (view, "range-changed",
                             G_CALLBACK (gimp_histogram_editor_info_update),
                             editor);
   g_signal_connect_swapped (view, "notify::histogram-channel",
@@ -293,13 +293,13 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
 
       gimp_histogram_view_set_histogram (view, editor->histogram);
 
-      g_signal_connect_object (gimage, "mode_changed",
+      g_signal_connect_object (gimage, "mode-changed",
                                G_CALLBACK (gimp_histogram_editor_menu_update),
                                editor, G_CONNECT_SWAPPED);
-      g_signal_connect_object (gimage, "active_layer_changed",
+      g_signal_connect_object (gimage, "active-layer-changed",
                                G_CALLBACK (gimp_histogram_editor_layer_changed),
                                editor, 0);
-      g_signal_connect_object (gimage, "mask_changed",
+      g_signal_connect_object (gimage, "mask-changed",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
     }

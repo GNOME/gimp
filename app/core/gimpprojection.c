@@ -271,10 +271,10 @@ gimp_projection_new (GimpImage *gimage)
   g_signal_connect_object (gimage, "update",
                            G_CALLBACK (gimp_projection_image_update),
                            proj, 0);
-  g_signal_connect_object (gimage, "size_changed",
+  g_signal_connect_object (gimage, "size-changed",
                            G_CALLBACK (gimp_projection_image_size_changed),
                            proj, 0);
-  g_signal_connect_object (gimage, "mode_changed",
+  g_signal_connect_object (gimage, "mode-changed",
                            G_CALLBACK (gimp_projection_image_mode_changed),
                            proj, 0);
   g_signal_connect_object (gimage, "flush",

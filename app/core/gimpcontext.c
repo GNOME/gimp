@@ -1895,7 +1895,7 @@ gimp_context_real_set_tool (GimpContext  *context,
     {
       g_object_ref (tool_info);
 
-      g_signal_connect_object (tool_info, "name_changed",
+      g_signal_connect_object (tool_info, "name-changed",
                                G_CALLBACK (gimp_context_tool_dirty),
                                context,
                                0);
@@ -2265,7 +2265,7 @@ gimp_context_real_set_brush (GimpContext *context,
     {
       g_object_ref (brush);
 
-      g_signal_connect_object (brush, "name_changed",
+      g_signal_connect_object (brush, "name-changed",
                                G_CALLBACK (gimp_context_brush_dirty),
                                context,
                                0);
@@ -2407,7 +2407,7 @@ gimp_context_real_set_pattern (GimpContext *context,
     {
       g_object_ref (pattern);
 
-      g_signal_connect_object (pattern, "name_changed",
+      g_signal_connect_object (pattern, "name-changed",
                                G_CALLBACK (gimp_context_pattern_dirty),
                                context,
                                0);
@@ -2537,7 +2537,7 @@ gimp_context_real_set_gradient (GimpContext  *context,
     {
       g_object_ref (gradient);
 
-      g_signal_connect_object (gradient, "name_changed",
+      g_signal_connect_object (gradient, "name-changed",
                                G_CALLBACK (gimp_context_gradient_dirty),
                                context,
                                0);
@@ -2659,7 +2659,7 @@ gimp_context_real_set_palette (GimpContext *context,
     {
       g_object_ref (palette);
 
-      g_signal_connect_object (palette, "name_changed",
+      g_signal_connect_object (palette, "name-changed",
                                G_CALLBACK (gimp_context_palette_dirty),
                                context,
                                0);
@@ -2803,7 +2803,7 @@ gimp_context_real_set_font (GimpContext *context,
     {
       g_object_ref (font);
 
-      g_signal_connect_object (font, "name_changed",
+      g_signal_connect_object (font, "name-changed",
                                G_CALLBACK (gimp_context_font_dirty),
                                context,
                                0);
@@ -2941,7 +2941,7 @@ gimp_context_real_set_buffer (GimpContext *context,
     {
       g_object_ref (buffer);
 
-      g_signal_connect_object (buffer, "name_changed",
+      g_signal_connect_object (buffer, "name-changed",
                                G_CALLBACK (gimp_context_buffer_dirty),
                                context,
                                0);
@@ -3081,7 +3081,7 @@ gimp_context_real_set_imagefile (GimpContext   *context,
     {
       g_object_ref (imagefile);
 
-      g_signal_connect_object (imagefile, "name_changed",
+      g_signal_connect_object (imagefile, "name-changed",
                                G_CALLBACK (gimp_context_imagefile_dirty),
                                context,
                                0);
@@ -3221,7 +3221,7 @@ gimp_context_real_set_template (GimpContext  *context,
     {
       g_object_ref (template);
 
-      g_signal_connect_object (template, "name_changed",
+      g_signal_connect_object (template, "name-changed",
                                G_CALLBACK (gimp_context_template_dirty),
                                context,
                                0);

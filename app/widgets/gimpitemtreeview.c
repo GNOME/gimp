@@ -329,7 +329,7 @@ gimp_item_tree_view_set_context (GimpDocked  *docked,
       if (! GIMP_CONTAINER_TREE_VIEW (view)->dnd_gimp)
         GIMP_CONTAINER_TREE_VIEW (view)->dnd_gimp = context->gimp;
 
-      g_signal_connect_swapped (context, "image_changed",
+      g_signal_connect_swapped (context, "image-changed",
                                 G_CALLBACK (gimp_item_tree_view_set_image),
                                 view);
 
@@ -560,7 +560,7 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
                         GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->signal_name,
 			G_CALLBACK (gimp_item_tree_view_item_changed),
 			view);
-      g_signal_connect (view->gimage, "size_changed",
+      g_signal_connect (view->gimage, "size-changed",
 			G_CALLBACK (gimp_item_tree_view_size_changed),
 			view);
 
@@ -607,11 +607,11 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
   if (container)
     {
       item_view->visible_changed_handler_id =
-	gimp_container_add_handler (container, "visibility_changed",
+	gimp_container_add_handler (container, "visibility-changed",
 				    G_CALLBACK (gimp_item_tree_view_visible_changed),
 				    view);
       item_view->linked_changed_handler_id =
-	gimp_container_add_handler (container, "linked_changed",
+	gimp_container_add_handler (container, "linked-changed",
 				    G_CALLBACK (gimp_item_tree_view_linked_changed),
 				    view);
     }

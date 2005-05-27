@@ -1151,7 +1151,7 @@ prefs_display_options_frame_add (Gimp         *gimp,
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (prefs_canvas_padding_color_changed),
                     gtk_bin_get_child (GTK_BIN (combo)));
 }

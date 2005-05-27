@@ -554,7 +554,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (tool->graph, "event",
                     G_CALLBACK (curves_graph_events),
                     tool);
-  g_signal_connect_after (tool->graph, "expose_event",
+  g_signal_connect_after (tool->graph, "expose-event",
                           G_CALLBACK (curves_graph_expose),
                           tool);
 

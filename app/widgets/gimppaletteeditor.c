@@ -224,10 +224,10 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 					 eventbox);
   gtk_widget_show (eventbox);
 
-  g_signal_connect (eventbox, "button_press_event",
+  g_signal_connect (eventbox, "button-press-event",
 		    G_CALLBACK (palette_editor_eventbox_button_press),
 		    editor);
-  g_signal_connect (eventbox->parent, "size_allocate",
+  g_signal_connect (eventbox->parent, "size-allocate",
                     G_CALLBACK (palette_editor_viewport_resized),
                     editor);
   g_signal_connect (eventbox->parent, "realize",
@@ -246,7 +246,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (alignment), editor->color_area);
   gtk_widget_show (editor->color_area);
 
-  g_signal_connect (editor->color_area, "button_press_event",
+  g_signal_connect (editor->color_area, "button-press-event",
 		    G_CALLBACK (palette_editor_color_area_button_press),
 		    editor);
 
@@ -283,7 +283,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (editor->columns_data, "value_changed",
+  g_signal_connect (editor->columns_data, "value-changed",
                     G_CALLBACK (palette_editor_columns_changed),
                     editor);
 }

@@ -181,7 +181,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
 				  gettext (cmyk_tips[i]),
 				  NULL);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
 			G_CALLBACK (colorsel_cmyk_adj_update),
 			module);
 
@@ -209,7 +209,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
                              "of the colored inks."), NULL);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (colorsel_cmyk_pullout_update),
                     module);
 

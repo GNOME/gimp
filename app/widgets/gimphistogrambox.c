@@ -126,7 +126,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
-  g_signal_connect (view, "range_changed",
+  g_signal_connect (view, "range-changed",
                     G_CALLBACK (gimp_histogram_box_histogram_range),
                     box);
 
@@ -148,7 +148,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   g_signal_connect (slider_area, "event",
                     G_CALLBACK (gimp_histogram_slider_area_event),
                     box);
-  g_signal_connect_after (slider_area, "expose_event",
+  g_signal_connect_after (slider_area, "expose-event",
                           G_CALLBACK (gimp_histogram_slider_area_expose),
                           box);
 
@@ -188,7 +188,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_histogram_box_low_adj_update),
                     box);
 
@@ -200,7 +200,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_histogram_box_high_adj_update),
                     box);
 

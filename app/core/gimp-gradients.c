@@ -90,10 +90,10 @@ gimp_gradients_init (Gimp *gimp)
                  gradient->segments->left_color.b,
                  0.0);
 
-  g_signal_connect (gimp->user_context, "foreground_changed",
+  g_signal_connect (gimp->user_context, "foreground-changed",
                     G_CALLBACK (gimp_gradients_foreground_changed),
                     gimp);
-  g_signal_connect (gimp->user_context, "background_changed",
+  g_signal_connect (gimp->user_context, "background-changed",
                     G_CALLBACK (gimp_gradients_background_changed),
                     gimp);
 }

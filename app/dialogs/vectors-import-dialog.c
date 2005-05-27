@@ -80,7 +80,7 @@ vectors_import_dialog_new (GimpImage *image,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog->dialog, 0);
 
-  g_signal_connect (dialog->dialog, "delete_event",
+  g_signal_connect (dialog->dialog, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
 

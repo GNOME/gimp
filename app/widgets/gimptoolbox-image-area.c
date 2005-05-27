@@ -124,7 +124,7 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
   gimp_help_set_help_data (image_view, tooltip, NULL);
   g_free (tooltip);
 
-  g_signal_connect_object (context, "image_changed",
+  g_signal_connect_object (context, "image-changed",
                            G_CALLBACK (gimp_view_set_viewable),
                            image_view, G_CONNECT_SWAPPED);
 

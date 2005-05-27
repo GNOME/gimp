@@ -233,7 +233,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, 0);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, 0);
 
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (offset_update),
                     private);
 
@@ -264,7 +264,7 @@ resize_dialog_new (GimpViewable       *viewable,
   if (pixbuf)
     gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (private->area), pixbuf);
 
-  g_signal_connect (private->area, "offsets_changed",
+  g_signal_connect (private->area, "offsets-changed",
                     G_CALLBACK (offsets_changed),
                     private);
 
@@ -441,5 +441,5 @@ offset_center_clicked (GtkWidget    *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 0, off_x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset), 1, off_y);
 
-  g_signal_emit_by_name (private->offset, "value_changed", 0);
+  g_signal_emit_by_name (private->offset, "value-changed", 0);
 }

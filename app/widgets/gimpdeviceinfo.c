@@ -189,22 +189,22 @@ gimp_device_info_constructor (GType                  type,
   /*  FIXME: this is ugly and needs to be done via "notify" once
    *  the contexts' properties are dynamic.
    */
-  g_signal_connect (object, "foreground_changed",
+  g_signal_connect (object, "foreground-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-  g_signal_connect (object, "background_changed",
+  g_signal_connect (object, "background-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-  g_signal_connect (object, "tool_changed",
+  g_signal_connect (object, "tool-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-  g_signal_connect (object, "brush_changed",
+  g_signal_connect (object, "brush-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-  g_signal_connect (object, "pattern_changed",
+  g_signal_connect (object, "pattern-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-  g_signal_connect (object, "gradient_changed",
+  g_signal_connect (object, "gradient-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
 

@@ -340,7 +340,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                                           NULL,
                                           GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE));
 
-  g_signal_connect (view->opacity_adjustment, "value_changed",
+  g_signal_connect (view->opacity_adjustment, "value-changed",
                     G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
                     view);
 
@@ -539,23 +539,23 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
   if (container)
     {
       layer_view->mode_changed_handler_id =
-        gimp_container_add_handler (container, "mode_changed",
+        gimp_container_add_handler (container, "mode-changed",
                                     G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
                                     view);
       layer_view->opacity_changed_handler_id =
-        gimp_container_add_handler (container, "opacity_changed",
+        gimp_container_add_handler (container, "opacity-changed",
                                     G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
                                     view);
       layer_view->preserve_trans_changed_handler_id =
-        gimp_container_add_handler (container, "preserve_trans_changed",
+        gimp_container_add_handler (container, "preserve-trans-changed",
                                     G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
                                     view);
       layer_view->mask_changed_handler_id =
-        gimp_container_add_handler (container, "mask_changed",
+        gimp_container_add_handler (container, "mask-changed",
                                     G_CALLBACK (gimp_layer_tree_view_mask_changed),
                                     view);
       layer_view->alpha_changed_handler_id =
-        gimp_container_add_handler (container, "alpha_changed",
+        gimp_container_add_handler (container, "alpha-changed",
                                     G_CALLBACK (gimp_layer_tree_view_alpha_changed),
                                     view);
     }
@@ -858,7 +858,7 @@ gimp_layer_tree_view_set_image (GimpItemTreeView *view,
 
   if (view->gimage)
     g_signal_connect (view->gimage,
-                      "floating_selection_changed",
+                      "floating-selection-changed",
                       G_CALLBACK (gimp_layer_tree_view_floating_selection_changed),
                       view);
 }
@@ -1196,9 +1196,9 @@ gimp_layer_tree_view_mask_update (GimpLayerTreeView *layer_view,
       closure = g_cclosure_new (G_CALLBACK (gimp_layer_tree_view_mask_callback),
                                 layer_view, NULL);
       g_object_watch_closure (G_OBJECT (renderer), closure);
-      g_signal_connect_closure (mask, "apply_changed", closure, FALSE);
-      g_signal_connect_closure (mask, "edit_changed",  closure, FALSE);
-      g_signal_connect_closure (mask, "show_changed",  closure, FALSE);
+      g_signal_connect_closure (mask, "apply-changed", closure, FALSE);
+      g_signal_connect_closure (mask, "edit-changed",  closure, FALSE);
+      g_signal_connect_closure (mask, "show-changed",  closure, FALSE);
     }
 
   gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,

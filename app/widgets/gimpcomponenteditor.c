@@ -187,7 +187,7 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
-  g_signal_connect (editor->view, "button_press_event",
+  g_signal_connect (editor->view, "button-press-event",
                     G_CALLBACK (gimp_component_editor_button_press),
                     editor);
 
@@ -259,16 +259,16 @@ gimp_component_editor_set_image (GimpImageEditor *editor,
     {
       gimp_component_editor_create_components (component_editor);
 
-      g_signal_connect (editor->gimage, "mode_changed",
+      g_signal_connect (editor->gimage, "mode-changed",
                         G_CALLBACK (gimp_component_editor_mode_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "alpha_changed",
+      g_signal_connect (editor->gimage, "alpha-changed",
                         G_CALLBACK (gimp_component_editor_alpha_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "component_visibility_changed",
+      g_signal_connect (editor->gimage, "component-visibility-changed",
                         G_CALLBACK (gimp_component_editor_visibility_changed),
                         component_editor);
-      g_signal_connect (editor->gimage, "component_active_changed",
+      g_signal_connect (editor->gimage, "component-active-changed",
                         G_CALLBACK (gimp_component_editor_active_changed),
                         component_editor);
     }

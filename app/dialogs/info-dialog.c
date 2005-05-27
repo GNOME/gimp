@@ -229,7 +229,7 @@ info_dialog_add_scale   (InfoDialog    *idialog,
     gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   if (callback)
-    g_signal_connect (adjustment, "value_changed",
+    g_signal_connect (adjustment, "value-changed",
 		      callback,
 		      callback_data);
 
@@ -270,7 +270,7 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
   if (callback)
-    g_signal_connect (adjustment, "value_changed",
+    g_signal_connect (adjustment, "value-changed",
 		      callback,
 		      callback_data);
 
@@ -316,7 +316,7 @@ info_dialog_add_sizeentry (InfoDialog                *idialog,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), i, value_ptr[i]);
 
   if (callback)
-    g_signal_connect (sizeentry, "value_changed",
+    g_signal_connect (sizeentry, "value-changed",
 		      callback,
 		      callback_data);
 

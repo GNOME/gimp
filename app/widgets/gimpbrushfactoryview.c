@@ -119,7 +119,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 
   view->spacing_scale = GIMP_SCALE_ENTRY_SCALE (view->spacing_adjustment);
 
-  g_signal_connect (view->spacing_adjustment, "value_changed",
+  g_signal_connect (view->spacing_adjustment, "value-changed",
                     G_CALLBACK (gimp_brush_factory_view_spacing_update),
                     view);
 
@@ -191,7 +191,7 @@ gimp_brush_factory_view_new (GimpViewType     view_type,
                     FALSE, FALSE, 0);
 
   factory_view->spacing_changed_handler_id =
-    gimp_container_add_handler (factory->container, "spacing_changed",
+    gimp_container_add_handler (factory->container, "spacing-changed",
                                 G_CALLBACK (gimp_brush_factory_view_spacing_changed),
                                 factory_view);
 

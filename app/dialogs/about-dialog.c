@@ -165,10 +165,10 @@ about_dialog_create (void)
       g_signal_connect (widget, "unmap",
                         G_CALLBACK (about_dialog_unmap),
                         NULL);
-      g_signal_connect (widget, "button_press_event",
+      g_signal_connect (widget, "button-press-event",
                         G_CALLBACK (about_dialog_button),
                         NULL);
-      g_signal_connect (widget, "key_press_event",
+      g_signal_connect (widget, "key-press-event",
                         G_CALLBACK (about_dialog_key),
                         NULL);
 

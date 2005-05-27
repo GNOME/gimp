@@ -84,7 +84,7 @@ gimp_clipboard_init (Gimp *gimp)
 
   gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
 
-  g_signal_connect_object (gimp, "buffer_changed",
+  g_signal_connect_object (gimp, "buffer-changed",
                            G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
 

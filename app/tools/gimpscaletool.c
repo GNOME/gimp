@@ -178,7 +178,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
                                                 GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                 G_CALLBACK (gimp_scale_tool_size_changed),
                                                 tr_tool);
-  g_signal_connect (scale->sizeentry, "unit_changed",
+  g_signal_connect (scale->sizeentry, "unit-changed",
                     G_CALLBACK (gimp_scale_tool_unit_changed),
                     tr_tool);
 

@@ -114,14 +114,14 @@ splash_create (void)
   splash->window =
     g_object_new (GTK_TYPE_WINDOW,
                   "type",            GTK_WINDOW_TOPLEVEL,
-                  "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
+                  "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
                   "title",           _("GIMP Startup"),
                   "role",            "gimp-startup",
-                  "window_position", GTK_WIN_POS_CENTER,
+                  "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
                   NULL);
 
-  g_signal_connect_swapped (splash->window, "delete_event",
+  g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
 
@@ -167,7 +167,7 @@ splash_create (void)
                    GDK_RGB_DITHER_NORMAL, 0, 0);
   g_object_unref (pixbuf);
 
-  g_signal_connect (splash->area, "expose_event",
+  g_signal_connect (splash->area, "expose-event",
                     G_CALLBACK (splash_area_expose),
                     splash);
 

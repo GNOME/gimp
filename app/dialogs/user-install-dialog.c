@@ -743,7 +743,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
   gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (darea, "expose_event",
+  g_signal_connect (darea, "expose-event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
@@ -753,7 +753,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
   gtk_widget_set_size_request (darea, 16, 16);
-  g_signal_connect (darea, "expose_event",
+  g_signal_connect (darea, "expose-event",
                     G_CALLBACK (user_install_corner_expose),
                     GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
@@ -994,7 +994,7 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
     gtk_tree_view_expand_all (GTK_TREE_VIEW (tv));
 
-    g_signal_connect (tv, "size_allocate",
+    g_signal_connect (tv, "size-allocate",
                       G_CALLBACK (user_install_tv_fix_size_request),
                       NULL);
 

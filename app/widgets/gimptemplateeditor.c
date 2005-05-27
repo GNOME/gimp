@@ -524,7 +524,7 @@ gimp_template_editor_new (GimpTemplate *template,
       editor->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE, FALSE);
       editor->stock_id_context = gimp_context_new (gimp, "foo", NULL);
 
-      g_signal_connect (editor->stock_id_context, "template_changed",
+      g_signal_connect (editor->stock_id_context, "template-changed",
                         G_CALLBACK (gimp_template_editor_icon_changed),
                         editor);
 

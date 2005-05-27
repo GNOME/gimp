@@ -303,7 +303,7 @@ gimp_stroke_editor_constructor (GType                   type,
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
-  g_signal_connect_object (editor->options, "dash_info_changed",
+  g_signal_connect_object (editor->options, "dash-info-changed",
                            G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 

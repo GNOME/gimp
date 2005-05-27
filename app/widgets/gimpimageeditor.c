@@ -125,7 +125,7 @@ gimp_image_editor_set_context (GimpDocked  *docked,
 
   if (context)
     {
-      g_signal_connect_swapped (context, "image_changed",
+      g_signal_connect_swapped (context, "image-changed",
                                 G_CALLBACK (gimp_image_editor_set_image),
                                 editor);
 

@@ -186,7 +186,7 @@ convert_dialog_new (GimpImage    *gimage,
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_colors);
 

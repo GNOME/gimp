@@ -299,21 +299,21 @@ gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
   cb_tool->cyan_red_adj =
     create_levels_scale (_("Cyan"), _("Red"), table, 0);
 
-  g_signal_connect (cb_tool->cyan_red_adj, "value_changed",
+  g_signal_connect (cb_tool->cyan_red_adj, "value-changed",
                     G_CALLBACK (color_balance_cr_adjustment_update),
                     cb_tool);
 
   cb_tool->magenta_green_adj =
     create_levels_scale (_("Magenta"), _("Green"), table, 1);
 
-  g_signal_connect (cb_tool->magenta_green_adj, "value_changed",
+  g_signal_connect (cb_tool->magenta_green_adj, "value-changed",
                     G_CALLBACK (color_balance_mg_adjustment_update),
                     cb_tool);
 
   cb_tool->yellow_blue_adj =
     create_levels_scale (_("Yellow"), _("Blue"), table, 2);
 
-  g_signal_connect (cb_tool->yellow_blue_adj, "value_changed",
+  g_signal_connect (cb_tool->yellow_blue_adj, "value-changed",
                     G_CALLBACK (color_balance_yb_adjustment_update),
                     cb_tool);
 

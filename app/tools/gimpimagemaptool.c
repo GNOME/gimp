@@ -783,7 +783,7 @@ gimp_image_map_tool_settings_dialog (GimpImageMapTool *tool,
   g_signal_connect (chooser, "response",
                     G_CALLBACK (settings_dialog_response),
                     tool);
-  g_signal_connect (chooser, "delete_event",
+  g_signal_connect (chooser, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
 

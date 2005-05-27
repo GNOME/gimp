@@ -165,13 +165,13 @@ edit_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (edit_fill_actions),
                                       G_CALLBACK (edit_fill_cmd_callback));
 
-  g_signal_connect_object (context, "foreground_changed",
+  g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),
                            group, 0);
-  g_signal_connect_object (context, "background_changed",
+  g_signal_connect_object (context, "background-changed",
                            G_CALLBACK (edit_actions_background_changed),
                            group, 0);
-  g_signal_connect_object (context, "pattern_changed",
+  g_signal_connect_object (context, "pattern-changed",
                            G_CALLBACK (edit_actions_pattern_changed),
                            group, 0);
 

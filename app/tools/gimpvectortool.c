@@ -1590,13 +1590,13 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   g_object_ref (vectors);
 
-  g_signal_connect_object (item->gimage, "active_vectors_changed",
+  g_signal_connect_object (item->gimage, "active-vectors-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_changed),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "removed",
                            G_CALLBACK (gimp_vector_tool_vectors_removed),
                            vector_tool, 0);
-  g_signal_connect_object (vectors, "visibility_changed",
+  g_signal_connect_object (vectors, "visibility-changed",
                            G_CALLBACK (gimp_vector_tool_vectors_visible),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "freeze",

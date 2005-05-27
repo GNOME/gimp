@@ -412,7 +412,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 4);
   gtk_widget_show (scale);
 
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &editor->replicate_times);
 
@@ -507,7 +507,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
   gtk_widget_show (scale);
 
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &editor->split_parts);
 

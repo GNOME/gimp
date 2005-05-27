@@ -335,7 +335,7 @@ palette_import_dialog_new (Gimp *gimp)
                                           NULL, NULL));
 
   g_signal_connect_swapped (import_dialog->num_colors,
-                            "value_changed",
+                            "value-changed",
                             G_CALLBACK (palette_import_make_palette),
                             import_dialog);
 
@@ -347,7 +347,7 @@ palette_import_dialog_new (Gimp *gimp)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (import_dialog->columns, "value_changed",
+  g_signal_connect (import_dialog->columns, "value-changed",
                     G_CALLBACK (palette_import_columns_changed),
                     import_dialog);
 
@@ -360,7 +360,7 @@ palette_import_dialog_new (Gimp *gimp)
                                           NULL, NULL));
   gimp_scale_entry_set_sensitive (GTK_OBJECT (import_dialog->threshold), FALSE);
 
-  g_signal_connect_swapped (import_dialog->threshold, "value_changed",
+  g_signal_connect_swapped (import_dialog->threshold, "value-changed",
                             G_CALLBACK (palette_import_make_palette),
                             import_dialog);
 
@@ -390,13 +390,13 @@ palette_import_dialog_new (Gimp *gimp)
                     G_CALLBACK (palette_import_image_remove),
                     import_dialog);
 
-  g_signal_connect (import_dialog->context, "gradient_changed",
+  g_signal_connect (import_dialog->context, "gradient-changed",
 		    G_CALLBACK (palette_import_gradient_changed),
 		    import_dialog);
-  g_signal_connect (import_dialog->context, "image_changed",
+  g_signal_connect (import_dialog->context, "image-changed",
 		    G_CALLBACK (palette_import_image_changed),
 		    import_dialog);
-  g_signal_connect (import_dialog->filename_entry, "filename_changed",
+  g_signal_connect (import_dialog->filename_entry, "filename-changed",
                     G_CALLBACK (palette_import_filename_changed),
                     import_dialog);
 

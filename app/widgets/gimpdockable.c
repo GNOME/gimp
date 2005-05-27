@@ -155,7 +155,7 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   container_class->forall     = gimp_dockable_forall;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("content_border",
+                                           g_param_spec_int ("content-border",
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,
@@ -195,7 +195,7 @@ gimp_dockable_init (GimpDockable *dockable)
   gimp_help_set_help_data (dockable->menu_button, _("Configure this tab"),
                            GIMP_HELP_DOCK_TAB_MENU);
 
-  g_signal_connect (dockable->menu_button, "button_press_event",
+  g_signal_connect (dockable->menu_button, "button-press-event",
                     G_CALLBACK (gimp_dockable_menu_button_press),
                     dockable);
 
@@ -208,7 +208,7 @@ gimp_dockable_init (GimpDockable *dockable)
       over the title area.  This keeps events that originate from widgets
       in the dockable to start a drag.
    */
-  g_signal_connect (dockable, "button_press_event",
+  g_signal_connect (dockable, "button-press-event",
                     G_CALLBACK (gimp_dockable_drag_event_filter),
                     NULL);
 }
@@ -461,7 +461,7 @@ gimp_dockable_style_set (GtkWidget *widget,
   gint          content_border;
 
   gtk_widget_style_get (widget,
-                        "content_border", &content_border,
+                        "content-border", &content_border,
                         NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
@@ -576,7 +576,7 @@ gimp_dockable_add (GtkContainer *container,
 
   GTK_CONTAINER_CLASS (parent_class)->add (container, widget);
 
-  g_signal_connect (widget, "title_changed",
+  g_signal_connect (widget, "title-changed",
                     G_CALLBACK (gimp_dockable_title_changed),
                     container);
 
