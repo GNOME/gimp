@@ -1,5 +1,21 @@
 2005-05-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpeditor.[ch]: added a name label (with properties
+	to show/hide and to set it).
+
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimphistogrameditor.[ch]: removed the label here and
+	use the functionality now provided by GimpEditor instead.
+
+	* app/widgets/gimpcontainerpopup.c: changed accordingly.
+
+2005-05-27  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c: use a smaller font for the
+	statistics.
+
+2005-05-27  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdata.c: reverted previous change for now.
 
 2005-05-27  Sven Neumann  <sven@gimp.org>

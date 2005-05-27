@@ -203,15 +203,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 
-  grid_view->name_label = gtk_label_new (_("(None)"));
-  gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (grid_view->name_label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (grid_view), grid_view->name_label,
-                      FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (grid_view), grid_view->name_label, 0);
-  gtk_widget_show (grid_view->name_label);
+  gimp_editor_set_show_name (GIMP_EDITOR (grid_view), TRUE);
 
   grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (box->scrolled_win),
@@ -494,8 +486,7 @@ gimp_container_grid_view_rename_item (GimpContainerView *view,
     {
       gchar *name = gimp_viewable_get_description (viewable, NULL);
 
-      gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
-
+      gimp_editor_set_name (GIMP_EDITOR (view), name);
       g_free (name);
     }
 }
@@ -649,12 +640,12 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gimp_view_renderer_update (preview->renderer);
 
       name = gimp_viewable_get_description (preview->renderer->viewable, NULL);
-      gtk_label_set_text (GTK_LABEL (grid_view->name_label), name);
+      gimp_editor_set_name (GIMP_EDITOR (grid_view), name);
       g_free (name);
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (grid_view->name_label), _("(None)"));
+      gimp_editor_set_name (GIMP_EDITOR (grid_view), NULL);
     }
 
   grid_view->selected_item = preview;

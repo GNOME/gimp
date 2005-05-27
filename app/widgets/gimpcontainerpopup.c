@@ -490,8 +490,8 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                        10 * (popup->default_preview_size +
                                              2 * popup->preview_border_width));
 
-  if (GIMP_IS_CONTAINER_GRID_VIEW (popup->editor->view))
-    gtk_widget_hide (GIMP_CONTAINER_GRID_VIEW (popup->editor->view)->name_label);
+  if (GIMP_IS_EDITOR (popup->editor->view))
+    gimp_editor_set_show_name (GIMP_EDITOR (popup->editor->view), FALSE);
 
   gtk_container_add (GTK_CONTAINER (popup->frame), GTK_WIDGET (popup->editor));
   gtk_widget_show (GTK_WIDGET (popup->editor));

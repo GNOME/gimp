@@ -42,7 +42,6 @@ struct _GimpHistogramEditor
 
   guint                 idle_id;
 
-  GtkWidget            *name;
   GtkWidget            *menu;
   GtkWidget            *box;
   GtkWidget            *labels[6];

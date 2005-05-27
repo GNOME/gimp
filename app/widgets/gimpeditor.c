@@ -34,6 +34,8 @@
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
+#include "gimp-intl.h"
+
 
 #define DEFAULT_CONTENT_SPACING  2
 #define DEFAULT_BUTTON_SPACING   2
@@ -46,7 +48,9 @@ enum
   PROP_MENU_FACTORY,
   PROP_MENU_IDENTIFIER,
   PROP_UI_PATH,
-  PROP_POPUP_DATA
+  PROP_POPUP_DATA,
+  PROP_SHOW_NAME,
+  PROP_NAME
 };
 
 
@@ -160,6 +164,19 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_SHOW_NAME,
+                                   g_param_spec_boolean ("show-name",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_NAME,
+                                   g_param_spec_string ("name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT));
+
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content_spacing",
                                                              NULL, NULL,
@@ -193,6 +210,16 @@ gimp_editor_init (GimpEditor *editor)
   editor->ui_path         = NULL;
   editor->popup_data      = editor;
   editor->button_box      = NULL;
+
+  editor->name_label = g_object_new (GTK_TYPE_LABEL,
+                                     "xalign",    0.0,
+                                     "yalign",    0.5,
+                                     "ellipsize", PANGO_ELLIPSIZE_END,
+                                     NULL);
+  gimp_label_set_attributes (GTK_LABEL (editor->name_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (editor), editor->name_label, FALSE, FALSE, 0);
 }
 
 static void
@@ -250,6 +277,12 @@ gimp_editor_set_property (GObject      *object,
     case PROP_POPUP_DATA:
       editor->popup_data = g_value_get_pointer (value);
       break;
+    case PROP_SHOW_NAME:
+      g_object_set_property (G_OBJECT (editor->name_label), "visible", value);
+      break;
+    case PROP_NAME:
+      gimp_editor_set_name (editor, g_value_get_string (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -277,6 +310,9 @@ gimp_editor_get_property (GObject    *object,
       break;
     case PROP_POPUP_DATA:
       g_value_set_pointer (value, editor->popup_data);
+      break;
+    case PROP_SHOW_NAME:
+      g_object_get_property (G_OBJECT (editor->name_label), "visible", value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -660,6 +696,25 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   g_free (tooltip);
 
   return button;
+}
+
+void
+gimp_editor_set_show_name (GimpEditor *editor,
+                           gboolean    show)
+{
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+
+  g_object_set (editor, "show-name", show, NULL);
+}
+
+void
+gimp_editor_set_name (GimpEditor  *editor,
+                      const gchar *name)
+{
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+
+  gtk_label_set_text (GTK_LABEL (editor->name_label),
+                      name ? name : _("(None)"));
 }
 
 void

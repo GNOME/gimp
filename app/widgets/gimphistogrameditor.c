@@ -138,13 +138,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   editor->idle_id   = 0;
   editor->box       = gimp_histogram_box_new ();
 
-  editor->name = label = gtk_label_new (_("(None)"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_label_set_attributes (GTK_LABEL (editor->name),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (editor), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gimp_editor_set_show_name (GIMP_EDITOR (editor), TRUE);
 
   view = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
@@ -196,15 +190,21 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gint y = (i % 3);
 
       label = gtk_label_new (gettext (gimp_histogram_editor_labels[i]));
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                                 -1);
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-			GTK_FILL, GTK_FILL, 2, 2);
+			GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
       gtk_widget_show (label);
 
       editor->labels[i] = label = gtk_label_new (NULL);
+      gimp_label_set_attributes (GTK_LABEL (editor->labels[i]),
+                                 PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                                 -1);
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x + 1, x + 2, y, y + 1,
-                        GTK_FILL, GTK_FILL, 2, 2);
+                        GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
       gtk_widget_show (label);
     }
 }
@@ -316,7 +316,7 @@ static void
 gimp_histogram_editor_layer_changed (GimpImage           *gimage,
                                      GimpHistogramEditor *editor)
 {
-  const gchar *name;
+  const gchar *name = NULL;
 
   if (editor->drawable)
     {
@@ -347,19 +347,14 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
 
       gimp_histogram_editor_update (editor);
     }
-  else
+  else if (editor->histogram)
     {
-      name = _("(None)");
-
-      if (editor->histogram)
-        {
-          gimp_histogram_calculate (editor->histogram, NULL, NULL);
-          gtk_widget_queue_draw GTK_WIDGET (editor->box);
-          gimp_histogram_editor_info_update (editor);
-        }
+      gimp_histogram_calculate (editor->histogram, NULL, NULL);
+      gtk_widget_queue_draw GTK_WIDGET (editor->box);
+      gimp_histogram_editor_info_update (editor);
     }
 
-  gtk_label_set_text (GTK_LABEL (editor->name), name);
+  gimp_editor_set_name (GIMP_EDITOR (editor), name);
 }
 
 static void

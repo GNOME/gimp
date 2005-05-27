@@ -40,7 +40,6 @@ struct _GimpContainerGridView
 {
   GimpContainerBox  parent_instance;
 
-  GtkWidget        *name_label;
   GtkWidget        *wrap_box;
 
   gint              rows;
