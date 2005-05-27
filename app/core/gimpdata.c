@@ -32,7 +32,6 @@
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -145,18 +144,26 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->get_extension            = NULL;
   klass->duplicate                = NULL;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_WRITABLE, "writable",
-                                    NULL, FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_WRITABLE, "deletable",
-                                    NULL, FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FILENAME, "filename",
-                                   NULL, NULL,
-                                   0);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MIME_TYPE, "mime-type",
-                                   NULL, NULL,
-                                   0);
+  g_object_class_install_property (object_class, PROP_FILENAME,
+				   g_param_spec_string ("filename", NULL, NULL,
+							NULL,
+							G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_WRITABLE,
+				   g_param_spec_boolean ("writable", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_WRITABLE,
+				   g_param_spec_boolean ("deletable", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_MIME_TYPE,
+				   g_param_spec_string ("mime-type", NULL, NULL,
+							NULL,
+							G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
