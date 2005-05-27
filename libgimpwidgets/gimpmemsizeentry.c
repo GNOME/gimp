@@ -91,7 +91,7 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
   object_class->finalize = gimp_memsize_entry_finalize;
 
   gimp_memsize_entry_signals[VALUE_CHANGED] =
-    g_signal_new ("value_changed",
+    g_signal_new ("value-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpMemsizeEntryClass, value_changed),
@@ -225,7 +225,7 @@ gimp_memsize_entry_new (guint64  value,
   gtk_box_pack_start (GTK_BOX (entry), entry->spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (entry->spinbutton);
 
-  g_signal_connect (entry->adjustment, "value_changed",
+  g_signal_connect (entry->adjustment, "value-changed",
                     G_CALLBACK (gimp_memsize_entry_adj_callback),
                     entry);
 

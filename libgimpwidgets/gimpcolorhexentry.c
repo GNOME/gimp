@@ -95,7 +95,7 @@ static void
 gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
 {
   entry_signals[COLOR_CHANGED] =
-    g_signal_new ("color_changed",
+    g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorHexEntryClass, color_changed),
@@ -155,14 +155,14 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 
   gtk_entry_set_text (GTK_ENTRY (entry), "000000");
 
-  g_signal_connect (entry, "focus_out_event",
+  g_signal_connect (entry, "focus-out-event",
                     G_CALLBACK (gimp_color_hex_entry_events),
                     NULL);
-  g_signal_connect (entry, "key_press_event",
+  g_signal_connect (entry, "key-press-event",
                     G_CALLBACK (gimp_color_hex_entry_events),
                     NULL);
 
-  g_signal_connect (completion, "match_selected",
+  g_signal_connect (completion, "match-selected",
                     G_CALLBACK (gimp_color_hex_entry_matched),
                     entry);
 }
@@ -186,7 +186,7 @@ gimp_color_hex_entry_new (void)
  * @color: pointer to a #GimpRGB
  *
  * Sets the color displayed by a #GimpColorHexEntry. If the new color
- * is different to the previously set color, the "color_changed"
+ * is different to the previously set color, the "color-changed"
  * signal is emitted.
  *
  * Since: GIMP 2.2

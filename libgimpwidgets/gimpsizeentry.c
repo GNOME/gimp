@@ -133,7 +133,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_size_entry_signals[VALUE_CHANGED] =
-    g_signal_new ("value_changed",
+    g_signal_new ("value-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
@@ -142,7 +142,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 		  G_TYPE_NONE, 0);
 
   gimp_size_entry_signals[REFVAL_CHANGED] =
-    g_signal_new ("refval_changed",
+    g_signal_new ("refval-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpSizeEntryClass, refval_changed),
@@ -151,7 +151,7 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 		  G_TYPE_NONE, 0);
 
   gimp_size_entry_signals[UNIT_CHANGED] =
-    g_signal_new ("unit_changed",
+    g_signal_new ("unit-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpSizeEntryClass, unit_changed),
@@ -335,7 +335,7 @@ gimp_size_entry_new (gint                       number_of_fields,
       gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
 				 i+1, i+2,
 				 gse->show_refval+1, gse->show_refval+2);
-      g_signal_connect (gsef->value_adjustment, "value_changed",
+      g_signal_connect (gsef->value_adjustment, "value-changed",
                         G_CALLBACK (gimp_size_entry_value_callback),
                         gsef);
 
@@ -354,7 +354,7 @@ gimp_size_entry_new (gint                       number_of_fields,
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
 				     i + 1, i + 2, 1, 2);
 	  g_signal_connect (gsef->refval_adjustment,
-                            "value_changed",
+                            "value-changed",
                             G_CALLBACK (gimp_size_entry_refval_callback),
                             gsef);
 
@@ -374,7 +374,7 @@ gimp_size_entry_new (gint                       number_of_fields,
 		    i+2, i+3,
 		    gse->show_refval+1, gse->show_refval+2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (gse->unitmenu, "unit_changed",
+  g_signal_connect (gse->unitmenu, "unit-changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
   gtk_widget_show (gse->unitmenu);
@@ -434,7 +434,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
   gsef->value_adjustment =
     GTK_OBJECT (gtk_spin_button_get_adjustment (value_spinbutton));
   gsef->value_spinbutton = GTK_WIDGET (value_spinbutton);
-  g_signal_connect (gsef->value_adjustment, "value_changed",
+  g_signal_connect (gsef->value_adjustment, "value-changed",
                     G_CALLBACK (gimp_size_entry_value_callback),
                     gsef);
 
@@ -443,7 +443,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       gsef->refval_adjustment =
 	GTK_OBJECT (gtk_spin_button_get_adjustment (refval_spinbutton));
       gsef->refval_spinbutton = GTK_WIDGET (refval_spinbutton);
-      g_signal_connect (gsef->refval_adjustment, "value_changed",
+      g_signal_connect (gsef->refval_adjustment, "value-changed",
                         G_CALLBACK (gimp_size_entry_refval_callback),
                         gsef);
     }

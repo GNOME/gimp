@@ -191,7 +191,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   layer_signals[OPACITY_CHANGED] =
-    g_signal_new ("opacity_changed",
+    g_signal_new ("opacity-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, opacity_changed),
@@ -200,7 +200,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_TYPE_NONE, 0);
 
   layer_signals[MODE_CHANGED] =
-    g_signal_new ("mode_changed",
+    g_signal_new ("mode-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, mode_changed),
@@ -209,7 +209,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_TYPE_NONE, 0);
 
   layer_signals[PRESERVE_TRANS_CHANGED] =
-    g_signal_new ("preserve_trans_changed",
+    g_signal_new ("preserve-trans-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, preserve_trans_changed),
@@ -218,7 +218,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  G_TYPE_NONE, 0);
 
   layer_signals[MASK_CHANGED] =
-    g_signal_new ("mask_changed",
+    g_signal_new ("mask-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpLayerClass, mask_changed),

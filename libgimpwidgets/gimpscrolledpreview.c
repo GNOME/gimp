@@ -169,7 +169,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     G_CALLBACK (gimp_scrolled_preview_area_unrealize),
                     preview);
 
-  g_signal_connect (GIMP_PREVIEW (preview)->area, "size_allocate",
+  g_signal_connect (GIMP_PREVIEW (preview)->area, "size-allocate",
                     G_CALLBACK (gimp_scrolled_preview_area_size_allocate),
                     preview);
 
@@ -183,7 +183,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gtk_container_add (GTK_CONTAINER (preview->nav_icon), image);
   gtk_widget_show (image);
 
-  g_signal_connect (preview->nav_icon, "button_press_event",
+  g_signal_connect (preview->nav_icon, "button-press-event",
                     G_CALLBACK (gimp_scrolled_preview_nav_button_press),
                     preview);
 }

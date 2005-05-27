@@ -90,7 +90,7 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   text_editor_signals[TEXT_CHANGED] =
-    g_signal_new ("text_changed",
+    g_signal_new ("text-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpTextEditorClass, text_changed),
@@ -99,7 +99,7 @@ gimp_text_editor_class_init (GimpTextEditorClass *klass)
 		  G_TYPE_NONE, 0);
 
   text_editor_signals[DIR_CHANGED] =
-    g_signal_new ("dir_changed",
+    g_signal_new ("dir-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpTextEditorClass, dir_changed),

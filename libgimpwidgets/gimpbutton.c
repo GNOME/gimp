@@ -86,7 +86,7 @@ gimp_button_class_init (GimpButtonClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   button_signals[EXTENDED_CLICKED] =
-    g_signal_new ("extended_clicked",
+    g_signal_new ("extended-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpButtonClass, extended_clicked),

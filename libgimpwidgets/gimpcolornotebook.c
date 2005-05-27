@@ -159,7 +159,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
 
-  g_signal_connect (notebook->notebook, "switch_page",
+  g_signal_connect (notebook->notebook, "switch-page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
                     notebook);
 
@@ -426,10 +426,10 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
 
   gtk_widget_show (page);
 
-  g_signal_connect (page, "color_changed",
+  g_signal_connect (page, "color-changed",
                     G_CALLBACK (gimp_color_notebook_color_changed),
                     notebook);
-  g_signal_connect (page, "channel_changed",
+  g_signal_connect (page, "channel-changed",
                     G_CALLBACK (gimp_color_notebook_channel_changed),
                     notebook);
 

@@ -93,7 +93,7 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_offset_area_signals[OFFSETS_CHANGED] =
-    g_signal_new ("offsets_changed",
+    g_signal_new ("offsets-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
@@ -185,7 +185,7 @@ gimp_offset_area_set_pixbuf (GimpOffsetArea *area,
  * @height: the new height
  *
  * Sets the size of the image/drawable displayed by the #GimpOffsetArea.
- * If the offsets change as a result of this change, the %offsets_changed
+ * If the offsets change as a result of this change, the "offsets-changed"
  * signal is emitted.
  **/
 void
@@ -235,7 +235,7 @@ gimp_offset_area_set_size (GimpOffsetArea *area,
  * @offset_y: the Y offset
  *
  * Sets the offsets of the image/drawable displayed by the #GimpOffsetArea.
- * It does not emit the %offsets_changed signal.
+ * It does not emit the "offsets-changed" signal.
  **/
 void
 gimp_offset_area_set_offsets (GimpOffsetArea *area,

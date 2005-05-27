@@ -443,7 +443,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
     {
       GimpPalette *palette = GIMP_PALETTE (editor->data);
 
-      g_signal_connect (editor->data, "invalidate_preview",
+      g_signal_connect (editor->data, "invalidate-preview",
                         G_CALLBACK (palette_editor_invalidate_preview),
                         editor);
 

@@ -243,7 +243,7 @@ gimp_image_class_init (GimpImageClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_image_signals[MODE_CHANGED] =
-    g_signal_new ("mode_changed",
+    g_signal_new ("mode-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, mode_changed),
@@ -252,7 +252,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[ALPHA_CHANGED] =
-    g_signal_new ("alpha_changed",
+    g_signal_new ("alpha-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
@@ -261,7 +261,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[FLOATING_SELECTION_CHANGED] =
-    g_signal_new ("floating_selection_changed",
+    g_signal_new ("floating-selection-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
@@ -270,7 +270,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_LAYER_CHANGED] =
-    g_signal_new ("active_layer_changed",
+    g_signal_new ("active-layer-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
@@ -279,7 +279,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_CHANNEL_CHANGED] =
-    g_signal_new ("active_channel_changed",
+    g_signal_new ("active-channel-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
@@ -288,7 +288,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_VECTORS_CHANGED] =
-    g_signal_new ("active_vectors_changed",
+    g_signal_new ("active-vectors-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, active_vectors_changed),
@@ -297,7 +297,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
-    g_signal_new ("component_visibility_changed",
+    g_signal_new ("component-visibility-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
@@ -307,7 +307,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
-    g_signal_new ("component_active_changed",
+    g_signal_new ("component-active-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
@@ -317,7 +317,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[MASK_CHANGED] =
-    g_signal_new ("mask_changed",
+    g_signal_new ("mask-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, mask_changed),
@@ -326,7 +326,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[RESOLUTION_CHANGED] =
-    g_signal_new ("resolution_changed",
+    g_signal_new ("resolution-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, resolution_changed),
@@ -335,7 +335,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[UNIT_CHANGED] =
-    g_signal_new ("unit_changed",
+    g_signal_new ("unit-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, unit_changed),
@@ -344,7 +344,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[QMASK_CHANGED] =
-    g_signal_new ("qmask_changed",
+    g_signal_new ("qmask-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
@@ -353,7 +353,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_image_signals[SELECTION_CONTROL] =
-    g_signal_new ("selection_control",
+    g_signal_new ("selection-control",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, selection_control),
@@ -396,7 +396,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_INT);
 
   gimp_image_signals[UPDATE_GUIDE] =
-    g_signal_new ("update_guide",
+    g_signal_new ("update-guide",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, update_guide),
@@ -406,7 +406,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_POINTER);
 
   gimp_image_signals[UPDATE_SAMPLE_POINT] =
-    g_signal_new ("update_sample_point",
+    g_signal_new ("update-sample-point",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, update_sample_point),
@@ -416,7 +416,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_POINTER);
 
   gimp_image_signals[SAMPLE_POINT_ADDED] =
-    g_signal_new ("sample_point_added",
+    g_signal_new ("sample-point-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, sample_point_added),
@@ -426,7 +426,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_POINTER);
 
   gimp_image_signals[SAMPLE_POINT_REMOVED] =
-    g_signal_new ("sample_point_removed",
+    g_signal_new ("sample-point-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, sample_point_removed),
@@ -436,7 +436,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_POINTER);
 
   gimp_image_signals[COLORMAP_CHANGED] =
-    g_signal_new ("colormap_changed",
+    g_signal_new ("colormap-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
@@ -446,7 +446,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_INT);
 
   gimp_image_signals[UNDO_EVENT] =
-    g_signal_new ("undo_event",
+    g_signal_new ("undo-event",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, undo_event),
@@ -584,11 +584,11 @@ gimp_image_init (GimpImage *gimage)
                                 G_CALLBACK (gimp_image_drawable_update),
                                 gimage);
   gimage->layer_visible_handler =
-    gimp_container_add_handler (gimage->layers, "visibility_changed",
+    gimp_container_add_handler (gimage->layers, "visibility-changed",
                                 G_CALLBACK (gimp_image_drawable_visibility),
                                 gimage);
   gimage->layer_alpha_handler =
-    gimp_container_add_handler (gimage->layers, "alpha_changed",
+    gimp_container_add_handler (gimage->layers, "alpha-changed",
                                 G_CALLBACK (gimp_image_layer_alpha_changed),
                                 gimage);
 
@@ -597,15 +597,15 @@ gimp_image_init (GimpImage *gimage)
                                 G_CALLBACK (gimp_image_drawable_update),
                                 gimage);
   gimage->channel_visible_handler =
-    gimp_container_add_handler (gimage->channels, "visibility_changed",
+    gimp_container_add_handler (gimage->channels, "visibility-changed",
                                 G_CALLBACK (gimp_image_drawable_visibility),
                                 gimage);
   gimage->channel_name_changed_handler =
-    gimp_container_add_handler (gimage->channels, "name_changed",
+    gimp_container_add_handler (gimage->channels, "name-changed",
                                 G_CALLBACK (gimp_image_channel_name_changed),
                                 gimage);
   gimage->channel_color_changed_handler =
-    gimp_container_add_handler (gimage->channels, "color_changed",
+    gimp_container_add_handler (gimage->channels, "color-changed",
                                 G_CALLBACK (gimp_image_channel_color_changed),
                                 gimage);
 

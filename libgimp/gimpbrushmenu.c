@@ -159,7 +159,7 @@ gimp_brush_select_widget_new (const gchar          *title,
   gtk_container_add (GTK_CONTAINER (frame), brush_sel->preview);
   gtk_widget_show (brush_sel->preview);
 
-  g_signal_connect_swapped (brush_sel->preview, "size_allocate",
+  g_signal_connect_swapped (brush_sel->preview, "size-allocate",
                             G_CALLBACK (gimp_brush_select_preview_resize),
                             brush_sel);
   g_signal_connect (brush_sel->preview, "event",

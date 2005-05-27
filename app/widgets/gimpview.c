@@ -157,7 +157,7 @@ gimp_view_class_init (GimpViewClass *klass)
                   GDK_TYPE_MODIFIER_TYPE);
 
   view_signals[DOUBLE_CLICKED] =
-    g_signal_new ("double_clicked",
+    g_signal_new ("double-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpViewClass, double_clicked),

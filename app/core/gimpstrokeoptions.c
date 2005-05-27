@@ -116,7 +116,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   klass->dash_info_changed = NULL;
 
   stroke_options_signals[DASH_INFO_CHANGED] =
-    g_signal_new ("dash_info_changed",
+    g_signal_new ("dash-info-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpStrokeOptionsClass, dash_info_changed),

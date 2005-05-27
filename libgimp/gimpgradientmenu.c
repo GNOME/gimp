@@ -154,11 +154,11 @@ gimp_gradient_select_widget_new (const gchar             *title,
                      gradient_sel->preview);
   gtk_widget_show (gradient_sel->preview);
 
-  g_signal_connect (gradient_sel->preview, "size_allocate",
+  g_signal_connect (gradient_sel->preview, "size-allocate",
                     G_CALLBACK (gimp_gradient_select_preview_size_allocate),
                     gradient_sel);
 
-  g_signal_connect (gradient_sel->preview, "expose_event",
+  g_signal_connect (gradient_sel->preview, "expose-event",
                     G_CALLBACK (gimp_gradient_select_preview_expose),
                     gradient_sel);
 

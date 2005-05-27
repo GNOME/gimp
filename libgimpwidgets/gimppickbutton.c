@@ -108,7 +108,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
   parent_class = g_type_class_peek_parent (klass);
 
   pick_button_signals[COLOR_PICKED] =
-    g_signal_new ("color_picked",
+    g_signal_new ("color-picked",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPickButtonClass, color_picked),
@@ -277,10 +277,10 @@ gimp_pick_button_clicked (GtkButton *gtk_button)
 
   gtk_grab_add (widget);
 
-  g_signal_connect (widget, "button_press_event",
+  g_signal_connect (widget, "button-press-event",
                     G_CALLBACK (gimp_pick_button_mouse_press),
                     button);
-  g_signal_connect (widget, "key_press_event",
+  g_signal_connect (widget, "key-press-event",
                     G_CALLBACK (gimp_pick_button_key_press),
                     button);
 }
@@ -292,10 +292,10 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
 {
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      g_signal_connect (invisible, "motion_notify_event",
+      g_signal_connect (invisible, "motion-notify-event",
                         G_CALLBACK (gimp_pick_button_mouse_motion),
                         button);
-      g_signal_connect (invisible, "button_release_event",
+      g_signal_connect (invisible, "button-release-event",
                         G_CALLBACK (gimp_pick_button_mouse_release),
                         button);
 

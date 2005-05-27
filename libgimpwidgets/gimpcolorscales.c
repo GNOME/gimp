@@ -209,7 +209,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 
       gimp_color_scale_set_channel (GIMP_COLOR_SCALE (scales->sliders[i]), i);
 
-      g_signal_connect (scales->slider_data[i], "value_changed",
+      g_signal_connect (scales->slider_data[i], "value-changed",
 			G_CALLBACK (gimp_color_scales_scale_update),
 			scales);
     }

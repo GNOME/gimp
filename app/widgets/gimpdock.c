@@ -156,7 +156,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   dock_signals[BOOK_ADDED] =
-    g_signal_new ("book_added",
+    g_signal_new ("book-added",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpDockClass, book_added),
@@ -166,7 +166,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 		  GIMP_TYPE_DOCKBOOK);
 
   dock_signals[BOOK_REMOVED] =
-    g_signal_new ("book_removed",
+    g_signal_new ("book-removed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpDockClass, book_removed),

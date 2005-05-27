@@ -115,7 +115,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  G_TYPE_NONE, 0);
 
   object_signals[NAME_CHANGED] =
-    g_signal_new ("name_changed",
+    g_signal_new ("name-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpObjectClass, name_changed),

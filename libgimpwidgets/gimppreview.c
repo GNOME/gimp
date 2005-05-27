@@ -232,7 +232,7 @@ gimp_preview_init (GimpPreview *preview)
                     G_CALLBACK (gimp_preview_area_unrealize),
                     preview);
 
-  g_signal_connect (preview->area, "size_allocate",
+  g_signal_connect (preview->area, "size-allocate",
                     G_CALLBACK (gimp_preview_area_size_allocate),
                     preview);
 

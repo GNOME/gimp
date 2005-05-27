@@ -115,7 +115,7 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
    * or reorders an element of the search path.
    **/
   gimp_path_editor_signals[PATH_CHANGED] =
-    g_signal_new ("path_changed",
+    g_signal_new ("path-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPathEditorClass, path_changed),
@@ -131,7 +131,7 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
    * gimp_path_editor_set_dir_writable().
    **/
   gimp_path_editor_signals[WRITABLE_CHANGED] =
-    g_signal_new ("writable_changed",
+    g_signal_new ("writable-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPathEditorClass, writable_changed),
@@ -294,7 +294,7 @@ gimp_path_editor_new (const gchar *filesel_title,
                       TRUE, TRUE, 0);
   gtk_widget_show (editor->file_entry);
 
-  g_signal_connect (editor->file_entry, "filename_changed",
+  g_signal_connect (editor->file_entry, "filename-changed",
                     G_CALLBACK (gimp_path_editor_file_entry_changed),
 		    editor);
 

@@ -133,7 +133,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_area_signals[COLOR_CHANGED] =
-    g_signal_new ("color_changed",
+    g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorAreaClass, color_changed),

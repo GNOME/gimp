@@ -577,12 +577,12 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 					 1.0, digits);
 
       g_signal_connect
-	(G_OBJECT (constrained_adj), "value_changed",
+	(G_OBJECT (constrained_adj), "value-changed",
 	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
 	 adjustment);
 
       g_signal_connect
-	(G_OBJECT (adjustment), "value_changed",
+	(G_OBJECT (adjustment), "value-changed",
 	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
 	 constrained_adj);
 
@@ -843,11 +843,11 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
        scale_adj->step_increment = log_step_increment;
        scale_adj->page_increment = log_page_increment;
 
-       g_signal_connect (scale_adj, "value_changed",
+       g_signal_connect (scale_adj, "value-changed",
                          G_CALLBACK (gimp_scale_entry_exp_adjustment_callback),
                          adj);
 
-       g_signal_connect (adj, "value_changed",
+       g_signal_connect (adj, "value-changed",
                          G_CALLBACK (gimp_scale_entry_log_adjustment_callback),
                          scale_adj);
 
@@ -883,11 +883,11 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
       scale_adj->step_increment = adj->step_increment;
       scale_adj->page_increment = adj->page_increment;
 
-      g_signal_connect (scale_adj, "value_changed",
+      g_signal_connect (scale_adj, "value-changed",
                         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
                         adj);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
                         scale_adj);
 
@@ -995,7 +995,7 @@ gimp_random_seed_new (guint    *seed,
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_uint_adjustment_update),
                     seed);
 
@@ -1082,7 +1082,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
 		  gcd->last_x = new_x;
 		  new_y = (new_x * gcd->orig_y) / gcd->orig_x;
 
-                  g_signal_stop_emission_by_name (widget, "value_changed");
+                  g_signal_stop_emission_by_name (widget, "value-changed");
 		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
                                               new_y);
 		  gcd->last_y
@@ -1093,7 +1093,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
 		  gcd->last_y = new_y;
 		  new_x = (new_y * gcd->orig_x) / gcd->orig_y;
 
-                  g_signal_stop_emission_by_name (widget, "value_changed");
+                  g_signal_stop_emission_by_name (widget, "value-changed");
 		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
                                               new_x);
                   gcd->last_x
@@ -1107,7 +1107,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
 	    {
 	      new_y = new_x;
 
-              g_signal_stop_emission_by_name (widget, "value_changed");
+              g_signal_stop_emission_by_name (widget, "value-changed");
 	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
               gcd->last_y = gcd->last_x
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
@@ -1116,7 +1116,7 @@ gimp_coordinates_callback (GtkWidget           *widget,
 	    {
 	      new_x = new_y;
 
-              g_signal_stop_emission_by_name (widget, "value_changed");
+              g_signal_stop_emission_by_name (widget, "value-changed");
 	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
               gcd->last_x = gcd->last_y
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
@@ -1273,7 +1273,7 @@ gimp_coordinates_new (GimpUnit         unit,
 			    G_CALLBACK (g_free),
 			    gcd);
 
-  g_signal_connect (sizeentry, "value_changed",
+  g_signal_connect (sizeentry, "value-changed",
 		    G_CALLBACK (gimp_coordinates_callback),
 		    gcd);
 

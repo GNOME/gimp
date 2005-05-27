@@ -376,7 +376,7 @@ gimp_context_class_init (GimpContextClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_context_signals[IMAGE_CHANGED] =
-    g_signal_new ("image_changed",
+    g_signal_new ("image-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, image_changed),
@@ -386,7 +386,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_IMAGE);
 
   gimp_context_signals[DISPLAY_CHANGED] =
-    g_signal_new ("display_changed",
+    g_signal_new ("display-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, display_changed),
@@ -396,7 +396,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_OBJECT);
 
   gimp_context_signals[TOOL_CHANGED] =
-    g_signal_new ("tool_changed",
+    g_signal_new ("tool-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, tool_changed),
@@ -406,7 +406,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_TOOL_INFO);
 
   gimp_context_signals[FOREGROUND_CHANGED] =
-    g_signal_new ("foreground_changed",
+    g_signal_new ("foreground-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, foreground_changed),
@@ -416,7 +416,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
-    g_signal_new ("background_changed",
+    g_signal_new ("background-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, background_changed),
@@ -426,7 +426,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_RGB | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[OPACITY_CHANGED] =
-    g_signal_new ("opacity_changed",
+    g_signal_new ("opacity-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, opacity_changed),
@@ -436,7 +436,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_TYPE_DOUBLE);
 
   gimp_context_signals[PAINT_MODE_CHANGED] =
-    g_signal_new ("paint_mode_changed",
+    g_signal_new ("paint-mode-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, paint_mode_changed),
@@ -446,7 +446,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_LAYER_MODE_EFFECTS);
 
   gimp_context_signals[BRUSH_CHANGED] =
-    g_signal_new ("brush_changed",
+    g_signal_new ("brush-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, brush_changed),
@@ -456,7 +456,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_BRUSH);
 
   gimp_context_signals[PATTERN_CHANGED] =
-    g_signal_new ("pattern_changed",
+    g_signal_new ("pattern-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, pattern_changed),
@@ -466,7 +466,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_PATTERN);
 
   gimp_context_signals[GRADIENT_CHANGED] =
-    g_signal_new ("gradient_changed",
+    g_signal_new ("gradient-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, gradient_changed),
@@ -476,7 +476,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_GRADIENT);
 
   gimp_context_signals[PALETTE_CHANGED] =
-    g_signal_new ("palette_changed",
+    g_signal_new ("palette-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, palette_changed),
@@ -486,7 +486,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_PALETTE);
 
   gimp_context_signals[FONT_CHANGED] =
-    g_signal_new ("font_changed",
+    g_signal_new ("font-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, font_changed),
@@ -496,7 +496,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_FONT);
 
   gimp_context_signals[BUFFER_CHANGED] =
-    g_signal_new ("buffer_changed",
+    g_signal_new ("buffer-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, buffer_changed),
@@ -506,7 +506,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_BUFFER);
 
   gimp_context_signals[IMAGEFILE_CHANGED] =
-    g_signal_new ("imagefile_changed",
+    g_signal_new ("imagefile-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, imagefile_changed),
@@ -516,7 +516,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   GIMP_TYPE_IMAGEFILE);
 
   gimp_context_signals[TEMPLATE_CHANGED] =
-    g_signal_new ("template_changed",
+    g_signal_new ("template-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContextClass, template_changed),

@@ -128,7 +128,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   widget_class = GTK_WIDGET_CLASS (klass);
 
   histogram_view_signals[RANGE_CHANGED] =
-    g_signal_new ("range_changed",
+    g_signal_new ("range-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpHistogramViewClass, range_changed),

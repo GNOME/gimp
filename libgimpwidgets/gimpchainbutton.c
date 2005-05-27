@@ -122,10 +122,10 @@ gimp_chain_button_init (GimpChainButton *button)
   g_signal_connect (button->button, "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback),
                     button);
-  g_signal_connect (button->line1, "expose_event",
+  g_signal_connect (button->line1, "expose-event",
                     G_CALLBACK (gimp_chain_button_draw_lines),
                     button);
-  g_signal_connect (button->line2, "expose_event",
+  g_signal_connect (button->line2, "expose-event",
                     G_CALLBACK (gimp_chain_button_draw_lines),
                     button);
 }

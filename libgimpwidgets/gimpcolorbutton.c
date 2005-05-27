@@ -177,7 +177,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_button_signals[COLOR_CHANGED] =
-    g_signal_new ("color_changed",
+    g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorButtonClass, color_changed),
@@ -268,7 +268,7 @@ gimp_color_button_init (GimpColorButton      *button,
                                      "drag-mask", GDK_BUTTON2_MASK,
                                      NULL);
 
-  g_signal_connect (button->color_area, "color_changed",
+  g_signal_connect (button->color_area, "color-changed",
                     G_CALLBACK (gimp_color_button_area_changed),
                     button);
 
@@ -510,7 +510,7 @@ gimp_color_button_clicked (GtkButton *button)
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), selection);
       gtk_widget_show (selection);
 
-      g_signal_connect (selection, "color_changed",
+      g_signal_connect (selection, "color-changed",
                         G_CALLBACK (gimp_color_button_selection_changed),
                         button);
 
@@ -543,7 +543,7 @@ gimp_color_button_get_action_type (GimpColorButton *button)
  * This returns a button with a preview showing the color.
  * When the button is clicked a GtkColorSelectionDialog is opened.
  * If the user changes the color the new color is written into the
- * array that was used to pass the initial color and the "color_changed"
+ * array that was used to pass the initial color and the "color-changed"
  * signal is emitted.
  *
  * Returns: Pointer to the new #GimpColorButton widget.
@@ -662,7 +662,7 @@ gimp_color_button_get_update (GimpColorButton *button)
  * @button:     A #GimpColorButton widget.
  * @continuous: The new setting of the @continuous_update property.
  *
- * When set to #TRUE, the @button will emit the "color_changed"
+ * When set to #TRUE, the @button will emit the "color-changed"
  * continuously while the color is changed in the color selection
  * dialog.
  **/

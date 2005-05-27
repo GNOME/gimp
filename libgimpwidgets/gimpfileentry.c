@@ -101,7 +101,7 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
    * This signal is emitted whenever the user changes the filename.
    **/
   gimp_file_entry_signals[FILENAME_CHANGED] =
-    g_signal_new ("filename_changed",
+    g_signal_new ("filename-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
@@ -140,7 +140,7 @@ gimp_file_entry_init (GimpFileEntry *entry)
   g_signal_connect (entry->entry, "activate",
                     G_CALLBACK (gimp_file_entry_entry_activate),
                     entry);
-  g_signal_connect (entry->entry, "focus_out_event",
+  g_signal_connect (entry->entry, "focus-out-event",
                     G_CALLBACK (gimp_file_entry_entry_focus_out),
                     entry);
 }
@@ -378,7 +378,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
       g_signal_connect (chooser, "response",
                         G_CALLBACK (gimp_file_entry_chooser_response),
                         entry);
-      g_signal_connect (chooser, "delete_event",
+      g_signal_connect (chooser, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
 

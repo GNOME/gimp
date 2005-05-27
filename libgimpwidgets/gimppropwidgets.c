@@ -1013,7 +1013,7 @@ gimp_prop_spin_button_new (GObject     *config,
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
@@ -1103,7 +1103,7 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
@@ -1175,7 +1175,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   g_object_set_data (G_OBJECT (adjustment),
                      "opacity-scale", GINT_TO_POINTER (TRUE));
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
 		    G_CALLBACK (gimp_prop_adjustment_callback),
 		    config);
 
@@ -1393,7 +1393,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
                   GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
                   param_spec);
 
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
 		    G_CALLBACK (gimp_prop_memsize_callback),
 		    config);
 
@@ -1838,7 +1838,7 @@ gimp_prop_file_entry_new (GObject     *config,
                   GIMP_FILE_ENTRY (entry)->entry,
                   param_spec);
 
-  g_signal_connect (entry, "filename_changed",
+  g_signal_connect (entry, "filename-changed",
 		    G_CALLBACK (gimp_prop_file_entry_callback),
 		    config);
 
@@ -2114,7 +2114,7 @@ gimp_prop_path_editor_new (GObject     *config,
   g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-path",
                      path_param_spec);
 
-  g_signal_connect (editor, "path_changed",
+  g_signal_connect (editor, "path-changed",
 		    G_CALLBACK (gimp_prop_path_editor_path_callback),
 		    config);
 
@@ -2127,7 +2127,7 @@ gimp_prop_path_editor_new (GObject     *config,
       g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-writable",
                          writable_param_spec);
 
-      g_signal_connect (editor, "writable_changed",
+      g_signal_connect (editor, "writable-changed",
                         G_CALLBACK (gimp_prop_path_editor_writable_callback),
                         config);
 
@@ -2396,7 +2396,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
                      param_spec);
 
-  g_signal_connect (sizeentry, "value_changed",
+  g_signal_connect (sizeentry, "value-changed",
 		    G_CALLBACK (gimp_prop_size_entry_callback),
 		    config);
 
@@ -2409,7 +2409,7 @@ gimp_prop_size_entry_new (GObject                   *config,
       g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
                          unit_param_spec);
 
-      g_signal_connect (sizeentry, "unit_changed",
+      g_signal_connect (sizeentry, "unit-changed",
                         G_CALLBACK (gimp_prop_size_entry_callback),
                         config);
 
@@ -2742,10 +2742,10 @@ gimp_prop_coordinates_connect (GObject     *config,
       g_object_set_data (G_OBJECT (sizeentry), "chainbutton", chainbutton);
     }
 
-  g_signal_connect (sizeentry, "value_changed",
+  g_signal_connect (sizeentry, "value-changed",
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
-  g_signal_connect (sizeentry, "refval_changed",
+  g_signal_connect (sizeentry, "refval-changed",
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
 
@@ -2767,7 +2767,7 @@ gimp_prop_coordinates_connect (GObject     *config,
                               old_unit_value,
                               (GDestroyNotify) g_free);
 
-      g_signal_connect (sizeentry, "unit_changed",
+      g_signal_connect (sizeentry, "unit-changed",
                         G_CALLBACK (gimp_prop_coordinates_callback),
                         config);
 
@@ -3042,7 +3042,7 @@ gimp_prop_color_area_new (GObject           *config,
 
   set_param_spec (G_OBJECT (area), area, param_spec);
 
-  g_signal_connect (area, "color_changed",
+  g_signal_connect (area, "color-changed",
 		    G_CALLBACK (gimp_prop_color_area_callback),
 		    config);
 
@@ -3162,7 +3162,7 @@ gimp_prop_unit_menu_new (GObject     *config,
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
 
-  g_signal_connect (menu, "unit_changed",
+  g_signal_connect (menu, "unit-changed",
 		    G_CALLBACK (gimp_prop_unit_menu_callback),
 		    config);
 

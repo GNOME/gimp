@@ -128,7 +128,7 @@ gimp_module_db_class_init (GimpModuleDBClass *klass)
                   GIMP_TYPE_MODULE);
 
   db_signals[MODULE_MODIFIED] =
-    g_signal_new ("module_modified",
+    g_signal_new ("module-modified",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpModuleDBClass, module_modified),

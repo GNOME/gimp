@@ -132,7 +132,7 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   selection_signals[COLOR_CHANGED] =
-    g_signal_new ("color_changed",
+    g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectionClass, color_changed),
@@ -190,11 +190,11 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->notebook);
 
-  g_signal_connect (selection->notebook, "color_changed",
+  g_signal_connect (selection->notebook, "color-changed",
                     G_CALLBACK (gimp_color_selection_notebook_changed),
                     selection);
   g_signal_connect (GIMP_COLOR_NOTEBOOK (selection->notebook)->notebook,
-                    "switch_page",
+                    "switch-page",
                     G_CALLBACK (gimp_color_selection_switch_page),
                     selection);
 
@@ -223,7 +223,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_container_add (GTK_CONTAINER (frame), selection->new_color);
   gtk_widget_show (selection->new_color);
 
-  g_signal_connect (selection->new_color, "color_changed",
+  g_signal_connect (selection->new_color, "color-changed",
 		    G_CALLBACK (gimp_color_selection_new_color_changed),
 		    selection);
 
@@ -264,10 +264,10 @@ gimp_color_selection_init (GimpColorSelection *selection)
                       TRUE, TRUE, 0);
   gtk_widget_show (selection->scales);
 
-  g_signal_connect (selection->scales, "channel_changed",
+  g_signal_connect (selection->scales, "channel-changed",
                     G_CALLBACK (gimp_color_selection_channel_changed),
                     selection);
-  g_signal_connect (selection->scales, "color_changed",
+  g_signal_connect (selection->scales, "color-changed",
                     G_CALLBACK (gimp_color_selection_scales_changed),
                     selection);
 
@@ -290,7 +290,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
 
   g_object_set_data (G_OBJECT (selection), "color-hex-entry", entry);
 
-  g_signal_connect (entry, "color_changed",
+  g_signal_connect (entry, "color-changed",
                     G_CALLBACK (gimp_color_selection_entry_changed),
                     selection);
 }
@@ -451,7 +451,7 @@ gimp_color_selection_reset (GimpColorSelection *selection)
  * gimp_color_selection_color_changed:
  * @selection: A #GimpColorSelection widget.
  *
- * Emits the "color_changed" signal.
+ * Emits the "color-changed" signal.
  **/
 void
 gimp_color_selection_color_changed (GimpColorSelection *selection)

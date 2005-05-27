@@ -87,7 +87,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   selector_signals[COLOR_CHANGED] =
-    g_signal_new ("color_changed",
+    g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectorClass, color_changed),
@@ -98,7 +98,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_TYPE_POINTER);
 
   selector_signals[CHANNEL_CHANGED] =
-    g_signal_new ("channel_changed",
+    g_signal_new ("channel-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorSelectorClass, channel_changed),

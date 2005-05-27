@@ -215,7 +215,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   view_signals[SET_IMAGE] =
-    g_signal_new ("set_image",
+    g_signal_new ("set-image",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpItemTreeViewClass, set_image),

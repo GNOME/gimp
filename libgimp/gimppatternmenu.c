@@ -144,7 +144,7 @@ gimp_pattern_select_widget_new (const gchar            *title,
   gtk_container_add (GTK_CONTAINER (frame), pattern_sel->preview);
   gtk_widget_show (pattern_sel->preview);
 
-  g_signal_connect_swapped (pattern_sel->preview, "size_allocate",
+  g_signal_connect_swapped (pattern_sel->preview, "size-allocate",
                             G_CALLBACK (gimp_pattern_select_preview_resize),
                             pattern_sel);
   g_signal_connect (pattern_sel->preview, "event",

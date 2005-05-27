@@ -132,7 +132,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_imagefile_signals[INFO_CHANGED] =
-    g_signal_new ("info_changed",
+    g_signal_new ("info-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImagefileClass, info_changed),
@@ -144,7 +144,7 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 
   gimp_object_class->name_changed     = gimp_imagefile_name_changed;
 
-  viewable_class->name_changed_signal = "info_changed";
+  viewable_class->name_changed_signal = "info-changed";
   viewable_class->get_new_pixbuf      = gimp_imagefile_get_new_pixbuf;
   viewable_class->get_description     = gimp_imagefile_get_description;
 

@@ -515,7 +515,7 @@ gimp_dialog_run (GimpDialog *dialog)
   unmap_handler    = g_signal_connect (dialog, "unmap",
                                        G_CALLBACK (run_unmap_handler),
                                        &ri);
-  delete_handler   = g_signal_connect (dialog, "delete_event",
+  delete_handler   = g_signal_connect (dialog, "delete-event",
                                        G_CALLBACK (run_delete_handler),
                                        &ri);
   destroy_handler  = g_signal_connect (dialog, "destroy",

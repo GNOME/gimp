@@ -293,10 +293,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_container_add (GTK_CONTAINER (frame), select->xy_color);
   gtk_widget_show (select->xy_color);
 
-  g_signal_connect (select->xy_color, "size_allocate",
+  g_signal_connect (select->xy_color, "size-allocate",
                     G_CALLBACK (gimp_color_select_xy_size_allocate),
                     select);
-  g_signal_connect_after (select->xy_color, "expose_event",
+  g_signal_connect_after (select->xy_color, "expose-event",
                           G_CALLBACK (gimp_color_select_xy_expose),
                           select);
   g_signal_connect (select->xy_color, "event",
@@ -321,10 +321,10 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_container_add (GTK_CONTAINER (frame), select->z_color);
   gtk_widget_show (select->z_color);
 
-  g_signal_connect (select->z_color, "size_allocate",
+  g_signal_connect (select->z_color, "size-allocate",
                     G_CALLBACK (gimp_color_select_z_size_allocate),
                     select);
-  g_signal_connect_after (select->z_color, "expose_event",
+  g_signal_connect_after (select->z_color, "expose-event",
                           G_CALLBACK (gimp_color_select_z_expose),
                           select);
   g_signal_connect (select->z_color, "event",

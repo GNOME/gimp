@@ -159,7 +159,7 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
   klass->move_cursor       = gimp_container_grid_view_move_cursor;
 
   grid_view_signals[MOVE_CURSOR] =
-    g_signal_new ("move_cursor",
+    g_signal_new ("move-cursor",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (GimpContainerGridViewClass, move_cursor),
@@ -170,19 +170,19 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
                   G_TYPE_INT);
 
   gtk_binding_entry_add_signal (binding_set, GDK_Home, 0,
-                                "move_cursor", 2,
+                                "move-cursor", 2,
                                 G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
                                 G_TYPE_INT, -1);
   gtk_binding_entry_add_signal (binding_set, GDK_End, 0,
-                                "move_cursor", 2,
+                                "move-cursor", 2,
                                 G_TYPE_ENUM, GTK_MOVEMENT_BUFFER_ENDS,
                                 G_TYPE_INT, 1);
   gtk_binding_entry_add_signal (binding_set, GDK_Page_Up, 0,
-                                "move_cursor", 2,
+                                "move-cursor", 2,
                                 G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
                                 G_TYPE_INT, -1);
   gtk_binding_entry_add_signal (binding_set, GDK_Page_Down, 0,
-                                "move_cursor", 2,
+                                "move-cursor", 2,
                                 G_TYPE_ENUM, GTK_MOVEMENT_PAGES,
                                 G_TYPE_INT, 1);
 
@@ -210,7 +210,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
                                          grid_view->wrap_box);
   gtk_widget_show (grid_view->wrap_box);
 
-  g_signal_connect (grid_view->wrap_box->parent, "size_allocate",
+  g_signal_connect (grid_view->wrap_box->parent, "size-allocate",
                     G_CALLBACK (gimp_container_grid_view_viewport_resized),
                     grid_view);
 
@@ -434,10 +434,10 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   gtk_widget_show (preview);
 
-  g_signal_connect (preview, "button_press_event",
+  g_signal_connect (preview, "button-press-event",
                     G_CALLBACK (gimp_container_grid_view_item_selected),
                     view);
-  g_signal_connect (preview, "double_clicked",
+  g_signal_connect (preview, "double-clicked",
                     G_CALLBACK (gimp_container_grid_view_item_activated),
                     view);
   g_signal_connect (preview, "context",

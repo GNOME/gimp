@@ -118,7 +118,7 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   view_signals[MARKER_CHANGED] =
-    g_signal_new ("marker_changed",
+    g_signal_new ("marker-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNavigationViewClass, marker_changed),

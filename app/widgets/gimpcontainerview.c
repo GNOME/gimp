@@ -152,7 +152,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
     return;
 
   view_signals[SELECT_ITEM] =
-    g_signal_new ("select_item",
+    g_signal_new ("select-item",
                   G_TYPE_FROM_INTERFACE (view_iface),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, select_item),
@@ -163,7 +163,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   G_TYPE_POINTER);
 
   view_signals[ACTIVATE_ITEM] =
-    g_signal_new ("activate_item",
+    g_signal_new ("activate-item",
                   G_TYPE_FROM_INTERFACE (view_iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, activate_item),
@@ -174,7 +174,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   G_TYPE_POINTER);
 
   view_signals[CONTEXT_ITEM] =
-    g_signal_new ("context_item",
+    g_signal_new ("context-item",
                   G_TYPE_FROM_INTERFACE (view_iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, context_item),

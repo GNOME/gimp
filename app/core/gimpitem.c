@@ -144,7 +144,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[VISIBILITY_CHANGED] =
-    g_signal_new ("visibility_changed",
+    g_signal_new ("visibility-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, visibility_changed),
@@ -153,7 +153,7 @@ gimp_item_class_init (GimpItemClass *klass)
                   G_TYPE_NONE, 0);
 
   gimp_item_signals[LINKED_CHANGED] =
-    g_signal_new ("linked_changed",
+    g_signal_new ("linked-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpItemClass, linked_changed),

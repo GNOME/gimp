@@ -179,7 +179,7 @@ gimp_help_connect (GtkWidget    *widget,
 
   g_object_set_data (G_OBJECT (widget), "gimp-help-data", help_data);
 
-  g_signal_connect (widget, "show_help",
+  g_signal_connect (widget, "show-help",
                     G_CALLBACK (gimp_help_callback),
                     help_func);
 
@@ -379,7 +379,7 @@ gimp_context_help_idle_start (gpointer widget)
 
       gtk_grab_add (invisible);
 
-      g_signal_connect (invisible, "button_press_event",
+      g_signal_connect (invisible, "button-press-event",
                         G_CALLBACK (gimp_context_help_button_press),
                         NULL);
     }

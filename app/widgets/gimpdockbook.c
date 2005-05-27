@@ -143,7 +143,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   dockbook_signals[DOCKABLE_ADDED] =
-    g_signal_new ("dockable_added",
+    g_signal_new ("dockable-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_added),
@@ -153,7 +153,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   GIMP_TYPE_DOCKABLE);
 
   dockbook_signals[DOCKABLE_REMOVED] =
-    g_signal_new ("dockable_removed",
+    g_signal_new ("dockable-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_removed),
@@ -163,7 +163,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   GIMP_TYPE_DOCKABLE);
 
   dockbook_signals[DOCKABLE_REORDERED] =
-    g_signal_new ("dockable_reordered",
+    g_signal_new ("dockable-reordered",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpDockbookClass, dockable_reordered),
@@ -182,13 +182,13 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   klass->dockable_reordered = NULL;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab_border",
+                                           g_param_spec_int ("tab-border",
                                                              NULL, NULL,
                                                              0, G_MAXINT,
                                                              DEFAULT_TAB_BORDER,
                                                              G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("tab_icon_size",
+                                           g_param_spec_enum ("tab-icon-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TAB_ICON_SIZE,

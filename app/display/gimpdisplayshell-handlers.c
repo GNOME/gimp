@@ -136,34 +136,34 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (gimage, "dirty",
                     G_CALLBACK (gimp_display_shell_clean_dirty_handler),
                     shell);
-  g_signal_connect (gimage, "undo_event",
+  g_signal_connect (gimage, "undo-event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
   g_signal_connect (gimage->grid, "notify",
                     G_CALLBACK (gimp_display_shell_grid_notify_handler),
                     shell);
-  g_signal_connect (gimage, "name_changed",
+  g_signal_connect (gimage, "name-changed",
                     G_CALLBACK (gimp_display_shell_name_changed_handler),
                     shell);
-  g_signal_connect (gimage, "selection_control",
+  g_signal_connect (gimage, "selection-control",
                     G_CALLBACK (gimp_display_shell_selection_control_handler),
                     shell);
-  g_signal_connect (gimage, "size_changed",
+  g_signal_connect (gimage, "size-changed",
                     G_CALLBACK (gimp_display_shell_size_changed_handler),
                     shell);
-  g_signal_connect (gimage, "resolution_changed",
+  g_signal_connect (gimage, "resolution-changed",
                     G_CALLBACK (gimp_display_shell_resolution_changed_handler),
                     shell);
-  g_signal_connect (gimage, "qmask_changed",
+  g_signal_connect (gimage, "qmask-changed",
                     G_CALLBACK (gimp_display_shell_qmask_changed_handler),
                     shell);
-  g_signal_connect (gimage, "update_guide",
+  g_signal_connect (gimage, "update-guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
                     shell);
-  g_signal_connect (gimage, "update_sample_point",
+  g_signal_connect (gimage, "update-sample-point",
                     G_CALLBACK (gimp_display_shell_update_sample_point_handler),
                     shell);
-  g_signal_connect (gimage, "invalidate_preview",
+  g_signal_connect (gimage, "invalidate-preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
                     shell);
 
@@ -176,7 +176,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                                 G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
                                 shell);
   shell->vectors_visible_handler =
-    gimp_container_add_handler (gimage->vectors, "visibility_changed",
+    gimp_container_add_handler (gimage->vectors, "visibility-changed",
                                 G_CALLBACK (gimp_display_shell_vectors_visible_handler),
                                 shell);
 

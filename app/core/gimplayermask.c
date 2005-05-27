@@ -99,7 +99,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
-    g_signal_new ("apply_changed",
+    g_signal_new ("apply-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
@@ -108,7 +108,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
                   G_TYPE_NONE, 0);
 
   layer_mask_signals[EDIT_CHANGED] =
-    g_signal_new ("edit_changed",
+    g_signal_new ("edit-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
@@ -117,7 +117,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
                   G_TYPE_NONE, 0);
 
   layer_mask_signals[SHOW_CHANGED] =
-    g_signal_new ("show_changed",
+    g_signal_new ("show-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),

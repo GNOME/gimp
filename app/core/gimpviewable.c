@@ -152,7 +152,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   quark_preview_pixbuf   = g_quark_from_static_string ("viewable-preview-pixbuf");
 
   viewable_signals[INVALIDATE_PREVIEW] =
-    g_signal_new ("invalidate_preview",
+    g_signal_new ("invalidate-preview",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpViewableClass, invalidate_preview),
@@ -161,7 +161,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                   G_TYPE_NONE, 0);
 
   viewable_signals[SIZE_CHANGED] =
-    g_signal_new ("size_changed",
+    g_signal_new ("size-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpViewableClass, size_changed),
@@ -176,7 +176,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
   klass->default_stock_id        = "gimp-question";
-  klass->name_changed_signal     = "name_changed";
+  klass->name_changed_signal     = "name-changed";
 
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;

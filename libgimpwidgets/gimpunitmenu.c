@@ -109,7 +109,7 @@ gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
    * the #GimpUnitMenu.
    **/
   gimp_unit_menu_signals[UNIT_CHANGED] =
-    g_signal_new ("unit_changed",
+    g_signal_new ("unit-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpUnitMenuClass, unit_changed),
@@ -685,7 +685,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), menu->tv);
 
-  g_signal_connect (menu->tv, "row_activated",
+  g_signal_connect (menu->tv, "row-activated",
                     G_CALLBACK (gimp_unit_menu_selection_row_activated_callback),
                     menu);
 

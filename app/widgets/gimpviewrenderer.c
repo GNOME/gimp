@@ -336,12 +336,12 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
                                  (gpointer *) &renderer->viewable);
 
       g_signal_connect_swapped (renderer->viewable,
-                                "invalidate_preview",
+                                "invalidate-preview",
                                 G_CALLBACK (gimp_view_renderer_invalidate),
                                 renderer);
 
       g_signal_connect_swapped (renderer->viewable,
-                                "size_changed",
+                                "size-changed",
                                 G_CALLBACK (gimp_view_renderer_size_changed),
                                 renderer);
 

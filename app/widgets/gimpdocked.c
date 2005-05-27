@@ -77,7 +77,7 @@ gimp_docked_iface_base_init (GimpDockedInterface *docked_iface)
   if (! initialized)
     {
       docked_signals[TITLE_CHANGED] =
-        g_signal_new ("title_changed",
+        g_signal_new ("title-changed",
                       GIMP_TYPE_DOCKED,
                       G_SIGNAL_RUN_FIRST,
                       G_STRUCT_OFFSET (GimpDockedInterface, title_changed),
