@@ -60,6 +60,7 @@ static gboolean gimp_histogram_editor_idle_update (GimpHistogramEditor *editor);
 static gboolean gimp_histogram_menu_sensitivity   (gint                 value,
                                                    gpointer             data);
 static void  gimp_histogram_editor_menu_update    (GimpHistogramEditor *editor);
+static void  gimp_histogram_editor_name_update    (GimpHistogramEditor *editor);
 static void  gimp_histogram_editor_info_update    (GimpHistogramEditor *editor);
 
 
@@ -316,10 +317,11 @@ static void
 gimp_histogram_editor_layer_changed (GimpImage           *gimage,
                                      GimpHistogramEditor *editor)
 {
-  const gchar *name = NULL;
-
   if (editor->drawable)
     {
+      g_signal_handlers_disconnect_by_func (editor->drawable,
+                                            gimp_histogram_editor_name_update,
+                                            editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
                                             gimp_histogram_editor_menu_update,
                                             editor);
@@ -336,13 +338,14 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
 
   if (editor->drawable)
     {
-      name = gimp_object_get_name (GIMP_OBJECT (editor->drawable));
-
-      g_signal_connect_object (editor->drawable, "invalidate_preview",
+      g_signal_connect_object (editor->drawable, "invalidate-preview",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
-      g_signal_connect_object (editor->drawable, "alpha_changed",
+      g_signal_connect_object (editor->drawable, "alpha-changed",
                                G_CALLBACK (gimp_histogram_editor_menu_update),
+                               editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->drawable, "name-changed",
+                               G_CALLBACK (gimp_histogram_editor_name_update),
                                editor, G_CONNECT_SWAPPED);
 
       gimp_histogram_editor_update (editor);
@@ -354,7 +357,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
       gimp_histogram_editor_info_update (editor);
     }
 
-  gimp_editor_set_name (GIMP_EDITOR (editor), name);
+  gimp_histogram_editor_name_update (editor);
 }
 
 static void
@@ -434,6 +437,18 @@ gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
       gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
     }
 }
+
+static void
+gimp_histogram_editor_name_update (GimpHistogramEditor *editor)
+{
+  const gchar *name = NULL;
+
+  if (editor->drawable)
+    name = gimp_object_get_name (GIMP_OBJECT (editor->drawable));
+
+  gimp_editor_set_name (GIMP_EDITOR (editor), name);
+}
+
 
 static void
 gimp_histogram_editor_info_update (GimpHistogramEditor *editor)

@@ -1,5 +1,10 @@
 2005-05-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimphistogrameditor.[ch]: connect to "name-changed"
+	of the active drawable and change the name displayed in the editor.
+
+2005-05-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpeditor.[ch]: added a name label (with properties
 	to show/hide and to set it).
 
