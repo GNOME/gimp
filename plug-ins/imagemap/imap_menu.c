@@ -56,6 +56,9 @@ void do_grid_settings_dialog();
 void do_zoom_in();
 void do_zoom_out();
 void do_edit_selected_shape();
+void do_create_guides_dialog();
+void do_use_gimp_guides_dialog();
+
 void imap_help();
 void set_func(int func);
 
@@ -197,12 +200,15 @@ static GtkActionEntry entries[] = {
   { "ToolsMenu", NULL, "_Tools" },
   { "GridSettings", NULL, "Grid Settings...", NULL, NULL, 
     do_grid_settings_dialog},
-  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL, NULL},
-  { "CreateGuides", NULL, "Create Guides...", NULL, NULL, NULL},
+  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL, 
+    do_use_gimp_guides_dialog},
+  { "CreateGuides", NULL, "Create Guides...", NULL, NULL, 
+    do_create_guides_dialog},
 
   { "HelpMenu", NULL, "_Help" },
-  { "Contents", NULL, "_Contents", NULL, NULL, imap_help},
-  { "About", NULL, "_About ImageMap...", NULL, NULL, do_about_dialog},
+  { "Contents", GTK_STOCK_HELP, "_Contents", NULL, NULL, imap_help},
+  { "About", GTK_STOCK_ABOUT, "_About ImageMap...", NULL, NULL, 
+    do_about_dialog},
 
   { "ZoomMenu", NULL, "_Zoom" },
 };

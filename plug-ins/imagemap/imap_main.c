@@ -1270,6 +1270,18 @@ do_move_down(void)
   */
 }
 
+void
+do_use_gimp_guides_dialog(void)
+{
+  command_execute (gimp_guides_command_new (_shapes, _drawable));
+}
+
+void
+do_create_guides_dialog(void)
+{
+  command_execute (guides_command_new (_shapes));
+}
+
 #ifdef _NOT_READY_YET_
 
 static Command_t*
@@ -1302,17 +1314,6 @@ factory_send_to_back(void)
    return send_to_back_command_new(_shapes);
 }
 
-static Command_t*
-factory_create_guides_dialog(void)
-{
-   return guides_command_new(_shapes);
-}
-
-static Command_t*
-factory_use_gimp_guides_dialog(void)
-{
-   return gimp_guides_command_new(_shapes, _drawable);
-}
 #endif
 
 static Command_t*

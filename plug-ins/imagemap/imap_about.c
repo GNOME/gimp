@@ -26,24 +26,30 @@
 #include <gtk/gtk.h>
 
 #include "imap_about.h"
-#include "imap_default_dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 void
 do_about_dialog(void)
 {
-   static DefaultDialog_t *dialog;
+   static GtkWidget *dialog;
    if (!dialog)
      {
-       dialog = make_default_dialog (_("About"));
-       default_dialog_hide_cancel_button (dialog);
-       default_dialog_hide_apply_button (dialog);
-       default_dialog_hide_help_button (dialog);
-       default_dialog_set_label (dialog, _("Imagemap plug-in 2.3"));
-       default_dialog_set_label (dialog, _("Copyright(c) 1999-2005 by Maurits Rijk"));
-       default_dialog_set_label (dialog, "m.rijk@chello.nl");
-       default_dialog_set_label (dialog, _("Released under the GNU General Public License"));
+       const gchar* authors[] = {"Maurits Rijk (m.rijk@chello.nl)", NULL};
+
+       dialog = gtk_about_dialog_new ();
+       gtk_about_dialog_set_name (GTK_ABOUT_DIALOG (dialog), "Imagemap plug-in");
+       gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), "2.3");
+       gtk_about_dialog_set_copyright (GTK_ABOUT_DIALOG (dialog),
+                                       _("Copyright(c) 1999-2005 by Maurits Rijk"));
+       gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (dialog), authors);
+       gtk_about_dialog_set_license (GTK_ABOUT_DIALOG (dialog), 
+                                     _("Released under the GNU General Public License"));
+
+       g_signal_connect (dialog, "destroy",
+                         G_CALLBACK (gtk_widget_destroyed),
+                         &dialog);
+
      }
-   default_dialog_show (dialog);
+   gtk_widget_show (dialog);
 }
