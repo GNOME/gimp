@@ -29,9 +29,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_TYPE_IMAGE_COMBO_BOX       (gimp_image_combo_box_get_type ())
+#define GIMP_IMAGE_COMBO_BOX            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_COMBO_BOX, GimpImageComboBox))
+#define GIMP_IS_IMAGE_COMBO_BOX         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_COMBO_BOX)
+
+
 typedef gboolean (* GimpImageConstraintFunc) (gint32   image_id,
                                               gpointer data);
 
+
+GType       gimp_image_combo_box_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_combo_box_new (GimpImageConstraintFunc  constraint,
                                       gpointer                 data);
@@ -39,4 +46,4 @@ GtkWidget * gimp_image_combo_box_new (GimpImageConstraintFunc  constraint,
 
 G_END_DECLS
 
-#endif /* __GIMP_DRAWABLE_COMBO_BOX_H__ */
+#endif /* __GIMP_IMAGE_COMBO_BOX_H__ */

@@ -30,6 +30,7 @@
 
 #include "gimp.h"
 
+#include "gimpuitypes.h"
 #include "gimpimagecombobox.h"
 #include "gimppixbuf.h"
 
@@ -37,6 +38,22 @@
 #define THUMBNAIL_SIZE   24
 #define WIDTH_REQUEST   200
 
+
+typedef struct _GimpImageComboBoxClass GimpImageComboBoxClass;
+
+struct _GimpImageComboBox
+{
+  GimpIntComboBox  parent_instance;
+};
+
+struct _GimpImageComboBoxClass
+{
+  GimpIntComboBoxClass  parent_class;
+};
+
+
+static void  gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass);
+static void  gimp_image_combo_box_init       (GimpImageComboBox      *combo_box);
 
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
                                              gint                     num_images,
@@ -55,6 +72,56 @@ static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
 
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
+
+GType
+gimp_image_combo_box_get_type (void)
+{
+  static GType combo_box_type = 0;
+
+  if (!combo_box_type)
+    {
+      static const GTypeInfo combo_box_info =
+      {
+        sizeof (GimpImageComboBoxClass),
+        NULL, /* base_init */
+        NULL, /* base_finalize */
+        (GClassInitFunc) gimp_image_combo_box_class_init,
+        NULL, /* class_finalize */
+        NULL, /* class_data */
+        sizeof (GimpImageComboBox),
+        0,
+        (GInstanceInitFunc) gimp_image_combo_box_init
+      };
+
+      combo_box_type = g_type_register_static (GIMP_TYPE_INT_COMBO_BOX,
+                                               "GimpImageComboBox",
+                                               &combo_box_info,
+                                               0);
+    }
+
+  return combo_box_type;
+}
+
+static void
+gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass)
+{
+  GtkWidgetClass *widget_class;
+
+  widget_class = GTK_WIDGET_CLASS (klass);
+
+  widget_class->drag_data_received = gimp_image_combo_box_drag_data_received;
+}
+
+static void
+gimp_image_combo_box_init (GimpImageComboBox *combo_box)
+{
+  gtk_drag_dest_set (GTK_WIDGET (combo_box),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
+}
 
 /**
  * gimp_image_combo_box_new:
@@ -85,7 +152,7 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
   gint32       *images;
   gint          num_images;
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+  combo_box = g_object_new (GIMP_TYPE_IMAGE_COMBO_BOX,
                             "width-request", WIDTH_REQUEST,
                             "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
@@ -101,17 +168,6 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
 
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
-
-  gtk_drag_dest_set (combo_box,
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     &target, 1,
-                     GDK_ACTION_COPY);
-
-  g_signal_connect (combo_box, "drag-data-received",
-                    G_CALLBACK (gimp_image_combo_box_drag_data_received),
-                    NULL);
 
   return combo_box;
 }
