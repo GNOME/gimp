@@ -192,13 +192,13 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
-  g_signal_connect_object (editor->view, "select_item",
+  g_signal_connect_object (editor->view, "select-item",
                            G_CALLBACK (gimp_container_editor_select_item),
                            editor, 0);
-  g_signal_connect_object (editor->view, "activate_item",
+  g_signal_connect_object (editor->view, "activate-item",
                            G_CALLBACK (gimp_container_editor_activate_item),
                            editor, 0);
-  g_signal_connect_object (editor->view, "context_item",
+  g_signal_connect_object (editor->view, "context-item",
                            G_CALLBACK (gimp_container_editor_context_item),
                            editor, 0);
 

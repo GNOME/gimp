@@ -220,7 +220,7 @@ stroke_dialog_new (GimpItem    *item,
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
     gtk_widget_show (combo);
 
-    g_signal_connect (combo, "select_item",
+    g_signal_connect (combo, "select-item",
                       G_CALLBACK (stroke_dialog_paint_info_selected),
                       desc);
 

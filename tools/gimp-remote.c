@@ -457,7 +457,7 @@ main (gint    argc,
 
           /*  set up an DND-source  */
           source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-          g_signal_connect (source, "selection_get",
+          g_signal_connect (source, "selection-get",
                             G_CALLBACK (source_selection_get),
                             file_list->str);
           gtk_widget_realize (source);

@@ -177,7 +177,7 @@ gimp_item_linked_get_list (GimpItem           *item,
            list;
            list = g_list_next (list))
         {
-          linked_item = (GimpItem *) list->data;
+          linked_item = list->data;
 
           if (linked_item != item && gimp_item_get_linked (linked_item))
             linked_list = g_list_prepend (linked_list, linked_item);
@@ -190,7 +190,7 @@ gimp_item_linked_get_list (GimpItem           *item,
            list;
            list = g_list_next (list))
         {
-          linked_item = (GimpItem *) list->data;
+          linked_item = list->data;
 
           if (linked_item != item && gimp_item_get_linked (linked_item))
             linked_list = g_list_prepend (linked_list, linked_item);
@@ -203,7 +203,7 @@ gimp_item_linked_get_list (GimpItem           *item,
            list;
            list = g_list_next (list))
         {
-          linked_item = (GimpItem *) list->data;
+          linked_item = list->data;
 
           if (linked_item != item && gimp_item_get_linked (linked_item))
             linked_list = g_list_prepend (linked_list, linked_item);

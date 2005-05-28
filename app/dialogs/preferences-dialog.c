@@ -1758,7 +1758,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
 
-    g_signal_connect (combo, "select_item",
+    g_signal_connect (combo, "select-item",
                       G_CALLBACK (prefs_template_select_callback),
                       core_config->default_image);
   }

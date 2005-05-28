@@ -153,7 +153,7 @@ gimp_undo_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
   gtk_widget_show (undo_editor->view);
 
-  g_signal_connect (undo_editor->view, "select_item",
+  g_signal_connect (undo_editor->view, "select-item",
                     G_CALLBACK (gimp_undo_editor_select_item),
                     undo_editor);
 

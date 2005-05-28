@@ -141,7 +141,7 @@ image_new_dialog_new (Gimp *gimp)
                              _("_Template:"),  0.0, 0.5,
                              dialog->combo, 1, FALSE);
 
-  g_signal_connect (dialog->combo, "select_item",
+  g_signal_connect (dialog->combo, "select-item",
                     G_CALLBACK (image_new_template_select),
                     dialog);
 

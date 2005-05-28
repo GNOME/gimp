@@ -201,7 +201,7 @@ about_dialog_create (void)
                          widget);
       gtk_widget_show (widget);
 
-      g_signal_connect (widget, "expose_event",
+      g_signal_connect (widget, "expose-event",
                         G_CALLBACK (about_dialog_logo_expose),
                         NULL);
 
