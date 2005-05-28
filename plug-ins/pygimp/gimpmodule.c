@@ -895,7 +895,8 @@ pygimp_gradient_get_uniform_samples(PyObject *self, PyObject *args)
     int i, j;
     PyObject *ret;
 
-    if (!PyArg_ParseTuple(args, "si|i:gradient_get_uniform_samples", &name, &num, &reverse))
+    if (!PyArg_ParseTuple(args, "si|i:gradient_get_uniform_samples",
+			  &name, &num, &reverse))
 	return NULL;
 
     if (!gimp_gradient_get_uniform_samples(name, num, reverse, &nsamp, &samp)) {
@@ -924,7 +925,7 @@ pygimp_gradient_get_custom_samples(PyObject *self, PyObject *args)
     PyObject *ret, *item;
     gboolean success;
 
-    if (!PyArg_ParseTuple(args, "sO|i:gradient_get_uniform_samples",
+    if (!PyArg_ParseTuple(args, "sO|i:gradient_get_custom_samples",
 			  &name, &ret, &reverse))
 	return NULL;
 
@@ -975,7 +976,8 @@ pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
     char *name;
     PyObject *arg_list, *str, *new_args, *ret;
 
-    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.gradient_get_uniform_samples") < 0)
+    if (PyErr_Warn(PyExc_DeprecationWarning,
+		   "use gimp.gradient_get_uniform_samples") < 0)
         return NULL;
 
     arg_list = PySequence_List(args);
@@ -1003,7 +1005,8 @@ pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
     char *name;
     PyObject *arg_list, *str, *new_args, *ret;
 
-    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.gradient_get_custom_samples") < 0)
+    if (PyErr_Warn(PyExc_DeprecationWarning,
+		   "use gimp.gradient_get_custom_samples") < 0)
         return NULL;
 
     arg_list = PySequence_List(args);
@@ -1468,8 +1471,8 @@ static char gimp_module_documentation[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-void
-initgimp()
+DL_EXPORT(void)
+initgimp(void)
 {
     PyObject *m, *d;
     PyObject *i;
@@ -1532,7 +1535,7 @@ initgimp()
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,
 		       gimp_module_documentation,
-		       (PyObject*)NULL, PYTHON_API_VERSION);
+		       NULL, PYTHON_API_VERSION);
 
     /* Add some symbolic constants to the module */
     d = PyModule_GetDict(m);

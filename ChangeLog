@@ -1,5 +1,11 @@
 2005-05-28  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/procbrowser.c: use DL_EXPORT for the init functions,
+	maybe this will help Win32 builds. Also some minor cleanups.
+
+2005-05-28  Manish Singh  <yosh@gimp.org>
+
 	* libgimp/gimpuitypes.h
 	* libgimp/gimpimagecombobox.[ch]: turn this into a GObject with its
 	own type.

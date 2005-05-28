@@ -179,7 +179,7 @@ static char procbrowser_doc[] =
 "This module provides a simple interface for the GIMP PDB Browser"
 ;
 
-void
+DL_EXPORT(void)
 initgimpprocbrowser(void)
 {
     PyObject *m, *pygimp;
