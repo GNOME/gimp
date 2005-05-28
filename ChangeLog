@@ -3416,24 +3416,24 @@
 	* app/tools/gimpcolortool.c: converted tabs to spaces, stylistic
 	cleanups.
 
-2003-03-06  Manish Singh  <yosh@gimp.org>
+2005-03-06  Manish Singh  <yosh@gimp.org>
 
 	* app/composite/gimp-composite-altivec.c: contort it to compile with
 	Apple's weirdo gcc.
 
 	* app/composite/gimp-composite-altivec.h: honor USE_ALTIVEC.
 
-2003-03-06  Manish Singh  <yosh@gimp.org>
+2005-03-06  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: rework AltiVec tests some.
 
-2003-03-06  Manish Singh  <yosh@gimp.org>
+2005-03-06  Manish Singh  <yosh@gimp.org>
 
 	* app/composite/gimp-composite-altivec-installer.c
 	* app/composite/gimp-composite-altivec-test.c: regenerated so the new
 	implementation is actually used.
 	
-2003-03-06  Manish Singh  <yosh@gimp.org>
+2005-03-06  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: revised tests for AltiVec. Define ALTIVEC_EXTRA_CFLAGS
 	for the extra compiler options needed. Also, support runtime checking
@@ -3640,7 +3640,7 @@
 
 	Also fixed and cleaned up the new generic tool value code.
 
-2003-03-04  Manish Singh  <yosh@gimp.org>
+2005-03-04  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/gqbist.c: #include gstdio.h
 
