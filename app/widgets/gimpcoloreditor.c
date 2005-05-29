@@ -42,11 +42,28 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_CONTEXT
+};
+
+
 static void   gimp_color_editor_class_init        (GimpColorEditorClass *klass);
 static void   gimp_color_editor_init              (GimpColorEditor      *editor);
 static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *docked_iface);
 
+static void   gimp_color_editor_set_property    (GObject           *object,
+                                                 guint              property_id,
+                                                 const GValue      *value,
+                                                 GParamSpec        *pspec);
+static void   gimp_color_editor_get_property    (GObject           *object,
+                                                 guint              property_id,
+                                                 GValue            *value,
+                                                 GParamSpec        *pspec);
+
 static void   gimp_color_editor_destroy         (GtkObject         *object);
+
 static void   gimp_color_editor_style_set       (GtkWidget         *widget,
                                                  GtkStyle          *prev_style);
 
@@ -55,8 +72,6 @@ static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
 static GList *gimp_color_editor_get_aux_info     (GimpDocked       *docked);
 static void   gimp_color_editor_set_context     (GimpDocked        *docked,
                                                  GimpContext       *context);
-
-static void   gimp_color_editor_destroy         (GtkObject         *object);
 
 static void   gimp_color_editor_fg_changed      (GimpContext       *context,
                                                  const GimpRGB     *rgb,
@@ -123,14 +138,25 @@ gimp_color_editor_get_type (void)
 static void
 gimp_color_editor_class_init (GimpColorEditorClass* klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_color_editor_destroy;
+  object_class->set_property = gimp_color_editor_set_property;
+  object_class->get_property = gimp_color_editor_get_property;
 
-  widget_class->style_set = gimp_color_editor_style_set;
+  gtk_object_class->destroy  = gimp_color_editor_destroy;
+
+  widget_class->style_set    = gimp_color_editor_style_set;
+
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_CONTEXT,
+                                                        G_PARAM_READWRITE));
+
 }
 
 static void
@@ -258,6 +284,53 @@ gimp_color_editor_init (GimpColorEditor *editor)
   g_signal_connect (editor->hex_entry, "color-changed",
                     G_CALLBACK (gimp_color_editor_entry_changed),
                     editor);
+}
+
+static void
+gimp_color_editor_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      gimp_docked_set_context (GIMP_DOCKED (object),
+                               g_value_get_object (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_editor_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->context);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+static void
+gimp_color_editor_destroy (GtkObject *object)
+{
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
+
+  if (editor->context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static GtkWidget *
@@ -399,30 +472,12 @@ gimp_color_editor_set_context (GimpDocked  *docked,
   gimp_fg_bg_editor_set_context (GIMP_FG_BG_EDITOR (editor->fg_bg), context);
 }
 
-static void
-gimp_color_editor_destroy (GtkObject *object)
-{
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
-
-  if (editor->context)
-    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
 GtkWidget *
 gimp_color_editor_new (GimpContext *context)
 {
-  GimpColorEditor *editor;
-
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
-
-  editor = g_object_new (GIMP_TYPE_COLOR_EDITOR, NULL);
-
-  if (context)
-    gimp_docked_set_context (GIMP_DOCKED (editor), context);
-
-  return GTK_WIDGET (editor);
+  return g_object_new (GIMP_TYPE_COLOR_EDITOR,
+                       "context", context,
+                       NULL);
 }
 
 static void

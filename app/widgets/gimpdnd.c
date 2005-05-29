@@ -1268,8 +1268,9 @@ gimp_dnd_get_color_icon (GtkWidget *widget,
 
   (* (GimpDndDragColorFunc) get_color_func) (widget, &color, get_color_data);
 
-  color_area = gimp_color_area_new (&color, TRUE, 0);
-  gtk_widget_set_size_request (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+  color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+  gtk_widget_set_size_request (color_area,
+                               DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
 
   return color_area;
 }

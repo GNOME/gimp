@@ -1,3 +1,14 @@
+2005-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdnd.c (gimp_dnd_get_color_icon): pass
+	GIMP_COLOR_AREA_CHECKS_SMALL instead of TRUE for the type of the
+	GimpColorArea.
+
+	* app/widgets/gimpcoloreditor.c: added a "context" property.
+
+	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_set_color):
+	always use gimp_rgba_distance(), regardless of the area's type.
+
 2005-05-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c

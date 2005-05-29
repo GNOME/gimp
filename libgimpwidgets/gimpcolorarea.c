@@ -388,16 +388,8 @@ gimp_color_area_set_color (GimpColorArea *area,
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (color != NULL);
 
-  if (area->type == GIMP_COLOR_AREA_FLAT)
-    {
-      if (gimp_rgb_distance (&area->color, color) < 0.000001)
-        return;
-    }
-  else
-    {
-      if (gimp_rgba_distance (&area->color, color) < 0.000001)
-        return;
-    }
+  if (gimp_rgba_distance (&area->color, color) < 0.000001)
+    return;
 
   area->color = *color;
 
