@@ -814,6 +814,12 @@ gimp_image_undo_thaw
 </SECTION>
 
 <SECTION>
+<FILE>gimpvectors</FILE>
+gimp_vectors_get_strokes
+gimp_vectors_stroke_translate
+</SECTION>
+
+<SECTION>
 <FILE>gimppixbuf</FILE>
 GimpPixbufTransparency
 gimp_image_get_thumbnail
@@ -857,6 +863,7 @@ GIMP_DRAWABLE_PREVIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpdrawablecombobox</FILE>
+<TITLE>GimpDrawableComboBox</TITLE>
 GimpDrawableConstraintFunc
 gimp_drawable_combo_box_new
 gimp_channel_combo_box_new
@@ -865,8 +872,15 @@ gimp_layer_combo_box_new
 
 <SECTION>
 <FILE>gimpimagecombobox</FILE>
+<TITLE>GimpImageComboBox</TITLE>
+GimpImageComboBox
 GimpImageConstraintFunc
 gimp_image_combo_box_new
+<SUBSECTION Standard>
+GIMP_IMAGE_COMBO_BOX
+GIMP_IS_IMAGE_COMBO_BOX
+GIMP_TYPE_IMAGE_COMBO_BOX
+gimp_image_combo_box_get_type
 </SECTION>
 
 <SECTION>
