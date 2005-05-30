@@ -150,14 +150,14 @@ typedef enum
 
 typedef struct
 {
-  ShootType        shoot_type;
-  gboolean         decorate;
-  guint            window_id;
-  guint            select_delay;
-  gint             x1;
-  gint             y1;
-  gint             x2;
-  gint             y2;
+  ShootType  shoot_type;
+  gboolean   decorate;
+  guint      window_id;
+  guint      select_delay;
+  gint       x1;
+  gint       y1;
+  gint       x2;
+  gint       y2;
 } ScreenShotValues;
 
 static ScreenShotValues shootvals =
@@ -744,6 +744,7 @@ shoot_dialog (GdkScreen **screen)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *button;
+  GtkWidget *toggle;
   GtkWidget *spinner;
   GdkPixbuf *pixbuf;
   GSList    *radio_group = NULL;
@@ -761,7 +762,7 @@ shoot_dialog (GdkScreen **screen)
 			    NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("Grab"), GTK_RESPONSE_OK);
+                                  _("_Grab"), GTK_RESPONSE_OK);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                               GTK_RESPONSE_OK,
@@ -794,7 +795,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("a _Single Window"));
+					       _("a single _window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_WINDOW);
@@ -814,10 +815,12 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_check_button_new_with_label (_("Include decoration"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.decorate);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 20);
-  gtk_widget_show (button);
+  toggle = gtk_check_button_new_with_label (_("Include decoration"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), shootvals.decorate);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 20);
+  gtk_widget_show (toggle);
+
+  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -827,7 +830,7 @@ shoot_dialog (GdkScreen **screen)
 
   /*  dragged region  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("Selected Region"));
+					       _("the selected _region"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_REGION);
@@ -844,7 +847,7 @@ shoot_dialog (GdkScreen **screen)
 
   /*  root window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("the _Whole Screen"));
+					       _("the whole _screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_ROOT);
@@ -867,7 +870,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("Delay for"));
+  label = gtk_label_new_with_mnemonic (_("W_ait for"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

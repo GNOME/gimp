@@ -1,3 +1,7 @@
+2005-05-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/screenshot.c: capitalization and mnemonics.
+
 2005-05-29  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdnd.c (gimp_dnd_get_color_icon): pass
