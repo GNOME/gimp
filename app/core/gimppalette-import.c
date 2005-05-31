@@ -18,7 +18,8 @@
 
 #include "config.h"
 
-#include <string.h> /* memcpy */
+#include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
@@ -377,9 +378,10 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
 typedef enum
 {
   GIMP_PALETTE_FILE_FORMAT_UNKNOWN,
-  GIMP_PALETTE_FILE_FORMAT_GPL,    /*  GIMP palette file                    */
-  GIMP_PALETTE_FILE_FORMAT_PAL,    /*  RIFF palette file                    */
-  GIMP_PALETTE_FILE_FORMAT_ACT     /*  Photoshop binary color palette file  */
+  GIMP_PALETTE_FILE_FORMAT_GPL,      /* GIMP palette                        */
+  GIMP_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
+  GIMP_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
+  GIMP_PALETTE_FILE_FORMAT_PSP_PAL   /* JASC's Paint Shop Pro color palette */
 } GimpPaletteFileFormat;
 
 static GimpPaletteFileFormat
@@ -398,13 +400,18 @@ gimp_palette_detect_file_format (const gchar *filename)
 	  if (strncmp (header + 0, "RIFF", 4) == 0 &&
               strncmp (header + 8, "PAL data", 8) == 0)
  	    {
-              format = GIMP_PALETTE_FILE_FORMAT_PAL;
+              format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
 	    }
 
 	  if (strncmp (header, "GIMP Palette", 12) == 0)
 	    {
               format = GIMP_PALETTE_FILE_FORMAT_GPL;
 	    }
+
+          if (strncmp (header, "JASC-PAL", 8) == 0)
+            {
+              format = GIMP_PALETTE_FILE_FORMAT_PSP_PAL;
+            }
 	}
 
       if (fstat (fd, &file_stat) >= 0)
@@ -469,7 +476,7 @@ gimp_palette_import_from_file (const gchar  *filename,
         }
       break;
 
-    case GIMP_PALETTE_FILE_FORMAT_PAL:
+    case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
       palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
 
       lseek (fd, 28, SEEK_SET);
@@ -485,10 +492,73 @@ gimp_palette_import_from_file (const gchar  *filename,
         }
       break;
 
+    case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:
+      {
+        gint       number_of_colors;
+        gint       data_size;
+        gint       i, j;
+        gboolean   color_ok;
+        gchar      buffer[4096];
+        /*Maximum valid file size: 256 * 4 * 3 + 256 * 2  ~= 3650 bytes */
+        gchar    **lines;
+        gchar    **ascii_colors;
+
+        palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+
+        lseek (fd, 16, SEEK_SET);
+        data_size = read (fd, buffer, sizeof (buffer) - 1);
+        buffer [data_size] = '\0';
+
+        lines = g_strsplit (buffer, "\x0d\x0a", -1);
+
+        number_of_colors = atoi (lines[0]);
+
+        for (i = 0; i < number_of_colors; i++)
+          {
+            if (lines[i + 1] == NULL)
+              {
+                g_printerr ("Premature end of file reading %s.",
+                            gimp_filename_to_utf8 (filename));
+                break;
+              }
+
+            ascii_colors = g_strsplit (lines [i + 1], " ", 3);
+            color_ok = TRUE;
+
+            for (j = 0 ; j < 3; j++)
+              {
+                if (ascii_colors [j] == NULL)
+                  {
+                    g_printerr ("Corrupted palette file %s.",
+                                gimp_filename_to_utf8 (filename));
+                    color_ok = FALSE;
+                    break;
+                  }
+
+                color_bytes [j] = atoi (ascii_colors[j]);
+              }
+
+            if (color_ok)
+              {
+                gimp_rgba_set_uchar (&color,
+                                     color_bytes[0],
+                                     color_bytes[1],
+                                     color_bytes[2],
+                                     255);
+                gimp_palette_add_entry (palette, -1, NULL, &color);
+              }
+
+            g_strfreev (ascii_colors);
+          }
+
+        g_strfreev (lines);
+      }
+      break;
+
     default:
       g_set_error (error,
-                   0, 0,
-                   _("Unknown type of palette file:\n%s"),
+                   GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unknown type of palette file: %s"),
                    gimp_filename_to_utf8 (filename));
       break;
     }
