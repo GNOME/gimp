@@ -1,3 +1,9 @@
+2005-05-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpbrightnesscontrasttool.[ch]: Allow tool to be 
+	operating by clicking and dragging inside the image, as
+	described in bug #165330.
+
 2005-05-31  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/common/CEL.c
