@@ -1,3 +1,7 @@
+2005-05-31  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprojection-construct.c: code cleanup.
+
 2005-05-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpstatusbar.c (gimp_statusbar_init): enable

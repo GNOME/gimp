@@ -102,6 +102,7 @@ gimp_projection_construct (GimpProjection *proj,
 
       layer = GIMP_DRAWABLE (gimp_container_get_child_by_index (gimage->layers,
                                                                 0));
+
       if (gimp_drawable_has_alpha (layer)                          &&
           (gimp_item_get_visible (GIMP_ITEM (layer)))              &&
           (gimp_item_width (GIMP_ITEM (layer))  == gimage->width)  &&
@@ -163,14 +164,12 @@ gimp_projection_construct_layers (GimpProjection *proj,
                                   gint            w,
                                   gint            h)
 {
-  GimpLayer   *layer;
-  gint         x1, y1, x2, y2;
-  PixelRegion  src1PR, src2PR, maskPR;
-  PixelRegion * mask;
-  GList       *list;
-  GList       *reverse_list;
-  gint         off_x;
-  gint         off_y;
+  GimpLayer *layer;
+  GList     *list;
+  GList     *reverse_list;
+  gint       x1, y1, x2, y2;
+  gint       off_x;
+  gint       off_y;
 
   /*  composite the floating selection if it exists  */
   if ((layer = gimp_image_floating_sel (proj->gimage)))
@@ -182,7 +181,7 @@ gimp_projection_construct_layers (GimpProjection *proj,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      layer = list->data;
 
       /*  only add layers that are visible and not floating selections
        *  to the list
@@ -196,7 +195,11 @@ gimp_projection_construct_layers (GimpProjection *proj,
 
   for (list = reverse_list; list; list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      PixelRegion  src1PR;
+      PixelRegion  src2PR;
+      PixelRegion  maskPR;
+
+      layer = list->data;
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
@@ -223,6 +226,8 @@ gimp_projection_construct_layers (GimpProjection *proj,
       /*  Otherwise, normal  */
       else
 	{
+          PixelRegion *mask = NULL;
+
 	  pixel_region_init (&src2PR,
 			     gimp_drawable_data (GIMP_DRAWABLE (layer)),
 			     (x1 - off_x), (y1 - off_y),
@@ -236,20 +241,20 @@ gimp_projection_construct_layers (GimpProjection *proj,
 				 (x2 - x1), (y2 - y1), FALSE);
 	      mask = &maskPR;
 	    }
-	  else
-	    mask = NULL;
 
 	  /*  Based on the type of the layer, project the layer onto the
 	   *  projection image...
 	   */
 	  switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
 	    {
-	    case GIMP_RGB_IMAGE: case GIMP_GRAY_IMAGE:
+	    case GIMP_RGB_IMAGE:
+            case GIMP_GRAY_IMAGE:
 	      /* no mask possible */
 	      project_intensity (proj, layer, &src2PR, &src1PR, mask);
 	      break;
 
-	    case GIMP_RGBA_IMAGE: case GIMP_GRAYA_IMAGE:
+	    case GIMP_RGBA_IMAGE:
+            case GIMP_GRAYA_IMAGE:
 	      project_intensity_alpha (proj, layer, &src2PR, &src1PR, mask);
 	      break;
 
@@ -280,11 +285,8 @@ gimp_projection_construct_channels (GimpProjection *proj,
                                     gint            w,
                                     gint            h)
 {
-  GimpChannel *channel;
-  PixelRegion  src1PR;
-  PixelRegion  src2PR;
-  GList       *list;
-  GList       *reverse_list = NULL;
+  GList *list;
+  GList *reverse_list = NULL;
 
   /*  reverse the channel list  */
   for (list = GIMP_LIST (proj->gimage->channels)->list;
@@ -296,10 +298,13 @@ gimp_projection_construct_channels (GimpProjection *proj,
 
   for (list = reverse_list; list; list = g_list_next (list))
     {
-      channel = (GimpChannel *) list->data;
+      GimpChannel *channel = list->data;
 
       if (gimp_item_get_visible (GIMP_ITEM (channel)))
 	{
+          PixelRegion  src1PR;
+          PixelRegion  src2PR;
+
 	  /* configure the pixel regions  */
 	  pixel_region_init (&src1PR,
 			     gimp_projection_get_tiles (proj),
