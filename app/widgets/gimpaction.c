@@ -260,6 +260,27 @@ gimp_action_set_proxy (GimpAction *action,
   if (! GTK_IS_IMAGE_MENU_ITEM (proxy))
     return;
 
+  /*  This is not quite the correct check, but works fine to enable
+   *  tooltips only for the "Open Recent" menu items, since they are
+   *  the only ones having both a viewable and a tooltip. --mitch
+   */
+  if (action->viewable)
+    {
+      gchar *tooltip = NULL;
+
+      g_object_get (action, "tooltip", &tooltip, NULL);
+
+      if (tooltip)
+        {
+          const gchar *help_id;
+
+          help_id = g_object_get_qdata (proxy, GIMP_HELP_ID);
+
+          gimp_help_set_help_data (proxy, tooltip, help_id);
+          g_free (tooltip);
+        }
+    }
+
   if (action->color)
     {
       GtkWidget *area;
