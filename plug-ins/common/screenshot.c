@@ -829,9 +829,9 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Include decoration"));
+  toggle = gtk_check_button_new_with_label (_("Include window decoration"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), shootvals.decorate);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 20);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
