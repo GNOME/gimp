@@ -1,18 +1,24 @@
-/* pcx.c GIMP plug-in for loading & saving PCX files */
+/*
+ * pcx.c GIMP plug-in for loading & saving PCX files
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
 
 /* This code is based in parts on code by Francisco Bustamante, but the
    largest portion of the code has been rewritten and is now maintained
    occasionally by Nick Lamb njl195@zepler.org.uk */
-
-/* New for 1998 -- Load 1, 4, 8 & 24 bit PCX files */
-/*              -- Save 8 & 24 bit PCX files */
-/* 1998-01-19 - fixed some endianness problems (Raphael Quinet) */
-/* 1998-02-05 - merged patch with "official" tree, some tidying up (njl) */
-/* 1998-05-17 - changed email address, more tidying up (njl) */
-/* 1998-05-31 - g_message (njl) */
-
-/* Please contact me if you can't use your PCXs with this tool, I want
-   The GIMP to have the best file filters on the planet */
 
 #include "config.h"
 

@@ -1,4 +1,23 @@
 /*
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+/*
  * hot.c - Scan an image for pixels with RGB values that will give
  *	"unsafe" values of chrominance signal or composite signal
  *	amplitude when encoded into an NTSC or PAL colour signal.
@@ -42,20 +61,6 @@
  *	goes to zero with 120 IRE input signal.  Generally, 110
  *	is a good compromise - it allows somewhat brighter colours
  *	than 100, while staying safely away from the hard limit.
- */
-
-/*
- * run-time options:
- *
- * Define either NTSC or PAL as 1 to select the colour system.
- * Define the other one as zero, or leave it undefined.
- *
- * Define FLAG_HOT as 1 if you want "hot" pixels set to black
- *	to identify them.  Otherwise they will be made safe.
- *
- * Define REDUCE_SAT as 1 if you want hot pixels to be repaired by
- *	reducing their saturation.  By default, luminance is reduced.
- *
  */
 
 #include "config.h"

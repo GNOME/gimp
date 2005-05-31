@@ -1,26 +1,22 @@
 /* cel.c -- KISS CEL file format plug-in for The GIMP
  * (copyright) 1997,1998 Nick Lamb (njl195@zepler.org.uk)
  *
- * Skeleton cloned from Michael Sweet's PNG plug-in. KISS format courtesy
- * of the KISS/GS documentation. Problem reports to the above address
- */
-
-/* History:
- * 0.1  Very limited functionality (modern 4bit only)
- * 0.2  Default palette (nice yellows) is automatically used
- * 0.3  Support for the older (pre KISS/GS) cell format
- * 0.4  First support for saving images
- * 0.5  Show copyright date, not version number, thanks to DbBrowser
- * 0.6  File dialogs, palette handling, better magic behaviour
- * 0.7  Handle interactivity settings, tidy up
- * 1.0  Fixed for GIMP 0.99.27 running on GTK+ 1.0.0, and released
- * 1.1  Oops, #include unistd.h, thanks Tamito Kajiyama
- * 1.2  Changed email address, tidied up
- * 1.3  Added g_message features, fixed Saving bugs...
- * 1.4  Offsets work (needed them for a nice example set)
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Possible future additions:
- *  +   Save (perhaps optionally?) the palette in a KCF
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -47,7 +43,7 @@ static gint      load_palette   (FILE        *fp,
                                  guchar       palette[]);
 static gint32    load_image     (const gchar *file,
                                  const gchar *brief);
-static gint      save_image     (const gchar *file,
+static gboolean  save_image     (const gchar *file,
                                  const gchar *brief,
                                  gint32       image,
                                  gint32       layer);
@@ -533,7 +529,7 @@ load_palette (FILE   *fp,
   return colours;
 }
 
-static gint
+static gboolean
 save_image (const gchar *file,
             const gchar *brief,
             gint32       image,

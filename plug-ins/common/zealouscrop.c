@@ -1,13 +1,20 @@
 /*
  * ZealousCrop plug-in version 1.00
  * by Adam D. Moss <adam@foxbox.org>
- * loosely based on Autocrop by Tim Newsome <drz@froody.bloke.com>
- */
-
-/*
- * BUGS:
- *  Doesn't undo properly.
- *  Progress bar doesn't do anything yet.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 #include "config.h"
@@ -179,13 +186,13 @@ do_zcrop (GimpDrawable *drawable,
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   livingrows = 0;
-  for (y=0; y<height; y++)
+  for (y = 0; y < height; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y, width);
 
       killrows[y] = TRUE;
 
-      for (x=0; x<width*bytes; x+=bytes)
+      for (x = 0; x < width * bytes; x += bytes)
         {
           if (!colours_equal (buffer, &buffer[x], bytes))
             {
@@ -202,13 +209,13 @@ do_zcrop (GimpDrawable *drawable,
 
 
   livingcols = 0;
-  for (x=0; x<width; x++)
+  for (x = 0; x < width; x++)
     {
       gimp_pixel_rgn_get_col (&srcPR, buffer, x, 0, height);
 
       killcols[x] = TRUE;
 
-      for (y=0; y<height*bytes; y+=bytes)
+      for (y = 0; y < height * bytes; y += bytes)
         {
           if (!colours_equal(buffer, &buffer[y], bytes))
             {
@@ -224,8 +231,8 @@ do_zcrop (GimpDrawable *drawable,
     }
 
 
-  if (((livingcols==0) || (livingrows==0)) ||
-      ((livingcols==width) && (livingrows==height)))
+  if ((livingcols == 0 || livingrows==0) ||
+      (livingcols == width && livingrows == height))
     {
       g_message (_("Nothing to crop."));
       return;
@@ -233,7 +240,7 @@ do_zcrop (GimpDrawable *drawable,
 
   destrow = 0;
 
-  for (y=0; y<height; y++)
+  for (y = 0; y < height; y++)
     {
       if (!killrows[y])
         {
@@ -251,7 +258,7 @@ do_zcrop (GimpDrawable *drawable,
   destcol = 0;
   gimp_pixel_rgn_init(&srcPR, drawable, 0, 0, width, height, FALSE, TRUE);
 
-  for (x=0; x<width; x++)
+  for (x = 0; x < width; x++)
     {
       if (!killcols[x])
         {

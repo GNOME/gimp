@@ -1,5 +1,19 @@
 2005-05-31  Maurits Rijk  <m.rijk@chello.nl>
 
+	* plug-ins/common/CEL.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/hot.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/tiler.c
+	* plug-ins/common/zealouscrop.c: GPL license added for plug-ins
+	without any license. If any of the authors objects we will
+	probably have to remove the plug-in.
+
+2005-05-31  Maurits Rijk  <m.rijk@chello.nl>
+
 	* plug-ins/gfig/gfig-dobject.c: plug memory leak: Fixes #305990
 
 2005-05-31  Maurits Rijk  <m.rijk@chello.nl>

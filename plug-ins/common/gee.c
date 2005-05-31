@@ -1,13 +1,24 @@
 /*
  * (c) Adam D. Moss : 1998-2000 : adam@gimp.org : adam@foxbox.org
  *
- * Enjoy.
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * Version 1.01 : 2000-12-12
- *
- */
 #include "config.h"
 
 #include <string.h>
@@ -137,7 +148,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-
 static void
 build_dialog (void)
 {
@@ -185,7 +195,6 @@ build_dialog (void)
                               NULL);
 }
 
-
 /* #define LIGHT 0x19
 #define LIGHT 0x1a
 #define LIGHT 0x21 */
@@ -210,7 +219,6 @@ gen_llut (void)
       llut[i] = k;
     }
 }
-
 
 static void
 do_fun (void)
@@ -244,7 +252,6 @@ do_fun (void)
 
   gtk_main ();
 }
-
 
 static void
 show (void)
@@ -289,7 +296,6 @@ bumpbob (int x, int y, int size)
       /* memset(&destbump[x+(y+o)*IWIDTH], 131, size); */
     }
 }
-
 
 /* Adam's sillier algorithm. */
 static void
@@ -522,7 +528,6 @@ iterate (void)
   }
 }
 
-
 static void
 render_frame (void)
 {
@@ -547,7 +552,6 @@ render_frame (void)
 
   frame++;
 }
-
 
 static void
 init_preview_misc (void)
@@ -628,7 +632,6 @@ init_preview_misc (void)
     }
 
   gimp_drawable_detach(drawable);
-
 
   /* convert the image data of varying types into flat grey or rgb. */
   switch (imagetype)
