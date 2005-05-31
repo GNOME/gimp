@@ -217,6 +217,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->progressbar = gtk_progress_bar_new ();
+  gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR (statusbar->progressbar),
+                                  PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (box, statusbar->progressbar, TRUE, TRUE, 0);
   gtk_widget_show (statusbar->progressbar);
 

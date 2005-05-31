@@ -1,5 +1,11 @@
 2005-05-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_init): enable
+	ellipsation on the progressbar. Fixes initial display width
+	calculation for long statusbar strings.
+
+2005-05-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpaction.c (gimp_action_set_proxy): re-enabled
 	tooltips on the "Open Recent" menu items, using an evil but
 	documented heuristic.
