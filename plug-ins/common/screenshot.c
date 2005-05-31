@@ -361,19 +361,21 @@ run (const gchar      *name,
 static GdkNativeWindow
 select_window_x11 (GdkScreen *screen)
 {
-  Display    *x_dpy;
-  Cursor      x_cursor;
-  XEvent      x_event;
-  Window      x_win;
-  Window      x_root;
-  XGCValues   gc_values;
-  GC          gc          = NULL;
-  gint        x_scr;
-  gint        status;
-  gint        buttons;
-  gint        mask        = ButtonPressMask | ButtonReleaseMask;
-  gint        x, y, w, h;
-  gboolean    cancel = FALSE;
+  Display      *x_dpy;
+  Cursor        x_cursor;
+  XEvent        x_event;
+  Window        x_win;
+  Window        x_root;
+  XGCValues     gc_values;
+  GC            gc          = NULL;
+  GdkKeymapKey *keys        = NULL;
+  gint          x_scr;
+  gint          status;
+  gint          buttons;
+  gint          mask        = ButtonPressMask | ButtonReleaseMask;
+  gint          x, y, w, h;
+  gint          num_keys;
+  gboolean      cancel      = FALSE;
 
   x_dpy = GDK_SCREEN_XDISPLAY (screen);
   x_scr = GDK_SCREEN_XNUMBER (screen);
@@ -421,8 +423,11 @@ select_window_x11 (GdkScreen *screen)
       return 0;
     }
 
-  XGrabKeyboard (x_dpy, x_root, False,
-                 GrabModeAsync, GrabModeAsync, CurrentTime);
+  if (gdk_keymap_get_entries_for_keyval (NULL, GDK_Escape, &keys, &num_keys))
+    {
+      XGrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root, False,
+                GrabModeAsync, GrabModeAsync);
+    }
 
   while (! cancel && ((x_win == None) || (buttons != 0)))
     {
@@ -457,8 +462,10 @@ select_window_x11 (GdkScreen *screen)
               y = MIN (shootvals.y1, shootvals.y2);
               w = ABS (shootvals.x2 - shootvals.x1);
               h = ABS (shootvals.y2 - shootvals.y1);
+
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+
               shootvals.x2 = x_event.xbutton.x_root;
               shootvals.y2 = x_event.xbutton.y_root;
             }
@@ -471,6 +478,7 @@ select_window_x11 (GdkScreen *screen)
               y = MIN (shootvals.y1, shootvals.y2);
               w = ABS (shootvals.x2 - shootvals.x1);
               h = ABS (shootvals.y2 - shootvals.y1);
+
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
 
@@ -481,6 +489,7 @@ select_window_x11 (GdkScreen *screen)
               y = MIN (shootvals.y1, shootvals.y2);
               w = ABS (shootvals.x2 - shootvals.x1);
               h = ABS (shootvals.y2 - shootvals.y1);
+
               if (w > 0 && h > 0)
                 XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
             }
@@ -510,7 +519,9 @@ select_window_x11 (GdkScreen *screen)
         }
     }
 
-  XUngrabKeyboard (x_dpy, CurrentTime);
+  if (keys)
+    XUngrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root);
+
   XUngrabPointer (x_dpy, CurrentTime);
   XFreeCursor (x_dpy, x_cursor);
 
