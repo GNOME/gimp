@@ -1,3 +1,12 @@
+2005-05-31  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+	
+	* app/widgets/gimpenumwidgets.c
+	(gimp_enum_stock_box_set_child_padding): don't leak the return
+	value of gtk_container_get_children (bug #305994, spotted by Ted
+	Kremenek).
+
 2005-05-26  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

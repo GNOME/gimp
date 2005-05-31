@@ -327,13 +327,14 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
                                        gint       xpad,
                                        gint       ypad)
 {
+  GList *children;
   GList *list;
 
   g_return_if_fail (GTK_IS_CONTAINER (stock_box));
 
-  for (list = gtk_container_get_children (GTK_CONTAINER (stock_box));
-       list;
-       list = g_list_next (list))
+  children = gtk_container_get_children (GTK_CONTAINER (stock_box));
+
+  for (list = children; list; list = g_list_next (list))
     {
       GtkBin  *bin  = list->data;
       GtkMisc *misc = GTK_MISC (bin->child);
@@ -342,4 +343,6 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
                             xpad < 0 ? misc->xpad : xpad,
                             ypad < 0 ? misc->ypad : ypad);
     }
+
+  g_list_free (children);
 }
