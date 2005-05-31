@@ -274,7 +274,7 @@ gimp_action_set_proxy (GimpAction *action,
         {
           const gchar *help_id;
 
-          help_id = g_object_get_qdata (proxy, GIMP_HELP_ID);
+          help_id = g_object_get_qdata (G_OBJECT (proxy), GIMP_HELP_ID);
 
           gimp_help_set_help_data (proxy, tooltip, help_id);
           g_free (tooltip);

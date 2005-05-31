@@ -1,5 +1,8 @@
 2005-05-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpaction.c (gimp_action_set_proxy): added missing
+	cast.
+
 	* app/core/gimpprojection-construct.c: code cleanup.
 
 2005-05-31  Michael Natterer  <mitch@gimp.org>
