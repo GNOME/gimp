@@ -67,6 +67,7 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
   GObjectClass *klass;
   GList        *diff;
   GList        *list;
+  gboolean      retval = TRUE;
 
   g_return_val_if_fail (G_IS_OBJECT (config), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
@@ -78,9 +79,6 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
   diff = gimp_config_diff (G_OBJECT (config),
                            G_OBJECT (compare), GIMP_CONFIG_PARAM_SERIALIZE);
 
-  if (! diff)
-    return TRUE;
-
   for (list = diff; list; list = g_list_next (list))
     {
       GParamSpec *prop_spec = list->data;
@@ -89,12 +87,15 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
         continue;
 
       if (! gimp_config_serialize_property (config, prop_spec, writer))
-        return FALSE;
+        {
+          retval = FALSE;
+          break;
+        }
     }
 
   g_list_free (diff);
 
-  return TRUE;
+  return retval;
 }
 
 static void

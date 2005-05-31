@@ -1,5 +1,16 @@
 2005-05-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpenumwidgets.c
+	(gimp_enum_stock_box_set_child_padding): don't leak the return
+	value of gtk_container_get_children (bug #305994, spotted by Ted
+	Kremenek).
+
+	* app/config/gimprc-serialize.c (gimp_rc_serialize_properties_diff):
+	don't leak the GList in the unlikely case of an error (bug #305992,
+	spotted by Ted Kremenek).
+
+2005-05-31  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.c: applied patch from Joao
 	S. O. Bueno Calligaris that adds support for loading PSP color
 	palette files (bug #305956).
