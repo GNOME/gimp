@@ -136,6 +136,7 @@ d_load_object (gchar *desc,
               if (sscanf (buf, "%d", &new_obj->type_data) != 1)
                 {
                   g_message ("Error while loading object (no type data)");
+                  g_free (new_obj);
                   return NULL;
                 }
 
@@ -143,6 +144,7 @@ d_load_object (gchar *desc,
               if (strcmp ("</EXTRA>", buf))
                 {
                   g_message ("Syntax error while loading object");
+                  g_free (new_obj);
                   return NULL;
                 }
               /* Go around and read the last line */
