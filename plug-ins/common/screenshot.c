@@ -520,7 +520,10 @@ select_window_x11 (GdkScreen *screen)
     }
 
   if (keys)
-    XUngrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root);
+    {
+      XUngrabKey (x_dpy, keys[0].keycode, AnyModifier, x_root);
+      g_free (keys);
+    }
 
   XUngrabPointer (x_dpy, CurrentTime);
   XFreeCursor (x_dpy, x_cursor);
