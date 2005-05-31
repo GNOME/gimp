@@ -1,3 +1,7 @@
+2005-05-31  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/imagemap/imap_selection.c: plug memory leak. Fixes #305995.
+
 2005-05-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c (select_window_x11): use XGrabKey()
