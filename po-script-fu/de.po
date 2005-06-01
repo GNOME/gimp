@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-17 18:50+0200\n"
-"PO-Revision-Date: 2005-05-17 18:50+0200\n"
+"POT-Creation-Date: 2005-06-01 23:55+0200\n"
+"PO-Revision-Date: 2005-06-01 23:57+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -260,44 +260,80 @@ msgstr "Sch_ablone"
 msgid "_Refresh Scripts"
 msgstr "Skripte _auffrischen"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:140
+#: plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Prozeduren-Browser"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:181
-msgid "_Search:"
-msgstr "_Suche:"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:195
+#: plug-ins/dbbrowser/gimpprocbrowser.c:154
 msgid "by name"
 msgstr "nach Name"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:196
+#: plug-ins/dbbrowser/gimpprocbrowser.c:155
 msgid "by description"
 msgstr "nach Beschreibung"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:404
+#: plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "nach Hilfe"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "nach Autor"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "nach Copyright"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "nach Datum"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "nach Typ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:331
 msgid "Searching by name - please wait"
 msgstr "Suche nach Name läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:427
+#: plug-ins/dbbrowser/gimpprocbrowser.c:353
 msgid "Searching by description - please wait"
 msgstr "Suche nach Beschreibung läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:436
+#: plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Suche nach Hilfe läuft - bitte warten"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Suche nach Autor läuft - bitte warten"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Suche nach Copyright läuft - bitte warten"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Suche nach Datum läuft - bitte warten"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Suche nach Typ läuft - bitte warten"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:443
+#: plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "Eine Prozedur"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:445
+#: plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Prozeduren"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:495
+#: plug-ins/dbbrowser/gimpprocbrowser.c:462
 msgid "No matches"
 msgstr "Keine Treffer"
 
