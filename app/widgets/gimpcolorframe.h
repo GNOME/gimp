@@ -50,6 +50,7 @@ struct _GimpColorFrame
   GtkWidget          *menu;
   GtkWidget          *name_labels[GIMP_COLOR_FRAME_ROWS];
   GtkWidget          *value_labels[GIMP_COLOR_FRAME_ROWS];
+  GtkWidget          *color_area;
 };
 
 struct _GimpColorFrameClass

@@ -83,7 +83,9 @@ static void
 gimp_color_frame_init (GimpColorFrame *frame)
 {
   GtkWidget *vbox;
+  GtkWidget *color_area;
   gint       i;
+  GimpRGB    init_color = {0, 0, 0, 1};
 
   frame->sample_valid = FALSE;
   frame->sample_type  = GIMP_RGB_IMAGE;
@@ -101,6 +103,14 @@ gimp_color_frame_init (GimpColorFrame *frame)
   vbox = gtk_vbox_new (TRUE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
+
+  color_area = gimp_color_area_new (&frame->color,
+                                    GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+  gtk_widget_set_size_request (color_area, 30, 20);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &init_color);
+  gtk_box_pack_start (GTK_BOX (vbox), color_area, FALSE, FALSE, 0);
+  gtk_widget_show (color_area);
+  frame->color_area = color_area;
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
@@ -244,6 +254,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (frame->sample_type);
 
   gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
+
+  gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
+                             &frame->color);
 
   switch (frame->frame_mode)
     {
