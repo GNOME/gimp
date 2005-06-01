@@ -1,3 +1,16 @@
+2005-06-01  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.c: cosmetic change: Make the stroke IDs
+	start from 1.
+
+	* tools/pdbgen/pdb/vectors.pdb: Two more wrappers:
+	vectors_stroke_remove and vectors_stroke_interpolate. Undo still
+	unsolved.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/vectors_cmds.c
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
 2005-05-31  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpbrightnesscontrasttool.[ch]: Allow tool to be 

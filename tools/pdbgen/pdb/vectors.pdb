@@ -81,11 +81,39 @@ CODE
     );
 }
 
-sub vectors_stroke_translate {
+
+sub vectors_stroke_remove {
     $blurb = 'return coordinates along the given stroke.';
 
     $help = <<'HELP';
 Returns a lot of coordinates along the passed stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg );
+
+    %invoke = (
+	vars => [ 'GimpStroke *stroke' ],
+        code => <<"CODE"
+{
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    gimp_vectors_stroke_remove (vectors, stroke);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub vectors_stroke_translate {
+    $blurb = 'translate the given stroke.';
+
+    $help = <<'HELP';
+Translate the given stroke.
 HELP
 
     &pdb_misc;
@@ -123,7 +151,71 @@ CODE
     );
 }
 
-    
+sub vectors_stroke_interpolate {
+    $blurb = 'returns polygonal approximation of the stroke.';
+
+    $help = <<'HELP';
+returns polygonal approximation of the stroke.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &stroke_arg,
+                { name => 'prescision', type => 'float',
+		  desc => 'The prescision used for the approximation' } );
+
+    @outargs = (
+	{ name => 'closed', type => 'boolean',
+	  desc => 'List of the strokes belonging to the path.' },
+	{ name => 'coords', type => 'floatarray',
+	  desc => 'List of the coords along the path (x0, y0, x1, y1, ...).',
+	  array => { name => 'num_coords',
+		     desc => 'The number of floats returned.',
+		     init => 1 },
+	  init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpStroke *stroke',
+	          'GArray     *coords_array',
+		  'gint        i' ],
+        code => <<"CODE"
+{
+  stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+  
+  if (stroke)
+    {
+      /* need to figure out how undo is supposed to work */
+
+      coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
+      if (coords_array)
+        {
+	  num_coords = coords_array->len;
+	  coords = g_new (gdouble, num_coords * 2);
+
+	  for (i = 0; i < num_coords; i++)
+	    {
+	      coords[2*i]   = g_array_index (coords_array, GimpCoords, i).x;
+	      coords[2*i+1] = g_array_index (coords_array, GimpCoords, i).y;
+	    }
+	  g_array_free (coords_array, TRUE);
+	  num_coords *= 2;
+	}
+      else
+        {
+	  success = FALSE;
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimplist.h"
               "core/gimpimage-undo.h"
@@ -132,7 +224,9 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(vectors_get_strokes
+            vectors_stroke_remove
             vectors_stroke_translate
+	    vectors_stroke_interpolate
             );
 %exports = (app => [@procs], lib => [@procs]);
 

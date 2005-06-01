@@ -29,12 +29,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint*    gimp_vectors_get_strokes      (gint32  vectors_ID,
-					gint   *num_strokes);
-gboolean gimp_vectors_stroke_translate (gint32  vectors_ID,
-					gint    stroke_id,
-					gint    offx,
-					gint    offy);
+gint*    gimp_vectors_get_strokes        (gint32    vectors_ID,
+					  gint     *num_strokes);
+gboolean gimp_vectors_stroke_remove      (gint32    vectors_ID,
+					  gint      stroke_id);
+gboolean gimp_vectors_stroke_translate   (gint32    vectors_ID,
+					  gint      stroke_id,
+					  gint      offx,
+					  gint      offy);
+gboolean gimp_vectors_stroke_interpolate (gint32    vectors_ID,
+					  gint      stroke_id,
+					  gdouble   prescision,
+					  gint     *num_coords,
+					  gdouble **coords);
 
 
 G_END_DECLS

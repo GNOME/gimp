@@ -666,8 +666,9 @@ gimp_vectors_add_strokes (const GimpVectors *src_vectors,
   while (current_lstroke)
     {
       current_lstroke->data = gimp_stroke_duplicate (current_lstroke->data);
+      dest_vectors->last_stroke_ID ++;
       gimp_stroke_set_ID (current_lstroke->data,
-                          dest_vectors->last_stroke_ID++);
+                          dest_vectors->last_stroke_ID);
       current_lstroke = g_list_next (current_lstroke);
     }
 
@@ -698,7 +699,8 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
   /*  Don't g_list_prepend() here.  See ChangeLog 2003-05-21 --Mitch  */
 
   vectors->strokes = g_list_append (vectors->strokes, stroke);
-  gimp_stroke_set_ID (stroke, vectors->last_stroke_ID++);
+  vectors->last_stroke_ID ++;
+  gimp_stroke_set_ID (stroke, vectors->last_stroke_ID);
   g_object_ref (stroke);
 }
 

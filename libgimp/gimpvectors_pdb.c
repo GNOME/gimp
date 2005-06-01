@@ -70,15 +70,49 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
 }
 
 /**
+ * gimp_vectors_stroke_remove:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ *
+ * return coordinates along the given stroke.
+ *
+ * Returns a lot of coordinates along the passed stroke.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_remove (gint32 vectors_ID,
+			    gint   stroke_id)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_vectors_stroke_remove",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_vectors_stroke_translate:
  * @vectors_ID: The vectors object.
  * @stroke_id: The stroke ID.
  * @offx: Offset in x direction.
  * @offy: Offset in y direction.
  *
- * return coordinates along the given stroke.
+ * translate the given stroke.
  *
- * Returns a lot of coordinates along the passed stroke.
+ * Translate the given stroke.
  *
  * Returns: TRUE on success.
  *
@@ -107,4 +141,54 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * gimp_vectors_stroke_interpolate:
+ * @vectors_ID: The vectors object.
+ * @stroke_id: The stroke ID.
+ * @prescision: The prescision used for the approximation.
+ * @num_coords: The number of floats returned.
+ * @coords: List of the coords along the path (x0, y0, x1, y1, ...).
+ *
+ * returns polygonal approximation of the stroke.
+ *
+ * returns polygonal approximation of the stroke.
+ *
+ * Returns: List of the strokes belonging to the path.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_stroke_interpolate (gint32    vectors_ID,
+				 gint      stroke_id,
+				 gdouble   prescision,
+				 gint     *num_coords,
+				 gdouble **coords)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean closed = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp_vectors_stroke_interpolate",
+				    &nreturn_vals,
+				    GIMP_PDB_PATH, vectors_ID,
+				    GIMP_PDB_INT32, stroke_id,
+				    GIMP_PDB_FLOAT, prescision,
+				    GIMP_PDB_END);
+
+  *num_coords = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      closed = return_vals[1].data.d_int32;
+      *num_coords = return_vals[2].data.d_int32;
+      *coords = g_new (gdouble, *num_coords);
+      memcpy (*coords, return_vals[3].data.d_floatarray,
+	      *num_coords * sizeof (gdouble));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return closed;
 }

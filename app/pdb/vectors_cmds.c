@@ -37,13 +37,17 @@
 #include "vectors/gimpvectors.h"
 
 static ProcRecord vectors_get_strokes_proc;
+static ProcRecord vectors_stroke_remove_proc;
 static ProcRecord vectors_stroke_translate_proc;
+static ProcRecord vectors_stroke_interpolate_proc;
 
 void
 register_vectors_procs (Gimp *gimp)
 {
   procedural_db_register (gimp, &vectors_get_strokes_proc);
+  procedural_db_register (gimp, &vectors_stroke_remove_proc);
   procedural_db_register (gimp, &vectors_stroke_translate_proc);
+  procedural_db_register (gimp, &vectors_stroke_interpolate_proc);
 }
 
 static Argument *
@@ -134,6 +138,67 @@ static ProcRecord vectors_get_strokes_proc =
 };
 
 static Argument *
+vectors_stroke_remove_invoker (Gimp         *gimp,
+                               GimpContext  *context,
+                               GimpProgress *progress,
+                               Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  GimpStroke *stroke;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  if (success)
+    {
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        gimp_vectors_stroke_remove (vectors, stroke);
+      else
+        success = FALSE;
+    }
+
+  return procedural_db_return_args (&vectors_stroke_remove_proc, success);
+}
+
+static ProcArg vectors_stroke_remove_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke_id",
+    "The stroke ID"
+  }
+};
+
+static ProcRecord vectors_stroke_remove_proc =
+{
+  "gimp_vectors_stroke_remove",
+  "return coordinates along the given stroke.",
+  "Returns a lot of coordinates along the passed stroke.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  vectors_stroke_remove_inargs,
+  0,
+  NULL,
+  { { vectors_stroke_remove_invoker } }
+};
+
+static Argument *
 vectors_stroke_translate_invoker (Gimp         *gimp,
                                   GimpContext  *context,
                                   GimpProgress *progress,
@@ -208,8 +273,8 @@ static ProcArg vectors_stroke_translate_inargs[] =
 static ProcRecord vectors_stroke_translate_proc =
 {
   "gimp_vectors_stroke_translate",
-  "return coordinates along the given stroke.",
-  "Returns a lot of coordinates along the passed stroke.",
+  "translate the given stroke.",
+  "Translate the given stroke.",
   "Simon Budig",
   "Simon Budig",
   "2005",
@@ -220,4 +285,130 @@ static ProcRecord vectors_stroke_translate_proc =
   0,
   NULL,
   { { vectors_stroke_translate_invoker } }
+};
+
+static Argument *
+vectors_stroke_interpolate_invoker (Gimp         *gimp,
+                                    GimpContext  *context,
+                                    GimpProgress *progress,
+                                    Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpVectors *vectors;
+  gint32 stroke_id;
+  gdouble prescision;
+  gboolean closed;
+  gint32 num_coords = 0;
+  gdouble *coords = NULL;
+  GimpStroke *stroke;
+  GArray     *coords_array;
+  gint        i;
+
+  vectors = (GimpVectors *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_VECTORS (vectors) && ! gimp_item_is_removed (GIMP_ITEM (vectors))))
+    success = FALSE;
+
+  stroke_id = args[1].value.pdb_int;
+
+  prescision = args[2].value.pdb_float;
+
+  if (success)
+    {
+      stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_id);
+
+      if (stroke)
+        {
+          /* need to figure out how undo is supposed to work */
+
+          coords_array = gimp_stroke_interpolate (stroke, prescision, &closed);
+          if (coords_array)
+            {
+              num_coords = coords_array->len;
+              coords = g_new (gdouble, num_coords * 2);
+
+              for (i = 0; i < num_coords; i++)
+                {
+                  coords[2*i]   = g_array_index (coords_array, GimpCoords, i).x;
+                  coords[2*i+1] = g_array_index (coords_array, GimpCoords, i).y;
+                }
+              g_array_free (coords_array, TRUE);
+              num_coords *= 2;
+            }
+          else
+            {
+              success = FALSE;
+            }
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_args = procedural_db_return_args (&vectors_stroke_interpolate_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = closed;
+      return_args[2].value.pdb_int = num_coords;
+      return_args[3].value.pdb_pointer = coords;
+    }
+
+  return return_args;
+}
+
+static ProcArg vectors_stroke_interpolate_inargs[] =
+{
+  {
+    GIMP_PDB_PATH,
+    "vectors",
+    "The vectors object"
+  },
+  {
+    GIMP_PDB_INT32,
+    "stroke_id",
+    "The stroke ID"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "prescision",
+    "The prescision used for the approximation"
+  }
+};
+
+static ProcArg vectors_stroke_interpolate_outargs[] =
+{
+  {
+    GIMP_PDB_INT32,
+    "closed",
+    "List of the strokes belonging to the path."
+  },
+  {
+    GIMP_PDB_INT32,
+    "num_coords",
+    "The number of floats returned."
+  },
+  {
+    GIMP_PDB_FLOATARRAY,
+    "coords",
+    "List of the coords along the path (x0, y0, x1, y1, ...)."
+  }
+};
+
+static ProcRecord vectors_stroke_interpolate_proc =
+{
+  "gimp_vectors_stroke_interpolate",
+  "returns polygonal approximation of the stroke.",
+  "returns polygonal approximation of the stroke.",
+  "Simon Budig",
+  "Simon Budig",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  3,
+  vectors_stroke_interpolate_inargs,
+  3,
+  vectors_stroke_interpolate_outargs,
+  { { vectors_stroke_interpolate_invoker } }
 };
