@@ -44,9 +44,9 @@
 )
 
 (define (tiny-fu-set-cmap img drawable palette)
-  (gimp-image-set-cmap img
-                       (* (car (gimp-palette-get-info palette)) 3)
-                       (tiny-fu-make-cmap-array palette))
+  (gimp-image-set-colormap img
+                           (* (car (gimp-palette-get-info palette)) 3)
+                           (tiny-fu-make-cmap-array palette))
   (gimp-displays-flush)
 )
 
