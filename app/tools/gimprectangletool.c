@@ -414,18 +414,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   x2 = curx;
   y2 = cury;
 
-  if (rectangle->function == RECT_CREATING)
-    {
-      if (x1 > x2 && y1 > y2)
-        rectangle->function = RECT_RESIZING_UPPER_LEFT;
-      else if (x1 > x2 && y1 < y2)
-        rectangle->function = RECT_RESIZING_LOWER_LEFT;
-      else if (x1 < x2 && y1 > y2)
-        rectangle->function = RECT_RESIZING_UPPER_RIGHT;
-      else if (x1 < x2 && y1 < y2)
-        rectangle->function = RECT_RESIZING_LOWER_RIGHT;
-    }
-
   inc_x = (x2 - x1);
   inc_y = (y2 - y1);
 
@@ -817,6 +805,18 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                     rectangle->x2 - rectangle->x1,
                                     " x ",
                                     rectangle->y2 - rectangle->y1);
+    }
+
+  if (rectangle->function == RECT_CREATING)
+    {
+      if (inc_x < 0 && inc_y < 0)
+        rectangle->function = RECT_RESIZING_UPPER_LEFT;
+      else if (inc_x < 0 && inc_y > 0)
+        rectangle->function = RECT_RESIZING_LOWER_LEFT;
+      else if (inc_x > 0 && inc_y < 0)
+        rectangle->function = RECT_RESIZING_UPPER_RIGHT;
+      else if (inc_x > 0 && inc_y > 0)
+        rectangle->function = RECT_RESIZING_LOWER_RIGHT;
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));

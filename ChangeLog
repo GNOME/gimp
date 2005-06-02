@@ -1,4 +1,10 @@
-2005-06-01  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2005-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
+	Don't change function before creating new rectangle;
+	cause of problem identified by Karine Delvare.
+	
+2005-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/screenshot.c: trap errors when running
 	XGrabKey, to prevent bail-out on BadAccess error as
