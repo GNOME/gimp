@@ -36,6 +36,7 @@ enum
 {
   PROP_0,
   PROP_HAS_NUMBER,
+  PROP_HAS_COLOR_AREA,
   PROP_NUMBER
 };
 
@@ -105,6 +106,12 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
                                                          FALSE,
                                                          G_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_HAS_NUMBER,
+                                   g_param_spec_boolean ("has-color-area",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_NUMBER,
                                    g_param_spec_int ("number",
                                                      NULL, NULL,
@@ -149,12 +156,13 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_box_pack_start (GTK_BOX (hbox), frame->number_label, FALSE, FALSE, 0);
 
   frame->color_area = gimp_color_area_new (&frame->color,
-                                           GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+                                           GIMP_COLOR_AREA_SMALL_CHECKS,
+                                           GDK_BUTTON1_MASK);
   gtk_widget_set_size_request (frame->color_area, 30, 20);
   gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
                              &frame->color);
   gtk_box_pack_end (GTK_BOX (hbox), frame->color_area, TRUE, TRUE, 0);
-  gtk_widget_show (frame->color_area);
+  gimp_color_frame_set_has_color_area (frame, FALSE);
 
   vbox2 = gtk_vbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -195,6 +203,10 @@ gimp_color_frame_get_property (GObject    *object,
       g_value_set_boolean (value, frame->has_number);
       break;
 
+    case PROP_HAS_COLOR_AREA:
+      g_value_set_boolean (value, frame->has_color_area);
+      break;
+
     case PROP_NUMBER:
       g_value_set_int (value, frame->number);
       break;
@@ -217,6 +229,10 @@ gimp_color_frame_set_property (GObject      *object,
     {
     case PROP_HAS_NUMBER:
       gimp_color_frame_set_has_number (frame, g_value_get_boolean (value));
+      break;
+
+    case PROP_HAS_COLOR_AREA:
+      gimp_color_frame_set_has_color_area (frame, g_value_get_boolean (value));
       break;
 
     case PROP_NUMBER:
@@ -255,6 +271,25 @@ gimp_color_frame_set_has_number (GimpColorFrame *frame,
       g_object_set (frame->number_label, "visible", frame->has_number, NULL);
 
       g_object_notify (G_OBJECT (frame), "has-number");
+    }
+}
+
+void
+gimp_color_frame_set_has_color_area (GimpColorFrame *frame,
+                                     gboolean        has_color_area)
+{
+  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+
+  if (has_color_area != frame->has_color_area)
+    {
+      frame->has_color_area = has_color_area ? TRUE : FALSE;
+
+      if (frame->has_color_area)
+        gtk_widget_show (frame->color_area);
+      else
+        gtk_widget_hide (frame->color_area);
+
+      g_object_notify (G_OBJECT (frame), "has-color-area");
     }
 }
 
@@ -384,8 +419,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
   gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
-                             &frame->color);
+  if (frame->has_color_area)
+    gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
+                               &frame->color);
 
   switch (frame->frame_mode)
     {

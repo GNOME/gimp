@@ -1,3 +1,11 @@
+2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpcolorframe.[ch]: add "has-color-area" property,
+	FALSE by default.
+
+	* app/widgets/gimpsamplepointeditor.c: explicitly add a color
+	area to the color frames.
+	
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdnd.c (gimp_dnd_get_viewable_icon): show the
