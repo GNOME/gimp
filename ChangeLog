@@ -1,3 +1,7 @@
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: build pygimp by default.
+
 2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimpcolorframe.[ch]: add "has-color-area" property,

@@ -1342,10 +1342,8 @@ AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
 
 dnl Pygimp configure stuff ...
 AC_ARG_ENABLE(python,
-  AC_HELP_STRING([--enable-python],
-                 [build python extension (by default disabled)]),,
-  [enable_python=no])
-
+  AC_HELP_STRING([--disable-python],
+                 [do not build the python extension]))
 
 if test "x$enable_python" != xno; then
   dnl check for Python
