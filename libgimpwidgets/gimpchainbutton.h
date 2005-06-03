@@ -36,15 +36,6 @@
 G_BEGIN_DECLS
 
 
-typedef enum
-{
-  GIMP_CHAIN_TOP,
-  GIMP_CHAIN_LEFT,
-  GIMP_CHAIN_BOTTOM,
-  GIMP_CHAIN_RIGHT
-} GimpChainPosition;
-
-
 #define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
 #define GIMP_CHAIN_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
 #define GIMP_CHAIN_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))

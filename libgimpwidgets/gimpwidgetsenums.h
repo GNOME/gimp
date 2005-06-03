@@ -26,6 +26,19 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_TYPE_CHAIN_POSITION (gimp_chain_position_get_type ())
+
+GType gimp_chain_position_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CHAIN_TOP,
+  GIMP_CHAIN_LEFT,
+  GIMP_CHAIN_BOTTOM,
+  GIMP_CHAIN_RIGHT
+} GimpChainPosition;
+
+
 #define GIMP_TYPE_COLOR_AREA_TYPE (gimp_color_area_type_get_type ())
 
 GType gimp_color_area_type_get_type (void) G_GNUC_CONST;
@@ -54,8 +67,11 @@ typedef enum
 } GimpColorSelectorChannel;
 
 
+#define GIMP_TYPE_SIZE_ENTRY_UPDATE_POLICY (gimp_size_entry_update_policy_get_type ())
 
-typedef enum  /*< skip >*/
+GType gimp_size_entry_update_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_SIZE_ENTRY_UPDATE_NONE       = 0,
   GIMP_SIZE_ENTRY_UPDATE_SIZE       = 1,

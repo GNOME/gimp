@@ -31,8 +31,12 @@ G_BEGIN_DECLS
 
 typedef struct _GimpAspectPreview    GimpAspectPreview;
 typedef struct _GimpDrawablePreview  GimpDrawablePreview;
-typedef struct _GimpImageComboBox    GimpImageComboBox;
 typedef struct _GimpProgressBar      GimpProgressBar;
+
+typedef struct _GimpImageComboBox    GimpImageComboBox;
+typedef struct _GimpDrawableComboBox GimpDrawableComboBox;
+typedef struct _GimpChannelComboBox  GimpChannelComboBox;
+typedef struct _GimpLayerComboBox    GimpLayerComboBox;
 
 
 G_END_DECLS

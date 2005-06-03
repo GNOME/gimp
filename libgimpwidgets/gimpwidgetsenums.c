@@ -9,6 +9,39 @@
 
 /* enumerations from "./gimpwidgetsenums.h" */
 GType
+gimp_chain_position_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CHAIN_TOP, "GIMP_CHAIN_TOP", "top" },
+    { GIMP_CHAIN_LEFT, "GIMP_CHAIN_LEFT", "left" },
+    { GIMP_CHAIN_BOTTOM, "GIMP_CHAIN_BOTTOM", "bottom" },
+    { GIMP_CHAIN_RIGHT, "GIMP_CHAIN_RIGHT", "right" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CHAIN_TOP, "GIMP_CHAIN_TOP", NULL },
+    { GIMP_CHAIN_LEFT, "GIMP_CHAIN_LEFT", NULL },
+    { GIMP_CHAIN_BOTTOM, "GIMP_CHAIN_BOTTOM", NULL },
+    { GIMP_CHAIN_RIGHT, "GIMP_CHAIN_RIGHT", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpChainPosition", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_color_area_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -71,6 +104,37 @@ gimp_color_selector_channel_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpColorSelectorChannel", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_size_entry_update_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SIZE_ENTRY_UPDATE_NONE, "GIMP_SIZE_ENTRY_UPDATE_NONE", "none" },
+    { GIMP_SIZE_ENTRY_UPDATE_SIZE, "GIMP_SIZE_ENTRY_UPDATE_SIZE", "size" },
+    { GIMP_SIZE_ENTRY_UPDATE_RESOLUTION, "GIMP_SIZE_ENTRY_UPDATE_RESOLUTION", "resolution" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SIZE_ENTRY_UPDATE_NONE, "GIMP_SIZE_ENTRY_UPDATE_NONE", NULL },
+    { GIMP_SIZE_ENTRY_UPDATE_SIZE, "GIMP_SIZE_ENTRY_UPDATE_SIZE", NULL },
+    { GIMP_SIZE_ENTRY_UPDATE_RESOLUTION, "GIMP_SIZE_ENTRY_UPDATE_RESOLUTION", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpSizeEntryUpdatePolicy", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_enum_set_value_descriptions (type, descs);
     }

@@ -121,7 +121,7 @@ void      gimp_rgba_set_uchar  (GimpRGB       *rgba,
                                 guchar         red,
                                 guchar         green,
                                 guchar         blue,
-                                 guchar         alpha);
+                                guchar         alpha);
 void      gimp_rgba_get_uchar  (const GimpRGB *rgba,
                                 guchar        *red,
                                 guchar        *green,

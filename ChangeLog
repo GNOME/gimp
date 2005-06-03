@@ -1,5 +1,20 @@
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
+	* libgimpcolor/gimprgb.h: whitespace fix.
+
+	* libgimpwidgets/gimpchainbutton.h
+	* libgimpwidgets/gimpwidgetsenums.[ch]: move GimpChainPosition
+	to a registered enum, and register GimpSizeEntryUpdatePolicy as
+	as well.
+
+	* libgimp/gimpuitypes.h
+	* libgimp/gimpdrawablecombobox.[ch]: turn these into GObjects
+	with their own types.
+
+	* libgimp/gimpimagecombobox.c: use G_DEFINE_TYPE.
+
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/enumcode.pl: make _gimp_enums_init public, so 
 	language bindings can do early enum registration if needed.
 

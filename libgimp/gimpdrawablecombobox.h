@@ -29,10 +29,27 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_TYPE_DRAWABLE_COMBO_BOX    (gimp_drawable_combo_box_get_type ())
+#define GIMP_DRAWABLE_COMBO_BOX         (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE_COMBO_BOX, GimpDrawableComboBox))
+#define GIMP_IS_DRAWABLE_COMBO_BOX      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE_COMBO_BOX)
+
+#define GIMP_TYPE_CHANNEL_COMBO_BOX     (gimp_channel_combo_box_get_type ())
+#define GIMP_CHANNEL_COMBO_BOX          (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL_COMBO_BOX, GimpChannelComboBox))
+#define GIMP_IS_CHANNEL_COMBO_BOX       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL_COMBO_BOX)
+
+#define GIMP_TYPE_LAYER_COMBO_BOX       (gimp_layer_combo_box_get_type ())
+#define GIMP_LAYER_COMBO_BOX            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_COMBO_BOX, GimpLayerComboBox))
+#define GIMP_IS_LAYER_COMBO_BOX         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_COMBO_BOX)
+
+
 typedef gboolean (* GimpDrawableConstraintFunc) (gint32   image_id,
                                                  gint32   drawable_id,
                                                  gpointer data);
 
+
+GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
+GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
+GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
                                          gpointer                   data);

@@ -52,9 +52,6 @@ struct _GimpImageComboBoxClass
 };
 
 
-static void  gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass);
-static void  gimp_image_combo_box_init       (GimpImageComboBox      *combo_box);
-
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
                                              gint                     num_images,
                                              gint32                  *images,
@@ -73,34 +70,9 @@ static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
 
-GType
-gimp_image_combo_box_get_type (void)
-{
-  static GType combo_box_type = 0;
-
-  if (!combo_box_type)
-    {
-      static const GTypeInfo combo_box_info =
-      {
-        sizeof (GimpImageComboBoxClass),
-        NULL, /* base_init */
-        NULL, /* base_finalize */
-        (GClassInitFunc) gimp_image_combo_box_class_init,
-        NULL, /* class_finalize */
-        NULL, /* class_data */
-        sizeof (GimpImageComboBox),
-        0,
-        (GInstanceInitFunc) gimp_image_combo_box_init
-      };
-
-      combo_box_type = g_type_register_static (GIMP_TYPE_INT_COMBO_BOX,
-                                               "GimpImageComboBox",
-                                               &combo_box_info,
-                                               0);
-    }
-
-  return combo_box_type;
-}
+G_DEFINE_TYPE(GimpImageComboBox,
+              gimp_image_combo_box,
+              GIMP_TYPE_INT_COMBO_BOX);
 
 static void
 gimp_image_combo_box_class_init (GimpImageComboBoxClass *klass)
