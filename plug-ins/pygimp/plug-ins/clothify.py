@@ -50,7 +50,7 @@ def python_clothify(timg, tdrawable, bx=9, by=9,
     pdb.plug_in_c_astretch(img, bump_layer)
     pdb.plug_in_noisify(img, bump_layer, 0, 0.2, 0.2, 0.2, 0.2)
     pdb.plug_in_bump_map(img, tdrawable, bump_layer, azimuth,
-                         elevation, depth, 0, 0, 0, 0, TRUE, FALSE, 0)
+                         elevation, depth, 0, 0, 0, 0, True, False, 0)
 
     gimp.delete(img)
 

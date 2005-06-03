@@ -54,7 +54,7 @@ class pixel_fetcher:
                 rowoff = y % self.tile_height
 
                 if col != self.col or row != self.row or self.tile == None:
-                        self.tile = self.drawable.get_tile(FALSE, row, col)
+                        self.tile = self.drawable.get_tile(False, row, col)
                         self.col = col
                         self.row = row
                 return self.tile[coloff, rowoff]
@@ -97,7 +97,7 @@ def python_whirl_pinch(image, drawable, whirl, pinch, radius):
 
         whirl = whirl * math.pi / 180
         dest_rgn = drawable.get_pixel_rgn(self.sel_x1, self.sel_y1,
-                                          self.sel_w, self.sel_h, TRUE, TRUE)
+                                          self.sel_w, self.sel_h, True, True)
         pft = pixel_fetcher(drawable)
         pfb = pixel_fetcher(drawable)
         bg_colour = gimp.get_background()
@@ -159,7 +159,7 @@ def python_whirl_pinch(image, drawable, whirl, pinch, radius):
                 progress = progress + self.sel_w * 2
                 gimp.progress_update(float(progress) / max_progress)
         drawable.flush()
-        drawable.merge_shadow(TRUE)
+        drawable.merge_shadow(True)
         drawable.update(self.sel_x1,self.sel_y1,self.sel_w,self.sel_h)
 
 def calc_undistorted_coords(self, wx, wy, whirl, pinch, radius):

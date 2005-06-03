@@ -157,7 +157,7 @@ def get_guides(image):
 
 class TableWriter:
     def __init__(self, filename, cellpadding=0, cellspacing=0, border=0,
-                 capitalize=FALSE):
+                 capitalize=False):
         self.table_attrs = {}
 
         self.table_attrs['cellpadding'] = cellpadding
@@ -221,9 +221,9 @@ register(
         (PF_STRING, "html_filename", "Filename to export", "py-slice.html"),
         (PF_STRING, "image_basename", "What to call the images", "pyslice"),
         (PF_RADIO, "image_extension", "The format of the images: {gif, jpg, png}", "gif", (("gif", "gif"), ("jpg", "jpg"), ("png", "png"))),
-        (PF_TOGGLE, "separate_image_dir", "Use a separate directory for images?", FALSE),
+        (PF_TOGGLE, "separate_image_dir", "Use a separate directory for images?", False),
         (PF_STRING, "relative_image_path", "The path to export the images to, relative to the Save Path", "images/"),
-        (PF_TOGGLE, "capitalize_tags", "Capitalize HTML tags?", FALSE),
+        (PF_TOGGLE, "capitalize_tags", "Capitalize HTML tags?", False),
         (PF_SPINNER, "cellspacing", "Add space between the table elements", 0, (0,15,1))
     ],
     [],

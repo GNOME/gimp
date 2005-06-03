@@ -97,7 +97,7 @@ def python_colorxhtml(img, drawable, filename, raw_filename,
     else:
         data = list('X' * 80)
 
-    pr = drawable.get_pixel_rgn(0, 0, width, height, FALSE, FALSE)
+    pr = drawable.get_pixel_rgn(0, 0, width, height, False, False)
 
     gimp.progress_init("Saving '%s' as COLORXHTML..." % filename)
 
@@ -189,7 +189,7 @@ register(
         (PF_FILE, "characters", "The filename to read or the characters to use",
                   ""),
         (PF_INT, "font_size", "The font size in pixels", 10),
-        (PF_BOOL, "separate", "Separate CSS file", TRUE)
+        (PF_BOOL, "separate", "Separate CSS file", True)
     ],
     [],
     python_colorxhtml,

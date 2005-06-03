@@ -70,14 +70,14 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
             shadow_w = -shadow_w
 
         pdb.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
-                                CHANNEL_OP_REPLACE, TRUE, TRUE, 7.5)
+                                CHANNEL_OP_REPLACE, True, True, 7.5)
         pdb.gimp_edit_bucket_fill(drawable, BG_BUCKET_FILL,
-                                  MULTIPLY_MODE, 100, 0, FALSE, 0, 0)
+                                  MULTIPLY_MODE, 100, 0, False, 0, 0)
 
     pdb.gimp_ellipse_select(img, cx - radius, cy - radius, 2 * radius,
-                            2 * radius, CHANNEL_OP_REPLACE, TRUE, FALSE, 0)
+                            2 * radius, CHANNEL_OP_REPLACE, True, False, 0)
     pdb.gimp_edit_blend(drawable, FG_BG_RGB_MODE, NORMAL_MODE, GRADIENT_RADIAL,
-                        100, offset, REPEAT_NONE, FALSE, FALSE, 0, 0, TRUE,
+                        100, offset, REPEAT_NONE, False, False, 0, 0, True,
                         light_x, light_y, light_end_x, light_end_y)
 
     pdb.gimp_selection_none(img)

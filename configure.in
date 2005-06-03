@@ -1349,11 +1349,21 @@ AC_ARG_ENABLE(python,
 
 if test "x$enable_python" != xno; then
   dnl check for Python
-  AM_PATH_PYTHON(2.2)
+  AM_PATH_PYTHON(2.2.1)
   AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version)
+
+  AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+  if test "x$PYGTK_CODEGEN" = xno; then
+    AC_MSG_ERROR(could not find pygtk-codegen-2.0 script)
+  fi
+
+  AC_MSG_CHECKING(for pygtk defs)
+  PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+  AC_SUBST(PYGTK_DEFSDIR)
+  AC_MSG_RESULT($PYGTK_DEFSDIR)
 
   dnl enable -fno-strict-aliasing if compiler supports it
   PYGIMP_EXTRA_CFLAGS=
