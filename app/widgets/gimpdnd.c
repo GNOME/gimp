@@ -1700,8 +1700,9 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
                             GCallback  get_viewable_func,
                             gpointer   get_viewable_data)
 {
-  GtkWidget    *view;
   GimpViewable *viewable;
+  GtkWidget    *view;
+  const gchar  *name;
 
   viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget,
                                                               get_viewable_data);
@@ -1710,6 +1711,33 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
     return NULL;
 
   view = gimp_view_new (viewable, DRAG_PREVIEW_SIZE, 0, TRUE);
+
+  name = gimp_object_get_name (GIMP_OBJECT (viewable));
+
+  if (name && *name)
+    {
+      GtkWidget *hbox;
+      GtkWidget *label;
+
+      hbox = gtk_hbox_new (FALSE, 3);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
+      gtk_box_pack_start (GTK_BOX (hbox), view, FALSE, FALSE, 0);
+      gtk_widget_show (view);
+
+      label = g_object_new (GTK_TYPE_LABEL,
+                            "label",           name,
+                            "xpad",            3,
+                            "xalign",          0.0,
+                            "yalign",          0.5,
+                            "max-width-chars", 80,
+                            "ellipsize",       PANGO_ELLIPSIZE_END,
+                            NULL);
+
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
+
+      return hbox;
+    }
 
   return view;
 }

@@ -1,3 +1,8 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdnd.c (gimp_dnd_get_viewable_icon): show the
+	viewable's name in the drag icon.
+
 2005-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview-dnd.c
