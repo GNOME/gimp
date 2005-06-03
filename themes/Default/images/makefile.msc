@@ -89,6 +89,7 @@ STOCK_VARIABLES = \
 	stock_gravity_south_west_24		stock-gravity-south-west-24.png	\
 	stock_gravity_west_24		stock-gravity-west-24.png	\
 	stock_grid_16		stock-grid-16.png	\
+	stock_hcenter_24	stock-hcenter-24.png	\
 	stock_histogram_16		stock-histogram-16.png \
 	stock_histogram_22		stock-histogram-22.png \
 	stock_histogram_linear_16		stock-histogram-linear-16.png	\
@@ -192,6 +193,7 @@ STOCK_VARIABLES = \
 	stock_transparency_24	stock-transparency-24.png \
 	stock_undo_history_16		stock-undo-history-16.png \
 	stock_undo_history_24		stock-undo-history-24.png \
+	stock_vcenter_24	stock-vcenter-24.png	\
 	stock_vchain_24		stock-vchain-24.png	\
 	stock_vchain_broken_24		stock-vchain-broken-24.png	\
 	stock_video_16		stock-video-16.png	\

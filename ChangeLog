@@ -1,3 +1,29 @@
+2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* gimp/app/tools/Makefile.am
+	* gimp/app/tools/gimp-tools.c
+	* gimp/app/tools/gimpalignoptions.c
+	* gimp/app/tools/gimpalignoptions.h
+	* gimp/app/tools/gimpaligntool.c
+	* gimp/app/tools/gimpaligntool.h: Add new tool for
+	aligning layers etc, as described in bug #147437.
+
+	* gimp/app/core/gimpitem.c
+	* gimp/app/core/gimpitem.h (gimp_item_align): add
+	function required by new tool.
+
+	* gimp/app/core/core-enums.c
+	* gimp/app/core/core-enums.h: add enum for alignment
+	types.
+
+	* gimp/themes/Default/images/stock-hcenter-24.png
+	* gimp/themes/Default/images/stock-vcenter-24.png
+	* gimp/libgimpwidgets/gimpstock.c
+	* gimp/libgimpwidgets/gimpstock.h
+	* gimp/themes/Default/images/Makefile.am
+	* gimp/themes/Default/images/makefile.msc: add two
+	stock symbols, modeled on the gravity symbols.
+
 2005-06-02  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):

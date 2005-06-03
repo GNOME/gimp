@@ -145,6 +145,42 @@ gimp_gravity_type_get_type (void)
 }
 
 GType
+gimp_alignment_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "left" },
+    { GIMP_ALIGN_CENTER, "GIMP_ALIGN_CENTER", "center" },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "right" },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "top" },
+    { GIMP_ALIGN_MIDDLE, "GIMP_ALIGN_MIDDLE", "middle" },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "bottom" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", NULL },
+    { GIMP_ALIGN_CENTER, "GIMP_ALIGN_CENTER", NULL },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", NULL },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
+    { GIMP_ALIGN_MIDDLE, "GIMP_ALIGN_MIDDLE", NULL },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpAlignmentType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_fill_type_get_type (void)
 {
   static const GEnumValue values[] =

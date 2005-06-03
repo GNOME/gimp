@@ -161,6 +161,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-gravity-south-east-24.png		\
 	stock-gravity-south-west-24.png		\
 	stock-gravity-west-24.png		\
+	stock-hcenter-24.png			\
 	stock-hchain-24.png			\
 	stock-hchain-broken-24.png		\
 	stock-histogram-22.png			\
@@ -199,6 +200,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-tool-options-24.png		\
 	stock-tools-24.png			\
 	stock-transparency-24.png		\
+	stock-vcenter-24.png			\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
 	stock-video-24.png			\

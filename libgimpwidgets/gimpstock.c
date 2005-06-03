@@ -141,6 +141,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_GRAVITY_SOUTH_WEST,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRAVITY_WEST,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_HCENTER,                  NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_VCENTER,                  NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_HCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -322,6 +325,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_GRAVITY_SOUTH_EAST,       stock_gravity_south_east_24       },
   { GIMP_STOCK_GRAVITY_SOUTH_WEST,       stock_gravity_south_west_24       },
   { GIMP_STOCK_GRAVITY_WEST,             stock_gravity_west_24             },
+
+  { GIMP_STOCK_HCENTER,                  stock_hcenter_24                  },
+  { GIMP_STOCK_VCENTER,                  stock_vcenter_24                  },
 
   { GIMP_STOCK_HCHAIN,                   stock_hchain_24                   },
   { GIMP_STOCK_HCHAIN_BROKEN,            stock_hchain_broken_24            },

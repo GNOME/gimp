@@ -95,6 +95,21 @@ typedef enum  /*< pdb-skip >*/
 } GimpGravityType;
 
 
+#define GIMP_TYPE_ALIGNMENT (gimp_alignment_type_get_type ())
+
+GType gimp_alignment_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_ALIGN_LEFT,
+  GIMP_ALIGN_CENTER,
+  GIMP_ALIGN_RIGHT,
+  GIMP_ALIGN_TOP,
+  GIMP_ALIGN_MIDDLE,
+  GIMP_ALIGN_BOTTOM
+} GimpAlignmentType;
+
+
 #define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
 
 GType gimp_fill_type_get_type (void) G_GNUC_CONST;

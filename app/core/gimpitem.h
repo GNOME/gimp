@@ -253,5 +253,12 @@ void            gimp_item_set_linked       (GimpItem       *item,
                                             gboolean        push_undo);
 gboolean        gimp_item_get_linked       (const GimpItem *item);
 
+void            gimp_item_align            (GimpItem          *target,
+                                            GimpAlignmentType  target_alignment,
+                                            GimpItem          *refeence,
+                                            GimpAlignmentType  reference_alignment,
+                                            gint               offset,
+                                            gboolean           push_undo);
+
 
 #endif /* __GIMP_ITEM_H__ */
