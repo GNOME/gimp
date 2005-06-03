@@ -23,7 +23,6 @@ void gimp_item_align (GimpItem          *target,
                       GimpAlignmentType  target_alignment,
                       GimpItem          *refeence,
                       GimpAlignmentType  reference_alignment,
-                      gint               offset,
-                      gboolean           push_undo);
+                      gint               offset);
 
 #endif /* __GIMP_ITEM_ALIGN_H__ */

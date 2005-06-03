@@ -1,3 +1,11 @@
+2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpitem-align.c
+	* app/core/gimpitem-align.h (gimp_item_align): remove push_undo
+	arg, useless as pointed out by mitch.
+
+	* app/tools/gimpaligntool.c: changed correspondingly.
+
 2005-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorframe.[ch]: added API to show a number in

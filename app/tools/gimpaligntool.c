@@ -564,8 +564,7 @@ do_horizontal_alignment (GtkWidget *widget,
                      align_tool->target_horz_align_type,
                      align_tool->reference_item,
                      align_tool->ref_horz_align_type,
-                     align_tool->horz_offset,
-                     TRUE);
+                     align_tool->horz_offset);
 
   gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->gimage);
 
@@ -586,8 +585,7 @@ do_vertical_alignment (GtkWidget *widget,
                      align_tool->target_vert_align_type,
                      align_tool->reference_item,
                      align_tool->ref_vert_align_type,
-                     align_tool->vert_offset,
-                     TRUE);
+                     align_tool->vert_offset);
 
   gimp_image_flush (GIMP_TOOL (align_tool)->gdisp->gimage);
 

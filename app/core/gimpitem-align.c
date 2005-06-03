@@ -38,8 +38,6 @@
  * @reference:            The #GimpItem to align the target with.
  * @reference_alignment:  The part of the reference item to align the target item with..
  * @offset:               How much to shift the target from perfect alignment..
- * @push_undo:            If #TRUE, create an entry in the image's undo stack
- *                        for this action.
  *
  * Aligns the target item with the reference item in the specified way.  If
  * the reference item is #NULL, then the target item is aligned with the
@@ -50,8 +48,7 @@ gimp_item_align (GimpItem          *target,
                  GimpAlignmentType  target_alignment,
                  GimpItem          *reference,
                  GimpAlignmentType  reference_alignment,
-                 gint               offset,
-                 gboolean           push_undo)
+                 gint               offset)
 {
   gboolean do_x       = FALSE;
   gboolean do_y       = FALSE;
@@ -157,5 +154,5 @@ gimp_item_align (GimpItem          *target,
       ytranslate = y0 - y1 + offset;
     }
 
-  gimp_item_translate (target, xtranslate, ytranslate, push_undo);
+  gimp_item_translate (target, xtranslate, ytranslate, TRUE);
 }
