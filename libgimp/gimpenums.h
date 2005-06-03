@@ -259,7 +259,7 @@ typedef enum
 } GimpRunMode;
 
 
-void           _gimp_enums_init          (void);
+void           gimp_enums_init           (void);
 
 const gchar ** gimp_enums_get_type_names (gint *n_type_names);
 

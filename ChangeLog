@@ -1,5 +1,17 @@
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
+	* tools/pdbgen/enumcode.pl: make _gimp_enums_init public, so 
+	language bindings can do early enum registration if needed.
+
+	* libgimp/gimpenums.h
+	* libgimp/gimpenums.c.tail: regenerated
+
+	* gimp.c: call gimp_enums_init instead of _gimp_enums_init.
+
+	* gimp.def: add newly exported function.
+
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: require python 2.2.1, so True and False are always 
 	there. Check for pygtk codegen stuff, we'll be using that in the
 	future.
