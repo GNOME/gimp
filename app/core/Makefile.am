@@ -170,6 +170,8 @@ libappcore_a_sources = \
 	gimpinterpreterdb.h		\
 	gimpitem.c			\
 	gimpitem.h			\
+	gimpitem-align.c		\
+	gimpitem-align.h		\
 	gimpitem-linked.c		\
 	gimpitem-linked.h		\
 	gimpitem-preview.c		\

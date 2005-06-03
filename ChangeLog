@@ -1,3 +1,15 @@
+2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpitem-align.[ch]: newly created to
+	hold code for gimp_item_align().
+
+	* app/core/Makefile.am: add new files
+	
+	* app/core/gimpitem.[ch]: remove code from here.
+
+	* app/tools/gimpaligntool.c: fix includes and remove
+	unneeded includes.
+	
 2005-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_init): pack the

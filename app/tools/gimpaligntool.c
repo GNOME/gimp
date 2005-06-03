@@ -24,21 +24,13 @@
 
 #include "tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
-#include "config/gimpguiconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimpitem-align.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-draw.h"
-#include "display/gimpdisplayshell-transform.h"
 
 #include "widgets/gimphelp-ids.h"
 
