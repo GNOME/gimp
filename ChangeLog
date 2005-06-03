@@ -1,3 +1,9 @@
+2005-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview-dnd.c
+	(gimp_container_tree_view_drop_status): bail out early if the view
+	has no container (instead of crashing).
+
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
 	* libgimpcolor/gimprgb.h: whitespace fix.

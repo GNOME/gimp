@@ -58,7 +58,8 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
   GtkTreeViewDropPosition  drop_pos      = GTK_TREE_VIEW_DROP_BEFORE;
   GdkDragAction            drag_action   = 0;
 
-  if (! gimp_container_view_get_reorderable (GIMP_CONTAINER_VIEW (tree_view)))
+  if (! gimp_container_view_get_container (GIMP_CONTAINER_VIEW (tree_view)) ||
+      ! gimp_container_view_get_reorderable (GIMP_CONTAINER_VIEW (tree_view)))
     goto drop_impossible;
 
   target_list = gtk_drag_dest_get_target_list (GTK_WIDGET (tree_view->view));
