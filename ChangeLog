@@ -1,3 +1,11 @@
+2005-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorframe.[ch]: added API to show a number in
+	front of the color area.
+
+	* app/widgets/gimpsamplepointeditor.c: use the new API to put the
+	sample points' numbers there.
+
 2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpitem-align.[ch]: newly created to

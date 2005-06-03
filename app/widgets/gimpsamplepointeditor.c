@@ -143,14 +143,18 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
 
   for (i = 0; i < 4; i++)
     {
-      editor->color_frames[i] = gimp_color_frame_new ();
-      gimp_color_frame_set_mode (GIMP_COLOR_FRAME (editor->color_frames[i]),
+      GtkWidget *frame;
+
+      frame = editor->color_frames[i] = gimp_color_frame_new ();
+      gimp_color_frame_set_has_number (GIMP_COLOR_FRAME (frame), TRUE);
+      gimp_color_frame_set_number (GIMP_COLOR_FRAME (frame), i + 1);
+      gimp_color_frame_set_mode (GIMP_COLOR_FRAME (frame),
                                  GIMP_COLOR_FRAME_MODE_PIXEL);
-      gtk_widget_set_sensitive (editor->color_frames[i], FALSE);
-      gtk_table_attach (GTK_TABLE (editor->table), editor->color_frames[i],
+      gtk_widget_set_sensitive (frame, FALSE);
+      gtk_table_attach (GTK_TABLE (editor->table), frame,
                         column, column + 1, row, row + 1,
                         GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_widget_show (editor->color_frames[i]);
+      gtk_widget_show (frame);
 
       column++;
 

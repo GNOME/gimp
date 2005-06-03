@@ -47,10 +47,14 @@ struct _GimpColorFrame
 
   GimpColorFrameMode  frame_mode;
 
+  gboolean            has_number;
+  gint                number;
+
   GtkWidget          *menu;
+  GtkWidget          *number_label;
+  GtkWidget          *color_area;
   GtkWidget          *name_labels[GIMP_COLOR_FRAME_ROWS];
   GtkWidget          *value_labels[GIMP_COLOR_FRAME_ROWS];
-  GtkWidget          *color_area;
 };
 
 struct _GimpColorFrameClass
@@ -63,13 +67,18 @@ GType       gimp_color_frame_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_frame_new         (void);
 
-void        gimp_color_frame_set_mode    (GimpColorFrame     *frame,
-                                          GimpColorFrameMode  mode);
-void        gimp_color_frame_set_color   (GimpColorFrame     *frame,
-                                          GimpImageType       sample_type,
-                                          const GimpRGB      *color,
-                                          gint                color_index);
-void        gimp_color_frame_set_invalid (GimpColorFrame     *frame);
+void        gimp_color_frame_set_has_number (GimpColorFrame     *frame,
+                                             gboolean            has_number);
+void        gimp_color_frame_set_number     (GimpColorFrame     *frame,
+                                             gint                number);
+
+void        gimp_color_frame_set_mode       (GimpColorFrame     *frame,
+                                             GimpColorFrameMode  mode);
+void        gimp_color_frame_set_color      (GimpColorFrame     *frame,
+                                             GimpImageType       sample_type,
+                                             const GimpRGB      *color,
+                                             gint                color_index);
+void        gimp_color_frame_set_invalid    (GimpColorFrame     *frame);
 
 
 #endif  /*  __GIMP_COLOR_FRAME_H__  */

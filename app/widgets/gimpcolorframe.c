@@ -32,11 +32,27 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_HAS_NUMBER,
+  PROP_NUMBER
+};
+
+
 /*  local function prototypes  */
 
 static void   gimp_color_frame_class_init    (GimpColorFrameClass *klass);
 static void   gimp_color_frame_init          (GimpColorFrame      *frame);
 
+static void   gimp_color_frame_get_property  (GObject             *object,
+                                              guint                property_id,
+                                              GValue              *value,
+                                              GParamSpec          *pspec);
+static void   gimp_color_frame_set_property  (GObject             *object,
+                                              guint                property_id,
+                                              const GValue        *value,
+                                              GParamSpec          *pspec);
 static void   gimp_color_frame_menu_callback (GtkWidget           *widget,
                                               GimpColorFrame      *frame);
 static void   gimp_color_frame_update        (GimpColorFrame      *frame);
@@ -76,7 +92,24 @@ gimp_color_frame_get_type (void)
 static void
 gimp_color_frame_class_init (GimpColorFrameClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->get_property = gimp_color_frame_get_property;
+  object_class->set_property = gimp_color_frame_set_property;
+
+  g_object_class_install_property (object_class, PROP_HAS_NUMBER,
+                                   g_param_spec_boolean ("has-number",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_NUMBER,
+                                   g_param_spec_int ("number",
+                                                     NULL, NULL,
+                                                     0, 256, 0,
+                                                     G_PARAM_READWRITE));
 }
 
 static void
@@ -84,7 +117,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
 {
   GtkWidget *vbox;
   GtkWidget *vbox2;
-  GtkWidget *color_area;
+  GtkWidget *hbox;
   gint       i;
 
   frame->sample_valid = FALSE;
@@ -104,12 +137,23 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  frame->number_label = gtk_label_new ("0");
+  gimp_label_set_attributes (GTK_LABEL (frame->number_label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_misc_set_alignment (GTK_MISC (frame->number_label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), frame->number_label, FALSE, FALSE, 0);
+
   frame->color_area = gimp_color_area_new (&frame->color,
                                            GIMP_COLOR_AREA_SMALL_CHECKS, 0);
   gtk_widget_set_size_request (frame->color_area, 30, 20);
   gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
                              &frame->color);
-  gtk_box_pack_start (GTK_BOX (vbox), frame->color_area, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), frame->color_area, TRUE, TRUE, 0);
   gtk_widget_show (frame->color_area);
 
   vbox2 = gtk_vbox_new (TRUE, 2);
@@ -118,8 +162,6 @@ gimp_color_frame_init (GimpColorFrame *frame)
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
-      GtkWidget *hbox;
-
       hbox = gtk_hbox_new (FALSE, 6);
       gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -139,6 +181,54 @@ gimp_color_frame_init (GimpColorFrame *frame)
     }
 }
 
+static void
+gimp_color_frame_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+
+  switch (property_id)
+    {
+    case PROP_HAS_NUMBER:
+      g_value_set_boolean (value, frame->has_number);
+      break;
+
+    case PROP_NUMBER:
+      g_value_set_int (value, frame->number);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_frame_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+
+  switch (property_id)
+    {
+    case PROP_HAS_NUMBER:
+      gimp_color_frame_set_has_number (frame, g_value_get_boolean (value));
+      break;
+
+    case PROP_NUMBER:
+      gimp_color_frame_set_number (frame, g_value_get_int (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 /**
  * gimp_color_frame_new:
  *
@@ -150,6 +240,41 @@ GtkWidget *
 gimp_color_frame_new (void)
 {
   return g_object_new (GIMP_TYPE_COLOR_FRAME, NULL);
+}
+
+void
+gimp_color_frame_set_has_number (GimpColorFrame *frame,
+                                 gboolean        has_number)
+{
+  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+
+  if (has_number != frame->has_number)
+    {
+      frame->has_number = has_number ? TRUE : FALSE;
+
+      g_object_set (frame->number_label, "visible", frame->has_number, NULL);
+
+      g_object_notify (G_OBJECT (frame), "has-number");
+    }
+}
+
+void
+gimp_color_frame_set_number (GimpColorFrame *frame,
+                             gint            number)
+{
+  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+
+  if (number != frame->number)
+    {
+      gchar str[8];
+
+      frame->number = number;
+
+      g_snprintf (str, sizeof (str), "%d", number);
+      gtk_label_set_text (GTK_LABEL (frame->number_label), str);
+
+      g_object_notify (G_OBJECT (frame), "number");
+    }
 }
 
 /**
