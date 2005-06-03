@@ -83,9 +83,9 @@ static void
 gimp_color_frame_init (GimpColorFrame *frame)
 {
   GtkWidget *vbox;
+  GtkWidget *vbox2;
   GtkWidget *color_area;
   gint       i;
-  GimpRGB    init_color = {0, 0, 0, 1};
 
   frame->sample_valid = FALSE;
   frame->sample_type  = GIMP_RGB_IMAGE;
@@ -100,24 +100,28 @@ gimp_color_frame_init (GimpColorFrame *frame)
                     G_CALLBACK (gimp_color_frame_menu_callback),
                     frame);
 
-  vbox = gtk_vbox_new (TRUE, 2);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  color_area = gimp_color_area_new (&frame->color,
-                                    GIMP_COLOR_AREA_SMALL_CHECKS, 0);
-  gtk_widget_set_size_request (color_area, 30, 20);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &init_color);
-  gtk_box_pack_start (GTK_BOX (vbox), color_area, FALSE, FALSE, 0);
-  gtk_widget_show (color_area);
-  frame->color_area = color_area;
+  frame->color_area = gimp_color_area_new (&frame->color,
+                                           GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+  gtk_widget_set_size_request (frame->color_area, 30, 20);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
+                             &frame->color);
+  gtk_box_pack_start (GTK_BOX (vbox), frame->color_area, FALSE, FALSE, 0);
+  gtk_widget_show (frame->color_area);
+
+  vbox2 = gtk_vbox_new (TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
 
   for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
     {
       GtkWidget *hbox;
 
       hbox = gtk_hbox_new (FALSE, 6);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
       frame->name_labels[i] = gtk_label_new (" ");

@@ -1,3 +1,9 @@
+2005-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_init): pack the
+	color area and the labels into different vboxes to make the widget
+	compact again.
+
 2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* gimp/app/tools/Makefile.am
