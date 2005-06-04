@@ -121,7 +121,7 @@ browser_open_url (const gchar *url)
 {
 #ifdef G_OS_WIN32
 
-  return ((gint) ShellExecute (HWND_DESKTOP, "open", url, NULL, NULL, SW_SHOWNORMAL) > 32);
+  return ((gint) ShellExecute (GetDesktopWindow(), "open", url, NULL, NULL, SW_SHOW) > 32);
 
 #else
 

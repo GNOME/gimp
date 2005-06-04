@@ -1,5 +1,10 @@
 2005-06-04  Michael Schumacher  <schumaml@cvs.gnome.org>
 
+	* plug-ins/common/webbrowser.c: use GetDesktopWindow() and SW_SHOW
+	as suggested in bug #171200. Applied to both branches.
+
+2005-06-04  Michael Schumacher  <schumaml@cvs.gnome.org>
+
 	* plug-ins/helpbrowser/dialog.c: added #ifdef G_OS_WIN32 because
 	O_BINARY isn't available on other platforms
 
