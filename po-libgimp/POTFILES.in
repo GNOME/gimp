@@ -3,7 +3,7 @@
 
 libgimp/gimpbrushmenu.c
 libgimp/gimpexport.c
-libgimp/gimpfontmenu.c
+libgimp/gimpfontselectbutton.c
 libgimp/gimpgradientmenu.c
 libgimp/gimpmenu.c
 libgimp/gimppalettemenu.c
