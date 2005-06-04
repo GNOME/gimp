@@ -32,7 +32,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
-#include "widgets/gimpeditor.h"
+#include "widgets/gimpdocked.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "dialogs/dialogs.h"
@@ -173,11 +173,22 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                 preview_size = gimp_container_view_get_preview_size (old_view,
                                                                      NULL);
 
+
               new_dockable =
                 gimp_dialog_factory_dockable_new (dockbook->dock->dialog_factory,
                                                   dockbook->dock,
                                                   identifier,
                                                   preview_size);
+
+              if (new_dockable)
+                {
+                  GimpDocked *old = GIMP_DOCKED (GTK_BIN (dockable)->child);
+                  GimpDocked *new = GIMP_DOCKED (GTK_BIN (new_dockable)->child);
+                  gboolean    show;
+
+                  show = gimp_docked_get_show_button_bar (old);
+                  gimp_docked_set_show_button_bar (new, show);
+                }
 
               /*  Maybe gimp_dialog_factory_dockable_new() returned
                *  an already existing singleton dockable, so check
@@ -283,10 +294,9 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
 
   if (dockable)
     {
-      GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
+      gboolean show = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      if (GIMP_IS_EDITOR (child))
-        gimp_editor_set_show_button_bar (GIMP_EDITOR (child),
-                                         gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
+      gimp_docked_set_show_button_bar (GIMP_DOCKED (GTK_BIN (dockable)->child),
+                                       show);
     }
 }

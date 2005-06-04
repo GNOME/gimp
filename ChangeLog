@@ -1,3 +1,15 @@
+2005-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdocked.[ch]
+	* app/widgets/gimpeditor.[ch]: moved button-bar API to the
+	GimpDocked interface.
+
+	* app/widgets/gimpcontainereditor.c: implement the new interface
+	methods and proxy them to the embedded docked.
+
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.c: changed accordingly.
+
 2005-06-04  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimpimagecombobox.h

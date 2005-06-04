@@ -34,7 +34,6 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocked.h"
-#include "widgets/gimpeditor.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "dialogs-actions.h"
@@ -167,6 +166,7 @@ dockable_actions_update (GimpActionGroup *group,
 {
   GimpDockable           *dockable;
   GimpDockbook           *dockbook;
+  GimpDocked             *docked;
   GimpDialogFactoryEntry *entry;
   GimpContainerView      *view;
   GimpViewType            view_type           = -1;
@@ -196,6 +196,8 @@ dockable_actions_update (GimpActionGroup *group,
     {
       return;
     }
+
+  docked = gtk_bin_get_child (GTK_BIN (dockable));
 
   gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
@@ -291,7 +293,7 @@ dockable_actions_update (GimpActionGroup *group,
     {
       GimpDockedInterface *docked_iface;
 
-      docked_iface = GIMP_DOCKED_GET_INTERFACE (GTK_BIN (dockable)->child);
+      docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
 
       if (tab_style == GIMP_TAB_STYLE_ICON)
         SET_ACTIVE ("dockable-tab-style-icon", TRUE);
@@ -324,19 +326,9 @@ dockable_actions_update (GimpActionGroup *group,
       SET_SENSITIVE ("dockable-view-type-list", list_view_available);
     }
 
-  if (GIMP_IS_EDITOR (GTK_BIN (dockable)->child))
-    {
-      GimpEditor *editor = GIMP_EDITOR (GTK_BIN (dockable)->child);
-
-      SET_VISIBLE ("dockable-show-button-bar",
-                   gimp_editor_has_button_bar (editor));
-      SET_ACTIVE ("dockable-show-button-bar",
-                  gimp_editor_get_show_button_bar (editor));
-    }
-  else
-    {
-      SET_VISIBLE ("dockable-show-button-bar", FALSE);
-    }
+  SET_VISIBLE ("dockable-show-button-bar", gimp_docked_has_button_bar (docked));
+  SET_ACTIVE ("dockable-show-button-bar",
+              gimp_docked_get_show_button_bar (docked));
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

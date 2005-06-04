@@ -96,10 +96,5 @@ void        gimp_editor_set_name            (GimpEditor         *editor,
 void        gimp_editor_set_box_style       (GimpEditor         *editor,
                                              GtkBox             *box);
 
-gboolean    gimp_editor_has_button_bar      (GimpEditor         *editor);
-void        gimp_editor_set_show_button_bar (GimpEditor         *editor,
-                                             gboolean            show);
-gboolean    gimp_editor_get_show_button_bar (GimpEditor         *editor);
-
 
 #endif  /*  __GIMP_EDITOR_H__  */

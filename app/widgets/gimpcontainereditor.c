@@ -69,6 +69,11 @@ static GimpUIManager * gimp_container_editor_get_menu(GimpDocked       *docked,
                                                       const gchar     **ui_path,
                                                       gpointer         *popup_data);
 
+static gboolean  gimp_container_editor_has_button_bar      (GimpDocked *docked);
+static void      gimp_container_editor_set_show_button_bar (GimpDocked *docked,
+                                                            gboolean    show);
+static gboolean  gimp_container_editor_get_show_button_bar (GimpDocked *docked);
+
 
 static GtkVBoxClass *parent_class = NULL;
 
@@ -130,9 +135,12 @@ gimp_container_editor_init (GimpContainerEditor *view)
 static void
 gimp_container_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->get_preview = gimp_container_editor_get_preview;
-  docked_iface->set_context = gimp_container_editor_set_context;
-  docked_iface->get_menu    = gimp_container_editor_get_menu;
+  docked_iface->get_preview         = gimp_container_editor_get_preview;
+  docked_iface->set_context         = gimp_container_editor_set_context;
+  docked_iface->get_menu            = gimp_container_editor_get_menu;
+  docked_iface->has_button_bar      = gimp_container_editor_has_button_bar;
+  docked_iface->set_show_button_bar = gimp_container_editor_set_show_button_bar;
+  docked_iface->get_show_button_bar = gimp_container_editor_get_show_button_bar;
 }
 
 gboolean
@@ -299,4 +307,29 @@ gimp_container_editor_get_menu (GimpDocked   *docked,
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
 
   return gimp_docked_get_menu (GIMP_DOCKED (editor->view), ui_path, popup_data);
+}
+
+static gboolean
+gimp_container_editor_has_button_bar (GimpDocked *docked)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  return gimp_docked_has_button_bar (GIMP_DOCKED (editor->view));
+}
+
+static void
+gimp_container_editor_set_show_button_bar (GimpDocked *docked,
+                                           gboolean    show)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  gimp_docked_set_show_button_bar (GIMP_DOCKED (editor->view), show);
+}
+
+static gboolean
+gimp_container_editor_get_show_button_bar (GimpDocked *docked)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
+
+  return gimp_docked_get_show_button_bar (GIMP_DOCKED (editor->view));
 }

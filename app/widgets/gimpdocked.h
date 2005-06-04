@@ -36,44 +36,54 @@ struct _GimpDockedInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void            (* title_changed) (GimpDocked   *docked);
+  void            (* title_changed)       (GimpDocked   *docked);
 
   /*  virtual functions  */
-  void            (* set_aux_info)  (GimpDocked   *docked,
-                                     GList        *aux_info);
-  GList         * (* get_aux_info)  (GimpDocked   *docked);
+  void            (* set_aux_info)        (GimpDocked   *docked,
+                                           GList        *aux_info);
+  GList         * (* get_aux_info)        (GimpDocked   *docked);
 
-  GtkWidget     * (* get_preview)   (GimpDocked   *docked,
-                                     GimpContext  *context,
-                                     GtkIconSize   size);
-  GimpUIManager * (* get_menu)      (GimpDocked   *docked,
-                                     const gchar **ui_path,
-                                     gpointer     *popup_data);
-  gchar         * (* get_title)     (GimpDocked   *docked);
+  GtkWidget     * (* get_preview)         (GimpDocked   *docked,
+                                           GimpContext  *context,
+                                           GtkIconSize   size);
+  GimpUIManager * (* get_menu)            (GimpDocked   *docked,
+                                           const gchar **ui_path,
+                                           gpointer     *popup_data);
+  gchar         * (* get_title)           (GimpDocked   *docked);
 
-  void            (* set_context)   (GimpDocked   *docked,
-                                     GimpContext  *context);
+  void            (* set_context)         (GimpDocked   *docked,
+                                           GimpContext  *context);
+
+  gboolean        (* has_button_bar)      (GimpDocked   *docked);
+  void            (* set_show_button_bar) (GimpDocked   *docked,
+                                           gboolean      show);
+  gboolean        (* get_show_button_bar) (GimpDocked   *docked);
 };
 
 
-GType           gimp_docked_interface_get_type (void) G_GNUC_CONST;
+GType           gimp_docked_interface_get_type  (void) G_GNUC_CONST;
 
-void            gimp_docked_title_changed      (GimpDocked   *docked);
+void            gimp_docked_title_changed       (GimpDocked   *docked);
 
-void            gimp_docked_set_aux_info       (GimpDocked   *docked,
-                                                GList        *aux_info);
-GList         * gimp_docked_get_aux_info       (GimpDocked   *docked);
+void            gimp_docked_set_aux_info        (GimpDocked   *docked,
+                                                 GList        *aux_info);
+GList         * gimp_docked_get_aux_info        (GimpDocked   *docked);
 
-GtkWidget     * gimp_docked_get_preview        (GimpDocked   *docked,
-                                                GimpContext  *context,
-                                                GtkIconSize   size);
-GimpUIManager * gimp_docked_get_menu           (GimpDocked   *docked,
-                                                const gchar **ui_path,
-                                                gpointer     *popup_data);
-gchar         * gimp_docked_get_title          (GimpDocked   *docked);
+GtkWidget     * gimp_docked_get_preview         (GimpDocked   *docked,
+                                                 GimpContext  *context,
+                                                 GtkIconSize   size);
+GimpUIManager * gimp_docked_get_menu            (GimpDocked   *docked,
+                                                 const gchar **ui_path,
+                                                 gpointer     *popup_data);
+gchar         * gimp_docked_get_title           (GimpDocked   *docked);
 
-void            gimp_docked_set_context        (GimpDocked   *docked,
-                                                GimpContext  *context);
+void            gimp_docked_set_context         (GimpDocked   *docked,
+                                                 GimpContext  *context);
+
+gboolean        gimp_docked_has_button_bar      (GimpDocked   *docked);
+void            gimp_docked_set_show_button_bar (GimpDocked   *docked,
+                                                 gboolean      show);
+gboolean        gimp_docked_get_show_button_bar (GimpDocked   *docked);
 
 
 #endif  /* __GIMP_DOCKED_H__ */
