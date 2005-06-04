@@ -3,6 +3,9 @@
 #include <libgimp/gimpui.h>
 
 gimp_aspect_preview_get_type
+gimp_channel_combo_box_get_type
+gimp_drawable_combo_box_get_type
 gimp_drawable_preview_get_type
 gimp_image_combo_box_get_type
+gimp_layer_combo_box_get_type
 gimp_progress_bar_get_type

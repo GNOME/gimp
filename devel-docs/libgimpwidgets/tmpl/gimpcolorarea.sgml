@@ -37,6 +37,11 @@ Displays a GimpRGB color, optionally with alpha-channel.
 
 </para>
 
+<!-- ##### ARG GimpColorArea:draw-border ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpColorArea:type ##### -->
 <para>
 

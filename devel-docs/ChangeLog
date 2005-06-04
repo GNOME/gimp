@@ -1,3 +1,15 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/libgimp.types
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: updated.
+
+	* libgimp/tmpl/gimpdrawablecombobox.sgml
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpvectors.sgml
+	* libgimpwidgets/tmpl/gimpcolorarea.sgml: regenerated.
+
 2005-05-29  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

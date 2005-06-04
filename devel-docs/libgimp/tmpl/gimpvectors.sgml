@@ -24,6 +24,29 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_stroke_interpolate ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@prescision: 
+@num_coords: 
+@coords: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_vectors_stroke_remove ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@stroke_id: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_stroke_translate ##### -->
 <para>
 

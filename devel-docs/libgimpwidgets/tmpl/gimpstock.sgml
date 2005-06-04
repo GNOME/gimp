@@ -784,6 +784,20 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_HCENTER ##### -->
+<para xml:base="../../gimpstock.xml">
+<inlinegraphic fileref="stock-hcenter-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VCENTER ##### -->
+<para xml:base="../../gimpstock.xml">
+<inlinegraphic fileref="stock-vcenter-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
 <para xml:base="../../gimpstock.xml">
 <inlinegraphic fileref="stock-char-picker-22.png" format="png"></inlinegraphic>

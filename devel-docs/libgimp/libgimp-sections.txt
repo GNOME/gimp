@@ -55,6 +55,7 @@ gimp_attach_new_parasite
 
 <SECTION>
 <FILE>gimpenums</FILE>
+gimp_enums_init
 GimpBrushApplicationMode
 GimpConvertDitherType
 GimpConvertPaletteType
@@ -816,6 +817,8 @@ gimp_image_undo_thaw
 <SECTION>
 <FILE>gimpvectors</FILE>
 gimp_vectors_get_strokes
+gimp_vectors_stroke_interpolate
+gimp_vectors_stroke_remove
 gimp_vectors_stroke_translate
 </SECTION>
 
@@ -864,10 +867,26 @@ GIMP_DRAWABLE_PREVIEW_GET_CLASS
 <SECTION>
 <FILE>gimpdrawablecombobox</FILE>
 <TITLE>GimpDrawableComboBox</TITLE>
+GimpDrawableComboBox
 GimpDrawableConstraintFunc
 gimp_drawable_combo_box_new
+GimpChannelComboBox
 gimp_channel_combo_box_new
+GimpLayerComboBox
 gimp_layer_combo_box_new
+<SUBSECTION Standard>
+GIMP_TYPE_LAYER_COMBO_BOX
+GIMP_TYPE_CHANNEL_COMBO_BOX
+gimp_layer_combo_box_get_type
+GIMP_IS_LAYER_COMBO_BOX
+GIMP_CHANNEL_COMBO_BOX
+GIMP_DRAWABLE_COMBO_BOX
+GIMP_LAYER_COMBO_BOX
+gimp_drawable_combo_box_get_type
+GIMP_IS_DRAWABLE_COMBO_BOX
+GIMP_TYPE_DRAWABLE_COMBO_BOX
+GIMP_IS_CHANNEL_COMBO_BOX
+gimp_channel_combo_box_get_type
 </SECTION>
 
 <SECTION>
