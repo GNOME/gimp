@@ -557,7 +557,7 @@ request_url (HtmlDocument *doc,
     {
       gint fd;
 
-      fd = open (filename, O_RDONLY);
+      fd = open (filename, O_RDONLY|O_BINARY);
 
       if (fd != -1)
         {
