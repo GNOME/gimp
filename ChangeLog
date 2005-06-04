@@ -1,3 +1,12 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdnd.c (gimp_dnd_get_viewable_icon): reduced the
+	number of characters to show before ellipsizing the label.
+
+	* libgimpwidgets/gimpcolorarea.c: added a "draw-border" property.
+
+	* app/widgets/gimpcolorframe.c: draw a border around the color area.
+
 2005-06-03  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/helpbrowser/dialog.c: added a O_BINARY to make sure

@@ -1729,7 +1729,7 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
                             "xpad",            3,
                             "xalign",          0.0,
                             "yalign",          0.5,
-                            "max-width-chars", 80,
+                            "max-width-chars", 30,
                             "ellipsize",       PANGO_ELLIPSIZE_END,
                             NULL);
 

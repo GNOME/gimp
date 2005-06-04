@@ -47,12 +47,13 @@ enum
   PROP_0,
   PROP_COLOR,
   PROP_TYPE,
-  PROP_DRAG_MASK
+  PROP_DRAG_MASK,
+  PROP_DRAW_BORDER
 };
 
 
-static void     gimp_color_area_class_init     (GimpColorAreaClass *klass);
-static void     gimp_color_area_init           (GimpColorArea      *area);
+static void      gimp_color_area_class_init    (GimpColorAreaClass *klass);
+static void      gimp_color_area_init          (GimpColorArea      *area);
 
 static void      gimp_color_area_get_property  (GObject            *object,
                                                 guint               property_id,
@@ -195,6 +196,18 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                                        0,
                                                        G_PARAM_WRITABLE |
                                                        G_PARAM_CONSTRUCT_ONLY));
+  /**
+   * GimpColorArea:draw-border:
+   *
+   * Whether to draw a thin border in the foreground color around the area.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_DRAW_BORDER,
+                                   g_param_spec_boolean ("draw-border",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
@@ -246,6 +259,10 @@ gimp_color_area_get_property (GObject    *object,
       g_value_set_enum (value, area->type);
       break;
 
+    case PROP_DRAW_BORDER:
+      g_value_set_boolean (value, area->draw_border);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -280,6 +297,10 @@ gimp_color_area_set_property (GObject      *object,
                              drag_mask,
                              &target, 1,
                              GDK_ACTION_COPY | GDK_ACTION_MOVE);
+      break;
+
+    case PROP_DRAW_BORDER:
+      gimp_color_area_set_draw_border (area, g_value_get_boolean (value));
       break;
 
     default:
@@ -450,12 +471,15 @@ gimp_color_area_set_type (GimpColorArea     *area,
 {
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  area->type = type;
+  if (area->type != type)
+    {
+      area->type = type;
 
-  area->needs_render = TRUE;
-  gtk_widget_queue_draw (GTK_WIDGET (area));
+      area->needs_render = TRUE;
+      gtk_widget_queue_draw (GTK_WIDGET (area));
 
-  g_object_notify (G_OBJECT (area), "type");
+      g_object_notify (G_OBJECT (area), "type");
+    }
 }
 
 /**
@@ -473,9 +497,16 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
 {
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  area->draw_border = draw_border ? TRUE : FALSE;
+  draw_border = draw_border ? TRUE : FALSE;
 
-  gtk_widget_queue_draw (GTK_WIDGET (area));
+  if (area->draw_border != draw_border)
+    {
+      area->draw_border = draw_border;
+
+      gtk_widget_queue_draw (GTK_WIDGET (area));
+
+      g_object_notify (G_OBJECT (area), "draw-border");
+    }
 }
 
 void

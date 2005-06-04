@@ -163,12 +163,15 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_misc_set_alignment (GTK_MISC (frame->number_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), frame->number_label, FALSE, FALSE, 0);
 
-  frame->color_area = gimp_color_area_new (&frame->color,
-                                           GIMP_COLOR_AREA_SMALL_CHECKS,
-                                           GDK_BUTTON1_MASK);
-  gtk_widget_set_size_request (frame->color_area, 30, 20);
-  gimp_color_area_set_color (GIMP_COLOR_AREA (frame->color_area),
-                             &frame->color);
+  frame->color_area =
+    g_object_new (GIMP_TYPE_COLOR_AREA,
+                  "color",          &frame->color,
+                  "type",           GIMP_COLOR_AREA_SMALL_CHECKS,
+                  "drag-mask",      GDK_BUTTON1_MASK,
+                  "draw-border",    TRUE,
+                  "height-request", 20,
+                  NULL);
+
   gtk_box_pack_end (GTK_BOX (hbox), frame->color_area, TRUE, TRUE, 0);
 
   vbox2 = gtk_vbox_new (TRUE, 2);
