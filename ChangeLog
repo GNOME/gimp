@@ -1,3 +1,15 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorarea.[ch]: invalidate the buffer when
+	the widget's sensitivity changes. Draw a stipple pattern on the
+	insensitive color area.
+
+	* libgimpwidgets/gimpcellrenderercolor.c: follow internal API change.
+
+	* libgimpwidgets/gimpcolorbutton.c: pass GDK_BUTTON1_MASK as
+	drag-mask. Doesn't work for whatever reason but it didn't work
+	with GDK_BUTTON2_MASK either.
+
 2005-06-04  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/webbrowser.c: use GetDesktopWindow() and SW_SHOW

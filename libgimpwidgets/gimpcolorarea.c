@@ -67,6 +67,8 @@ static void      gimp_color_area_finalize      (GObject            *object);
 
 static void      gimp_color_area_size_allocate (GtkWidget          *widget,
                                                 GtkAllocation      *allocation);
+static void      gimp_color_area_state_changed (GtkWidget          *widget,
+                                                GtkStateType        previous_state);
 static gboolean  gimp_color_area_expose        (GtkWidget          *widget,
                                                 GdkEventExpose     *event);
 static void      gimp_color_area_render        (GimpColorArea      *area);
@@ -147,6 +149,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   object_class->finalize           = gimp_color_area_finalize;
 
   widget_class->size_allocate      = gimp_color_area_size_allocate;
+  widget_class->state_changed      = gimp_color_area_state_changed;
   widget_class->expose_event       = gimp_color_area_expose;
 
   widget_class->drag_begin         = gimp_color_area_drag_begin;
@@ -333,6 +336,20 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
     }
 }
 
+static void
+gimp_color_area_state_changed (GtkWidget    *widget,
+                               GtkStateType  previous_state)
+{
+  if (widget->state == GTK_STATE_INSENSITIVE ||
+      previous_state == GTK_STATE_INSENSITIVE)
+    {
+      GIMP_COLOR_AREA (widget)->needs_render = TRUE;
+    }
+
+  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
+    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
+}
+
 static gboolean
 gimp_color_area_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -340,7 +357,7 @@ gimp_color_area_expose (GtkWidget      *widget,
   GimpColorArea *area = GIMP_COLOR_AREA (widget);
   guchar        *buf;
 
-  if (! area->buf || !GTK_WIDGET_DRAWABLE (widget))
+  if (! area->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
   if (area->needs_render)
@@ -510,7 +527,8 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
 }
 
 void
-_gimp_color_area_render_buf (GimpColorAreaType  type,
+_gimp_color_area_render_buf (GtkWidget         *widget,
+                             GimpColorAreaType  type,
                              guchar            *buf,
                              guint              width,
                              guint              height,
@@ -522,8 +540,13 @@ _gimp_color_area_render_buf (GimpColorAreaType  type,
   guchar   light[3];
   guchar   dark[3];
   guchar   opaque[3];
+  guchar   insensitive[3];
   guchar  *p;
   gdouble  frac;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (color != NULL);
 
   switch (type)
     {
@@ -542,7 +565,11 @@ _gimp_color_area_render_buf (GimpColorAreaType  type,
 
   gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  if (color->a == 1.0 || !check_size)
+  insensitive[0] = widget->style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
+  insensitive[1] = widget->style->bg[GTK_STATE_INSENSITIVE].green >> 8;
+  insensitive[2] = widget->style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+
+  if (check_size == 0 || color->a == 1.0 || ! GTK_WIDGET_IS_SENSITIVE (widget))
     {
       for (y = 0; y < height; y++)
         {
@@ -550,9 +577,18 @@ _gimp_color_area_render_buf (GimpColorAreaType  type,
 
           for (x = 0; x < width; x++)
             {
-              *p++ = opaque[0];
-              *p++ = opaque[1];
-              *p++ = opaque[2];
+              if ((! GTK_WIDGET_IS_SENSITIVE (widget)) && ((x + y) % 2))
+                {
+                  *p++ = insensitive[0];
+                  *p++ = insensitive[1];
+                  *p++ = insensitive[2];
+                }
+              else
+                {
+                  *p++ = opaque[0];
+                  *p++ = opaque[1];
+                  *p++ = opaque[2];
+                }
             }
         }
 
@@ -561,16 +597,17 @@ _gimp_color_area_render_buf (GimpColorAreaType  type,
 
   light[0] = (GIMP_CHECK_LIGHT +
               (color->r - GIMP_CHECK_LIGHT) * color->a) * 255.999;
-  dark[0]  = (GIMP_CHECK_DARK +
-              (color->r - GIMP_CHECK_DARK)  * color->a) * 255.999;
   light[1] = (GIMP_CHECK_LIGHT +
               (color->g - GIMP_CHECK_LIGHT) * color->a) * 255.999;
-  dark[1]  = (GIMP_CHECK_DARK +
-              (color->g - GIMP_CHECK_DARK)  * color->a) * 255.999;
   light[2] = (GIMP_CHECK_LIGHT +
               (color->b - GIMP_CHECK_LIGHT) * color->a) * 255.999;
-  dark[2]  = (GIMP_CHECK_DARK +
-              (color->b - GIMP_CHECK_DARK)  * color->a) * 255.999;
+
+  dark[0] = (GIMP_CHECK_DARK +
+             (color->r - GIMP_CHECK_DARK)  * color->a) * 255.999;
+  dark[1] = (GIMP_CHECK_DARK +
+             (color->g - GIMP_CHECK_DARK)  * color->a) * 255.999;
+  dark[2] = (GIMP_CHECK_DARK +
+             (color->b - GIMP_CHECK_DARK)  * color->a) * 255.999;
 
   for (y = 0; y < height; y++)
     {
@@ -631,15 +668,16 @@ _gimp_color_area_render_buf (GimpColorAreaType  type,
 static void
 gimp_color_area_render (GimpColorArea *area)
 {
-  area->needs_render = FALSE;
-
   if (! area->buf)
     return;
 
-  _gimp_color_area_render_buf (area->type,
+  _gimp_color_area_render_buf (GTK_WIDGET (area),
+                               area->type,
                                area->buf,
                                area->width, area->height, area->rowstride,
                                &area->color);
+
+  area->needs_render = FALSE;
 }
 
 static void

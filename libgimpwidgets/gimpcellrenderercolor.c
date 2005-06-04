@@ -277,7 +277,8 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
       buf = g_alloca (rowstride * (rect.height - 2));
 
-      _gimp_color_area_render_buf ((color->opaque ?
+      _gimp_color_area_render_buf (widget,
+                                   (color->opaque ?
                                     GIMP_COLOR_AREA_FLAT :
                                     GIMP_COLOR_AREA_SMALL_CHECKS),
                                    buf,

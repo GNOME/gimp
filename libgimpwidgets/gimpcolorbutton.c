@@ -265,7 +265,7 @@ gimp_color_button_init (GimpColorButton      *button,
   button->dialog = NULL;
 
   button->color_area = g_object_new (GIMP_TYPE_COLOR_AREA,
-                                     "drag-mask", GDK_BUTTON2_MASK,
+                                     "drag-mask", GDK_BUTTON1_MASK,
                                      NULL);
 
   g_signal_connect (button->color_area, "color-changed",
