@@ -1,3 +1,12 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/dockable-actions.c
+	* app/actions/dockable-commands.[ch]
+	* app/widgets/gimpeditor.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/dockable-menu.xml.in: allow to show/hide the button-bar in
+	GimpEditor. Should be merged into the GimpDocked interface.
+
 2005-06-04  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: define _O_BINARY ourselves if

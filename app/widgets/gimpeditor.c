@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -31,6 +33,7 @@
 #include "gimpeditor.h"
 #include "gimpdnd.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -50,7 +53,8 @@ enum
   PROP_UI_PATH,
   PROP_POPUP_DATA,
   PROP_SHOW_NAME,
-  PROP_NAME
+  PROP_NAME,
+  PROP_SHOW_BUTTON_BAR
 };
 
 
@@ -73,6 +77,10 @@ static void        gimp_editor_destroy           (GtkObject       *object);
 static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
 
+static void        gimp_editor_set_aux_info      (GimpDocked      *docked,
+                                                  GList           *aux_info);
+static GList     * gimp_editor_get_aux_info      (GimpDocked      *docked);
+
 static GimpUIManager * gimp_editor_get_menu      (GimpDocked      *docked,
                                                   const gchar    **ui_path,
                                                   gpointer        *popup_data);
@@ -80,7 +88,8 @@ static GimpUIManager * gimp_editor_get_menu      (GimpDocked      *docked,
 static GtkIconSize gimp_editor_ensure_button_box (GimpEditor      *editor);
 
 
-static GtkVBoxClass *parent_class = NULL;
+static GtkVBoxClass        *parent_class        = NULL;
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 GType
@@ -177,6 +186,13 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_SHOW_BUTTON_BAR,
+                                   g_param_spec_boolean ("show-button-bar",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content_spacing",
                                                              NULL, NULL,
@@ -225,7 +241,11 @@ gimp_editor_init (GimpEditor *editor)
 static void
 gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->get_menu = gimp_editor_get_menu;
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  docked_iface->set_aux_info = gimp_editor_set_aux_info;
+  docked_iface->get_aux_info = gimp_editor_get_aux_info;
+  docked_iface->get_menu     = gimp_editor_get_menu;
 }
 
 static GObject *
@@ -283,6 +303,9 @@ gimp_editor_set_property (GObject      *object,
     case PROP_NAME:
       gimp_editor_set_name (editor, g_value_get_string (value));
       break;
+    case PROP_SHOW_BUTTON_BAR:
+      gimp_editor_set_show_button_bar (editor, g_value_get_boolean (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -313,6 +336,9 @@ gimp_editor_get_property (GObject    *object,
       break;
     case PROP_SHOW_NAME:
       g_object_get_property (G_OBJECT (editor->name_label), "visible", value);
+      break;
+    case PROP_SHOW_BUTTON_BAR:
+      g_value_set_boolean (value, editor->show_button_bar);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -368,6 +394,51 @@ gimp_editor_style_set (GtkWidget *widget,
 
   if (editor->button_box)
     gimp_editor_set_box_style (editor, GTK_BOX (editor->button_box));
+}
+
+
+#define AUX_INFO_SHOW_BUTTON_BAR "show-button-bar"
+
+static void
+gimp_editor_set_aux_info (GimpDocked *docked,
+                          GList      *aux_info)
+{
+  GList *list;
+
+  if (parent_docked_iface && parent_docked_iface->set_aux_info)
+    parent_docked_iface->set_aux_info (docked, aux_info);
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (strcmp (aux->name, AUX_INFO_SHOW_BUTTON_BAR) == 0)
+        {
+          gboolean show = g_ascii_strcasecmp (aux->value, "false");
+
+          gimp_editor_set_show_button_bar (GIMP_EDITOR (docked), show);
+        }
+    }
+}
+
+static GList *
+gimp_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpEditor  *editor   = GIMP_EDITOR (docked);
+  GList       *aux_info = NULL;
+
+  if (parent_docked_iface && parent_docked_iface->set_aux_info)
+    aux_info = parent_docked_iface->get_aux_info (docked);
+
+  if (! editor->show_button_bar)
+    {
+      aux_info =
+        g_list_append (aux_info,
+                       gimp_session_info_aux_new (AUX_INFO_SHOW_BUTTON_BAR,
+                                                  "false"));
+    }
+
+  return aux_info;
 }
 
 static GimpUIManager *
@@ -760,6 +831,46 @@ gimp_editor_set_box_style (GimpEditor *editor,
   g_list_free (children);
 }
 
+gboolean
+gimp_editor_has_button_bar (GimpEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+
+  return editor->button_box != NULL;
+}
+
+void
+gimp_editor_set_show_button_bar (GimpEditor *editor,
+                                 gboolean    show)
+{
+  g_return_if_fail (GIMP_IS_EDITOR (editor));
+
+  show = show ? TRUE : FALSE;
+
+  if (show != editor->show_button_bar)
+    {
+      editor->show_button_bar = show;
+
+      if (editor->button_box)
+        {
+          if (show)
+            gtk_widget_show (editor->button_box);
+          else
+            gtk_widget_hide (editor->button_box);
+        }
+
+      g_object_notify (G_OBJECT (editor), "show-button-bar");
+    }
+}
+
+gboolean
+gimp_editor_get_show_button_bar (GimpEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_EDITOR (editor), FALSE);
+
+  return editor->show_button_bar;
+}
+
 
 /*  private functions  */
 
@@ -779,7 +890,9 @@ gimp_editor_ensure_button_box (GimpEditor *editor)
       editor->button_box = gtk_hbox_new (TRUE, button_spacing);
       gtk_box_pack_end (GTK_BOX (editor), editor->button_box, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (editor), editor->button_box, 0);
-      gtk_widget_show (editor->button_box);
+
+      if (editor->show_button_bar)
+        gtk_widget_show (editor->button_box);
     }
 
   return button_icon_size;

@@ -20,23 +20,25 @@
 #define __DOCKABLE_COMMANDS_H__
 
 
-void   dockable_add_tab_cmd_callback      (GtkAction   *action,
-                                           const gchar *value,
-                                           gpointer     data);
-void   dockable_close_tab_cmd_callback    (GtkAction   *action,
-                                           gpointer     data);
-void   dockable_detach_tab_cmd_callback   (GtkAction   *action,
-                                           gpointer     data);
+void   dockable_add_tab_cmd_callback         (GtkAction   *action,
+                                              const gchar *value,
+                                              gpointer     data);
+void   dockable_close_tab_cmd_callback       (GtkAction   *action,
+                                              gpointer     data);
+void   dockable_detach_tab_cmd_callback      (GtkAction   *action,
+                                              gpointer     data);
 
-void   dockable_toggle_view_cmd_callback  (GtkAction   *action,
-                                           GtkAction   *current,
-                                           gpointer     data);
-void   dockable_preview_size_cmd_callback (GtkAction   *action,
-                                           GtkAction   *current,
-                                           gpointer     data);
-void   dockable_tab_style_cmd_callback    (GtkAction   *action,
-                                           GtkAction   *current,
-                                           gpointer     data);
+void   dockable_toggle_view_cmd_callback     (GtkAction   *action,
+                                              GtkAction   *current,
+                                              gpointer     data);
+void   dockable_preview_size_cmd_callback    (GtkAction   *action,
+                                              GtkAction   *current,
+                                              gpointer     data);
+void   dockable_tab_style_cmd_callback       (GtkAction   *action,
+                                              GtkAction   *current,
+                                              gpointer     data);
+void   dockable_show_button_bar_cmd_callback (GtkAction   *action,
+                                              gpointer     data);
 
 
 #endif /* __DOCKABLE_COMMANDS_H__ */

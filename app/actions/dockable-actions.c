@@ -34,6 +34,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocked.h"
+#include "widgets/gimpeditor.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "dialogs-actions.h"
@@ -49,10 +50,10 @@ static GimpActionEntry dockable_actions[] =
     N_("Dialogs Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCK },
 
-  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, "" },
-  { "dockable-add-tab-menu",      NULL, N_("_Add Tab")        },
-  { "dockable-preview-size-menu", NULL, N_("_Preview Size")   },
-  { "dockable-tab-style-menu",    NULL, N_("_Tab Style")      },
+  { "dockable-menu",               GTK_STOCK_MISSING_IMAGE, "" },
+  { "dockable-add-tab-menu",       NULL, N_("_Add Tab")        },
+  { "dockable-preview-size-menu",  NULL, N_("_Preview Size")   },
+  { "dockable-tab-style-menu",     NULL, N_("_Tab Style")      },
 
   { "dockable-close-tab", GTK_STOCK_CLOSE,
     N_("_Close Tab"), "", NULL,
@@ -101,6 +102,16 @@ static GimpRadioActionEntry dockable_tab_style_actions[] =
 #undef PREVIEW_SIZE
 #undef TAB_STYLE
 
+
+static GimpToggleActionEntry dockable_toggle_actions[] =
+{
+  { "dockable-show-button-bar", NULL,
+    N_("_Show Button Bar"), NULL, NULL,
+    G_CALLBACK (dockable_show_button_bar_cmd_callback),
+    TRUE,
+    GIMP_HELP_DOCK_SHOW_BUTTON_BAR }
+};
+
 static GimpRadioActionEntry dockable_view_type_actions[] =
 {
   { "dockable-view-type-list", NULL,
@@ -121,6 +132,10 @@ dockable_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  dockable_actions,
                                  G_N_ELEMENTS (dockable_actions));
+
+  gimp_action_group_add_toggle_actions (group,
+                                        dockable_toggle_actions,
+                                        G_N_ELEMENTS (dockable_toggle_actions));
 
   gimp_action_group_add_string_actions (group,
                                         dialogs_dockable_actions,
@@ -307,6 +322,20 @@ dockable_actions_update (GimpActionGroup *group,
 
       SET_SENSITIVE ("dockable-view-type-grid", grid_view_available);
       SET_SENSITIVE ("dockable-view-type-list", list_view_available);
+    }
+
+  if (GIMP_IS_EDITOR (GTK_BIN (dockable)->child))
+    {
+      GimpEditor *editor = GIMP_EDITOR (GTK_BIN (dockable)->child);
+
+      SET_VISIBLE ("dockable-show-button-bar",
+                   gimp_editor_has_button_bar (editor));
+      SET_ACTIVE ("dockable-show-button-bar",
+                  gimp_editor_get_show_button_bar (editor));
+    }
+  else
+    {
+      SET_VISIBLE ("dockable-show-button-bar", FALSE);
     }
 
 #undef SET_ACTIVE

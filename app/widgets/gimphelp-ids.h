@@ -424,6 +424,7 @@
 #define GIMP_HELP_DOCK_TAB_STYLE                  "gimp-dock-tab-style"
 #define GIMP_HELP_DOCK_VIEW_AS_LIST               "gimp-dock-view-as-list"
 #define GIMP_HELP_DOCK_VIEW_AS_GRID               "gimp-dock-view-as-grid"
+#define GIMP_HELP_DOCK_SHOW_BUTTON_BAR            "gimp-dock-show-button-bar"
 
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"
 #define GIMP_HELP_COLOR_DIALOG                    "gimp-color-dialog"

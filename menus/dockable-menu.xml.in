@@ -29,6 +29,7 @@
     </menu>
     <menuitem action="dockable-view-type-list" />
     <menuitem action="dockable-view-type-grid" />
+    <menuitem action="dockable-show-button-bar"/>
     <separator />
     <menuitem action="dock-show-image-menu" />
     <menuitem action="dock-auto-follow-active" />

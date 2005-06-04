@@ -32,6 +32,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimpeditor.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "dialogs/dialogs.h"
@@ -264,5 +265,28 @@ dockable_tab_style_cmd_callback (GtkAction *action,
       gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
                                   GTK_WIDGET (dockable),
                                   tab_widget);
+    }
+}
+
+void
+dockable_show_button_bar_cmd_callback (GtkAction *action,
+                                       gpointer   data)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  GimpDockable *dockable;
+  gint          page_num;
+
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = (GimpDockable *)
+    gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (dockable)
+    {
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
+
+      if (GIMP_IS_EDITOR (child))
+        gimp_editor_set_show_button_bar (GIMP_EDITOR (child),
+                                         gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)));
     }
 }
