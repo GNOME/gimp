@@ -23,6 +23,13 @@ Changes in CVS (not released yet)
 - allow to paste a new image using Ctrl-V on the toolbox
 - show previews of dash presets in Stroke Options dialog
 - Escape key cancels the window selection in the Screenshot plug-in
+- allow to operate the Brightness Contrast tool by clicking and dragging
+  on the canvas
+- improved Sample Points dockable
+- added first draft of new align tool
+- turned image and drawable combo boxes in libgimpui into real widgets
+- further improved Python bindings
+- nicer DND icons for viewables
 - bug fixes and code cleanup
 
 
