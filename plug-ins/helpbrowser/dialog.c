@@ -56,6 +56,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 
 enum
 {
@@ -866,12 +870,7 @@ request_url (HtmlDocument *doc,
 
   if (filename)
     {
-
-#ifdef G_OS_WIN32
-      gint fd = g_open (filename, O_RDONLY|O_BINARY, 0);
-#else
-      gint fd = g_open (filename, O_RDONLY, 0);      
-#endif
+      gint fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
       if (fd != -1)
         {
