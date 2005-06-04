@@ -783,6 +783,7 @@ gimp_text_buffer_load (GtkTextBuffer  *buffer,
       g_utf8_validate (buf, count + remaining, &leftover);
 
       gtk_text_buffer_insert (buffer, &iter, buf, leftover - buf);
+      gtk_text_buffer_get_iter_at_offset (buffer, &iter, -1);
 
       remaining = (buf + remaining + count) - leftover;
       g_memmove (buf, leftover, remaining);
