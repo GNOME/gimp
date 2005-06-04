@@ -223,8 +223,8 @@ libgimp_2_0_la_built_sources = \
 libgimp_2_0_la_extra_sources = gimpenums.c.tail
 
 libgimp_2_0_la_SOURCES = \
-	$(libgimp_2_0_la_sources)	\
-	$(libgimp_2_0_la_built_sources)
+	$(libgimp_2_0_la_built_sources)	\
+	$(libgimp_2_0_la_sources)
 
 libgimpui_2_0_la_sources = \
 	gimpui.c		\
@@ -266,8 +266,8 @@ libgimpui_2_0_la_built_sources = \
 libgimpui_2_0_la_extra_sources = gimpuimarshal.list
 
 libgimpui_2_0_la_SOURCES = \
-	$(libgimpui_2_0_la_sources)		\
-	$(libgimpui_2_0_la_built_sources)
+	$(libgimpui_2_0_la_built_sources)	\
+	$(libgimpui_2_0_la_sources)
 
 gimpinclude_HEADERS = \
 	gimp.h			\

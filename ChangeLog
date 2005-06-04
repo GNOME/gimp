@@ -1,5 +1,9 @@
 2005-06-04  Manish Singh  <yosh@gimp.org>
 
+	* libgimp/Makefile.am: reorder to get the marshal files built first.
+
+2005-06-04  Manish Singh  <yosh@gimp.org>
+
 	* libgimp/gimpfontselectbutton.[ch]: new formal widget based on
 	gimpfontmenu.[ch].
 
