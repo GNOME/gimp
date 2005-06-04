@@ -6,6 +6,17 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.8
+========================
+- fixed possible crash in plug-ins-query PDB function
+- fixes to Script-Fu server mode on Win32
+- fixed possible crash in win32 gimptool variant
+- plugged a tiny memleak in the image display code
+- plugged a tiny memleak in libgimpwidgets
+- attempt to fix calling the web-browser on win32 (bug #171200)
+- fixed loading of images in help-browser plug-in on win32
+
+
 Bugs fixed in GIMP 2.2.7
 ========================
 - update layer previews on colormap changes (bug #301033)
