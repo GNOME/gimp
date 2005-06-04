@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: olle@paalalinn.com\n"
-"POT-Creation-Date: 2005-05-13 03:28+0000\n"
-"PO-Revision-Date: 2005-05-15 23:28+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-26 03:36+0000\n"
+"PO-Revision-Date: 2005-05-29 21:18+0300\n"
 "Last-Translator: Olle Niit olle@paalalinn.com\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -117,17 +117,17 @@ msgid "(none)"
 msgstr "(puudub)"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1085
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autor:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1092
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:1099
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Kuupäev:"
 
@@ -143,15 +143,15 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:648
+#: ../plug-ins/script-fu/script-fu-server.c:653
 msgid "Script-Fu Server Options"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:681
 msgid "Server Port:"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:682
+#: ../plug-ins/script-fu/script-fu-server.c:687
 msgid "Server Logfile:"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:296
 msgid "S_cript-Fu"
-msgstr ""
+msgstr "S_cript-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:298
 msgid "_Alchemy"
@@ -234,11 +234,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Decor"
-msgstr ""
+msgstr "_Dekoratsioon"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Render"
-msgstr ""
+msgstr "_Tekita"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Selection"
@@ -254,76 +254,96 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Refresh Scripts"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
-msgid "Procedure Browser"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-msgid "Search by _Name"
-msgstr ""
+msgstr "_Värskenda skripte"
 
 #: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr ""
+msgid "Procedure Browser"
+msgstr "Protseduuride sirvija"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-msgid "_Search:"
-msgstr "_Otsi:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "nime järgi"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "kirjelduse järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "abiinfo järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "autori järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "copyright'i järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "kuupäeva järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "tüübi järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
 msgid "Searching by name - please wait"
 msgstr "Nime järgi otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr ""
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
+msgid "Searching by description - please wait"
+msgstr "Kirjelduse järgi otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Abiinfo järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Autori järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Copyright'i järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Kuupäeva järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Tüübi järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
-msgstr ""
+msgstr "1 protseduur"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
-msgstr ""
+msgstr "%d protseduuri"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
 msgid "No matches"
-msgstr ""
+msgstr "Ei leidnud sobivaid"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:135
+#: ../plug-ins/dbbrowser/gimpprocview.c:138
 msgid "Parameters"
-msgstr ""
+msgstr "Parameetrid"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
-msgstr ""
+msgstr "Tagastatavad väärtused"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr ""
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "GIMPi pistik"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "GIMPi laiendus"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr ""
+msgstr "Lisainformatsioon"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -419,7 +439,7 @@ msgstr "Fondi suurus (pikslites)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
 msgid "Outline blur radius"
-msgstr ""
+msgstr "Piirjoone udu raadius"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
@@ -537,12 +557,12 @@ msgstr "Lõpeta kokkusegamine"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Number of X tiles"
-msgstr ""
+msgstr "X klotside arv"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of Y tiles"
-msgstr ""
+msgstr "Y klotside arv"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
@@ -575,7 +595,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Work on copy"
-msgstr ""
+msgstr "Tööta koopiaga"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
@@ -583,15 +603,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border X size"
-msgstr ""
+msgstr "X raami suurus"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border Y size"
-msgstr ""
+msgstr "Y raami suurus"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border color"
-msgstr ""
+msgstr "Raami värv"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Delta value on color"
@@ -600,7 +620,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "Down"
-msgstr ""
+msgstr "Alumine"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
@@ -626,17 +646,17 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Left"
-msgstr ""
+msgstr "Vasak"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Orientation"
-msgstr ""
+msgstr "Suund"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
 msgid "Right"
-msgstr ""
+msgstr "Parem"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
@@ -647,12 +667,12 @@ msgstr "Suurus"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
 msgid "Up"
-msgstr ""
+msgstr "Ülemine"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "_Arrow..."
-msgstr ""
+msgstr "_Nool..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
 msgid "Bar height"
@@ -937,7 +957,7 @@ msgstr "Pildi suurus"
 #: ../plug-ins/script-fu/scripts/camo.scm.h:7
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Smooth"
-msgstr ""
+msgstr "Mahenda"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:8
 msgid "_Camouflage..."
@@ -1145,11 +1165,11 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "Effect size (pixels)"
-msgstr ""
+msgstr "Effekti suurus (piksleid)"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
-msgstr ""
+msgstr "Taustapilt"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Crystal..."
@@ -1161,11 +1181,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth horizontally"
-msgstr ""
+msgstr "Mahenda horisontaalselt"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth vertically"
-msgstr ""
+msgstr "Mahenda vertikaalselt"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Spread"
@@ -1197,7 +1217,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Color"
-msgstr ""
+msgstr "Värv"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
@@ -1308,7 +1328,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:4
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Random seed"
-msgstr ""
+msgstr "Juhuslikkuse seeme"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:5
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
@@ -1326,11 +1346,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
-msgstr ""
+msgstr "Aktiivsed värvid"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Black on white"
-msgstr ""
+msgstr "Must valgel"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Font _size (pixels)"
@@ -1342,11 +1362,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "_Border (pixels)"
-msgstr ""
+msgstr "_Raam (pikslit)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Color scheme"
-msgstr ""
+msgstr "_Värviskeem"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Filter (regexp)"
@@ -1366,7 +1386,7 @@ msgstr "_Tekst"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 msgid "_Frosty..."
-msgstr ""
+msgstr "_Härmane..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add shadow"
@@ -1374,7 +1394,7 @@ msgstr "Lisa vari"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Blur border"
-msgstr ""
+msgstr "Udusta raam"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Granularity (1 is Low)"
@@ -1391,16 +1411,16 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
-msgstr ""
+msgstr "Automaatkärbe"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Dark color"
-msgstr ""
+msgstr "Tume värv"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight color"
-msgstr ""
+msgstr "Esiletõstetud värv"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
@@ -2406,6 +2426,15 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr ""
+
+#~ msgid "_Search:"
+#~ msgstr "_Otsi:"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "GIMPi pistik"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMPi laiendus"
 
 #~ msgid "None"
 #~ msgstr "Puudub"
