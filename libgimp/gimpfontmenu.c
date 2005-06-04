@@ -25,49 +25,20 @@
 #include "gimp.h"
 #include "gimpui.h"
 
-#include "libgimp-intl.h"
 
+typedef struct _CompatCallbackData CompatCallbackData;
 
-#define FONT_SELECT_DATA_KEY  "gimp-font-select-data"
-
-
-typedef struct _FontSelect FontSelect;
-
-struct _FontSelect
+struct _CompatCallbackData
 {
-  gchar               *title;
-  GimpRunFontCallback  callback;
-  gpointer             data;
-
-  GtkWidget           *button;
-  GtkWidget           *label;
-
-  gchar               *font_name;      /* Local copy */
-
-  const gchar         *temp_font_callback;
+  GimpRunFontCallback callback;
+  gpointer            data;
 };
 
 
-/*  local function prototypes  */
-
-static void   gimp_font_select_widget_callback (const gchar *name,
-                                                gboolean     closing,
-                                                gpointer     data);
-static void   gimp_font_select_widget_clicked  (GtkWidget   *widget,
-                                                FontSelect  *font_sel);
-static void   gimp_font_select_widget_destroy  (GtkWidget   *widget,
-                                                FontSelect  *font_sel);
-
-static void   gimp_font_select_drag_data_received (GtkWidget        *widget,
-                                                   GdkDragContext   *context,
-                                                   gint              x,
-                                                   gint              y,
-                                                   GtkSelectionData *selection,
-                                                   guint             info,
-                                                   guint             time);
-
-
-static const GtkTargetEntry target = { "application/x-gimp-font-name", 0 };
+static void compat_callback (GimpFontSelectButton *font_button,
+                             const gchar          *font_name,
+                             gboolean              dialog_closing,
+                             gpointer              data);
 
 
 /**
@@ -90,59 +61,22 @@ gimp_font_select_widget_new (const gchar         *title,
                              GimpRunFontCallback  callback,
                              gpointer             data)
 {
-  FontSelect *font_sel;
-  GtkWidget  *hbox;
-  GtkWidget  *image;
+  GtkWidget          *font_button;
+  CompatCallbackData *compat_data;
 
   g_return_val_if_fail (callback != NULL, NULL);
 
-  if (! title)
-    title = _("Font Selection");
+  font_button = gimp_font_select_button_new (title, font_name);
 
-  font_sel = g_new0 (FontSelect, 1);
+  compat_data = g_new (CompatCallbackData, 1);
+  compat_data->callback = callback;
+  compat_data->data = data;
 
-  font_sel->title    = g_strdup (title);
-  font_sel->callback = callback;
-  font_sel->data     = data;
+  g_signal_connect_data (font_button, "font-set",
+                         G_CALLBACK (compat_callback),
+                         compat_data, (GClosureNotify) g_free, 0);
 
-  font_sel->font_name = g_strdup (font_name);
-
-  font_sel->button = gtk_button_new ();
-
-  g_signal_connect (font_sel->button, "clicked",
-                    G_CALLBACK (gimp_font_select_widget_clicked),
-                    font_sel);
-  g_signal_connect (font_sel->button, "destroy",
-                    G_CALLBACK (gimp_font_select_widget_destroy),
-                    font_sel);
-
-  gtk_drag_dest_set (GTK_WIDGET (font_sel->button),
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     &target, 1,
-                     GDK_ACTION_COPY);
-
-  g_signal_connect (font_sel->button, "drag-data-received",
-                    G_CALLBACK (gimp_font_select_drag_data_received),
-                    NULL);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (font_sel->button), hbox);
-  gtk_widget_show (hbox);
-
-  image = gtk_image_new_from_stock (GIMP_STOCK_FONT, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
-
-  font_sel->label = gtk_label_new (font_name);
-  gtk_box_pack_start (GTK_BOX (hbox), font_sel->label, TRUE, TRUE, 4);
-  gtk_widget_show (font_sel->label);
-
-  g_object_set_data (G_OBJECT (font_sel->button),
-                     FONT_SELECT_DATA_KEY, font_sel);
-
-  return font_sel->button;
+  return font_button;
 }
 
 /**
@@ -154,17 +88,9 @@ gimp_font_select_widget_new (const gchar         *title,
 void
 gimp_font_select_widget_close (GtkWidget *widget)
 {
-  FontSelect *font_sel;
+  g_return_if_fail (widget != NULL);
 
-  font_sel = g_object_get_data (G_OBJECT (widget), FONT_SELECT_DATA_KEY);
-
-  g_return_if_fail (font_sel != NULL);
-
-  if (font_sel->temp_font_callback)
-    {
-      gimp_font_select_destroy (font_sel->temp_font_callback);
-      font_sel->temp_font_callback = NULL;
-    }
+  gimp_font_select_button_close_popup (GIMP_FONT_SELECT_BUTTON (widget));
 }
 
 /**
@@ -180,95 +106,19 @@ void
 gimp_font_select_widget_set (GtkWidget   *widget,
                              const gchar *font_name)
 {
-  FontSelect *font_sel;
+  g_return_if_fail (widget != NULL);
 
-  font_sel = g_object_get_data (G_OBJECT (widget), FONT_SELECT_DATA_KEY);
-
-  g_return_if_fail (font_sel != NULL);
-
-  if (font_sel->temp_font_callback)
-    gimp_fonts_set_popup (font_sel->temp_font_callback, font_name);
-  else
-    gimp_font_select_widget_callback (font_name, FALSE, font_sel);
-}
-
-
-/*  private functions  */
-
-static void
-gimp_font_select_widget_callback (const gchar *name,
-                                  gboolean     closing,
-                                  gpointer     data)
-{
-  FontSelect *font_sel = (FontSelect *) data;
-
-  g_free (font_sel->font_name);
-  font_sel->font_name = g_strdup (name);
-
-  gtk_label_set_text (GTK_LABEL (font_sel->label), name);
-
-  if (font_sel->callback)
-    font_sel->callback (name, closing, font_sel->data);
-
-  if (closing)
-    font_sel->temp_font_callback = NULL;
+  gimp_font_select_button_set_font_name (GIMP_FONT_SELECT_BUTTON (widget),
+                                         font_name);
 }
 
 static void
-gimp_font_select_widget_clicked (GtkWidget  *widget,
-                                 FontSelect *font_sel)
+compat_callback (GimpFontSelectButton *font_button,
+                 const gchar          *font_name,
+                 gboolean              dialog_closing,
+                 gpointer              data)
 {
-  if (font_sel->temp_font_callback)
-    {
-      /*  calling gimp_fonts_set_popup() raises the dialog  */
-      gimp_fonts_set_popup (font_sel->temp_font_callback, font_sel->font_name);
-    }
-  else
-    {
-      font_sel->temp_font_callback =
-        gimp_font_select_new (font_sel->title,
-                              font_sel->font_name,
-                              gimp_font_select_widget_callback,
-                              font_sel);
-    }
-}
+  CompatCallbackData *compat_data = data;
 
-static void
-gimp_font_select_widget_destroy (GtkWidget  *widget,
-                                 FontSelect *font_sel)
-{
-  if (font_sel->temp_font_callback)
-    {
-      gimp_font_select_destroy (font_sel->temp_font_callback);
-      font_sel->temp_font_callback = NULL;
-    }
-
-  g_free (font_sel->title);
-  g_free (font_sel->font_name);
-  g_free (font_sel);
-}
-
-static void
-gimp_font_select_drag_data_received (GtkWidget        *widget,
-                                     GdkDragContext   *context,
-                                     gint              x,
-                                     gint              y,
-                                     GtkSelectionData *selection,
-                                     guint             info,
-                                     guint             time)
-{
-  gchar *name;
-
-  if ((selection->format != 8) || (selection->length < 1))
-    {
-      g_warning ("Received invalid font data!");
-      return;
-    }
-
-  name = g_strndup (selection->data, selection->length);
-
-  if (g_utf8_validate (name, -1, NULL))
-    gimp_font_select_widget_set (widget, name);
-
-  g_free (name);
+  compat_data->callback (font_name, dialog_closing, compat_data->data);
 }

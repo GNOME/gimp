@@ -8,3 +8,5 @@ _libs
 *.la
 gimpenums.c
 gimpenums.c.tail
+gimpuimarshal.h
+gimpuimarshal.c

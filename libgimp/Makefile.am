@@ -222,18 +222,11 @@ libgimp_2_0_la_built_sources = \
 
 libgimp_2_0_la_extra_sources = gimpenums.c.tail
 
-EXTRA_DIST = \
-	COPYING				\
-	makefile.msc			\
-	gimp.def			\
-	gimpui.def			\
-	$(libgimp_2_0_la_extra_sources)
-
 libgimp_2_0_la_SOURCES = \
 	$(libgimp_2_0_la_sources)	\
 	$(libgimp_2_0_la_built_sources)
 
-libgimpui_2_0_la_SOURCES = \
+libgimpui_2_0_la_sources = \
 	gimpui.c		\
 	gimpui.h		\
 	gimpuitypes.h		\
@@ -247,6 +240,8 @@ libgimpui_2_0_la_SOURCES = \
 	gimpdrawablepreview.h	\
 	gimpfontmenu.c		\
 	gimpfontmenu.h		\
+	gimpfontselectbutton.c	\
+	gimpfontselectbutton.h	\
 	gimpgradientmenu.c 	\
 	gimpgradientmenu.h 	\
 	gimppalettemenu.c	\
@@ -263,6 +258,16 @@ libgimpui_2_0_la_SOURCES = \
 	gimpprogressbar.h	\
 	gimpexport.c		\
 	gimpexport.h
+
+libgimpui_2_0_la_built_sources = \
+	gimpuimarshal.c			\
+	gimpuimarshal.h
+
+libgimpui_2_0_la_extra_sources = gimpuimarshal.list
+
+libgimpui_2_0_la_SOURCES = \
+	$(libgimpui_2_0_la_sources)		\
+	$(libgimpui_2_0_la_built_sources)
 
 gimpinclude_HEADERS = \
 	gimp.h			\
@@ -300,6 +305,7 @@ gimpinclude_HEADERS = \
 	gimpbrushmenu.h		\
 	gimpdrawablepreview.h   \
 	gimpfontmenu.h		\
+	gimpfontselectbutton.h	\
 	gimpgradientmenu.h	\
 	gimppalettemenu.h	\
 	gimppatternmenu.h	\
@@ -328,6 +334,14 @@ libgimpui_2_0_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
 
 libgimpui_2_0_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
 
+EXTRA_DIST = \
+	COPYING					\
+	makefile.msc				\
+	gimp.def				\
+	gimpui.def				\
+	$(libgimp_2_0_la_extra_sources)		\
+	$(libgimpui_2_0_la_extra_sources)
+
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
@@ -336,7 +350,7 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-cec
+gen_sources = xgen-cec xgen-umh xgen-umc
 CLEANFILES = $(gen_sources)
 
 $(srcdir)/gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS)
@@ -353,3 +367,14 @@ $(srcdir)/gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_M
 	&& cat $(srcdir)/gimpenums.c.tail >> xgen-cec \
 	&& cp xgen-cec $(@F) \
 	&& rm -f xgen-cec
+
+$(srcdir)/gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
+	$(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header >> xgen-umh \
+	&& (cmp -s xgen-umh $(@F) || cp xgen-umh $(@F)) \
+	&& rm -f xgen-umh xgen-umh~
+
+$(srcdir)/gimpuimarshal.c: $(srcdir)/gimpuimarshal.h
+	echo "#include \"gimpuimarshal.h\"" >> xgen-umc \
+	&& $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --body >> xgen-umc \
+	&& cp xgen-umc $(@F) \
+	&& rm -f xgen-umc xgen-umc~

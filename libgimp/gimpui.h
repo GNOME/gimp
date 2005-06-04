@@ -39,6 +39,7 @@
 #include <libgimp/gimpprogressbar.h>
 #include <libgimp/gimpdrawablecombobox.h>
 #include <libgimp/gimpimagecombobox.h>
+#include <libgimp/gimpfontselectbutton.h>
 
 
 G_BEGIN_DECLS

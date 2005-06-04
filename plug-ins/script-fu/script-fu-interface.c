@@ -92,9 +92,9 @@ static void   script_fu_gradient_callback   (const gchar          *name,
                                              const gdouble        *mask_data,
                                              gboolean              closing,
                                              gpointer              data);
-static void   script_fu_font_callback       (const gchar          *name,
-                                             gboolean              closing,
-                                             gpointer              data);
+static void   script_fu_font_callback       (gpointer              data,
+                                             const gchar          *name,
+                                             gboolean              closing);
 static void   script_fu_palette_callback    (const gchar          *name,
                                              gboolean              closing,
                                              gpointer              data);
@@ -451,10 +451,11 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_FONT:
-	  widget = gimp_font_select_widget_new (_("Script-Fu Font Selection"),
-                                                script->arg_values[i].sfa_font,
-                                                script_fu_font_callback,
-                                                &script->arg_values[i].sfa_font);
+	  widget = gimp_font_select_button_new (_("Script-Fu Font Selection"),
+                                                script->arg_values[i].sfa_font);
+          g_signal_connect_swapped (widget, "font-set",
+                                    G_CALLBACK (script_fu_font_callback),
+                                    &script->arg_values[i].sfa_font);
 	  break;
 
 	case SF_PALETTE:
@@ -591,7 +592,8 @@ script_fu_interface_quit (SFScript *script)
     switch (script->arg_types[i])
       {
       case SF_FONT:
-  	gimp_font_select_widget_close (sf_interface->args_widgets[i]);
+  	gimp_font_select_button_close_popup
+          (GIMP_FONT_SELECT_BUTTON (sf_interface->args_widgets[i]));
 	break;
 
       case SF_PALETTE:
@@ -680,9 +682,9 @@ script_fu_gradient_callback (const gchar   *name,
 }
 
 static void
-script_fu_font_callback (const gchar *name,
-                         gboolean     closing,
-                         gpointer     data)
+script_fu_font_callback (gpointer     data,
+                         const gchar *name,
+                         gboolean     closing)
 {
   script_fu_string_update (data, name);
 }
@@ -952,8 +954,9 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_FONT:
-          gimp_font_select_widget_set (widget,
-                                       script->arg_defaults[i].sfa_font);
+          gimp_font_select_button_set_font_name
+            (GIMP_FONT_SELECT_BUTTON (widget),
+             script->arg_defaults[i].sfa_font);
           break;
 
         case SF_PALETTE:

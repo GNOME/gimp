@@ -141,12 +141,13 @@ static GtkTreeModel * add_image_list      (gboolean        add_box_flag,
 					   gint32         *image_id,
 					   GtkWidget      *hbox);
 
-static gboolean    film_dialog               (gint32       image_ID);
-static void        film_reset_callback       (GtkWidget   *widget,
-                                              gpointer     data);
-static void        film_font_select_callback (const gchar *name,
-                                              gboolean     closing,
-                                              gpointer     data);
+static gboolean    film_dialog               (gint32                image_ID);
+static void        film_reset_callback       (GtkWidget            *widget,
+                                              gpointer              data);
+static void        film_font_select_callback (GimpFontSelectButton *button,
+                                              const gchar          *name,
+                                              gboolean              closing,
+                                              gpointer              data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1150,7 +1151,7 @@ create_selection_tab (GtkWidget *notebook,
   GtkWidget    *spinbutton;
   GtkObject    *adj;
   GtkWidget    *button;
-  GtkWidget    *font_sel;
+  GtkWidget    *font_button;
   gint32       *image_id_list;
   gint          nimages, j;
 
@@ -1253,13 +1254,12 @@ create_selection_tab (GtkWidget *notebook,
                     &filmvals.number_start);
 
   /* Fontfamily for numbering */
-  font_sel = gimp_font_select_widget_new (NULL,
-                                          filmvals.number_font,
-                                          film_font_select_callback,
-                                          &filmvals);
+  font_button = gimp_font_select_button_new (NULL, filmvals.number_font);
+  g_signal_connect (font_button, "font-set",
+                    G_CALLBACK (film_font_select_callback), &filmvals);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                      _("_Font:"), 0.0, 0.5,
-                                     font_sel, 1, FALSE);
+                                     font_button, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
   /* Numbering color */
@@ -1513,9 +1513,10 @@ film_reset_callback (GtkWidget *widget,
 }
 
 static void
-film_font_select_callback (const gchar *name,
-                           gboolean     closing,
-                           gpointer     data)
+film_font_select_callback (GimpFontSelectButton *button,
+                           const gchar          *name,
+                           gboolean              closing,
+                           gpointer              data)
 {
   FilmVals *vals = (FilmVals *) data;
 

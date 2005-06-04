@@ -1,3 +1,22 @@
+2005-06-04  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimpfontselectbutton.[ch]: new formal widget based on
+	gimpfontmenu.[ch].
+
+	* libgimp/gimpuimarshal.list: needed for new signal in above.
+
+	* libgimp/gimpfontmenu.[ch]: deprecate, and thinly wrap around
+	new GimpFontSelectButton for compatibility.
+
+	* libgimp/gimpuitypes.h: add GimpFontSelectButton, as well
+	as types for the future SelectButtons.
+
+	* libgimp/gimpui.h
+	* libgimp/Makefile.am: hook in the new widget.
+
+	* plug-ins/common/film.c
+	* plug-ins/script-fu/script-fu-interface.c: use new API.
+
 2005-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdocked.[ch]
