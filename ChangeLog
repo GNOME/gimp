@@ -1,3 +1,11 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+	
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	fix calculation of zoom offsets in the case that dot-for-dot mode
+	is not enabled (bug #306476).
+
 2005-06-04  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/webbrowser.c: use GetDesktopWindow() and SW_SHOW
