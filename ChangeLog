@@ -1,3 +1,11 @@
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorframe.[ch]: added property for "mode",
+	fixed some implementation issues.
+
+	* app/widgets/gimpsamplepointeditor.c: create the color frames
+	using g_object_new().
+
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-api.h
