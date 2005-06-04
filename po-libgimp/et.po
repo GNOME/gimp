@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: olle@paalalinn.com\n"
-"POT-Creation-Date: 2005-05-13 03:25+0000\n"
-"PO-Revision-Date: 2005-05-24 00:08+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-26 03:33+0000\n"
+"PO-Revision-Date: 2005-06-01 22:40+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -167,7 +167,9 @@ msgstr "_Ekspordi"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Sinu pildi peaks eksportima enne kui selle saab salvestada kui %s järgnevatel põhjustel:"
+msgstr ""
+"Sinu pildi peaks eksportima enne kui selle saab salvestada kui %s "
+"järgnevatel põhjustel:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:564
@@ -284,18 +286,15 @@ msgstr "Asenda olemasolev valik"
 msgid "Intersect with the current selection"
 msgstr "Valituks osutub kahe valiku ühisosa"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:62
 msgid "Red"
 msgstr "Punane"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:63
 msgid "Green"
 msgstr "Roheline"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:64
 msgid "Blue"
 msgstr "Sinine"
 
@@ -307,8 +306,7 @@ msgstr "Hall"
 msgid "Indexed"
 msgstr "Indekseeritud"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:65
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -350,11 +348,11 @@ msgstr "Ainult must"
 
 #: ../libgimpbase/gimpbaseenums.c:261
 msgid "Image source"
-msgstr ""
+msgstr "Pilt"
 
 #: ../libgimpbase/gimpbaseenums.c:262
 msgid "Pattern source"
-msgstr ""
+msgstr "Muster"
 
 #: ../libgimpbase/gimpbaseenums.c:291
 msgid "Lightness"
@@ -382,7 +380,7 @@ msgstr "Lineaarne"
 
 #: ../libgimpbase/gimpbaseenums.c:360
 msgid "Bi-linear"
-msgstr ""
+msgstr "Bi-lineaarne"
 
 #: ../libgimpbase/gimpbaseenums.c:361
 msgid "Radial"
@@ -390,35 +388,35 @@ msgstr "Radiaalne"
 
 #: ../libgimpbase/gimpbaseenums.c:362
 msgid "Square"
-msgstr ""
+msgstr "Ruut"
 
 #: ../libgimpbase/gimpbaseenums.c:363
 msgid "Conical (sym)"
-msgstr ""
+msgstr "Kooniline (sümm)"
 
 #: ../libgimpbase/gimpbaseenums.c:364
 msgid "Conical (asym)"
-msgstr ""
+msgstr "Kooniline (asüm)"
 
 #: ../libgimpbase/gimpbaseenums.c:365
 msgid "Shaped (angular)"
-msgstr ""
+msgstr "Nurgeline"
 
 #: ../libgimpbase/gimpbaseenums.c:366
 msgid "Shaped (spherical)"
-msgstr ""
+msgstr "Kerakujuline"
 
 #: ../libgimpbase/gimpbaseenums.c:367
 msgid "Shaped (dimpled)"
-msgstr ""
+msgstr "Lohukujuline"
 
 #: ../libgimpbase/gimpbaseenums.c:368
 msgid "Spiral (cw)"
-msgstr ""
+msgstr "Spiraalne (pärip)"
 
 #: ../libgimpbase/gimpbaseenums.c:369
 msgid "Spiral (ccw)"
-msgstr ""
+msgstr "Spiraalne (vastup)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Stock ID"
@@ -470,7 +468,7 @@ msgstr "Kuubik"
 
 #: ../libgimpbase/gimpbaseenums.c:501
 msgid "Lanczos (Best)"
-msgstr ""
+msgstr "Lanczos (Parim)"
 
 #: ../libgimpbase/gimpbaseenums.c:529
 msgid "Constant"
@@ -486,11 +484,11 @@ msgstr "Puudub"
 
 #: ../libgimpbase/gimpbaseenums.c:560
 msgid "Sawtooth wave"
-msgstr ""
+msgstr "Saehamba laine"
 
 #: ../libgimpbase/gimpbaseenums.c:561
 msgid "Triangular wave"
-msgstr ""
+msgstr "Kolmnurkne laine"
 
 #: ../libgimpbase/gimpbaseenums.c:589
 msgid "Pixels"
@@ -519,6 +517,22 @@ msgstr "Edasi"
 #: ../libgimpbase/gimpbaseenums.c:650
 msgid "Backward"
 msgstr "Tagasi"
+
+#: ../libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Sisemine GIMP'i potseduur"
+
+#: ../libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "GIMP'i pistik"
+
+#: ../libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "GIMP'i laiendus"
+
+#: ../libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Ajutine protseduur"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -576,7 +590,7 @@ msgstr "(vigane UTF-8 tekstilõik)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
 msgid "Mode of operation for color management."
-msgstr ""
+msgstr "Värvihalduse töörežiim"
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Sets the color profile for the display."
@@ -584,11 +598,11 @@ msgstr "Seab ekraani värviprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "Sets default RGB workspace color profile."
-msgstr ""
+msgstr "Seab vaikimisi RGB töötsooni värviprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:46
 msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
+msgstr "Seab CMYK värviprofiili teisendamiseks RGB ja CMYK vahel."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "Sets the color profile used when printing."
@@ -596,35 +610,34 @@ msgstr "Seab printimisel kasutatava värviprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "Sets how colors are mapped for your display."
-msgstr ""
+msgstr "Määrab kuidas värvid vastendatakse sinu ekraani järgi."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "Sets how colors are converted from workspace to simulation device."
-msgstr ""
+msgstr "Määrab kuidas värvid teisendatakse töötsoonist teesklusseadmele."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
-msgstr ""
+msgstr "Värvihaldus puudub"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgid "Color managed display"
-msgstr ""
+msgstr "Värvihaldusega ekraan"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
-msgstr ""
+msgstr "Trükkimise teesklemine"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
 msgid "Perceptual"
-msgstr ""
+msgstr "Tajutav"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
 msgid "Relative Colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:60 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Küllastatus"
 
@@ -638,7 +651,7 @@ msgstr "Küsi"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:89
 msgid "Use embedded profile"
-msgstr ""
+msgstr "Kasuta manusprofiili"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:90
 msgid "Convert to RGB workspace"
@@ -697,6 +710,8 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
+"Viga '%s' ajutise faili kirjutamisel: %s\n"
+"Algset faili ei puudutatud."
 
 #: ../libgimpconfig/gimpconfigwriter.c:675
 #, c-format
@@ -704,6 +719,8 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
+"Viga '%s' ajutise faili kirjutamisel: %s\n"
+"Faili ei loodud."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
 #, c-format
@@ -727,7 +744,7 @@ msgstr "vigane UTF-8 tekstilõik"
 #: ../libgimpconfig/gimpscanner.c:623
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr ""
+msgstr "Viga failist '%s' andmete sõelumisel, rida %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:180
 #, c-format
@@ -781,85 +798,45 @@ msgstr "Ei suutnud luua pisipildikataloogi '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Ei suutnud luua pisipilti %s-le: %s"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:130
+msgid "_Search:"
+msgstr "_Otsi:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "_Esiplaani värv"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:122
 msgid "_Background Color"
 msgstr "_Tagapõhja värv"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:126
 msgid "Blac_k"
 msgstr "_Must"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Valge"
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:129
 msgid "Scales"
-msgstr ""
+msgstr "Tasakaal"
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_H"
-
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_S"
-
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_V"
-
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "Värvus"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "Väärtus"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "16nd värviesitus nagu HTML ja CSS kasutab"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr "HTML _esitus:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:214
 msgid "Current:"
 msgstr "Aktiivne:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:236
 msgid "Old:"
 msgstr "Vana:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:281
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "16nd värviesitus nagu HTML ja CSS kasutab"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "HTML _Notation:"
+msgstr "HTML _esitus:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
@@ -893,7 +870,7 @@ msgstr "Kaust"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
+msgstr "Klõpsa pipetti, siis klõpsa värvi suvalises kohas ekraanil värvi valimiseks."
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
@@ -1005,19 +982,55 @@ msgstr "Faktor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
+msgstr "Kasuta seda numbrit juhusliku arvut generaatori seemnena - see lubab sul korrata antud  \"juhuslikku\" toimingut"
 
 #: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
-msgstr ""
+msgstr "_Uus seeme"
 
 #: ../libgimpwidgets/gimpwidgets.c:1020
 msgid "Seed random number generator with a generated random number"
-msgstr ""
+msgstr "Seemnega juhusliku arvu generaator väljamõeldud juhusliku arvuga"
 
 #: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
-msgstr ""
+msgstr "_Juhuslik"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:59
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:59
+msgid "Hue"
+msgstr "Värvus"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:60
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:61
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:61
+msgid "Value"
+msgstr "Väärtus"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:62
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:63
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:64
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:65
+msgid "_A"
+msgstr "_A"
 
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
@@ -1045,7 +1058,7 @@ msgstr ""
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Gamma värvi ekraani filter"
 
 #: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
@@ -1073,7 +1086,7 @@ msgstr ""
 
 #: ../modules/cdisplay_lcms.c:163
 msgid "Color Management"
-msgstr ""
+msgstr "Värvihaldus"
 
 #: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
@@ -1081,7 +1094,7 @@ msgstr ""
 
 #: ../modules/cdisplay_proof.c:221
 msgid "Color Proof"
-msgstr ""
+msgstr "Värviprofiil"
 
 #: ../modules/cdisplay_proof.c:346
 msgid "_Intent:"
@@ -1089,7 +1102,7 @@ msgstr ""
 
 #: ../modules/cdisplay_proof.c:350
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Vali ICC värviprofiil"
 
 #: ../modules/cdisplay_proof.c:353
 msgid "_Profile:"
@@ -1097,7 +1110,7 @@ msgstr "_Profiil:"
 
 #: ../modules/cdisplay_proof.c:358
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "_Musta punkti kompensatsioon"
 
 #: ../modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"

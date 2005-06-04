@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
-"Report-Msgid-Bugs-To: olle@paalalinn.com\n"
-"POT-Creation-Date: 2005-05-13 03:25+0000\n"
-"PO-Revision-Date: 2005-05-18 00:10+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-26 03:33+0000\n"
+"PO-Revision-Date: 2005-06-02 08:15+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "Reaalaja eelvaade"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:640
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
+msgstr "Kui selle võimaluse lubad, joonistatakse eelvaade muudatuste korral automaatselt"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:643
 msgid "Redraw"
@@ -426,7 +426,7 @@ msgstr ""
 #: ../plug-ins/fits/fits.c:333 ../plug-ins/flame/flame.c:412
 #: ../plug-ins/gfig/gfig.c:429 ../plug-ins/gfli/gfli.c:422
 #: ../plug-ins/gfli/gfli.c:457 ../plug-ins/help/domain.c:423
-#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:840
+#: ../plug-ins/jpeg/jpeg-load.c:82 ../plug-ins/jpeg/jpeg-load.c:841
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:204
 #: ../plug-ins/winicon/icoload.c:135 ../plug-ins/xjt/xjt.c:2524
 #: ../plug-ins/xjt/xjt.c:2532
@@ -1203,7 +1203,7 @@ msgstr ""
 #: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/sunras.c:430 ../plug-ins/common/tga.c:415
 #: ../plug-ins/common/tiff.c:532 ../plug-ins/common/wmf.c:951
-#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:339
+#: ../plug-ins/common/xbm.c:721 ../plug-ins/common/xpm.c:341
 #: ../plug-ins/common/xwd.c:469 ../plug-ins/faxg3/faxg3.c:204
 #: ../plug-ins/gfli/gfli.c:463 ../plug-ins/jpeg/jpeg-load.c:90
 #: ../plug-ins/sgi/sgi.c:317 ../plug-ins/winicon/icoload.c:461
@@ -1253,7 +1253,7 @@ msgstr ""
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:500
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 #: ../plug-ins/gimpressionist/general.c:121 ../plug-ins/jpeg/jpeg-load.c:224
-#: ../plug-ins/jpeg/jpeg-load.c:707 ../plug-ins/sgi/sgi.c:368
+#: ../plug-ins/jpeg/jpeg-load.c:708 ../plug-ins/sgi/sgi.c:368
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1156
 msgid "Background"
 msgstr "Tagapõhi"
@@ -1284,7 +1284,7 @@ msgstr ""
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
 #: ../plug-ins/common/tga.c:1028 ../plug-ins/common/tiff.c:1935
-#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:620
+#: ../plug-ins/common/xbm.c:996 ../plug-ins/common/xpm.c:622
 #: ../plug-ins/common/xwd.c:567 ../plug-ins/fits/fits.c:451
 #: ../plug-ins/gfli/gfli.c:679 ../plug-ins/jpeg/jpeg-save.c:214
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:978
@@ -2847,7 +2847,7 @@ msgstr ""
 #. The smoothing toggle
 #: ../plug-ins/common/curve_bend.c:1352
 msgid "Smoo_thing"
-msgstr ""
+msgstr "_Mahendamine"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1362 ../plug-ins/common/gqbist.c:833
@@ -2871,28 +2871,28 @@ msgstr ""
 
 #: ../plug-ins/common/curve_bend.c:1414
 msgid "_Upper"
-msgstr ""
+msgstr "Ü_lemine"
 
 #: ../plug-ins/common/curve_bend.c:1415
 msgid "_Lower"
-msgstr ""
+msgstr "_Alumine"
 
 #: ../plug-ins/common/curve_bend.c:1425
 msgid "Curve Type"
-msgstr ""
+msgstr "Kurvi tüüp"
 
 #: ../plug-ins/common/curve_bend.c:1429
 msgid "Smoot_h"
-msgstr ""
+msgstr "Ma_henda"
 
 #: ../plug-ins/common/curve_bend.c:1430
 msgid "_Free"
-msgstr ""
+msgstr "_Vaba"
 
 #. The Copy button
 #: ../plug-ins/common/curve_bend.c:1445
 msgid "_Copy"
-msgstr ""
+msgstr "_Koopia"
 
 #: ../plug-ins/common/curve_bend.c:1450
 msgid "Copy the active curve to the other border"
@@ -2901,7 +2901,7 @@ msgstr ""
 #. The CopyInv button
 #: ../plug-ins/common/curve_bend.c:1457
 msgid "_Mirror"
-msgstr ""
+msgstr "_Peegelda"
 
 #: ../plug-ins/common/curve_bend.c:1462
 msgid "Mirror the active curve to the other border"
@@ -2910,7 +2910,7 @@ msgstr ""
 #. The Swap button
 #: ../plug-ins/common/curve_bend.c:1470
 msgid "S_wap"
-msgstr ""
+msgstr "_Vaheta"
 
 #: ../plug-ins/common/curve_bend.c:1475
 msgid "Swap the two curves"
@@ -2943,57 +2943,57 @@ msgstr ""
 #: ../plug-ins/common/decompose.c:129 ../plug-ins/common/decompose.c:132
 #: ../plug-ins/common/decompose.c:134
 msgid "red"
-msgstr ""
+msgstr "punane"
 
 #: ../plug-ins/common/decompose.c:130 ../plug-ins/common/decompose.c:133
 #: ../plug-ins/common/decompose.c:135
 msgid "green"
-msgstr ""
+msgstr "roheline"
 
 #: ../plug-ins/common/decompose.c:131 ../plug-ins/common/decompose.c:136
 #: ../plug-ins/common/decompose.c:138
 msgid "blue"
-msgstr ""
+msgstr "sinine"
 
 #: ../plug-ins/common/decompose.c:137 ../plug-ins/common/decompose.c:158
 msgid "alpha"
-msgstr ""
+msgstr "alfa"
 
 #: ../plug-ins/common/decompose.c:139 ../plug-ins/common/decompose.c:142
 msgid "hue"
-msgstr ""
+msgstr "värvitoon"
 
 #: ../plug-ins/common/decompose.c:140 ../plug-ins/common/decompose.c:143
 msgid "saturation"
-msgstr ""
+msgstr "küllastus"
 
 #: ../plug-ins/common/decompose.c:141 ../plug-ins/common/decompose.c:144
 msgid "value"
-msgstr ""
+msgstr "väärtus"
 
 #: ../plug-ins/common/decompose.c:145 ../plug-ins/common/decompose.c:148
 msgid "cyan"
-msgstr ""
+msgstr "tsüaan"
 
 #: ../plug-ins/common/decompose.c:146 ../plug-ins/common/decompose.c:149
 msgid "magenta"
-msgstr ""
+msgstr "magenta"
 
 #: ../plug-ins/common/decompose.c:147 ../plug-ins/common/decompose.c:150
 msgid "yellow"
-msgstr ""
+msgstr "kollane"
 
 #: ../plug-ins/common/decompose.c:148
 msgid "Cyan"
-msgstr ""
+msgstr "Tsüaan"
 
 #: ../plug-ins/common/decompose.c:149
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: ../plug-ins/common/decompose.c:150
 msgid "Yellow"
-msgstr ""
+msgstr "_Kollane"
 
 #: ../plug-ins/common/decompose.c:151 ../plug-ins/common/decompose.c:155
 msgid "cyan_k"
@@ -3025,7 +3025,7 @@ msgstr ""
 
 #: ../plug-ins/common/decompose.c:158
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: ../plug-ins/common/decompose.c:165
 msgid "luma_y470"
@@ -3205,11 +3205,11 @@ msgstr ""
 #: ../plug-ins/common/tile.c:418 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 msgid "_Width:"
-msgstr ""
+msgstr "_Laius:"
 
 #: ../plug-ins/common/destripe.c:481
 msgid "Create _histogram"
-msgstr ""
+msgstr "Loo _histogramm"
 
 #: ../plug-ins/common/dicom.c:135
 msgid "DICOM image"
@@ -3251,7 +3251,7 @@ msgstr ""
 #: ../plug-ins/common/diffraction.c:608 ../plug-ins/common/softglow.c:678
 #: ../plug-ins/flame/flame.c:1052
 msgid "_Brightness:"
-msgstr ""
+msgstr "_Heledus:"
 
 #: ../plug-ins/common/diffraction.c:617
 msgid "Sc_attering:"
@@ -3328,7 +3328,7 @@ msgstr ""
 #: ../plug-ins/common/fractaltrace.c:734 ../plug-ins/common/newsprint.c:397
 #: ../plug-ins/common/ripple.c:563
 msgid "_Black"
-msgstr ""
+msgstr "_Must"
 
 #: ../plug-ins/common/dog.c:137
 msgid "_Difference of Gaussians..."
@@ -3340,7 +3340,7 @@ msgstr ""
 
 #: ../plug-ins/common/dog.c:298
 msgid "Smoothing parameters"
-msgstr ""
+msgstr "Mahenduse parameetrid"
 
 #: ../plug-ins/common/dog.c:312
 msgid "_Radius 1:"
@@ -3445,7 +3445,7 @@ msgstr ""
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
 msgid "_Height:"
-msgstr ""
+msgstr "_Kõrgus:"
 
 #: ../plug-ins/common/engrave.c:252
 msgid "_Limit line width"
@@ -3470,11 +3470,11 @@ msgstr ""
 
 #: ../plug-ins/common/exchange.c:345
 msgid "To Color"
-msgstr ""
+msgstr "Värviks"
 
 #: ../plug-ins/common/exchange.c:345
 msgid "From Color"
-msgstr ""
+msgstr "Värvist"
 
 #: ../plug-ins/common/exchange.c:363
 msgid "Color Exchange: To Color"
@@ -3502,7 +3502,7 @@ msgstr ""
 
 #: ../plug-ins/common/film.c:234
 msgid "_Film..."
-msgstr ""
+msgstr "_Film..."
 
 #: ../plug-ins/common/film.c:319
 msgid "Composing Images..."
@@ -3520,11 +3520,11 @@ msgstr "Ajutine"
 
 #: ../plug-ins/common/film.c:1073
 msgid "Available Images:"
-msgstr ""
+msgstr "Kättesaadavad pildid:"
 
 #: ../plug-ins/common/film.c:1074
 msgid "On Film:"
-msgstr ""
+msgstr "Filmil:"
 
 #. Create selection
 #: ../plug-ins/common/film.c:1160 ../plug-ins/imagemap/imap_selection.c:361
@@ -3593,11 +3593,11 @@ msgstr ""
 
 #: ../plug-ins/common/film.c:1345
 msgid "Image _height:"
-msgstr ""
+msgstr "Pildi _kõrgus:"
 
 #: ../plug-ins/common/film.c:1356
 msgid "Image spac_ing:"
-msgstr ""
+msgstr "Pildi _vahekaugus:"
 
 #: ../plug-ins/common/film.c:1367
 msgid "_Hole offset:"
@@ -3641,11 +3641,11 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:233
 msgid "Darker:"
-msgstr ""
+msgstr "Tumedam:"
 
 #: ../plug-ins/common/fp.c:234
 msgid "Lighter:"
-msgstr ""
+msgstr "Heledam:"
 
 #: ../plug-ins/common/fp.c:236
 msgid "More Sat:"
@@ -3657,7 +3657,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:239 ../plug-ins/common/fp.c:530
 msgid "Current:"
-msgstr ""
+msgstr "Praegune:"
 
 #: ../plug-ins/common/fp.c:328
 msgid "_Filter Pack..."
@@ -3677,7 +3677,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:522
 msgid "Original:"
-msgstr ""
+msgstr "Algne:"
 
 #: ../plug-ins/common/fp.c:574
 msgid "Hue Variations"
@@ -3705,15 +3705,15 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:691
 msgid "Windows"
-msgstr ""
+msgstr "Aknad"
 
 #: ../plug-ins/common/fp.c:701 ../plug-ins/common/lic.c:670
 msgid "_Saturation"
-msgstr ""
+msgstr "_Küllastus"
 
 #: ../plug-ins/common/fp.c:709
 msgid "A_dvanced"
-msgstr ""
+msgstr "_Eriline"
 
 #: ../plug-ins/common/fp.c:729
 msgid "Value Variations"
@@ -3729,27 +3729,27 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:830
 msgid "H_ue"
-msgstr ""
+msgstr "_Värvitoon"
 
 #: ../plug-ins/common/fp.c:831
 msgid "Satu_ration"
-msgstr ""
+msgstr "_Küllastus"
 
 #: ../plug-ins/common/fp.c:832
 msgid "V_alue"
-msgstr ""
+msgstr "_Väärtus"
 
 #: ../plug-ins/common/fp.c:858
 msgid "Show"
-msgstr ""
+msgstr "Näita"
 
 #: ../plug-ins/common/fp.c:863
 msgid "_Entire Image"
-msgstr ""
+msgstr "_Kogu pilt"
 
 #: ../plug-ins/common/fp.c:864
 msgid "Se_lection Only"
-msgstr ""
+msgstr "_Ainult valik"
 
 #: ../plug-ins/common/fp.c:865
 msgid "Selec_tion In Context"
@@ -3901,7 +3901,7 @@ msgstr ""
 #. attach labels
 #: ../plug-ins/common/gbr.c:683 ../plug-ins/common/grid.c:770
 msgid "Spacing:"
-msgstr ""
+msgstr "Vahemaa:"
 
 #: ../plug-ins/common/gbr.c:694 ../plug-ins/common/gih.c:907
 #: ../plug-ins/common/pat.c:525 ../plug-ins/gimpressionist/presets.c:651
@@ -4025,7 +4025,7 @@ msgstr ""
 
 #: ../plug-ins/common/gif.c:1399
 msgid "I don't care"
-msgstr ""
+msgstr "Mul ükskõik"
 
 #: ../plug-ins/common/gif.c:1401
 msgid "Cumulative layers (combine)"
@@ -4046,7 +4046,7 @@ msgstr ""
 
 #: ../plug-ins/common/gifload.c:312
 msgid "This is not a GIF file"
-msgstr ""
+msgstr "See ei ole GIF fail"
 
 #: ../plug-ins/common/gifload.c:350
 msgid "Non-square pixels.  Image might look squashed."
@@ -4102,11 +4102,11 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:893
 msgid "Spacing (percent):"
-msgstr ""
+msgstr "Vahemaa (protsenti):"
 
 #: ../plug-ins/common/gih.c:960
 msgid "Pixels"
-msgstr ""
+msgstr "Pikslit"
 
 #: ../plug-ins/common/gih.c:965
 msgid "Cell size:"
@@ -4134,7 +4134,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:1027
 msgid "Display as:"
-msgstr ""
+msgstr "Näita kui:"
 
 #: ../plug-ins/common/gih.c:1036
 msgid "Dimension:"
@@ -5737,7 +5737,7 @@ msgstr ""
 msgid "Gray"
 msgstr "Hall"
 
-#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:464
+#: ../plug-ins/common/postscript.c:3015 ../plug-ins/common/xpm.c:466
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:151
 #: ../plug-ins/print/gimp_main_window.c:1413
@@ -6196,57 +6196,57 @@ msgstr ""
 msgid "_Value:"
 msgstr ""
 
-#: ../plug-ins/common/screenshot.c:236 ../plug-ins/winsnap/winsnap.c:994
+#: ../plug-ins/common/screenshot.c:238 ../plug-ins/winsnap/winsnap.c:994
 msgid "_Screen Shot..."
 msgstr "_Pilt ekraanilt..."
 
-#: ../plug-ins/common/screenshot.c:418
+#: ../plug-ins/common/screenshot.c:420
 msgid "Error grabbing the pointer"
 msgstr "Viga hiirekursori krabamisel"
 
-#: ../plug-ins/common/screenshot.c:557
+#: ../plug-ins/common/screenshot.c:582
 msgid "Loading Screen Shot..."
 msgstr "Laen ekraanilt tehtud pilti..."
 
-#: ../plug-ins/common/screenshot.c:564 ../plug-ins/common/screenshot.c:730
+#: ../plug-ins/common/screenshot.c:589 ../plug-ins/common/screenshot.c:755
 msgid "Screen Shot"
 msgstr "Pilt ekraanilt"
 
-#: ../plug-ins/common/screenshot.c:672
+#: ../plug-ins/common/screenshot.c:697
 msgid "Specified window not found"
 msgstr "Ei leidnud akent, mida pildistada"
 
-#: ../plug-ins/common/screenshot.c:699
+#: ../plug-ins/common/screenshot.c:724
 msgid "Error obtaining Screen shot"
 msgstr "Ekraanipildist koopia tegemine ebaõnnestus"
 
 #. single window
-#: ../plug-ins/common/screenshot.c:739 ../plug-ins/common/screenshot.c:765
+#: ../plug-ins/common/screenshot.c:764 ../plug-ins/common/screenshot.c:790
 #: ../plug-ins/winsnap/winsnap.c:865
 msgid "Grab"
 msgstr "Kraba"
 
-#: ../plug-ins/common/screenshot.c:772
+#: ../plug-ins/common/screenshot.c:797
 msgid "a _Single Window"
 msgstr "Üksik _aken"
 
-#: ../plug-ins/common/screenshot.c:792
+#: ../plug-ins/common/screenshot.c:817
 msgid "Include decoration"
 msgstr "Koos dekoratsioonidega"
 
-#: ../plug-ins/common/screenshot.c:805
+#: ../plug-ins/common/screenshot.c:830
 msgid "Selected Region"
 msgstr "Valik"
 
-#: ../plug-ins/common/screenshot.c:822
+#: ../plug-ins/common/screenshot.c:847
 msgid "the _Whole Screen"
 msgstr "_terve ekraan"
 
-#: ../plug-ins/common/screenshot.c:845
+#: ../plug-ins/common/screenshot.c:870
 msgid "Delay for"
 msgstr ""
 
-#: ../plug-ins/common/screenshot.c:860
+#: ../plug-ins/common/screenshot.c:885
 msgid "seconds"
 msgstr "sekundist viivitust"
 
@@ -7919,24 +7919,24 @@ msgstr ""
 msgid "_Mask file extension:"
 msgstr ""
 
-#: ../plug-ins/common/xpm.c:168 ../plug-ins/common/xpm.c:193
+#: ../plug-ins/common/xpm.c:170 ../plug-ins/common/xpm.c:195
 msgid "X PixMap image"
 msgstr ""
 
-#: ../plug-ins/common/xpm.c:349
+#: ../plug-ins/common/xpm.c:351
 #, c-format
 msgid "Error opening file '%s'"
 msgstr ""
 
-#: ../plug-ins/common/xpm.c:354
+#: ../plug-ins/common/xpm.c:356
 msgid "XPM file invalid"
 msgstr ""
 
-#: ../plug-ins/common/xpm.c:769
+#: ../plug-ins/common/xpm.c:771
 msgid "Save as XPM"
 msgstr ""
 
-#: ../plug-ins/common/xpm.c:790
+#: ../plug-ins/common/xpm.c:792
 msgid "_Alpha threshold:"
 msgstr ""
 
@@ -7984,48 +7984,82 @@ msgstr "ZealousCropping(tm)..."
 msgid "Nothing to crop."
 msgstr "Pole midagi kärpida."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Protseduuride sirvija"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-#: ../plug-ins/dbbrowser/plugin-browser.c:546
-msgid "Search by _Name"
-msgstr "Otsi _nime järgi"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "nime järgi"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr "Otsi _kirjelduse järgi"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "kirjelduse järgi"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-#: ../plug-ins/dbbrowser/plugin-browser.c:716
-msgid "_Search:"
-msgstr "_Otsi:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "abiinfo järgi"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
-#: ../plug-ins/dbbrowser/plugin-browser.c:395
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "autori järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "copyright'i järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "kuupäeva järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "tüübi järgi"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
+#: ../plug-ins/dbbrowser/plugin-browser.c:388
 msgid "Searching by name - please wait"
 msgstr "Nime järgi otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr ""
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
+msgid "Searching by description - please wait"
+msgstr "Kirjelduse järgi otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Abiinfo järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Autori järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Copyright'i järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Kuupäeva järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Tüübi järgi otsimine - palun oota"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Otsimine - palun oota"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "1 protseduur"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d protseduuri"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
-#: ../plug-ins/dbbrowser/plugin-browser.c:514
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
+#: ../plug-ins/dbbrowser/plugin-browser.c:517
 msgid "No matches"
 msgstr "Selliseid pole"
 
@@ -8035,92 +8069,76 @@ msgstr "Selliseid pole"
 #.
 #. *    Scales
 #.
-#: ../plug-ins/dbbrowser/gimpprocview.c:135 ../plug-ins/gflare/gflare.c:2677
+#: ../plug-ins/dbbrowser/gimpprocview.c:138 ../plug-ins/gflare/gflare.c:2677
 #: ../plug-ins/gflare/gflare.c:3508 ../plug-ins/gflare/gflare.c:3613
 #: ../plug-ins/gflare/gflare.c:3750
 msgid "Parameters"
 msgstr "Parameetrid"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
-msgstr ""
+msgstr "Tagastatavad väärtused"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Lisateave"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autor:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Kuupäev:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr "Sisemine GIMPi protseduur"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "GIMPi pistik"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "GIMPi laiendus"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr "Ajutine protseduur"
-
-#: ../plug-ins/dbbrowser/plugin-browser.c:149
+#: ../plug-ins/dbbrowser/plugin-browser.c:145
 msgid "_Plug-In Browser"
 msgstr "_Pistikute sirvija"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:416
+#: ../plug-ins/dbbrowser/plugin-browser.c:401
 msgid "1 Plug-In Interface"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:418
+#: ../plug-ins/dbbrowser/plugin-browser.c:403
 #, c-format
 msgid "%d Plug-In Interfaces"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:542
+#: ../plug-ins/dbbrowser/plugin-browser.c:541
 msgid "Plug-In Browser"
 msgstr "Pistikute sirvija"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:593
+#: ../plug-ins/dbbrowser/plugin-browser.c:584
 msgid "Name"
 msgstr "Nimi"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:601
-#: ../plug-ins/dbbrowser/plugin-browser.c:670
+#: ../plug-ins/dbbrowser/plugin-browser.c:592
+#: ../plug-ins/dbbrowser/plugin-browser.c:661
 msgid "Insertion Date"
-msgstr ""
+msgstr "Lisamise kuupäev"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:609
+#: ../plug-ins/dbbrowser/plugin-browser.c:600
 msgid "Menu Path"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:617
-#: ../plug-ins/dbbrowser/plugin-browser.c:679
+#: ../plug-ins/dbbrowser/plugin-browser.c:608
+#: ../plug-ins/dbbrowser/plugin-browser.c:670
 msgid "Image Types"
 msgstr "Piltide tüübid"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:641
+#: ../plug-ins/dbbrowser/plugin-browser.c:632
 msgid "List View"
 msgstr "Nimekirjavaade"
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:661
+#: ../plug-ins/dbbrowser/plugin-browser.c:652
 msgid "Menu Path/Name"
 msgstr ""
 
-#: ../plug-ins/dbbrowser/plugin-browser.c:702
+#: ../plug-ins/dbbrowser/plugin-browser.c:693
 msgid "Tree View"
 msgstr "Puuvaade"
 
@@ -8138,7 +8156,7 @@ msgstr ""
 
 #: ../plug-ins/fits/fits.c:342
 msgid "Error during open of FITS file"
-msgstr ""
+msgstr "Viga FITS faili avamisel"
 
 #: ../plug-ins/fits/fits.c:347
 msgid "FITS file keeps no displayable images"
@@ -8150,7 +8168,7 @@ msgstr ""
 
 #: ../plug-ins/fits/fits.c:963
 msgid "Load FITS File"
-msgstr ""
+msgstr "Lae FITS fail"
 
 #: ../plug-ins/fits/fits.c:983
 msgid "Replacement for undefined pixels"
@@ -8159,7 +8177,7 @@ msgstr ""
 #: ../plug-ins/fits/fits.c:988 ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/gfig/gfig-dialog.c:1421
 msgid "White"
-msgstr ""
+msgstr "Valge"
 
 #: ../plug-ins/fits/fits.c:995
 msgid "Pixel value scaling"
@@ -8257,11 +8275,11 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:1066
 msgid "Co_ntrast:"
-msgstr ""
+msgstr "Ko_ntrastsus:"
 
 #: ../plug-ins/flame/flame.c:1080
 msgid "_Gamma:"
-msgstr ""
+msgstr "_Gamma:"
 
 #: ../plug-ins/flame/flame.c:1094
 msgid "Sample _density:"
@@ -8285,7 +8303,7 @@ msgstr "Omatehtud spektrikomplekt"
 
 #: ../plug-ins/flame/flame.c:1203
 msgid "C_amera"
-msgstr ""
+msgstr "K_aamera"
 
 #: ../plug-ins/flame/flame.c:1208
 msgid "_Zoom:"
@@ -8310,7 +8328,7 @@ msgstr ""
 #. Start building the dialog up
 #: ../plug-ins/gfig/gfig-dialog.c:289
 msgid "Gfig"
-msgstr ""
+msgstr "Gfig"
 
 #. Tool options notebook
 #: ../plug-ins/gfig/gfig-dialog.c:340
@@ -8328,15 +8346,15 @@ msgstr "Täida"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "No fill"
-msgstr ""
+msgstr "Ei täida"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Color fill"
-msgstr ""
+msgstr "Täida värviga"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Pattern fill"
-msgstr ""
+msgstr "Täida mustriga"
 
 #: ../plug-ins/gfig/gfig-dialog.c:421
 msgid "Shape Gradient"
@@ -8519,7 +8537,7 @@ msgstr "Raadius:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1385
 msgid "Grid spacing:"
-msgstr ""
+msgstr "Ruudustiku vahemaa:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1401
 msgid "Rectangle"
@@ -8531,7 +8549,7 @@ msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:1412
 msgid "Grid type:"
-msgstr ""
+msgstr "Ruudustiku tüüp:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1419 ../plug-ins/gflare/gflare.c:558
 msgid "Normal"
@@ -8573,7 +8591,7 @@ msgstr "Vasak"
 #: ../plug-ins/gimpressionist/orientation.c:130
 #: ../plug-ins/print/gimp_main_window.c:508
 msgid "Orientation:"
-msgstr ""
+msgstr "Suund:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:583
 msgid "Hey where has the object gone ?"
@@ -8581,11 +8599,11 @@ msgstr ""
 
 #: ../plug-ins/gfig/gfig-dobject.c:947
 msgid "Error reading file"
-msgstr ""
+msgstr "Viga faili lugemisel"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1036
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Kirjutuskaitstud objekti redigeerimine - sa ei saa seda salvestada"
 
 #: ../plug-ins/gfig/gfig-poly.c:50
 msgid "Regular Polygon Number of Sides"
@@ -8645,12 +8663,12 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:1261
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr ""
+msgstr "GFlare faili '%s' avamine ei õnnestunud: %s"
 
 #: ../plug-ins/gflare/gflare.c:1269
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr ""
+msgstr "'%s' ei ole sobiv GFlare fail."
 
 #: ../plug-ins/gflare/gflare.c:1323
 #, c-format
@@ -8668,18 +8686,18 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:1481
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr ""
+msgstr "GFlare faili '%s' kirjutamine ebaõnnestus: %s"
 
 #.
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gflare/gflare.c:2293
 msgid "GFlare"
-msgstr ""
+msgstr "GFlare"
 
 #: ../plug-ins/gflare/gflare.c:2350
 msgid "A_uto update preview"
-msgstr ""
+msgstr "_Uuenda eelvaadet automaatselt"
 
 #: ../plug-ins/gflare/gflare.c:2401
 msgid "`Default' is created."
@@ -8723,7 +8741,7 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:2991
 msgid "New GFlare"
-msgstr ""
+msgstr "Uus GFlare"
 
 #: ../plug-ins/gflare/gflare.c:2994
 msgid "Enter a name for the new GFlare"
@@ -8736,7 +8754,7 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:3070
 msgid "Copy GFlare"
-msgstr ""
+msgstr "Kopeeri GFlare"
 
 #: ../plug-ins/gflare/gflare.c:3073
 msgid "Enter a name for the copied GFlare"
@@ -8749,11 +8767,11 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:3126
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
+msgstr "Ei saa kustutada!! PEab olema vähemalt üks GFlare."
 
 #: ../plug-ins/gflare/gflare.c:3136
 msgid "Delete GFlare"
-msgstr ""
+msgstr "Kustuta GFlare"
 
 #: ../plug-ins/gflare/gflare.c:3208
 #, c-format
@@ -8762,7 +8780,7 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:3249
 msgid "GFlare Editor"
-msgstr ""
+msgstr "GFlare redaktor"
 
 #: ../plug-ins/gflare/gflare.c:3253
 msgid "Rescan Gradients"
@@ -8776,7 +8794,7 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:3383 ../plug-ins/gflare/gflare.c:3411
 #: ../plug-ins/gflare/gflare.c:3439
 msgid "Opacity:"
-msgstr ""
+msgstr "Läbipaistmatus:"
 
 #: ../plug-ins/gflare/gflare.c:3396 ../plug-ins/gflare/gflare.c:3424
 #: ../plug-ins/gflare/gflare.c:3452
@@ -8803,7 +8821,7 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:3481 ../plug-ins/gflare/gflare.c:3584
 #: ../plug-ins/gflare/gflare.c:3723
 msgid "Gradients"
-msgstr ""
+msgstr "Spektrikomplektid"
 
 #: ../plug-ins/gflare/gflare.c:3492 ../plug-ins/gflare/gflare.c:3597
 #: ../plug-ins/gflare/gflare.c:3734
@@ -8821,12 +8839,12 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:3520 ../plug-ins/gflare/gflare.c:3625
 #: ../plug-ins/gflare/gflare.c:3762
 msgid "Size (%):"
-msgstr ""
+msgstr "Suurus (%):"
 
 #: ../plug-ins/gflare/gflare.c:3532 ../plug-ins/gflare/gflare.c:3637
 #: ../plug-ins/gflare/gflare.c:3774
 msgid "Rotation:"
-msgstr ""
+msgstr "Pööramine:"
 
 #: ../plug-ins/gflare/gflare.c:3544 ../plug-ins/gflare/gflare.c:3650
 #: ../plug-ins/gflare/gflare.c:3787
@@ -8866,7 +8884,7 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:3812
 msgid "Circle"
-msgstr ""
+msgstr "Ring"
 
 #: ../plug-ins/gflare/gflare.c:3829
 msgid "Polygon"
@@ -8874,7 +8892,7 @@ msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:3862
 msgid "Random Seed:"
-msgstr ""
+msgstr "Juhuslikkuse seeme:"
 
 #: ../plug-ins/gflare/gflare.c:3876
 msgid "_Second Flares"
@@ -8907,7 +8925,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
-msgstr ""
+msgstr "Salvesta pintsel"
 
 #: ../plug-ins/gimpressionist/brush.c:488
 msgid "_Brush"
@@ -8916,7 +8934,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/brush.c:525
 #: ../plug-ins/print/gimp_color_window.c:407
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: ../plug-ins/gimpressionist/brush.c:543
 msgid "Changes the gamma (brightness) of the selected brush"
@@ -8946,7 +8964,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:42
 msgid "Co_lor"
-msgstr ""
+msgstr "_Värv"
 
 #: ../plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
@@ -9166,7 +9184,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientation.c:174
 #: ../plug-ins/gimpressionist/size.c:178
 msgid "Manual"
-msgstr ""
+msgstr "Käsitsi"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
@@ -9206,7 +9224,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:601
 #: ../plug-ins/gimpressionist/sizemap.c:472
 msgid "A_dd"
-msgstr ""
+msgstr "_Lisa"
 
 #: ../plug-ins/gimpressionist/orientmap.c:605
 msgid "Add new vector"
@@ -9223,11 +9241,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:622
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: ../plug-ins/gimpressionist/orientmap.c:626
 msgid "_Normal"
-msgstr ""
+msgstr "_Normaalne"
 
 #: ../plug-ins/gimpressionist/orientmap.c:627
 msgid "Vorte_x"
@@ -9254,7 +9272,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
 msgid "A_ngle:"
-msgstr ""
+msgstr "_Nurk:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:657
 msgid "Change the angle of the selected vector"
@@ -9283,7 +9301,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/paper.c:120
 msgid "P_aper"
-msgstr ""
+msgstr "P_aber"
 
 #: ../plug-ins/gimpressionist/paper.c:155
 msgid "Inverts the Papers texture"
@@ -9396,11 +9414,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:77
 msgid "_Size"
-msgstr ""
+msgstr "_Suurus"
 
 #: ../plug-ins/gimpressionist/size.c:91
 msgid "Sizes:"
-msgstr ""
+msgstr "Suurused:"
 
 #: ../plug-ins/gimpressionist/size.c:95
 msgid "The number of sizes of brushes to use"
@@ -9424,7 +9442,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:133
 msgid "Size:"
-msgstr ""
+msgstr "Suurus:"
 
 #: ../plug-ins/gimpressionist/size.c:142
 msgid ""
@@ -10349,7 +10367,7 @@ msgstr "Säilita _suund"
 msgid "JPEG preview"
 msgstr "JPEG eelvaade"
 
-#: ../plug-ins/jpeg/jpeg-load.c:575 ../plug-ins/winicon/icoload.c:526
+#: ../plug-ins/jpeg/jpeg-load.c:576 ../plug-ins/winicon/icoload.c:526
 #, c-format
 msgid "Opening thumbnail for '%s'..."
 msgstr ""
@@ -11623,6 +11641,27 @@ msgstr ""
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr ""
+
+#~ msgid "Search by _Name"
+#~ msgstr "Otsi _nime järgi"
+
+#~ msgid "Search by _Description"
+#~ msgstr "Otsi _kirjelduse järgi"
+
+#~ msgid "_Search:"
+#~ msgstr "_Otsi:"
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Sisemine GIMPi protseduur"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "GIMPi pistik"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMPi laiendus"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Ajutine protseduur"
 
 #~ msgid "S_elect Window After"
 #~ msgstr "_Vali aken pärast"
