@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-18 03:15+0000\n"
-"PO-Revision-Date: 2005-05-18 12:49+0200\n"
+"POT-Creation-Date: 2005-05-29 11:16+0000\n"
+"PO-Revision-Date: 2005-05-29 19:00+0200\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -176,8 +176,8 @@ msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
 "converted to UTF-8: %s\n"
 "\n"
-"Most probably your filesystem stores files in an encoding different from UTF-"
-"8 and you didn't tell GLib about this. Please set the environment variable "
+"Your filesystem probably stores files in an encoding other than UTF-8 and "
+"you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
 "El nombre del directorio que contiene la configuración de usuario de Gimp no "
@@ -546,7 +546,7 @@ msgid "Intersect"
 msgstr "Intersectar"
 
 #: ../app/actions/channels-commands.c:86
-#: ../app/actions/channels-commands.c:380
+#: ../app/actions/channels-commands.c:397
 msgid "Channel Attributes"
 msgstr "Atributos del canal"
 
@@ -559,35 +559,35 @@ msgid "Edit Channel Color"
 msgstr "Editar el color del canal"
 
 #: ../app/actions/channels-commands.c:92
-#: ../app/actions/channels-commands.c:124
-msgid "Fill Opacity:"
-msgstr "Opacidad del relleno:"
+#: ../app/actions/channels-commands.c:125
+msgid "_Fill Opacity:"
+msgstr "Opacidad del _relleno:"
 
-#: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:118
-#: ../app/actions/channels-commands.c:159
-#: ../app/actions/channels-commands.c:163
+#: ../app/actions/channels-commands.c:119
+#: ../app/actions/channels-commands.c:161
+#: ../app/actions/channels-commands.c:165
 #: ../app/widgets/gimpchanneltreeview.c:373
 msgid "New Channel"
 msgstr "Nuevo canal"
 
-#: ../app/actions/channels-commands.c:121
+#: ../app/actions/channels-commands.c:122
 msgid "New Channel Options"
 msgstr "Nuevas opciones de canal"
 
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:124
 msgid "New Channel Color"
 msgstr "Nuevo canal de color"
 
-#: ../app/actions/channels-commands.c:243
+#: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
-#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:280
+#: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:302
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia del canal %s"
 
-#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:595
+#: ../app/actions/channels-commands.c:310 ../app/core/gimpselection.c:595
 #: ../app/pdb/selection_cmds.c:921 ../app/pdb/selection_cmds.c:1045
 msgid "Channel to Selection"
 msgstr "Canal a selección"
@@ -714,7 +714,7 @@ msgstr "In_tercambiar los colores"
 #: ../app/dialogs/file-open-dialog.c:259
 #: ../app/dialogs/file-open-location-dialog.c:201
 #: ../app/display/gimpdisplayshell-dnd.c:448
-#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:146
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox-dnd.c:157
 #: ../app/widgets/gimptoolbox.c:1046
 #, c-format
 msgid ""
@@ -725,9 +725,9 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1331
-#: ../app/core/gimppalette-import.c:220 ../app/core/gimppalette.c:518
-#: ../app/core/gimppalette.c:629 ../app/dialogs/palette-import-dialog.c:692
+#: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1348
+#: ../app/core/gimppalette-import.c:220 ../app/core/gimppalette.c:520
+#: ../app/core/gimppalette.c:631 ../app/dialogs/palette-import-dialog.c:692
 #: ../app/pdb/image_cmds.c:3838 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Sin nombre"
@@ -1214,29 +1214,31 @@ msgstr "¿Seguro que quiere vaciar el histórico de deshacer de la imagen?"
 #: ../app/actions/edit-commands.c:146
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr "Al limpiar el historial de deshacer de esta imagen se recuperarán %s de memoria."
+msgstr ""
+"Al limpiar el historial de deshacer de esta imagen se recuperarán %s de "
+"memoria."
 
-#: ../app/actions/edit-commands.c:236
+#: ../app/actions/edit-commands.c:238
 msgid "Cut Named"
 msgstr "Cortar (con nombre)"
 
-#: ../app/actions/edit-commands.c:239 ../app/actions/edit-commands.c:259
+#: ../app/actions/edit-commands.c:241 ../app/actions/edit-commands.c:261
 msgid "Enter a name for this buffer"
 msgstr "Ponga un nombre a este búfer"
 
-#: ../app/actions/edit-commands.c:256
+#: ../app/actions/edit-commands.c:258
 msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
-#: ../app/actions/edit-commands.c:384
+#: ../app/actions/edit-commands.c:386
 msgid "There is no active layer or channel to cut from."
 msgstr "No hay una capa o canal activo desde donde cortar."
 
-#: ../app/actions/edit-commands.c:396 ../app/actions/edit-commands.c:433
+#: ../app/actions/edit-commands.c:398 ../app/actions/edit-commands.c:435
 msgid "(Unnamed Buffer)"
 msgstr "(Búfer sin nombre)"
 
-#: ../app/actions/edit-commands.c:421
+#: ../app/actions/edit-commands.c:423
 msgid "There is no active layer or channel to copy from."
 msgstr "No hay una capa o canal activo desde donde se pueda copiar."
 
@@ -1391,11 +1393,11 @@ msgstr "Abrir imagen como capa"
 msgid "Open Image"
 msgstr "Abrir imagen"
 
-#: ../app/actions/file-commands.c:472
+#: ../app/actions/file-commands.c:477
 msgid "(Unnamed Template)"
 msgstr "(Plantilla sin nombre)"
 
-#: ../app/actions/file-commands.c:521
+#: ../app/actions/file-commands.c:526
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2143,7 +2145,7 @@ msgstr "Editar atributos de capa"
 
 #: ../app/actions/layers-commands.c:234 ../app/actions/layers-commands.c:236
 #: ../app/actions/layers-commands.c:293 ../app/actions/layers-commands.c:297
-#: ../app/widgets/gimpdrawabletreeview.c:416
+#: ../app/widgets/gimpdrawabletreeview.c:361
 #: ../app/widgets/gimplayertreeview.c:872
 msgid "New Layer"
 msgstr "Capa nueva"
@@ -2499,7 +2501,7 @@ msgid "Edit Quick Mask Color"
 msgstr "Editar el color de las máscara rápida"
 
 #: ../app/actions/qmask-commands.c:112
-msgid "Mask Opacity:"
+msgid "_Mask Opacity:"
 msgstr "Opacidad de la máscara:"
 
 #: ../app/actions/select-actions.c:44
@@ -2733,9 +2735,9 @@ msgstr "Abrir archivo de texto (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:137
 #: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:116
-#: ../app/core/gimpbrush-load.c:406 ../app/core/gimpbrushgenerated.c:601
-#: ../app/core/gimpbrushpipe.c:337 ../app/core/gimpgradient-load.c:63
-#: ../app/core/gimppalette.c:361 ../app/core/gimppattern.c:329
+#: ../app/core/gimpbrush-load.c:406 ../app/core/gimpbrushgenerated.c:602
+#: ../app/core/gimpbrushpipe.c:332 ../app/core/gimpgradient-load.c:63
+#: ../app/core/gimppalette.c:361 ../app/core/gimppattern.c:318
 #: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3397,7 +3399,7 @@ msgstr ""
 
 #: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:255
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
-#: ../app/core/gimppalette.c:562 ../app/gui/themes.c:238
+#: ../app/core/gimppalette.c:564 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:613 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:350
 #, c-format
@@ -3875,11 +3877,12 @@ msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
-msgstr "Cuando se encuentre activado, se establecerán las ventanas "
-"empotrables (la caja de herramientas y las paletas) como dependientes "
-"de la ventana de imagen activa. La mayoría de los gestores de ventanas "
-"mantendrán entonces las ventanas empotrables encima de la ventana "
-"de imagen, pero esto podría tener también otros efectos. "
+msgstr ""
+"Cuando se encuentre activado, se establecerán las ventanas empotrables (la "
+"caja de herramientas y las paletas) como dependientes de la ventana de "
+"imagen activa. La mayoría de los gestores de ventanas mantendrán entonces "
+"las ventanas empotrables encima de la ventana de imagen, pero esto podría "
+"tener también otros efectos. "
 
 #: ../app/config/gimprc-blurbs.h:359
 msgid ""
@@ -4161,12 +4164,12 @@ msgid "Stipples"
 msgstr "Punteados"
 
 #: ../app/core/core-enums.c:363
-msgid "Dash dot..."
-msgstr "Punto y guión..."
+msgid "Dash, dot"
+msgstr "Raya - punto"
 
 #: ../app/core/core-enums.c:364
-msgid "Dash dot dot..."
-msgstr "Guión punto punto..."
+msgid "Dash, dot, dot"
+msgstr "Raya - punto - punto"
 
 #: ../app/core/core-enums.c:392
 msgid "Circle"
@@ -4631,14 +4634,14 @@ msgstr ""
 "Error fatal de análisis en el archivo de pincel «%s»: El archivo parece "
 "estar truncado."
 
-#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated.c:648
-#: ../app/core/gimpbrushpipe.c:353
+#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated.c:649
+#: ../app/core/gimpbrushpipe.c:348
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de pincel «%s»."
 
 #: ../app/core/gimpbrush-load.c:268 ../app/core/gimpcontext.c:1296
-#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:401
+#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:390
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
@@ -4667,38 +4670,38 @@ msgstr ""
 msgid "Fatal parse error in brush file '%s'"
 msgstr "Error fatal de análisis en el archivo de pincel «%s»"
 
-#: ../app/core/gimpbrushgenerated.c:614
+#: ../app/core/gimpbrushgenerated.c:615
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
 "Error fatal de análisis: en el archivo de pincel «%s»: No es un archivo de "
 "pincel de El Gimp."
 
-#: ../app/core/gimpbrushgenerated.c:630
+#: ../app/core/gimpbrushgenerated.c:631
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr ""
 "Error fatal de análisis en el archivo de pincel «%s»: Versión de pincel de "
 "El Gimp desconocida."
 
-#: ../app/core/gimpbrushgenerated.c:669
+#: ../app/core/gimpbrushgenerated.c:670
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr ""
 "Error fatal de análisis en el archivo de pincel «%s»: Forma de pincel de El "
 "Gimp desconocida."
 
-#: ../app/core/gimpbrushgenerated.c:750
+#: ../app/core/gimpbrushgenerated.c:751
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Ocurrió un error al leer el archivo de pincel «%s»: %s"
 
-#: ../app/core/gimpbrushgenerated.c:752
+#: ../app/core/gimpbrushgenerated.c:753
 msgid "File is truncated"
 msgstr "El archivo está truncado"
 
-#: ../app/core/gimpbrushpipe.c:368 ../app/core/gimpbrushpipe.c:388
-#: ../app/core/gimpbrushpipe.c:478
+#: ../app/core/gimpbrushpipe.c:364 ../app/core/gimpbrushpipe.c:384
+#: ../app/core/gimpbrushpipe.c:474
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
@@ -4815,7 +4818,7 @@ msgstr "Selección borrosa"
 msgid "Select by Color"
 msgstr "Seleccionar por color"
 
-#: ../app/core/gimpdata.c:314
+#: ../app/core/gimpdata.c:425
 #, c-format
 msgid "Could not delete '%s': %s"
 msgstr "No se ha podido borrar «%s»: %s"
@@ -4924,36 +4927,36 @@ msgstr ""
 "Error fatal de análisis: en el archivo de degradados «%s»: No es un archivo "
 "de degradados de El Gimp."
 
-#: ../app/core/gimpgradient-load.c:87
+#: ../app/core/gimpgradient-load.c:89
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de degradado «%s»."
 
-#: ../app/core/gimpgradient-load.c:109
+#: ../app/core/gimpgradient-load.c:111
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr ""
 "Error fatal de análisis en el archivo de degradados «%s»: El archivo está "
 "corrupto."
 
-#: ../app/core/gimpgradient-load.c:166
+#: ../app/core/gimpgradient-load.c:168
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Segmento corrupto %d en el archivo de degradado «%s»."
 
-#: ../app/core/gimpgradient-load.c:177 ../app/core/gimpgradient-load.c:191
+#: ../app/core/gimpgradient-load.c:179 ../app/core/gimpgradient-load.c:193
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
 "El archivo de degradado «%s» está corrompido. Los segmentos no se expanden a "
 "través del rango 0-1."
 
-#: ../app/core/gimpgradient-load.c:275
+#: ../app/core/gimpgradient-load.c:277
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "No se encontraron degradados lineales en «%s»"
 
-#: ../app/core/gimpgradient-load.c:285
+#: ../app/core/gimpgradient-load.c:287
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Fallo al importar degradados desde «%s»: %s"
@@ -5111,143 +5114,143 @@ msgstr "Mover punto de muestra"
 msgid "Can't undo %s"
 msgstr "No se puede deshacer %s"
 
-#: ../app/core/gimpimage.c:1405
+#: ../app/core/gimpimage.c:1422
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: ../app/core/gimpimage.c:1445
+#: ../app/core/gimpimage.c:1462
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: ../app/core/gimpimage.c:2258
+#: ../app/core/gimpimage.c:2275
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: ../app/core/gimpimage.c:2291
+#: ../app/core/gimpimage.c:2308
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:2759
+#: ../app/core/gimpimage.c:2776
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:2823 ../app/core/gimpimage.c:2836
+#: ../app/core/gimpimage.c:2840 ../app/core/gimpimage.c:2853
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:2910
+#: ../app/core/gimpimage.c:2927
 msgid "Layer cannot be raised higher."
 msgstr "La capa no puede ser elevada más alto."
 
-#: ../app/core/gimpimage.c:2916 ../app/core/gimpimage.c:2966
+#: ../app/core/gimpimage.c:2933 ../app/core/gimpimage.c:2983
 msgid "Cannot raise a layer without alpha."
 msgstr "No se puede elevar una capa sin alfa."
 
-#: ../app/core/gimpimage.c:2921
+#: ../app/core/gimpimage.c:2938
 msgid "Raise Layer"
 msgstr "Elevar la capa"
 
-#: ../app/core/gimpimage.c:2938
+#: ../app/core/gimpimage.c:2955
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: ../app/core/gimpimage.c:2943
+#: ../app/core/gimpimage.c:2960
 msgid "Lower Layer"
 msgstr "Bajar la capa"
 
-#: ../app/core/gimpimage.c:2960
+#: ../app/core/gimpimage.c:2977
 msgid "Layer is already on top."
 msgstr "La capa ya se encuentra en lo más alto."
 
-#: ../app/core/gimpimage.c:2971
+#: ../app/core/gimpimage.c:2988
 msgid "Raise Layer to Top"
 msgstr "Elevar la capa hasta lo más alto"
 
-#: ../app/core/gimpimage.c:2991
+#: ../app/core/gimpimage.c:3008
 msgid "Layer is already on the bottom."
 msgstr "La capa ya se encuentra en la parte más baja."
 
-#: ../app/core/gimpimage.c:2996
+#: ../app/core/gimpimage.c:3013
 msgid "Lower Layer to Bottom"
 msgstr "Bajar la capa hasta la parte más baja"
 
-#: ../app/core/gimpimage.c:3069
+#: ../app/core/gimpimage.c:3086
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:3113 ../app/core/gimpimage.c:3124
+#: ../app/core/gimpimage.c:3130 ../app/core/gimpimage.c:3141
 msgid "Remove Channel"
 msgstr "Eliminar el canal"
 
-#: ../app/core/gimpimage.c:3171
+#: ../app/core/gimpimage.c:3188
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado más alto."
 
-#: ../app/core/gimpimage.c:3176
+#: ../app/core/gimpimage.c:3193
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: ../app/core/gimpimage.c:3193
+#: ../app/core/gimpimage.c:3210
 msgid "Channel is already on top."
 msgstr "El canal ya está en la cima."
 
-#: ../app/core/gimpimage.c:3198
+#: ../app/core/gimpimage.c:3215
 msgid "Raise Channel to Top"
 msgstr "Elevar el canal hasta lo alto"
 
-#: ../app/core/gimpimage.c:3215
+#: ../app/core/gimpimage.c:3232
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender más."
 
-#: ../app/core/gimpimage.c:3220
+#: ../app/core/gimpimage.c:3237
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: ../app/core/gimpimage.c:3240
+#: ../app/core/gimpimage.c:3257
 msgid "Channel is already on the bottom."
 msgstr "El canal ya está en el fondo."
 
-#: ../app/core/gimpimage.c:3245
+#: ../app/core/gimpimage.c:3262
 msgid "Lower Channel to Bottom"
 msgstr "Bajar el canal hasta lo más bajo"
 
-#: ../app/core/gimpimage.c:3320
+#: ../app/core/gimpimage.c:3337
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:3365
+#: ../app/core/gimpimage.c:3382
 msgid "Remove Path"
 msgstr "Eliminar la ruta"
 
-#: ../app/core/gimpimage.c:3409
+#: ../app/core/gimpimage.c:3426
 msgid "Path cannot be raised higher."
 msgstr "La ruta no puede ser elevada más alto."
 
-#: ../app/core/gimpimage.c:3414
+#: ../app/core/gimpimage.c:3431
 msgid "Raise Path"
 msgstr "Elevar la ruta"
 
-#: ../app/core/gimpimage.c:3431
+#: ../app/core/gimpimage.c:3448
 msgid "Path is already on top."
 msgstr "La ruta ya está en la cima."
 
-#: ../app/core/gimpimage.c:3436
+#: ../app/core/gimpimage.c:3453
 msgid "Raise Path to Top"
 msgstr "Elevar la ruta hasta el principio"
 
-#: ../app/core/gimpimage.c:3453
+#: ../app/core/gimpimage.c:3470
 msgid "Path cannot be lowered more."
 msgstr "La ruta no puede descender más."
 
-#: ../app/core/gimpimage.c:3458
+#: ../app/core/gimpimage.c:3475
 msgid "Lower Path"
 msgstr "Bajar la ruta"
 
-#: ../app/core/gimpimage.c:3478
+#: ../app/core/gimpimage.c:3495
 msgid "Path is already on the bottom."
 msgstr "La ruta ya está en el fondo."
 
-#: ../app/core/gimpimage.c:3483
+#: ../app/core/gimpimage.c:3500
 msgid "Lower Path to Bottom"
 msgstr "Bajar la ruta hasta el fondo"
 
@@ -5464,20 +5467,20 @@ msgstr ""
 "Error fatal de análisis en el archivo de paleta «%s»: Cabecera mágica "
 "perdida."
 
-#: ../app/core/gimppalette.c:396 ../app/core/gimppalette.c:421
-#: ../app/core/gimppalette.c:451 ../app/core/gimppalette.c:531
+#: ../app/core/gimppalette.c:398 ../app/core/gimppalette.c:423
+#: ../app/core/gimppalette.c:453 ../app/core/gimppalette.c:533
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Error fatal de análisis en el archivo de paleta «%s»: Error de lectura en la "
 "línea %d."
 
-#: ../app/core/gimppalette.c:411
+#: ../app/core/gimppalette.c:413
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Cadena UTF-8 inválida en el archivo de paleta «%s»"
 
-#: ../app/core/gimppalette.c:439
+#: ../app/core/gimppalette.c:441
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -5487,39 +5490,39 @@ msgstr ""
 "d. Usando el valor predeterminado."
 
 #. maybe we should just abort?
-#: ../app/core/gimppalette.c:479
+#: ../app/core/gimppalette.c:481
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 "Leyendo el archivo de paleta «%s»: Falta la componente ROJO en la línea %d."
 
-#: ../app/core/gimppalette.c:487
+#: ../app/core/gimppalette.c:489
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr ""
 "Leyendo el archivo de paleta «%s»: Falta la componente VERDE en la línea %d."
 
-#: ../app/core/gimppalette.c:495
+#: ../app/core/gimppalette.c:497
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 "Leyendo el archivo de paleta «%s»: Falta la componente AZUL en la línea %d."
 
-#: ../app/core/gimppalette.c:505
+#: ../app/core/gimppalette.c:507
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Leyendo el archivo de paleta «%s»: Valor RGB fuera de rango en la línea %d."
 
-#: ../app/core/gimppattern.c:338 ../app/core/gimppattern.c:385
-#: ../app/core/gimppattern.c:416
+#: ../app/core/gimppattern.c:327 ../app/core/gimppattern.c:374
+#: ../app/core/gimppattern.c:406
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr ""
 "Error de análisis fatal en el archivo de patrón «%s»: No se han podido leer %"
 "d bytes: %s"
 
-#: ../app/core/gimppattern.c:358
+#: ../app/core/gimppattern.c:347
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
@@ -5527,7 +5530,7 @@ msgstr ""
 "Error de análisis fatal en el archivo de patrón «%s»: Versión del formato de "
 "patrón desconocida %d."
 
-#: ../app/core/gimppattern.c:368
+#: ../app/core/gimppattern.c:357
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5537,7 +5540,7 @@ msgstr ""
 "no soportada %d.\n"
 "Los patrones de El Gimp deben ser GRAY o RGB."
 
-#: ../app/core/gimppattern.c:394
+#: ../app/core/gimppattern.c:383
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»."
@@ -5590,6 +5593,14 @@ msgstr "Selección flotante"
 #: ../app/core/gimpselection.c:839
 msgid "Floated Layer"
 msgstr "Capa flotante"
+
+#: ../app/core/gimpstrokeoptions.c:151
+msgid ""
+"Convert a mitered join to a bevelled join if the miter would extend to a "
+"distance of more than miter-limit * line-width from the actual join point."
+msgstr "Convertir una unión mediana en una unión en bisel si la mediana se "
+"extendiese hasta una distancia mayor que el límite de mediana "
+"multiplicado por el grosor de la línea a partir del punto real de unión."
 
 #: ../app/core/gimptemplate.c:156
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -5685,9 +5696,13 @@ msgstr "Contribuciones"
 msgid "About The GIMP"
 msgstr "Acerca de El Gimp"
 
-#: ../app/dialogs/channel-options-dialog.c:143
-msgid "Channel Name:"
-msgstr "Nombre del canal:"
+#: ../app/dialogs/channel-options-dialog.c:144
+msgid "Channel _Name:"
+msgstr "_Nombre del canal:"
+
+#: ../app/dialogs/channel-options-dialog.c:173
+msgid "Initialize from _selection"
+msgstr "Iniciar a partir de la _selección"
 
 #: ../app/dialogs/convert-dialog.c:119
 msgid "Indexed Color Conversion"
@@ -6750,7 +6765,8 @@ msgstr "Hint para otros e_mpotrables:"
 
 #: ../app/dialogs/preferences-dialog.c:2294
 msgid "Toolbox and other docks are transient to the active display"
-msgstr "La caja de herramientas y otros empotrables dependerán de la vista activa"
+msgstr ""
+"La caja de herramientas y otros empotrables dependerán de la vista activa"
 
 #: ../app/dialogs/preferences-dialog.c:2298
 msgid "Focus"
@@ -7073,12 +7089,13 @@ msgid ""
 "functionality to GIMP.  These programs are searched for at run-time and "
 "information about their functionality is cached in this file.  This file is "
 "intended to be written by GIMP only, and should not be edited."
-msgstr "Los complementos y las extensiones son programas externos ejecutados "
-"por El GIMP que proporcionan funcionalidades adicionales. Estos programas "
-"se buscan en tiempo de ejecución, y se almacena la información acerca de "
-"su función y fechas de modificación en este archivo para conseguir un "
-"inicio de El Gimp más rápido. Este archivo sólo debe ser escrito "
-"por El Gimp, y no debe ser editado."
+msgstr ""
+"Los complementos y las extensiones son programas externos ejecutados por El "
+"GIMP que proporcionan funcionalidades adicionales. Estos programas se buscan "
+"en tiempo de ejecución, y se almacena la información acerca de su función y "
+"fechas de modificación en este archivo para conseguir un inicio de El Gimp "
+"más rápido. Este archivo sólo debe ser escrito por El Gimp, y no debe ser "
+"editado."
 
 #: ../app/dialogs/user-install-dialog.c:154
 msgid ""
@@ -7127,8 +7144,10 @@ msgstr ""
 msgid ""
 "This folder is used to store user defined brushes. GIMP checks this folder "
 "in addition to the system-wide brushes installation."
-msgstr "Esta carpeta se utiliza para almacenar los pinceles definidos por el "
-"usuario. El Gimp revisa esta carpeta además de la instalación global de pinceles."
+msgstr ""
+"Esta carpeta se utiliza para almacenar los pinceles definidos por el "
+"usuario. El Gimp revisa esta carpeta además de la instalación global de "
+"pinceles."
 
 #: ../app/dialogs/user-install-dialog.c:193
 msgid ""
@@ -7136,11 +7155,12 @@ msgid ""
 "checks this folder in addition to the system-wide fonts installation. Use "
 "this only if you really want to have fonts available in GIMP only, otherwise "
 "put them in your global font directory."
-msgstr "Esta carpeta se utiliza para almacenar las tipografías que desea que "
-"sean visibles sólo en El Gimp. El Gimp revisa esta carpeta además de la "
-"instalación de tipografías global del sistema. Utilice esta carpeta solamente "
-"si realmente quiere tener tipografías exclusivas para El Gimp, de otro modo "
-"póngalas en su directorio de tipografías global."
+msgstr ""
+"Esta carpeta se utiliza para almacenar las tipografías que desea que sean "
+"visibles sólo en El Gimp. El Gimp revisa esta carpeta además de la "
+"instalación de tipografías global del sistema. Utilice esta carpeta "
+"solamente si realmente quiere tener tipografías exclusivas para El Gimp, de "
+"otro modo póngalas en su directorio de tipografías global."
 
 #: ../app/dialogs/user-install-dialog.c:202
 msgid ""
@@ -7199,8 +7219,8 @@ msgstr ""
 "Esta carpeta se utiliza para almacenar los intérpretes de complementos "
 "temporales o no soportados por el sistema, creados por el usuario. El Gimp "
 "revisa esta carpeta además de la carpeta global de intérpretes de El Gimp "
-"cuando está buscando los archivos de configuración de los intérpretes "
-"de complementos."
+"cuando está buscando los archivos de configuración de los intérpretes de "
+"complementos."
 
 #: ../app/dialogs/user-install-dialog.c:249
 msgid ""
@@ -7514,11 +7534,11 @@ msgstr "Color de los cuadros oscuros"
 msgid "Custom color"
 msgstr "Color personalizado"
 
-#: ../app/display/gimpdisplayshell.c:903
+#: ../app/display/gimpdisplayshell.c:912
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: ../app/display/gimpdisplayshell.c:923
+#: ../app/display/gimpdisplayshell.c:932
 msgid "Toggle Quick Mask"
 msgstr "Activar máscara rápida"
 
@@ -7572,7 +7592,7 @@ msgid "Drop New Path"
 msgstr "Borrar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:838
+#: ../app/widgets/gimplayertreeview.c:838 ../app/widgets/gimptoolbox-dnd.c:352
 msgid "Dropped Buffer"
 msgstr "Búfer descartado"
 
@@ -7982,6 +8002,10 @@ msgstr ""
 #: ../app/pdb/selection_tools_cmds.c:332 ../app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
 msgstr "Selección libre"
+
+#: ../app/pdb/vectors_cmds.c:173
+msgid "Modify Path"
+msgstr "Modificar la ruta"
 
 #: ../app/plug-in/plug-in.c:563 ../app/plug-in/plug-in.c:596
 #, c-format
@@ -9858,10 +9882,6 @@ msgid "Percentage of width of brush"
 msgstr "Porcentaje del ancho del pincel"
 
 #: ../app/widgets/gimpbufferview.c:165 ../app/widgets/gimpbufferview.c:246
-#: ../app/widgets/gimpcontainergridview.c:206
-#: ../app/widgets/gimpcontainergridview.c:657
-#: ../app/widgets/gimphistogrameditor.c:141
-#: ../app/widgets/gimphistogrameditor.c:352
 msgid "(None)"
 msgstr "(Ninguno)"
 
@@ -9899,6 +9919,7 @@ msgid "Add the selected filter to the list of active filters."
 msgstr "Añadir el filtro seleccionado a la lista de filtros activos."
 
 #: ../app/widgets/gimpcolordisplayeditor.c:222
+#: ../app/widgets/gimpcontrollerlist.c:297
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Eliminar el filtro seleccionado de la lista de filtros activos."
 
@@ -9930,6 +9951,10 @@ msgstr "No hay ningún filtro seleccionado"
 #: ../app/widgets/gimpcolordisplayeditor.c:555
 msgid "Configure selected filter"
 msgstr "Configurar el filtro seleccionado"
+
+#: ../app/widgets/gimpcoloreditor.c:253
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Notación hexadecimal como la que se utiliza en el HTML y CSS"
 
 #: ../app/widgets/gimpcolorframe.c:254
 msgid "Index:"
@@ -10184,6 +10209,89 @@ msgstr "Eventos del teclado"
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Preparado"
+
+#: ../app/widgets/gimpcontrollerlist.c:212
+msgid "Available Controllers"
+msgstr "Controladores disponibles"
+
+#: ../app/widgets/gimpcontrollerlist.c:277
+msgid "Create a controller of the selected type."
+msgstr "Crear un controlador del tipo seleccionado."
+
+#: ../app/widgets/gimpcontrollerlist.c:312
+msgid "Active Controllers"
+msgstr "Controladores activos"
+
+#: ../app/widgets/gimpcontrollerlist.c:328
+msgid "Configure the selected controller"
+msgstr "Configurar el controlador seleccionado"
+
+#: ../app/widgets/gimpcontrollerlist.c:336
+msgid "Move the selected controller up"
+msgstr "Mover el controlador seleccionado hacia arriba"
+
+#: ../app/widgets/gimpcontrollerlist.c:344
+msgid "Move the selected controller down"
+msgstr "Mover el controlador seleccionado hacia abajo"
+
+#: ../app/widgets/gimpcontrollerlist.c:516
+msgid ""
+"There can only be one active keyboard controller.\n"
+"\n"
+"You already have a keyboard controller in your list of active controllers."
+msgstr ""
+"Sólo puede haber un cotrolador activo de teclado.\n"
+"\n"
+"Ya tiene un controlador de teclado en su lista de controladores activos."
+
+#: ../app/widgets/gimpcontrollerlist.c:524
+msgid ""
+"There can only be one active wheel controller.\n"
+"\n"
+"You already have a wheel controller in your list of active controllers."
+msgstr ""
+"Sólo puede haber un controlador activo de rueda.\n"
+"\n"
+"Ya tiene un controlador de rueda en su lista de controladores activos."
+
+#: ../app/widgets/gimpcontrollerlist.c:550
+msgid "Remove Controller?"
+msgstr "¿Quitar el controlador?"
+
+#: ../app/widgets/gimpcontrollerlist.c:555
+msgid "Disable Controller"
+msgstr "Desactivar el controlador"
+
+#: ../app/widgets/gimpcontrollerlist.c:557
+msgid "Remove Controller"
+msgstr "Quitar el controlador"
+
+#: ../app/widgets/gimpcontrollerlist.c:568
+#, c-format
+msgid "Remove Controller '%s'?"
+msgstr "¿Quitar el controlador '%s'?"
+
+#: ../app/widgets/gimpcontrollerlist.c:572
+msgid ""
+"Removing this controller from the list of active controllers will "
+"permanently delete all event mappings you have configured.\n"
+"\n"
+"Selecting \"Disable Controller\" will disable the controller without "
+"removing it."
+msgstr ""
+"La eliminación de este controlador de la lista de controladores activos "
+"borrará permanentemente todas las asignaciones de eventos que haya configurado.\n"
+"\n"
+"Al seleccionar \"Desactivar el controlador\" se desactivará el controlador "
+"sin quitarlo."
+
+#: ../app/widgets/gimpcontrollerlist.c:633
+msgid "Configure Controller"
+msgstr "Configurar el controlador"
+
+#: ../app/widgets/gimpcontrollerlist.c:636
+msgid "Configure Input Controller"
+msgstr "Configurar el controlador de entrada"
 
 #: ../app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10581,31 +10689,31 @@ msgstr "No se ha podido iniciar el complemento del visor de ayuda de El Gimp."
 msgid "Use _web browser instead"
 msgstr "Utilizar un navegador _web en su lugar"
 
-#: ../app/widgets/gimphistogrameditor.c:128
+#: ../app/widgets/gimphistogrameditor.c:129
 msgid "Mean:"
 msgstr "Media:"
 
-#: ../app/widgets/gimphistogrameditor.c:129
+#: ../app/widgets/gimphistogrameditor.c:130
 msgid "Std Dev:"
 msgstr "Desviación est.:"
 
-#: ../app/widgets/gimphistogrameditor.c:130
+#: ../app/widgets/gimphistogrameditor.c:131
 msgid "Median:"
 msgstr "Mediana:"
 
-#: ../app/widgets/gimphistogrameditor.c:131
+#: ../app/widgets/gimphistogrameditor.c:132
 msgid "Pixels:"
 msgstr "Píxeles:"
 
-#: ../app/widgets/gimphistogrameditor.c:132
+#: ../app/widgets/gimphistogrameditor.c:133
 msgid "Count:"
 msgstr "Cuenta:"
 
-#: ../app/widgets/gimphistogrameditor.c:133
+#: ../app/widgets/gimphistogrameditor.c:134
 msgid "Percentile:"
 msgstr "Percentil:"
 
-#: ../app/widgets/gimphistogrameditor.c:155
+#: ../app/widgets/gimphistogrameditor.c:150
 msgid "Channel:"
 msgstr "Canal:"
 
@@ -10687,6 +10795,17 @@ msgstr "Mantener transparencia"
 msgid "Empty Layer"
 msgstr "Capa vacía"
 
+#: ../app/widgets/gimpmenudock.c:191
+msgid "Auto"
+msgstr "Auto"
+
+#: ../app/widgets/gimpmenudock.c:202
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
+msgstr ""
+"Cuando está activado el diálogo automáticamente sigue a la imagen en la que "
+"está trabajando."
+
 #: ../app/widgets/gimpmessagebox.c:462
 #, c-format
 msgid "Message repeated %d times."
@@ -10730,35 +10849,35 @@ msgstr "%d x %d ppp"
 msgid "%d dpi"
 msgstr "%d ppp"
 
-#: ../app/widgets/gimpstrokeeditor.c:196
+#: ../app/widgets/gimpstrokeeditor.c:201
 msgid "Line Width:"
 msgstr "Anchura de la línea:"
 
-#: ../app/widgets/gimpstrokeeditor.c:207
+#: ../app/widgets/gimpstrokeeditor.c:212
 msgid "_Line Style"
 msgstr "E_stilo de la línea"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Cap style:"
 msgstr "Estilo de _capuchón: [Cap]"
 
-#: ../app/widgets/gimpstrokeeditor.c:232
+#: ../app/widgets/gimpstrokeeditor.c:237
 msgid "_Join style:"
 msgstr "E_stilo de la unión:"
 
-#: ../app/widgets/gimpstrokeeditor.c:237
+#: ../app/widgets/gimpstrokeeditor.c:242
 msgid "_Miter limit:"
 msgstr "Límite de la _mitra: [Miter limit]"
 
-#: ../app/widgets/gimpstrokeeditor.c:244
+#: ../app/widgets/gimpstrokeeditor.c:249
 msgid "Dash pattern:"
-msgstr "Patrón de guiones:"
+msgstr "Patrón de punteado:"
 
-#: ../app/widgets/gimpstrokeeditor.c:286
-msgid "Dash preset:"
-msgstr "Preparación del guión:"
+#: ../app/widgets/gimpstrokeeditor.c:291
+msgid "Dash _preset:"
+msgstr "Configuración predeterminada de punteado:"
 
-#: ../app/widgets/gimpstrokeeditor.c:298
+#: ../app/widgets/gimpstrokeeditor.c:312
 msgid "_Antialiasing"
 msgstr "_Anti-alias"
 
@@ -10876,8 +10995,8 @@ msgid ""
 "The arrows swap colors. Click to open the color selection dialog."
 msgstr ""
 "Colores de frente y fondo.  Los cuadrados blancos y negros reinician los "
-"colores.  Las flechas intercambian los colores. Pulse para abrir el "
-"diálogo de selección de colores."
+"colores.  Las flechas intercambian los colores. Pulse para abrir el diálogo "
+"de selección de colores."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -10891,14 +11010,19 @@ msgstr "Recuperar opciones desde..."
 msgid "Delete saved options..."
 msgstr "Borrar las opciones guardadas..."
 
-#: ../app/widgets/gimpuimanager.c:695
+#: ../app/widgets/gimpuimanager.c:698
 msgid "Your GIMP installation is incomplete:"
 msgstr "Su instalación de El Gimp está incompleta:"
 
-#: ../app/widgets/gimpuimanager.c:697
+#: ../app/widgets/gimpuimanager.c:700
 msgid "Plase make sure the menu XML files are correctly installed."
 msgstr ""
 "Asegúrese de que los archivos XML del menú están instalados correctamente."
+
+#: ../app/widgets/gimpuimanager.c:705
+#, c-format
+msgid "There was an error parsing the menu definition from %s: %s"
+msgstr "Hubo un error al analizar la definición de menú a partir de %s: %s"
 
 #: ../app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -11179,16 +11303,6 @@ msgstr "No se ha podido iniciar «%s»: %s"
 
 #~ msgid "Selection: REPLACE"
 #~ msgstr "Selección: REEMPLAZAR"
-
-#~ msgid "Auto"
-#~ msgstr "Auto"
-
-#~ msgid ""
-#~ "When enabled the dialog automatically follows the image you are working "
-#~ "on."
-#~ msgstr ""
-#~ "Cuando está activado el diálogo automáticamente sigue a la imagen en la "
-#~ "que está trabajando."
 
 #~ msgid "Close this Tab"
 #~ msgstr "Cerrar esta solapa"
