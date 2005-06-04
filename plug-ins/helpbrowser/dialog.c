@@ -557,7 +557,11 @@ request_url (HtmlDocument *doc,
     {
       gint fd;
 
+#ifdef G_OS_WIN32
       fd = open (filename, O_RDONLY|O_BINARY);
+#else
+      fd = open (filename, O_RDONLY);
+#endif
 
       if (fd != -1)
         {

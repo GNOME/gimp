@@ -1,5 +1,10 @@
 2005-06-03  Michael Schumacher  <schumaml@cvs.gnome.org>
 
+	* plug-ins/helpbrowser/dialog.c: added #ifdef G_OS_WIN32 because
+	O_BINARY isn't available on other platforms
+
+2005-06-03  Michael Schumacher  <schumaml@cvs.gnome.org>
+
 	* plug-ins/helpbrowser/dialog.c: added a O_BINARY to make sure
 	that images are loaded correctly
 
