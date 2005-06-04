@@ -866,7 +866,7 @@ request_url (HtmlDocument *doc,
 
   if (filename)
     {
-      gint fd = g_open (filename, O_RDONLY, 0);
+      gint fd = g_open (filename, O_RDONLY|O_BINARY, 0);
 
       if (fd != -1)
         {

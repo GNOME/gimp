@@ -1,3 +1,8 @@
+2005-06-03  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/helpbrowser/dialog.c: added a O_BINARY to make sure
+	that images are loaded correctly
+
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimpdrawablecombobox.c: create the layer combo with the
