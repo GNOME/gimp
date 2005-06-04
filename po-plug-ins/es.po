@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-19 19:28+0000\n"
-"PO-Revision-Date: 2005-05-22 22:37+0100\n"
+"POT-Creation-Date: 2005-06-01 19:30+0000\n"
+"PO-Revision-Date: 2005-06-01 22:32+0100\n"
 "Last-Translator: Alonso Lara <keko@khor-ha.net>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,6 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:562
 #: ../plug-ins/FractalExplorer/Dialogs.c:1672
-#: ../plug-ins/imagemap/imap_about.c:39
 #: ../plug-ins/print/gimp_main_window.c:367
 msgid "About"
 msgstr "Acerca de"
@@ -385,18 +384,18 @@ msgstr "_Fractales"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1819
 #: ../plug-ins/Lighting/lighting_ui.c:1158 ../plug-ins/bmp/bmpwrite.c:194
-#: ../plug-ins/common/CEL.c:573 ../plug-ins/common/CML_explorer.c:2010
+#: ../plug-ins/common/CEL.c:569 ../plug-ins/common/CML_explorer.c:2010
 #: ../plug-ins/common/channel_mixer.c:1063 ../plug-ins/common/compressor.c:409
 #: ../plug-ins/common/compressor.c:540 ../plug-ins/common/curve_bend.c:860
-#: ../plug-ins/common/dicom.c:648 ../plug-ins/common/gbr.c:582
+#: ../plug-ins/common/dicom.c:648 ../plug-ins/common/gbr.c:600
 #: ../plug-ins/common/gif.c:994 ../plug-ins/common/gih.c:1257
 #: ../plug-ins/common/gtm.c:222 ../plug-ins/common/mng.c:559
-#: ../plug-ins/common/mng.c:947 ../plug-ins/common/pat.c:433
-#: ../plug-ins/common/pcx.c:579 ../plug-ins/common/pix.c:505
+#: ../plug-ins/common/mng.c:947 ../plug-ins/common/pat.c:447
+#: ../plug-ins/common/pcx.c:585 ../plug-ins/common/pix.c:505
 #: ../plug-ins/common/png.c:1173 ../plug-ins/common/pnm.c:810
 #: ../plug-ins/common/postscript.c:1120 ../plug-ins/common/psd_save.c:1330
 #: ../plug-ins/common/raw.c:522 ../plug-ins/common/raw.c:549
-#: ../plug-ins/common/spheredesigner.c:2091 ../plug-ins/common/sunras.c:504
+#: ../plug-ins/common/spheredesigner.c:2107 ../plug-ins/common/sunras.c:504
 #: ../plug-ins/common/tga.c:1022 ../plug-ins/common/tiff.c:1929
 #: ../plug-ins/common/xbm.c:991 ../plug-ins/common/xwd.c:562
 #: ../plug-ins/fits/fits.c:445 ../plug-ins/flame/flame.c:443
@@ -427,16 +426,16 @@ msgstr "Guardar parámetros de fractal"
 #: ../plug-ins/FractalExplorer/Dialogs.c:2128
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1164
 #: ../plug-ins/Lighting/lighting_ui.c:1302 ../plug-ins/bmp/bmpread.c:152
-#: ../plug-ins/common/CEL.c:301 ../plug-ins/common/CML_explorer.c:2230
+#: ../plug-ins/common/CEL.c:297 ../plug-ins/common/CML_explorer.c:2230
 #: ../plug-ins/common/channel_mixer.c:980 ../plug-ins/common/curve_bend.c:912
-#: ../plug-ins/common/dicom.c:291 ../plug-ins/common/gbr.c:325
+#: ../plug-ins/common/dicom.c:291 ../plug-ins/common/gbr.c:343
 #: ../plug-ins/common/gifload.c:294 ../plug-ins/common/gih.c:647
-#: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:302
-#: ../plug-ins/common/pcx.c:299 ../plug-ins/common/pix.c:325
+#: ../plug-ins/common/mng.c:1118 ../plug-ins/common/pat.c:316
+#: ../plug-ins/common/pcx.c:305 ../plug-ins/common/pix.c:325
 #: ../plug-ins/common/png.c:671 ../plug-ins/common/pnm.c:434
 #: ../plug-ins/common/postscript.c:989 ../plug-ins/common/psd.c:1801
 #: ../plug-ins/common/psp.c:1454 ../plug-ins/common/raw.c:235
-#: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1981
+#: ../plug-ins/common/raw.c:639 ../plug-ins/common/spheredesigner.c:1997
 #: ../plug-ins/common/sunras.c:375 ../plug-ins/common/svg.c:309
 #: ../plug-ins/common/svg.c:692 ../plug-ins/common/tga.c:409
 #: ../plug-ins/common/tiff.c:526 ../plug-ins/common/xbm.c:715
@@ -606,7 +605,7 @@ msgstr "Luz 6"
 
 #. row labels
 #: ../plug-ins/Lighting/lighting_ui.c:388
-#: ../plug-ins/common/spheredesigner.c:2638
+#: ../plug-ins/common/spheredesigner.c:2654
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -1132,7 +1131,7 @@ msgid "Map Images to Box Faces"
 msgstr "Mapear imágenes a las caras de la caja"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1178
-#: ../plug-ins/common/spheredesigner.c:2733
+#: ../plug-ins/common/spheredesigner.c:2749
 msgid "Scale X:"
 msgstr "Escala X:"
 
@@ -1222,10 +1221,10 @@ msgstr "Imagen BMP de Windows"
 msgid "Bad colormap"
 msgstr "Mapa de colores malo"
 
-#: ../plug-ins/bmp/bmpread.c:158 ../plug-ins/common/CEL.c:306
-#: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:331
+#: ../plug-ins/bmp/bmpread.c:158 ../plug-ins/common/CEL.c:302
+#: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:349
 #: ../plug-ins/common/gifload.c:299 ../plug-ins/common/gih.c:653
-#: ../plug-ins/common/pat.c:308 ../plug-ins/common/pcx.c:305
+#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:311
 #: ../plug-ins/common/pix.c:331 ../plug-ins/common/png.c:679
 #: ../plug-ins/common/pnm.c:440 ../plug-ins/common/postscript.c:996
 #: ../plug-ins/common/psd.c:1807 ../plug-ins/common/raw.c:645
@@ -1267,12 +1266,12 @@ msgstr "Profundidad de bits no soportada o no válida."
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:353
-#: ../plug-ins/common/CEL.c:356 ../plug-ins/common/blinds.c:276
+#: ../plug-ins/bmp/bmpread.c:488 ../plug-ins/common/CEL.c:349
+#: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:276
 #: ../plug-ins/common/compose.c:759 ../plug-ins/common/decompose.c:619
 #: ../plug-ins/common/dicom.c:443 ../plug-ins/common/film.c:940
-#: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:330
-#: ../plug-ins/common/pcx.c:336 ../plug-ins/common/pix.c:365
+#: ../plug-ins/common/gifload.c:866 ../plug-ins/common/pcx.c:336
+#: ../plug-ins/common/pcx.c:342 ../plug-ins/common/pix.c:365
 #: ../plug-ins/common/png.c:804 ../plug-ins/common/pnm.c:518
 #: ../plug-ins/common/psd.c:2215 ../plug-ins/common/raw.c:680
 #: ../plug-ins/common/smooth_palette.c:253 ../plug-ins/common/sunras.c:915
@@ -1292,7 +1291,7 @@ msgid "The bitmap ends unexpectedly."
 msgstr "El mapa de bits finaliza inesperadamente."
 
 #: ../plug-ins/bmp/bmpwrite.c:132 ../plug-ins/common/dicom.c:618
-#: ../plug-ins/common/pcx.c:573
+#: ../plug-ins/common/pcx.c:579
 msgid "Cannot save images with alpha channel."
 msgstr "No se puede guardar imágenes con canales alfa."
 
@@ -1304,10 +1303,10 @@ msgstr "No puede operar sobre tipos de imagen desconocidos."
 
 #. And let's begin the progress
 #. init the progress meter
-#: ../plug-ins/bmp/bmpwrite.c:205 ../plug-ins/common/CEL.c:578
-#: ../plug-ins/common/gbr.c:588 ../plug-ins/common/gif.c:1001
+#: ../plug-ins/bmp/bmpwrite.c:205 ../plug-ins/common/CEL.c:574
+#: ../plug-ins/common/gbr.c:606 ../plug-ins/common/gif.c:1001
 #: ../plug-ins/common/gih.c:1262 ../plug-ins/common/gtm.c:243
-#: ../plug-ins/common/pat.c:439 ../plug-ins/common/pcx.c:541
+#: ../plug-ins/common/pat.c:453 ../plug-ins/common/pcx.c:547
 #: ../plug-ins/common/pix.c:511 ../plug-ins/common/png.c:1181
 #: ../plug-ins/common/pnm.c:815 ../plug-ins/common/postscript.c:1126
 #: ../plug-ins/common/psd_save.c:1336 ../plug-ins/common/sunras.c:510
@@ -1424,7 +1423,7 @@ msgid "Phase angle, range 0-360"
 msgstr "ángulo de fase, rango 0-360"
 
 #. Propagate Mode
-#: ../plug-ins/common/AlienMap2.c:512 ../plug-ins/common/hot.c:584
+#: ../plug-ins/common/AlienMap2.c:512 ../plug-ins/common/hot.c:589
 #: ../plug-ins/common/vpropagate.c:1086 ../plug-ins/common/waves.c:269
 msgid "Mode"
 msgstr "Modo"
@@ -1437,19 +1436,19 @@ msgstr "Modelo de color _RGB"
 msgid "_HSL color model"
 msgstr "Modelo de color _HSL"
 
-#: ../plug-ins/common/CEL.c:108 ../plug-ins/common/CEL.c:126
+#: ../plug-ins/common/CEL.c:104 ../plug-ins/common/CEL.c:122
 msgid "KISS CEL"
 msgstr "KISS CEL"
 
-#: ../plug-ins/common/CEL.c:187
+#: ../plug-ins/common/CEL.c:183
 msgid "Load KISS Palette"
 msgstr "Cargar paleta KISS"
 
-#: ../plug-ins/common/CEL.c:345
+#: ../plug-ins/common/CEL.c:341
 msgid "Can't create a new image"
 msgstr "No se puede crear una imagen nueva"
 
-#: ../plug-ins/common/CEL.c:434
+#: ../plug-ins/common/CEL.c:430
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "¡Profundidad de bits no soportada (%d)!"
@@ -3563,7 +3562,7 @@ msgid "Composing Images..."
 msgstr "Componiendo imágenes..."
 
 #: ../plug-ins/common/film.c:432 ../plug-ins/common/guillotine.c:183
-#: ../plug-ins/helpbrowser/dialog.c:801
+#: ../plug-ins/helpbrowser/dialog.c:827
 msgid "Untitled"
 msgstr "Sin título"
 
@@ -3581,7 +3580,7 @@ msgid "On Film:"
 msgstr "En la película:"
 
 #. Create selection
-#: ../plug-ins/common/film.c:1160 ../plug-ins/imagemap/imap_selection.c:361
+#: ../plug-ins/common/film.c:1160 ../plug-ins/imagemap/imap_selection.c:366
 #: ../plug-ins/rcm/rcm_dialog.c:162
 msgid "Selection"
 msgstr "Selección"
@@ -3921,61 +3920,61 @@ msgstr "_IIR"
 msgid "_RLE"
 msgstr "_RLE"
 
-#: ../plug-ins/common/gbr.c:129 ../plug-ins/common/gbr.c:150
+#: ../plug-ins/common/gbr.c:147 ../plug-ins/common/gbr.c:168
 msgid "GIMP brush"
 msgstr "PincEl Gimp"
 
-#: ../plug-ins/common/gbr.c:366 ../plug-ins/common/gbr.c:378
+#: ../plug-ins/common/gbr.c:384 ../plug-ins/common/gbr.c:396
 msgid "Unsupported brush format"
 msgstr "Formato de pincel no soportado"
 
-#: ../plug-ins/common/gbr.c:389
+#: ../plug-ins/common/gbr.c:407
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Error en el archivo de pinceles «%s» de El Gimp."
 
-#: ../plug-ins/common/gbr.c:397
+#: ../plug-ins/common/gbr.c:415
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de pincel «%s»"
 
 # # //R ¿Con subrayado?
-#: ../plug-ins/common/gbr.c:403 ../plug-ins/common/gih.c:497
+#: ../plug-ins/common/gbr.c:421 ../plug-ins/common/gih.c:497
 #: ../plug-ins/common/gih.c:1157 ../plug-ins/gflare/gflare.c:2995
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: ../plug-ins/common/gbr.c:574
+#: ../plug-ins/common/gbr.c:592
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Los pinceles de El Gimp son en TONOS DE GRIS o bien en RGBA"
 
-#: ../plug-ins/common/gbr.c:658
+#: ../plug-ins/common/gbr.c:676
 msgid "Save as Brush"
 msgstr "Guardar como pincel"
 
 #. attach labels
-#: ../plug-ins/common/gbr.c:683 ../plug-ins/common/grid.c:770
+#: ../plug-ins/common/gbr.c:701 ../plug-ins/common/grid.c:770
 msgid "Spacing:"
 msgstr "Espaciado:"
 
-#: ../plug-ins/common/gbr.c:694 ../plug-ins/common/gih.c:907
-#: ../plug-ins/common/pat.c:525 ../plug-ins/gimpressionist/presets.c:651
+#: ../plug-ins/common/gbr.c:712 ../plug-ins/common/gih.c:907
+#: ../plug-ins/common/pat.c:539 ../plug-ins/gimpressionist/presets.c:651
 msgid "Description:"
 msgstr "Descripción:"
 
-#: ../plug-ins/common/gee.c:92
+#: ../plug-ins/common/gee.c:103
 msgid "Gee-_Slime"
 msgstr "Gee-_Slime"
 
-#: ../plug-ins/common/gee.c:150
+#: ../plug-ins/common/gee.c:160
 msgid "GEE-SLIME"
 msgstr "¡Oh! Viscoso"
 
-#: ../plug-ins/common/gee.c:156 ../plug-ins/common/gee_zoom.c:189
+#: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:189
 msgid "Thank you for choosing GIMP"
 msgstr "Gracias por elegir a El Gimp"
 
-#: ../plug-ins/common/gee.c:164
+#: ../plug-ins/common/gee.c:174
 msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
@@ -4468,35 +4467,35 @@ msgstr "Guillotina..."
 msgid "C source code header"
 msgstr "Cabecera de código fuente en C"
 
-#: ../plug-ins/common/hot.c:208
+#: ../plug-ins/common/hot.c:213
 msgid "_Hot..."
 msgstr "_Caliente..."
 
-#: ../plug-ins/common/hot.c:370
+#: ../plug-ins/common/hot.c:375
 msgid "Hot..."
 msgstr "Caliente..."
 
-#: ../plug-ins/common/hot.c:561
+#: ../plug-ins/common/hot.c:566
 msgid "Hot"
 msgstr "Caliente"
 
-#: ../plug-ins/common/hot.c:596
+#: ../plug-ins/common/hot.c:601
 msgid "Create _New layer"
 msgstr "Crear una capa _nueva"
 
-#: ../plug-ins/common/hot.c:605
+#: ../plug-ins/common/hot.c:610
 msgid "Action"
 msgstr "Acción"
 
-#: ../plug-ins/common/hot.c:609
+#: ../plug-ins/common/hot.c:614
 msgid "Reduce _Luminance"
 msgstr "Reducir la _luminosidad"
 
-#: ../plug-ins/common/hot.c:610
+#: ../plug-ins/common/hot.c:615
 msgid "Reduce _Saturation"
 msgstr "Reducir la _saturación"
 
-#: ../plug-ins/common/hot.c:611 ../plug-ins/common/waves.c:274
+#: ../plug-ins/common/hot.c:616 ../plug-ins/common/waves.c:274
 msgid "_Blacken"
 msgstr "Enne_grecer"
 
@@ -5460,34 +5459,34 @@ msgstr "31 de Septiembre de 1999"
 msgid "_Paper Tile..."
 msgstr "Mosaico de papel..."
 
-#: ../plug-ins/common/pat.c:106 ../plug-ins/common/pat.c:128
+#: ../plug-ins/common/pat.c:120 ../plug-ins/common/pat.c:142
 msgid "GIMP pattern"
 msgstr "Patrón Gimp"
 
-#: ../plug-ins/common/pat.c:344
+#: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 
-#: ../plug-ins/common/pat.c:500
+#: ../plug-ins/common/pat.c:514
 msgid "Save as Pattern"
 msgstr "Guardar como patrón"
 
-#: ../plug-ins/common/pcx.c:94 ../plug-ins/common/pcx.c:113
+#: ../plug-ins/common/pcx.c:100 ../plug-ins/common/pcx.c:119
 msgid "ZSoft PCX image"
 msgstr "Imagen ZSoft PCX"
 
-#: ../plug-ins/common/pcx.c:310
+#: ../plug-ins/common/pcx.c:316
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "No se ha podido leer la cabecera de «%s»"
 
-#: ../plug-ins/common/pcx.c:317
+#: ../plug-ins/common/pcx.c:323
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
-#: ../plug-ins/common/pcx.c:371
+#: ../plug-ins/common/pcx.c:377
 msgid "Unusual PCX flavour, giving up"
 msgstr "Versión de PCX inusual, terminando"
 
@@ -6300,57 +6299,60 @@ msgstr "_Saturación:"
 msgid "_Value:"
 msgstr "_Valor:"
 
-#: ../plug-ins/common/screenshot.c:236 ../plug-ins/winsnap/winsnap.c:994
+#: ../plug-ins/common/screenshot.c:238 ../plug-ins/winsnap/winsnap.c:994
 msgid "_Screen Shot..."
 msgstr "_Captura de pantalla..."
 
-#: ../plug-ins/common/screenshot.c:418
+#: ../plug-ins/common/screenshot.c:422
 msgid "Error grabbing the pointer"
 msgstr "Ocurrió un error al grabar el puntero"
 
-#: ../plug-ins/common/screenshot.c:557
+#: ../plug-ins/common/screenshot.c:596
 msgid "Loading Screen Shot..."
 msgstr "Cargando la captura de pantalla..."
 
-#: ../plug-ins/common/screenshot.c:564 ../plug-ins/common/screenshot.c:730
+#: ../plug-ins/common/screenshot.c:603 ../plug-ins/common/screenshot.c:770
 msgid "Screen Shot"
 msgstr "Captura de pantalla"
 
-#: ../plug-ins/common/screenshot.c:672
+#: ../plug-ins/common/screenshot.c:711
 msgid "Specified window not found"
 msgstr "No se ha encontrado la ventana especificada"
 
-#: ../plug-ins/common/screenshot.c:699
+#: ../plug-ins/common/screenshot.c:738
 msgid "Error obtaining Screen shot"
 msgstr "Ocurrió un error al obtener la captura de pantalla"
 
+#: ../plug-ins/common/screenshot.c:779
+msgid "_Grab"
+msgstr "_Capturar"
+
 #. single window
-#: ../plug-ins/common/screenshot.c:739 ../plug-ins/common/screenshot.c:765
-#: ../plug-ins/winsnap/winsnap.c:865
+#: ../plug-ins/common/screenshot.c:805 ../plug-ins/winsnap/winsnap.c:865
 msgid "Grab"
 msgstr "Capturar"
 
-#: ../plug-ins/common/screenshot.c:772
-msgid "a _Single Window"
-msgstr "una _sola ventana"
+#: ../plug-ins/common/screenshot.c:812
+msgid "a single _window"
+msgstr "una sola _ventana"
 
-#: ../plug-ins/common/screenshot.c:792
-msgid "Include decoration"
-msgstr "Incluir decoración"
+#: ../plug-ins/common/screenshot.c:832
+msgid "Include window decoration"
+msgstr "Incluir decoración de la ventana"
 
-#: ../plug-ins/common/screenshot.c:805
-msgid "Selected Region"
-msgstr "Región seleccionada"
+#: ../plug-ins/common/screenshot.c:847
+msgid "the selected _region"
+msgstr "la _región seleccionada"
 
-#: ../plug-ins/common/screenshot.c:822
-msgid "the _Whole Screen"
-msgstr "la pantalla e_ntera"
+#: ../plug-ins/common/screenshot.c:864
+msgid "the whole _screen"
+msgstr "la _pantalla entera"
 
-#: ../plug-ins/common/screenshot.c:845
-msgid "Delay for"
-msgstr "Retardar durante"
+#: ../plug-ins/common/screenshot.c:887
+msgid "W_ait for"
+msgstr "Esper_ar"
 
-#: ../plug-ins/common/screenshot.c:860
+#: ../plug-ins/common/screenshot.c:902
 msgid "seconds"
 msgstr "segundos"
 
@@ -6765,167 +6767,167 @@ msgstr "Usar el color de frente"
 msgid "Use the background color"
 msgstr "Usar el color de fondo"
 
-#: ../plug-ins/common/spheredesigner.c:274
+#: ../plug-ins/common/spheredesigner.c:290
 #: ../plug-ins/gimpressionist/general.c:147
 msgid "Solid"
 msgstr "Sólido"
 
-#: ../plug-ins/common/spheredesigner.c:275
+#: ../plug-ins/common/spheredesigner.c:291
 msgid "Checker"
 msgstr "Ajedrez"
 
-#: ../plug-ins/common/spheredesigner.c:276
+#: ../plug-ins/common/spheredesigner.c:292
 msgid "Marble"
 msgstr "Mármol"
 
-#: ../plug-ins/common/spheredesigner.c:277
+#: ../plug-ins/common/spheredesigner.c:293
 msgid "Lizard"
 msgstr "Lagarto"
 
-#: ../plug-ins/common/spheredesigner.c:278
+#: ../plug-ins/common/spheredesigner.c:294
 msgid "Phong"
 msgstr "Phong"
 
-#: ../plug-ins/common/spheredesigner.c:279
+#: ../plug-ins/common/spheredesigner.c:295
 msgid "Noise"
 msgstr "Ruido"
 
-#: ../plug-ins/common/spheredesigner.c:280
+#: ../plug-ins/common/spheredesigner.c:296
 msgid "Wood"
 msgstr "Madera"
 
-#: ../plug-ins/common/spheredesigner.c:281
+#: ../plug-ins/common/spheredesigner.c:297
 msgid "Spiral"
 msgstr "Espiral"
 
-#: ../plug-ins/common/spheredesigner.c:282
+#: ../plug-ins/common/spheredesigner.c:298
 msgid "Spots"
 msgstr "Lunares"
 
-#: ../plug-ins/common/spheredesigner.c:1733
-#: ../plug-ins/common/spheredesigner.c:2629
+#: ../plug-ins/common/spheredesigner.c:1749
+#: ../plug-ins/common/spheredesigner.c:2645
 msgid "Texture"
 msgstr "Textura"
 
-#: ../plug-ins/common/spheredesigner.c:1735
+#: ../plug-ins/common/spheredesigner.c:1751
 msgid "Bumpmap"
 msgstr "Mapa de relieve"
 
-#: ../plug-ins/common/spheredesigner.c:1737
-#: ../plug-ins/common/spheredesigner.c:2631
+#: ../plug-ins/common/spheredesigner.c:1753
+#: ../plug-ins/common/spheredesigner.c:2647
 msgid "Light"
 msgstr "Luz"
 
-#: ../plug-ins/common/spheredesigner.c:1988
+#: ../plug-ins/common/spheredesigner.c:2004
 #, c-format
 msgid "File '%s' is not a valid save file."
 msgstr "El archivo «%s» no es válido."
 
-#: ../plug-ins/common/spheredesigner.c:2167
+#: ../plug-ins/common/spheredesigner.c:2183
 msgid "Open File"
 msgstr "Abrir archivo"
 
-#: ../plug-ins/common/spheredesigner.c:2167
+#: ../plug-ins/common/spheredesigner.c:2183
 msgid "Save File"
 msgstr "Guardar archivo"
 
-#: ../plug-ins/common/spheredesigner.c:2489
+#: ../plug-ins/common/spheredesigner.c:2505
 msgid "Sphere Designer"
 msgstr "Diseñador de esferas"
 
-#: ../plug-ins/common/spheredesigner.c:2532
+#: ../plug-ins/common/spheredesigner.c:2548
 msgid "Update _Preview"
 msgstr "Actualizar  la _previsualización"
 
-#: ../plug-ins/common/spheredesigner.c:2586
+#: ../plug-ins/common/spheredesigner.c:2602
 msgid "Textures"
 msgstr "Texturas"
 
-#: ../plug-ins/common/spheredesigner.c:2614
+#: ../plug-ins/common/spheredesigner.c:2630
 msgid "Texture Properties"
 msgstr "Propiedades de la textura"
 
-#: ../plug-ins/common/spheredesigner.c:2630
+#: ../plug-ins/common/spheredesigner.c:2646
 msgid "Bump"
 msgstr "Relieve"
 
-#: ../plug-ins/common/spheredesigner.c:2658
+#: ../plug-ins/common/spheredesigner.c:2674
 msgid "Texture:"
 msgstr "Textura:"
 
-#: ../plug-ins/common/spheredesigner.c:2663
+#: ../plug-ins/common/spheredesigner.c:2679
 msgid "Colors:"
 msgstr "Colores:"
 
-#: ../plug-ins/common/spheredesigner.c:2666
-#: ../plug-ins/common/spheredesigner.c:2677
+#: ../plug-ins/common/spheredesigner.c:2682
+#: ../plug-ins/common/spheredesigner.c:2693
 msgid "Color Selection Dialog"
 msgstr "Diálogo de selección de color"
 
 #. Scale
-#: ../plug-ins/common/spheredesigner.c:2688
+#: ../plug-ins/common/spheredesigner.c:2704
 #: ../plug-ins/gimpressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:555
 msgid "Scale:"
 msgstr "Escala:"
 
-#: ../plug-ins/common/spheredesigner.c:2696
+#: ../plug-ins/common/spheredesigner.c:2712
 msgid "Turbulence:"
 msgstr "Turbulencia:"
 
-#: ../plug-ins/common/spheredesigner.c:2703
+#: ../plug-ins/common/spheredesigner.c:2719
 msgid "Amount:"
 msgstr "Cantidad:"
 
-#: ../plug-ins/common/spheredesigner.c:2710
+#: ../plug-ins/common/spheredesigner.c:2726
 msgid "Exp.:"
 msgstr "Exp:"
 
-#: ../plug-ins/common/spheredesigner.c:2717
+#: ../plug-ins/common/spheredesigner.c:2733
 msgid "Texture Transformations"
 msgstr "Transformaciones de texturas"
 
-#: ../plug-ins/common/spheredesigner.c:2740
+#: ../plug-ins/common/spheredesigner.c:2756
 msgid "Scale Y:"
 msgstr "Escala Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2746
+#: ../plug-ins/common/spheredesigner.c:2762
 msgid "Scale Z:"
 msgstr "Escala Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2753
+#: ../plug-ins/common/spheredesigner.c:2769
 msgid "Rotate X:"
 msgstr "Rotación X:"
 
-#: ../plug-ins/common/spheredesigner.c:2760
+#: ../plug-ins/common/spheredesigner.c:2776
 msgid "Rotate Y:"
 msgstr "Rotación Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2767
+#: ../plug-ins/common/spheredesigner.c:2783
 msgid "Rotate Z:"
 msgstr "Rotación Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2774
+#: ../plug-ins/common/spheredesigner.c:2790
 msgid "Position X:"
 msgstr "Posición X:"
 
-#: ../plug-ins/common/spheredesigner.c:2781
+#: ../plug-ins/common/spheredesigner.c:2797
 msgid "Position Y:"
 msgstr "Posición Y:"
 
-#: ../plug-ins/common/spheredesigner.c:2788
+#: ../plug-ins/common/spheredesigner.c:2804
 msgid "Position Z:"
 msgstr "Posición Z:"
 
-#: ../plug-ins/common/spheredesigner.c:2936
+#: ../plug-ins/common/spheredesigner.c:2952
 msgid "Rendering Sphere..."
 msgstr "Renderizando supernova..."
 
-#: ../plug-ins/common/spheredesigner.c:2993
+#: ../plug-ins/common/spheredesigner.c:3009
 msgid "Sphere _Designer..."
 msgstr "_Diseñador de esferas..."
 
-#: ../plug-ins/common/spheredesigner.c:3050
+#: ../plug-ins/common/spheredesigner.c:3066
 msgid "Region selected for plug-in is empty"
 msgstr "La región seleccionada para el complemento está vacía"
 
@@ -7293,11 +7295,11 @@ msgstr "O_pacidad:"
 msgid "Number of Segments"
 msgstr "Número de segmentos"
 
-#: ../plug-ins/common/tiler.c:64
+#: ../plug-ins/common/tiler.c:70
 msgid "_Make Seamless"
 msgstr "_Crear sin costuras"
 
-#: ../plug-ins/common/tiler.c:320
+#: ../plug-ins/common/tiler.c:326
 msgid "Tiler..."
 msgstr "Enlosar..."
 
@@ -8132,15 +8134,15 @@ msgstr "Error al escribir imagen indexada/de grises"
 msgid "Error during writing rgb image"
 msgstr "Error al escribir imagen rgb"
 
-#: ../plug-ins/common/zealouscrop.c:81
+#: ../plug-ins/common/zealouscrop.c:88
 msgid "_Zealous Crop"
 msgstr "Recorte _Zealous"
 
-#: ../plug-ins/common/zealouscrop.c:129
+#: ../plug-ins/common/zealouscrop.c:136
 msgid "ZealousCropping(tm)..."
 msgstr "ZealousCropping™.."
 
-#: ../plug-ins/common/zealouscrop.c:230
+#: ../plug-ins/common/zealouscrop.c:237
 msgid "Nothing to crop."
 msgstr "Nada para recortar."
 
@@ -8759,15 +8761,15 @@ msgstr "Izquierda"
 msgid "Orientation:"
 msgstr "Orientación:"
 
-#: ../plug-ins/gfig/gfig-dobject.c:583
+#: ../plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
 msgstr "¿dónde se ha ido el objeto?"
 
-#: ../plug-ins/gfig/gfig-dobject.c:947
+#: ../plug-ins/gfig/gfig-dobject.c:949
 msgid "Error reading file"
 msgstr "Error al leer el archivo"
 
-#: ../plug-ins/gfig/gfig-dobject.c:1036
+#: ../plug-ins/gfig/gfig-dobject.c:1038
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Editando objeto sólo-lectura - no podrá guardarlo"
 
@@ -9769,27 +9771,27 @@ msgstr "Visor de ayuda de El Gimp"
 msgid "Drag and drop this icon to a web browser"
 msgstr "Arrastrar y soltar este icono en un navegador web"
 
-#: ../plug-ins/helpbrowser/dialog.c:445
+#: ../plug-ins/helpbrowser/dialog.c:461
 msgid "Go back one page"
 msgstr "Retroceder una página"
 
-#: ../plug-ins/helpbrowser/dialog.c:449
+#: ../plug-ins/helpbrowser/dialog.c:465
 msgid "Go forward one page"
 msgstr "Avanzar una página"
 
-#: ../plug-ins/helpbrowser/dialog.c:453
+#: ../plug-ins/helpbrowser/dialog.c:469
 msgid "Go to the index page"
 msgstr "Ir a la página índice"
 
-#: ../plug-ins/helpbrowser/dialog.c:483
+#: ../plug-ins/helpbrowser/dialog.c:499
 msgid "Visit the GIMP documentation website"
 msgstr "Visitar la web de documentación de El Gimp"
 
-#: ../plug-ins/helpbrowser/dialog.c:557
+#: ../plug-ins/helpbrowser/dialog.c:573
 msgid "Document not found"
 msgstr "Documento no encontrado"
 
-#: ../plug-ins/helpbrowser/dialog.c:559
+#: ../plug-ins/helpbrowser/dialog.c:575
 msgid "The requested URL could not be loaded:"
 msgstr "No se ha podido cargar la URL solicitada:"
 
@@ -9951,15 +9953,11 @@ msgstr "Guardar como un fractal IFS"
 msgid "Open IFS Fraktal file"
 msgstr "Abrir archivo fractal IFS"
 
-#: ../plug-ins/imagemap/imap_about.c:43
-msgid "Imagemap plug-in 2.3"
-msgstr "Complemento Imagemap 2.3"
-
 #: ../plug-ins/imagemap/imap_about.c:44
 msgid "Copyright(c) 1999-2005 by Maurits Rijk"
 msgstr "Copyright © 1999-2005 por Maurits Rijk"
 
-#: ../plug-ins/imagemap/imap_about.c:46
+#: ../plug-ins/imagemap/imap_about.c:47
 msgid "Released under the GNU General Public License"
 msgstr "Publicado bajo la Licencia Pública General GNU  "
 
@@ -10257,7 +10255,7 @@ msgstr "Configuración de área"
 msgid "Area #%d Settings"
 msgstr "Configuración de Área nº %d"
 
-#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:81
+#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:84
 msgid "Error opening file"
 msgstr "Error al abrir el archivo"
 
@@ -10372,12 +10370,12 @@ msgstr "No se ha podido leer el archivo:"
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:115
+#: ../plug-ins/imagemap/imap_menu.c:118
 #, c-format
 msgid "_Undo %s"
 msgstr "Des_hacer %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:131
+#: ../plug-ins/imagemap/imap_menu.c:134
 #, c-format
 msgid "_Redo %s"
 msgstr "_Rehacer %s"
@@ -10490,19 +10488,19 @@ msgstr "_X superior izquierdo:"
 msgid "Upper left _y:"
 msgstr "_Y superior izquierdo:"
 
-#: ../plug-ins/imagemap/imap_selection.c:371
+#: ../plug-ins/imagemap/imap_selection.c:376
 msgid "#"
 msgstr "#"
 
-#: ../plug-ins/imagemap/imap_selection.c:382
+#: ../plug-ins/imagemap/imap_selection.c:387
 msgid "URL"
 msgstr "URL"
 
-#: ../plug-ins/imagemap/imap_selection.c:400
+#: ../plug-ins/imagemap/imap_selection.c:405
 msgid "ALT Text"
 msgstr "ALT Text"
 
-#: ../plug-ins/imagemap/imap_selection.c:410
+#: ../plug-ins/imagemap/imap_selection.c:415
 msgid "Target"
 msgstr "Destino"
 
@@ -10835,7 +10833,8 @@ msgstr "Error en la línea %d letra %d: %s"
 #: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr "Se esperaba el texto o elemento opcional <%s>, se encontró en cambio <%s>"
+msgstr ""
+"Se esperaba el texto o elemento opcional <%s>, se encontró en cambio <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
@@ -11936,6 +11935,3 @@ msgstr "Error: No se ha podido leer el archivo de propiedades XJT «%s»."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: El archivo de propiedades XJT «%s» está vacío."
-
-#~ msgid "_Search:"
-#~ msgstr "B_uscar:"
