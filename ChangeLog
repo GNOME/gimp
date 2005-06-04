@@ -1,5 +1,11 @@
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
+	fix calculation of zoom offsets in the case that dot-for-dot mode
+	is not enabled (bug #306476).
+
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdnd.c (gimp_dnd_get_viewable_icon): use the
 	viewable's description in the drag icon. Use a larger preview.
 
