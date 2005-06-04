@@ -293,6 +293,9 @@ gimp_palette_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (docked_iface);
 
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
   docked_iface->set_aux_info = gimp_palette_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_palette_editor_get_aux_info;
 }
@@ -342,8 +345,7 @@ gimp_palette_editor_set_aux_info (GimpDocked *docked,
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
   GList             *list;
 
-  if (parent_docked_iface->set_aux_info)
-    parent_docked_iface->set_aux_info (docked, aux_info);
+  parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
@@ -363,11 +365,10 @@ gimp_palette_editor_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_palette_editor_get_aux_info (GimpDocked *docked)
 {
-  GimpPaletteEditor *editor   = GIMP_PALETTE_EDITOR (docked);
-  GList             *aux_info = NULL;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (docked);
+  GList             *aux_info;
 
-  if (parent_docked_iface->get_aux_info)
-    aux_info = parent_docked_iface->get_aux_info (docked);
+  aux_info = parent_docked_iface->get_aux_info (docked);
 
   if (editor->zoom_factor != 1.0)
     {

@@ -54,7 +54,8 @@ static void   gimp_cursor_view_style_set         (GtkWidget            *widget,
                                                   GtkStyle             *prev_style);
 
 
-static GimpEditorClass *parent_class = NULL;
+static GimpEditorClass     *parent_class        = NULL;
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 GType
@@ -191,6 +192,11 @@ gimp_cursor_view_init (GimpCursorView *view)
 static void
 gimp_cursor_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
   docked_iface->set_aux_info = gimp_cursor_view_set_aux_info;
   docked_iface->get_aux_info = gimp_cursor_view_get_aux_info;
 }
@@ -204,6 +210,8 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
 {
   GimpCursorView *view = GIMP_CURSOR_VIEW (docked);
   GList          *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
@@ -233,10 +241,12 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_cursor_view_get_aux_info (GimpDocked *docked)
 {
-  GimpCursorView     *view   = GIMP_CURSOR_VIEW (docked);
-  GList              *aux_info = NULL;
+  GimpCursorView     *view = GIMP_CURSOR_VIEW (docked);
+  GList              *aux_info;
   const gchar        *nick;
   GimpSessionInfoAux *aux;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
 
   if (gimp_enum_get_value (GIMP_TYPE_COLOR_FRAME_MODE,
                            GIMP_COLOR_FRAME (view->color_frame_1)->frame_mode,

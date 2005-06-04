@@ -95,7 +95,8 @@ static void   gimp_color_editor_entry_changed   (GimpColorHexEntry *entry,
                                                  GimpColorEditor   *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+static GimpEditorClass     *parent_class        = NULL;
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 GType
@@ -355,6 +356,11 @@ gimp_color_editor_get_preview (GimpDocked  *docked,
 static void
 gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
   docked_iface->get_preview  = gimp_color_editor_get_preview;
   docked_iface->set_aux_info = gimp_color_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_color_editor_get_aux_info;
@@ -370,6 +376,8 @@ gimp_color_editor_set_aux_info (GimpDocked *docked,
   GimpColorEditor *editor   = GIMP_COLOR_EDITOR (docked);
   GtkWidget       *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
   GList           *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
@@ -408,7 +416,9 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
 {
   GimpColorEditor    *editor   = GIMP_COLOR_EDITOR (docked);
   GimpColorNotebook  *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook);
-  GList              *aux_info = NULL;
+  GList              *aux_info;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
 
   if (notebook->cur_page)
     {

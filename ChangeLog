@@ -1,3 +1,14 @@
+2005-06-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcursorview.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimppaletteeditor.c: peek at the default interface to
+	get the parent interface. Unconditionally chain up in get_aux_info()
+	and set_aux_info() methods.
+
 2005-06-04  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/Makefile.am: reorder to get the marshal files built first.

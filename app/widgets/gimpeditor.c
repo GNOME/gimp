@@ -84,8 +84,7 @@ static gboolean    gimp_editor_get_show_button_bar (GimpDocked      *docked);
 static GtkIconSize gimp_editor_ensure_button_box   (GimpEditor      *editor);
 
 
-static GtkVBoxClass        *parent_class        = NULL;
-static GimpDockedInterface *parent_docked_iface = NULL;
+static GtkVBoxClass *parent_class = NULL;
 
 
 GType
@@ -231,8 +230,6 @@ gimp_editor_init (GimpEditor *editor)
 static void
 gimp_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
-
   docked_iface->get_menu            = gimp_editor_get_menu;
   docked_iface->has_button_bar      = gimp_editor_has_button_bar;
   docked_iface->set_show_button_bar = gimp_editor_set_show_button_bar;

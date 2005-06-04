@@ -93,7 +93,8 @@ static void       gimp_data_editor_revert_clicked    (GtkWidget      *widget,
 static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+static GimpEditorClass     *parent_class        = NULL;
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 GType
@@ -185,6 +186,11 @@ gimp_data_editor_init (GimpDataEditor *editor)
 static void
 gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
+  parent_docked_iface = g_type_interface_peek_parent (docked_iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
   docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
   docked_iface->get_title    = gimp_data_editor_get_title;
@@ -294,6 +300,8 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
   GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
   GList          *list;
 
+  parent_docked_iface->set_aux_info (docked, aux_info);
+
   for (list = aux_info; list; list = g_list_next (list))
     {
       GimpSessionInfoAux *aux = list->data;
@@ -315,8 +323,10 @@ gimp_data_editor_set_aux_info (GimpDocked *docked,
 static GList *
 gimp_data_editor_get_aux_info (GimpDocked *docked)
 {
-  GimpDataEditor *editor   = GIMP_DATA_EDITOR (docked);
-  GList          *aux_info = NULL;
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
+  GList          *aux_info;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
 
   if (editor->data)
     {

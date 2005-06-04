@@ -215,6 +215,9 @@ gimp_histogram_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (docked_iface);
 
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
   docked_iface->set_aux_info = gimp_histogram_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_histogram_editor_get_aux_info;
 }
@@ -226,8 +229,7 @@ gimp_histogram_editor_set_aux_info (GimpDocked *docked,
   GimpHistogramEditor *editor = GIMP_HISTOGRAM_EDITOR (docked);
   GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-  if (parent_docked_iface->set_aux_info)
-    parent_docked_iface->set_aux_info (docked, aux_info);
+  parent_docked_iface->set_aux_info (docked, aux_info);
 
   gimp_session_info_aux_set_props (G_OBJECT (view), aux_info,
                                    "histogram-channel",
@@ -242,16 +244,13 @@ gimp_histogram_editor_get_aux_info (GimpDocked *docked)
   GimpHistogramView   *view   = GIMP_HISTOGRAM_BOX (editor->box)->view;
   GList               *aux_info;
 
-  aux_info = gimp_session_info_aux_new_from_props (G_OBJECT (view),
-                                                   "histogram-channel",
-                                                   "histogram-scale",
-                                                   NULL);
+  aux_info = parent_docked_iface->get_aux_info (docked);
 
-  if (parent_docked_iface->get_aux_info)
-    return g_list_concat (parent_docked_iface->get_aux_info (docked),
-                          aux_info);
-  else
-    return aux_info;
+  return g_list_concat (aux_info,
+                        gimp_session_info_aux_new_from_props (G_OBJECT (view),
+                                                              "histogram-channel",
+                                                              "histogram-scale",
+                                                              NULL));
 }
 
 static void
