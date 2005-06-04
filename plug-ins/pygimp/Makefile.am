@@ -21,17 +21,19 @@ INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
 
 pygimpdir = $(gimpplugindir)/python
 
-pygimp_LTLIBRARIES = gimpmodule.la gimpprocbrowsermodule.la
+pygimp_LTLIBRARIES = gimpmodule.la _gimpenumsmodule.la gimpcolormodule.la \
+	gimpprocbrowsermodule.la
 
 gimpmodule_la_SOURCES = \
 	gimpmodule.c		\
-	pygimp-image.c		\
-	pygimp-drawable.c	\
-	pygimp-tile.c		\
 	pygimp-display.c	\
+	pygimp-drawable.c	\
+	pygimp-image.c		\
 	pygimp-parasite.c	\
 	pygimp-pdb.c		\
-	pygimp.h
+	pygimp-tile.c		\
+	pygimp.h		\
+	pygimp-api.h
 
 gimpmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimp
@@ -42,6 +44,31 @@ gimpmodule_la_LIBADD = \
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)
+
+_gimpenumsmodule_la_SOURCES = \
+	gimpenumsmodule.c
+
+_gimpenumsmodule_la_LDFLAGS = -module -avoid-version \
+	-export-symbols-regex init_gimpenums
+
+_gimpenumsmodule_la_LIBADD = \
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
+	$(RT_LIBS)
+
+gimpcolormodule_la_SOURCES = \
+	gimpcolormodule.c	\
+	pygimp-rgb.c		\
+	pygimpcolor.h
+
+gimpcolormodule_la_LDFLAGS = -module -avoid-version \
+	-export-symbols-regex initgimpcolor
+
+gimpcolormodule_la_LIBADD = \
+	$(libgimpcolor)	\
+	$(GLIB_LIBS)
 
 gimpprocbrowsermodule_la_SOURCES = \
 	procbrowser.c

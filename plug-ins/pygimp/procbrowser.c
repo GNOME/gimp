@@ -26,29 +26,16 @@
 #include <pygobject.h>
 #include <pygtk/pygtk.h>
 
-#include <libgimp/gimp.h>
+#include "pygimp-api.h"
 
 #include <plug-ins/dbbrowser/gimpprocbrowser.h>
 
-
-typedef PyObject *(*PyGimpPDBFunctionNew)(const char *name, const char *blurb,
-					  const char *help, const char *author,
-					  const char *copyright,
-					  const char *date,
-					  GimpPDBProcType proc_type,
-					  int n_params, int n_return_vals,
-					  GimpParamDef *params,
-					  GimpParamDef *return_vals);
 
 typedef struct
 {
     PyObject *func;
     PyObject *data;
 } ProxyData;
-
-
-static PyTypeObject *PyGimpPDBFunction_Type;
-static PyGimpPDBFunctionNew pygimp_pdb_function_new;
 
 
 static GimpParamDef *
@@ -182,32 +169,11 @@ static char procbrowser_doc[] =
 DL_EXPORT(void)
 initgimpprocbrowser(void)
 {
-    PyObject *m, *pygimp;
+    PyObject *m;
 
     init_pygobject();
     init_pygtk();
-
-    pygimp = PyImport_ImportModule("gimp");
-
-    if (pygimp) {
-	PyObject *module_dict = PyModule_GetDict(pygimp);
-	PyObject *type_object, *c_object;
-
-	type_object = PyDict_GetItemString(module_dict, "_PDBFunction");
-	c_object    = PyDict_GetItemString(module_dict, "_pdb_function_new");
-
-	if (PyType_Check(type_object) && PyCObject_Check(c_object)) {
-	    PyGimpPDBFunction_Type = (PyTypeObject*)type_object;
-	    pygimp_pdb_function_new = PyCObject_AsVoidPtr(c_object);
-	} else {
-	    PyErr_SetString(PyExc_RuntimeError,
-			    "could not find compatible gimp module");
-	    return;
-	}
-    } else {
-	PyErr_SetString(PyExc_ImportError, "could not import gimp");
-	return;
-    }
+    init_pygimp();
 
     /* Create the module and add the functions */
     m = Py_InitModule3("gimpprocbrowser",

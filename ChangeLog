@@ -1,5 +1,30 @@
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-api.h
+	* plug-ins/pygimp/gimpmodule.c: export our API to other modules
+	in a saner fashion. Also add checks_get_shades method.
+
+	* plug-ins/pygimp/procbrowser.c: Use new export API.
+
+	* plug-ins/pygimp/pygimp-drawable.c (drw_mask_intersect):
+	use Py_BuildValue to build the tuple.
+
+	* plug-ins/pygimp/pygimp-image.c (img_repr): capitalization fix.
+
+	* plug-ins/pygimp/pygimp-rgb.c
+	* plug-ins/pygimp/pygimpcolor.h
+	* plug-ins/pygimp/gimpcolormodule.c: beginnings of a wrapper to
+	libgimpcolor.
+
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/pygimp/gimpenumsmodule.c: use gimp enum API to find out
+	our enums.
+
+	* plug-ins/pygimp/Makefile.am: hook in all of the above.
+
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: build pygimp by default.
 
 2005-06-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

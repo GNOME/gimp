@@ -22,6 +22,10 @@
 #endif
 
 #include "pygimp.h"
+
+#define _INSIDE_PYGIMP_
+#include "pygimp-api.h"
+
 #include <sysmodule.h>
 
 #if PY_VERSION_HEX >= 0x2030000
@@ -1319,6 +1323,29 @@ pygimp_fonts_refresh(PyObject *self)
 }
 
 static PyObject *
+pygimp_checks_get_shades(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    int type;
+    guchar light, dark;
+    static char *kwlist[] = { "type", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "i:checks_get_shades", kwlist,
+				     &type))
+        return NULL;
+
+    if (type < GIMP_CHECK_TYPE_LIGHT_CHECKS ||
+	type > GIMP_CHECK_TYPE_BLACK_ONLY) {
+        PyErr_SetString(PyExc_ValueError, "Invalid check type");
+	return NULL;
+    }
+
+    gimp_checks_get_shades(type, &light, &dark);
+
+    return Py_BuildValue("(ii)", light, dark);
+}
+
+static PyObject *
 pygimp_fonts_get_list(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     char **list, *filter = NULL;
@@ -1458,10 +1485,22 @@ static struct PyMethodDef gimp_methods[] = {
     {"get_progname", (PyCFunction)pygimp_get_progname,	METH_NOARGS},
     {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,	METH_NOARGS},
     {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,	METH_VARARGS | METH_KEYWORDS},
+    {"checks_get_shades", (PyCFunction)pygimp_checks_get_shades, METH_VARARGS | METH_KEYWORDS},
     {"_id2image", (PyCFunction)id2image, METH_VARARGS},
     {"_id2drawable", (PyCFunction)id2drawable, METH_VARARGS},
     {"_id2display", (PyCFunction)id2display, METH_VARARGS},
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
+};
+
+
+static struct _PyGimp_Functions pygimp_api_functions = {
+    pygimp_image_new,
+    pygimp_display_new,
+    pygimp_layer_new,
+    pygimp_channel_new,
+
+    &PyGimpPDBFunction_Type,
+    pygimp_pdb_function_new    
 };
 
 
@@ -1532,6 +1571,9 @@ initgimp(void)
     if (PyType_Ready(&PyGimpParasite_Type) < 0)
 	return;
 
+    /* set the default python encoding to utf-8 */
+    PyUnicode_SetDefaultEncoding("utf-8");
+
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,
 		       gimp_module_documentation,
@@ -1554,11 +1596,10 @@ initgimp(void)
     PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
     PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
 
-    /* these are private, for use in gimpprocbrowser */
-    PyDict_SetItemString(d, "_PDBFunction",
-			 (PyObject *)&PyGimpPDBFunction_Type);
-    PyDict_SetItemString(d, "_pdb_function_new",
-			 PyCObject_FromVoidPtr(pygimp_pdb_function_new, NULL));
+    /* for other modules */
+    PyDict_SetItemString(d, "_PyGimp_API",
+			 i=PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
+    Py_DECREF(i);
 
     PyDict_SetItemString(d, "version",
 			 i=Py_BuildValue("(iii)",

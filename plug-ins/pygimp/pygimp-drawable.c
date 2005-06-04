@@ -410,7 +410,6 @@ static PyObject *
 drw_mask_intersect(PyGimpDrawable *self)
 {
     int x, y, width, height;
-    PyObject *ret;
 
     if (!gimp_drawable_mask_intersect(self->ID, &x, &y, &width, &height)) {
 	PyErr_Format(pygimp_error,
@@ -419,14 +418,7 @@ drw_mask_intersect(PyGimpDrawable *self)
 	return NULL;
     }
 
-    ret = PyTuple_New(4);
-
-    PyTuple_SetItem(ret, 0, PyInt_FromLong(x));
-    PyTuple_SetItem(ret, 1, PyInt_FromLong(y));
-    PyTuple_SetItem(ret, 2, PyInt_FromLong(width));
-    PyTuple_SetItem(ret, 3, PyInt_FromLong(height));
-
-    return ret;
+    return Py_BuildValue("(iiii)", x, y, width, height);
 }
 
 static PyObject *
