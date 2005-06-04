@@ -99,7 +99,7 @@ static const GtkTargetEntry targets[] =
 
 G_DEFINE_TYPE(GimpDrawableComboBox,
               gimp_drawable_combo_box,
-	      GIMP_TYPE_INT_COMBO_BOX);
+              GIMP_TYPE_INT_COMBO_BOX);
 
 static void
 gimp_drawable_combo_box_class_init (GimpDrawableComboBoxClass *klass)
@@ -317,7 +317,7 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          num_images;
   gint          i;
 
-  combo_box = g_object_new (GIMP_TYPE_CHANNEL_COMBO_BOX,
+  combo_box = g_object_new (GIMP_TYPE_LAYER_COMBO_BOX,
                             "width-request", WIDTH_REQUEST,
                             "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);

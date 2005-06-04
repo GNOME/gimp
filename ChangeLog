@@ -1,5 +1,10 @@
 2005-06-03  Manish Singh  <yosh@gimp.org>
 
+	* libgimp/gimpdrawablecombobox.c: create the layer combo with the
+	right type.
+
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/Makefile.am
 	* tools/pdbgen/enumcode-py.pl: removed, unneeded now.
 
