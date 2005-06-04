@@ -23,9 +23,6 @@
 #define __GIMP_CONTAINER_VIEW_H__
 
 
-#include "gimpeditor.h"
-
-
 enum
 {
   GIMP_CONTAINER_VIEW_PROP_0,

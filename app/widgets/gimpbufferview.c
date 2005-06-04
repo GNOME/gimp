@@ -36,6 +36,7 @@
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
+#include "gimpeditor.h"
 #include "gimphelp-ids.h"
 #include "gimpview.h"
 #include "gimpviewrendererbuffer.h"

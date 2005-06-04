@@ -35,6 +35,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
+#include "gimpeditor.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 

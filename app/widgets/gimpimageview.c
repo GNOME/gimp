@@ -32,6 +32,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpcontainerview.h"
+#include "gimpeditor.h"
 #include "gimpimageview.h"
 #include "gimpdnd.h"
 #include "gimpuimanager.h"

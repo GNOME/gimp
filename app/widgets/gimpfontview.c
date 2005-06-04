@@ -31,6 +31,7 @@
 #include "core/gimpcontext.h"
 
 #include "gimpcontainerview.h"
+#include "gimpeditor.h"
 #include "gimpfontview.h"
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"

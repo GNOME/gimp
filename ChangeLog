@@ -1,5 +1,13 @@
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainerview.h: don't include gimpeditor.h.
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpfontview.c: include it here instead.
+
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/dockable-actions.c
 	* app/actions/dockable-commands.[ch]
 	* app/widgets/gimpeditor.[ch]
