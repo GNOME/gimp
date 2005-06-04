@@ -1,3 +1,8 @@
+2005-06-03  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enumcode-py.pl: removed, unneeded now.
+
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorframe.[ch]: added property for "mode",

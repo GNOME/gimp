@@ -51,7 +51,6 @@ EXTRA_DIST = \
 	README		\
 	app.pl		\
 	enumcode.pl	\
-	enumcode-py.pl	\
 	enumgen.pl	\
 	groups.pl	\
 	lib.pl		\
@@ -137,12 +136,4 @@ stamp-enum-code: $(srcdir)/enumcode.pl $(enum_deps)
 	  $(PERL) enumcode.pl \
 	 && echo timestamp > $$rootme/stamp-enum-code
 
-stamp-enum-code-py: $(srcdir)/enumcode-py.pl $(enum_deps)
-	rootme=`pwd`; \
-	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
-	cd $(srcdir) && \
-	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \
-	  $(PERL) enumcode-py.pl \
-	 && echo timestamp > $$rootme/stamp-enum-code-py
-
-all-local: stamp-pdbgen stamp-enum-code stamp-enum-code-py
+all-local: stamp-pdbgen stamp-enum-code
