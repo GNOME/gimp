@@ -57,8 +57,8 @@
 #include "gimp-intl.h"
 
 
-#define DRAG_PREVIEW_SIZE 32
-#define DRAG_ICON_OFFSET  -8
+#define DRAG_PREVIEW_SIZE  GIMP_VIEW_SIZE_LARGE
+#define DRAG_ICON_OFFSET   -8
 
 
 #ifdef DEBUG_DND
@@ -1702,7 +1702,7 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
 {
   GimpViewable *viewable;
   GtkWidget    *view;
-  const gchar  *name;
+  gchar        *desc;
 
   viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget,
                                                               get_viewable_data);
@@ -1712,9 +1712,9 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
 
   view = gimp_view_new (viewable, DRAG_PREVIEW_SIZE, 0, TRUE);
 
-  name = gimp_object_get_name (GIMP_OBJECT (viewable));
+  desc = gimp_viewable_get_description (viewable, NULL);
 
-  if (name && *name)
+  if (desc)
     {
       GtkWidget *hbox;
       GtkWidget *label;
@@ -1725,13 +1725,15 @@ gimp_dnd_get_viewable_icon (GtkWidget *widget,
       gtk_widget_show (view);
 
       label = g_object_new (GTK_TYPE_LABEL,
-                            "label",           name,
+                            "label",           desc,
                             "xpad",            3,
                             "xalign",          0.0,
                             "yalign",          0.5,
                             "max-width-chars", 30,
                             "ellipsize",       PANGO_ELLIPSIZE_END,
                             NULL);
+
+      g_free (desc);
 
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
       gtk_widget_show (label);

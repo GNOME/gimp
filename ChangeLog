@@ -1,5 +1,13 @@
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_get_viewable_icon): use the
+	viewable's description in the drag icon. Use a larger preview.
+
+	* app/widgets/gimpdockbook.c: tweak spacing and border-width of
+	the tab widget if it is being used as drag icon.
+
+2005-06-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.[ch]: invalidate the buffer when
 	the widget's sensitivity changes. Draw a stipple pattern on the
 	insensitive color area.

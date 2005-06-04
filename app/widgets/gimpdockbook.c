@@ -43,7 +43,7 @@
 
 #define DEFAULT_TAB_BORDER     0
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
-#define DND_WIDGET_ICON_SIZE   GTK_ICON_SIZE_DND
+#define DND_WIDGET_ICON_SIZE   GTK_ICON_SIZE_BUTTON
 #define MENU_WIDGET_ICON_SIZE  GTK_ICON_SIZE_MENU
 #define MENU_WIDGET_SPACING    4
 
@@ -514,12 +514,10 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                               GdkDragContext *context,
                               gpointer        data)
 {
-  GimpDockable *dockable;
+  GimpDockable *dockable = GIMP_DOCKABLE (data);
   GtkWidget    *window;
   GtkWidget    *frame;
   GtkWidget    *view;
-
-  dockable = GIMP_DOCKABLE (data);
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
 
@@ -532,6 +530,13 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
                                        dockable->context,
                                        GIMP_TAB_STYLE_ICON_BLURB,
                                        DND_WIDGET_ICON_SIZE);
+
+  if (GTK_IS_CONTAINER (view))
+    gtk_container_set_border_width (GTK_CONTAINER (view), 3);
+
+  if (GTK_IS_HBOX (view))
+    gtk_box_set_spacing (GTK_BOX (view), 6);
+
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
