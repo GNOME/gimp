@@ -26,8 +26,6 @@ from _gimpenums import *
 # This is from pygtk/gtk/__init__.py
 # Copyright (C) 1998-2003  James Henstridge
 
-from warnings import warn as _warn
-
 class _DeprecatedConstant:
     def __init__(self, value, name, suggestion):
         self._v = value
@@ -35,9 +33,10 @@ class _DeprecatedConstant:
         self._suggestion = suggestion
 
     def _deprecated(self, value):
+        import warnings
         message = '%s is deprecated, use %s instead' % (self._name,
                                                         self._suggestion)
-        _warn(message, DeprecationWarning, 3)
+        warnings.warn(message, DeprecationWarning, 3)
         return value
 
     __nonzero__ = lambda self: self._deprecated(self._v == True)
@@ -50,14 +49,3 @@ TRUE = _DeprecatedConstant(True, 'gimpenums.TRUE', 'True')
 FALSE = _DeprecatedConstant(False, 'gimpenums.FALSE', 'False')
 
 del _DeprecatedConstant
-
-def exported_constants():
-    import gobject, _gimpenums
-    constants = ['TRUE', 'FALSE']
-    for name in dir(_gimpenums):
-        if isinstance(getattr(_gimpenums, name), gobject.GEnum):
-            constants.append(name)
-    return constants
-
-__all__ = exported_constants()
-del exported_constants

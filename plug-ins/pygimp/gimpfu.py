@@ -62,7 +62,7 @@ element in their description tuple -- a 3-tuple of the form (lower,upper,step),
 which defines the limits for the slider or spinner.'''
 
 import string as _string
-import gimp, gimpenums
+import gimp
 from gimpenums import *
 pdb = gimp.pdb
 
@@ -166,9 +166,8 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
             raise error, ("parameter definition must contain at least 4 "
                         "elements (%s given: %s)" % (len(ent), ent))
 
-        if type(ent[0]) != gimpenums.PDBArgType and \
-           type(ent[0]) != int:
-            raise error, "parameter types must be PDB argument types"
+        if type(ent[0] != int:
+            raise error, "parameter types must be integers"
 
         if not letterCheck(ent[1]):
             raise error, "parameter name contains illegal characters"

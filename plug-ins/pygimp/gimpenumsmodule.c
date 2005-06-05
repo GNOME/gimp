@@ -84,11 +84,11 @@ add_registered_enums(PyObject *m)
 
     names = gimp_enums_get_type_names(&num_names);
 
-    pyg_enum_add(m, "CheckSize", "GIMP_", GIMP_TYPE_CHECK_SIZE);
-    pyg_enum_add(m, "CheckType", "GIMP_", GIMP_TYPE_CHECK_TYPE);
+    pyg_enum_add_constants(m, GIMP_TYPE_CHECK_SIZE, "GIMP_");
+    pyg_enum_add_constants(m, GIMP_TYPE_CHECK_TYPE, "GIMP_");
 
     for (i = 0; i < num_names; i++)
-	pyg_enum_add(m, names[i] + 4, "GIMP_", g_type_from_name(names[i]));
+	pyg_enum_add_constants(m, g_type_from_name(names[i]), "GIMP_");
 }
 
 
