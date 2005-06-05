@@ -447,7 +447,9 @@ select_window_x11 (GdkScreen *screen)
                 x_win = x_root;
 #ifdef HAVE_X11_XMU_WINUTIL_H
               else if (! shootvals.decorate)
-                x_win = XmuClientWindow (x_dpy, x_win);
+                {
+                  x_win = XmuClientWindow (x_dpy, x_win);
+                }
 #endif
 
               shootvals.x2 = shootvals.x1 = x_event.xbutton.x_root;
@@ -839,7 +841,7 @@ shoot_dialog (GdkScreen **screen)
 
   g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
 
-  g_signal_connect (button, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &shootvals.decorate);
 

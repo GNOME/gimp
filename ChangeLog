@@ -1,3 +1,8 @@
+2005-06-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/screenshot.c: make " no decorations" option
+	work; problem pointed out by Jean-Luc Coulon on dev list.
+
 2005-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrendererbrush.c
