@@ -344,6 +344,12 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
                                             renderer->width,
                                             renderer->height);
 
+  if (temp_buf->width < renderer->width)
+    temp_buf->x = (renderer->width - temp_buf->width) / 2;
+
+  if (temp_buf->height < renderer->height)
+    temp_buf->y = (renderer->height - temp_buf->height) / 2;
+
   gimp_view_renderer_render_buffer (renderer, temp_buf, -1,
                                     GIMP_VIEW_BG_WHITE,
                                     GIMP_VIEW_BG_WHITE);
