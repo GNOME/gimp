@@ -166,7 +166,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
             raise error, ("parameter definition must contain at least 4 "
                         "elements (%s given: %s)" % (len(ent), ent))
 
-        if type(ent[0] != int:
+        if type(ent[0]) != int:
             raise error, "parameter types must be integers"
 
         if not letterCheck(ent[1]):
