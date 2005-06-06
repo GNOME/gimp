@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-01 04:48-0400\n"
-"PO-Revision-Date: 2005-06-01 14:29-0400\n"
+"POT-Creation-Date: 2005-06-05 22:10-0400\n"
+"PO-Revision-Date: 2005-06-05 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -218,8 +218,8 @@ msgstr "Dockable"
 msgid "Document History"
 msgstr "Document History"
 
-#: app/actions/actions.c:125 app/core/core-enums.c:782
-#: app/core/core-enums.c:813
+#: app/actions/actions.c:125 app/core/core-enums.c:818
+#: app/core/core-enums.c:849
 msgid "Drawable"
 msgstr "Drawable"
 
@@ -456,7 +456,7 @@ msgstr "Duplicate channel"
 msgid "_Delete Channel"
 msgstr "_Delete Channel"
 
-#: app/actions/channels-actions.c:73 app/core/core-enums.c:833
+#: app/actions/channels-actions.c:73 app/core/core-enums.c:869
 msgid "Delete channel"
 msgstr "Delete channel"
 
@@ -948,11 +948,15 @@ msgstr "I_con & Text"
 msgid "St_atus & Text"
 msgstr "St_atus & Text"
 
-#: app/actions/dockable-actions.c:107
+#: app/actions/dockable-actions.c:108
+msgid "_Show Button Bar"
+msgstr "_Show Button Bar"
+
+#: app/actions/dockable-actions.c:117
 msgid "View as _List"
 msgstr "View as _List"
 
-#: app/actions/dockable-actions.c:112
+#: app/actions/dockable-actions.c:122
 msgid "View as _Grid"
 msgstr "View as _Grid"
 
@@ -1967,7 +1971,7 @@ msgstr "Duplicate layer"
 msgid "_Delete Layer"
 msgstr "_Delete Layer"
 
-#: app/actions/layers-actions.c:93 app/core/core-enums.c:821
+#: app/actions/layers-actions.c:93 app/core/core-enums.c:857
 msgid "Delete layer"
 msgstr "Delete layer"
 
@@ -3941,8 +3945,8 @@ msgstr "fatal parse error"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "value for token %s is not a valid UTF-8 string"
 
-#: app/core/core-enums.c:53 app/core/core-enums.c:168
-#: app/core/core-enums.c:454 app/tools/gimptransformoptions.c:456
+#: app/core/core-enums.c:53 app/core/core-enums.c:204
+#: app/core/core-enums.c:490 app/tools/gimptransformoptions.c:456
 msgid "None"
 msgstr "None"
 
@@ -3974,459 +3978,459 @@ msgstr "Use black and white (1-bit) palette"
 msgid "Use custom palette"
 msgstr "Use custom palette"
 
-#: app/core/core-enums.c:163
+#: app/core/core-enums.c:199
 msgid "Foreground color"
 msgstr "Foreground colour"
 
-#: app/core/core-enums.c:164
+#: app/core/core-enums.c:200
 msgid "Background color"
 msgstr "Background colour"
 
-#: app/core/core-enums.c:165
+#: app/core/core-enums.c:201
 msgid "White"
 msgstr "White"
 
 #. Transparency
-#: app/core/core-enums.c:166 app/dialogs/preferences-dialog.c:2035
+#: app/core/core-enums.c:202 app/dialogs/preferences-dialog.c:2035
 msgid "Transparency"
 msgstr "Transparency"
 
-#: app/core/core-enums.c:167 app/core/core-enums.c:258
+#: app/core/core-enums.c:203 app/core/core-enums.c:294
 #: app/pdb/internal_procs.c:180
 msgid "Pattern"
 msgstr "Pattern"
 
-#: app/core/core-enums.c:198
+#: app/core/core-enums.c:234
 msgid "Intersections (dots)"
 msgstr "Intersections (dots)"
 
-#: app/core/core-enums.c:199
+#: app/core/core-enums.c:235
 msgid "Intersections (crosshairs)"
 msgstr "Intersections (crosshairs)"
 
-#: app/core/core-enums.c:200
+#: app/core/core-enums.c:236
 msgid "Dashed"
 msgstr "Dashed"
 
-#: app/core/core-enums.c:201
+#: app/core/core-enums.c:237
 msgid "Double dashed"
 msgstr "Double dashed"
 
-#: app/core/core-enums.c:202 app/core/core-enums.c:257
+#: app/core/core-enums.c:238 app/core/core-enums.c:293
 msgid "Solid"
 msgstr "Solid"
 
-#: app/core/core-enums.c:229
+#: app/core/core-enums.c:265
 msgid "Stroke line"
 msgstr "Stroke line"
 
-#: app/core/core-enums.c:230
+#: app/core/core-enums.c:266
 msgid "Stroke with a paint tool"
 msgstr "Stroke with a paint tool"
 
-#: app/core/core-enums.c:286
+#: app/core/core-enums.c:322
 msgid "Miter"
 msgstr "Mitre"
 
-#: app/core/core-enums.c:287 app/core/core-enums.c:317
+#: app/core/core-enums.c:323 app/core/core-enums.c:353
 msgid "Round"
 msgstr "Round"
 
-#: app/core/core-enums.c:288
+#: app/core/core-enums.c:324
 msgid "Bevel"
 msgstr "Bevel"
 
-#: app/core/core-enums.c:316
+#: app/core/core-enums.c:352
 msgid "Butt"
 msgstr "Butt"
 
-#: app/core/core-enums.c:318 app/core/core-enums.c:393
+#: app/core/core-enums.c:354 app/core/core-enums.c:429
 msgid "Square"
 msgstr "Square"
 
-#: app/core/core-enums.c:354
+#: app/core/core-enums.c:390
 msgid "Custom"
 msgstr "Custom"
 
-#: app/core/core-enums.c:355
+#: app/core/core-enums.c:391
 msgid "Line"
 msgstr "Line"
 
-#: app/core/core-enums.c:356
+#: app/core/core-enums.c:392
 msgid "Long dashes"
 msgstr "Long dashes"
 
-#: app/core/core-enums.c:357
+#: app/core/core-enums.c:393
 msgid "Medium dashes"
 msgstr "Medium dashes"
 
-#: app/core/core-enums.c:358
+#: app/core/core-enums.c:394
 msgid "Short dashes"
 msgstr "Short dashes"
 
-#: app/core/core-enums.c:359
+#: app/core/core-enums.c:395
 msgid "Sparse dots"
 msgstr "Sparse dots"
 
-#: app/core/core-enums.c:360
+#: app/core/core-enums.c:396
 msgid "Normal dots"
 msgstr "Normal dots"
 
-#: app/core/core-enums.c:361
+#: app/core/core-enums.c:397
 msgid "Dense dots"
 msgstr "Dense dots"
 
-#: app/core/core-enums.c:362
+#: app/core/core-enums.c:398
 msgid "Stipples"
 msgstr "Stipples"
 
-#: app/core/core-enums.c:363
+#: app/core/core-enums.c:399
 msgid "Dash, dot"
 msgstr "Dash, dot"
 
-#: app/core/core-enums.c:364
+#: app/core/core-enums.c:400
 msgid "Dash, dot, dot"
 msgstr "Dash, dot, dot"
 
-#: app/core/core-enums.c:392
+#: app/core/core-enums.c:428
 msgid "Circle"
 msgstr "Circle"
 
-#: app/core/core-enums.c:394
+#: app/core/core-enums.c:430
 msgid "Diamond"
 msgstr "Diamond"
 
-#: app/core/core-enums.c:422 app/dialogs/preferences-dialog.c:2067
+#: app/core/core-enums.c:458 app/dialogs/preferences-dialog.c:2067
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: app/core/core-enums.c:423 app/dialogs/preferences-dialog.c:2069
+#: app/core/core-enums.c:459 app/dialogs/preferences-dialog.c:2069
 msgid "Vertical"
 msgstr "Vertical"
 
-#: app/core/core-enums.c:424
+#: app/core/core-enums.c:460
 msgid "Unknown"
 msgstr "Unknown"
 
-#: app/core/core-enums.c:455
+#: app/core/core-enums.c:491
 msgid "Image-sized layers"
 msgstr "Image-sized layers"
 
-#: app/core/core-enums.c:456
+#: app/core/core-enums.c:492
 msgid "All visible layers"
 msgstr "All visible layers"
 
-#: app/core/core-enums.c:457
+#: app/core/core-enums.c:493
 msgid "All linked layers"
 msgstr "All linked layers"
 
-#: app/core/core-enums.c:458
+#: app/core/core-enums.c:494
 msgid "All layers"
 msgstr "All layers"
 
-#: app/core/core-enums.c:522
+#: app/core/core-enums.c:558
 msgid "Tiny"
 msgstr "Tiny"
 
-#: app/core/core-enums.c:523
+#: app/core/core-enums.c:559
 msgid "Very small"
 msgstr "Very small"
 
-#: app/core/core-enums.c:524
+#: app/core/core-enums.c:560
 msgid "Small"
 msgstr "Small"
 
-#: app/core/core-enums.c:525
+#: app/core/core-enums.c:561
 msgid "Medium"
 msgstr "Medium"
 
-#: app/core/core-enums.c:526
+#: app/core/core-enums.c:562
 msgid "Large"
 msgstr "Large"
 
-#: app/core/core-enums.c:527
+#: app/core/core-enums.c:563
 msgid "Very large"
 msgstr "Very large"
 
-#: app/core/core-enums.c:528
+#: app/core/core-enums.c:564
 msgid "Huge"
 msgstr "Huge"
 
-#: app/core/core-enums.c:529
+#: app/core/core-enums.c:565
 msgid "Enormous"
 msgstr "Enormous"
 
-#: app/core/core-enums.c:530
+#: app/core/core-enums.c:566
 msgid "Gigantic"
 msgstr "Gigantic"
 
-#: app/core/core-enums.c:592
+#: app/core/core-enums.c:628
 msgid "No thumbnails"
 msgstr "No thumbnails"
 
-#: app/core/core-enums.c:593
+#: app/core/core-enums.c:629
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: app/core/core-enums.c:594
+#: app/core/core-enums.c:630
 msgid "Large (256x256)"
 msgstr "Large (256x256)"
 
-#: app/core/core-enums.c:768
+#: app/core/core-enums.c:804
 msgid "<<invalid>>"
 msgstr "<<invalid>>"
 
-#: app/core/core-enums.c:769
+#: app/core/core-enums.c:805
 msgid "Scale image"
 msgstr "Scale image"
 
-#: app/core/core-enums.c:770
+#: app/core/core-enums.c:806
 msgid "Resize image"
 msgstr "Resize image"
 
-#: app/core/core-enums.c:771
+#: app/core/core-enums.c:807
 msgid "Flip image"
 msgstr "Flip image"
 
-#: app/core/core-enums.c:772
+#: app/core/core-enums.c:808
 msgid "Rotate image"
 msgstr "Rotate image"
 
-#: app/core/core-enums.c:773
+#: app/core/core-enums.c:809
 msgid "Crop image"
 msgstr "Crop image"
 
-#: app/core/core-enums.c:774
+#: app/core/core-enums.c:810
 msgid "Convert image"
 msgstr "Convert image"
 
-#: app/core/core-enums.c:775
+#: app/core/core-enums.c:811
 msgid "Remove item"
 msgstr "Remove item"
 
-#: app/core/core-enums.c:776
+#: app/core/core-enums.c:812
 msgid "Merge layers"
 msgstr "Merge layers"
 
-#: app/core/core-enums.c:777
+#: app/core/core-enums.c:813
 msgid "Merge vectors"
 msgstr "Merge vectors"
 
-#: app/core/core-enums.c:778 app/core/gimpchannel.c:387
+#: app/core/core-enums.c:814 app/core/gimpchannel.c:387
 msgid "Quick Mask"
 msgstr "Quick Mask"
 
-#: app/core/core-enums.c:779 app/core/core-enums.c:809
+#: app/core/core-enums.c:815 app/core/core-enums.c:845
 msgid "Guide"
 msgstr "Guide"
 
-#: app/core/core-enums.c:780 app/core/core-enums.c:810
+#: app/core/core-enums.c:816 app/core/core-enums.c:846
 #: app/core/gimpimage-grid.c:58 app/dialogs/grid-dialog.c:149
 #: app/tools/tools-enums.c:203
 msgid "Grid"
 msgstr "Grid"
 
-#: app/core/core-enums.c:781 app/core/core-enums.c:811
+#: app/core/core-enums.c:817 app/core/core-enums.c:847
 msgid "Sample Point"
 msgstr "Sample Point"
 
-#: app/core/core-enums.c:783 app/core/core-enums.c:814
+#: app/core/core-enums.c:819 app/core/core-enums.c:850
 msgid "Drawable mod"
 msgstr "Drawable mod"
 
-#: app/core/core-enums.c:784 app/core/core-enums.c:815
+#: app/core/core-enums.c:820 app/core/core-enums.c:851
 msgid "Selection mask"
 msgstr "Selection mask"
 
-#: app/core/core-enums.c:785 app/core/core-enums.c:818
+#: app/core/core-enums.c:821 app/core/core-enums.c:854
 msgid "Item visibility"
 msgstr "Item visibility"
 
-#: app/core/core-enums.c:786
+#: app/core/core-enums.c:822
 msgid "Linked item"
 msgstr "Linked item"
 
-#: app/core/core-enums.c:787
+#: app/core/core-enums.c:823
 msgid "Item properties"
 msgstr "Item properties"
 
-#: app/core/core-enums.c:788 app/core/core-enums.c:817
+#: app/core/core-enums.c:824 app/core/core-enums.c:853
 msgid "Move item"
 msgstr "Move item"
 
-#: app/core/core-enums.c:789
+#: app/core/core-enums.c:825
 msgid "Scale item"
 msgstr "Scale item"
 
-#: app/core/core-enums.c:790
+#: app/core/core-enums.c:826
 msgid "Resize item"
 msgstr "Resize item"
 
-#: app/core/core-enums.c:791 app/core/core-enums.c:828
+#: app/core/core-enums.c:827 app/core/core-enums.c:864
 msgid "Add layer mask"
 msgstr "Add layer mask"
 
-#: app/core/core-enums.c:792 app/core/core-enums.c:830
+#: app/core/core-enums.c:828 app/core/core-enums.c:866
 msgid "Apply layer mask"
 msgstr "Apply layer mask"
 
-#: app/core/core-enums.c:793
+#: app/core/core-enums.c:829
 msgid "Floating selection to layer"
 msgstr "Floating selection to layer"
 
-#: app/core/core-enums.c:794
+#: app/core/core-enums.c:830
 msgid "Float selection"
 msgstr "Float selection"
 
-#: app/core/core-enums.c:795
+#: app/core/core-enums.c:831
 msgid "Anchor floating selection"
 msgstr "Anchor floating selection"
 
-#: app/core/core-enums.c:796
+#: app/core/core-enums.c:832
 msgid "Remove floating selection"
 msgstr "Remove floating selection"
 
-#: app/core/core-enums.c:797 app/core/gimp-edit.c:248
+#: app/core/core-enums.c:833 app/core/gimp-edit.c:248
 msgid "Paste"
 msgstr "Paste"
 
-#: app/core/core-enums.c:798 app/core/gimp-edit.c:399
+#: app/core/core-enums.c:834 app/core/gimp-edit.c:399
 msgid "Cut"
 msgstr "Cut"
 
-#: app/core/core-enums.c:799 app/core/core-enums.c:826
+#: app/core/core-enums.c:835 app/core/core-enums.c:862
 #: app/tools/gimptexttool.c:146 app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:800 app/core/core-enums.c:843
+#: app/core/core-enums.c:836 app/core/core-enums.c:879
 #: app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Transform"
 
-#: app/core/core-enums.c:801 app/core/core-enums.c:844
+#: app/core/core-enums.c:837 app/core/core-enums.c:880
 #: app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Paint"
 
-#: app/core/core-enums.c:802 app/core/core-enums.c:846
+#: app/core/core-enums.c:838 app/core/core-enums.c:882
 msgid "Attach parasite"
 msgstr "Attach parasite"
 
-#: app/core/core-enums.c:803 app/core/core-enums.c:847
+#: app/core/core-enums.c:839 app/core/core-enums.c:883
 msgid "Remove parasite"
 msgstr "Remove parasite"
 
-#: app/core/core-enums.c:804
+#: app/core/core-enums.c:840
 msgid "Import paths"
 msgstr "Import paths"
 
-#: app/core/core-enums.c:805 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:841 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: app/core/core-enums.c:806
+#: app/core/core-enums.c:842
 msgid "Image type"
 msgstr "Image type"
 
-#: app/core/core-enums.c:807
+#: app/core/core-enums.c:843
 msgid "Image size"
 msgstr "Image size"
 
-#: app/core/core-enums.c:808
+#: app/core/core-enums.c:844
 msgid "Resolution change"
 msgstr "Resolution change"
 
-#: app/core/core-enums.c:812
+#: app/core/core-enums.c:848
 msgid "Change indexed palette"
 msgstr "Change indexed palette"
 
-#: app/core/core-enums.c:816
+#: app/core/core-enums.c:852
 msgid "Rename item"
 msgstr "Rename item"
 
-#: app/core/core-enums.c:819
+#: app/core/core-enums.c:855
 msgid "Set item linked"
 msgstr "Set item linked"
 
-#: app/core/core-enums.c:820
+#: app/core/core-enums.c:856
 msgid "New layer"
 msgstr "New layer"
 
-#: app/core/core-enums.c:822
+#: app/core/core-enums.c:858
 msgid "Reposition layer"
 msgstr "Reposition layer"
 
-#: app/core/core-enums.c:823
+#: app/core/core-enums.c:859
 msgid "Set layer mode"
 msgstr "Set layer mode"
 
-#: app/core/core-enums.c:824
+#: app/core/core-enums.c:860
 msgid "Set layer opacity"
 msgstr "Set layer opacity"
 
-#: app/core/core-enums.c:825
+#: app/core/core-enums.c:861
 msgid "Set preserve trans"
 msgstr "Set preserve trans"
 
-#: app/core/core-enums.c:827
+#: app/core/core-enums.c:863
 msgid "Text modified"
 msgstr "Text modified"
 
-#: app/core/core-enums.c:829
+#: app/core/core-enums.c:865
 msgid "Delete layer mask"
 msgstr "Delete layer mask"
 
-#: app/core/core-enums.c:831
+#: app/core/core-enums.c:867
 msgid "Show layer mask"
 msgstr "Show layer mask"
 
-#: app/core/core-enums.c:832
+#: app/core/core-enums.c:868
 msgid "New channel"
 msgstr "New channel"
 
-#: app/core/core-enums.c:834
+#: app/core/core-enums.c:870
 msgid "Reposition channel"
 msgstr "Reposition channel"
 
-#: app/core/core-enums.c:835
+#: app/core/core-enums.c:871
 msgid "Channel color"
 msgstr "Channel colour"
 
-#: app/core/core-enums.c:836
+#: app/core/core-enums.c:872
 msgid "New vectors"
 msgstr "New vectors"
 
-#: app/core/core-enums.c:837
+#: app/core/core-enums.c:873
 msgid "Delete vectors"
 msgstr "Delete vectors"
 
-#: app/core/core-enums.c:838
+#: app/core/core-enums.c:874
 msgid "Vectors mod"
 msgstr "Vectors mod"
 
-#: app/core/core-enums.c:839
+#: app/core/core-enums.c:875
 msgid "Reposition vectors"
 msgstr "Reposition vectors"
 
-#: app/core/core-enums.c:840
+#: app/core/core-enums.c:876
 msgid "FS to layer"
 msgstr "FS to layer"
 
-#: app/core/core-enums.c:841
+#: app/core/core-enums.c:877
 msgid "FS rigor"
 msgstr "FS rigor"
 
-#: app/core/core-enums.c:842
+#: app/core/core-enums.c:878
 msgid "FS relax"
 msgstr "FS relax"
 
-#: app/core/core-enums.c:845 app/paint/gimpink.c:103
+#: app/core/core-enums.c:881 app/paint/gimpink.c:103
 #: app/tools/gimpinktool.c:62
 msgid "Ink"
 msgstr "Ink"
 
-#: app/core/core-enums.c:848
+#: app/core/core-enums.c:884
 msgid "EEK: can't undo"
 msgstr "EEK: cannot undo"
 
@@ -6480,7 +6484,7 @@ msgstr "Check _Size:"
 msgid "Get Monitor Resolution"
 msgstr "Get Monitor Resolution"
 
-#: app/dialogs/preferences-dialog.c:2049 app/widgets/gimpcursorview.c:125
+#: app/dialogs/preferences-dialog.c:2049 app/widgets/gimpcursorview.c:126
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "Pixels"
@@ -7520,7 +7524,7 @@ msgstr "Plug-In could not save image"
 msgid "Invalid character sequence in URI"
 msgstr "Invalid character sequence in URI"
 
-#: app/gui/session.c:246 app/menus/menus.c:373 app/tools/gimp-tools.c:399
+#: app/gui/session.c:246 app/menus/menus.c:373 app/tools/gimp-tools.c:401
 #: app/widgets/gimpdevices.c:218
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7777,7 +7781,7 @@ msgstr "Text procedures"
 msgid "Transform Tool procedures"
 msgstr "Transform Tool procedures"
 
-#: app/pdb/internal_procs.c:213 app/widgets/gimpcursorview.c:147
+#: app/pdb/internal_procs.c:213 app/widgets/gimpcursorview.c:148
 msgid "Units"
 msgstr "Units"
 
@@ -7803,7 +7807,7 @@ msgstr ""
 msgid "Free Select"
 msgstr "Free Select"
 
-#: app/pdb/vectors_cmds.c:173
+#: app/pdb/vectors_cmds.c:238
 msgid "Modify Path"
 msgstr "Modify Path"
 
@@ -8042,7 +8046,7 @@ msgstr "Number of grid lines"
 msgid "Grid line spacing"
 msgstr "Grid line spacing"
 
-#: app/tools/gimp-tools.c:296
+#: app/tools/gimp-tools.c:298
 msgid "This tool has no options."
 msgstr "This tool has no options."
 
@@ -9017,7 +9021,7 @@ msgstr "Fix"
 msgid "Center"
 msgstr "Centre"
 
-#: app/tools/gimprectangletool.c:816 app/tools/gimprectangletool.c:1177
+#: app/tools/gimprectangletool.c:804 app/tools/gimprectangletool.c:1177
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -9029,13 +9033,13 @@ msgstr "1 "
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:1578 app/widgets/gimpcursorview.c:138
-#: app/widgets/gimpcursorview.c:160
+#: app/tools/gimprectangletool.c:1578 app/widgets/gimpcursorview.c:139
+#: app/widgets/gimpcursorview.c:161
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:1579 app/widgets/gimpcursorview.c:144
-#: app/widgets/gimpcursorview.c:166
+#: app/tools/gimprectangletool.c:1579 app/widgets/gimpcursorview.c:145
+#: app/widgets/gimpcursorview.c:167
 msgid "Y"
 msgstr "Y"
 
@@ -9647,7 +9651,8 @@ msgstr "Spacing:"
 msgid "Percentage of width of brush"
 msgstr "Percentage of width of brush"
 
-#: app/widgets/gimpbufferview.c:165 app/widgets/gimpbufferview.c:246
+#: app/widgets/gimpbufferview.c:166 app/widgets/gimpbufferview.c:247
+#: app/widgets/gimpeditor.c:758
 msgid "(None)"
 msgstr "(None)"
 
@@ -9718,67 +9723,67 @@ msgstr "No filter selected"
 msgid "Configure selected filter"
 msgstr "Configure selected filter"
 
-#: app/widgets/gimpcoloreditor.c:279
+#: app/widgets/gimpcoloreditor.c:280
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimal colour notation as used in HTML and CSS"
 
-#: app/widgets/gimpcolorframe.c:254
+#: app/widgets/gimpcolorframe.c:446
 msgid "Index:"
 msgstr "Index:"
 
-#: app/widgets/gimpcolorframe.c:258 app/widgets/gimpcolorframe.c:279
+#: app/widgets/gimpcolorframe.c:450 app/widgets/gimpcolorframe.c:471
 msgid "Red:"
 msgstr "Red:"
 
-#: app/widgets/gimpcolorframe.c:259 app/widgets/gimpcolorframe.c:280
+#: app/widgets/gimpcolorframe.c:451 app/widgets/gimpcolorframe.c:472
 msgid "Green:"
 msgstr "Green:"
 
-#: app/widgets/gimpcolorframe.c:260 app/widgets/gimpcolorframe.c:281
+#: app/widgets/gimpcolorframe.c:452 app/widgets/gimpcolorframe.c:473
 msgid "Blue:"
 msgstr "Blue:"
 
-#: app/widgets/gimpcolorframe.c:270 app/widgets/gimpcolorframe.c:301
+#: app/widgets/gimpcolorframe.c:462 app/widgets/gimpcolorframe.c:493
 msgid "Value:"
 msgstr "Value:"
 
-#: app/widgets/gimpcolorframe.c:289
+#: app/widgets/gimpcolorframe.c:481
 msgid "Hex:"
 msgstr "Hex:"
 
-#: app/widgets/gimpcolorframe.c:299
+#: app/widgets/gimpcolorframe.c:491
 msgid "Hue:"
 msgstr "Hue:"
 
-#: app/widgets/gimpcolorframe.c:300
+#: app/widgets/gimpcolorframe.c:492
 msgid "Sat.:"
 msgstr "Sat.:"
 
-#: app/widgets/gimpcolorframe.c:317
+#: app/widgets/gimpcolorframe.c:509
 msgid "Cyan:"
 msgstr "Cyan:"
 
-#: app/widgets/gimpcolorframe.c:318
+#: app/widgets/gimpcolorframe.c:510
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: app/widgets/gimpcolorframe.c:319
+#: app/widgets/gimpcolorframe.c:511
 msgid "Yellow:"
 msgstr "Yellow:"
 
-#: app/widgets/gimpcolorframe.c:320
+#: app/widgets/gimpcolorframe.c:512
 msgid "Black:"
 msgstr "Black:"
 
-#: app/widgets/gimpcolorframe.c:334
+#: app/widgets/gimpcolorframe.c:526
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/widgets/gimpcolorframe.c:352 app/widgets/gimpcursorview.c:135
-#: app/widgets/gimpcursorview.c:141 app/widgets/gimpcursorview.c:157
-#: app/widgets/gimpcursorview.c:163 app/widgets/gimpcursorview.c:340
-#: app/widgets/gimpcursorview.c:341 app/widgets/gimpcursorview.c:342
-#: app/widgets/gimpcursorview.c:343
+#: app/widgets/gimpcolorframe.c:544 app/widgets/gimpcursorview.c:136
+#: app/widgets/gimpcursorview.c:142 app/widgets/gimpcursorview.c:158
+#: app/widgets/gimpcursorview.c:164 app/widgets/gimpcursorview.c:350
+#: app/widgets/gimpcursorview.c:351 app/widgets/gimpcursorview.c:352
+#: app/widgets/gimpcursorview.c:353
 msgid "n/a"
 msgstr "n/a"
 
@@ -10195,15 +10200,15 @@ msgstr "Mouse Wheel"
 msgid "Mouse Wheel Events"
 msgstr "Mouse Wheel Events"
 
-#: app/widgets/gimpdataeditor.c:208
+#: app/widgets/gimpdataeditor.c:214
 msgid "Save"
 msgstr "Save"
 
-#: app/widgets/gimpdataeditor.c:216
+#: app/widgets/gimpdataeditor.c:222
 msgid "Revert"
 msgstr "Revert"
 
-#: app/widgets/gimpdataeditor.c:344
+#: app/widgets/gimpdataeditor.c:354
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (read only)"
@@ -10571,7 +10576,7 @@ msgstr "Message repeated %d times."
 msgid "Message repeated once."
 msgstr "Message repeated once."
 
-#: app/widgets/gimppaletteeditor.c:269 app/widgets/gimppaletteeditor.c:1005
+#: app/widgets/gimppaletteeditor.c:269 app/widgets/gimppaletteeditor.c:1006
 msgid "Undefined"
 msgstr "Undefined"
 
@@ -10820,7 +10825,7 @@ msgstr "Open the font selection dialogue"
 msgid "<%s>"
 msgstr "<%s>"
 
-#: app/widgets/gimpwidgets-utils.c:796
+#: app/widgets/gimpwidgets-utils.c:797
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Invalid UTF-8 data in file '%s'."

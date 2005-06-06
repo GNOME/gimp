@@ -1,3 +1,7 @@
+2005-06-05  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2005-06-04  Manish Singh  <yosh@gimp.org>
 
 	* POTFILES.in: added libgimp/gimpfontselectbutton.c
