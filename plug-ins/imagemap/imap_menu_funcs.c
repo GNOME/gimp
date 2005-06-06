@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,18 +47,6 @@ add_accelerator(GtkWidget *widget, guint accelerator_key,
 }
 
 GtkWidget*
-prepend_item_with_label(GtkWidget *parent, gchar *label,
-			MenuCallback activate, gpointer data)
-{
-   GtkWidget *item = gtk_menu_item_new_with_mnemonic(label);
-   gtk_menu_shell_prepend(GTK_MENU_SHELL(parent), item);
-   g_signal_connect(item, "activate", G_CALLBACK(activate), data);
-   gtk_widget_show(item);
-
-   return item;
-}
-
-GtkWidget*
 insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
 		       MenuCallback activate, gpointer data)
 {
@@ -68,12 +56,4 @@ insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
    gtk_widget_show(item);
 
    return item;
-}
-
-void
-menu_command(GtkWidget *widget, gpointer data)
-{
-   CommandFactory_t *factory = (CommandFactory_t*) data;
-   Command_t *command = (*factory)();
-   command_execute(command);
 }

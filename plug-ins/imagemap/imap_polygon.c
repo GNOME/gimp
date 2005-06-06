@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@
 #include "imap_commands.h"
 #include "imap_main.h"
 #include "imap_misc.h"
+#include "imap_menu.h"
 #include "imap_object_popup.h"
 #include "imap_polygon.h"
 #include "imap_stock.h"
@@ -653,24 +654,24 @@ polygon_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
    output(param, " %d,%d", first->x, first->y);
 }
 
+static Object_t *_current_obj;
 static gboolean _insert_edge;
 static gint _insert_x;
 static gint _insert_y;
 
-static void
-polygon_insert_point(GtkWidget *widget, gpointer data)
+void
+polygon_insert_point(void)
 {
-   Command_t *command = insert_point_command_new(get_popup_object(), _insert_x,
-						 _insert_y, _insert_edge);
-   command_execute(command);
+  Command_t *command = insert_point_command_new (_current_obj, _insert_x,
+                                                 _insert_y, _insert_edge);
+  command_execute (command);
 }
 
-static void
-polygon_delete_point(GtkWidget *widget, gpointer data)
+void
+polygon_delete_point(void)
 {
-   Command_t *command = delete_point_command_new(get_popup_object(),
-						 _sash_point);
-   command_execute(command);
+  Command_t *command = delete_point_command_new(_current_obj, _sash_point);
+  command_execute (command);
 }
 
 static gboolean
@@ -711,37 +712,46 @@ polygon_near_edge(Object_t *obj, gint x, gint y)
 }
 
 static void
+polygon_handle_popup (GdkEventButton *event, gboolean near_sash,
+                      gboolean near_edge)
+{
+  GtkWidget *popup = menu_get_widget ("/PolygonPopupMenu");
+  GtkWidget *delete = menu_get_widget ("/PolygonPopupMenu/DeletePoint");
+  GtkWidget *insert = menu_get_widget ("/PolygonPopupMenu/InsertPoint");
+
+  gtk_widget_set_sensitive (delete, near_sash);
+  gtk_widget_set_sensitive (insert, near_edge);
+
+  gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
+                 event->button, event->time);
+}
+
+static void
 polygon_do_popup(Object_t *obj, GdkEventButton *event)
 {
-   gint x = get_real_coord((gint) event->x);
-   gint y = get_real_coord((gint) event->y);
-
-   if (polygon_near_sash(obj, x, y)) {
-      static ObjectPopup_t *delete_popup;
-      if (!delete_popup) {
-	 delete_popup = make_object_popup();
-	 object_popup_prepend_menu(delete_popup, _("Delete Point"),
-				   polygon_delete_point, delete_popup);
+  gint x = get_real_coord ((gint) event->x);
+  gint y = get_real_coord ((gint) event->y);
+ 
+  _current_obj = obj;
+ 
+  if (polygon_near_sash (obj, x, y)) 
+    {
+      polygon_handle_popup (event, TRUE, FALSE);
+    } 
+  else 
+    {
+      _insert_edge = polygon_near_edge (obj, x, y);
+      if (_insert_edge) 
+        {
+          _insert_x = x;
+           _insert_y = y;
+           
+           polygon_handle_popup (event, FALSE, TRUE);
+        } 
+      else {
+        object_do_popup (obj, event);
       }
-      object_handle_popup(delete_popup, obj, event);
-   } else {
-      _insert_edge = polygon_near_edge(obj, x, y);
-      if (_insert_edge) {
-	 static ObjectPopup_t *insert_popup;
-
-	 _insert_x = x;
-	 _insert_y = y;
-
-	 if (!insert_popup) {
-	    insert_popup = make_object_popup();
-	    object_popup_prepend_menu(insert_popup, _("Insert Point"),
-				      polygon_insert_point, insert_popup);
-	 }
-	 object_handle_popup(insert_popup, obj, event);
-      } else {
-	 object_do_popup(obj, event);
-      }
-   }
+    }
 }
 
 static const gchar*

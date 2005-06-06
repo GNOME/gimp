@@ -27,43 +27,16 @@
 
 #include "imap_commands.h"
 #include "imap_main.h"
+#include "imap_menu.h"
 #include "imap_object_popup.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-
-/* Current object with popup menu */
-static Object_t *_current_obj;
-
-Object_t*
-get_popup_object(void)
-{
-   return _current_obj;
-}
-
-extern GtkUIManager *ui_manager;
-
-ObjectPopup_t*
-make_object_popup(void)
-{
-   ObjectPopup_t *popup = g_new (ObjectPopup_t, 1);
-   popup->menu = gtk_ui_manager_get_widget (ui_manager, "/ObjectPopupMenu");
-   return popup;
-}
-
-GtkWidget*
-object_popup_prepend_menu(ObjectPopup_t *popup, gchar *label,
-			  MenuCallback activate, gpointer data)
-{
-   return prepend_item_with_label(popup->menu, label, activate, data);
-}
 
 void
 object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
 {
   /* int position = object_get_position_in_list(obj) + 1; */
 
-   _current_obj = popup->obj = obj;
 #ifdef _TEMP_
    gtk_widget_set_sensitive(popup->up, (position > 1) ? TRUE : FALSE);
    gtk_widget_set_sensitive(popup->down,
@@ -80,6 +53,9 @@ object_do_popup(Object_t *obj, GdkEventButton *event)
    static ObjectPopup_t *popup;
 
    if (!popup)
-      popup = make_object_popup();
-   object_handle_popup(popup, obj, event);
+     {
+       popup = g_new (ObjectPopup_t, 1);
+       popup->menu = menu_get_widget ("/ObjectPopupMenu");
+     }
+   object_handle_popup (popup, obj, event);
 }

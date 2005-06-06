@@ -370,12 +370,11 @@ draw_grid(GtkWidget *preview)
    }
 }
 
-gboolean
+void
 toggle_grid(void)
 {
    grid_snap = !grid_snap;
    redraw_preview();
-   return grid_snap;
 }
 
 static gint

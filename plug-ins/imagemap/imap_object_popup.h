@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,12 +33,8 @@ typedef struct {
    Object_t  *obj;
 } ObjectPopup_t;
 
-ObjectPopup_t *make_object_popup(void);
-GtkWidget *object_popup_prepend_menu(ObjectPopup_t *popup, gchar *label, 
-				     MenuCallback activate, gpointer data);
 void object_handle_popup(ObjectPopup_t *popup, Object_t *obj, 
 			 GdkEventButton *event);
 void object_do_popup(Object_t *obj, GdkEventButton *event);
-Object_t *get_popup_object(void);
 
 #endif /* _IMAP_OBJECT_POPUP_H */

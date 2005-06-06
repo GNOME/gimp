@@ -41,7 +41,6 @@
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
-#include "imap_grid.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_misc.h"
@@ -1271,6 +1270,18 @@ do_move_down(void)
 }
 
 void
+do_move_to_front(void)
+{
+  command_execute(move_to_front_command_new(_shapes));
+}
+
+void
+do_send_to_back(void)
+{
+  command_execute(send_to_back_command_new(_shapes));
+}
+
+void
 do_use_gimp_guides_dialog(void)
 {
   command_execute (gimp_guides_command_new (_shapes, _drawable));
@@ -1302,17 +1313,6 @@ factory_preview_gray(void)
    return command_new(set_preview_gray);
 }
 
-static Command_t*
-factory_move_to_front(void)
-{
-   return move_to_front_command_new(_shapes);
-}
-
-static Command_t*
-factory_send_to_back(void)
-{
-   return send_to_back_command_new(_shapes);
-}
 
 #endif
 

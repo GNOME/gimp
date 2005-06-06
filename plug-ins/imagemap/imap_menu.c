@@ -43,6 +43,8 @@
 #include "libgimp/stdplugins-intl.h"
 #include "libgimpwidgets/gimpstock.h"
 
+/* Fix me: move all of these prototypes to imap_menu.h */
+
 void save();
 void do_close();
 void do_quit();
@@ -55,6 +57,8 @@ void do_deselect_all();
 void do_grid_settings_dialog();
 void do_zoom_in();
 void do_zoom_out();
+void do_move_to_front();
+void do_send_to_back();
 void do_edit_selected_shape();
 void do_create_guides_dialog();
 void do_use_gimp_guides_dialog();
@@ -63,7 +67,13 @@ void imap_help();
 void set_func(int func);
 
 static Menu_t _menu;
-GtkUIManager *ui_manager;
+static GtkUIManager *ui_manager;
+
+GtkWidget*
+menu_get_widget(const gchar *path)
+{
+  return gtk_ui_manager_get_widget (ui_manager, path);
+}
 
 static void 
 set_sensitive (const gchar *path, gboolean sensitive)
@@ -178,15 +188,20 @@ static GtkActionEntry entries[] = {
   { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
   { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL, 
     do_deselect_all},
-  { "EditAreaInfo", GTK_STOCK_PROPERTIES, "Edit Area Info...", NULL, 
+  { "EditAreaInfo", GTK_STOCK_EDIT, "Edit Area Info...", NULL, 
     "Edit selected area info", do_edit_selected_shape},
   { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences", 
     do_preferences_dialog},
-  { "MoveToFront", IMAP_STOCK_TO_FRONT, NULL, NULL, "Move to Front", NULL},
-  { "SendToBack", IMAP_STOCK_TO_BACK, NULL, NULL, "Send to Back", NULL},
+  { "MoveToFront", IMAP_STOCK_TO_FRONT, "", NULL, "Move to Front", 
+    do_move_to_front},
+  { "SendToBack", IMAP_STOCK_TO_BACK, "", NULL, "Send to Back",
+    do_send_to_back},
   { "DeleteArea", NULL, "Delete Area", NULL, NULL, NULL},
   { "MoveUp", GTK_STOCK_GO_UP, "Move Up", NULL, NULL, NULL},
   { "MoveDown", GTK_STOCK_GO_DOWN, "Move Down", NULL, NULL, NULL},
+
+  { "InsertPoint", NULL, "Insert Point", NULL, NULL, polygon_insert_point},
+  { "DeletePoint", NULL, "Delete Point", NULL, NULL, polygon_delete_point},
 
   { "ViewMenu", NULL, "_View" },
   { "Source", NULL, "Source...", NULL, NULL, do_source_dialog},
@@ -195,7 +210,8 @@ static GtkActionEntry entries[] = {
   { "ZoomToMenu", NULL, "_Zoom To" },
 
   { "MappingMenu", NULL, "_Mapping" },
-  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL, NULL},
+  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL, 
+    do_settings_dialog},
   
   { "ToolsMenu", NULL, "_Tools" },
   { "GridSettings", NULL, "Grid Settings...", NULL, NULL, 
@@ -216,7 +232,7 @@ static GtkActionEntry entries[] = {
 /* Toggle items */
 static GtkToggleActionEntry toggle_entries[] = {
   { "AreaList", NULL, "Area List", NULL, NULL, NULL, TRUE },
-  { "Grid", GIMP_STOCK_GRID, "_Grid", NULL, "Grid", NULL, FALSE }
+  { "Grid", GIMP_STOCK_GRID, "_Grid", NULL, "Grid", toggle_grid, FALSE }
 };
 
 static GtkRadioActionEntry color_entries[] = {
@@ -335,6 +351,17 @@ static const char *ui_description =
 "    <menuitem action='Copy'/>"
 "  </popup>"
 ""
+"  <popup name='PolygonPopupMenu'>"
+"    <menuitem action='InsertPoint'/>"
+"    <menuitem action='DeletePoint'/>"
+"    <menuitem action='EditAreaInfo'/>"
+"    <menuitem action='DeleteArea'/>"
+"    <menuitem action='MoveUp'/>"
+"    <menuitem action='MoveDown'/>"
+"    <menuitem action='Cut'/>"
+"    <menuitem action='Copy'/>"
+"  </popup>"
+""
 "  <toolbar name='Toolbar'>"
 "    <toolitem action='Open'/>"
 "    <toolitem action='Save'/>"
@@ -352,6 +379,9 @@ static const char *ui_description =
 "    <toolitem action='ZoomOut'/>"
 "    <separator/>"
 "    <toolitem action='EditMapInfo'/>"
+"    <separator/>"
+"    <toolitem action='MoveToFront'/>"
+"    <toolitem action='SendToBack'/>"
 "    <separator/>"
 "    <toolitem action='Grid'/>"
 "  </toolbar>"

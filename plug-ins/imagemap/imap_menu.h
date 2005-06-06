@@ -48,7 +48,7 @@ typedef struct {
   gint	      nr_off_mru_items;
 } Menu_t;
 
-
+GtkWidget *menu_get_widget(const gchar *path);
 Menu_t *make_menu(GtkWidget *main_vbox, GtkWidget *window);
 void menu_build_mru_items(MRU_t *mru);
 void menu_set_zoom_sensitivity(gint factor);
