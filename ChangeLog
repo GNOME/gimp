@@ -1,3 +1,10 @@
+2005-06-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* plug-ins/gfig/gfig.c (gfig_load_from_parasite): only create the
+	temporary file if there is a parasite to load.
+
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

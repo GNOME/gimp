@@ -740,31 +740,36 @@ gfig_load_from_parasite (void)
   GimpParasite *parasite;
   GFigObj      *gfig;
 
+  parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
+  if (! parasite)
+    return NULL;
+
   fname = gimp_temp_name ("gfigtmp");
+
   fp = fopen (fname, "w");
   if (!fp)
     {
-      g_message (_("Error trying to open temp file '%s'for parasite loading.\n"), fname);
+      g_message (_("Error trying to open temporary file '%s' "
+                   "for parasite loading: %s"),
+                 gimp_filename_to_utf8 (fname), g_strerror (errno));
       return NULL;
     }
-
-  parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
-
-  if (!parasite)
-    return NULL;
 
   fwrite (gimp_parasite_data (parasite),
           sizeof (guchar),
           gimp_parasite_data_size (parasite),
           fp);
-
-  gimp_parasite_free (parasite);
   fclose (fp);
 
+  gimp_parasite_free (parasite);
+
   gfig = gfig_load (fname, "(none)");
+
   unlink (fname);
 
-  return (gfig);
+  g_free (fname);
+
+  return gfig;
 }
 
 void
