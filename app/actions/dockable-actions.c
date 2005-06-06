@@ -105,7 +105,7 @@ static GimpRadioActionEntry dockable_tab_style_actions[] =
 static GimpToggleActionEntry dockable_toggle_actions[] =
 {
   { "dockable-show-button-bar", NULL,
-    N_("_Show Button Bar"), NULL, NULL,
+    N_("Show _Button Bar"), NULL, NULL,
     G_CALLBACK (dockable_show_button_bar_cmd_callback),
     TRUE,
     GIMP_HELP_DOCK_SHOW_BUTTON_BAR }
