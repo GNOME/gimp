@@ -15,6 +15,11 @@ EXPORTS
 	gimp_drawable_preview_get_type
 	gimp_drawable_preview_new
 	gimp_export_image
+	gimp_font_select_button_close_popup
+	gimp_font_select_button_get_font_name
+	gimp_font_select_button_get_type
+	gimp_font_select_button_new
+	gimp_font_select_button_set_font_name
 	gimp_font_select_widget_close
 	gimp_font_select_widget_new
 	gimp_font_select_widget_set

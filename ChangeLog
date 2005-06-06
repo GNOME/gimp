@@ -1,3 +1,7 @@
+2005-06-06  Tor Lillqvist  <tml@novell.com>
+
+	* libgimp/gimpui.def: Add gimp_font_select_button_*.
+
 2005-06-05  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py
