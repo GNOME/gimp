@@ -741,7 +741,12 @@ gfig_load_from_parasite (void)
   GimpParasite *parasite;
   GFigObj      *gfig;
 
+  parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
+  if (! parasite)
+    return NULL;
+
   fname = gimp_temp_name ("gfigtmp");
+
   fp = g_fopen (fname, "w");
   if (!fp)
     {
@@ -751,23 +756,21 @@ gfig_load_from_parasite (void)
       return NULL;
     }
 
-  parasite = gimp_drawable_parasite_find (gfig_context->drawable_id, "gfig");
-
-  if (!parasite)
-    return NULL;
-
   fwrite (gimp_parasite_data (parasite),
           sizeof (guchar),
           gimp_parasite_data_size (parasite),
           fp);
-
-  gimp_parasite_free (parasite);
   fclose (fp);
 
+  gimp_parasite_free (parasite);
+
   gfig = gfig_load (fname, "(none)");
+
   g_unlink (fname);
 
-  return (gfig);
+  g_free (fname);
+
+  return gfig;
 }
 
 void
