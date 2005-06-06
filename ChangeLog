@@ -1,3 +1,7 @@
+2005-06-06  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcellrendererdashes.c: removed unused variable.
+
 2005-06-06  Tor Lillqvist  <tml@novell.com>
 
 	* libgimp/gimpui.def: Add gimp_font_select_button_*.

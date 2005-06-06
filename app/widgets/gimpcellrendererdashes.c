@@ -221,7 +221,6 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStateType            state;
-  GdkRectangle            rect;
   gint                    width;
   gint                    x, y;
 
