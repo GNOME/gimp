@@ -1,3 +1,8 @@
+2005-06-07  Manish Singh  <yosh@gimp.org>
+
+	* app/actions/dockable-actions.c (dockable_actions_update): cast
+	the result of gtk_bin_get_child ().
+
 2005-06-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/dockable-actions.c (dockable_toggle_actions): use

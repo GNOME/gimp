@@ -197,7 +197,7 @@ dockable_actions_update (GimpActionGroup *group,
       return;
     }
 
-  docked = gtk_bin_get_child (GTK_BIN (dockable));
+  docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
 
   gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
