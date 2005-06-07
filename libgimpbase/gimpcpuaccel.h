@@ -33,6 +33,7 @@
 #define CPU_ACCEL_X86_MMXEXT     0x20000000
 #define CPU_ACCEL_X86_SSE        0x10000000
 #define CPU_ACCEL_X86_SSE2       0x08000000
+#define CPU_ACCEL_X86_SSE3       0x02000000
 
 /* powerpc accelerations */
 #define CPU_ACCEL_PPC_ALTIVEC    0x04000000
