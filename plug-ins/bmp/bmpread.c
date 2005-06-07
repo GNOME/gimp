@@ -457,9 +457,9 @@ ReadImage (FILE     *fd,
     case 24:
     case 16:
       base_type = GIMP_RGB;
-      image_type = GIMP_RGB_IMAGE;
+      image_type = bpp == 32 ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
 
-      channels = 3;
+      channels = bpp == 32 ? 4 : 3;
       break;
 
     case 8:
@@ -516,7 +516,8 @@ ReadImage (FILE     *fd,
               {
                 *(temp++)= buffer[xpos * 4 + 2];
                 *(temp++)= buffer[xpos * 4 + 1];
-                *(temp++)= buffer[xpos * 4];
+                *(temp++)= buffer[xpos * 4 + 0];
+                *(temp++)= buffer[xpos * 4 + 3];
               }
             if (ypos == 0)
               break;

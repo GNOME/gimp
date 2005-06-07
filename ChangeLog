@@ -1,3 +1,11 @@
+2005-06-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/bmp/bmp.c
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: applied a (slightly modified) patch
+	contributed by Brandon that adds support for reading and writing
+	RGBA BMP files (bug #306339).
+
 2005-06-07  Manish Singh  <yosh@gimp.org>
 
 	* app/base/cpu-accel.[ch]: detect SSE3.

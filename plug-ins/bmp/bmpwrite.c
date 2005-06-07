@@ -119,30 +119,28 @@ WriteBMP (const gchar *filename,
   guchar        puffer[50];
   gint          i;
 
-  /* first: can we save this image? */
-
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  if (gimp_drawable_has_alpha (drawable_ID))
-    {
-      g_message (_("Cannot save images with alpha channel."));
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-
-  /* We can save it. So what colors do we use? */
-
   switch (drawable_type)
     {
+    case GIMP_RGBA_IMAGE:
+      colors       = 0;
+      BitsPerPixel = 32;
+      MapSize      = 0;
+      channels     = 4;
+      break;
+
     case GIMP_RGB_IMAGE:
       colors       = 0;
       BitsPerPixel = 24;
       MapSize      = 0;
       channels     = 3;
       break;
+
     case GIMP_GRAY_IMAGE:
       colors       = 256;
       BitsPerPixel = 8;
@@ -155,6 +153,11 @@ WriteBMP (const gchar *filename,
           Blue[i]  = i;
         }
       break;
+
+    case GIMP_GRAYA_IMAGE:
+      g_message (_("Cannot operate on grayscale images with alpha channel."));
+      return GIMP_PDB_EXECUTION_ERROR;
+
     case GIMP_INDEXED_IMAGE:
       cmap     = gimp_image_get_colormap (image, &colors);
       MapSize  = 4 * colors;
@@ -174,9 +177,13 @@ WriteBMP (const gchar *filename,
           Blue[i]  = *cmap++;
         }
       break;
-    default:
-      g_message (_("Cannot operate on unknown image types."));
+
+    case GIMP_INDEXEDA_IMAGE:
+      g_message (_("Cannot operate on indexed images with alpha channel."));
       return GIMP_PDB_EXECUTION_ERROR;
+
+    default:
+      g_assert_not_reached ();
     }
 
   /* Perhaps someone wants RLE encoded Bitmaps */
@@ -215,7 +222,7 @@ WriteBMP (const gchar *filename,
   rows = drawable->height;
 
   /* ... that we write to our headers. */
-  if ((BitsPerPixel != 24) &&
+  if ((BitsPerPixel < 24) &&
       (cols % (8/BitsPerPixel)))
     Spcols = (((cols / (8 / BitsPerPixel)) + 1) * (8 / BitsPerPixel));
   else
@@ -346,9 +353,38 @@ WriteImage (FILE   *f,
   xpos = 0;
   rowstride = width * channels;
 
-  /* We'll begin with the 24 bit Bitmaps, they are easy :-) */
+  /* We'll begin with the 32 and 24 bit Bitmaps, they are easy :-) */
 
-  if (bpp == 24)
+  if (bpp == 32)
+    {
+      for (ypos = height - 1; ypos >= 0; ypos--)  /* for each row   */
+        {
+          for (i = 0; i < width; i++)  /* for each pixel */
+            {
+              temp = src + (ypos * rowstride) + (xpos * channels);
+              buf[2] = (guchar) *temp;
+              temp++;
+              buf[1] = (guchar) *temp;
+              temp++;
+              buf[0] = (guchar) *temp;
+              temp++;
+              buf[3] = (guchar) *temp;
+              xpos++;
+
+              Write (f, buf, 4);
+            }
+
+          Write (f, &buf[3], spzeile - (width * 4));
+
+          cur_progress++;
+          if ((cur_progress % 5) == 0)
+            gimp_progress_update ((gdouble) cur_progress /
+                                  (gdouble) max_progress);
+
+          xpos = 0;
+        }
+    }
+  else if (bpp == 24)
     {
       for (ypos = height - 1; ypos >= 0; ypos--)  /* for each row   */
         {
