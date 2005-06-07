@@ -74,6 +74,10 @@ static void   do_horizontal_alignment        (GtkWidget       *widget,
                                               gpointer         data);
 static void   do_vertical_alignment          (GtkWidget       *widget,
                                               gpointer         data);
+static void   clear_reference                (GimpItem        *reference_item,
+                                              GimpAlignTool   *align_tool);
+static void   clear_target                   (GimpItem        *target_item,
+                                              GimpAlignTool   *align_tool);
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -196,6 +200,8 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
   align_tool->target_item     = NULL;
   align_tool->reference_item  = NULL;
 
+  align_tool->select_reference = FALSE;
+
   align_tool->target_horz_align_type = GIMP_ALIGN_LEFT;
   align_tool->ref_horz_align_type    = GIMP_ALIGN_LEFT;
   align_tool->target_vert_align_type = GIMP_ALIGN_TOP;
@@ -246,9 +252,9 @@ gimp_align_tool_button_press (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
-  GimpAlignOptions *options    = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
-  GimpItem         *item       = NULL;
+  GimpAlignTool    *align_tool  = GIMP_ALIGN_TOOL (tool);
+  GimpAlignOptions *options     = GIMP_ALIGN_OPTIONS (tool->tool_info->tool_options);
+  GimpItem         *item        = NULL;
 
   /*  If the tool was being used in another image...reset it  */
 
@@ -298,23 +304,25 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
   if (item)
     {
-      if (state & GDK_CONTROL_MASK)
+      if (state & GDK_CONTROL_MASK || align_tool->select_reference)
         {
           if (align_tool->reference_item)
-            g_object_remove_weak_pointer (G_OBJECT (align_tool->reference_item),
-                                          (gpointer) &align_tool->reference_item);
+            g_signal_handlers_disconnect_by_func (align_tool->reference_item,
+                                                  G_CALLBACK (clear_reference),
+                                                  (gpointer) align_tool);
           align_tool->reference_item = item;
-          g_object_add_weak_pointer (G_OBJECT (align_tool->reference_item),
-                                     (gpointer) &align_tool->reference_item);
+          g_signal_connect (item, "removed",
+                            G_CALLBACK (clear_reference), (gpointer) align_tool);
         }
       else
         {
           if (align_tool->target_item)
-            g_object_remove_weak_pointer (G_OBJECT (align_tool->target_item),
-                                          (gpointer) &align_tool->target_item);
+            g_signal_handlers_disconnect_by_func (align_tool->target_item,
+                                                  G_CALLBACK (clear_target),
+                                                  (gpointer) align_tool);
           align_tool->target_item = item;
-          g_object_add_weak_pointer (G_OBJECT (align_tool->target_item),
-                                     (gpointer) &align_tool->target_item);
+          g_signal_connect (item, "removed",
+                            G_CALLBACK (clear_target), (gpointer) align_tool);
         }
     }
 
@@ -421,7 +429,9 @@ static GtkWidget *
 gimp_align_tool_controls (GimpAlignTool *align_tool)
 {
   GtkWidget *main_vbox;
+  GtkWidget *vbox2;
   GtkWidget *hbox;
+  GtkWidget *hbox2;
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *button;
@@ -435,32 +445,41 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
   gtk_widget_show (main_vbox);
 
-  label = gtk_label_new (_("Ctrl-click to select reference."));
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox2 = gimp_int_radio_group_new (FALSE, NULL,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &align_tool->select_reference, FALSE,
 
-  label = gtk_label_new (_("Click to select target."));
-  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+                                    _("Select Target"),
+                                    FALSE, NULL,
+
+                                    _("Select Reference (Ctrl)"),
+                                    TRUE, NULL,
+                                    NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
 
   table = gtk_table_new (7, 9, FALSE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 5);
   gtk_widget_show (table);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 10);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 10);
 
   row = col = 0;
 
   /* Top row */
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
+  gtk_widget_show (hbox2);
   label = gtk_label_new (_("Horizontal"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 4, row, row + 1);
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   row++;
 
   /* second row */
 
-  col = 0;
+  col = 1;
 
   button = button_with_stock (GIMP_ALIGN_LEFT, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
@@ -484,7 +503,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   /* next row */
   label = gtk_label_new (_("Offset"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 3, row, row + 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
@@ -500,15 +519,18 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   row++;
 
+  hbox2 = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox2, 0, 8, row, row + 1);
+  gtk_widget_show (hbox2);
   label = gtk_label_new (_("Vertical"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 4, row, row + 1);
+  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   row++;
 
   /* second row */
 
-  col = 0;
+  col = 1;
 
   button = button_with_stock (GIMP_ALIGN_TOP, align_tool);
   gtk_table_attach_defaults (GTK_TABLE (table), button, col, col + 2, row, row + 1);
@@ -532,7 +554,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
 
   /* next row */
   label = gtk_label_new (_("Offset"));
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 3, row, row + 1);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, row, row + 1);
   gtk_widget_show (label);
 
   spinbutton = gimp_spin_button_new (&align_tool->vert_offset_adjustment,
@@ -669,3 +691,37 @@ set_action (GtkWidget *widget,
       break;
     }
 }
+
+static void
+clear_target (GimpItem      *target_item,
+              GimpAlignTool *align_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
+
+  if (align_tool->target_item)
+    g_signal_handlers_disconnect_by_func (align_tool->target_item,
+                                          G_CALLBACK (clear_target),
+                                          (gpointer) align_tool);
+
+  align_tool->target_item = NULL;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
+}
+
+static void
+clear_reference (GimpItem      *reference_item,
+                 GimpAlignTool *align_tool)
+{
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
+
+  if (align_tool->reference_item)
+    g_signal_handlers_disconnect_by_func (align_tool->reference_item,
+                                          G_CALLBACK (clear_reference),
+                                          (gpointer) align_tool);
+
+  align_tool->reference_item = NULL;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
+}
+

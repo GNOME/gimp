@@ -43,6 +43,8 @@ struct _GimpAlignTool
   GimpItem            *target_item;
   GimpItem            *reference_item;
 
+  gboolean             select_reference;
+
   GimpAlignmentType    target_horz_align_type;
   GimpAlignmentType    target_vert_align_type;
   GimpAlignmentType    ref_horz_align_type;
