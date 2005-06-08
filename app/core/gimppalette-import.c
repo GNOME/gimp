@@ -73,7 +73,7 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
   dx = 1.0 / (n_colors - 1);
 
@@ -245,7 +245,7 @@ gimp_palette_import_image_make_palette (GHashTable  *h_array,
 			&sorted_list);
   sorted_list = g_slist_sort (sorted_list, gimp_palette_import_sort_colors);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
   g_object_set_data (G_OBJECT (palette), "import_n_colors",
 		     GINT_TO_POINTER (n_colors));
@@ -356,7 +356,7 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   g_return_val_if_fail (gimp_image_base_type (gimage) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
   for (count= 0; count < gimage->num_cols; ++count)
     {
@@ -454,7 +454,7 @@ gimp_palette_import_from_file (const gchar  *filename,
   switch (gimp_palette_detect_file_format (filename))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load (filename, FALSE, error);
+      palette_list = gimp_palette_load (filename, error);
       if (palette_list)
         {
           palette = palette_list->data;
@@ -463,7 +463,7 @@ gimp_palette_import_from_file (const gchar  *filename,
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+      palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
       while (read (fd, color_bytes, 3) == 3)
         {
@@ -477,7 +477,7 @@ gimp_palette_import_from_file (const gchar  *filename,
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+      palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
       lseek (fd, 28, SEEK_SET);
       while (read (fd,
@@ -503,7 +503,7 @@ gimp_palette_import_from_file (const gchar  *filename,
         gchar    **lines;
         gchar    **ascii_colors;
 
-        palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+        palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 
         lseek (fd, 16, SEEK_SET);
         data_size = read (fd, buffer, sizeof (buffer) - 1);

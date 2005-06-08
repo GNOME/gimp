@@ -582,9 +582,7 @@ gimp_data_get_mime_type (GimpData *data)
 
 /**
  * gimp_data_duplicate:
- * @data:              a #GimpData object
- * @stingy_memory_use: if %TRUE, use the disk rather than RAM
- *                     where possible.
+ * @data: a #GimpData object
  *
  * Creates a copy of @data, if possible.  Only the object data is
  * copied:  the newly created object is not automatically given an
@@ -593,13 +591,12 @@ gimp_data_get_mime_type (GimpData *data)
  * Returns: the newly created copy, or %NULL if @data cannot be copied.
  **/
 GimpData *
-gimp_data_duplicate (GimpData *data,
-                     gboolean  stingy_memory_use)
+gimp_data_duplicate (GimpData *data)
 {
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
   if (GIMP_DATA_GET_CLASS (data)->duplicate)
-    return GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
+    return GIMP_DATA_GET_CLASS (data)->duplicate (data);
 
   return NULL;
 }

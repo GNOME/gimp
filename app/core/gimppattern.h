@@ -51,14 +51,11 @@ struct _GimpPatternClass
 
 GType      gimp_pattern_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_pattern_new          (const gchar        *name,
-                                      gboolean            stingy_memory_use);
+GimpData * gimp_pattern_new          (const gchar        *name);
 GimpData * gimp_pattern_get_standard (void);
 GList    * gimp_pattern_load         (const gchar        *filename,
-                                      gboolean            stingy_memory_use,
                                       GError            **error);
 GList    * gimp_pattern_load_pixbuf  (const gchar        *filename,
-                                      gboolean            stingy_memory_use,
                                       GError            **error);
 
 TempBuf  * gimp_pattern_get_mask     (const GimpPattern  *pattern);

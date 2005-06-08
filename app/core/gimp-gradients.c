@@ -27,8 +27,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -106,13 +104,9 @@ gimp_gradients_add_gradient (Gimp        *gimp,
                              const gchar *name,
                              const gchar *id)
 {
-  GimpBaseConfig *base_config;
-  GimpGradient   *gradient;
+  GimpGradient *gradient;
 
-  base_config = GIMP_BASE_CONFIG (gimp->config);
-
-  gradient = GIMP_GRADIENT (gimp_gradient_new (name,
-                                               base_config->stingy_memory_use));
+  gradient = GIMP_GRADIENT (gimp_gradient_new (name));
 
   gimp_data_make_internal (GIMP_DATA (gradient));
 

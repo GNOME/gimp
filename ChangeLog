@@ -1,3 +1,36 @@
+2005-06-08  Sven Neumann  <sven@gimp.org>
+
+	Removed "stingy-memory-use" all over the place. This feature was
+	really not that useful anymore. The GUI for the preference option
+	was already removed for GIMP 2.2.  Fixes bug #306617.
+
+	* app/config/gimpbaseconfig.[ch]: set IGNORE flag on
+	"stingy-memory-use".
+
+	* app/config/gimpcoreconfig.h: added a comment that the
+	font_path_writable variable is unused.
+
+	* app/base/temp-buf.[ch]: removed code that used to deal with
+	swapping temp-bufs to disk.
+
+	* app/base/base.c: made base_config a static variable.
+	
+	* app/core/gimpdata.[ch]
+	* app/core/gimpdatafactory.[ch]: removed stingy_memory_use
+	parameter from data construction methods.
+
+	* app/core/gimp-gradients.c
+	* app/core/gimpbrush-load.[ch]
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpbrushpipe.[ch]
+	* app/core/gimpcontext.c
+	* app/core/gimpgradient-load.[ch]
+	* app/core/gimpgradient.[ch]
+	* app/core/gimppalette-import.c
+	* app/core/gimppalette.[ch]
+	* app/core/gimppattern.[ch]: changed accordingly.
+
 2005-06-05  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpaligntool.[ch]: improve layout of controls.  Add

@@ -64,10 +64,8 @@ GimpData  * gimp_brush_generated_new          (const gchar *name,
                                                gint         spikes,
                                                gfloat       hardness,
                                                gfloat       aspect_ratio,
-                                               gfloat       angle,
-                                               gboolean     stingy_memory_use);
+                                               gfloat       angle);
 GList     * gimp_brush_generated_load         (const gchar *file_name,
-                                               gboolean     stingy_memory_use,
                                                GError     **error);
 
 GimpBrushGeneratedShape

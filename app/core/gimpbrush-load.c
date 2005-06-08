@@ -99,7 +99,6 @@ static gint32      abr_read_long             (FILE         *file);
 
 GList *
 gimp_brush_load (const gchar  *filename,
-                 gboolean      stingy_memory_use,
                  GError      **error)
 {
   GimpBrush *brush;
@@ -124,15 +123,6 @@ gimp_brush_load (const gchar  *filename,
 
   if (! brush)
     return NULL;
-
-  /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    {
-      temp_buf_swap (brush->mask);
-
-      if (brush->pixmap)
-        temp_buf_swap (brush->pixmap);
-    }
 
   return g_list_prepend (NULL, brush);
 }
@@ -387,7 +377,6 @@ gimp_brush_load_brush (gint          fd,
 
 GList *
 gimp_brush_load_abr (const gchar  *filename,
-                     gboolean      stingy_memory_use,
                      GError      **error)
 {
   FILE      *file;
@@ -437,10 +426,6 @@ gimp_brush_load_abr (const gchar  *filename,
                            gimp_filename_to_utf8 (filename));
               break;
             }
-
-          /*  Swap the brush to disk (if we're being stingy with memory) */
-          if (stingy_memory_use)
-            temp_buf_swap (brush->mask);
 
           brush_list = g_list_prepend (brush_list, brush);
         }

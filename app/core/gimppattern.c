@@ -46,8 +46,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "base/temp-buf.h"
 
 #include "gimpimage.h"
@@ -74,8 +72,7 @@ static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
 static gchar    * gimp_pattern_get_description (GimpViewable     *viewable,
                                                 gchar           **tooltip);
 static gchar    * gimp_pattern_get_extension   (GimpData         *data);
-static GimpData * gimp_pattern_duplicate       (GimpData         *data,
-                                                gboolean          stingy_memory_use);
+static GimpData * gimp_pattern_duplicate       (GimpData         *data);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -229,25 +226,17 @@ gimp_pattern_get_extension (GimpData *data)
 }
 
 static GimpData *
-gimp_pattern_duplicate (GimpData *data,
-                        gboolean  stingy_memory_use)
+gimp_pattern_duplicate (GimpData *data)
 {
-  GimpPattern *pattern;
-
-  pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
+  GimpPattern *pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
 
   pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
-
-  /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
 }
 
 GimpData *
-gimp_pattern_new (const gchar *name,
-                  gboolean     stingy_memory_use)
+gimp_pattern_new (const gchar *name)
 {
   GimpPattern *pattern;
   guchar      *data;
@@ -270,10 +259,6 @@ gimp_pattern_new (const gchar *name,
 	data += 3;
       }
 
-  /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (pattern->mask);
-
   return GIMP_DATA (pattern);
 }
 
@@ -284,7 +269,7 @@ gimp_pattern_get_standard (void)
 
   if (! standard_pattern)
     {
-      standard_pattern = gimp_pattern_new ("Standard", FALSE);
+      standard_pattern = gimp_pattern_new ("Standard");
 
       standard_pattern->dirty = FALSE;
       gimp_data_make_internal (standard_pattern);
@@ -298,7 +283,6 @@ gimp_pattern_get_standard (void)
 
 GList *
 gimp_pattern_load (const gchar  *filename,
-                   gboolean      stingy_memory_use,
                    GError      **error)
 {
   GimpPattern   *pattern = NULL;
@@ -413,10 +397,6 @@ gimp_pattern_load (const gchar  *filename,
 
   close (fd);
 
-  /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (pattern->mask);
-
   return g_list_prepend (NULL, pattern);
 
  error:
@@ -430,7 +410,6 @@ gimp_pattern_load (const gchar  *filename,
 
 GList *
 gimp_pattern_load_pixbuf (const gchar  *filename,
-                          gboolean      stingy_memory_use,
                           GError      **error)
 {
   GimpPattern *pattern;
@@ -484,10 +463,6 @@ gimp_pattern_load_pixbuf (const gchar  *filename,
     }
 
   g_object_unref (pixbuf);
-
-  /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (pattern->mask);
 
   return g_list_prepend (NULL, pattern);
 }

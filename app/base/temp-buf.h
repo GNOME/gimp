@@ -22,16 +22,12 @@
 
 struct _TempBuf
 {
-  gint      bytes;      /*  the necessary info                             */
-  gint      width;
-  gint      height;
-  gint      x, y;       /*  origin of data source                          */
-
-  gboolean  swapped;    /*  flag indicating whether buf is cached to disk  */
-  gchar    *filename;   /*  filename of cached information                 */
-
-  guchar   *data;       /*  The data buffer. Do never access this field
-                            directly, use temp_buf_data() instead !!       */
+  gint    bytes;      /*  the necessary info                             */
+  gint    width;
+  gint    height;
+  gint    x, y;       /*  origin of data source                          */
+  guchar *data;       /*  The data buffer. Do never access this field
+                          directly, use temp_buf_data() instead !!       */
 };
 
 
@@ -80,18 +76,6 @@ MaskBuf * mask_buf_new         (gint           width,
 void      mask_buf_free        (MaskBuf       *mask_buf);
 guchar  * mask_buf_data        (MaskBuf       *mask_buf);
 guchar  * mask_buf_data_clear  (MaskBuf       *mask_buf);
-
-
-/*  The disk caching functions  */
-
-void      temp_buf_swap        (TempBuf       *buf);
-void      temp_buf_unswap      (TempBuf       *buf);
-void      temp_buf_swap_free   (TempBuf       *buf);
-
-
-/*  Called by app_procs:exit() to free up the cached undo buffer  */
-
-void      swapping_free        (void);
 
 
 #endif  /*  __TEMP_BUF_H__  */

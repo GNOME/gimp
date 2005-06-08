@@ -64,11 +64,9 @@ struct _GimpPaletteClass
 
 GType              gimp_palette_get_type     (void) G_GNUC_CONST;
 
-GimpData         * gimp_palette_new          (const gchar      *name,
-                                              gboolean          stingy_memory_use);
+GimpData         * gimp_palette_new          (const gchar      *name);
 GimpData         * gimp_palette_get_standard (void);
 GList            * gimp_palette_load         (const gchar      *filename,
-                                              gboolean          stingy_memory_use,
                                               GError          **error);
 
 GimpPaletteEntry * gimp_palette_add_entry    (GimpPalette      *palette,

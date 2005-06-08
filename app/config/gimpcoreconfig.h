@@ -54,7 +54,7 @@ struct _GimpCoreConfig
   gchar                 *gradient_path;
   gchar                 *gradient_path_writable;
   gchar                 *font_path;
-  gchar                 *font_path_writable;
+  gchar                 *font_path_writable;  /*  unused  */
   gchar                 *default_brush;
   gchar                 *default_pattern;
   gchar                 *default_palette;

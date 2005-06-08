@@ -31,8 +31,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
@@ -395,12 +393,7 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 
   if (factory->data_new_func)
     {
-      GimpBaseConfig *base_config;
-      GimpData       *data;
-
-      base_config = GIMP_BASE_CONFIG (factory->gimp->config);
-
-      data = factory->data_new_func (name, base_config->stingy_memory_use);
+      GimpData *data = factory->data_new_func (name);
 
       if (data)
         {
@@ -420,15 +413,12 @@ GimpData *
 gimp_data_factory_data_duplicate (GimpDataFactory *factory,
                                   GimpData        *data)
 {
-  GimpBaseConfig *base_config;
-  GimpData       *new_data;
+  GimpData *new_data;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
-  base_config = GIMP_BASE_CONFIG (factory->gimp->config);
-
-  new_data = gimp_data_duplicate (data, base_config->stingy_memory_use);
+  new_data = gimp_data_duplicate (data);
 
   if (new_data)
     {
@@ -627,14 +617,11 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
  insert:
   {
-    GimpBaseConfig *base_config = GIMP_BASE_CONFIG (factory->gimp->config);
-    GList          *data_list;
-    GError         *error       = NULL;
+    GList  *data_list;
+    GError *error = NULL;
 
-    data_list =
-      (* factory->loader_entries[i].load_func) (file_data->filename,
-                                                base_config->stingy_memory_use,
-                                                &error);
+    data_list = factory->loader_entries[i].load_func (file_data->filename,
+                                                      &error);
 
     if (! data_list)
       {

@@ -75,8 +75,7 @@ static gboolean   gimp_brush_generated_save          (GimpData     *data,
                                                       GError      **error);
 static void       gimp_brush_generated_dirty         (GimpData     *data);
 static gchar    * gimp_brush_generated_get_extension (GimpData     *data);
-static GimpData * gimp_brush_generated_duplicate     (GimpData     *data,
-                                                      gboolean      stingy_memory_use);
+static GimpData * gimp_brush_generated_duplicate     (GimpData     *data);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -330,8 +329,7 @@ gimp_brush_generated_get_extension (GimpData *data)
 }
 
 static GimpData *
-gimp_brush_generated_duplicate (GimpData *data,
-                                gboolean  stingy_memory_use)
+gimp_brush_generated_duplicate (GimpData *data)
 {
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
 
@@ -341,8 +339,7 @@ gimp_brush_generated_duplicate (GimpData *data,
                                    brush->spikes,
                                    brush->hardness,
                                    brush->aspect_ratio,
-                                   brush->angle,
-                                   stingy_memory_use);
+                                   brush->angle);
 }
 
 static gdouble
@@ -542,8 +539,7 @@ gimp_brush_generated_new (const gchar             *name,
                           gint                     spikes,
                           gfloat                   hardness,
                           gfloat                   aspect_ratio,
-                          gfloat                   angle,
-                          gboolean                 stingy_memory_use)
+                          gfloat                   angle)
 {
   GimpBrushGenerated *brush;
 
@@ -566,15 +562,11 @@ gimp_brush_generated_new (const gchar             *name,
   /* render brush mask */
   gimp_data_dirty (GIMP_DATA (brush));
 
-  if (stingy_memory_use)
-    temp_buf_swap (GIMP_BRUSH (brush)->mask);
-
   return GIMP_DATA (brush);
 }
 
 GList *
 gimp_brush_generated_load (const gchar  *filename,
-                           gboolean      stingy_memory_use,
                            GError      **error)
 {
   GimpBrushGenerated      *brush;
@@ -733,9 +725,6 @@ gimp_brush_generated_load (const gchar  *filename,
 
   /* render brush mask */
   gimp_data_dirty (GIMP_DATA (brush));
-
-  if (stingy_memory_use)
-    temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
   return g_list_prepend (NULL, brush);
 

@@ -64,8 +64,7 @@ struct _GimpBrushClass
 
 GType       gimp_brush_get_type         (void) G_GNUC_CONST;
 
-GimpData  * gimp_brush_new              (const gchar      *name,
-                                         gboolean          stingy_memory_use);
+GimpData  * gimp_brush_new              (const gchar      *name);
 GimpData  * gimp_brush_get_standard     (void);
 
 GimpBrush * gimp_brush_select_brush     (GimpBrush        *brush,

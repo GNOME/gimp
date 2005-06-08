@@ -76,7 +76,6 @@ struct _GimpBrushPipeClass
 GType    gimp_brush_pipe_get_type (void) G_GNUC_CONST;
 
 GList  * gimp_brush_pipe_load     (const gchar  *filename,
-                                   gboolean      stingy_memory_use,
                                    GError      **error);
 
 

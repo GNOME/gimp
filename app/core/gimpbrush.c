@@ -27,8 +27,6 @@
 #include "base/brush-scale.h"
 #include "base/temp-buf.h"
 
-#include "config/gimpbaseconfig.h"
-
 #include "gimpbrush.h"
 #include "gimpbrush-load.h"
 #include "gimpbrushgenerated.h"
@@ -316,15 +314,13 @@ gimp_brush_get_extension (GimpData *data)
 }
 
 GimpData *
-gimp_brush_new (const gchar *name,
-                gboolean     stingy_memory_use)
+gimp_brush_new (const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
   return gimp_brush_generated_new (name,
                                    GIMP_BRUSH_GENERATED_CIRCLE,
-                                   5.0, 2, 0.5, 1.0, 0.0,
-                                   stingy_memory_use);
+                                   5.0, 2, 0.5, 1.0, 0.0);
 }
 
 GimpData *
@@ -334,7 +330,7 @@ gimp_brush_get_standard (void)
 
   if (! standard_brush)
     {
-      standard_brush = gimp_brush_new ("Standard", FALSE);
+      standard_brush = gimp_brush_new ("Standard");
 
       standard_brush->dirty = FALSE;
       gimp_data_make_internal (standard_brush);

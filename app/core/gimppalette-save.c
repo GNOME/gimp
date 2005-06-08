@@ -71,8 +71,7 @@ static gchar    * gimp_palette_get_description  (GimpViewable      *viewable,
 static gboolean   gimp_palette_save             (GimpData          *data,
                                                  GError           **error);
 static gchar    * gimp_palette_get_extension    (GimpData          *data);
-static GimpData * gimp_palette_duplicate        (GimpData          *data,
-                                                 gboolean           stingy_memory_use);
+static GimpData * gimp_palette_duplicate        (GimpData          *data);
 
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 
@@ -305,8 +304,7 @@ gimp_palette_get_description (GimpViewable  *viewable,
 }
 
 GimpData *
-gimp_palette_new (const gchar *name,
-                  gboolean     stingy_memory_use)
+gimp_palette_new (const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
@@ -323,7 +321,7 @@ gimp_palette_get_standard (void)
 
   if (! standard_palette)
     {
-      standard_palette = gimp_palette_new ("Standard", FALSE);
+      standard_palette = gimp_palette_new ("Standard");
 
       standard_palette->dirty = FALSE;
       gimp_data_make_internal (standard_palette);
@@ -336,7 +334,6 @@ gimp_palette_get_standard (void)
 
 GList *
 gimp_palette_load (const gchar  *filename,
-                   gboolean      stingy_memory_use,
                    GError      **error)
 {
   GimpPalette      *palette;
@@ -593,8 +590,7 @@ gimp_palette_get_extension (GimpData *data)
 }
 
 static GimpData *
-gimp_palette_duplicate (GimpData *data,
-                        gboolean  stingy_memory_use)
+gimp_palette_duplicate (GimpData *data)
 {
   GimpPalette *palette = GIMP_PALETTE (data);
   GimpPalette *new;

@@ -31,8 +31,6 @@
 
 #include "core-types.h"
 
-#include "base/temp-buf.h"
-
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
@@ -2225,8 +2223,6 @@ static void
 gimp_context_real_set_brush (GimpContext *context,
                              GimpBrush   *brush)
 {
-  GimpBaseConfig *base_config;
-
   if (! standard_brush)
     standard_brush = GIMP_BRUSH (gimp_brush_get_standard ());
 
@@ -2239,23 +2235,12 @@ gimp_context_real_set_brush (GimpContext *context,
       context->brush_name = NULL;
     }
 
-  base_config = GIMP_BASE_CONFIG (context->gimp->config);
-
   /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
-      /*  make sure the active brush is swapped before we get a new one...  */
-      if (base_config->stingy_memory_use &&
-          context->brush->mask           &&
-          G_OBJECT (context->brush)->ref_count == 2)
-        {
-          temp_buf_swap (context->brush->mask);
-        }
-
       g_signal_handlers_disconnect_by_func (context->brush,
                                             gimp_context_brush_dirty,
                                             context);
-
       g_object_unref (context->brush);
     }
 
@@ -2269,14 +2254,6 @@ gimp_context_real_set_brush (GimpContext *context,
                                G_CALLBACK (gimp_context_brush_dirty),
                                context,
                                0);
-
-      /*  Make sure the active brush is unswapped... */
-      if (base_config->stingy_memory_use &&
-          brush->mask                    &&
-          G_OBJECT (brush)->ref_count < 2)
-        {
-          temp_buf_unswap (brush->mask);
-        }
 
       if (brush != standard_brush)
         context->brush_name = g_strdup (GIMP_OBJECT (brush)->name);
@@ -2368,8 +2345,6 @@ static void
 gimp_context_real_set_pattern (GimpContext *context,
                                GimpPattern *pattern)
 {
-  GimpBaseConfig *base_config;
-
   if (! standard_pattern)
     standard_pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
 
@@ -2380,16 +2355,6 @@ gimp_context_real_set_pattern (GimpContext *context,
     {
       g_free (context->pattern_name);
       context->pattern_name = NULL;
-    }
-
-  base_config = GIMP_BASE_CONFIG (context->gimp->config);
-
-  /*  make sure the active pattern is swapped before we get a new one...  */
-  if (base_config->stingy_memory_use             &&
-      context->pattern && context->pattern->mask &&
-      G_OBJECT (context->pattern)->ref_count == 2)
-    {
-      temp_buf_swap (pattern->mask);
     }
 
   /*  disconnect from the old pattern's signals  */
@@ -2411,14 +2376,6 @@ gimp_context_real_set_pattern (GimpContext *context,
                                G_CALLBACK (gimp_context_pattern_dirty),
                                context,
                                0);
-
-      /*  Make sure the active pattern is unswapped... */
-      if (base_config->stingy_memory_use   &&
-          pattern->mask                    &&
-          G_OBJECT (pattern)->ref_count < 2)
-        {
-          temp_buf_unswap (pattern->mask);
-        }
 
       if (pattern != standard_pattern)
         context->pattern_name = g_strdup (GIMP_OBJECT (pattern)->name);

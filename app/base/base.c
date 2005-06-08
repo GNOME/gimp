@@ -47,12 +47,8 @@
 
 #include "base.h"
 #include "pixel-processor.h"
-#include "temp-buf.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
-
-
-GimpBaseConfig *base_config = NULL;
 
 
 static void   base_toast_old_swap_files   (const gchar *swap_path);
@@ -63,6 +59,9 @@ static void   base_tile_cache_size_notify (GObject     *config,
 static void   base_num_processors_notify  (GObject     *config,
                                            GParamSpec  *param_spec,
                                            gpointer     data);
+
+
+static GimpBaseConfig *base_config = NULL;
 
 
 /*  public functions  */
@@ -126,7 +125,6 @@ base_exit (void)
   g_return_if_fail (base_config != NULL);
 
   pixel_processor_exit ();
-  swapping_free ();
   paint_funcs_free ();
   tile_swap_exit ();
   tile_cache_exit ();

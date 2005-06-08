@@ -27,14 +27,12 @@
 
 
 GList     * gimp_brush_load        (const gchar  *filename,
-                                    gboolean      stingy_memory_use,
                                     GError      **error);
 GimpBrush * gimp_brush_load_brush  (gint          fd,
                                     const gchar  *filename,
                                     GError      **error);
 
 GList     * gimp_brush_load_abr    (const gchar  *filename,
-                                    gboolean      stingy_memory_use,
                                     GError      **error);
 
 

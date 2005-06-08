@@ -40,7 +40,6 @@
 
 GList *
 gimp_gradient_load (const gchar  *filename,
-                    gboolean      stingy_memory_use,
                     GError      **error)
 {
   GimpGradient        *gradient;
@@ -250,7 +249,6 @@ static const GMarkupParser markup_parser =
 
 GList *
 gimp_gradient_load_svg (const gchar  *filename,
-                        gboolean      stingy_memory_use,
                         GError      **error)
 {
   GimpXmlParser *xml_parser;

@@ -116,7 +116,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                     "stingy-memory-use",
                                     STINGY_MEMORY_USE_BLURB,
                                     FALSE,
-                                    GIMP_CONFIG_PARAM_RESTART);
+                                    GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
                                  1, GIMP_MAX_NUM_THREADS, 2,

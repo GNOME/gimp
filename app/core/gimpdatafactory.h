@@ -26,10 +26,8 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name,
-                                                gboolean      stingy_memory_use);
+typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name);
 typedef GList    * (* GimpDataLoadFunc)        (const gchar  *filename,
-                                                gboolean      stingy_memory_use,
                                                 GError      **error);
 typedef GimpData * (* GimpDataGetStandardFunc) (void);
 

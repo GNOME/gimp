@@ -307,7 +307,6 @@ gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
 
 GList *
 gimp_brush_pipe_load (const gchar  *filename,
-                      gboolean      stingy_memory_use,
                       GError      **error)
 {
   GimpBrushPipe     *pipe = NULL;

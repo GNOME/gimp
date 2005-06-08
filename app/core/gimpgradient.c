@@ -61,8 +61,7 @@ static TempBuf  * gimp_gradient_get_new_preview  (GimpViewable      *viewable,
                                                   gint               width,
                                                   gint               height);
 static gchar    * gimp_gradient_get_extension    (GimpData          *data);
-static GimpData * gimp_gradient_duplicate        (GimpData          *data,
-                                                  gboolean           stingy_memory_use);
+static GimpData * gimp_gradient_duplicate        (GimpData          *data);
 
 static GimpGradientSegment *
            gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
@@ -312,8 +311,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 }
 
 static GimpData *
-gimp_gradient_duplicate (GimpData *data,
-                         gboolean  stingy_memory_use)
+gimp_gradient_duplicate (GimpData *data)
 {
   GimpGradient        *gradient;
   GimpGradientSegment *head, *prev, *cur, *orig;
@@ -348,8 +346,7 @@ gimp_gradient_duplicate (GimpData *data,
 }
 
 GimpData *
-gimp_gradient_new (const gchar *name,
-                   gboolean     stingy_memory_use)
+gimp_gradient_new (const gchar *name)
 {
   GimpGradient *gradient;
 
@@ -372,7 +369,7 @@ gimp_gradient_get_standard (void)
 
   if (! standard_gradient)
     {
-      standard_gradient = gimp_gradient_new ("Standard", FALSE);
+      standard_gradient = gimp_gradient_new ("Standard");
 
       standard_gradient->dirty = FALSE;
       gimp_data_make_internal (standard_gradient);
