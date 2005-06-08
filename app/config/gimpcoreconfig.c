@@ -244,8 +244,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
-                                 "font-path-writable",
-                                 FONT_PATH_WRITABLE_BLURB,
+                                 "font-path-writable", NULL,
 				 GIMP_CONFIG_PATH_DIR_LIST, NULL,
                                  GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,

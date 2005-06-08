@@ -113,8 +113,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "${gimp_dir}",
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,
-                                    "stingy-memory-use",
-                                    STINGY_MEMORY_USE_BLURB,
+                                    "stingy-memory-use", NULL,
                                     FALSE,
                                     GIMP_CONFIG_PARAM_IGNORE);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,

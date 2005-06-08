@@ -143,8 +143,6 @@ N_("When enabled, the selected pattern will be used for all tools.")
 #define FONT_PATH_BLURB \
 "Where to look for fonts."
 
-#define FONT_PATH_WRITABLE_BLURB ""
-
 #define HELP_BROWSER_BLURB \
 N_("Sets the browser used by the help system.")
 
@@ -331,11 +329,6 @@ N_("Enable to display a handy GIMP tip on startup.")
 
 #define SHOW_TOOL_TIPS_BLURB \
 N_("Enable to display tooltips.")
-
-#define STINGY_MEMORY_USE_BLURB \
-N_("There is always a tradeoff between memory usage and speed.  In most " \
-   "cases, the GIMP opts for speed over memory.  However, if memory is a " \
-   "big issue, try to enable this setting.")
 
 #define SWAP_PATH_BLURB \
 N_("Sets the swap file location. The gimp uses a tile based memory " \
