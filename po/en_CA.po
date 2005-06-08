@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-05 22:10-0400\n"
-"PO-Revision-Date: 2005-06-05 14:29-0400\n"
+"POT-Creation-Date: 2005-06-08 17:34-0400\n"
+"PO-Revision-Date: 2005-06-08 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -701,8 +701,8 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:126 app/core/gimpimage.c:1348
-#: app/core/gimppalette-import.c:221 app/core/gimppalette.c:520
-#: app/core/gimppalette.c:631 app/dialogs/palette-import-dialog.c:692
+#: app/core/gimppalette-import.c:221 app/core/gimppalette.c:517
+#: app/core/gimppalette.c:627 app/dialogs/palette-import-dialog.c:692
 #: app/pdb/image_cmds.c:3838 app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Untitled"
@@ -949,8 +949,8 @@ msgid "St_atus & Text"
 msgstr "St_atus & Text"
 
 #: app/actions/dockable-actions.c:108
-msgid "_Show Button Bar"
-msgstr "_Show Button Bar"
+msgid "Show _Button Bar"
+msgstr "Show _Button Bar"
 
 #: app/actions/dockable-actions.c:117
 msgid "View as _List"
@@ -2702,10 +2702,10 @@ msgid "Open Text File (UTF-8)"
 msgstr "Open Text File (UTF-8)"
 
 #: app/actions/text-editor-commands.c:137 app/config/gimpconfig-file.c:57
-#: app/core/gimpbrush-load.c:116 app/core/gimpbrush-load.c:406
-#: app/core/gimpbrushgenerated.c:602 app/core/gimpbrushpipe.c:332
-#: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:361
-#: app/core/gimppattern.c:318 app/tools/gimpimagemaptool.c:614
+#: app/core/gimpbrush-load.c:115 app/core/gimpbrush-load.c:395
+#: app/core/gimpbrushgenerated.c:594 app/core/gimpbrushpipe.c:331
+#: app/core/gimpgradient-load.c:62 app/core/gimppalette.c:358
+#: app/core/gimppattern.c:302 app/tools/gimpimagemaptool.c:614
 #: app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3360,9 +3360,9 @@ msgstr ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 
-#: app/config/gimpconfig-file.c:66 app/core/gimpbrushgenerated.c:255
+#: app/config/gimpconfig-file.c:66 app/core/gimpbrushgenerated.c:254
 #: app/core/gimpgradient-save.c:51 app/core/gimpgradient-save.c:142
-#: app/core/gimppalette.c:564 app/gui/themes.c:238
+#: app/core/gimppalette.c:561 app/gui/themes.c:238
 #: app/tools/gimpimagemaptool.c:613 app/vectors/gimpvectors-export.c:83
 #: app/xcf/xcf.c:350
 #, c-format
@@ -3492,19 +3492,19 @@ msgstr "When enabled, the selected gradient will be used for all tools."
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "When enabled, the selected pattern will be used for all tools."
 
-#: app/config/gimprc-blurbs.h:149
+#: app/config/gimprc-blurbs.h:147
 msgid "Sets the browser used by the help system."
 msgstr "Sets the browser used by the help system."
 
-#: app/config/gimprc-blurbs.h:157
+#: app/config/gimprc-blurbs.h:155
 msgid "Sets the text to appear in image window status bars."
 msgstr "Sets the text to appear in image window status bars."
 
-#: app/config/gimprc-blurbs.h:160
+#: app/config/gimprc-blurbs.h:158
 msgid "Sets the text to appear in image window titles."
 msgstr "Sets the text to appear in image window titles."
 
-#: app/config/gimprc-blurbs.h:163
+#: app/config/gimprc-blurbs.h:161
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -3512,23 +3512,23 @@ msgstr ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 
-#: app/config/gimprc-blurbs.h:167
+#: app/config/gimprc-blurbs.h:165
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Install a private colourmap; might be useful on 8-bit (256 colour) displays."
 
-#: app/config/gimprc-blurbs.h:170
+#: app/config/gimprc-blurbs.h:168
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Sets the level of interpolation used for scaling and other transformations."
 
-#: app/config/gimprc-blurbs.h:177
+#: app/config/gimprc-blurbs.h:175
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "How many recently opened image filenames to keep on the File menu."
 
-#: app/config/gimprc-blurbs.h:180
+#: app/config/gimprc-blurbs.h:178
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -3536,7 +3536,7 @@ msgstr ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 
-#: app/config/gimprc-blurbs.h:184
+#: app/config/gimprc-blurbs.h:182
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -3544,11 +3544,11 @@ msgstr ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 
-#: app/config/gimprc-blurbs.h:188
+#: app/config/gimprc-blurbs.h:186
 msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "When enabled, GIMP will show mnemonics in menus."
 
-#: app/config/gimprc-blurbs.h:191
+#: app/config/gimprc-blurbs.h:189
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
@@ -3556,7 +3556,7 @@ msgstr ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colours allocated for the GIMP."
 
-#: app/config/gimprc-blurbs.h:202
+#: app/config/gimprc-blurbs.h:200
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3566,7 +3566,7 @@ msgstr ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 
-#: app/config/gimprc-blurbs.h:207
+#: app/config/gimprc-blurbs.h:205
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -3576,7 +3576,7 @@ msgstr ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 
-#: app/config/gimprc-blurbs.h:212
+#: app/config/gimprc-blurbs.h:210
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
@@ -3586,7 +3586,7 @@ msgstr ""
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 
-#: app/config/gimprc-blurbs.h:217
+#: app/config/gimprc-blurbs.h:215
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -3594,7 +3594,7 @@ msgstr ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 
-#: app/config/gimprc-blurbs.h:221
+#: app/config/gimprc-blurbs.h:219
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
@@ -3602,7 +3602,7 @@ msgstr ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
 
-#: app/config/gimprc-blurbs.h:235
+#: app/config/gimprc-blurbs.h:233
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -3616,7 +3616,7 @@ msgstr ""
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
 
-#: app/config/gimprc-blurbs.h:248
+#: app/config/gimprc-blurbs.h:246
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -3626,7 +3626,7 @@ msgstr ""
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 
-#: app/config/gimprc-blurbs.h:253
+#: app/config/gimprc-blurbs.h:251
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -3634,7 +3634,7 @@ msgstr ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogues."
 
-#: app/config/gimprc-blurbs.h:257
+#: app/config/gimprc-blurbs.h:255
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
@@ -3642,7 +3642,7 @@ msgstr ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 
-#: app/config/gimprc-blurbs.h:261
+#: app/config/gimprc-blurbs.h:259
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
@@ -3650,26 +3650,26 @@ msgstr ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
 
-#: app/config/gimprc-blurbs.h:265
+#: app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Let GIMP try to restore your last saved session on each startup."
 
-#: app/config/gimprc-blurbs.h:268
+#: app/config/gimprc-blurbs.h:266
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Remember the current tool, pattern, colour, and brush across GIMP sessions."
 
-#: app/config/gimprc-blurbs.h:272
+#: app/config/gimprc-blurbs.h:270
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 "Save the positions and sizes of the main dialogues when the GIMP exits."
 
-#: app/config/gimprc-blurbs.h:275
+#: app/config/gimprc-blurbs.h:273
 msgid "Save the tool options when the GIMP exits."
 msgstr "Save the tool options when the GIMP exits."
 
-#: app/config/gimprc-blurbs.h:281
+#: app/config/gimprc-blurbs.h:279
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -3677,7 +3677,7 @@ msgstr ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 
-#: app/config/gimprc-blurbs.h:285
+#: app/config/gimprc-blurbs.h:283
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -3687,7 +3687,7 @@ msgstr ""
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 
-#: app/config/gimprc-blurbs.h:290
+#: app/config/gimprc-blurbs.h:288
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
@@ -3695,7 +3695,7 @@ msgstr ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
 
-#: app/config/gimprc-blurbs.h:294
+#: app/config/gimprc-blurbs.h:292
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -3703,7 +3703,7 @@ msgstr ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 
-#: app/config/gimprc-blurbs.h:298
+#: app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -3711,7 +3711,7 @@ msgstr ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 
-#: app/config/gimprc-blurbs.h:302
+#: app/config/gimprc-blurbs.h:300
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -3719,7 +3719,7 @@ msgstr ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 
-#: app/config/gimprc-blurbs.h:306
+#: app/config/gimprc-blurbs.h:304
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -3727,7 +3727,7 @@ msgstr ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 
-#: app/config/gimprc-blurbs.h:310
+#: app/config/gimprc-blurbs.h:308
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -3735,7 +3735,7 @@ msgstr ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 
-#: app/config/gimprc-blurbs.h:314
+#: app/config/gimprc-blurbs.h:312
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -3743,7 +3743,7 @@ msgstr ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 
-#: app/config/gimprc-blurbs.h:318
+#: app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -3751,7 +3751,7 @@ msgstr ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 
-#: app/config/gimprc-blurbs.h:322
+#: app/config/gimprc-blurbs.h:320
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -3759,7 +3759,7 @@ msgstr ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 
-#: app/config/gimprc-blurbs.h:326
+#: app/config/gimprc-blurbs.h:324
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -3767,25 +3767,15 @@ msgstr ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 
-#: app/config/gimprc-blurbs.h:330
+#: app/config/gimprc-blurbs.h:328
 msgid "Enable to display a handy GIMP tip on startup."
 msgstr "Enable display of a handy GIMP tip on startup."
 
-#: app/config/gimprc-blurbs.h:333
+#: app/config/gimprc-blurbs.h:331
 msgid "Enable to display tooltips."
 msgstr "Enable to display tooltips."
 
-#: app/config/gimprc-blurbs.h:336
-msgid ""
-"There is always a tradeoff between memory usage and speed.  In most cases, "
-"the GIMP opts for speed over memory.  However, if memory is a big issue, try "
-"to enable this setting."
-msgstr ""
-"There is always a tradeoff between memory usage and speed.  In most cases, "
-"the GIMP opts for speed over memory.  However, if memory is a big issue, try "
-"to enable this setting."
-
-#: app/config/gimprc-blurbs.h:341
+#: app/config/gimprc-blurbs.h:334
 msgid ""
 "Sets the swap file location. The gimp uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3801,11 +3791,11 @@ msgstr ""
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 
-#: app/config/gimprc-blurbs.h:350
+#: app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
 msgstr "When enabled, menus can be torn off."
 
-#: app/config/gimprc-blurbs.h:353
+#: app/config/gimprc-blurbs.h:346
 msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
@@ -3815,7 +3805,7 @@ msgstr ""
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 
-#: app/config/gimprc-blurbs.h:359
+#: app/config/gimprc-blurbs.h:352
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -3823,15 +3813,15 @@ msgstr ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 
-#: app/config/gimprc-blurbs.h:363
+#: app/config/gimprc-blurbs.h:356
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr "Save changed keyboard shortcuts when the GIMP exits."
 
-#: app/config/gimprc-blurbs.h:366
+#: app/config/gimprc-blurbs.h:359
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Restore saved keyboard shortcuts on each GIMP startup."
 
-#: app/config/gimprc-blurbs.h:369
+#: app/config/gimprc-blurbs.h:362
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -3843,7 +3833,7 @@ msgstr ""
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
 
-#: app/config/gimprc-blurbs.h:381
+#: app/config/gimprc-blurbs.h:374
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
@@ -3851,7 +3841,7 @@ msgstr ""
 "Sets the size of the thumbnail shown in the Open dialogue. Note that GIMP "
 "cannot create thumbnails if layer previews are disabled."
 
-#: app/config/gimprc-blurbs.h:385
+#: app/config/gimprc-blurbs.h:378
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -3859,7 +3849,7 @@ msgstr ""
 "The thumbnail in the Open dialogue will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 
-#: app/config/gimprc-blurbs.h:389
+#: app/config/gimprc-blurbs.h:382
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
@@ -3871,7 +3861,7 @@ msgstr ""
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
 
-#: app/config/gimprc-blurbs.h:400
+#: app/config/gimprc-blurbs.h:393
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -3879,15 +3869,15 @@ msgstr ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 
-#: app/config/gimprc-blurbs.h:404
+#: app/config/gimprc-blurbs.h:397
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Sets the manner in which transparency is displayed in images."
 
-#: app/config/gimprc-blurbs.h:407
+#: app/config/gimprc-blurbs.h:400
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Sets the size of the checkerboard used to display transparency."
 
-#: app/config/gimprc-blurbs.h:410
+#: app/config/gimprc-blurbs.h:403
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
@@ -3895,7 +3885,7 @@ msgstr ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 
-#: app/config/gimprc-blurbs.h:414
+#: app/config/gimprc-blurbs.h:407
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -3903,7 +3893,7 @@ msgstr ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
 
-#: app/config/gimprc-blurbs.h:418
+#: app/config/gimprc-blurbs.h:411
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -3913,15 +3903,15 @@ msgstr ""
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 
-#: app/config/gimprc-blurbs.h:423
+#: app/config/gimprc-blurbs.h:416
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Sets the size of the previews in the Undo History."
 
-#: app/config/gimprc-blurbs.h:426
+#: app/config/gimprc-blurbs.h:419
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "When enabled, pressing F1 will open the help browser."
 
-#: app/config/gimprc-blurbs.h:429
+#: app/config/gimprc-blurbs.h:422
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -4462,19 +4452,19 @@ msgstr "Fill with Transparency"
 msgid "Fill with Pattern"
 msgstr "Fill with Pattern"
 
-#: app/core/gimp-gradients.c:70
+#: app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
 msgstr "FG to BG (RGB)"
 
-#: app/core/gimp-gradients.c:75
+#: app/core/gimp-gradients.c:73
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "FG to BG (HSV counter-clockwise)"
 
-#: app/core/gimp-gradients.c:80
+#: app/core/gimp-gradients.c:78
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "FG to BG (HSV clockwise hue)"
 
-#: app/core/gimp-gradients.c:85
+#: app/core/gimp-gradients.c:83
 msgid "FG to Transparent"
 msgstr "FG to Transparent"
 
@@ -4514,54 +4504,54 @@ msgstr "Documents"
 msgid "Modules"
 msgstr "Modules"
 
-#: app/core/gimpbrush-load.c:162
+#: app/core/gimpbrush-load.c:152
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Could not read %d bytes from '%s': %s"
 
-#: app/core/gimpbrush-load.c:182
+#: app/core/gimpbrush-load.c:172
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Fatal parse error in brush file '%s': Width = 0."
 
-#: app/core/gimpbrush-load.c:191
+#: app/core/gimpbrush-load.c:181
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Fatal parse error in brush file '%s': Height = 0."
 
-#: app/core/gimpbrush-load.c:200
+#: app/core/gimpbrush-load.c:190
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Fatal parse error in brush file '%s': Bytes = 0."
 
-#: app/core/gimpbrush-load.c:224
+#: app/core/gimpbrush-load.c:214
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fatal parse error in brush file '%s': Unknown depth %d."
 
-#: app/core/gimpbrush-load.c:237
+#: app/core/gimpbrush-load.c:227
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fatal parse error in brush file '%s': Unknown version %d."
 
-#: app/core/gimpbrush-load.c:253 app/core/gimpbrush-load.c:373
+#: app/core/gimpbrush-load.c:243 app/core/gimpbrush-load.c:363
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatal parse error in brush file '%s': File appears truncated."
 
-#: app/core/gimpbrush-load.c:261 app/core/gimpbrushgenerated.c:649
-#: app/core/gimpbrushpipe.c:348
+#: app/core/gimpbrush-load.c:251 app/core/gimpbrushgenerated.c:641
+#: app/core/gimpbrushpipe.c:347
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Invalid UTF-8 string in brush file '%s'."
 
-#: app/core/gimpbrush-load.c:268 app/core/gimpcontext.c:1296
-#: app/core/gimpitem.c:475 app/core/gimppattern.c:390
+#: app/core/gimpbrush-load.c:258 app/core/gimpcontext.c:1294
+#: app/core/gimpitem.c:475 app/core/gimppattern.c:374
 #: app/dialogs/template-options-dialog.c:80 app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Unnamed"
 
-#: app/core/gimpbrush-load.c:362
+#: app/core/gimpbrush-load.c:352
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -4570,44 +4560,44 @@ msgstr ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 
-#: app/core/gimpbrush-load.c:419
+#: app/core/gimpbrush-load.c:408
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Fatal parse error in brush file '%s': unable to decode ABR format version %d."
 
-#: app/core/gimpbrush-load.c:436
+#: app/core/gimpbrush-load.c:425
 #, c-format
 msgid "Fatal parse error in brush file '%s'"
 msgstr "Fatal parse error in brush file '%s'"
 
-#: app/core/gimpbrushgenerated.c:615
+#: app/core/gimpbrushgenerated.c:607
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr "Fatal parse error in brush file '%s': Not a GIMP brush file."
 
-#: app/core/gimpbrushgenerated.c:631
+#: app/core/gimpbrushgenerated.c:623
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 msgstr "Fatal parse error in brush file '%s': Unknown GIMP brush version."
 
-#: app/core/gimpbrushgenerated.c:670
+#: app/core/gimpbrushgenerated.c:662
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 msgstr "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
 
-#: app/core/gimpbrushgenerated.c:751
+#: app/core/gimpbrushgenerated.c:740
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Error while reading brush file '%s': %s"
 
-#: app/core/gimpbrushgenerated.c:753
+#: app/core/gimpbrushgenerated.c:742
 msgid "File is truncated"
 msgstr "File is truncated"
 
-#: app/core/gimpbrushpipe.c:364 app/core/gimpbrushpipe.c:384
-#: app/core/gimpbrushpipe.c:474
+#: app/core/gimpbrushpipe.c:363 app/core/gimpbrushpipe.c:383
+#: app/core/gimpbrushpipe.c:473
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatal parse error in brush file '%s': File is corrupt."
@@ -4726,7 +4716,7 @@ msgstr "Select by Colour"
 msgid "Could not delete '%s': %s"
 msgstr "Could not delete '%s': %s"
 
-#: app/core/gimpdatafactory.c:324 app/core/gimpdatafactory.c:542
+#: app/core/gimpdatafactory.c:322 app/core/gimpdatafactory.c:532
 #, c-format
 msgid ""
 "Warning: Failed to save data:\n"
@@ -4737,17 +4727,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:444 app/core/gimpdatafactory.c:447
+#: app/core/gimpdatafactory.c:434 app/core/gimpdatafactory.c:437
 #: app/core/gimpitem.c:272 app/core/gimpitem.c:275
 msgid "copy"
 msgstr "copy"
 
-#: app/core/gimpdatafactory.c:456 app/core/gimpitem.c:284
+#: app/core/gimpdatafactory.c:446 app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s copy"
 
-#: app/core/gimpdatafactory.c:641
+#: app/core/gimpdatafactory.c:628
 #, c-format
 msgid ""
 "Warning: Failed to load data:\n"
@@ -4824,37 +4814,37 @@ msgstr "Empty variable name in environment file %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Illegal variable name in environment file %s: %s"
 
-#: app/core/gimpgradient-load.c:72
+#: app/core/gimpgradient-load.c:71
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 
-#: app/core/gimpgradient-load.c:89
+#: app/core/gimpgradient-load.c:88
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Invalid UTF-8 string in gradient file '%s'."
 
-#: app/core/gimpgradient-load.c:111
+#: app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
 msgstr "Fatal parse error in gradient file '%s': File is corrupt."
 
-#: app/core/gimpgradient-load.c:168
+#: app/core/gimpgradient-load.c:167
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Corrupt segment %d in gradient file '%s'."
 
-#: app/core/gimpgradient-load.c:179 app/core/gimpgradient-load.c:193
+#: app/core/gimpgradient-load.c:178 app/core/gimpgradient-load.c:192
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 
-#: app/core/gimpgradient-load.c:277
+#: app/core/gimpgradient-load.c:275
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "No linear gradients found in '%s'"
 
-#: app/core/gimpgradient-load.c:287
+#: app/core/gimpgradient-load.c:285
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Failed to import gradients from '%s': %s"
@@ -5332,7 +5322,7 @@ msgstr "Show Layer Mask"
 msgid "Unknown type of palette file: %s"
 msgstr "Unknown type of palette file: %s"
 
-#: app/core/gimppalette.c:376
+#: app/core/gimppalette.c:373
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
@@ -5341,23 +5331,23 @@ msgstr ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 
-#: app/core/gimppalette.c:382
+#: app/core/gimppalette.c:379
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "Fatal parse error in palette file '%s': Missing magic header."
 
-#: app/core/gimppalette.c:398 app/core/gimppalette.c:423
-#: app/core/gimppalette.c:453 app/core/gimppalette.c:533
+#: app/core/gimppalette.c:395 app/core/gimppalette.c:420
+#: app/core/gimppalette.c:450 app/core/gimppalette.c:530
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr "Fatal parse error in palette file '%s': Read error in line %d."
 
-#: app/core/gimppalette.c:413
+#: app/core/gimppalette.c:410
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Invalid UTF-8 string in palette file '%s'"
 
-#: app/core/gimppalette.c:441
+#: app/core/gimppalette.c:438
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -5367,40 +5357,40 @@ msgstr ""
 "default value."
 
 #. maybe we should just abort?
-#: app/core/gimppalette.c:481
+#: app/core/gimppalette.c:478
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Reading palette file '%s': Missing RED component in line %d."
 
-#: app/core/gimppalette.c:489
+#: app/core/gimppalette.c:486
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr "Reading palette '%s': Missing GREEN component in line %d."
 
-#: app/core/gimppalette.c:497
+#: app/core/gimppalette.c:494
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Reading palette file '%s': Missing BLUE component in line %d."
 
-#: app/core/gimppalette.c:507
+#: app/core/gimppalette.c:504
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Reading palette file '%s': RGB value out of range in line %d."
 
-#: app/core/gimppattern.c:327 app/core/gimppattern.c:374
-#: app/core/gimppattern.c:406
+#: app/core/gimppattern.c:311 app/core/gimppattern.c:358
+#: app/core/gimppattern.c:390
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 
-#: app/core/gimppattern.c:347
+#: app/core/gimppattern.c:331
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 
-#: app/core/gimppattern.c:357
+#: app/core/gimppattern.c:341
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -5409,7 +5399,7 @@ msgstr ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 
-#: app/core/gimppattern.c:383
+#: app/core/gimppattern.c:367
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Invalid UTF-8 string in pattern file '%s'."
