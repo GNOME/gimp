@@ -1,5 +1,9 @@
 2005-06-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/laplace.c: minor code cleanup.
+
+2005-06-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc-blurbs.h: removed blurbs for unused preferences.
 
 	* app/config/gimpbaseconfig.c
