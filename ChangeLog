@@ -1,3 +1,9 @@
+2005-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpbaseconfig.c: ignore the user setting for
+	"stingy-memory-use" and use the default value which is FALSE.
+	Fixes bug #306617 for the stable branch.
+
 2005-06-06  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
