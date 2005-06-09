@@ -30,6 +30,9 @@ Changes in CVS (not released yet)
 - turned image and drawable combo boxes in libgimpui into real widgets
 - further improved Python bindings
 - nicer DND icons for viewables
+- allow to hide the button-bar found at the bottom of most dockables
+- turned font selection in libgimpui into a real widget
+- added support for BMP files with alpha channel (RGBA)
 - bug fixes and code cleanup
 
 
