@@ -7,8 +7,8 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
-Changes in CVS (not released yet)
-=================================
+Changes in GIMP 2.3.1
+=====================
 
 - allow to copy and paste SVG between GIMP and other applications
 - added a utility for testing and debugging clipboard operations

@@ -1,3 +1,7 @@
+2005-06-09  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.1 development release.
+
 2005-06-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/laplace.c: minor code cleanup.
