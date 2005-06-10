@@ -1,3 +1,7 @@
+2005-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: don't try to generate tips/Makefile.
+
 2005-06-10  Sven Neumann  <sven@gimp.org>
 
 	Switch to a more standard way of treating the translations for the

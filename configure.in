@@ -1710,7 +1710,6 @@ devel-docs/libgimpwidgets/version
 devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
-tips/Makefile
 cursors/Makefile
 themes/Makefile
 themes/Default/Makefile
