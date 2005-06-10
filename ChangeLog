@@ -1,3 +1,23 @@
+2005-06-10  Sven Neumann  <sven@gimp.org>
+
+	Switch to a more standard way of treating the translations for the
+	startup tips (bug #171846):
+
+	* Makefile.am
+	* configure.in: removed tips directory; added data/tips and po-tips
+	directories instead.
+
+	* data/Makefile.am
+	* data/AUTHORS
+	* data/ChangeLog
+	* data/README: removed these three outdated files.
+
+	* data/tips: gimp.tips.xml and related files live here now.
+
+	* po-tips: translations of the tips are found here now.
+
+	* README.i18n: changed accordingly.
+
 2005-06-10  Michael Natterer  <mitch@gimp.org>
 
 	Fix bug #134304, as far as it's fixable:

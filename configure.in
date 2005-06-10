@@ -1718,23 +1718,25 @@ themes/Default/images/Makefile
 themes/Default/images/preferences/Makefile
 themes/Small/Makefile
 data/Makefile
-data/interpreters/Makefile
+data/brushes/Makefile
 data/environ/Makefile
+data/gradients/Makefile
+data/images/Makefile
+data/interpreters/Makefile
 data/misc/Makefile
+data/misc/gimp.applications
 data/misc/gimp.desktop.in
 data/misc/gimp.keys
-data/misc/gimp.applications
-data/images/Makefile
-data/brushes/Makefile
-data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
+data/tips/Makefile
 etc/Makefile
 m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
+po-tips/Makefile.in
 gimp-zip
 Makefile
 ])
@@ -1757,6 +1759,7 @@ AC_CONFIG_COMMANDS([chmod-scripts],
 AC_CONFIG_COMMANDS([sed-po-makefiles],
 [sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile
 sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
-sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile])
+sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile
+sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile])
 
 AC_OUTPUT

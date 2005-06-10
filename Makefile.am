@@ -12,7 +12,6 @@ SUBDIRS = \
 	po-script-fu	\
 	data		\
 	menus		\
-	tips		\
 	libgimpbase	\
 	libgimpcolor	\
 	libgimpmath	\

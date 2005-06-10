@@ -1,0 +1,5 @@
+2005-06-10  Sven Neumann  <sven@gimp.org>
+
+	Added new directory po-tips and imported translations that used
+	to live in the tips directory. Added stubs for missing po files.
+

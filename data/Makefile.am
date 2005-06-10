@@ -1,11 +1,15 @@
 ## Makefile.am for gimp/data
 
-SUBDIRS = interpreters environ misc images brushes gradients palettes patterns
-
-EXTRA_DIST = \
-	AUTHORS		\
-	ChangeLog	\
-	README
+SUBDIRS = \
+	brushes		\
+	environ		\
+	gradients	\
+	images		\
+	interpreters	\
+	misc		\
+	palettes	\
+	patterns	\
+	tips
 
 fontdir = $(gimpdatadir)/fonts
 
