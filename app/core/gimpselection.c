@@ -670,6 +670,12 @@ gimp_selection_extract (GimpChannel  *selection,
       return NULL;
     }
 
+  /*  If there is a selection, we must add alpha because the selection
+   *  could have any shape.
+   */
+  if (non_empty)
+    add_alpha = TRUE;
+
   /*  How many bytes in the temp buffer?  */
   switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {

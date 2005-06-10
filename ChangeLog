@@ -1,3 +1,18 @@
+2005-06-10  Michael Natterer  <mitch@gimp.org>
+
+	Fix bug #134304, as far as it's fixable:
+
+	* app/core/gimp-edit.c (gimp_edit_paste_as_new): handle pasting
+	buffers without alpha. Also don't uselessly convert all buffers
+	to RGB but create an image in the buffer's color space.
+
+	(gimp_edit_extract): call gimp_selection_extract() with
+	add_alpha = FALSE.
+
+	* app/core/gimpselection.c (gimp_selection_extract): set add_alpha
+	to TRUE if there is a selection, because the selection could have
+	any shape.
+
 2005-06-09  Sven Neumann  <sven@gimp.org>
 
 	* configure.in:  bumped version number to 2.3.2.

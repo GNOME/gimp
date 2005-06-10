@@ -170,9 +170,7 @@ gimp_edit_paste (GimpImage    *gimage,
   else
     type = gimp_image_base_type_with_alpha (gimage);
 
-  layer = gimp_layer_new_from_tiles (paste->tiles,
-                                     gimage,
-                                     type,
+  layer = gimp_layer_new_from_tiles (paste->tiles, gimage, type,
                                      _("Pasted Layer"),
                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -271,18 +269,30 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 			GimpImage  *invoke,
 			GimpBuffer *paste)
 {
-  GimpImage *gimage;
-  GimpLayer *layer;
+  GimpImage     *gimage;
+  GimpLayer     *layer;
+  GimpImageType  type;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
   g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
 
+  switch (tile_manager_bpp (paste->tiles))
+    {
+    case 1: type = GIMP_GRAY_IMAGE;  break;
+    case 2: type = GIMP_GRAYA_IMAGE; break;
+    case 3: type = GIMP_RGB_IMAGE;   break;
+    case 4: type = GIMP_RGBA_IMAGE;  break;
+    default:
+      g_return_val_if_reached (NULL);
+      break;
+    }
+
   /*  create a new image  (always of type GIMP_RGB)  */
   gimage = gimp_create_image (gimp,
 			      gimp_buffer_get_width (paste),
                               gimp_buffer_get_height (paste),
-			      GIMP_RGB,
+			      GIMP_IMAGE_TYPE_BASE_TYPE (type),
 			      TRUE);
   gimp_image_undo_disable (gimage);
 
@@ -294,9 +304,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
                            gimp_image_get_unit (invoke));
     }
 
-  layer = gimp_layer_new_from_tiles (paste->tiles,
-                                     gimage,
-                                     gimp_image_base_type_with_alpha (gimage),
+  layer = gimp_layer_new_from_tiles (paste->tiles, gimage, type,
 				     _("Pasted Layer"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
@@ -400,7 +408,7 @@ gimp_edit_extract (GimpImage    *gimage,
 
   /*  Cut/copy the mask portion from the gimage  */
   tiles = gimp_selection_extract (gimp_image_get_mask (gimage),
-                                  drawable, context, cut_pixels, FALSE, TRUE);
+                                  drawable, context, cut_pixels, FALSE, FALSE);
 
   if (cut_pixels)
     gimp_image_undo_group_end (gimage);
