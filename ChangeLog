@@ -1,3 +1,11 @@
+2005-06-11  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: if any of the pygimp dependencies aren't fulfilled,
+	display a more informative message.
+
+	* autogen.sh: depend on automake 1.8, so AM_PATH_PYTHON has a user
+	defined failure mode. Also prefer automake 1.9.
+
 2005-06-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c: connect to "selection-changed"

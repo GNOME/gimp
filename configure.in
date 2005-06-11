@@ -1345,17 +1345,26 @@ AC_ARG_ENABLE(python,
   AC_HELP_STRING([--disable-python],
                  [do not build the python extension]))
 
+m4_define([pycheck_error], [
+*** Could not find $1.
+*** Please install $2, or skip building the python scripting extension by
+*** passing --disable-python to configure (but then you will not be able
+*** to use scripts for GIMP that are written in Python).])
+
 if test "x$enable_python" != xno; then
   dnl check for Python
-  AM_PATH_PYTHON(2.2.1)
-  AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
+  AM_PATH_PYTHON(2.2.1,,
+    [AC_MSG_ERROR([pycheck_error([Python 2.2.1 or better], [it])])])
+  AM_CHECK_PYTHON_HEADERS(,
+    [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
 
   dnl check for PyGTK
-  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version)
+  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
+    [AC_MSG_ERROR([pycheck_error([PyGTK], [it])])])
 
   AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
   if test "x$PYGTK_CODEGEN" = xno; then
-    AC_MSG_ERROR(could not find pygtk-codegen-2.0 script)
+    AC_MSG_ERROR([pycheck_error([pygtk-codegen-2.0 script], [it])])
   fi
 
   AC_MSG_CHECKING(for pygtk defs)
