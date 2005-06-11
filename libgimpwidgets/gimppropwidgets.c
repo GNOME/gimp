@@ -1973,7 +1973,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
 
   set_param_spec (G_OBJECT (button), button, param_spec);
 
-  g_signal_connect (button, "file-activated",
+  g_signal_connect (button, "selection-changed",
 		    G_CALLBACK (gimp_prop_file_chooser_button_callback),
 		    config);
 
@@ -1997,21 +1997,29 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
     return;
 
   value = gtk_file_chooser_get_filename (button);
-  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  utf8 = value ? g_filename_to_utf8 (value, -1, NULL, NULL, NULL) : NULL;
   g_free (value);
 
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_file_chooser_button_notify,
-                                   button);
-
-  g_object_set (config,
-                param_spec->name, utf8,
+  g_object_get (config,
+                param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_file_chooser_button_notify,
-                                   button);
+  if (! (value && utf8 && strcmp (value, utf8) == 0))
+    {
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_file_chooser_button_notify,
+                                       button);
 
+      g_object_set (config,
+                    param_spec->name, utf8,
+                    NULL);
+
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_file_chooser_button_notify,
+                                       button);
+    }
+
+  g_free (value);
   g_free (utf8);
 }
 

@@ -1,3 +1,8 @@
+2005-06-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c: connect to "selection-changed"
+	instead of "file-activated". Fixes bug #307146.
+
 2005-06-11  Michael Natterer  <mitch@gimp.org>
 
 	Allow to use the selected font in the text editor (bug #170299):
