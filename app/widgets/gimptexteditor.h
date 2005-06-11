@@ -36,7 +36,10 @@ struct _GimpTextEditor
 
   /*<  private  >*/
   GimpTextDirection  base_dir;
+  gchar             *font_name;
+
   GtkWidget         *view;
+  GtkWidget         *font_toggle;
   GtkWidget         *file_dialog;
   GimpUIManager     *ui_manager;
 };
@@ -62,6 +65,10 @@ gchar             * gimp_text_editor_get_text      (GimpTextEditor    *editor);
 void                gimp_text_editor_set_direction (GimpTextEditor    *editor,
                                                     GimpTextDirection  base_dir);
 GimpTextDirection   gimp_text_editor_get_direction (GimpTextEditor    *editor);
+
+void                gimp_text_editor_set_font_name (GimpTextEditor    *editor,
+                                                    const gchar       *font_name);
+const gchar       * gimp_text_editor_get_font_name (GimpTextEditor    *editor);
 
 
 #endif  /* __GIMP_TEXT_EDITOR_H__ */

@@ -513,8 +513,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 }
 
 static void
-gimp_text_options_dir_changed (GimpTextEditor  *editor,
-                               GimpTextOptions *options)
+gimp_text_options_editor_dir_changed (GimpTextEditor  *editor,
+                                      GimpTextOptions *options)
 {
   g_object_set (options,
                 "base-direction", editor->base_dir,
@@ -522,9 +522,9 @@ gimp_text_options_dir_changed (GimpTextEditor  *editor,
 }
 
 static void
-gimp_text_options_notify_dir (GimpTextOptions *options,
-                              GParamSpec      *pspec,
-                              GimpTextEditor  *editor)
+gimp_text_options_editor_notify_dir (GimpTextOptions *options,
+                                     GParamSpec      *pspec,
+                                     GimpTextEditor  *editor)
 {
   GimpTextDirection  dir;
 
@@ -535,12 +535,25 @@ gimp_text_options_notify_dir (GimpTextOptions *options,
   gimp_text_editor_set_direction (editor, dir);
 }
 
+static void
+gimp_text_options_editor_notify_font (GimpTextOptions *options,
+                                      GParamSpec      *pspec,
+                                      GimpTextEditor  *editor)
+{
+  const gchar *font_name;
+
+  font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
+
+  gimp_text_editor_set_font_name (editor, font_name);
+}
+
 GtkWidget *
 gimp_text_options_editor_new (GimpTextOptions *options,
                               GimpMenuFactory *menu_factory,
                               const gchar     *title)
 {
-  GtkWidget *editor;
+  GtkWidget   *editor;
+  const gchar *font_name;
 
   g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
@@ -548,14 +561,21 @@ gimp_text_options_editor_new (GimpTextOptions *options,
 
   editor = gimp_text_editor_new (title, menu_factory);
 
+  font_name = gimp_context_get_font_name (GIMP_CONTEXT (options));
+
   gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
                                   options->base_dir);
+  gimp_text_editor_set_font_name (GIMP_TEXT_EDITOR (editor),
+                                  font_name);
 
   g_signal_connect_object (editor, "dir-changed",
-                           G_CALLBACK (gimp_text_options_dir_changed),
+                           G_CALLBACK (gimp_text_options_editor_dir_changed),
                            options, 0);
   g_signal_connect_object (options, "notify::base-direction",
-                           G_CALLBACK (gimp_text_options_notify_dir),
+                           G_CALLBACK (gimp_text_options_editor_notify_dir),
+                           editor, 0);
+  g_signal_connect_object (options, "notify::font",
+                           G_CALLBACK (gimp_text_options_editor_notify_font),
                            editor, 0);
 
   return editor;

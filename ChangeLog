@@ -1,3 +1,14 @@
+2005-06-11  Michael Natterer  <mitch@gimp.org>
+
+	Allow to use the selected font in the text editor (bug #170299):
+
+	* app/widgets/gimptexteditor.[ch]: added a "Use selected font"
+	toggle and an API to set/get the selected font name.
+
+	* app/tools/gimptextoptions.c: update the editor's font when the
+	text option's font changes. Renamed text editor callbacks to
+	gimp_text_options_editor_foo().
+
 2005-06-10  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: don't try to generate tips/Makefile.
