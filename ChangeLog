@@ -1,3 +1,7 @@
+2005-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-transform-resize.c: added missing brackets in macros.
+
 2005-06-11  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: if any of the pygimp dependencies aren't fulfilled,

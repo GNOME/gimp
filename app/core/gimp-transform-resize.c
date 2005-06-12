@@ -37,8 +37,8 @@
 #error "no FINITE() implementation available?!"
 #endif
 
-#define MIN4(a,b,c,d) MIN(MIN(a,b),MIN(c,d))
-#define MAX4(a,b,c,d) MAX(MAX(a,b),MAX(c,d))
+#define MIN4(a,b,c,d) MIN(MIN((a),(b)),MIN((c),(d)))
+#define MAX4(a,b,c,d) MAX(MAX((a),(b)),MAX((c),(d)))
 
 
 typedef struct
