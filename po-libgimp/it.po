@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-22 11:55+0200\n"
-"PO-Revision-Date: 2005-04-22 12:32+0200\n"
+"POT-Creation-Date: 2005-06-12 17:39+0200\n"
+"PO-Revision-Date: 2005-06-12 13:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -192,9 +192,13 @@ msgstr ""
 "Si è in procinto di salvare un canale (selezione salvata) con nome %s.\n"
 "Non verranno salvati i livelli visibili."
 
-#: ../libgimp/gimpfontmenu.c:100
+#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
 msgid "Font Selection"
 msgstr "Selezione caratteri"
+
+#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+msgid "Sans"
+msgstr "Senza grazie"
 
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
@@ -284,18 +288,15 @@ msgstr "Rimpiazza ls selezione corrente"
 msgid "Intersect with the current selection"
 msgstr "Interseca con la selezione corrente"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Rosso"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Blu"
 
@@ -307,8 +308,7 @@ msgstr "Grigio"
 msgid "Indexed"
 msgstr "Indicizzato"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -520,6 +520,22 @@ msgstr "Avanti"
 msgid "Backward"
 msgstr "Indietro"
 
+#: ../libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Procedura interna di GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "Plug-in di GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "Estensione di GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Procedura temporanea"
+
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
@@ -625,8 +641,7 @@ msgid "Relative Colorimetric"
 msgstr "Colorimetrico relativo"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Saturazione"
 
@@ -788,85 +803,45 @@ msgstr "Fallita la creazione della cartella miniature '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Fallita la creazione delle miniature per %s: %s"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:130
+msgid "_Search:"
+msgstr "_Cerca:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "Colore _primo piano"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:122
 msgid "_Background Color"
 msgstr "Colore di _sfondo"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:126
 msgid "Blac_k"
 msgstr "_Nero"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Bianco"
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:129
 msgid "Scales"
 msgstr "Scale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_H"
-
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_S"
-
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_V"
-
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "Tonalità"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "Valore"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notazione colore esadecimale come si usa in HTML e nei CSS"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr "_Notazione HTML:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:214
 msgid "Current:"
 msgstr "Corrente:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:236
 msgid "Old:"
 msgstr "Vecchio:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:281
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Notazione colore esadecimale come si usa in HTML e nei CSS"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "HTML _Notation:"
+msgstr "_Notazione HTML:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
@@ -958,39 +933,39 @@ msgstr "_Reimposta"
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "_Delinea"
 
-#: ../libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
 msgstr "Spaziatura l_ettere"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
 msgstr "Spaziatura r_ighe"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
 msgid "_Scale"
 msgstr "_Scala"
 
-#: ../libgimpwidgets/gimpstock.c:273
+#: ../libgimpwidgets/gimpstock.c:276
 msgid "Crop"
 msgstr "Ritaglia"
 
-#: ../libgimpwidgets/gimpstock.c:290
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1030,6 +1005,42 @@ msgstr "Generatore del seme di casualità con un numero generato casualmente"
 #: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Casualizza"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "Tonalità"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "Valore"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "_A"
 
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"

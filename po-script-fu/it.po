@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-06 23:35+0200\n"
-"PO-Revision-Date: 2005-04-06 23:36+0200\n"
+"POT-Creation-Date: 2005-06-12 17:40+0200\n"
+"PO-Revision-Date: 2005-06-12 17:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -68,68 +68,68 @@ msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:333
+#: ../plug-ins/script-fu/script-fu-interface.c:334
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:436
+#: ../plug-ins/script-fu/script-fu-interface.c:438
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:440
+#: ../plug-ins/script-fu/script-fu-interface.c:442
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:452
+#: ../plug-ins/script-fu/script-fu-interface.c:454
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:467
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:485
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:549
+#: ../plug-ins/script-fu/script-fu-interface.c:552
 msgid "Script Progress"
 msgstr "Avanzamento dello script"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:557
+#: ../plug-ins/script-fu/script-fu-interface.c:560
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1083
-#: ../plug-ins/dbbrowser/gimpprocview.c:199
+#: ../plug-ins/script-fu/script-fu-interface.c:1088
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1090
-#: ../plug-ins/dbbrowser/gimpprocview.c:221
+#: ../plug-ins/script-fu/script-fu-interface.c:1095
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1097
-#: ../plug-ins/dbbrowser/gimpprocview.c:210
+#: ../plug-ins/script-fu/script-fu-interface.c:1102
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Data:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1106
+#: ../plug-ins/script-fu/script-fu-interface.c:1111
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
@@ -144,15 +144,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:648
+#: ../plug-ins/script-fu/script-fu-server.c:653
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:681
 msgid "Server Port:"
 msgstr "Porta server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:682
+#: ../plug-ins/script-fu/script-fu-server.c:687
 msgid "Server Logfile:"
 msgstr "File di log server:"
 
@@ -257,74 +257,94 @@ msgstr "_Opzioni matite"
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Navigatore delle procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-msgid "Search by _Name"
-msgstr "Ricerca per _nome"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "per nome"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-msgid "Search by _Description"
-msgstr "Ricerca per _descrizione"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "per descrizione"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-msgid "_Search:"
-msgstr "_Cerca:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "per aiuto"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "per autore"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "per copyright"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "per data"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "per tipo"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
 msgid "Searching by name - please wait"
 msgstr "Ricerca per nome - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
+msgid "Searching by description - please wait"
 msgstr "Ricerca per descrizione - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Ricerca per aiuto - attendere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Ricerca per autore - attendere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Ricerca per copyright - attendere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Ricerca per data - attendere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Ricerca per tipo - attendere"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
 msgstr "Ricerca - attendere"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "1 procedura"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
 msgid "No matches"
 msgstr "Nessun riscontro"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:134
+#: ../plug-ins/dbbrowser/gimpprocview.c:138
 msgid "Parameters"
 msgstr "Parametri"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:147
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
 msgstr "Valori restituiti"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:160
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Informazioni aggiuntive"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:320
-msgid "Internal GIMP procedure"
-msgstr "Procedura interna di GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Plug-In"
-msgstr "Plug-in di GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:322
-msgid "GIMP Extension"
-msgstr "Estensione di GIMP"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:323
-msgid "Temporary Procedure"
-msgstr "Procedura temporanea"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
