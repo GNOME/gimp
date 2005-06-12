@@ -5,9 +5,9 @@ to have the following packages (or newer versions) installed:
 
     * GNU autoconf 2.54
         - ftp://ftp.gnu.org/gnu/autoconf/
-    * GNU automake 1.7  (1.8 and 1.9 should work as well)
+    * GNU automake 1.8 (automake 1.9 should work as well)
         - ftp://ftp.gnu.org/gnu/automake/
-    * GNU libtool 1.4  (1.5 if you are compiling on Win32)
+    * GNU libtool 1.4  (libtool 1.5 if you are compiling on Win32)
         - ftp://ftp.gnu.org/gnu/libtool/
 
 Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
