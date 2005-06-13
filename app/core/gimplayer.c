@@ -797,7 +797,7 @@ gimp_layer_transform_color (GimpImage         *gimage,
 	      gimp_image_transform_color (gimage, drawable, d, src_type, s);
 
 	      /*  copy alpha channel  */
-	      d[layerPR->bytes - 1] = src[bufPR->bytes - 1];
+	      d[layerPR->bytes - 1] = s[bufPR->bytes - 1];
 
               s += bufPR->bytes;
               d += layerPR->bytes;

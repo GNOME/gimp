@@ -1,3 +1,8 @@
+2005-06-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_transform_color): copy the
+	alpha channel from the correct source.
+
 2005-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-transform-resize.c: added missing brackets in macros.
