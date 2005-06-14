@@ -223,16 +223,17 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Creates a screenshot of a portion of the screen",
-                          "After a user specified time out the user selects a window and "
-                          "another time out is started. At the end of the second time out "
-                          "the window is grabbed and the image is loaded into The GIMP. "
-                          "Alternatively the whole screen can be grabbed. When called "
-                          "non-interactively it may grab the root window, or use the "
-                          "window-id passed as a parameter.  If 7 arguments are given,"
-                          "the last four will be used as corners of the region to be"
-                          "grabbed",
-			  "Sven Neumann <sven@gimp.org>, Henrik Brix Andersen <brix@gimp.org>",
+			  "Creates screenshots",
+                          "The plug-in allows to take screenshots of a an "
+                          "interactively selected window or of the desktop, "
+                          "either the whole desktop or an interactively "
+                          "selected region. When called non-interactively it "
+                          "may grab the root window, or use the window-id "
+                          "passed as a parameter.  If 7 arguments are given,"
+                          "the last four will be used as corners of the region "
+                          "to be grabbed",
+			  "Sven Neumann <sven@gimp.org>, "
+                          "Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2003",
 			  "v0.9.7 (2003/11/15)",
 			  N_("_Screen Shot..."),
@@ -598,14 +599,14 @@ create_image (const GdkPixbuf *pixbuf)
   gchar        *pixels;
   gpointer      pr;
 
-  status = gimp_progress_init (_("Loading Screen Shot..."));
+  status = gimp_progress_init (_("Loading Screenshot..."));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_undo_disable (image);
-  layer = gimp_layer_new (image, _("Screen Shot"),
+  layer = gimp_layer_new (image, _("Screenshot"),
                           width, height,
                           GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
 
@@ -757,8 +758,6 @@ static gboolean
 shoot_dialog (GdkScreen **screen)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
@@ -768,7 +767,14 @@ shoot_dialog (GdkScreen **screen)
   GdkPixbuf *pixbuf;
   GSList    *radio_group = NULL;
   GtkObject *adj;
+  gboolean   region = FALSE;
   gboolean   run;
+
+  if (shootvals.shoot_type == SHOOT_REGION)
+    {
+      shootvals.shoot_type = SHOOT_ROOT;
+      region = TRUE;
+    }
 
   gimp_ui_init ("screenshot", FALSE);
 
@@ -796,25 +802,15 @@ shoot_dialog (GdkScreen **screen)
       g_object_unref (pixbuf);
     }
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /*  single window  */
-  frame = gimp_frame_new (_("Grab"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("a single _window"));
+					       _("Take a screenshot of "
+                                                 "a single _window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_WINDOW);
@@ -847,26 +843,10 @@ shoot_dialog (GdkScreen **screen)
 
 #endif /* HAVE_X11_XMU_WINUTIL_H */
 
-  /*  dragged region  */
-  button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("the selected _region"));
-  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                shootvals.shoot_type == SHOOT_REGION);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-
-  g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (SHOOT_REGION));
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.shoot_type);
-
-  gtk_widget_show (button);
-
   /*  root window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
-					       _("the whole _screen"));
+					       _("Take a screenshot of "
+                                                 "your _desktop"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_ROOT);
@@ -881,15 +861,32 @@ shoot_dialog (GdkScreen **screen)
 
   gtk_widget_show (button);
 
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
+  /*  dragged region  */
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  toggle = gtk_check_button_new_with_label (_("Select a region"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), region);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
+  gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle, _("If enabled, you can use the mouse to "
+                                     "select a rectangular region of the "
+                                     "screen."), NULL);
+
+  g_object_set_data (G_OBJECT (button), "set_sensitive", toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &region);
 
   /*  grab delay  */
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("W_ait for"));
+  label = gtk_label_new_with_mnemonic (_("W_ait"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -904,13 +901,20 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 
-  label = gtk_label_new (_("seconds"));
+  label = gtk_label_new (_("seconds before grabbing"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  gimp_help_set_help_data (spinner, _("The number of seconds to wait after "
+                                      "selecting the window or region and "
+                                      "actually taking the screenshot."), NULL);
 
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (shootvals.shoot_type == SHOOT_ROOT && region)
+    shootvals.shoot_type = SHOOT_REGION;
 
   if (run)
     {

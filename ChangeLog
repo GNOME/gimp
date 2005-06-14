@@ -1,3 +1,8 @@
+2005-06-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/screenshot.c: some dialog changes, hopefully to
+	the better.
+
 2005-06-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_transform_color): copy the
