@@ -1,7 +1,8 @@
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
-	* app/core/gimpimage.c (gimp_image_raise_layer): allow to raise a
-	layer w/o an alpha channel.
+	* app/core/gimpimage.c (gimp_image_raise_layer)
+	(gimp_image_raise_layer_to_top): allow to raise a layer w/o an
+	alpha channel.
 
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
