@@ -2928,12 +2928,6 @@ gimp_image_raise_layer (GimpImage *gimage,
       return FALSE;
     }
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      g_message (_("Cannot raise a layer without alpha."));
-      return FALSE;
-    }
-
   return gimp_image_position_layer (gimage, layer, index - 1,
                                     TRUE, _("Raise Layer"));
 }

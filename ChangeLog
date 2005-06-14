@@ -1,5 +1,10 @@
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_raise_layer): allow to raise a
+	layer w/o an alpha channel.
+
+2005-06-14  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-gradients.c: renamed internal keys.
 
 2005-06-14  Sven Neumann  <sven@gimp.org>
