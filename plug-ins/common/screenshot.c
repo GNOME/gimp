@@ -1,5 +1,5 @@
 /*
- *  ScreenShot plug-in
+ *  Screenshot plug-in
  *  Copyright 1998-2000 Sven Neumann <sven@gimp.org>
  *  Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
  *
@@ -158,9 +158,9 @@ typedef struct
   gint       y1;
   gint       x2;
   gint       y2;
-} ScreenShotValues;
+} ScreenshotValues;
 
-static ScreenShotValues shootvals =
+static ScreenshotValues shootvals =
 {
   SHOOT_WINDOW, /* root window  */
   TRUE,         /* include WM decorations */
@@ -223,20 +223,20 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Creates screenshots",
+			  "Take a screenshot",
                           "The plug-in allows to take screenshots of a an "
                           "interactively selected window or of the desktop, "
                           "either the whole desktop or an interactively "
-                          "selected region. When called non-interactively it "
-                          "may grab the root window, or use the window-id "
-                          "passed as a parameter.  If 7 arguments are given,"
-                          "the last four will be used as corners of the region "
-                          "to be grabbed",
+                          "selected region. When called non-interactively, it "
+                          "may grab the root window or use the window-id "
+                          "passed as a parameter.  The last four parameters "
+                          "are optional and can be used to specify the corners "
+                          "of the region to be grabbed.",
 			  "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2003",
 			  "v0.9.7 (2003/11/15)",
-			  N_("_Screen Shot..."),
+			  N_("_Screenshot..."),
 			  NULL,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
@@ -340,7 +340,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /* Store variable states for next run */
-	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
+	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenshotValues));
 
 	  gimp_display_new (image_ID);
 	}
@@ -669,7 +669,7 @@ create_image (const GdkPixbuf *pixbuf)
   return image;
 }
 
-/* The main ScreenShot function */
+/* The main Screenshot function */
 
 static gint32
 shoot (GdkScreen *screen)
@@ -741,7 +741,7 @@ shoot (GdkScreen *screen)
 
   if (!screenshot)
     {
-      g_message (_("Error obtaining Screen shot"));
+      g_message (_("There was an error taking the screenshot."));
       return -1;
     }
 
@@ -752,7 +752,7 @@ shoot (GdkScreen *screen)
   return image;
 }
 
-/*  ScreenShot dialog  */
+/*  Screenshot dialog  */
 
 static gboolean
 shoot_dialog (GdkScreen **screen)
@@ -778,7 +778,7 @@ shoot_dialog (GdkScreen **screen)
 
   gimp_ui_init ("screenshot", FALSE);
 
-  dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
+  dialog = gimp_dialog_new (_("Screenshot"), "screenshot",
                             NULL, 0,
 			    gimp_standard_help_func, HELP_ID,
 
