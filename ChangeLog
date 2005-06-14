@@ -1,5 +1,9 @@
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-gradients.c: renamed internal keys.
+
+2005-06-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: some dialog changes, hopefully to
 	the better.
 

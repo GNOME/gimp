@@ -36,10 +36,10 @@
 #include "gimp-intl.h"
 
 
-#define FG_BG_RGB_KEY      "gimp-fg-bg-rgb-gradient"
-#define FG_BG_HSV_CCW_KEY  "gimp-fg-bg-hsv-ccw-gradient"
-#define FG_BG_HSV_CW_KEY   "gimp-fg-bg-hsv-cw-gradient"
-#define FG_TRANSPARENT_KEY "gimp-fg-transparent-gradient"
+#define FG_BG_RGB_KEY      "gimp-gradient-fg-bg-rgb"
+#define FG_BG_HSV_CCW_KEY  "gimp-gradient-fg-bg-hsv-ccw"
+#define FG_BG_HSV_CW_KEY   "gimp-gradient-fg-bg-hsv-cw"
+#define FG_TRANSPARENT_KEY "gimp-gradient-fg-transparent"
 
 
 /*  local function prototypes  */
