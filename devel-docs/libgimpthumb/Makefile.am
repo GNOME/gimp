@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-AUTOMAKE_OPTIONS = 1.6
-
 # The name of the module.
 DOC_MODULE = libgimpthumb
 
