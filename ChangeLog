@@ -1,5 +1,10 @@
 2005-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: fix capitalization on the
+	Color Management page.
+
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimplayertreeview.[ch]: there's no need to keep a
 	reference to the anchor button.
 

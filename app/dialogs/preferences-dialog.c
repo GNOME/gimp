@@ -2160,13 +2160,13 @@ prefs_dialog_new (Gimp       *gimp,
     }
     profiles[] =
     {
-      { N_("_RGB Profile:"),
+      { N_("_RGB profile:"),
         N_("Select RGB color profile"),     "rgb-profile"     },
-      { N_("_CMYK Profile:"),
+      { N_("_CMYK profile:"),
         N_("Select CMYK color profile"),    "cmyk-profile"    },
-      { N_("_Monitor Profile:"),
+      { N_("_Monitor profile:"),
         N_("Select monitor color profile"), "display-profile" },
-      { N_("_Printer Profile:"),
+      { N_("_Printer profile:"),
         N_("Select printer color profile"), "printer-profile" }
     };
 
@@ -2178,10 +2178,10 @@ prefs_dialog_new (Gimp       *gimp,
                               _("_Mode of operation:"),
                               GTK_TABLE (table), 0, NULL);
     prefs_enum_combo_box_add (color_config, "display-rendering-intent", 0, 0,
-                              _("_Display Rendering Intent:"),
+                              _("_Display rendering intent:"),
                               GTK_TABLE (table), 1, NULL);
     prefs_enum_combo_box_add (color_config, "simulation-rendering-intent", 0, 0,
-                              _("_Softproof Rendering Intent:"),
+                              _("_Softproof rendering intent:"),
                               GTK_TABLE (table), 2, NULL);
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
