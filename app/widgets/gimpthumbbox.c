@@ -712,6 +712,9 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 
   box->idle_id = 0;
 
+  if (thumb->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+    return FALSE;
+
   switch (thumb->thumb_state)
     {
     case GIMP_THUMB_STATE_NOT_FOUND:

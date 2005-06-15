@@ -673,6 +673,9 @@ gimp_imagefile_load_thumb (GimpImagefile *imagefile,
   if (gimp_thumbnail_peek_thumb (thumbnail, size) < GIMP_THUMB_STATE_EXISTS)
     return NULL;
 
+  if (thumbnail->image_state == GIMP_THUMB_STATE_NOT_FOUND)
+    return NULL;
+
   pixbuf = gimp_thumbnail_load_thumb (thumbnail, size, &error);
 
   if (! pixbuf)
