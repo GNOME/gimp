@@ -253,6 +253,8 @@ dockable_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,sensitive) \
         gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
 
+  SET_SENSITIVE ("dockable-detach-tab", n_pages > 1);
+
   SET_VISIBLE ("dockable-preview-size-menu", preview_size != -1);
 
   if (preview_size != -1)
