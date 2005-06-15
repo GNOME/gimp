@@ -427,7 +427,9 @@ prefs_input_devices_dialog (GtkWidget *widget,
       return;
     }
 
-  input_dialog = gtk_input_dialog_new ();
+  input_dialog = g_object_new (GTK_TYPE_INPUT_DIALOG,
+                               "title", _("Configure Input Devices"),
+                               NULL);
 
   g_object_add_weak_pointer (G_OBJECT (input_dialog),
                              (gpointer) &input_dialog);

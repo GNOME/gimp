@@ -1,3 +1,8 @@
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c (prefs_input_devices_dialog):
+	changed window title as suggested in bug #307701.
+
 2005-06-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/gimpmodule.[ch] (gimp_module_register_enum):
