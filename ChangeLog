@@ -1,3 +1,10 @@
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/actions/dockable-actions.c (dockable_actions_update): set the
+	"Detach Tab" action insensitive if the dockable is alone in its dock.
+
 2005-06-09  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpbaseconfig.c: ignore the user setting for
