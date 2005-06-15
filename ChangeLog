@@ -1,5 +1,13 @@
 2005-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/tool-options-actions.c: removed ellipsis from commands
+	that only present a confirmation dialog.
+
+	* app/actions/file-actions.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimplevelstool.c
 	* app/widgets/gimpgrideditor.c: capitalization.
 
 2005-06-15  Sven Neumann  <sven@gimp.org>

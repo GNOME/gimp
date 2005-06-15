@@ -82,7 +82,7 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-toys-menu",           NULL, N_("To_ys")          },
 
   { "plug-in-reset-all", GIMP_STOCK_RESET,
-    N_("Reset all _Filters..."), NULL, NULL,
+    N_("Reset all _Filters"), NULL, NULL,
     G_CALLBACK (plug_in_reset_all_cmd_callback),
     GIMP_HELP_FILTER_RESET_ALL }
 };

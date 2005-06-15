@@ -84,7 +84,7 @@ static GimpActionEntry tool_options_actions[] =
     GIMP_HELP_TOOL_OPTIONS_RESET },
 
   { "tool-options-reset-all", GIMP_STOCK_RESET,
-    N_("Reset _all Tool Options..."), "",
+    N_("Reset _all Tool Options"), "",
     N_("Reset all tool options"),
     G_CALLBACK (tool_options_reset_all_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_RESET }
