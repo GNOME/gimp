@@ -1,5 +1,10 @@
 2005-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/dockable-actions.c (dockable_actions_update): set the
+	"Detach Tab" action insensitive if the dockable is alone in its dock.
+
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c (prefs_input_devices_dialog):
 	changed window title as suggested in bug #307701.
 
