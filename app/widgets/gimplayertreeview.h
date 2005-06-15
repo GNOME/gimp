@@ -45,8 +45,6 @@ struct _GimpLayerTreeView
   GtkWidget            *preserve_trans_toggle;
   GtkAdjustment        *opacity_adjustment;
 
-  GtkWidget            *anchor_button;
-
   gint                  model_column_mask;
   gint                  model_column_mask_visible;
 

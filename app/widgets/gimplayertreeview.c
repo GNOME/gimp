@@ -382,6 +382,7 @@ gimp_layer_tree_view_constructor (GType                  type,
 {
   GimpContainerTreeView *tree_view;
   GimpLayerTreeView     *layer_view;
+  GtkWidget             *button;
   GObject               *object;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -425,15 +426,13 @@ gimp_layer_tree_view_constructor (GType                  type,
   /*  hide basically useless edit button  */
   gtk_widget_hide (GIMP_ITEM_TREE_VIEW (layer_view)->edit_button);
 
-  layer_view->anchor_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
-                                   "layers-anchor", NULL);
+  button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
+                                          "layers-anchor", NULL);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
-                                  GTK_BUTTON (layer_view->anchor_button),
+                                  GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
-                         layer_view->anchor_button, 5);
-
+                         button, 5);
 
   return object;
 }

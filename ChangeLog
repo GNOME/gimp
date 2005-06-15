@@ -1,5 +1,10 @@
 2005-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimplayertreeview.[ch]: there's no need to keep a
+	reference to the anchor button.
+
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c (gimp_imagefile_load_thumb): 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_auto_thumbnail):
 	don't display a preview and don't attempt to create one if the
