@@ -132,7 +132,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (title);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("Do_n't save"), GTK_RESPONSE_CLOSE);
+                                  _("Do_n't Save"), GTK_RESPONSE_CLOSE);
   gtk_button_set_image (GTK_BUTTON (button),
                         gtk_image_new_from_stock (GTK_STOCK_DELETE,
                                                   GTK_ICON_SIZE_BUTTON));
