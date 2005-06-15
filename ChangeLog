@@ -1,5 +1,9 @@
 2005-06-15  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpgrideditor.c: capitalization.
+
+2005-06-15  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: fix capitalization on the
 	Color Management page.
 

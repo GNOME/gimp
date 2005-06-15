@@ -216,7 +216,7 @@ gimp_grid_editor_constructor (GType                  type,
                                         GIMP_GRID_DOTS,
                                         GIMP_GRID_SOLID);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Line _Style:"), 0.0, 0.5,
+                             _("Line _style:"), 0.0, 0.5,
                              style, 1, FALSE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "fgcolor",
