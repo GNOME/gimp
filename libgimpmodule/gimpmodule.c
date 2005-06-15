@@ -441,9 +441,7 @@ gimp_module_state_name (GimpModuleState state)
  * @name:
  * @const_static_values:
  *
- * Registers an enum similar to g_enum_register_static() but for
- * modules. This function should actually live in GLib but since
- * there's no such API, it is provided here.
+ * This function is deprecated! Use g_type_module_register_enum() instead.
  *
  * Return value: a new enum #GType
  **/
@@ -452,17 +450,7 @@ gimp_module_register_enum (GTypeModule      *module,
                            const gchar	    *name,
                            const GEnumValue *const_static_values)
 {
-  GTypeInfo enum_type_info = { 0, };
-
-  g_return_val_if_fail (G_IS_TYPE_MODULE (module), 0);
-  g_return_val_if_fail (name != NULL, 0);
-  g_return_val_if_fail (const_static_values != NULL, 0);
-
-  g_enum_complete_type_info (G_TYPE_ENUM,
-                             &enum_type_info, const_static_values);
-
-  return g_type_module_register_type (G_TYPE_MODULE (module),
-                                      G_TYPE_ENUM, name, &enum_type_info, 0);
+  return g_type_module_register_enum (module, name, const_static_values);
 }
 
 

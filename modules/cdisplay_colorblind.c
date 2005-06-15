@@ -260,8 +260,8 @@ cdisplay_colorblind_deficiency_get_type (GTypeModule *module)
   if (! cdisplay_colorblind_deficiency_type)
     {
       cdisplay_colorblind_deficiency_type =
-        gimp_module_register_enum (module,
-                                   "CDisplayColorblindDeficiency", enum_values);
+        g_type_module_register_enum (module, "CDisplayColorblindDeficiency",
+                                     enum_values);
 
       gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type,
                                         enum_descs);

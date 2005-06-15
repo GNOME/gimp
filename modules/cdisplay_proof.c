@@ -183,8 +183,8 @@ cdisplay_proof_intent_get_type (GTypeModule *module)
   if (! cdisplay_proof_intent_type)
     {
       cdisplay_proof_intent_type =
-        gimp_module_register_enum (module,
-                                   "CDisplayProofIntent", enum_values);
+        g_type_module_register_enum (module, "CDisplayProofIntent",
+                                     enum_values);
 
       gimp_enum_set_value_descriptions (cdisplay_proof_intent_type,
                                         enum_descs);

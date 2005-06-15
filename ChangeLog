@@ -1,3 +1,12 @@
+2005-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/gimpmodule.[ch] (gimp_module_register_enum):
+	deprecated. Changed implementation to simply call
+	g_type_module_register_enum().
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_proof.c: use g_type_module_register_enum() instead.
+
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.c (gimp_image_raise_layer)
