@@ -397,7 +397,12 @@ test_clipboard_copy_callback (GtkClipboard     *clipboard,
 
   if (! g_file_get_contents (copy_data->filename, &buf, &buf_size,
                              &copy_data->error))
-    return;
+    {
+      if (! option_store_filename)
+        gtk_main_quit ();
+
+      return;
+    }
 
   gtk_selection_data_set (selection, selection->target,
                           8, (guchar *) buf, buf_size);

@@ -1,5 +1,10 @@
 2005-06-16  Sven Neumann  <sven@gimp.org>
 
+	* tools/test-clipboard.c (test_clipboard_copy_callback): exit from
+	main loop if g_file_get_contents() fails.
+
+2005-06-16  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c: capitalization.
 
 2005-06-15  Sven Neumann  <sven@gimp.org>
