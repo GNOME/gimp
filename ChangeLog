@@ -1,3 +1,16 @@
+2005-06-16  Sven Neumann  <sven@gimp.org>
+
+	Redid the framework that deals with installing desktop files.
+	Fixes bug #307705:
+
+	* data/misc/*: removed.
+
+	* desktop/*: readded the desktop files in a new directory.
+
+	* Makefile.am
+	* configure.in
+	* data/Makefile.am: changed accordingly.
+
 2005-06-16  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdb/pdbgen/edit.pdb: revert accidential commit.

@@ -6,7 +6,6 @@ SUBDIRS = \
 	gradients	\
 	images		\
 	interpreters	\
-	misc		\
 	palettes	\
 	patterns	\
 	tips

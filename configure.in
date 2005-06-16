@@ -111,16 +111,6 @@ fi
 AM_CONDITIONAL(GIMP_UNSTABLE, test "x$GIMP_UNSTABLE" = "xyes")
 
 
-dnl Choose a desktop icon
-if test "x$GIMP_UNSTABLE" = "xyes"; then
-  GIMP_DESKTOP_ICON="wilber-devel-icon.png"
-else
-  GIMP_DESKTOP_ICON="wilber-icon.png"
-fi
-
-AC_SUBST(GIMP_DESKTOP_ICON)
-
-
 # libtool versioning
 m4_define([lt_current], [m4_eval(100 * gimp_minor_version + gimp_micro_version - gimp_interface_age)])
 m4_define([lt_revision], [gimp_interface_age])
@@ -1438,7 +1428,6 @@ else
   DESKTOP_DATADIR="$datadir"
 fi
 
-AM_CONDITIONAL(DESKTOP_DATADIR, test "x$with_desktop_dir" != xno)
 AC_SUBST(DESKTOP_DATADIR)
 
 
@@ -1731,13 +1720,13 @@ data/environ/Makefile
 data/gradients/Makefile
 data/images/Makefile
 data/interpreters/Makefile
-data/misc/Makefile
-data/misc/gimp.applications
-data/misc/gimp.desktop.in
-data/misc/gimp.keys
 data/palettes/Makefile
 data/patterns/Makefile
 data/tips/Makefile
+desktop/Makefile
+desktop/gimp.applications
+desktop/gimp.desktop.in
+desktop/gimp.keys
 etc/Makefile
 m4macros/Makefile
 po/Makefile.in
