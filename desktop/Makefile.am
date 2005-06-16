@@ -4,23 +4,18 @@ desktop_in_files = gimp.desktop.in.in
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 
-applicationsdir = @DESKTOP_DATADIR@/applications
-
-icondir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
-
-mimeinfodir = @DESKTOP_DATADIR@/mime-info
-
-registrydir = @DESKTOP_DATADIR@/application-registry
-
-
 if DESKTOP_DATADIR
 
+applicationsdir = @DESKTOP_DATADIR@/applications
 applications_DATA = $(desktop_files)
 
+icondir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
 icon_DATA = gimp.png
 
+mimeinfodir = @DESKTOP_DATADIR@/mime-info
 mimeinfo_DATA = gimp.keys
 
+registrydir = @DESKTOP_DATADIR@/application-registry
 registry_DATA = gimp.applications
 
 endif

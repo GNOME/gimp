@@ -1,5 +1,11 @@
 2005-06-16  Sven Neumann  <sven@gimp.org>
 
+	* desktop/gimp.applications.in: expand the GIMP acronym.
+
+	* desktop/gimp.keys.in: removed some cruft.
+
+2005-06-16  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in
 	* desktop/Makefile.am: allow to skip installation of desktop files
