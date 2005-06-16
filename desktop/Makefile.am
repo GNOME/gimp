@@ -6,29 +6,31 @@ desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 applicationsdir = @DESKTOP_DATADIR@/applications
 
-applications_DATA = $(desktop_files)
-
-
 icondir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
-
-icon_DATA = gimp.png
-
 
 mimeinfodir = @DESKTOP_DATADIR@/mime-info
 
-mimeinfo_DATA = gimp.keys
-
-
 registrydir = @DESKTOP_DATADIR@/application-registry
+
+
+if DESKTOP_DATADIR
+
+applications_DATA = $(desktop_files)
+
+icon_DATA = gimp.png
+
+mimeinfo_DATA = gimp.keys
 
 registry_DATA = gimp.applications
 
+endif
+
 
 EXTRA_DIST = \
-	$(desktop_in_files)	\
-	$(icon_DATA)		\
-	$(mimeinfo_DATA)	\
-	$(registry_DATA)
+	gimp.applications.in	\
+	gimp.desktop.in.in	\
+	gimp.keys.in		\
+	gimp.png
 
 
 DISTCLEANFILES = $(desktop_files)

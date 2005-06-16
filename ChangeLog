@@ -1,5 +1,12 @@
 2005-06-16  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in
+	* desktop/Makefile.am: allow to skip installation of desktop files
+	by passing --without-desktop-dir.
+
+2005-06-16  Sven Neumann  <sven@gimp.org>
+
 	Redid the framework that deals with installing desktop files.
 	Fixes bug #307705:
 

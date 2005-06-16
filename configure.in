@@ -1428,6 +1428,7 @@ else
   DESKTOP_DATADIR="$datadir"
 fi
 
+AM_CONDITIONAL(DESKTOP_DATADIR, test "x$with_desktop_dir" != xno)
 AC_SUBST(DESKTOP_DATADIR)
 
 

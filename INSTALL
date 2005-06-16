@@ -162,12 +162,11 @@ These are:
      because configure tries to find it in the usual places.
 
   --with-desktop-dir=[PATH]. This option specifies where to install
-     links to the gimp desktop files. These files are used by desktop
-     environments that comply to the specs published at freedesktop.org.
-     The default value ${prefix}/share should be fine if your desktop
-     environment is installed in the same prefix as gimp. No links are
-     created if the desktop directories don't exist or you used
-     --without-desktop-dir.
+     desktop files. These files are used by desktop environments that
+     comply to the specs published at freedesktop.org. The default
+     value ${prefix}/share should be fine if your desktop environment
+     is installed in the same prefix as gimp. No files are installed
+     if you call configure with --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
      gimp-2.3 the default gimp installation. Otherwise a link called
