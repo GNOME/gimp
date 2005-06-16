@@ -9,8 +9,8 @@ if DESKTOP_DATADIR
 applicationsdir = @DESKTOP_DATADIR@/applications
 applications_DATA = $(desktop_files)
 
-icondir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
-icon_DATA = gimp.png
+iconsdir = @DESKTOP_DATADIR@/icons/hicolor/48x48/apps
+icons_DATA = gimp.png
 
 mimeinfodir = @DESKTOP_DATADIR@/mime-info
 mimeinfo_DATA = gimp.keys
