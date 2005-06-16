@@ -166,9 +166,9 @@ HELP
 
   if (success)
     {
-      layer = gimp_edit_paste_pdb (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                   drawable, gimp->global_buffer,
-                                   paste_into);
+      layer = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
+                               drawable, gimp->global_buffer,
+                               paste_into, -1, -1, -1, -1);
       if (! layer)
         success = FALSE;
     }
