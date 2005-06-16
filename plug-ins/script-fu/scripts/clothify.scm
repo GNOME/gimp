@@ -60,4 +60,4 @@
 		    SF-ADJUSTMENT _"Depth"          '(3 1 50 1 10 0 1))
 
 (script-fu-menu-register "script-fu-clothify"
-			 "<Image>/Script-Fu/Alchemy")
+			 "<Image>/Filters/Alchemy")

@@ -96,7 +96,7 @@
 		    SF-COLOR      _"Background Color" '(255 255 255))
 
 (script-fu-menu-register "script-fu-bovinated-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-bovinated-logo text

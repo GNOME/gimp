@@ -79,7 +79,7 @@
 		    SF-COLOR      _"Background color"         '(7 0 20))
 
 (script-fu-menu-register "script-fu-glowing-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-glowing-logo text

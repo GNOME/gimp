@@ -824,7 +824,7 @@ plugin_query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_gflare",
-                             "<Image>/Filters/Light Effects");
+                             "<Image>/Filters/Light Effects/Light");
 }
 
 void

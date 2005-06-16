@@ -87,7 +87,7 @@
 		    SF-COLOR      _"Background Color"     '(191 191 191))
 
 (script-fu-menu-register "script-fu-chrome-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-chrome-logo text

@@ -38,4 +38,4 @@
 		    SF-OPTION   _"Erase/fill" '(_"Erase" _"Fill with BG"))
 
 (script-fu-menu-register "script-fu-erase-rows"
-			 "<Image>/Script-Fu/Alchemy")
+			 "<Image>/Filters/Alchemy")

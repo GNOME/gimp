@@ -232,7 +232,7 @@ query (void)
 			  "Peter Kirchgessner",
 			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  N_("_Film..."),
+			  N_("_Filmstrip..."),
 			  "INDEXED*, GRAY*, RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
@@ -1168,7 +1168,7 @@ create_selection_tab (GtkWidget *notebook,
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* Film height/colour */
-  frame = gimp_frame_new (_("Film"));
+  frame = gimp_frame_new (_("Filmstrip"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1320,7 +1320,7 @@ create_advanced_tab (GtkWidget *notebook)
   GtkWidget *button;
   gint       row;
 
-  frame = gimp_frame_new (_("All Values are Fractions of the Film Height"));
+  frame = gimp_frame_new (_("All Values are Fractions of the Strip Height"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
                             gtk_label_new_with_mnemonic (_("Ad_vanced")));
@@ -1440,7 +1440,7 @@ film_dialog (gint32 image_ID)
 
   gimp_ui_init ("film", TRUE);
 
-  dlg = gimp_dialog_new (_("Film"), "film",
+  dlg = gimp_dialog_new (_("Filmstrip"), "film",
                          NULL, 0,
 			 gimp_standard_help_func, "plug-in-film",
 

@@ -514,17 +514,20 @@
       <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
+      <menu action="plug-in-enhance-menu" name="Enhance" />
+      <menu action="plug-in-distorts-menu" name="Distorts" />
       <menu action="plug-in-colors-menu" name="Colors">
 	<menu action="plug-in-colors-map-menu" name="Map" />
       </menu>
       <menu action="plug-in-noise-menu" name="Noise" />
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
-      <menu action="plug-in-enhance-menu" name="Enhance" />
       <menu action="plug-in-generic-menu" name="Generic" />
       <separator />
-      <menu action="plug-in-glass-effects-menu" name="Glass Effects" />
-      <menu action="plug-in-light-effects-menu" name="Light Effects" />
-      <menu action="plug-in-distorts-menu" name="Distorts" />
+      <menu action="plug-in-light-effects-menu" name="Light Effects">
+        <placeholder name="Light" />
+	<separator />
+        <placeholder name="Glass" />
+      </menu>
       <menu action="plug-in-artistic-menu" name="Artistic" />
       <menu action="plug-in-map-menu" name="Map" />
       <menu action="plug-in-render-menu" name="Render">

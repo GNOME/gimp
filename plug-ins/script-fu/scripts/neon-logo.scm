@@ -190,7 +190,7 @@
 		    SF-TOGGLE     _"Create shadow"    FALSE)
 
 (script-fu-menu-register "script-fu-neon-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-neon-logo text

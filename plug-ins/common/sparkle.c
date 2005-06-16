@@ -189,7 +189,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_sparkle",
-                             "<Image>/Filters/Light Effects");
+                             "<Image>/Filters/Light Effects/Light");
 }
 
 static void

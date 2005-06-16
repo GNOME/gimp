@@ -1,3 +1,23 @@
+2005-06-17  Sven Neumann  <sven@gimp.org>
+
+	* menus/image-menu.xml.in
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* plug-ins/pygimp/plug-ins/whirlpinch.py
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/*.scm: applied menu reorganization
+	patch done by Akkana Peck (bug #116145).
+
+	* plug-ins/common/film.c: renamed filter to "Filmstrip".
+
 2005-06-16  Sven Neumann  <sven@gimp.org>
 
 	* desktop/gimp.applications.in: expand the GIMP acronym.

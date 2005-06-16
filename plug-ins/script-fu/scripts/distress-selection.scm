@@ -99,4 +99,4 @@
 		    SF-TOGGLE     _"Smooth vertically"      TRUE)
 
 (script-fu-menu-register "script-fu-distress-selection"
-			 "<Image>/Script-Fu/Selection")
+			 "<Image>/Filters/Selection")

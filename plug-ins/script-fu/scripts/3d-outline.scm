@@ -126,7 +126,7 @@
                     SF-ADJUSTMENT _"Shadow Y offset"     '(0 0 200 1 5 0 1))
 
 (script-fu-menu-register "script-fu-3d-outline-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-3d-outline-logo text-pattern

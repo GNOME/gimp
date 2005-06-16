@@ -175,4 +175,4 @@
 		    SF-TOGGLE     _"Allow resizing" TRUE)
 
 (script-fu-menu-register "script-fu-drop-shadow"
-			 "<Image>/Script-Fu/Shadow")
+			 "<Image>/Filters/Shadow")

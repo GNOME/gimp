@@ -84,4 +84,4 @@
 		    SF-ADJUSTMENT _"Randomness"          '(30 0 2000 1 1 0 1))
 
 (script-fu-menu-register "script-fu-line-nova"
-			 "<Image>/Script-Fu/Render")
+			 "<Image>/Filters/Render")

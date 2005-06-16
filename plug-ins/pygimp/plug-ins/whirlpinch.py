@@ -203,7 +203,7 @@ register(
         "James Henstridge (translated from C plugin)",
         "James Henstridge",
         "1997-1999",
-        "<Image>/Python-Fu/Distorts/_Whirl and Pinch",
+        "<Image>/Filters/Distorts/_Whirl and Pinch...",
         "RGB*, GRAY*",
         [
                 (PF_SLIDER, "whirl", "Whirl angle", 90, (-360, 360, 1)),

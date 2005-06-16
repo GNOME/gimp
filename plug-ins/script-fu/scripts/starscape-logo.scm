@@ -134,7 +134,7 @@
 		    SF-COLOR      _"Glow color"               '(28 65 188))
 
 (script-fu-menu-register "script-fu-starscape-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-starscape-logo text

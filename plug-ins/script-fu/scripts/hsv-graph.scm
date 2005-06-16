@@ -349,4 +349,4 @@
 		    SF-ADJUSTMENT _"End Y" (cons script-fu-hsv-graph-end-y '(0 5000 1 10 0 1)))
 
 (script-fu-menu-register "script-fu-hsv-graph"
-			 "<Image>/Script-Fu/Utils")
+			 "<Image>/Filters/Colors")

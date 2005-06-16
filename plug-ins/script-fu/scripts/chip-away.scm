@@ -145,7 +145,7 @@
 		    SF-PATTERN    _"Pattern"              "Burlwood")
 
 (script-fu-menu-register "script-fu-chip-away-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-chip-away-logo text

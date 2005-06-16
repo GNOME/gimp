@@ -163,4 +163,4 @@
 		    SF-TOGGLE     _"Flatten image"          TRUE)
 
 (script-fu-menu-register "script-fu-fuzzy-border"
-			 "<Image>/Script-Fu/Decor")
+			 "<Image>/Filters/Decor")

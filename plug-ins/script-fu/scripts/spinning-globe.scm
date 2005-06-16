@@ -120,4 +120,4 @@
 		    SF-TOGGLE     _"Work on copy"            TRUE)
 
 (script-fu-menu-register "script-fu-spinning-globe"
-			 "<Image>/Script-Fu/Animators")
+			 "<Image>/Filters/Animation/Animators")

@@ -136,7 +136,7 @@
 		    SF-TOGGLE     _"Gradient reverse"     FALSE)
 
 (script-fu-menu-register "script-fu-cool-metal-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-cool-metal-logo text

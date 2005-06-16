@@ -84,4 +84,4 @@
 		    SF-STRING   _"Filename"     "mypattern")
 
 (script-fu-menu-register "script-fu-selection-to-pattern"
-			 "<Image>/Script-Fu/Selection")
+			 "<Image>/Filters/Selection")

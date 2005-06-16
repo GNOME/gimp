@@ -132,7 +132,7 @@
 		    SF-TOGGLE     _"Fade away"        TRUE)
 
 (script-fu-menu-register "script-fu-alien-neon-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-alien-neon-logo text 

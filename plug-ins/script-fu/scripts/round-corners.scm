@@ -139,4 +139,4 @@
 		    SF-TOGGLE     _"Work on copy"    TRUE)
 
 (script-fu-menu-register "script-fu-round-corners"
-			 "<Image>/Script-Fu/Decor")
+			 "<Image>/Filters/Decor")

@@ -77,7 +77,7 @@
                     SF-COLOR    _"Background color" '(0 0 0))
 
 (script-fu-menu-register "script-fu-chalk-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-chalk-logo text

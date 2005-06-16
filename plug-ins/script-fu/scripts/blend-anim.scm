@@ -231,4 +231,4 @@
 		    SF-TOGGLE     _"Looped"              TRUE)
 
 (script-fu-menu-register "script-fu-blend-anim"
-			 "<Image>/Script-Fu/Animators")
+			 "<Image>/Filters/Animation/Animators")

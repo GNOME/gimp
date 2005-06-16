@@ -121,7 +121,7 @@
 		    SF-COLOR      _"Background color" '(255 255 255))
 
 (script-fu-menu-register "script-fu-comic-logo-alpha"
-			 "<Image>/Script-Fu/Alpha to Logo")
+			 "<Image>/Filters/Alpha to Logo")
 
 
 (define (script-fu-comic-logo text

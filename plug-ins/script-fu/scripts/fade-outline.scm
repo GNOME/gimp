@@ -170,4 +170,4 @@
 		    SF-TOGGLE     _"Clear unselected maskarea" TRUE)
 
 (script-fu-menu-register "script-fu-fade-outline"
-			 "<Image>/Script-Fu/Selection")
+			 "<Image>/Filters/Selection")
