@@ -339,14 +339,14 @@ void  extract_alpha_region                (PixelRegion *src,
                                            PixelRegion *mask,
                                            PixelRegion *dest);
 
-void  extract_from_region                 (PixelRegion *src,
-                                           PixelRegion *dest,
-                                           PixelRegion *mask,
-                                           guchar      *cmap,
-                                           guchar      *bg,
-                                           gint         type,
-                                           gboolean     has_alpha,
-                                           gboolean     cut);
+void  extract_from_region                 (PixelRegion       *src,
+                                           PixelRegion       *dest,
+                                           PixelRegion       *mask,
+                                           const guchar      *cmap,
+                                           const guchar      *bg,
+                                           GimpImageBaseType  type,
+                                           gboolean           has_alpha,
+                                           gboolean           cut);
 
 
 void  convolve_region                     (PixelRegion         *srcR,

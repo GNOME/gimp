@@ -2345,14 +2345,14 @@ extract_alpha_region (PixelRegion *src,
 
 
 void
-extract_from_region (PixelRegion *src,
-                     PixelRegion *dest,
-                     PixelRegion *mask,
-                     guchar      *cmap,
-                     guchar      *bg,
-                     gint         type,
-                     gboolean     has_alpha,
-                     gboolean     cut)
+extract_from_region (PixelRegion       *src,
+                     PixelRegion       *dest,
+                     PixelRegion       *mask,
+                     const guchar      *cmap,
+                     const guchar      *bg,
+                     GimpImageBaseType  type,
+                     gboolean           has_alpha,
+                     gboolean           cut)
 {
   gint    h;
   guchar *s, *d, *m;
@@ -2371,12 +2371,13 @@ extract_from_region (PixelRegion *src,
         {
           switch (type)
             {
-            case 0:  /*  RGB      */
-            case 1:  /*  GRAY     */
+            case GIMP_RGB:
+            case GIMP_GRAY:
               extract_from_inten_pixels (s, d, m, bg, cut, src->w,
                                          src->bytes, has_alpha);
               break;
-            case 2:  /*  INDEXED  */
+
+            case GIMP_INDEXED:
               extract_from_indexed_pixels (s, d, m, cmap, bg, cut, src->w,
                                            src->bytes, has_alpha);
               break;
@@ -3799,7 +3800,7 @@ struct initial_regions_struct
   guint                 opacity;
   GimpLayerModeEffects  mode;
   const gboolean       *affect;
-  InitialMode                type;
+  InitialMode           type;
   guchar               *data;
 };
 

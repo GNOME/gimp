@@ -1,5 +1,11 @@
 2005-06-17  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.[ch]: pass GimpImageBaseType to
+	extract_from_region() instead of some anonymous integer. Added
+	some const qualifiers.
+
+2005-06-17  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_extract): fixed
 	long-standing bug in the calculation of the depth of the
 	tile-manager created when copying from an indexed drawable.
