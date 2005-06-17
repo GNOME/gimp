@@ -152,6 +152,7 @@ build_dialog (void)
   GtkWidget *dlg;
   GtkWidget *button;
   GtkWidget *frame;
+  gchar     *tmp;
 
   gimp_ui_init ("gee", TRUE);
 
@@ -168,10 +169,11 @@ build_dialog (void)
                     G_CALLBACK (window_response_callback),
                     NULL);
 
-  gimp_help_set_help_data (button,
-                           _("A less obsolete creation of Adam D. Moss / "
-                             "adam@gimp.org / adam@foxbox.org / 1998-2000"),
-                           NULL);
+  tmp = g_strdup_printf (_("A less obsolete creation by %s"),
+                         "Adam D. Moss / adam@gimp.org / adam@foxbox.org "
+                         "/ 1998-2000");
+  gimp_help_set_help_data (button, tmp, NULL);
+  g_free (tmp);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
