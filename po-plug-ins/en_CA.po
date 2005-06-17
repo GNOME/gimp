@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-08 17:35-0400\n"
-"PO-Revision-Date: 2005-06-08 14:31-0400\n"
+"POT-Creation-Date: 2005-06-17 01:37-0400\n"
+"PO-Revision-Date: 2005-06-17 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -629,7 +629,7 @@ msgid "Position"
 msgstr "Position"
 
 #: plug-ins/Lighting/lighting_ui.c:456 plug-ins/common/flarefx.c:759
-#: plug-ins/common/mblur.c:999 plug-ins/common/nova.c:453
+#: plug-ins/common/mblur.c:999 plug-ins/common/nova.c:454
 #: plug-ins/common/papertile.c:271 plug-ins/flame/flame.c:1222
 #: plug-ins/gflare/gflare.c:2657
 msgid "_X:"
@@ -640,7 +640,7 @@ msgid "Light source X position in XYZ space"
 msgstr "Light source X position in XYZ space"
 
 #: plug-ins/Lighting/lighting_ui.c:469 plug-ins/common/flarefx.c:764
-#: plug-ins/common/mblur.c:1005 plug-ins/common/nova.c:458
+#: plug-ins/common/mblur.c:1005 plug-ins/common/nova.c:459
 #: plug-ins/common/papertile.c:280 plug-ins/flame/flame.c:1236
 #: plug-ins/gflare/gflare.c:2661
 msgid "_Y:"
@@ -3148,7 +3148,7 @@ msgid "R_ecursive"
 msgstr "R_ecursive"
 
 #: plug-ins/common/despeckle.c:459 plug-ins/common/neon.c:733
-#: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:361
+#: plug-ins/common/nlfilt.c:1083 plug-ins/common/nova.c:362
 #: plug-ins/common/unsharp.c:666 plug-ins/common/whirlpinch.c:589
 #: plug-ins/gflare/gflare.c:2690 plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
@@ -3485,8 +3485,8 @@ msgid "Lock _thresholds"
 msgstr "Lock _thresholds"
 
 #: plug-ins/common/film.c:235
-msgid "_Film..."
-msgstr "_Film..."
+msgid "_Filmstrip..."
+msgstr "_Filmstrip..."
 
 #: plug-ins/common/film.c:320
 msgid "Composing Images..."
@@ -3518,8 +3518,8 @@ msgstr "Selection"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1171 plug-ins/common/film.c:1443
-msgid "Film"
-msgstr "Film"
+msgid "Filmstrip"
+msgstr "Filmstrip"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1180
@@ -3532,7 +3532,7 @@ msgid "Select Film Color"
 msgstr "Select Film Colour"
 
 #: plug-ins/common/film.c:1221 plug-ins/common/film.c:1271
-#: plug-ins/common/nova.c:348
+#: plug-ins/common/nova.c:349
 msgid "Co_lor:"
 msgstr "Co_lour:"
 
@@ -3568,8 +3568,8 @@ msgid "Image Selection"
 msgstr "Image Selection"
 
 #: plug-ins/common/film.c:1323
-msgid "All Values are Fractions of the Film Height"
-msgstr "All Values are Fractions of the Film Height"
+msgid "All Values are Fractions of the Strip Height"
+msgstr "All Values are Fractions of the Strip Height"
 
 #: plug-ins/common/film.c:1326
 msgid "Ad_vanced"
@@ -5252,31 +5252,31 @@ msgstr "Normalizing..."
 msgid "Su_perNova..."
 msgstr "Su_perNova..."
 
-#: plug-ins/common/nova.c:259
+#: plug-ins/common/nova.c:260
 msgid "Rendering SuperNova..."
 msgstr "Rendering SuperNova..."
 
-#: plug-ins/common/nova.c:302
+#: plug-ins/common/nova.c:303
 msgid "SuperNova"
 msgstr "SuperNova"
 
-#: plug-ins/common/nova.c:344
+#: plug-ins/common/nova.c:345
 msgid "SuperNova Color Picker"
 msgstr "SuperNova Colour Picker"
 
-#: plug-ins/common/nova.c:373
+#: plug-ins/common/nova.c:374
 msgid "_Spokes:"
 msgstr "_Spokes:"
 
-#: plug-ins/common/nova.c:388
+#: plug-ins/common/nova.c:389
 msgid "R_andom hue:"
 msgstr "R_andom hue:"
 
-#: plug-ins/common/nova.c:440
+#: plug-ins/common/nova.c:441
 msgid "Center of SuperNova"
 msgstr "Centre of SuperNova"
 
-#: plug-ins/common/nova.c:474
+#: plug-ins/common/nova.c:475
 msgid "S_how cursor"
 msgstr "S_how cursor"
 
@@ -6218,62 +6218,73 @@ msgstr "_Saturation:"
 msgid "_Value:"
 msgstr "_Value:"
 
-#: plug-ins/common/screenshot.c:238 plug-ins/winsnap/winsnap.c:994
-msgid "_Screen Shot..."
-msgstr "_Screen Shot..."
+#: plug-ins/common/screenshot.c:239
+msgid "_Screenshot..."
+msgstr "_Screenshot..."
 
-#: plug-ins/common/screenshot.c:422
+#: plug-ins/common/screenshot.c:423
 msgid "Error grabbing the pointer"
 msgstr "Error grabbing the pointer"
 
-#: plug-ins/common/screenshot.c:601
-msgid "Loading Screen Shot..."
-msgstr "Loading Screen Shot..."
+#: plug-ins/common/screenshot.c:602
+msgid "Loading Screenshot..."
+msgstr "Loading Screenshot..."
 
-#: plug-ins/common/screenshot.c:608 plug-ins/common/screenshot.c:775
-msgid "Screen Shot"
-msgstr "Screen Shot"
+#: plug-ins/common/screenshot.c:609 plug-ins/common/screenshot.c:781
+msgid "Screenshot"
+msgstr "Screenshot"
 
-#: plug-ins/common/screenshot.c:716
+#: plug-ins/common/screenshot.c:717
 msgid "Specified window not found"
 msgstr "Specified window not found"
 
-#: plug-ins/common/screenshot.c:743
-msgid "Error obtaining Screen shot"
-msgstr "Error obtaining Screenshot"
+#: plug-ins/common/screenshot.c:744
+msgid "There was an error taking the screenshot."
+msgstr "There was an error taking the screenshot."
 
-#: plug-ins/common/screenshot.c:784
+#: plug-ins/common/screenshot.c:790
 msgid "_Grab"
 msgstr "_Grab"
 
-#. single window
-#: plug-ins/common/screenshot.c:810 plug-ins/winsnap/winsnap.c:865
-msgid "Grab"
-msgstr "Grab"
+#: plug-ins/common/screenshot.c:812
+msgid "Take a screenshot of a single _window"
+msgstr "Take a screenshot of a single _window"
 
-#: plug-ins/common/screenshot.c:817
-msgid "a single _window"
-msgstr "a single _window"
-
-#: plug-ins/common/screenshot.c:837
+#: plug-ins/common/screenshot.c:833
 msgid "Include window decoration"
 msgstr "Include window decoration"
 
-#: plug-ins/common/screenshot.c:852
-msgid "the selected _region"
-msgstr "the selected _region"
+#: plug-ins/common/screenshot.c:848
+msgid "Take a screenshot of your _desktop"
+msgstr "Take a screenshot of your _desktop"
 
 #: plug-ins/common/screenshot.c:869
-msgid "the whole _screen"
-msgstr "the whole _screen"
+msgid "Select a region"
+msgstr "Select a region"
 
-#: plug-ins/common/screenshot.c:892
-msgid "W_ait for"
-msgstr "W_ait for"
+#: plug-ins/common/screenshot.c:874
+msgid ""
+"If enabled, you can use the mouse to select a rectangular region of the "
+"screen."
+msgstr ""
+"If enabled, you can use the mouse to select a rectangular region of the "
+"screen."
 
-#: plug-ins/common/screenshot.c:907
-msgid "seconds"
-msgstr "seconds"
+#: plug-ins/common/screenshot.c:889
+msgid "W_ait"
+msgstr "W_ait"
+
+#: plug-ins/common/screenshot.c:904
+msgid "seconds before grabbing"
+msgstr "seconds before grabbing"
+
+#: plug-ins/common/screenshot.c:908
+msgid ""
+"The number of seconds to wait after selecting the window or region and "
+"actually taking the screenshot."
+msgstr ""
+"The number of seconds to wait after selecting the window or region and "
+"actually taking the screenshot."
 
 #: plug-ins/common/sel_gauss.c:105
 msgid "_Selective Gaussian Blur..."
@@ -11691,6 +11702,10 @@ msgstr "Windows icons cannot be higher or wider than 255 pixels."
 msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows icon"
 
+#: plug-ins/winsnap/winsnap.c:865
+msgid "Grab"
+msgstr "Grab"
+
 #: plug-ins/winsnap/winsnap.c:881
 msgid "Grab a single window"
 msgstr "Grab a single window"
@@ -11710,6 +11725,10 @@ msgstr "Seconds delay"
 #: plug-ins/winsnap/winsnap.c:930
 msgid "Include decorations"
 msgstr "Include decorations"
+
+#: plug-ins/winsnap/winsnap.c:994
+msgid "_Screen Shot..."
+msgstr "_Screen Shot..."
 
 #: plug-ins/winsnap/winsnap.c:1143
 msgid "No data captured"
