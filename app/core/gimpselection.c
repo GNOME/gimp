@@ -697,7 +697,8 @@ gimp_selection_extract (GimpChannel  *selection,
 	}
       else
 	{
-	  bytes = add_alpha ? 4 : drawable->bytes;
+	  bytes = (add_alpha ||
+                   gimp_drawable_has_alpha (drawable)) ? 4 : 3;
 	  base_type = GIMP_INDEXED;
 	}
       break;
