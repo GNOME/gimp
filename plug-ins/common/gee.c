@@ -100,13 +100,11 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "2000",
-                          N_("Gee-_Slime"),
+                          N_("Gee Slime"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
-
-  gimp_plugin_menu_register ("plug_in_the_slimy_egg", "<Image>/Filters/Toys");
 }
 
 static void
@@ -157,7 +155,7 @@ build_dialog (void)
 
   gimp_ui_init ("gee", TRUE);
 
-  dlg = gimp_dialog_new (_("GEE-SLIME"), "gee",
+  dlg = gimp_dialog_new (_("Gee Slime"), "gee",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-the-slimy-egg",
                          NULL);
@@ -171,7 +169,7 @@ build_dialog (void)
                     NULL);
 
   gimp_help_set_help_data (button,
-                           _("A less-obsolete creation of Adam D. Moss / "
+                           _("A less obsolete creation of Adam D. Moss / "
                              "adam@gimp.org / adam@foxbox.org / 1998-2000"),
                            NULL);
 

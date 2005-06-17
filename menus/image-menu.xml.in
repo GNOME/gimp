@@ -541,7 +541,6 @@
       <menu action="plug-in-animation-menu" name="Animation" />
       <menu action="plug-in-combine-menu" name="Combine" />
       <separator />
-      <menu action="plug-in-toys-menu" name="Toys" />
     </menu>
 
   </menubar-and-popup>

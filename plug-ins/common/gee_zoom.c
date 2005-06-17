@@ -119,13 +119,11 @@ query (void)
                           "Adam D. Moss <adam@gimp.org>",
                           "Adam D. Moss <adam@gimp.org>",
                           "1998",
-                          N_("Gee-_Zoom"),
+                          N_("Gee Zoom"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
-
-  gimp_plugin_menu_register ("plug_in_the_old_egg", "<Image>/Filters/Toys");
 }
 
 static void
@@ -180,7 +178,7 @@ build_dialog (void)
 
   gimp_ui_init ("gee_zoom", TRUE);
 
-  dlg = gimp_dialog_new (_("GEE-ZOOM"), "gee_zoom",
+  dlg = gimp_dialog_new (_("Gee Zoom"), "gee_zoom",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-the-old-egg",
                          NULL);

@@ -79,7 +79,6 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-web-menu",            NULL, N_("_Web")           },
   { "plug-in-animation-menu",      NULL, N_("An_imation")     },
   { "plug-in-combine-menu",        NULL, N_("C_ombine")       },
-  { "plug-in-toys-menu",           NULL, N_("To_ys")          },
 
   { "plug-in-reset-all", GIMP_STOCK_RESET,
     N_("Reset all _Filters"), NULL, NULL,
