@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 01:37-0400\n"
+"POT-Creation-Date: 2005-06-17 18:55-0400\n"
 "PO-Revision-Date: 2005-06-17 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -3892,40 +3892,32 @@ msgstr "Spacing:"
 msgid "Description:"
 msgstr "Description:"
 
-#: plug-ins/common/gee.c:103
-msgid "Gee-_Slime"
-msgstr "Gee-_Slime"
+#: plug-ins/common/gee.c:103 plug-ins/common/gee.c:158
+msgid "Gee Slime"
+msgstr "Gee Slime"
 
-#: plug-ins/common/gee.c:160
-msgid "GEE-SLIME"
-msgstr "GEE-SLIME"
-
-#: plug-ins/common/gee.c:166 plug-ins/common/gee_zoom.c:189
+#: plug-ins/common/gee.c:164 plug-ins/common/gee_zoom.c:187
 msgid "Thank you for choosing GIMP"
 msgstr "Thank you for choosing GIMP"
 
-#: plug-ins/common/gee.c:174
+#: plug-ins/common/gee.c:172
 msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"A less obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"A less obsolete creation by Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 
-#: plug-ins/common/gee_zoom.c:122
-msgid "Gee-_Zoom"
-msgstr "Gee-_Zoom"
+#: plug-ins/common/gee_zoom.c:122 plug-ins/common/gee_zoom.c:181
+msgid "Gee Zoom"
+msgstr "Gee Zoom"
 
-#: plug-ins/common/gee_zoom.c:183
-msgid "GEE-ZOOM"
-msgstr "GEE-ZOOM"
-
-#: plug-ins/common/gee_zoom.c:197
+#: plug-ins/common/gee_zoom.c:195
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"An obsolete creation by Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 
 #: plug-ins/common/gif.c:402 plug-ins/common/gifload.c:141
