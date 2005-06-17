@@ -1,5 +1,10 @@
 2005-06-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: removed menu
+	registration (bug #307535).
+
+2005-06-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gee.c
 	* plug-ins/common/gee_zoom.c: don't register any menu entries
 	(see bug #307998).
