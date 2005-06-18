@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-16 14:55+0200\n"
-"PO-Revision-Date: 2005-06-16 14:58+0200\n"
+"PO-Revision-Date: 2005-06-18 02:38+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -996,7 +996,7 @@ msgstr "Bild ö_ffnen"
 
 #: ../app/actions/documents-actions.c:47
 msgid "Open the selected entry"
-msgstr "Gewählten Eintrag entfernen"
+msgstr "Gewählten Eintrag öffnen"
 
 #: ../app/actions/documents-actions.c:52
 msgid "_Raise or Open Image"
