@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-16 14:55+0200\n"
-"PO-Revision-Date: 2005-06-18 02:38+0200\n"
+"PO-Revision-Date: 2005-06-18 02:44+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6964,7 +6964,7 @@ msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungenverlorgen:"
 
 #: ../app/dialogs/quit-dialog.c:177
 msgid "There is one image with unsaved changes:"
-msgstr "Kein Bild mit ungesicherten Änderungen vorhanden:"
+msgstr "Es ist ein Bild mit ungesicherten Änderungen vorhanden:"
 
 #: ../app/dialogs/quit-dialog.c:180
 #, c-format
