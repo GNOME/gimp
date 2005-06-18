@@ -1,5 +1,10 @@
 2005-06-18  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.c (gimp_imagefile_get_new_pixbuf):
+	simplified, use the eek wilber icon if the file doesn't exist.
+
+2005-06-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gee.c
 	* plug-ins/common/gee_zoom.c: string fixes (bug #308134).
 

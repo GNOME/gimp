@@ -472,32 +472,36 @@ gimp_imagefile_get_new_pixbuf (GimpViewable *viewable,
 {
   GimpImagefile *imagefile = GIMP_IMAGEFILE (viewable);
   GdkPixbuf     *pixbuf;
+  const gchar   *stock_id  = NULL;
 
   if (! GIMP_OBJECT (imagefile)->name)
     return NULL;
 
   pixbuf = gimp_imagefile_load_thumb (imagefile, width, height);
 
-  if (pixbuf)
+  switch (imagefile->thumbnail->image_state)
     {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
+    case GIMP_THUMB_STATE_REMOTE:
+      stock_id = "gtk-network";
+      break;
+
+    case GIMP_THUMB_STATE_FOLDER:
+      stock_id = "gtk-open";
+      break;
+
+    case GIMP_THUMB_STATE_SPECIAL:
+      stock_id = "gtk-harddisk";
+      break;
+
+    case GIMP_THUMB_STATE_NOT_FOUND:
+      stock_id = "gimp-wilber-eek";
+      break;
+
+    default:
+      break;
     }
-  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
-    {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-network");
-    }
-  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
-    {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-open");
-    }
-  else if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_SPECIAL)
-    {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), "gtk-harddisk");
-    }
-  else
-    {
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), NULL);
-    }
+
+  gimp_viewable_set_stock_id (GIMP_VIEWABLE (imagefile), stock_id);
 
   return pixbuf;
 }
