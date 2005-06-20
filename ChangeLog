@@ -1,12 +1,17 @@
 2005-06-21  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/documents-commands.c: added a second text to the
+	confirmation dialog; changed the primary text.
+
+2005-06-21  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp-ids.h: added missing id to fix the build.
 
 2005-06-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/laplace.c: don't normalize the result.
 	Fixes bug #306874?
-	
+
 2005-06-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/documents-actions.c

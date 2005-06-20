@@ -200,8 +200,12 @@ documents_clear_cmd_callback (GtkAction *action,
                            dialog, G_CONNECT_SWAPPED);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                     _("Do you really want to remove all "
-                                       "entries from the document history?"));
+                                     _("Remove all entries from the "
+                                       "document history?"));
+
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Clearing the document history will permanently "
+                               "remove all currently listed entries."));
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
