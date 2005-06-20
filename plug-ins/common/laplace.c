@@ -220,7 +220,6 @@ laplace (GimpDrawable *drawable)
   gint         bytes;
   gint         current;
   gint         gradient;
-  gint         max_gradient = 0;
   gint         alpha;
   gint         counter;
   guchar      *dest, *d;
@@ -231,7 +230,6 @@ laplace (GimpDrawable *drawable)
   gint         row, col;
   gint         x1, y1, x2, y2;
   gint         minval, maxval;
-  gfloat       scale = 1.0;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -287,8 +285,6 @@ laplace (GimpDrawable *drawable)
 
 	    gradient = (0.5 * MAX ((maxval - cr [col]), (cr[col]- minval)));
 
-	    max_gradient = MAX (abs (gradient), max_gradient);
-
 	    *d++ = (((pr[col - bytes] + pr[col]       + pr[col + bytes] +
                       cr[col - bytes] - (8 * cr[col]) + cr[col + bytes] +
                       nr[col - bytes] + nr[col]       + nr[col + bytes]) > 0) ?
@@ -322,7 +318,6 @@ laplace (GimpDrawable *drawable)
   laplace_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
 
   gimp_progress_init (_("Cleanup..."));
-  scale = (255.0 / (gfloat) max_gradient);
   counter =0;
 
   /*  loop through the rows, applying the laplace convolution  */
@@ -344,9 +339,7 @@ laplace (GimpDrawable *drawable)
                        BLACK_REGION (nr[col - bytes]) ||
                        BLACK_REGION (nr[col])         ||
                        BLACK_REGION (nr[col + bytes]))) ?
-                     (gint) (scale * ((float) ((current >= 128) ?
-                                               (current - 128) : current)))
-                     : 0);
+                     ((current >= 128) ? (current - 128) : current) : 0);
 
           if (alpha && (((col + 1) % bytes) == 0)) /* the alpha channel */
             {
