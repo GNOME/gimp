@@ -2,6 +2,7 @@
 
 	* app/actions/documents-actions.c
 	* app/actions/documents-commands.[ch]
+	* app/widgets/gimpdocumentview.c
 	* app/widgets/gimphelp-ids.h
 	* menus/documents-menu.xml: added "Clear document history" action,
 	button, menu item and confirm dialog (bug #140001).

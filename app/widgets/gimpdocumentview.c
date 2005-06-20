@@ -145,6 +145,9 @@ gimp_document_view_new (GimpViewType     view_type,
 				  GTK_BUTTON (document_view->remove_button),
 				  GIMP_TYPE_IMAGEFILE);
 
+  gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+                                 "documents-clear", NULL);
+
   document_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
                                    "documents-recreate-preview",
