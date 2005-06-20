@@ -100,19 +100,32 @@ query (void)
     { GIMP_PDB_INT32,    "value_distance",      "distribution distance on value axis [0,255]" }
   };
 
+  gimp_install_procedure ("plug_in_hsv_noise",
+                          "Scattering pixel values in HSV space",
+                          "Scattering pixel values in HSV space",
+                          "Shuji Narazaki (narazaki@InetQ.or.jp)",
+                          "Shuji Narazaki",
+                          "1997",
+                          N_("HSV Noise..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_hsv_noise", "<Image>/Filters/Noise");
+
   gimp_install_procedure (PLUG_IN_NAME,
                           "Scattering pixel values in HSV space",
                           "Scattering pixel values in HSV space",
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
                           "1997",
-                          N_("S_catter HSV..."),
+                          NULL,
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Noise");
 }
 
 static void

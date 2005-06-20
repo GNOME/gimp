@@ -137,7 +137,7 @@ query (void)
   };
 
 
-  gimp_install_procedure ("plug_in_scatter_rgb",
+  gimp_install_procedure ("plug_in_rgb_noise",
                           "Adds random noise to image channels ",
                           "Add normally distributed (zero mean) random values "
                           "to image channels.  Noise may be additive "
@@ -148,13 +148,13 @@ query (void)
                           "Torsten Martinsen",
                           "Torsten Martinsen",
                           "May 2000",
-                          N_("_Scatter RGB..."),
+                          N_("_RGB Noise..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (scatter_args), 0,
                           scatter_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_scatter_rgb", "<Image>/Filters/Noise");
+  gimp_plugin_menu_register ("plug_in_rgb_noise", "<Image>/Filters/Noise");
 
   gimp_install_procedure ("plug_in_noisify",
                           "Adds random noise to image channels ",

@@ -1,3 +1,13 @@
+2005-06-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/noisify.c: rename as "plug-in-rgb-noise"
+	with menu entry "RGB Noise".  Leave "plug-in-noisify" for
+	backward compatibility.
+
+	* plug-ins/common/scatter_hsv.c: rename as "plug-in-hsv-noise"
+	with menu entry "HSV Noise".  Leave "plug-in-scatter-hsv" for
+	backward compatibility.
+
 2005-06-20  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): set the
