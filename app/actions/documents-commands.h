@@ -28,6 +28,8 @@ void   documents_file_open_dialog_cmd_callback (GtkAction *action,
                                                 gpointer   data);
 void   documents_remove_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
+void   documents_clear_cmd_callback            (GtkAction *action,
+                                                gpointer   data);
 void   documents_recreate_preview_cmd_callback (GtkAction *action,
                                                 gpointer   data);
 void   documents_reload_previews_cmd_callback  (GtkAction *action,

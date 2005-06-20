@@ -1,3 +1,11 @@
+2005-06-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/documents-actions.c
+	* app/actions/documents-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/documents-menu.xml: added "Clear document history" action,
+	button, menu item and confirm dialog (bug #140001).
+
 2005-06-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/noisify.c: rename as "plug-in-rgb-noise"

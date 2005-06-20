@@ -7,6 +7,7 @@
     <menuitem action="documents-raise-or-open" />
     <menuitem action="documents-file-open-dialog" />
     <menuitem action="documents-remove" />
+    <menuitem action="documents-clear" />
     <separator />
     <menuitem action="documents-recreate-preview" />
     <menuitem action="documents-reload-previews" />

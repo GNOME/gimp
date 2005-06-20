@@ -30,6 +30,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-documents.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimagefile.h"
@@ -39,6 +40,8 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdocumentview.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -162,6 +165,51 @@ documents_remove_cmd_callback (GtkAction *action,
     {
       gimp_container_remove (container, GIMP_OBJECT (imagefile));
     }
+}
+
+void
+documents_clear_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GtkWidget           *dialog;
+
+  context = gimp_container_view_get_context (editor->view);
+
+  dialog = gimp_message_dialog_new (_("Clear Document History"),
+                                    GIMP_STOCK_QUESTION,
+                                    GTK_WIDGET (editor),
+                                    GTK_DIALOG_MODAL |
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func, NULL,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect_object (gtk_widget_get_toplevel (GTK_WIDGET (editor)),
+                           "unmap",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog, G_CONNECT_SWAPPED);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Do you really want to remove all "
+                                       "entries from the document history?"));
+
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      gimp_container_clear (context->gimp->documents);
+      gimp_documents_save (context->gimp);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 void
