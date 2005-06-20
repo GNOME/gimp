@@ -591,8 +591,9 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  the toplevel shell */
   shell = g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                        "unit",  unit,
-                        "scale", scale,
+                        "gravity", GDK_GRAVITY_CENTER,
+                        "unit",    unit,
+                        "scale",   scale,
                         NULL);
 
   shell->gdisp = gdisp;

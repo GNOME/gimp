@@ -1,3 +1,9 @@
+2005-06-20  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): set the
+	gravity of the image window to CENTER. Gives much better behaviour
+	for "resize-windows-on-zoom".
+
 2005-06-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_get_new_pixbuf):
