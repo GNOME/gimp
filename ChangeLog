@@ -1,5 +1,10 @@
 2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/common/retinex.c:  initialize memory before using.
+	Fixes bug #157915.
+
+2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimplayer-floating-sel.c: set "Keep Transparency"
 	FALSE when creating floating sel; see bug #161042.
 
