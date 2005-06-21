@@ -1860,16 +1860,12 @@ do {                                                            \
       spotfn_list[rf].thresh = spot2thresh (rf, width);
       thresh[0] = spotfn_list[rf].thresh;
 
-      /* optimisation: only use separate threshold matrices if the
-       * spot functions are actually different */
       ASRT (gf);
-      if (!spotfn_list[gf].thresh)
-        spotfn_list[gf].thresh = spot2thresh (gf, width);
+      spotfn_list[gf].thresh = spot2thresh (gf, width);
       thresh[1] = spotfn_list[gf].thresh;
 
       ASRT (bf);
-      if (!spotfn_list[bf].thresh)
-        spotfn_list[bf].thresh = spot2thresh (bf, width);
+      spotfn_list[bf].thresh = spot2thresh (bf, width);
       thresh[2] = spotfn_list[bf].thresh;
 
       if (colourspace == CS_CMYK)
@@ -1877,8 +1873,7 @@ do {                                                            \
           rot[3] = DEG2RAD (pvals.gry_ang);
           gf = pvals.gry_spotfn;
           ASRT (gf);
-          if (!spotfn_list[gf].thresh)
-            spotfn_list[gf].thresh = spot2thresh (gf, width);
+	  spotfn_list[gf].thresh = spot2thresh (gf, width);
           thresh[3] = spotfn_list[gf].thresh;
         }
     }
