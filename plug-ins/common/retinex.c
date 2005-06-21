@@ -657,6 +657,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
       g_warning ("Failed to allocate memory");
       return;
     }
+  memset (dst, 0, size * sizeof (gfloat));
 
   channelsize  = (width * height);
   in  = (gfloat *) g_try_malloc (channelsize * sizeof (gfloat));
