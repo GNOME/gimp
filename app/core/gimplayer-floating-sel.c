@@ -71,7 +71,7 @@ floating_sel_attach (GimpLayer    *layer,
     }
 
   /*  set the drawable and allocate a backing store  */
-  gimp_layer_set_preserve_trans (layer, TRUE, FALSE);
+  gimp_layer_set_preserve_trans (layer, FALSE, FALSE);
   layer->fs.drawable      = drawable;
   layer->fs.backing_store = tile_manager_new (GIMP_ITEM (layer)->width,
                                               GIMP_ITEM (layer)->height,
