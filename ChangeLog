@@ -1,3 +1,8 @@
+2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/mblur.c: add option of blurring inward
+	or outward for zoom, should fix bug #142968.
+	
 2005-06-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c

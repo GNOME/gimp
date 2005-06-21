@@ -74,6 +74,7 @@ typedef struct
   gint32    angle;
   gdouble   center_x;
   gdouble   center_y;
+  gboolean  blur_outward;
   gboolean  preview;
 } mblur_vals_t;
 
@@ -127,14 +128,16 @@ static mblur_vals_t mbvals =
   45,           /* radius     */
   100000.0,     /* center_x   */
   100000.0,     /* center_y   */
+  TRUE,         /* blur_outward */
   FALSE         /* preview    */
 };
 
 
-static GtkObject *length  = NULL;
-static GtkObject *angle   = NULL;
-static GtkWidget *center  = NULL;
-static GtkWidget *preview = NULL;
+static GtkObject *length     = NULL;
+static GtkObject *angle      = NULL;
+static GtkWidget *center     = NULL;
+static GtkWidget *dir_button = NULL;
+static GtkWidget *preview    = NULL;
 
 static gint       img_width, img_height, img_bpp;
 static gboolean   has_alpha;
@@ -156,6 +159,7 @@ query (void)
     { GIMP_PDB_INT32,     "angle",     "Angle" },
     { GIMP_PDB_FLOAT,     "center_x",     "Center X (optional)" },
     { GIMP_PDB_FLOAT,     "center_y",     "Center Y (optional)" },
+    { GIMP_PDB_INT32,     "blur_outward", "For radial, 1 for outward, 0 for inward (optional)" },
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -228,6 +232,12 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
+      if (nparams == 9)
+        {
+          mbvals.blur_outward = param[6].data.d_int32;
+	  --nparams;
+        }
+
       if (nparams == 8)
         {
           mbvals.center_x = param[6].data.d_float;
@@ -694,8 +704,16 @@ mblur_zoom (GimpDrawable *drawable,
 
               for (i = 0; i < n; ++i)
                 {
-                  xx = center_x + (x - center_x) * (1.0 - f * i);
-                  yy = center_y + (y - center_y) * (1.0 - f * i);
+		  if (mbvals.blur_outward)
+		    {
+		      xx = center_x + (x - center_x) * (1.0 - f * i);
+		      yy = center_y + (y - center_y) * (1.0 - f * i);
+		    }
+		  else
+		    {
+		      xx = center_x + (x - center_x) * (1.0 + f * i);
+		      yy = center_y + (y - center_y) * (1.0 + f * i);
+		    }
 
                   if ((yy < drawable_y1) || (yy >= drawable_y2) ||
                       (xx < drawable_x1) || (xx >= drawable_x2))
@@ -830,18 +848,21 @@ mblur_set_sensitivity (void)
       gimp_scale_entry_set_sensitive (length, TRUE);
       gimp_scale_entry_set_sensitive (angle, TRUE);
       gtk_widget_set_sensitive (center, FALSE);
+      gtk_widget_set_sensitive (dir_button, FALSE);
       break;
 
     case MBLUR_RADIAL:
       gimp_scale_entry_set_sensitive (length, FALSE);
       gimp_scale_entry_set_sensitive (angle, TRUE);
       gtk_widget_set_sensitive (center, TRUE);
+      gtk_widget_set_sensitive (dir_button, FALSE);
       break;
 
     case MBLUR_ZOOM:
       gimp_scale_entry_set_sensitive (length, TRUE);
       gimp_scale_entry_set_sensitive (angle, FALSE);
       gtk_widget_set_sensitive (center, TRUE);
+      gtk_widget_set_sensitive (dir_button, TRUE);
       break;
 
     default:
@@ -876,6 +897,7 @@ mblur_dialog (gint32        image_ID,
   GtkWidget    *entry;
   GtkWidget    *spinbutton;
   GtkWidget    *label;
+  GtkWidget    *button;
   GtkSizeGroup *group;
   GtkObject    *adj;
   gdouble       xres, yres;
@@ -922,6 +944,18 @@ mblur_dialog (gint32        image_ID,
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  button = gtk_check_button_new_with_mnemonic (_("Blur _outward"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), mbvals.blur_outward);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mbvals.blur_outward);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  dir_button = button;
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
