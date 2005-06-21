@@ -39,11 +39,6 @@
    many it's research."  --Wilson Mizner
  *********************************************************************/
 
-/* Changes:
- *
- * 2000-01-05  Fixed a problem with strtok and got rid of the selfmade i18n
- *             Sven Neumann <sven@gimp.org>
- */
 
 /**********************************************************************
  Include necessary files
@@ -61,11 +56,6 @@
 
 #include <glib/gstdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -81,6 +71,7 @@
 #endif
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /**********************************************************************
   Global variables
@@ -697,10 +688,14 @@ delete_dialog_callback (GtkWidget *widget,
       selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
       gtk_tree_selection_get_selected (selection, &model, &iter);
 
-      gtk_tree_model_get (model, &iter, 2, &sel_obj, -1);
+      gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
 
       /* Delete the current  item + asssociated file */
       valid = gtk_list_store_remove (GTK_LIST_STORE(model), &iter);
+
+      /* Try to select first item if last one was deleted */
+      if (!valid)
+        valid = gtk_tree_model_get_iter_first (model, &iter);
 
       /* Shadow copy for ordering info */
       fractalexplorer_list = g_list_remove (fractalexplorer_list, sel_obj);
@@ -720,7 +715,7 @@ delete_dialog_callback (GtkWidget *widget,
         {
           gtk_tree_selection_select_iter (selection, &iter);
 
-          gtk_tree_model_get (model, &iter, 2, &current_obj, -1);
+          gtk_tree_model_get (model, &iter, 1, &current_obj, -1);
 	}
     }
   else
@@ -748,7 +743,7 @@ delete_fractal_callback (GtkWidget *widget,
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
-      gtk_tree_model_get (model, &iter, 2, &sel_obj, -1);
+      gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
 
       str = g_strdup_printf (_("Are you sure you want to delete "
                                "\"%s\" from the list and from disk?"),
@@ -828,10 +823,7 @@ fill_list_store (GtkListStore *list_store)
       g = tmp->data;
 
       gtk_list_store_append (list_store, &iter);
-      if (g->obj_status & fractalexplorer_READONLY)
-        gtk_list_store_set (list_store, &iter, 0, GTK_STOCK_NO, 1, g->draw_name, 2, g, -1);
-      else
-        gtk_list_store_set (list_store, &iter, 0, GTK_STOCK_YES, 1, g->draw_name, 2, g, -1);
+      gtk_list_store_set (list_store, &iter, 0, g->draw_name, 1, g, -1);
     }
 }
 
@@ -845,9 +837,9 @@ view_selection_func (GtkTreeSelection *selection,
   GtkTreeIter         iter;
   fractalexplorerOBJ *sel_obj;
 
-  if (gtk_tree_model_get_iter(model, &iter, path))
+  if (gtk_tree_model_get_iter (model, &iter, path))
     {
-      gtk_tree_model_get(model, &iter, 2, &sel_obj, -1);
+      gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
 
       if (!path_currently_selected)
         {
@@ -959,13 +951,7 @@ fractalexplorer_list_load_one (const GimpDatafileData *file_data,
                                           file_data->basename);
 
   if (fractalexplorer)
-    {
-      /* Read only ?*/  /* FIXME: filename handling for Win32 */
-      if (access (filename, W_OK))
-        fractalexplorer->obj_status |= fractalexplorer_READONLY;
-
-      fractalexplorer_list_insert (fractalexplorer);
-    }
+    fractalexplorer_list_insert (fractalexplorer);
 }
 
 static void
@@ -1030,23 +1016,21 @@ add_objects_list (void)
   view = gtk_tree_view_new ();
   col = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
-  renderer = gtk_cell_renderer_pixbuf_new ();
-  gtk_tree_view_column_pack_start (col, renderer, FALSE);
-  gtk_tree_view_column_add_attribute (col, renderer, "stock-id", 0);
+
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (col, renderer, TRUE);
-  gtk_tree_view_column_add_attribute (col, renderer, "text", 1);
+  gtk_tree_view_column_add_attribute (col, renderer, "text", 0);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-  selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-  gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
-  gtk_tree_selection_set_select_function(selection, view_selection_func, NULL, NULL);
 
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                         view);
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
+  gtk_tree_selection_set_select_function (selection,
+                                          view_selection_func, NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), view);
   gtk_widget_show (view);
 
   fractalexplorer_list_load_all (fractalexplorer_path);
-  list_store = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_POINTER);
   fill_list_store (list_store);
   gtk_tree_view_set_model (GTK_TREE_VIEW (view), GTK_TREE_MODEL (list_store));
   g_object_unref (list_store); /* destroy model automatically with view */
@@ -1129,6 +1113,7 @@ fractalexplorer_rescan_list (GtkWidget *widget,
         {
           GtkTreeModel     *model;
           GtkTreeSelection *selection;
+          GtkTreePath      *path;
           GtkTreeIter       iter;
 
           fractalexplorer_list_load_all (fractalexplorer_path);
@@ -1142,7 +1127,11 @@ fractalexplorer_rescan_list (GtkWidget *widget,
 	  if (gtk_tree_model_get_iter_first (model, &iter))
             {
               gtk_tree_selection_select_iter (selection, &iter);
+              path = gtk_tree_model_get_path (model, &iter);
               current_obj = fractalexplorer_list->data;
+              gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view), path, NULL,
+                                            FALSE, 0.0, 0.0);
+              gtk_tree_path_free (path);
 	    }
         }
     }

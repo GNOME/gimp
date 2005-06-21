@@ -33,12 +33,9 @@
 #include "FractalExplorer.h"
 #include "Dialogs.h"
 
-#include "logo.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 
-#define RESPONSE_ABOUT 1
 #define ZOOM_UNDO_SIZE 100
 
 
@@ -100,12 +97,8 @@ static void create_load_file_chooser   (GtkWidget      *widget,
 static void create_save_file_chooser   (GtkWidget      *widget,
                                         GtkWidget      *dialog);
 
-static void explorer_logo_dialog       (GtkWidget      *parent);
-
 static void cmap_preview_size_allocate (GtkWidget      *widget,
                                         GtkAllocation  *allocation);
-
-static void logo_preview_size_allocate (GtkWidget      *preview);
 
 /**********************************************************************
  CALLBACKS
@@ -118,10 +111,6 @@ dialog_response (GtkWidget *widget,
 {
   switch (response_id)
     {
-    case RESPONSE_ABOUT:
-      explorer_logo_dialog (widget);
-      break;
-
     case GTK_RESPONSE_OK:
       wint.run = TRUE;
       gtk_widget_destroy (widget);
@@ -559,7 +548,6 @@ explorer_dialog (void)
                      NULL, 0,
                      gimp_standard_help_func, HELP_ID,
 
-                     _("About"),       RESPONSE_ABOUT,
                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
@@ -574,7 +562,6 @@ explorer_dialog (void)
                     NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_ABOUT,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1617,116 +1604,6 @@ make_color_map (void)
         colormap[i][1] = gr;
         colormap[i][2] = bl;
       }
-}
-
-/**********************************************************************
- FUNCTION: explorer_logo_dialog
- *********************************************************************/
-
-static void
-logo_preview_size_allocate (GtkWidget *preview)
-{
-  guchar *temp;
-  guchar *temp2;
-  guchar *datapointer;
-  gint    x, y;
-
-  temp2 = temp = g_new (guchar, logo_height*(logo_width + 10) * 3);
-  datapointer = header_data + logo_width * logo_height - 1;
-
-  for (y = 0; y < logo_height; y++)
-  {
-    for (x = 0; x < logo_width; x++)
-    {
-      HEADER_PIXEL (datapointer, temp2);
-      temp2 += 3;
-    }
-  }
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview), 0, 0,
-                          logo_width, logo_height, GIMP_RGB_IMAGE,
-                          temp, logo_width * 3);
-  g_free (temp);
-}
-
-/**********************************************************************
- FUNCTION: explorer_logo_dialog
- *********************************************************************/
-
-static void
-explorer_logo_dialog (GtkWidget *parent)
-{
-  static GtkWidget *dialog = NULL;
-
-  GtkWidget *label;
-  GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *preview;
-  GtkWidget *frame;
-
-  if (dialog)
-    {
-      gtk_window_present (GTK_WINDOW (dialog));
-      return;
-    }
-
-  dialog = gimp_dialog_new (_("About"), "fractalexplorer",
-                            parent, 0,
-                            gimp_standard_help_func, HELP_ID,
-
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                            NULL);
-
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &dialog);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  /*  The logo frame & drawing area  */
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, logo_width, logo_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
-  g_signal_connect (preview, "size_allocate",
-                    G_CALLBACK (logo_preview_size_allocate), NULL);
-
-
-  label = gtk_label_new ("Fractal Chaos Explorer\n"
-                         "Plug-In for the GIMP\n"
-                         "Version 2.00 (Multilingual)");
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new ("\nContains code from:\n\n"
-                         "Daniel Cotting  <cotting@mygale.org>\n"
-                         "Peter Kirchgessner  <Pkirchg@aol.com>\n"
-                         "Scott Draves  <spot@cs.cmu.edu>\n"
-                         "Andy Thomas  <alt@picnic.demon.co.uk>\n"
-                         "and the GIMP distribution.");
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (dialog);
 }
 
 /**********************************************************************

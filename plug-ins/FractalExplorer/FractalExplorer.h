@@ -158,7 +158,6 @@ typedef struct _fractalexplorerListOptions
 /* States of the object */
 #define fractalexplorer_OK       0x0
 #define fractalexplorer_MODIFIED 0x1
-#define fractalexplorer_READONLY 0x2
 
 #define gradient_GRADIENTEDITOR  0x2
 
