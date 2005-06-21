@@ -701,7 +701,7 @@ delete_dialog_callback (GtkWidget *widget,
 
       /* Delete the current  item + asssociated file */
       valid = gtk_list_store_remove (GTK_LIST_STORE(model), &iter);
-      
+
       /* Shadow copy for ordering info */
       fractalexplorer_list = g_list_remove (fractalexplorer_list, sel_obj);
       /*
@@ -756,7 +756,7 @@ delete_fractal_callback (GtkWidget *widget,
 
       delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
                                               gtk_widget_get_toplevel (view),
-                                              gimp_standard_help_func, HELP_ID,
+                                              gimp_standard_help_func, NULL,
                                               GTK_STOCK_DIALOG_QUESTION,
                                               str,
                                               GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
@@ -820,7 +820,7 @@ fill_list_store (GtkListStore *list_store)
 {
   GList         *tmp;
   GtkTreeIter    iter;
-  
+
 
   for (tmp = fractalexplorer_list; tmp; tmp = tmp->next)
     {
@@ -1040,17 +1040,17 @@ add_objects_list (void)
   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
   gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
   gtk_tree_selection_set_select_function(selection, view_selection_func, NULL, NULL);
-  
+
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
                                          view);
   gtk_widget_show (view);
 
   fractalexplorer_list_load_all (fractalexplorer_path);
   list_store = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
-  fill_list_store (list_store);  
+  fill_list_store (list_store);
   gtk_tree_view_set_model (GTK_TREE_VIEW (view), GTK_TREE_MODEL (list_store));
   g_object_unref (list_store); /* destroy model automatically with view */
-  
+
   /* Put buttons in */
   button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
@@ -1080,31 +1080,59 @@ add_objects_list (void)
 }
 
 static void
-fractalexplorer_rescan_response (GtkWidget *widget,
-                                 gint       response_id,
-                                 gpointer   data)
+fractalexplorer_rescan_list (GtkWidget *widget,
+                             gpointer   data)
 {
-  GtkWidget        *view = (GtkWidget *) data;
-  GtkTreeModel     *model;
-  GtkTreeSelection *selection;
-  GtkTreeIter       iter;
-  
-  if (response_id == GTK_RESPONSE_OK)
+  static GtkWidget *dlg  = NULL;
+  GtkWidget        *view = data;
+  GtkWidget        *patheditor;
+
+  if (dlg)
     {
-      GtkWidget *patheditor;
+      gtk_window_present (GTK_WINDOW (dlg));
+      return;
+    }
 
-      gtk_widget_set_sensitive (widget, FALSE);
+  dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
+                         gtk_widget_get_toplevel (view),
+                         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                         gimp_standard_help_func, NULL,
 
-      patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (widget),
-                                                  "patheditor"));
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
+                         NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  g_signal_connect (dlg, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &dlg);
+
+  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"),
+                                     fractalexplorer_path);
+  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (patheditor);
+
+  if (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK)
+    {
       g_free (fractalexplorer_path);
       fractalexplorer_path =
         gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
       if (fractalexplorer_path)
         {
+          GtkTreeModel     *model;
+          GtkTreeSelection *selection;
+          GtkTreeIter       iter;
+
           fractalexplorer_list_load_all (fractalexplorer_path);
+
           model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
 	  gtk_list_store_clear (GTK_LIST_STORE (model));
           fill_list_store (GTK_LIST_STORE (model));
@@ -1119,49 +1147,5 @@ fractalexplorer_rescan_response (GtkWidget *widget,
         }
     }
 
-  gtk_widget_destroy (widget);
-}
-
-static void
-fractalexplorer_rescan_list (GtkWidget *widget,
-                             gpointer   data)
-{
-  GtkWidget        *view = (GtkWidget *) data;
-  static GtkWidget *dlg  = NULL;
-
-  GtkWidget *patheditor;
-
-  if (dlg)
-    {
-      gtk_window_present (GTK_WINDOW (dlg));
-      return;
-    }
-
-  dlg = gimp_dialog_new (_("Rescan for Fractals"), "fractalexplorer",
-                         NULL, 0,
-                         gimp_standard_help_func, HELP_ID,
-
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                         NULL);
-
-  g_signal_connect (dlg, "response",
-                    G_CALLBACK (fractalexplorer_rescan_response),
-                    view);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &dlg);
-
-  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"),
-                                     fractalexplorer_path);
-  gtk_container_set_border_width (GTK_CONTAINER (patheditor), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (patheditor);
-
-  g_object_set_data (G_OBJECT (dlg), "patheditor", patheditor);
-
-  gtk_widget_show (dlg);
+  gtk_widget_destroy (dlg);
 }

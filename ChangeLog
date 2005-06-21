@@ -1,5 +1,10 @@
 2005-06-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c: minor changes, mainly to the
+	Rescan dialog.
+
+2005-06-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/FractalExplorer.c: applied a patch from
 	Karine Delvare that ports the list to GtkTreeView and replaces the
 	XPM icons with stock icons. Fixes bug #140202.
