@@ -1,3 +1,7 @@
+2005-06-21  Hendrik Richter  <hendi@gnome-de.org>
+
+	* de.po: Fixed German translation (#308553)
+
 2005-06-18  Sven Neumann  <sven@gimp.org>
 
 	* de.po: fixed translation (bug #308131 and bug #308127).
