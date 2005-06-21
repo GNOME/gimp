@@ -2,6 +2,13 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/common/newsprint.c: remove "optimization" that interacts
+	badly with preview; fixes bug #161573.
+	
+2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	Merged from HEAD branch:
+
 	* plug-ins/common/retinex.c:  initialize memory before using.
 	Fixes bug #157915.
 
