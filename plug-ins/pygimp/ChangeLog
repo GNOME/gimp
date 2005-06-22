@@ -1,3 +1,7 @@
+2005-06-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/foggify.py: fixed capitalization of menu label.
+
 2004-12-19  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: added $(pygimp_DATA) to EXTRA_DIST.

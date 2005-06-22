@@ -1,5 +1,9 @@
 2005-06-22  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-actions.c: unified spelling of "Re-Show".
+
+2005-06-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mblur.c: switch to a more compact dialog layout.
 
 2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>

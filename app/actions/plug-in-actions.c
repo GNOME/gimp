@@ -391,7 +391,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
       label = plug_in_proc_def_get_label (proc_def, domain);
 
       repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
-      reshow = g_strdup_printf (_("R_e-show \"%s\""), label);
+      reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
 
       g_free (label);
 

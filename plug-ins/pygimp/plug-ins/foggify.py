@@ -51,7 +51,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Filters/Render/Clouds/Add _fog...",
+    "<Image>/Filters/Render/Clouds/Add _Fog...",
     "RGB*, GRAY*",
     [
         (PF_STRING, "name", "The new layer name", "Clouds"),
