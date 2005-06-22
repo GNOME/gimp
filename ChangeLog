@@ -1,5 +1,10 @@
 2005-06-22  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: added Edit->Preferences since that
+	seems to be the standard location nowadays (bug #157613).
+
+2005-06-22  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/plug-in-actions.c: unified spelling of "Re-Show".
 
 2005-06-22  Sven Neumann  <sven@gimp.org>
