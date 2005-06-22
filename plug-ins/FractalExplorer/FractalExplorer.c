@@ -982,7 +982,6 @@ GtkWidget *
 add_objects_list (void)
 {
   GtkWidget         *table;
-  GtkWidget         *frame;
   GtkWidget         *list_frame;
   GtkWidget         *scrolled_win;
   GtkTreeViewColumn *col;
@@ -992,14 +991,10 @@ add_objects_list (void)
   GtkListStore      *list_store;
   GtkWidget         *button;
 
-  frame = gimp_frame_new (_("Choose Fractal by double-clicking on it"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
   delete_frame_to_freeze = list_frame = gtk_frame_new (NULL);
@@ -1060,7 +1055,7 @@ add_objects_list (void)
                     G_CALLBACK (delete_fractal_callback),
                     view);
 
-  return frame;
+  return table;
 }
 
 static void

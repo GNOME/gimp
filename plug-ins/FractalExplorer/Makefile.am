@@ -24,8 +24,7 @@ FractalExplorer_SOURCES = \
 	Dialogs.h		\
 	Dialogs.c		\
 	FractalExplorer.c	\
-	FractalExplorer.h	\
-	logo.h
+	FractalExplorer.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\
