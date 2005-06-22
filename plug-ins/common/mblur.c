@@ -890,18 +890,19 @@ static gboolean
 mblur_dialog (gint32        image_ID,
               GimpDrawable *drawable)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *vbox;
-  GtkWidget    *frame;
-  GtkWidget    *table;
-  GtkWidget    *entry;
-  GtkWidget    *spinbutton;
-  GtkWidget    *label;
-  GtkWidget    *button;
-  GtkSizeGroup *group;
-  GtkObject    *adj;
-  gdouble       xres, yres;
-  gboolean      run;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *entry;
+  GtkWidget *spinbutton;
+  GtkWidget *label;
+  GtkWidget *button;
+  GtkObject *adj;
+  gdouble    xres, yres;
+  gboolean   run;
 
   gimp_ui_init ("mblur", FALSE);
 
@@ -919,18 +920,22 @@ mblur_dialog (gint32        image_ID,
                                               GTK_RESPONSE_CANCEL,
                                               -1);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   preview = gimp_drawable_preview_new (drawable, &mbvals.preview);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (mblur),
                             drawable);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Blur Type"),
                                     G_CALLBACK (mblur_radio_button_update),
@@ -942,65 +947,16 @@ mblur_dialog (gint32        image_ID,
 
                                     NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  button = gtk_check_button_new_with_mnemonic (_("Blur _outward"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), mbvals.blur_outward);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &mbvals.blur_outward);
-  g_signal_connect_swapped (button, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  dir_button = button;
-
-  group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  frame = gimp_frame_new (_("Blur Parameters"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  length = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                 _("L_ength:"), 150, 3,
-                                 mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
-                                 TRUE, 0, 0,
-                                 NULL, NULL);
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (length));
-  g_object_unref (group);
-
-  g_signal_connect (length, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mbvals.length);
-  g_signal_connect_swapped (length, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  angle = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                _("_Angle:"), 150, 3,
-                                mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
-                                TRUE, 0, 0,
-                                NULL, NULL);
-  gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (angle));
-
-  g_signal_connect (angle, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mbvals.angle);
-  g_signal_connect_swapped (angle, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
 
   center = gimp_frame_new (_("Blur Center"));
-  gtk_box_pack_start (GTK_BOX (vbox), center, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), center, FALSE, FALSE, 0);
   gtk_widget_show (center);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_add (GTK_CONTAINER (center), vbox);
+  gtk_widget_show (vbox);
 
   gimp_image_get_resolution (image_ID, &xres, &yres);
 
@@ -1011,7 +967,7 @@ mblur_dialog (gint32        image_ID,
   gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 6);
-  gtk_container_add (GTK_CONTAINER (center), entry);
+  gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
   g_signal_connect (entry, "value_changed",
@@ -1031,13 +987,60 @@ mblur_dialog (gint32        image_ID,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, mbvals.center_x);
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                         _("_X:"), 0, 0, 0.0);
-  gtk_size_group_add_widget (group, label);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, mbvals.center_y);
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                         _("_Y:"), 1, 0, 0.0);
-  gtk_size_group_add_widget (group, label);
+
+  button = gtk_check_button_new_with_mnemonic (_("Blur _outward"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                mbvals.blur_outward);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mbvals.blur_outward);
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  dir_button = button;
+
+  frame = gimp_frame_new (_("Blur Parameters"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  length = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                 _("L_ength:"), 150, 3,
+                                 mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
+                                 TRUE, 0, 0,
+                                 NULL, NULL);
+
+  g_signal_connect (length, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &mbvals.length);
+  g_signal_connect_swapped (length, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  angle = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                _("_Angle:"), 150, 3,
+                                mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
+
+  g_signal_connect (angle, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &mbvals.angle);
+  g_signal_connect_swapped (angle, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   mblur_set_sensitivity ();
 
