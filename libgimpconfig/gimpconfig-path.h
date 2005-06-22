@@ -24,6 +24,11 @@
 #define __GIMP_CONFIG_PATH_H__
 
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
+
 /*
  * GIMP_TYPE_CONFIG_PATH
  */
@@ -75,5 +80,7 @@ gchar             * gimp_config_build_data_path      (const gchar  *name);
 gchar             * gimp_config_build_writable_path  (const gchar  *name);
 gchar             * gimp_config_build_plug_in_path   (const gchar  *name);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_CONFIG_PATH_H__ */

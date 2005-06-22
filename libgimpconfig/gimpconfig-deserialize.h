@@ -23,6 +23,10 @@
 #ifndef __GIMP_CONFIG_DESERIALIZE_H__
 #define __GIMP_CONFIG_DESERIALIZE_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
 
 gboolean    gimp_config_deserialize_properties (GimpConfig *config,
                                                 GScanner   *scanner,
@@ -31,5 +35,7 @@ GTokenType  gimp_config_deserialize_property   (GimpConfig *config,
                                                 GScanner   *scanner,
                                                 gint        nest_level);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_CONFIG_DESERIALIZE_H__ */

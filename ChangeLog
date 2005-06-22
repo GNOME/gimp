@@ -1,3 +1,13 @@
+2005-06-22  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpconfig/gimpconfig-deserialize.h
+	* libgimpconfig/gimpconfig-error.h
+	* libgimpconfig/gimpconfig-iface.h
+	* libgimpconfig/gimpconfig-params.h
+	* libgimpconfig/gimpconfig-path.h
+	* libgimpconfig/gimpconfig-serialize.h
+	* libgimpconfig/gimpconfig-utils.h: added G_BEGIN_DECLS/G_END_DECLS.
+
 2005-06-22  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: added Edit->Preferences since that

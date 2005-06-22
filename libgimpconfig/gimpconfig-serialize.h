@@ -23,6 +23,10 @@
 #ifndef __GIMP_CONFIG_SERIALIZE_H__
 #define __GIMP_CONFIG_SERIALIZE_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
 
 gboolean  gimp_config_serialize_properties         (GimpConfig       *config,
 						    GimpConfigWriter *writer);
@@ -36,5 +40,7 @@ gboolean  gimp_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

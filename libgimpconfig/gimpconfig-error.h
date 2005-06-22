@@ -22,6 +22,10 @@
 #ifndef __GIMP_CONFIG_ERROR_H__
 #define __GIMP_CONFIG_ERROR_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
 
 typedef enum
 {
@@ -36,5 +40,7 @@ typedef enum
 
 GQuark        gimp_config_error_quark   (void) G_GNUC_CONST;
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_CONFIG_ERROR_H__ */

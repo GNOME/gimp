@@ -23,6 +23,11 @@
 #ifndef __GIMP_CONFIG_UTILS_H__
 #define __GIMP_CONFIG_UTILS_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
+
 GList    * gimp_config_diff                  (GObject      *a,
                                               GObject      *b,
                                               GParamFlags   flags);
@@ -38,5 +43,7 @@ void       gimp_config_reset_property        (GObject      *object,
 void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_CONFIG_UTILS_H__ */

@@ -23,6 +23,10 @@
 #ifndef __GIMP_CONFIG_IFACE_H__
 #define __GIMP_CONFIG_IFACE_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
 
 #define GIMP_TYPE_CONFIG               (gimp_config_interface_get_type ())
 #define GIMP_IS_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONFIG))
@@ -92,5 +96,7 @@ gboolean      gimp_config_is_equal_to           (GimpConfig   *a,
                                                  GimpConfig   *b);
 void          gimp_config_reset                 (GimpConfig   *config);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_CONFIG_IFACE_H__ */

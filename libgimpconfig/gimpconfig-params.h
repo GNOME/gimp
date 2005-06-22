@@ -23,6 +23,10 @@
 #ifndef __GIMP_CONFIG_PARAMS_H__
 #define __GIMP_CONFIG_PARAMS_H__
 
+G_BEGIN_DECLS
+
+/* For information look into the C source or the html documentation */
+
 
 /*
  * GIMP_CONFIG_PARAM_SERIALIZE - A property that can and should be
@@ -146,5 +150,7 @@
                                    G_PARAM_READWRITE |\
                                    GIMP_CONFIG_PARAM_SERIALIZE))
 
+
+G_END_DECLS
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */
