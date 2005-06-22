@@ -2,19 +2,20 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # Funda Wang <fundawang@linux.net.cn>, 2003.
+# Cai Qian <caiqian@gnome.org>, 2005
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-04 03:13+0200\n"
-"PO-Revision-Date: 2005-04-04 14:45+0800\n"
-"Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"PO-Revision-Date: 2005-06-18 15:45+0800\n"
+"Last-Translator: Cai Qian <caiqian@gnome.org>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"Translator: Cai Qian <caiqian@gnome.org>\n"
 
 #: app/app_procs.c:133
 msgid "(This console window will close in ten seconds)\n"
@@ -1901,7 +1902,7 @@ msgstr "透明(_A)"
 
 #: app/actions/layers-actions.c:58
 msgid "_Properties"
-msgstr "透视(_P)"
+msgstr "属性(_P)"
 
 #: app/actions/layers-actions.c:60
 msgid "Layer _Mode"
@@ -3082,9 +3083,8 @@ msgid "S_how Grid"
 msgstr "显示网格(_H)"
 
 #: app/actions/view-actions.c:148
-#, fuzzy
 msgid "Show Sample Points"
-msgstr "显示选区(_S)"
+msgstr "显示采样点"
 
 #: app/actions/view-actions.c:154
 msgid "Sn_ap to Guides"
@@ -3095,9 +3095,8 @@ msgid "Sna_p to Grid"
 msgstr "吸附到网格(_P)"
 
 #: app/actions/view-actions.c:166
-#, fuzzy
 msgid "Snap to _Canvas Edges"
-msgstr "吸附到参考线(_A)"
+msgstr "吸附到画布边缘(_C)"
 
 #: app/actions/view-actions.c:172
 msgid "Snap t_o Active Path"
@@ -3688,11 +3687,10 @@ msgid ""
 msgstr "如果启用，网格将默认可见。这也可以通过“查看->显示网格”命令进行切换。"
 
 #: app/config/gimprc-blurbs.h:326
-#, fuzzy
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr "如果启用，标尺将默认可见。这也可以通过“查看->显示标尺”命令进行切换。"
+msgstr "如果启用，采样点将默认可见。这也可以通过“查看->显示采样点”命令进行切换。"
 
 #: app/config/gimprc-blurbs.h:330
 msgid "Enable to display a handy GIMP tip on startup."
@@ -4009,24 +4007,20 @@ msgid "Unknown"
 msgstr "未知"
 
 #: app/core/core-enums.c:455
-#, fuzzy
 msgid "Image-sized layers"
-msgstr "图层改变大小"
+msgstr "图像大小的图层"
 
 #: app/core/core-enums.c:456
-#, fuzzy
 msgid "All visible layers"
-msgstr "合并可见图层"
+msgstr "全部可见图层"
 
 #: app/core/core-enums.c:457
-#, fuzzy
 msgid "All linked layers"
-msgstr "%d 个图层"
+msgstr "全部链接图层"
 
 #: app/core/core-enums.c:458
-#, fuzzy
 msgid "All layers"
-msgstr "所有文件"
+msgstr "全部图层"
 
 #: app/core/core-enums.c:522
 msgid "Tiny"
@@ -4131,7 +4125,6 @@ msgid "Sample Point"
 msgstr "采样点"
 
 #: app/core/core-enums.c:781 app/core/core-enums.c:812
-#, fuzzy
 msgid "Drawable mod"
 msgstr "可绘对象 mod"
 
@@ -4211,14 +4204,12 @@ msgid "Paint"
 msgstr "涂画"
 
 #: app/core/core-enums.c:800 app/core/core-enums.c:844
-#, fuzzy
 msgid "Attach parasite"
-msgstr "恢复图像"
+msgstr "添加寄生物"
 
 #: app/core/core-enums.c:801 app/core/core-enums.c:845
-#, fuzzy
 msgid "Remove parasite"
-msgstr "删除路径"
+msgstr "删除寄生物"
 
 #: app/core/core-enums.c:802
 msgid "Import paths"
@@ -4281,7 +4272,6 @@ msgid "Delete layer mask"
 msgstr "删除图层蒙板"
 
 #: app/core/core-enums.c:829
-#, fuzzy
 msgid "Show layer mask"
 msgstr "显示图层蒙板"
 
@@ -4306,9 +4296,8 @@ msgid "Delete vectors"
 msgstr "删除向量"
 
 #: app/core/core-enums.c:836
-#, fuzzy
 msgid "Vectors mod"
-msgstr "向量 Mod"
+msgstr "向量 mod"
 
 #: app/core/core-enums.c:837
 msgid "Reposition vectors"
@@ -4389,9 +4378,8 @@ msgid "Procedural Database"
 msgstr "过程数据库"
 
 #: app/core/gimp.c:647
-#, fuzzy
 msgid "Plug-In Interpreters"
-msgstr "插件文件夹"
+msgstr "插件解释器"
 
 #: app/core/gimp.c:653
 msgid "Plug-In Environment"
@@ -4422,19 +4410,19 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "无法从“%2$s”中读取 %1$d 字节：%3$s"
 
 #: app/core/gimpbrush.c:555
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "画笔文件“%s”出现严重解析错误：未知深度 %d。"
+msgstr "画笔文件“%s”出现严重解析错误：宽度 = 0。"
 
 #: app/core/gimpbrush.c:564
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+msgstr "画笔文件“%s”出现严重解析错误：高度 = 0。"
 
 #: app/core/gimpbrush.c:573
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "画笔文件“%s”出现严重解析错误：文件已损坏。"
+msgstr "画笔文件“%s”出现严重解析错误：字节数 = 0。"
 
 #: app/core/gimpbrush.c:597
 #, c-format
@@ -4791,9 +4779,8 @@ msgid "Add Color to Colormap"
 msgstr "添加颜色到颜色表"
 
 #: app/core/gimpimage-convert.c:803
-#, fuzzy
 msgid "Cannot convert image, palette is empty."
-msgstr "无法转换到多于 256 种颜色的色板。"
+msgstr "无法转换图像，色板为空。"
 
 #: app/core/gimpimage-convert.c:816
 msgid "Convert Image to RGB"
@@ -4901,14 +4888,12 @@ msgid "Change Image Unit"
 msgstr "改变图像单位"
 
 #: app/core/gimpimage.c:2256
-#, fuzzy
 msgid "Attach Parasite to Image"
-msgstr "恢复图像"
+msgstr "添加寄生物到图像"
 
 #: app/core/gimpimage.c:2289
-#, fuzzy
 msgid "Remove Parasite from Image"
-msgstr "恢复图像"
+msgstr "从图像删除寄生物"
 
 #: app/core/gimpimage.c:2757
 msgid "Add Layer"
@@ -5584,9 +5569,8 @@ msgid ""
 msgstr ""
 
 #: app/dialogs/file-save-dialog.c:398
-#, fuzzy
 msgid "Extension Mismatch"
-msgstr "扩展名"
+msgstr "扩展名不对应"
 
 #: app/dialogs/file-save-dialog.c:414
 msgid "The given file extension does not match the chosen file type."
@@ -6048,11 +6032,10 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "配置快捷键"
 
 #: app/dialogs/preferences-dialog.c:549
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "请按新的加速键，或按 Backspace 清除"
+msgstr "要编辑快捷键，请在相应行按新的加速键，或按 Backspace 清除"
 
 #: app/dialogs/preferences-dialog.c:593
 msgid ""
@@ -6491,41 +6474,36 @@ msgid "_RGB Profile:"
 msgstr "_RGB 配置文件："
 
 #: app/dialogs/preferences-dialog.c:2121
-#, fuzzy
 msgid "Select RGB color profile"
-msgstr "按颜色选择"
+msgstr "选择 RGB 颜色配置"
 
 #: app/dialogs/preferences-dialog.c:2122
 msgid "_CMYK Profile:"
-msgstr "_CMYK 配置文件："
+msgstr "_CMYK 配置："
 
 #: app/dialogs/preferences-dialog.c:2123
-#, fuzzy
 msgid "Select CMYK color profile"
-msgstr "选择颜色"
+msgstr "选择 CMYK 颜色配置"
 
 #: app/dialogs/preferences-dialog.c:2124
 msgid "_Monitor Profile:"
-msgstr ""
+msgstr "显示器配置：(_M)"
 
 #: app/dialogs/preferences-dialog.c:2125
-#, fuzzy
 msgid "Select monitor color profile"
-msgstr "选择工具过程"
+msgstr "选择显示器颜色配置"
 
 #: app/dialogs/preferences-dialog.c:2126
-#, fuzzy
 msgid "_Printer Profile:"
-msgstr "打印大小："
+msgstr "打印机配置：(_P)"
 
 #: app/dialogs/preferences-dialog.c:2127
-#, fuzzy
 msgid "Select printer color profile"
-msgstr "选择色板文件"
+msgstr "选择打印机颜色配置"
 
 #: app/dialogs/preferences-dialog.c:2135
 msgid "_Mode of operation:"
-msgstr ""
+msgstr "操作模式：(_M)"
 
 #: app/dialogs/preferences-dialog.c:2138
 msgid "_Display Rendering Intent:"
@@ -6699,19 +6677,16 @@ msgid "Select Module Folders"
 msgstr "选择模块文件夹"
 
 #: app/dialogs/preferences-dialog.c:2400
-#, fuzzy
 msgid "Interpreters"
-msgstr "项目属性"
+msgstr "解释器"
 
 #: app/dialogs/preferences-dialog.c:2400
-#, fuzzy
 msgid "Interpreter Folders"
-msgstr "图案文件夹"
+msgstr "解释器文件夹"
 
 #: app/dialogs/preferences-dialog.c:2402
-#, fuzzy
 msgid "Select Interpreter Folders"
-msgstr "选择图案文件夹"
+msgstr "选择解释器文件夹"
 
 #: app/dialogs/preferences-dialog.c:2404
 msgid "Environment Folders"
@@ -7011,15 +6986,14 @@ msgstr ""
 "夹。"
 
 #: app/dialogs/user-install-dialog.c:242
-#, fuzzy
 msgid ""
 "This folder is used to store configuration for user created, temporary, or "
 "otherwise non-system-supported plug-in interpreters.  The GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
 msgstr ""
-"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持的插件。GIMP 在搜索插"
-"件时除了检查系统的 GIMP 插件安装以外还将搜索这个文件夹。"
+"这个文件夹用于储存用户创建的、临时的、或者其它非系统支持插件的解释器。GIMP 在搜索插"
+"件解释器配置文件时除了检查系统的 GIMP 插件解释器安装文件夹以外还将搜索这个文件夹。"
 
 #: app/dialogs/user-install-dialog.c:252
 msgid ""
@@ -8919,9 +8893,8 @@ msgid "Posterize _levels:"
 msgstr "海报效果级数(_L)："
 
 #: app/tools/gimprectangleoptions.c:114
-#, fuzzy
 msgid "Highlight rectangle"
-msgstr "明亮"
+msgstr "矩形高亮"
 
 #: app/tools/gimprectangleoptions.c:119
 msgid "Fixed width"
@@ -8962,32 +8935,29 @@ msgid "Center Y"
 msgstr "中心 Y"
 
 #: app/tools/gimprectangleoptions.c:274
-#, fuzzy
 msgid "Highlight"
-msgstr "明亮"
+msgstr "高亮"
 
 #: app/tools/gimprectangleoptions.c:286
 msgid "Fix"
 msgstr ""
 
 #: app/tools/gimprectangleoptions.c:319
-#, fuzzy
 msgid "Center"
-msgstr "中心(_E)"
+msgstr "中心"
 
 #. initialize the statusbar display
 #: app/tools/gimprectangletool.c:824 app/tools/gimprectangletool.c:1178
-#, fuzzy
 msgid "Rectangle: "
-msgstr "重置范围(_E)"
+msgstr "矩形："
 
 #: app/tools/gimprectangletool.c:1538
 msgid "1 "
-msgstr ""
+msgstr "1 "
 
 #: app/tools/gimprectangletool.c:1539
 msgid "2 "
-msgstr ""
+msgstr "2 "
 
 #: app/tools/gimprectselecttool.c:97
 msgid "Select rectangular regions"
@@ -9755,179 +9725,145 @@ msgid "Select Controller Event Action"
 msgstr "选择控制器事件动作"
 
 #: app/widgets/gimpcontrollerkeyboard.c:69
-#, fuzzy
 msgid "Cursor Up (Shift + Control + Alt)"
-msgstr "上卷(Shift + Control + Alt)"
+msgstr "光标上移(Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:72
-#, fuzzy
 msgid "Cursor Up (Control + Alt)"
-msgstr "上卷(Control + Alt)"
+msgstr "光标上移(Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:75
-#, fuzzy
 msgid "Cursor Up (Shift + Alt)"
-msgstr "上卷(Shift + Alt)"
+msgstr "光标上移(Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:78
-#, fuzzy
 msgid "Cursor Up (Shift + Control)"
-msgstr "上卷(Shift + Control)"
+msgstr "光标上移(Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:81
-#, fuzzy
 msgid "Cursor Up (Alt)"
-msgstr "上卷(Alt)"
+msgstr "光标上移(Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:84
-#, fuzzy
 msgid "Cursor Up (Control)"
-msgstr "上卷(Control)"
+msgstr "光标上移(Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:87
-#, fuzzy
 msgid "Cursor Up (Shift)"
-msgstr "上卷(Shift)"
+msgstr "光标上移(Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:90
-#, fuzzy
 msgid "Cursor Up"
-msgstr "光标"
+msgstr "光标上移"
 
 #: app/widgets/gimpcontrollerkeyboard.c:94
-#, fuzzy
 msgid "Cursor Down (Shift + Control + Alt)"
-msgstr "下卷(Shift + Control + Alt)"
+msgstr "光标下移(Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:97
-#, fuzzy
 msgid "Cursor Down (Control + Alt)"
-msgstr "下卷(Control + Alt)"
+msgstr "光标下移(Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:100
-#, fuzzy
 msgid "Cursor Down (Shift + Alt)"
-msgstr "下卷(Shift + Alt)"
+msgstr "光标下移(Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:103
-#, fuzzy
 msgid "Cursor Down (Shift + Control)"
-msgstr "下卷(Shift + Control)"
+msgstr "光标下移(Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:106
-#, fuzzy
 msgid "Cursor Down (Alt)"
-msgstr "下卷(Alt)"
+msgstr "光标下移(Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:109
-#, fuzzy
 msgid "Cursor Down (Control)"
-msgstr "下卷(Control)"
+msgstr "光标下移(Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:112
-#, fuzzy
 msgid "Cursor Down (Shift)"
-msgstr "下卷(Shift)"
+msgstr "光标下移(Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:115
-#, fuzzy
 msgid "Cursor Down"
-msgstr "光标"
+msgstr "光标下移"
 
 #: app/widgets/gimpcontrollerkeyboard.c:119
-#, fuzzy
 msgid "Cursor Left (Shift + Control + Alt)"
-msgstr "左卷(Shift + Control + Alt)"
+msgstr "光标下移(Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:122
-#, fuzzy
 msgid "Cursor Left (Control + Alt)"
-msgstr "左卷(Control + Alt)"
+msgstr "光标左移(Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:125
-#, fuzzy
 msgid "Cursor Left (Shift + Alt)"
-msgstr "左卷(Shift + Alt)"
+msgstr "光标左移(Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:128
-#, fuzzy
 msgid "Cursor Left (Shift + Control)"
-msgstr "左卷(Shift + Control)"
+msgstr "光标左移(Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:131
-#, fuzzy
 msgid "Cursor Left (Alt)"
-msgstr "左卷(Alt)"
+msgstr "光标左移(Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:134
-#, fuzzy
 msgid "Cursor Left (Control)"
-msgstr "左卷(Control)"
+msgstr "光标左移(Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:137
-#, fuzzy
 msgid "Cursor Left (Shift)"
-msgstr "左卷(Shift)"
+msgstr "光标左移(Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:140
-#, fuzzy
 msgid "Cursor Left"
-msgstr "光标"
+msgstr "光标左移"
 
 #: app/widgets/gimpcontrollerkeyboard.c:144
-#, fuzzy
 msgid "Cursor Right (Shift + Control + Alt)"
-msgstr "右卷(Shift + Control + Alt)"
+msgstr "光标右移(Shift + Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:147
-#, fuzzy
 msgid "Cursor Right (Control + Alt)"
-msgstr "右卷(Control + Alt)"
+msgstr "光标右移(Control + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:150
-#, fuzzy
 msgid "Cursor Right (Shift + Alt)"
-msgstr "右卷(Shift + Alt)"
+msgstr "光标右移(Shift + Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:153
-#, fuzzy
 msgid "Cursor Right (Shift + Control)"
-msgstr "右卷(Shift + Control)"
+msgstr "光标右移(Shift + Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:156
-#, fuzzy
 msgid "Cursor Right (Alt)"
-msgstr "右卷(Alt)"
+msgstr "光标右移(Alt)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:159
-#, fuzzy
 msgid "Cursor Right (Control)"
-msgstr "右卷(Control)"
+msgstr "光标右移(Control)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:162
-#, fuzzy
 msgid "Cursor Right (Shift)"
-msgstr "右卷(Shift)"
+msgstr "光标右移(Shift)"
 
 #: app/widgets/gimpcontrollerkeyboard.c:165
-#, fuzzy
 msgid "Cursor Right"
-msgstr "右卷"
+msgstr "光标右移"
 
 #: app/widgets/gimpcontrollerkeyboard.c:207
 msgid "Keyboard"
 msgstr "键盘"
 
 #: app/widgets/gimpcontrollerkeyboard.c:230
-#, fuzzy
 msgid "Keyboard Events"
-msgstr "键盘"
+msgstr "键盘消息"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
-#, fuzzy
 msgid "Ready"
-msgstr "红色"
+msgstr "就位"
 
 #: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"

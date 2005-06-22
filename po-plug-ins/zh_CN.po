@@ -1,19 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
+# Cai Qian <caiqian@gnome.org>, 2005
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 15:41+0100\n"
-"PO-Revision-Date: 2004-11-24 19:30+0800\n"
-"Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"PO-Revision-Date: 2005-06-18 15:30+0800\n"
+"Last-Translator: Cai Qian <caiqian@gnome.org>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Translator: Yuheng Xie <elephant@linux.net.cn>\n"
+"Translator: Cai Qian <caiqian@gnome.org>\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:523 plug-ins/gfig/gfig-dialog.c:283
 #: plug-ins/gflare/gflare.c:891
@@ -4313,15 +4314,15 @@ msgstr "C 源代码头文件"
 
 #: plug-ins/common/hot.c:217
 msgid "_Hot..."
-msgstr "坏点(_H)..."
+msgstr "燥点(_H)..."
 
 #: plug-ins/common/hot.c:379
 msgid "Hot..."
-msgstr "坏点..."
+msgstr "燥点..."
 
 #: plug-ins/common/hot.c:570
 msgid "Hot"
-msgstr "坏点"
+msgstr "燥点"
 
 #: plug-ins/common/hot.c:600
 msgid "Create _New layer"
@@ -5588,14 +5589,12 @@ msgid "PNM image"
 msgstr "PNM 图像"
 
 #: plug-ins/common/pnm.c:260
-#, fuzzy
 msgid "PGM image"
-msgstr "PNM 图像"
+msgstr "PGM 图像"
 
 #: plug-ins/common/pnm.c:272
-#, fuzzy
 msgid "PPM image"
-msgstr "PNM 图像"
+msgstr "PPM 图像"
 
 #: plug-ins/common/pnm.c:465 plug-ins/common/pnm.c:486
 #: plug-ins/common/pnm.c:493 plug-ins/common/pnm.c:502
@@ -8466,19 +8465,16 @@ msgid "First Gfig"
 msgstr "第一个几何图形"
 
 #: plug-ins/gfig/gfig-dialog.c:859
-#, fuzzy
 msgid "_Undo"
-msgstr "撤销"
+msgstr "撤销(_U)"
 
 #: plug-ins/gfig/gfig-dialog.c:863
-#, fuzzy
 msgid "_Clear"
-msgstr "清除"
+msgstr "清除(_C)"
 
 #: plug-ins/gfig/gfig-dialog.c:867
-#, fuzzy
 msgid "_Grid"
-msgstr "网格"
+msgstr "网格(_G)"
 
 #: plug-ins/gfig/gfig-dialog.c:875
 msgid "Raise selected object"
@@ -11039,9 +11035,8 @@ msgid "Media size:"
 msgstr "介质尺寸："
 
 #: plug-ins/print/gimp_main_window.c:989
-#, fuzzy
 msgid "Dimensions:"
-msgstr "尺寸"
+msgstr "尺寸:"
 
 #: plug-ins/print/gimp_main_window.c:1003
 msgid "Width of the paper that you wish to print to"
@@ -11088,9 +11083,8 @@ msgid "Set the scale (size) of the image"
 msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:1152
-#, fuzzy
 msgid "Scale by:"
-msgstr "缩放 Z："
+msgstr "缩放为："
 
 #: plug-ins/print/gimp_main_window.c:1157
 msgid ""
@@ -11103,9 +11097,8 @@ msgid "Percent"
 msgstr "百分比"
 
 #: plug-ins/print/gimp_main_window.c:1169
-#, fuzzy
 msgid "Scale the print to the size of the page"
-msgstr "笔划的大小由区域的色调决定"
+msgstr "以页面大小打印"
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid "PPI"
@@ -11113,7 +11106,7 @@ msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:1181
 msgid "Scale the print to the number of dots per inch"
-msgstr ""
+msgstr "以每英寸内像素的个数打印"
 
 #: plug-ins/print/gimp_main_window.c:1203
 msgid "Set the width of the print"
@@ -11129,7 +11122,7 @@ msgstr "单位："
 
 #: plug-ins/print/gimp_main_window.c:1242
 msgid "Select the base unit of measurement for printing"
-msgstr ""
+msgstr "选择打印大小的基本单位"
 
 #: plug-ins/print/gimp_main_window.c:1245
 msgid "Inch"
