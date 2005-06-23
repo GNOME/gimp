@@ -238,48 +238,40 @@ void
 gimp_browser_set_widget (GimpBrowser *browser,
                          GtkWidget   *widget)
 {
-  GtkWidget *child;
-
   g_return_if_fail (GIMP_IS_BROWSER (browser));
-  g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (widget == NULL || GTK_IS_WIDGET (widget));
 
-  child = g_object_get_data (G_OBJECT (browser->right_vbox), "child");
+  if (widget == browser->right_widget)
+    return;
 
-  if (child)
-    gtk_container_remove (GTK_CONTAINER (browser->right_vbox), child);
+  if (browser->right_widget)
+    gtk_container_remove (GTK_CONTAINER (browser->right_vbox),
+                          browser->right_widget);
 
-  gtk_box_pack_start (GTK_BOX (browser->right_vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  browser->right_widget = widget;
 
-  g_object_set_data (G_OBJECT (browser->right_vbox), "child", widget);
+  if (widget)
+    {
+      gtk_box_pack_start (GTK_BOX (browser->right_vbox), widget,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (widget);
+    }
 }
 
 void
 gimp_browser_show_message (GimpBrowser *browser,
                            const gchar *message)
 {
-  GtkWidget *child;
-
   g_return_if_fail (GIMP_IS_BROWSER (browser));
   g_return_if_fail (message != NULL);
 
-  child = g_object_get_data (G_OBJECT (browser->right_vbox), "child");
-
-  if (GTK_IS_LABEL (child))
+  if (GTK_IS_LABEL (browser->right_widget))
     {
-      gtk_label_set_text (GTK_LABEL (child), message);
+      gtk_label_set_text (GTK_LABEL (browser->right_widget), message);
     }
   else
     {
-      if (child)
-        gtk_container_remove (GTK_CONTAINER (browser->right_vbox), child);
-
-      child = gtk_label_new (message);
-      gtk_box_pack_start (GTK_BOX (browser->right_vbox), child,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (child);
-
-      g_object_set_data (G_OBJECT (browser->right_vbox), "child", child);
+      gimp_browser_set_widget (browser, gtk_label_new (message));
     }
 
   while (gtk_events_pending ())

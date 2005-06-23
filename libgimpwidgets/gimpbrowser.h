@@ -55,6 +55,7 @@ struct _GimpBrowser
   GtkWidget *count_label;
 
   GtkWidget *right_vbox;
+  GtkWidget *right_widget;
 };
 
 struct _GimpBrowserClass
@@ -64,6 +65,12 @@ struct _GimpBrowserClass
   void (* search) (GimpBrowser *browser,
                    const gchar *search_string,
                    gint         search_type);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 
