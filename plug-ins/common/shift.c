@@ -229,14 +229,9 @@ shift (GimpDrawable *drawable,
   gint              x1, y1, x2, y2;
   gint              x, y;
   gint              progress, max_progress;
-  gint              amount;
-  gint              xdist, ydist;
+  gint              i, n = 0;
+  gint             *offsets;
   GRand            *gr;
-
-  gr = g_rand_new ();
-
-  pft = gimp_pixel_fetcher_new (drawable, FALSE);
-  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
   if (preview)
     {
@@ -255,54 +250,71 @@ shift (GimpDrawable *drawable,
   progress     = 0;
   max_progress = width * height;
 
-  amount = shvals.shift_amount;
-
   /* Shift the image.  It's a pretty simple algorithm.  If horizontal
      is selected, then every row is shifted a random number of pixels
      in the range of -shift_amount/2 to shift_amount/2.  The effect is
-     just reproduced with columns if vertical is selected.  Vertical
-     has been added since 0.54 so that the user doesn't have to rotate
-     the image to do a vertical shift.
-  */
+     just reproduced with columns if vertical is selected.
+   */
+
+  n = (shvals.orientation == HORIZONTAL) ? height : width;
+
+  offsets = g_new (gint, n);
+  gr = g_rand_new ();
+
+  for (i = 0; i < n; i++)
+    offsets[i] = g_rand_int_range (gr,
+                                   - (shvals.shift_amount + 1) / 2.0,
+                                   + (shvals.shift_amount + 1) / 2.0);
+
+  g_rand_free (gr);
+
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
+  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_WRAP);
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
                        x1, y1, width, height, (preview == NULL), TRUE);
+
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
       destline = dest_rgn.data;
 
-      if (shvals.orientation == VERTICAL)
+      switch (shvals.orientation)
         {
-          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
-            {
-              dest = destline;
-              ydist = g_rand_int_range (gr, -(amount + 1) / 2.0,
-                                        (amount + 1) / 2.0 );
-              for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
-                {
-                  gimp_pixel_fetcher_get_pixel (pft, x, y + ydist, dest);
-                  dest += dest_rgn.rowstride;
-                }
-              destline += bytes;
-            }
-        }
-      else
-        {
+        case HORIZONTAL:
           for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
             {
               dest = destline;
-              xdist = g_rand_int_range (gr, -(amount + 1) / 2.0,
-                                        (amount + 1) / 2.0);
+
               for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
                 {
-                  gimp_pixel_fetcher_get_pixel (pft, x + xdist, y, dest);
+                  gimp_pixel_fetcher_get_pixel (pft,
+                                                x + offsets[y - y1], y, dest);
                   dest += bytes;
                 }
+
               destline += dest_rgn.rowstride;
             }
+          break;
+
+        case VERTICAL:
+          for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
+            {
+              dest = destline;
+
+              for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
+                {
+                  gimp_pixel_fetcher_get_pixel (pft,
+                                                x, y + offsets[x - x1], dest);
+                  dest += dest_rgn.rowstride;
+                }
+
+              destline += bytes;
+            }
+          break;
         }
+
       if (preview)
         {
           gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
@@ -316,16 +328,15 @@ shift (GimpDrawable *drawable,
     }
 
   gimp_pixel_fetcher_destroy (pft);
+  g_free (offsets);
 
-  if (!preview)
+  if (! preview)
     {
       /*  update the region  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
     }
-
-  g_rand_free (gr);
 }
 
 static gboolean
@@ -370,8 +381,11 @@ shift_dialog (gint32        image_ID,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &shvals.orientation, shvals.orientation,
 
-                                    _("Shift _horizontally"), HORIZONTAL, &horizontal,
-                                    _("Shift _vertically"),   VERTICAL,   &vertical,
+                                    _("Shift _horizontally"),
+                                    HORIZONTAL, &horizontal,
+
+                                    _("Shift _vertically"),
+                                    VERTICAL,   &vertical,
 
                                     NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
