@@ -405,6 +405,7 @@ grid (gint32        image_ID,
                        drawable, 0, 0, sx2 - sx1, sy2 - sy1, FALSE, FALSE);
 
   dest = g_new (guchar, (sx2 - sx1) * bytes);
+
   for (y = sy1; y < sy2; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
@@ -413,15 +414,49 @@ grid (gint32        image_ID,
       while (y_offset < 0)
         y_offset += grid_cfg.hspace;
 
-      if ((y_offset + (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
+      if ((y_offset +
+           (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
         {
           for (x = sx1; x < sx2; x++)
             {
-              pix_composite (&dest[(x-sx1) * bytes], hcolor, bytes, blend, alpha);
+              pix_composite (&dest[(x-sx1) * bytes],
+                             hcolor, bytes, blend, alpha);
             }
         }
 
-      if ((y_offset + (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth)
+      for (x = sx1; x < sx2; x++)
+        {
+          x_offset = grid_cfg.vspace + x - grid_cfg.voffset;
+          while (x_offset < 0)
+            x_offset += grid_cfg.vspace;
+
+          if ((x_offset +
+               (grid_cfg.vwidth / 2)) % grid_cfg.vspace < grid_cfg.vwidth)
+            {
+              pix_composite (&dest[(x-sx1) * bytes],
+                             vcolor, bytes, blend, alpha);
+            }
+
+          if ((x_offset +
+               (grid_cfg.iwidth / 2)) % grid_cfg.vspace < grid_cfg.iwidth
+              &&
+              ((y_offset % grid_cfg.hspace >= grid_cfg.ispace
+                &&
+                y_offset % grid_cfg.hspace < grid_cfg.ioffset)
+               ||
+               (grid_cfg.hspace -
+                (y_offset % grid_cfg.hspace) >= grid_cfg.ispace
+                &&
+                grid_cfg.hspace -
+                (y_offset % grid_cfg.hspace) < grid_cfg.ioffset)))
+            {
+              pix_composite (&dest[(x-sx1) * bytes],
+                             icolor, bytes, blend, alpha);
+            }
+        }
+
+      if ((y_offset +
+           (grid_cfg.iwidth / 2)) % grid_cfg.hspace < grid_cfg.iwidth)
         {
           for (x = sx1; x < sx2; x++)
             {
@@ -433,39 +468,18 @@ grid (gint32        image_ID,
                    &&
                    x_offset % grid_cfg.vspace < grid_cfg.ioffset)
                   ||
-                  (grid_cfg.vspace - (x_offset % grid_cfg.vspace) >= grid_cfg.ispace
+                  (grid_cfg.vspace -
+                   (x_offset % grid_cfg.vspace) >= grid_cfg.ispace
                    &&
-                   grid_cfg.vspace - (x_offset % grid_cfg.vspace) < grid_cfg.ioffset))
+                   grid_cfg.vspace -
+                   (x_offset % grid_cfg.vspace) < grid_cfg.ioffset))
                 {
-                  pix_composite (&dest[(x-sx1) * bytes], icolor, bytes, blend, alpha);
+                  pix_composite (&dest[(x-sx1) * bytes],
+                                 icolor, bytes, blend, alpha);
                 }
             }
         }
 
-      for (x = sx1; x < sx2; x++)
-        {
-          x_offset = grid_cfg.vspace + x - grid_cfg.voffset;
-          while (x_offset < 0)
-            x_offset += grid_cfg.vspace;
-
-          if ((x_offset + (grid_cfg.vwidth / 2)) % grid_cfg.vspace < grid_cfg.vwidth)
-            {
-              pix_composite (&dest[(x-sx1) * bytes], vcolor, bytes, blend, alpha);
-            }
-
-          if ((x_offset + (grid_cfg.iwidth / 2)) % grid_cfg.vspace < grid_cfg.iwidth
-              &&
-              ((y_offset % grid_cfg.hspace >= grid_cfg.ispace
-                &&
-                y_offset % grid_cfg.hspace < grid_cfg.ioffset)
-               ||
-               (grid_cfg.hspace - (y_offset % grid_cfg.hspace) >= grid_cfg.ispace
-                &&
-                grid_cfg.hspace - (y_offset % grid_cfg.hspace) < grid_cfg.ioffset)))
-            {
-              pix_composite (&dest[(x-sx1) * bytes], icolor, bytes, blend, alpha);
-            }
-        }
       if (preview)
         {
           memcpy (buffer + (y - sy1) * (sx2 - sx1) * bytes,

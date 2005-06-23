@@ -16,9 +16,13 @@ Bugs fixed in GIMP 2.2.8
 - attempt to fix calling the web-browser on win32 (bug #171200)
 - fixed loading of images in help-browser plug-in on win32
 - fixed zoom offsets if dot-for-dot mode is disabled (bug #306476)
-- fixes to gfig parasite loading
+- fixes to Gfig parasite loading
 - disabled buggy gimprc option stingy-memory-use (bug #306617)
 - don't try to create a preview for a non-existant image file (bug #307672)
+- fixed bug in Retinex plug-in (bug #157915)
+- fixed bug in Newsprint plug-in (bug #161573)
+- fixed bug in Shift plug-in (bug #308748)
+- fixed bug in Grid plug-in (bug #308754)
 
 
 Bugs fixed in GIMP 2.2.7
