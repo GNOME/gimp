@@ -51,15 +51,15 @@ typedef struct
  *  Local Functions
  */
 static void       script_fu_console_interface  (void);
-static void       script_fu_response           (GtkWidget    *widget,
-                                                gint          response_id,
-						gpointer      data);
-static void       script_fu_browse_callback    (GtkWidget    *widget,
-						gpointer      data);
+static void       script_fu_response           (GtkWidget   *widget,
+                                                gint         response_id,
+						gpointer     data);
+static void       script_fu_browse_callback    (GtkWidget   *widget,
+						gpointer     data);
 static gboolean   script_fu_cc_is_empty        (void);
-static gboolean   script_fu_cc_key_function    (GtkWidget    *widget,
-						GdkEventKey  *event,
-						gpointer      data);
+static gboolean   script_fu_cc_key_function    (GtkWidget   *widget,
+						GdkEventKey *event,
+						gpointer     data);
 
 static void       script_fu_open_siod_console  (void);
 static void       script_fu_close_siod_console (void);
@@ -134,7 +134,6 @@ static void
 script_fu_console_interface (void)
 {
   GtkWidget  *dialog;
-  GtkWidget  *main_vbox;
   GtkWidget  *vbox;
   GtkWidget  *button;
   GtkWidget  *label;
@@ -160,20 +159,11 @@ script_fu_console_interface (void)
 		    &dialog);
 
   /*  The main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
 		      TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
-
-  label = gtk_label_new (_("SIOD Output"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   /*  The output text widget  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -232,15 +222,6 @@ script_fu_console_interface (void)
   }
 
   /*  The current command  */
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  label = gtk_label_new (_("Current Command"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
