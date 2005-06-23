@@ -1,3 +1,14 @@
+2005-06-23  Tor Lillqvist  <tml@novell.com>
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): Sort
+	the boundary so that GIMP_CANVAS_STYLE_XOR drawing (which uses
+	GDK_CAP_NOT_LAST) works better. Remove the dubious code snippet
+	that offset some segments by one pixel. It didn't do what the
+	comment said, and why one would need to to what the comment said,
+	or what it actually did, is unclear. Now brush outlines don't have
+	so many gaps any longer. (There are still some gaps for
+	pathological brushes.)
+
 2005-06-23  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-actions.c (plug_in_actions_last_changed): call
