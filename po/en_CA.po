@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-17 01:35-0400\n"
-"PO-Revision-Date: 2005-06-17 14:29-0400\n"
+"POT-Creation-Date: 2005-06-23 19:27-0400\n"
+"PO-Revision-Date: 2005-06-23 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -684,7 +684,7 @@ msgstr "_Default Colours"
 msgid "S_wap Colors"
 msgstr "S_wap Colours"
 
-#: app/actions/data-commands.c:100 app/actions/documents-commands.c:251
+#: app/actions/data-commands.c:100 app/actions/documents-commands.c:303
 #: app/actions/file-commands.c:175 app/dialogs/file-open-dialog.c:208
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
@@ -997,28 +997,52 @@ msgid "Remove the selected entry"
 msgstr "Remove the selected entry"
 
 #: app/actions/documents-actions.c:70
+msgid "_Clear History"
+msgstr "_Clear History"
+
+#: app/actions/documents-actions.c:71
+msgid "Clear the entire document history"
+msgstr "Clear the entire document history"
+
+#: app/actions/documents-actions.c:76
 msgid "Recreate _Preview"
 msgstr "Recreate _Preview"
 
-#: app/actions/documents-actions.c:71
+#: app/actions/documents-actions.c:77
 msgid "Recreate preview"
 msgstr "Recreate preview"
 
-#: app/actions/documents-actions.c:76
+#: app/actions/documents-actions.c:82
 msgid "Reload _all Previews"
 msgstr "Reload _all Previews"
 
-#: app/actions/documents-actions.c:77
+#: app/actions/documents-actions.c:83
 msgid "Reload all previews"
 msgstr "Reload all previews"
 
-#: app/actions/documents-actions.c:82
+#: app/actions/documents-actions.c:88
 msgid "Remove Dangling E_ntries"
 msgstr "Remove Dangling E_ntries"
 
-#: app/actions/documents-actions.c:83
+#: app/actions/documents-actions.c:89
 msgid "Remove dangling entries"
 msgstr "Remove dangling entries"
+
+#: app/actions/documents-commands.c:180
+msgid "Clear Document History"
+msgstr "Clear Document History"
+
+#: app/actions/documents-commands.c:203
+msgid "Remove all entries from the document history?"
+msgstr "Remove all entries from the document history?"
+
+#: app/actions/documents-commands.c:207
+msgid ""
+"Clearing the document history will permanently remove all currently listed "
+"entries."
+msgstr ""
+"Clearing the document history will permanently remove all currently listed "
+"entries."
 
 #: app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -2390,19 +2414,15 @@ msgstr "An_imation"
 msgid "C_ombine"
 msgstr "C_ombine"
 
-#: app/actions/plug-in-actions.c:82
-msgid "To_ys"
-msgstr "To_ys"
-
-#: app/actions/plug-in-actions.c:85
+#: app/actions/plug-in-actions.c:84
 msgid "Reset all _Filters"
 msgstr "Reset all _Filters"
 
-#: app/actions/plug-in-actions.c:93
+#: app/actions/plug-in-actions.c:92
 msgid "Re_peat Last"
 msgstr "Re_peat Last"
 
-#: app/actions/plug-in-actions.c:98
+#: app/actions/plug-in-actions.c:97
 msgid "R_e-Show Last"
 msgstr "R_e-Show Last"
 
@@ -2413,8 +2433,8 @@ msgstr "Re_peat \"%s\""
 
 #: app/actions/plug-in-actions.c:395
 #, c-format
-msgid "R_e-show \"%s\""
-msgstr "R_e-show \"%s\""
+msgid "R_e-Show \"%s\""
+msgstr "R_e-Show \"%s\""
 
 #: app/actions/plug-in-actions.c:408
 msgid "Repeat Last"
@@ -5130,56 +5150,56 @@ msgstr "Path is already on the bottom."
 msgid "Lower Path to Bottom"
 msgstr "Lower Path to Bottom"
 
-#: app/core/gimpimagefile.c:571 app/dialogs/preferences-dialog.c:1513
+#: app/core/gimpimagefile.c:575 app/dialogs/preferences-dialog.c:1513
 msgid "Folder"
 msgstr "Folder"
 
-#: app/core/gimpimagefile.c:576
+#: app/core/gimpimagefile.c:580
 msgid "Special File"
 msgstr "Special File"
 
-#: app/core/gimpimagefile.c:592
+#: app/core/gimpimagefile.c:596
 msgid "Remote File"
 msgstr "Remote File"
 
-#: app/core/gimpimagefile.c:609
+#: app/core/gimpimagefile.c:613
 msgid "Click to create preview"
 msgstr "Click to create preview"
 
-#: app/core/gimpimagefile.c:613
+#: app/core/gimpimagefile.c:617
 msgid "Loading preview ..."
 msgstr "Loading preview ..."
 
-#: app/core/gimpimagefile.c:617
+#: app/core/gimpimagefile.c:621
 msgid "Preview is out of date"
 msgstr "Preview is out of date"
 
-#: app/core/gimpimagefile.c:621
+#: app/core/gimpimagefile.c:625
 msgid "Cannot create preview"
 msgstr "Cannot create preview"
 
-#: app/core/gimpimagefile.c:628
+#: app/core/gimpimagefile.c:632
 msgid "(Preview may be out of date)"
 msgstr "(Preview may be out of date)"
 
 #. pixel size
-#: app/core/gimpimagefile.c:634 app/widgets/gimpimagepropview.c:282
+#: app/core/gimpimagefile.c:638 app/widgets/gimpimagepropview.c:282
 #: app/widgets/gimpsizebox.c:430 app/widgets/gimptemplateeditor.c:633
 #: app/widgets/gimptemplateeditor.c:671
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixels"
 
-#: app/core/gimpimagefile.c:649
+#: app/core/gimpimagefile.c:653
 msgid "1 Layer"
 msgstr "1 Layer"
 
-#: app/core/gimpimagefile.c:651
+#: app/core/gimpimagefile.c:655
 #, c-format
 msgid "%d Layers"
 msgstr "%d Layers"
 
-#: app/core/gimpimagefile.c:695
+#: app/core/gimpimagefile.c:699
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Could not open thumbnail '%s': %s"
@@ -5433,15 +5453,15 @@ msgstr "Invert Selection"
 msgid "No selection to stroke."
 msgstr "No selection to stroke."
 
-#: app/core/gimpselection.c:821
+#: app/core/gimpselection.c:822
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Cannot float selection because the selected region is empty."
 
-#: app/core/gimpselection.c:828
+#: app/core/gimpselection.c:829
 msgid "Float Selection"
 msgstr "Float Selection"
 
-#: app/core/gimpselection.c:845
+#: app/core/gimpselection.c:846
 msgid "Floated Layer"
 msgstr "Floated Layer"
 
@@ -7338,11 +7358,11 @@ msgstr "Dark check colour"
 msgid "Custom color"
 msgstr "Custom colour"
 
-#: app/display/gimpdisplayshell.c:912
+#: app/display/gimpdisplayshell.c:913
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: app/display/gimpdisplayshell.c:932
+#: app/display/gimpdisplayshell.c:933
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
