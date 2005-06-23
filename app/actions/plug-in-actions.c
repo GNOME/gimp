@@ -147,6 +147,7 @@ plug_in_actions_setup (GimpActionGroup *group)
   g_signal_connect_object (group->gimp, "last-plug-in-changed",
                            G_CALLBACK (plug_in_actions_last_changed),
                            group, 0);
+
   plug_in_actions_last_changed (group->gimp, group);
 }
 
@@ -386,7 +387,7 @@ plug_in_actions_last_changed (Gimp            *gimp,
       gchar         *reshow;
 
       progname = plug_in_proc_def_get_progname (proc_def);
-      domain   = plug_ins_locale_domain (group->gimp, progname, NULL);
+      domain   = plug_ins_locale_domain (gimp, progname, NULL);
 
       label = plug_in_proc_def_get_label (proc_def, domain);
 
@@ -408,6 +409,9 @@ plug_in_actions_last_changed (Gimp            *gimp,
       gimp_action_group_set_action_label (group, "plug-in-reshow",
                                           _("Re-Show Last"));
     }
+
+  /* update sensitivity of the "plug-in-repeat" and "plug-in-reshow" actions */
+  plug_in_actions_update (group, gimp);
 }
 
 static gboolean
