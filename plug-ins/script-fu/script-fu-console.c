@@ -136,7 +136,6 @@ script_fu_console_interface (void)
   GtkWidget  *dialog;
   GtkWidget  *vbox;
   GtkWidget  *button;
-  GtkWidget  *label;
   GtkWidget  *scrolled_window;
   GtkWidget  *hbox;
 
