@@ -1,5 +1,11 @@
 2005-06-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpintcombobox.c (gimp_int_combo_box_new_valist)
+	(gimp_int_combo_box_new_array): no need to create a new list store;
+	gimp_int_combo_box_init() already did that for us.
+
+2005-06-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/grid.c: draw the intersection on top of the grid.
 	Fixes bug #308754.
 

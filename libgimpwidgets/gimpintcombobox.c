@@ -273,12 +273,9 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
   const gchar  *label;
   gint          value;
 
-  store = gimp_int_store_new ();
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "model", store,
-                            NULL);
-  g_object_unref (store);
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
 
   for (label = first_label, value = first_value;
        label;
@@ -316,15 +313,12 @@ gimp_int_combo_box_new_array (gint         n_values,
   GtkListStore *store;
   gint          i;
 
-  g_return_val_if_fail (n_values > 0, NULL);
-  g_return_val_if_fail (labels != NULL, NULL);
+  g_return_val_if_fail (n_values >= 0, NULL);
+  g_return_val_if_fail (labels != NULL || n_values == 0, NULL);
 
-  store = gimp_int_store_new ();
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
-  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "model", store,
-                            NULL);
-  g_object_unref (store);
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
 
   for (i = 0; i < n_values; i++)
     {
