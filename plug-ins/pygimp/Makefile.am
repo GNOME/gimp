@@ -43,6 +43,7 @@ gimpmodule_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
+	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
 _gimpenumsmodule_la_SOURCES = \
@@ -56,6 +57,7 @@ _gimpenumsmodule_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
+	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
 gimpcolormodule_la_SOURCES = \
@@ -68,7 +70,8 @@ gimpcolormodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 
 gimpcolormodule_la_LIBADD = \
 	$(libgimpcolor)	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)	\
+	$(PYLINK_LIBS)
 
 gimpprocbrowsermodule_la_SOURCES = \
 	procbrowser.c
@@ -86,6 +89,7 @@ gimpprocbrowsermodule_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(PYLINK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 

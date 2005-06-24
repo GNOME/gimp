@@ -1348,6 +1348,17 @@ if test "x$enable_python" != xno; then
   AM_CHECK_PYTHON_HEADERS(,
     [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
 
+  dnl Win32 needs all symbols resolved for linking, even for DLLs
+  dnl Assume the link library is in $exec_prefix/libs
+  dnl This might be able to be figured out from distutils, but it's
+  dnl not documented so we won't rely on internal implementation
+  PYLINK_LIBS=
+  if test "x$platform_win32" = "xyes"; then
+    py_exec_prefix=`$PYTHON -c "import sys; print sys.exec_prefix"`
+    PYLINK_LIBS="-L${py_exec_prefix}/libs -lpython${PYTHON_VERSION}"
+  fi
+  AC_SUBST(PYLINK_LIBS)
+
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
     [AC_MSG_ERROR([pycheck_error([PyGTK], [it])])])

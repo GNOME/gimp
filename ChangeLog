@@ -1,3 +1,10 @@
+2005-06-24  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: define PYLINK_LIBS on Win32, since DLLs need to have
+	all their symbols fully resolved at link time.
+
+	* plug-ins/pygimp/Makefile.am: link python modules with PYLINK_LIBS.
+
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: relabel the profile used for
