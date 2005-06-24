@@ -116,7 +116,7 @@ static void      run                       (const gchar      *name,
 
 static gint32    load_image                (const gchar      *filename,
                                             gboolean          interactive);
-static gint      save_image                (const gchar      *filename,
+static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
                                             gint32            drawable_ID,
                                             gint32            orig_image_ID);
@@ -134,10 +134,10 @@ static void      save_dialog_response      (GtkWidget        *widget,
                                             gint              response_id,
                                             gpointer          data);
 
-static gboolean  ia_has_transparent_pixels (guchar           *pixels,
+static gboolean  ia_has_transparent_pixels (const guchar     *pixels,
                                             gint              numpixels);
 
-static int       find_unused_ia_colour     (guchar           *pixels,
+static gint      find_unused_ia_color      (const guchar     *pixels,
                                             gint              numpixels,
                                             gint             *colors);
 
@@ -547,13 +547,13 @@ run (const gchar      *name,
 }
 
 
-/* Try to find a colour in the palette which isn't actually
+/* Try to find a color in the palette which isn't actually
  * used in the image, so that we can use it as the transparency
  * index. Taken from gif.c */
 static gint
-find_unused_ia_colour (guchar *pixels,
-                       gint    numpixels,
-                       gint   *colors)
+find_unused_ia_color (const guchar *pixels,
+                      gint          numpixels,
+                      gint         *colors)
 {
   gint     i;
   gboolean ix_used[256];
@@ -566,7 +566,7 @@ find_unused_ia_colour (guchar *pixels,
 
   for (i = 0; i < numpixels; i++)
     {
-      /* If alpha is over a threshold, the colour index in the
+      /* If alpha is over a threshold, the color index in the
        * palette is taken. Otherwise, this pixel is transparent. */
       if (pixels[i * 2 + 1] > 127)
         ix_used[pixels[i * 2]] = TRUE;
@@ -586,16 +586,17 @@ find_unused_ia_colour (guchar *pixels,
         }
     }
 
-  /* Couldn't find an unused colour index within the number of
+  /* Couldn't find an unused color index within the number of
      bits per pixel we wanted.  Will have to increment the number
-     of colours in the image and assign a transparent pixel there. */
+     of colors in the image and assign a transparent pixel there. */
   if ((*colors) < 256)
     {
       (*colors)++;
-      return ((*colors) - 1);
+
+      return (*colors) - 1;
     }
 
-  return (-1);
+  return -1;
 }
 
 
@@ -1063,13 +1064,13 @@ load_image (const gchar *filename,
  * 'save_image ()' - Save the specified image to a PNG file.
  */
 
-static gint
+static gboolean
 save_image (const gchar *filename,
             gint32       image_ID,
             gint32       drawable_ID,
             gint32       orig_image_ID)
 {
-  int i, k,                     /* Looping vars */
+  gint i, k,                    /* Looping vars */
     bpp = 0,                    /* Bytes per pixel */
     type,                       /* Type of drawable/layer */
     num_passes,                 /* Number of interlace passes in file */
@@ -1157,7 +1158,7 @@ save_image (const gchar *filename,
     {
       g_message (_("Error while saving '%s'. Could not save image."),
                  gimp_filename_to_utf8 (filename));
-      return 0;
+      return FALSE;
     }
 
   if (text)
@@ -1172,7 +1173,7 @@ save_image (const gchar *filename,
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return 0;
+      return FALSE;
     }
 
   png_init_io (pp, fp);
@@ -1215,18 +1216,22 @@ save_image (const gchar *filename,
       info->color_type = PNG_COLOR_TYPE_RGB;
       bpp = 3;
       break;
+
     case GIMP_RGBA_IMAGE:
       info->color_type = PNG_COLOR_TYPE_RGB_ALPHA;
       bpp = 4;
       break;
+
     case GIMP_GRAY_IMAGE:
       info->color_type = PNG_COLOR_TYPE_GRAY;
       bpp = 1;
       break;
+
     case GIMP_GRAYA_IMAGE:
       info->color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
       bpp = 2;
       break;
+
     case GIMP_INDEXED_IMAGE:
       bpp = 1;
       info->color_type = PNG_COLOR_TYPE_PALETTE;
@@ -1235,15 +1240,17 @@ save_image (const gchar *filename,
         (png_colorp) gimp_image_get_colormap (image_ID, &num_colors);
       info->num_palette = num_colors;
       break;
+
     case GIMP_INDEXEDA_IMAGE:
       bpp = 2;
       info->color_type = PNG_COLOR_TYPE_PALETTE;
       /* fix up transparency */
       respin_cmap (pp, info, remap, image_ID, drawable);
       break;
+
     default:
       g_message ("Image type can't be saved as PNG");
-      return 0;
+      return FALSE;
     }
 
   /*
@@ -1455,34 +1462,35 @@ save_image (const gchar *filename,
 
   fclose (fp);
 
-  return (1);
+  return TRUE;
 }
 
 static gboolean
-ia_has_transparent_pixels (guchar *pixels,
-                           gint    numpixels)
+ia_has_transparent_pixels (const guchar *pixels,
+                           gint          numpixels)
 {
   while (numpixels --)
     {
       if (pixels [1] <= 127)
         return TRUE;
+
       pixels += 2;
     }
+
   return FALSE;
 }
 
 static void
-respin_cmap (png_structp pp,
-             png_infop info,
-             guchar * remap,
-             gint32 image_ID,
-             GimpDrawable * drawable)
+respin_cmap (png_structp   pp,
+             png_infop     info,
+             guchar       *remap,
+             gint32        image_ID,
+             GimpDrawable *drawable)
 {
   static const guchar trans[] = { 0 };
 
   gint          colors;
   guchar       *before;
-  gint          transparent;
   gint          cols, rows;
   GimpPixelRgn  pixel_rgn;
   guchar       *pixels;
@@ -1499,33 +1507,34 @@ respin_cmap (png_structp pp,
       colors = 1;
     }
 
+#if PNG_LIBPNG_VER > 99
+
   cols      = drawable->width;
   rows      = drawable->height;
   numpixels = cols * rows;
 
+  pixels = g_new (guchar, numpixels * 2); /* GIMP_INDEXEDA_IMAGE */
+
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, FALSE, FALSE);
 
-  pixels = (guchar *) g_malloc (numpixels * 2);
-
-  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
-                           drawable->width, drawable->height);
+  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels,
+                           0, 0, drawable->width, drawable->height);
 
 
   /* Try to find an entry which isn't actually used in the
      image, for a transparency index. */
 
-#if PNG_LIBPNG_VER > 99
   if (ia_has_transparent_pixels (pixels, numpixels))
     {
-      transparent = find_unused_ia_colour (pixels, numpixels, &colors);
+      gint transparent = find_unused_ia_color (pixels, numpixels, &colors);
 
       if (transparent != -1)        /* we have a winner for a transparent
                                      * index - do like gif2png and swap
                                      * index 0 and index transparent */
         {
           png_color palette[256];
-          gint i;
+          gint      i;
 
           png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
 
@@ -1559,16 +1568,17 @@ respin_cmap (png_structp pp,
         }
     }
   else
-    png_set_PLTE (pp, info, (png_colorp) before, colors);
+    {
+      png_set_PLTE (pp, info, (png_colorp) before, colors);
+    }
+
+  g_free (pixels);
 
 #else
   info->valid |= PNG_INFO_PLTE;
   info->palette = (png_colorp) before;
   info->num_palette = colors;
 #endif /* PNG_LIBPNG_VER > 99 */
-
-  g_free (pixels);
-
 }
 
 static gboolean

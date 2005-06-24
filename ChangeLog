@@ -1,5 +1,10 @@
-2005-06-24  Sven Neumann  <neumann@jpk.com>
+2005-06-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: some code cleanup, no real changes. 
+
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c (save_image): 
 	* app/dialogs/preferences-dialog.c: added a check button to control
 	the "display-profile-from-gdk" option.
 
