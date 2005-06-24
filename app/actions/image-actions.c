@@ -116,7 +116,7 @@ static GimpActionEntry image_actions[] =
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
 
-  { "image-properties", GIMP_STOCK_INFO,
+  { "image-properties", GTK_STOCK_PROPERTIES,
     N_("Image Properties"), NULL, NULL,
     G_CALLBACK (image_properties_cmd_callback),
     GIMP_HELP_IMAGE_PROPERTIES }

@@ -55,7 +55,7 @@ static GimpActionEntry layers_actions[] =
   { "layers-mask-menu",         NULL,                    N_("_Mask")         },
   { "layers-transparency-menu", NULL,                    N_("Tr_ansparency") },
   { "layers-transform-menu",    NULL,                    N_("_Transform")    },
-  { "layers-properties-menu",   NULL,                    N_("_Properties")   },
+  { "layers-properties-menu",   GTK_STOCK_PROPERTIES,    N_("_Properties")   },
   { "layers-opacity-menu",      GIMP_STOCK_TRANSPARENCY, N_("_Opacity")      },
   { "layers-mode-menu",         GIMP_STOCK_TOOL_PENCIL,  N_("Layer _Mode")   },
 

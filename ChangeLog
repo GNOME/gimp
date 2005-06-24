@@ -1,5 +1,12 @@
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c
+	* app/dialogs/image-properties-dialog.c: use GTK_STOCK_PROPERTIES
+	as stock icon for property menu items and dialogs.
+
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppdbprogress.[ch]: removed an incomplete and unused
 	function.
 
