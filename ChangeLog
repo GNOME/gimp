@@ -1,5 +1,10 @@
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
+	increased maximum property size, added debug output.
+
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c: implement the configure method and tell
 	the user where this module can be configured.
 

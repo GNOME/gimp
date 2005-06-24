@@ -374,14 +374,22 @@ cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
       g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
       if (gdk_property_get (gdk_screen_get_root_window (screen),
-                            gdk_atom_intern ("_ICC_PROFILE", FALSE),
-                            GDK_NONE,
-                            0, 256 * 1024, FALSE,
-                            &type, &format, &nitems, &data) && nitems > 0)
+                        gdk_atom_intern ("_ICC_PROFILE", FALSE),
+                        GDK_NONE,
+                        0, 64 * 1024 * 1024, FALSE,
+                        &type, &format, &nitems, &data) && nitems > 0)
         {
-          cmsHPROFILE *profile = cmsOpenProfileFromMem (data, nitems);
+          cmsHPROFILE  profile = cmsOpenProfileFromMem (data, nitems);
 
           g_free (data);
+
+          if (profile)
+            {
+              const gchar *name = cmsTakeProductName (profile);
+
+              g_printerr ("obtained ICC profile from X server: %s\n",
+                          name ? name : "<untitled>");
+            }
 
           return profile;
         }
