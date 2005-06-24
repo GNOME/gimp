@@ -302,7 +302,12 @@ procedural_db_execute (Gimp         *gimp,
           return_args = plug_in_run (gimp, context, progress, procedure,
                                      args, procedure->num_args,
                                      TRUE, FALSE, -1);
-          break;
+
+          /*  If there are no return arguments, assume
+           *  an execution error and fall through.
+           */
+          if (return_args)
+            break;
 
         default:
           return_args = g_new (Argument, 1);
