@@ -9,7 +9,7 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
-SUBDIRS = doc plug-ins
+SUBDIRS = plug-ins
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -48,7 +48,7 @@ gimpmodule_la_LIBADD = \
 _gimpenumsmodule_la_SOURCES = \
 	gimpenumsmodule.c
 
-_gimpenumsmodule_la_LDFLAGS = -module -avoid-version \
+_gimpenumsmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex init_gimpenums
 
 _gimpenumsmodule_la_LIBADD = \
@@ -63,7 +63,7 @@ gimpcolormodule_la_SOURCES = \
 	pygimp-rgb.c		\
 	pygimpcolor.h
 
-gimpcolormodule_la_LDFLAGS = -module -avoid-version \
+gimpcolormodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimpcolor
 
 gimpcolormodule_la_LIBADD = \
@@ -118,9 +118,6 @@ install-data-local: install-env-file install-interp-file
 
 uninstall-local:
 	rm -f '$(DESTDIR)$(pyenvfile)' '$(DESTDIR)$(pyinterpfile)'
-
-snap:
-	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`
 
 EXTRA_DIST = \
 	$(pygimp_DATA)	\

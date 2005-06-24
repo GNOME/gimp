@@ -1676,7 +1676,6 @@ plug-ins/metadata/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
-plug-ins/pygimp/doc/Makefile
 plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
 plug-ins/rcm/images/Makefile

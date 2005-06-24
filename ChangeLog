@@ -1,5 +1,13 @@
 2005-06-24  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/Makefile.am: build all libraries with no-undefined.
+	Ignore doc stuff for now, since it's ancient and needs to be massively
+	revised.
+
+	* configure.in: don't generate plug-ins/pygimp/doc/Makefile
+
+2005-06-24  Manish Singh  <yosh@gimp.org>
+
 	* acinclude.m4: split out into separate files...
 
 	* m4macros/alsa.m4
