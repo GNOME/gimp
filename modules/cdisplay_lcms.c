@@ -88,6 +88,9 @@ static void   cdisplay_lcms_changed      (GimpColorDisplay  *display);
 static void   cdisplay_lcms_set_config   (CdisplayLcms      *lcms,
                                           GimpColorConfig   *config);
 
+static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
+                                                       GimpColorConfig *config);
+
 
 static const GimpModuleInfo cdisplay_lcms_info =
 {
@@ -278,9 +281,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       /*  this should be taken from the image  */
       src_profile = cmsCreate_sRGBProfile ();
 
-      if (config->display_profile)
-        dest_profile = cmsOpenProfileFromFile (config->display_profile,"r");
-
+      dest_profile = cdisplay_lcms_get_display_profile (lcms, config);
       break;
     }
 
@@ -336,4 +337,39 @@ cdisplay_lcms_set_config (CdisplayLcms    *lcms,
     }
 
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (lcms));
+}
+
+
+static cmsHPROFILE
+cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
+                                   GimpColorConfig *config)
+{
+  if (config->display_profile_from_gdk)
+    {
+      /*  FIXME: need to access the display's screen here  */
+      GdkScreen *screen = gdk_screen_get_default ();
+      GdkAtom    type;
+      gint       format;
+      gint       nitems;
+      guchar    *data;
+
+      g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+
+      if (gdk_property_get (gdk_screen_get_root_window (screen),
+                            gdk_atom_intern ("_ICC_PROFILE", FALSE),
+                            GDK_NONE,
+                            0, G_MAXLONG,
+                            FALSE,
+                            &type, &format, &nitems, &data) && nitems)
+        {
+          cmsHPROFILE *profile = cmsOpenProfileFromMem (data, nitems);
+
+          g_free (data);
+
+          return profile;
+        }
+    }
+
+  if (config->display_profile)
+    return cmsOpenProfileFromFile (config->display_profile, "r");
 }

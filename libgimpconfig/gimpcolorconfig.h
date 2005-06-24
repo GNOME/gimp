@@ -41,6 +41,7 @@ struct _GimpColorConfig
   gchar                      *rgb_profile;
   gchar                      *cmyk_profile;
   gchar                      *display_profile;
+  gboolean                    display_profile_from_gdk;
   gchar                      *printer_profile;
   GimpColorRenderingIntent    display_intent;
   GimpColorRenderingIntent    simulation_intent;

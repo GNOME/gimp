@@ -40,6 +40,9 @@
   N_("Mode of operation for color management.")
 #define DISPLAY_PROFILE_BLURB \
   N_("Sets the color profile for the display.")
+#define DISPLAY_PROFILE_FROM_GDK_BLURB \
+  N_("When enabled, the GIMP will try to use the display color profile " \
+     "from the windowing system.")
 #define RGB_PROFILE_BLURB \
   N_("Sets default RGB workspace color profile.")
 #define CMYK_PROFILE_BLURB \
@@ -50,6 +53,7 @@
   N_("Sets how colors are mapped for your display.")
 #define SIMULATION_RENDERING_INTENT_BLURB \
   N_("Sets how colors are converted from workspace to simulation device.")
+
 #define OPEN_BEHAVIOUR_NO_PROFILE_BLURB \
   "Defines what will be done if no color profile is available."
 #define OPEN_BEHAVIOUR_RGB_PROFILE_BLURB \
@@ -65,6 +69,7 @@ enum
   PROP_RGB_PROFILE,
   PROP_CMYK_PROFILE,
   PROP_DISPLAY_PROFILE,
+  PROP_DISPLAY_PROFILE_FROM_GDK,
   PROP_PRINTER_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
   PROP_SIMULATION_RENDERING_INTENT,
@@ -160,6 +165,11 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  "display-profile", DISPLAY_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISPLAY_PROFILE_FROM_GDK,
+                                    "display-profile-from-gdk",
+                                    DISPLAY_PROFILE_FROM_GDK_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PRINTER_PROFILE,
                                  "printer-profile", PRINTER_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
@@ -250,6 +260,9 @@ gimp_color_config_set_property (GObject      *object,
       g_free (color_config->display_profile);
       color_config->display_profile = g_value_dup_string (value);
       break;
+    case PROP_DISPLAY_PROFILE_FROM_GDK:
+      color_config->display_profile_from_gdk = g_value_get_boolean (value);
+      break;
     case PROP_PRINTER_PROFILE:
       g_free (color_config->printer_profile);
       color_config->printer_profile = g_value_dup_string (value);
@@ -302,6 +315,9 @@ gimp_color_config_get_property (GObject    *object,
       break;
     case PROP_DISPLAY_PROFILE:
       g_value_set_string (value, color_config->display_profile);
+      break;
+    case PROP_DISPLAY_PROFILE_FROM_GDK:
+      g_value_set_boolean (value, color_config->display_profile_from_gdk);
       break;
     case PROP_PRINTER_PROFILE:
       g_value_set_string (value, color_config->printer_profile);
