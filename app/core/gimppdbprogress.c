@@ -239,7 +239,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                 const gchar         *text,
                                 gdouble              value)
 {
-  if (! progress->callback_busy)
+  if (progress->callback_name && ! progress->callback_busy)
     {
       Argument *return_vals;
       gint      n_return_vals;
@@ -256,8 +256,7 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
                                             GIMP_PDB_FLOAT,  value,
                                             GIMP_PDB_END);
 
-      if (! return_vals ||
-          return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
+      if (! return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
         {
           g_message (_("Unable to run %s callback. "
                        "The corresponding plug-in may have crashed."),
@@ -378,34 +377,9 @@ gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
       GimpPdbProgress *progress = list->data;
 
       if (progress->callback_name &&
-          ! strcmp (callback_name, progress->callback_name))
+          strcmp (callback_name, progress->callback_name) == 0)
 	return progress;
     }
 
   return NULL;
-}
-
-void
-gimp_pdb_progresss_check_callback (GimpPdbProgressClass *klass)
-{
-  GList *list;
-
-  g_return_if_fail (GIMP_IS_PDB_PROGRESS_CLASS (klass));
-
-  list = klass->progresses;
-
-  while (list)
-    {
-      GimpPdbProgress *progress = list->data;
-
-      list = g_list_next (list);
-
-      if (progress->callback_name)
-        {
-          if (! procedural_db_lookup (progress->context->gimp,
-                                      progress->callback_name))
-            {
-            }
-        }
-    }
 }

@@ -59,7 +59,6 @@ GType             gimp_pdb_progress_get_type        (void) G_GNUC_CONST;
 
 GimpPdbProgress * gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
                                                      const gchar          *callback_name);
-void              gimp_pdb_progresss_check_callback (GimpPdbProgressClass *klass);
 
 
 G_END_DECLS

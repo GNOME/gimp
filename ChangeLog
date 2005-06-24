@@ -1,5 +1,10 @@
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppdbprogress.[ch]: removed an incomplete and unused
+	function.
+
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/procedural_db.c (procedural_db_execute): if we end up
 	without any return values, assume an execution error instead of
 	crashing (bug #308904).
