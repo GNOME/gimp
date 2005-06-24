@@ -57,6 +57,7 @@ EXPORTS
 	gimp_rgba_distance
 	gimp_rgba_get_uchar
 	gimp_rgba_multiply
+	gimp_rgba_parse_css
 	gimp_rgba_set
 	gimp_rgba_set_uchar
 	gimp_rgba_subtract
