@@ -1,5 +1,11 @@
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
+	* app/pdb/procedural_db.c (procedural_db_execute): if we end up
+	without any return values, assume an execution error instead of
+	crashing (bug #308904).
+
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
 	increased maximum property size, added debug output.
 
