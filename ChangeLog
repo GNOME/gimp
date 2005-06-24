@@ -1,3 +1,14 @@
+2005-06-24  Manish Singh  <yosh@gimp.org>
+
+	* acinclude.m4: split out into separate files...
+
+	* m4macros/alsa.m4
+	* m4macros/gimpprint.m4
+	* m4macros/gtk-doc.m4
+	* m4macros/pythondev.m4: ... and put them here.
+
+	* m4macros/Makefile.am: dist the above files.
+
 2005-06-24  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes
