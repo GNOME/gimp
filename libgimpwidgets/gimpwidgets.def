@@ -104,6 +104,9 @@ EXPORTS
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
 	gimp_enum_combo_box_set_stock_prefix
+	gimp_enum_label_get_type
+	gimp_enum_label_new
+	gimp_enum_label_set_value
 	gimp_enum_radio_box_new 
 	gimp_enum_radio_box_new_with_range
 	gimp_enum_radio_frame_new
@@ -206,6 +209,7 @@ EXPORTS
 	gimp_prop_entry_new
 	gimp_prop_enum_check_button_new
 	gimp_prop_enum_combo_box_new
+	gimp_prop_enum_label_new
 	gimp_prop_enum_radio_box_new
 	gimp_prop_enum_radio_frame_new
 	gimp_prop_enum_stock_box_new

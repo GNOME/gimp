@@ -31,6 +31,7 @@
 
 #include "libgimp/libgimp-intl.h"
 
+
 /*  utility function prototypes  */
 
 static void         set_param_spec     (GObject     *object,
@@ -789,10 +790,74 @@ gimp_prop_enum_radio_box_new (GObject     *config,
   return vbox;
 }
 
+
+/***********/
+/*  label  */
+/***********/
+
+static void  gimp_prop_enum_label_notify (GObject    *config,
+                                          GParamSpec *param_spec,
+                                          GtkWidget  *label);
+
+/**
+ * gimp_prop_enum_label_new:
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of enum property to be displayed.
+ *
+ * Return value: The newly created #GimpEnumLabel widget.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_enum_label_new (GObject     *config,
+                          const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *label;
+  gint        value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  label = gimp_enum_label_new (param_spec->value_type, value);
+
+  set_param_spec (G_OBJECT (label), NULL, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_enum_label_notify),
+                  label);
+
+  return label;
+}
+
+static void
+gimp_prop_enum_label_notify (GObject    *config,
+                             GParamSpec *param_spec,
+                             GtkWidget  *label)
+{
+  gint value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gimp_enum_label_set_value (GIMP_ENUM_LABEL (label), value);
+}
+
+
 /**
  * gimp_prop_boolean_radio_frame_new:
  * @config:            Object to which property is attached.
- * @property_name:     Name of Enum property controlled by the radio buttons.
+ * @property_name:     Name of boolean property controlled by the radio buttons.
  * @title:             Label for the frame.
  * @true_text:         Label for the button corresponding to #TRUE.
  * @false_text:        Label for the button corresponding to #FALSE.

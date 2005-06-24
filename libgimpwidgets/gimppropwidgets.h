@@ -79,6 +79,9 @@ GtkWidget     * gimp_prop_enum_stock_box_new      (GObject      *config,
                                                    gint          minimum,
                                                    gint          maximum);
 
+GtkWidget     * gimp_prop_enum_label_new          (GObject      *config,
+                                                   const gchar  *property_name);
+
 
 /*  GParamInt, GParamUInt, GParamLong, GParamULong, GParamDouble  */
 

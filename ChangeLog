@@ -1,3 +1,18 @@
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpenumlabel.[ch]: added new widget GimpEnumLabel.
+
+	* libgimpwidgets/gimppropwidgets.[ch]: added
+	gimp_prop_enum_label_new().
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): started to
+	add a view on the current color managment configuration.
+
 2005-06-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/Makefile.am: build all libraries with no-undefined.

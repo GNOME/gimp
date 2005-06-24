@@ -231,16 +231,53 @@ cdisplay_lcms_set_property (GObject      *object,
 static GtkWidget *
 cdisplay_lcms_configure (GimpColorDisplay *display)
 {
-  return g_object_new (GTK_TYPE_LABEL,
-                       "label",      _("This module takes its configuration "
-                                       "from the <i>Color Management</i> "
-                                       "section in the Preferences dialog."),
-                       "use-markup", TRUE,
-                       "justify",    GTK_JUSTIFY_LEFT,
-                       "wrap",       TRUE,
-                       "xalign",     0.5,
-                       "yalign",     0.5,
-                       NULL);
+  CdisplayLcms *lcms   = CDISPLAY_LCMS (display);
+  GObject      *config = G_OBJECT (lcms->config);
+  GtkWidget    *vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *label;
+  GtkWidget    *image;
+  GtkWidget    *table;
+  gint          row = 0;
+
+  vbox = gtk_vbox_new (FALSE, 12);
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",      _("This module takes its configuration "
+                                        "from the <i>Color Management</i> "
+                                        "section in the Preferences dialog."),
+                        "use-markup", TRUE,
+                        "wrap",       TRUE,
+                        "justify",    GTK_JUSTIFY_LEFT,
+                        "xalign",     0.0,
+                        "yalign",     0.5,
+                        NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label = gimp_prop_enum_label_new (config, "mode");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Mode of operation:"),
+                             0.0, 0.5, label, 1, TRUE);
+
+  /* more to come here */
+
+  return vbox;
 }
 
 static void
