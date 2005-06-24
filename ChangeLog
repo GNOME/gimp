@@ -1,3 +1,10 @@
+2005-06-24  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes
+	made by Daniel P. Stasinski in his text-circle3.scm script. Letters
+	are now placed properly for both positive and negative fill angles.
+	Last(?) fix for bug #144588.
+
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: added a mnemonic.
