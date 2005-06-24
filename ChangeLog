@@ -1,3 +1,12 @@
+2005-06-24  Sven Neumann  <neumann@jpk.com>
+
+	* app/dialogs/preferences-dialog.c: added a check button to control
+	the "display-profile-from-gdk" option.
+
+	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
+	fixed use of gdk_property_get(). Return NULL if no display profile
+	can be obtained.
+
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
 	Added basic support for the proposed ICC Profiles In X Specification
@@ -7,8 +16,7 @@
 	"display-profile-from-gdk", default to TRUE.
 
 	* modules/cdisplay_lcms.c: try to retrieve the display color
-	profile from the "_ICC_PROFILE" profile on the default screen's
-	root window.
+	profile from the "_ICC_PROFILE" property on the default screen.
 
 2005-06-23  Akkana Peck  <akkana@shallowsky.com>
 

@@ -2149,7 +2149,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     &top_iter,
 				     page_index++);
 
-  table = prefs_table_new (7, GTK_CONTAINER (vbox));
+  table = prefs_table_new (8, GTK_CONTAINER (vbox));
 
   {
     static const struct
@@ -2171,6 +2171,7 @@ prefs_dialog_new (Gimp       *gimp,
     };
 
     GObject *color_config;
+    gint     row;
 
     g_object_get (object, "color-management", &color_config, NULL);
 
@@ -2184,16 +2185,34 @@ prefs_dialog_new (Gimp       *gimp,
                               _("_Softproof rendering intent:"),
                               GTK_TABLE (table), 2, NULL);
 
-    for (i = 0; i < G_N_ELEMENTS (profiles); i++)
+    for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
       {
 	button =
           gimp_prop_file_chooser_button_new (color_config,
                                              profiles[i].property_name,
                                              gettext (profiles[i].fs_label),
                                              GTK_FILE_CHOOSER_ACTION_OPEN);
-	gimp_table_attach_aligned (GTK_TABLE (table), 0, 3 + i,
+
+	gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
 				   gettext (profiles[i].label), 0.0, 0.5,
 				   button, 1, FALSE);
+
+
+#if defined (GDK_WINDOWING_X11)
+        if (i == 2) /* display profile */
+          {
+            button =
+              gimp_prop_check_button_new (color_config,
+                                          "display-profile-from-gdk",
+                                          _("Try to obtain the monitor profile "
+                                            "from the X server"));
+
+            row++;
+            gtk_table_attach_defaults (GTK_TABLE (table),
+                                       button, 0, 2, row, row + 1);
+            gtk_widget_show (button);
+          }
+#endif
       }
 
     g_object_unref (color_config);

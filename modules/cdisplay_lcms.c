@@ -344,23 +344,23 @@ static cmsHPROFILE
 cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
                                    GimpColorConfig *config)
 {
+#if defined (GDK_WINDOWING_X11)
   if (config->display_profile_from_gdk)
     {
       /*  FIXME: need to access the display's screen here  */
       GdkScreen *screen = gdk_screen_get_default ();
-      GdkAtom    type;
-      gint       format;
-      gint       nitems;
-      guchar    *data;
+      GdkAtom    type   = GDK_NONE;
+      gint       format = 0;
+      gint       nitems = 0;
+      guchar    *data   = NULL;
 
       g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
       if (gdk_property_get (gdk_screen_get_root_window (screen),
                             gdk_atom_intern ("_ICC_PROFILE", FALSE),
                             GDK_NONE,
-                            0, G_MAXLONG,
-                            FALSE,
-                            &type, &format, &nitems, &data) && nitems)
+                            0, 256 * 1024, FALSE,
+                            &type, &format, &nitems, &data) && nitems > 0)
         {
           cmsHPROFILE *profile = cmsOpenProfileFromMem (data, nitems);
 
@@ -369,7 +369,10 @@ cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
           return profile;
         }
     }
+#endif
 
   if (config->display_profile)
     return cmsOpenProfileFromFile (config->display_profile, "r");
+
+  return NULL;
 }
