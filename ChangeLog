@@ -1,3 +1,28 @@
+2005-06-24  Tor Lillqvist  <tml@novell.com>
+
+	* app/display/gimpcanvas.h: Add new GimpCanvasStyle value,
+	GIMP_CANVAS_STYLE_XOR_DOTTED.
+
+	* app/display/gimpcanvas.c (gimp_canvas_gc_new): Implement it like
+	GIMP_CANVAS_STYLE_XOR_DASHED, except that we set the dash pattern
+	to a single-pixel on-off one.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): Sort
+	the boundary so that we can draw each connected group of segments
+	using gimp_canvas_draw_lines(). (Even if we would still use
+	gimp_canvas_draw_segments(), the boundary would have to be sorted
+	so that the XOR drawing and GDK_CAP_NOT_LAST cooperate properly.)
+
+	Use GIMP_CANVAS_STYLE_XOR_DOTTED so the outline doesn't look too
+	heavy.
+
+	Remove the dubious code snippet that offset some segments by one
+	pixel. It didn't do what the comment claimed, and why one would
+	need to do what the comment said, or what it actually did, is
+	unclear.
+
+	Now brush outlines shouldn't have gaps any longer. (#308710)
+
 2005-06-24  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: define PYLINK_LIBS on Win32, since DLLs need to have
@@ -154,17 +179,6 @@
 	* plug-ins/script-fu/scripts/weave.scm
 	* plug-ins/script-fu/scripts/xach-effect.scm: Reorganize
 	the Image window's Filters menu, as discussed in bug #116145.
-
-2005-06-23  Tor Lillqvist  <tml@novell.com>
-
-	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): Sort
-	the boundary so that GIMP_CANVAS_STYLE_XOR drawing (which uses
-	GDK_CAP_NOT_LAST) works better. Remove the dubious code snippet
-	that offset some segments by one pixel. It didn't do what the
-	comment said, and why one would need to to what the comment said,
-	or what it actually did, is unclear. Now brush outlines don't have
-	so many gaps any longer. (There are still some gaps for
-	pathological brushes.)
 
 2005-06-23  Sven Neumann  <sven@gimp.org>
 

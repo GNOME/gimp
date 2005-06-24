@@ -246,6 +246,7 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       values.graphics_exposures = TRUE;
       break;
 
+    case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR_DASHED:
       mask |= GDK_GC_LINE_STYLE;
       values.line_style = GDK_LINE_ON_OFF_DASH;
@@ -275,6 +276,12 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     }
 
   gc = gdk_gc_new_with_values (GTK_WIDGET (canvas)->window, &values, mask);
+
+  if (style == GIMP_CANVAS_STYLE_XOR_DOTTED)
+    {
+      gint8 one = 1;
+      gdk_gc_set_dashes (gc, 0, &one, 1);
+    }
 
   switch (style)
     {
