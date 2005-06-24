@@ -403,4 +403,4 @@
 		    SF-ADJUSTMENT _"Thread intensity"  '(100 0 100 1 10 1 1))
 
 (script-fu-menu-register "script-fu-weave"
-			 "<Image>/Filters/Alchemy")
+			 "<Image>/Filters/Artistic")

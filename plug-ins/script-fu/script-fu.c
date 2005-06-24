@@ -293,8 +293,6 @@ script_fu_extension_init (void)
                                     N_("_Classic.Gimp.Org"));
 
   gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Alchemy"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("Alpha to _Logo"));
   gimp_plugin_menu_branch_register ("<Image>/Filters/Animation",
                                     N_("A_nimators"));
@@ -304,12 +302,8 @@ script_fu_extension_init (void)
                                     N_("_Render"));
   gimp_plugin_menu_branch_register ("<Image>/Filters",
                                     N_("_Selection"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("S_hadow"));
   gimp_plugin_menu_branch_register ("<Image>/Filters/Decor",
                                     N_("Stencil _Ops"));
-  gimp_plugin_menu_branch_register ("<Image>/Filters",
-                                    N_("_Utils"));
 
   gimp_install_temp_proc ("script_fu_refresh",
 			  "Re-read all available scripts",

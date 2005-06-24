@@ -815,7 +815,7 @@ query (void)
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_lic", "<Image>/Filters/Map");
+  gimp_plugin_menu_register ("plug_in_lic", "<Image>/Filters/Artistic");
 }
 
 static void

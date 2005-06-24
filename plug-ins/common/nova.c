@@ -180,7 +180,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_nova",
-                             "<Image>/Filters/Light Effects/Light");
+                             "<Image>/Filters/Light and Shadow/Light");
 }
 
 static void

@@ -60,7 +60,7 @@ register(
     "James Henstridge",
     "James Henstridge",
     "1999",
-    "<Image>/Filters/Shadow/_Drop Shadow and Bevel...",
+    "<Image>/Filters/Light and Shadow/Shadow/_Drop Shadow and Bevel...",
     "RGBA, GRAYA",
     [
         (PF_SLIDER, "blur",   "Shadow blur", 6, (1, 30, 1)),

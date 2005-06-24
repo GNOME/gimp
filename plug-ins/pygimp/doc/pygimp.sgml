@@ -153,7 +153,7 @@ register(
 	"James Henstridge",
 	"James Henstridge",
 	"1997-1999",
-	"&lt;Image&gt;/Python-Fu/Alchemy/Clothify",
+	"&lt;Image&gt;/Filters/Artistic/Clothify",
 	"RGB*, GRAY*",
 	[
 		(PF_INT, "x_blur", "X Blur", 9),

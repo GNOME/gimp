@@ -1,3 +1,34 @@
+2005-06-23  Akkana Peck  <akkana@shallowsky.com>
+
+	* app/actions/plug-in-actions.c
+	* menus/image-menu.xml.in
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/depthmerge.c
+	* plug-ins/common/film.c
+	* plug-ins/common/flarefx.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/pygimp/doc/pygimp.sgml
+	* plug-ins/pygimp/doc/pygimp.html
+	* plug-ins/pygimp/doc/structure-of-plugin.html
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scripts/clothify.scm
+	* plug-ins/script-fu/scripts/drop-shadow.scm
+	* plug-ins/script-fu/scripts/erase-rows.scm
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/predator.scm
+	* plug-ins/script-fu/scripts/weave.scm
+	* plug-ins/script-fu/scripts/xach-effect.scm: Reorganize
+	the Image window's Filters menu, as discussed in bug #116145.
+
 2005-06-23  Tor Lillqvist  <tml@novell.com>
 
 	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): Sort

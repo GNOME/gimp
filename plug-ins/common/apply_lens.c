@@ -114,7 +114,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_applylens",
-                             "<Image>/Filters/Light Effects/Glass");
+                             "<Image>/Filters/Light and Shadow/Glass");
 }
 
 static void

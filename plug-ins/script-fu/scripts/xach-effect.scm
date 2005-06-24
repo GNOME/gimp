@@ -131,4 +131,4 @@
 		    SF-TOGGLE     _"Keep selection"       TRUE)
 
 (script-fu-menu-register "script-fu-xach-effect"
-			 "<Image>/Filters/Shadow")
+			 "<Image>/Filters/Light and Shadow/Shadow")

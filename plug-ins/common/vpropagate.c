@@ -267,8 +267,8 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (DEFAULT_PLUG_IN_NAME, "<Image>/Filters/Distorts");
-  gimp_plugin_menu_register (ERODE_PLUG_IN_NAME,   "<Image>/Filters/Generic");
-  gimp_plugin_menu_register (DILATE_PLUG_IN_NAME,  "<Image>/Filters/Generic");
+  gimp_plugin_menu_register (ERODE_PLUG_IN_NAME,   "<Image>/Filters/Effects/Generic");
+  gimp_plugin_menu_register (DILATE_PLUG_IN_NAME,  "<Image>/Filters/Effects/Generic");
 }
 
 static void
