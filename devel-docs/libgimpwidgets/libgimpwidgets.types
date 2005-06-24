@@ -20,6 +20,7 @@ gimp_color_selection_get_type
 gimp_controller_get_type
 gimp_dialog_get_type
 gimp_enum_combo_box_get_type
+gimp_enum_label_get_type
 gimp_enum_store_get_type
 gimp_file_entry_get_type
 gimp_frame_get_type

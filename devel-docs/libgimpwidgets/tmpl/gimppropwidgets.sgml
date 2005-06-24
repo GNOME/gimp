@@ -97,6 +97,16 @@ GimpPropWidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_prop_enum_label_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_prop_enum_radio_frame_new ##### -->
 <para>
 

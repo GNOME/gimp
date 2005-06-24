@@ -1,3 +1,11 @@
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpenumlabel.sgml
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml: added GimpEnumLabel.
+
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/tmpl/gimpcolorconfig.sgml
