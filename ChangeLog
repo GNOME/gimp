@@ -1,3 +1,7 @@
+2005-06-24  Manish Singh  <yosh@gimp.org>
+
+	* libgimpcolor/gimpcolor.def: add gimp_rgba_parse_css
+
 2005-06-24  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/image-actions.c
