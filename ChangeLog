@@ -1,3 +1,8 @@
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): show the names
+	of the color profiles that are used.
+
 2005-06-24  Tor Lillqvist  <tml@novell.com>
 
 	* app/display/gimpcanvas.h: Add new GimpCanvasStyle value,

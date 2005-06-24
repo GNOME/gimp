@@ -89,8 +89,9 @@ static void        cdisplay_lcms_changed    (GimpColorDisplay  *display);
 static void        cdisplay_lcms_set_config (CdisplayLcms      *lcms,
                                              GimpColorConfig   *config);
 
-static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
-                                                       GimpColorConfig *config);
+static cmsHPROFILE  cdisplay_lcms_get_rgb_profile     (CdisplayLcms *lcms);
+static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms *lcms);
+static cmsHPROFILE  cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms);
 
 
 static const GimpModuleInfo cdisplay_lcms_info =
@@ -228,6 +229,23 @@ cdisplay_lcms_set_property (GObject      *object,
     }
 }
 
+
+static inline const gchar *
+cdisplay_lcms_profile_get_name (cmsHPROFILE  profile)
+{
+  if (profile)
+    {
+      const gchar *name = cmsTakeProductName (profile);
+
+      if (g_utf8_validate (name, -1, NULL))
+        return name;
+      else
+        return _("(invalid UTF-8 string)");
+    }
+
+  return _("None");
+}
+
 static GtkWidget *
 cdisplay_lcms_configure (GimpColorDisplay *display)
 {
@@ -238,6 +256,8 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   GtkWidget    *label;
   GtkWidget    *image;
   GtkWidget    *table;
+  cmsHPROFILE   profile;
+  const gchar  *name;
   gint          row = 0;
 
   vbox = gtk_vbox_new (FALSE, 12);
@@ -251,7 +271,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gtk_widget_show (image);
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",      _("This module takes its configuration "
+                        "label",      _("This filter takes its configuration "
                                         "from the <i>Color Management</i> "
                                         "section in the Preferences dialog."),
                         "use-markup", TRUE,
@@ -266,6 +286,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 12);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
@@ -274,30 +295,39 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Mode of operation:"),
                              0.0, 0.5, label, 1, TRUE);
-  {
-    static const struct
-    {
-      const gchar *text;
-      const gchar *property_name;
-    }
-    profiles[] =
-    {
-      { N_("RGB profile:"),              "rgb-profile"     },
-      { N_("CMYK profile:"),             "cmyk-profile"    },
-      { N_("Monitor profile:"),          "display-profile" },
-      { N_("Print simulation profile:"), "printer-profile" }
-    };
 
-    gint i;
+  /*  FIXME: need to update label with config changes  */
+  profile = cdisplay_lcms_get_rgb_profile (lcms);
+  name = cdisplay_lcms_profile_get_name (profile);
+  if (profile)
+    cmsCloseProfile (profile);
 
-    for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
-      {
-        label = gimp_prop_label_new (config, profiles[i].property_name);
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                   profiles[i].text,
-                                   0.0, 0.5, label, 1, TRUE);
-      }
-  }
+  label = gtk_label_new (name);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("RGB workspace profile:"),
+                             0.0, 0.5, label, 1, TRUE);
+
+  /*  FIXME: need to update label with config changes  */
+  profile = cdisplay_lcms_get_display_profile (lcms);
+  name = cdisplay_lcms_profile_get_name (profile);
+  if (profile)
+    cmsCloseProfile (profile);
+
+  label = gtk_label_new (name);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Monitor profile:"),
+                             0.0, 0.5, label, 1, TRUE);
+
+  /*  FIXME: need to update label with config changes  */
+  profile = cdisplay_lcms_get_printer_profile (lcms);
+  name = cdisplay_lcms_profile_get_name (profile);
+  if (profile)
+    cmsCloseProfile (profile);
+
+  label = gtk_label_new (name);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Print simulation profile:"),
+                             0.0, 0.5, label, 1, TRUE);
 
   return vbox;
 }
@@ -348,16 +378,13 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       return;
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      if (config->printer_profile)
-        proof_profile = cmsOpenProfileFromFile (config->printer_profile, "r");
+      proof_profile = cdisplay_lcms_get_printer_profile (lcms);
 
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      /*  this should be taken from the image  */
-      src_profile = cmsCreate_sRGBProfile ();
-
-      dest_profile = cdisplay_lcms_get_display_profile (lcms, config);
+      src_profile = cdisplay_lcms_get_rgb_profile (lcms);
+      dest_profile = cdisplay_lcms_get_display_profile (lcms);
       break;
     }
 
@@ -415,11 +442,24 @@ cdisplay_lcms_set_config (CdisplayLcms    *lcms,
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (lcms));
 }
 
+static cmsHPROFILE
+cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
+{
+  GimpColorConfig *config = lcms->config;
+
+  /*  this should be taken from the image  */
+
+  if (config->rgb_profile)
+    return cmsOpenProfileFromFile (config->rgb_profile, "r");
+
+  return cmsCreate_sRGBProfile ();
+}
 
 static cmsHPROFILE
-cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
-                                   GimpColorConfig *config)
+cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
+  GimpColorConfig *config = lcms->config;
+
 #if defined (GDK_WINDOWING_X11)
   if (config->display_profile_from_gdk)
     {
@@ -433,22 +473,14 @@ cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
       g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
       if (gdk_property_get (gdk_screen_get_root_window (screen),
-                        gdk_atom_intern ("_ICC_PROFILE", FALSE),
-                        GDK_NONE,
-                        0, 64 * 1024 * 1024, FALSE,
-                        &type, &format, &nitems, &data) && nitems > 0)
+                            gdk_atom_intern ("_ICC_PROFILE", FALSE),
+                            GDK_NONE,
+                            0, 64 * 1024 * 1024, FALSE,
+                            &type, &format, &nitems, &data) && nitems > 0)
         {
           cmsHPROFILE  profile = cmsOpenProfileFromMem (data, nitems);
 
           g_free (data);
-
-          if (profile)
-            {
-              const gchar *name = cmsTakeProductName (profile);
-
-              g_printerr ("obtained ICC profile from X server: %s\n",
-                          name ? name : "<untitled>");
-            }
 
           return profile;
         }
@@ -457,6 +489,17 @@ cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
 
   if (config->display_profile)
     return cmsOpenProfileFromFile (config->display_profile, "r");
+
+  return NULL;
+}
+
+static cmsHPROFILE
+cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms)
+{
+  GimpColorConfig *config = lcms->config;
+
+  if (config->printer_profile)
+    return cmsOpenProfileFromFile (config->printer_profile, "r");
 
   return NULL;
 }
