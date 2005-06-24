@@ -2204,8 +2204,8 @@ prefs_dialog_new (Gimp       *gimp,
             button =
               gimp_prop_check_button_new (color_config,
                                           "display-profile-from-gdk",
-                                          _("Try to obtain the monitor profile "
-                                            "from the X server"));
+                                          _("_Try to obtain the monitor "
+                                            "profile from the X server"));
 
             row++;
             gtk_table_attach_defaults (GTK_TABLE (table),

@@ -326,7 +326,8 @@ static void   gimp_prop_int_combo_box_notify   (GObject     *config,
  * property.  The contents of the widget are determined by @store,
  * which should be created using gimp_int_store_new().
  *
- * Return value: The newly created #GimpIntComboBox widget.
+ * Return value: The newly created #GimpIntComboBox widget, optionally
+ *               wrapped into a #GtkEventBox.
  *
  * Since GIMP 2.4
  */
@@ -396,7 +397,8 @@ gimp_prop_int_combo_box_new (GObject      *config,
  * enum.  If the two values are equal (e.g., 0, 0), then the full
  * range of the Enum is used.
  *
- * Return value: The newly created #GimpIntComboBox widget.
+ * Return value: The newly created #GimpEnumComboBox widget, optionally
+ *               wrapped into a #GtkEventBox.
  *
  * Since GIMP 2.4
  */
@@ -533,7 +535,8 @@ static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
  * displaying the @true_text label, the other displaying the
  * @false_text label.
  *
- * Return value: The newly created #GtkComboBox widget.
+ * Return value: The newly created #GtkComboBox widget, optionally
+ *               wrapped into a #GtkEventBox..
  *
  * Since GIMP 2.4
  */
@@ -1945,6 +1948,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *button;
+  GtkWidget  *widget;
   gchar      *filename;
   gchar      *value;
 
@@ -1971,7 +1975,19 @@ gimp_prop_file_chooser_button_new (GObject              *config,
       g_free (filename);
     }
 
-  set_param_spec (G_OBJECT (button), button, param_spec);
+  /*  can't set a tooltip on a file-chooser button  */
+  if (g_param_spec_get_blurb (param_spec))
+    {
+      widget = gtk_event_box_new ();
+      gtk_container_add (GTK_CONTAINER (widget), button);
+      gtk_widget_show (button);
+    }
+  else
+    {
+      widget = button;
+    }
+
+  set_param_spec (G_OBJECT (button), widget, param_spec);
 
   g_signal_connect (button, "selection-changed",
 		    G_CALLBACK (gimp_prop_file_chooser_button_callback),
@@ -1981,7 +1997,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
                   button);
 
-  return button;
+  return widget;
 }
 
 static void

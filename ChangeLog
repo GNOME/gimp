@@ -1,3 +1,14 @@
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: added a mnemonic.
+
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_new): embed the button in an
+	event-box if the param_spec provides a blurb to be used as a
+	tooltip.
+
+	* libgimpconfig/gimpcolorconfig.c: improved blurbs.
+
 2005-06-24  Manish Singh  <yosh@gimp.org>
 
 	* libgimpcolor/gimpcolor.def: add gimp_rgba_parse_css
