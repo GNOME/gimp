@@ -65,28 +65,29 @@ enum
 };
 
 
-static GType  cdisplay_lcms_get_type     (GTypeModule       *module);
-static void   cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
-static void   cdisplay_lcms_init         (CdisplayLcms      *lcms);
-static void   cdisplay_lcms_dispose      (GObject           *object);
-static void   cdisplay_lcms_get_property (GObject           *object,
-                                          guint              property_id,
-                                          GValue            *value,
-                                          GParamSpec        *pspec);
-static void   cdisplay_lcms_set_property (GObject           *object,
-                                          guint              property_id,
-                                          const GValue      *value,
-                                          GParamSpec        *pspec);
+static GType     cdisplay_lcms_get_type     (GTypeModule       *module);
+static void      cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
+static void      cdisplay_lcms_init         (CdisplayLcms      *lcms);
+static void      cdisplay_lcms_dispose      (GObject           *object);
+static void      cdisplay_lcms_get_property (GObject           *object,
+                                             guint              property_id,
+                                             GValue            *value,
+                                             GParamSpec        *pspec);
+static void      cdisplay_lcms_set_property (GObject           *object,
+                                             guint              property_id,
+                                             const GValue      *value,
+                                             GParamSpec        *pspec);
 
-static void   cdisplay_lcms_convert      (GimpColorDisplay  *display,
-                                          guchar            *buf,
-                                          gint               width,
-                                          gint               height,
-                                          gint               bpp,
-                                          gint               bpl);
-static void   cdisplay_lcms_changed      (GimpColorDisplay  *display);
-static void   cdisplay_lcms_set_config   (CdisplayLcms      *lcms,
-                                          GimpColorConfig   *config);
+static GtkWidget * cdisplay_lcms_configure  (GimpColorDisplay  *display);
+static void        cdisplay_lcms_convert    (GimpColorDisplay  *display,
+                                             guchar            *buf,
+                                             gint               width,
+                                             gint               height,
+                                             gint               bpp,
+                                             gint               bpl);
+static void        cdisplay_lcms_changed    (GimpColorDisplay  *display);
+static void        cdisplay_lcms_set_config (CdisplayLcms      *lcms,
+                                             GimpColorConfig   *config);
 
 static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms    *lcms,
                                                        GimpColorConfig *config);
@@ -165,6 +166,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   display_class->name        = _("Color Management");
   display_class->help_id     = "gimp-colordisplay-lcms";
+  display_class->configure   = cdisplay_lcms_configure;
   display_class->convert     = cdisplay_lcms_convert;
   display_class->changed     = cdisplay_lcms_changed;
 
@@ -224,6 +226,21 @@ cdisplay_lcms_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GtkWidget *
+cdisplay_lcms_configure (GimpColorDisplay *display)
+{
+  return g_object_new (GTK_TYPE_LABEL,
+                       "label",      _("This module takes its configuration "
+                                       "from the <i>Color Management</i> "
+                                       "section in the Preferences dialog."),
+                       "use-markup", TRUE,
+                       "justify",    GTK_JUSTIFY_LEFT,
+                       "wrap",       TRUE,
+                       "xalign",     0.5,
+                       "yalign",     0.5,
+                       NULL);
 }
 
 static void
