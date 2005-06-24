@@ -1,5 +1,15 @@
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: relabel the profile used for
+	softproofing to "Print simulation profile".
+
+	* libgimpconfig/gimpcolorconfig.c: improved blurb.
+	
+	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): show filenames
+	of profiles; will be replaced by real profile information.
+
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h

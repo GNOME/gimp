@@ -264,7 +264,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  table = gtk_table_new (1, 2, FALSE);
+  table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -274,8 +274,30 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Mode of operation:"),
                              0.0, 0.5, label, 1, TRUE);
+  {
+    static const struct
+    {
+      const gchar *text;
+      const gchar *property_name;
+    }
+    profiles[] =
+    {
+      { N_("RGB profile:"),              "rgb-profile"     },
+      { N_("CMYK profile:"),             "cmyk-profile"    },
+      { N_("Monitor profile:"),          "display-profile" },
+      { N_("Print simulation profile:"), "printer-profile" }
+    };
 
-  /* more to come here */
+    gint i;
+
+    for (i = 0, row = 3; i < G_N_ELEMENTS (profiles); i++, row++)
+      {
+        label = gimp_prop_label_new (config, profiles[i].property_name);
+        gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                   profiles[i].text,
+                                   0.0, 0.5, label, 1, TRUE);
+      }
+  }
 
   return vbox;
 }

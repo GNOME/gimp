@@ -53,7 +53,8 @@
 #define DISPLAY_RENDERING_INTENT_BLURB \
   N_("Sets how colors are mapped for your display.")
 #define SIMULATION_RENDERING_INTENT_BLURB \
-  N_("Sets how colors are converted from workspace to simulation device.")
+  N_("Sets how colors are converted from workspace to the print simulation " \
+     "device.")
 
 #define OPEN_BEHAVIOUR_NO_PROFILE_BLURB \
   "Defines what will be done if no color profile is available."

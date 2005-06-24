@@ -2166,7 +2166,7 @@ prefs_dialog_new (Gimp       *gimp,
         N_("Select CMYK color profile"),    "cmyk-profile"    },
       { N_("_Monitor profile:"),
         N_("Select monitor color profile"), "display-profile" },
-      { N_("_Printer profile:"),
+      { N_("_Print simulation profile:"),
         N_("Select printer color profile"), "printer-profile" }
     };
 
