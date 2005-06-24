@@ -35,6 +35,11 @@ GimpColorConfig
 
 </para>
 
+<!-- ##### ARG GimpColorConfig:display-profile-from-gdk ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpColorConfig:display-rendering-intent ##### -->
 <para>
 

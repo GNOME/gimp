@@ -27,6 +27,7 @@ GimpBrowser
 @search_type: 
 @count_label: 
 @right_vbox: 
+@right_widget: 
 
 <!-- ##### FUNCTION gimp_browser_new ##### -->
 <para>

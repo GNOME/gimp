@@ -1,3 +1,8 @@
+2005-06-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/tmpl/gimpcolorconfig.sgml
+	* libgimpwidgets/tmpl/gimpbrowser.sgml: regenerated.
+
 2005-06-14  Sven Neumann  <sven@gimp.org>
 
 	* */Makefile.am: removed obsolete AUTOMAKE_OPTIONS. 
