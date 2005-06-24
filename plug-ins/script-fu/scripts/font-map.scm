@@ -2,14 +2,15 @@
 ;; Spencer Kimball
 
 (define (max-font-width text use-name font-list font-size)
-  (let* ((list     font-list)
+  (let* ((list (cadr font-list))
+     (list-cnt (car font-list))
+	 (count    0)
 	 (width    0)
 	 (maxwidth 0)
 	 (font     "")
 	 (extents  '()))
-    (while list
-	   (set! font (car list))
-	   (set! list (cdr list))
+    (while (< count list-cnt)
+	   (set! font (aref list count))
 	   (if (= use-name TRUE)
 	       (set! text font))
 	   (set! extents (gimp-text-get-extents-fontname text
@@ -17,19 +18,21 @@
 							 font))
 	   (set! width (nth 0 extents))
 	   (if (> width maxwidth)
-	       (set! maxwidth width)))
+	       (set! maxwidth width))
+       (set! count (+ count 1)))
     maxwidth))
 
 
 (define (max-font-height text use-name font-list font-size)
-  (let* ((list      font-list)
+  (let* ((list  (cadr font-list))
+     (list-cnt  (car font-list))
+	 (count     0)
 	 (height    0)
 	 (maxheight 0)
 	 (font      "")
 	 (extents   '()))
-    (while list
-	   (set! font (car list))
-	   (set! list (cdr list))
+    (while (< count list-cnt)
+	   (set! font (aref list count))
 	   (if (= use-name TRUE)
 	       (set! text font))
 	   (set! extents (gimp-text-get-extents-fontname text
@@ -37,7 +40,8 @@
 							 font))
 	   (set! height (nth 1 extents))
 	   (if (> height maxheight)
-	       (set! maxheight height)))
+	       (set! maxheight height))
+       (set! count (+ count 1)))
     maxheight))
 
 
@@ -48,10 +52,10 @@
 			    font-size
 			    border
 			    colors)
-  (let* ((font        "")
-	 (count       0)
-         (font-list  (cadr (gimp-fonts-get-list font-filter)))
-	 (num-fonts  (length font-list))
+  (let* ((font   "")
+	 (count      0)
+	 (font-list  (gimp-fonts-get-list font-filter))
+	 (num-fonts  (car font-list))
 	 (label-size (/ font-size 2))
 	 (border     (+ border (* labels (/ label-size 2))))
 	 (y           border)
@@ -70,6 +74,8 @@
 
     (gimp-image-undo-disable img)
 
+    (set! font-list (cadr font-list))
+
     (if (= colors 0)
 	(begin
 	  (gimp-context-set-background '(255 255 255))
@@ -87,9 +93,8 @@
 	  (gimp-image-add-layer img drawable -1)))
 	  (gimp-edit-clear drawable)
 
-    (while font-list
-	   (set! font (car font-list))
-	   (set! font-list (cdr font-list))
+    (while (< count num-fonts)
+	   (set! font (aref font-list count))
 
 	   (if (= use-name TRUE)
 	       (set! text font))
@@ -115,7 +120,6 @@
 								    label-size PIXELS
 								    "Sans")))
 		(set! y (+ y label-size))))
-
 
 	   (set! count (+ count 1)))
 

@@ -103,6 +103,12 @@
 	plug_in_actions_update() to update the sensitivity of the last used
 	plug-in entries.
 
+2005-06-23  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/font-map.scm: Updated to fix problems
+	related to change in handling of string arrays (see bug #168290).
+	Fixes bug #308681.
+
 2005-06-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpintcombobox.c (gimp_int_combo_box_new_valist)
