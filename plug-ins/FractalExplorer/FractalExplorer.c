@@ -167,10 +167,9 @@ static gint       fractalexplorer_list_pos         (fractalexplorerOBJ *feOBJ);
 static gint       fractalexplorer_list_insert      (fractalexplorerOBJ *feOBJ);
 static fractalexplorerOBJ *fractalexplorer_new     (void);
 static void       fill_list_store                  (GtkListStore       *list_store);
-gboolean          view_selection_func              (GtkTreeSelection   *selection,
-                                                    GtkTreeModel       *model,
+static void       view_activate                    (GtkTreeView        *view,
                                                     GtkTreePath        *path,
-                                                    gboolean            path_currently_selected,
+                                                    GtkTreeViewColumn  *col,
                                                     gpointer            data);
 
 static void       fractalexplorer_free             (fractalexplorerOBJ *feOBJ);
@@ -716,7 +715,7 @@ delete_dialog_callback (GtkWidget *widget,
           gtk_tree_selection_select_iter (selection, &iter);
 
           gtk_tree_model_get (model, &iter, 1, &current_obj, -1);
-	}
+  }
     }
   else
     {
@@ -827,31 +826,28 @@ fill_list_store (GtkListStore *list_store)
     }
 }
 
-gboolean
-view_selection_func (GtkTreeSelection *selection,
-                     GtkTreeModel     *model,
-                     GtkTreePath      *path,
-                     gboolean          path_currently_selected,
-                     gpointer          data)
+static void
+view_activate (GtkTreeView       *view,
+               GtkTreePath       *path,
+               GtkTreeViewColumn *col,
+               gpointer           data)
 {
+  GtkTreeModel       *model;
   GtkTreeIter         iter;
   fractalexplorerOBJ *sel_obj;
 
+  model = gtk_tree_view_get_model (view);
+  
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
       gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
-
-      if (!path_currently_selected)
-        {
-          current_obj = sel_obj;
-          wvals = current_obj->opts;
-          dialog_change_scale ();
-          set_cmap_preview ();
-          dialog_update_preview ();
-        }
+      current_obj = sel_obj;
+      wvals = current_obj->opts;
+      dialog_change_scale ();
+      set_cmap_preview ();
+      dialog_update_preview ();
     }
 
-  return TRUE; /* allow selection state to change */
 }
 
 static void
@@ -1019,8 +1015,9 @@ add_objects_list (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  gtk_tree_selection_set_select_function (selection,
-                                          view_selection_func, NULL, NULL);
+  g_signal_connect (view, "row_activated",
+                    G_CALLBACK (view_activate),
+                    NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), view);
   gtk_widget_show (view);
 
@@ -1114,12 +1111,12 @@ fractalexplorer_rescan_list (GtkWidget *widget,
           fractalexplorer_list_load_all (fractalexplorer_path);
 
           model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
-	  gtk_list_store_clear (GTK_LIST_STORE (model));
+          gtk_list_store_clear (GTK_LIST_STORE (model));
           fill_list_store (GTK_LIST_STORE (model));
 
-	  /* select first */
+          /* select active fractal, otherwise first fractal */
           selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-	  if (gtk_tree_model_get_iter_first (model, &iter))
+          if (gtk_tree_model_get_iter_first (model, &iter))
             {
               gtk_tree_selection_select_iter (selection, &iter);
               path = gtk_tree_model_get_path (model, &iter);
@@ -1127,7 +1124,7 @@ fractalexplorer_rescan_list (GtkWidget *widget,
               gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view), path, NULL,
                                             FALSE, 0.0, 0.0);
               gtk_tree_path_free (path);
-	    }
+            }
         }
     }
 
