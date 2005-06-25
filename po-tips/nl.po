@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2005-04-10 00:13+0200\n"
+"PO-Revision-Date: 2005-06-24 23:32+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -100,43 +100,31 @@ msgstr ""
 "slepen."
 
 #: ../tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
-msgstr ""
-"De GIMP kan de meeste wijzigingen aan de afbeelding ongedaan maken, dus wees "
-"vrij om te experimenteren."
+msgstr "GIMP kan de meeste wijzigingen aan de afbeelding ongedaan maken, dus experimenteer gerust."
 
 #: ../tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
-msgstr ""
-"De GIMP ondersteunt instant gzipcompressie. Voeg <tt>.gz</tt> (of <tt>.bz2</"
-"tt> als u bzip2 hebt geïnstalleerd) aan de bestandsnaam toe en uw afbeelding "
-"zal gecomprimeerd worden opgeslagen. Uiteraard kunt u ook gecomprimeerde "
-"afbeeldingen openen."
+msgstr "GIMP ondersteunt instant gzipcompressie. Voeg <tt>.gz</tt> (of <tt>.bz2</tt> als u bzip2 heeft) aan de bestandsnaam toe en uw afbeelding zal gecomprimeerd worden opgeslagen. Uiteraard kunt u ook gecomprimeerde afbeeldingen openen."
 
 #: ../tips/gimp-tips.xml.in.h:12
-#, fuzzy
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr ""
-"Gebruik lagen om structuur in uw afbeelding aan te brengen. U kunt lagen "
-"zien als een stapel dia's of filters, zodat u door ze heen kunt kijken om "
-"een totaalbeeld te krijgen."
+msgstr "Gebruik lagen om structuur in uw afbeelding aan te brengen. U kunt lagen beschouwen als een stapel dia's of filters, waar u doorheen kunt kijken om een totaalbeeld te krijgen."
 
 #: ../tips/gimp-tips.xml.in.h:13
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer-&gt;Transparency-&gt;Add Alpha Channel."
-msgstr ""
+msgstr "Wanneer een laagnaam in het dialoogvenster Lagen <b>vet</b> wordt weergegeven bevat deze laag geen alphakanaal. U kunt een alphakanaal toevoegen met Laag-&gt;Transparantie-&gt;Alphakanaal toevoegen."
 
 #: ../tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -234,18 +222,12 @@ msgstr ""
 "hoeken van 15 graden beperkt blijven."
 
 #: ../tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
-msgstr ""
-"Als u een afbeelding opslaat om er later opnieuw mee te werken, gebruik dan "
-"GIMP's eigen afbeeldingsbestandformaat XCF (gebruik de extensie <tt>.xcf</"
-"tt>). Hiermee behoudt u de lagen en elk ander onderdeel van uw werk. Als u "
-"een project eenmaal hebt afgesloten, kunt u de afbeelding ook als JPEG, PNG, "
-"GIF en dergelijke opslaan."
+msgstr "Als u een afbeelding opslaat om er later opnieuw mee te werken, gebruik dan GIMP's eigen bestandsformaat XCF (gebruik de extensie <tt>.xcf</tt>). Hiermee behoudt u de lagen en elk aspect van uw werk-in-wording. Wanneer een project is voltooid, kunt u de afbeelding ook als JPEG, PNG, GIF en dergelijke opslaan."
 
 #: ../tips/gimp-tips.xml.in.h:23
 msgid ""
@@ -286,15 +268,11 @@ msgstr ""
 "alleen die laag bevat."
 
 #: ../tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
-msgstr ""
-"U kunt vele zaken in de GIMP verslepen. Zo kunt u een kleur uit de "
-"gereedschapskist of uit een kleurenpalet naar een afbeelding slepen: "
-"hierdoor zal de afbeelding of selectie met die kleur worden opgevuld."
+msgstr "U kunt vele zaken in GIMP verslepen. Zo kunt u een kleur uit de gereedschapskist of uit een kleurenpalet naar een afbeelding slepen: hierdoor zal de afbeelding of selectie met die kleur worden opgevuld."
 
 #: ../tips/gimp-tips.xml.in.h:28
 msgid ""
