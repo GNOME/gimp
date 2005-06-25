@@ -1,3 +1,7 @@
+2005-06-25  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am: added all-local target which rebuilds AUTHORS.
+
 2005-06-25  Karine Delvare  <kdelvare@nerim.net>
 
 	* AUTHORS

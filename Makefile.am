@@ -95,5 +95,6 @@ if HAVE_XMLLINT
 	  ( echo "* authors.xml INVALID *"; exit 1; )
 endif
 
+all-local: AUTHORS
 
 dist-hook: validate-authors
