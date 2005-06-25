@@ -1,5 +1,9 @@
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolordisplayeditor.c: use a GtkVPaned.
+
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): show the names
 	of the color profiles that are used.
 

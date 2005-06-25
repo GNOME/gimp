@@ -140,6 +140,7 @@ gimp_color_display_editor_class_init (GimpColorDisplayEditorClass *klass)
 static void
 gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 {
+  GtkWidget         *paned;
   GtkWidget         *hbox;
   GtkWidget         *ed;
   GtkWidget         *scrolled_win;
@@ -149,11 +150,12 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   GtkTreeViewColumn *column;
   GtkCellRenderer   *rend;
 
-  gtk_box_set_spacing (GTK_BOX (editor), 12);
-  gtk_box_set_homogeneous (GTK_BOX (editor), TRUE);
+  paned = gtk_vpaned_new ();
+  gtk_box_pack_start (GTK_BOX (editor), paned, TRUE, TRUE, 0);
+  gtk_widget_show (paned);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (editor), hbox, TRUE, TRUE, 0);
+  gtk_paned_pack1 (GTK_PANED (paned), hbox, FALSE, FALSE);
   gtk_widget_show (hbox);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -188,7 +190,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                     G_CALLBACK (gimp_color_display_editor_src_changed),
                     editor);
 
-  vbox = gtk_vbox_new (TRUE, 0);
+  vbox = gtk_vbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -304,7 +306,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   /*  the config frame  */
 
   editor->config_frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (editor), editor->config_frame, TRUE, TRUE, 0);
+  gtk_paned_pack2 (GTK_PANED (paned), editor->config_frame, TRUE, FALSE);
   gtk_widget_show (editor->config_frame);
 
   editor->config_box = gtk_vbox_new (FALSE, 6);
