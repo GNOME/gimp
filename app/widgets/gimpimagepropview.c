@@ -275,6 +275,7 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   GimpUnit           unit;
   gdouble            unit_factor;
   gint               unit_digits;
+  const gchar       *desc;
   gchar              format_buf[32];
   gchar              buf[256];
 
@@ -317,17 +318,18 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   /*  color type  */
   type = gimp_image_base_type (image);
 
+  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, type,
+                       NULL, NULL, &desc, NULL);
+
   switch (type)
     {
     case GIMP_RGB:
-      g_snprintf (buf, sizeof (buf), "%s", _("RGB Color"));
-      break;
     case GIMP_GRAY:
-      g_snprintf (buf, sizeof (buf), "%s", _("Grayscale"));
+      g_snprintf (buf, sizeof (buf), "%s", desc);
       break;
     case GIMP_INDEXED:
-      g_snprintf (buf, sizeof (buf), "%s (%d %s)",
-                  _("Indexed Color"), image->num_cols, _("colors"));
+      g_snprintf (buf, sizeof (buf),
+                  "%s (%d %s)", desc, image->num_cols, _("colors"));
       break;
     }
 
