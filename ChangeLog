@@ -1,3 +1,8 @@
+2005-06-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/Makefile.am: drop the module suffix from the
+	filename of the dynamic libraries.
+
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c

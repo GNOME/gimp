@@ -21,10 +21,9 @@ INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
 
 pygimpdir = $(gimpplugindir)/python
 
-pygimp_LTLIBRARIES = gimpmodule.la _gimpenumsmodule.la gimpcolormodule.la \
-	gimpprocbrowsermodule.la
+pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la gimpprocbrowser.la
 
-gimpmodule_la_SOURCES = \
+gimp_la_SOURCES = \
 	gimpmodule.c		\
 	pygimp-display.c	\
 	pygimp-drawable.c	\
@@ -35,10 +34,10 @@ gimpmodule_la_SOURCES = \
 	pygimp.h		\
 	pygimp-api.h
 
-gimpmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimp_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimp
 
-gimpmodule_la_LIBADD = \
+gimp_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
@@ -46,13 +45,13 @@ gimpmodule_la_LIBADD = \
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
-_gimpenumsmodule_la_SOURCES = \
+_gimpenums_la_SOURCES = \
 	gimpenumsmodule.c
 
-_gimpenumsmodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+_gimpenums_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex init_gimpenums
 
-_gimpenumsmodule_la_LIBADD = \
+_gimpenums_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
@@ -60,26 +59,26 @@ _gimpenumsmodule_la_LIBADD = \
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
-gimpcolormodule_la_SOURCES = \
+gimpcolor_la_SOURCES = \
 	gimpcolormodule.c	\
 	pygimp-rgb.c		\
 	pygimpcolor.h
 
-gimpcolormodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimpcolor_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimpcolor
 
-gimpcolormodule_la_LIBADD = \
+gimpcolor_la_LIBADD = \
 	$(libgimpcolor)	\
 	$(GLIB_LIBS)	\
 	$(PYLINK_LIBS)
 
-gimpprocbrowsermodule_la_SOURCES = \
+gimpprocbrowser_la_SOURCES = \
 	procbrowser.c
 
-gimpprocbrowsermodule_la_LDFLAGS = -module -avoid-version $(no_undefined) \
+gimpprocbrowser_la_LDFLAGS = -module -avoid-version $(no_undefined) \
 	-export-symbols-regex initgimpprocbrowser
 
-gimpprocbrowsermodule_la_LIBADD = \
+gimpprocbrowser_la_LIBADD = \
 	$(libgimpprocbrowser)	\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
