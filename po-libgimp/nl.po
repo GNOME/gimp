@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-15 11:25+0000\n"
-"PO-Revision-Date: 2005-05-15 18:39+0200\n"
+"POT-Creation-Date: 2005-06-24 19:30+0000\n"
+"PO-Revision-Date: 2005-06-24 22:58+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,9 +196,14 @@ msgstr ""
 "U staat op het punt een kanaal (opgeslagen selectie) op te slaan als %s.\n"
 "Hiermee slaat u niet de zichtbare lagen op."
 
-#: ../libgimp/gimpfontmenu.c:100
+#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
 msgid "Font Selection"
 msgstr "Fontselectie"
+
+# zonder schreef/schreefloos
+#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+msgid "Sans"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
@@ -290,18 +295,15 @@ msgstr "Huidige selectie vervangen"
 msgid "Intersect with the current selection"
 msgstr "Snijden met huidige selectie"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Rood"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Groen"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Blauw"
 
@@ -313,8 +315,7 @@ msgstr "Grijs"
 msgid "Indexed"
 msgstr "Met index"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -614,24 +615,30 @@ msgid "Sets the color profile for the display."
 msgstr "Stelt het kleurprofiel van de display in."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system."
+msgstr "Indien aangezet, zal GIMP trachten het kleurprofiel voor weergave uit het 'windowing'systeem te gebruiken."
+
+#: ../libgimpconfig/gimpcolorconfig.c:47
 msgid "Sets default RGB workspace color profile."
 msgstr "Stelt standaard RGB kleurprofiel in."
 
-#: ../libgimpconfig/gimpcolorconfig.c:46
+#: ../libgimpconfig/gimpcolorconfig.c:49
 msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
 msgstr ""
 "Stelt het CMYK kleurprofiel in dat gebruikt wordt om RGB en CMYK in elkaar "
 "om te zetten."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:51
 msgid "Sets the color profile used when printing."
 msgstr "Stelt het kleurprofiel is dat gebruikt wordt bij afdrukken."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:53
 msgid "Sets how colors are mapped for your display."
 msgstr "Stelt in hoe kleuren worden geprojecteerd op uw monitor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "Sets how colors are converted from workspace to simulation device."
 msgstr ""
 "Stelt in hoe kleuren worden omgezet van werkruimte naar simulatieapparaat."
@@ -660,8 +667,7 @@ msgid "Relative Colorimetric"
 msgstr "Relatief colorimetrisch"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Verzadiging"
 
@@ -782,7 +788,7 @@ msgstr "Module '%s' wordt geladen\n"
 
 #: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
 #: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:482
+#: ../libgimpmodule/gimpmodule.c:470
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Laadfout module '%s': %s"
@@ -828,98 +834,50 @@ msgstr "Kon de map '%s' voor de miniaturen niet aanmaken."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kon geen miniatuur aanmaken voor %s: %s"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:130
+msgid "_Search:"
+msgstr "_Zoeken:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "_Voorgrondkleur"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:122
 msgid "_Background Color"
 msgstr "_Achtergrondkleur"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:126
 msgid "Blac_k"
 msgstr "_Zwart"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Wit"
 
 # 'Schaalt'? 'Schubben'? Weegschalen
 # Misschien gaat het over kleurbereik
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:129
 msgid "Scales"
 msgstr "Schalen"
 
-# Deze letters moeten eigenlijk overeenkomen met de Nederlandse vertaling
-# Hue-kleurtoon
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_K"
-
-# Saturation-verzadiging
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_V"
-
-# Value-waarde
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_W"
-
-# Red-rood
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-# Green-groen
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-# Blue-blauw
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-# Alpha-alfa
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "Kleurtoon"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "Waarde"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr "HTML-_notatie:"
-
 # Huidige kleur
 # (niet huidig kleur)
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:214
 msgid "Current:"
 msgstr "Huidige:"
 
 # Vorige kleur
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:236
 msgid "Old:"
 msgstr "Oude:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:281
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML en CSS"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "HTML _Notation:"
+msgstr "HTML-_notatie:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
@@ -1012,39 +970,39 @@ msgstr "_Opnieuw instellen"
 msgid "Visible"
 msgstr "Zichtbaar"
 
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "_Doorhalen"
 
-#: ../libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
 msgstr "L_etterspatiëring"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
 msgstr "_Regelhoogte"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
 msgstr "_Herschalen"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
 msgid "_Scale"
 msgstr "_Schalen"
 
-#: ../libgimpwidgets/gimpstock.c:273
+#: ../libgimpwidgets/gimpstock.c:276
 msgid "Crop"
 msgstr "Snijden"
 
-#: ../libgimpwidgets/gimpstock.c:290
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Transform"
 msgstr "_Transformeren"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Shear"
 msgstr "_Hellen"
 
@@ -1086,6 +1044,50 @@ msgstr ""
 #: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
+
+# Deze letters moeten eigenlijk overeenkomen met de Nederlandse vertaling
+# Hue-kleurtoon
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "_K"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "Kleurtoon"
+
+# Saturation-verzadiging
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "_V"
+
+# Value-waarde
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "_W"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "Waarde"
+
+# Red-rood
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "_R"
+
+# Green-groen
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "_G"
+
+# Blue-blauw
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "_B"
+
+# Alpha-alfa
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "_A"
 
 # Is 'Protanopia' called the same in Dutch?
 #: ../modules/cdisplay_colorblind.c:67
@@ -1138,13 +1140,19 @@ msgstr "Contrast"
 msgid "Contrast C_ycles:"
 msgstr "Contrast-c_ycles:"
 
-#: ../modules/cdisplay_lcms.c:95
+#: ../modules/cdisplay_lcms.c:99
 msgid "Color management display filter using ICC color profiles"
 msgstr "Kleurbeheer weergavefilter met ICC-kleurpofielen"
 
-#: ../modules/cdisplay_lcms.c:163
+#: ../modules/cdisplay_lcms.c:167
 msgid "Color Management"
 msgstr "Kleurbeheer"
+
+#: ../modules/cdisplay_lcms.c:235
+msgid ""
+"This module takes its configuration from the <i>Color Management</i> section "
+"in the Preferences dialog."
+msgstr "Deze module haalt zijn configuratie uit de sectie <i>Kleurbeheer</i> in het dialoogvenster Voorkeuren."
 
 #: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
