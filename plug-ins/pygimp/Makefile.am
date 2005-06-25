@@ -113,8 +113,8 @@ install-env-file:
 
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
-	echo 'python=$(PYTHON)' > '$(DESTDIR)$(pyinterpfile)'
-	echo '/usr/bin/python=$(PYTHON)' >> '$(DESTDIR)$(pyinterpfile)'
+	echo 'python=$(PYBIN_PATH)' > '$(DESTDIR)$(pyinterpfile)'
+	echo '/usr/bin/python=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
 	echo ':Python:E::py::python:' >> '$(DESTDIR)$(pyinterpfile)'
 
 install-data-local: install-env-file install-interp-file
