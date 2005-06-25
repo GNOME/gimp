@@ -666,7 +666,7 @@ resolve_sh_bang (GimpInterpreterDB  *db,
   while (cp > buffer)
     {
       cp--;
-      if ((*cp == ' ') || (*cp == '\t'))
+      if ((*cp == ' ') || (*cp == '\t') || (*cp == '\r'))
         *cp = '\0';
       else
         break;

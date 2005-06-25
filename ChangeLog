@@ -1,5 +1,10 @@
 2005-06-25  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpinterpreterdb.c: eat CRs too, since they might be
+	there on Win32 systems.
+
+2005-06-25  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: introduce a notion of runtime path to the python
 	interpreter, for the pygimp.interp file.
 
