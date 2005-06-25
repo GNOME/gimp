@@ -4155,7 +4155,7 @@ msgstr "Suivant la forme (excroissances)"
 
 #: app/core/core-enums.c:379
 msgid "Spiral (cw)"
-msgstr "Spirale (sens hotaire)"
+msgstr "Spirale (sens horaire)"
 
 #: app/core/core-enums.c:380
 msgid "Spiral (ccw)"

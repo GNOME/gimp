@@ -1,3 +1,10 @@
+2005-06-25  Karine Delvare  <kdelvare@nerim.net>
+
+	* authors.xml: added Akkana Peck to contributors and updated my
+	last name.
+	
+	* po/fr.po: fixed typo.
+
 2005-06-25  Karine Delvare  <kdelvare@cvs.gimp.org>
 
 	* plug-ins/FractalExplorer/FractalExplorer.c: activate fractal on
