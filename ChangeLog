@@ -1,5 +1,11 @@
 2005-06-25  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: attempt to work around weird escaping behavior
+	in the windows shell when converting backslashes to forward
+	slashes.
+
+2005-06-25  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: convert backslashes to forward slashes for python
 	stuff on Win32.
 
