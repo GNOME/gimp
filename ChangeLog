@@ -1,3 +1,8 @@
+2005-06-25  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/maze/maze_face.c: First step in changing the UI to match
+	the layout suggested in bug #82591.
+
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolordisplayeditor.c: shortened bold labels.
@@ -100,7 +105,7 @@
 2005-06-24  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/text-circle.scm: Incorporated changes
-	made by Daniel P. Stasinski in his text-circle3.scm script. Letters
+	made by Daniel P. Stasinski in his text-circle2.scm script. Letters
 	are now placed properly for both positive and negative fill angles.
 	Last(?) fix for bug #144588.
 
