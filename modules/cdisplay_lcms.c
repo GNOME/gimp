@@ -271,15 +271,17 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gtk_widget_show (image);
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",      _("This filter takes its configuration "
-                                        "from the <i>Color Management</i> "
-                                        "section in the Preferences dialog."),
-                        "use-markup", TRUE,
-                        "wrap",       TRUE,
-                        "justify",    GTK_JUSTIFY_LEFT,
-                        "xalign",     0.0,
-                        "yalign",     0.5,
+                        "label",   _("This filter takes its configuration "
+                                     "from the Color Management section "
+                                     "in the Preferences dialog."),
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.5,
                         NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC
+                             -1);
 
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

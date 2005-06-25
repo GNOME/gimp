@@ -1,5 +1,10 @@
 2005-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c
+	* modules/cdisplay_lcms.c: use italic text for info labels.
+
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolordisplayeditor.c: use a GtkVPaned.
 
 2005-06-25  Sven Neumann  <sven@gimp.org>

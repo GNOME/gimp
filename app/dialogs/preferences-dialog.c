@@ -553,6 +553,9 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                         "xalign",  0.0,
                         "yalign",  0.5,
                         NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
