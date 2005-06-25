@@ -1,3 +1,8 @@
+2005-06-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpimagepropview.c: use bold and right-aligned
+	labels for the label titles.
+
 2005-06-25  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am: added all-local target which rebuilds AUTHORS.

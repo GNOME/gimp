@@ -60,7 +60,10 @@ static void      gimp_image_prop_view_get_property (GObject           *object,
                                                     GValue            *value,
                                                     GParamSpec        *pspec);
 
-static void      gimp_image_prop_view_update       (GimpImagePropView *view);
+static GtkWidget * gimp_image_prop_view_add_label  (GtkTable          *table,
+                                                    gint               row,
+                                                    const gchar       *text);
+static void        gimp_image_prop_view_update     (GimpImagePropView *view);
 
 
 static GtkTableClass *parent_class = NULL;
@@ -163,71 +166,40 @@ gimp_image_prop_view_constructor (GType                  type,
                                   GObjectConstructParam *params)
 {
   GimpImagePropView *view;
+  GtkTable          *table;
   GObject           *object;
-  GtkWidget         *label;
   gint               row = 0;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   view = GIMP_IMAGE_PROP_VIEW (object);
+  table = GTK_TABLE (view);
 
   g_assert (view->image != NULL);
 
-  view->pixel_size_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Pixel dimensions:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->pixel_size_label =
+    gimp_image_prop_view_add_label (table, row++, _("Pixel dimensions:"));
 
-  view->print_size_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Print size:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->print_size_label =
+    gimp_image_prop_view_add_label (table, row++, _("Print size:"));
 
-  view->resolution_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Resolution:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->resolution_label =
+    gimp_image_prop_view_add_label (table, row++, _("Resolution:"));
 
-  view->colorspace_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Color space:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->colorspace_label =
+    gimp_image_prop_view_add_label (table, row++, _("Color space:"));
 
-  view->memsize_label =label =  gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Size in memory:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->memsize_label =
+    gimp_image_prop_view_add_label (table, row++, _("Size in memory:"));
 
-  view->layers_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Number of layers:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->layers_label =
+    gimp_image_prop_view_add_label (table, row++, _("Number of layers:"));
 
-  view->channels_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Number of channels:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->channels_label =
+    gimp_image_prop_view_add_label (table, row++, _("Number of channels:"));
 
-  view->vectors_label = label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gimp_table_attach_aligned (GTK_TABLE (view), 0, row++,
-                             _("Number of paths:"),
-                             0.0, 0.5, label,
-                             1, FALSE);
+  view->vectors_label =
+    gimp_image_prop_view_add_label (table, row++, _("Number of paths:"));
 
   g_signal_connect_object (view->image, "size-changed",
                            G_CALLBACK (gimp_image_prop_view_update),
@@ -266,6 +238,37 @@ gimp_image_prop_view_new (GimpImage *image)
 
 
 /*  private functions  */
+
+static GtkWidget *
+gimp_image_prop_view_add_label (GtkTable    *table,
+                                gint         row,
+                                const gchar *text)
+{
+  GtkWidget *label;
+  GtkWidget *desc;
+
+  desc = g_object_new (GTK_TYPE_LABEL,
+                       "label",  text,
+                       "xalign", 1.0,
+                       "yalign", 0.5,
+                       NULL);
+  gimp_label_set_attributes (GTK_LABEL (desc),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_table_attach (table, desc,
+                    0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (desc);
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "xalign", 0.0,
+                        "yalign", 0.5,
+                        NULL);
+  gtk_table_attach (table, label,
+                    1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  return label;
+}
 
 static void
 gimp_image_prop_view_update (GimpImagePropView *view)
