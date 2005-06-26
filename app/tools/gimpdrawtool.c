@@ -1273,6 +1273,21 @@ gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool,
   g_free (coords);
 }
 
+/**
+ * gimp_draw_tool_draw_boundary:
+ *
+ * @draw_tool: a #GimpDrawTool
+ * @bound_segs: the sorted brush outline
+ * @n_bound_segs: the number of segments in @bound_segs
+ * @offset_x: x offset
+ * @offset_y: y offset
+ * @use_offsets: whether to use offsets
+ *
+ * Draw the boundary of the brush that @draw_tool uses. The boundary
+ * should be sorted with sort_boundary(), and @n_bound_segs should
+ * include the sentinel segments inserted by sort_boundary() that
+ * indicate the end of connected segment sequences (groups) .
+ */
 void
 gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                               const BoundSeg *bound_segs,
@@ -1287,15 +1302,11 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   gint              xmax, ymax;
   gint              x, y;
   gint              i;
-  gint              num_groups;
-  BoundSeg	   *sorted_segs;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (n_bound_segs > 0 || bound_segs == NULL);
 
   shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
-
-  sorted_segs = sort_boundary (bound_segs, n_bound_segs, &num_groups);
 
   gdk_points = g_new0 (GdkPoint, n_bound_segs + 1);
   n_gdk_points = 0;
@@ -1306,12 +1317,12 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   /* The sorted boundary has sentinel segments inserted at the end of
    * each group.
    */
-  for (i = 0; i < n_bound_segs + num_groups; i++)
+  for (i = 0; i < n_bound_segs; i++)
     {
-      if (sorted_segs[i].x1 == -1 &&
-	  sorted_segs[i].y1 == -1 &&
-	  sorted_segs[i].x2 == -1 &&
-	  sorted_segs[i].y2 == -1)
+      if (bound_segs[i].x1 == -1 &&
+	  bound_segs[i].y1 == -1 &&
+	  bound_segs[i].x2 == -1 &&
+	  bound_segs[i].y2 == -1)
 	{
 	  /* Group ends */
 	  gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
@@ -1324,8 +1335,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
       if (n_gdk_points == 0)
 	{
 	  gimp_display_shell_transform_xy (shell,
-					   sorted_segs[i].x1 + offset_x,
-					   sorted_segs[i].y1 + offset_y,
+					   bound_segs[i].x1 + offset_x,
+					   bound_segs[i].y1 + offset_y,
 					   &x, &y,
 					   use_offsets);
 
@@ -1338,8 +1349,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
       g_assert (n_gdk_points < n_bound_segs + 1);
 
       gimp_display_shell_transform_xy (shell,
-                                       sorted_segs[i].x2 + offset_x,
-                                       sorted_segs[i].y2 + offset_y,
+                                       bound_segs[i].x2 + offset_x,
+                                       bound_segs[i].y2 + offset_y,
                                        &x, &y,
                                        use_offsets);
 
@@ -1350,5 +1361,4 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
     }
 
   g_free (gdk_points);
-  g_free (sorted_segs);
 }

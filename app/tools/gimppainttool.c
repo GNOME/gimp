@@ -784,6 +784,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
             {
               TempBuf     *mask = gimp_brush_get_mask (brush_core->main_brush);
               PixelRegion  PR   = { 0, };
+	      BoundSeg    *boundary;
+	      gint	   num_groups;
 
               PR.data      = temp_buf_data (mask);
               PR.x         = 0;
@@ -793,12 +795,16 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               PR.bytes     = mask->bytes;
               PR.rowstride = PR.w * PR.bytes;
 
-              brush_core->brush_bound_segs =
+              boundary =
                 find_mask_boundary (&PR, &brush_core->n_brush_bound_segs,
                                     WithinBounds,
                                     0, 0,
                                     PR.w, PR.h,
                                     0);
+              brush_core->brush_bound_segs =
+		sort_boundary (boundary, brush_core->n_brush_bound_segs, &num_groups);
+	      brush_core->n_brush_bound_segs += num_groups;
+	      g_free (boundary);
 
               brush_core->brush_bound_width  = mask->width;
               brush_core->brush_bound_height = mask->height;

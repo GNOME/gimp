@@ -1,3 +1,14 @@
+2005-06-26  Tor Lillqvist  <tml@novell.com>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_draw): Store the
+	GimpBrushCore::brush_bound_segs as sorted (the result of
+	sort_boundary), as the only place where it is used
+	(gimp_draw_tool_draw_boundary()) would sort it each time it is
+	called anyway.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary):
+	Correspondingly we now don't have to sort the boundary here.
+
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gimprc.pdb: allow to access (read-only) the
