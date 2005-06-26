@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-12 17:39+0200\n"
-"PO-Revision-Date: 2005-06-12 13:06+0200\n"
+"POT-Creation-Date: 2005-06-26 18:51+0200\n"
+"PO-Revision-Date: 2005-06-26 18:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -480,7 +480,7 @@ msgstr "Costante"
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:250
 msgid "None"
 msgstr "Nessuno"
 
@@ -587,6 +587,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/cdisplay_lcms.c:247
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
@@ -595,30 +596,36 @@ msgid "Mode of operation for color management."
 msgstr "Modalità di operazione per gestione colore."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
-msgid "Sets the color profile for the display."
-msgstr "Imposta il profilo colore per il display."
+msgid "The color profile of your (primary) monitor."
+msgstr "Profilo colore per il monitor (principale)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
-msgid "Sets default RGB workspace color profile."
-msgstr "Imposta il profilo di colore predefinito RGB."
-
-#: ../libgimpconfig/gimpcolorconfig.c:46
-msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr "Imposta il profilo di colore CMYK usato per convertire tra RGB e CMYK."
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr "Se abilitato GIMP tenterà di usare il profilo di colore dello schermo dal sistema di finestre. Il profilo del monitor configurato verrà usato solo in caso di fallimento dell'operazione."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "Sets the color profile used when printing."
-msgstr "Imposta il profilo di colore usato per la stampa."
+msgid "The default RGB workspace color profile."
+msgstr "Profilo di colore RGB dello spazio di lavoro predefinito."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Profilo di colore CMYK usato per convertire tra RGB e CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Il profilo di colore usato per la simulazione di una versione stampata (campione)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Imposta come verranno mappati i colori per il display."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
-msgid "Sets how colors are converted from workspace to simulation device."
-msgstr ""
-"Imposta come i colori saranno convertiti dallo spazio di lavoro al "
-"dispositivo di simulazione."
+#: ../libgimpconfig/gimpcolorconfig.c:56
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
+msgstr "Imposta come i colori saranno convertiti dallo spazio di lavoro al dispositivo di simulazione di stampa."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -757,7 +764,7 @@ msgstr "Caricamento modulo: '%s'\n"
 
 #: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
 #: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:482
+#: ../libgimpmodule/gimpmodule.c:470
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulo '%s' errore di caricamento: %s"
@@ -892,7 +899,7 @@ msgstr "Controllo stile"
 msgid "_Preview"
 msgstr "Ante_prima"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1728
+#: ../libgimpwidgets/gimppropwidgets.c:1796
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Questo campo di immissione testo è limitato a %d caratteri."
@@ -1090,13 +1097,35 @@ msgstr "Contrasto"
 msgid "Contrast C_ycles:"
 msgstr "_Ciclo di contrasto:"
 
-#: ../modules/cdisplay_lcms.c:95
+#: ../modules/cdisplay_lcms.c:104
 msgid "Color management display filter using ICC color profiles"
 msgstr "Il filtro di gestione colore del display usa i profili di colore ICC"
 
-#: ../modules/cdisplay_lcms.c:163
+#: ../modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Gestione del colore"
+
+#: ../modules/cdisplay_lcms.c:278
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr "Questo filtro prende la sua configurazione dalla sezione gestione colore nella finestra delle preferenze."
+
+#: ../modules/cdisplay_lcms.c:301
+msgid "Mode of operation:"
+msgstr "Modalità di operazione:"
+
+#: ../modules/cdisplay_lcms.c:311
+msgid "RGB workspace profile:"
+msgstr "Profilo di colore RGB:"
+
+#: ../modules/cdisplay_lcms.c:321
+msgid "Monitor profile:"
+msgstr "Profilo del monitor:"
+
+#: ../modules/cdisplay_lcms.c:331
+msgid "Print simulation profile:"
+msgstr "Profilo di simulazione di stampa:"
 
 #: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"

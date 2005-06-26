@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-12 17:40+0200\n"
+"POT-Creation-Date: 2005-06-26 20:16+0200\n"
 "PO-Revision-Date: 2005-06-12 17:50+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -19,23 +19,15 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "La modalità console Script-Fu permette solo invocazioni interattive"
 
-#: ../plug-ins/script-fu/script-fu-console.c:146
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr "Uscita SIOD"
-
-#: ../plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Comando corrente"
-
-#: ../plug-ins/script-fu/script-fu-console.c:257
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:538
+#: ../plug-ins/script-fu/script-fu-console.c:518
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -161,7 +153,7 @@ msgid "Script-Fu _Console"
 msgstr "_Console Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu"
 
@@ -197,7 +189,7 @@ msgstr "_Motivi"
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:285 ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
 msgstr "_Utilità"
 
@@ -218,42 +210,30 @@ msgid "_Classic.Gimp.Org"
 msgstr "_Classico gimp.org"
 
 #: ../plug-ins/script-fu/script-fu.c:296
-msgid "S_cript-Fu"
-msgstr "S_cript-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr "_Alchimia"
-
-#: ../plug-ins/script-fu/script-fu.c:300
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "A_nimators"
 msgstr "A_nimatori"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Decor"
 msgstr "_Decorazioni"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Render"
 msgstr "_Render"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Selection"
 msgstr "_Selezione"
 
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "S_hadow"
-msgstr "_Ombra"
-
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "Stencil _Ops"
 msgstr "_Opzioni matite"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
@@ -2335,10 +2315,6 @@ msgstr "Opacità maschera"
 msgid "Mask size"
 msgstr "Dimensione maschera"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr "Maschera sf_uocata..."
-
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr "Ampiezza"
@@ -2434,3 +2410,21 @@ msgstr "Opacità illuminazione"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."
+
+#~ msgid "SIOD Output"
+#~ msgstr "Uscita SIOD"
+
+#~ msgid "Current Command"
+#~ msgstr "Comando corrente"
+
+#~ msgid "S_cript-Fu"
+#~ msgstr "S_cript-Fu"
+
+#~ msgid "_Alchemy"
+#~ msgstr "_Alchimia"
+
+#~ msgid "S_hadow"
+#~ msgstr "_Ombra"
+
+#~ msgid "_Unsharp Mask..."
+#~ msgstr "Maschera sf_uocata..."

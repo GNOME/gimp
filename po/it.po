@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-26 16:46+0200\n"
-"PO-Revision-Date: 2005-06-26 16:56+0200\n"
+"PO-Revision-Date: 2005-06-26 22:40+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -9515,7 +9515,7 @@ msgstr "La soglia non agisce su livelli indicizzati."
 
 #: ../app/tools/gimptransformoptions.c:328
 msgid "Transform Direction"
-msgstr "Trasforma direzione"
+msgstr "Direzione di trasformazione"
 
 #: ../app/tools/gimptransformoptions.c:337
 msgid "Interpolation:"
@@ -9528,7 +9528,7 @@ msgstr "Supercampionamento"
 #. the clip resulting image toggle button
 #: ../app/tools/gimptransformoptions.c:352
 msgid "Clip result"
-msgstr "Mantieni il risultato"
+msgstr "Ritaglia il risultato"
 
 #: ../app/tools/gimptransformoptions.c:366
 msgid "Preview:"
@@ -9537,7 +9537,7 @@ msgstr "Anteprima:"
 #. the constraints frame
 #: ../app/tools/gimptransformoptions.c:412
 msgid "Constraints"
-msgstr "Limiti"
+msgstr "Vincoli"
 
 #: ../app/tools/gimptransformoptions.c:424
 #, c-format
