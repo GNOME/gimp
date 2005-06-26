@@ -93,6 +93,10 @@ static cmsHPROFILE  cdisplay_lcms_get_rgb_profile     (CdisplayLcms *lcms);
 static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms *lcms);
 static cmsHPROFILE  cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms);
 
+static void         cdisplay_lcms_attach_labelled (GtkTable    *table,
+                                                   gint         row,
+                                                   const gchar *text,
+                                                   GtkWidget   *widget);
 
 static const GimpModuleInfo cdisplay_lcms_info =
 {
@@ -279,10 +283,10 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
                         "xalign",  0.0,
                         "yalign",  0.5,
                         NULL);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC
-                             -1);
 
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -293,10 +297,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  label = gimp_prop_enum_label_new (config, "mode");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Mode of operation:"),
-                             0.0, 0.5, label, 1, TRUE);
+  cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
+                                 _("Mode of operation:"),
+                                 gimp_prop_enum_label_new (config, "mode"));
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_rgb_profile (lcms);
@@ -304,10 +307,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   if (profile)
     cmsCloseProfile (profile);
 
-  label = gtk_label_new (name);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("RGB workspace profile:"),
-                             0.0, 0.5, label, 1, TRUE);
+  cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
+                                 _("RGB workspace profile:"),
+                                 gtk_label_new (name));
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_display_profile (lcms);
@@ -315,10 +317,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   if (profile)
     cmsCloseProfile (profile);
 
-  label = gtk_label_new (name);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Monitor profile:"),
-                             0.0, 0.5, label, 1, TRUE);
+  cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
+                                 _("Monitor profile:"),
+                                 gtk_label_new (name));
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_printer_profile (lcms);
@@ -326,10 +327,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   if (profile)
     cmsCloseProfile (profile);
 
-  label = gtk_label_new (name);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Print simulation profile:"),
-                             0.0, 0.5, label, 1, TRUE);
+  cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
+                                 _("Print simulation profile:"),
+                                 gtk_label_new (name));
 
   return vbox;
 }
@@ -504,4 +504,35 @@ cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms)
     return cmsOpenProfileFromFile (config->printer_profile, "r");
 
   return NULL;
+}
+
+static void
+cdisplay_lcms_attach_labelled (GtkTable    *table,
+                               gint         row,
+                               const gchar *text,
+                               GtkWidget   *widget)
+{
+  GtkWidget *label;
+  GtkWidget *hbox;
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                       "label",  text,
+                       "xalign", 1.0,
+                       "yalign", 0.5,
+                       NULL);
+
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_table_attach (table, label,
+                    0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach (table, hbox,
+                    1, 2, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (hbox);
+
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 }
