@@ -1,3 +1,8 @@
+2005-06-26  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_lcms.c: added tooltips with more information on
+	the used profiles.
+
 2005-06-26  Tor Lillqvist  <tml@novell.com>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_draw): Store the

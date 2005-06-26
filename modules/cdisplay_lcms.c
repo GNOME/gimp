@@ -96,7 +96,8 @@ static cmsHPROFILE  cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms);
 static void         cdisplay_lcms_attach_labelled (GtkTable    *table,
                                                    gint         row,
                                                    const gchar *text,
-                                                   GtkWidget   *widget);
+                                                   GtkWidget   *widget,
+                                                   const gchar *tooltip);
 
 static const GimpModuleInfo cdisplay_lcms_info =
 {
@@ -233,21 +234,26 @@ cdisplay_lcms_set_property (GObject      *object,
     }
 }
 
-
-static inline const gchar *
-cdisplay_lcms_profile_get_name (cmsHPROFILE  profile)
+static void
+cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
+                                const gchar **name,
+                                const gchar **info)
 {
   if (profile)
     {
-      const gchar *name = cmsTakeProductName (profile);
+      *name = cmsTakeProductName (profile);
+      if (! g_utf8_validate (*name, -1, NULL))
+        *name = _("(invalid UTF-8 string)");
 
-      if (g_utf8_validate (name, -1, NULL))
-        return name;
-      else
-        return _("(invalid UTF-8 string)");
+      *info = cmsTakeProductInfo (profile);
+      if (! g_utf8_validate (*info, -1, NULL))
+        *info = NULL;
     }
-
-  return _("None");
+  else
+    {
+      *name = _("None");
+      *info = NULL;
+    }
 }
 
 static GtkWidget *
@@ -262,6 +268,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   GtkWidget    *table;
   cmsHPROFILE   profile;
   const gchar  *name;
+  const gchar  *info;
   gint          row = 0;
 
   vbox = gtk_vbox_new (FALSE, 12);
@@ -299,37 +306,38 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
 
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Mode of operation:"),
-                                 gimp_prop_enum_label_new (config, "mode"));
+                                 gimp_prop_enum_label_new (config, "mode"),
+                                 NULL);
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_rgb_profile (lcms);
-  name = cdisplay_lcms_profile_get_name (profile);
+  cdisplay_lcms_profile_get_info (profile, &name, &info);
   if (profile)
     cmsCloseProfile (profile);
 
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("RGB workspace profile:"),
-                                 gtk_label_new (name));
+                                 gtk_label_new (name), info);
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_display_profile (lcms);
-  name = cdisplay_lcms_profile_get_name (profile);
+  cdisplay_lcms_profile_get_info (profile, &name, &info);
   if (profile)
     cmsCloseProfile (profile);
 
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Monitor profile:"),
-                                 gtk_label_new (name));
+                                 gtk_label_new (name), info);
 
   /*  FIXME: need to update label with config changes  */
   profile = cdisplay_lcms_get_printer_profile (lcms);
-  name = cdisplay_lcms_profile_get_name (profile);
+  cdisplay_lcms_profile_get_info (profile, &name, &info);
   if (profile)
     cmsCloseProfile (profile);
 
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
                                  _("Print simulation profile:"),
-                                 gtk_label_new (name));
+                                 gtk_label_new (name), info);
 
   return vbox;
 }
@@ -510,27 +518,47 @@ static void
 cdisplay_lcms_attach_labelled (GtkTable    *table,
                                gint         row,
                                const gchar *text,
-                               GtkWidget   *widget)
+                               GtkWidget   *widget,
+                               const gchar *tooltip)
 {
-  GtkWidget *label;
+  GtkWidget *ebox = NULL;
   GtkWidget *hbox;
 
-  label = g_object_new (GTK_TYPE_LABEL,
-                       "label",  text,
-                       "xalign", 1.0,
-                       "yalign", 0.5,
-                       NULL);
+  if (text)
+    {
+      GtkWidget *label;
 
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_table_attach (table, label,
-                    0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
+      label = g_object_new (GTK_TYPE_LABEL,
+                            "label",  text,
+                            "xalign", 1.0,
+                            "yalign", 0.5,
+                            NULL);
+
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                                 -1);
+      gtk_table_attach (table, label, 0, 1, row, row + 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
+
+  if (tooltip)
+    {
+      ebox = gtk_event_box_new ();
+      gtk_table_attach (table, ebox, 1, 2, row, row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+      gimp_help_set_help_data (ebox, tooltip, NULL);
+      gtk_widget_show (ebox);
+    }
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach (table, hbox,
-                    1, 2, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+
+  if (ebox)
+    gtk_container_add (GTK_CONTAINER (ebox), hbox);
+  else
+    gtk_table_attach (table, hbox, 1, 2, row, row + 1,
+                      GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+
   gtk_widget_show (hbox);
 
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
