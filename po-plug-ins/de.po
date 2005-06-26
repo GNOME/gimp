@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-26 16:08+0200\n"
-"PO-Revision-Date: 2005-06-26 16:21+0200\n"
+"PO-Revision-Date: 2005-06-26 21:58+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7910,7 +7910,7 @@ msgstr "X-BitMap-Bild"
 
 #: plug-ins/common/xbm.c:239
 msgid "Created with The GIMP"
-msgstr "Erzeugt mit Gimp"
+msgstr "Erzeugt mit GIMP"
 
 #: plug-ins/common/xbm.c:799
 #, c-format
@@ -9685,7 +9685,7 @@ msgstr ""
 
 #: plug-ins/help/domain.c:177
 msgid "The GIMP help files are not installed."
-msgstr "Die The-Gimp-Hilfedateien sind nicht installiert."
+msgstr "Die GIMP Hilfedateien sind nicht installiert."
 
 #: plug-ins/help/domain.c:179
 msgid "There is a problem with the GIMP help files."

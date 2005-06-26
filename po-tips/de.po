@@ -6,10 +6,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.2.0\n"
+"Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-26 15:59+0200\n"
-"PO-Revision-Date: 2005-06-26 16:10+0200\n"
+"PO-Revision-Date: 2005-06-26 21:57+0200\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Willkommen bei The GIMP, dem GNU Image Manipulation Program.</big>"
+msgstr "<big>Willkommen bei GIMP, dem GNU Image Manipulation Program.</big>"
 
 #: data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -105,31 +105,21 @@ msgstr ""
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
-msgstr ""
-"The GIMP kann die meisten Änderungen an einem Bild rückgängig machen - Sie können also "
-"frei nach Belieben experimentieren."
+msgstr "GIMP kann die meisten Änderungen an einem Bild rückgängig machen - Sie können also frei nach Belieben experimentieren."
 
 #: data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
-msgstr ""
-"The GIMP erlaubt es, Bilder beim Abspeichern automatisch mit gzip oder bzip2 "
-"zu komprimieren (vorausgesetzt diese Programme sind installiert). Hängen Sie "
-"dazu beim Abspeichern die Endung <tt>.gz</tt> beziehungsweise <tt>.bz2</tt> "
-"an den Dateinamen an. Natürlich werden die Bilder beim Laden automatisch "
-"entpackt."
+msgstr "GIMP erlaubt es, Bilder beim Abspeichern automatisch mit gzip oder bzip2 zu komprimieren (vorausgesetzt diese Programme sind installiert). Hängen Sie dazu beim Abspeichern die Endung <tt>.gz</tt> beziehungsweise <tt>.bz2</tt> an den Dateinamen an. Natürlich werden die Bilder beim Laden automatisch entpackt."
 
 #: data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr ""
-"The GIMP benutzt Ebenen um Ihre Bilder zu verwalten. Diese können Sie sich als "
-"ein Stapel von Folien oder Filtern vorstellen. Sieht man durch diese Folien "
-"hindurch, so entsteht das Bild durch Überlagerung ihrer Inhalte."
+msgstr "GIMP benutzt Ebenen um Ihre Bilder zu verwalten. Diese können Sie sich als ein Stapel von Folien oder Filtern vorstellen. Sieht man durch diese Folien hindurch, so entsteht das Bild durch Überlagerung ihrer Inhalte."
 
 #: data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -289,11 +279,7 @@ msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
-msgstr ""
-"In The GIMP können verschiedenste Dinge verschoben und verändert werden. "
-"Wenn Sie z.B. eine Farbe aus dem Werkzeugkasten oder aus der Farbpalette "
-"heraus auf ein Bild ziehen, wird dieses Bild oder die aktuelle Auswahl mit "
-"dieser Farbe ausgefüllt."
+msgstr "In GIMP können verschiedenste Dinge verschoben und verändert werden. Wenn Sie z.B. eine Farbe aus dem Werkzeugkasten oder aus der Farbpalette heraus auf ein Bild ziehen, wird dieses Bild oder die aktuelle Auswahl mit dieser Farbe ausgefüllt."
 
 #: data/tips/gimp-tips.xml.in.h:28
 msgid ""
