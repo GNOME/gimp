@@ -264,6 +264,9 @@ dump_gimprc_manpage (GimpConfig       *rc,
       if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
+      if (prop_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
+        continue;
+
       write (fd, ".TP\n", strlen (".TP\n"));
 
       if (gimp_config_serialize_property (rc, prop_spec, writer))

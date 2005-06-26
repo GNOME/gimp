@@ -1,3 +1,8 @@
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-dump.c (dump_gimprc_manpage): don't dump
+	properties that have the GIMP_CONFIG_PARAM_IGNORE flag set.
+
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: added gimp_get_color_configuration.
