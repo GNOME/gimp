@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--  This simple XSL transformation creates a text version from
-      gimp-tips.xml.in which can then be used to seed
-      http://wiki.gimp.org/gimp/FortuneCookies in the GIMP Wiki.  -->
+<!-- This simple XSL transformation creates a text version from
+     gimp-tips.xml.in which can then be used to seed
+     http://wiki.gimp.org/gimp/FortuneCookies in the GIMP Wiki. -->
 
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <!-- Pass this stylesheet a lang parameter in order to select a language. -->
+  <xsl:param name="lang" />
+
   <xsl:output method="text" />
 
   <xsl:template match="/">
-    <xsl:apply-templates select="//_thetip" />
+    <xsl:apply-templates select="//thetip[lang($lang)]" />
   </xsl:template>
 
-  <xsl:template match="_thetip">
+  <xsl:template match="thetip">
  * <xsl:apply-templates />
   </xsl:template>
 
@@ -23,8 +26,7 @@
     <xsl:text>}}}</xsl:text>
   </xsl:template>
 
-  <!--  this sucks
-	but I don't seem to get xsl:strip-space to work with xsltproc  -->
+  <!-- This sucks, but I don't seem to get xsl:strip-space to work. -->
   <xsl:template match="text()">
     <xsl:call-template name="search-and-replace">
       <xsl:with-param name="input" select="." />

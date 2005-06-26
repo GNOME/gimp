@@ -27,9 +27,9 @@ if HAVE_XMLLINT
 	  ( echo "* gimp-tips.xml INVALID *"; exit 1; )
 endif
 
-fortunes: gimp-tips.xml.in fortunes.xsl
+fortunes: gimp-tips.xml fortunes.xsl
 if HAVE_XSLTPROC
-	$(XSLTPROC) fortunes.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --stringparam lang en fortunes.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "xsltproc is needed to build fortunes"; exit 1;
 endif
