@@ -1354,13 +1354,16 @@ if test "x$enable_python" != xno; then
   dnl not documented so we won't rely on internal implementation
   PYLINK_LIBS=
   if test "x$platform_win32" = "xyes"; then
-    PYTHON=`$echo "$PYTHON" | sed -e 's/\\\\/\\//g'`
+    PYBIN_PATH="$py_exec_prefix\pythonw.exe"
     PYTHON_INCLUDES=`$echo "$PYTHON_INCLUDES" | sed -e 's/\\\\/\\//g'`
     py_exec_prefix=`echo "$py_exec_prefix" | sed -e 's/\\\\/\\//g'`
     pylibversion=`echo $PYTHON_VERSION | sed -e 's/\\.//'`
     PYLINK_LIBS="-L${py_exec_prefix}/libs -lpython${pylibversion}"
+  else
+    PYBIN_PATH="$PYTHON"
   fi
   AC_SUBST(PYLINK_LIBS)
+  AC_SUBST(PYBIN_PATH)
 
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
