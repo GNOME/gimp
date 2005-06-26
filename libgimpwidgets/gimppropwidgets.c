@@ -1144,7 +1144,8 @@ gimp_prop_scale_entry_new (GObject     *config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
-  tooltip = gettext (g_param_spec_get_blurb (param_spec));
+  tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
+                      g_param_spec_get_blurb (param_spec));
 
   if (! restrict_scale)
     {
@@ -1225,7 +1226,8 @@ gimp_prop_opacity_entry_new (GObject     *config,
 
   g_object_get (config, property_name, &value, NULL);
 
-  tooltip = gettext (g_param_spec_get_blurb (param_spec));
+  tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
+                      g_param_spec_get_blurb (param_spec));
 
   value *= 100.0;
   lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
@@ -3511,7 +3513,12 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        gimp_help_set_help_data (widget, gettext (blurb), NULL);
+        {
+          const gchar *domain;
+
+          domain = gimp_type_get_translation_domain (param_spec->owner_type);
+          gimp_help_set_help_data (widget, dgettext (domain, blurb), NULL);
+        }
     }
 }
 

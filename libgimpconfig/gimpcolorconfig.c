@@ -132,6 +132,9 @@ gimp_color_config_get_type (void)
 
       g_type_add_interface_static (config_type,
                                    GIMP_TYPE_CONFIG, &config_iface_info);
+
+      gimp_type_set_translation_domain (config_type,
+                                        GETTEXT_PACKAGE "-libgimp");
     }
 
   return config_type;

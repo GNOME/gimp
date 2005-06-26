@@ -1,5 +1,13 @@
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c: use dgettext() instead of
+	gettext() and try to obtain the translation domain from the type.
+	Fixes i18n of tooltips on property widgets (bug #307756).
+
+	* libgimpconfig/gimpcolorconfig.c: set a translation domain.
+
+2005-06-26  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c: added tooltips with more information on
 	the used profiles.
 
