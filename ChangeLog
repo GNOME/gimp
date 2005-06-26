@@ -1,3 +1,8 @@
+2005-06-26  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimpgimprc.c (gimp_get_color_configuration): cast to
+	GIMP_CONFIG() for gimp_config_deserialize_string().
+
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
 	* data/tips/Makefile.am

@@ -47,7 +47,8 @@ gimp_get_color_configuration (void)
 
   config = g_object_new (GIMP_TYPE_COLOR_CONFIG, NULL);
 
-  if (! gimp_config_deserialize_string (config, text, -1, NULL, &error))
+  if (! gimp_config_deserialize_string (GIMP_CONFIG (config), text, -1, NULL,
+                                        &error))
     {
       g_warning ("failed to deserialize color configuration: %s",
                  error->message);
