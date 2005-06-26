@@ -91,7 +91,6 @@ gint                 sel_x2;
 gint                 sel_y2;
 gint                 preview_width;
 gint                 preview_height;
-GtkWidget           *delete_frame_to_freeze;
 gdouble             *gg;
 gint                 line_no;
 gchar               *filename;
@@ -161,15 +160,18 @@ static void explorer_render_row (const guchar *src_row,
 static void       delete_dialog_callback           (GtkWidget          *widget,
                                                     gboolean            value,
                                                     gpointer            data);
-static gint       delete_fractal_callback          (GtkWidget          *widget,
+static gboolean   delete_fractal_callback          (GtkWidget          *widget,
                                                     gpointer            data);
 static gint       fractalexplorer_list_pos         (fractalexplorerOBJ *feOBJ);
 static gint       fractalexplorer_list_insert      (fractalexplorerOBJ *feOBJ);
 static fractalexplorerOBJ *fractalexplorer_new     (void);
 static void       fill_list_store                  (GtkListStore       *list_store);
-static void       view_activate                    (GtkTreeView        *view,
+static void       activate_fractal                 (fractalexplorerOBJ *sel_obj);
+static void       activate_fractal_callback        (GtkTreeView        *view,
                                                     GtkTreePath        *path,
                                                     GtkTreeViewColumn  *col,
+                                                    gpointer            data);
+static gboolean   apply_fractal_callback           (GtkWidget          *widget,
                                                     gpointer            data);
 
 static void       fractalexplorer_free             (fractalexplorerOBJ *feOBJ);
@@ -707,19 +709,13 @@ delete_dialog_callback (GtkWidget *widget,
       /* Free current obj */
       fractalexplorer_free_everything (sel_obj);
 
-      gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
-
       /* Check whether there are items left */
       if (valid)
         {
           gtk_tree_selection_select_iter (selection, &iter);
 
           gtk_tree_model_get (model, &iter, 1, &current_obj, -1);
-  }
-    }
-  else
-    {
-      gtk_widget_set_sensitive (delete_frame_to_freeze, TRUE);
+        }
     }
 
   delete_dialog = NULL;
@@ -759,7 +755,6 @@ delete_fractal_callback (GtkWidget *widget,
                                               data);
       g_free (str);
 
-      gtk_widget_set_sensitive (GTK_WIDGET (delete_frame_to_freeze), FALSE);
       gtk_widget_show (delete_dialog);
     }
 
@@ -827,10 +822,20 @@ fill_list_store (GtkListStore *list_store)
 }
 
 static void
-view_activate (GtkTreeView       *view,
-               GtkTreePath       *path,
-               GtkTreeViewColumn *col,
-               gpointer           data)
+activate_fractal (fractalexplorerOBJ *sel_obj)
+{
+  current_obj = sel_obj;
+  wvals = current_obj->opts;
+  dialog_change_scale ();
+  set_cmap_preview ();
+  dialog_update_preview ();
+}
+
+static void
+activate_fractal_callback (GtkTreeView       *view,
+                           GtkTreePath       *path,
+                           GtkTreeViewColumn *col,
+                           gpointer           data)
 {
   GtkTreeModel       *model;
   GtkTreeIter         iter;
@@ -841,13 +846,29 @@ view_activate (GtkTreeView       *view,
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
       gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
-      current_obj = sel_obj;
-      wvals = current_obj->opts;
-      dialog_change_scale ();
-      set_cmap_preview ();
-      dialog_update_preview ();
+      activate_fractal (sel_obj);
     }
 
+}
+
+static gboolean
+apply_fractal_callback (GtkWidget *widget,
+                        gpointer   data)
+{
+  GtkWidget          *view = (GtkWidget *) data;
+  GtkTreeSelection   *selection;
+  GtkTreeModel       *model;
+  GtkTreeIter         iter;
+  fractalexplorerOBJ *sel_obj;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
+      activate_fractal (sel_obj);
+    }
+
+  return FALSE;
 }
 
 static void
@@ -978,7 +999,6 @@ GtkWidget *
 add_objects_list (void)
 {
   GtkWidget         *table;
-  GtkWidget         *list_frame;
   GtkWidget         *scrolled_win;
   GtkTreeViewColumn *col;
   GtkCellRenderer   *renderer;
@@ -987,21 +1007,19 @@ add_objects_list (void)
   GtkListStore      *list_store;
   GtkWidget         *button;
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
   gtk_widget_show (table);
 
-  delete_frame_to_freeze = list_frame = gtk_frame_new (NULL);
-  gtk_table_attach (GTK_TABLE (table), list_frame, 0, 2, 0, 1,
-                    GTK_FILL|GTK_EXPAND , GTK_FILL|GTK_EXPAND, 0, 0);
-  gtk_widget_show (list_frame);
-
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (list_frame), scrolled_win);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), scrolled_win, 0, 3, 0, 1,
+                    GTK_FILL|GTK_EXPAND , GTK_FILL|GTK_EXPAND, 0, 0);
   gtk_widget_show (scrolled_win);
 
   view = gtk_tree_view_new ();
@@ -1013,10 +1031,10 @@ add_objects_list (void)
   gtk_tree_view_column_add_attribute (col, renderer, "text", 0);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
   g_signal_connect (view, "row_activated",
-                    G_CALLBACK (view_activate),
+                    G_CALLBACK (activate_fractal_callback),
                     NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), view);
   gtk_widget_show (view);
@@ -1040,8 +1058,20 @@ add_objects_list (void)
                     G_CALLBACK (fractalexplorer_rescan_list),
                     view);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (button,
+                           _("Apply currently selected fractal"), NULL);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (apply_fractal_callback),
+                    view);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
