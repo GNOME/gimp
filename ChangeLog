@@ -3,7 +3,7 @@
 	Merged from HEAD branch:
 
 	* app/config/gimpconfig-dump.c: don't dump properties that have
-	the GIMP_CONFIG_PARAM_IGNORE flag set.
+	the GIMP_PARAM_IGNORE flag set.
 
 2005-06-24  Manish Singh  <yosh@gimp.org>
 

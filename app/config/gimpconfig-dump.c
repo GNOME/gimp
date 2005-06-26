@@ -136,7 +136,7 @@ dump_gimprc_system (GimpConfig       *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (prop_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
+      if (prop_spec->flags & GIMP_PARAM_IGNORE)
         continue;
 
       comment = dump_describe_param (prop_spec);
@@ -268,7 +268,7 @@ dump_gimprc_manpage (GimpConfig       *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      if (prop_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
+      if (prop_spec->flags & GIMP_PARAM_IGNORE)
         continue;
 
       write (fd, ".TP\n", strlen (".TP\n"));
