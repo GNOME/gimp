@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-02 00:16+0200\n"
-"PO-Revision-Date: 2005-05-24 12:40+0200\n"
+"POT-Creation-Date: 2005-06-26 16:41+0200\n"
+"PO-Revision-Date: 2005-06-26 16:51+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: libgimp/gimpbrushmenu.c:140
 msgid "Brush Selection"
@@ -187,9 +187,13 @@ msgstr ""
 "Sie sichern einen Kanal (gesicherte Selektion) als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gesichert."
 
-#: libgimp/gimpfontmenu.c:100
+#: libgimp/gimpfontselectbutton.c:124 libgimp/gimpfontselectbutton.c:169
 msgid "Font Selection"
 msgstr "Schriftenauswahl"
+
+#: libgimp/gimpfontselectbutton.c:137 libgimp/gimpfontselectbutton.c:170
+msgid "Sans"
+msgstr "Sans"
 
 #: libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
@@ -279,15 +283,15 @@ msgstr "Auswahl ersetzen"
 msgid "Intersect with the current selection"
 msgstr "Auswahlschnittmenge bilden"
 
-#: libgimpbase/gimpbaseenums.c:160 libgimpwidgets/gimpwidgetsenums.c:62
+#: libgimpbase/gimpbaseenums.c:160 libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Rot"
 
-#: libgimpbase/gimpbaseenums.c:161 libgimpwidgets/gimpwidgetsenums.c:63
+#: libgimpbase/gimpbaseenums.c:161 libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Grün"
 
-#: libgimpbase/gimpbaseenums.c:162 libgimpwidgets/gimpwidgetsenums.c:64
+#: libgimpbase/gimpbaseenums.c:162 libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Blau"
 
@@ -299,7 +303,7 @@ msgstr "Grau"
 msgid "Indexed"
 msgstr "Indiziert"
 
-#: libgimpbase/gimpbaseenums.c:165 libgimpwidgets/gimpwidgetsenums.c:65
+#: libgimpbase/gimpbaseenums.c:165 libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Deckkraft"
 
@@ -471,7 +475,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: libgimpbase/gimpbaseenums.c:559
+#: libgimpbase/gimpbaseenums.c:559 modules/cdisplay_lcms.c:250
 msgid "None"
 msgstr "Keine"
 
@@ -578,6 +582,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
+#: modules/cdisplay_lcms.c:247
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültiger UTF-8 Text)"
 
@@ -586,32 +591,40 @@ msgid "Mode of operation for color management."
 msgstr "Arbeitsmodus der Farbverwaltung."
 
 #: libgimpconfig/gimpcolorconfig.c:42
-msgid "Sets the color profile for the display."
-msgstr "Legt das Farbprofil für den Bildschirm fest."
+msgid "The color profile of your (primary) monitor."
+msgstr "Das Farbprofil für Ihren (primären) Bildschirm."
 
 #: libgimpconfig/gimpcolorconfig.c:44
-msgid "Sets default RGB workspace color profile."
-msgstr "Legt das Standard-RGB-Farbprofil für den Arbeitsbereich fest."
-
-#: libgimpconfig/gimpcolorconfig.c:46
-msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
-"Legt das CMYK-Farbprofil fest, welches zum Konvertieren zwischen RGB und "
-"CMYK verwendet wird."
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr "Wenn diese Option ausgewählt ist, wird The GIMP versuchen, dass Bildschirmfarbprofil des "
+"Fenstersystems zu verwenden. Das konfigurierte Monitorprofil wird dann nur als Ausweichlösung "
+"verwendet."
 
 #: libgimpconfig/gimpcolorconfig.c:48
-msgid "Sets the color profile used when printing."
-msgstr "Legt das Farbprofil für den Druck fest."
+msgid "The default RGB workspace color profile."
+msgstr "Das Standard-RGB-Farbprofil für den Arbeitsbereich."
 
 #: libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Das CMYK-Farbprofil, welches zum Konvertieren zwischen RGB und "
+"CMYK verwendet wird."
+
+#: libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Das Farbprofil, welche zur Simulation einer Druckversion (Druckprobe) verwendet wird."
+
+#: libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Legt fest, wie Farben auf Ihren Bildschirm abgebildet werden"
 
-#: libgimpconfig/gimpcolorconfig.c:52
-msgid "Sets how colors are converted from workspace to simulation device."
+#: libgimpconfig/gimpcolorconfig.c:56
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
 msgstr ""
-"Legt fest, wie Farben vom Arbeitsbereich zum Simulationsgerät verändert "
-"werden"
+"Legt fest, wie Farben vom Arbeitsbereich zum simulierten Drucker verändert werden."
 
 #: libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -634,7 +647,7 @@ msgid "Relative Colorimetric"
 msgstr "Kolorimetrisch (relativ)"
 
 #: libgimpconfig/gimpcolorconfig-enums.c:58
-#: libgimpwidgets/gimpwidgetsenums.c:60 modules/cdisplay_proof.c:57
+#: libgimpwidgets/gimpwidgetsenums.c:93 modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Sättigung"
 
@@ -688,7 +701,7 @@ msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
 #: libgimpconfig/gimpconfig-path.c:376
 #, c-format
 msgid "Cannot expand ${%s}"
-msgstr "${%s} konnte nicht nicht expandiert werden"
+msgstr "${%s} konnte nicht expandiert werden"
 
 #: libgimpconfig/gimpconfigwriter.c:135
 #, c-format
@@ -749,7 +762,7 @@ msgstr "Lade Modul: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:197 libgimpmodule/gimpmodule.c:216
 #: libgimpmodule/gimpmodule.c:330 libgimpmodule/gimpmodule.c:358
-#: libgimpmodule/gimpmodule.c:482
+#: libgimpmodule/gimpmodule.c:470
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Fehler beim Laden von Modul '%s': %s"
@@ -793,7 +806,7 @@ msgstr "Fehler beim Anlegen des Verzeichnis für Vorschaubilder '%s'."
 #: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Das Vorschaubild für %s köonnte nicht erstellt werden: %s"
+msgstr "Das Vorschaubild für %s konnte nicht erstellt werden: %s"
 
 #: libgimpwidgets/gimpbrowser.c:130
 msgid "_Search:"
@@ -813,7 +826,7 @@ msgstr "_Schwarz"
 
 #: libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
-msgstr "_Weiss"
+msgstr "_Weiß"
 
 #: libgimpwidgets/gimpcolorscales.c:129
 msgid "Scales"
@@ -884,7 +897,7 @@ msgstr "Schachbrett Muster"
 msgid "_Preview"
 msgstr "_Vorschau"
 
-#: libgimpwidgets/gimppropwidgets.c:1728
+#: libgimpwidgets/gimppropwidgets.c:1796
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
@@ -925,39 +938,39 @@ msgstr "_Rücksetzen"
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:157 libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "_Nachziehen"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
 msgstr "L_aufweite"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
 msgstr "Z_eilenabstand"
 
-#: libgimpwidgets/gimpstock.c:187
+#: libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:294
+#: libgimpwidgets/gimpstock.c:191 libgimpwidgets/gimpstock.c:297
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:273
+#: libgimpwidgets/gimpstock.c:276
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:293
+#: libgimpwidgets/gimpstock.c:296
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:295
+#: libgimpwidgets/gimpstock.c:298
 msgid "_Shear"
 msgstr "_Scheren"
 
@@ -982,7 +995,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
+"Benutze diesen Wert für den Zufallsgenerator - dies ermöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
 #: libgimpwidgets/gimpwidgets.c:1007
@@ -997,39 +1010,39 @@ msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 msgid "_Randomize"
 msgstr "_Zufällig"
 
-#: libgimpwidgets/gimpwidgetsenums.c:59
+#: libgimpwidgets/gimpwidgetsenums.c:92
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpwidgetsenums.c:59
+#: libgimpwidgets/gimpwidgetsenums.c:92
 msgid "Hue"
 msgstr "Farbton"
 
-#: libgimpwidgets/gimpwidgetsenums.c:60
+#: libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpwidgetsenums.c:61
+#: libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpwidgetsenums.c:61
+#: libgimpwidgets/gimpwidgetsenums.c:94
 msgid "Value"
 msgstr "Wert"
 
-#: libgimpwidgets/gimpwidgetsenums.c:62
+#: libgimpwidgets/gimpwidgetsenums.c:95
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpwidgetsenums.c:63
+#: libgimpwidgets/gimpwidgetsenums.c:96
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpwidgetsenums.c:64
+#: libgimpwidgets/gimpwidgetsenums.c:97
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpwidgetsenums.c:65
+#: libgimpwidgets/gimpwidgetsenums.c:98
 msgid "_A"
 msgstr "_A"
 
@@ -1082,13 +1095,35 @@ msgstr "Kontrast"
 msgid "Contrast C_ycles:"
 msgstr "Kontrast_verstärkung:"
 
-#: modules/cdisplay_lcms.c:95
+#: modules/cdisplay_lcms.c:104
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC-Farbprofilfilter für farbverwaltete Bildschirme"
 
-#: modules/cdisplay_lcms.c:163
+#: modules/cdisplay_lcms.c:172
 msgid "Color Management"
 msgstr "Farbverwaltung"
+
+#: modules/cdisplay_lcms.c:278
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr "Dieser Filter entnimmt seine Konfiguration aus dem Abschnitt Farbverwaltung im Einstellungsdialog."
+
+#: modules/cdisplay_lcms.c:301
+msgid "Mode of operation:"
+msgstr "Arbeitsmodus:"
+
+#: modules/cdisplay_lcms.c:311
+msgid "RGB workspace profile:"
+msgstr "RGB-Farbprofil für den Arbeitsbereich:"
+
+#: modules/cdisplay_lcms.c:321
+msgid "Monitor profile:"
+msgstr "Monitor-Profil:"
+
+#: modules/cdisplay_lcms.c:331
+msgid "Print simulation profile:"
+msgstr "Drucksimulationsprofil:"
 
 #: modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
@@ -1182,3 +1217,4 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druck"
+

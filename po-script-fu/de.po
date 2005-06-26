@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-01 23:55+0200\n"
-"PO-Revision-Date: 2005-06-01 23:57+0200\n"
+"POT-Creation-Date: 2005-06-26 16:10+0200\n"
+"PO-Revision-Date: 2005-06-26 16:11+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,23 +24,15 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Der Skript-Fu Konsolenmodus kann nur interaktiv gestartet werden"
 
-#: plug-ins/script-fu/script-fu-console.c:146
+#: plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
-#: plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr "SIOD Ausgabe"
-
-#: plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Aktueller Befehl"
-
-#: plug-ins/script-fu/script-fu-console.c:257
+#: plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:538
+#: plug-ins/script-fu/script-fu-console.c:518
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu-Auswertemodus ermöglicht nur nicht-interaktive Aufrufe"
 
@@ -92,47 +84,47 @@ msgstr "Skript-Fu-Verzeichnisauswahl"
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu-Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:461
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu-Palettenauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:469
+#: plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu-Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:476
+#: plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu-Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:484
+#: plug-ins/script-fu/script-fu-interface.c:485
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu-Pinselauswahl"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:551
+#: plug-ins/script-fu/script-fu-interface.c:552
 msgid "Script Progress"
 msgstr "Skriptfortschritt"
 
-#: plug-ins/script-fu/script-fu-interface.c:559
+#: plug-ins/script-fu/script-fu-interface.c:560
 msgid "(none)"
 msgstr "(kein)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1085
+#: plug-ins/script-fu/script-fu-interface.c:1088
 #: plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1092
+#: plug-ins/script-fu/script-fu-interface.c:1095
 #: plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1099
+#: plug-ins/script-fu/script-fu-interface.c:1102
 #: plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1108
+#: plug-ins/script-fu/script-fu-interface.c:1111
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
@@ -164,7 +156,7 @@ msgid "Script-Fu _Console"
 msgstr "Skript-Fu-_Konsole"
 
 #: plug-ins/script-fu/script-fu.c:123 plug-ins/script-fu/script-fu.c:152
-#: plug-ins/script-fu/script-fu.c:330
+#: plug-ins/script-fu/script-fu.c:322
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Skript-Fu"
 
@@ -200,7 +192,7 @@ msgstr "_Muster"
 msgid "_Test"
 msgstr "_Test"
 
-#: plug-ins/script-fu/script-fu.c:285 plug-ins/script-fu/script-fu.c:314
+#: plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
 msgstr "_Hilfsmittel"
 
@@ -221,42 +213,30 @@ msgid "_Classic.Gimp.Org"
 msgstr "_classic.gimp.org"
 
 #: plug-ins/script-fu/script-fu.c:296
-msgid "S_cript-Fu"
-msgstr "_Skript-Fu"
-
-#: plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr "_Alchemie"
-
-#: plug-ins/script-fu/script-fu.c:300
 msgid "Alpha to _Logo"
 msgstr "Alpha als _Logo"
 
-#: plug-ins/script-fu/script-fu.c:302
+#: plug-ins/script-fu/script-fu.c:298
 msgid "A_nimators"
 msgstr "A_nimationen"
 
-#: plug-ins/script-fu/script-fu.c:304
+#: plug-ins/script-fu/script-fu.c:300
 msgid "_Decor"
 msgstr "_Dekoration"
 
-#: plug-ins/script-fu/script-fu.c:306
+#: plug-ins/script-fu/script-fu.c:302
 msgid "_Render"
 msgstr "_Rendern"
 
-#: plug-ins/script-fu/script-fu.c:308
+#: plug-ins/script-fu/script-fu.c:304
 msgid "_Selection"
 msgstr "Aus_wahl"
 
-#: plug-ins/script-fu/script-fu.c:310
-msgid "S_hadow"
-msgstr "_Schatten"
-
-#: plug-ins/script-fu/script-fu.c:312
+#: plug-ins/script-fu/script-fu.c:306
 msgid "Stencil _Ops"
 msgstr "Sch_ablone"
 
-#: plug-ins/script-fu/script-fu.c:322
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_Refresh Scripts"
 msgstr "Skripte _auffrischen"
 
@@ -1849,7 +1829,7 @@ msgstr "_Perspektivisch..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Edge amount"
-msgstr "Einfluß der Kanten"
+msgstr "Einfluss der Kanten"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 msgid "Pixel amount"
@@ -2337,10 +2317,6 @@ msgstr "Masken Deckkraft"
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
 msgstr "Masken Größe"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr "_Unscharf maskieren..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
