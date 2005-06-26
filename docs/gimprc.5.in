@@ -54,13 +54,6 @@ created on a directory that is mounted over NFS.  For these reasons, it may be
 desirable to put your swap file in "/tmp".  This is a single folder.
 
 .TP
-(stingy-memory-use no)
-
-There is always a tradeoff between memory usage and speed.  In most cases, the
-GIMP opts for speed over memory.  However, if memory is a big issue, try to
-enable this setting.  Possible values are yes and no.
-
-.TP
 (num-processors 1)
 
 On multiprocessor machines, if GIMP has been compiled with --enable-mp this

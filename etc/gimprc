@@ -29,12 +29,6 @@
 # 
 # (swap-path "${gimp_dir}")
 
-# There is always a tradeoff between memory usage and speed.  In most cases,
-# the GIMP opts for speed over memory.  However, if memory is a big issue,
-# try to enable this setting.  Possible values are yes and no.
-# 
-# (stingy-memory-use no)
-
 # On multiprocessor machines, if GIMP has been compiled with --enable-mp this
 # sets how many processors GIMP should use simultaneously.  This is an
 # integer value.
