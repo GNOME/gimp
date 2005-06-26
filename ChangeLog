@@ -1,3 +1,11 @@
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
+	* menus/Makefile.am
+	* menus/menus.xsl
+	* menus/toolbox-menu.xml.in: readded the Debug menu but changed
+	the XSLT and the build rules so that it is only included in the
+	development versions.
+
 2005-06-26  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpenvirontable.c: feed environment values through
@@ -13,7 +21,7 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c (dump_gimprc_manpage): don't dump
-	properties that have the GIMP_CONFIG_PARAM_IGNORE flag set.
+	properties that have the GIMP_PARAM_IGNORE flag set.
 
 2005-06-26  Sven Neumann  <sven@gimp.org>
 

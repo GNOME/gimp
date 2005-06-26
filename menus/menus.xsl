@@ -8,6 +8,8 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:param name="debug-menu" />
+
   <xsl:output method="xml"
               version="1.0"
               encoding="utf-8"
@@ -35,6 +37,12 @@
 
   <xsl:template match="menuitems">
     <xsl:apply-templates />
+  </xsl:template>
+
+  <xsl:template match="menu[@action='debug-menu']">
+    <xsl:if test="$debug-menu='yes'">
+      <xsl:call-template name="identity" />
+    </xsl:if>
   </xsl:template>
 
   <!-- need to strip the XInclude namespace declaration from the ui element -->

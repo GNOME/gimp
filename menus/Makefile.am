@@ -44,9 +44,13 @@ EXTRA_DIST = \
 MAINTAINERCLEAN_FILES = $(menudata_built_files)
 
 
+if GIMP_UNSTABLE
+XSLTPARAMS = --stringparam debug-menu yes
+endif
+
 %.xml: %.xml.in menus.xsl dialogs-menuitems.xml
 if HAVE_XSLTPROC
-	$(XSLTPROC) --xinclude menus.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --xinclude $(XSLTPARAMS) menus.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "xsltproc is needed to build the menus XML files"; exit 1;
 endif
