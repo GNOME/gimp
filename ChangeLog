@@ -1,3 +1,15 @@
+2005-06-26  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpenvirontable.c: feed environment values through
+	gimp_config_path_expand, so ${gimp..} variables can be used.
+
+	* plug-ins/pygimp/Makefile.am: define PYTHONPATH in terms of
+	${gimp_plug_in_dir}. Use ; as a path separator on windows.
+
+	With this final changes, pygimp should work out of the box on
+	Win32 now. Thanks to Michael Schumacher and lode leroy for
+	figuring out the high level details and testing.
+
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c (dump_gimprc_manpage): don't dump

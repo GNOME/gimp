@@ -28,6 +28,7 @@
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -248,7 +249,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
   FILE             *env;
   gchar             buffer[4096];
   gsize             len;
-  gchar            *name, *value, *separator, *p, *q;
+  gchar            *name, *value, *separator, *expanded, *p, *q;
   GimpEnvironValue *val;
 
   environ_table = GIMP_ENVIRON_TABLE (user_data);
@@ -308,7 +309,14 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
       if (! g_hash_table_lookup (environ_table->vars, name))
         {
           val = g_new (GimpEnvironValue, 1);
-          val->value = g_strdup (value);
+
+	  expanded = gimp_config_path_expand (value, FALSE, NULL);
+
+	  if (expanded)
+	    val->value = expanded;
+	  else
+	    val->value = g_strdup (value);
+
           val->separator = g_strdup (separator);
 
           g_hash_table_insert (environ_table->vars, g_strdup (name), val);

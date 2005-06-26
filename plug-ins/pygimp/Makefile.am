@@ -13,11 +13,16 @@ SUBDIRS = plug-ins
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
+path_separator = ;
+else
+path_separator = :
 endif
 
 AM_CFLAGS = $(PYGIMP_EXTRA_CFLAGS)
 
 INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
+
+pygimpbase = python
 
 pygimpdir = $(gimpplugindir)/python
 
@@ -109,7 +114,7 @@ pyinterpfile = $(pyinterpdir)/pygimp.interp
 
 install-env-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyenvdir)'
-	echo ": PYTHONPATH=$(pygimpdir)" > '$(DESTDIR)$(pyenvfile)'
+	echo '$(path_separator) PYTHONPATH=$${gimp_plug_in_dir}/$(pygimpbase)' > '$(DESTDIR)$(pyenvfile)'
 
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
