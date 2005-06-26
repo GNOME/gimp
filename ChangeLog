@@ -1,5 +1,29 @@
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/gimprc.pdb: allow to access (read-only) the
+	current color management configuration through the PDB.
+
+	* libgimp/gimpgimprc_pdb.[ch]
+	* app/pdb/gimprc_cmds.c
+	* app/pdb/internal_procs.c: regenerated.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpgimprc.[ch]: wrap the new PDB function to make it
+	easier to use from plug-ins. This change adds a dependency on
+	libgimpconfig to libgimp.
+
+	* gimp.pc.in: changed accordingly.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gflare/gflare.c: no need to include gimpconfig.h
+	explicitely any longer.
+
+	* libgimp/gimpfontselectbutton.c: fixed gtk-doc comments.
+
+2005-06-26  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c: also use bold, right-aligned labels here.
 
 2005-06-25  Manish Singh  <yosh@gimp.org>

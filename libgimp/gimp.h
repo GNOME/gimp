@@ -24,9 +24,10 @@
 
 #include <glib-object.h>
 
-#include <libgimpcolor/gimpcolor.h>
-#include <libgimpmath/gimpmath.h>
 #include <libgimpbase/gimpbase.h>
+#include <libgimpcolor/gimpcolor.h>
+#include <libgimpconfig/gimpconfig.h>
+#include <libgimpmath/gimpmath.h>
 
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
@@ -36,6 +37,7 @@
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
 #include <libgimp/gimpfontselect.h>
+#include <libgimp/gimpgimprc.h>
 #include <libgimp/gimpgradients.h>
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
@@ -324,7 +326,6 @@ const gchar * gimp_display_name        (void) G_GNUC_CONST;
 gint          gimp_monitor_number      (void) G_GNUC_CONST;
 
 const gchar * gimp_get_progname        (void) G_GNUC_CONST;
-
 
 gboolean      gimp_attach_new_parasite (const gchar    *name,
                                         gint            flags,

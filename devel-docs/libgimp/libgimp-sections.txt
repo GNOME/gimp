@@ -374,6 +374,7 @@ gimp_fonts_set_popup
 <FILE>gimpgimprc</FILE>
 gimp_gimprc_query
 gimp_gimprc_set
+gimp_get_color_configuration
 gimp_get_default_comment
 gimp_get_module_load_inhibit
 gimp_get_monitor_resolution
@@ -916,6 +917,26 @@ gimp_progress_bar_get_type
 GIMP_PROGRESS_BAR_CLASS
 GIMP_IS_PROGRESS_BAR_CLASS
 GIMP_PROGRESS_BAR_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpfontselectbutton</FILE>
+<TITLE>GimpFontSelectButton</TITLE>
+GimpFontSelectButton
+gimp_font_select_button_new
+gimp_font_select_button_get_font_name
+gimp_font_select_button_set_font_name
+gimp_font_select_button_close_popup
+<SUBSECTION Standard>
+GimpFontSelectButtonPrivate
+GimpFontSelectButtonClass
+GIMP_FONT_SELECT_BUTTON
+GIMP_IS_FONT_SELECT_BUTTON
+GIMP_TYPE_FONT_SELECT_BUTTON
+gimp_font_select_button_get_type
+GIMP_FONT_SELECT_BUTTON_CLASS
+GIMP_IS_FONT_SELECT_BUTTON_CLASS
+GIMP_FONT_SELECT_BUTTON_GET_CLASS
 </SECTION>
 
 <SECTION>

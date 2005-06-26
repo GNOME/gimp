@@ -2,6 +2,7 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimp = ./libgimp-$(GIMP_API_VERSION).la
@@ -178,6 +179,8 @@ libgimp_2_0_la_sources = \
 	gimpdrawable.h		\
 	gimpfontselect.c	\
 	gimpfontselect.h	\
+	gimpgimprc.c		\
+	gimpgimprc.h		\
 	gimpgradients.c		\
 	gimpgradients.h		\
 	gimpgradientselect.c	\
@@ -280,6 +283,7 @@ gimpinclude_HEADERS = \
 	gimpchannel.h		\
 	gimpdrawable.h		\
 	gimpfontselect.h	\
+	gimpgimprc.h		\
 	gimpgradients.h		\
 	gimpgradientselect.h	\
 	gimpimage.h		\
@@ -320,9 +324,9 @@ libgimp_2_0_la_LDFLAGS = \
 	$(no_undefined)				\
 	$(libgimp_export_symbols)
 
-libgimp_2_0_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
+libgimp_2_0_la_LIBADD = $(libgimpconfig) $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
 
-libgimp_2_0_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
+libgimp_2_0_la_DEPENDENCIES = $(gimp_def) $(libgimpconfig) $(libgimpcolor) $(libgimpbase)
 
 libgimpui_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

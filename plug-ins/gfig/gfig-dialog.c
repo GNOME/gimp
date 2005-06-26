@@ -41,8 +41,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <libgimpconfig/gimpconfig.h>
-
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"

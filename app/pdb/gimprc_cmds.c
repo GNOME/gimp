@@ -24,6 +24,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 
 #include "pdb-types.h"
@@ -40,6 +41,7 @@ static ProcRecord gimprc_set_proc;
 static ProcRecord get_default_comment_proc;
 static ProcRecord get_monitor_resolution_proc;
 static ProcRecord get_theme_dir_proc;
+static ProcRecord get_color_configuration_proc;
 static ProcRecord get_module_load_inhibit_proc;
 
 void
@@ -50,6 +52,7 @@ register_gimprc_procs (Gimp *gimp)
   procedural_db_register (gimp, &get_default_comment_proc);
   procedural_db_register (gimp, &get_monitor_resolution_proc);
   procedural_db_register (gimp, &get_theme_dir_proc);
+  procedural_db_register (gimp, &get_color_configuration_proc);
   procedural_db_register (gimp, &get_module_load_inhibit_proc);
 }
 
@@ -321,6 +324,49 @@ static ProcRecord get_theme_dir_proc =
   1,
   get_theme_dir_outargs,
   { { get_theme_dir_invoker } }
+};
+
+static Argument *
+get_color_configuration_invoker (Gimp         *gimp,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 Argument     *args)
+{
+  Argument *return_args;
+  gchar *config;
+
+  config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
+
+  return_args = procedural_db_return_args (&get_color_configuration_proc, TRUE);
+  return_args[1].value.pdb_pointer = config;
+
+  return return_args;
+}
+
+static ProcArg get_color_configuration_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "config",
+    "Serialized color management configuration"
+  }
+};
+
+static ProcRecord get_color_configuration_proc =
+{
+  "gimp_get_color_configuration",
+  "Get a serialized version of the color management configuration.",
+  "Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.",
+  "Sven Neumann",
+  "Sven Neumann",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  0,
+  NULL,
+  1,
+  get_color_configuration_outargs,
+  { { get_color_configuration_invoker } }
 };
 
 static Argument *

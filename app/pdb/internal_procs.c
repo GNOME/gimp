@@ -75,7 +75,7 @@ void register_undo_procs               (Gimp *gimp);
 void register_unit_procs               (Gimp *gimp);
 void register_vectors_procs            (Gimp *gimp);
 
-/* 462 procedures registered total */
+/* 463 procedures registered total */
 
 void
 internal_procs_init (Gimp               *gimp,
@@ -111,13 +111,13 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Drawable procedures"), 0.186);
   register_drawable_procs (gimp);
 
-  (* status_callback) (NULL, _("Transformation procedures"), 0.26);
+  (* status_callback) (NULL, _("Transformation procedures"), 0.259);
   register_drawable_transform_procs (gimp);
 
   (* status_callback) (NULL, _("Edit procedures"), 0.294);
   register_edit_procs (gimp);
 
-  (* status_callback) (NULL, _("File Operations"), 0.314);
+  (* status_callback) (NULL, _("File Operations"), 0.313);
   register_fileops_procs (gimp);
 
   (* status_callback) (NULL, _("Floating selections"), 0.335);
@@ -126,70 +126,70 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Font UI"), 0.348);
   register_font_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Fonts"), 0.355);
+  (* status_callback) (NULL, _("Fonts"), 0.354);
   register_fonts_procs (gimp);
 
   (* status_callback) (NULL, _("Gimprc procedures"), 0.359);
   register_gimprc_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient"), 0.372);
+  (* status_callback) (NULL, _("Gradient"), 0.374);
   register_gradient_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradient UI"), 0.437);
+  (* status_callback) (NULL, _("Gradient UI"), 0.438);
   register_gradient_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Gradients"), 0.444);
+  (* status_callback) (NULL, _("Gradients"), 0.445);
   register_gradients_procs (gimp);
 
-  (* status_callback) (NULL, _("Guide procedures"), 0.455);
+  (* status_callback) (NULL, _("Guide procedures"), 0.456);
   register_guides_procs (gimp);
 
-  (* status_callback) (NULL, _("Help procedures"), 0.468);
+  (* status_callback) (NULL, _("Help procedures"), 0.469);
   register_help_procs (gimp);
 
-  (* status_callback) (NULL, _("Image"), 0.47);
+  (* status_callback) (NULL, _("Image"), 0.471);
   register_image_procs (gimp);
 
-  (* status_callback) (NULL, _("Layer"), 0.606);
+  (* status_callback) (NULL, _("Layer"), 0.607);
   register_layer_procs (gimp);
 
   (* status_callback) (NULL, _("Message procedures"), 0.665);
   register_message_procs (gimp);
 
-  (* status_callback) (NULL, _("Miscellaneous"), 0.671);
+  (* status_callback) (NULL, _("Miscellaneous"), 0.672);
   register_misc_procs (gimp);
 
-  (* status_callback) (NULL, _("Paint Tool procedures"), 0.675);
+  (* status_callback) (NULL, _("Paint Tool procedures"), 0.676);
   register_paint_tools_procs (gimp);
 
   (* status_callback) (NULL, _("Palette"), 0.708);
   register_palette_procs (gimp);
 
-  (* status_callback) (NULL, _("Palette UI"), 0.738);
+  (* status_callback) (NULL, _("Palette UI"), 0.739);
   register_palette_select_procs (gimp);
 
   (* status_callback) (NULL, _("Palettes"), 0.745);
   register_palettes_procs (gimp);
 
-  (* status_callback) (NULL, _("Parasite procedures"), 0.753);
+  (* status_callback) (NULL, _("Parasite procedures"), 0.754);
   register_parasite_procs (gimp);
 
-  (* status_callback) (NULL, _("Paths"), 0.779);
+  (* status_callback) (NULL, _("Paths"), 0.78);
   register_paths_procs (gimp);
 
   (* status_callback) (NULL, _("Pattern"), 0.814);
   register_pattern_procs (gimp);
 
-  (* status_callback) (NULL, _("Pattern UI"), 0.818);
+  (* status_callback) (NULL, _("Pattern UI"), 0.819);
   register_pattern_select_procs (gimp);
 
   (* status_callback) (NULL, _("Patterns"), 0.825);
   register_patterns_procs (gimp);
 
-  (* status_callback) (NULL, _("Plug-in"), 0.833);
+  (* status_callback) (NULL, _("Plug-in"), 0.834);
   register_plug_in_procs (gimp);
 
-  (* status_callback) (NULL, _("Procedural database"), 0.846);
+  (* status_callback) (NULL, _("Procedural database"), 0.847);
   register_procedural_db_procs (gimp);
 
   (* status_callback) (NULL, _("Progress"), 0.866);

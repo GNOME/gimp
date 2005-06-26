@@ -198,6 +198,37 @@ gimp_get_theme_dir (void)
 }
 
 /**
+ * _gimp_get_color_configuration:
+ *
+ * Get a serialized version of the color management configuration.
+ *
+ * Returns a string that can be deserialized into a GimpColorConfig
+ * object representing the current color management configuration.
+ *
+ * Returns: Serialized color management configuration.
+ *
+ * Since: GIMP 2.4
+ */
+gchar *
+_gimp_get_color_configuration (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *config = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_get_color_configuration",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    config = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return config;
+}
+
+/**
  * gimp_get_module_load_inhibit:
  *
  * Get the list of modules which should not be loaded.

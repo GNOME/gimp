@@ -81,6 +81,7 @@
     <chapter id="libgimp-selectors">
       <title>Controlling the Core's Selection Dialogs</title>
       <xi:include href="xml/gimpbrushselect.xml" />
+      <xi:include href="xml/gimpfontselectbutton.xml" />
       <xi:include href="xml/gimpfontselect.xml" />
       <xi:include href="xml/gimpgradientselect.xml" />
       <xi:include href="xml/gimppaletteselect.xml" />

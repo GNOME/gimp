@@ -182,6 +182,32 @@ CODE
     );
 }
 
+sub get_color_configuration {
+    $blurb = 'Get a serialized version of the color management configuration.';
+    $help = 'Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.';
+
+    $author = $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+
+    @inargs = ( );
+
+    @outargs = (
+	{  name => 'config', type => 'string',
+	   desc => 'Serialized color management configuration',
+	   wrap => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpconfig/gimpconfig.h" "config/gimpcoreconfig.h") ],
+	code => <<'CODE'
+{
+  config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
+}
+CODE
+    );
+}
+
 sub get_module_load_inhibit {
     $blurb = 'Get the list of modules which should not be loaded.';
 
@@ -210,7 +236,7 @@ CODE
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution get_theme_dir
-            get_module_load_inhibit);
+            get_color_configuration get_module_load_inhibit);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';

@@ -28,8 +28,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <libgimpconfig/gimpconfig.h>
-
 #include "FractalExplorer.h"
 #include "Dialogs.h"
 

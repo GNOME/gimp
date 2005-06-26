@@ -45,9 +45,6 @@
 
 #include <glib-object.h>
 
-#include <libgimpcolor/gimpcolor.h>
-#include <libgimpconfig/gimpconfig.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
