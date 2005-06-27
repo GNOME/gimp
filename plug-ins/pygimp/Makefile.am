@@ -24,7 +24,7 @@ INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
 
 pygimpbase = python
 
-pygimpdir = $(gimpplugindir)/python
+pygimpdir = $(gimpplugindir)/$(pygimpbase)
 
 pygimp_LTLIBRARIES = gimp.la _gimpenums.la gimpcolor.la gimpprocbrowser.la
 
