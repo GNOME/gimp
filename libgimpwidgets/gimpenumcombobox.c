@@ -32,6 +32,25 @@
 #include "libgimp/libgimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_MODEL
+};
+
+
+static void  gimp_enum_combo_box_class_init   (GimpEnumComboBoxClass *klass);
+
+static void  gimp_enum_combo_box_set_property (GObject      *object,
+                                               guint         prop_id,
+                                               const GValue *value,
+                                               GParamSpec   *pspec);
+static void  gimp_enum_combo_box_get_property (GObject      *object,
+                                               guint         prop_id,
+                                               GValue       *value,
+                                               GParamSpec   *pspec);
+
+
 GType
 gimp_enum_combo_box_get_type (void)
 {
@@ -44,7 +63,7 @@ gimp_enum_combo_box_get_type (void)
         sizeof (GimpEnumComboBoxClass),
         NULL,           /* base_init      */
         NULL,           /* base_finalize  */
-        NULL,           /* class_init     */
+        (GClassInitFunc) gimp_enum_combo_box_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data     */
         sizeof (GimpEnumComboBox),
@@ -59,6 +78,63 @@ gimp_enum_combo_box_get_type (void)
 
   return enum_combo_box_type;
 }
+
+static void
+gimp_enum_combo_box_class_init (GimpEnumComboBoxClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_enum_combo_box_set_property;
+  object_class->get_property = gimp_enum_combo_box_get_property;
+
+  /*  override the "model" property of GtkComboBox  */
+  g_object_class_install_property (object_class,
+                                   PROP_MODEL,
+                                   g_param_spec_object ("model", NULL, NULL,
+                                                        GIMP_TYPE_ENUM_STORE,
+                                                        G_PARAM_READWRITE));
+}
+
+static void
+gimp_enum_combo_box_set_property (GObject      *object,
+                                  guint         prop_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GtkComboBox *combo_box = GTK_COMBO_BOX (object);
+
+  switch (prop_id)
+    {
+    case PROP_MODEL:
+      gtk_combo_box_set_model (combo_box, g_value_get_object (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_enum_combo_box_get_property (GObject    *object,
+                                  guint       prop_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  GtkComboBox *combo_box = GTK_COMBO_BOX (object);
+
+  switch (prop_id)
+    {
+    case PROP_MODEL:
+      g_value_set_object (value, gtk_combo_box_get_model (combo_box));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
 
 /**
  * gimp_enum_combo_box_new:
@@ -98,13 +174,32 @@ gimp_enum_combo_box_new (GType enum_type)
 }
 
 /**
+ * gimp_enum_combo_box_new_with_model
+ * @enum_store: a #GimpEnumStore to use as the model
+ *
+ * Creates a #GtkComboBox for the given @enum_store.
+ *
+ * Return value: a new #GimpEnumComboBox.
+ *
+ * Since: GIMP 2.4
+ **/
+GtkWidget *
+gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
+{
+  g_return_val_if_fail (GIMP_IS_ENUM_STORE (enum_store), NULL);
+
+  return g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                       "model", enum_store,
+                       NULL);
+}
+
+/**
  * gimp_enum_combo_box_set_stock_prefix:
  * @combo_box:    a #GimpEnumComboBox
  * @stock_prefix: a prefix to create icon stock ID from enum values
  *
  * Attempts to create stock icons for all items in the @combo_box. See
- * gimp_enum_store_set_icons() to find out what to use for
- * @stock_prefix.
+ * gimp_enum_store_set_icons() to find out what to use as @stock_prefix.
  *
  * Since: GIMP 2.4
  **/

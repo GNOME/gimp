@@ -51,7 +51,7 @@ struct _GimpIntComboBox
 
 struct _GimpIntComboBoxClass
 {
-  GtkComboBoxClass  parent_instance;
+  GtkComboBoxClass  parent_class;
 };
 
 

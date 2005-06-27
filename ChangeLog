@@ -1,5 +1,24 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpenumcombobox.[ch]: added new constructor
+	gimp_enum_combo_box_new_with_model(). Also override the "model"
+	property to make it clear that GimpEnumComboBox expects to be
+	used with GimpEnumStore.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpwidgets-constructors.c: use the new constructor.
+
+	* libgimpwidgets/gimpenumlabel.h
+	* libgimpwidgets/gimpenumstore.h
+	* libgimpwidgets/gimpintcombobox.h
+	* libgimpwidgets/gimpintstore.h: use "parent_class", not
+	"parent_instance" when including the parent struct.
+
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/debug-commands.c: fixed memory profile debug action.
 
 2005-06-27  Sven Neumann  <sven@gimp.org>

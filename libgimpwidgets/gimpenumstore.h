@@ -45,7 +45,7 @@ struct _GimpEnumStore
 
 struct _GimpEnumStoreClass
 {
-  GimpIntStoreClass  parent_instance;
+  GimpIntStoreClass  parent_class;
 
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);

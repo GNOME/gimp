@@ -58,7 +58,7 @@ struct _GimpIntStore
 
 struct _GimpIntStoreClass
 {
-  GtkListStoreClass  parent_instance;
+  GtkListStoreClass  parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);

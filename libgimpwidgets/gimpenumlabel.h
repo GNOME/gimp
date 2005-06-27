@@ -46,7 +46,7 @@ struct _GimpEnumLabel
 
 struct _GimpEnumLabelClass
 {
-  GtkLabelClass  parent_instance;
+  GtkLabelClass  parent_class;
 };
 
 

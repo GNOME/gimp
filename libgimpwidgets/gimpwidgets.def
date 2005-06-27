@@ -103,6 +103,7 @@ EXPORTS
 	gimp_double_adjustment_update
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
+	gimp_enum_combo_box_new_with_model
 	gimp_enum_combo_box_set_stock_prefix
 	gimp_enum_label_get_type
 	gimp_enum_label_new

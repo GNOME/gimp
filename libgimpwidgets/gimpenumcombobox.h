@@ -43,7 +43,7 @@ struct _GimpEnumComboBox
 
 struct _GimpEnumComboBoxClass
 {
-  GimpIntComboBoxClass  parent_instance;
+  GimpIntComboBoxClass  parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
@@ -56,6 +56,7 @@ struct _GimpEnumComboBoxClass
 GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
+GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
 
 void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                                   const gchar      *stock_prefix);
