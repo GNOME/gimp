@@ -96,6 +96,11 @@ gboolean    gimp_page_selector_page_is_selected   (GimpPageSelector *selector,
 gint      * gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
                                                    gint             *n_selected_pages);
 
+void        gimp_page_selector_select_range       (GimpPageSelector *selector,
+                                                   const gchar      *range);
+gchar     * gimp_page_selector_get_selected_range (GimpPageSelector *selector);
+
+
 G_END_DECLS
 
 #endif /* __GIMP_PAGE_SELECTOR_H__ */

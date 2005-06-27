@@ -75,6 +75,9 @@ static gboolean gimp_page_selector_range_focus_out (GtkEntry         *entry,
                                                     GimpPageSelector *selector);
 static void   gimp_page_selector_range_activate    (GtkEntry         *entry,
                                                     GimpPageSelector *selector);
+static void   gimp_page_selector_print_range       (GString          *string,
+                                                    gint              start,
+                                                    gint              end);
 
 
 static guint         selector_signals[LAST_SIGNAL] = { 0 };
@@ -551,88 +554,16 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
   return array;
 }
 
-
-/*  private functions  */
-
-static void
-gimp_page_selector_print_range (GString *string,
-                                gint     start,
-                                gint     end)
+void
+gimp_page_selector_select_range (GimpPageSelector *selector,
+                                 const gchar      *range_string)
 {
-  if (string->len != 0)
-    g_string_append_c (string, ',');
+  gchar **ranges;
 
-  if (start == end)
-    g_string_append_printf (string, "%d", start + 1);
-  else
-    g_string_append_printf (string, "%d-%d", start + 1, end + 1);
-}
+  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-static void
-gimp_page_selector_selection_changed (GtkIconView      *icon_view,
-                                      GimpPageSelector *selector)
-{
-  gint    *pages;
-  gint     n_pages;
-  GString *string;
-
-  string = g_string_new ("");
-
-  pages = gimp_page_selector_get_selected_pages (selector, &n_pages);
-
-  if (pages)
-    {
-      gint range_start, range_end;
-      gint last_printed;
-      gint i;
-
-      range_start  = pages[0];
-      range_end    = pages[0];
-      last_printed = -1;
-
-      for (i = 1; i < n_pages; i++)
-        {
-          if (pages[i] > range_end + 1)
-            {
-              gimp_page_selector_print_range (string,
-                                              range_start, range_end);
-
-              last_printed = range_end;
-              range_start = pages[i];
-            }
-
-          range_end = pages[i];
-        }
-
-      if (range_end != last_printed)
-        gimp_page_selector_print_range (string, range_start, range_end);
-
-      g_free (pages);
-    }
-
-  gtk_entry_set_text (GTK_ENTRY (selector->range_entry),
-                      g_string_free (string, FALSE));
-  gtk_editable_set_position (GTK_EDITABLE (selector->range_entry), -1);
-
-  g_signal_emit (selector, selector_signals[SELECTION_CHANGED], 0);
-}
-
-static gboolean
-gimp_page_selector_range_focus_out (GtkEntry         *entry,
-                                    GdkEventFocus    *fevent,
-                                    GimpPageSelector *selector)
-{
-  gimp_page_selector_range_activate (entry, selector);
-
-  return FALSE;
-}
-
-static void
-gimp_page_selector_range_activate (GtkEntry         *entry,
-                                   GimpPageSelector *selector)
-{
-  const gchar  *text;
-  gchar       **ranges;
+  if (! range_string)
+    range_string = "";
 
   g_signal_handlers_block_by_func (selector->view,
                                    gimp_page_selector_selection_changed,
@@ -640,9 +571,7 @@ gimp_page_selector_range_activate (GtkEntry         *entry,
 
   gimp_page_selector_unselect_all (selector);
 
-  text = gtk_entry_get_text (entry);
-
-  ranges = g_strsplit (text, ",", -1);
+  ranges = g_strsplit (range_string, ",", -1);
 
   if (ranges)
     {
@@ -696,4 +625,98 @@ gimp_page_selector_range_activate (GtkEntry         *entry,
 
   gimp_page_selector_selection_changed (GTK_ICON_VIEW (selector->view),
                                         selector);
+}
+
+gchar *
+gimp_page_selector_get_selected_range (GimpPageSelector *selector)
+{
+  gint    *pages;
+  gint     n_pages;
+  GString *string;
+
+  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+
+  string = g_string_new ("");
+
+  pages = gimp_page_selector_get_selected_pages (selector, &n_pages);
+
+  if (pages)
+    {
+      gint range_start, range_end;
+      gint last_printed;
+      gint i;
+
+      range_start  = pages[0];
+      range_end    = pages[0];
+      last_printed = -1;
+
+      for (i = 1; i < n_pages; i++)
+        {
+          if (pages[i] > range_end + 1)
+            {
+              gimp_page_selector_print_range (string,
+                                              range_start, range_end);
+
+              last_printed = range_end;
+              range_start = pages[i];
+            }
+
+          range_end = pages[i];
+        }
+
+      if (range_end != last_printed)
+        gimp_page_selector_print_range (string, range_start, range_end);
+
+      g_free (pages);
+    }
+
+  return g_string_free (string, FALSE);
+}
+
+/*  private functions  */
+
+static void
+gimp_page_selector_selection_changed (GtkIconView      *icon_view,
+                                      GimpPageSelector *selector)
+{
+  gchar *range;
+
+  range = gimp_page_selector_get_selected_range (selector);
+  gtk_entry_set_text (GTK_ENTRY (selector->range_entry), range);
+  g_free (range);
+
+  gtk_editable_set_position (GTK_EDITABLE (selector->range_entry), -1);
+
+  g_signal_emit (selector, selector_signals[SELECTION_CHANGED], 0);
+}
+
+static gboolean
+gimp_page_selector_range_focus_out (GtkEntry         *entry,
+                                    GdkEventFocus    *fevent,
+                                    GimpPageSelector *selector)
+{
+  gimp_page_selector_range_activate (entry, selector);
+
+  return FALSE;
+}
+
+static void
+gimp_page_selector_range_activate (GtkEntry         *entry,
+                                   GimpPageSelector *selector)
+{
+  gimp_page_selector_select_range (selector, gtk_entry_get_text (entry));
+}
+
+static void
+gimp_page_selector_print_range (GString *string,
+                                gint     start,
+                                gint     end)
+{
+  if (string->len != 0)
+    g_string_append_c (string, ',');
+
+  if (start == end)
+    g_string_append_printf (string, "%d", start + 1);
+  else
+    g_string_append_printf (string, "%d-%d", start + 1, end + 1);
 }

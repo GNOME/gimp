@@ -1,5 +1,10 @@
 2005-06-27  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimppageselector.[ch]: made range API public.
+
+2005-06-27  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppageselector.[ch]: added "Select All/None"
 	buttons and a "Select Range" entry which allows entering of page
 	ranges manually (e.g. "1,6,8,10-16").

@@ -170,11 +170,13 @@ EXPORTS
 	gimp_page_selector_get_n_pages
 	gimp_page_selector_get_page_thumbnail
 	gimp_page_selector_get_selected_pages
+	gimp_page_selector_get_selected_range
 	gimp_page_selector_get_type
 	gimp_page_selector_new
 	gimp_page_selector_page_is_selected
 	gimp_page_selector_select_all
 	gimp_page_selector_select_page
+	gimp_page_selector_select_range
 	gimp_page_selector_set_n_pages
 	gimp_page_selector_set_page_thumbnail
 	gimp_page_selector_unselect_all
