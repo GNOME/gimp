@@ -413,8 +413,8 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
  * Returns: The page's thumbnail, or %NULL if none is set.
  **/
 GdkPixbuf *
-gimp_page_selector_get_page_thmbnail (GimpPageSelector   *selector,
-                                      gint                page_no)
+gimp_page_selector_get_page_thumbnail (GimpPageSelector   *selector,
+                                       gint                page_no)
 {
   GdkPixbuf   *thumbnail;
   GtkTreeIter  iter;
