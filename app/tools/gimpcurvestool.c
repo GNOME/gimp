@@ -475,7 +475,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
                                           GIMP_HISTOGRAM_ALPHA);
-  menu = gimp_enum_combo_box_new_with_model (store);
+  menu = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
   g_signal_connect (menu, "changed",

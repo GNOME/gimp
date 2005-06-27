@@ -141,7 +141,7 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode)
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
                                          GIMP_LIGHTEN_ONLY_MODE, -1);
 
-  combo = gimp_enum_combo_box_new_with_model (store);
+  combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),

@@ -1,3 +1,9 @@
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpwidgets-constructors.c: added missing casts.
+
 2005-06-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/Makefile.am
