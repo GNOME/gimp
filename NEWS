@@ -15,7 +15,21 @@ Changes in CVS (not released yet)
 - some minor UI changes for HIG compliance
 - redid the framework that deals with installing desktop files
 - started to reorganize menus, mainly plug-ins and scripts
+- renamed "Scatter RGB" and "Scatter HSV" to "RGB Noise" and "HSV Noise"
+- allow to clear the document history
+- don't normalize the result in the Laplace plug-in (bug #306874)
+- ported FractalExplorer GUI to GtkTreeView, getting rid of the last
+  XPM icons that were being used
+- added an option to Motion Blur to blur outwards
+- added support for the proposed ICC Profiles In X Specification
+- added new widget GimpEnumLabel
+- let the lcms display filter module show information about the used
+  color profiles
+- improved drawing of the brush outline
+- fixed build of Python language binding on Win32
+- allow plug-ins to access the user's color management configuration
 - bug fixes and code cleanup
+
 
 
 Changes in GIMP 2.3.1
