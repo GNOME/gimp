@@ -1,5 +1,12 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
+	* tools/Makefile.am: always build the doc-shooter; keeps it from
+	bit-rotting.
+
+	* tools/widgets.c: added GimpEnumLabel. 
+
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimpenumcombobox.sgml: updated.
 

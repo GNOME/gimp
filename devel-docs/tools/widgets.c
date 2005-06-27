@@ -375,6 +375,24 @@ create_enum_combo_box (void)
 }
 
 static WidgetInfo *
+create_enum_label (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  label = gimp_enum_label_new (GIMP_TYPE_IMAGE_BASE_TYPE, GIMP_RGB);
+  gtk_container_add (GTK_CONTAINER (align), label);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Enum Label"), FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-enum-label", vbox, SMALL);
+}
+
+static WidgetInfo *
 create_file_entry (void)
 {
   GtkWidget *vbox;
@@ -597,6 +615,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_color_selection ());
   retval = g_list_append (retval, create_dialog ());
   retval = g_list_append (retval, create_enum_combo_box ());
+  retval = g_list_append (retval, create_enum_label ());
   retval = g_list_append (retval, create_file_entry ());
   retval = g_list_append (retval, create_frame ());
   retval = g_list_append (retval, create_int_combo_box ());
