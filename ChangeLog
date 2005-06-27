@@ -1,5 +1,9 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/debug-commands.c: fixed memory profile debug action.
+
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): gracefully
 	handle a NULL config until we have fixed creation of color display
 	modules so that they always have a reference to GimpColorConfig.

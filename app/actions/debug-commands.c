@@ -33,6 +33,7 @@
 
 #include "menus/menus.h"
 
+#include "actions.h"
 #include "debug-commands.h"
 
 
@@ -51,11 +52,13 @@ void
 debug_mem_profile_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  extern gboolean gimp_debug_memsize;
+  extern gboolean  gimp_debug_memsize;
+  Gimp            *gimp;
+  return_if_no_gimp (gimp, data);
 
   gimp_debug_memsize = TRUE;
 
-  gimp_object_get_memsize (GIMP_OBJECT (data), NULL);
+  gimp_object_get_memsize (GIMP_OBJECT (gimp), NULL);
 
   gimp_debug_memsize = FALSE;
 }
