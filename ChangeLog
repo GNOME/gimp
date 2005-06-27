@@ -1,3 +1,13 @@
+2005-06-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimppageselector.[ch]: new widget, GimpPageSelector
+	which will be used to select which pages to open from multi-page
+	documents (e.g. PS, PDF, TIFF). Work in progress!
+
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpenumcombobox.[ch]: added new constructor

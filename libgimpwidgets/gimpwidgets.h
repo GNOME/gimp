@@ -54,6 +54,7 @@
 #include <libgimpwidgets/gimpintstore.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>
 #include <libgimpwidgets/gimpoffsetarea.h>
+#include <libgimpwidgets/gimppageselector.h>
 #include <libgimpwidgets/gimppatheditor.h>
 #include <libgimpwidgets/gimppickbutton.h>
 #include <libgimpwidgets/gimppixmap.h>
