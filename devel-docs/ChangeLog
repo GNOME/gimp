@@ -1,3 +1,8 @@
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpenumcombobox.sgml: updated.
+
 2005-06-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-docs.sgml

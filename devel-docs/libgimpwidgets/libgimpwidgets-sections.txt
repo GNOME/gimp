@@ -220,6 +220,7 @@ GIMP_ENUM_STORE_GET_CLASS
 <TITLE>GimpEnumComboBox</TITLE>
 GimpEnumComboBox
 gimp_enum_combo_box_new
+gimp_enum_combo_box_new_with_model
 gimp_enum_combo_box_set_stock_prefix
 <SUBSECTION Standard>
 GimpEnumComboBoxClass
