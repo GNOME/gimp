@@ -22,10 +22,14 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpframe.h"
 #include "gimppageselector.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -51,18 +55,26 @@ enum
 };
 
 
-static void     gimp_page_selector_class_init   (GimpPageSelectorClass *klass);
-static void     gimp_page_selector_init         (GimpPageSelector      *selector);
+static void   gimp_page_selector_class_init   (GimpPageSelectorClass *klass);
+static void   gimp_page_selector_init         (GimpPageSelector      *selector);
 
-static void     gimp_page_selector_finalize       (GObject         *object);
-static void     gimp_page_selector_get_property   (GObject         *object,
-                                                   guint            property_id,
-                                                   GValue          *value,
-                                                   GParamSpec      *pspec);
-static void     gimp_page_selector_set_property   (GObject         *object,
-                                                   guint            property_id,
-                                                   const GValue    *value,
-                                                   GParamSpec      *pspec);
+static void   gimp_page_selector_finalize          (GObject          *object);
+static void   gimp_page_selector_get_property      (GObject          *object,
+                                                    guint             property_id,
+                                                    GValue           *value,
+                                                    GParamSpec       *pspec);
+static void   gimp_page_selector_set_property      (GObject          *object,
+                                                    guint             property_id,
+                                                    const GValue     *value,
+                                                    GParamSpec       *pspec);
+
+static void   gimp_page_selector_selection_changed (GtkIconView      *icon_view,
+                                                    GimpPageSelector *selector);
+static gboolean gimp_page_selector_range_focus_out (GtkEntry         *entry,
+                                                    GdkEventFocus    *fevent,
+                                                    GimpPageSelector *selector);
+static void   gimp_page_selector_range_activate    (GtkEntry         *entry,
+                                                    GimpPageSelector *selector);
 
 
 static guint         selector_signals[LAST_SIGNAL] = { 0 };
@@ -136,11 +148,27 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
 static void
 gimp_page_selector_init (GimpPageSelector *selector)
 {
+  GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *sw;
+  GtkWidget *hbox;
+  GtkWidget *hbbox;
+  GtkWidget *button;
+  GtkWidget *label;
+
+  /* Pages */
+
+  frame = gimp_frame_new (_("Select Pages"));
+  gtk_box_pack_start (GTK_BOX (selector), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (selector), sw, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
   selector->store = gtk_list_store_new (3,
@@ -148,22 +176,6 @@ gimp_page_selector_init (GimpPageSelector *selector)
                                         GDK_TYPE_PIXBUF,
                                         G_TYPE_STRING);
 
-#if 0
-  selector->view =
-    gtk_tree_view_new_with_model (GTK_TREE_MODEL (selector->store));
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (selector->view), FALSE);
-
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (selector->view),
-                                               -1, NULL,
-                                               gtk_cell_renderer_pixbuf_new (),
-                                               "pixbuf", COLUMN_THUMBNAIL,
-                                               NULL);
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (selector->view),
-                                               -1, NULL,
-                                               gtk_cell_renderer_text_new (),
-                                               "text", COLUMN_TEXT,
-                                               NULL);
-#else
   selector->view =
     gtk_icon_view_new_with_model (GTK_TREE_MODEL (selector->store));
   gtk_icon_view_set_text_column (GTK_ICON_VIEW (selector->view),
@@ -172,10 +184,54 @@ gimp_page_selector_init (GimpPageSelector *selector)
                                    COLUMN_THUMBNAIL);
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (selector->view),
                                     GTK_SELECTION_MULTIPLE);
-#endif
-
   gtk_container_add (GTK_CONTAINER (sw), selector->view);
   gtk_widget_show (selector->view);
+
+  g_signal_connect (selector->view, "selection-changed",
+                    G_CALLBACK (gimp_page_selector_selection_changed),
+                    selector);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  hbbox = gtk_hbutton_box_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
+  button = gtk_button_new_with_mnemonic (_("Select _All"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_page_selector_select_all),
+                            selector);
+
+  button = gtk_button_new_with_mnemonic (_("Select _None"));
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_page_selector_unselect_all),
+                            selector);
+
+  selector->range_entry = gtk_entry_new ();
+  gtk_widget_set_size_request (selector->range_entry, 80, -1);
+  gtk_box_pack_end (GTK_BOX (hbox), selector->range_entry, TRUE, TRUE, 0);
+  gtk_widget_show (selector->range_entry);
+
+  g_signal_connect (selector->range_entry, "focus-out-event",
+                    G_CALLBACK (gimp_page_selector_range_focus_out),
+                    selector);
+  g_signal_connect (selector->range_entry, "activate",
+                    G_CALLBACK (gimp_page_selector_range_activate),
+                    selector);
+
+  label = gtk_label_new_with_mnemonic (_("Select _Range:"));
+  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), selector->range_entry);
 
   selector->thumbnail = gtk_widget_render_icon (GTK_WIDGET (selector),
                                                 GTK_STOCK_FILE,
@@ -231,6 +287,9 @@ gimp_page_selector_set_property (GObject      *object,
       break;
     }
 }
+
+
+/*  public functions  */
 
 /**
  * gimp_page_selector_new:
@@ -452,6 +511,13 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
   return selected;
 }
 
+gint
+gimp_page_selector_int_compare (gconstpointer a,
+                                gconstpointer b)
+{
+  return *(gint*)a - *(gint*)b;
+}
+
 gint *
 gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
                                        gint             *n_selected_pages)
@@ -476,8 +542,158 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
       array[i] = indices[0];
     }
 
+  qsort (array, *n_selected_pages, sizeof (gint),
+         gimp_page_selector_int_compare);
+
   g_list_foreach (selected, (GFunc) gtk_tree_path_free, NULL);
   g_list_free (selected);
 
   return array;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_page_selector_print_range (GString *string,
+                                gint     start,
+                                gint     end)
+{
+  if (string->len != 0)
+    g_string_append_c (string, ',');
+
+  if (start == end)
+    g_string_append_printf (string, "%d", start + 1);
+  else
+    g_string_append_printf (string, "%d-%d", start + 1, end + 1);
+}
+
+static void
+gimp_page_selector_selection_changed (GtkIconView      *icon_view,
+                                      GimpPageSelector *selector)
+{
+  gint    *pages;
+  gint     n_pages;
+  GString *string;
+
+  string = g_string_new ("");
+
+  pages = gimp_page_selector_get_selected_pages (selector, &n_pages);
+
+  if (pages)
+    {
+      gint range_start, range_end;
+      gint last_printed;
+      gint i;
+
+      range_start  = pages[0];
+      range_end    = pages[0];
+      last_printed = -1;
+
+      for (i = 1; i < n_pages; i++)
+        {
+          if (pages[i] > range_end + 1)
+            {
+              gimp_page_selector_print_range (string,
+                                              range_start, range_end);
+
+              last_printed = range_end;
+              range_start = pages[i];
+            }
+
+          range_end = pages[i];
+        }
+
+      if (range_end != last_printed)
+        gimp_page_selector_print_range (string, range_start, range_end);
+
+      g_free (pages);
+    }
+
+  gtk_entry_set_text (GTK_ENTRY (selector->range_entry),
+                      g_string_free (string, FALSE));
+  gtk_editable_set_position (GTK_EDITABLE (selector->range_entry), -1);
+
+  g_signal_emit (selector, selector_signals[SELECTION_CHANGED], 0);
+}
+
+static gboolean
+gimp_page_selector_range_focus_out (GtkEntry         *entry,
+                                    GdkEventFocus    *fevent,
+                                    GimpPageSelector *selector)
+{
+  gimp_page_selector_range_activate (entry, selector);
+
+  return FALSE;
+}
+
+static void
+gimp_page_selector_range_activate (GtkEntry         *entry,
+                                   GimpPageSelector *selector)
+{
+  const gchar  *text;
+  gchar       **ranges;
+
+  g_signal_handlers_block_by_func (selector->view,
+                                   gimp_page_selector_selection_changed,
+                                   selector);
+
+  gimp_page_selector_unselect_all (selector);
+
+  text = gtk_entry_get_text (entry);
+
+  ranges = g_strsplit (text, ",", -1);
+
+  if (ranges)
+    {
+      gint i;
+
+      for (i = 0; ranges[i] != NULL; i++)
+        {
+          gchar *range = g_strstrip (ranges[i]);
+          gchar *dash;
+
+          dash = strchr (range, '-');
+
+          if (dash)
+            {
+              gint page_from;
+              gint page_to;
+
+              if (sscanf (range,    "%i", &page_from) == 1 &&
+                  sscanf (dash + 1, "%i", &page_to)   == 1 &&
+                  page_from <= page_to                     &&
+                  page_from <= selector->n_pages)
+                {
+                  gint page_no;
+
+                  page_from = MAX (page_from, 1) - 1;
+                  page_to   = MIN (page_to, selector->n_pages) - 1;
+
+                  for (page_no = page_from; page_no <= page_to; page_no++)
+                    gimp_page_selector_select_page (selector, page_no);
+                }
+            }
+          else
+            {
+              gint page_no;
+
+              if (sscanf (range, "%i", &page_no) == 1 &&
+                  page_no >= 1                        &&
+                  page_no <= selector->n_pages)
+                {
+                  gimp_page_selector_select_page (selector, page_no - 1);
+                }
+            }
+        }
+
+      g_strfreev (ranges);
+    }
+
+  g_signal_handlers_unblock_by_func (selector->view,
+                                     gimp_page_selector_selection_changed,
+                                     selector);
+
+  gimp_page_selector_selection_changed (GTK_ICON_VIEW (selector->view),
+                                        selector);
 }

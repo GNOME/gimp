@@ -52,6 +52,8 @@ struct _GimpPageSelector
   GtkListStore *store;
   GtkWidget    *view;
 
+  GtkWidget    *range_entry;
+
   GdkPixbuf    *thumbnail;
 };
 

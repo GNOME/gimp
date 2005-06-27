@@ -1,3 +1,9 @@
+2005-06-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppageselector.[ch]: added "Select All/None"
+	buttons and a "Select Range" entry which allows entering of page
+	ranges manually (e.g. "1,6,8,10-16").
+
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.c
