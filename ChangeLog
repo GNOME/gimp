@@ -1,5 +1,11 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c (cdisplay_lcms_configure): gracefully
+	handle a NULL config until we have fixed creation of color display
+	modules so that they always have a reference to GimpColorConfig.
+
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolordisplayeditor.c: dialog layout tweaks.
 
 2005-06-26  Manish Singh  <yosh@gimp.org>

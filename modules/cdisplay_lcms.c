@@ -271,6 +271,9 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   const gchar  *info;
   gint          row = 0;
 
+  if (! config)
+    return NULL;
+
   vbox = gtk_vbox_new (FALSE, 12);
 
   hbox = gtk_hbox_new (FALSE, 12);
