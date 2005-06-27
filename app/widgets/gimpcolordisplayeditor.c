@@ -305,8 +305,16 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   /*  the config frame  */
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_paned_pack2 (GTK_PANED (paned), vbox, TRUE, FALSE);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   editor->config_frame = gimp_frame_new (NULL);
-  gtk_paned_pack2 (GTK_PANED (paned), editor->config_frame, TRUE, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->config_frame, TRUE, TRUE, 0);
   gtk_widget_show (editor->config_frame);
 
   editor->config_box = gtk_vbox_new (FALSE, 6);
