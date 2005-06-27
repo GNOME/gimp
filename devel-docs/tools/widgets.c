@@ -142,8 +142,10 @@ create_browser (void)
   GtkWidget *browser;
 
   vbox = gtk_vbox_new (FALSE, 6);
-  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  align = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   browser = gimp_browser_new ();
+  gtk_box_pack_start (GTK_BOX (GIMP_BROWSER (browser)->left_vbox),
+                      gtk_label_new ("TreeView goes here"), TRUE, TRUE, 0);
   gtk_container_add (GTK_CONTAINER (align), browser);
   gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
   gtk_box_pack_start (GTK_BOX (vbox),

@@ -1,5 +1,11 @@
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
+	* tools/widgets.c: added an explanatory label to GimpBrowser.
+
+	* libgimpwidgets/images: updated screenshots.
+
+2005-06-27  Sven Neumann  <sven@gimp.org>
+
 	* tools/Makefile.am: always build the doc-shooter; keeps it from
 	bit-rotting.
 
