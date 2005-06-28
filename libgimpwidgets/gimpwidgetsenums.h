@@ -67,6 +67,17 @@ typedef enum
 } GimpColorSelectorChannel;
 
 
+#define GIMP_TYPE_PAGE_SELECTOR_TARGET (gimp_page_selector_target_get_type ())
+
+GType gimp_page_selector_target_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PAGE_SELECTOR_TARGET_LAYERS, /*< desc="Layers" >*/
+  GIMP_PAGE_SELECTOR_TARGET_IMAGES  /*< desc="Images" >*/
+} GimpPageSelectorTarget;
+
+
 #define GIMP_TYPE_SIZE_ENTRY_UPDATE_POLICY (gimp_size_entry_update_policy_get_type ())
 
 GType gimp_size_entry_update_policy_get_type (void) G_GNUC_CONST;

@@ -1,3 +1,14 @@
+2005-06-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgetsenums.[ch]: added enum
+	GimpPageSelectorTarget which can be one of { LAYERS, IMAGES }
+	(suggestions for a better name welcome).
+
+	* libgimpwidgets/gimppageselector.[ch]: added "target" property
+	and a combo box to select a target. Removed GimpFrame around inner
+	widgets again. Set a minimum width on the items so the "Page xxx"
+	text doesn't wrap for pages smaller than 1000.
+
 2005-06-27  Michael Schumacher  <schumaml@cvs.gnome.org>
 	
 	* libgimpwidgets/gimppageselector.c: fixed a typo: 

@@ -29,8 +29,8 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpframe.h"
 #include "gimppageselector.h"
+#include "gimppropwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -44,7 +44,8 @@ enum
 enum
 {
   PROP_0,
-  PROP_N_PAGES
+  PROP_N_PAGES,
+  PROP_TARGET
 };
 
 enum
@@ -67,6 +68,8 @@ static void   gimp_page_selector_set_property      (GObject          *object,
                                                     guint             property_id,
                                                     const GValue     *value,
                                                     GParamSpec       *pspec);
+static void   gimp_page_selector_style_set         (GtkWidget        *widget,
+                                                    GtkStyle         *prev_style);
 
 static void   gimp_page_selector_selection_changed (GtkIconView      *icon_view,
                                                     GimpPageSelector *selector);
@@ -115,9 +118,18 @@ gimp_page_selector_get_type (void)
 static void
 gimp_page_selector_class_init (GimpPageSelectorClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->finalize     = gimp_page_selector_finalize;
+  object_class->get_property = gimp_page_selector_get_property;
+  object_class->set_property = gimp_page_selector_set_property;
+
+  widget_class->style_set    = gimp_page_selector_style_set;
+
+  klass->selection_changed   = NULL;
 
   selector_signals[SELECTION_CHANGED] =
     g_signal_new ("selection-changed",
@@ -127,12 +139,6 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
-
-  object_class->finalize     = gimp_page_selector_finalize;
-  object_class->get_property = gimp_page_selector_get_property;
-  object_class->set_property = gimp_page_selector_set_property;
-
-  klass->selection_changed   = NULL;
 
   /**
    * GimpPageSelector:n_pages:
@@ -144,34 +150,42 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
   g_object_class_install_property (object_class, PROP_N_PAGES,
                                    g_param_spec_int ("n-pages", NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     G_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
+                                                     G_PARAM_READWRITE));
+
+  /**
+   * GimpPageSelector:target:
+   *
+   * The target to open the document to.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class, PROP_TARGET,
+                                   g_param_spec_enum ("target", NULL, NULL,
+                                                      GIMP_TYPE_PAGE_SELECTOR_TARGET,
+                                                      GIMP_PAGE_SELECTOR_TARGET_LAYERS,
+                                                      G_PARAM_READWRITE));
 }
 
 static void
 gimp_page_selector_init (GimpPageSelector *selector)
 {
-  GtkWidget *frame;
-  GtkWidget *vbox;
   GtkWidget *sw;
   GtkWidget *hbox;
   GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *label;
+  GtkWidget *combo;
 
-  /* Pages */
+  selector->n_pages = 0;
+  selector->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
-  frame = gimp_frame_new (_("Select Pages"));
-  gtk_box_pack_start (GTK_BOX (selector), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_box_set_spacing (GTK_BOX (selector), 6);
 
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
+  /*  Pages  */
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (selector), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
   selector->store = gtk_list_store_new (3,
@@ -195,8 +209,10 @@ gimp_page_selector_init (GimpPageSelector *selector)
                     selector);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  /*  Select buttons  */
 
   hbbox = gtk_hbutton_box_new ();
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
@@ -230,15 +246,31 @@ gimp_page_selector_init (GimpPageSelector *selector)
                     G_CALLBACK (gimp_page_selector_range_activate),
                     selector);
 
-  label = gtk_label_new_with_mnemonic (_("Select _Range:"));
+  label = gtk_label_new_with_mnemonic (_("Select _range:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), selector->range_entry);
 
+  /*  Target combo  */
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (selector), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("Open _pages as"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (selector), "target", -1, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
   selector->thumbnail = gtk_widget_render_icon (GTK_WIDGET (selector),
                                                 GTK_STOCK_FILE,
-                                                GTK_ICON_SIZE_BUTTON,
+                                                GTK_ICON_SIZE_DND,
                                                 NULL);
 }
 
@@ -266,6 +298,9 @@ gimp_page_selector_get_property (GObject    *object,
     case PROP_N_PAGES:
       g_value_set_int (value, selector->n_pages);
       break;
+    case PROP_TARGET:
+      g_value_set_enum (value, selector->target);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -285,10 +320,45 @@ gimp_page_selector_set_property (GObject      *object,
     case PROP_N_PAGES:
       gimp_page_selector_set_n_pages (selector, g_value_get_int (value));
       break;
+    case PROP_TARGET:
+      selector->target = g_value_get_enum (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_page_selector_style_set (GtkWidget *widget,
+                              GtkStyle  *prev_style)
+{
+  GimpPageSelector *selector = GIMP_PAGE_SELECTOR (widget);
+  PangoLayout      *layout;
+  PangoRectangle    ink_rect;
+  PangoRectangle    logical_rect;
+  gint              focus_line_width;
+  gint              focus_padding;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  layout = gtk_widget_create_pango_layout (widget, _("Page 000"));
+  pango_layout_get_extents (layout, &ink_rect, &logical_rect);
+  g_object_unref (layout);
+
+  gtk_widget_style_get (widget,
+                        "focus-line-width", &focus_line_width,
+                        "focus-padding",    &focus_padding,
+                        NULL);
+
+#define ICON_TEXT_PADDING 3 /* EEK */
+
+  gtk_icon_view_set_item_width (GTK_ICON_VIEW (selector->view),
+                                PANGO_PIXELS (MAX (ink_rect.width,
+                                                   logical_rect.width)) +
+                                2 * (focus_line_width + focus_padding +
+                                     ICON_TEXT_PADDING));
 }
 
 
@@ -376,6 +446,31 @@ gimp_page_selector_get_n_pages (GimpPageSelector *selector)
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), 0);
 
   return selector->n_pages;
+}
+
+void
+gimp_page_selector_set_target (GimpPageSelector       *selector,
+                               GimpPageSelectorTarget  target)
+{
+  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (target >= GIMP_PAGE_SELECTOR_TARGET_LAYERS &&
+                    target <= GIMP_PAGE_SELECTOR_TARGET_IMAGES);
+
+  if (target != selector->target)
+    {
+      selector->target = target;
+
+      g_object_notify (G_OBJECT (selector), "target");
+    }
+}
+
+GimpPageSelectorTarget
+gimp_page_selector_get_target (GimpPageSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector),
+                        GIMP_PAGE_SELECTOR_TARGET_LAYERS);
+
+  return selector->target;
 }
 
 /**

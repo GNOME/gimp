@@ -112,6 +112,35 @@ gimp_color_selector_channel_get_type (void)
 }
 
 GType
+gimp_page_selector_target_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PAGE_SELECTOR_TARGET_LAYERS, "GIMP_PAGE_SELECTOR_TARGET_LAYERS", "layers" },
+    { GIMP_PAGE_SELECTOR_TARGET_IMAGES, "GIMP_PAGE_SELECTOR_TARGET_IMAGES", "images" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PAGE_SELECTOR_TARGET_LAYERS, N_("Layers"), NULL },
+    { GIMP_PAGE_SELECTOR_TARGET_IMAGES, N_("Images"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpPageSelectorTarget", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_size_entry_update_policy_get_type (void)
 {
   static const GEnumValue values[] =
