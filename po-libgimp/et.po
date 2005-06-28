@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-26 03:33+0000\n"
-"PO-Revision-Date: 2005-06-01 22:40+0300\n"
+"POT-Creation-Date: 2005-06-11 19:25+0000\n"
+"PO-Revision-Date: 2005-06-25 11:53+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -194,9 +194,13 @@ msgstr ""
 "Sa salvestad kanalit (salvestatud valikut) kui %s.\n"
 "See ei salvesta nähtavaid kihte."
 
-#: ../libgimp/gimpfontmenu.c:100
+#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
 msgid "Font Selection"
 msgstr "Fondi valimine"
+
+#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+msgid "Sans"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
@@ -286,15 +290,15 @@ msgstr "Asenda olemasolev valik"
 msgid "Intersect with the current selection"
 msgstr "Valituks osutub kahe valiku ühisosa"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Punane"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Roheline"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Sinine"
 
@@ -306,7 +310,7 @@ msgstr "Hall"
 msgid "Indexed"
 msgstr "Indekseeritud"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:65
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -368,11 +372,11 @@ msgstr "Keskmine"
 
 #: ../libgimpbase/gimpbaseenums.c:321
 msgid "Dodge"
-msgstr ""
+msgstr "Helenda"
 
 #: ../libgimpbase/gimpbaseenums.c:322
 msgid "Burn"
-msgstr ""
+msgstr "Tumenda"
 
 #: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
 msgid "Linear"
@@ -637,7 +641,7 @@ msgid "Relative Colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:60 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Küllastatus"
 
@@ -749,7 +753,7 @@ msgstr "Viga failist '%s' andmete sõelumisel, rida %d: %s"
 #: ../libgimpmodule/gimpmodule.c:180
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr "Laen moodulit: '%s'\n"
+msgstr "Laadin moodulit: '%s'\n"
 
 #: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
 #: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
@@ -769,7 +773,7 @@ msgstr "Moodul on vigane"
 
 #: ../libgimpmodule/gimpmodule.c:427
 msgid "Loaded"
-msgstr "Laetud"
+msgstr "Laaditud"
 
 #: ../libgimpmodule/gimpmodule.c:428
 msgid "Load failed"
@@ -777,7 +781,7 @@ msgstr "Laadimine ei õnnestunud"
 
 #: ../libgimpmodule/gimpmodule.c:429
 msgid "Not loaded"
-msgstr "Ei ole laetud"
+msgstr "Ei ole laaditud"
 
 #: ../libgimpthumb/gimpthumb-utils.c:125
 #, c-format
@@ -870,7 +874,8 @@ msgstr "Kaust"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Klõpsa pipetti, siis klõpsa värvi suvalises kohas ekraanil värvi valimiseks."
+msgstr ""
+"Klõpsa pipetti, siis klõpsa värvi suvalises kohas ekraanil värvi valimiseks."
 
 #: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
@@ -926,41 +931,41 @@ msgstr "_Reseti"
 msgid "Visible"
 msgstr "Nähtav"
 
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "_Pintseldamine"
 
-#: ../libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
 msgstr "_Tähevahed"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
 msgstr "_Reavahed"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
 msgstr "_Muuda suurust"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
 msgid "_Scale"
 msgstr "_Vii mõõtu"
 
-#: ../libgimpwidgets/gimpstock.c:273
+#: ../libgimpwidgets/gimpstock.c:276
 msgid "Crop"
 msgstr "Kärbi"
 
-#: ../libgimpwidgets/gimpstock.c:290
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Transform"
 msgstr "_Teisenda"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Rotate"
 msgstr "_Pööra"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Shear"
-msgstr ""
+msgstr "_Lõika"
 
 #: ../libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
@@ -982,7 +987,9 @@ msgstr "Faktor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Kasuta seda numbrit juhusliku arvut generaatori seemnena - see lubab sul korrata antud  \"juhuslikku\" toimingut"
+msgstr ""
+"Kasuta seda numbrit juhusliku arvut generaatori seemnena - see lubab sul "
+"korrata antud  \"juhuslikku\" toimingut"
 
 #: ../libgimpwidgets/gimpwidgets.c:1007
 msgid "_New Seed"
@@ -996,39 +1003,39 @@ msgstr "Seemnega juhusliku arvu generaator väljamõeldud juhusliku arvuga"
 msgid "_Randomize"
 msgstr "_Juhuslik"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:59
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:59
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
 msgid "Hue"
 msgstr "Värvus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:60
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:61
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:61
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
 msgid "Value"
 msgstr "Väärtus"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:62
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:63
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:64
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:65
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "_A"
 msgstr "_A"
 
@@ -1166,7 +1173,7 @@ msgstr ""
 
 #: ../modules/colorsel_triangle.c:170
 msgid "Triangle"
-msgstr ""
+msgstr "Kolmnurk"
 
 #: ../modules/colorsel_water.c:88
 msgid "Watercolor style color selector"

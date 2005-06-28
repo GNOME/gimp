@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-26 03:19+0000\n"
-"PO-Revision-Date: 2005-06-04 15:26+0300\n"
+"POT-Creation-Date: 2005-06-11 19:13+0000\n"
+"PO-Revision-Date: 2005-06-25 18:54+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr ""
 " Et vältida andmete kustumist, kontrolli Fail --> Häälestus --> Kaustad "
 "saalefaili kausta asukohta ja õigusi. (aktiivne on \"%s\")."
 
-#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:442
+#: ../app/app_procs.c:334 ../app/core/gimppalette-import.c:449
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' avamine ebaõnnestus: %s"
@@ -54,7 +54,7 @@ msgstr "'%s' avamine ebaõnnestus: %s"
 #: ../app/batch.c:84 ../app/batch.c:101
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
-msgstr ""
+msgstr "Batch interpretaator '%s' ei ole saadaval, batch režiim on keelatud."
 
 #: ../app/main.c:121 ../tools/gimp-remote.c:78
 msgid "Show version information and exit"
@@ -115,7 +115,7 @@ msgstr "Ära kasuta dialoogi, vaid saada teated konsoolile."
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:192
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr ""
+msgstr "PDB ühilduvusrežiim (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:198
@@ -172,9 +172,12 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Kataloogi nimi, kus hoitakse GIMPi kasutaja häälestusfaili ei ole UTF-8 formaati tõlgitav: %s\n"
+"Kataloogi nimi, kus hoitakse GIMPi kasutaja häälestusfaili ei ole UTF-8 "
+"formaati tõlgitav: %s\n"
 "\n"
-"Kõige tõenäolisemalt kasutab sinu failisüsteem kodeeringut mis erineb UTF-8-st ja sa ei öelnud seda GLib-ile. Palun määra töökeskkonna muutuja G_FILENAME_ENCODING."
+"Kõige tõenäolisemalt kasutab sinu failisüsteem kodeeringut mis erineb UTF-8-"
+"st ja sa ei öelnud seda GLib-ile. Palun määra töökeskkonna muutuja "
+"G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:95 ../app/core/gimp.c:871
@@ -219,8 +222,8 @@ msgstr "Dokitav"
 msgid "Document History"
 msgstr "Dokumenti ajalugu"
 
-#: ../app/actions/actions.c:125 ../app/core/core-enums.c:782
-#: ../app/core/core-enums.c:813
+#: ../app/actions/actions.c:125 ../app/core/core-enums.c:818
+#: ../app/core/core-enums.c:849
 msgid "Drawable"
 msgstr "Joonistatav"
 
@@ -462,7 +465,7 @@ msgstr "Dubleeri kanal"
 msgid "_Delete Channel"
 msgstr "_Kustuta kanal"
 
-#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:833
+#: ../app/actions/channels-actions.c:73 ../app/core/core-enums.c:869
 msgid "Delete channel"
 msgstr "Kustuta kanal"
 
@@ -535,7 +538,7 @@ msgid "Intersect"
 msgstr "Ühisosa"
 
 #: ../app/actions/channels-commands.c:86
-#: ../app/actions/channels-commands.c:380
+#: ../app/actions/channels-commands.c:397
 msgid "Channel Attributes"
 msgstr "Kanali omadused"
 
@@ -548,27 +551,27 @@ msgid "Edit Channel Color"
 msgstr "Redigeeri kanali värvi"
 
 #: ../app/actions/channels-commands.c:92
-#: ../app/actions/channels-commands.c:124
-msgid "Fill Opacity:"
-msgstr "Täitematerjali läbipaistmatus:"
+#: ../app/actions/channels-commands.c:125
+msgid "_Fill Opacity:"
+msgstr "_Täidise läbipaistmatus:"
 
-#: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:118
-#: ../app/actions/channels-commands.c:159
-#: ../app/actions/channels-commands.c:163
+#: ../app/actions/channels-commands.c:119
+#: ../app/actions/channels-commands.c:161
+#: ../app/actions/channels-commands.c:165
 #: ../app/widgets/gimpchanneltreeview.c:373
 msgid "New Channel"
 msgstr "Uus kanal"
 
-#: ../app/actions/channels-commands.c:121
+#: ../app/actions/channels-commands.c:122
 msgid "New Channel Options"
 msgstr "Uue kanali võimalused"
 
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:124
 msgid "New Channel Color"
 msgstr "Uue kanali värv"
 
-#: ../app/actions/channels-commands.c:243
+#: ../app/actions/channels-commands.c:245
 #: ../app/display/gimpdisplayshell-dnd.c:496
 #: ../app/widgets/gimpchanneltreeview.c:306
 #: ../app/widgets/gimplayertreeview.c:808 ../app/widgets/gimptoolbox-dnd.c:302
@@ -576,7 +579,7 @@ msgstr "Uue kanali värv"
 msgid "%s Channel Copy"
 msgstr "%s kanali koopia"
 
-#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:595
+#: ../app/actions/channels-commands.c:310 ../app/core/gimpselection.c:595
 #: ../app/pdb/selection_cmds.c:921 ../app/pdb/selection_cmds.c:1045
 msgid "Channel to Selection"
 msgstr "Kanal valikusse"
@@ -715,8 +718,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:126 ../app/core/gimpimage.c:1348
-#: ../app/core/gimppalette-import.c:220 ../app/core/gimppalette.c:520
-#: ../app/core/gimppalette.c:631 ../app/dialogs/palette-import-dialog.c:692
+#: ../app/core/gimppalette-import.c:221 ../app/core/gimppalette.c:517
+#: ../app/core/gimppalette.c:627 ../app/dialogs/palette-import-dialog.c:692
 #: ../app/pdb/image_cmds.c:3838 ../app/widgets/gimpdnd-xds.c:83
 msgid "Untitled"
 msgstr "Pealkirjatu"
@@ -962,11 +965,15 @@ msgstr "I_koon ja tekst"
 msgid "St_atus & Text"
 msgstr "S_eis ja tekst"
 
-#: ../app/actions/dockable-actions.c:107
+#: ../app/actions/dockable-actions.c:108
+msgid "Show _Button Bar"
+msgstr "Näita _nupuriba"
+
+#: ../app/actions/dockable-actions.c:117
 msgid "View as _List"
 msgstr "Vaata _nimekirjana"
 
-#: ../app/actions/dockable-actions.c:112
+#: ../app/actions/dockable-actions.c:122
 msgid "View as _Grid"
 msgstr "Vaata _ruudustikuna"
 
@@ -1016,11 +1023,11 @@ msgstr "Loo eelvaade uuesti"
 
 #: ../app/actions/documents-actions.c:76
 msgid "Reload _all Previews"
-msgstr "Lae uuesti _kõik eelvaated"
+msgstr "Laadi uuesti _kõik eelvaated"
 
 #: ../app/actions/documents-actions.c:77
 msgid "Reload all previews"
-msgstr "Lae uuesti kõik eelvaated"
+msgstr "Laadi uuesti kõik eelvaated"
 
 #: ../app/actions/documents-actions.c:82
 msgid "Remove Dangling E_ntries"
@@ -1399,15 +1406,15 @@ msgstr "Fontide menüü"
 
 #: ../app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
-msgstr ""
+msgstr "_Värskenda fontide nimekirja"
 
 #: ../app/actions/fonts-actions.c:49
 msgid "Rescan font list"
-msgstr ""
+msgstr "Värskenda fontide nimekirja"
 
 #: ../app/actions/gradient-editor-actions.c:45
 msgid "Gradient Editor Menu"
-msgstr ""
+msgstr "Spektrikomplekti redigeerimise menüü"
 
 #: ../app/actions/gradient-editor-actions.c:49
 msgid "_Load Left Color From"
@@ -1427,27 +1434,27 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:62
 msgid "L_eft Endpoint's Color..."
-msgstr ""
+msgstr "V_asaku lõppunkti värv..."
 
 #: ../app/actions/gradient-editor-actions.c:67
 msgid "R_ight Endpoint's Color..."
-msgstr ""
+msgstr "Pa_rema lõppunkti värv..."
 
 #: ../app/actions/gradient-editor-actions.c:107
 msgid "Ble_nd Endpoints' Colors"
-msgstr ""
+msgstr "Sega lõppu_nktide värvid kokku"
 
 #: ../app/actions/gradient-editor-actions.c:112
 msgid "Blend Endpoints' Opacit_y"
-msgstr ""
+msgstr "Sega lõppunktide _läbipaistmatused kokku"
 
 #: ../app/actions/gradient-editor-actions.c:142
 msgid "_Left Neighbor's Right Endpoint"
-msgstr ""
+msgstr "_Vasaku naabri parem lõppunkt"
 
 #: ../app/actions/gradient-editor-actions.c:147
 msgid "_Right Endpoint"
-msgstr ""
+msgstr "_Parem lõppunkt"
 
 #: ../app/actions/gradient-editor-actions.c:152
 #: ../app/actions/gradient-editor-actions.c:200
@@ -1461,11 +1468,11 @@ msgstr "_Tagapõhjavärv"
 
 #: ../app/actions/gradient-editor-actions.c:190
 msgid "_Right Neighbor's Left Endpoint"
-msgstr ""
+msgstr "Parema naabri vasak lõppunkt"
 
 #: ../app/actions/gradient-editor-actions.c:195
 msgid "_Left Endpoint"
-msgstr ""
+msgstr "_Vasak lõpppunkt"
 
 #: ../app/actions/gradient-editor-actions.c:244
 msgid "_Linear"
@@ -1473,24 +1480,24 @@ msgstr "_Lineaarne"
 
 #: ../app/actions/gradient-editor-actions.c:249
 msgid "_Curved"
-msgstr ""
+msgstr "_Kõverjooneline"
 
 #: ../app/actions/gradient-editor-actions.c:254
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_Sinusoidaalne"
 
 #: ../app/actions/gradient-editor-actions.c:259
 msgid "Spherical (i_ncreasing)"
-msgstr ""
+msgstr "Kerakujuline (_suurenev)"
 
 #: ../app/actions/gradient-editor-actions.c:264
 msgid "Spherical (_decreasing)"
-msgstr ""
+msgstr "Kerakujuline (_vähenev)"
 
 #: ../app/actions/gradient-editor-actions.c:269
 #: ../app/actions/gradient-editor-actions.c:292
 msgid "(Varies)"
-msgstr ""
+msgstr "(Muutuv)"
 
 #: ../app/actions/gradient-editor-actions.c:277
 #: ../app/actions/image-actions.c:128
@@ -1499,11 +1506,11 @@ msgstr "_RGB"
 
 #: ../app/actions/gradient-editor-actions.c:282
 msgid "HSV (_counter-clockwise hue)"
-msgstr ""
+msgstr "HSV (_vastupäeva värvitoon)"
 
 #: ../app/actions/gradient-editor-actions.c:287
 msgid "HSV (clockwise _hue)"
-msgstr ""
+msgstr "HSV (_päripäeva  värvitoon)"
 
 #: ../app/actions/gradient-editor-actions.c:300
 msgid "Zoom In"
@@ -1544,15 +1551,15 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:593
 msgid "_Flip Segment"
-msgstr ""
+msgstr "_Peegelda lõik"
 
 #: ../app/actions/gradient-editor-actions.c:595
 msgid "_Replicate Segment..."
-msgstr ""
+msgstr "_Dubleeri lõik..."
 
 #: ../app/actions/gradient-editor-actions.c:597
 msgid "Split Segment at _Midpoint"
-msgstr ""
+msgstr "Tükelda segment _keskpunktist"
 
 #: ../app/actions/gradient-editor-actions.c:599
 msgid "Split Segment _Uniformly..."
@@ -1560,7 +1567,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:601
 msgid "_Delete Segment"
-msgstr ""
+msgstr "_Kustuta lõik"
 
 #: ../app/actions/gradient-editor-actions.c:603
 msgid "Re-_center Segment's Midpoint"
@@ -1580,11 +1587,11 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:615
 msgid "_Flip Selection"
-msgstr ""
+msgstr "_Peegelda valik"
 
 #: ../app/actions/gradient-editor-actions.c:617
 msgid "_Replicate Selection..."
-msgstr ""
+msgstr "_Dubleeri valikut..."
 
 #: ../app/actions/gradient-editor-actions.c:619
 msgid "Split Segments at _Midpoints"
@@ -1596,7 +1603,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:623
 msgid "_Delete Selection"
-msgstr ""
+msgstr "_Kustuta valik"
 
 #: ../app/actions/gradient-editor-actions.c:625
 msgid "Re-_center Midpoints in Selection"
@@ -1608,7 +1615,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:85
 msgid "Left Endpoint Color"
-msgstr ""
+msgstr "Vasaku lõppunkti värv"
 
 #: ../app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
@@ -1616,7 +1623,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:189
 msgid "Right Endpoint Color"
-msgstr ""
+msgstr "Parema lõppunkti värv"
 
 #: ../app/actions/gradient-editor-commands.c:191
 msgid "Gradient Segment's Right Endpoint Color"
@@ -1624,7 +1631,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:358
 msgid "Replicate Segment"
-msgstr ""
+msgstr "Dubleeri lõik"
 
 #: ../app/actions/gradient-editor-commands.c:359
 msgid "Replicate Gradient Segment"
@@ -1632,7 +1639,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:363
 msgid "Replicate Selection"
-msgstr ""
+msgstr "Dubleeri valik"
 
 #: ../app/actions/gradient-editor-commands.c:364
 msgid "Replicate Gradient Selection"
@@ -1640,19 +1647,23 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:376
 msgid "Replicate"
-msgstr ""
+msgstr "Dubleeri"
 
 #: ../app/actions/gradient-editor-commands.c:396
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"Mitu korda sa tahad\n"
+"valitud lõiku dubleerida?"
 
 #: ../app/actions/gradient-editor-commands.c:399
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"Mitu korda sa tahad\n"
+"valikut dubleerida?"
 
 #: ../app/actions/gradient-editor-commands.c:457
 msgid "Split Segment Uniformly"
@@ -1672,7 +1683,7 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:475
 msgid "Split"
-msgstr ""
+msgstr "Tükelda"
 
 #: ../app/actions/gradient-editor-commands.c:491
 msgid ""
@@ -1761,7 +1772,7 @@ msgstr "Pildimenüü"
 
 #: ../app/actions/image-actions.c:58
 msgid "_Xtns"
-msgstr ""
+msgstr "_Xtns"
 
 #: ../app/actions/image-actions.c:59
 msgid "_Image"
@@ -1977,7 +1988,7 @@ msgstr "Dubleeri kiht"
 msgid "_Delete Layer"
 msgstr "_Kustuta kiht"
 
-#: ../app/actions/layers-actions.c:93 ../app/core/core-enums.c:821
+#: ../app/actions/layers-actions.c:93 ../app/core/core-enums.c:857
 msgid "Delete layer"
 msgstr "Kustuta kiht"
 
@@ -2171,19 +2182,19 @@ msgstr "Kustuta värv"
 
 #: ../app/actions/palette-editor-actions.c:62
 msgid "New Color from _FG"
-msgstr ""
+msgstr "Uus värv _esiplaanivärvist"
 
 #: ../app/actions/palette-editor-actions.c:63
 msgid "New color from FG"
-msgstr ""
+msgstr "Uus värv esiplaanivärvist"
 
 #: ../app/actions/palette-editor-actions.c:68
 msgid "New Color from _BG"
-msgstr ""
+msgstr "Uus värv _tagapõhjavärvist"
 
 #: ../app/actions/palette-editor-actions.c:69
 msgid "New color from BG"
-msgstr ""
+msgstr "Uus värv tagapõhja värvist"
 
 #: ../app/actions/palette-editor-actions.c:77
 #: ../app/actions/view-actions.c:227
@@ -2205,7 +2216,7 @@ msgstr "Redigeeri värvipaleti värvi"
 
 #: ../app/actions/palette-editor-commands.c:70
 msgid "Edit Color Palette Entry"
-msgstr ""
+msgstr "Redigeeri värvipaleti sissekannet"
 
 #: ../app/actions/palettes-actions.c:44
 msgid "Palettes Menu"
@@ -2337,7 +2348,7 @@ msgstr "_Udu"
 
 #: ../app/actions/plug-in-actions.c:65
 msgid "Ma_p"
-msgstr ""
+msgstr "_Kaart"
 
 #: ../app/actions/plug-in-actions.c:66
 msgid "_Noise"
@@ -2345,7 +2356,7 @@ msgstr "_Müra"
 
 #: ../app/actions/plug-in-actions.c:67
 msgid "Edge-De_tect"
-msgstr ""
+msgstr "_Serva äratundmine"
 
 #: ../app/actions/plug-in-actions.c:68
 msgid "En_hance"
@@ -2353,7 +2364,7 @@ msgstr "Tee _ilusamaks"
 
 #: ../app/actions/plug-in-actions.c:69
 msgid "_Generic"
-msgstr ""
+msgstr "Ü_ldine"
 
 #: ../app/actions/plug-in-actions.c:70
 msgid "Gla_ss Effects"
@@ -2361,7 +2372,7 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:71
 msgid "_Light Effects"
-msgstr ""
+msgstr "_Valgusefektid"
 
 #: ../app/actions/plug-in-actions.c:72
 msgid "_Distorts"
@@ -2373,7 +2384,7 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:74
 msgid "_Map"
-msgstr ""
+msgstr "_Kaart"
 
 #: ../app/actions/plug-in-actions.c:75
 msgid "_Render"
@@ -2381,7 +2392,7 @@ msgstr "_Tekita"
 
 #: ../app/actions/plug-in-actions.c:76
 msgid "_Clouds"
-msgstr ""
+msgstr "_Pilved"
 
 #: ../app/actions/plug-in-actions.c:77
 msgid "_Nature"
@@ -2389,11 +2400,11 @@ msgstr ""
 
 #: ../app/actions/plug-in-actions.c:79
 msgid "_Web"
-msgstr ""
+msgstr "_Veeb"
 
 #: ../app/actions/plug-in-actions.c:80
 msgid "An_imation"
-msgstr ""
+msgstr "_Animatsioon"
 
 #: ../app/actions/plug-in-actions.c:81
 msgid "C_ombine"
@@ -2479,8 +2490,8 @@ msgid "Edit Quick Mask Color"
 msgstr "Redigeeri kiirmaski värvi"
 
 #: ../app/actions/qmask-commands.c:112
-msgid "Mask Opacity:"
-msgstr "Maski läbipaistmatus:"
+msgid "_Mask Opacity:"
+msgstr "_Maski läbipaistmatus:"
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
@@ -2681,9 +2692,9 @@ msgstr "Ava"
 
 #: ../app/actions/text-editor-actions.c:45
 msgid "Load text from file"
-msgstr "Lae tekst failist"
+msgstr "Laadi tekst failist"
 
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:331
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:339
 msgid "Clear"
 msgstr "Tühjenda"
 
@@ -2712,10 +2723,10 @@ msgid "Open Text File (UTF-8)"
 msgstr "Ava tekstifail (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:137
-#: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:116
-#: ../app/core/gimpbrush-load.c:406 ../app/core/gimpbrushgenerated.c:602
-#: ../app/core/gimpbrushpipe.c:332 ../app/core/gimpgradient-load.c:63
-#: ../app/core/gimppalette.c:361 ../app/core/gimppattern.c:318
+#: ../app/config/gimpconfig-file.c:57 ../app/core/gimpbrush-load.c:115
+#: ../app/core/gimpbrush-load.c:395 ../app/core/gimpbrushgenerated.c:594
+#: ../app/core/gimpbrushpipe.c:331 ../app/core/gimpgradient-load.c:62
+#: ../app/core/gimppalette.c:358 ../app/core/gimppattern.c:302
 #: ../app/tools/gimpimagemaptool.c:614 ../app/xcf/xcf.c:293
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -3371,9 +3382,9 @@ msgstr ""
 "töö salvestada teistsuguse failinimega, pane GIMP uuesti käima ja kontolli "
 "(File, Häälestus, Kaustad) saalefaili asukohta."
 
-#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:255
+#: ../app/config/gimpconfig-file.c:66 ../app/core/gimpbrushgenerated.c:254
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:142
-#: ../app/core/gimppalette.c:564 ../app/gui/themes.c:238
+#: ../app/core/gimppalette.c:561 ../app/gui/themes.c:238
 #: ../app/tools/gimpimagemaptool.c:613 ../app/vectors/gimpvectors-export.c:83
 #: ../app/xcf/xcf.c:350
 #, c-format
@@ -3396,7 +3407,9 @@ msgstr "Viga '%s' lugemisel: %s"
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
-msgstr "Tekkis viga andmete sõelumisel sinu failist '%s'. Kasutatakse vaikeväärtusi. Sinu häälestustest tehti varukoopia nimega '%s'."
+msgstr ""
+"Tekkis viga andmete sõelumisel sinu failist '%s'. Kasutatakse vaikeväärtusi. "
+"Sinu häälestustest tehti varukoopia nimega '%s'."
 
 #: ../app/config/gimprc.c:296 ../app/config/gimprc.c:309
 #, c-format
@@ -3486,94 +3499,98 @@ msgstr ""
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:149
+#: ../app/config/gimprc-blurbs.h:147
 msgid "Sets the browser used by the help system."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:157
+#: ../app/config/gimprc-blurbs.h:155
 msgid "Sets the text to appear in image window status bars."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:160
+#: ../app/config/gimprc-blurbs.h:158
 msgid "Sets the text to appear in image window titles."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:163
+#: ../app/config/gimprc-blurbs.h:161
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:167
+#: ../app/config/gimprc-blurbs.h:165
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:170
+#: ../app/config/gimprc-blurbs.h:168
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:177
+#: ../app/config/gimprc-blurbs.h:175
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:180
+#: ../app/config/gimprc-blurbs.h:178
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:184
+#: ../app/config/gimprc-blurbs.h:182
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
-msgstr "GIMP hoiatab kasutajat, kui see püüab luua pilti mis võtab rohkem mälu kui siinkohal määratud."
+msgstr ""
+"GIMP hoiatab kasutajat, kui see püüab luua pilti mis võtab rohkem mälu kui "
+"siinkohal määratud."
 
-#: ../app/config/gimprc-blurbs.h:188
+#: ../app/config/gimprc-blurbs.h:186
 msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:191
+#: ../app/config/gimprc-blurbs.h:189
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:202
+#: ../app/config/gimprc-blurbs.h:200
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:207
+#: ../app/config/gimprc-blurbs.h:205
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:212
+#: ../app/config/gimprc-blurbs.h:210
 msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
 "versions."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:217
+#: ../app/config/gimprc-blurbs.h:215
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:221
+#: ../app/config/gimprc-blurbs.h:219
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
-msgstr "Mitme protsessoriga arvutitel, juhul kui GIMP on kompileeritud võtmega --enable-mp, määrab see ära, mitut protsessorit GIMP tohib korraga kasutada."
+msgstr ""
+"Mitme protsessoriga arvutitel, juhul kui GIMP on kompileeritud võtmega --"
+"enable-mp, määrab see ära, mitut protsessorit GIMP tohib korraga kasutada."
 
-#: ../app/config/gimprc-blurbs.h:235
+#: ../app/config/gimprc-blurbs.h:233
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -3582,137 +3599,130 @@ msgid ""
 "painting."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:248
+#: ../app/config/gimprc-blurbs.h:246
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:253
+#: ../app/config/gimprc-blurbs.h:251
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:257
+#: ../app/config/gimprc-blurbs.h:255
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:261
+#: ../app/config/gimprc-blurbs.h:259
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:265
+#: ../app/config/gimprc-blurbs.h:263
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:266
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:272
+#: ../app/config/gimprc-blurbs.h:270
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:275
+#: ../app/config/gimprc-blurbs.h:273
 msgid "Save the tool options when the GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:281
+#: ../app/config/gimprc-blurbs.h:279
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:285
+#: ../app/config/gimprc-blurbs.h:283
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:290
+#: ../app/config/gimprc-blurbs.h:288
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:294
+#: ../app/config/gimprc-blurbs.h:292
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:298
+#: ../app/config/gimprc-blurbs.h:296
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:302
+#: ../app/config/gimprc-blurbs.h:300
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:306
+#: ../app/config/gimprc-blurbs.h:304
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:310
+#: ../app/config/gimprc-blurbs.h:308
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:314
+#: ../app/config/gimprc-blurbs.h:312
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:318
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:322
+#: ../app/config/gimprc-blurbs.h:320
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:326
+#: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:330
+#: ../app/config/gimprc-blurbs.h:328
 msgid "Enable to display a handy GIMP tip on startup."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:333
+#: ../app/config/gimprc-blurbs.h:331
 msgid "Enable to display tooltips."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:336
-msgid ""
-"There is always a tradeoff between memory usage and speed.  In most cases, "
-"the GIMP opts for speed over memory.  However, if memory is a big issue, try "
-"to enable this setting."
-msgstr ""
-
-#: ../app/config/gimprc-blurbs.h:341
+#: ../app/config/gimprc-blurbs.h:334
 msgid ""
 "Sets the swap file location. The gimp uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -3722,32 +3732,32 @@ msgid ""
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:350
+#: ../app/config/gimprc-blurbs.h:343
 msgid "When enabled, menus can be torn off."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:353
+#: ../app/config/gimprc-blurbs.h:346
 msgid ""
 "When enabled, dock windows (the toolbox and palettes) are set to be "
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:359
+#: ../app/config/gimprc-blurbs.h:352
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:363
+#: ../app/config/gimprc-blurbs.h:356
 msgid "Save changed keyboard shortcuts when the GIMP exits."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:366
+#: ../app/config/gimprc-blurbs.h:359
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:369
+#: ../app/config/gimprc-blurbs.h:362
 msgid ""
 "Sets the temporary storage directory. Files will appear here during the "
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
@@ -3755,68 +3765,83 @@ msgid ""
 "one that is shared by other users."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:381
+#: ../app/config/gimprc-blurbs.h:374
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
-msgstr "Määrab pisipildi suuruse, mida näidatakse Avamise dialoogis. Pane tähele et GIMP ei saa luua pisipilte, kui kihtide eelvaated on keelatud."
+msgstr ""
+"Määrab pisipildi suuruse, mida näidatakse Avamise dialoogis. Pane tähele et "
+"GIMP ei saa luua pisipilte, kui kihtide eelvaated on keelatud."
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:378
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
-msgstr "Avamise dialoogis uuendatakse automaatselt pisipilti kui fail on siinmääratud suurusest väiksem."
+msgstr ""
+"Avamise dialoogis uuendatakse automaatselt pisipilti kui fail on "
+"siinmääratud suurusest väiksem."
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:382
 msgid ""
 "The tile cache is used to make sure the GIMP doesn't thrash tiles between "
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr "Tööpuhver on kasutusel selleks, et GIMP ei peaks pidevalt andmekogumeid loksutama kõvaketta ja mälu vahel edasi-tagasi. Kui sa selle väärtuse suuremaks paned, kasutav GIMP vähem kõvaketta saalefaili, aga GIMP kasutab siis rohkem mälu. Ümberpööratult - väiksem puhvri suurus paneb GIMP'i rohkem kõvaketta saalefaili kasutama ja vähem mälu kasutama."
+msgstr ""
+"Tööpuhver on kasutusel selleks, et GIMP ei peaks pidevalt andmekogumeid "
+"loksutama kõvaketta ja mälu vahel edasi-tagasi. Kui sa selle väärtuse "
+"suuremaks paned, kasutav GIMP vähem kõvaketta saalefaili, aga GIMP kasutab "
+"siis rohkem mälu. Ümberpööratult - väiksem puhvri suurus paneb GIMP'i rohkem "
+"kõvaketta saalefaili kasutama ja vähem mälu kasutama."
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:404
+#: ../app/config/gimprc-blurbs.h:397
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:410
+#: ../app/config/gimprc-blurbs.h:403
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:414
+#: ../app/config/gimprc-blurbs.h:407
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr "Seab minimaalse arvu operatsioone, mida saab tagasi tagasi võtta. Rohkem tagasivõtmise tasemeid on saadaval kuni jõutakse tagasivõtmise suuruse piiranguni."
+msgstr ""
+"Seab minimaalse arvu operatsioone, mida saab tagasi tagasi võtta. Rohkem "
+"tagasivõtmise tasemeid on saadaval kuni jõutakse tagasivõtmise suuruse "
+"piiranguni."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:411
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "Seab ülemise piiri, kui palju mälu kasutatakse pildi kohta tagasivõtmise pinus. Hoolimata sellest seadest saab ikkagi nii palju tagasi võtta, kui on häälestatud tagasivõtmise sammude arvu suurusena."
+msgstr ""
+"Seab ülemise piiri, kui palju mälu kasutatakse pildi kohta tagasivõtmise "
+"pinus. Hoolimata sellest seadest saab ikkagi nii palju tagasi võtta, kui on "
+"häälestatud tagasivõtmise sammude arvu suurusena."
 
-#: ../app/config/gimprc-blurbs.h:423
+#: ../app/config/gimprc-blurbs.h:416
 msgid "Sets the size of the previews in the Undo History."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:419
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:429
+#: ../app/config/gimprc-blurbs.h:422
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -3836,8 +3861,8 @@ msgstr ""
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 
-#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:168
-#: ../app/core/core-enums.c:454 ../app/tools/gimptransformoptions.c:456
+#: ../app/core/core-enums.c:53 ../app/core/core-enums.c:204
+#: ../app/core/core-enums.c:490 ../app/tools/gimptransformoptions.c:456
 msgid "None"
 msgstr "Puudub"
 
@@ -3869,459 +3894,459 @@ msgstr ""
 msgid "Use custom palette"
 msgstr ""
 
-#: ../app/core/core-enums.c:163
+#: ../app/core/core-enums.c:199
 msgid "Foreground color"
 msgstr "Esiplaani värv"
 
-#: ../app/core/core-enums.c:164
+#: ../app/core/core-enums.c:200
 msgid "Background color"
 msgstr "Tagapõhja värv"
 
-#: ../app/core/core-enums.c:165
+#: ../app/core/core-enums.c:201
 msgid "White"
 msgstr "Valge"
 
 #. Transparency
-#: ../app/core/core-enums.c:166 ../app/dialogs/preferences-dialog.c:2035
+#: ../app/core/core-enums.c:202 ../app/dialogs/preferences-dialog.c:2035
 msgid "Transparency"
 msgstr "Läbipaistev"
 
-#: ../app/core/core-enums.c:167 ../app/core/core-enums.c:258
+#: ../app/core/core-enums.c:203 ../app/core/core-enums.c:294
 #: ../app/pdb/internal_procs.c:180
 msgid "Pattern"
 msgstr "Muster"
 
-#: ../app/core/core-enums.c:198
+#: ../app/core/core-enums.c:234
 msgid "Intersections (dots)"
 msgstr ""
 
-#: ../app/core/core-enums.c:199
+#: ../app/core/core-enums.c:235
 msgid "Intersections (crosshairs)"
 msgstr ""
 
-#: ../app/core/core-enums.c:200
+#: ../app/core/core-enums.c:236
 msgid "Dashed"
 msgstr ""
 
-#: ../app/core/core-enums.c:201
+#: ../app/core/core-enums.c:237
 msgid "Double dashed"
 msgstr ""
 
-#: ../app/core/core-enums.c:202 ../app/core/core-enums.c:257
+#: ../app/core/core-enums.c:238 ../app/core/core-enums.c:293
 msgid "Solid"
 msgstr ""
 
-#: ../app/core/core-enums.c:229
+#: ../app/core/core-enums.c:265
 msgid "Stroke line"
 msgstr ""
 
-#: ../app/core/core-enums.c:230
+#: ../app/core/core-enums.c:266
 msgid "Stroke with a paint tool"
 msgstr ""
 
-#: ../app/core/core-enums.c:286
+#: ../app/core/core-enums.c:322
 msgid "Miter"
 msgstr ""
 
-#: ../app/core/core-enums.c:287 ../app/core/core-enums.c:317
+#: ../app/core/core-enums.c:323 ../app/core/core-enums.c:353
 msgid "Round"
 msgstr ""
 
-#: ../app/core/core-enums.c:288
+#: ../app/core/core-enums.c:324
 msgid "Bevel"
 msgstr ""
 
-#: ../app/core/core-enums.c:316
+#: ../app/core/core-enums.c:352
 msgid "Butt"
 msgstr ""
 
-#: ../app/core/core-enums.c:318 ../app/core/core-enums.c:393
+#: ../app/core/core-enums.c:354 ../app/core/core-enums.c:429
 msgid "Square"
 msgstr ""
 
-#: ../app/core/core-enums.c:354
+#: ../app/core/core-enums.c:390
 msgid "Custom"
 msgstr ""
 
-#: ../app/core/core-enums.c:355
+#: ../app/core/core-enums.c:391
 msgid "Line"
 msgstr ""
 
-#: ../app/core/core-enums.c:356
+#: ../app/core/core-enums.c:392
 msgid "Long dashes"
 msgstr ""
 
-#: ../app/core/core-enums.c:357
+#: ../app/core/core-enums.c:393
 msgid "Medium dashes"
 msgstr ""
 
-#: ../app/core/core-enums.c:358
+#: ../app/core/core-enums.c:394
 msgid "Short dashes"
 msgstr ""
 
-#: ../app/core/core-enums.c:359
+#: ../app/core/core-enums.c:395
 msgid "Sparse dots"
 msgstr ""
 
-#: ../app/core/core-enums.c:360
+#: ../app/core/core-enums.c:396
 msgid "Normal dots"
 msgstr ""
 
-#: ../app/core/core-enums.c:361
+#: ../app/core/core-enums.c:397
 msgid "Dense dots"
 msgstr ""
 
-#: ../app/core/core-enums.c:362
+#: ../app/core/core-enums.c:398
 msgid "Stipples"
 msgstr ""
 
-#: ../app/core/core-enums.c:363
+#: ../app/core/core-enums.c:399
 msgid "Dash, dot"
 msgstr ""
 
-#: ../app/core/core-enums.c:364
+#: ../app/core/core-enums.c:400
 msgid "Dash, dot, dot"
 msgstr ""
 
-#: ../app/core/core-enums.c:392
+#: ../app/core/core-enums.c:428
 msgid "Circle"
 msgstr ""
 
-#: ../app/core/core-enums.c:394
+#: ../app/core/core-enums.c:430
 msgid "Diamond"
 msgstr ""
 
-#: ../app/core/core-enums.c:422 ../app/dialogs/preferences-dialog.c:2067
+#: ../app/core/core-enums.c:458 ../app/dialogs/preferences-dialog.c:2067
 msgid "Horizontal"
 msgstr ""
 
-#: ../app/core/core-enums.c:423 ../app/dialogs/preferences-dialog.c:2069
+#: ../app/core/core-enums.c:459 ../app/dialogs/preferences-dialog.c:2069
 msgid "Vertical"
 msgstr ""
 
-#: ../app/core/core-enums.c:424
+#: ../app/core/core-enums.c:460
 msgid "Unknown"
 msgstr ""
 
-#: ../app/core/core-enums.c:455
+#: ../app/core/core-enums.c:491
 msgid "Image-sized layers"
 msgstr "Pildisuurused kihid"
 
-#: ../app/core/core-enums.c:456
+#: ../app/core/core-enums.c:492
 msgid "All visible layers"
 msgstr "Kõik nähtavad kihid"
 
-#: ../app/core/core-enums.c:457
+#: ../app/core/core-enums.c:493
 msgid "All linked layers"
 msgstr "Kõik lingitud kihid"
 
-#: ../app/core/core-enums.c:458
+#: ../app/core/core-enums.c:494
 msgid "All layers"
 msgstr "Kõik kihid"
 
-#: ../app/core/core-enums.c:522
+#: ../app/core/core-enums.c:558
 msgid "Tiny"
 msgstr "Tilluke"
 
-#: ../app/core/core-enums.c:523
+#: ../app/core/core-enums.c:559
 msgid "Very small"
 msgstr "Väga väike"
 
-#: ../app/core/core-enums.c:524
+#: ../app/core/core-enums.c:560
 msgid "Small"
 msgstr "Väike"
 
-#: ../app/core/core-enums.c:525
+#: ../app/core/core-enums.c:561
 msgid "Medium"
 msgstr "Keskmine"
 
-#: ../app/core/core-enums.c:526
+#: ../app/core/core-enums.c:562
 msgid "Large"
 msgstr "Suur"
 
-#: ../app/core/core-enums.c:527
+#: ../app/core/core-enums.c:563
 msgid "Very large"
 msgstr "Väga suur"
 
-#: ../app/core/core-enums.c:528
+#: ../app/core/core-enums.c:564
 msgid "Huge"
 msgstr "Hiigelsuur"
 
-#: ../app/core/core-enums.c:529
+#: ../app/core/core-enums.c:565
 msgid "Enormous"
 msgstr "Tohutu"
 
-#: ../app/core/core-enums.c:530
+#: ../app/core/core-enums.c:566
 msgid "Gigantic"
 msgstr "Määratu"
 
-#: ../app/core/core-enums.c:592
+#: ../app/core/core-enums.c:628
 msgid "No thumbnails"
 msgstr "Pisipiltideta"
 
-#: ../app/core/core-enums.c:593
+#: ../app/core/core-enums.c:629
 msgid "Normal (128x128)"
 msgstr "Normaalne (128x128)"
 
-#: ../app/core/core-enums.c:594
+#: ../app/core/core-enums.c:630
 msgid "Large (256x256)"
 msgstr "Suur (256x256)"
 
-#: ../app/core/core-enums.c:768
+#: ../app/core/core-enums.c:804
 msgid "<<invalid>>"
 msgstr "<<vigane>>"
 
-#: ../app/core/core-enums.c:769
+#: ../app/core/core-enums.c:805
 msgid "Scale image"
 msgstr "Vii pilt mõõtu"
 
-#: ../app/core/core-enums.c:770
+#: ../app/core/core-enums.c:806
 msgid "Resize image"
 msgstr "Muuda pildi suurust"
 
-#: ../app/core/core-enums.c:771
+#: ../app/core/core-enums.c:807
 msgid "Flip image"
 msgstr "Peegelda pilti"
 
-#: ../app/core/core-enums.c:772
+#: ../app/core/core-enums.c:808
 msgid "Rotate image"
 msgstr "Pööra pilti"
 
-#: ../app/core/core-enums.c:773
+#: ../app/core/core-enums.c:809
 msgid "Crop image"
 msgstr "Kärbi pilti"
 
-#: ../app/core/core-enums.c:774
+#: ../app/core/core-enums.c:810
 msgid "Convert image"
 msgstr "Teisenda pilt"
 
-#: ../app/core/core-enums.c:775
+#: ../app/core/core-enums.c:811
 msgid "Remove item"
 msgstr "Eemalda element"
 
-#: ../app/core/core-enums.c:776
+#: ../app/core/core-enums.c:812
 msgid "Merge layers"
 msgstr "Ühenda kihid"
 
-#: ../app/core/core-enums.c:777
+#: ../app/core/core-enums.c:813
 msgid "Merge vectors"
 msgstr "Ühenda vektorjooned"
 
-#: ../app/core/core-enums.c:778 ../app/core/gimpchannel.c:387
+#: ../app/core/core-enums.c:814 ../app/core/gimpchannel.c:387
 msgid "Quick Mask"
 msgstr "Kiirmask"
 
-#: ../app/core/core-enums.c:779 ../app/core/core-enums.c:809
+#: ../app/core/core-enums.c:815 ../app/core/core-enums.c:845
 msgid "Guide"
 msgstr "Abijoon"
 
-#: ../app/core/core-enums.c:780 ../app/core/core-enums.c:810
+#: ../app/core/core-enums.c:816 ../app/core/core-enums.c:846
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:203
 msgid "Grid"
 msgstr "Ruudustik"
 
-#: ../app/core/core-enums.c:781 ../app/core/core-enums.c:811
+#: ../app/core/core-enums.c:817 ../app/core/core-enums.c:847
 msgid "Sample Point"
 msgstr "Näidispunkt"
 
-#: ../app/core/core-enums.c:783 ../app/core/core-enums.c:814
+#: ../app/core/core-enums.c:819 ../app/core/core-enums.c:850
 msgid "Drawable mod"
 msgstr ""
 
-#: ../app/core/core-enums.c:784 ../app/core/core-enums.c:815
+#: ../app/core/core-enums.c:820 ../app/core/core-enums.c:851
 msgid "Selection mask"
 msgstr "Valiku mask"
 
-#: ../app/core/core-enums.c:785 ../app/core/core-enums.c:818
+#: ../app/core/core-enums.c:821 ../app/core/core-enums.c:854
 msgid "Item visibility"
 msgstr "Elemendi nähtavus"
 
-#: ../app/core/core-enums.c:786
+#: ../app/core/core-enums.c:822
 msgid "Linked item"
 msgstr "Lingitud element"
 
-#: ../app/core/core-enums.c:787
+#: ../app/core/core-enums.c:823
 msgid "Item properties"
 msgstr "Elemendi omadused"
 
-#: ../app/core/core-enums.c:788 ../app/core/core-enums.c:817
+#: ../app/core/core-enums.c:824 ../app/core/core-enums.c:853
 msgid "Move item"
 msgstr "Liiguta elementi"
 
-#: ../app/core/core-enums.c:789
+#: ../app/core/core-enums.c:825
 msgid "Scale item"
 msgstr "Vii element mõõtu"
 
-#: ../app/core/core-enums.c:790
+#: ../app/core/core-enums.c:826
 msgid "Resize item"
 msgstr "Muuda elemendi suurust"
 
-#: ../app/core/core-enums.c:791 ../app/core/core-enums.c:828
+#: ../app/core/core-enums.c:827 ../app/core/core-enums.c:864
 msgid "Add layer mask"
 msgstr "Lisa kanali mask"
 
-#: ../app/core/core-enums.c:792 ../app/core/core-enums.c:830
+#: ../app/core/core-enums.c:828 ../app/core/core-enums.c:866
 msgid "Apply layer mask"
 msgstr "Rakenda kanali mask"
 
-#: ../app/core/core-enums.c:793
+#: ../app/core/core-enums.c:829
 msgid "Floating selection to layer"
 msgstr "Teisenda ujuv valik kihiks"
 
-#: ../app/core/core-enums.c:794
+#: ../app/core/core-enums.c:830
 msgid "Float selection"
 msgstr "Ujuta valikut"
 
-#: ../app/core/core-enums.c:795
+#: ../app/core/core-enums.c:831
 msgid "Anchor floating selection"
 msgstr "Ankurda ujuv valik"
 
-#: ../app/core/core-enums.c:796
+#: ../app/core/core-enums.c:832
 msgid "Remove floating selection"
 msgstr "Eemalda ujuv valik"
 
-#: ../app/core/core-enums.c:797 ../app/core/gimp-edit.c:248
+#: ../app/core/core-enums.c:833 ../app/core/gimp-edit.c:246
 msgid "Paste"
 msgstr "Aseta"
 
-#: ../app/core/core-enums.c:798 ../app/core/gimp-edit.c:399
+#: ../app/core/core-enums.c:834 ../app/core/gimp-edit.c:407
 msgid "Cut"
 msgstr "Lõika"
 
-#: ../app/core/core-enums.c:799 ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:835 ../app/core/core-enums.c:862
 #: ../app/tools/gimptexttool.c:146 ../app/widgets/widgets-enums.c:263
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:800 ../app/core/core-enums.c:843
+#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:879
 #: ../app/core/gimpdrawable-transform.c:911
 msgid "Transform"
 msgstr "Teisenda"
 
-#: ../app/core/core-enums.c:801 ../app/core/core-enums.c:844
+#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:880
 #: ../app/paint/gimppaintcore.c:345
 msgid "Paint"
 msgstr "Värvi"
 
-#: ../app/core/core-enums.c:802 ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:838 ../app/core/core-enums.c:882
 msgid "Attach parasite"
 msgstr "Lisa parasiit"
 
-#: ../app/core/core-enums.c:803 ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:883
 msgid "Remove parasite"
 msgstr "Eemalda parasiit"
 
-#: ../app/core/core-enums.c:804
+#: ../app/core/core-enums.c:840
 msgid "Import paths"
 msgstr "Impordi vektorjooned"
 
-#: ../app/core/core-enums.c:805 ../app/pdb/drawable_cmds.c:1693
+#: ../app/core/core-enums.c:841 ../app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: ../app/core/core-enums.c:806
+#: ../app/core/core-enums.c:842
 msgid "Image type"
 msgstr "Pildi tüüp"
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:843
 msgid "Image size"
 msgstr "Pildi suurus"
 
-#: ../app/core/core-enums.c:808
+#: ../app/core/core-enums.c:844
 msgid "Resolution change"
 msgstr "Eraldusvõime muutmine"
 
-#: ../app/core/core-enums.c:812
+#: ../app/core/core-enums.c:848
 msgid "Change indexed palette"
 msgstr "Muuda indekseeritud värvipalette"
 
-#: ../app/core/core-enums.c:816
+#: ../app/core/core-enums.c:852
 msgid "Rename item"
 msgstr "Nimeta element ümber"
 
-#: ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:855
 msgid "Set item linked"
 msgstr "Sea element lingituks"
 
-#: ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:856
 msgid "New layer"
 msgstr "Uus kiht"
 
-#: ../app/core/core-enums.c:822
+#: ../app/core/core-enums.c:858
 msgid "Reposition layer"
 msgstr "Paiguta kiht ümber"
 
-#: ../app/core/core-enums.c:823
+#: ../app/core/core-enums.c:859
 msgid "Set layer mode"
 msgstr "Sea kihi olek"
 
-#: ../app/core/core-enums.c:824
+#: ../app/core/core-enums.c:860
 msgid "Set layer opacity"
 msgstr "Sea kihi läbipaistmatus"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:861
 msgid "Set preserve trans"
 msgstr ""
 
-#: ../app/core/core-enums.c:827
+#: ../app/core/core-enums.c:863
 msgid "Text modified"
 msgstr "Tekst on muudetud"
 
-#: ../app/core/core-enums.c:829
+#: ../app/core/core-enums.c:865
 msgid "Delete layer mask"
 msgstr "Kustuta kihi mask"
 
-#: ../app/core/core-enums.c:831
+#: ../app/core/core-enums.c:867
 msgid "Show layer mask"
 msgstr "Näita kihi maski"
 
-#: ../app/core/core-enums.c:832
+#: ../app/core/core-enums.c:868
 msgid "New channel"
 msgstr "Uus kanal"
 
-#: ../app/core/core-enums.c:834
+#: ../app/core/core-enums.c:870
 msgid "Reposition channel"
 msgstr ""
 
-#: ../app/core/core-enums.c:835
+#: ../app/core/core-enums.c:871
 msgid "Channel color"
 msgstr "Kanali värv"
 
-#: ../app/core/core-enums.c:836
+#: ../app/core/core-enums.c:872
 msgid "New vectors"
 msgstr "Kustuta vektorid"
 
-#: ../app/core/core-enums.c:837
+#: ../app/core/core-enums.c:873
 msgid "Delete vectors"
 msgstr "Kustuta vektorid"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:874
 msgid "Vectors mod"
 msgstr ""
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:875
 msgid "Reposition vectors"
 msgstr ""
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:876
 msgid "FS to layer"
 msgstr ""
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:877
 msgid "FS rigor"
 msgstr ""
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:878
 msgid "FS relax"
 msgstr ""
 
-#: ../app/core/core-enums.c:845 ../app/paint/gimpink.c:103
+#: ../app/core/core-enums.c:881 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:62
 msgid "Ink"
 msgstr "Tint"
 
-#: ../app/core/core-enums.c:848
+#: ../app/core/core-enums.c:884
 msgid "EEK: can't undo"
 msgstr "EEK: ei saa tagasi võtta"
 
@@ -4329,43 +4354,43 @@ msgstr "EEK: ei saa tagasi võtta"
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Ei saa lõigata ega kopeerida sest valitud regioon on tühi."
 
-#: ../app/core/gimp-edit.c:176 ../app/core/gimp-edit.c:300
+#: ../app/core/gimp-edit.c:174 ../app/core/gimp-edit.c:308
 msgid "Pasted Layer"
 msgstr "Asetatud kiht"
 
-#: ../app/core/gimp-edit.c:350
+#: ../app/core/gimp-edit.c:358
 msgid "Fill with FG Color"
 msgstr "Täida esiplaanivärviga"
 
-#: ../app/core/gimp-edit.c:354 ../app/core/gimp-edit.c:375
+#: ../app/core/gimp-edit.c:362 ../app/core/gimp-edit.c:383
 msgid "Fill with BG Color"
 msgstr "Täida tagaplaanivärviga"
 
-#: ../app/core/gimp-edit.c:358
+#: ../app/core/gimp-edit.c:366
 msgid "Fill with White"
 msgstr "Täida valge värviga"
 
-#: ../app/core/gimp-edit.c:362
+#: ../app/core/gimp-edit.c:370
 msgid "Fill with Transparency"
 msgstr "Täida läbipaistvusega"
 
-#: ../app/core/gimp-edit.c:366
+#: ../app/core/gimp-edit.c:374
 msgid "Fill with Pattern"
 msgstr "Täida mustriga"
 
-#: ../app/core/gimp-gradients.c:70
+#: ../app/core/gimp-gradients.c:68
 msgid "FG to BG (RGB)"
 msgstr "FG BG-ks (RGB)"
 
-#: ../app/core/gimp-gradients.c:75
+#: ../app/core/gimp-gradients.c:73
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr ""
 
-#: ../app/core/gimp-gradients.c:80
+#: ../app/core/gimp-gradients.c:78
 msgid "FG to BG (HSV clockwise hue)"
 msgstr ""
 
-#: ../app/core/gimp-gradients.c:85
+#: ../app/core/gimp-gradients.c:83
 msgid "FG to Transparent"
 msgstr "Esiplaanivärv läbipaistvaks"
 
@@ -4405,100 +4430,113 @@ msgstr "Dokumendid"
 msgid "Modules"
 msgstr "Moodulid"
 
-#: ../app/core/gimpbrush-load.c:162
+#: ../app/core/gimpbrush-load.c:152
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Ei saanud lugeda %d baiti '%s'-st: %s"
 
-#: ../app/core/gimpbrush-load.c:182
+#: ../app/core/gimpbrush-load.c:172
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Laius = 0."
 
-#: ../app/core/gimpbrush-load.c:191
+#: ../app/core/gimpbrush-load.c:181
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Kõrgus = 0."
 
-#: ../app/core/gimpbrush-load.c:200
+#: ../app/core/gimpbrush-load.c:190
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Baite = 0."
 
-#: ../app/core/gimpbrush-load.c:224
+#: ../app/core/gimpbrush-load.c:214
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu sügavus %d."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu sügavus %d."
 
-#: ../app/core/gimpbrush-load.c:237
+#: ../app/core/gimpbrush-load.c:227
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu versioon %d."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu versioon %d."
 
-#: ../app/core/gimpbrush-load.c:253 ../app/core/gimpbrush-load.c:373
+#: ../app/core/gimpbrush-load.c:243 ../app/core/gimpbrush-load.c:363
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Tundub et faili lõpust on jupp puudu."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Tundub et faili lõpust "
+"on jupp puudu."
 
-#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated.c:649
-#: ../app/core/gimpbrushpipe.c:348
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimpbrushgenerated.c:641
+#: ../app/core/gimpbrushpipe.c:347
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Vigane UTF-8 tekstilõik pintslifailis '%s'."
 
-#: ../app/core/gimpbrush-load.c:268 ../app/core/gimpcontext.c:1296
-#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:390
+#: ../app/core/gimpbrush-load.c:258 ../app/core/gimpcontext.c:1294
+#: ../app/core/gimpitem.c:475 ../app/core/gimppattern.c:374
 #: ../app/dialogs/template-options-dialog.c:80
 #: ../app/tools/gimpvectortool.c:334
 msgid "Unnamed"
 msgstr "Nimetu"
 
-#: ../app/core/gimpbrush-load.c:362
+#: ../app/core/gimpbrush-load.c:352
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Saatuslik andmete sõelumise viga pintslifailis '%s': Mittetoetatud pintsli sügavus %d\n"
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Mittetoetatud pintsli "
+"sügavus %d\n"
 "GIMP'i pintslid peavad olema GRAY või RGBA."
 
-#: ../app/core/gimpbrush-load.c:419
+#: ../app/core/gimpbrush-load.c:408
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Võimatu dekodeerida abr formaadi versiooni %d."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Võimatu dekodeerida abr "
+"formaadi versiooni %d."
 
-#: ../app/core/gimpbrush-load.c:436
+#: ../app/core/gimpbrush-load.c:425
 #, c-format
 msgid "Fatal parse error in brush file '%s'"
 msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s'"
 
-#: ../app/core/gimpbrushgenerated.c:615
+#: ../app/core/gimpbrushgenerated.c:607
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': See ei ole GIMP'i pintslifail."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': See ei ole GIMP'i "
+"pintslifail."
 
-#: ../app/core/gimpbrushgenerated.c:631
+#: ../app/core/gimpbrushgenerated.c:623
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu GIMP pintliversioon."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu GIMP "
+"pintliversioon."
 
-#: ../app/core/gimpbrushgenerated.c:670
+#: ../app/core/gimpbrushgenerated.c:662
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu GIMP'i pintslikuju."
+msgstr ""
+"Saatuslik andmete sõelumise viga pintslifailis '%s': Tundmatu GIMP'i "
+"pintslikuju."
 
-#: ../app/core/gimpbrushgenerated.c:751
+#: ../app/core/gimpbrushgenerated.c:740
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Viga pintslifaili '%s' lugemisel: %s"
 
-#: ../app/core/gimpbrushgenerated.c:753
+#: ../app/core/gimpbrushgenerated.c:742
 msgid "File is truncated"
 msgstr "Fail on lühendatud"
 
-#: ../app/core/gimpbrushpipe.c:364 ../app/core/gimpbrushpipe.c:384
-#: ../app/core/gimpbrushpipe.c:474
+#: ../app/core/gimpbrushpipe.c:363 ../app/core/gimpbrushpipe.c:383
+#: ../app/core/gimpbrushpipe.c:473
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Saatuslik andmete sõelumise viga pintslifailis '%s': Fail on vigane."
@@ -4618,7 +4656,7 @@ msgstr "Vali värvi järgi"
 msgid "Could not delete '%s': %s"
 msgstr "Ei suutnud '%s' kustutada: %s"
 
-#: ../app/core/gimpdatafactory.c:324 ../app/core/gimpdatafactory.c:542
+#: ../app/core/gimpdatafactory.c:322 ../app/core/gimpdatafactory.c:532
 #, c-format
 msgid ""
 "Warning: Failed to save data:\n"
@@ -4629,17 +4667,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:444 ../app/core/gimpdatafactory.c:447
+#: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:437
 #: ../app/core/gimpitem.c:272 ../app/core/gimpitem.c:275
 msgid "copy"
 msgstr "koopia"
 
-#: ../app/core/gimpdatafactory.c:456 ../app/core/gimpitem.c:284
+#: ../app/core/gimpdatafactory.c:446 ../app/core/gimpitem.c:284
 #, c-format
 msgid "%s copy"
 msgstr "%s koopia"
 
-#: ../app/core/gimpdatafactory.c:641
+#: ../app/core/gimpdatafactory.c:628
 #, c-format
 msgid ""
 "Warning: Failed to load data:\n"
@@ -4717,37 +4755,41 @@ msgstr "Tühi muutujanimi töökeskkonda kirjeldavas failis %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Lubamatu muutujanimi töökeskkonda kirjeldavas failis %s: %s"
 
-#: ../app/core/gimpgradient-load.c:72
+#: ../app/core/gimpgradient-load.c:71
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Saatuslik andmete sõelumise viga spektrikomplekti failis '%s': See pole GIMP'i apektrikomplekti fail."
+msgstr ""
+"Saatuslik andmete sõelumise viga spektrikomplekti failis '%s': See pole "
+"GIMP'i apektrikomplekti fail."
 
-#: ../app/core/gimpgradient-load.c:89
+#: ../app/core/gimpgradient-load.c:88
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Vigane UTF-8 tekstilõik spektrikomplekti failis '%s'."
 
-#: ../app/core/gimpgradient-load.c:111
+#: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt."
-msgstr "Saatuslik andmete sõelumise viga spektrikomplekti failis '%s': Fail on vigane."
+msgstr ""
+"Saatuslik andmete sõelumise viga spektrikomplekti failis '%s': Fail on "
+"vigane."
 
-#: ../app/core/gimpgradient-load.c:168
+#: ../app/core/gimpgradient-load.c:167
 #, c-format
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr ""
 
-#: ../app/core/gimpgradient-load.c:179 ../app/core/gimpgradient-load.c:193
+#: ../app/core/gimpgradient-load.c:178 ../app/core/gimpgradient-load.c:192
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
 
-#: ../app/core/gimpgradient-load.c:277
+#: ../app/core/gimpgradient-load.c:275
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "Lineaarseid spektrikomplekte '%s'-st ei leidnud."
 
-#: ../app/core/gimpgradient-load.c:287
+#: ../app/core/gimpgradient-load.c:285
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Ei õnnestunud spektrikomplekte '%s'-st importida: %s"
@@ -5218,39 +5260,35 @@ msgstr "Liiguta kihi maski"
 msgid "Show Layer Mask"
 msgstr "Näita kihi maski"
 
-#: ../app/core/gimppalette-import.c:491
+#: ../app/core/gimppalette-import.c:561
 #, c-format
-msgid ""
-"Unknown type of palette file:\n"
-"%s"
-msgstr ""
-"Tundmatu värvipaletifaili tüüp:\n"
-"%s"
+msgid "Unknown type of palette file: %s"
+msgstr "Tundmatu värvipaletifaili tüüp: %s"
 
-#: ../app/core/gimppalette.c:376
+#: ../app/core/gimppalette.c:373
 #, c-format
 msgid ""
 "Fatal parse error in palette file '%s': Missing magic header.\n"
 "Does this file need converting from DOS?"
 msgstr ""
 
-#: ../app/core/gimppalette.c:382
+#: ../app/core/gimppalette.c:379
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr ""
 
-#: ../app/core/gimppalette.c:398 ../app/core/gimppalette.c:423
-#: ../app/core/gimppalette.c:453 ../app/core/gimppalette.c:533
+#: ../app/core/gimppalette.c:395 ../app/core/gimppalette.c:420
+#: ../app/core/gimppalette.c:450 ../app/core/gimppalette.c:530
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 
-#: ../app/core/gimppalette.c:413
+#: ../app/core/gimppalette.c:410
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Vigane UTF-8 tekstilõik värvipaleti failis '%s'"
 
-#: ../app/core/gimppalette.c:441
+#: ../app/core/gimppalette.c:438
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -5258,46 +5296,46 @@ msgid ""
 msgstr ""
 
 #. maybe we should just abort?
-#: ../app/core/gimppalette.c:481
+#: ../app/core/gimppalette.c:478
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
 
-#: ../app/core/gimppalette.c:489
+#: ../app/core/gimppalette.c:486
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
 msgstr ""
 
-#: ../app/core/gimppalette.c:497
+#: ../app/core/gimppalette.c:494
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr ""
 
-#: ../app/core/gimppalette.c:507
+#: ../app/core/gimppalette.c:504
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 
-#: ../app/core/gimppattern.c:327 ../app/core/gimppattern.c:374
-#: ../app/core/gimppattern.c:406
+#: ../app/core/gimppattern.c:311 ../app/core/gimppattern.c:358
+#: ../app/core/gimppattern.c:390
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
 msgstr ""
 
-#: ../app/core/gimppattern.c:347
+#: ../app/core/gimppattern.c:331
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 
-#: ../app/core/gimppattern.c:357
+#: ../app/core/gimppattern.c:341
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
 
-#: ../app/core/gimppattern.c:383
+#: ../app/core/gimppattern.c:367
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Vigane UTF-8 tekstilõik mustrifailis '%s'."
@@ -5335,15 +5373,15 @@ msgstr "Pööra valik pahupidi"
 msgid "No selection to stroke."
 msgstr "Pole valikut mida pintseldada."
 
-#: ../app/core/gimpselection.c:815
+#: ../app/core/gimpselection.c:821
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Ei saa valikut ujutada sest valitud regioon on tühi."
 
-#: ../app/core/gimpselection.c:822
+#: ../app/core/gimpselection.c:828
 msgid "Float Selection"
 msgstr "Ujuv valik"
 
-#: ../app/core/gimpselection.c:839
+#: ../app/core/gimpselection.c:845
 msgid "Floated Layer"
 msgstr "Ujutatud kiht"
 
@@ -5355,15 +5393,15 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:156
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
-msgstr ""
+msgstr "Mõõtühik, mida kasutatakse kui ei ole punkt-punktilt režiimis. "
 
 #: ../app/core/gimptemplate.c:163
 msgid "The horizontal image resolution."
-msgstr ""
+msgstr "Pildi horisontaalne eraldusvõime."
 
 #: ../app/core/gimptemplate.c:168
 msgid "The vertical image resolution."
-msgstr ""
+msgstr "Pildi vertikaalne eraldusvõime."
 
 #: ../app/core/gimptemplate.c:448 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -5441,9 +5479,13 @@ msgstr ""
 msgid "About The GIMP"
 msgstr "Teave GIMP'i kohta"
 
-#: ../app/dialogs/channel-options-dialog.c:143
-msgid "Channel Name:"
-msgstr "Kanali nimi:"
+#: ../app/dialogs/channel-options-dialog.c:144
+msgid "Channel _Name:"
+msgstr "Kanali _nimi:"
+
+#: ../app/dialogs/channel-options-dialog.c:173
+msgid "Initialize from _selection"
+msgstr "Algväärtusta _valikust"
 
 #: ../app/dialogs/convert-dialog.c:119
 msgid "Indexed Color Conversion"
@@ -5572,7 +5614,7 @@ msgstr "Ava asukoht"
 
 #: ../app/dialogs/file-open-location-dialog.c:109
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "Sisesta asukoht (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:259 ../app/dialogs/file-save-dialog.c:295
 msgid ""
@@ -5757,7 +5799,7 @@ msgstr "Pole enam kättesaadaval"
 
 #: ../app/dialogs/module-dialog.c:475
 msgid "Load"
-msgstr "Lae"
+msgstr "Laadi"
 
 #: ../app/dialogs/module-dialog.c:477
 msgid "Query"
@@ -6112,7 +6154,7 @@ msgstr "Vali teema"
 
 #: ../app/dialogs/preferences-dialog.c:1558
 msgid "Reload C_urrent Theme"
-msgstr "Lae aktiivne teema _uuesti"
+msgstr "Laadi aktiivne teema _uuesti"
 
 #: ../app/dialogs/preferences-dialog.c:1570
 msgid "Help System"
@@ -6352,7 +6394,7 @@ msgid "Get Monitor Resolution"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2049
-#: ../app/widgets/gimpcursorview.c:125 ../app/widgets/gimpgrideditor.c:267
+#: ../app/widgets/gimpcursorview.c:126 ../app/widgets/gimpgrideditor.c:267
 #: ../app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "pikslit"
@@ -6487,7 +6529,7 @@ msgstr ""
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2306
 msgid "Window Positions"
-msgstr ""
+msgstr "Akende asukohad"
 
 #: ../app/dialogs/preferences-dialog.c:2309
 msgid "_Save window positions on exit"
@@ -6495,7 +6537,7 @@ msgstr "_Salvesta väljumisel akende asukohad"
 
 #: ../app/dialogs/preferences-dialog.c:2313
 msgid "Save Window Positions _Now"
-msgstr ""
+msgstr "Salvesta akende asukohad _nüüd"
 
 #: ../app/dialogs/preferences-dialog.c:2320
 msgid "_Reset Saved Window Positions to Default Values"
@@ -6524,71 +6566,71 @@ msgstr "Vali saalefaili kaust"
 
 #: ../app/dialogs/preferences-dialog.c:2387
 msgid "Brush Folders"
-msgstr ""
+msgstr "Pintslite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2389
 msgid "Select Brush Folders"
-msgstr ""
+msgstr "Vali pintslite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2391
 msgid "Pattern Folders"
-msgstr ""
+msgstr "Mustrite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2393
 msgid "Select Pattern Folders"
-msgstr ""
+msgstr "Vali mustrite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2395
 msgid "Palette Folders"
-msgstr ""
+msgstr "Värvipalettide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2397
 msgid "Select Palette Folders"
-msgstr ""
+msgstr "Vali värvipalettide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2399
 msgid "Gradient Folders"
-msgstr ""
+msgstr "Spektrikomplektide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2401
 msgid "Select Gradient Folders"
-msgstr ""
+msgstr "Vali spektrikomplektide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2403
 msgid "Font Folders"
-msgstr ""
+msgstr "Fontide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2405
 msgid "Select Font Folders"
-msgstr ""
+msgstr "Vali fontide kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2407
 msgid "Plug-In Folders"
-msgstr ""
+msgstr "Pistikute kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2409
 msgid "Select Plug-In Folders"
-msgstr ""
+msgstr "Vali pistikute kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2411
 msgid "Scripts"
-msgstr ""
+msgstr "Skriptid"
 
 #: ../app/dialogs/preferences-dialog.c:2411
 msgid "Script-Fu Folders"
-msgstr ""
+msgstr "Script-Fu Kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2413
 msgid "Select Script-Fu Folders"
-msgstr ""
+msgstr "Vali Script-Fu kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2415
 msgid "Module Folders"
-msgstr ""
+msgstr "Moodulite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2417
 msgid "Select Module Folders"
-msgstr ""
+msgstr "Vali moodulite kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2419
 msgid "Interpreters"
@@ -6604,23 +6646,23 @@ msgstr "Vali interpretaatori kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2423
 msgid "Environment Folders"
-msgstr ""
+msgstr "Töökeskkonna kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2425
 msgid "Select Environment Folders"
-msgstr ""
+msgstr "Vali töökeskkonna kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2427
 msgid "Themes"
-msgstr ""
+msgstr "Teemad"
 
 #: ../app/dialogs/preferences-dialog.c:2427
 msgid "Theme Folders"
-msgstr ""
+msgstr "Teemade kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2429
 msgid "Select Theme Folders"
-msgstr ""
+msgstr "Vali teemade kaustad"
 
 #: ../app/dialogs/print-size-dialog.c:134
 msgid "Print Size"
@@ -6641,18 +6683,18 @@ msgstr "_Kõrgus:"
 #: ../app/dialogs/print-size-dialog.c:216 ../app/widgets/gimpsizebox.c:274
 #: ../app/widgets/gimptemplateeditor.c:359
 msgid "_X resolution:"
-msgstr ""
+msgstr "_X eraldusvõime:"
 
 #: ../app/dialogs/print-size-dialog.c:223 ../app/widgets/gimpsizebox.c:277
 #: ../app/widgets/gimptemplateeditor.c:366
 msgid "_Y resolution:"
-msgstr ""
+msgstr "_Y eraldusvõime:"
 
 #: ../app/dialogs/print-size-dialog.c:234 ../app/widgets/gimpsizebox.c:270
 #: ../app/widgets/gimptemplateeditor.c:379
 #, c-format
 msgid "pixels/%a"
-msgstr ""
+msgstr "pikslit/%a"
 
 #: ../app/dialogs/quit-dialog.c:87
 msgid "Quit The GIMP"
@@ -6673,7 +6715,7 @@ msgstr "%d pildi muudatused on salvestamata:"
 
 #: ../app/dialogs/quit-dialog.c:199
 msgid "_Discard Changes"
-msgstr "_Unusta muudatused"
+msgstr "_Ära salvesta"
 
 #: ../app/dialogs/resize-dialog.c:116
 msgid "Canvas Size"
@@ -6689,11 +6731,11 @@ msgstr "Muuda _kihtide suurusi:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
-msgstr ""
+msgstr "Monitori eraldusvõime õigeks seadmine"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
-msgstr ""
+msgstr "Mõõda joonlauad ära ja sisesta nende pikkused:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
@@ -6714,7 +6756,7 @@ msgstr "Kvaliteet"
 
 #: ../app/dialogs/scale-dialog.c:184
 msgid "I_nterpolation:"
-msgstr ""
+msgstr "I_nterpoleerimine:"
 
 #: ../app/dialogs/scale-dialog.c:201
 msgid ""
@@ -6889,11 +6931,11 @@ msgstr ""
 
 #: ../app/dialogs/user-install-dialog.c:266
 msgid "This folder is searched for image templates."
-msgstr ""
+msgstr "Sellest kataloogist otsitakse piltide malle."
 
 #: ../app/dialogs/user-install-dialog.c:271
 msgid "This folder is searched for user-installed themes."
-msgstr ""
+msgstr "Sellest kataloogist otsitakse kasutaja poolt paigaldatud teemasid."
 
 #: ../app/dialogs/user-install-dialog.c:276
 msgid "This folder is used for temporary files."
@@ -7089,7 +7131,12 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr "Kõik pildi ja tagasivõtmisega seotud andmed, mis ei mahu Tööpuhvri sisse, kirjutatakse saalefaili.  Hea oleks kui see fail asuks kohalikul kõvakettal, millel on piisavalt vaba ruumi (mõnisada megabaiti). UNIX süsteemis oleks hea kasutada ülesüsteemilist ajutiste failide kataloogi (\"/tmp\" või \"/var/tmp\")."
+msgstr ""
+"Kõik pildi ja tagasivõtmisega seotud andmed, mis ei mahu Tööpuhvri sisse, "
+"kirjutatakse saalefaili.  Hea oleks kui see fail asuks kohalikul kõvakettal, "
+"millel on piisavalt vaba ruumi (mõnisada megabaiti). UNIX süsteemis oleks "
+"hea kasutada ülesüsteemilist ajutiste failide kataloogi (\"/tmp\" või \"/var/"
+"tmp\")."
 
 #: ../app/dialogs/user-install-dialog.c:1415
 msgid "Select swap dir"
@@ -7113,7 +7160,7 @@ msgstr ""
 
 #: ../app/dialogs/vectors-import-dialog.c:88
 msgid "All Files (*.*)"
-msgstr ""
+msgstr "Kõik failid (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:93
 msgid "Scalable SVG image (*.svg)"
@@ -7133,7 +7180,7 @@ msgstr ""
 
 #: ../app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr ""
+msgstr "Tööriista ikoon"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
@@ -7145,7 +7192,7 @@ msgstr ""
 
 #: ../app/display/display-enums.c:55
 msgid "From theme"
-msgstr ""
+msgstr "Teemast"
 
 #: ../app/display/display-enums.c:56
 msgid "Light check color"
@@ -7157,7 +7204,7 @@ msgstr ""
 
 #: ../app/display/display-enums.c:58
 msgid "Custom color"
-msgstr ""
+msgstr "Omatehtud värv"
 
 #: ../app/display/gimpdisplayshell.c:912
 msgid "Zoom image when window size changes"
@@ -7165,7 +7212,7 @@ msgstr "Akna suuruse muutmisel muuda ka pildi suurust"
 
 #: ../app/display/gimpdisplayshell.c:932
 msgid "Toggle Quick Mask"
-msgstr ""
+msgstr "Pööra kiirmask"
 
 #: ../app/display/gimpdisplayshell-close.c:123
 #: ../app/display/gimpdisplayshell-close.c:198
@@ -7251,40 +7298,40 @@ msgstr "Suurus:"
 
 #: ../app/display/gimpdisplayshell-title.c:223
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-tühi"
 
 #: ../app/display/gimpdisplayshell-title.c:226
 msgid "grayscale-empty"
-msgstr ""
+msgstr "Halltoonid-tühi"
 
 #: ../app/display/gimpdisplayshell-title.c:226
 msgid "grayscale"
-msgstr ""
+msgstr "Halltoonid"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "indexed-empty"
-msgstr ""
+msgstr "Indekseeritud-tühi"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "indexed"
-msgstr ""
+msgstr "Indekseeritud"
 
 #: ../app/display/gimpdisplayshell-title.c:281
 msgid "(modified)"
-msgstr ""
+msgstr "(muudetud)"
 
 #: ../app/display/gimpdisplayshell-title.c:287
 msgid "(clean)"
-msgstr ""
+msgstr "(puhas)"
 
 #: ../app/display/gimpdisplayshell-title.c:314
 msgid "1 layer"
-msgstr ""
+msgstr "1 kiht"
 
 #: ../app/display/gimpdisplayshell-title.c:314
 #, c-format
 msgid "%d layers"
-msgstr "kihte %d"
+msgstr "%d kihti"
 
 #: ../app/display/gimpdisplayshell-title.c:326
 #: ../app/display/gimpdisplayshell-title.c:338
@@ -7294,17 +7341,17 @@ msgstr "(pole)"
 
 #: ../app/display/gimpstatusbar.c:146
 msgid "Shadow type"
-msgstr ""
+msgstr "Varju tüüp"
 
 #: ../app/display/gimpstatusbar.c:147
 msgid "Style of bevel around the statusbar text"
-msgstr ""
+msgstr "Olekuriba teksti ümber oleva kaldserva tüüp"
 
-#: ../app/display/gimpstatusbar.c:226
+#: ../app/display/gimpstatusbar.c:228
 msgid "Cancel"
 msgstr "Tühista"
 
-#: ../app/display/gimpstatusbar.c:450
+#: ../app/display/gimpstatusbar.c:452
 msgid "Other..."
 msgstr "Muu..."
 
@@ -7318,7 +7365,7 @@ msgstr "Ei ole tavaline fail"
 
 #: ../app/file/file-open.c:173
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr ""
+msgstr "Pistik tagastas SUCCESS aga ei tagastanud pilti"
 
 #: ../app/file/file-open.c:181
 msgid "Plug-In could not open image"
@@ -7334,10 +7381,10 @@ msgstr "Pistik ei suutnud pilti salvestada"
 
 #: ../app/file/file-utils.c:107
 msgid "Invalid character sequence in URI"
-msgstr ""
+msgstr "URI koosneb lubamatust tähemärkiderodust"
 
 #: ../app/gui/session.c:246 ../app/menus/menus.c:373
-#: ../app/tools/gimp-tools.c:399 ../app/widgets/gimpdevices.c:218
+#: ../app/tools/gimp-tools.c:401 ../app/widgets/gimpdevices.c:218
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "\"%s\" kustutamine ebaõnnestus: %s"
@@ -7412,7 +7459,7 @@ msgstr "Udustamine"
 msgid "Sharpen"
 msgstr "Teravustamine"
 
-#: ../app/pdb/color_cmds.c:142 ../app/tools/gimpbrightnesscontrasttool.c:85
+#: ../app/pdb/color_cmds.c:142 ../app/tools/gimpbrightnesscontrasttool.c:101
 msgid "Brightness-Contrast"
 msgstr "Heledus-Kontrastsus"
 
@@ -7451,13 +7498,13 @@ msgstr "Peegelda..."
 #: ../app/pdb/transform_tools_cmds.c:198
 #: ../app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
-msgstr ""
+msgstr "Perspektiiv..."
 
 #: ../app/pdb/drawable_transform_cmds.c:1655
 #: ../app/pdb/drawable_transform_cmds.c:1797
 #: ../app/pdb/transform_tools_cmds.c:590 ../app/tools/gimpsheartool.c:158
 msgid "Shearing..."
-msgstr ""
+msgstr "Nihutamine..."
 
 #: ../app/pdb/drawable_transform_cmds.c:1949
 #: ../app/pdb/drawable_transform_cmds.c:2130
@@ -7465,7 +7512,7 @@ msgstr ""
 #: ../app/pdb/drawable_transform_cmds.c:2518
 #: ../app/pdb/transform_tools_cmds.c:723
 msgid "2D Transform..."
-msgstr ""
+msgstr "2D teisendus..."
 
 #: ../app/pdb/edit_cmds.c:673 ../app/tools/gimpblendtool.c:243
 msgid "Blending..."
@@ -7486,7 +7533,7 @@ msgstr "Pintsel"
 
 #: ../app/pdb/internal_procs.c:90
 msgid "Brush UI"
-msgstr ""
+msgstr "Pintsli UI"
 
 #: ../app/pdb/internal_procs.c:105
 msgid "Convert"
@@ -7502,7 +7549,7 @@ msgstr ""
 
 #: ../app/pdb/internal_procs.c:114
 msgid "Transformation procedures"
-msgstr ""
+msgstr "Teisendamise protseduurid"
 
 #: ../app/pdb/internal_procs.c:117
 msgid "Edit procedures"
@@ -7518,7 +7565,7 @@ msgstr "Ujutatud valikud"
 
 #: ../app/pdb/internal_procs.c:126
 msgid "Font UI"
-msgstr ""
+msgstr "Fondi UI"
 
 #: ../app/pdb/internal_procs.c:132
 msgid "Gimprc procedures"
@@ -7530,7 +7577,7 @@ msgstr "Spektrikomplekt"
 
 #: ../app/pdb/internal_procs.c:138
 msgid "Gradient UI"
-msgstr ""
+msgstr "Spektrikomplekti UI"
 
 #: ../app/pdb/internal_procs.c:144
 msgid "Guide procedures"
@@ -7558,7 +7605,7 @@ msgstr "Värvipalett"
 
 #: ../app/pdb/internal_procs.c:168
 msgid "Palette UI"
-msgstr ""
+msgstr "Värvipaleti UI"
 
 #: ../app/pdb/internal_procs.c:174
 msgid "Parasite procedures"
@@ -7566,7 +7613,7 @@ msgstr "Parasiitprotseduurid"
 
 #: ../app/pdb/internal_procs.c:183
 msgid "Pattern UI"
-msgstr ""
+msgstr "Mustri UI"
 
 #: ../app/pdb/internal_procs.c:189
 msgid "Plug-in"
@@ -7596,7 +7643,7 @@ msgstr "Teksti protseduurid"
 msgid "Transform Tool procedures"
 msgstr "Teisendamise tööriista protseduurid"
 
-#: ../app/pdb/internal_procs.c:213 ../app/widgets/gimpcursorview.c:147
+#: ../app/pdb/internal_procs.c:213 ../app/widgets/gimpcursorview.c:148
 msgid "Units"
 msgstr "Ühikud"
 
@@ -7622,7 +7669,7 @@ msgstr ""
 msgid "Free Select"
 msgstr "Vabakäejoone valik"
 
-#: ../app/pdb/vectors_cmds.c:173
+#: ../app/pdb/vectors_cmds.c:238
 msgid "Modify Path"
 msgstr "Muuda vektorjoont"
 
@@ -7768,7 +7815,8 @@ msgstr "Loobu tekstiteabest"
 
 #: ../app/text/gimptextlayer.c:579
 msgid "Due to lack of any fonts, text functionality is not available."
-msgstr "Mingi fontide jama pärast pole tekstiga töötamise vahendid kasutatavad."
+msgstr ""
+"Mingi fontide jama pärast pole tekstiga töötamise vahendid kasutatavad."
 
 #: ../app/text/gimptextlayer.c:614
 msgid "Empty Text Layer"
@@ -7856,7 +7904,7 @@ msgstr "Ruudustiku joonte arv"
 msgid "Grid line spacing"
 msgstr "Ruudustiku joonte vahekaugus"
 
-#: ../app/tools/gimp-tools.c:296
+#: ../app/tools/gimp-tools.c:298
 msgid "This tool has no options."
 msgstr "Sellel tööriistal pole võimalusi."
 
@@ -7895,7 +7943,7 @@ msgstr ""
 
 #: ../app/tools/gimpblendoptions.c:294
 msgid "Max Depth:"
-msgstr ""
+msgstr "Maks. sügavus:"
 
 #: ../app/tools/gimpblendoptions.c:301
 #: ../app/tools/gimpbucketfilloptions.c:294
@@ -7920,27 +7968,27 @@ msgstr "Sega kokku: indekseeritud piltide puhul kahjuks võimatu."
 msgid "Blend: "
 msgstr "Sega kokku:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:86
+#: ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "Adjust brightness and contrast"
 msgstr "Reguleeri heledust ja kontrastsust"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:87
+#: ../app/tools/gimpbrightnesscontrasttool.c:103
 msgid "B_rightness-Contrast..."
 msgstr "_Heledus-Kontrastsus..."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:138
+#: ../app/tools/gimpbrightnesscontrasttool.c:158
 msgid "Adjust Brightness and Contrast"
 msgstr "Reguleeri heledust ja kontrastsust"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:181
+#: ../app/tools/gimpbrightnesscontrasttool.c:201
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Heledus-kontrastsus ei tööta indekseeritud kihtidel."
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:236
+#: ../app/tools/gimpbrightnesscontrasttool.c:322
 msgid "_Brightness:"
 msgstr "_Heledus:"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:251
+#: ../app/tools/gimpbrightnesscontrasttool.c:337
 msgid "Con_trast:"
 msgstr "_Kontrastsus:"
 
@@ -8015,7 +8063,7 @@ msgstr "_Värvitooni järgi valimine"
 
 #: ../app/tools/gimpclonetool.c:93
 msgid "Paint using Patterns or Image Regions"
-msgstr "Värvi kasutades mustreid või pildi regioone"
+msgstr "Klooni kasutades pildi regioone või mustreid"
 
 #: ../app/tools/gimpclonetool.c:94
 msgid "_Clone"
@@ -8254,11 +8302,11 @@ msgstr "Reguleeri värvi kurve"
 
 #: ../app/tools/gimpcurvestool.c:199
 msgid "Load Curves"
-msgstr "Lae kurvid"
+msgstr "Laadi kurvid"
 
 #: ../app/tools/gimpcurvestool.c:200
 msgid "Load curves settings from file"
-msgstr "Lae kurvide seaded failist"
+msgstr "Laadi kurvide seaded failist"
 
 #: ../app/tools/gimpcurvestool.c:201
 msgid "Save Curves"
@@ -8292,7 +8340,7 @@ msgstr "Kurvi tüüp"
 
 #: ../app/tools/gimpdodgeburntool.c:70
 msgid "Dodge or Burn strokes"
-msgstr ""
+msgstr "Helenda või tumenda"
 
 #: ../app/tools/gimpdodgeburntool.c:71
 msgid "Dod_geBurn"
@@ -8441,7 +8489,7 @@ msgstr "Muuda kõiki värve"
 
 #: ../app/tools/gimphuesaturationtool.c:366
 msgid "_Overlap:"
-msgstr ""
+msgstr "Üle_ulatus:"
 
 #: ../app/tools/gimphuesaturationtool.c:384
 msgid "Modify Selected Color"
@@ -8534,11 +8582,11 @@ msgstr "Reguleeri värvitasemeid"
 
 #: ../app/tools/gimplevelstool.c:217
 msgid "Load Levels"
-msgstr "Lae tasemed"
+msgstr "Laadi tasemed"
 
 #: ../app/tools/gimplevelstool.c:218
 msgid "Load levels settings from file"
-msgstr "Lae tasemete seaded failist"
+msgstr "Laadi tasemete seaded failist"
 
 #: ../app/tools/gimplevelstool.c:219
 msgid "Save Levels"
@@ -8629,7 +8677,7 @@ msgstr "Vahemaa:"
 
 #: ../app/tools/gimpmoveoptions.c:169
 msgid "Pick a layer or guide"
-msgstr ""
+msgstr "Vali kiht või abijoon"
 
 #: ../app/tools/gimpmoveoptions.c:170
 msgid "Move the current layer"
@@ -8657,15 +8705,15 @@ msgstr "_Liiguta"
 
 #: ../app/tools/gimpmovetool.c:299 ../app/tools/gimpmovetool.c:577
 msgid "Move Guide: "
-msgstr ""
+msgstr "Liiguta abijoont: "
 
 #: ../app/tools/gimpmovetool.c:571
 msgid "Cancel Guide"
-msgstr ""
+msgstr "Tühista abijoon"
 
 #: ../app/tools/gimpmovetool.c:577
 msgid "Add Guide: "
-msgstr ""
+msgstr "Lisa abijoon: "
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -8846,7 +8894,7 @@ msgstr ""
 msgid "Center"
 msgstr "Keskkpaik"
 
-#: ../app/tools/gimprectangletool.c:816 ../app/tools/gimprectangletool.c:1177
+#: ../app/tools/gimprectangletool.c:804 ../app/tools/gimprectangletool.c:1177
 msgid "Rectangle: "
 msgstr "Ristkülik:"
 
@@ -8858,13 +8906,13 @@ msgstr "1 "
 msgid "2 "
 msgstr "2 "
 
-#: ../app/tools/gimprectangletool.c:1578 ../app/widgets/gimpcursorview.c:138
-#: ../app/widgets/gimpcursorview.c:160
+#: ../app/tools/gimprectangletool.c:1578 ../app/widgets/gimpcursorview.c:139
+#: ../app/widgets/gimpcursorview.c:161
 msgid "X"
 msgstr "X"
 
-#: ../app/tools/gimprectangletool.c:1579 ../app/widgets/gimpcursorview.c:144
-#: ../app/widgets/gimpcursorview.c:166
+#: ../app/tools/gimprectangletool.c:1579 ../app/widgets/gimpcursorview.c:145
+#: ../app/widgets/gimpcursorview.c:167
 msgid "Y"
 msgstr "Y"
 
@@ -8874,7 +8922,7 @@ msgstr "Vali ristkülikukujulised regioonid"
 
 #: ../app/tools/gimprectselecttool.c:97
 msgid "_Rect Select"
-msgstr ""
+msgstr "_Ristk. valik"
 
 #: ../app/tools/gimprectselecttool.c:394
 msgid "Selection: "
@@ -8894,11 +8942,11 @@ msgstr "Pööramise teave"
 
 #: ../app/tools/gimprotatetool.c:185
 msgid "Center X:"
-msgstr ""
+msgstr "Keskpaiga X:"
 
 #: ../app/tools/gimprotatetool.c:190
 msgid "Center Y:"
-msgstr ""
+msgstr "Keskpaiga Y:"
 
 #: ../app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9467,11 +9515,8 @@ msgstr "Vahemaa:"
 msgid "Percentage of width of brush"
 msgstr "Pintslitõmmete vahemaa protsentides"
 
-#: ../app/widgets/gimpbufferview.c:165 ../app/widgets/gimpbufferview.c:246
-#: ../app/widgets/gimpcontainergridview.c:206
-#: ../app/widgets/gimpcontainergridview.c:657
-#: ../app/widgets/gimphistogrameditor.c:141
-#: ../app/widgets/gimphistogrameditor.c:352
+#: ../app/widgets/gimpbufferview.c:166 ../app/widgets/gimpbufferview.c:247
+#: ../app/widgets/gimpeditor.c:758
 msgid "(None)"
 msgstr "(Pole)"
 
@@ -9542,67 +9587,67 @@ msgstr "Filtrit pole valitud"
 msgid "Configure selected filter"
 msgstr "Häälesta valitud filter"
 
-#: ../app/widgets/gimpcoloreditor.c:253
+#: ../app/widgets/gimpcoloreditor.c:280
 msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr ""
 
-#: ../app/widgets/gimpcolorframe.c:254
+#: ../app/widgets/gimpcolorframe.c:446
 msgid "Index:"
 msgstr "Indeks:"
 
-#: ../app/widgets/gimpcolorframe.c:258 ../app/widgets/gimpcolorframe.c:279
+#: ../app/widgets/gimpcolorframe.c:450 ../app/widgets/gimpcolorframe.c:471
 msgid "Red:"
 msgstr "Punane:"
 
-#: ../app/widgets/gimpcolorframe.c:259 ../app/widgets/gimpcolorframe.c:280
+#: ../app/widgets/gimpcolorframe.c:451 ../app/widgets/gimpcolorframe.c:472
 msgid "Green:"
 msgstr "Roheline:"
 
-#: ../app/widgets/gimpcolorframe.c:260 ../app/widgets/gimpcolorframe.c:281
+#: ../app/widgets/gimpcolorframe.c:452 ../app/widgets/gimpcolorframe.c:473
 msgid "Blue:"
 msgstr "Sinine:"
 
-#: ../app/widgets/gimpcolorframe.c:270 ../app/widgets/gimpcolorframe.c:301
+#: ../app/widgets/gimpcolorframe.c:462 ../app/widgets/gimpcolorframe.c:493
 msgid "Value:"
 msgstr "Väärtus:"
 
-#: ../app/widgets/gimpcolorframe.c:289
+#: ../app/widgets/gimpcolorframe.c:481
 msgid "Hex:"
 msgstr ""
 
-#: ../app/widgets/gimpcolorframe.c:299
+#: ../app/widgets/gimpcolorframe.c:491
 msgid "Hue:"
 msgstr "Värvitoon:"
 
-#: ../app/widgets/gimpcolorframe.c:300
+#: ../app/widgets/gimpcolorframe.c:492
 msgid "Sat.:"
 msgstr ""
 
-#: ../app/widgets/gimpcolorframe.c:317
+#: ../app/widgets/gimpcolorframe.c:509
 msgid "Cyan:"
 msgstr "Tsüaan:"
 
-#: ../app/widgets/gimpcolorframe.c:318
+#: ../app/widgets/gimpcolorframe.c:510
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../app/widgets/gimpcolorframe.c:319
+#: ../app/widgets/gimpcolorframe.c:511
 msgid "Yellow:"
 msgstr "Kollane:"
 
-#: ../app/widgets/gimpcolorframe.c:320
+#: ../app/widgets/gimpcolorframe.c:512
 msgid "Black:"
 msgstr "Must:"
 
-#: ../app/widgets/gimpcolorframe.c:334
+#: ../app/widgets/gimpcolorframe.c:526
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../app/widgets/gimpcolorframe.c:352 ../app/widgets/gimpcursorview.c:135
-#: ../app/widgets/gimpcursorview.c:141 ../app/widgets/gimpcursorview.c:157
-#: ../app/widgets/gimpcursorview.c:163 ../app/widgets/gimpcursorview.c:340
-#: ../app/widgets/gimpcursorview.c:341 ../app/widgets/gimpcursorview.c:342
-#: ../app/widgets/gimpcursorview.c:343
+#: ../app/widgets/gimpcolorframe.c:544 ../app/widgets/gimpcursorview.c:136
+#: ../app/widgets/gimpcursorview.c:142 ../app/widgets/gimpcursorview.c:158
+#: ../app/widgets/gimpcursorview.c:164 ../app/widgets/gimpcursorview.c:350
+#: ../app/widgets/gimpcursorview.c:351 ../app/widgets/gimpcursorview.c:352
+#: ../app/widgets/gimpcursorview.c:353
 msgid "n/a"
 msgstr ""
 
@@ -10008,15 +10053,15 @@ msgstr "Hiire ratas"
 msgid "Mouse Wheel Events"
 msgstr "Hiireratta sündmused"
 
-#: ../app/widgets/gimpdataeditor.c:208
+#: ../app/widgets/gimpdataeditor.c:214
 msgid "Save"
 msgstr "Salvesta"
 
-#: ../app/widgets/gimpdataeditor.c:216
+#: ../app/widgets/gimpdataeditor.c:222
 msgid "Revert"
 msgstr "Alusta otsast"
 
-#: ../app/widgets/gimpdataeditor.c:344
+#: ../app/widgets/gimpdataeditor.c:354
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (kirjutuskaitstud)"
@@ -10179,11 +10224,11 @@ msgstr "Tagapõhja värviks seatud:"
 #: ../app/widgets/gimpgradienteditor.c:1297
 #, c-format
 msgid "%s%sDrag: move & compress"
-msgstr ""
+msgstr "%s%sTõmba: liiguta ja tihenda"
 
 #: ../app/widgets/gimpgradienteditor.c:1237
 msgid "Drag: move"
-msgstr ""
+msgstr "Tõmba: liiguta"
 
 #: ../app/widgets/gimpgradienteditor.c:1244
 #: ../app/widgets/gimpgradienteditor.c:1258
@@ -10191,17 +10236,17 @@ msgstr ""
 #: ../app/widgets/gimpgradienteditor.c:1294
 #, c-format
 msgid "%s%sClick: extend selection"
-msgstr ""
+msgstr "%s%sKlõps: laienda valikut"
 
 #: ../app/widgets/gimpgradienteditor.c:1250
 #: ../app/widgets/gimpgradienteditor.c:1264
 msgid "Click: select"
-msgstr ""
+msgstr "Klõps: vali"
 
 #: ../app/widgets/gimpgradienteditor.c:1278
 #: ../app/widgets/gimpgradienteditor.c:1302
 msgid "Click: select    Drag: move"
-msgstr ""
+msgstr "Klõps: vali    Tõmba: liiguta"
 
 #: ../app/widgets/gimpgradienteditor.c:1524
 #: ../app/widgets/gimpgradienteditor.c:1532
@@ -10263,31 +10308,31 @@ msgstr "Ei suutnud käivitada GIMPi abiinfo sirvija pistikut."
 msgid "Use _web browser instead"
 msgstr "Kasuta hoopis _veebilehitsejat"
 
-#: ../app/widgets/gimphistogrameditor.c:128
+#: ../app/widgets/gimphistogrameditor.c:129
 msgid "Mean:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:129
+#: ../app/widgets/gimphistogrameditor.c:130
 msgid "Std Dev:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:130
+#: ../app/widgets/gimphistogrameditor.c:131
 msgid "Median:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:131
+#: ../app/widgets/gimphistogrameditor.c:132
 msgid "Pixels:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:132
+#: ../app/widgets/gimphistogrameditor.c:133
 msgid "Count:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:133
+#: ../app/widgets/gimphistogrameditor.c:134
 msgid "Percentile:"
 msgstr ""
 
-#: ../app/widgets/gimphistogrameditor.c:155
+#: ../app/widgets/gimphistogrameditor.c:150
 msgid "Channel:"
 msgstr "Kanal:"
 
@@ -10326,28 +10371,28 @@ msgstr "Vektorjoonte arv:"
 #: ../app/widgets/gimpimagepropview.c:309
 #, c-format
 msgid "pixels/%s"
-msgstr ""
+msgstr "pikslit/%s"
 
 #: ../app/widgets/gimpimagepropview.c:311
 #, c-format
 msgid "%g x %g %s"
-msgstr ""
+msgstr "%g x %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:323
 msgid "RGB Color"
-msgstr ""
+msgstr "RGB värvid"
 
 #: ../app/widgets/gimpimagepropview.c:326
 msgid "Grayscale"
-msgstr ""
+msgstr "Halltoonid"
 
 #: ../app/widgets/gimpimagepropview.c:330
 msgid "Indexed Color"
-msgstr ""
+msgstr "Indekseeritud värvid"
 
 #: ../app/widgets/gimpimagepropview.c:330
 msgid "colors"
-msgstr ""
+msgstr "värvi"
 
 #: ../app/widgets/gimpitemtreeview.c:1013
 msgid "Set Item Exclusive Visible"
@@ -10363,7 +10408,7 @@ msgstr ""
 
 #: ../app/widgets/gimplayertreeview.c:318
 msgid "Keep transparency"
-msgstr ""
+msgstr "Jäta läbipaistvaks"
 
 #: ../app/widgets/gimplayertreeview.c:878
 msgid "Empty Layer"
@@ -10388,13 +10433,13 @@ msgid "Message repeated once."
 msgstr "Teadet on korra korratud."
 
 #: ../app/widgets/gimppaletteeditor.c:269
-#: ../app/widgets/gimppaletteeditor.c:1005
+#: ../app/widgets/gimppaletteeditor.c:1006
 msgid "Undefined"
 msgstr "Määramata"
 
 #: ../app/widgets/gimppaletteeditor.c:277
 msgid "Columns:"
-msgstr ""
+msgstr "Veerge:"
 
 #: ../app/widgets/gimpselectiondata.c:318
 #, c-format
@@ -10403,6 +10448,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Failinime '%s' ei suutnud teisendada korrektseks URI-ks:\n"
+"\n"
+"%s"
 
 #: ../app/widgets/gimpselectiondata.c:322
 msgid "Invalid UTF-8"
@@ -10424,7 +10472,7 @@ msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:212
 msgid "_Line Style"
-msgstr ""
+msgstr "_Joone stiil"
 
 #: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Cap style:"
@@ -10488,6 +10536,10 @@ msgstr "%d x %d dpi, %s"
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
+
+#: ../app/widgets/gimptexteditor.c:230
+msgid "_Use selected font"
+msgstr "_Kasuta valitud fonti"
 
 #: ../app/widgets/gimpthumbbox.c:351
 #, c-format
@@ -10560,7 +10612,9 @@ msgstr ""
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
-msgstr "Esiplaani ja tagapõhja värvid. Must ja valge kastike resetib värvid.  Nooled vahetavad värvid. Klõpsa värvivaliku dialoogi avamiseks."
+msgstr ""
+"Esiplaani ja tagapõhja värvid. Must ja valge kastike resetib värvid.  Nooled "
+"vahetavad värvid. Klõpsa värvivaliku dialoogi avamiseks."
 
 #: ../app/widgets/gimptooloptionseditor.c:187
 msgid "Save options to..."
@@ -10631,7 +10685,7 @@ msgstr "Ava fondivaliku dialoog"
 msgid "<%s>"
 msgstr "<%s>"
 
-#: ../app/widgets/gimpwidgets-utils.c:796
+#: ../app/widgets/gimpwidgets-utils.c:797
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Vigased UTF-8 andmed failis '%s'."
