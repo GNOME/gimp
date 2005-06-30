@@ -28,13 +28,15 @@ EXTRA_PROGRAMS = jpeg
 
 jpeg_SOURCES = \
 	jpeg.c		\
-	jpeg-load.c	\
-	jpeg-save.c	\
 	jpeg.h		\
-	jpeg-save.h	\
+	jpeg-exif.c	\
+	jpeg-icc.c	\
+	jpeg-icc.h	\
+	jpeg-load.c	\
 	jpeg-load.h	\
-	jpeg-exif.c     \
-	gimpexif.c      \
+	jpeg-save.c	\
+	jpeg-save.h	\
+	gimpexif.c	\
 	gimpexif.h
 
 jpeg_LDADD = \
