@@ -52,7 +52,8 @@ enum
 {
   COLUMN_PAGE_NO,
   COLUMN_THUMBNAIL,
-  COLUMN_TEXT
+  COLUMN_LABEL,
+  COLUMN_LABEL_SET
 };
 
 
@@ -188,15 +189,16 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_box_pack_start (GTK_BOX (selector), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
-  selector->store = gtk_list_store_new (3,
+  selector->store = gtk_list_store_new (4,
                                         G_TYPE_INT,
                                         GDK_TYPE_PIXBUF,
-                                        G_TYPE_STRING);
+                                        G_TYPE_STRING,
+                                        G_TYPE_BOOLEAN);
 
   selector->view =
     gtk_icon_view_new_with_model (GTK_TREE_MODEL (selector->store));
   gtk_icon_view_set_text_column (GTK_ICON_VIEW (selector->view),
-                                 COLUMN_TEXT);
+                                 COLUMN_LABEL);
   gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (selector->view),
                                    COLUMN_THUMBNAIL);
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (selector->view),
@@ -421,7 +423,8 @@ gimp_page_selector_set_n_pages (GimpPageSelector *selector,
               gtk_list_store_set (selector->store, &iter,
                                   COLUMN_PAGE_NO,   i,
                                   COLUMN_THUMBNAIL, selector->thumbnail,
-                                  COLUMN_TEXT,      text,
+                                  COLUMN_LABEL,     text,
+                                  COLUMN_LABEL_SET, FALSE,
                                   -1);
 
               g_free (text);
@@ -530,6 +533,60 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector   *selector,
     return NULL;
 
   return thumbnail;
+}
+
+void
+gimp_page_selector_set_page_label (GimpPageSelector *selector,
+                                   gint              page_no,
+                                   const gchar      *label)
+{
+  GtkTreeIter  iter;
+  gchar       *tmp;
+
+  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (page_no >= 0 && page_no < selector->n_pages);
+
+  if (! label)
+    tmp = g_strdup_printf (_("Page %d"), page_no + 1);
+  else
+    tmp = (gchar *) label;
+
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selector->store),
+                                 &iter, NULL, page_no);
+  gtk_list_store_set (selector->store, &iter,
+                      COLUMN_LABEL,     tmp,
+                      COLUMN_LABEL_SET, label != NULL,
+                      -1);
+
+  if (! label)
+    g_free (tmp);
+}
+
+gchar *
+gimp_page_selector_get_page_label (GimpPageSelector *selector,
+                                   gint              page_no)
+{
+  GtkTreeIter  iter;
+  gchar       *label;
+  gboolean     label_set;
+
+  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+  g_return_val_if_fail (page_no >= 0 && page_no < selector->n_pages, NULL);
+
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selector->store),
+                                 &iter, NULL, page_no);
+  gtk_tree_model_get (GTK_TREE_MODEL (selector->store), &iter,
+                      COLUMN_LABEL,     &label,
+                      COLUMN_LABEL_SET, &label_set,
+                      -1);
+
+  if (! label_set)
+    {
+      g_free (label);
+      return NULL;
+    }
+
+  return label;
 }
 
 void

@@ -85,6 +85,12 @@ void        gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
 GdkPixbuf * gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
                                                    gint              page_no);
 
+void        gimp_page_selector_set_page_label     (GimpPageSelector *selector,
+                                                   gint              page_no,
+                                                   const gchar      *label);
+gchar     * gimp_page_selector_get_page_label     (GimpPageSelector *selector,
+                                                   gint              page_no);
+
 void        gimp_page_selector_select_all         (GimpPageSelector *selector);
 void        gimp_page_selector_unselect_all       (GimpPageSelector *selector);
 void        gimp_page_selector_select_page        (GimpPageSelector *selector,
