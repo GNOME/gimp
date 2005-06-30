@@ -1008,10 +1008,10 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (chst->angle_adj));
   g_object_unref (group);
 
-  g_signal_connect (chst->angle_adj, "value_changed",
+  g_signal_connect (chst->angle_adj, "value-changed",
                     G_CALLBACK (angle_callback),
                     chst);
-  g_signal_connect_swapped (chst->angle_adj, "value_changed",
+  g_signal_connect_swapped (chst->angle_adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1258,10 +1258,10 @@ newsprint_dialog (GimpDrawable *drawable)
                           1.0, 1200.0, 1.0, 10.0, 0,
                           FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                           NULL, NULL);
-  g_signal_connect (st.input_spi, "value_changed",
+  g_signal_connect (st.input_spi, "value-changed",
                     G_CALLBACK (spi_callback),
                     &st);
-  g_signal_connect_swapped (st.input_spi, "value_changed",
+  g_signal_connect_swapped (st.input_spi, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1272,10 +1272,10 @@ newsprint_dialog (GimpDrawable *drawable)
                           1.0, 1200.0, 1.0, 10.0, 1,
                           FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                           NULL, NULL);
-  g_signal_connect (st.output_lpi, "value_changed",
+  g_signal_connect (st.output_lpi, "value-changed",
                     G_CALLBACK (lpi_callback),
                     &st);
-  g_signal_connect_swapped (st.output_lpi, "value_changed",
+  g_signal_connect_swapped (st.output_lpi, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1285,10 +1285,10 @@ newsprint_dialog (GimpDrawable *drawable)
                                       3.0, 100.0, 1.0, 5.0, 0,
                                       FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
                                       NULL, NULL);
-  g_signal_connect (st.cellsize, "value_changed",
+  g_signal_connect (st.cellsize, "value-changed",
                     G_CALLBACK (cellsize_callback),
                     &st);
-  g_signal_connect_swapped (st.cellsize, "value_changed",
+  g_signal_connect_swapped (st.cellsize, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1320,10 +1320,10 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_widget_set_sensitive (st.pull_table, (pvals.colourspace == CS_CMYK));
       gtk_widget_show (st.pull_table);
 
-      g_signal_connect (st.pull, "value_changed",
+      g_signal_connect (st.pull, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &pvals.k_pullout);
-      g_signal_connect_swapped (st.pull, "value_changed",
+      g_signal_connect_swapped (st.pull, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
@@ -1449,10 +1449,10 @@ newsprint_dialog (GimpDrawable *drawable)
                               1.0, 15.0, 1.0, 5.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.oversample);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

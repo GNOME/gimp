@@ -417,7 +417,7 @@ shift_dialog (gint32        image_ID,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
                                 _("Shift _amount:"), 1, 0, 0.0);
 
-  g_signal_connect (size_entry, "value_changed",
+  g_signal_connect (size_entry, "value-changed",
                     G_CALLBACK (shift_amount_callback),
                     preview);
   gtk_box_pack_start (GTK_BOX (main_vbox), size_entry, FALSE, FALSE, 0);

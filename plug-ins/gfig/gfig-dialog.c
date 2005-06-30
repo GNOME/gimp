@@ -1275,7 +1275,7 @@ gfig_prefs_action_callback (GtkAction *widget,
                                         MIN_UNDO, MAX_UNDO, 1, 2, 0,
                                         TRUE, 0, 0,
                                         NULL, NULL);
-      g_signal_connect (size_data, "value_changed",
+      g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.maxundo);
 
@@ -1318,10 +1318,10 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 
-      g_signal_connect (scale_data, "value_changed",
+      g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selopt.feather_radius);
-      g_signal_connect (scale_data, "value_changed",
+      g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gfig_paint_callback),
                         NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
@@ -1385,10 +1385,10 @@ gfig_grid_action_callback (GtkAction *action,
                                         MIN_GRID, MAX_GRID, 1, 10, 0,
                                         TRUE, 0, 0,
                                         NULL, NULL);
-      g_signal_connect (size_data, "value_changed",
+      g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.gridspacing);
-      g_signal_connect (size_data, "value_changed",
+      g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (draw_grid_clear),
                         NULL);
 
@@ -1636,7 +1636,7 @@ num_sides_widget (gchar *d_title,
                                     *num_sides, adj_min, adj_max, 1, 10, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
+  g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     num_sides);
 

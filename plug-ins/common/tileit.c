@@ -399,7 +399,7 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), tint.preview);
   gtk_widget_show (tint.preview);
 
-  g_signal_connect_after (tint.preview, "expose_event",
+  g_signal_connect_after (tint.preview, "expose-event",
                           G_CALLBACK (tileit_preview_expose),
                           NULL);
   g_signal_connect (tint.preview, "event",
@@ -505,7 +505,7 @@ tileit_dialog (void)
                     GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (tileit_exp_update_f),
                     &exp_call);
 
@@ -529,7 +529,7 @@ tileit_dialog (void)
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (tileit_exp_update_f),
                     &exp_call);
 
@@ -570,7 +570,7 @@ tileit_dialog (void)
                                 opacity, 0, 100, 1, 10, 0,
                                 TRUE, 0, 0,
                                 NULL, NULL);
-  g_signal_connect (scale, "value_changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
@@ -591,7 +591,7 @@ tileit_dialog (void)
                                 itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
                                 TRUE, 0, 0,
                                 NULL, NULL);
-  g_signal_connect (scale, "value_changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);
 

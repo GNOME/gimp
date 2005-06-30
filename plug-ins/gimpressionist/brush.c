@@ -535,7 +535,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_scale_set_digits (GTK_SCALE (tmpw), 2);
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect_swapped (brush_gamma_adjust, "value_changed",
+  g_signal_connect_swapped (brush_gamma_adjust, "value-changed",
                             G_CALLBACK (update_brush_preview),
                             pcvals.selected_brush);
 
@@ -585,7 +585,7 @@ create_brushpage (GtkNotebook *notebook)
                           NULL);
   gtk_size_group_add_widget (group,
                              GIMP_SCALE_ENTRY_LABEL (brush_aspect_adjust));
-  g_signal_connect (brush_aspect_adjust, "value_changed",
+  g_signal_connect (brush_aspect_adjust, "value-changed",
                     G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brush_aspect);
 
   brush_relief_adjust =
@@ -598,7 +598,7 @@ create_brushpage (GtkNotebook *notebook)
                           NULL);
   gtk_size_group_add_widget (group,
                              GIMP_SCALE_ENTRY_LABEL (brush_relief_adjust));
-  g_signal_connect (brush_relief_adjust, "value_changed",
+  g_signal_connect (brush_relief_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_relief);
 

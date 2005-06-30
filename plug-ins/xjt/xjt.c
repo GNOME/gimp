@@ -885,7 +885,7 @@ save_dialog (void)
 				     jsvals.quality, 0.0, 1.0, 0.01, 0.11, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.quality);
 
@@ -894,7 +894,7 @@ save_dialog (void)
 				     jsvals.smoothing, 0.0, 1.0, 0.01, 0.1, 2,
 				     TRUE, 0, 0,
 				     NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
 

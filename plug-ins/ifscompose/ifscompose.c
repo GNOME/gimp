@@ -1001,19 +1001,19 @@ design_area_create (GtkWidget *window,
   g_signal_connect (ifsDesign->area, "realize",
                     G_CALLBACK (design_area_realize),
                     NULL);
-  g_signal_connect (ifsDesign->area, "expose_event",
+  g_signal_connect (ifsDesign->area, "expose-event",
                     G_CALLBACK (design_area_expose),
                     NULL);
-  g_signal_connect (ifsDesign->area, "button_press_event",
+  g_signal_connect (ifsDesign->area, "button-press-event",
                     G_CALLBACK (design_area_button_press),
                     NULL);
-  g_signal_connect (ifsDesign->area, "button_release_event",
+  g_signal_connect (ifsDesign->area, "button-release-event",
                     G_CALLBACK (design_area_button_release),
                     NULL);
-  g_signal_connect (ifsDesign->area, "motion_notify_event",
+  g_signal_connect (ifsDesign->area, "motion-notify-event",
                     G_CALLBACK (design_area_motion),
                     NULL);
-  g_signal_connect (ifsDesign->area, "configure_event",
+  g_signal_connect (ifsDesign->area, "configure-event",
                     G_CALLBACK (design_area_configure),
                     NULL);
   gtk_widget_set_events (ifsDesign->area,
@@ -2023,11 +2023,11 @@ color_map_create (gchar    *name,
                       FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
 
-  g_signal_connect (color_map->button, "color_changed",
+  g_signal_connect (color_map->button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     data);
 
-  g_signal_connect (color_map->button, "color_changed",
+  g_signal_connect (color_map->button, "color-changed",
                     G_CALLBACK (color_map_color_changed_cb),
                     color_map);
 
@@ -2119,7 +2119,7 @@ value_pair_create (gpointer      data,
                                            0.0, 1.0, 3);
   gtk_widget_set_size_request (value_pair->spin, 72, -1);
 
-  g_signal_connect (value_pair->adjustment, "value_changed",
+  g_signal_connect (value_pair->adjustment, "value-changed",
                     G_CALLBACK (value_pair_scale_callback),
                     value_pair);
 

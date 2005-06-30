@@ -954,10 +954,10 @@ bumpmap_dialog (void)
                               bmvals.azimuth, 0.0, 360.0, 1.0, 15.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bmvals.azimuth);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -966,10 +966,10 @@ bumpmap_dialog (void)
                               bmvals.elevation, 0.5, 90.0, 1.0, 5.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bmvals.elevation);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -978,10 +978,10 @@ bumpmap_dialog (void)
                               bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.depth);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
@@ -993,10 +993,10 @@ bumpmap_dialog (void)
                           TRUE, 0, 0,
                           _("The offset can be adjusted by dragging the "
                             "preview using the middle mouse button."), NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.xofs);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1007,10 +1007,10 @@ bumpmap_dialog (void)
                           TRUE, 0, 0,
                           _("The offset can be adjusted by dragging the "
                             "preview using the middle mouse button."), NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.yofs);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
   gtk_table_set_row_spacing (GTK_TABLE (table), row++, 12);
@@ -1020,10 +1020,10 @@ bumpmap_dialog (void)
                               bmvals.waterlevel, 0.0, 255.0, 1.0, 8.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.waterlevel);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1032,10 +1032,10 @@ bumpmap_dialog (void)
                               bmvals.ambient, 0.0, 255.0, 1.0, 8.0, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bmvals.ambient);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

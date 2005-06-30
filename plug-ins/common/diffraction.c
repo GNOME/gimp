@@ -495,7 +495,7 @@ diffraction_dialog (void)
                               dvals.lam_r, 0.0, 20.0, 0.2, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_r);
 
@@ -504,7 +504,7 @@ diffraction_dialog (void)
                               dvals.lam_g, 0.0, 20.0, 0.2, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_g);
 
@@ -513,7 +513,7 @@ diffraction_dialog (void)
                               dvals.lam_b, 0.0, 20.0, 0.2, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_b);
 
@@ -533,7 +533,7 @@ diffraction_dialog (void)
                               dvals.contour_r, 0.0, 10.0, 0.1, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_r);
 
@@ -542,7 +542,7 @@ diffraction_dialog (void)
                               dvals.contour_g, 0.0, 10.0, 0.1, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_g);
 
@@ -551,7 +551,7 @@ diffraction_dialog (void)
                               dvals.contour_b, 0.0, 10.0, 0.1, 1.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_b);
 
@@ -571,7 +571,7 @@ diffraction_dialog (void)
                               dvals.edges_r, 0.0, 1.0, 0.01, 0.1, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_r);
 
@@ -580,7 +580,7 @@ diffraction_dialog (void)
                               dvals.edges_g, 0.0, 1.0, 0.01, 0.1, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_g);
 
@@ -589,7 +589,7 @@ diffraction_dialog (void)
                               dvals.edges_b, 0.0, 1.0, 0.01, 0.1, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_b);
 
@@ -609,7 +609,7 @@ diffraction_dialog (void)
                               dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.brightness);
 
@@ -618,7 +618,7 @@ diffraction_dialog (void)
                               dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.scattering);
 
@@ -627,7 +627,7 @@ diffraction_dialog (void)
                               dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.polarization);
 

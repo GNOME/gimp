@@ -582,7 +582,7 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.red_data, "value_changed",
+  g_signal_connect (mix.red_data, "value-changed",
                     G_CALLBACK (cm_red_scale_callback),
                     &mix);
 
@@ -600,7 +600,7 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.green_data, "value_changed",
+  g_signal_connect (mix.green_data, "value-changed",
                     G_CALLBACK (cm_green_scale_callback),
                     &mix);
 
@@ -619,7 +619,7 @@ cm_dialog (GimpDrawable *drawable)
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
 
-  g_signal_connect (mix.blue_data, "value_changed",
+  g_signal_connect (mix.blue_data, "value-changed",
                     G_CALLBACK (cm_blue_scale_callback),
                     &mix);
 
@@ -892,7 +892,7 @@ cm_load_file_callback (GtkWidget    *widget,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_load_file_response_callback),
                         mix);
-      g_signal_connect (dialog, "delete_event",
+      g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
 
@@ -1019,7 +1019,7 @@ cm_save_file_callback (GtkWidget    *widget,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_save_file_response_callback),
                         mix);
-      g_signal_connect (dialog, "delete_event",
+      g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
 

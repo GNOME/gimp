@@ -770,10 +770,10 @@ flare_center_create (GimpDrawable *drawable,
   gtk_container_add (GTK_CONTAINER (frame), center->coords);
   gtk_widget_show (center->coords);
 
-  g_signal_connect (center->coords, "value_changed",
+  g_signal_connect (center->coords, "value-changed",
                     G_CALLBACK (flare_center_coords_update),
                     center);
-  g_signal_connect (center->coords, "refval_changed",
+  g_signal_connect (center->coords, "refval-changed",
                     G_CALLBACK (flare_center_coords_update),
                     center);
 
@@ -793,7 +793,7 @@ flare_center_create (GimpDrawable *drawable,
   g_signal_connect (preview->area, "realize",
                     G_CALLBACK (flare_center_preview_realize),
                     center);
-  g_signal_connect_after (preview->area, "expose_event",
+  g_signal_connect_after (preview->area, "expose-event",
                           G_CALLBACK (flare_center_preview_expose),
                           center);
   g_signal_connect (preview->area, "event",

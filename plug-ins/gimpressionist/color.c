@@ -79,7 +79,7 @@ create_colorpage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("Adds random noise to the color"),
                           NULL);
-  g_signal_connect (colornoiseadjust, "value_changed",
+  g_signal_connect (colornoiseadjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.color_noise);
 

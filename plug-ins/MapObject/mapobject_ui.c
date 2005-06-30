@@ -604,7 +604,7 @@ create_options_page (void)
 			      1, TRUE, 0, 0,
 			      _("Antialiasing quality. Higher is better, "
 			       "but slower"), NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.maxdepth);
 
@@ -614,7 +614,7 @@ create_options_page (void)
 			     _("_Threshold:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.pixeltreshold);
 
@@ -684,7 +684,7 @@ create_light_page (void)
 			     _("Lightsource color:"), 0.0, 0.5,
 			     colorbutton, 1, FALSE);
 
-  g_signal_connect (colorbutton, "color_changed",
+  g_signal_connect (colorbutton, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &mapvals.lightsource.color);
 
@@ -710,7 +710,7 @@ create_light_page (void)
 			     _("X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (xadj, "value_changed",
+  g_signal_connect (xadj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.x);
 
@@ -724,7 +724,7 @@ create_light_page (void)
 			     _("Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (yadj, "value_changed",
+  g_signal_connect (yadj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.y);
 
@@ -738,7 +738,7 @@ create_light_page (void)
 			     _("Z:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (zadj, "value_changed",
+  g_signal_connect (zadj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.position.z);
 
@@ -764,7 +764,7 @@ create_light_page (void)
 			     _("X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.x);
 
@@ -777,7 +777,7 @@ create_light_page (void)
 			     _("Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.y);
 
@@ -790,7 +790,7 @@ create_light_page (void)
 			     _("Z:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.lightsource.direction.z);
 
@@ -851,7 +851,7 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
 
@@ -880,7 +880,7 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
 
@@ -923,7 +923,7 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_ref);
 
@@ -952,7 +952,7 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
 
@@ -981,7 +981,7 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
 
@@ -1037,7 +1037,7 @@ create_orientation_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.position.x);
 
@@ -1050,7 +1050,7 @@ create_orientation_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.position.y);
 
@@ -1063,7 +1063,7 @@ create_orientation_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.position.z);
 
@@ -1084,7 +1084,7 @@ create_orientation_page (void)
 			      _("Rotation angle about X axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.alpha);
 
@@ -1095,7 +1095,7 @@ create_orientation_page (void)
 			      _("Rotation angle about Y axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.beta);
 
@@ -1106,7 +1106,7 @@ create_orientation_page (void)
 			      _("Rotation angle about Z axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.gamma);
 
@@ -1182,7 +1182,7 @@ create_box_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.scale.x);
 
@@ -1194,7 +1194,7 @@ create_box_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.scale.y);
 
@@ -1206,7 +1206,7 @@ create_box_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.scale.z);
 
@@ -1279,7 +1279,7 @@ create_cylinder_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.cylinder_radius);
 
@@ -1293,7 +1293,7 @@ create_cylinder_page (void)
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
 			     GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.cylinder_length);
 

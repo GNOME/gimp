@@ -179,7 +179,7 @@ create_paperpage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("Specifies the scale of the texture (in percent of original file)"),
                           NULL);
-  g_signal_connect (paper_scale_adjust, "value_changed",
+  g_signal_connect (paper_scale_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paper_scale);
 
@@ -191,7 +191,7 @@ create_paperpage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("Specifies the amount of embossing to apply to the image (in percent)"),
                           NULL);
-  g_signal_connect (paper_relief_adjust, "value_changed",
+  g_signal_connect (paper_relief_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paper_relief);
 

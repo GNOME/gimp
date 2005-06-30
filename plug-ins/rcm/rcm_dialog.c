@@ -216,19 +216,19 @@ rcm_create_one_circle (gint   height,
   /* set signals */
   gtk_widget_set_events (st->preview, RANGE_ADJUST_MASK);
 
-  g_signal_connect_after (st->preview, "expose_event",
+  g_signal_connect_after (st->preview, "expose-event",
                           G_CALLBACK (rcm_expose_event),
                           st);
 
-  g_signal_connect (st->preview, "button_press_event",
+  g_signal_connect (st->preview, "button-press-event",
                     G_CALLBACK (rcm_button_press_event),
                     st);
 
-  g_signal_connect (st->preview, "button_release_event",
+  g_signal_connect (st->preview, "button-release-event",
                     G_CALLBACK (rcm_release_event),
                     st);
 
-  g_signal_connect (st->preview, "motion_notify_event",
+  g_signal_connect (st->preview, "motion-notify-event",
                     G_CALLBACK (rcm_motion_notify_event),
                     st);
 
@@ -429,19 +429,19 @@ rcm_create_gray (void)
 
   gtk_widget_add_events (preview, RANGE_ADJUST_MASK);
 
-  g_signal_connect_after (preview, "expose_event",
+  g_signal_connect_after (preview, "expose-event",
                           G_CALLBACK (rcm_gray_expose_event),
                           st);
 
-  g_signal_connect (preview, "button_press_event",
+  g_signal_connect (preview, "button-press-event",
                     G_CALLBACK (rcm_gray_button_press_event),
                     st);
 
-  g_signal_connect (preview, "button_release_event",
+  g_signal_connect (preview, "button-release-event",
                     G_CALLBACK (rcm_gray_release_event),
                     st);
 
-  g_signal_connect (preview, "motion_notify_event",
+  g_signal_connect (preview, "motion-notify-event",
                     G_CALLBACK (rcm_gray_motion_notify_event),
                     st);
 

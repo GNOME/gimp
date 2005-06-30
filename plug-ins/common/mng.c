@@ -1448,7 +1448,7 @@ mng_save_dialog (gint32 image_id)
                              _("PNG compression level:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
-  g_signal_connect (scale_adj, "value_changed",
+  g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.compression_level);
 
@@ -1470,7 +1470,7 @@ mng_save_dialog (gint32 image_id)
                              _("JPEG compression quality:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
-  g_signal_connect (scale_adj, "value_changed",
+  g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.quality);
 
@@ -1487,7 +1487,7 @@ mng_save_dialog (gint32 image_id)
                              _("JPEG smoothing factor:"), 0.0, 0.9,
                              scale, 1, FALSE);
 
-  g_signal_connect (scale_adj, "value_changed",
+  g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.smoothing);
 
@@ -1522,7 +1522,7 @@ mng_save_dialog (gint32 image_id)
                                      mng_data.default_delay,
                                      0, 65000, 10, 100, 0, 1, 0);
 
-  g_signal_connect (spinbutton_adj, "value_changed",
+  g_signal_connect (spinbutton_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mng_data.default_delay);
 

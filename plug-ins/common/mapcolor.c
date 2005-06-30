@@ -425,10 +425,10 @@ add_color_button (gint       csel_index,
                              0.0, 0.5,
                              button, 1, TRUE);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &plvals.colors[csel_index]);
-  g_signal_connect_swapped (button, "color_changed",
+  g_signal_connect_swapped (button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 }

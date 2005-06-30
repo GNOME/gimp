@@ -476,10 +476,10 @@ lens_dialog (GimpDrawable *drawable)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &lvals.refraction);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

@@ -433,7 +433,7 @@ warp_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (label_group, label);
   g_object_unref (label_group);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount);
 
@@ -446,7 +446,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.iter);
 
@@ -565,7 +565,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.dither);
 
@@ -578,7 +578,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.angle);
 
@@ -591,7 +591,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &dvals.substeps);
 
@@ -652,7 +652,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.grad_scale);
 
@@ -685,7 +685,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_scale);
 
@@ -700,7 +700,7 @@ warp_dialog (GimpDrawable *drawable)
                                      spinbutton, 1, FALSE);
   gtk_size_group_add_widget (label_group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.vector_angle);
 

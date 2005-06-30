@@ -324,13 +324,13 @@ exchange_dialog (GimpDrawable *drawable)
                                      &xargs.threshold,
                                      GIMP_COLOR_AREA_FLAT);
 
-  g_signal_connect (threshold, "color_changed",
+  g_signal_connect (threshold, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &xargs.threshold);
-  g_signal_connect (threshold, "color_changed",
+  g_signal_connect (threshold, "color-changed",
                     G_CALLBACK (color_button_callback),
                     &xargs.threshold);
-  g_signal_connect_swapped (threshold, "color_changed",
+  g_signal_connect_swapped (threshold, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -370,13 +370,13 @@ exchange_dialog (GimpDrawable *drawable)
                                  NULL, 0.0, 0.0,
                                  colorbutton, 1, FALSE);
 
-      g_signal_connect (colorbutton, "color_changed",
+      g_signal_connect (colorbutton, "color-changed",
                         G_CALLBACK (gimp_color_button_get_color),
                         framenumber ? &xargs.to : &xargs.from);
-      g_signal_connect (colorbutton, "color_changed",
+      g_signal_connect (colorbutton, "color-changed",
                         G_CALLBACK (color_button_callback),
                         framenumber ? &xargs.to : &xargs.from);
-      g_signal_connect_swapped (colorbutton, "color_changed",
+      g_signal_connect_swapped (colorbutton, "color-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
@@ -402,13 +402,13 @@ exchange_dialog (GimpDrawable *drawable)
       g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
       g_object_set_data (G_OBJECT (colorbutton), "red", adj);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         framenumber ? &xargs.to.r : &xargs.from.r);
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (scale_callback),
                         framenumber ? &xargs.to : &xargs.from);
-      g_signal_connect_swapped (adj, "value_changed",
+      g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
@@ -428,13 +428,13 @@ exchange_dialog (GimpDrawable *drawable)
           g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
           g_object_set_data (G_OBJECT (threshold), "red", adj);
 
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (gimp_double_adjustment_update),
                             &xargs.threshold.r);
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (scale_callback),
                             &xargs.threshold);
-          g_signal_connect_swapped (adj, "value_changed",
+          g_signal_connect_swapped (adj, "value-changed",
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 
@@ -462,13 +462,13 @@ exchange_dialog (GimpDrawable *drawable)
       g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
       g_object_set_data (G_OBJECT (colorbutton), "green", adj);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         framenumber ? &xargs.to.g : &xargs.from.g);
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (scale_callback),
                         framenumber ? &xargs.to : &xargs.from);
-      g_signal_connect_swapped (adj, "value_changed",
+      g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
@@ -489,13 +489,13 @@ exchange_dialog (GimpDrawable *drawable)
           g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
           g_object_set_data (G_OBJECT (threshold), "green", adj);
 
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (gimp_double_adjustment_update),
                             &xargs.threshold.g);
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (scale_callback),
                             &xargs.threshold);
-          g_signal_connect_swapped (adj, "value_changed",
+          g_signal_connect_swapped (adj, "value-changed",
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 
@@ -524,13 +524,13 @@ exchange_dialog (GimpDrawable *drawable)
       g_object_set_data (G_OBJECT (adj), "colorbutton", colorbutton);
       g_object_set_data (G_OBJECT (colorbutton), "blue", adj);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         framenumber ? &xargs.to.b : &xargs.from.b);
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (scale_callback),
                         framenumber ? &xargs.to : &xargs.from);
-      g_signal_connect_swapped (adj, "value_changed",
+      g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
@@ -550,13 +550,13 @@ exchange_dialog (GimpDrawable *drawable)
           g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
           g_object_set_data (G_OBJECT (threshold), "blue", adj);
 
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (gimp_double_adjustment_update),
                             &xargs.threshold.b);
-          g_signal_connect (adj, "value_changed",
+          g_signal_connect (adj, "value-changed",
                             G_CALLBACK (scale_callback),
                             &xargs.threshold);
-          g_signal_connect_swapped (adj, "value_changed",
+          g_signal_connect_swapped (adj, "value-changed",
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 

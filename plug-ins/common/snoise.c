@@ -616,7 +616,7 @@ solid_noise_dialog (GimpDrawable *drawable)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
                                  GIMP_RANDOM_SEED_SPINBUTTON (seed_hbox));
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed_hbox),
-                           "value_changed",
+                           "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -626,10 +626,10 @@ solid_noise_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Detail:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &snvals.detail);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -667,10 +667,10 @@ solid_noise_dialog (GimpDrawable *drawable)
                               snvals.xsize, MIN_SIZE, MAX_SIZE, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.xsize);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -680,10 +680,10 @@ solid_noise_dialog (GimpDrawable *drawable)
                               snvals.ysize, MIN_SIZE, MAX_SIZE, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &snvals.ysize);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

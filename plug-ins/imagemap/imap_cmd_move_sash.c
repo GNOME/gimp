@@ -138,9 +138,9 @@ move_sash_command_execute(Command_t *parent)
 
    hide_url();
    preview_freeze();
-   g_signal_connect(command->widget, "button_release_event",
+   g_signal_connect(command->widget, "button-release-event",
                     G_CALLBACK (sash_end), command);   
-   g_signal_connect(command->widget, "motion_notify_event", 
+   g_signal_connect(command->widget, "motion-notify-event", 
                     G_CALLBACK (sash_move), command);   
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
 

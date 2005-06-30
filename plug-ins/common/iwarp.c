@@ -958,7 +958,7 @@ iwarp_animate_dialog (GtkWidget *dlg,
                                      2, MAX_NUM_FRAMES, 1, 10, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &animate_num_frames);
 
@@ -1057,7 +1057,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                                      5.0, MAX_DEFORM_AREA_RADIUS, 1.0, 10.0, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.deform_area_radius);
 
@@ -1067,7 +1067,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                                      0.0, 1.0, 0.01, 0.1, 2,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.deform_amount);
 
@@ -1110,7 +1110,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                                      1.0, 5.0, 1.1, 1.0, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &iwarp_vals.max_supersample_depth);
 
@@ -1120,7 +1120,7 @@ iwarp_settings_dialog (GtkWidget *dlg,
                                      1.0, 10.0, 0.01, 0.1, 2,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &iwarp_vals.supersample_threshold);
 

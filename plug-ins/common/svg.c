@@ -811,7 +811,7 @@ load_dialog (const gchar *filename)
   gimp_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
   gimp_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
 
-  g_signal_connect (size, "value_changed",
+  g_signal_connect (size, "value-changed",
 		    G_CALLBACK (load_dialog_size_callback),
                     NULL);
 
@@ -837,7 +837,7 @@ load_dialog (const gchar *filename)
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (xadj, "value_changed",
+  g_signal_connect (xadj, "value-changed",
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 
@@ -859,7 +859,7 @@ load_dialog (const gchar *filename)
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (yadj, "value_changed",
+  g_signal_connect (yadj, "value-changed",
 		    G_CALLBACK (load_dialog_ratio_callback),
 		    NULL);
 

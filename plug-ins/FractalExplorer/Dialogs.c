@@ -592,19 +592,19 @@ explorer_dialog (void)
   gtk_widget_set_size_request (wint.preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), wint.preview);
 
-  g_signal_connect (wint.preview, "button_press_event",
+  g_signal_connect (wint.preview, "button-press-event",
                     G_CALLBACK (preview_button_press_event),
                     NULL);
-  g_signal_connect (wint.preview, "button_release_event",
+  g_signal_connect (wint.preview, "button-release-event",
                     G_CALLBACK (preview_button_release_event),
                     NULL);
-  g_signal_connect (wint.preview, "motion_notify_event",
+  g_signal_connect (wint.preview, "motion-notify-event",
                     G_CALLBACK (preview_motion_notify_event),
                     NULL);
-  g_signal_connect (wint.preview, "leave_notify_event",
+  g_signal_connect (wint.preview, "leave-notify-event",
                     G_CALLBACK (preview_leave_notify_event),
                     NULL);
-  g_signal_connect (wint.preview, "enter_notify_event",
+  g_signal_connect (wint.preview, "enter-notify-event",
                     G_CALLBACK (preview_enter_notify_event),
                     NULL);
 
@@ -708,7 +708,7 @@ explorer_dialog (void)
                           TRUE, 0, 0,
                           _("Change the first (minimal) x-coordinate "
                             "delimitation"), NULL);
-  g_signal_connect (elements->xmin, "value_changed",
+  g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
@@ -719,7 +719,7 @@ explorer_dialog (void)
                           TRUE, 0, 0,
                           _("Change the second (maximal) x-coordinate "
                             "delimitation"), NULL);
-  g_signal_connect (elements->xmax, "value_changed",
+  g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
@@ -730,7 +730,7 @@ explorer_dialog (void)
                           TRUE, 0, 0,
                           _("Change the first (minimal) y-coordinate "
                             "delimitation"), NULL);
-  g_signal_connect (elements->ymin, "value_changed",
+  g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
@@ -741,7 +741,7 @@ explorer_dialog (void)
                           TRUE, 0, 0,
                           _("Change the second (maximal) y-coordinate "
                             "delimitation"), NULL);
-  g_signal_connect (elements->ymax, "value_changed",
+  g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
@@ -753,7 +753,7 @@ explorer_dialog (void)
                           _("Change the iteration value. The higher it "
                             "is, the more details will be calculated, "
                             "which will take more time"), NULL);
-  g_signal_connect (elements->iter, "value_changed",
+  g_signal_connect (elements->iter, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
 
@@ -765,7 +765,7 @@ explorer_dialog (void)
                           _("Change the CX value (changes aspect of "
                             "fractal, active with every fractal but "
                             "Mandelbrot and Sierpinski)"), NULL);
-  g_signal_connect (elements->cx, "value_changed",
+  g_signal_connect (elements->cx, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
 
@@ -777,7 +777,7 @@ explorer_dialog (void)
                           _("Change the CY value (changes aspect of "
                             "fractal, active with every fractal but "
                             "Mandelbrot and Sierpinski)"), NULL);
-  g_signal_connect (elements->cy, "value_changed",
+  g_signal_connect (elements->cy, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
@@ -907,7 +907,7 @@ explorer_dialog (void)
                           TRUE, 0, 0,
                           _("Change the number of colors in the mapping"),
                           NULL);
-  g_signal_connect (elements->ncol, "value_changed",
+  g_signal_connect (elements->ncol, "value-changed",
                     G_CALLBACK (explorer_number_of_colors_callback),
                     &wvals.ncolors);
 
@@ -939,7 +939,7 @@ explorer_dialog (void)
                           wvals.redstretch, 0, 1, 0.01, 0.1, 2,
                           TRUE, 0, 0,
                           _("Change the intensity of the red channel"), NULL);
-  g_signal_connect (elements->red, "value_changed",
+  g_signal_connect (elements->red, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.redstretch);
 
@@ -949,7 +949,7 @@ explorer_dialog (void)
                           wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
                           TRUE, 0, 0,
                           _("Change the intensity of the green channel"), NULL);
-  g_signal_connect (elements->green, "value_changed",
+  g_signal_connect (elements->green, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.greenstretch);
 
@@ -959,7 +959,7 @@ explorer_dialog (void)
                           wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
                           TRUE, 0, 0,
                           _("Change the intensity of the blue channel"), NULL);
-  g_signal_connect (elements->blue, "value_changed",
+  g_signal_connect (elements->blue, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.bluestretch);
 

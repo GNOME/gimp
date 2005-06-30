@@ -573,7 +573,7 @@ fp_create_circle_palette (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
 
-  g_signal_connect (win, "delete_event",
+  g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -640,7 +640,7 @@ fp_create_rough (void)
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_show (scale);
 
-  g_signal_connect (data, "value_changed",
+  g_signal_connect (data, "value-changed",
                     G_CALLBACK (fp_scale_update),
                     &fpvals.roughness);
 
@@ -728,7 +728,7 @@ fp_create_lnd (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
 
-  g_signal_connect (win, "delete_event",
+  g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -772,7 +772,7 @@ fp_create_msnls (void)
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
 
-  g_signal_connect (win, "delete_event",
+  g_signal_connect (win, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -1309,7 +1309,7 @@ fp_advanced_dialog (void)
   gtk_window_set_title (GTK_WINDOW (AW.window),
                         _("Advanced Filter Pack Options"));
 
-  g_signal_connect (AW.window, "delete_event",
+  g_signal_connect (AW.window, "delete-event",
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
@@ -1408,7 +1408,7 @@ fp_advanced_dialog (void)
                     0, 0, 0, 0);
   gtk_widget_show (scale);
 
-  g_signal_connect (smoothnessData, "value_changed",
+  g_signal_connect (smoothnessData, "value-changed",
                     G_CALLBACK (fp_scale_update),
                     &fpvals.aliasing);
 
@@ -1438,7 +1438,7 @@ fp_advanced_dialog (void)
   gtk_range_set_update_policy (GTK_RANGE (scale), 0);
   gtk_widget_show (scale);
 
-  g_signal_connect (smoothnessData, "value_changed",
+  g_signal_connect (smoothnessData, "value-changed",
                     G_CALLBACK (fp_preview_scale_update),
                     &fpvals.preview_size);
 

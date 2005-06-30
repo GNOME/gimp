@@ -2662,10 +2662,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
   chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
 
   gtk_container_add (GTK_CONTAINER (frame), center);
-  g_signal_connect (center, "value_changed",
+  g_signal_connect (center, "value-changed",
                     G_CALLBACK (dlg_position_entry_callback),
                     NULL);
-  g_signal_connect (center, "refval_changed",
+  g_signal_connect (center, "refval-changed",
                     G_CALLBACK (dlg_position_entry_callback),
                     NULL);
   gtk_widget_hide (chain);
@@ -2689,10 +2689,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               1.0, 10.0, 1,
                               FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.radius);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -2701,10 +2701,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.rotation);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -2713,10 +2713,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.hue);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -2725,10 +2725,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vangle);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -2737,10 +2737,10 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               pvals.vlength, 1, 1000, 1.0, 10.0, 1,
                               FALSE, 1, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vlength);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
@@ -2778,7 +2778,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               1.0, 10.0, 1.0, 1.0, 0,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.asupsample_max_depth);
 
@@ -2788,7 +2788,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
                               0.0, 4.0, 0.01, 0.01, 2,
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.asupsample_threshold);
 
@@ -3381,10 +3381,10 @@ ed_make_page_general (GFlareEditor *ed,
                               gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_opacity);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3409,10 +3409,10 @@ ed_make_page_general (GFlareEditor *ed,
                               gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_opacity);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3437,10 +3437,10 @@ ed_make_page_general (GFlareEditor *ed,
                               gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_opacity);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3518,10 +3518,10 @@ ed_make_page_glow (GFlareEditor *ed,
                               gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
                               FALSE, 0, G_MAXINT,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_size);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3530,10 +3530,10 @@ ed_make_page_glow (GFlareEditor *ed,
                               gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_rotation);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3542,10 +3542,10 @@ ed_make_page_glow (GFlareEditor *ed,
                               gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_hue);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3623,10 +3623,10 @@ ed_make_page_rays (GFlareEditor *ed,
                               gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
                               FALSE, 0, G_MAXINT,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_size);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3636,10 +3636,10 @@ ed_make_page_rays (GFlareEditor *ed,
                               -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_rotation);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3648,10 +3648,10 @@ ed_make_page_rays (GFlareEditor *ed,
                               gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_hue);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3660,10 +3660,10 @@ ed_make_page_rays (GFlareEditor *ed,
                               gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
                               FALSE, 0, G_MAXINT,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gflare->rays_nspikes);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3672,10 +3672,10 @@ ed_make_page_rays (GFlareEditor *ed,
                               gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
                               FALSE, 0, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_thickness);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3760,10 +3760,10 @@ ed_make_page_sflare (GFlareEditor *ed,
                               gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
                               FALSE, 0, G_MAXINT,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_size);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3773,10 +3773,10 @@ ed_make_page_sflare (GFlareEditor *ed,
                               -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_rotation);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3785,10 +3785,10 @@ ed_make_page_sflare (GFlareEditor *ed,
                               gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_hue);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
@@ -3865,7 +3865,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 
-  g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value_changed",
+  g_signal_connect (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed), "value-changed",
                     G_CALLBACK (ed_preview_update),
                     NULL);
 

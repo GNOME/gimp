@@ -155,7 +155,7 @@ create_generalpage (GtkNotebook *notebook)
                                                 GIMP_COLOR_AREA_FLAT);
   g_signal_connect (general_color_button, "clicked",
                     G_CALLBACK (select_color), NULL);
-  g_signal_connect (general_color_button, "color_changed",
+  g_signal_connect (general_color_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pcvals.color);
   gtk_box_pack_start (GTK_BOX (box4), general_color_button, FALSE, FALSE, 0);

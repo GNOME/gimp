@@ -726,7 +726,7 @@ create_main_dialog (void)
                                      licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.filtlen);
 
@@ -735,7 +735,7 @@ create_main_dialog (void)
                                      licvals.noisemag, 1, 5, 0.1, 1.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.noisemag);
 
@@ -744,7 +744,7 @@ create_main_dialog (void)
                                      licvals.intsteps, 1, 40, 1.0, 5.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.intsteps);
 
@@ -753,7 +753,7 @@ create_main_dialog (void)
                                      licvals.minv, -100, 0, 1, 10, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.minv);
 
@@ -762,7 +762,7 @@ create_main_dialog (void)
                                      licvals.maxv, 0, 100, 1, 10, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.maxv);
 

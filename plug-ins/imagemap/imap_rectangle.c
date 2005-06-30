@@ -389,28 +389,28 @@ rectangle_create_info_widget(GtkWidget *frame)
    label = create_label_in_table(table, 0, 0, _("Upper left _x:"));
    props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
 					  max_width - 1);
-   g_signal_connect(props->x, "value_changed",
+   g_signal_connect(props->x, "value-changed",
 		    G_CALLBACK(x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 3, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("Upper left _y:"));
    props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
 					  max_height - 1);
-   g_signal_connect(props->y, "value_changed",
+   g_signal_connect(props->y, "value-changed",
 		    G_CALLBACK(y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 3, _("pixels"));
 
    label = create_label_in_table(table, 2, 0, _("_Width:"));
    props->width = create_spin_button_in_table(table, label, 2, 1, 1, 1,
 					      max_width);
-   g_signal_connect(props->width, "value_changed",
+   g_signal_connect(props->width, "value-changed",
 		    G_CALLBACK(width_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 3, _("pixels"));
 
    label = create_label_in_table(table, 3, 0, _("_Height:"));
    props->height = create_spin_button_in_table(table, label, 3, 1, 1, 1,
 					       max_height);
-   g_signal_connect(props->height, "value_changed",
+   g_signal_connect(props->height, "value-changed",
 		    G_CALLBACK(height_changed_cb), (gpointer) props);
    create_label_in_table(table, 3, 3, _("pixels"));
 

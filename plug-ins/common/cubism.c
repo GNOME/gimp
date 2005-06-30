@@ -301,10 +301,10 @@ cubism_dialog (GimpDrawable *drawable)
                                      cvals.tile_size, 0.0, 100.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_size);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -314,10 +314,10 @@ cubism_dialog (GimpDrawable *drawable)
                           cvals.tile_saturation, 0.0, 10.0, 0.1, 1, 1,
                           TRUE, 0, 0,
                           NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &cvals.tile_saturation);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

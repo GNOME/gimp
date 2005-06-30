@@ -371,10 +371,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
               TRUE, 0, 0,
               _("Adjust the Luminosity Threshold"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.lum_threshold);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -384,10 +384,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Flare Intensity"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.flare_inten);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -397,10 +397,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.spike_len, 1, 100, 1, 10, 0,
               TRUE, 0, 0,
               _("Adjust the Spike Length"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_len);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -410,10 +410,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.spike_pts, 0, 16, 1, 4, 0,
               TRUE, 0, 0,
               _("Adjust the Number of Spikes"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_pts);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -424,10 +424,10 @@ sparkle_dialog (GimpDrawable *drawable)
               TRUE, 0, 0,
               _("Adjust the Spike Angle "
                 "(-1 means a Random Angle is chosen)"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_angle);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -437,10 +437,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.density, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Spike Density"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.density);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -450,10 +450,10 @@ sparkle_dialog (GimpDrawable *drawable)
               svals.opacity, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
               _("Adjust the Opacity of the Spikes"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.opacity);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -464,10 +464,10 @@ sparkle_dialog (GimpDrawable *drawable)
               TRUE, 0, 0,
               _("Adjust the Value how much the Hue should "
                 "be changed randomly"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_hue);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -478,10 +478,10 @@ sparkle_dialog (GimpDrawable *drawable)
               TRUE, 0, 0,
               _("Adjust the Value how much the Saturation should "
                 "be changed randomly"), NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.random_saturation);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

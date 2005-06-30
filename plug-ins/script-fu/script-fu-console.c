@@ -230,7 +230,7 @@ script_fu_console_interface (void)
   gtk_widget_grab_focus (cint.cc);
   gtk_widget_show (cint.cc);
 
-  g_signal_connect (cint.cc, "key_press_event",
+  g_signal_connect (cint.cc, "key-press-event",
 		    G_CALLBACK (script_fu_cc_key_function),
 		    NULL);
 

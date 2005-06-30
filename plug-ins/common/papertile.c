@@ -270,7 +270,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_X:"), 0.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (w.division_x_adj, "value_changed",
+  g_signal_connect (w.division_x_adj, "value-changed",
                     G_CALLBACK (division_x_adj_changed),
                     NULL);
 
@@ -279,7 +279,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Y:"), 0.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (w.division_y_adj, "value_changed",
+  g_signal_connect (w.division_y_adj, "value-changed",
                     G_CALLBACK (division_y_adj_changed),
                     NULL);
 
@@ -290,7 +290,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Size:"), 0.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (w.tile_size_adj, "value_changed",
+  g_signal_connect (w.tile_size_adj, "value-changed",
                     G_CALLBACK (tile_size_adj_changed),
                     NULL);
 
@@ -340,7 +340,7 @@ open_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Max (%):"), 0.0, 0.5,
 			     button, 1, TRUE);
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &p.params.move_max_rate);
 
@@ -389,7 +389,7 @@ open_dialog (void)
 			    p.params.background_type == BACKGROUND_TYPE_COLOR);
   g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
 
-  g_signal_connect (color_button, "color_changed",
+  g_signal_connect (color_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &p.params.background_color);
 

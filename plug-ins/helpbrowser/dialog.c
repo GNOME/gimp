@@ -314,7 +314,7 @@ browser_dialog_open (void)
                     G_CALLBACK (view_unrealize),
                     NULL);
 
-  g_signal_connect (html, "button_press_event",
+  g_signal_connect (html, "button-press-event",
                     G_CALLBACK (view_button_press),
                     NULL);
 

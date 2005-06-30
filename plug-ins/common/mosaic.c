@@ -728,10 +728,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      mvals.tile_size, 5.0, 100.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_size);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -740,10 +740,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      mvals.tile_height, 1.0, 50.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_height);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -752,10 +752,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      mvals.tile_spacing, 1.0, 50.0, 1.0, 10.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_spacing);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -765,10 +765,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      0.0, 1.0, 0.10, 0.1, 2,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.tile_neatness);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -777,10 +777,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      mvals.light_dir, 0.0, 360.0, 1.0, 15.0, 1,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.light_dir);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -790,10 +790,10 @@ mosaic_dialog (GimpDrawable *drawable)
                                      0.0, 1.0, 0.01, 0.1, 2,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mvals.color_variation);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

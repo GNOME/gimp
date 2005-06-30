@@ -307,10 +307,10 @@ blinds_dialog (GimpDrawable *drawable)
                                     bvals.angledsp, 1, 90, 1, 15, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
+  g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.angledsp);
-  g_signal_connect_swapped (size_data, "value_changed",
+  g_signal_connect_swapped (size_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -319,10 +319,10 @@ blinds_dialog (GimpDrawable *drawable)
                                     bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
                                     TRUE, 0, 0,
                                     NULL, NULL);
-  g_signal_connect (size_data, "value_changed",
+  g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.numsegs);
-  g_signal_connect_swapped (size_data, "value_changed",
+  g_signal_connect_swapped (size_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

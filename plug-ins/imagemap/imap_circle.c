@@ -264,20 +264,20 @@ circle_create_info_widget(GtkWidget *frame)
    label = create_label_in_table(table, 0, 0, _("Center _x:"));
    props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
 					  max_width - 1);
-   g_signal_connect(props->x, "value_changed",
+   g_signal_connect(props->x, "value-changed",
                     G_CALLBACK (x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 2, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("Center _y:"));
    props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
 					  max_height - 1);
-   g_signal_connect(props->y, "value_changed",
+   g_signal_connect(props->y, "value-changed",
                     G_CALLBACK (y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 2, _("pixels"));
 
    label = create_label_in_table(table, 2, 0, _("_Radius:"));
    props->r = create_spin_button_in_table(table, label, 2, 1, 1, 1, G_MAXINT);
-   g_signal_connect(props->r, "value_changed",
+   g_signal_connect(props->r, "value-changed",
                     G_CALLBACK (r_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 2, _("pixels"));
 

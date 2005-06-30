@@ -296,10 +296,10 @@ colorify_dialog (GimpDrawable *drawable)
                                                COLOR_SIZE, COLOR_SIZE,
                                                &cvals.color,
                                                GIMP_COLOR_AREA_FLAT);
-  g_signal_connect (custom_color_button, "color_changed",
+  g_signal_connect (custom_color_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &cvals.color);
-  g_signal_connect_swapped (custom_color_button, "color_changed",
+  g_signal_connect_swapped (custom_color_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

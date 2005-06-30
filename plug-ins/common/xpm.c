@@ -794,7 +794,7 @@ save_dialog (void)
                                      TRUE, 0, 0,
                                      NULL, NULL);
 
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xpmvals.threshold);
 

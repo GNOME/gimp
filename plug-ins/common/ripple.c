@@ -614,10 +614,10 @@ ripple_dialog (GimpDrawable *drawable)
                                      rvals.period, 0, 200, 1, 10, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.period);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -627,10 +627,10 @@ ripple_dialog (GimpDrawable *drawable)
                                      rvals.amplitude, 0, 200, 1, 10, 0,
                                      TRUE, 0, 0,
                                      NULL, NULL);
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.amplitude);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

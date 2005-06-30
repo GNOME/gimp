@@ -1838,7 +1838,7 @@ function_graph_new (GtkWidget *widget,
   gtk_widget_set_size_request (preview, 256, 256);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "expose_event",
+  g_signal_connect (preview, "expose-event",
                     G_CALLBACK (function_graph_expose), data);
 
   gtk_widget_show (dlg);
@@ -1968,7 +1968,7 @@ CML_save_to_file_callback (GtkWidget *widget,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_save_to_file_response),
                         NULL);
-      g_signal_connect (dialog, "delete_event",
+      g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
@@ -2145,7 +2145,7 @@ CML_load_from_file_callback (GtkWidget *widget,
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_load_from_file_response),
                         NULL);
-      g_signal_connect (dialog, "delete_event",
+      g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
     }
@@ -2466,7 +2466,7 @@ CML_explorer_int_entry_init (WidgetEntry *widget_entry,
                              GtkObject   *adjustment,
                              gpointer     value_ptr)
 {
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (CML_explorer_int_adjustment_update),
                     value_ptr);
 
@@ -2499,7 +2499,7 @@ CML_explorer_double_entry_init (WidgetEntry *widget_entry,
                                 GtkObject   *adjustment,
                                 gpointer     value_ptr)
 {
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (CML_explorer_double_adjustment_update),
                     value_ptr);
 

@@ -391,10 +391,10 @@ noisify_add_channel (GtkWidget    *table,
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (noisify_double_adjustment_update),
                     &nvals.noise[channel]);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -418,10 +418,10 @@ noisify_add_alpha_channel (GtkWidget    *table,
 
   g_object_set_data (G_OBJECT (adj), "drawable", drawable);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &nvals.noise[channel]);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

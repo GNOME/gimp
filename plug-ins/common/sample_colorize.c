@@ -1554,7 +1554,7 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (g_di.adj_lvl_in_min, "value_changed",
+  g_signal_connect (g_di.adj_lvl_in_min, "value-changed",
                     G_CALLBACK (p_smp_adj_lvl_in_min_upd_callback),
                     &g_di);
 
@@ -1567,7 +1567,7 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (g_di.adj_lvl_in_gamma, "value_changed",
+  g_signal_connect (g_di.adj_lvl_in_gamma, "value-changed",
                     G_CALLBACK (p_smp_text_gamma_upd_callback),
                     &g_di);
 
@@ -1580,7 +1580,7 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (g_di.adj_lvl_in_max, "value_changed",
+  g_signal_connect (g_di.adj_lvl_in_max, "value-changed",
                     G_CALLBACK (p_smp_adj_lvl_in_max_upd_callback),
                     &g_di);
 
@@ -1604,7 +1604,7 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (g_di.adj_lvl_out_min, "value_changed",
+  g_signal_connect (g_di.adj_lvl_out_min, "value-changed",
                     G_CALLBACK (p_smp_adj_lvl_out_min_upd_callback),
                     &g_di);
 
@@ -1617,7 +1617,7 @@ p_smp_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (g_di.adj_lvl_out_max, "value_changed",
+  g_signal_connect (g_di.adj_lvl_out_max, "value-changed",
                     G_CALLBACK (p_smp_adj_lvl_out_max_upd_callback),
                     &g_di);
 

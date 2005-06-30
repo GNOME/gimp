@@ -466,7 +466,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	 
 	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
 
-	 g_signal_connect(widget, "motion_notify_event",
+	 g_signal_connect(widget, "motion-notify-event",
                           G_CALLBACK(button_motion), factory);
       }
    }

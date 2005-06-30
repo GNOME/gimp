@@ -2959,7 +2959,7 @@ load_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Resolution:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
 
@@ -2968,7 +2968,7 @@ load_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Width:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.width);
 
@@ -2977,7 +2977,7 @@ load_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_Height:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
 
@@ -3129,7 +3129,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("_Width:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (vals->adjustment[0], "value_changed",
+  g_signal_connect (vals->adjustment[0], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.width);
 
@@ -3138,7 +3138,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("_Height:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (vals->adjustment[1], "value_changed",
+  g_signal_connect (vals->adjustment[1], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.height);
 
@@ -3147,7 +3147,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("_X offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (vals->adjustment[2], "value_changed",
+  g_signal_connect (vals->adjustment[2], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.x_offset);
 
@@ -3156,7 +3156,7 @@ save_dialog (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("_Y offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
-  g_signal_connect (vals->adjustment[3], "value_changed",
+  g_signal_connect (vals->adjustment[3], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
 
@@ -3255,7 +3255,7 @@ save_dialog (void)
 			     spinbutton, 1, FALSE);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &psvals.preview_size);
 

@@ -339,7 +339,7 @@ script_fu_interface (SFScript *script)
 
           gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
 
-	  g_signal_connect (widget, "color_changed",
+	  g_signal_connect (widget, "color-changed",
 			    G_CALLBACK (gimp_color_button_get_color),
 			    &script->arg_values[i].sfa_color);
 	  break;
@@ -427,7 +427,7 @@ script_fu_interface (SFScript *script)
 	    }
 
           g_signal_connect (script->arg_values[i].sfa_adjustment.adj,
-                            "value_changed",
+                            "value-changed",
                             G_CALLBACK (gimp_double_adjustment_update),
                             &script->arg_values[i].sfa_adjustment.value);
 	  break;

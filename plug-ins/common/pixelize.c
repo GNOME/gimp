@@ -354,10 +354,10 @@ pixelize_dialog (GimpDrawable *drawable)
 
   gtk_box_pack_start (GTK_BOX (main_vbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
-  g_signal_connect (sizeentry, "value_changed",
+  g_signal_connect (sizeentry, "value-changed",
                     G_CALLBACK (update_pixelsize),
                     preview);
-  g_signal_connect (sizeentry, "refval_changed",
+  g_signal_connect (sizeentry, "refval-changed",
                     G_CALLBACK (update_pixelsize),
                     preview);
 

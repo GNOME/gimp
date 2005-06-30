@@ -355,10 +355,10 @@ displace_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount_x);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -402,10 +402,10 @@ displace_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), spinbutton, 1, 2, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount_y);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

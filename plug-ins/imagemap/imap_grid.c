@@ -245,13 +245,13 @@ create_grid_settings_dialog(void)
 
    label = create_label_in_table(table, 0, 0, _("_Width"));
    data->width = create_spin_button_in_table(table, label, 0, 1, 15, 1, 100);
-   g_signal_connect(data->width, "value_changed",
+   g_signal_connect(data->width, "value-changed",
                     G_CALLBACK (width_changed_cb), (gpointer) data);
    create_label_in_table(table, 0, 3, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("_Height"));
    data->height = create_spin_button_in_table(table, label, 1, 1, 15, 1, 100);
-   g_signal_connect(data->height, "value_changed",
+   g_signal_connect(data->height, "value-changed",
                     G_CALLBACK (height_changed_cb), (gpointer) data);
    create_label_in_table(table, 1, 3, _("pixels"));
 
@@ -272,12 +272,12 @@ create_grid_settings_dialog(void)
 
    label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));
    data->left = create_spin_button_in_table(table, label, 0, 0, 0, 0, 100);
-   g_signal_connect(data->left, "value_changed",
+   g_signal_connect(data->left, "value-changed",
                     G_CALLBACK (left_changed_cb), (gpointer) data);
 
    label = create_label_in_table(table, 1, 2, _("pixels from _top"));
    data->top = create_spin_button_in_table(table, label, 1, 0, 0, 0, 100);
-   g_signal_connect(data->top, "value_changed",
+   g_signal_connect(data->top, "value-changed",
                     G_CALLBACK (top_changed_cb), (gpointer) data);
 
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);

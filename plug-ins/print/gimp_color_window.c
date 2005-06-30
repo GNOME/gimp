@@ -245,7 +245,7 @@ gimp_create_color_adjust_window (void)
   gtk_container_add (GTK_CONTAINER (frame), swatch);
   gtk_widget_show (swatch);
 
-  g_signal_connect (swatch, "expose_event",
+  g_signal_connect (swatch, "expose-event",
                     G_CALLBACK (gimp_color_swatch_expose),
                     NULL);
 
@@ -276,7 +276,7 @@ gimp_create_color_adjust_window (void)
                           _("Set the brightness of the print.\n"
                             "0 is solid black, 2 is solid white"),
                           NULL);
-  g_signal_connect (brightness_adjustment, "value_changed",
+  g_signal_connect (brightness_adjustment, "value-changed",
                     G_CALLBACK (gimp_brightness_update),
                     NULL);
 
@@ -295,7 +295,7 @@ gimp_create_color_adjust_window (void)
   set_adjustment_tooltip (contrast_adjustment,
                           _("Set the contrast of the print"),
                           NULL);
-  g_signal_connect (contrast_adjustment, "value_changed",
+  g_signal_connect (contrast_adjustment, "value-changed",
                     G_CALLBACK (gimp_contrast_update),
                     NULL);
 
@@ -314,7 +314,7 @@ gimp_create_color_adjust_window (void)
   set_adjustment_tooltip (cyan_adjustment,
                           _("Adjust the cyan balance of the print"),
                           NULL);
-  g_signal_connect (cyan_adjustment, "value_changed",
+  g_signal_connect (cyan_adjustment, "value-changed",
                     G_CALLBACK (gimp_cyan_update),
                     NULL);
 
@@ -333,7 +333,7 @@ gimp_create_color_adjust_window (void)
   set_adjustment_tooltip (magenta_adjustment,
                           _("Adjust the magenta balance of the print"),
                           NULL);
-  g_signal_connect (magenta_adjustment, "value_changed",
+  g_signal_connect (magenta_adjustment, "value-changed",
                     G_CALLBACK (gimp_magenta_update),
                     NULL);
 
@@ -352,7 +352,7 @@ gimp_create_color_adjust_window (void)
   set_adjustment_tooltip (yellow_adjustment,
                           _("Adjust the yellow balance of the print"),
                           NULL);
-  g_signal_connect (yellow_adjustment, "value_changed",
+  g_signal_connect (yellow_adjustment, "value-changed",
                     G_CALLBACK (gimp_yellow_update),
                     NULL);
 
@@ -373,7 +373,7 @@ gimp_create_color_adjust_window (void)
                             "Use zero saturation to produce grayscale output "
                             "using color and black inks"),
                           NULL);
-  g_signal_connect (saturation_adjustment, "value_changed",
+  g_signal_connect (saturation_adjustment, "value-changed",
                     G_CALLBACK (gimp_saturation_update),
                     NULL);
 
@@ -395,7 +395,7 @@ gimp_create_color_adjust_window (void)
                             "paper or smears; increase the density if black "
                             "regions are not solid."),
                           NULL);
-  g_signal_connect (density_adjustment, "value_changed",
+  g_signal_connect (density_adjustment, "value-changed",
                     G_CALLBACK (gimp_density_update),
                     NULL);
 
@@ -418,7 +418,7 @@ gimp_create_color_adjust_window (void)
                             "Black and white will remain the same, unlike with "
                             "the brightness adjustment."),
                           NULL);
-  g_signal_connect (gamma_adjustment, "value_changed",
+  g_signal_connect (gamma_adjustment, "value-changed",
                     G_CALLBACK (gimp_gamma_update),
                     NULL);
 

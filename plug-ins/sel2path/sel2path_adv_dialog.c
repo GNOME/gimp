@@ -99,7 +99,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "If two endpoints are closer than this,"
 			      "they are made to be equal.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->align_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -114,7 +114,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "and successors is smaller than this, it's a corner, "
 			      "even if it's within `corner_surround' pixels of a "
 			      "point with a smaller angle.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->corner_always_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -127,7 +127,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Number of points to consider when determining if a "
 			      "point is a corner or not.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->corner_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -141,7 +141,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "If a point, its predecessors, and its successors "
 			      "define an angle smaller than this, it's a corner.",
 			      NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->corner_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -157,7 +157,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "unacceptable.  If any pixel is further away "
 			      "than this from the fitted curve, we try again.",
 			      NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->error_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -170,7 +170,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "A second number of adjacent points to consider "
 			      "when filtering.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_alternative_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -186,7 +186,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "filter_surround and filter_alternative_surround "
 			      "points differ by more than this, use the one from "
 			      "filter_alternative_surround.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_epsilon);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -202,7 +202,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "so --- can produce vastly better results.  But if "
 			      "any points that ``should'' be corners aren't found, "
 			      "the curve goes to hell around that point.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_iteration_count);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -215,7 +215,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "To produce the new point, use the old point plus "
 			      "this times the neighbors.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_percent);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -229,7 +229,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of adjacent points to consider if "
 			      "`filter_surround' points defines a straight line.",
 			      NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_secondary_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -242,7 +242,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Number of adjacent points to consider when filtering.",
 			      NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -273,7 +273,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "be changed back to a curve. This is weighted by the "
 			      "square of the curve length, to make shorter curves "
 			      "more likely to be reverted.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->line_reversion_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -287,7 +287,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "How many pixels (on the average) a spline can "
 			      "diverge from the line determined by its endpoints "
 			      "before it is changed to a straight line.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->line_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -301,7 +301,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "If reparameterization doesn't improve the fit by this "
 			      "much percent, stop doing it. ""Amount of error at which "
 			      "it is pointless to reparameterize.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->reparameterize_improvement);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -318,7 +318,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "The initial fit is not good enough for the Newton-Raphson "
 			      "iteration to improve it.  It may be that it would be better "
 			      "to detect the cases where we didn't find any corners.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->reparameterize_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -331,7 +331,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      TRUE, 0, 0,
 			      "Percentage of the curve away from the worst point "
 			      "to look for a better place to subdivide.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->subdivide_search);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -345,7 +345,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of points to consider when deciding whether "
 			      "a given point is a better place to subdivide.",
 			      NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->subdivide_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -359,7 +359,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "How many pixels a point can diverge from a straight "
 			      "line and still be considered a better place to "
 			      "subdivide.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->subdivide_threshold);
   adjust_widgets = g_slist_append (adjust_widgets, adj);
@@ -373,7 +373,7 @@ dialog_create_selection_area (SELVALS *sels)
 			      "Number of points to look at on either side of a "
 			      "point when computing the approximation to the "
 			      "tangent at that point.", NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->tangent_surround);
   adjust_widgets = g_slist_append (adjust_widgets, adj);

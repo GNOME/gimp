@@ -645,7 +645,7 @@ entscale_int_new (GtkWidget *table,
   /*
     If the first arg of gtk_adjustment_new() isn't between min and
     max, it is automatically corrected by gtk later with
-    "value_changed" signal. I don't like this, since I want to leave
+    "value-changed" signal. I don't like this, since I want to leave
     *intvar untouched when `constraint' is false.
     The lines below might look oppositely, but this is OK.
    */
@@ -677,7 +677,7 @@ entscale_int_new (GtkWidget *table,
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entscale_int_entry_update),
                     intvar);
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (entscale_int_scale_update),
                     intvar);
   g_signal_connect (entry, "destroy",

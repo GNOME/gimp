@@ -568,7 +568,7 @@ save_dialog (gint32 image_ID)
 			   _("The number of pixels in the table border."),
 			   NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.border);
 
@@ -613,7 +613,7 @@ save_dialog (gint32 image_ID)
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellpadding."), NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellpadding);
 
@@ -626,7 +626,7 @@ save_dialog (gint32 image_ID)
   gimp_help_set_help_data (spinbutton,
 			   _("The amount of cellspacing."), NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellspacing);
 

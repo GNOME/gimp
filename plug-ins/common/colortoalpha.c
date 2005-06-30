@@ -416,10 +416,10 @@ color_to_alpha_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &pvals.color);
-  g_signal_connect_swapped (button, "color_changed",
+  g_signal_connect_swapped (button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

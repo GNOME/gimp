@@ -438,7 +438,7 @@ alienmap2_dialog (void)
                           _("Number of cycles covering full value range"),
                           NULL);
   label_freq_rh = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redfrequency);
 
@@ -450,7 +450,7 @@ alienmap2_dialog (void)
                           _("Phase angle, range 0-360"),
                           NULL);
   label_phase_rh = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redangle);
 
@@ -462,7 +462,7 @@ alienmap2_dialog (void)
                           _("Number of cycles covering full value range"),
                           NULL);
   label_freq_gs = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenfrequency);
 
@@ -474,7 +474,7 @@ alienmap2_dialog (void)
                           _("Phase angle, range 0-360"),
                           NULL);
   label_phase_gs = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenangle);
 
@@ -486,7 +486,7 @@ alienmap2_dialog (void)
                           _("Number of cycles covering full value range"),
                           NULL);
   label_freq_bl = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.bluefrequency);
 
@@ -498,7 +498,7 @@ alienmap2_dialog (void)
                           _("Phase angle, range 0-360"),
                           NULL);
   label_phase_bl = GIMP_SCALE_ENTRY_LABEL (adj);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.blueangle);
 

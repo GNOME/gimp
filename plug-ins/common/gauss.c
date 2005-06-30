@@ -512,10 +512,10 @@ gauss_dialog (gint32        image_ID,
 
   /*  FIXME: Shouldn't need two signal connections here,
              gimp_coordinates_new() seems to be severily broken.  */
-  g_signal_connect_swapped (size, "value_changed",
+  g_signal_connect_swapped (size, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-  g_signal_connect_swapped (size, "refval_changed",
+  g_signal_connect_swapped (size, "refval-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

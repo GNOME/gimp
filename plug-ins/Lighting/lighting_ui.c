@@ -330,7 +330,7 @@ create_options_page (void)
                               3, TRUE, 0.0, 0.0,
                               "Distance of observer from surface",
                               "plug-in-lighting");
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (distance_update),
                     NULL);
 
@@ -420,7 +420,7 @@ create_light_page (void)
                                           &mapvals.lightsource[k].color,
                                           GIMP_COLOR_AREA_FLAT);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (colorbutton), TRUE);
-  g_signal_connect (colorbutton, "color_changed",
+  g_signal_connect (colorbutton, "color-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gtk_widget_show (colorbutton);
@@ -437,7 +437,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                                  _("_Intensity:"), 0.0, 0.5,
                                  spin_intensity, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_intensity,
@@ -455,7 +455,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
                                  _("_X:"), 0.0, 0.5,
                                  spin_pos_x, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_pos_x,
@@ -468,7 +468,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
                              _("_Y:"), 0.0, 0.5,
                              spin_pos_y, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_pos_y,
@@ -481,7 +481,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
                              _("_Z:"), 0.0, 0.5,
                              spin_pos_z, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_pos_z,
@@ -498,7 +498,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 1,
                              _("X:"), 0.0, 0.5,
                              spin_dir_x, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_dir_x,
@@ -510,7 +510,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 2,
                              _("Y:"), 0.0, 0.5,
                                  spin_dir_y, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_dir_y,
@@ -522,7 +522,7 @@ create_light_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 4, 3,
                              _("Z:"), 0.0, 0.5,
                              spin_dir_z, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (apply_settings),
                     NULL);
   gimp_help_set_help_data (spin_dir_z,
@@ -610,10 +610,10 @@ create_material_page (void)
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.ambient_int);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
   gtk_widget_show (spinbutton);
@@ -639,10 +639,10 @@ create_material_page (void)
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.diffuse_int);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
   gtk_widget_show (spinbutton);
@@ -668,10 +668,10 @@ create_material_page (void)
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.specular_ref);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
   gtk_widget_show (spinbutton);
@@ -696,10 +696,10 @@ create_material_page (void)
                                      0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.material.highlight);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
   gtk_widget_show (spinbutton);
@@ -805,10 +805,10 @@ create_bump_page (void)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Ma_ximum height:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.bumpmax);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 

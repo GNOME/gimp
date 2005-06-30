@@ -731,10 +731,10 @@ save_dialog (void)
                                 _("JPEG quality parameter"),
                                 "file-jpeg-save-quality");
 
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.quality);
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -793,10 +793,10 @@ save_dialog (void)
                                 TRUE, 0.0, 0.0,
                                 NULL,
                                 "file-jpeg-save-smoothing");
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (make_preview),
                     NULL);
 
@@ -821,7 +821,7 @@ save_dialog (void)
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);
 
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (save_restart_update),
                     toggle);
   g_signal_connect_swapped (toggle, "toggled",

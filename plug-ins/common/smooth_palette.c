@@ -445,7 +445,7 @@ dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
                              _("_Search depth:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.ntries);
 

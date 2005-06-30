@@ -611,7 +611,7 @@ dialog (void)
                                       1.0, 1.0, 0.0,
                                       TRUE, 0, 0,
                                       NULL, NULL);
-   g_signal_connect (adjustment, "value_changed",
+   g_signal_connect (adjustment, "value-changed",
                      G_CALLBACK (dialog_scale_update),
                      &curl.opacity);
 

@@ -701,7 +701,7 @@ save_dialog (void)
 			     _("Spacing:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &info.spacing);
 

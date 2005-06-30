@@ -94,7 +94,7 @@ create_placementpage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("The relative density of the brush strokes"),
                           NULL);
-  g_signal_connect (brush_density_adjust, "value_changed",
+  g_signal_connect (brush_density_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_density);
 

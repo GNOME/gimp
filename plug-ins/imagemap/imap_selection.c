@@ -438,9 +438,9 @@ make_selection(ObjectList_t *object_list)
 
   /* For handling doubleclick */
 
-  g_signal_connect (list, "button_press_event",
+  g_signal_connect (list, "button-press-event",
 		    G_CALLBACK(button_press_cb), data);
-  g_signal_connect (list, "button_release_event",
+  g_signal_connect (list, "button-release-event",
 		    G_CALLBACK(button_release_cb), data);
 
   /* Callbacks we are interested in */

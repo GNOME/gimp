@@ -425,10 +425,10 @@ illusion_dialog (GimpDrawable *drawable)
                              _("_Divisions:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &parameters.division);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

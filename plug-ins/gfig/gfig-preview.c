@@ -83,7 +83,7 @@ make_preview (void)
                     G_CALLBACK (gfig_preview_events),
                     NULL);
 
-  g_signal_connect_after (gfig_context->preview , "expose_event",
+  g_signal_connect_after (gfig_context->preview , "expose-event",
                           G_CALLBACK (gfig_preview_expose),
                           NULL);
 
@@ -101,7 +101,7 @@ make_preview (void)
 
   ruler = gtk_hruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_width, 0, PREVIEW_SIZE);
-  g_signal_connect_swapped (gfig_context->preview, "motion_notify_event",
+  g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 2, 0, 1,
@@ -110,7 +110,7 @@ make_preview (void)
 
   ruler = gtk_vruler_new ();
   gtk_ruler_set_range (GTK_RULER (ruler), 0, preview_height, 0, PREVIEW_SIZE);
-  g_signal_connect_swapped (gfig_context->preview, "motion_notify_event",
+  g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,

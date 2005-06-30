@@ -1200,7 +1200,7 @@ create_selection_tab (GtkWidget *notebook,
   gtk_size_group_add_widget (group, label);
   g_object_unref (group);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &filmvals.film_height);
 
@@ -1222,7 +1222,7 @@ create_selection_tab (GtkWidget *notebook,
                                      button, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
@@ -1249,7 +1249,7 @@ create_selection_tab (GtkWidget *notebook,
                                      spinbutton, 1, TRUE);
   gtk_size_group_add_widget (group, label);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &filmvals.number_start);
 
@@ -1272,7 +1272,7 @@ create_selection_tab (GtkWidget *notebook,
                                      button, 1, FALSE);
   gtk_size_group_add_widget (group, label);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.number_color);
 
@@ -1347,7 +1347,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_height);
 
@@ -1358,7 +1358,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_space);
 
@@ -1369,7 +1369,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_offset);
 
@@ -1380,7 +1380,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_width);
 
@@ -1391,7 +1391,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_height);
 
@@ -1402,7 +1402,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_space);
 
@@ -1413,7 +1413,7 @@ create_advanced_tab (GtkWidget *notebook)
 			  0.0, 1.0, 0.001, 0.01, 3,
 			  TRUE, 0, 0,
 			  NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);
 

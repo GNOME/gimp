@@ -94,7 +94,7 @@ create_sizepage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("The number of sizes of brushes to use"),
                           NULL);
-  g_signal_connect (sizenumadjust, "value_changed",
+  g_signal_connect (sizenumadjust, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pcvals.size_num);
 
@@ -106,7 +106,7 @@ create_sizepage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("The smallest brush to create"),
                           NULL);
-  g_signal_connect (sizefirstadjust, "value_changed",
+  g_signal_connect (sizefirstadjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.size_first);
 
@@ -118,7 +118,7 @@ create_sizepage (GtkNotebook *notebook)
                           TRUE, 0, 0,
                           _("The largest brush to create"),
                           NULL);
-  g_signal_connect (sizelastadjust, "value_changed",
+  g_signal_connect (sizelastadjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.size_last);
 

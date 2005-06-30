@@ -259,10 +259,10 @@ sel_gauss_dialog (GimpDrawable *drawable)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Blur radius:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bvals.radius);
-  g_signal_connect_swapped (spinbutton, "value_changed",
+  g_signal_connect_swapped (spinbutton, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -271,10 +271,10 @@ sel_gauss_dialog (GimpDrawable *drawable)
                               bvals.maxdelta, 0, 255, 1, 8, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.maxdelta);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

@@ -215,7 +215,7 @@ build_dialog (void)
   gtk_widget_add_events (drawing_area,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect (drawing_area, "button_release_event",
+  g_signal_connect (drawing_area, "button-release-event",
                     G_CALLBACK (toggle_feedbacktype),
                     NULL);
 

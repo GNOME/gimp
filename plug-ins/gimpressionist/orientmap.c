@@ -556,7 +556,7 @@ create_orientmap_dialog (void)
   gtk_container_add (GTK_CONTAINER (ebox), tmpw);
   gtk_widget_show (tmpw);
   gtk_widget_add_events (ebox, GDK_BUTTON_PRESS_MASK);
-  g_signal_connect (ebox, "button_press_event",
+  g_signal_connect (ebox, "button-press-event",
                    G_CALLBACK (map_click_callback), NULL);
   gtk_widget_show (ebox);
 
@@ -566,7 +566,7 @@ create_orientmap_dialog (void)
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (vector_preview_brightness_adjust, "value_changed",
+  g_signal_connect (vector_preview_brightness_adjust, "value-changed",
                     G_CALLBACK (update_vector_prev), NULL);
   gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
 
@@ -656,7 +656,7 @@ create_orientmap_dialog (void)
                           TRUE, 0, 0,
                           _("Change the angle of the selected vector"),
                           NULL);
-  g_signal_connect (angle_adjust, "value_changed",
+  g_signal_connect (angle_adjust, "value-changed",
                     G_CALLBACK (angle_adjust_move_callback), NULL);
 
   angle_offset_adjust =
@@ -667,7 +667,7 @@ create_orientmap_dialog (void)
                           TRUE, 0, 0,
                           _("Offset all vectors with a given angle"),
                           NULL);
-  g_signal_connect (angle_offset_adjust, "value_changed",
+  g_signal_connect (angle_offset_adjust, "value-changed",
                     G_CALLBACK (angle_offset_adjust_move_callback), NULL);
 
   strength_adjust =
@@ -678,7 +678,7 @@ create_orientmap_dialog (void)
                           TRUE, 0, 0,
                           _("Change the strength of the selected vector"),
                           NULL);
-  g_signal_connect (strength_adjust, "value_changed",
+  g_signal_connect (strength_adjust, "value-changed",
                     G_CALLBACK (strength_adjust_move_callback), NULL);
 
   orient_map_str_exp_adjust =
@@ -689,7 +689,7 @@ create_orientmap_dialog (void)
                           TRUE, 0, 0,
                           _("Change the exponent of the strength"),
                           NULL);
-  g_signal_connect (orient_map_str_exp_adjust, "value_changed",
+  g_signal_connect (orient_map_str_exp_adjust, "value-changed",
                     G_CALLBACK (strength_exponent_adjust_move_callback), NULL);
 
   gtk_widget_show (orient_map_window);

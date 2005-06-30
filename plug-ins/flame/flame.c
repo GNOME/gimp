@@ -488,7 +488,7 @@ make_file_dlg (const gchar *title,
   gtk_dialog_set_default_response (GTK_DIALOG (file_dlg), GTK_RESPONSE_OK);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect (file_dlg, "delete_event",
+  g_signal_connect (file_dlg, "delete-event",
                     G_CALLBACK (gtk_true),
                     NULL);
   g_signal_connect (file_dlg, "response",
@@ -718,10 +718,10 @@ edit_callback (GtkWidget *widget,
                                   TRUE, 0, 0,
                                   NULL, NULL);
 
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &pick_speed);
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (set_edit_preview),
                         NULL);
 
@@ -1055,10 +1055,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.brightness);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
@@ -1069,10 +1069,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.contrast);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
@@ -1083,10 +1083,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.gamma);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
@@ -1097,7 +1097,7 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.sample_density);
 
@@ -1108,7 +1108,7 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.cp.spatial_oversample);
 
@@ -1119,7 +1119,7 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.spatial_filter_radius);
 
@@ -1211,10 +1211,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.zoom);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
@@ -1225,10 +1225,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.center[0]);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
@@ -1239,10 +1239,10 @@ dialog (void)
                               TRUE, 0, 0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.center[1]);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (set_flame_preview),
                     NULL);
 

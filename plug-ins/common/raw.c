@@ -982,10 +982,10 @@ load_dialog (gchar *filename)
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &runtime->file_offset);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (preview_update),
                             preview);
 
@@ -995,10 +995,10 @@ load_dialog (gchar *filename)
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &runtime->image_width);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (preview_update),
                             preview);
 
@@ -1008,10 +1008,10 @@ load_dialog (gchar *filename)
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &runtime->image_height);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (preview_update),
                             preview);
 
@@ -1048,10 +1048,10 @@ load_dialog (gchar *filename)
                               TRUE, 0.0, 0.0,
                               NULL, NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &runtime->palette_offset);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (palette_update),
                             preview);
 

@@ -2542,7 +2542,7 @@ makewindow (void)
   gtk_widget_set_size_request (drawarea, PREVIEWSIZE, PREVIEWSIZE);
   gtk_widget_show (drawarea);
 
-  g_signal_connect (drawarea, "expose_event",
+  g_signal_connect (drawarea, "expose-event",
                     G_CALLBACK (expose_event), NULL);
 
   button = gtk_button_new_with_mnemonic (_("Update _Preview"));
@@ -2686,7 +2686,7 @@ makewindow (void)
   gtk_widget_show (button);
   drawcolor1 (button);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (color1_changed),
                     NULL);
 
@@ -2697,14 +2697,14 @@ makewindow (void)
   gtk_widget_show (button);
   drawcolor2 (button);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (color2_changed),
                     NULL);
 
   scalescale = gimp_scale_entry_new (GTK_TABLE (table), 0, 3, _("Scale:"),
                                      100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 1,
                                      TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (scalescale, "value_changed",
+  g_signal_connect (scalescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
@@ -2712,21 +2712,21 @@ makewindow (void)
                                           _("Turbulence:"),
                                           100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (turbulencescale, "value_changed",
+  g_signal_connect (turbulencescale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   amountscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 5, _("Amount:"),
                                        100, -1, 1.0, 0.0, 1.0, 0.01, 0.1, 2,
                                        TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (amountscale, "value_changed",
+  g_signal_connect (amountscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   expscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 6, _("Exp.:"),
                                    100, -1, 1.0, 0.0, 1.0, 0.01, 0.1, 2,
                                    TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (expscale, "value_changed",
+  g_signal_connect (expscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
@@ -2749,62 +2749,62 @@ makewindow (void)
   scalexscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0, _("Scale X:"),
                                       100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
                                       TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (scalexscale, "value_changed",
+  g_signal_connect (scalexscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   scaleyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 1, _("Scale Y:"),
                                       100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
                                       TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (scaleyscale, "value_changed",
+  g_signal_connect (scaleyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
   scalezscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 2, _("Scale Z:"),
                                       100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
                                       TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (scalezscale, "value_changed",
+  g_signal_connect (scalezscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   rotxscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 3, _("Rotate X:"),
                                     100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotxscale, "value_changed",
+  g_signal_connect (rotxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   rotyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 4, _("Rotate Y:"),
                                     100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotyscale, "value_changed",
+  g_signal_connect (rotyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   rotzscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 5, _("Rotate Z:"),
                                     100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotzscale, "value_changed",
+  g_signal_connect (rotzscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   posxscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 6, _("Position X:"),
                                     100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotxscale, "value_changed",
+  g_signal_connect (rotxscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   posyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 7, _("Position Y:"),
                                     100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotyscale, "value_changed",
+  g_signal_connect (rotyscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 
   poszscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 8, _("Position Z:"),
                                     100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
                                     TRUE, 0.0, 0.0, NULL, NULL);
-  g_signal_connect (rotzscale, "value_changed",
+  g_signal_connect (rotzscale, "value-changed",
                     G_CALLBACK (getscales),
                     NULL);
 

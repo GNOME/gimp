@@ -764,7 +764,7 @@ randomize_dialog (void)
 			      pivals.rndm_pct, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.rndm_pct);
 
@@ -776,7 +776,7 @@ randomize_dialog (void)
 			      pivals.rndm_rcount, 1.0, 100.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of times to apply filter"), NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.rndm_rcount);
 

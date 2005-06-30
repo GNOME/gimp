@@ -286,10 +286,10 @@ glasstile_dialog (GimpDrawable *drawable)
                                    TRUE, 0, 0,
                                    NULL, NULL);
 
-  g_signal_connect (gv->xadj, "value_changed",
+  g_signal_connect (gv->xadj, "value-changed",
                     G_CALLBACK (glasstile_size_changed),
                     gv);
-  g_signal_connect_swapped (gv->xadj, "value_changed",
+  g_signal_connect_swapped (gv->xadj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -300,10 +300,10 @@ glasstile_dialog (GimpDrawable *drawable)
                                    TRUE, 0, 0,
                                    NULL, NULL);
 
-  g_signal_connect (gv->yadj, "value_changed",
+  g_signal_connect (gv->yadj, "value-changed",
                     G_CALLBACK (glasstile_size_changed),
                     gv);
-  g_signal_connect_swapped (gv->yadj, "value_changed",
+  g_signal_connect_swapped (gv->yadj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

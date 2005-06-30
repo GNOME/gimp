@@ -508,11 +508,11 @@ build_dialog (GimpImageBaseType  basetype,
   gdk_window_set_cursor(shape_window->window, cursor);
   gdk_cursor_unref (cursor);
 
-  g_signal_connect (shape_window, "button_press_event",
+  g_signal_connect (shape_window, "button-press-event",
                     G_CALLBACK (shape_pressed),NULL);
-  g_signal_connect (shape_window, "button_release_event",
+  g_signal_connect (shape_window, "button-release-event",
                     G_CALLBACK (shape_released),NULL);
-  g_signal_connect (shape_window, "motion_notify_event",
+  g_signal_connect (shape_window, "motion-notify-event",
                     G_CALLBACK (shape_motion),NULL);
 
   icon_pos = g_new (CursorOffset, 1);
@@ -520,13 +520,13 @@ build_dialog (GimpImageBaseType  basetype,
 
   /*  gtk_widget_show (shape_window);*/
 
-  g_signal_connect (eventbox, "button_press_event",
+  g_signal_connect (eventbox, "button-press-event",
                     G_CALLBACK (preview_pressed), NULL);
 
-  g_signal_connect (drawing_area, "expose_event",
+  g_signal_connect (drawing_area, "expose-event",
                     G_CALLBACK (repaint_da), drawing_area);
 
-  g_signal_connect (shape_drawing_area, "expose_event",
+  g_signal_connect (shape_drawing_area, "expose-event",
                     G_CALLBACK (maybeblocked_expose), shape_drawing_area);
 
   root_win = gdk_get_default_root_window ();

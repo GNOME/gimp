@@ -162,9 +162,9 @@ move_command_execute(Command_t *parent)
    GtkWidget *widget = command->preview->preview;
 
    /*   preview_freeze(); */
-   g_signal_connect(widget, "button_release_event", 
+   g_signal_connect(widget, "button-release-event", 
                     G_CALLBACK (button_release), command);   
-   g_signal_connect(widget, "motion_notify_event", 
+   g_signal_connect(widget, "motion-notify-event", 
                     G_CALLBACK (button_motion), command);   
    return CMD_DESTRUCT;
 }

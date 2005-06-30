@@ -1714,7 +1714,7 @@ save_dialog (gint32    image_ID,
                           _("Choose a high compression level "
                             "for small file size"), NULL);
 
-  g_signal_connect (scale, "value_changed",
+  g_signal_connect (scale, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
 

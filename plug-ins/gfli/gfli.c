@@ -834,7 +834,7 @@ load_dialog (const gchar *name)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
@@ -843,7 +843,7 @@ load_dialog (const gchar *name)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
 
@@ -897,7 +897,7 @@ save_dialog (gint32 image_id)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
@@ -906,7 +906,7 @@ save_dialog (gint32 image_id)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
 

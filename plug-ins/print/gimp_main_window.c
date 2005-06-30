@@ -431,13 +431,13 @@ create_preview (void)
   gtk_container_add (GTK_CONTAINER (event_box), preview);
   gtk_widget_show (preview);
 
-  g_signal_connect (preview, "expose_event",
+  g_signal_connect (preview, "expose-event",
                     G_CALLBACK (gimp_preview_expose), NULL);
-  g_signal_connect (preview, "button_press_event",
+  g_signal_connect (preview, "button-press-event",
                     G_CALLBACK (gimp_preview_button_callback), NULL);
-  g_signal_connect (preview, "button_release_event",
+  g_signal_connect (preview, "button-release-event",
                     G_CALLBACK (gimp_preview_button_callback), NULL);
-  g_signal_connect (preview, "motion_notify_event",
+  g_signal_connect (preview, "motion-notify-event",
                     G_CALLBACK (gimp_preview_motion_callback), NULL);
   gtk_widget_show (GTK_WIDGET (preview));
 
@@ -1140,7 +1140,7 @@ create_scaling_frame (void)
   set_adjustment_tooltip (scaling_adjustment,
                           _("Set the scale (size) of the image"),
                           NULL);
-  g_signal_connect (scaling_adjustment, "value_changed",
+  g_signal_connect (scaling_adjustment, "value-changed",
                     G_CALLBACK (gimp_scaling_update),
                     NULL);
 

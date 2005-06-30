@@ -240,7 +240,7 @@ threshold_alpha_dialog (void)
 			      VALS.threshold, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &VALS.threshold);
 

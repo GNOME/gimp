@@ -732,10 +732,10 @@ dialog (gint32        image_ID,
   /* connect to the 'value_changed' signal because we have to take care
    * of keeping the entries in sync when the chainbutton is active
    */
-  g_signal_connect (width, "value_changed",
+  g_signal_connect (width, "value-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect_swapped (width, "value_changed",
+  g_signal_connect_swapped (width, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -796,13 +796,13 @@ dialog (gint32        image_ID,
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
-  g_signal_connect (space, "value_changed",
+  g_signal_connect (space, "value-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect (space, "unit_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect_swapped (space, "value_changed",
+  g_signal_connect_swapped (space, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -869,13 +869,13 @@ dialog (gint32        image_ID,
    * we have to take care of keeping the entries in sync when the
    * chainbutton is active
    */
-  g_signal_connect (offset, "value_changed",
+  g_signal_connect (offset, "value-changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
   g_signal_connect (offset, "unit_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
-  g_signal_connect_swapped (offset, "value_changed",
+  g_signal_connect_swapped (offset, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -895,13 +895,13 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), hcolor_button, 0, 1, 1, 2);
   gtk_widget_show (hcolor_button);
 
-  g_signal_connect (hcolor_button, "color_changed",
+  g_signal_connect (hcolor_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.hcolor);
-  g_signal_connect (hcolor_button, "color_changed",
+  g_signal_connect (hcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     chain_button);
-  g_signal_connect_swapped (hcolor_button, "color_changed",
+  g_signal_connect_swapped (hcolor_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -913,13 +913,13 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), vcolor_button, 1, 2, 1, 2);
   gtk_widget_show (vcolor_button);
 
-  g_signal_connect (vcolor_button, "color_changed",
+  g_signal_connect (vcolor_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.vcolor);
-  g_signal_connect (vcolor_button, "color_changed",
+  g_signal_connect (vcolor_button, "color-changed",
                     G_CALLBACK (color_callback),
                     chain_button);
-  g_signal_connect_swapped (vcolor_button, "color_changed",
+  g_signal_connect_swapped (vcolor_button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -931,10 +931,10 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, 1, 2);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "color_changed",
+  g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.icolor);
-  g_signal_connect_swapped (button, "color_changed",
+  g_signal_connect_swapped (button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

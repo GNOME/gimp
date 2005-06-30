@@ -349,10 +349,10 @@ nova_dialog (GimpDrawable *drawable)
                                  _("Co_lor:"), 0.0, 0.5,
                                  button, 1, TRUE);
 
-      g_signal_connect (button, "color_changed",
+      g_signal_connect (button, "color-changed",
                         G_CALLBACK (gimp_color_button_get_color),
                         &pvals.color);
-      g_signal_connect_swapped (button, "color_changed",
+      g_signal_connect_swapped (button, "color-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
     }
@@ -363,10 +363,10 @@ nova_dialog (GimpDrawable *drawable)
                               pvals.radius, 1, 100, 1, 10, 0,
                               FALSE, 1, GIMP_MAX_IMAGE_SIZE,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.radius);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
   /* Number of spokes */
@@ -375,10 +375,10 @@ nova_dialog (GimpDrawable *drawable)
                               pvals.nspoke, 1, 1024, 1, 16, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.nspoke);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -390,10 +390,10 @@ nova_dialog (GimpDrawable *drawable)
                                   pvals.randomhue, 0, 360, 1, 15, 0,
                                   TRUE, 0, 0,
                                   NULL, NULL);
-      g_signal_connect (adj, "value_changed",
+      g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &pvals.randomhue);
-      g_signal_connect_swapped (adj, "value_changed",
+      g_signal_connect_swapped (adj, "value-changed",
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
     }
@@ -465,10 +465,10 @@ nova_center_create (GimpDrawable *drawable,
   gtk_container_add (GTK_CONTAINER (frame), center->coords);
   gtk_widget_show (center->coords);
 
-  g_signal_connect (center->coords, "value_changed",
+  g_signal_connect (center->coords, "value-changed",
                     G_CALLBACK (nova_center_coords_update),
                     center);
-  g_signal_connect (center->coords, "refval_changed",
+  g_signal_connect (center->coords, "refval-changed",
                     G_CALLBACK (nova_center_coords_update),
                     center);
 
@@ -488,7 +488,7 @@ nova_center_create (GimpDrawable *drawable,
   g_signal_connect (preview->area, "realize",
                     G_CALLBACK (nova_center_preview_realize),
                     center);
-  g_signal_connect_after (preview->area, "expose_event",
+  g_signal_connect_after (preview->area, "expose-event",
                           G_CALLBACK (nova_center_preview_expose),
                           center);
   g_signal_connect (preview->area, "event",

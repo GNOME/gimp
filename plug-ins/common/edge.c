@@ -698,10 +698,10 @@ edge_dialog (GimpDrawable *drawable)
                                      FALSE, 1.0, G_MAXFLOAT,
                                      NULL, NULL);
 
-  g_signal_connect (scale_data, "value_changed",
+  g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.amount);
-  g_signal_connect_swapped (scale_data, "value_changed",
+  g_signal_connect_swapped (scale_data, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

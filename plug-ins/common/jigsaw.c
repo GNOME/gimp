@@ -2463,10 +2463,10 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
   g_object_unref (group);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.x);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -2479,10 +2479,10 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.y);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -2507,10 +2507,10 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.blend_lines);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -2525,10 +2525,10 @@ jigsaw_dialog (GimpDrawable *drawable)
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.blend_amount);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

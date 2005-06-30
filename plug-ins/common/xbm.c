@@ -1230,7 +1230,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Hot spot _X:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.x_hot);
 
@@ -1240,7 +1240,7 @@ save_dialog (gint32 drawable_ID)
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Hot spot _Y:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.y_hot);
 

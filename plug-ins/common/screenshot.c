@@ -897,7 +897,7 @@ shoot_dialog (GdkScreen **screen)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 

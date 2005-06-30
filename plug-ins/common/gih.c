@@ -893,7 +893,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Spacing (percent):"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &info.spacing);
 
@@ -931,7 +931,7 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.guides      = NULL;
   cellw_adjust.value       = &gihparams.cellwidth;
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (size_adjustment_callback),
                     &cellw_adjust);
 
@@ -953,7 +953,7 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.guides      = NULL;
   cellh_adjust.value       = &gihparams.cellheight;
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (size_adjustment_callback),
                     &cellh_adjust);
 
@@ -977,7 +977,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Number of cells:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gihparams.ncells);
 
@@ -1036,7 +1036,7 @@ gih_save_dialog (gint32 image_ID)
 			     _("Dimension:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
-  g_signal_connect (adjustment, "value_changed",
+  g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (dim_callback),
                     &cellw_adjust);
 
@@ -1061,7 +1061,7 @@ gih_save_dialog (gint32 image_ID)
       if (i >= gihparams.dim)
         gtk_widget_set_sensitive (spinbutton, FALSE);
 
-      g_signal_connect (adjustment, "value_changed",
+      g_signal_connect (adjustment, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &gihparams.rank[i]);
 

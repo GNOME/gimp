@@ -1344,7 +1344,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
-  g_signal_connect (cd->rotate_data, "value_changed",
+  g_signal_connect (cd->rotate_data, "value-changed",
                     G_CALLBACK (bender_rotate_adj_callback),
                     cd);
 

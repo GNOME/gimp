@@ -131,9 +131,9 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
-   g_signal_connect(command->widget, "button_release_event", 
+   g_signal_connect(command->widget, "button-release-event", 
                     G_CALLBACK (select_release), command);   
-   g_signal_connect(command->widget, "motion_notify_event", 
+   g_signal_connect(command->widget, "motion-notify-event", 
                     G_CALLBACK (select_motion), command);   
 
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);

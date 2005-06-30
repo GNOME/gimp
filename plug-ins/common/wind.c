@@ -1008,11 +1008,11 @@ dialog_box (GimpDrawable *drawable)
                               TRUE, 0, 0,
                               _("Higher values restrict the effect to fewer areas of the image"), NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.threshold);
 
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1027,11 +1027,11 @@ dialog_box (GimpDrawable *drawable)
                               TRUE, 0, 0,
                               _("Higher values increase the magnitude of the effect"), NULL);
 
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.strength);
 
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

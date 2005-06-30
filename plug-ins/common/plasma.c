@@ -339,7 +339,7 @@ plasma_dialog (GimpDrawable *drawable)
                                  GIMP_RANDOM_SEED_SPINBUTTON (seed));
 
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed),
-                            "value_changed",
+                            "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -349,10 +349,10 @@ plasma_dialog (GimpDrawable *drawable)
                               0.1, 7.0, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
-  g_signal_connect (adj, "value_changed",
+  g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.turbulence);
-  g_signal_connect_swapped (adj, "value_changed",
+  g_signal_connect_swapped (adj, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

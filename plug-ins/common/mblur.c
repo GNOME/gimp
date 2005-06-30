@@ -970,10 +970,10 @@ mblur_dialog (gint32        image_ID,
   gtk_box_pack_start (GTK_BOX (vbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  g_signal_connect (entry, "value_changed",
+  g_signal_connect (entry, "value-changed",
                     G_CALLBACK (mblur_center_update),
                     NULL);
-  g_signal_connect_swapped (entry, "value_changed",
+  g_signal_connect_swapped (entry, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1022,10 +1022,10 @@ mblur_dialog (gint32        image_ID,
                                  TRUE, 0, 0,
                                  NULL, NULL);
 
-  g_signal_connect (length, "value_changed",
+  g_signal_connect (length, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mbvals.length);
-  g_signal_connect_swapped (length, "value_changed",
+  g_signal_connect_swapped (length, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -1035,10 +1035,10 @@ mblur_dialog (gint32        image_ID,
                                 TRUE, 0, 0,
                                 NULL, NULL);
 
-  g_signal_connect (angle, "value_changed",
+  g_signal_connect (angle, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mbvals.angle);
-  g_signal_connect_swapped (angle, "value_changed",
+  g_signal_connect_swapped (angle, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
