@@ -1,5 +1,9 @@
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version number to 2.3.3.
+
+2005-07-01  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.3.2 development release.
 
 2005-07-01  Akkana Peck  <akkana@cvs.gnome.org>
@@ -874,7 +878,7 @@
 
 2005-06-09  Sven Neumann  <sven@gimp.org>
 
-	* configure.in:  bumped version number to 2.3.2.
+	* configure.in: bumped version number to 2.3.2.
 
 2005-06-09  Sven Neumann  <sven@gimp.org>
 
