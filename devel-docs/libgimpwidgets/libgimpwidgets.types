@@ -28,6 +28,7 @@ gimp_int_combo_box_get_type
 gimp_int_store_get_type
 gimp_memsize_entry_get_type
 gimp_offset_area_get_type
+gimp_page_selector_get_type
 gimp_path_editor_get_type
 gimp_pick_button_get_type
 gimp_pixmap_get_type

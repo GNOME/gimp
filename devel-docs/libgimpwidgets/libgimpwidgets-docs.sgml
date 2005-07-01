@@ -41,6 +41,7 @@
     <xi:include href="xml/gimpintstore.xml" />
     <xi:include href="xml/gimpmemsizeentry.xml" />
     <xi:include href="xml/gimpoffsetarea.xml" />
+    <xi:include href="xml/gimppageselector.xml" />
     <xi:include href="xml/gimppatheditor.xml" />
     <xi:include href="xml/gimppickbutton.xml" />
     <xi:include href="xml/gimppixmap.xml" />
