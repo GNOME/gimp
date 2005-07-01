@@ -530,7 +530,7 @@
       </menu>
       <menu action="plug-in-noise-menu" name="Noise" />
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect" />
-      <menu action="plug-in-generic-menu" name="Effects">
+      <menu action="plug-in-effects-menu" name="Effects">
         <placeholder name="Generic" />
 	<separator />
         <placeholder name="Alchemy" />

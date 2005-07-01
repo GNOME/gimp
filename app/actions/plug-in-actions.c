@@ -66,7 +66,7 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-noise-menu",          NULL, N_("_Noise")         },
   { "plug-in-edge-detect-menu",    NULL, N_("Edge-De_tect")   },
   { "plug-in-enhance-menu",        NULL, N_("En_hance")       },
-  { "plug-in-generic-menu",        NULL, N_("_Effects")       },
+  { "plug-in-effects-menu",        NULL, N_("_Effects")       },
   { "plug-in-light-shadow-menu",   NULL, N_("_Light and Shadow") },
   { "plug-in-distorts-menu",       NULL, N_("_Distorts")      },
   { "plug-in-artistic-menu",       NULL, N_("_Artistic")      },
