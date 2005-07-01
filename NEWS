@@ -22,12 +22,15 @@ Changes in CVS (not released yet)
   XPM icons that were being used
 - added an option to Motion Blur to blur outwards
 - added support for the proposed ICC Profiles In X Specification
-- added new widget GimpEnumLabel
+- added new widget GimpEnumLabel to libgimpwidgets
 - let the lcms display filter module show information about the used
   color profiles
 - improved drawing of the brush outline
 - fixed build of Python language binding on Win32
 - allow plug-ins to access the user's color management configuration
+- added new widget GimpPageSelector to libgimpwidgets
+- reenabled the Debug menu
+- load and save ICC color profiles from/to JPEG images
 - bug fixes and code cleanup
 
 

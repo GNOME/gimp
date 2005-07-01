@@ -1,7 +1,7 @@
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/jpeg/jpeg-load.c: load embedded ICC profiles and attach
-	them as "icc-profile" parasite.
+	* plug-ins/jpeg/jpeg-load.c: load an embedded ICC profile and
+	attach it using the "icc-profile" parasite.
 
 	* plug-ins/jpeg/jpeg-save.c: look for the "icc-profile" parasite
 	and embed the profile in the JPEG file if it is available.
