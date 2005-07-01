@@ -1,5 +1,9 @@
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppageselector.c: added more API documentation.
+
+2005-07-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-load.c: load an embedded ICC profile and
 	attach it using the "icc-profile" parasite.
 
