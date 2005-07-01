@@ -1,13 +1,21 @@
+2005-07-01  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.2 development release.
+
 2005-07-01  Akkana Peck  <akkana@cvs.gnome.org>
 
 	* app/actions/plug-in-actions.c
 	* menus/image-menu.xml.in: Rename Effects menu's action to
 	plug-in-effects-menu (missed during image menu reorg).
 
-
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (SUBDIRS): added po-tips.
+
+	* app/Makefile.am (dist-dump-gimprc): don't needlessly write to
+	the source directory.
+
+	* data/tips/Makefile.am (EXTRA_DIST): added tipsdata_DATA.
 
 2005-07-01  Sven Neumann  <sven@gimp.org>
 

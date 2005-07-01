@@ -208,9 +208,14 @@ endif
 # uptodate when a release is made
 #
 dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
-	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
-	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc.5.in
-
+	./$< --dump-gimprc-system > gimprc.tmp	\
+		&& (cmp -s gimprc.tmp $(top_srcdir)/etc/gimprc ||	\
+		    gimprc.tmp $(top_srcdir)/etc/gimprc)		\
+		&& rm gimprc.tmp
+	./$< --dump-gimprc-manpage > gimprc.tmp	\
+		&& (cmp -s gimprc.tmp $(top_srcdir)/docs/gimprc.5.in ||	\
+		    gimprc.tmp $(top_srcdir)/docs/gimprc.5.in)		\
+		&& rm gimprc.tmp
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
 

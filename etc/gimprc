@@ -253,6 +253,7 @@
 # 
 # (color-management
 #     (mode display)
+#     (display-profile-from-gdk yes)
 #     (display-rendering-intent perceptual)
 #     (simulation-rendering-intent perceptual)
 #     (display-module "CdisplayLcms"))

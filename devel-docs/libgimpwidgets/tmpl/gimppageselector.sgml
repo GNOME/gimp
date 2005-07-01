@@ -19,23 +19,13 @@ GimpPageSelector
 
 </para>
 
-
-<!-- ##### SIGNAL GimpPageSelector::selection-changed ##### -->
-<para>
-
-</para>
-
-@gimppageselector: the object which received the signal.
-
-<!-- ##### ARG GimpPageSelector:n-pages ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpPageSelector:target ##### -->
-<para>
-
-</para>
+@parent_instance: 
+@n_pages: 
+@target: 
+@store: 
+@view: 
+@range_entry: 
+@thumbnail: 
 
 <!-- ##### ENUM GimpPageSelectorTarget ##### -->
 <para>

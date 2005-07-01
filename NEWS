@@ -7,8 +7,8 @@ This is the development branch of The GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
-Changes in CVS (not released yet)
-=================================
+Changes in GIMP 2.3.2
+=====================
 
 - more standard way of dealing with translation of the startup tips
 - allow to use the selected font in the text tool's text editor
@@ -32,7 +32,6 @@ Changes in CVS (not released yet)
 - reenabled the Debug menu
 - load and save ICC color profiles from/to JPEG images
 - bug fixes and code cleanup
-
 
 
 Changes in GIMP 2.3.1

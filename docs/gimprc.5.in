@@ -54,11 +54,6 @@ created on a directory that is mounted over NFS.  For these reasons, it may be
 desirable to put your swap file in "/tmp".  This is a single folder.
 
 .TP
-
-The stingy-memory-use property has no description.  Possible values are yes
-and no.
-
-.TP
 (num-processors 2)
 
 On multiprocessor machines, if GIMP has been compiled with --enable-mp this
@@ -155,11 +150,6 @@ search.
 (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
 Where to look for fonts.  This is a colon-separated list of folders to search.
-
-.TP
-
-The font-path-writable property has no description.  This is a colon-separated
-list of folders to search.
 
 .TP
 (default-brush "Circle (11)")
@@ -322,6 +312,7 @@ system colors allocated for the GIMP.  This is an integer value.
 .TP
 (color-management
     (mode display)
+    (display-profile-from-gdk yes)
     (display-rendering-intent perceptual)
     (simulation-rendering-intent perceptual)
     (display-module "CdisplayLcms"))
@@ -618,11 +609,6 @@ default threshold.  This is an integer value.
 If enabled, the move tool changes the active layer or path when a layer or
 path is being picked. This used to be the default behaviour in older versions.
  Possible values are yes and no.
-
-.TP
-
-The info-window-per-display property has no description.  Possible values are
-yes and no.
 
 .TP
 (trust-dirty-flag no)

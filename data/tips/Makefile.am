@@ -9,6 +9,7 @@ tipsdata_data_files = $(tipsdata_in_files:.xml.in=.xml)
 tipsdata_DATA =	$(tipsdata_data_files)
 
 EXTRA_DIST = \
+	$(tipsdata_DATA)	\
 	$(tipsdata_in_files)	\
         gimp-tips.dtd		\
         fortunes.xsl
