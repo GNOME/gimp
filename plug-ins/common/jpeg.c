@@ -2040,6 +2040,8 @@ save_dialog (void)
                     GTK_FILL, 0, 0, 0);
   gtk_widget_show (restart);
 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (restart), jsvals.restart);
+
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);
 

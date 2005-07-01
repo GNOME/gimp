@@ -1,3 +1,9 @@
+2005-07-01  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Initialize restart markers check button
+	accordingly from defaults. Fixes bug #309091, patch from
+	David 'Bombe' Roden.
+
 2005-06-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.9, interface_age 9.
