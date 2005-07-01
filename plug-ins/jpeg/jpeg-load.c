@@ -37,6 +37,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "jpeg.h"
+#include "jpeg-icc.h"
 #include "jpeg-load.h"
 
 
@@ -55,6 +56,8 @@ load_image (const gchar *filename,
   guchar  *buf;
   guchar  * volatile padded_buf = NULL;
   guchar **rowbuf;
+  guchar  *profile;
+  guint    profile_size;
   gint     image_type;
   gint     layer_type;
   gint     tile_height;
@@ -92,6 +95,7 @@ load_image (const gchar *filename,
     }
 
   image_ID = -1;
+
   /* Establish the setjmp return context for my_error_exit to use. */
   if (setjmp (jerr.setjmp_buffer))
     {
@@ -101,10 +105,13 @@ load_image (const gchar *filename,
       jpeg_destroy_decompress (&cinfo);
       if (infile)
         fclose (infile);
+
       if (image_ID != -1 && !preview)
         gimp_image_delete (image_ID);
+
       if (preview)
         destroy_preview();
+
       gimp_quit ();
     }
 
@@ -115,11 +122,19 @@ load_image (const gchar *filename,
 
   jpeg_stdio_src (&cinfo, infile);
 
-  /* - step 2.1: tell the lib to save the comments */
-  jpeg_save_markers (&cinfo, JPEG_COM, 0xffff);
+  if (! preview)
+    {
+      /* - step 2.1: tell the lib to save the comments */
+      jpeg_save_markers (&cinfo, JPEG_COM, 0xffff);
 
-  /* - step 2.2: tell the lib to save APP1 markers (may contain EXIF or XMP) */
-  jpeg_save_markers (&cinfo, JPEG_APP0 + 1, 0xffff);
+      /* - step 2.2: tell the lib to save APP1 markers
+       *   (may contain EXIF or XMP)
+       */
+      jpeg_save_markers (&cinfo, JPEG_APP0 + 1, 0xffff);
+
+      /* - step 2.3: tell the lib to keep any APP2 data it may find */
+      jpeg_icc_setup_read_profile (&cinfo);
+    }
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
@@ -322,9 +337,21 @@ load_image (const gchar *filename,
             {
               g_warning ("JPEG - unable to decode XMP metadata packet");
             }
+
           gimp_destroy_params (return_vals, nreturn_vals);
           g_free (xmp_packet);
         }
+    }
+
+  /* Step 5.3: check for an embedded ICC profile */
+  if (!preview && jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
+    {
+      GimpParasite *parasite = gimp_parasite_new ("icc-profile",
+                                                  0, profile_size, profile);
+      gimp_image_parasite_attach (image_ID, parasite);
+      gimp_parasite_free (parasite);
+
+      g_free (profile);
     }
 
   if (!preview)
@@ -347,8 +374,8 @@ load_image (const gchar *filename,
         }
 
       /* Do not attach the "jpeg-save-options" parasite to the image
-       * because this conflics with the global defaults.  See bug #75398:
-       * http://bugzilla.gnome.org/show_bug.cgi?id=75398 */
+       * because this conflicts with the global defaults (bug #75398).
+       */
     }
 
   /* Step 6: while (scan lines remain to be read) */

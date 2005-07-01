@@ -1,3 +1,11 @@
+2005-07-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c: load embedded ICC profiles and attach
+	them as "icc-profile" parasite.
+
+	* plug-ins/jpeg/jpeg-save.c: look for the "icc-profile" parasite
+	and embed the profile in the JPEG file if it is available.
+
 2005-07-01  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.c: Initialize restart markers check button
@@ -13,8 +21,8 @@
 2005-06-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/Makefile.am
-	* plug-ins/jpeg/jpeg-icc.[ch]: copied from lcms that reads and
-	writes ICC profiles from/to JPEG files. Not yet used at all.
+	* plug-ins/jpeg/jpeg-icc.[ch]: copied code from lcms that reads
+	and writes ICC profiles from/to JPEG files. Not yet used at all.
 
 2005-06-29  Sven Neumann  <sven@gimp.org>
 

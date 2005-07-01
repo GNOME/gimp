@@ -44,6 +44,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "jpeg.h"
+#include "jpeg-icc.h"
 #include "jpeg-save.h"
 
 
@@ -189,6 +190,7 @@ save_image (const gchar *filename,
   GimpPixelRgn   pixel_rgn;
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
+  GimpParasite  *parasite;
   struct jpeg_compress_struct cinfo;
   struct my_error_mgr         jerr;
   FILE     * volatile outfile;
@@ -273,21 +275,16 @@ save_image (const gchar *filename,
 
     case GIMP_RGBA_IMAGE:
     case GIMP_GRAYA_IMAGE:
-      /*gimp_message ("jpeg: image contains a-channel info which will be lost");*/
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = drawable->bpp - 1;
       has_alpha = TRUE;
       break;
 
     case GIMP_INDEXED_IMAGE:
-      /*gimp_message ("jpeg: cannot operate on indexed color images");*/
       return FALSE;
-      break;
 
     default:
-      /*gimp_message ("jpeg: cannot operate on unknown image types");*/
       return FALSE;
-      break;
     }
 
   /* Step 3: set parameters for compression */
@@ -485,8 +482,6 @@ save_image (const gchar *filename,
   /* Step 4.2: Write the XMP packet in an APP1 marker */
   if (jsvals.save_xmp)
     {
-      GimpParasite *parasite;
-
       /* FIXME: temporary hack until the right thing is done by a library */
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-metadata");
       if (parasite)
@@ -495,7 +490,7 @@ save_image (const gchar *filename,
           glong        xmp_data_size;
           gchar       *app_block;
 
-          xmp_data = ((const gchar *)gimp_parasite_data (parasite)) + 10;
+          xmp_data = ((const gchar *) gimp_parasite_data (parasite)) + 10;
           xmp_data_size = gimp_parasite_data_size (parasite) - 10;
           g_print ("jpeg-save: saving XMP packet (%d bytes)\n",
                    (int) xmp_data_size);
@@ -508,6 +503,16 @@ save_image (const gchar *filename,
                              sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
           g_free (app_block);
         }
+    }
+
+  /* Step 4.3: store the color profile if there is one */
+  parasite = gimp_image_parasite_find (orig_image_ID, "icc-profile");
+  if (parasite)
+    {
+      jpeg_icc_write_profile (&cinfo,
+                              gimp_parasite_data (parasite),
+                              gimp_parasite_data_size (parasite));
+      gimp_parasite_free (parasite);
     }
 
   /* Step 5: while (scan lines remain to be written) */
