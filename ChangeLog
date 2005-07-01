@@ -1,3 +1,9 @@
+2005-07-01  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/jpeg/jpeg-save.c: Initialize restart markers check button
+	accordingly from defaults. Fixes bug #309091, patch from
+	David 'Bombe' Roden.
+
 2005-06-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.def

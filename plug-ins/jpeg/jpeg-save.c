@@ -818,6 +818,8 @@ save_dialog (void)
   gtk_table_attach (GTK_TABLE (table), toggle, 2, 4, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.restart);
+
   gtk_widget_set_sensitive (restart_markers_label, jsvals.restart);
   gtk_widget_set_sensitive (restart_markers_scale, jsvals.restart);
 
