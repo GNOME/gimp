@@ -10,6 +10,7 @@ SUBDIRS = \
 	po-libgimp	\
 	po-plug-ins	\
 	po-script-fu	\
+	po-tips		\
 	data		\
 	desktop		\
 	menus		\

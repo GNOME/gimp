@@ -1,5 +1,9 @@
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am (SUBDIRS): added po-tips.
+
+2005-07-01  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppageselector.c: added more API documentation.
 
 2005-07-01  Sven Neumann  <sven@gimp.org>
