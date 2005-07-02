@@ -807,7 +807,7 @@ gimp_image_convert (GimpImage              *gimage,
 
       if (custom_palette->n_colors < 1)
         {
-          g_message (_("Cannot convert image, palette is empty."));
+          g_message (_("Cannot convert image: palette is empty."));
           return;
         }
     }

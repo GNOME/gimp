@@ -145,7 +145,7 @@ tree_items[] =
        "provide additional functionality to GIMP.  These "
        "programs are searched for at run-time and information "
        "about their functionality is cached in this file.  "
-       "This file is intended to be written by GIMP only, "
+       "This file is intended to be written to by GIMP only, "
        "and should not be edited."),
     TREE_ITEM_DO_NOTHING
   },

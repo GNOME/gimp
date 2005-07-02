@@ -98,8 +98,8 @@ batch_run (Gimp         *gimp,
         }
       else
         {
-          g_message (_("The batch interpreter '%s' is not available, "
-                       "batch mode disabled."), batch_interpreter);
+          g_message (_("The batch interpreter '%s' is not available. "
+                       "Batch mode disabled."), batch_interpreter);
         }
     }
 

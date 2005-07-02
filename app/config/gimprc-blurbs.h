@@ -252,11 +252,11 @@ N_("Sets the preview size used for layers and channel previews in newly " \
    "created dialogs.")
 
 #define RESIZE_WINDOWS_ON_RESIZE_BLURB \
-N_("When enabled, the image window will automatically resize itself, " \
+N_("When enabled, the image window will automatically resize itself " \
    "whenever the physical image size changes.")
 
 #define RESIZE_WINDOWS_ON_ZOOM_BLURB \
-N_("When enabled, the image window will automatically resize itself, " \
+N_("When enabled, the image window will automatically resize itself " \
    "when zooming into and out of images.")
 
 #define RESTORE_SESSION_BLURB \
@@ -325,13 +325,13 @@ N_("When enabled, the sample points are visible by default. This can also be " \
    "toggled with the \"View->Show Sample Points\" command.")
 
 #define SHOW_TIPS_BLURB \
-N_("Enable to display a handy GIMP tip on startup.")
+N_("Enable displaying a handy GIMP tip on startup.")
 
 #define SHOW_TOOL_TIPS_BLURB \
-N_("Enable to display tooltips.")
+N_("Enable tooltips display.")
 
 #define SWAP_PATH_BLURB \
-N_("Sets the swap file location. The gimp uses a tile based memory " \
+N_("Sets the swap file location. The GIMP uses a tile based memory " \
    "allocation scheme. The swap file is used to quickly and easily " \
    "swap tiles out to disk and back in. Be aware that the swap file " \
    "can easily get very large if the GIMP is used with large images. " \
@@ -400,8 +400,8 @@ N_("Sets the manner in which transparency is displayed in images.")
 N_("Sets the size of the checkerboard used to display transparency.")
 
 #define TRUST_DIRTY_FLAG_BLURB \
-N_("When enabled, the GIMP will not save if the image is unchanged since " \
-   "opening it.")
+N_("When enabled, the GIMP will not save an image if it has not been changed " \
+   "since it was opened.")
 
 #define UNDO_LEVELS_BLURB \
 N_("Sets the minimal number of operations that can be undone. More undo " \
