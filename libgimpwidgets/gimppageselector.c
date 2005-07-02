@@ -79,6 +79,8 @@ static gboolean gimp_page_selector_range_focus_out (GtkEntry         *entry,
                                                     GimpPageSelector *selector);
 static void   gimp_page_selector_range_activate    (GtkEntry         *entry,
                                                     GimpPageSelector *selector);
+static gint   gimp_page_selector_int_compare       (gconstpointer     a,
+                                                    gconstpointer     b);
 static void   gimp_page_selector_print_range       (GString          *string,
                                                     gint              start,
                                                     gint              end);
@@ -147,7 +149,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
    * The number of pages of the document to open.
    *
    * Since: GIMP 2.4
-   */
+   **/
   g_object_class_install_property (object_class, PROP_N_PAGES,
                                    g_param_spec_int ("n-pages", NULL, NULL,
                                                      0, G_MAXINT, 0,
@@ -159,7 +161,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
    * The target to open the document to.
    *
    * Since: GIMP 2.4
-   */
+   **/
   g_object_class_install_property (object_class, PROP_TARGET,
                                    g_param_spec_enum ("target", NULL, NULL,
                                                       GIMP_TYPE_PAGE_SELECTOR_TARGET,
@@ -456,6 +458,13 @@ gimp_page_selector_get_n_pages (GimpPageSelector *selector)
   return selector->n_pages;
 }
 
+/**
+ * gimp_page_selector_set_target:
+ * @selector: Pointer to a #GimpPageSelector.
+ * @target:   How to open the selected pages.
+ *
+ * Since: GIMP 2.4
+ **/
 void
 gimp_page_selector_set_target (GimpPageSelector       *selector,
                                GimpPageSelectorTarget  target)
@@ -472,6 +481,14 @@ gimp_page_selector_set_target (GimpPageSelector       *selector,
     }
 }
 
+/**
+ * gimp_page_selector_get_target:
+ * @selector: Pointer to a #GimpPageSelector.
+ *
+ * Returns: How the selected pages should be opened.
+ *
+ * Since: GIMP 2.4
+ **/
 GimpPageSelectorTarget
 gimp_page_selector_get_target (GimpPageSelector *selector)
 {
@@ -487,6 +504,8 @@ gimp_page_selector_get_target (GimpPageSelector *selector)
  * @page_no: The number of the page to set the thumbnail for.
  * @thumbnail: The thumbnail pixbuf.
  *
+ * Sets the thumbnail for given %page_no. A default "page" icon will
+ * be used if no page thumbnail is set.
  *
  * Since: GIMP 2.4
  **/
@@ -516,13 +535,15 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
- * Returns: The page's thumbnail, or %NULL if none is set.
+ * Returns: The page's thumbnail, or %NULL if none is set. The returned
+ *          pixbuf is owned by #GimpPageSelector and must not be
+ *          unref'ed when no longer needed.
  *
  * Since: GIMP 2.4
  **/
 GdkPixbuf *
-gimp_page_selector_get_page_thumbnail (GimpPageSelector   *selector,
-                                       gint                page_no)
+gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
+                                       gint              page_no)
 {
   GdkPixbuf   *thumbnail;
   GtkTreeIter  iter;
@@ -586,7 +607,9 @@ gimp_page_selector_set_page_label (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
- * Returns: The page's label, or %NULL if none is set.
+ * Returns: The page's label, or %NULL if none is set. This is a newly
+ *          allocated string that should be g_free()'d when no longer
+ *          needed.
  *
  * Since: GIMP 2.4
  **/
@@ -611,7 +634,7 @@ gimp_page_selector_get_page_label (GimpPageSelector *selector,
   if (! label_set)
     {
       g_free (label);
-      return NULL;
+      label = NULL;
     }
 
   return label;
@@ -737,13 +760,6 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
   return selected;
 }
 
-static gint
-gimp_page_selector_int_compare (gconstpointer a,
-                                gconstpointer b)
-{
-  return *(gint*) a - *(gint*) b;
-}
-
 /**
  * gimp_page_selector_get_selected_pages:
  * @selector: Pointer to a #GimpPageSelector.
@@ -790,7 +806,15 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
 /**
  * gimp_page_selector_select_range:
  * @selector: Pointer to a #GimpPageSelector.
- * @range:
+ * @range: A string representing the set of selected pages.
+ *
+ * Selectes the pages described by %range. The range string is a
+ * user-editable list of pages and ranges, e.g. "1,3,5-7,9-12,14".
+ * Note that the page numbering in the range string starts with 1,
+ * not 0.
+ *
+ * Invalid pages and ranges will be silently ignored, duplicate and
+ * overlapping pages and ranges will be merged.
  *
  * Since: GIMP 2.4
  **/
@@ -871,7 +895,9 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
  * gimp_page_selector_get_selected_range:
  * @selector: Pointer to a #GimpPageSelector.
  *
- * Returns: A newly allocated string.
+ * Returns: A newly allocated string representing the set of selected
+ *          pages. See gimp_page_selector_set_selected_range() for the
+ *          format of the string.
  *
  * Since: GIMP 2.4
  **/
@@ -921,6 +947,7 @@ gimp_page_selector_get_selected_range (GimpPageSelector *selector)
   return g_string_free (string, FALSE);
 }
 
+
 /*  private functions  */
 
 static void
@@ -953,6 +980,13 @@ gimp_page_selector_range_activate (GtkEntry         *entry,
                                    GimpPageSelector *selector)
 {
   gimp_page_selector_select_range (selector, gtk_entry_get_text (entry));
+}
+
+static gint
+gimp_page_selector_int_compare (gconstpointer a,
+                                gconstpointer b)
+{
+  return *(gint*)a - *(gint*)b;
 }
 
 static void

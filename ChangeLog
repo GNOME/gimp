@@ -1,10 +1,14 @@
+2005-07-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppageselector.c: some cleanup and API docs.
+
 2005-07-01  Nathan Summers  <rock@gimp.org>
 
 	* app/batch.c
-        * app/config/gimprc-blurbs.h
-        * app/core/gimpimage-convert.c
-        * app/dialogs/user-install-dialog.c: grammar and other pedantic string
-        changes.
+	* app/config/gimprc-blurbs.h
+	* app/core/gimpimage-convert.c
+	* app/dialogs/user-install-dialog.c: grammar and other pedantic string
+	changes.
 
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
