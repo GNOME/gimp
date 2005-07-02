@@ -54,6 +54,7 @@ m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.8.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [1.99.15])
+m4_define([poppler_required_version], [0.3.1])
 
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
@@ -1148,6 +1149,22 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
 
 AC_SUBST(SVG)
 AC_SUBST(LIBSVG)
+
+###################
+# Check for librsvg
+###################
+
+PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version,
+  POPPLER='poppler$(EXEEXT)'
+  LIBPOPPLER=$POPPLER_LIBS
+  AC_DEFINE(HAVE_POPPLER, 1, "Define to 1 if libpoppler is available")
+  have_poppler=yes,
+  AC_MSG_WARN([*** PDF import will be by the postscript plugin (libpoppler not found) ***]))
+
+AC_SUBST(POPPLER)
+AC_SUBST(LIBPOPPLER)
+
+AM_CONDITIONAL(HAVE_POPPLER, test x$have_poppler = xyes)
 
 
 #####################

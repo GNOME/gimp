@@ -604,6 +604,7 @@ query (void)
 				    "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
+#ifndef HAVE_POPPLER
   gimp_install_procedure ("file_pdf_load",
                           "load PDF documents",
                           "load PDF documents",
@@ -622,6 +623,7 @@ query (void)
 				    "pdf",
 				    "",
                                     "0,string,%PDF");
+#endif
 
   gimp_install_procedure ("file_ps_load_setargs",
                           "set additional parameters for procedure file_ps_load",
@@ -650,7 +652,10 @@ query (void)
 
   gimp_register_thumbnail_loader ("file_ps_load",  "file_ps_load_thumb");
   gimp_register_thumbnail_loader ("file_eps_load", "file_ps_load_thumb");
+
+#ifndef HAVE_POPPLER
   gimp_register_thumbnail_loader ("file_pdf_load", "file_ps_load_thumb");
+#endif
 
   gimp_install_procedure ("file_ps_save",
                           "save image as PostScript docuement",
