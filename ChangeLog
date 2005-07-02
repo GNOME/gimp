@@ -1,3 +1,12 @@
+2005-07-01  Nathan Summers  <rock@gimp.org>
+
+	Changes in preparation for integrating gimp-poppler.
+
+	* configure.in: check for libpoppler.
+
+	* plug-ins/common/postscript.c (query): don't register file_load_pdf
+	if HAVE_POPPLER is defined
+
 2005-07-02  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppageselector.c: some cleanup and API docs.
