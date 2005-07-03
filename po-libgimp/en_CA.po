@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-05 22:10-0400\n"
-"PO-Revision-Date: 2005-06-05 20:02-0400\n"
+"POT-Creation-Date: 2005-07-03 18:23-0400\n"
+"PO-Revision-Date: 2005-07-03 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -474,7 +474,7 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: libgimpbase/gimpbaseenums.c:559
+#: libgimpbase/gimpbaseenums.c:559 modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "None"
 
@@ -581,6 +581,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: libgimpbase/gimputils.c:169 libgimpbase/gimputils.c:174
+#: modules/cdisplay_lcms.c:246
 msgid "(invalid UTF-8 string)"
 msgstr "(invalid UTF-8 string)"
 
@@ -589,28 +590,40 @@ msgid "Mode of operation for color management."
 msgstr "Mode of operation for colour management."
 
 #: libgimpconfig/gimpcolorconfig.c:42
-msgid "Sets the color profile for the display."
-msgstr "Sets the colour profile for the display."
+msgid "The color profile of your (primary) monitor."
+msgstr "The colour profile of your (primary) monitor."
 
 #: libgimpconfig/gimpcolorconfig.c:44
-msgid "Sets default RGB workspace color profile."
-msgstr "Sets default RGB workspace colour profile."
-
-#: libgimpconfig/gimpcolorconfig.c:46
-msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr "Sets the CMYK colour profile used to convert between RGB and CMYK."
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"When enabled, the GIMP will try to use the display colour profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
 
 #: libgimpconfig/gimpcolorconfig.c:48
-msgid "Sets the color profile used when printing."
-msgstr "Sets the colour profile used when printing."
+msgid "The default RGB workspace color profile."
+msgstr "The default RGB workspace colour profile."
 
 #: libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "The CMYK colour profile used to convert between RGB and CMYK."
+
+#: libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "The colour profile used for simulating a printed version (softproof)."
+
+#: libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Sets how colours are mapped for your display."
 
-#: libgimpconfig/gimpcolorconfig.c:52
-msgid "Sets how colors are converted from workspace to simulation device."
-msgstr "Sets how colours are converted from workspace to simulation device."
+#: libgimpconfig/gimpcolorconfig.c:56
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
+msgstr ""
+"Sets how colours are converted from workspace to the print simulation device."
 
 #: libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -748,7 +761,7 @@ msgstr "Loading module: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:197 libgimpmodule/gimpmodule.c:216
 #: libgimpmodule/gimpmodule.c:330 libgimpmodule/gimpmodule.c:358
-#: libgimpmodule/gimpmodule.c:482
+#: libgimpmodule/gimpmodule.c:470
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Module '%s' load error: %s"
@@ -882,7 +895,7 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: libgimpwidgets/gimppropwidgets.c:1728
+#: libgimpwidgets/gimppropwidgets.c:1798
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "This text input field is limited to %d characters."
@@ -1031,6 +1044,14 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
+#: libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "Layers"
+
+#: libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "Images"
+
 #: modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
 msgstr "Protanopia (insensitivity to red)"
@@ -1079,13 +1100,37 @@ msgstr "Contrast"
 msgid "Contrast C_ycles:"
 msgstr "Contrast C_ycles:"
 
-#: modules/cdisplay_lcms.c:95
+#: modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Colour management display filter using ICC colour profiles"
 
-#: modules/cdisplay_lcms.c:163
+#: modules/cdisplay_lcms.c:173
 msgid "Color Management"
 msgstr "Colour Management"
+
+#: modules/cdisplay_lcms.c:288
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"This filter takes its configuration from the Colour Management section in the "
+"Preferences dialogue."
+
+#: modules/cdisplay_lcms.c:311
+msgid "Mode of operation:"
+msgstr "Mode of operation:"
+
+#: modules/cdisplay_lcms.c:322
+msgid "RGB workspace profile:"
+msgstr "RGB workspace profile:"
+
+#: modules/cdisplay_lcms.c:332
+msgid "Monitor profile:"
+msgstr "Monitor profile:"
+
+#: modules/cdisplay_lcms.c:342
+msgid "Print simulation profile:"
+msgstr "Print simulation profile:"
 
 #: modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
