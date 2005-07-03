@@ -56,7 +56,7 @@ static gint      gimp_frame_get_indent          (GtkWidget      *widget);
 static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
 
 
-static GtkVBoxClass *parent_class = NULL;
+static GtkFrameClass *parent_class = NULL;
 
 
 GType
@@ -77,6 +77,7 @@ gimp_frame_get_type (void)
         sizeof (GimpFrame),
         0,              /* n_preallocs    */
         (GInstanceInitFunc) gimp_frame_init,
+        NULL            /* value_table    */
       };
 
       frame_type = g_type_register_static (GTK_TYPE_FRAME,

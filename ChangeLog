@@ -1,3 +1,7 @@
+2005-07-03  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimpframe.c: cleanups.
+
 2005-07-01  Nathan Summers  <rock@gimp.org>
 
 	Changes in preparation for integrating gimp-poppler.
