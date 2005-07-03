@@ -1150,9 +1150,10 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
 AC_SUBST(SVG)
 AC_SUBST(LIBSVG)
 
-###################
-# Check for librsvg
-###################
+
+######################
+# Check for libpoppler
+######################
 
 PKG_CHECK_MODULES(POPPLER, poppler-glib >= poppler_required_version,
   POPPLER='poppler$(EXEEXT)'
