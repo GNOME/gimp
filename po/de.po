@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-18 02:39+0200\n"
-"PO-Revision-Date: 2005-06-21 19:47+0200\n"
+"POT-Creation-Date: 2005-07-05 00:29+0200\n"
+"PO-Revision-Date: 2005-07-05 00:30+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6996,7 +6996,7 @@ msgstr "GIMP beenden"
 
 #: ../app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungenverlorgen:"
+msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungen verloren:"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "There is one image with unsaved changes:"
@@ -8042,7 +8042,7 @@ msgstr ""
 "PDB-Aufruffehler:\n"
 "Prozedur '%s' nicht gefunden"
 
-#: ../app/pdb/procedural_db.c:275 ../app/pdb/procedural_db.c:387
+#: ../app/pdb/procedural_db.c:275 ../app/pdb/procedural_db.c:392
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
