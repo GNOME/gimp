@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-05 00:29+0200\n"
-"PO-Revision-Date: 2005-07-05 00:30+0200\n"
+"PO-Revision-Date: 2005-07-05 01:25+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6315,8 +6315,7 @@ msgstr "Vorschau"
 
 #: ../app/dialogs/preferences-dialog.c:294
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr ""
-"Sie müssen GIMP neu starten, damit die folgenden Änderungen aktiv werden:"
+msgstr "Sie müssen GIMP neu starten, damit die folgenden Änderungen aktiv werden:"
 
 #: ../app/dialogs/preferences-dialog.c:501
 msgid "Configure Keyboard Shortcuts"
@@ -6996,7 +6995,7 @@ msgstr "GIMP beenden"
 
 #: ../app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungen verloren:"
+msgstr "Wenn Sie GIMP jetzt beenden, gehen diese Änderungen verloren."
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "There is one image with unsaved changes:"
