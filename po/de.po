@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-26 16:52+0200\n"
-"PO-Revision-Date: 2005-07-05 00:36+0200\n"
+"PO-Revision-Date: 2005-07-05 01:23+0200\n"
 "Last-Translator: Hendrik Richter <hendi@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6945,7 +6945,7 @@ msgstr "GIMP beenden"
 
 #: app/dialogs/quit-dialog.c:139
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "Wenn Sie GIMP jetzt beenden, gehen folgende Änderungen verloren:"
+msgstr "Wenn Sie GIMP jetzt beenden, gehen diese Änderungen verloren."
 
 #: app/dialogs/quit-dialog.c:177
 msgid "There is one image with unsaved changes:"
