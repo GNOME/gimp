@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-24 19:30+0000\n"
-"PO-Revision-Date: 2005-06-24 22:58+0200\n"
+"POT-Creation-Date: 2005-07-03 19:29+0000\n"
+"PO-Revision-Date: 2005-07-04 04:59+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -493,7 +493,7 @@ msgstr "Constant"
 msgid "Incremental"
 msgstr "Oplopend"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Geen"
 
@@ -603,6 +603,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/cdisplay_lcms.c:246
 msgid "(invalid UTF-8 string)"
 msgstr "(ongeldige UTF-8 tekenreeks)"
 
@@ -611,37 +612,36 @@ msgid "Mode of operation for color management."
 msgstr "Werkingswijze van kleurbeheer."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
-msgid "Sets the color profile for the display."
-msgstr "Stelt het kleurprofiel van de display in."
+msgid "The color profile of your (primary) monitor."
+msgstr "Het kleurprofiel van uw (primaire) beeldscherm."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
 "When enabled, the GIMP will try to use the display color profile from the "
-"windowing system."
-msgstr "Indien aangezet, zal GIMP trachten het kleurprofiel voor weergave uit het 'windowing'systeem te gebruiken."
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr "Indien aangezet, zal GIMP trachten het kleurprofiel voor weergave uit het 'windowing'systeem te gebruiken. Het geconfigureerde beeldschermprofiel zal dan alleen worden gebruikt om op te kunnen terugvallen."
 
-#: ../libgimpconfig/gimpcolorconfig.c:47
-msgid "Sets default RGB workspace color profile."
-msgstr "Stelt standaard RGB kleurprofiel in."
+#: ../libgimpconfig/gimpcolorconfig.c:48
+msgid "The default RGB workspace color profile."
+msgstr "Het standaard RGB kleurprofiel."
 
-#: ../libgimpconfig/gimpcolorconfig.c:49
-msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
-"Stelt het CMYK kleurprofiel in dat gebruikt wordt om RGB en CMYK in elkaar "
-"om te zetten."
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Het CMYK kleurprofiel dat gebruikt wordt om RGB en CMYK in elkaar om te zetten."
 
-#: ../libgimpconfig/gimpcolorconfig.c:51
-msgid "Sets the color profile used when printing."
-msgstr "Stelt het kleurprofiel is dat gebruikt wordt bij afdrukken."
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Het kleurprofiel om een afdrukversie te simuleren (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:53
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Stelt in hoe kleuren worden geprojecteerd op uw monitor."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
-msgid "Sets how colors are converted from workspace to simulation device."
-msgstr ""
-"Stelt in hoe kleuren worden omgezet van werkruimte naar simulatieapparaat."
+#: ../libgimpconfig/gimpcolorconfig.c:56
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
+msgstr "Stelt in hoe kleuren worden omgezet van werkruimte naar het afdruksimulatieapparaat."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -929,7 +929,7 @@ msgstr "Transparantiestijl"
 msgid "_Preview"
 msgstr "_Voorbeeld"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1728
+#: ../libgimpwidgets/gimppropwidgets.c:1798
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Dit tekstinvoerveld mag  maximaal %d tekens bevatten."
@@ -1089,6 +1089,14 @@ msgstr "_B"
 msgid "_A"
 msgstr "_A"
 
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "Lagen"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "Afbeeldingen"
+
 # Is 'Protanopia' called the same in Dutch?
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
@@ -1140,19 +1148,36 @@ msgstr "Contrast"
 msgid "Contrast C_ycles:"
 msgstr "Contrast-c_ycles:"
 
-#: ../modules/cdisplay_lcms.c:99
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Kleurbeheer weergavefilter met ICC-kleurpofielen"
 
-#: ../modules/cdisplay_lcms.c:167
+#: ../modules/cdisplay_lcms.c:173
 msgid "Color Management"
 msgstr "Kleurbeheer"
 
-#: ../modules/cdisplay_lcms.c:235
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
-"This module takes its configuration from the <i>Color Management</i> section "
-"in the Preferences dialog."
-msgstr "Deze module haalt zijn configuratie uit de sectie <i>Kleurbeheer</i> in het dialoogvenster Voorkeuren."
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr "Dit filter haalt zijn configuratie uit de sectie Kleurbeheer in het dialoogvenster Voorkeuren."
+
+#: ../modules/cdisplay_lcms.c:311
+msgid "Mode of operation:"
+msgstr "Werkmethode:"
+
+#: ../modules/cdisplay_lcms.c:322
+msgid "RGB workspace profile:"
+msgstr "RGB kleurprofiel:"
+
+#: ../modules/cdisplay_lcms.c:332
+msgid "Monitor profile:"
+msgstr "Beeldschermprofiel:"
+
+# Simulatie afdrukken
+#: ../modules/cdisplay_lcms.c:342
+msgid "Print simulation profile:"
+msgstr "Afdruksimulatieprofiel:"
 
 #: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
@@ -1251,6 +1276,9 @@ msgstr "Waterverf"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Druk"
+
+#~ msgid "Sets the color profile used when printing."
+#~ msgstr "Stelt het kleurprofiel is dat gebruikt wordt bij afdrukken."
 
 #~ msgid "Forward (traditional)"
 #~ msgstr "Voorwaarts (traditioneel)"

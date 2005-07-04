@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-21 19:15+0000\n"
-"PO-Revision-Date: 2005-04-22 02:31+0200\n"
+"POT-Creation-Date: 2005-07-03 19:32+0000\n"
+"PO-Revision-Date: 2005-07-04 04:51+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,23 +20,15 @@ msgstr ""
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu-consolemodus staat alleen een interactieve aanroep toe"
 
-#: ../plug-ins/script-fu/script-fu-console.c:146
+#: ../plug-ins/script-fu/script-fu-console.c:144
 msgid "Script-Fu Console"
 msgstr "Script-Fu Console"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "SIOD Output"
-msgstr "SIOD-uitvoer"
-
-#: ../plug-ins/script-fu/script-fu-console.c:239
-msgid "Current Command"
-msgstr "Huidige opdracht"
-
-#: ../plug-ins/script-fu/script-fu-console.c:257
+#: ../plug-ins/script-fu/script-fu-console.c:237
 msgid "_Browse..."
 msgstr "_Verkennen..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:538
+#: ../plug-ins/script-fu/script-fu-console.c:518
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu-evaluatiemodus staat alleen een nietinteractieve aanroep toe"
 
@@ -88,47 +80,47 @@ msgstr "Script-Fu-mapselectie"
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-fontselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-paletselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu-patroonselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:476
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-verloopselectie"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:484
+#: ../plug-ins/script-fu/script-fu-interface.c:485
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penseelselectie"
 
 #. the script progress frame
-#: ../plug-ins/script-fu/script-fu-interface.c:551
+#: ../plug-ins/script-fu/script-fu-interface.c:552
 msgid "Script Progress"
 msgstr "Scriptvoortgang"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:559
+#: ../plug-ins/script-fu/script-fu-interface.c:560
 msgid "(none)"
 msgstr "(geen)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1085
-#: ../plug-ins/dbbrowser/gimpprocview.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:1088
+#: ../plug-ins/dbbrowser/gimpprocview.c:205
 msgid "Author:"
 msgstr "Auteur:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1092
-#: ../plug-ins/dbbrowser/gimpprocview.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:1095
+#: ../plug-ins/dbbrowser/gimpprocview.c:229
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1099
-#: ../plug-ins/dbbrowser/gimpprocview.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:1102
+#: ../plug-ins/dbbrowser/gimpprocview.c:217
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1108
+#: ../plug-ins/script-fu/script-fu-interface.c:1111
 msgid "Image Types:"
 msgstr "Afbeeldingstypen:"
 
@@ -143,15 +135,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:648
+#: ../plug-ins/script-fu/script-fu-server.c:653
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu Serveropties"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:681
 msgid "Server Port:"
 msgstr "Serverpoort:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:682
+#: ../plug-ins/script-fu/script-fu-server.c:687
 msgid "Server Logfile:"
 msgstr "Serverlogbestand:"
 
@@ -160,7 +152,7 @@ msgid "Script-Fu _Console"
 msgstr "Script-Fu _Console"
 
 #: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtra/Script-Fu"
 
@@ -196,9 +188,9 @@ msgstr "_Patronen"
 msgid "_Test"
 msgstr "_Tekst"
 
-#: ../plug-ins/script-fu/script-fu.c:285 ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:285
 msgid "_Utils"
-msgstr ""
+msgstr "_Gereedschap"
 
 #: ../plug-ins/script-fu/script-fu.c:287
 msgid "_Web Page Themes"
@@ -218,114 +210,121 @@ msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:296
-msgid "S_cript-Fu"
-msgstr "S_cript-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:298
-msgid "_Alchemy"
-msgstr "_Alchemie"
-
-#: ../plug-ins/script-fu/script-fu.c:300
 msgid "Alpha to _Logo"
 msgstr "Alpha naar l_ogo"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "A_nimators"
 msgstr "A_nimators"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:300
 msgid "_Decor"
 msgstr "_Decor"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Render"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Selection"
 msgstr "_Selectie"
 
-#: ../plug-ins/script-fu/script-fu.c:310
-msgid "S_hadow"
-msgstr "Sc_haduw"
-
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "Stencil _Ops"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Refresh Scripts"
 msgstr "S_cripts verversen"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:126
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
 msgid "Procedure Browser"
 msgstr "Procedureverkenner"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:130
-msgid "Search by _Name"
-msgstr "Op naam zoeken"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:154
+msgid "by name"
+msgstr "op naam"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:131
-#, fuzzy
-msgid "Search by _Description"
-msgstr "Op naam zoeken"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:155
+msgid "by description"
+msgstr "op omschrijving"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:213
-msgid "_Search:"
-msgstr "_Zoeken:"
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:156
+msgid "by help"
+msgstr "op hulp"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:375
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:157
+msgid "by author"
+msgstr "op auteur"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:158
+msgid "by copyright"
+msgstr "op copyright"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:159
+msgid "by date"
+msgstr "op datum"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:160
+msgid "by type"
+msgstr "op type"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:331
 msgid "Searching by name - please wait"
 msgstr "Zoeken op naam - wacht A.U.B."
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:399
-msgid "Searching by blurb - please wait"
-msgstr "Zoeken op omschrijving - wacht A.U.B."
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:353
+msgid "Searching by description - please wait"
+msgstr "Zoeken op omschrijving - een ogenblik geduld"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:361
+msgid "Searching by help - please wait"
+msgstr "Zoeken op hulp - een ogenblik geduld"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:369
+msgid "Searching by author - please wait"
+msgstr "Zoeken op auteur - een ogenblik geduld"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:377
+msgid "Searching by copyright - please wait"
+msgstr "Zoeken op copyright - een ogenblik geduld"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:385
+msgid "Searching by date - please wait"
+msgstr "Zoeken op datum - een ogenblik geduld"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:393
+msgid "Searching by type - please wait"
+msgstr "Zoeken op type - een ogenblik geduld"
+
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:401
 msgid "Searching - please wait"
-msgstr "Zoeken - wacht a.u.b."
+msgstr "Zoeken - een ogenblik geduld"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:417
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:408
 msgid "1 Procedure"
 msgstr "1 procedure"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:419
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedures"
 
-#: ../plug-ins/dbbrowser/gimpprocbrowser.c:465
+#: ../plug-ins/dbbrowser/gimpprocbrowser.c:462
 msgid "No matches"
 msgstr "Geen overeenkomsten"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:135
+#: ../plug-ins/dbbrowser/gimpprocview.c:138
 msgid "Parameters"
 msgstr "Parameters"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:148
+#: ../plug-ins/dbbrowser/gimpprocview.c:151
 msgid "Return Values"
 msgstr "Teruggeefwaardes"
 
-#: ../plug-ins/dbbrowser/gimpprocview.c:161
+#: ../plug-ins/dbbrowser/gimpprocview.c:164
 msgid "Additional Information"
 msgstr "Aanvullende informatie"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:326
-msgid "Internal GIMP procedure"
-msgstr "Interne GIMP-procedure"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:327
-msgid "GIMP Plug-In"
-msgstr "GIMP Plug-In"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:328
-msgid "GIMP Extension"
-msgstr "GIMP extensie"
-
-#: ../plug-ins/dbbrowser/gimpprocview.c:329
-msgid "Temporary Procedure"
-msgstr "Tijdelijke procedure"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -493,7 +492,7 @@ msgstr "Tekst"
 # windingen/cirkels
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr ""
+msgstr "3_D Truchet..."
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
@@ -816,18 +815,16 @@ msgstr "Gelust"
 msgid "Max. blur radius"
 msgstr "Max. vervagingsradius"
 
-# vloeien/samenvloeien
+# vloeien/samenvloeien/mengen
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
-#, fuzzy
 msgid "_Blend..."
-msgstr "Bladeren..."
+msgstr "_Mengen..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
 msgid "Blen_ded..."
-msgstr ""
+msgstr "_Gemengd..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
-#, fuzzy
 msgid "Blend mode"
 msgstr "Verloopmodus"
 
@@ -913,7 +910,6 @@ msgid "Fadeout"
 msgstr "Uitvloei"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
-#, fuzzy
 msgid "Fadeout width"
 msgstr "Uitvloeibreedte"
 
@@ -1475,17 +1471,14 @@ msgid "_Tube Button Label..."
 msgstr "_Buisknop label..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
-#, fuzzy
 msgid "Blend gradient (Text)"
 msgstr "Verloop (tekst)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
-#, fuzzy
 msgid "Blend gradient (outline)"
 msgstr "Verloop (omtrek)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:4
-#, fuzzy
 msgid "Blend gradient (text)"
 msgstr "Verloop (tekst)"
 
@@ -1931,7 +1924,6 @@ msgid "Black"
 msgstr "Zwart"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-#, fuzzy
 msgid "Edge behavior"
 msgstr "Randgedrag"
 
@@ -2191,9 +2183,8 @@ msgid "_Spyrogimp..."
 msgstr "_Spyrograaf..."
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-#, fuzzy
 msgid "Burst color"
-msgstr "Tekstkleur"
+msgstr "Explosiekleur"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Effect size (pixels * 30)"
@@ -2201,7 +2192,7 @@ msgstr "Effectgrootte (pixels * 30)"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 msgid "Starb_urst..."
-msgstr ""
+msgstr "Stere_xplosie..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Effect size (pixels * 4)"
@@ -2209,11 +2200,11 @@ msgstr "Effectgrootte (pixels * 4)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
-msgstr ""
+msgstr "_Sterzicht..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Swirl-_Tile..."
-msgstr ""
+msgstr "_Krultegel..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl amount"
@@ -2233,7 +2224,7 @@ msgstr "Wervelhoek"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "_Swirly..."
-msgstr ""
+msgstr "_Krullen..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "Base color"
@@ -2269,7 +2260,6 @@ msgid "Text C_ircle..."
 msgstr "Te_kstcirkel..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-#, fuzzy
 msgid "Ending blend"
 msgstr "Einde verloop"
 
@@ -2290,7 +2280,6 @@ msgid "Squares"
 msgstr "Vierkanten"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
-#, fuzzy
 msgid "Starting blend"
 msgstr "Begin verloop"
 
@@ -2337,7 +2326,7 @@ msgstr "Voorgrondkleur"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "T_ruchet..."
-msgstr ""
+msgstr "T_ruchet..."
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "Mask opacity"
@@ -2346,10 +2335,6 @@ msgstr "Maskerondoorzichtigheid"
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
 msgstr "Maskergrootte"
-
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr "_Onscherp masker..."
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
@@ -2447,6 +2432,42 @@ msgstr "Ondoorzichtheid hoge lichten"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "_Xach-Effect..."
 msgstr "_Xach-effect..."
+
+#~ msgid "SIOD Output"
+#~ msgstr "SIOD-uitvoer"
+
+#~ msgid "Current Command"
+#~ msgstr "Huidige opdracht"
+
+#~ msgid "S_cript-Fu"
+#~ msgstr "S_cript-Fu"
+
+#~ msgid "_Alchemy"
+#~ msgstr "_Alchemie"
+
+#~ msgid "S_hadow"
+#~ msgstr "Sc_haduw"
+
+#~ msgid "Search by _Name"
+#~ msgstr "Op naam zoeken"
+
+#~ msgid "_Search:"
+#~ msgstr "_Zoeken:"
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "Interne GIMP-procedure"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "GIMP Plug-In"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "GIMP extensie"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "Tijdelijke procedure"
+
+#~ msgid "_Unsharp Mask..."
+#~ msgstr "_Onscherp masker..."
 
 #~ msgid "Search by _Blurb"
 #~ msgstr "Op omschrijving zoeken"
