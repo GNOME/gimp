@@ -19,9 +19,13 @@ LDADDS = \
 	$(libgimpmath)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(GTK_LIBS)
+	$(GTK_LIBS)		\
+	$(X_LIBS) -lX11
 
-noinst_PROGRAMS = doc-shooter
+
+noinst_PROGRAMS = $(DOC_SHOOTER)
+
+EXTRA_PROGRAMS = doc-shooter
 
 doc_shooter_SOURCES = \
 	shadow.c	\

@@ -874,6 +874,9 @@ if test "$gdk_target" = x11; then
    dnl screenshot plug-in needs to link to X11 explicitely
    LIBSCREENSHOT="$X_LIBS -lX11"
 
+   dnl doc-shooter is X11 specific
+   DOC_SHOOTER=doc-shooter
+
     dnl Test for Xmu
     if test -z "$LIBXMU"; then
       gimp_save_CFLAGS="$CFLAGS"
@@ -897,6 +900,7 @@ fi
 AC_SUBST(LIBXMU)
 AC_SUBST(LIBSCREENSHOT)
 AC_SUBST(GIMP_REMOTE)
+AC_SUBST(DOC_SHOOTER)
 
 
 ###################
