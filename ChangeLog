@@ -1,5 +1,9 @@
 2005-07-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd_save.c: removed uesless g_malloc() wrapper.
+
+2005-07-04  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* devel-docs/tools/Makefile.am: build the doc-shooter utility
 	conditionally and explicitely link it with -lX11.

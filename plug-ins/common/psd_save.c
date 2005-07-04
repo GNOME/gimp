@@ -129,7 +129,6 @@ static void   run                  (const gchar      *name,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
 
-static void * xmalloc              (size_t n);
 static void   psd_lmode_layer      (gint32 idLayer, gchar* psdMode);
 static void   reshuffle_cmap_write (guchar *mapGimp);
 static void   save_header          (FILE *fd, gint32 image_id);
@@ -145,7 +144,7 @@ static void   write_string         (FILE *fd, char *val, gchar *why);
 static void   write_gchar          (FILE *fd, unsigned char val, gchar *why);
 static void   write_gshort         (FILE *fd, gshort val, gchar *why);
 static void   write_glong          (FILE *fd, glong val, gchar *why);
-    
+
 static void   write_pixel_data     (FILE *fd, gint32 drawableID,
 				    gint32 *ChanLenPosition,
 				    glong rowlenOffset);
@@ -159,7 +158,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static const gchar *prog_name = "PSD";
 
 MAIN()
 
@@ -257,28 +255,6 @@ run (const gchar      *name,
     }
 }
 
-
-
-static void *
-xmalloc (size_t n)
-{
-  void *p;
-
-  if (n == 0)
-    {
-      IFDBG printf ("PSD: WARNING: %s: xmalloc asked for zero-sized chunk\n", prog_name);
-
-      return (NULL);
-    }
-
-  if ((p = g_malloc (n)) != NULL)
-    return p;
-
-  IFDBG printf ("%s: out of memory\n", prog_name);
-  gimp_quit ();
-  return NULL;
-}
-
 static void
 psd_lmode_layer (gint32 idLayer, gchar *psdMode)
 {
@@ -320,8 +296,6 @@ psd_lmode_layer (gint32 idLayer, gchar *psdMode)
     case GIMP_OVERLAY_MODE:                /* ? */
       strcpy (psdMode, "over");
       break;
-/*    case GIMP_BEHIND_MODE:                 These are from GIMP 1.1.14*/
-/*    case GIMP_DIVIDE_MODE:                 These are from GIMP 1.1.14*/
     case GIMP_ADDITION_MODE:
     case GIMP_SUBTRACT_MODE:
       IFDBG printf ("PSD: Warning - unsupported layer-blend mode: %c, using 'norm' mode\n",
@@ -558,7 +532,7 @@ reshuffle_cmap_write (guchar *mapGimp)
   guchar *mapPSD;
   gint i;
 
-  mapPSD = xmalloc (768);
+  mapPSD = g_malloc (768);
 
   for (i = 0; i < 256; i++)
     {
@@ -631,7 +605,7 @@ save_color_mode_data (FILE *fd, gint32 image_id)
           write_glong (fd, 768, "color data length");
             /* For this type, length is always 768 */
 
-          cmap_modified = xmalloc (768);
+          cmap_modified = g_malloc (768);
           for (i = 0; i < nColors * 3; i++)
             cmap_modified[i] = cmap[i];
 
@@ -1097,7 +1071,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
 
   LengthsTable = g_new (gshort, height);
-  rledata = g_new (gchar, (MIN(height, tile_height) * 
+  rledata = g_new (gchar, (MIN(height, tile_height) *
 			   (width + 10 + (width/100))));
 
 
@@ -1161,7 +1135,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
       fseek (fd, length_table_pos, SEEK_SET);
       for (j = 0; j < height; j++) /* write real length table */
 	write_gshort (fd, LengthsTable[j], "RLE length");
-    
+
       if (ChanLenPosition)    /* Update total compressed length */
 	{
 	  fseek (fd, ChanLenPosition[i], SEEK_SET);
@@ -1204,7 +1178,7 @@ save_data (FILE *fd, gint32 image_id)
 
 
   write_gshort (fd, 1, "RLE compression");
- 
+
   /* All line lengths go before the rle pixel data */
 
   offset = ftell(fd); /* Offset in file of line lengths */
@@ -1212,7 +1186,7 @@ save_data (FILE *fd, gint32 image_id)
   for (i = 0; i < ChanCount; i++)
     for (j = 0; j < imageHeight; j++)
       write_gshort (fd, 0, "junk line lengths");
-      
+
   bottom_layer = PSDImageData.lLayers[PSDImageData.nLayers - 1];
 
   if (PSDImageData.nLayers != 1 ||
