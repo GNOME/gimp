@@ -1,3 +1,9 @@
+2005-07-04  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* devel-docs/tools/Makefile.am: build the doc-shooter utility
+	conditionally and explicitely link it with -lX11.
+
 2005-07-03  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimpframe.c: cleanups.
