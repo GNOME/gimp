@@ -1,3 +1,10 @@
+2005-07-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppageselector.c: added a frame around the
+	thumbnails. The code is still a bit hackish... Frame stretching
+	is a 1:1 copy from app/widgets/gimpviewrenderer-frame.c so it
+	can be easily factored out).
+
 2005-07-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/cpercep.[ch]: renamed cpercep_init_conversions() to

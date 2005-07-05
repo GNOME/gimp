@@ -31,6 +31,7 @@
 
 #include "gimppageselector.h"
 #include "gimppropwidgets.h"
+#include "gimpstock.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -84,6 +85,9 @@ static gint   gimp_page_selector_int_compare       (gconstpointer     a,
 static void   gimp_page_selector_print_range       (GString          *string,
                                                     gint              start,
                                                     gint              end);
+
+static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
+                                                    GdkPixbuf        *pixbuf);
 
 
 static guint         selector_signals[LAST_SIGNAL] = { 0 };
@@ -521,13 +525,16 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
   g_return_if_fail (thumbnail == NULL || GDK_IS_PIXBUF (thumbnail));
 
   if (! thumbnail)
-    thumbnail = selector->thumbnail;
+    thumbnail = g_object_ref (selector->thumbnail);
+  else
+    thumbnail = gimp_page_selector_add_frame (GTK_WIDGET (selector), thumbnail);
 
   gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selector->store),
                                  &iter, NULL, page_no);
   gtk_list_store_set (selector->store, &iter,
                       COLUMN_THUMBNAIL, thumbnail,
                       -1);
+  g_object_unref (thumbnail);
 }
 
 /**
@@ -1001,4 +1008,184 @@ gimp_page_selector_print_range (GString *string,
     g_string_append_printf (string, "%d", start + 1);
   else
     g_string_append_printf (string, "%d-%d", start + 1, end + 1);
+}
+
+static void
+draw_frame_row (GdkPixbuf *frame_image,
+                gint       target_width,
+                gint       source_width,
+                gint       source_v_position,
+                gint       dest_v_position,
+                GdkPixbuf *result_pixbuf,
+                gint       left_offset,
+                gint       height)
+{
+  gint remaining_width = target_width;
+  gint h_offset        = 0;
+
+  while (remaining_width > 0)
+    {
+      gint slab_width = (remaining_width > source_width ?
+                         source_width : remaining_width);
+      gdk_pixbuf_copy_area (frame_image,
+                            left_offset, source_v_position,
+                            slab_width, height,
+                            result_pixbuf,
+                            left_offset + h_offset, dest_v_position);
+
+      remaining_width -= slab_width;
+      h_offset += slab_width;
+    }
+}
+
+/* utility to draw the middle section of the frame in a loop */
+static void
+draw_frame_column (GdkPixbuf *frame_image,
+                   gint       target_height,
+                   gint       source_height,
+                   gint       source_h_position,
+                   gint       dest_h_position,
+                   GdkPixbuf *result_pixbuf,
+                   gint       top_offset, int width)
+{
+  gint remaining_height = target_height;
+  gint v_offset         = 0;
+
+  while (remaining_height > 0)
+    {
+      gint slab_height = (remaining_height > source_height ?
+                          source_height : remaining_height);
+
+      gdk_pixbuf_copy_area (frame_image,
+                            source_h_position, top_offset,
+                            width, slab_height,
+                            result_pixbuf,
+                            dest_h_position, top_offset + v_offset);
+
+      remaining_height -= slab_height;
+      v_offset += slab_height;
+    }
+}
+
+GdkPixbuf *
+stretch_frame_image (GdkPixbuf *frame_image,
+                     gint       left_offset,
+                     gint       top_offset,
+                     gint       right_offset,
+                     gint       bottom_offset,
+                     gint       dest_width,
+                     gint       dest_height)
+{
+  GdkPixbuf *pixbuf;
+  guchar    *pixels;
+  gint       frame_width, frame_height;
+  gint       row_stride;
+  gint       target_width,  target_frame_width;
+  gint       target_height, target_frame_height;
+
+  frame_width  = gdk_pixbuf_get_width  (frame_image);
+  frame_height = gdk_pixbuf_get_height (frame_image );
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
+                           dest_width, dest_height);
+  gdk_pixbuf_fill (pixbuf, 0);
+
+  row_stride = gdk_pixbuf_get_rowstride (pixbuf);
+  pixels = gdk_pixbuf_get_pixels (pixbuf);
+
+  target_width = dest_width - left_offset - right_offset;
+  target_height = dest_height - top_offset - bottom_offset;
+  target_frame_width  = frame_width - left_offset - right_offset;
+  target_frame_height = frame_height - top_offset - bottom_offset;
+
+  left_offset   += MIN (target_width / 4, target_frame_width / 4);
+  right_offset  += MIN (target_width / 4, target_frame_width / 4);
+  top_offset    += MIN (target_height / 4, target_frame_height / 4);
+  bottom_offset += MIN (target_height / 4, target_frame_height / 4);
+
+  target_width = dest_width - left_offset - right_offset;
+  target_height = dest_height - top_offset - bottom_offset;
+  target_frame_width  = frame_width - left_offset - right_offset;
+  target_frame_height = frame_height - top_offset - bottom_offset;
+
+  /* draw the left top corner  and top row */
+  gdk_pixbuf_copy_area (frame_image,
+                        0, 0, left_offset, top_offset,
+                        pixbuf, 0,  0);
+  draw_frame_row (frame_image, target_width, target_frame_width,
+                  0, 0,
+                  pixbuf,
+                  left_offset, top_offset);
+
+  /* draw the right top corner and left column */
+  gdk_pixbuf_copy_area (frame_image,
+                        frame_width - right_offset, 0,
+                        right_offset, top_offset,
+
+                        pixbuf,
+                        dest_width - right_offset,  0);
+  draw_frame_column (frame_image, target_height, target_frame_height, 0, 0,
+                     pixbuf, top_offset, left_offset);
+
+  /* draw the bottom right corner and bottom row */
+  gdk_pixbuf_copy_area (frame_image,
+                        frame_width - right_offset, frame_height - bottom_offset,
+                        right_offset, bottom_offset,
+                        pixbuf,
+                        dest_width - right_offset, dest_height - bottom_offset);
+  draw_frame_row (frame_image, target_width, target_frame_width,
+                  frame_height - bottom_offset, dest_height - bottom_offset,
+                  pixbuf, left_offset, bottom_offset);
+
+  /* draw the bottom left corner and the right column */
+  gdk_pixbuf_copy_area (frame_image,
+                        0, frame_height - bottom_offset,
+                        left_offset, bottom_offset,
+                        pixbuf,
+                        0,  dest_height - bottom_offset);
+  draw_frame_column (frame_image, target_height, target_frame_height,
+                     frame_width - right_offset, dest_width - right_offset,
+                     pixbuf, top_offset, right_offset);
+
+  return pixbuf;
+}
+
+#define FRAME_LEFT   2
+#define FRAME_TOP    2
+#define FRAME_RIGHT  4
+#define FRAME_BOTTOM 4
+
+static GdkPixbuf *
+gimp_page_selector_add_frame (GtkWidget *widget,
+                              GdkPixbuf *pixbuf)
+{
+  GdkPixbuf *frame;
+  gint       width, height;
+
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  frame = g_object_get_data (G_OBJECT (widget), "frame");
+
+  if (! frame)
+    {
+      frame = gtk_widget_render_icon (widget,
+                                      GIMP_STOCK_FRAME,
+                                      GTK_ICON_SIZE_DIALOG, NULL);
+      g_object_set_data_full (G_OBJECT (widget), "frame", frame,
+                              (GDestroyNotify) g_object_unref);
+    }
+
+  frame = stretch_frame_image (frame,
+                               FRAME_LEFT,
+                               FRAME_TOP,
+                               FRAME_RIGHT,
+                               FRAME_BOTTOM,
+                               width  + FRAME_LEFT + FRAME_RIGHT,
+                               height + FRAME_TOP  + FRAME_BOTTOM);
+
+  gdk_pixbuf_copy_area (pixbuf, 0, 0, width, height,
+                        frame, FRAME_LEFT, FRAME_TOP);
+
+  return frame;
 }
