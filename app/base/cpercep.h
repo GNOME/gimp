@@ -1,5 +1,3 @@
-#ifndef __CPERCEP_H__
-#define __CPERCEP_H__
 /*
 Copyright (C) 1997-2002 Adam D. Moss (the "Author").  All Rights Reserved.
 
@@ -33,16 +31,26 @@ from the Author.
   TODO: document functions, rename erroneously-named arguments
 */
 
-void
-cpercep_init_conversions(void);
+#ifndef __CPERCEP_H__
+#define __CPERCEP_H__
 
-void
-cpercep_rgb_to_space (double inr, double ing, double inb,
-		      double* outr, double* outg, double* outb);
 
-void
-cpercep_space_to_rgb (double inr, double ing, double inb,
-		      double* outr, double* outg, double* outb);
+void  cpercep_init         (void);
+
+void  cpercep_rgb_to_space (double  inr,
+                            double  ing,
+                            double  inb,
+                            double *outr,
+                            double *outg,
+                            double *outb);
+
+void  cpercep_space_to_rgb (double  inr,
+                            double  ing,
+                            double  inb,
+                            double *outr,
+                            double *outg,
+                            double *outb);
+
 
 #if 0
 /* This is in the header so that it can potentially be inlined. */
@@ -53,24 +61,10 @@ cpercep_distance_space (const double L1, const double a1, const double b1,
   const double Ld = L1 - L2;
   const double ad = a1 - a2;
   const double bd = b1 - b2;
+
   return (Ld*Ld + ad*ad + bd*bd);
 }
 #endif
-
-
-/* EXPERIMENTAL */
-#if 0
-void
-mix_colours (const double L1, const double a1, const double b1,
-	     const double L2, const double a2, const double b2,
-	     double *rtnL, double *rtna, double *rtnb,
-	     double mass1, double mass2);
-/* util function */
-const double
-xscaler(const double start, const double end,
-	const double me, const double him);
-#define MF(L) ((L)<=0.0 ? 0.0 : 1.0)
-#endif /* EXPERIMENTAL */
 
 
 #endif /* __CPERCEP_H__ */

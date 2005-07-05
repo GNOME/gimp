@@ -59,7 +59,7 @@ from the Author.
 
 #ifndef __GLIBC__
 /* cbrt() is a GNU extension */
-#define cbrt(x) (pow(x, 1.0/3.0)) 
+#define cbrt(x) (pow(x, 1.0/3.0))
 #endif
 
 #ifdef GIMP_COMPILATION
@@ -244,14 +244,14 @@ rgbxyzrgb_init(void)
     CMatrix MRC, MRCi;
     double C1,C2,C3;
 
-    MRC[0][0] = pxr; 
-    MRC[0][1] = pxg; 
+    MRC[0][0] = pxr;
+    MRC[0][1] = pxg;
     MRC[0][2] = pxb;
-    MRC[1][0] = pyr; 
-    MRC[1][1] = pyg; 
+    MRC[1][0] = pyr;
+    MRC[1][1] = pyg;
     MRC[1][2] = pyb;
-    MRC[2][0] = 1.0F - (pxr + pyr); 
-    MRC[2][1] = 1.0F - (pxg + pyg); 
+    MRC[2][0] = 1.0F - (pxr + pyr);
+    MRC[2][1] = 1.0F - (pxg + pyg);
     MRC[2][2] = 1.0F - (pxb + pyb);
 
     Minvert (MRC, MRCi);
@@ -303,15 +303,6 @@ rgb_to_xyz (double *inr_outx,
   *ing_outy = Mrgb_to_xyz[1][0]*r + Mrgb_to_xyz[1][1]*g + Mrgb_to_xyz[1][2]*b;
   *inb_outz = Mrgb_to_xyz[2][0]*r + Mrgb_to_xyz[2][1]*g + Mrgb_to_xyz[2][2]*b;
 }
-
-
-/* call this before using the CPercep function */
-void
-cpercep_init_conversions(void)
-{
-  rgbxyzrgb_init();
-}
-
 
 
 static inline double
@@ -369,7 +360,7 @@ xyz_to_lab (double *inx,
 	{
 	  g_printerr (" <eek1>%f \007",(float)L);
 	}
-      
+
       if (L > 100.0F)
 	{
 	  g_printerr (" <eek2>%f \007",(float)L);
@@ -384,7 +375,7 @@ xyz_to_lab (double *inx,
   ffuncY = ffunc(Y);
   a = 500.0F * (ffunc(X/xnn) - ffuncY);
   b = 200.0F * (ffuncY - ffunc(Z/znn));
- 
+
   *inx = L;
   *iny = a;
   *inz = b;
@@ -446,10 +437,26 @@ lab_to_xyz (double *inl,
 
 
 
+/* call this before using the CPercep function */
+void
+cpercep_init (void)
+{
+  static gboolean initialized = FALSE;
+
+  if (! initialized)
+    {
+      rgbxyzrgb_init();
+      initialized = TRUE;
+    }
+}
 
 void
-cpercep_rgb_to_space (double inr, double ing, double inb,
-		      double* outr, double* outg, double* outb)
+cpercep_rgb_to_space (double  inr,
+                      double  ing,
+                      double  inb,
+		      double *outr,
+                      double *outg,
+                      double *outb)
 {
 #ifdef APPROX
 #ifdef SANITY
@@ -525,8 +532,12 @@ cpercep_rgb_to_space (double inr, double ing, double inb,
 
 
 void
-cpercep_space_to_rgb (double inr, double ing, double inb,
-		      double* outr, double* outg, double* outb)
+cpercep_space_to_rgb (double  inr,
+                      double  ing,
+                      double  inb,
+		      double *outr,
+                      double *outg,
+                      double *outb)
 {
   lab_to_xyz(&inr, &ing, &inb);
 
@@ -590,7 +601,7 @@ mix_colours (const double L1, const double a1, const double b1,
 	     double mass1, double mass2)
 {
   double w1, w2;
-  
+
 #if 0
   *rtnL = xscaler (L1, L2, mass1, mass2);
   *rtna = xscaler (a1, a2, mass1, mass2);
@@ -604,7 +615,7 @@ mix_colours (const double L1, const double a1, const double b1,
   w1 = mass1 * (L1*L1*L1);
   w2 = mass2 * (L2*L2*L2);
 #endif
-  
+
   *rtnL = xscaler (L1, L2, mass1, mass2);
 
   if (w1 <= 0.0 &&

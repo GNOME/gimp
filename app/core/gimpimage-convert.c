@@ -850,7 +850,7 @@ gimp_image_convert (GimpImage              *gimage,
   g_object_set (gimage, "base-type", new_type, NULL);
 
   /* initialize the colour conversion routines */
-  cpercep_init_conversions ();
+  cpercep_init ();
 
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)
