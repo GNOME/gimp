@@ -210,6 +210,8 @@ gimp_browser_add_search_types (GimpBrowser *browser,
                                              args);
       va_end (args);
 
+      gtk_combo_box_set_focus_on_click (GTK_COMBO_BOX (combo), FALSE);
+
       browser->search_type_combo = combo;
       browser->search_type       = first_type_id;
 

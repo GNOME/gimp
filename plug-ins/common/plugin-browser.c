@@ -589,14 +589,6 @@ browser_dialog_new (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Insertion Date"),
-                                                     renderer,
-                                                     "text", LIST_COLUMN_DATE,
-                                                     NULL);
-  gtk_tree_view_column_set_sort_column_id  (column, LIST_COLUMN_DATE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
-
-  renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
                                                      renderer,
                                                      "text", LIST_COLUMN_PATH,
@@ -611,6 +603,15 @@ browser_dialog_new (void)
                                                      LIST_COLUMN_IMAGE_TYPES,
                                                      NULL);
   gtk_tree_view_column_set_sort_column_id  (column, LIST_COLUMN_IMAGE_TYPES);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
+
+  renderer = gtk_cell_renderer_text_new ();
+
+  column = gtk_tree_view_column_new_with_attributes (_("Installation Date"),
+                                                     renderer,
+                                                     "text", LIST_COLUMN_DATE,
+                                                     NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, LIST_COLUMN_DATE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -658,21 +659,21 @@ browser_dialog_new (void)
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Insertion Date"),
-                                                     renderer,
-                                                     "text",
-                                                     TREE_COLUMN_DATE,
-                                                     NULL);
-  gtk_tree_view_column_set_sort_column_id  (column, TREE_COLUMN_DATE);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
-
-  renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
                                                      renderer,
                                                      "text",
                                                      TREE_COLUMN_IMAGE_TYPES,
                                                      NULL);
   gtk_tree_view_column_set_sort_column_id  (column, TREE_COLUMN_IMAGE_TYPES);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
+
+  renderer = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes (_("Installation Date"),
+                                                     renderer,
+                                                     "text",
+                                                     TREE_COLUMN_DATE,
+                                                     NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, TREE_COLUMN_DATE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

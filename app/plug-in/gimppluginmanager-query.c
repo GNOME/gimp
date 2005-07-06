@@ -45,7 +45,7 @@ static int
 match_strings (regex_t *preg,
                gchar   *a)
 {
-  return regexec (preg, a, 0, NULL, 0);
+  return regexec (preg, a, 0, NULL, REG_ICASE);
 }
 
 gint

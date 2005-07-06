@@ -483,7 +483,7 @@ gauss_dialog (gint32        image_ID,
 
   /*  parameter settings  */
   frame = gimp_frame_new (_("Blur Radius"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  Get the image resolution and unit  */
