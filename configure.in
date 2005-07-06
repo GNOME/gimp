@@ -1135,9 +1135,16 @@ AC_SUBST(LIBXPM)
 # Check for gtkhtml2
 ####################
 
-PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= gtkhtml2_required_version,
-  have_gtkhtml2=yes,
-  AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
+AC_ARG_WITH(gtkhtml2, [  --without-gtkhtml2      build without gtkhtml2 support])
+
+have_gtkhtml2=no
+if test "x$with_gtkhtml2" != xno; then
+  PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= gtkhtml2_required_version,
+    have_gtkhtml2=yes,
+    AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
+else
+  AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 support disabled) ***])
+fi
 
 AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
 
@@ -1146,10 +1153,16 @@ AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
 # Check for librsvg
 ###################
 
-PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-  SVG='svg$(EXEEXT)'
-  LIBSVG=$SVG_LIBS,
-  AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg not found) ***]))
+AC_ARG_WITH(librsvg,[  --without-librsvg       build without librsvg support])
+
+if test "x$with_librsvg" != xno; then
+  PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
+    SVG='svg$(EXEEXT)'
+    LIBSVG=$SVG_LIBS,
+    AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg not found) ***]))
+else
+  AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg support disabled) ***])
+fi
 
 AC_SUBST(SVG)
 AC_SUBST(LIBSVG)
@@ -1250,21 +1263,26 @@ AC_SUBST(WMF_CFLAGS)
 # Check for lcms
 ################
 
-have_lcms=no
-AC_CHECK_LIB(lcms, cmsCreate_sRGBProfile, [
-  AC_CHECK_HEADER(lcms.h,
-    have_lcms=yes, [
-    AC_CHECK_HEADER(lcms/lcms.h,
-      have_lcms=yes
-      AC_DEFINE(HAVE_LCMS_LCMS_H, 1,
-        [Define to 1 if the lcms header must be included as lcms/lcms.h]))
-    ])
-])
+AC_ARG_WITH(lcms,[  --without-lcms          build without lcms support])
 
-if test $have_lcms = yes; then
-  LCMS_LIBS="-llcms"
+have_lcms=no
+if test "x$with_lcms" != xno; then
+  AC_CHECK_LIB(lcms, cmsCreate_sRGBProfile, [
+    AC_CHECK_HEADER(lcms.h,
+      have_lcms=yes, [
+      AC_CHECK_HEADER(lcms/lcms.h,
+        have_lcms=yes
+        AC_DEFINE(HAVE_LCMS_LCMS_H, 1,
+          [Define to 1 if the lcms header must be included as lcms/lcms.h]))
+      ])
+  ])
+  if test $have_lcms = yes; then
+    LCMS_LIBS="-llcms"
+  else
+    AC_MSG_WARN([*** color proof module will not be built (lcms not found or unusable) ***])
+  fi
 else
-  AC_MSG_WARN([*** color proof module will not be built (lcms not found or unuseable) ***])
+  AC_MSG_WARN([*** color proof module will not be built (lcms support disabled) ***])
 fi
 
 AC_SUBST(LCMS_LIBS)

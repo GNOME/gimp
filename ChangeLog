@@ -1,3 +1,10 @@
+2005-07-05  Manish Singh  <yosh@gimp.org>
+
+	* INSTALL
+	* configure.in: Allow gtkhtml2, svg, and lcms features to be disabled
+	explicitly at configure time. Based on patch from John N. Laliberte,
+	fixes bug #307704.
+
 2005-07-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimppageselector.c: added a frame around the
