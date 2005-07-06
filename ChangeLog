@@ -1,3 +1,21 @@
+2005-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-ins-query.c (match_strings): reverted previous
+	change, it was bogus.
+
+2005-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-ins-query.c (match_strings): match
+	case-insensitive.
+
+	* libgimpwidgets/gimpbrowser.c: unset "focus-on-click" on the
+	filter combo-box.
+
+	* plug-ins/dbbrowser/plugin-browser.c: moved "Insertation Date"
+	column all the way to the right and renamed to "Installation Date".
+
+	* plug-ins/common/gauss.c: tweaked dialog packing.
+
 2005-07-05  Manish Singh  <yosh@gimp.org>
 
 	* INSTALL

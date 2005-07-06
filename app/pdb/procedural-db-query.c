@@ -42,7 +42,9 @@
 #include "gimp-intl.h"
 
 
-#define COMPAT_BLURB "This procedure is deprecated! Use '%s' instead."
+#define PDB_REGCOMP_FLAGS  REG_ICASE
+
+#define COMPAT_BLURB       "This procedure is deprecated! Use '%s' instead."
 
 
 typedef struct _PDBQuery PDBQuery;
@@ -144,19 +146,19 @@ procedural_db_query (Gimp          *gimp,
   *num_procs = 0;
   *procs     = NULL;
 
-  if (regcomp (&pdb_query.name_regex, name, 0))
+  if (regcomp (&pdb_query.name_regex, name, PDB_REGCOMP_FLAGS))
     goto free_name;
-  if (regcomp (&pdb_query.blurb_regex, blurb, 0))
+  if (regcomp (&pdb_query.blurb_regex, blurb, PDB_REGCOMP_FLAGS))
     goto free_blurb;
-  if (regcomp (&pdb_query.help_regex, help, 0))
+  if (regcomp (&pdb_query.help_regex, help, PDB_REGCOMP_FLAGS))
     goto free_help;
-  if (regcomp (&pdb_query.author_regex, author, 0))
+  if (regcomp (&pdb_query.author_regex, author, PDB_REGCOMP_FLAGS))
     goto free_author;
-  if (regcomp (&pdb_query.copyright_regex, copyright, 0))
+  if (regcomp (&pdb_query.copyright_regex, copyright, PDB_REGCOMP_FLAGS))
     goto free_copyright;
-  if (regcomp (&pdb_query.date_regex, date, 0))
+  if (regcomp (&pdb_query.date_regex, date, PDB_REGCOMP_FLAGS))
     goto free_date;
-  if (regcomp (&pdb_query.proc_type_regex, proc_type, 0))
+  if (regcomp (&pdb_query.proc_type_regex, proc_type, PDB_REGCOMP_FLAGS))
     goto free_proc_type;
 
   success = TRUE;
