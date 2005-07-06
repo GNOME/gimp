@@ -1,3 +1,8 @@
+2005-07-05  Manish Singh  <yosh@gimp.org>
+
+	* tools/shooter.c: Reorder #includes so things compile everywhere.
+	Fixes bug #309562.
+
 2005-07-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml

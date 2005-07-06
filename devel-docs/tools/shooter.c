@@ -7,10 +7,10 @@
 #include <unistd.h>
 #endif
 
-#include <X11/extensions/shape.h>
-
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
+
+#include <X11/extensions/shape.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
