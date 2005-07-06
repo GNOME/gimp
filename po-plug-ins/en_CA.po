@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-03 18:24-0400\n"
-"PO-Revision-Date: 2005-07-03 14:31-0400\n"
+"POT-Creation-Date: 2005-07-06 18:28-0400\n"
+"PO-Revision-Date: 2005-07-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -375,7 +375,7 @@ msgstr "_Fractals"
 #: plug-ins/common/mng.c:947 plug-ins/common/pat.c:447
 #: plug-ins/common/pcx.c:585 plug-ins/common/pix.c:505
 #: plug-ins/common/png.c:1174 plug-ins/common/pnm.c:810
-#: plug-ins/common/postscript.c:1125 plug-ins/common/psd_save.c:1330
+#: plug-ins/common/postscript.c:1125 plug-ins/common/psd_save.c:1304
 #: plug-ins/common/raw.c:522 plug-ins/common/raw.c:549
 #: plug-ins/common/spheredesigner.c:2107 plug-ins/common/sunras.c:504
 #: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1929
@@ -1236,7 +1236,7 @@ msgstr "Cannot operate on indexed images with alpha channel."
 #: plug-ins/common/pat.c:453 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:511 plug-ins/common/png.c:1182
 #: plug-ins/common/pnm.c:815 plug-ins/common/postscript.c:1131
-#: plug-ins/common/psd_save.c:1336 plug-ins/common/sunras.c:510
+#: plug-ins/common/psd_save.c:1310 plug-ins/common/sunras.c:510
 #: plug-ins/common/tga.c:1028 plug-ins/common/tiff.c:1935
 #: plug-ins/common/xbm.c:996 plug-ins/common/xpm.c:622
 #: plug-ins/common/xwd.c:567 plug-ins/fits/fits.c:451 plug-ins/gfli/gfli.c:679
@@ -5814,11 +5814,11 @@ msgstr "Preview _size:"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Invalid UTF-8 string in PSD file"
 
-#: plug-ins/common/psd_save.c:187
+#: plug-ins/common/psd_save.c:185
 msgid "Photoshop image"
 msgstr "Photoshop image"
 
-#: plug-ins/common/psd_save.c:1306
+#: plug-ins/common/psd_save.c:1280
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -5827,7 +5827,7 @@ msgstr ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
 "more than 30000 pixels wide or tall."
 
-#: plug-ins/common/psd_save.c:1318
+#: plug-ins/common/psd_save.c:1292
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -8061,50 +8061,60 @@ msgstr "by date"
 msgid "by type"
 msgstr "by type"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:331
+#: plug-ins/dbbrowser/gimpprocbrowser.c:332
 #: plug-ins/dbbrowser/plugin-browser.c:388
 msgid "Searching by name - please wait"
 msgstr "Searching by name - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:353
+#: plug-ins/dbbrowser/gimpprocbrowser.c:352
 msgid "Searching by description - please wait"
 msgstr "Searching by description - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:361
+#: plug-ins/dbbrowser/gimpprocbrowser.c:360
 msgid "Searching by help - please wait"
 msgstr "Searching by help - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:369
+#: plug-ins/dbbrowser/gimpprocbrowser.c:368
 msgid "Searching by author - please wait"
 msgstr "Searching by author - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:377
+#: plug-ins/dbbrowser/gimpprocbrowser.c:376
 msgid "Searching by copyright - please wait"
 msgstr "Searching by copyright - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:385
+#: plug-ins/dbbrowser/gimpprocbrowser.c:384
 msgid "Searching by date - please wait"
 msgstr "Searching by date - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:393
+#: plug-ins/dbbrowser/gimpprocbrowser.c:392
 msgid "Searching by type - please wait"
 msgstr "Searching by type - please wait"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:401
+#: plug-ins/dbbrowser/gimpprocbrowser.c:400
 msgid "Searching - please wait"
 msgstr "Searching - please wait"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:408
-msgid "1 Procedure"
-msgstr "1 Procedure"
-
-#: plug-ins/dbbrowser/gimpprocbrowser.c:410
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Procedures"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:462
-#: plug-ins/dbbrowser/plugin-browser.c:517
+#: plug-ins/dbbrowser/gimpprocbrowser.c:415
+#: plug-ins/dbbrowser/plugin-browser.c:409
+msgid "No matches for your query"
+msgstr "No matches for your query"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
+msgid "1 procedure matches your query"
+msgstr "1 procedure matches your query"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+#, c-format
+msgid "%d procedures match your query"
+msgstr "%d procedures match your query"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:477
+#: plug-ins/dbbrowser/plugin-browser.c:533
 msgid "No matches"
 msgstr "No matches"
 
@@ -8144,46 +8154,51 @@ msgstr "Copyright:"
 msgid "_Plug-In Browser"
 msgstr "_Plug-In Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:401
-msgid "1 Plug-In Interface"
-msgstr "1 Plug-In Interface"
-
-#: plug-ins/dbbrowser/plugin-browser.c:403
+#: plug-ins/dbbrowser/plugin-browser.c:402
 #, c-format
-msgid "%d Plug-In Interfaces"
-msgstr "%d Plug-In Interfaces"
+msgid "%d Plug-ins"
+msgstr "%d Plug-ins"
 
-#: plug-ins/dbbrowser/plugin-browser.c:541
+#: plug-ins/dbbrowser/plugin-browser.c:412
+msgid "1 plug-in matches your query"
+msgstr "1 plug-in matches your query"
+
+#: plug-ins/dbbrowser/plugin-browser.c:415
+#, c-format
+msgid "%d plug-ins match your query"
+msgstr "%d plug-ins match your query"
+
+#: plug-ins/dbbrowser/plugin-browser.c:557
 msgid "Plug-In Browser"
 msgstr "Plug-In Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:584
+#: plug-ins/dbbrowser/plugin-browser.c:600
 msgid "Name"
 msgstr "Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:592
-#: plug-ins/dbbrowser/plugin-browser.c:661
-msgid "Insertion Date"
-msgstr "Insertion Date"
-
-#: plug-ins/dbbrowser/plugin-browser.c:600
+#: plug-ins/dbbrowser/plugin-browser.c:608
 msgid "Menu Path"
 msgstr "Menu Path"
 
-#: plug-ins/dbbrowser/plugin-browser.c:608
-#: plug-ins/dbbrowser/plugin-browser.c:670
+#: plug-ins/dbbrowser/plugin-browser.c:616
+#: plug-ins/dbbrowser/plugin-browser.c:678
 msgid "Image Types"
 msgstr "Image Types"
 
-#: plug-ins/dbbrowser/plugin-browser.c:632
+#: plug-ins/dbbrowser/plugin-browser.c:626
+#: plug-ins/dbbrowser/plugin-browser.c:687
+msgid "Installation Date"
+msgstr "Installation Date"
+
+#: plug-ins/dbbrowser/plugin-browser.c:649
 msgid "List View"
 msgstr "List View"
 
-#: plug-ins/dbbrowser/plugin-browser.c:652
+#: plug-ins/dbbrowser/plugin-browser.c:669
 msgid "Menu Path/Name"
 msgstr "Menu Path/Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:693
+#: plug-ins/dbbrowser/plugin-browser.c:710
 msgid "Tree View"
 msgstr "Tree View"
 
