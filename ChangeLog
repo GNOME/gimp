@@ -1,3 +1,8 @@
+2005-07-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactionview.c (gimp_action_view_new): set a
+	search column.
+
 2005-07-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpbrowser.c: set the count label in italic.

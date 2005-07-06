@@ -324,6 +324,9 @@ gimp_action_view_new (GimpUIManager *manager,
   GIMP_ACTION_VIEW (view)->manager        = g_object_ref (manager);
   GIMP_ACTION_VIEW (view)->show_shortcuts = show_shortcuts;
 
+  gtk_tree_view_set_search_column (GTK_TREE_VIEW (view),
+                                   GIMP_ACTION_VIEW_COLUMN_LABEL);
+
   column = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_title (column, _("Action"));
 
