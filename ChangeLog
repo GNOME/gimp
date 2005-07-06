@@ -1,7 +1,19 @@
 2005-07-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpbrowser.c: set the count label in italic.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c
+	* plug-ins/dbbrowser/plugin-browser.c: try to make it more obvious
+	that the list is the result of a query by explicitely mentioning
+	this in the summary below the list.
+
+2005-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-ins-query.c (match_strings): reverted previous
 	change, it was bogus.
+
+	* app/pdb/procedural-db-query.c: case-insensitive search for
+	procedures.
 
 2005-07-06  Sven Neumann  <sven@gimp.org>
 

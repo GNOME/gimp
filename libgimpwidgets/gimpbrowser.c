@@ -28,8 +28,7 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimpbrowser.h"
-#include "gimpintcombobox.h"
+#include "gimpwidgets.h"
 #include "gimpwidgetsmarshal.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -145,6 +144,9 @@ gimp_browser_init (GimpBrowser *browser)
 
   browser->count_label = gtk_label_new ("0 Matches");
   gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (browser->count_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
   gtk_box_pack_end (GTK_BOX (browser->left_vbox), browser->count_label,
                     FALSE, FALSE, 0);
   gtk_widget_show (browser->count_label);

@@ -397,10 +397,26 @@ browser_search (GimpBrowser   *gimp_browser,
   else
     num_plugins = 0;
 
-  if (num_plugins == 1)
-    str = g_strdup (_("1 Plug-In Interface"));
+  if (! search_text || strlen (search_text) == 0)
+    {
+      str = g_strdup_printf (_("%d Plug-ins"), num_plugins);
+    }
   else
-    str = g_strdup_printf (_("%d Plug-In Interfaces"), num_plugins);
+    {
+      switch (num_plugins)
+        {
+        case 0:
+          str = g_strdup (_("No matches for your query"));
+          break;
+        case 1:
+          str = g_strdup (_("1 plug-in matches your query"));
+          break;
+        default:
+          str = g_strdup_printf (_("%d plug-ins match your query"),
+                                 num_plugins);
+          break;
+        }
+    }
 
   gtk_label_set_text (GTK_LABEL (gimp_browser->count_label), str);
   g_free (str);

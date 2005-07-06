@@ -325,21 +325,20 @@ browser_search (GimpBrowser   *gimp_browser,
 
   if (search_type == SEARCH_TYPE_NAME)
     {
-      GString *query;
+      GString     *query = g_string_new ("");
+      const gchar *q     = query_text;
 
       gimp_browser_show_message (GIMP_BROWSER (browser->browser),
                                  _("Searching by name - please wait"));
 
-      query = g_string_new ("");
-
-      while (*query_text)
+      while (*q)
         {
-          if ((*query_text == '_') || (*query_text == '-'))
+          if ((*q == '_') || (*q == '-'))
             g_string_append (query, "[-_]");
           else
-            g_string_append_c (query, *query_text);
+            g_string_append_c (query, *q);
 
-          query_text++;
+          q++;
         }
 
       gimp_procedural_db_query (query->str, ".*", ".*", ".*", ".*", ".*", ".*",
@@ -404,10 +403,26 @@ browser_search (GimpBrowser   *gimp_browser,
                                 &num_procs, &proc_list);
     }
 
-  if (num_procs == 1)
-    str = g_strdup (_("1 Procedure"));
+  if (! query_text || strlen (query_text) == 0)
+    {
+      str = g_strdup_printf (_("%d Procedures"), num_procs);
+    }
   else
-    str = g_strdup_printf (_("%d Procedures"), num_procs);
+    {
+      switch (num_procs)
+        {
+        case 0:
+          str = g_strdup (_("No matches for your query"));
+          break;
+        case 1:
+          str = g_strdup (_("1 procedure matches your query"));
+          break;
+        default:
+          str = g_strdup_printf (_("%d procedures match your query"),
+                                 num_procs);
+          break;
+        }
+    }
 
   gtk_label_set_text (GTK_LABEL (gimp_browser->count_label), str);
   g_free (str);
