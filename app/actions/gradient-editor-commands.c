@@ -476,6 +476,11 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
 
                               NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gradient_editor_split_uniform_response),
                     editor);

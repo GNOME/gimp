@@ -144,6 +144,12 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),

@@ -1,3 +1,10 @@
+2005-07-07  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/gradient-editor-commands.c
+	* app/widgets/gimpcolordialog.c
+	* app/widgets/gimpdock.c
+	* plug-ins/script-fu/script-fu-server.c: 
+
 2005-07-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpactionview.c (gimp_action_view_new): set a

@@ -2297,9 +2297,9 @@ dlg_run (void)
                                         NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   /*
    *    main hbox
@@ -3242,16 +3242,22 @@ ed_run (GtkWindow            *parent,
   /*
    *    Dialog Shell
    */
-  shell = ed->shell =
-    gimp_dialog_new (_("GFlare Editor"), "gflare",
-                     GTK_WIDGET (parent), 0,
-                     gimp_standard_help_func, HELP_ID,
+  ed->shell =
+    shell = gimp_dialog_new (_("GFlare Editor"), "gflare",
+                             GTK_WIDGET (parent), 0,
+                             gimp_standard_help_func, HELP_ID,
 
-                     _("Rescan Gradients"), RESPONSE_RESCAN,
-                     GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OK,          GTK_RESPONSE_OK,
+                             _("Rescan Gradients"), RESPONSE_RESCAN,
+                             GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                             GTK_STOCK_OK,          GTK_RESPONSE_OK,
 
-                     NULL);
+                             NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+                                           RESPONSE_RESCAN,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (shell, "response",
                     G_CALLBACK (ed_response),

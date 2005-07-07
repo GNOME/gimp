@@ -659,6 +659,11 @@ server_interface (void)
 
 			 NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
   g_signal_connect (dlg, "response",
                     G_CALLBACK (response_callback),
                     NULL);

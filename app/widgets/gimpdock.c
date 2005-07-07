@@ -349,6 +349,11 @@ gimp_dock_delete_event (GtkWidget   *widget,
 
                                  NULL);
 
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                          _("Close all tabs?"));
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
