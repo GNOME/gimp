@@ -15,6 +15,9 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpConfigWriter ##### -->
 <para>
 

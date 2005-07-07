@@ -14,6 +14,9 @@ Definitions and Functions relating to HSV colors.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpHSV ##### -->
 <para>
 

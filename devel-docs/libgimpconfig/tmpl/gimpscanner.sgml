@@ -14,6 +14,9 @@ gimpscanner
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_scanner_new_file ##### -->
 <para>
 

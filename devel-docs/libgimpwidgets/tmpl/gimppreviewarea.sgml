@@ -14,6 +14,9 @@ A general purpose preview widget which caches its pixel data.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPreviewArea ##### -->
 <para>
 

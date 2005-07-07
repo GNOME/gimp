@@ -14,6 +14,9 @@ Utility functions provided and used by libgimpthumb
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_thumb_init ##### -->
 <para>
 

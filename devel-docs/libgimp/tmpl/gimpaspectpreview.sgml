@@ -14,6 +14,9 @@ A widget providing a preview with fixed aspect ratio.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpAspectPreview ##### -->
 <para>
 

@@ -33,6 +33,9 @@ Whenever the user selects a unit from the menu or the dialog, the
 gimp_coordinates_new()
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpUnitMenu ##### -->
 <para>
 

@@ -15,6 +15,9 @@ High-level API functions for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpConfig ##### -->
 <para>
 

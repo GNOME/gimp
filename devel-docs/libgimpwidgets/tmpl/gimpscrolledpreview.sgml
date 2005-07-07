@@ -14,6 +14,9 @@ A widget providing a #GimpPreview enhanced by scrolling capabilities.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpScrolledPreview ##### -->
 <para>
 

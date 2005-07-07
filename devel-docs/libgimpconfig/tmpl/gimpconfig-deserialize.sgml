@@ -15,6 +15,9 @@ Deserializing code for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_config_deserialize_properties ##### -->
 <para>
 

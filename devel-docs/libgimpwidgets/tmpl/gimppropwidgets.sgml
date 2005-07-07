@@ -14,6 +14,9 @@ GimpPropWidgets
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_prop_check_button_new ##### -->
 <para>
 
@@ -172,10 +175,14 @@ GimpPropWidgets
 @step_increment: 
 @page_increment: 
 @digits: 
+@_scale: 
+@ed_lower: 
+@ed_upper: 
+@Returns: 
+<!-- # Unused Parameters # -->
 @restrict_scale: 
 @restricted_lower: 
 @restricted_upper: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_prop_opacity_entry_new ##### -->

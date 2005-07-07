@@ -14,6 +14,9 @@ Keeps a list of #GimpModule's found in a given searchpath.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpModuleDB ##### -->
 <para>
 The #GimpModuleDB struct contains no public members.

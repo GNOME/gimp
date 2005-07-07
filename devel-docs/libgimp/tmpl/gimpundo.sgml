@@ -15,6 +15,9 @@ Control of undo/redo.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_image_undo_group_start ##### -->
 <para>
 

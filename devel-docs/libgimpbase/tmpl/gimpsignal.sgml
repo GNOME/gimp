@@ -15,6 +15,9 @@ Portable signal handling.
 signal(2), signal(5 or 7), sigaction(2).
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpSignalHandlerFunc ##### -->
 <para>
 A prototype for signal handler functions. Note that each function which

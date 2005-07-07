@@ -14,6 +14,9 @@ Functions operating on a single palette.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_palette_new ##### -->
 <para>
 

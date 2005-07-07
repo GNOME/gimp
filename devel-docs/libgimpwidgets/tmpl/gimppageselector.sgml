@@ -14,18 +14,31 @@ GimpPageSelector
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPageSelector ##### -->
 <para>
 
 </para>
 
-@parent_instance: 
-@n_pages: 
-@target: 
-@store: 
-@view: 
-@range_entry: 
-@thumbnail: 
+
+<!-- ##### SIGNAL GimpPageSelector::selection-changed ##### -->
+<para>
+
+</para>
+
+@gimppageselector: the object which received the signal.
+
+<!-- ##### ARG GimpPageSelector:n-pages ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpPageSelector:target ##### -->
+<para>
+
+</para>
 
 <!-- ##### ENUM GimpPageSelectorTarget ##### -->
 <para>

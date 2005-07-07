@@ -26,6 +26,9 @@ You may want to use the convenience function gimp_coordinates_new() to set
 up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpChainButton ##### -->
 <para>
 

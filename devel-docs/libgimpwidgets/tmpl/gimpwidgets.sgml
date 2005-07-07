@@ -15,6 +15,9 @@ helper functions.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### FUNCTION gimp_radio_group_new ##### -->
 <para>
 

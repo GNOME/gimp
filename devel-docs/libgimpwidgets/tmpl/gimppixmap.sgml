@@ -26,6 +26,9 @@ gimp_pixmap_button_new()
 #GtkPixmap
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPixmap ##### -->
 <para>
 

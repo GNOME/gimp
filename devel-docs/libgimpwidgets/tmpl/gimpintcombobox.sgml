@@ -14,6 +14,9 @@ A widget providing a popup menu of integer values (e.g. enums).
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpIntComboBox ##### -->
 <para>
 

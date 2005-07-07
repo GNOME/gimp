@@ -30,6 +30,9 @@ the search path, the "path_changed" signal will be emitted.
 #G_SEARCHPATH_SEPARATOR
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPathEditor ##### -->
 <para>
 

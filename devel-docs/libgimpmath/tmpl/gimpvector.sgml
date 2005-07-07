@@ -18,6 +18,9 @@ Utilities to set up and manipulate vectors.
 #GimpMatrix4
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpVector2 ##### -->
 <para>
 A two dimensional vector.

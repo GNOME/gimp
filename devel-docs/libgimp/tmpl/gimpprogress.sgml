@@ -14,6 +14,9 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpProgressStartCallback ##### -->
 <para>
 

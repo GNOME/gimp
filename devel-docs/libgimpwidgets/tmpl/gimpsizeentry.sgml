@@ -42,6 +42,9 @@ real-world-unit.
 gimp_coordinates_new()
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpSizeEntry ##### -->
 <para>
 

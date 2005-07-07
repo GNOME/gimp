@@ -15,6 +15,9 @@ system.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpHelpFunc ##### -->
 <para>
 This is the prototype for all functions you pass as @help_func to the

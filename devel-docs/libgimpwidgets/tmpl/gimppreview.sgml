@@ -14,6 +14,9 @@ A widget providing a #GimpPreviewArea plus framework to update the preview.
 
 </para>
 
+<!-- ##### SECTION Stability_Level ##### -->
+
+
 <!-- ##### STRUCT GimpPreview ##### -->
 <para>
 
