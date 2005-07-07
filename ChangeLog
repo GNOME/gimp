@@ -1,5 +1,10 @@
 2005-07-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/segmentator.[ch]: applied GIMP coding style, switch to
+	glib functions for memory allocation.
+
+2005-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/base/segmentator.[ch]: added foreground extraction
 	algorithm.  This code is contributed by Gerald Friedland. Please
