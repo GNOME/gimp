@@ -3,7 +3,10 @@
 	* app/actions/gradient-editor-commands.c
 	* app/widgets/gimpcolordialog.c
 	* app/widgets/gimpdock.c
-	* plug-ins/script-fu/script-fu-server.c: 
+	* plug-ins/gflare/gflare.c
+	* plug-ins/script-fu/script-fu-server.c: set alternative button
+	order in some places that were missed earlier. Spotted by Stephan
+	Binner.
 
 2005-07-06  Michael Natterer  <mitch@gimp.org>
 
