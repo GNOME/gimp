@@ -1,3 +1,11 @@
+2005-07-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/Makefile.am
+	* app/base/segmentator.[ch]: added foreground extraction
+	algorithm.  This code is contributed by Gerald Friedland. Please
+	see the comments in the code for links to further information.
+	This is work in progress. Don't expect it to do anything yet.
+
 2005-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/documents-actions.c

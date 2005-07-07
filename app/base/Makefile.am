@@ -36,6 +36,8 @@ libappbase_a_SOURCES = \
 	pixel-region.h		\
 	pixel-surround.c	\
 	pixel-surround.h	\
+	segmentator.c		\
+	segmentator.h		\
 	temp-buf.c		\
 	temp-buf.h		\
 	threshold.c		\
