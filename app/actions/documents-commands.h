@@ -26,6 +26,8 @@ void   documents_raise_or_open_cmd_callback    (GtkAction *action,
                                                 gpointer   data);
 void   documents_file_open_dialog_cmd_callback (GtkAction *action,
                                                 gpointer   data);
+void   documents_copy_location_cmd_callback    (GtkAction *action,
+                                                gpointer   data);
 void   documents_remove_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   documents_clear_cmd_callback            (GtkAction *action,

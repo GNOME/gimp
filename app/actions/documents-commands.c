@@ -148,6 +148,34 @@ documents_file_open_dialog_cmd_callback (GtkAction *action,
 }
 
 void
+documents_copy_location_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GimpImagefile       *imagefile;
+
+  context   = gimp_container_view_get_context (editor->view);
+  imagefile = gimp_context_get_imagefile (context);
+
+  if (imagefile)
+    {
+      GtkClipboard *clipboard;
+      const gchar  *uri;
+
+      uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+      clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                 GDK_SELECTION_CLIPBOARD);
+      gtk_clipboard_set_text (clipboard, uri, -1);
+
+      clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                 GDK_SELECTION_PRIMARY);
+      gtk_clipboard_set_text (clipboard, uri, -1);
+    }
+}
+
+void
 documents_remove_cmd_callback (GtkAction *action,
                                gpointer   data)
 {

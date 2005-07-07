@@ -351,6 +351,7 @@
 #define GIMP_HELP_BUFFER_DELETE                   "gimp-buffer-delete"
 
 #define GIMP_HELP_DOCUMENT_CLEAR                  "gimp-document-clear"
+#define GIMP_HELP_DOCUMENT_COPY_LOCATION          "gimp-document-copy-location"
 #define GIMP_HELP_DOCUMENT_DIALOG                 "gimp-document-dialog"
 #define GIMP_HELP_DOCUMENT_OPEN                   "gimp-document-open"
 #define GIMP_HELP_DOCUMENT_REMOVE                 "gimp-document-remove"

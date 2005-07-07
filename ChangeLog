@@ -1,3 +1,12 @@
+2005-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/documents-actions.c
+	* app/actions/documents-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/documents-menu.xml: added "Copy Image Location" to the
+	document history popup menu which copies the image's URI to
+	clipbpard and primary.
+
 2005-07-07  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/gradient-editor-commands.c

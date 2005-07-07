@@ -60,6 +60,12 @@ static GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
+  { "documents-copy-location", GTK_STOCK_COPY,
+    N_("Copy Image _Location"), "",
+    N_("Copy image location to clipboard"),
+    G_CALLBACK (documents_copy_location_cmd_callback),
+    GIMP_HELP_DOCUMENT_COPY_LOCATION },
+
   { "documents-remove", GTK_STOCK_REMOVE,
     N_("Remove _Entry"), "",
     N_("Remove the selected entry"),
@@ -118,6 +124,7 @@ documents_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("documents-open",             imagefile);
   SET_SENSITIVE ("documents-raise-or-open",    imagefile);
   SET_SENSITIVE ("documents-file-open-dialog", TRUE);
+  SET_SENSITIVE ("documents-copy-location",    imagefile);
   SET_SENSITIVE ("documents-remove",           imagefile);
   SET_SENSITIVE ("documents-clear",            TRUE);
   SET_SENSITIVE ("documents-recreate-preview", imagefile);

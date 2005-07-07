@@ -6,6 +6,7 @@
     <menuitem action="documents-open" />
     <menuitem action="documents-raise-or-open" />
     <menuitem action="documents-file-open-dialog" />
+    <menuitem action="documents-copy-location" />
     <menuitem action="documents-remove" />
     <menuitem action="documents-clear" />
     <separator />
