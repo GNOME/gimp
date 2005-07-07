@@ -1,3 +1,10 @@
+2005-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppageselector.[ch]: fixed horizontal layout to
+	not always use multiples of the default item width. Use the
+	maximum thumbnail icon width instead. Also fixes keynav since it
+	doesn't trigger a GTK+ bug any more.
+
 2005-07-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/segmentator.[ch]: applied GIMP coding style, switch to

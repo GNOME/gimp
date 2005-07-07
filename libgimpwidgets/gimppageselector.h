@@ -50,6 +50,10 @@ struct _GimpPageSelector
   GtkWidget              *range_entry;
 
   GdkPixbuf              *thumbnail;
+
+  gint                    default_item_width;
+  gint                    max_item_width;
+  guint                   item_width_idle_id;
 };
 
 struct _GimpPageSelectorClass
