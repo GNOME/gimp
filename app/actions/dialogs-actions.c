@@ -114,7 +114,7 @@ GimpStringActionEntry dialogs_dockable_actions[] =
   { "dialogs-cursor", GIMP_STOCK_CURSOR,
     N_("_Cursor"), NULL, NULL,
     "gimp-cursor-view",
-    GIMP_HELP_CURSOR_DIALOG },
+    GIMP_HELP_CURSOR_INFO_DIALOG },
 
   { "dialogs-sample-points", GIMP_STOCK_SAMPLE_POINT,
     N_("_Sample Points"), NULL, NULL,

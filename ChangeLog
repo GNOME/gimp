@@ -12,6 +12,7 @@
 
 	* app/widgets/gimphelp-ids.h: help IDs for above actions.
 
+	* app/actions/dialogs-actions.c
 	* app/dialogs/dialogs.c: follow help ID change.
 
 	* app/menus/menus.c
