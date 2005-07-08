@@ -127,7 +127,7 @@ gimp_bilinear_rgb (gdouble  x,
 {
   gdouble m0, m1;
   gdouble ix, iy;
-  GimpRGB v;
+  GimpRGB v = { 0, };
 
   g_return_val_if_fail (values != NULL, v);
 
@@ -174,7 +174,7 @@ gimp_bilinear_rgba (gdouble  x,
   gdouble m0, m1;
   gdouble ix, iy;
   gdouble a0, a1, a2, a3, alpha;
-  GimpRGB v;
+  GimpRGB v = { 0, };
 
   g_return_val_if_fail (values != NULL, v);
 
