@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="cursor-info-popup">
+    <menuitem action="cursor-info-sample-merged" />
+  </popup>
+</ui>

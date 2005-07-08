@@ -25,6 +25,10 @@ libappactions_a_SOURCES = \
 	context-actions.h		\
 	context-commands.c		\
 	context-commands.h		\
+	cursor-info-actions.c		\
+	cursor-info-actions.h		\
+	cursor-info-commands.c		\
+	cursor-info-commands.h		\
 	data-commands.c			\
 	data-commands.h			\
 	debug-actions.c			\

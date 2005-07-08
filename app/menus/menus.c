@@ -309,6 +309,14 @@ menus_init (Gimp              *gimp,
                                       "text-editor-toolbar.xml",
                                       NULL,
                                       NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<CursorInfo>",
+                                      "cursor-info",
+                                      NULL,
+                                      "/cursor-info-popup",
+                                      "cursor-info-menu.xml",
+                                      NULL,
+                                      NULL);
 }
 
 void

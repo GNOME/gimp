@@ -1,3 +1,26 @@
+2005-07-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcursorview.[ch]: added boolean "sample-merged"
+	property, API and GUI. Pick from the active drawable if it's
+	FALSE.
+
+	* app/actions/Makefile.am
+	* app/actions/actions.c
+	* app/actions/cursor-info-actions.[ch]
+	* app/actions/cursor-info-commands.[ch]: new files with actions
+	and callbacks for the cursor info dialog's menu.
+
+	* app/widgets/gimphelp-ids.h: help IDs for above actions.
+
+	* app/dialogs/dialogs.c: follow help ID change.
+
+	* app/menus/menus.c
+	* menus/Makefile.am
+	* menus/cursor-info-menu.xml: add the cursor-info menu.
+
+	* app/dialogs/dialogs-constructors.c: pass the menu factory to
+	gimp_cursor_view_new().
+
 2005-07-09  Sven Neumann  <sven@gimp.org>
 
 	* app/base/segmentator.c: plugged memory leaks.

@@ -51,6 +51,7 @@
 #include "channels-actions.h"
 #include "colormap-editor-actions.h"
 #include "context-actions.h"
+#include "cursor-info-actions.h"
 #include "debug-actions.h"
 #include "dialogs-actions.h"
 #include "dock-actions.h"
@@ -107,6 +108,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "context", N_("Context"), NULL,
     context_actions_setup,
     context_actions_update },
+  { "cursor-info", N_("Cursor Info"), NULL,
+    cursor_info_actions_setup,
+    cursor_info_actions_update },
   { "debug", N_("Debug"), NULL,
     debug_actions_setup,
     debug_actions_update },

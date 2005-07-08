@@ -49,6 +49,8 @@ struct _GimpCursorView
   GtkWidget   *unit_y_label;
   GtkWidget   *color_frame_1;
   GtkWidget   *color_frame_2;
+
+  gboolean     sample_merged;
 };
 
 struct _GimpCursorViewClass
@@ -57,14 +59,18 @@ struct _GimpCursorViewClass
 };
 
 
-GType       gimp_cursor_view_get_type      (void) G_GNUC_CONST;
+GType       gimp_cursor_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_cursor_view_new           (void);
+GtkWidget * gimp_cursor_view_new               (GimpMenuFactory *menu_factory);
 
-void        gimp_cursor_view_update_cursor (GimpCursorView *view,
-                                            GimpImage      *image,
-                                            GimpUnit        unit,
-                                            gdouble         x,
-                                            gdouble         y);
+void        gimp_cursor_view_set_sample_merged (GimpCursorView  *view,
+                                                gboolean         sample_merged);
+gboolean    gimp_cursor_view_get_sample_merged (GimpCursorView  *view);
+
+void        gimp_cursor_view_update_cursor     (GimpCursorView  *view,
+                                                GimpImage       *image,
+                                                GimpUnit         unit,
+                                                gdouble          x,
+                                                gdouble          y);
 
 #endif /* __GIMP_CURSOR_VIEW_H__ */

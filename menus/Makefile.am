@@ -15,6 +15,7 @@ menudata_DATA = \
 	buffers-menu.xml		\
 	channels-menu.xml		\
 	colormap-editor-menu.xml	\
+	cursor-info-menu.xml		\
 	documents-menu.xml		\
 	error-console-menu.xml		\
 	fonts-menu.xml			\

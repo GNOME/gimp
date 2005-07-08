@@ -136,7 +136,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
             dialogs_error_console_new, 0, TRUE),
   DOCKABLE ("gimp-cursor-view",
             N_("Cursor"), N_("Cursor Info"), GIMP_STOCK_CURSOR,
-            GIMP_HELP_CURSOR_DIALOG,
+            GIMP_HELP_CURSOR_INFO_DIALOG,
             dialogs_cursor_view_new, 0, TRUE),
 
   /*  list & grid views  */

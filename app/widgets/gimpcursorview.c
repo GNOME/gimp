@@ -32,21 +32,38 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimppickable.h"
 #include "core/gimpunit.h"
 
 #include "gimpcolorframe.h"
 #include "gimpcursorview.h"
 #include "gimpdocked.h"
+#include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_SAMPLE_MERGED
+};
 
 
 static void   gimp_cursor_view_class_init        (GimpCursorViewClass  *klass);
 static void   gimp_cursor_view_init              (GimpCursorView       *view);
 static void   gimp_cursor_view_docked_iface_init (GimpDockedInterface  *docked_iface);
 
+static void   gimp_cursor_view_set_property      (GObject              *object,
+                                                  guint                 property_id,
+                                                  const GValue         *value,
+                                                  GParamSpec           *pspec);
+static void   gimp_cursor_view_get_property      (GObject              *object,
+                                                  guint                 property_id,
+                                                  GValue               *value,
+                                                  GParamSpec           *pspec);
 static void   gimp_cursor_view_set_aux_info      (GimpDocked           *docked,
                                                   GList                *aux_info);
 static GList *gimp_cursor_view_get_aux_info      (GimpDocked           *docked);
@@ -98,19 +115,33 @@ gimp_cursor_view_get_type (void)
 static void
 gimp_cursor_view_class_init (GimpCursorViewClass* klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->style_set = gimp_cursor_view_style_set;
+  object_class->get_property = gimp_cursor_view_get_property;
+  object_class->set_property = gimp_cursor_view_set_property;
+
+  widget_class->style_set    = gimp_cursor_view_style_set;
+
+  g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
+                                   g_param_spec_boolean ("sample-merged",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
 gimp_cursor_view_init (GimpCursorView *view)
 {
-  GtkWidget   *frame;
-  GtkWidget   *table;
-  gint         content_spacing;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *toggle;
+  gint       content_spacing;
+
+  view->sample_merged = TRUE;
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content_spacing", &content_spacing,
@@ -187,6 +218,13 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_box_pack_start (GTK_BOX (view->color_hbox), view->color_frame_2,
                       TRUE, TRUE, 0);
   gtk_widget_show (view->color_frame_2);
+
+  /* sample merged toggle */
+
+  toggle = gimp_prop_check_button_new (G_OBJECT (view), "sample-merged",
+                                       _("_Sample Merged"));
+  gtk_box_pack_start (GTK_BOX (view), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 }
 
 static void
@@ -199,6 +237,44 @@ gimp_cursor_view_docked_iface_init (GimpDockedInterface *docked_iface)
 
   docked_iface->set_aux_info = gimp_cursor_view_set_aux_info;
   docked_iface->get_aux_info = gimp_cursor_view_get_aux_info;
+}
+
+static void
+gimp_cursor_view_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      view->sample_merged = g_value_get_boolean (value);
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_cursor_view_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, view->sample_merged);
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 #define AUX_INFO_FRAME_1_MODE "frame-1-mode"
@@ -289,10 +365,41 @@ gimp_cursor_view_style_set (GtkWidget *widget,
 /*  public functions  */
 
 GtkWidget *
-gimp_cursor_view_new (void)
+gimp_cursor_view_new (GimpMenuFactory *menu_factory)
 {
-  return g_object_new (GIMP_TYPE_CURSOR_VIEW, NULL);
+  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+
+  return g_object_new (GIMP_TYPE_CURSOR_VIEW,
+                       "menu-factory",    menu_factory,
+                       "menu-identifier", "<CursorInfo>",
+                       "ui-path",         "/cursor-info-popup",
+                       NULL);
 }
+
+void
+gimp_cursor_view_set_sample_merged (GimpCursorView *view,
+                                    gboolean        sample_merged)
+{
+  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+
+  sample_merged = sample_merged ? TRUE : FALSE;
+
+  if (view->sample_merged != sample_merged)
+    {
+      view->sample_merged = sample_merged;
+
+      g_object_notify (G_OBJECT (view), "sample-merged");
+    }
+}
+
+gboolean
+gimp_cursor_view_get_sample_merged (GimpCursorView *view)
+{
+  g_return_val_if_fail (GIMP_IS_CURSOR_VIEW (view), FALSE);
+
+  return view->sample_merged;
+}
+
 
 void
 gimp_cursor_view_update_cursor (GimpCursorView   *view,
@@ -355,10 +462,33 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
 
   if (image)
     {
-      pickable = GIMP_PICKABLE (image->projection);
+      if (view->sample_merged)
+        {
+          pickable = GIMP_PICKABLE (image->projection);
 
-      color = gimp_pickable_get_color_at (pickable,
-                                          (gint) floor (x), (gint) floor (y));
+          color = gimp_pickable_get_color_at (pickable,
+                                              (gint) floor (x),
+                                              (gint) floor (y));
+        }
+      else
+        {
+          GimpDrawable *drawable;
+
+          drawable = gimp_image_active_drawable (image);
+
+          if (drawable)
+            {
+              gint off_x, off_y;
+
+              pickable = GIMP_PICKABLE (drawable);
+
+              gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+
+              color = gimp_pickable_get_color_at (pickable,
+                                                  ((gint) floor (x)) - off_x,
+                                                  ((gint) floor (y)) - off_y);
+            }
+        }
     }
 
   if (color)
