@@ -498,6 +498,25 @@ create_offset_area (void)
 }
 
 static WidgetInfo *
+create_page_selector (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *selector;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  selector = gimp_page_selector_new ();
+  gtk_widget_set_size_request (selector, -1, 240);
+  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), 16);
+  gimp_page_selector_select_range (GIMP_PAGE_SELECTOR (selector),
+                                   "1,3,7-9,12-15");
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), selector);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Page Selector"), FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-page-selector", vbox, ASIS);
+}
+
+static WidgetInfo *
 create_path_editor (void)
 {
   GtkWidget *vbox;
@@ -623,6 +642,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_int_combo_box ());
   retval = g_list_append (retval, create_memsize_entry ());
   retval = g_list_append (retval, create_offset_area ());
+  retval = g_list_append (retval, create_page_selector ());
   retval = g_list_append (retval, create_path_editor ());
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());

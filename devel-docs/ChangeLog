@@ -1,3 +1,10 @@
+2005-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* tools/widgets.c
+	* libgimpwidgets/visual-index.xml
+	* libgimpwidgets/images/gimp-page-selector.png: added
+	GimpPageSelector to doc-shooter.
+
 2005-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp*/tmpl/*.sgml: gtk-doc 1.4 added the Stability_Level

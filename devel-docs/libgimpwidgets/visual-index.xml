@@ -46,6 +46,9 @@
   <link linkend="GimpOffsetArea">
     <inlinegraphic fileref="gimp-offset-area.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpPageSelector">
+    <inlinegraphic fileref="gimp-page-selector.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpPathEditor">
     <inlinegraphic fileref="gimp-path-editor.png" format="PNG"></inlinegraphic>
   </link>
