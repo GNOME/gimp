@@ -1,3 +1,7 @@
+2005-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewabledialog.c: ellipsize the name label.
+
 2005-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursorview.[ch]: added boolean "sample-merged"

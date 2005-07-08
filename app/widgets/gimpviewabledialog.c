@@ -159,8 +159,11 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_box_pack_start (GTK_BOX (vbox), dialog->desc_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->desc_label);
 
-  dialog->viewable_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->viewable_label), 0.0, 0.5);
+  dialog->viewable_label = g_object_new (GTK_TYPE_LABEL,
+                                         "xalign",    0.0,
+                                         "yalign",    0.5,
+                                         "ellipsize", PANGO_ELLIPSIZE_END,
+                                         NULL);
   gimp_label_set_attributes (GTK_LABEL (dialog->viewable_label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
