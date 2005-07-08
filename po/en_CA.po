@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-03 18:20-0400\n"
-"PO-Revision-Date: 2005-07-03 14:29-0400\n"
+"POT-Creation-Date: 2005-07-08 16:22-0400\n"
+"PO-Revision-Date: 2005-07-08 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -689,7 +689,7 @@ msgstr "_Default Colours"
 msgid "S_wap Colors"
 msgstr "S_wap Colours"
 
-#: app/actions/data-commands.c:100 app/actions/documents-commands.c:303
+#: app/actions/data-commands.c:100 app/actions/documents-commands.c:331
 #: app/actions/file-commands.c:175 app/dialogs/file-open-dialog.c:208
 #: app/dialogs/file-open-dialog.c:259
 #: app/dialogs/file-open-location-dialog.c:201
@@ -994,54 +994,62 @@ msgid "Open image dialog"
 msgstr "Open image dialogue"
 
 #: app/actions/documents-actions.c:64
+msgid "Copy Image _Location"
+msgstr "Copy Image _Location"
+
+#: app/actions/documents-actions.c:65
+msgid "Copy image location to clipboard"
+msgstr "Copy image location to clipboard"
+
+#: app/actions/documents-actions.c:70
 msgid "Remove _Entry"
 msgstr "Remove _Entry"
 
-#: app/actions/documents-actions.c:65
+#: app/actions/documents-actions.c:71
 msgid "Remove the selected entry"
 msgstr "Remove the selected entry"
 
-#: app/actions/documents-actions.c:70
+#: app/actions/documents-actions.c:76
 msgid "_Clear History"
 msgstr "_Clear History"
 
-#: app/actions/documents-actions.c:71
+#: app/actions/documents-actions.c:77
 msgid "Clear the entire document history"
 msgstr "Clear the entire document history"
 
-#: app/actions/documents-actions.c:76
+#: app/actions/documents-actions.c:82
 msgid "Recreate _Preview"
 msgstr "Recreate _Preview"
 
-#: app/actions/documents-actions.c:77
+#: app/actions/documents-actions.c:83
 msgid "Recreate preview"
 msgstr "Recreate preview"
 
-#: app/actions/documents-actions.c:82
+#: app/actions/documents-actions.c:88
 msgid "Reload _all Previews"
 msgstr "Reload _all Previews"
 
-#: app/actions/documents-actions.c:83
+#: app/actions/documents-actions.c:89
 msgid "Reload all previews"
 msgstr "Reload all previews"
 
-#: app/actions/documents-actions.c:88
+#: app/actions/documents-actions.c:94
 msgid "Remove Dangling E_ntries"
 msgstr "Remove Dangling E_ntries"
 
-#: app/actions/documents-actions.c:89
+#: app/actions/documents-actions.c:95
 msgid "Remove dangling entries"
 msgstr "Remove dangling entries"
 
-#: app/actions/documents-commands.c:180
+#: app/actions/documents-commands.c:208
 msgid "Clear Document History"
 msgstr "Clear Document History"
 
-#: app/actions/documents-commands.c:203
+#: app/actions/documents-commands.c:231
 msgid "Remove all entries from the document history?"
 msgstr "Remove all entries from the document history?"
 
-#: app/actions/documents-commands.c:207
+#: app/actions/documents-commands.c:235
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
@@ -1210,40 +1218,40 @@ msgstr "_Undo %s"
 msgid "_Redo %s"
 msgstr "_Redo %s"
 
-#: app/actions/edit-commands.c:110
+#: app/actions/edit-commands.c:107
 msgid "Clear Undo History"
 msgstr "Clear Undo History"
 
-#: app/actions/edit-commands.c:134
+#: app/actions/edit-commands.c:133
 msgid "Really clear image's undo history?"
 msgstr "Really clear image's undo history?"
 
-#: app/actions/edit-commands.c:146
+#: app/actions/edit-commands.c:145
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Clearing the undo history of this image will gain %s of memory."
 
-#: app/actions/edit-commands.c:238
+#: app/actions/edit-commands.c:244
 msgid "Cut Named"
 msgstr "Cut Named"
 
-#: app/actions/edit-commands.c:241 app/actions/edit-commands.c:261
+#: app/actions/edit-commands.c:247 app/actions/edit-commands.c:267
 msgid "Enter a name for this buffer"
 msgstr "Enter a name for this buffer"
 
-#: app/actions/edit-commands.c:258
+#: app/actions/edit-commands.c:264
 msgid "Copy Named"
 msgstr "Copy Named"
 
-#: app/actions/edit-commands.c:386
+#: app/actions/edit-commands.c:377
 msgid "There is no active layer or channel to cut from."
 msgstr "There is no active layer or channel to cut from."
 
-#: app/actions/edit-commands.c:398 app/actions/edit-commands.c:435
+#: app/actions/edit-commands.c:389 app/actions/edit-commands.c:426
 msgid "(Unnamed Buffer)"
 msgstr "(Unnamed Buffer)"
 
-#: app/actions/edit-commands.c:423
+#: app/actions/edit-commands.c:414
 msgid "There is no active layer or channel to copy from."
 msgstr "There is no active layer or channel to copy from."
 
@@ -1696,7 +1704,7 @@ msgstr "Split Gradient Segments Uniformly"
 msgid "Split"
 msgstr "Split"
 
-#: app/actions/gradient-editor-commands.c:491
+#: app/actions/gradient-editor-commands.c:496
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -1704,7 +1712,7 @@ msgstr ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 
-#: app/actions/gradient-editor-commands.c:494
+#: app/actions/gradient-editor-commands.c:499
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -2781,8 +2789,8 @@ msgid "Enter a name for the saved options"
 msgstr "Enter a name for the saved options"
 
 #: app/actions/tool-options-commands.c:76
-#: app/actions/tool-options-commands.c:254
-#: app/actions/tool-options-commands.c:272
+#: app/actions/tool-options-commands.c:246
+#: app/actions/tool-options-commands.c:264
 msgid "Saved Options"
 msgstr "Saved Options"
 
@@ -2794,11 +2802,11 @@ msgstr "Rename Saved Tool Options"
 msgid "Enter a new name for the saved options"
 msgstr "Enter a new name for the saved options"
 
-#: app/actions/tool-options-commands.c:213
+#: app/actions/tool-options-commands.c:191
 msgid "Reset Tool Options"
 msgstr "Reset Tool Options"
 
-#: app/actions/tool-options-commands.c:236
+#: app/actions/tool-options-commands.c:213
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Do you really want to reset all tool options to default values?"
 
@@ -9612,45 +9620,45 @@ msgstr "Failed to import paths from '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:328 app/widgets/gimpcontrollereditor.c:399
+#: app/widgets/gimpactionview.c:331 app/widgets/gimpcontrollereditor.c:399
 msgid "Action"
 msgstr "Action"
 
-#: app/widgets/gimpactionview.c:357
+#: app/widgets/gimpactionview.c:360
 msgid "Shortcut"
 msgstr "Shortcut"
 
-#: app/widgets/gimpactionview.c:379
+#: app/widgets/gimpactionview.c:382
 msgid "Name"
 msgstr "Name"
 
-#: app/widgets/gimpactionview.c:509 app/widgets/gimpactionview.c:691
+#: app/widgets/gimpactionview.c:512 app/widgets/gimpactionview.c:694
 msgid "Changing shortcut failed."
 msgstr "Changing shortcut failed."
 
-#: app/widgets/gimpactionview.c:549
+#: app/widgets/gimpactionview.c:552
 msgid "Conflicting Shortcuts"
 msgstr "Conflicting Shortcuts"
 
-#: app/widgets/gimpactionview.c:555
+#: app/widgets/gimpactionview.c:558
 msgid "_Reassign shortcut"
 msgstr "_Reassign shortcut"
 
-#: app/widgets/gimpactionview.c:566
+#: app/widgets/gimpactionview.c:569
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 
-#: app/widgets/gimpactionview.c:570
+#: app/widgets/gimpactionview.c:573
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Reassigning the shortcut will cause it to be removed from \"%s\"."
 
-#: app/widgets/gimpactionview.c:627
+#: app/widgets/gimpactionview.c:630
 msgid "Removing shortcut failed."
 msgstr "Removing shortcut failed."
 
-#: app/widgets/gimpactionview.c:632
+#: app/widgets/gimpactionview.c:635
 msgid "Invalid shortcut."
 msgstr "Invalid shortcut."
 
@@ -9696,7 +9704,7 @@ msgstr "Empty Channel"
 msgid "Clipboard"
 msgstr "Clipboard"
 
-#: app/widgets/gimpcolordialog.c:169
+#: app/widgets/gimpcolordialog.c:175
 msgid "Add the current color to the color history"
 msgstr "Add the current colour to the colour history"
 
@@ -10241,7 +10249,7 @@ msgstr "Background: %d, %d, %d"
 msgid "The given filename does not have any known file extension."
 msgstr "The given filename does not have any known file extension."
 
-#: app/widgets/gimpdock.c:342 app/widgets/gimpdock.c:353
+#: app/widgets/gimpdock.c:342 app/widgets/gimpdock.c:358
 msgid "Close all tabs?"
 msgstr "Close all tabs?"
 
@@ -10249,7 +10257,7 @@ msgstr "Close all tabs?"
 msgid "Close all Tabs"
 msgstr "Close all Tabs"
 
-#: app/widgets/gimpdock.c:355
+#: app/widgets/gimpdock.c:360
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
@@ -10258,7 +10266,7 @@ msgstr ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 
-#: app/widgets/gimpdock.c:690
+#: app/widgets/gimpdock.c:695
 msgid "You can drop dockable dialogs here."
 msgstr "You can drop dockable dialogues here."
 
@@ -10279,40 +10287,40 @@ msgstr "Too many error messages!"
 msgid "Messages are redirected to stderr."
 msgstr "Messages are redirected to stderr."
 
-#: app/widgets/gimpfiledialog.c:321
+#: app/widgets/gimpfiledialog.c:324
 msgid "Automatically Detected"
 msgstr "Automatically Detected"
 
-#: app/widgets/gimpfiledialog.c:327
+#: app/widgets/gimpfiledialog.c:333
 msgid "By Extension"
 msgstr "By Extension"
 
-#: app/widgets/gimpfiledialog.c:457
+#: app/widgets/gimpfiledialog.c:469
 msgid "File exists"
 msgstr "File exists"
 
-#: app/widgets/gimpfiledialog.c:462
+#: app/widgets/gimpfiledialog.c:474
 msgid "_Replace"
 msgstr "_Replace"
 
-#: app/widgets/gimpfiledialog.c:473
+#: app/widgets/gimpfiledialog.c:485
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "A file named '%s' already exists."
 
-#: app/widgets/gimpfiledialog.c:478
+#: app/widgets/gimpfiledialog.c:490
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Do you want to replace it with the image you are saving?"
 
-#: app/widgets/gimpfiledialog.c:538
+#: app/widgets/gimpfiledialog.c:550
 msgid "All Files"
 msgstr "All Files"
 
-#: app/widgets/gimpfiledialog.c:543
+#: app/widgets/gimpfiledialog.c:555
 msgid "All Images"
 msgstr "All Images"
 
-#: app/widgets/gimpfiledialog.c:682
+#: app/widgets/gimpfiledialog.c:694
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Select File _Type (%s)"
