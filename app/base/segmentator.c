@@ -150,6 +150,27 @@ free_list (ArrayList *list)
 
 /* RGB -> CIELAB and other interesting methods... */
 
+#ifdef JNI_COMPILE
+
+/* Java */
+static guchar getRed (int rgb)
+{
+  return (rgb >> 16) & 0xFF;
+}
+
+static guchar getGreen (int rgb)
+{
+  return (rgb >> 8) & 0xFF;
+}
+
+static guchar getBlue (int rgb)
+{
+  return (rgb) & 0xFF;
+}
+
+#else
+
+/* GIMP */
 static guchar getRed (guint rgb)
 {
   return (rgb) & 0xFF;
@@ -162,8 +183,10 @@ static guchar getGreen (guint rgb)
 
 static guchar getBlue (guint rgb)
 {
-  return (rgb >>16) & 0xFF;
+  return (rgb >> 16) & 0xFF;
 }
+
+#endif
 
 #if 0
 static guchar getAlpha (guint rgb)
