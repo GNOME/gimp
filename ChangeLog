@@ -1,5 +1,11 @@
 2005-07-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): enable
+	remote files: set local_only to FALSE if the PDB has
+	"file_uri_load/save" procedures (yes, this is questionable).
+
+2005-07-08  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpcolor/gimpbilinear.c
 	* libgimpwidgets/gimppreviewarea.c: fix some uninitialized stuff
 	gcc 4.0 was choking about.

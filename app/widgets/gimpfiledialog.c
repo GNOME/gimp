@@ -36,6 +36,8 @@
 #include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
 
+#include "pdb/procedural_db.h" /* FIXME */
+
 #include "file/file-utils.h"
 
 #include "plug-in/plug-in-proc-def.h"
@@ -307,6 +309,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   GSList         *file_procs;
   const gchar    *automatic;
   const gchar    *automatic_help_id;
+  gboolean        local_only;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
@@ -320,12 +323,18 @@ gimp_file_dialog_new (Gimp                 *gimp,
       file_procs = gimp->load_procs;
       automatic  = _("Automatically Detected");
       automatic_help_id = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
+
+      /* FIXME */
+      local_only = (procedural_db_lookup (gimp, "file_uri_load") == NULL);
       break;
 
     case GTK_FILE_CHOOSER_ACTION_SAVE:
       file_procs = gimp->save_procs;
       automatic  = _("By Extension");
       automatic_help_id = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
+
+      /* FIXME */
+      local_only = (procedural_db_lookup (gimp, "file_uri_save") == NULL);
       break;
 
     default:
@@ -334,9 +343,10 @@ gimp_file_dialog_new (Gimp                 *gimp,
     }
 
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
-                         "title",  title,
-                         "role",   role,
-                         "action", action,
+                         "title",      title,
+                         "role",       role,
+                         "action",     action,
+                         "local-only", local_only,
                          NULL);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
@@ -366,6 +376,8 @@ gimp_file_dialog_new (Gimp                 *gimp,
       g_signal_connect (button, "clicked",
                         G_CALLBACK (gimp_file_dialog_help_clicked),
                         dialog);
+
+      g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
     }
 
   gimp_file_dialog_add_preview (dialog, gimp);
