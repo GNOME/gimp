@@ -375,9 +375,9 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                            color[ALPHA_PIX]);
 
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->color_frame_1),
-                                  sample_type, &rgb, -1);
+                                  sample_type, &rgb, color[4]);
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->color_frame_2),
-                                  sample_type, &rgb, -1);
+                                  sample_type, &rgb, color[4]);
 
       g_free (color);
     }
