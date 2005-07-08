@@ -2505,7 +2505,7 @@ ifs_compose_save (GtkWidget *parent)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save as IFS Fraktal file"),
+        gtk_file_chooser_dialog_new (_("Save as IFS Fractal file"),
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
@@ -2540,7 +2540,7 @@ ifs_compose_load (GtkWidget *parent)
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Open IFS Fraktal file"),
+        gtk_file_chooser_dialog_new (_("Open IFS Fractal file"),
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
