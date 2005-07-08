@@ -59,9 +59,6 @@
 
 static void   edit_paste                 (GimpDisplay *gdisp,
                                           gboolean     paste_into);
-static void   edit_undo_clear_response   (GtkWidget   *dialog,
-                                          gint         response_id,
-                                          GimpImage   *gimage);
 static void   cut_named_buffer_callback  (GtkWidget   *widget,
                                           const gchar *name,
                                           gpointer     data);
@@ -108,7 +105,9 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   dialog = gimp_message_dialog_new (_("Clear Undo History"), GIMP_STOCK_WARNING,
-                                    widget, 0,
+                                    widget,
+                                    GTK_DIALOG_MODAL |
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func,
                                     GIMP_HELP_EDIT_UNDO_CLEAR,
 
@@ -122,13 +121,13 @@ edit_undo_clear_cmd_callback (GtkAction *action,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_signal_connect_object (gimage, "disconnect",
+  g_signal_connect_object (gtk_widget_get_toplevel (widget), "unmap",
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (edit_undo_clear_response),
-                    gimage);
+  g_signal_connect_object (gimage, "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog, G_CONNECT_SWAPPED);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Really clear image's undo history?"));
@@ -147,7 +146,14 @@ edit_undo_clear_cmd_callback (GtkAction *action,
                                "image will gain %s of memory."), size);
   g_free (size);
 
-  gtk_widget_show (dialog);
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      gimp_image_undo_disable (gimage);
+      gimp_image_undo_enable (gimage);
+      gimp_image_flush (gimage);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 void
@@ -352,21 +358,6 @@ edit_paste (GimpDisplay *gdisp,
 
           g_object_unref (buffer);
         }
-    }
-}
-
-static void
-edit_undo_clear_response (GtkWidget *dialog,
-                          gint       response_id,
-                          GimpImage *gimage)
-{
-  gtk_widget_destroy (dialog);
-
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      gimp_image_undo_disable (gimage);
-      gimp_image_undo_enable (gimage);
-      gimp_image_flush (gimage);
     }
 }
 
