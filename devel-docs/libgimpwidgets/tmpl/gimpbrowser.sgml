@@ -22,15 +22,15 @@ GimpBrowser
 
 </para>
 
-@parent_instance: 
-@left_vbox: 
-@search_entry: 
-@search_timeout_id: 
-@search_type_combo: 
-@search_type: 
-@count_label: 
-@right_vbox: 
-@right_widget: 
+
+<!-- ##### SIGNAL GimpBrowser::search ##### -->
+<para>
+
+</para>
+
+@gimpbrowser: the object which received the signal.
+@arg1: 
+@arg2: 
 
 <!-- ##### FUNCTION gimp_browser_new ##### -->
 <para>

@@ -1,5 +1,15 @@
 2005-07-08  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/Makefile.am: converted spaces to tabs.
+
+	* libgimpwidgets/libgimpwidgets.types: added GimpBrowser and
+	GimpScrolledPreview.
+
+	* libgimpwidgets/tmpl/gimpbrowser.sgml
+	* libgimpwidgets/tmpl/gimpscrolledpreview.sgml: regenerated.
+
+2005-07-08  Michael Natterer  <mitch@gimp.org>
+
 	* tools/widgets.c
 	* libgimpwidgets/visual-index.xml
 	* libgimpwidgets/images/gimp-page-selector.png: added
