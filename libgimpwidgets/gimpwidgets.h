@@ -62,6 +62,7 @@
 #include <libgimpwidgets/gimppreviewarea.h>
 #include <libgimpwidgets/gimppropwidgets.h>
 #include <libgimpwidgets/gimpquerybox.h>
+#include <libgimpwidgets/gimpscrolledpreview.h>
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstock.h>
 #include <libgimpwidgets/gimpunitmenu.h>
