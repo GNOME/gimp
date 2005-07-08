@@ -61,14 +61,16 @@ typedef struct _ArrayList ArrayList;
 struct _ArrayList
 {
   lab       *array;
-  int        arraylength;
+  guint      arraylength;
+  gboolean   owned;
   ArrayList *next;
 };
 
 static void
 add_to_list (ArrayList *list,
-             lab       *newarray,
-             int        newarraylength)
+             lab       *array,
+             guint      arraylength,
+             gboolean   take)
 {
   ArrayList *cur = list;
   ArrayList *prev;
@@ -82,8 +84,9 @@ add_to_list (ArrayList *list,
 
   prev->next = g_new0 (ArrayList, 1);
 
-  prev->array = newarray;
-  prev->arraylength = newarraylength;
+  prev->array = array;
+  prev->arraylength = arraylength;
+  prev->owned = take;
 }
 
 static int
@@ -128,7 +131,7 @@ list_to_array (ArrayList *list,
 }
 
 static void
-freelist (ArrayList *list)
+free_list (ArrayList *list)
 {
   ArrayList *cur = list;
 
@@ -138,7 +141,9 @@ freelist (ArrayList *list)
 
       cur = cur->next;
 
-      g_free (prev->array);
+      if (prev->owned)
+        g_free (prev->array);
+
       g_free (prev);
     }
 }
@@ -169,8 +174,9 @@ static guchar getAlpha (guint rgb)
 
 
 /* Gets an int containing rgb, and an lab struct */
-static lab *calcLAB (guint  rgb,
-                     lab   *newpixel)
+static lab *
+calcLAB (guint  rgb,
+         lab   *newpixel)
 {
   float var_R = (getRed (rgb)   / 255.0);
   float var_G = (getGreen (rgb) / 255.0);
@@ -333,13 +339,16 @@ stageone (lab       *points,
             }
         }
 
+      if (depth > 0)
+        g_free (points);
+
       /* create subtrees */
       stageone (smallerpoints, dims, depth + 1, clusters, limits, countsm);
       stageone (biggerpoints, dims, depth + 1, clusters, limits, countgr);
     }
   else
     { /* create leave */
-      add_to_list (clusters, points, length);
+      add_to_list (clusters, points, length, depth != 0);
     }
 }
 
@@ -487,7 +496,7 @@ stagetwo (lab       *points,
                           point->l, point->a, point->b, sum);
            */
 
-          add_to_list (clusters, point, 1);
+          add_to_list (clusters, point, 1, TRUE);
         }
 
       g_free (points);
@@ -520,6 +529,12 @@ create_signature (lab   *input,
   lab       *rval;
   int        k, i;
   int        clusters1size;
+
+  if (length < 1)
+    {
+      *returnlength = 0;
+      return NULL;
+    }
 
   clusters1 = g_new0 (ArrayList, 1);
 
@@ -560,8 +575,8 @@ create_signature (lab   *input,
   /* see paper by tomasi */
   rval = list_to_array (clusters2, returnlength);
 
-  freelist (clusters2);
-  freelist (clusters1);
+  free_list (clusters2);
+  free_list (clusters1);
 
   /* g_printerr ("step #2 -> %d clusters\n", returnlength[0]); */
 
@@ -916,11 +931,8 @@ segmentate (guint *rgbs,
   if (bgsiglen < 1)
     return confidencematrix;    /* No segmentation possible */
 
-  /* Create color signature for fg if possible */
-  if (surefgcount > 0)
-    fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
-  else
-    fgsiglen = 0;
+  /* Create color signature for fg */
+  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
 
   /* Classify - the slow way....Better: Tree traversation */
   for (i = 0; i < length; i++)

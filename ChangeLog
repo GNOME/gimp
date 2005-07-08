@@ -1,3 +1,7 @@
+2005-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/base/segmentator.c: plugged memory leaks.
+
 2005-07-08  Sven Neumann  <sven@gimp.org>
 
 	* app/base/segmentator.c: minor cleanup, use a GQueue instead of a
