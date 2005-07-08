@@ -1,3 +1,7 @@
+2005-07-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/segmentator.c: minor cleanup.
+
 2005-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcursorview.c (gimp_cursor_view_update_cursor):

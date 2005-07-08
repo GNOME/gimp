@@ -89,8 +89,8 @@ addtoList (ArrayList *list,
 static int
 listSize (ArrayList *list)
 {
-  int        count = 0;
   ArrayList *cur   = list;
+  int        count = 0;
 
   while (cur->array)
     {
@@ -105,10 +105,10 @@ static lab *
 listToArray (ArrayList *list,
              int       *returnlength)
 {
-  int        i = 0;
-  int        len;
   ArrayList *cur = list;
   lab       *arraytoreturn;
+  int        i = 0;
+  int        len;
 
   len = listSize (list);
   arraytoreturn = g_new (lab, len);
@@ -427,8 +427,8 @@ stagetwo (lab       *points,
             }
         }
 
-      smallerpoints = g_malloc (countsm * sizeof (lab));
-      biggerpoints = g_malloc (countgr * sizeof (lab));
+      smallerpoints = g_new (lab, countsm);
+      biggerpoints = g_new (lab, countgr);
       smallc = 0;
       bigc = 0;
 
@@ -457,10 +457,6 @@ stagetwo (lab       *points,
                 countsm, total, threshold);
       stagetwo (biggerpoints, dims, depth + 1, clusters, limits,
                 countgr, total, threshold);
-
-      /*  g_free (smallerpoints);
-       *  g_free (biggerpoints);
-       */
     }
   else /* create leave */
     {
@@ -485,11 +481,12 @@ stagetwo (lab       *points,
           point->l /= (length * 1.0);
           point->a /= (length * 1.0);
           point->b /= (length * 1.0);
+
           /* g_printerr ("cluster=%f, %f, %f sum=%d\n",
                           point->l, point->a, point->b, sum);
            */
 
-          addtoList(clusters, point, 1);
+          addtoList (clusters, point, 1);
         }
 
       g_free (points);
@@ -508,10 +505,10 @@ euklid (const lab p,
 
 /* Creates a color signature for a given set of pixels */
 static lab *
-createSignature (lab   *input,
-                 int    length,
-                 float  limits[DIMS],
-                 int   *returnlength)
+create_signature (lab   *input,
+                  int    length,
+                  float  limits[DIMS],
+                  int   *returnlength)
 {
   ArrayList *clusters1;
   ArrayList *clusters2;
@@ -561,8 +558,10 @@ createSignature (lab   *input,
 
   /* see paper by tomasi */
   rval = listToArray (clusters2, returnlength);
+
   freelist (clusters1);
   freelist (clusters2);
+
   g_free (centroids);
 
   /* g_printerr ("step #2 -> %d clusters\n", returnlength[0]); */
@@ -723,7 +722,7 @@ findmaxblob (float *cm,
   int   *labelfield = g_new0 (int, length);
   Queue *q;
 
-  q = createqueue();
+  q = createqueue ();
 
   for (i = 0; i < length; i++)
     {
@@ -770,8 +769,8 @@ findmaxblob (float *cm,
         }
     }
 
-  g_free(q);
-  g_free(labelfield);
+  g_free (q);
+  g_free (labelfield);
 }
 
 
@@ -787,11 +786,11 @@ getclustersize (float limits[DIMS])
   return sum;
 }
 
-/* calculates alpha\timesConfidencematrix */
+/* calculates alpha \times Confidencematrix */
 static void
-premultiplyMatrix (float  alpha,
-                   float *cm,
-                   int    length)
+premultiply_matrix (float  alpha,
+                    float *cm,
+                    int    length)
 {
   int i;
 
@@ -804,8 +803,8 @@ premultiplyMatrix (float  alpha,
 
 /* Normalizes a confidencematrix */
 static void
-normalizeMatrix (float *cm,
-                 int   length)
+normalize_matrix (float *cm,
+                  int   length)
 {
   float max = 0.0;
   float alpha = 0.0;
@@ -823,7 +822,7 @@ normalizeMatrix (float *cm,
     return;
 
   alpha = 1.00f / max;
-  premultiplyMatrix(alpha, cm, length);
+  premultiply_matrix (alpha, cm, length);
 }
 
 /* A confidence matrix eroder */
@@ -945,7 +944,7 @@ segmentate (guint *rgbs,
             float  limits[DIMS],
             int    smoothness)
 {
-  float clustersize = getclustersize(limits);
+  float clustersize = getclustersize (limits);
   int length = xres * yres;
   int surebgcount = 0, surefgcount = 0;
   int i, k, j;
@@ -992,14 +991,14 @@ segmentate (guint *rgbs,
     }
 
   /* Create color signature for bg */
-  bgsig = createSignature (surebg, surebgcount, limits, &bgsiglen);
+  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
 
   if (bgsiglen < 1)
     return confidencematrix;    /* No segmentation possible */
 
   /* Create color signature for fg if possible */
   if (surefgcount > 0)
-    fgsig = createSignature(surefg, surefgcount, limits, &fgsiglen);
+    fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
   else
     fgsiglen = 0;
 
@@ -1065,7 +1064,7 @@ segmentate (guint *rgbs,
   /* Smooth a bit for error killing */
   smoothcm (confidencematrix, xres, yres, 0.33, 0.33, 0.33);
 
-  normalizeMatrix (confidencematrix, length);
+  normalize_matrix (confidencematrix, length);
 
   /* Now erode, to make sure only "strongly connected components"
    * keep being connected
@@ -1081,7 +1080,7 @@ segmentate (guint *rgbs,
       smoothcm (confidencematrix, xres, yres, 0.33, 0.33, 0.33);
     }
 
-  normalizeMatrix (confidencematrix, length);
+  normalize_matrix (confidencematrix, length);
 
   /* Threshold the values */
   for (i = 0; i < length; i++)
