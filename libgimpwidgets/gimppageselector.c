@@ -165,6 +165,13 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
 
   klass->selection_changed   = NULL;
 
+  /**
+   * GimpPageSelector::selection-changed:
+   *
+   * This signal is emitted whenever the set of selected pages changes.
+   *
+   * Since: GIMP 2.4
+   **/
   selector_signals[SELECTION_CHANGED] =
     g_signal_new ("selection-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -175,7 +182,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                   G_TYPE_NONE, 0);
 
   /**
-   * GimpPageSelector::n_pages:
+   * GimpPageSelector:n-pages:
    *
    * The number of pages of the document to open.
    *
@@ -187,7 +194,7 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                                                      G_PARAM_READWRITE));
 
   /**
-   * GimpPageSelector::target:
+   * GimpPageSelector:target:
    *
    * The target to open the document to.
    *
