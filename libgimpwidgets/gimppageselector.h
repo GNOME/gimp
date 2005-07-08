@@ -39,21 +39,7 @@ typedef struct _GimpPageSelectorClass  GimpPageSelectorClass;
 
 struct _GimpPageSelector
 {
-  GtkVBox                 parent_instance;
-
-  gint                    n_pages;
-  GimpPageSelectorTarget  target;
-
-  GtkListStore           *store;
-  GtkWidget              *view;
-
-  GtkWidget              *range_entry;
-
-  GdkPixbuf              *thumbnail;
-
-  gint                    default_item_width;
-  gint                    max_item_width;
-  guint                   item_width_idle_id;
+  GtkVBox  parent_instance;
 };
 
 struct _GimpPageSelectorClass
