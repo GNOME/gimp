@@ -66,9 +66,9 @@ struct _ArrayList
 };
 
 static void
-addtoList (ArrayList *list,
-           lab       *newarray,
-           int        newarraylength)
+add_to_list (ArrayList *list,
+             lab       *newarray,
+             int        newarraylength)
 {
   ArrayList *cur = list;
   ArrayList *prev;
@@ -87,7 +87,7 @@ addtoList (ArrayList *list,
 }
 
 static int
-listSize (ArrayList *list)
+list_size (ArrayList *list)
 {
   ArrayList *cur   = list;
   int        count = 0;
@@ -102,21 +102,22 @@ listSize (ArrayList *list)
 }
 
 static lab *
-listToArray (ArrayList *list,
-             int       *returnlength)
+list_to_array (ArrayList *list,
+               int       *returnlength)
 {
   ArrayList *cur = list;
   lab       *arraytoreturn;
   int        i = 0;
   int        len;
 
-  len = listSize (list);
+  len = list_size (list);
   arraytoreturn = g_new (lab, len);
-  returnlength[0] = len;
+  *returnlength = len;
 
   while (cur->array)
     {
       arraytoreturn[i++] = cur->array[0];
+
       /* Every array in the list node has only one point
        * when we call this method
        */
@@ -130,18 +131,16 @@ static void
 freelist (ArrayList *list)
 {
   ArrayList *cur = list;
-  ArrayList *prev;
 
-  do
+  while (cur)
     {
-      prev = cur;
+      ArrayList *prev = cur;
+
       cur = cur->next;
 
-      if (prev->array)
-        g_free (prev->array);
-
+      g_free (prev->array);
       g_free (prev);
-    } while (cur);
+    }
 }
 
 /* RGB -> CIELAB and other interesting methods... */
@@ -340,7 +339,7 @@ stageone (lab       *points,
     }
   else
     { /* create leave */
-      addtoList (clusters, points, length);
+      add_to_list (clusters, points, length);
     }
 }
 
@@ -452,6 +451,8 @@ stagetwo (lab       *points,
             }
         }
 
+      g_free (points);
+
       /* create subtrees */
       stagetwo (smallerpoints, dims, depth + 1, clusters, limits,
                 countsm, total, threshold);
@@ -486,7 +487,7 @@ stagetwo (lab       *points,
                           point->l, point->a, point->b, sum);
            */
 
-          addtoList (clusters, point, 1);
+          add_to_list (clusters, point, 1);
         }
 
       g_free (points);
@@ -523,7 +524,7 @@ create_signature (lab   *input,
   clusters1 = g_new0 (ArrayList, 1);
 
   stageone (input, DIMS, 0, clusters1, limits, length);
-  clusters1size = listSize (clusters1);
+  clusters1size = list_size (clusters1);
   centroids = g_new (lab, clusters1size);
   curelem = clusters1;
 
@@ -554,15 +555,13 @@ create_signature (lab   *input,
 
   clusters2 = g_new0 (ArrayList, 1);
 
-  stagetwo(centroids, DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
+  stagetwo (centroids, DIMS, 0, clusters2, limits, clusters1size, length, 0.1);
 
   /* see paper by tomasi */
-  rval = listToArray (clusters2, returnlength);
+  rval = list_to_array (clusters2, returnlength);
 
-  freelist (clusters1);
   freelist (clusters2);
-
-  g_free (centroids);
+  freelist (clusters1);
 
   /* g_printerr ("step #2 -> %d clusters\n", returnlength[0]); */
 
@@ -633,78 +632,6 @@ smoothcm (float *cm,
     }
 }
 
-
-/* Simulate a queue needed for region growing */
-/* The methods are NOT generic */
-
-typedef struct _Queue Queue;
-
-struct _Queue
-{
-  int       val;
-  gboolean  valid;
-  Queue    *next;
-};
-
-
-static Queue *
-createqueue (void)
-{
-  return g_new0 (Queue, 1);
-}
-
-static void
-addtoqueue (Queue *q,
-            int    val)
-{
-  Queue *cur = q;
-
-  while (cur->valid)
-    {
-      cur = cur->next;
-    };
-
-  cur->val = val;
-  cur->valid = TRUE;
-  cur->next = createqueue ();
-}
-
-static gboolean
-isempty (Queue *q)
-{
-  if (! q)
-    return TRUE;
-
-  return ! q->valid;
-}
-
-static int
-headval (Queue *q)
-{
-  return q->val;
-}
-
-static Queue *
-removehead (Queue *q)
-{
-  Queue *n;
-
-  q->val = 0;
-  q->valid = FALSE;
-
-  if (q->next)
-    {
-      n = q->next;
-      g_free (q);
-    }
-  else
-    {
-      n = q;
-    }
-
-  return n;
-}
-
 /* Region growing */
 static void
 findmaxblob (float *cm,
@@ -712,44 +639,40 @@ findmaxblob (float *cm,
              int    xres,
              int    yres)
 {
-  int    i;
-  int    curlabel = 1;
-  int    maxregion = 0;
-  int    maxblob = 0;
-  int    regioncount = 0;
-  int    pos = 0;
-  int    length = xres * yres;
-  int   *labelfield = g_new0 (int, length);
-  Queue *q;
-
-  q = createqueue ();
+  int     i;
+  int     curlabel = 1;
+  int     maxregion = 0;
+  int     maxblob = 0;
+  int     regioncount = 0;
+  int     pos = 0;
+  int     length = xres * yres;
+  int    *labelfield = g_new0 (int, length);
+  GQueue *q = g_queue_new ();
 
   for (i = 0; i < length; i++)
     {
       regioncount = 0;
-      if (labelfield[i] == 0 && cm[i] >= 0.5)
-        {
-          addtoqueue (q, i);
-        }
 
-      while (!isempty (q))
+      if (labelfield[i] == 0 && cm[i] >= 0.5)
+        g_queue_push_tail (q, GINT_TO_POINTER (i));
+
+      while (! g_queue_is_empty (q))
         {
-          pos = headval (q);
-          q = removehead (q);
+          pos = GPOINTER_TO_INT (g_queue_pop_head (q));
 
           if (pos < 0 || pos >= length)
-            {
-              continue;
-            }
+            continue;
 
           if (labelfield[pos] == 0 && cm[pos] >= 0.5f)
             {
               labelfield[pos] = curlabel;
+
               regioncount++;
-              addtoqueue (q, pos + 1);
-              addtoqueue (q, pos - 1);
-              addtoqueue (q, pos + xres);
-              addtoqueue (q, pos - xres);
+
+              g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos + xres));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos - xres));
             }
         }
 
@@ -758,6 +681,7 @@ findmaxblob (float *cm,
           maxregion = regioncount;
           maxblob = curlabel;
         }
+
       curlabel++;
     }
 
@@ -769,7 +693,7 @@ findmaxblob (float *cm,
         }
     }
 
-  g_free (q);
+  g_queue_free (q);
   g_free (labelfield);
 }
 
@@ -795,9 +719,7 @@ premultiply_matrix (float  alpha,
   int i;
 
   for (i = 0; i < length; i++)
-    {
-      cm[i] = alpha * cm[i];
-    }
+    cm[i] = alpha * cm[i];
 }
 
 
@@ -949,7 +871,7 @@ segmentate (guint *rgbs,
   int surebgcount = 0, surefgcount = 0;
   int i, k, j;
   int bgsiglen, fgsiglen;
-  lab *surebg, *surefg = NULL, *bgsig, *fgsig = NULL;
+  lab *surebg, *surefg, *bgsig, *fgsig = NULL;
   char background = 0;
   float min, d;
   lab labpixel;
@@ -968,9 +890,7 @@ segmentate (guint *rgbs,
     }
 
   surebg = g_new (lab, surebgcount);
-
-  if (surefgcount > 0)
-    surefg = g_new (lab, surefgcount);
+  surefg = g_new (lab, surefgcount);
 
   k = 0;
   j = 0;
