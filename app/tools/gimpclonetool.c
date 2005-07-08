@@ -76,7 +76,7 @@ static void   gimp_clone_tool_draw             (GimpDrawTool    *draw_tool);
 static GtkWidget * gimp_clone_options_gui      (GimpToolOptions *tool_options);
 
 
-static GimpPaintToolClass *parent_class;
+static GimpPaintToolClass *parent_class = NULL;
 
 
 void
