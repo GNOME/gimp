@@ -1683,8 +1683,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          if (gimage)
-            gimp_image_undo_push_layer_opacity (gimage, NULL, layer);
+          gimp_image_undo_push_layer_opacity (gimage, NULL, layer);
         }
 
       layer->opacity = opacity;
@@ -1719,8 +1718,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          if (gimage)
-            gimp_image_undo_push_layer_mode (gimage, NULL, layer);
+          gimp_image_undo_push_layer_mode (gimage, NULL, layer);
         }
 
       layer->mode = mode;
@@ -1755,8 +1753,7 @@ gimp_layer_set_preserve_trans (GimpLayer *layer,
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          if (gimage)
-            gimp_image_undo_push_layer_preserve_trans (gimage, NULL, layer);
+          gimp_image_undo_push_layer_preserve_trans (gimage, NULL, layer);
         }
 
       layer->preserve_trans = preserve ? TRUE : FALSE;
