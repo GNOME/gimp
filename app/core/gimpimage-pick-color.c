@@ -43,10 +43,19 @@ gimp_image_pick_color (GimpImage     *gimage,
   GimpPickable *pickable;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (sample_merged || GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (drawable == NULL ||
                         gimp_item_get_image (GIMP_ITEM (drawable)) == gimage,
                         FALSE);
+
+  if (! sample_merged)
+    {
+      if (! drawable)
+        drawable = gimp_image_active_drawable (gimage);
+
+      if (! drawable)
+        return FALSE;
+    }
 
   if (sample_merged)
     {

@@ -32,8 +32,8 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimpitem.h"
-#include "core/gimppickable.h"
 #include "core/gimpunit.h"
 
 #include "gimpcolorframe.h"
@@ -408,8 +408,9 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 gdouble           x,
                                 gdouble           y)
 {
-  GimpPickable *pickable = NULL;
-  guchar       *color    = NULL;
+  GimpImageType sample_type;
+  GimpRGB       color;
+  gint          color_index;
 
   g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
@@ -460,56 +461,17 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
       gtk_label_set_text (GTK_LABEL (view->unit_y_label),  _("n/a"));
     }
 
-  if (image)
+  if (image && gimp_image_pick_color (image, NULL,
+                                      (gint) floor (x),
+                                      (gint) floor (y),
+                                      view->sample_merged,
+                                      FALSE, 0.0,
+                                      &sample_type, &color, &color_index))
     {
-      if (view->sample_merged)
-        {
-          pickable = GIMP_PICKABLE (image->projection);
-
-          color = gimp_pickable_get_color_at (pickable,
-                                              (gint) floor (x),
-                                              (gint) floor (y));
-        }
-      else
-        {
-          GimpDrawable *drawable;
-
-          drawable = gimp_image_active_drawable (image);
-
-          if (drawable)
-            {
-              gint off_x, off_y;
-
-              pickable = GIMP_PICKABLE (drawable);
-
-              gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
-
-              color = gimp_pickable_get_color_at (pickable,
-                                                  ((gint) floor (x)) - off_x,
-                                                  ((gint) floor (y)) - off_y);
-            }
-        }
-    }
-
-  if (color)
-    {
-      GimpImageType sample_type;
-      GimpRGB       rgb;
-
-      sample_type = gimp_pickable_get_image_type (pickable);
-
-      gimp_rgba_set_uchar (&rgb,
-                           color[RED_PIX],
-                           color[GREEN_PIX],
-                           color[BLUE_PIX],
-                           color[ALPHA_PIX]);
-
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->color_frame_1),
-                                  sample_type, &rgb, color[4]);
+                                  sample_type, &color, color_index);
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->color_frame_2),
-                                  sample_type, &rgb, color[4]);
-
-      g_free (color);
+                                  sample_type, &color, color_index);
     }
   else
     {
