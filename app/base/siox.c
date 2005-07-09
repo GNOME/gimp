@@ -32,17 +32,18 @@
  */
 
 #include <string.h>
-#include <math.h>
 
 #include <glib-object.h>
 
-#include "segmentator.h"
+#include "libgimpmath/gimpmath.h"
 
-/* Please look all the way down for an explanation of JNI_COMPILE.
- */
-#ifdef JNI_COMPILE
-#include "NativeExperimentalPipe.h"
-#endif
+#include "base-types.h"
+
+#include "paint-funcs/paint-funcs.h"
+
+#include "pixel-region.h"
+#include "segmentator.h"
+#include "tile-manager.h"
 
 
 /* Simulate a java.util.ArrayList */
@@ -108,18 +109,16 @@ static lab *
 list_to_array (ArrayList *list,
                int       *returnlength)
 {
-  ArrayList *cur = list;
-  lab       *arraytoreturn;
-  int        i = 0;
-  int        len;
+  ArrayList *cur   = list;
+  gint       i     = 0;
+  gint       len   = list_size (list);
+  lab       *array = g_new (lab, len);
 
-  len = list_size (list);
-  arraytoreturn = g_new (lab, len);
   *returnlength = len;
 
   while (cur->array)
     {
-      arraytoreturn[i++] = cur->array[0];
+      array[i++] = cur->array[0];
 
       /* Every array in the list node has only one point
        * when we call this method
@@ -127,7 +126,7 @@ list_to_array (ArrayList *list,
       cur = cur->next;
     }
 
-  return arraytoreturn;
+  return array;
 }
 
 static void
@@ -148,113 +147,57 @@ free_list (ArrayList *list)
     }
 }
 
-/* RGB -> CIELAB and other interesting methods... */
-
-#ifdef JNI_COMPILE
-
-/* Java */
-static guchar getRed (int rgb)
+static void
+calcLAB (const guchar *src,
+         lab          *pixel)
 {
-  return (rgb >> 16) & 0xFF;
-}
+  gfloat r = src[RED_PIX] / 255.0;
+  gfloat g = src[GREEN_PIX] / 255.0;
+  gfloat b = src[BLUE_PIX] / 255.0;
+  gfloat x, y, z;
 
-static guchar getGreen (int rgb)
-{
-  return (rgb >> 8) & 0xFF;
-}
-
-static guchar getBlue (int rgb)
-{
-  return (rgb) & 0xFF;
-}
-
-#else
-
-/* GIMP */
-static guchar getRed (guint rgb)
-{
-  return (rgb) & 0xFF;
-}
-
-static guchar getGreen (guint rgb)
-{
-  return (rgb >> 8) & 0xFF;
-}
-
-static guchar getBlue (guint rgb)
-{
-  return (rgb >> 16) & 0xFF;
-}
-
-#endif
-
-#if 0
-static guchar getAlpha (guint rgb)
-{
-  return (rgb >> 24) & 0xFF;
-}
-#endif
-
-
-/* Gets an int containing rgb, and an lab struct */
-static lab *
-calcLAB (guint  rgb,
-         lab   *newpixel)
-{
-  float var_R = (getRed (rgb)   / 255.0);
-  float var_G = (getGreen (rgb) / 255.0);
-  float var_B = (getBlue (rgb)  / 255.0);
-
-  float X, Y, Z, var_X, var_Y, var_Z;
-
-  if (var_R > 0.04045)
-    var_R = (float) pow ((var_R + 0.055) / 1.055, 2.4);
+  if (r > 0.04045)
+    r = (float) pow ((r + 0.055) / 1.055, 2.4);
   else
-    var_R = var_R / 12.92;
+    r = r / 12.92;
 
-  if (var_G > 0.04045)
-    var_G = (float) pow ((var_G + 0.055) / 1.055, 2.4);
+  if (g > 0.04045)
+    g = (float) pow ((g + 0.055) / 1.055, 2.4);
   else
-    var_G = var_G / 12.92;
+    g = g / 12.92;
 
-  if (var_B > 0.04045)
-    var_B = (float) pow ((var_B + 0.055) / 1.055, 2.4);
+  if (b > 0.04045)
+    b = (float) pow ((b + 0.055) / 1.055, 2.4);
   else
-    var_B = var_B / 12.92;
+    b = b / 12.92;
 
-  var_R = var_R * 100.0;
-  var_G = var_G * 100.0;
-  var_B = var_B * 100.0;
+  r = r * 100.0;
+  g = g * 100.0;
+  b = b * 100.0;
 
   /* Observer. = 2°, Illuminant = D65 */
-  X = (float) (var_R * 0.4124 + var_G * 0.3576 + var_B * 0.1805);
-  Y = (float) (var_R * 0.2126 + var_G * 0.7152 + var_B * 0.0722);
-  Z = (float) (var_R * 0.0193 + var_G * 0.1192 + var_B * 0.9505);
+  x = (float) (r * 0.4124 + g * 0.3576 + b * 0.1805) / 95.047;
+  y = (float) (r * 0.2126 + g * 0.7152 + b * 0.0722) / 100.0;
+  z = (float) (r * 0.0193 + g * 0.1192 + b * 0.9505) / 108.883;
 
-  var_X = X / 95.047;   /* Observer = 2, Illuminant = D65 */
-  var_Y = Y / 100.0;
-  var_Z = Z / 108.883;
-
-  if (var_X > 0.008856)
-    var_X = (float) pow (var_X, (1.0 / 3));
+  if (x > 0.008856)
+    x = (float) pow (x, (1.0 / 3));
   else
-    var_X = (7.787 * var_X) + (16.0 / 116);
+    x = (7.787 * x) + (16.0 / 116);
 
-  if (var_Y > 0.008856)
-    var_Y = (float) pow (var_Y, (1.0 / 3));
+  if (y > 0.008856)
+    y = (float) pow (y, (1.0 / 3));
   else
-    var_Y = (7.787 * var_Y) + (16.0 / 116);
+    y = (7.787 * y) + (16.0 / 116);
 
-  if (var_Z > 0.008856)
-    var_Z = (float) pow (var_Z, (1.0 / 3));
+  if (z > 0.008856)
+    z = (float) pow (z, (1.0 / 3));
   else
-    var_Z = (7.787 * var_Z) + (16.0 / 116);
+    z = (7.787 * z) + (16.0 / 116);
 
-  newpixel->l = (116 * var_Y) - 16;
-  newpixel->a = 500 * (var_X - var_Y);
-  newpixel->b = 200 * (var_Y - var_Z);
-
-  return newpixel;
+  pixel->l = (116 * y) - 16;
+  pixel->a = 500 * (x - y);
+  pixel->b = 200 * (y - z);
 }
 
 #if 0
@@ -670,64 +613,220 @@ smoothcm (float *cm,
     }
 }
 
-/* Region growing */
 static void
-findmaxblob (float *cm,
-             guint *image,
-             int    xres,
-             int    yres)
+normalize_mask (TileManager *mask,
+                gint         x,
+                gint         y,
+                gint         width,
+                gint         height)
 {
-  int     i;
-  int     curlabel = 1;
-  int     maxregion = 0;
-  int     maxblob = 0;
-  int     regioncount = 0;
-  int     pos = 0;
-  int     length = xres * yres;
-  int    *labelfield = g_new0 (int, length);
-  GQueue *q = g_queue_new ();
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+  guchar      max = 0;
 
-  for (i = 0; i < length; i++)
+  pixel_region_init (&region, mask, x, y, width, height, FALSE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
     {
-      regioncount = 0;
+      guchar *data = region.data;
 
-      if (labelfield[i] == 0 && cm[i] >= 0.5)
-        g_queue_push_tail (q, GINT_TO_POINTER (i));
-
-      while (! g_queue_is_empty (q))
+      for (row = 0; row < region.h; row++)
         {
-          pos = GPOINTER_TO_INT (g_queue_pop_head (q));
+          guchar *d = data;
 
-          if (pos < 0 || pos >= length)
-            continue;
-
-          if (labelfield[pos] == 0 && cm[pos] >= 0.5f)
+          for (col = 0; col < region.w; col++, d++)
             {
-              labelfield[pos] = curlabel;
-
-              regioncount++;
-
-              g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos + xres));
-              g_queue_push_tail (q, GINT_TO_POINTER (pos - xres));
+              if (*d > max)
+                max = *d;
             }
-        }
 
-      if (regioncount > maxregion)
-        {
-          maxregion = regioncount;
-          maxblob = curlabel;
+          data += region.rowstride;
         }
-
-      curlabel++;
     }
 
-  for (i = 0; i < length; i++)
-    { /* Kill everything that is not biggest blob! */
-      if (labelfield[i] != 0 && labelfield[i] != maxblob)
+  if (max == 255)
+    return;
+
+  g_printerr ("max = %d (need to actually implement normalize ?)\n", max);
+  /*  TODO (or not TODO)  */
+}
+
+static void
+threshold_mask (TileManager *mask,
+                gint         x,
+                gint         y,
+                gint         width,
+                gint         height)
+{
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      guchar *data = region.data;
+
+      for (row = 0; row < region.h; row++)
         {
-          cm[i] = 0.0;
+          guchar *d = data;
+
+          for (col = 0; col < region.w; col++, d++)
+            {
+              *d = *d > 127 ? 255 : 0;
+            }
+
+          data += region.rowstride;
+        }
+    }
+}
+
+static void
+smooth_mask (TileManager *mask,
+             gint         x,
+             gint         y,
+             gint         width,
+             gint         height)
+{
+  /*  TODO  */
+}
+
+static void
+erode_mask (TileManager *mask,
+            gint         x,
+            gint         y,
+            gint         width,
+            gint         height)
+{
+  PixelRegion region;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  /* inefficient */
+  thin_region (&region, 1, 1, TRUE);
+}
+
+static void
+dilate_mask (TileManager *mask,
+             gint         x,
+             gint         y,
+             gint         width,
+             gint         height)
+{
+  PixelRegion region;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  /* inefficient */
+  fatten_region (&region, 1, 1);
+}
+
+static void
+find_max_blob (TileManager *mask,
+               gint         x,
+               gint         y,
+               gint         width,
+               gint         height)
+{
+  GQueue     *q          = g_queue_new ();
+  gint        length     = width * height;
+  gint       *labelfield = g_new0 (gint, length);
+  PixelRegion region;
+  gpointer    pr;
+  gint        row, col;
+  gint        curlabel  = 1;
+  gint        maxregion = 0;
+  gint        maxblob   = 0;
+
+  pixel_region_init (&region, mask, x, y, width, height, FALSE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *data  = region.data;
+      gint          index = (region.x - x) + (region.y - y) * width;
+
+      for (row = 0; row < region.h; row++)
+        {
+          const guchar *d = data;
+          gint          i = index;
+
+          for (col = 0; col < region.w; col++, d++, i++)
+            {
+              gint regioncount = 0;
+
+              if (labelfield[i] == 0 && *d > 127)
+                g_queue_push_tail (q, GINT_TO_POINTER (i));
+
+              while (! g_queue_is_empty (q))
+                {
+                  gint pos = GPOINTER_TO_INT (g_queue_pop_head (q));
+
+                  if (pos < 0 || pos >= length)
+                    continue;
+
+                  if (labelfield[pos] == 0)
+                    {
+                      guchar val;
+
+                      read_pixel_data_1 (mask, pos % width, pos / width, &val);
+                      if (val > 127)
+                        {
+                          labelfield[pos] = curlabel;
+
+                          regioncount++;
+
+                          g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
+                          g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
+                          g_queue_push_tail (q, GINT_TO_POINTER (pos + width));
+                          g_queue_push_tail (q, GINT_TO_POINTER (pos - width));
+                        }
+                    }
+                }
+
+              if (regioncount > maxregion)
+                {
+                  maxregion = regioncount;
+                  maxblob = curlabel;
+                }
+
+              curlabel++;
+            }
+
+          data += region.rowstride;
+          index += width;
+        }
+    }
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  for (pr = pixel_regions_register (1, &region);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      guchar *data  = region.data;
+      gint    index = (region.x - x) + (region.y - y) * width;
+
+      for (row = 0; row < region.h; row++)
+        {
+          guchar *d = data;
+          gint    i = index;
+
+          for (col = 0; col < region.w; col++, d++, i++)
+            {
+              if (labelfield[i] != 0 && labelfield[i] != maxblob)
+                *d = 0;
+            }
+
+          data += region.rowstride;
+          index += width;
         }
     }
 
@@ -735,10 +834,9 @@ findmaxblob (float *cm,
   g_free (labelfield);
 }
 
-
 /* Returns squared clustersize */
-static float
-getclustersize (float limits[DIMS])
+static gfloat
+getclustersize (const float limits[DIMS])
 {
   float sum = (limits[0] - (-limits[0])) * (limits[0] - (-limits[0]));
 
@@ -747,6 +845,237 @@ getclustersize (float limits[DIMS])
 
   return sum;
 }
+
+
+/*
+ * Call this method:
+ * rgbs - the picture
+ * confidencematrix - a confidencematrix with values <=0.1 is sure background,
+ *                    >=0.9 is sure foreground, rest unknown
+ * xres, yres - the dimensions of the picture and the confidencematrix
+ * limits - a three dimensional float array specifing the accuracy
+ *          a good value is: {0.66,1.25,2.5}
+ * int smoothness - specifies how smooth the boundaries of a picture should
+ *                  be made (value greater or equal to 0).
+ *                  More smooth = fault tolerant,
+ *                  less smooth = exact boundaries - try 3 for a first guess.
+ * returns and writes into the confidencematrix the resulting segmentation
+ */
+void
+foreground_extract (TileManager  *pixels,
+                    TileManager  *mask,
+                    gfloat        limits[DIMS],
+                    gint          smoothness)
+{
+  gfloat    clustersize = getclustersize (limits);
+  gint      surebgcount = 0;
+  gint      surefgcount = 0;
+  gint      i, j;
+  gint      bgsiglen, fgsiglen;
+  lab      *surebg;
+  lab      *surefg;
+  lab      *bgsig;
+  lab      *fgsig;
+
+  PixelRegion  srcPR;
+  PixelRegion  mapPR;
+  gpointer     pr;
+  gint         width, height;
+  gint         bpp;
+  gint         row, col;
+
+  g_return_if_fail (pixels != NULL);
+  g_return_if_fail (mask != NULL && tile_manager_bpp (mask) == 1);
+
+  width = tile_manager_width (pixels);
+  height = tile_manager_height (pixels);
+  bpp = tile_manager_bpp (pixels);
+
+  g_return_if_fail (bpp == 3 || bpp == 4);
+  g_return_if_fail (tile_manager_width (mask) == width);
+  g_return_if_fail (tile_manager_height (mask) == height);
+
+  /* count given foreground and background pixels */
+  pixel_region_init (&mapPR, mask, 0, 0, width, height, FALSE);
+
+  for (pr = pixel_regions_register (1, &mapPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *map = mapPR.data;
+
+      for (row = 0; row < mapPR.h; row++)
+        {
+          const guchar *m = map;
+
+          for (col = 0; col < mapPR.w; col++, m++)
+            {
+              if (*m < 32)
+                surebgcount++;
+              else if (*m > 224)
+                surefgcount++;
+            }
+
+          map += mapPR.rowstride;
+        }
+    }
+
+  surebg = g_new (lab, surebgcount);
+  surefg = g_new (lab, surefgcount);
+
+  i = 0;
+  j = 0;
+
+  /* create inputs for colorsignatures */
+  pixel_region_init (&srcPR, pixels, 0, 0, width, height, FALSE);
+  pixel_region_init (&mapPR, mask, 0, 0, width, height, FALSE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *src = srcPR.data;
+      const guchar *map = mapPR.data;
+
+      for (row = 0; row < srcPR.h; row++)
+        {
+          const guchar *s = src;
+          const guchar *m = map;
+
+          for (col = 0; col < srcPR.w; col++, m++, s += bpp)
+            {
+              if (*m < 32)
+                {
+                  calcLAB (s, surebg + i);
+                  i++;
+                }
+              else if (*m > 224)
+                {
+                  calcLAB (s, surefg + j);
+                  j++;
+                }
+            }
+
+          src += srcPR.rowstride;
+          map += mapPR.rowstride;
+        }
+    }
+
+  /* Create color signature for bg */
+  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
+  g_free (surebg);
+
+  if (bgsiglen < 1)
+    {
+      g_free (surefg);
+      return;
+    }
+
+  /* Create color signature for fg */
+  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
+  g_free (surefg);
+
+  /* Classify - the slow way....Better: Tree traversation */
+  pixel_region_init (&srcPR, pixels, 0, 0, width, height, FALSE);
+  pixel_region_init (&mapPR, mask, 0, 0, width, height, TRUE);
+
+  for (pr = pixel_regions_register (2, &srcPR, &mapPR);
+       pr != NULL;
+       pr = pixel_regions_process (pr))
+    {
+      const guchar *src = srcPR.data;
+      guchar       *map = mapPR.data;
+
+      for (row = 0; row < srcPR.h; row++)
+        {
+          const guchar *s = src;
+          guchar       *m = map;
+
+          for (col = 0; col < srcPR.w; col++, m++, s += bpp)
+            {
+              lab       labpixel;
+              gboolean  background = FALSE;
+              gfloat    min, d;
+
+              if (*m < 32 || *m > 224)
+                continue;
+
+              calcLAB (s, &labpixel);
+              background = TRUE;
+              min = euklid (labpixel, bgsig[0]);
+
+              for (i = 1; i < bgsiglen; i++)
+                {
+                  d = euklid (labpixel, bgsig[i]);
+
+                  if (d < min)
+                    min = d;
+                }
+
+              if (fgsiglen == 0)
+                {
+                  if (min < clustersize)
+                    background = TRUE;
+                  else
+                    background = FALSE;
+                }
+              else
+                {
+                  for (i = 0; i < fgsiglen; i++)
+                    {
+                      d = euklid (labpixel, fgsig[i]);
+
+                      if (d < min)
+                        {
+                          min = d;
+                          background = FALSE;
+                          break;
+                        }
+                    }
+                }
+
+              *m = background ? 0 : 255;
+            }
+
+          src += srcPR.rowstride;
+          map += mapPR.rowstride;
+        }
+    }
+
+  g_free (fgsig);
+  g_free (bgsig);
+
+  /* Smooth a bit for error killing */
+  smooth_mask (mask, 0, 0, width, height);
+
+  normalize_mask (mask, 0, 0, width, height);
+
+  /* Now erode, to make sure only "strongly connected components"
+   * keep being connected
+   */
+  erode_mask (mask, 0, 0, width, height);
+
+  /* search the biggest connected component */
+  find_max_blob (mask, 0, 0, width, height);
+
+  /* smooth again - as user specified */
+  for (i = 0; i < smoothness; i++)
+    smooth_mask (mask, 0, 0, width, height);
+
+  normalize_mask (mask, 0, 0, width, height);
+
+  /* Threshold the values */
+  threshold_mask (mask, 0, 0, width, height);
+
+  /* search the biggest connected component again to kill jitter */
+  find_max_blob (mask, 0, 0, width, height);
+
+  /* Now dilate, to fill up boundary pixels killed by erode */
+  dilate_mask (mask, 0, 0, width, height);
+}
+
+
+/************ Unused functions, for reference ***************/
 
 /* calculates alpha \times Confidencematrix */
 static void
@@ -759,7 +1088,6 @@ premultiply_matrix (float  alpha,
   for (i = 0; i < length; i++)
     cm[i] = alpha * cm[i];
 }
-
 
 /* Normalizes a confidencematrix */
 static void
@@ -882,201 +1210,66 @@ dilate2 (float *cm,
      }
 }
 
-/*
- * Call this method:
- * rgbs - the picture
- * confidencematrix - a confidencematrix with values <=0.1 is sure background,
- *                    >=0.9 is sure foreground, rest unknown
- * xres, yres - the dimensions of the picture and the confidencematrix
- * limits - a three dimensional float array specifing the accuracy
- *          a good value is: {0.66,1.25,2.5}
- * int smoothness - specifies how smooth the boundaries of a picture should
- *                  be made (value greater or equal to 0).
- *                  More smooth = fault tolerant,
- *                  less smooth = exact boundaries - try 3 for a first guess.
- * returns and writes into the confidencematrix the resulting segmentation
- */
-float *
-segmentate (guint *rgbs,
-            float *confidencematrix,
-            int    xres,
-            int    yres,
-            float  limits[DIMS],
-            int    smoothness)
+/* region growing */
+static void
+findmaxblob (float *cm,
+             guint *image,
+             int    xres,
+             int    yres)
 {
-  float clustersize = getclustersize (limits);
-  int length = xres * yres;
-  int surebgcount = 0, surefgcount = 0;
-  int i, k, j;
-  int bgsiglen, fgsiglen;
-  lab *surebg, *surefg, *bgsig, *fgsig = NULL;
-  char background = 0;
-  float min, d;
-  lab labpixel;
+  int     i;
+  int     curlabel = 1;
+  int     maxregion = 0;
+  int     maxblob = 0;
+  int     regioncount = 0;
+  int     pos = 0;
+  int     length = xres * yres;
+  int    *labelfield = g_new0 (int, length);
+  GQueue *q = g_queue_new ();
 
-  /* count given foreground and background pixels */
   for (i = 0; i < length; i++)
     {
-      if (confidencematrix[i] <= 0.10f)
+      regioncount = 0;
+
+      if (labelfield[i] == 0 && cm[i] >= 0.5)
+        g_queue_push_tail (q, GINT_TO_POINTER (i));
+
+      while (! g_queue_is_empty (q))
         {
-          surebgcount++;
-        }
-      else if (confidencematrix[i] >= 0.90f)
-        {
-          surefgcount++;
-        }
-    }
+          pos = GPOINTER_TO_INT (g_queue_pop_head (q));
 
-  surebg = g_new (lab, surebgcount);
-  surefg = g_new (lab, surefgcount);
+          if (pos < 0 || pos >= length)
+            continue;
 
-  k = 0;
-  j = 0;
-
-  /* create inputs for colorsignatures */
-  for (i = 0; i < length; i++)
-    {
-      if (confidencematrix[i] <= 0.10f)
-        {
-          calcLAB (rgbs[i], &surebg[k]);
-          k++;
-        }
-      else if (confidencematrix[i] >= 0.90f)
-        {
-          calcLAB (rgbs[i], &surefg[j]);
-          j++;
-        }
-    }
-
-  /* Create color signature for bg */
-  bgsig = create_signature (surebg, surebgcount, limits, &bgsiglen);
-
-  if (bgsiglen < 1)
-    return confidencematrix;    /* No segmentation possible */
-
-  /* Create color signature for fg */
-  fgsig = create_signature (surefg, surefgcount, limits, &fgsiglen);
-
-  /* Classify - the slow way....Better: Tree traversation */
-  for (i = 0; i < length; i++)
-    {
-      if (confidencematrix[i] >= 0.90)
-        {
-          confidencematrix[i] = 1.0f;
-          continue;
-        }
-
-      if (confidencematrix[i] <= 0.10)
-        {
-          confidencematrix[i] = 0.0f;
-          continue;
-        }
-
-      calcLAB (rgbs[i], &labpixel);
-      background = 1;
-      min = euklid (labpixel, bgsig[0]);
-
-      for (j = 1; j < bgsiglen; j++)
-        {
-          d = euklid(labpixel, bgsig[j]);
-          if (d < min)
+          if (labelfield[pos] == 0 && cm[pos] >= 0.5f)
             {
-              min = d;
+              labelfield[pos] = curlabel;
+
+              regioncount++;
+
+              g_queue_push_tail (q, GINT_TO_POINTER (pos + 1));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos - 1));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos + xres));
+              g_queue_push_tail (q, GINT_TO_POINTER (pos - xres));
             }
         }
 
-      if (fgsiglen == 0)
+      if (regioncount > maxregion)
         {
-          if (min < clustersize)
-            background = 1;
-          else
-            background = 0;
-        }
-      else
-        {
-          for (j = 0; j < fgsiglen; j++)
-            {
-              d = euklid (labpixel, fgsig[j]);
-              if (d < min)
-                {
-                  min = d;
-                  background = 0;
-                  break;
-                }
-            }
+          maxregion = regioncount;
+          maxblob = curlabel;
         }
 
-      if (background == 0)
-        {
-          confidencematrix[i] = 1.0f;
-        }
-      else
-        {
-          confidencematrix[i] = 0.0f;
-        }
+      curlabel++;
     }
 
-  /* Smooth a bit for error killing */
-  smoothcm (confidencematrix, xres, yres, 0.33, 0.33, 0.33);
-
-  normalize_matrix (confidencematrix, length);
-
-  /* Now erode, to make sure only "strongly connected components"
-   * keep being connected
-   */
-  erode2 (confidencematrix, xres, yres);
-
-  /* search the biggest connected component */
-  findmaxblob (confidencematrix, rgbs, xres, yres);
-
-  for (i = 0; i < smoothness; i++)
-    {
-      /* smooth again - as user specified */
-      smoothcm (confidencematrix, xres, yres, 0.33, 0.33, 0.33);
-    }
-
-  normalize_matrix (confidencematrix, length);
-
-  /* Threshold the values */
   for (i = 0; i < length; i++)
     {
-      if (confidencematrix[i] >= 0.5)
-        confidencematrix[i] = 1.0;
-      else
-        confidencematrix[i] = 0.0;
+      /* Kill everything that is not biggest blob! */
+      if (labelfield[i] != 0 && labelfield[i] != maxblob)
+        cm[i] = 0.0;
     }
 
-  /* search the biggest connected component again
-     to make sure jitter is killed
-   */
-  findmaxblob (confidencematrix, rgbs, xres, yres);
-
-  /* Now dilate, to fill up boundary pixels killed by erode */
-  dilate2 (confidencematrix, xres, yres);
-
-  g_free (surefg);
-  g_free (surebg);
-  g_free (bgsig);
-  g_free (fgsig);
-
-  return confidencematrix;
+  g_queue_free (q);
+  g_free (labelfield);
 }
-
-
-/* If JNI_COMPILE is defined, we provide a Java binding for the segmentate
- * funtion.  This allows me to use an existing benchmark as a unit test.
- * The plan is to implement this test as a GIMP plug-in later. Until then,
- * please leave this code in.
- */
-
-#ifdef JNI_COMPILE
-JNIEXPORT void JNICALL Java_NativeExperimentalPipe_segmentate
-    (JNIEnv * env, jobject obj, jintArray rgbs, jfloatArray cm, jint xres,
-     jint yres, jfloatArray limits) {
-	jint *jrgbs = (*env)->GetIntArrayElements(env, rgbs, 0);
-	jfloat *jcm = (*env)->GetFloatArrayElements(env, cm, 0);
-	jfloat *jlimits = (*env)->GetFloatArrayElements(env, limits, 0);
-	segmentate(jrgbs, jcm, xres, yres, jlimits, 6);
-	(*env)->ReleaseFloatArrayElements(env, cm, jcm, 0);
-}
-#endif

@@ -92,6 +92,8 @@ libappcore_a_sources = \
 	gimpdrawable-desaturate.h	\
 	gimpdrawable-equalize.c		\
 	gimpdrawable-equalize.h		\
+	gimpdrawable-foreground-extract.c\
+	gimpdrawable-foreground-extract.h\
 	gimpdrawable-histogram.c	\
 	gimpdrawable-histogram.h	\
 	gimpdrawable-invert.c		\

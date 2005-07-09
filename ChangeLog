@@ -1,3 +1,19 @@
+2005-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/base/segmentator.[ch]: ported to GIMP data structures. There
+	are still some TODOs, smooth_mask() isn't implemented yet.
+
+	* app/core/Makefile.am
+	* app/core/gimpdrawable-foreground-extract.[ch]: thin wrapper around
+	the new segmentation algorithm.
+
+	* tools/pdbgen/pdb/drawable.pdb: added a first draft of a PDB API
+	for foreground extraction.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpdrawable_pdb.[ch]: regenerated.
+
 2005-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer.c: removed if(image) checks where the image

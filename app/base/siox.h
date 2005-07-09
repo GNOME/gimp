@@ -40,12 +40,10 @@
 #define DIMS 3
 
 
-float * segmentate (guint *rgbs,
-                    float *confidencematrix,
-                    int    xres,
-                    int    yres,
-                    float  limits[DIMS],
-                    int    smoothness);
+void  foreground_extract (TileManager  *tiles,
+                          TileManager  *trimap,
+                          gfloat        limits[DIMS],
+                          gint          smoothness);
 
 
 #endif /* __SEGMENTATOR_H__ */

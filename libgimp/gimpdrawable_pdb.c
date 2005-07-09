@@ -1298,3 +1298,38 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
 
   return success;
 }
+
+/**
+ * gimp_drawable_foreground_extract:
+ * @drawable_ID: The drawable.
+ * @mask_ID: Tri-Map.
+ *
+ * Extract the foreground of a drawable using a given trimap.
+ *
+ * Image Segmentation by Uniform Color Clustering, see
+ * http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_drawable_foreground_extract (gint32 drawable_ID,
+				  gint32 mask_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_foreground_extract",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_DRAWABLE, mask_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

@@ -31,6 +31,7 @@
 #include "base/tile.h"
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
+#include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-preview.h"
 #include "core/gimpdrawable.h"
@@ -74,6 +75,7 @@ static ProcRecord drawable_fill_proc;
 static ProcRecord drawable_offset_proc;
 static ProcRecord drawable_thumbnail_proc;
 static ProcRecord drawable_sub_thumbnail_proc;
+static ProcRecord drawable_foreground_extract_proc;
 
 void
 register_drawable_procs (Gimp *gimp)
@@ -112,6 +114,7 @@ register_drawable_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_offset_proc);
   procedural_db_register (gimp, &drawable_thumbnail_proc);
   procedural_db_register (gimp, &drawable_sub_thumbnail_proc);
+  procedural_db_register (gimp, &drawable_foreground_extract_proc);
 }
 
 static Argument *
@@ -2498,4 +2501,64 @@ static ProcRecord drawable_sub_thumbnail_proc =
   5,
   drawable_sub_thumbnail_outargs,
   { { drawable_sub_thumbnail_invoker } }
+};
+
+static Argument *
+drawable_foreground_extract_invoker (Gimp         *gimp,
+                                     GimpContext  *context,
+                                     GimpProgress *progress,
+                                     Argument     *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawable *mask;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  mask = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
+    success = FALSE;
+
+  if (success)
+    {
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success)
+        gimp_drawable_foreground_extract (drawable, mask);
+    }
+
+  return procedural_db_return_args (&drawable_foreground_extract_proc, success);
+}
+
+static ProcArg drawable_foreground_extract_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The drawable"
+  },
+  {
+    GIMP_PDB_DRAWABLE,
+    "mask",
+    "Tri-Map"
+  }
+};
+
+static ProcRecord drawable_foreground_extract_proc =
+{
+  "gimp_drawable_foreground_extract",
+  "Extract the foreground of a drawable using a given trimap.",
+  "Image Segmentation by Uniform Color Clustering, see http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
+  "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",
+  "Gerald Friedland",
+  "2005",
+  NULL,
+  GIMP_INTERNAL,
+  2,
+  drawable_foreground_extract_inargs,
+  0,
+  NULL,
+  { { drawable_foreground_extract_invoker } }
 };
