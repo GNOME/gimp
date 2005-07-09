@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-06 18:28-0400\n"
-"PO-Revision-Date: 2005-07-06 14:31-0400\n"
+"POT-Creation-Date: 2005-07-09 02:15-0400\n"
+"PO-Revision-Date: 2005-07-09 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8125,8 +8125,8 @@ msgstr "No matches"
 #. *    Scales
 #.
 #: plug-ins/dbbrowser/gimpprocview.c:138 plug-ins/gflare/gflare.c:2674
-#: plug-ins/gflare/gflare.c:3505 plug-ins/gflare/gflare.c:3610
-#: plug-ins/gflare/gflare.c:3747
+#: plug-ins/gflare/gflare.c:3511 plug-ins/gflare/gflare.c:3616
+#: plug-ins/gflare/gflare.c:3753
 msgid "Parameters"
 msgstr "Parameters"
 
@@ -8852,114 +8852,114 @@ msgid "Rescan Gradients"
 msgstr "Rescan Gradients"
 
 #. Glow
-#: plug-ins/gflare/gflare.c:3369
+#: plug-ins/gflare/gflare.c:3375
 msgid "Glow Paint Options"
 msgstr "Glow Paint Options"
 
-#: plug-ins/gflare/gflare.c:3380 plug-ins/gflare/gflare.c:3408
-#: plug-ins/gflare/gflare.c:3436
+#: plug-ins/gflare/gflare.c:3386 plug-ins/gflare/gflare.c:3414
+#: plug-ins/gflare/gflare.c:3442
 msgid "Opacity:"
 msgstr "Opacity:"
 
-#: plug-ins/gflare/gflare.c:3393 plug-ins/gflare/gflare.c:3421
-#: plug-ins/gflare/gflare.c:3449
+#: plug-ins/gflare/gflare.c:3399 plug-ins/gflare/gflare.c:3427
+#: plug-ins/gflare/gflare.c:3455
 msgid "Paint Mode:"
 msgstr "Paint Mode:"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3397
+#: plug-ins/gflare/gflare.c:3403
 msgid "Rays Paint Options"
 msgstr "Rays Paint Options"
 
 #. Rays
-#: plug-ins/gflare/gflare.c:3425
+#: plug-ins/gflare/gflare.c:3431
 msgid "Second Flares Paint Options"
 msgstr "Second Flares Paint Options"
 
-#: plug-ins/gflare/gflare.c:3452 plug-ins/gimpressionist/general.c:115
+#: plug-ins/gflare/gflare.c:3458 plug-ins/gimpressionist/general.c:115
 msgid "_General"
 msgstr "_General"
 
 #.
 #. *  Gradient Menus
 #.
-#: plug-ins/gflare/gflare.c:3478 plug-ins/gflare/gflare.c:3581
-#: plug-ins/gflare/gflare.c:3720
+#: plug-ins/gflare/gflare.c:3484 plug-ins/gflare/gflare.c:3587
+#: plug-ins/gflare/gflare.c:3726
 msgid "Gradients"
 msgstr "Gradients"
 
-#: plug-ins/gflare/gflare.c:3489 plug-ins/gflare/gflare.c:3594
-#: plug-ins/gflare/gflare.c:3731
+#: plug-ins/gflare/gflare.c:3495 plug-ins/gflare/gflare.c:3600
+#: plug-ins/gflare/gflare.c:3737
 msgid "Radial Gradient:"
 msgstr "Radial Gradient:"
 
-#: plug-ins/gflare/gflare.c:3493 plug-ins/gflare/gflare.c:3598
+#: plug-ins/gflare/gflare.c:3499 plug-ins/gflare/gflare.c:3604
 msgid "Angular Gradient:"
 msgstr "Angular Gradient:"
 
-#: plug-ins/gflare/gflare.c:3497 plug-ins/gflare/gflare.c:3602
+#: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3608
 msgid "Angular Size Gradient:"
 msgstr "Angular Size Gradient:"
 
-#: plug-ins/gflare/gflare.c:3517 plug-ins/gflare/gflare.c:3622
-#: plug-ins/gflare/gflare.c:3759
+#: plug-ins/gflare/gflare.c:3523 plug-ins/gflare/gflare.c:3628
+#: plug-ins/gflare/gflare.c:3765
 msgid "Size (%):"
 msgstr "Size (%):"
 
-#: plug-ins/gflare/gflare.c:3529 plug-ins/gflare/gflare.c:3634
-#: plug-ins/gflare/gflare.c:3771
+#: plug-ins/gflare/gflare.c:3535 plug-ins/gflare/gflare.c:3640
+#: plug-ins/gflare/gflare.c:3777
 msgid "Rotation:"
 msgstr "Rotation:"
 
-#: plug-ins/gflare/gflare.c:3541 plug-ins/gflare/gflare.c:3647
-#: plug-ins/gflare/gflare.c:3784
+#: plug-ins/gflare/gflare.c:3547 plug-ins/gflare/gflare.c:3653
+#: plug-ins/gflare/gflare.c:3790
 msgid "Hue Rotation:"
 msgstr "Hue Rotation:"
 
-#: plug-ins/gflare/gflare.c:3555
+#: plug-ins/gflare/gflare.c:3561
 msgid "G_low"
 msgstr "G_low"
 
-#: plug-ins/gflare/gflare.c:3659
+#: plug-ins/gflare/gflare.c:3665
 msgid "# of Spikes:"
 msgstr "# of Spikes:"
 
-#: plug-ins/gflare/gflare.c:3671
+#: plug-ins/gflare/gflare.c:3677
 msgid "Spike Thickness:"
 msgstr "Spike Thickness:"
 
-#: plug-ins/gflare/gflare.c:3685
+#: plug-ins/gflare/gflare.c:3691
 msgid "_Rays"
 msgstr "_Rays"
 
-#: plug-ins/gflare/gflare.c:3735
+#: plug-ins/gflare/gflare.c:3741
 msgid "Size Factor Gradient:"
 msgstr "Size Factor Gradient:"
 
-#: plug-ins/gflare/gflare.c:3739
+#: plug-ins/gflare/gflare.c:3745
 msgid "Probability Gradient:"
 msgstr "Probability Gradient:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
-#: plug-ins/gflare/gflare.c:3801
+#: plug-ins/gflare/gflare.c:3807
 msgid "Shape of Second Flares"
 msgstr "Shape of Second Flares"
 
-#: plug-ins/gflare/gflare.c:3809
+#: plug-ins/gflare/gflare.c:3815
 msgid "Circle"
 msgstr "Circle"
 
-#: plug-ins/gflare/gflare.c:3826
+#: plug-ins/gflare/gflare.c:3832
 msgid "Polygon"
 msgstr "Polygon"
 
-#: plug-ins/gflare/gflare.c:3859
+#: plug-ins/gflare/gflare.c:3865
 msgid "Random Seed:"
 msgstr "Random Seed:"
 
-#: plug-ins/gflare/gflare.c:3873
+#: plug-ins/gflare/gflare.c:3879
 msgid "_Second Flares"
 msgstr "_Second Flares"
 
@@ -9815,11 +9815,11 @@ msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "File '%s' doesn't seem to be an IFS Fractal file."
 
 #: plug-ins/ifscompose/ifscompose.c:2508
-msgid "Save as IFS Fraktal file"
+msgid "Save as IFS Fractal file"
 msgstr "Save as IFS Fractal file"
 
 #: plug-ins/ifscompose/ifscompose.c:2543
-msgid "Open IFS Fraktal file"
+msgid "Open IFS Fractal file"
 msgstr "Open IFS Fractal file"
 
 #: plug-ins/imagemap/imap_about.c:44

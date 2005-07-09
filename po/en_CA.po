@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-08 16:22-0400\n"
-"PO-Revision-Date: 2005-07-08 14:29-0400\n"
+"POT-Creation-Date: 2005-07-09 02:13-0400\n"
+"PO-Revision-Date: 2005-07-09 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -182,154 +182,158 @@ msgstr ""
 "G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:95 app/core/gimp.c:871 app/dialogs/dialogs.c:145
+#: app/actions/actions.c:96 app/core/gimp.c:871 app/dialogs/dialogs.c:145
 #: app/dialogs/preferences-dialog.c:2411 app/pdb/internal_procs.c:93
 msgid "Brushes"
 msgstr "Brushes"
 
-#: app/actions/actions.c:98 app/dialogs/dialogs.c:157
+#: app/actions/actions.c:99 app/dialogs/dialogs.c:157
 msgid "Buffers"
 msgstr "Buffers"
 
-#: app/actions/actions.c:101 app/dialogs/dialogs.c:170
+#: app/actions/actions.c:102 app/dialogs/dialogs.c:170
 msgid "Channels"
 msgstr "Channels"
 
-#: app/actions/actions.c:104
+#: app/actions/actions.c:105
 msgid "Colormap Editor"
 msgstr "Colourmap Editor"
 
-#: app/actions/actions.c:107 app/pdb/internal_procs.c:102
+#: app/actions/actions.c:108 app/pdb/internal_procs.c:102
 msgid "Context"
 msgstr "Context"
 
-#: app/actions/actions.c:110
+#: app/actions/actions.c:111 app/dialogs/dialogs.c:138
+msgid "Cursor Info"
+msgstr "Cursor Info"
+
+#: app/actions/actions.c:114
 msgid "Debug"
 msgstr "Debug"
 
-#: app/actions/actions.c:113
+#: app/actions/actions.c:117
 msgid "Dialogs"
 msgstr "Dialogues"
 
-#: app/actions/actions.c:116
+#: app/actions/actions.c:120
 msgid "Dock"
 msgstr "Dock"
 
-#: app/actions/actions.c:119
+#: app/actions/actions.c:123
 msgid "Dockable"
 msgstr "Dockable"
 
-#: app/actions/actions.c:122 app/dialogs/dialogs.c:159
+#: app/actions/actions.c:126 app/dialogs/dialogs.c:159
 msgid "Document History"
 msgstr "Document History"
 
-#: app/actions/actions.c:125 app/core/core-enums.c:818
+#: app/actions/actions.c:129 app/core/core-enums.c:818
 #: app/core/core-enums.c:849
 msgid "Drawable"
 msgstr "Drawable"
 
-#: app/actions/actions.c:128 app/tools/tools-enums.c:172
+#: app/actions/actions.c:132 app/tools/tools-enums.c:172
 msgid "Edit"
 msgstr "Edit"
 
-#: app/actions/actions.c:131 app/dialogs/dialogs.c:134
+#: app/actions/actions.c:135 app/dialogs/dialogs.c:134
 msgid "Error Console"
 msgstr "Error Console"
 
-#: app/actions/actions.c:134
+#: app/actions/actions.c:138
 msgid "File"
 msgstr "File"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:137 app/core/gimp.c:887 app/dialogs/dialogs.c:153
+#: app/actions/actions.c:141 app/core/gimp.c:887 app/dialogs/dialogs.c:153
 #: app/dialogs/preferences-dialog.c:2427 app/pdb/internal_procs.c:129
 msgid "Fonts"
 msgstr "Fonts"
 
-#: app/actions/actions.c:140 app/dialogs/dialogs.c:216
+#: app/actions/actions.c:144 app/dialogs/dialogs.c:216
 #: app/widgets/gimpgradienteditor.c:294
 msgid "Gradient Editor"
 msgstr "Gradient Editor"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:143 app/core/gimp.c:883 app/dialogs/dialogs.c:149
+#: app/actions/actions.c:147 app/core/gimp.c:883 app/dialogs/dialogs.c:149
 #: app/dialogs/preferences-dialog.c:2423 app/pdb/internal_procs.c:141
 msgid "Gradients"
 msgstr "Gradients"
 
-#: app/actions/actions.c:146
+#: app/actions/actions.c:150
 msgid "Help"
 msgstr "Help"
 
-#: app/actions/actions.c:149 app/pdb/internal_procs.c:150
+#: app/actions/actions.c:153 app/pdb/internal_procs.c:150
 #: app/tools/tools-enums.c:204
 msgid "Image"
 msgstr "Image"
 
 #. list & grid views
-#: app/actions/actions.c:152 app/dialogs/dialogs.c:143
+#: app/actions/actions.c:156 app/dialogs/dialogs.c:143
 msgid "Images"
 msgstr "Images"
 
-#: app/actions/actions.c:155 app/dialogs/dialogs.c:166
+#: app/actions/actions.c:159 app/dialogs/dialogs.c:166
 #: app/dialogs/resize-dialog.c:281
 msgid "Layers"
 msgstr "Layers"
 
-#: app/actions/actions.c:158 app/dialogs/dialogs.c:220
+#: app/actions/actions.c:162 app/dialogs/dialogs.c:220
 #: app/widgets/gimppaletteeditor.c:194
 msgid "Palette Editor"
 msgstr "Palette Editor"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:161 app/core/gimp.c:879 app/dialogs/dialogs.c:151
+#: app/actions/actions.c:165 app/core/gimp.c:879 app/dialogs/dialogs.c:151
 #: app/dialogs/preferences-dialog.c:2419 app/pdb/internal_procs.c:171
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:164 app/core/gimp.c:875 app/dialogs/dialogs.c:147
+#: app/actions/actions.c:168 app/core/gimp.c:875 app/dialogs/dialogs.c:147
 #: app/dialogs/preferences-dialog.c:2415 app/pdb/internal_procs.c:186
 msgid "Patterns"
 msgstr "Patterns"
 
-#: app/actions/actions.c:167 app/dialogs/preferences-dialog.c:2431
+#: app/actions/actions.c:171 app/dialogs/preferences-dialog.c:2431
 msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
-#: app/actions/actions.c:170
+#: app/actions/actions.c:174
 msgid "QuickMask"
 msgstr "QuickMask"
 
-#: app/actions/actions.c:173
+#: app/actions/actions.c:177
 msgid "Select"
 msgstr "Select"
 
 #. initialize the template list
-#: app/actions/actions.c:176 app/core/gimp.c:896 app/dialogs/dialogs.c:161
+#: app/actions/actions.c:180 app/core/gimp.c:896 app/dialogs/dialogs.c:161
 msgid "Templates"
 msgstr "Templates"
 
-#: app/actions/actions.c:179
+#: app/actions/actions.c:183
 msgid "Text Editor"
 msgstr "Text Editor"
 
-#: app/actions/actions.c:182 app/dialogs/dialogs.c:126
+#: app/actions/actions.c:186 app/dialogs/dialogs.c:126
 #: app/dialogs/preferences-dialog.c:1629 app/gui/gui.c:404
 msgid "Tool Options"
 msgstr "Tool Options"
 
-#: app/actions/actions.c:185 app/dialogs/dialogs.c:155
+#: app/actions/actions.c:189 app/dialogs/dialogs.c:155
 msgid "Tools"
 msgstr "Tools"
 
-#: app/actions/actions.c:188 app/dialogs/dialogs.c:174
+#: app/actions/actions.c:192 app/dialogs/dialogs.c:174
 #: app/pdb/internal_procs.c:177 app/pdb/internal_procs.c:216
 #: app/tools/gimpvectortool.c:154
 msgid "Paths"
 msgstr "Paths"
 
-#: app/actions/actions.c:191
+#: app/actions/actions.c:195
 msgid "View"
 msgstr "View"
 
@@ -5647,10 +5651,6 @@ msgstr "Errors"
 msgid "Cursor"
 msgstr "Cursor"
 
-#: app/dialogs/dialogs.c:138
-msgid "Cursor Info"
-msgstr "Cursor Info"
-
 #: app/dialogs/dialogs.c:159
 msgid "History"
 msgstr "History"
@@ -6503,7 +6503,7 @@ msgstr "Check _Size:"
 msgid "Get Monitor Resolution"
 msgstr "Get Monitor Resolution"
 
-#: app/dialogs/preferences-dialog.c:2054 app/widgets/gimpcursorview.c:126
+#: app/dialogs/preferences-dialog.c:2054 app/widgets/gimpcursorview.c:157
 #: app/widgets/gimpgrideditor.c:267 app/widgets/gimpgrideditor.c:299
 msgid "Pixels"
 msgstr "Pixels"
@@ -7547,7 +7547,7 @@ msgstr "Plug-In could not save image"
 msgid "Invalid character sequence in URI"
 msgstr "Invalid character sequence in URI"
 
-#: app/gui/session.c:246 app/menus/menus.c:373 app/tools/gimp-tools.c:401
+#: app/gui/session.c:246 app/menus/menus.c:381 app/tools/gimp-tools.c:401
 #: app/widgets/gimpdevices.c:218
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7804,7 +7804,7 @@ msgstr "Text procedures"
 msgid "Transform Tool procedures"
 msgstr "Transform Tool procedures"
 
-#: app/pdb/internal_procs.c:213 app/widgets/gimpcursorview.c:148
+#: app/pdb/internal_procs.c:213 app/widgets/gimpcursorview.c:179
 msgid "Units"
 msgstr "Units"
 
@@ -9060,13 +9060,13 @@ msgstr "1 "
 msgid "2 "
 msgstr "2 "
 
-#: app/tools/gimprectangletool.c:1578 app/widgets/gimpcursorview.c:139
-#: app/widgets/gimpcursorview.c:161
+#: app/tools/gimprectangletool.c:1578 app/widgets/gimpcursorview.c:170
+#: app/widgets/gimpcursorview.c:192
 msgid "X"
 msgstr "X"
 
-#: app/tools/gimprectangletool.c:1579 app/widgets/gimpcursorview.c:145
-#: app/widgets/gimpcursorview.c:167
+#: app/tools/gimprectangletool.c:1579 app/widgets/gimpcursorview.c:176
+#: app/widgets/gimpcursorview.c:198
 msgid "Y"
 msgstr "Y"
 
@@ -9797,11 +9797,11 @@ msgstr "Black:"
 msgid "Alpha:"
 msgstr "Alpha:"
 
-#: app/widgets/gimpcolorframe.c:544 app/widgets/gimpcursorview.c:136
-#: app/widgets/gimpcursorview.c:142 app/widgets/gimpcursorview.c:158
-#: app/widgets/gimpcursorview.c:164 app/widgets/gimpcursorview.c:350
-#: app/widgets/gimpcursorview.c:351 app/widgets/gimpcursorview.c:352
-#: app/widgets/gimpcursorview.c:353
+#: app/widgets/gimpcolorframe.c:544 app/widgets/gimpcursorview.c:167
+#: app/widgets/gimpcursorview.c:173 app/widgets/gimpcursorview.c:189
+#: app/widgets/gimpcursorview.c:195 app/widgets/gimpcursorview.c:457
+#: app/widgets/gimpcursorview.c:458 app/widgets/gimpcursorview.c:459
+#: app/widgets/gimpcursorview.c:460
 msgid "n/a"
 msgstr "n/a"
 
@@ -10217,6 +10217,10 @@ msgstr "Mouse Wheel"
 #: app/widgets/gimpcontrollerwheel.c:229
 msgid "Mouse Wheel Events"
 msgstr "Mouse Wheel Events"
+
+#: app/widgets/gimpcursorview.c:225
+msgid "_Sample Merged"
+msgstr "_Sample Merged"
 
 #: app/widgets/gimpdataeditor.c:214
 msgid "Save"
