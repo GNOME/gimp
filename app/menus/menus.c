@@ -317,6 +317,14 @@ menus_init (Gimp              *gimp,
                                       "cursor-info-menu.xml",
                                       NULL,
                                       NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<SamplePointEditor>",
+                                      "sample-point-editor",
+                                      NULL,
+                                      "/sample-point-editor-popup",
+                                      "sample-point-editor-menu.xml",
+                                      NULL,
+                                      NULL);
 }
 
 void

@@ -73,6 +73,7 @@
 #include "patterns-actions.h"
 #include "plug-in-actions.h"
 #include "qmask-actions.h"
+#include "sample-point-editor-actions.h"
 #include "select-actions.h"
 #include "templates-actions.h"
 #include "text-editor-actions.h"
@@ -174,6 +175,9 @@ static GimpActionFactoryEntry action_groups[] =
   { "qmask", N_("QuickMask"), GIMP_STOCK_QMASK_ON,
     qmask_actions_setup,
     qmask_actions_update },
+  { "sample-point-editor", N_("Sample Points"), GIMP_STOCK_SAMPLE_POINT,
+    sample_point_editor_actions_setup,
+    sample_point_editor_actions_update },
   { "select", N_("Select"), GIMP_STOCK_SELECTION,
     select_actions_setup,
     select_actions_update },

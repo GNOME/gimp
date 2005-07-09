@@ -113,6 +113,10 @@ libappactions_a_SOURCES = \
 	qmask-actions.h			\
 	qmask-commands.c		\
 	qmask-commands.h		\
+	sample-point-editor-actions.c	\
+	sample-point-editor-actions.h	\
+	sample-point-editor-commands.c	\
+	sample-point-editor-commands.h	\
 	select-actions.c		\
 	select-actions.h		\
 	select-commands.c		\

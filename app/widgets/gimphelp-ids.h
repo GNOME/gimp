@@ -414,6 +414,9 @@
 #define GIMP_HELP_CURSOR_INFO_DIALOG              "gimp-cursor-info-dialog"
 #define GIMP_HELP_CURSOR_INFO_SAMPLE_MERGED       "gimp-cursor-info-sample-merged"
 
+#define GIMP_HELP_SAMPLE_POINT_DIALOG             "gimp-sample-point-dialog"
+#define GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED      "gimp-sample-point-sample-merged"
+
 #define GIMP_HELP_DOCK                            "gimp-dock"
 #define GIMP_HELP_DOCK_CLOSE                      "gimp-dock-close"
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
@@ -437,7 +440,6 @@
 #define GIMP_HELP_DISPLAY_FILTER_DIALOG           "gimp-display-filter-dialog"
 #define GIMP_HELP_HISTOGRAM_DIALOG                "gimp-histogram-dialog"
 #define GIMP_HELP_INFO_DIALOG                     "gimp-info-dialog"
-#define GIMP_HELP_SAMPLE_POINT_DIALOG             "gimp-sample-point-dialog"
 #define GIMP_HELP_MODULE_DIALOG                   "gimp-module-dialog"
 #define GIMP_HELP_NAVIGATION_DIALOG               "gimp-navigation-dialog"
 #define GIMP_HELP_TEXT_EDITOR_DIALOG              "gimp-text-editor-dialog"

@@ -45,6 +45,8 @@ struct _GimpSamplePointEditor
 
   gboolean         dirty[4];
   guint            dirty_idle_id;
+
+  gboolean         sample_merged;
 };
 
 struct _GimpSamplePointEditorClass
@@ -53,9 +55,13 @@ struct _GimpSamplePointEditorClass
 };
 
 
-GType       gimp_sample_point_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_sample_point_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_sample_point_editor_new      (GimpMenuFactory *menu_factory);
+GtkWidget * gimp_sample_point_editor_new               (GimpMenuFactory *menu_factory);
+
+void        gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
+                                                        gboolean               sample_merged);
+gboolean    gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor);
 
 
 #endif /* __GIMP_SAMPLE_POINT_EDITOR_H__ */

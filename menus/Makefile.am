@@ -27,6 +27,7 @@ menudata_DATA = \
 	palettes-menu.xml		\
 	patterns-menu.xml		\
 	qmask-menu.xml			\
+	sample-point-editor-menu.xml	\
 	selection-editor-menu.xml	\
 	templates-menu.xml		\
 	text-editor-toolbar.xml		\

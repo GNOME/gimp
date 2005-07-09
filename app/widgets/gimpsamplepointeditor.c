@@ -40,12 +40,27 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_SAMPLE_MERGED
+};
+
+
 static void   gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass);
 static void   gimp_sample_point_editor_init       (GimpSamplePointEditor      *editor);
 
 static GObject * gimp_sample_point_editor_constructor (GType                  type,
                                                        guint                  n_params,
                                                        GObjectConstructParam *params);
+static void   gimp_sample_point_editor_set_property   (GObject               *object,
+                                                       guint                  property_id,
+                                                       const GValue          *value,
+                                                       GParamSpec            *pspec);
+static void   gimp_sample_point_editor_get_property   (GObject               *object,
+                                                       guint                  property_id,
+                                                       GValue                *value,
+                                                       GParamSpec            *pspec);
 static void   gimp_sample_point_editor_dispose        (GObject               *object);
 
 static void   gimp_sample_point_editor_style_set      (GtkWidget             *widget,
@@ -116,11 +131,20 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass* klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor     = gimp_sample_point_editor_constructor;
+  object_class->get_property    = gimp_sample_point_editor_get_property;
+  object_class->set_property    = gimp_sample_point_editor_set_property;
   object_class->dispose         = gimp_sample_point_editor_dispose;
 
   widget_class->style_set       = gimp_sample_point_editor_style_set;
 
   image_editor_class->set_image = gimp_sample_point_editor_set_image;
+
+  g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
+                                   g_param_spec_boolean ("sample-merged",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -130,6 +154,8 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
   gint i;
   gint row    = 0;
   gint column = 0;
+
+  editor->sample_merged = TRUE;
 
   gtk_widget_style_get (GTK_WIDGET (editor),
                         "content_spacing", &content_spacing,
@@ -183,6 +209,45 @@ gimp_sample_point_editor_constructor (GType                  type,
   editor = GIMP_SAMPLE_POINT_EDITOR (object);
 
   return object;
+}
+
+static void
+gimp_sample_point_editor_set_property (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec)
+{
+  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      gimp_sample_point_editor_set_sample_merged (editor,
+                                                  g_value_get_boolean (value));
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_sample_point_editor_get_property (GObject    *object,
+                                       guint       property_id,
+                                       GValue     *value,
+                                       GParamSpec *pspec)
+{
+  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, editor->sample_merged);
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -269,14 +334,42 @@ gimp_sample_point_editor_new (GimpMenuFactory *menu_factory)
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   return g_object_new (GIMP_TYPE_SAMPLE_POINT_EDITOR,
-#if 0
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<SamplePointEditor>",
-                       "ui-path",         "/selection-editor-popup",
-#endif
+                       "ui-path",         "/sample-point-editor-popup",
                        NULL);
 }
 
+void
+gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
+                                            gboolean               sample_merged)
+{
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT_EDITOR (editor));
+
+  sample_merged = sample_merged ? TRUE : FALSE;
+
+  if (editor->sample_merged != sample_merged)
+    {
+      gint i;
+
+      editor->sample_merged = sample_merged;
+
+      for (i = 0; i < 4; i++)
+        editor->dirty[i] = TRUE;
+
+      gimp_sample_point_editor_dirty (editor, -1);
+
+      g_object_notify (G_OBJECT (editor), "sample-merged");
+    }
+}
+
+gboolean
+gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT_EDITOR (editor), FALSE);
+
+  return editor->sample_merged;
+}
 
 /*  private functions  */
 
@@ -413,7 +506,8 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           if (gimp_image_pick_color (image_editor->gimage, NULL,
                                      sample_point->x,
                                      sample_point->y,
-                                     TRUE, FALSE, 0.0,
+                                     editor->sample_merged,
+                                     FALSE, 0.0,
                                      &image_type,
                                      &color,
                                      &color_index))
