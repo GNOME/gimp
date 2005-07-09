@@ -1,3 +1,11 @@
+2005-07-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_real_feather):
+	gaussian_blur_region() writes to the pixel data, need to initialize
+	the pixel region with dirty == TRUE;
+
+	* app/paint-funcs/paint-funcs-generic.h: formatting.
+
 2005-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsamplepointeditor.[ch]: added "sample-merged"

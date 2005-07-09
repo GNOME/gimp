@@ -336,7 +336,7 @@ inline void
 shade_pixels (const guchar *src,
               guchar       *dest,
               const guchar *col,
-              guchar            blend,
+              guchar        blend,
               guint         w,
               guint         bytes,
               gboolean      has_alpha)
@@ -1100,7 +1100,7 @@ dissolve_pixels (const guchar *src,
                  gint          length,
                  gint          sb,
                  gint          db,
-                 guint               has_alpha)
+                 gboolean      has_alpha)
 {
   gint    alpha, b;
   gint32  rand_val;

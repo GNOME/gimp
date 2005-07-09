@@ -1146,7 +1146,7 @@ gimp_channel_real_feather (GimpChannel *channel,
                      0, 0,
                      gimp_item_width  (GIMP_ITEM (channel)),
                      gimp_item_height (GIMP_ITEM (channel)),
-                     FALSE);
+                     TRUE);
   gaussian_blur_region (&srcPR, radius_x, radius_y);
 
   channel->bounds_known = FALSE;
