@@ -1,5 +1,7 @@
 2005-07-09  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.[ch]: formatting.
+
 	* app/core/gimpchannel.c (gimp_channel_real_feather):
 	gaussian_blur_region() writes to the pixel data, need to initialize
 	the pixel region with dirty == TRUE;

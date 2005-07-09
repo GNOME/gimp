@@ -33,14 +33,12 @@ pixel_surround_init (PixelSurround *ps,
 		     TileManager   *tm,
 		     gint           w,
 		     gint           h,
-		     guchar         bg[MAX_CHANNELS])
+		     const guchar   bg[MAX_CHANNELS])
 {
   gint i;
 
   for (i = 0; i < MAX_CHANNELS; ++i)
-    {
-      ps->bg[i] = bg[i];
-    }
+    ps->bg[i] = bg[i];
 
   ps->tile       = NULL;
   ps->mgr        = tm;
@@ -69,10 +67,11 @@ pixel_surround_lock (PixelSurround *ps,
 
   /* do we have the whole region? */
   if (ps->tile &&
-      (i < (tile_ewidth(ps->tile) - ps->w)) &&
-      (j < (tile_eheight(ps->tile) - ps->h)))
+      (i < (tile_ewidth (ps->tile) - ps->w)) &&
+      (j < (tile_eheight (ps->tile) - ps->h)))
     {
       ps->row_stride = tile_ewidth (ps->tile) * ps->bpp;
+
       /* is this really the correct way? */
       return tile_data_pointer (ps->tile, i, j);
     }
@@ -87,9 +86,9 @@ pixel_surround_lock (PixelSurround *ps,
   /* copy pixels, one by one */
   /* no, this is not the best way, but it's much better than before */
   ptr = ps->buff;
-  for (j = y; j < y+ps->h; ++j)
+  for (j = y; j < y + ps->h; ++j)
     {
-      for (i = x; i < x+ps->w; ++i)
+      for (i = x; i < x + ps->w; ++i)
 	{
 	  Tile *tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
 
@@ -100,17 +99,14 @@ pixel_surround_lock (PixelSurround *ps,
 						j % TILE_HEIGHT);
 
 	      for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
-		{
-		  *ptr = *k;
-		}
+                *ptr = *k;
+
 	      tile_release (tile, FALSE);
 	    }
 	  else
 	    {
-	      for (k = ps->bg; k < ps->bg+ps->bpp; ++k, ++ptr)
-		{
-		  *ptr = *k;
-		}
+	      for (k = ps->bg; k < ps->bg + ps->bpp; ++k, ++ptr)
+                *ptr = *k;
 	    }
 	}
     }
