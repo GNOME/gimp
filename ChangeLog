@@ -1,3 +1,7 @@
+2005-07-10  Sven Neumann  <sven@gimp.org>
+
+	* app/batch.c (batch_run): unified strings.
+
 2005-07-10  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated

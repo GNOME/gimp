@@ -81,8 +81,8 @@ batch_run (Gimp         *gimp,
       if (proc)
         batch_run_cmd (gimp, proc_name, proc, GIMP_RUN_INTERACTIVE, NULL);
       else
-        g_message (_("The batch interpreter '%s' is not available, "
-                     "batch mode disabled."), proc_name);
+        g_message (_("The batch interpreter '%s' is not available. "
+                     "Batch mode disabled."), proc_name);
     }
   else
     {
