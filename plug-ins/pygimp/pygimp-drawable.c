@@ -1596,17 +1596,17 @@ lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyObject *
-lay_get_preserve_trans(PyGimpLayer *self, void *closure)
+lay_get_lock_alpha(PyGimpLayer *self, void *closure)
 {
-    return PyBool_FromLong(gimp_layer_get_preserve_trans(self->ID));
+    return PyBool_FromLong(gimp_layer_get_lock_alpha(self->ID));
 }
 
 static int
-lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
+lay_set_lock_alpha(PyGimpLayer *self, PyObject *value, void *closure)
 {
     if (value == NULL) {
         PyErr_SetString(PyExc_TypeError,
-			"cannot delete preserve_transparency");
+			"cannot delete lock_alpha");
         return -1;
     }
 
@@ -1615,10 +1615,9 @@ lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    if (!gimp_layer_set_preserve_trans(self->ID, PyInt_AsLong(value))) {
+    if (!gimp_layer_set_lock_alpha(self->ID, PyInt_AsLong(value))) {
 	PyErr_Format(pygimp_error,
-	             "could not set preserve transperancy setting on "
-		     "layer (ID %d)",
+	             "could not set lock alpha setting on layer (ID %d)",
 		     self->ID);
 	return -1;
     }
@@ -1655,6 +1654,24 @@ lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
     return 0;
 }
 
+static PyObject *
+lay_get_preserve_trans(PyGimpLayer *self, void *closure)
+{
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use lock_alpha attribute") < 0)
+	return NULL;
+
+    return lay_get_lock_alpha(self, closure);
+}
+
+static int
+lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use lock_alpha attribute") < 0)
+	return -1;
+
+    return lay_set_lock_alpha(self, value, closure);
+}
+
 static PyGetSetDef lay_getsets[] = {
     { "is_floating_sel", (getter)lay_get_is_floating_sel, (setter)0 },
     { "mask", (getter)lay_get_mask, (setter)0 },
@@ -1662,9 +1679,10 @@ static PyGetSetDef lay_getsets[] = {
     { "edit_mask", (getter)lay_get_edit_mask, (setter)lay_set_edit_mask },
     { "mode", (getter)lay_get_mode, (setter)lay_set_mode },
     { "opacity", (getter)lay_get_opacity, (setter)lay_set_opacity },
+    { "lock_alpha", (getter)lay_get_lock_alpha, (setter)lay_set_lock_alpha },
+    { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
     { "preserve_trans", (getter)lay_get_preserve_trans,
       (setter)lay_set_preserve_trans },
-    { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
     { NULL, (getter)0, (setter)0 }
 };
 

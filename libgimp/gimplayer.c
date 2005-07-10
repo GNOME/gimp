@@ -110,5 +110,5 @@ gboolean
 gimp_layer_set_preserve_trans (gint32   layer_ID,
                                gboolean preserve_trans)
 {
-  gimp_layer_set_lock_alpha (layer_ID, preserve_trans);
+  return gimp_layer_set_lock_alpha (layer_ID, preserve_trans);
 }
