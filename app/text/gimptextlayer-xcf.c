@@ -215,9 +215,9 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   drawable->type      = gimp_drawable_type (GIMP_DRAWABLE (layer));
   drawable->has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
-  GIMP_LAYER (text_layer)->opacity        = gimp_layer_get_opacity (layer);
-  GIMP_LAYER (text_layer)->mode           = gimp_layer_get_mode (layer);
-  GIMP_LAYER (text_layer)->preserve_trans = gimp_layer_get_preserve_trans (layer);
+  GIMP_LAYER (text_layer)->opacity    = gimp_layer_get_opacity (layer);
+  GIMP_LAYER (text_layer)->mode       = gimp_layer_get_mode (layer);
+  GIMP_LAYER (text_layer)->lock_alpha = gimp_layer_get_lock_alpha (layer);
 
   gimp_text_layer_set_text (text_layer, text);
 

@@ -271,7 +271,7 @@ rotate_drawable (GimpDrawable *drawable)
   gint          bytes;
   gint          row, col;
   gint          offsetx, offsety;
-  gboolean      was_preserve_transparency = FALSE;
+  gboolean      was_lock_alpha = FALSE;
   guchar       *buffer;
   guchar       *src_row, *dest_row;
 
@@ -284,10 +284,10 @@ rotate_drawable (GimpDrawable *drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  if (gimp_layer_get_preserve_trans (drawable->drawable_id))
+  if (gimp_layer_get_lock_alpha (drawable->drawable_id))
     {
-      was_preserve_transparency = TRUE;
-      gimp_layer_set_preserve_trans (drawable->drawable_id, FALSE);
+      was_lock_alpha = TRUE;
+      gimp_layer_set_lock_alpha (drawable->drawable_id, FALSE);
     }
 
   if (rotvals.angle == 2)  /* we're rotating by 180° */
@@ -390,8 +390,8 @@ rotate_drawable (GimpDrawable *drawable)
 			  width, height);
   gimp_layer_set_offsets (drawable->drawable_id, offsetx, offsety);
 
-  if (was_preserve_transparency)
-    gimp_layer_set_preserve_trans (drawable->drawable_id, TRUE);
+  if (was_lock_alpha)
+    gimp_layer_set_lock_alpha (drawable->drawable_id, TRUE);
 
   return;
 }

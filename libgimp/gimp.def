@@ -352,6 +352,7 @@ EXPORTS
 	gimp_layer_from_mask
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
+	gimp_layer_get_lock_alpha
 	gimp_layer_get_mask
 	gimp_layer_get_mode
 	gimp_layer_get_opacity
@@ -367,6 +368,7 @@ EXPORTS
 	gimp_layer_scale
 	gimp_layer_set_apply_mask
 	gimp_layer_set_edit_mask
+	gimp_layer_set_lock_alpha
 	gimp_layer_set_mode
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity

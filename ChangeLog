@@ -1,3 +1,68 @@
+2005-07-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/layers-actions.c
+	* app/actions/layers-commands.[ch]
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimplayer.[ch]
+	* app/text/gimptextlayer-xcf.c
+	* app/widgets/gimphelp-ids.h
+	* app/widgets/gimplayertreeview.[ch]
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-private.h
+	* app/xcf/xcf-save.c
+	* tools/pdbgen/pdb/layer.pdb
+	* menus/image-menu.xml.in
+	* libgimp/gimp.def: did a global s/preserve_trans/lock_alpha/ in
+	preparation for more layer locking flags.
+
+	* app/pdb/procedural_db.c
+	* libgimp/gimplayer.[ch]: added compat stuff for preserve_trans.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/script-fu/scripts/3d-outline.scm
+	* plug-ins/script-fu/scripts/alien-glow-bar.scm
+	* plug-ins/script-fu/scripts/alien-glow-bullet.scm
+	* plug-ins/script-fu/scripts/alien-glow-logo.scm
+	* plug-ins/script-fu/scripts/basic1-logo.scm
+	* plug-ins/script-fu/scripts/basic2-logo.scm
+	* plug-ins/script-fu/scripts/beveled-pattern-button.scm
+	* plug-ins/script-fu/scripts/blend-anim.scm
+	* plug-ins/script-fu/scripts/blended-logo.scm
+	* plug-ins/script-fu/scripts/bovinated-logo.scm
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/carved-logo.scm
+	* plug-ins/script-fu/scripts/chalk.scm
+	* plug-ins/script-fu/scripts/chip-away.scm
+	* plug-ins/script-fu/scripts/comic-logo.scm
+	* plug-ins/script-fu/scripts/coolmetal-logo.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/drop-shadow.scm
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/glowing-logo.scm
+	* plug-ins/script-fu/scripts/gradient-bevel-logo.scm
+	* plug-ins/script-fu/scripts/image-structure.scm
+	* plug-ins/script-fu/scripts/neon-logo.scm
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/starburst-logo.scm
+	* plug-ins/script-fu/scripts/starscape-logo.scm
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	* plug-ins/script-fu/scripts/title-header.scm
+	* plug-ins/script-fu/scripts/waves-anim.scm
+	* plug-ins/xjt/xjt.c: changed accordingly.
+
 2005-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c (batch_run): unified strings.

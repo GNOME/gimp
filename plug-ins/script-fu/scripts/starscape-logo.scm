@@ -69,7 +69,7 @@
     (gimp-image-add-layer img glow-layer 1)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-channel img bump-channel 0)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
 
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

@@ -52,8 +52,8 @@ static ProcRecord layer_from_mask_proc;
 static ProcRecord layer_add_mask_proc;
 static ProcRecord layer_remove_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
-static ProcRecord layer_get_preserve_trans_proc;
-static ProcRecord layer_set_preserve_trans_proc;
+static ProcRecord layer_get_lock_alpha_proc;
+static ProcRecord layer_set_lock_alpha_proc;
 static ProcRecord layer_get_apply_mask_proc;
 static ProcRecord layer_set_apply_mask_proc;
 static ProcRecord layer_get_show_mask_proc;
@@ -83,8 +83,8 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_add_mask_proc);
   procedural_db_register (gimp, &layer_remove_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
-  procedural_db_register (gimp, &layer_get_preserve_trans_proc);
-  procedural_db_register (gimp, &layer_set_preserve_trans_proc);
+  procedural_db_register (gimp, &layer_get_lock_alpha_proc);
+  procedural_db_register (gimp, &layer_set_lock_alpha_proc);
   procedural_db_register (gimp, &layer_get_apply_mask_proc);
   procedural_db_register (gimp, &layer_set_apply_mask_proc);
   procedural_db_register (gimp, &layer_get_show_mask_proc);
@@ -1157,10 +1157,10 @@ static ProcRecord layer_is_floating_sel_proc =
 };
 
 static Argument *
-layer_get_preserve_trans_invoker (Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+layer_get_lock_alpha_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
@@ -1170,15 +1170,15 @@ layer_get_preserve_trans_invoker (Gimp         *gimp,
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
-  return_args = procedural_db_return_args (&layer_get_preserve_trans_proc, success);
+  return_args = procedural_db_return_args (&layer_get_lock_alpha_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_layer_get_preserve_trans (layer);
+    return_args[1].value.pdb_int = gimp_layer_get_lock_alpha (layer);
 
   return return_args;
 }
 
-static ProcArg layer_get_preserve_trans_inargs[] =
+static ProcArg layer_get_lock_alpha_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
@@ -1187,55 +1187,55 @@ static ProcArg layer_get_preserve_trans_inargs[] =
   }
 };
 
-static ProcArg layer_get_preserve_trans_outargs[] =
+static ProcArg layer_get_lock_alpha_outargs[] =
 {
   {
     GIMP_PDB_INT32,
-    "preserve_trans",
-    "The layer's preserve transperancy setting"
+    "lock_alpha",
+    "The layer's lock alpha channel setting"
   }
 };
 
-static ProcRecord layer_get_preserve_trans_proc =
+static ProcRecord layer_get_lock_alpha_proc =
 {
-  "gimp_layer_get_preserve_trans",
-  "Get the preserve transperancy setting of the specified layer.",
-  "This procedure returns the specified layer's preserve transperancy setting.",
+  "gimp_layer_get_lock_alpha",
+  "Get the lock alpha channel setting of the specified layer.",
+  "This procedure returns the specified layer's lock alpha channel setting.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
   1,
-  layer_get_preserve_trans_inargs,
+  layer_get_lock_alpha_inargs,
   1,
-  layer_get_preserve_trans_outargs,
-  { { layer_get_preserve_trans_invoker } }
+  layer_get_lock_alpha_outargs,
+  { { layer_get_lock_alpha_invoker } }
 };
 
 static Argument *
-layer_set_preserve_trans_invoker (Gimp         *gimp,
-                                  GimpContext  *context,
-                                  GimpProgress *progress,
-                                  Argument     *args)
+layer_set_lock_alpha_invoker (Gimp         *gimp,
+                              GimpContext  *context,
+                              GimpProgress *progress,
+                              Argument     *args)
 {
   gboolean success = TRUE;
   GimpLayer *layer;
-  gboolean preserve_trans;
+  gboolean lock_alpha;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
-  preserve_trans = args[1].value.pdb_int ? TRUE : FALSE;
+  lock_alpha = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_layer_set_preserve_trans (layer, preserve_trans, TRUE);
+    gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
 
-  return procedural_db_return_args (&layer_set_preserve_trans_proc, success);
+  return procedural_db_return_args (&layer_set_lock_alpha_proc, success);
 }
 
-static ProcArg layer_set_preserve_trans_inargs[] =
+static ProcArg layer_set_lock_alpha_inargs[] =
 {
   {
     GIMP_PDB_LAYER,
@@ -1244,26 +1244,26 @@ static ProcArg layer_set_preserve_trans_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "preserve_trans",
-    "The new layer's preserve transperancy setting"
+    "lock_alpha",
+    "The new layer's lock alpha channel setting"
   }
 };
 
-static ProcRecord layer_set_preserve_trans_proc =
+static ProcRecord layer_set_lock_alpha_proc =
 {
-  "gimp_layer_set_preserve_trans",
-  "Set the preserve transperancy setting of the specified layer.",
-  "This procedure sets the specified layer's preserve transperancy setting.",
+  "gimp_layer_set_lock_alpha",
+  "Set the lock alpha channel setting of the specified layer.",
+  "This procedure sets the specified layer's lock alpha channel setting.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   NULL,
   GIMP_INTERNAL,
   2,
-  layer_set_preserve_trans_inargs,
+  layer_set_lock_alpha_inargs,
   0,
   NULL,
-  { { layer_set_preserve_trans_invoker } }
+  { { layer_set_lock_alpha_invoker } }
 };
 
 static Argument *

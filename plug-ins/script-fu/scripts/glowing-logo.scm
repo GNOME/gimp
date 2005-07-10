@@ -27,7 +27,7 @@
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill logo-layer BACKGROUND-FILL)
 

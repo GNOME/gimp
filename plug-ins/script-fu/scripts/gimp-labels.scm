@@ -52,8 +52,8 @@
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img bg-layer 2)
     
-    (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-layer-set-preserve-trans shadow-layer TRUE)
+    (gimp-layer-set-lock-alpha text-layer TRUE)
+    (gimp-layer-set-lock-alpha shadow-layer TRUE)
     
     (gimp-context-set-background text-color)
     (gimp-edit-fill text-layer BACKGROUND-FILL)

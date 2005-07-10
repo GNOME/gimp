@@ -42,8 +42,8 @@ struct _GimpLayerTreeView
 
   GtkWidget            *options_box;
   GtkWidget            *paint_mode_menu;
-  GtkWidget            *preserve_trans_toggle;
   GtkAdjustment        *opacity_adjustment;
+  GtkWidget            *lock_alpha_toggle;
 
   gint                  model_column_mask;
   gint                  model_column_mask_visible;
@@ -56,7 +56,7 @@ struct _GimpLayerTreeView
   /*< private >*/
   GQuark                mode_changed_handler_id;
   GQuark                opacity_changed_handler_id;
-  GQuark                preserve_trans_changed_handler_id;
+  GQuark                lock_alpha_changed_handler_id;
   GQuark                mask_changed_handler_id;
   GQuark                alpha_changed_handler_id;
 };

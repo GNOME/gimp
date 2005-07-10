@@ -1204,7 +1204,7 @@ read_layer_block (FILE     *f,
       if (!visibility)
 	gimp_drawable_set_visible (layer_ID, FALSE);
 
-      gimp_layer_set_preserve_trans (layer_ID, transparency_protected);
+      gimp_layer_set_lock_alpha (layer_ID, transparency_protected);
 
       if (major < 4)
 	if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)

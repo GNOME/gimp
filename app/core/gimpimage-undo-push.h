@@ -101,7 +101,7 @@ gboolean gimp_image_undo_push_layer_mode            (GimpImage     *gimage,
 gboolean gimp_image_undo_push_layer_opacity         (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
-gboolean gimp_image_undo_push_layer_preserve_trans  (GimpImage     *gimage,
+gboolean gimp_image_undo_push_layer_lock_alpha      (GimpImage     *gimage,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer);
 

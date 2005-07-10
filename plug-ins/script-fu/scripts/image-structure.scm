@@ -84,7 +84,7 @@
 	  (begin
 	    (gimp-selection-layer-alpha layer)
 	    (gimp-selection-invert img)
-	    (gimp-layer-set-preserve-trans layer FALSE)
+	    (gimp-layer-set-lock-alpha layer FALSE)
 	    (gimp-context-set-foreground padding-color)
 	    (gimp-edit-bucket-fill layer FG-BUCKET-FILL NORMAL-MODE
                                    padding-opacity 0 0 0 0)

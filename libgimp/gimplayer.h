@@ -27,15 +27,20 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_layer_new  (gint32                image_ID,
-			  const gchar          *name,
-			  gint                  width,
-			  gint                  height,
-			  GimpImageType         type,
-			  gdouble               opacity,
-			  GimpLayerModeEffects  mode);
-gint32   gimp_layer_copy (gint32                layer_ID);
+gint32   gimp_layer_new                (gint32                image_ID,
+                                        const gchar          *name,
+                                        gint                  width,
+                                        gint                  height,
+                                        GimpImageType         type,
+                                        gdouble               opacity,
+                                        GimpLayerModeEffects  mode);
+gint32   gimp_layer_copy               (gint32                layer_ID);
 
+#ifndef GIMP_DISABLE_DEPRECATED
+gboolean gimp_layer_get_preserve_trans (gint32                layer_ID);
+gboolean gimp_layer_set_preserve_trans (gint32                layer_ID,
+                                        gboolean              preserve_trans);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 G_END_DECLS
 

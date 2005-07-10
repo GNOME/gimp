@@ -1050,7 +1050,7 @@ do_layer_record(FILE *fd, guint32 *offset, gint layernum)
   (*offset)++;
 
   IFDBG printf("\t\t\t\tLayer Flags: %d (%s, %s)\n", flags,
-	 flags&1?"preserve transparency":"don't preserve transparency",
+	 flags&1?"lock alpha":"don't lock alpha",
 	 flags&2?"visible":"not visible");
 
   layer->protecttrans = (flags & 1) ? TRUE : FALSE;
@@ -2062,7 +2062,7 @@ load_image (const gchar *name)
 
 	  gimp_layer_translate (layer_ID, layer->x, layer->y);
 
-	  gimp_layer_set_preserve_trans (layer_ID, layer->protecttrans);
+	  gimp_layer_set_lock_alpha (layer_ID, layer->protecttrans);
 	  gimp_drawable_set_visible (layer_ID, layer->visible);
 
 	  drawable = gimp_drawable_get (layer_ID);

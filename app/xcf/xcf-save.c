@@ -503,8 +503,8 @@ xcf_save_layer_props (XcfInfo   *info,
 		                  gimp_item_get_visible (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, gimage, PROP_LINKED, error,
                                   gimp_item_get_linked (GIMP_ITEM (layer))));
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_PRESERVE_TRANSPARENCY,
-                                  error, layer->preserve_trans));
+  xcf_check_error (xcf_save_prop (info, gimage, PROP_LOCK_ALPHA,
+                                  error, layer->lock_alpha));
 
   if (layer->mask)
     {
@@ -720,16 +720,16 @@ xcf_save_prop (XcfInfo   *info,
       }
       break;
 
-    case PROP_PRESERVE_TRANSPARENCY:
+    case PROP_LOCK_ALPHA:
       {
-	guint32 preserve_trans;
+	guint32 lock_alpha;
 
-	preserve_trans = va_arg (args, guint32);
+	lock_alpha = va_arg (args, guint32);
 	size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
-	xcf_write_int32_check_error (info, &preserve_trans, 1);
+	xcf_write_int32_check_error (info, &lock_alpha, 1);
       }
       break;
 

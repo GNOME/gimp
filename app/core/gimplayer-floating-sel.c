@@ -71,7 +71,7 @@ floating_sel_attach (GimpLayer    *layer,
     }
 
   /*  set the drawable and allocate a backing store  */
-  gimp_layer_set_preserve_trans (layer, FALSE, FALSE);
+  gimp_layer_set_lock_alpha (layer, FALSE, FALSE);
   layer->fs.drawable      = drawable;
   layer->fs.backing_store = tile_manager_new (GIMP_ITEM (layer)->width,
                                               GIMP_ITEM (layer)->height,
@@ -411,7 +411,7 @@ floating_sel_composite (GimpLayer *layer,
   PixelRegion  fsPR;
   GimpImage   *gimage;
   GimpLayer   *d_layer = NULL;
-  gint         preserve_trans;
+  gint         lock_alpha;
   gint         active[MAX_CHANNELS];
   gint         offx, offy;
   gint         x1, y1, x2, y2;
@@ -467,17 +467,17 @@ floating_sel_composite (GimpLayer *layer,
 			     (x2 - x1), (y2 - y1), FALSE);
 
 	  /*  a kludge here to prevent the case of the drawable
-	   *  underneath having preserve transparency on, and disallowing
+	   *  underneath having lock alpha on, and disallowing
 	   *  the composited floating selection from being shown
 	   */
 	  if (GIMP_IS_LAYER (layer->fs.drawable))
 	    {
 	      d_layer = GIMP_LAYER (layer->fs.drawable);
-	      if ((preserve_trans = gimp_layer_get_preserve_trans (d_layer)))
-		gimp_layer_set_preserve_trans (d_layer, FALSE, FALSE);
+	      if ((lock_alpha = gimp_layer_get_lock_alpha (d_layer)))
+		gimp_layer_set_lock_alpha (d_layer, FALSE, FALSE);
 	    }
 	  else
-	    preserve_trans = FALSE;
+	    lock_alpha = FALSE;
 
 	  /*  We need to set all gimage channels to active to make sure that
 	   *  nothing strange happens while applying the floating selection.
@@ -500,9 +500,9 @@ floating_sel_composite (GimpLayer *layer,
                                       NULL,
                                       (x1 - offx), (y1 - offy));
 
-	  /*  restore preserve transparency  */
-	  if (preserve_trans)
-	    gimp_layer_set_preserve_trans (d_layer, TRUE, FALSE);
+	  /*  restore lock alpha  */
+	  if (lock_alpha)
+	    gimp_layer_set_lock_alpha (d_layer, TRUE, FALSE);
 
 	  /*  restore gimage active channels  */
 	  for (i = 0; i < MAX_CHANNELS; i++)

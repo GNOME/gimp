@@ -90,7 +90,7 @@ void   layers_mode_cmd_callback               (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
 
-void   layers_preserve_trans_cmd_callback     (GtkAction   *action,
+void   layers_lock_alpha_cmd_callback         (GtkAction   *action,
                                                gpointer     data);
 
 

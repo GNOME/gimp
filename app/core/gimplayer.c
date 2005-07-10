@@ -54,7 +54,7 @@ enum
 {
   OPACITY_CHANGED,
   MODE_CHANGED,
-  PRESERVE_TRANS_CHANGED,
+  LOCK_ALPHA_CHANGED,
   MASK_CHANGED,
   LAST_SIGNAL
 };
@@ -208,11 +208,11 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  layer_signals[PRESERVE_TRANS_CHANGED] =
-    g_signal_new ("preserve-trans-changed",
+  layer_signals[LOCK_ALPHA_CHANGED] =
+    g_signal_new ("lock-alpha-changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpLayerClass, preserve_trans_changed),
+		  G_STRUCT_OFFSET (GimpLayerClass, lock_alpha_changed),
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -262,18 +262,18 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
-  klass->preserve_trans_changed       = NULL;
+  klass->lock_alpha_changed           = NULL;
   klass->mask_changed                 = NULL;
 }
 
 static void
 gimp_layer_init (GimpLayer *layer)
 {
-  layer->opacity        = GIMP_OPACITY_OPAQUE;
-  layer->mode           = GIMP_NORMAL_MODE;
-  layer->preserve_trans = FALSE;
+  layer->opacity    = GIMP_OPACITY_OPAQUE;
+  layer->mode       = GIMP_NORMAL_MODE;
+  layer->lock_alpha = FALSE;
 
-  layer->mask           = NULL;
+  layer->mask       = NULL;
 
   /*  floating selection  */
   layer->fs.backing_store  = NULL;
@@ -402,7 +402,7 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
   for (i = 0; i < MAX_CHANNELS; i++)
     active[i] = gimage->active[i];
 
-  if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
+  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
 }
 
@@ -468,9 +468,9 @@ gimp_layer_duplicate (GimpItem *item,
   layer     = GIMP_LAYER (item);
   new_layer = GIMP_LAYER (new_item);
 
-  new_layer->mode           = layer->mode;
-  new_layer->opacity        = layer->opacity;
-  new_layer->preserve_trans = layer->preserve_trans;
+  new_layer->mode       = layer->mode;
+  new_layer->opacity    = layer->opacity;
+  new_layer->lock_alpha = layer->lock_alpha;
 
   /*  duplicate the layer mask if necessary  */
   if (layer->mask)
@@ -1741,31 +1741,33 @@ gimp_layer_get_mode (const GimpLayer *layer)
 }
 
 void
-gimp_layer_set_preserve_trans (GimpLayer *layer,
-                               gboolean   preserve,
-                               gboolean   push_undo)
+gimp_layer_set_lock_alpha (GimpLayer *layer,
+                           gboolean   lock_alpha,
+                           gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (layer->preserve_trans != preserve)
+  lock_alpha = lock_alpha ? TRUE : FALSE;
+
+  if (layer->lock_alpha != lock_alpha)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-          gimp_image_undo_push_layer_preserve_trans (gimage, NULL, layer);
+          gimp_image_undo_push_layer_lock_alpha (gimage, NULL, layer);
         }
 
-      layer->preserve_trans = preserve ? TRUE : FALSE;
+      layer->lock_alpha = lock_alpha;
 
-      g_signal_emit (layer, layer_signals[PRESERVE_TRANS_CHANGED], 0);
+      g_signal_emit (layer, layer_signals[LOCK_ALPHA_CHANGED], 0);
     }
 }
 
 gboolean
-gimp_layer_get_preserve_trans (const GimpLayer *layer)
+gimp_layer_get_lock_alpha (const GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  return layer->preserve_trans;
+  return layer->lock_alpha;
 }

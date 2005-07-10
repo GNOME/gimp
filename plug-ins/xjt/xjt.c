@@ -108,7 +108,7 @@ typedef enum
   PROP_MODE = 7,
   PROP_VISIBLE = 8,
   PROP_LINKED = 9,
-  PROP_PRESERVE_TRANSPARENCY = 10,
+  PROP_LOCK_ALPHA = 10,
   PROP_APPLY_MASK = 11,
   PROP_EDIT_MASK = 12,
   PROP_SHOW_MASK = 13,
@@ -287,7 +287,7 @@ typedef struct
   gint32   mode;
   gint     visible;
   gint     linked;
-  gint     preserve_transparency;
+  gint     lock_alpha;
   gint     apply_mask;
   gint     edit_mask;
   gint     show_mask;
@@ -348,7 +348,7 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   { PROP_MODE,                  "md",     PTYP_INT,                 0.0,  0.0,  0.0 } ,
   { PROP_VISIBLE,               "iv",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_LINKED,                "ln",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
-  { PROP_PRESERVE_TRANSPARENCY, "pt",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
+  { PROP_LOCK_ALPHA,            "pt",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_APPLY_MASK,            "aml",    PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_EDIT_MASK,             "eml",    PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_SHOW_MASK,             "sml",    PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
@@ -1435,8 +1435,8 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = gimp_drawable_get_linked (layer_id);
   p_write_prop (fp, PROP_LINKED, &l_param, wr_all_prp);
 
-  l_param.int_val1 = gimp_layer_get_preserve_trans (layer_id);
-  p_write_prop (fp, PROP_PRESERVE_TRANSPARENCY, &l_param, wr_all_prp);
+  l_param.int_val1 = gimp_layer_get_lock_alpha (layer_id);
+  p_write_prop (fp, PROP_LOCK_ALPHA, &l_param, wr_all_prp);
 
   l_param.int_val1 = gimp_layer_get_apply_mask(layer_id);
   p_write_prop (fp, PROP_APPLY_MASK, &l_param, wr_all_prp);
@@ -1922,7 +1922,7 @@ t_layer_props * p_new_layer_prop(void)
   l_new_prop->mode               = g_prop_table[p_get_property_index(PROP_MODE)].default_val1;
   l_new_prop->visible            = p_invert(g_prop_table[p_get_property_index(PROP_VISIBLE)].default_val1);
   l_new_prop->linked             = g_prop_table[p_get_property_index(PROP_LINKED)].default_val1;
-  l_new_prop->preserve_transparency = g_prop_table[p_get_property_index(PROP_PRESERVE_TRANSPARENCY)].default_val1;
+  l_new_prop->lock_alpha         = g_prop_table[p_get_property_index(PROP_LOCK_ALPHA)].default_val1;
   l_new_prop->apply_mask         = g_prop_table[p_get_property_index(PROP_APPLY_MASK)].default_val1;
   l_new_prop->edit_mask          = g_prop_table[p_get_property_index(PROP_EDIT_MASK)].default_val1;
   l_new_prop->show_mask          = g_prop_table[p_get_property_index(PROP_SHOW_MASK)].default_val1;
@@ -2664,8 +2664,8 @@ gint p_scann_layer_prop(gchar         *scan_ptr,
        case PROP_LINKED:
             l_new_prop->linked = l_param.int_val1;
             break;
-       case PROP_PRESERVE_TRANSPARENCY:
-            l_new_prop->preserve_transparency = l_param.int_val1;
+       case PROP_LOCK_ALPHA:
+            l_new_prop->lock_alpha = l_param.int_val1;
             break;
        case PROP_APPLY_MASK:
             l_new_prop->apply_mask = l_param.int_val1;
@@ -3458,7 +3458,7 @@ load_xjt_image (const gchar *filename)
       gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
       gimp_drawable_set_visible (l_layer_id, l_layer_prp_ptr->visible);
       gimp_drawable_set_linked (l_layer_id, l_layer_prp_ptr->linked);
-      gimp_layer_set_preserve_trans (l_layer_id, l_layer_prp_ptr->preserve_transparency);
+      gimp_layer_set_lock_alpha (l_layer_id, l_layer_prp_ptr->lock_alpha);
       if (l_layer_prp_ptr->tattoo >= 0)
 	{
 	 gimp_drawable_set_tattoo (l_layer_id, l_layer_prp_ptr->tattoo);

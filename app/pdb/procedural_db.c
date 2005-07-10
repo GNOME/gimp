@@ -164,7 +164,10 @@ procedural_db_init_procs (Gimp               *gimp,
     { "gimp_undo_push_group_start",      "gimp_image_undo_group_start"     },
     { "gimp_undo_push_group_end",        "gimp_image_undo_group_end"       },
     { "gimp_channel_ops_duplicate",      "gimp_image_duplicate"            },
-    { "gimp_channel_ops_offset",         "gimp_drawable_offset"            }
+    { "gimp_channel_ops_offset",         "gimp_drawable_offset"            },
+
+    { "gimp_layer_get_preserve_trans",   "gimp_drawable_set_lock_alpha"    },
+    { "gimp_layer_set_preserve_trans",   "gimp_drawable_set_lock_alpha"    }
   };
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));

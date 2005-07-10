@@ -157,7 +157,7 @@
 
     (gimp-image-undo-disable img)
     (gimp-context-set-foreground text-color)
-    (gimp-layer-set-preserve-trans text-layer TRUE)
+    (gimp-layer-set-lock-alpha text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
     (apply-blended-logo-effect img text-layer b-size bg-color
 			       blend-mode blend-fg blend-bg

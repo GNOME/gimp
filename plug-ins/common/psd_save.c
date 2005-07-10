@@ -954,7 +954,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
       write_gchar (fd, 0, "Clipping");
 
       flags = 0;
-      if (gimp_layer_get_preserve_trans (PSDImageData.lLayers[i])) flags |= 1;
+      if (gimp_layer_get_lock_alpha (PSDImageData.lLayers[i])) flags |= 1;
       if (! gimp_drawable_get_visible (PSDImageData.lLayers[i])) flags |= 2;
       IFDBG printf ("         Flags: %u\n", flags);
       write_gchar (fd, flags, "Flags");

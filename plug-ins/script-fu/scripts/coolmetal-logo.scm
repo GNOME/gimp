@@ -36,7 +36,7 @@
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img reflect-layer 1)
     (gimp-image-add-layer img shadow-layer 1)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
 
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

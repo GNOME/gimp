@@ -50,10 +50,10 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear pattern)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-edit-fill logo-layer FOREGROUND-FILL)
-    (gimp-layer-set-preserve-trans logo-layer FALSE)
+    (gimp-layer-set-lock-alpha logo-layer FALSE)
     (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
 
     (gimp-drawable-set-visible pattern FALSE)

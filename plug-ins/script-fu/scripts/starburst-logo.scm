@@ -28,7 +28,7 @@
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img burst-layer 0)
     (gimp-layer-add-mask burst-layer layer-mask)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
 
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

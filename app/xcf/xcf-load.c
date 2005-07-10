@@ -616,9 +616,9 @@ xcf_load_layer_props (XcfInfo   *info,
           }
           break;
 
-        case PROP_PRESERVE_TRANSPARENCY:
+        case PROP_LOCK_ALPHA:
           info->cp +=
-            xcf_read_int32 (info->fp, (guint32 *) &layer->preserve_trans, 1);
+            xcf_read_int32 (info->fp, (guint32 *) &layer->lock_alpha, 1);
           break;
 
         case PROP_APPLY_MASK:

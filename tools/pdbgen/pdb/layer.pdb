@@ -570,7 +570,7 @@ CODE
     );
 }
 
-&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
+&layer_accessors('lock_alpha', 'boolean', 'lock alpha channel', 1, 1);
 
 &layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 0,
 		 [ <<'CODE1', <<'CODE2' ]);

@@ -144,7 +144,7 @@
 
     (if (>= shadow-blur 1.0)
 	(begin
-	  (gimp-layer-set-preserve-trans shadow-layer FALSE)
+	  (gimp-layer-set-lock-alpha shadow-layer FALSE)
 	  (gimp-layer-resize shadow-layer
 			     shadow-width
 			     shadow-height

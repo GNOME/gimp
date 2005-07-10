@@ -167,7 +167,7 @@ run (const gchar      *name,
       gimp_drawable_is_rgb (drawable->drawable_id) &&
       gimp_drawable_is_layer (drawable->drawable_id))
     {
-      gboolean preserve_trans;
+      gboolean lock_alpha;
 
       gimp_image_undo_group_start (image_ID);
 
@@ -177,14 +177,14 @@ run (const gchar      *name,
       /*  Reget the drawable, bpp might have changed  */
       drawable = gimp_drawable_get (drawable->drawable_id);
 
-      /*  Unset 'Keep transparency'  */
-      preserve_trans = gimp_layer_get_preserve_trans (drawable->drawable_id);
-      gimp_layer_set_preserve_trans (drawable->drawable_id, FALSE);
+      /*  Unset 'Lock alpha'  */
+      lock_alpha = gimp_layer_get_lock_alpha (drawable->drawable_id);
+      gimp_layer_set_lock_alpha (drawable->drawable_id, FALSE);
 
       gimp_progress_init (_("Removing color..."));
       gimp_rgn_iterate2 (drawable, 0 /* unused */, to_alpha_func, NULL);
 
-      gimp_layer_set_preserve_trans (drawable->drawable_id, preserve_trans);
+      gimp_layer_set_lock_alpha (drawable->drawable_id, lock_alpha);
 
       gimp_image_undo_group_end (image_ID);
 

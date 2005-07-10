@@ -39,7 +39,7 @@ struct _GimpLayer
 
   gdouble               opacity;          /*  layer opacity              */
   GimpLayerModeEffects  mode;             /*  layer combination mode     */
-  gboolean              preserve_trans;   /*  preserve transparency      */
+  gboolean              lock_alpha;       /*  lock the alpha channel     */
 
   GimpLayerMask        *mask;             /*  possible layer mask        */
 
@@ -60,10 +60,10 @@ struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
 
-  void (* opacity_changed)        (GimpLayer *layer);
-  void (* mode_changed)           (GimpLayer *layer);
-  void (* preserve_trans_changed) (GimpLayer *layer);
-  void (* mask_changed)           (GimpLayer *layer);
+  void (* opacity_changed)    (GimpLayer *layer);
+  void (* mode_changed)       (GimpLayer *layer);
+  void (* lock_alpha_changed) (GimpLayer *layer);
+  void (* mask_changed)       (GimpLayer *layer);
 };
 
 
@@ -130,10 +130,10 @@ void            gimp_layer_set_mode            (GimpLayer            *layer,
                                                 gboolean              push_undo);
 GimpLayerModeEffects gimp_layer_get_mode       (const GimpLayer      *layer);
 
-void            gimp_layer_set_preserve_trans  (GimpLayer            *layer,
-                                                gboolean              preserve,
+void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
+                                                gboolean              lock_alpha,
                                                 gboolean              push_undo);
-gboolean        gimp_layer_get_preserve_trans  (const GimpLayer      *layer);
+gboolean        gimp_layer_get_lock_alpha      (const GimpLayer      *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */

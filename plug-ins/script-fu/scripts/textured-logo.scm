@@ -43,7 +43,7 @@
     (gimp-image-add-layer img text-shadow-layer 0)
     (gimp-selection-all img)
     (gimp-context-set-pattern text-pattern)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-edit-bucket-fill logo-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (gimp-selection-none img)
     (gimp-edit-clear text-shadow-layer)

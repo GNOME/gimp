@@ -55,7 +55,7 @@
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-context-set-pattern pattern)
 
     (gimp-context-set-background '(255 255 255))
@@ -75,7 +75,7 @@
     (gimp-edit-bucket-fill logo-layer 2 NORMAL-MODE 100 255 FALSE 1 1)
     (gimp-selection-none img)
 
-    (gimp-layer-set-preserve-trans bump-layer FALSE)
+    (gimp-layer-set-lock-alpha bump-layer FALSE)
     (plug-in-spread 1 img bump-layer spread-amount spread-amount)
     (gimp-selection-layer-alpha bump-layer)
     (plug-in-gauss-rle 1 img bump-layer blur-amount TRUE TRUE)

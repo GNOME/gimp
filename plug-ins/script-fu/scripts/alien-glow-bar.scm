@@ -48,7 +48,7 @@
     (gimp-image-add-layer img glow-layer -1)
     (gimp-image-add-layer img ruler-layer -1)
      
-   ; (gimp-layer-set-preserve-trans ruler-layer TRUE)
+   ; (gimp-layer-set-lock-alpha ruler-layer TRUE)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-edit-clear glow-layer)

@@ -1669,7 +1669,7 @@ struct _LayerPropertiesUndo
 {
   GimpLayerModeEffects old_mode;
   gdouble              old_opacity;
-  gboolean             old_preserve_trans;
+  gboolean             old_lock_alpha;
 };
 
 static gboolean undo_push_layer_properties (GimpImage           *gimage,
@@ -1701,11 +1701,11 @@ gimp_image_undo_push_layer_opacity (GimpImage   *gimage,
 }
 
 gboolean
-gimp_image_undo_push_layer_preserve_trans (GimpImage   *gimage,
-                                           const gchar *undo_desc,
-                                           GimpLayer   *layer)
+gimp_image_undo_push_layer_lock_alpha (GimpImage   *gimage,
+                                       const gchar *undo_desc,
+                                       GimpLayer   *layer)
 {
-  return undo_push_layer_properties (gimage, GIMP_UNDO_LAYER_PRESERVE_TRANS,
+  return undo_push_layer_properties (gimage, GIMP_UNDO_LAYER_LOCK_ALPHA,
                                      undo_desc, layer);
 }
 
@@ -1733,9 +1733,9 @@ undo_push_layer_properties (GimpImage    *gimage,
     {
       LayerPropertiesUndo *lpu = new->data;
 
-      lpu->old_mode           = gimp_layer_get_mode (layer);
-      lpu->old_opacity        = gimp_layer_get_opacity (layer);
-      lpu->old_preserve_trans = gimp_layer_get_preserve_trans (layer);
+      lpu->old_mode       = gimp_layer_get_mode (layer);
+      lpu->old_opacity    = gimp_layer_get_opacity (layer);
+      lpu->old_lock_alpha = gimp_layer_get_lock_alpha (layer);
 
       return TRUE;
     }
@@ -1773,13 +1773,13 @@ undo_pop_layer_properties (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_LAYER_PRESERVE_TRANS:
+    case GIMP_UNDO_LAYER_LOCK_ALPHA:
       {
-        gboolean preserve_trans;
+        gboolean lock_alpha;
 
-        preserve_trans = gimp_layer_get_preserve_trans (layer);
-        gimp_layer_set_preserve_trans (layer, lpu->old_preserve_trans, FALSE);
-        lpu->old_preserve_trans = preserve_trans;
+        lock_alpha = gimp_layer_get_lock_alpha (layer);
+        gimp_layer_set_lock_alpha (layer, lpu->old_lock_alpha, FALSE);
+        lpu->old_lock_alpha = lock_alpha;
       }
       break;
 

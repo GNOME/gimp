@@ -208,7 +208,7 @@ static guchar      *dstimage = NULL;
 static gint         preview_width, preview_height;
 static gint         sel_width, sel_height;
 static gint         image_bpp;
-static gint         preserve_trans;
+static gint         lock_alpha;
 static GimpVector2 *deform_vectors = NULL;
 static GimpVector2 *deform_area_vectors = NULL;
 static gint         lastx, lasty;
@@ -854,9 +854,9 @@ iwarp_init (void)
   image_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   if (gimp_drawable_is_layer (drawable->drawable_id))
-    preserve_trans = gimp_layer_get_preserve_trans (drawable->drawable_id);
+    lock_alpha = gimp_layer_get_lock_alpha (drawable->drawable_id);
   else
-    preserve_trans = FALSE;
+    lock_alpha = FALSE;
 
   preview_bpp = image_bpp;
 
@@ -1415,7 +1415,7 @@ iwarp_deform (gint    x,
             /* Yeah, it is ugly but since color is a pointer into image-data
              * I must not change color[image_bpp - 1]  ...
              */
-            if (preserve_trans && (image_bpp == 4 || image_bpp == 2))
+            if (lock_alpha && (image_bpp == 4 || image_bpp == 2))
               {
                 iwarp_preview_get_point (x + xi, y + yi, color);
                 alpha = color[image_bpp - 1];
@@ -1423,7 +1423,7 @@ iwarp_deform (gint    x,
 
             iwarp_preview_get_point (xn, yn, color);
 
-            if (!preserve_trans && (image_bpp == 4 || image_bpp == 2))
+            if (!lock_alpha && (image_bpp == 4 || image_bpp == 2))
               {
                 alpha = color[image_bpp - 1];
               }

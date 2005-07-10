@@ -17,7 +17,7 @@
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img bg-layer 2)
     (gimp-context-set-foreground text-color)
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-edit-fill logo-layer FOREGROUND-FILL)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

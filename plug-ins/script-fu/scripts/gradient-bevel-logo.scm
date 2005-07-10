@@ -43,20 +43,20 @@
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
     (gimp-selection-none img)
 
-    (gimp-layer-set-preserve-trans blur-layer TRUE)
+    (gimp-layer-set-lock-alpha blur-layer TRUE)
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-all img)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (gimp-edit-clear blur-layer)
     (gimp-selection-none img)
-    (gimp-layer-set-preserve-trans blur-layer FALSE)
+    (gimp-layer-set-lock-alpha blur-layer FALSE)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
     (plug-in-gauss-rle 1 img blur-layer bevel-width 1 1)
     (gimp-selection-none img)
     (gimp-context-set-background '(127 127 127))
     (gimp-context-set-foreground '(255 255 255))
-    (gimp-layer-set-preserve-trans logo-layer TRUE)
+    (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-selection-all img)
 
     (gimp-edit-blend logo-layer FG-BG-RGB-MODE NORMAL-MODE
@@ -65,7 +65,7 @@
 		     indentX indentY indentX (- height indentY))
 
     (gimp-selection-none img)
-    (gimp-layer-set-preserve-trans logo-layer FALSE)
+    (gimp-layer-set-lock-alpha logo-layer FALSE)
     (plug-in-bump-map 1 img logo-layer blur-layer 115 bevel-height 5 0 0 0 15 TRUE FALSE 0)
     (gimp-layer-set-offsets blur-layer 5 5)
     (gimp-invert blur-layer)

@@ -430,7 +430,7 @@
         </menu>
         <menuitem action="drawable-visible" />
         <menuitem action="drawable-linked" />
-        <menuitem action="layers-preserve-transparency" />
+        <menuitem action="layers-lock-alpha" />
       </menu>
 
 -->

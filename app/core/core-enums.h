@@ -401,7 +401,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_LAYER_REPOSITION,         /*< desc="Reposition layer"          >*/
   GIMP_UNDO_LAYER_MODE,               /*< desc="Set layer mode"            >*/
   GIMP_UNDO_LAYER_OPACITY,            /*< desc="Set layer opacity"         >*/
-  GIMP_UNDO_LAYER_PRESERVE_TRANS,     /*< desc="Set preserve trans"        >*/
+  GIMP_UNDO_LAYER_LOCK_ALPHA,         /*< desc="Lock/Unlock alpha channel" >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text"                      >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text modified"             >*/
   GIMP_UNDO_LAYER_MASK_ADD,           /*< desc="Add layer mask"            >*/

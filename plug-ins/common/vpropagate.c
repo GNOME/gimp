@@ -1186,7 +1186,7 @@ vpropagate_dialog (GimpDrawable *drawable)
                               G_CALLBACK (vpropagate_toggle_button_update),
                               &propagate_alpha);
 
-      if (gimp_layer_get_preserve_trans (drawable->drawable_id))
+      if (gimp_layer_get_lock_alpha (drawable->drawable_id))
         {
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), 0);
           gtk_widget_set_sensitive (toggle, FALSE);

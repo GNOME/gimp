@@ -66,9 +66,9 @@ gboolean             gimp_layer_add_mask             (gint32                laye
 gboolean             gimp_layer_remove_mask          (gint32                layer_ID,
 						      GimpMaskApplyMode     mode);
 gboolean             gimp_layer_is_floating_sel      (gint32                layer_ID);
-gboolean             gimp_layer_get_preserve_trans   (gint32                layer_ID);
-gboolean             gimp_layer_set_preserve_trans   (gint32                layer_ID,
-						      gboolean              preserve_trans);
+gboolean             gimp_layer_get_lock_alpha       (gint32                layer_ID);
+gboolean             gimp_layer_set_lock_alpha       (gint32                layer_ID,
+						      gboolean              lock_alpha);
 gboolean             gimp_layer_get_apply_mask       (gint32                layer_ID);
 gboolean             gimp_layer_set_apply_mask       (gint32                layer_ID,
 						      gboolean              apply_mask);

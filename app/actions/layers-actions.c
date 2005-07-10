@@ -177,11 +177,11 @@ static GimpActionEntry layers_actions[] =
 
 static GimpToggleActionEntry layers_toggle_actions[] =
 {
-  { "layers-preserve-transparency", GIMP_STOCK_TRANSPARENCY,
-    N_("Kee_p Transparency"), NULL, NULL,
-    G_CALLBACK (layers_preserve_trans_cmd_callback),
+  { "layers-lock-alpha", GIMP_STOCK_TRANSPARENCY,
+    N_("Lock Alph_a Channel"), NULL, NULL,
+    G_CALLBACK (layers_lock_alpha_cmd_callback),
     FALSE,
-    GIMP_HELP_LAYER_KEEP_TRANSPARENCY },
+    GIMP_HELP_LAYER_LOCK_ALPHA },
 
   { "layers-mask-edit", GIMP_STOCK_EDIT,
     N_("_Edit Layer Mask"), NULL, NULL,
@@ -391,7 +391,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       sel        = FALSE;
   gboolean       alpha      = FALSE;    /*  alpha channel present  */
   gboolean       indexed    = FALSE;    /*  is indexed             */
-  gboolean       preserve   = FALSE;
+  gboolean       lock_alpha = FALSE;
   gboolean       text_layer = FALSE;
   GList         *next       = NULL;
   GList         *prev       = NULL;
@@ -409,9 +409,9 @@ layers_actions_update (GimpActionGroup *group,
         {
           GList *list;
 
-          mask     = gimp_layer_get_mask (layer);
-          preserve = gimp_layer_get_preserve_trans (layer);
-          alpha    = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          mask       = gimp_layer_get_mask (layer);
+          lock_alpha = gimp_layer_get_lock_alpha (layer);
+          alpha      = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
           list = g_list_find (GIMP_LIST (gimage->layers)->list, layer);
 
@@ -465,8 +465,8 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-alpha-add",       layer && !fs && !alpha);
 
-  SET_SENSITIVE ("layers-preserve-transparency", layer);
-  SET_ACTIVE    ("layers-preserve-transparency", preserve);
+  SET_SENSITIVE ("layers-lock-alpha", layer);
+  SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
   SET_SENSITIVE ("layers-mask-add",    layer && !fs && !ac && !mask);
   SET_SENSITIVE ("layers-mask-apply",  layer && !fs && !ac &&  mask);

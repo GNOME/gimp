@@ -779,28 +779,28 @@ layers_mode_cmd_callback (GtkAction *action,
 }
 
 void
-layers_preserve_trans_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+layers_lock_alpha_cmd_callback (GtkAction *action,
+                                gpointer   data)
 {
   GimpImage *gimage;
   GimpLayer *layer;
-  gboolean   preserve;
+  gboolean   lock_alpha;
   return_if_no_layer (gimage, layer, data);
 
-  preserve = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  lock_alpha = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (preserve != gimp_layer_get_preserve_trans (layer))
+  if (lock_alpha != gimp_layer_get_lock_alpha (layer))
     {
       GimpUndo *undo;
       gboolean  push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (gimage, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_LAYER_PRESERVE_TRANS);
+                                           GIMP_UNDO_LAYER_LOCK_ALPHA);
 
       if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
         push_undo = FALSE;
 
-      gimp_layer_set_preserve_trans (layer, preserve, push_undo);
+      gimp_layer_set_lock_alpha (layer, lock_alpha, push_undo);
       gimp_image_flush (gimage);
     }
 }

@@ -124,9 +124,9 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       /* Since a channel might be selected, we must check wheter RGB or not. */
-      if (gimp_layer_get_preserve_trans (drawable_id))
+      if (gimp_layer_get_lock_alpha (drawable_id))
 	{
-	  g_message (_("The layer preserves transparency."));
+	  g_message (_("The layer has its alpha channel locked."));
 	  return;
 	}
       if (!gimp_drawable_is_rgb (drawable_id) &&

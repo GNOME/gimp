@@ -128,14 +128,14 @@
     (gimp-selection-shrink img (* inc-shrink 3))
     (gimp-curves-spline tube-layer 4 6 (neon-spline3))
 
-    (gimp-layer-set-preserve-trans tube-layer 1)
+    (gimp-layer-set-lock-alpha tube-layer 1)
     (gimp-selection-layer-alpha tube-layer)
     (gimp-selection-invert img)
     (gimp-context-set-background glow-color)
     (gimp-edit-fill tube-layer BACKGROUND-FILL)
 
     (gimp-selection-none img)
-    (gimp-layer-set-preserve-trans tube-layer 0)
+    (gimp-layer-set-lock-alpha tube-layer 0)
     (gimp-curves-spline tube-layer 4 8 (neon-spline4))
 
     (gimp-selection-load selection)

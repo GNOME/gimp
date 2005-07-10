@@ -56,7 +56,7 @@
 					    (- (+ num-frames 2)
 					       remaining-frames) 10)
 					   " (replace)")))
-         (gimp-layer-set-preserve-trans waves-layer FALSE)
+         (gimp-layer-set-lock-alpha waves-layer FALSE)
 	 (gimp-image-add-layer image waves-layer -1)
 	 (gimp-drawable-set-name waves-layer layer-name)
 	 

@@ -56,7 +56,7 @@
 
     (gimp-image-add-channel img mask 0)
 
-    (gimp-layer-set-preserve-trans mask-layer TRUE)
+    (gimp-layer-set-lock-alpha mask-layer TRUE)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill mask-layer BACKGROUND-FILL)
     (gimp-context-set-background '(0 0 0))

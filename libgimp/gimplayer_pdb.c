@@ -589,60 +589,60 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
 }
 
 /**
- * gimp_layer_get_preserve_trans:
+ * gimp_layer_get_lock_alpha:
  * @layer_ID: The layer.
  *
- * Get the preserve transperancy setting of the specified layer.
+ * Get the lock alpha channel setting of the specified layer.
  *
- * This procedure returns the specified layer's preserve transperancy
+ * This procedure returns the specified layer's lock alpha channel
  * setting.
  *
- * Returns: The layer's preserve transperancy setting.
+ * Returns: The layer's lock alpha channel setting.
  */
 gboolean
-gimp_layer_get_preserve_trans (gint32 layer_ID)
+gimp_layer_get_lock_alpha (gint32 layer_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean preserve_trans = FALSE;
+  gboolean lock_alpha = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp_layer_get_preserve_trans",
+  return_vals = gimp_run_procedure ("gimp_layer_get_lock_alpha",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, layer_ID,
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    preserve_trans = return_vals[1].data.d_int32;
+    lock_alpha = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return preserve_trans;
+  return lock_alpha;
 }
 
 /**
- * gimp_layer_set_preserve_trans:
+ * gimp_layer_set_lock_alpha:
  * @layer_ID: The layer.
- * @preserve_trans: The new layer's preserve transperancy setting.
+ * @lock_alpha: The new layer's lock alpha channel setting.
  *
- * Set the preserve transperancy setting of the specified layer.
+ * Set the lock alpha channel setting of the specified layer.
  *
- * This procedure sets the specified layer's preserve transperancy
+ * This procedure sets the specified layer's lock alpha channel
  * setting.
  *
  * Returns: TRUE on success.
  */
 gboolean
-gimp_layer_set_preserve_trans (gint32   layer_ID,
-			       gboolean preserve_trans)
+gimp_layer_set_lock_alpha (gint32   layer_ID,
+			   gboolean lock_alpha)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_layer_set_preserve_trans",
+  return_vals = gimp_run_procedure ("gimp_layer_set_lock_alpha",
 				    &nreturn_vals,
 				    GIMP_PDB_LAYER, layer_ID,
-				    GIMP_PDB_INT32, preserve_trans,
+				    GIMP_PDB_INT32, lock_alpha,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
