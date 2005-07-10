@@ -1,3 +1,7 @@
+2005-07-10  Adam Weinberger  <adamw@gnome.org>
+
+	* en_CA.po: Updated Canadian English translation.
+
 2005-07-09  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: added sample-point-editor-actions.c and
