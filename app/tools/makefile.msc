@@ -27,6 +27,8 @@ PKG_LINK = \
 
 OBJECTS = \
 	gimpairbrushtool.obj \
+	gimpaligntool.obj \
+	gimpalignoptions.obj \
 	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \

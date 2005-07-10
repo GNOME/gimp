@@ -32,17 +32,17 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
-COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma png pnm polar postscript psd psd_save psp randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
+COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colortoalpha compose compressor convmatrix csource cubism curve_bend
+COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
+COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lic
+COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw retinex ripple rotate
+COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
 
-NOTNOW = wmf 
+NOTNOW = wmf svg
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain winicon winsnap xjt
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap jpeg maze mosaic pagecurl rcm sel2path sgi twain winicon winsnap xjt
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -229,7 +229,7 @@ OBJECTS = \
 
 !IFDEF EXTRA_dbbrowser
 OBJECTS = \
-	gimpprocbox.obj \
+#	gimpprocbox.obj \
 	gimpprocbrowser.obj \
 	gimpprocview.obj \
 	procedure-browser.obj
@@ -421,7 +421,6 @@ OBJECTS = \
 	imap_object.obj \
 	imap_object_popup.obj \
 	imap_polygon.obj \
-	imap_popup.obj \
 	imap_preferences.obj \
 	imap_preview.obj \
 	imap_rectangle.obj \
@@ -432,8 +431,7 @@ OBJECTS = \
 	imap_stock.obj \
 	imap_string.obj \
 	imap_table.obj \
-	imap_toolbar.obj \
-	imap_tools.obj
+	imap_taglist.obj
 # not changing the source which is lexed
 EXTRACFLAGS = -FIstring.h -FIstdlib.h
 !ENDIF
@@ -445,6 +443,13 @@ OPTIMIZE =
 !IFDEF EXTRA_jpeg
 EXTRACFLAGS = -I$(JPEG)
 EXTRALIBS = $(JPEG)\libjpeg.lib
+OBJECTS = \
+	gimpexif.obj \
+	jpeg.obj \
+	jpeg-exif.obj \
+	jpeg-icc.obj \
+	jpeg-load.obj \
+	jpeg-save.obj
 !ENDIF
 
 !IFDEF EXTRA_maze
@@ -621,12 +626,20 @@ OBJECTS = \
 
 !IFDEF EXTRA_helpbrowser
 OBJECTS = \
+	gimpthrobber.obj \
+	gimpthrobberaction.obj \
 	helpbrowser.obj	\
 	dialog.obj	\
 	queue.obj		\
 	uri.obj
 EXTRACFLAGS = $(GTKHTML2_CFLAGS)
 EXTRALIBS = $(GTKHTML2_LIBS) user32.lib shell32.lib
+
+dialog.c : logo-pixbuf.h
+
+logo-pixbuf.h: wilber-reading.png
+	gdk-pixbuf-csource --raw --name=logo_data wilber-reading.png > logo-pixbuf.h
+
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -677,7 +690,7 @@ EXTRALIBS = user32.lib
 !ENDIF
 
 !IFDEF EXTRA_webbrowser
-EXTRALIBS = shell32.lib
+EXTRALIBS = shell32.lib user32.lib
 !ENDIF
 
 !IFDEF EXTRA_winprint
@@ -765,6 +778,7 @@ $(PLUGIN).exe :  $(EXTRA_DEPS) $(OBJECTS) $(RESOURCE)
 	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
 	..\..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\..\libgimpmath\gimpmath-$(GIMP_VER).lib \
 	..\..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) $(EXTRALIBS) $(LDFLAGS)

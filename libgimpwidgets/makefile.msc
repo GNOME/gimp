@@ -31,6 +31,7 @@ install : all
 	$(INSTALL) gimpmath-$(GIMP_VER).dll $(BIN)
 
 OBJECTS = \
+	gimpbrowser.obj \
 	gimpbutton.obj \
 	gimpcellrenderercolor.obj \
 	gimpcellrenderertoggle.obj \
@@ -49,6 +50,7 @@ OBJECTS = \
 	gimpcontroller.obj \
 	gimpdialog.obj \
 	gimpenumcombobox.obj \
+	gimpenumlabel.obj \
 	gimpenumstore.obj \
 	gimpenumwidgets.obj \
 	gimpfileentry.obj \
@@ -59,6 +61,7 @@ OBJECTS = \
 	gimpmemsizeentry.obj \
 	gimpoffsetarea.obj \
 	gimpoldwidgets.obj \
+	gimppageselector.obj \
 	gimppatheditor.obj \
 	gimppickbutton.obj \
 	gimppixmap.obj \
@@ -72,6 +75,7 @@ OBJECTS = \
 	gimpunitmenu.obj \
 	gimpwidgets.obj \
 	gimpwidgets-private.obj \
+	gimpwidgetsenums.obj \
 	gimpwidgetsmarshal.obj \
 
 

@@ -68,6 +68,7 @@ OBJECTS = \
 	pattern_cmds.obj \
 	patterns_cmds.obj \
 	plug_in_cmds.obj \
+	procedural-db-query.obj \
 	procedural_db_cmds.obj \
 	progress_cmds.obj \
 	selection_cmds.obj \

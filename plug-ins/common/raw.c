@@ -37,6 +37,10 @@
 
 #include <glib/gstdio.h>
 
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 

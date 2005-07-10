@@ -543,7 +543,7 @@ select_window_x11 (GdkScreen *screen)
 #ifdef GDK_WINDOWING_WIN32
 
 static GdkNativeWindow
-select_window_x11 (GdkScreen *screen)
+select_window_win32 (GdkScreen *screen)
 {
   /* MS Windows specific code goes here (yet to be written) */
 
@@ -558,7 +558,7 @@ select_window_x11 (GdkScreen *screen)
 #ifdef __GNUC__
 #warning Win32 screenshot window chooser not implemented yet
 #else
-#pragma message "Win32 screenshot window chooser not implemented yet"
+#pragma message("Win32 screenshot window chooser not implemented yet")
 #endif
 
   return 0;

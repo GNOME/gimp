@@ -32,6 +32,7 @@ OBJECTS = \
 	pixel-processor.obj \
 	pixel-region.obj \
 	pixel-surround.obj \
+	segmentator.obj \
 	temp-buf.obj \
 	threshold.obj \
 	tile.obj \

@@ -24,6 +24,7 @@ OPTIMIZE = -Zi -MD
 all : \
 	..\config.h \
 	gimpenums.c \
+	gimpuimarshal.c \
 	gimp-$(GIMP_VER).dll \
 	gimpui-$(GIMP_VER).dll
 
@@ -89,6 +90,7 @@ gimp_OBJECTS = \
 	gimpchannel.obj \
 	gimpdrawable.obj \
 	gimpfontselect.obj \
+	gimpgimprc.obj \
 	gimpgradients.obj \
 	gimpgradientselect.obj \
 	gimpimage.obj \
@@ -127,8 +129,10 @@ gimpenums.c: gimpenums.h gimpenums.c.tail
 	type gimpenums.c.tail >> xgen-cec
 	copy xgen-cec gimpenums.c
 	del xgen-cec
+
 gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
 	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(DEPLIBS) \
+	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	$(LDFLAGS) user32.lib /def:gimp.def
@@ -146,6 +150,7 @@ gimpui_OBJECTS = \
 	gimpexport.obj \
 	gimpfontmenu.obj \
 	gimpfontselect_pdb.obj \
+	gimpfontselectbutton.obj \
 	gimpgradientmenu.obj \
 	gimpimagecombobox.obj \
 	gimpmenu.obj \
@@ -154,6 +159,14 @@ gimpui_OBJECTS = \
 	gimppixbuf.obj \
 	gimpprogressbar.obj \
 	gimpui.obj \
+	gimpuimarshal.obj \
+
+gimpuimarshal.h : gimpuimarshal.list
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimpui_marshal gimpuimarshal.list --header >gimpuimarshal.h
+
+gimpuimarshal.c : gimpuimarshal.list gimpuimarshal.h
+	$(GLIB)\gobject\glib-genmarshal --prefix=_gimpui_marshal gimpuimarshal.list --body >gimpuimarshal.c
+
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) \

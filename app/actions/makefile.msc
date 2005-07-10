@@ -34,6 +34,8 @@ OBJECTS = \
 	colormap-editor-commands.obj \
 	context-actions.obj \
 	context-commands.obj \
+	cursor-info-actions.obj \
+	cursor-info-commands.obj \
 	data-commands.obj \
 	debug-actions.obj \
 	debug-commands.obj \
@@ -76,6 +78,8 @@ OBJECTS = \
 	plug-in-commands.obj \
 	qmask-actions.obj \
 	qmask-commands.obj \
+	sample-point-editor-actions.obj \
+	sample-point-editor-commands.obj \
 	select-actions.obj \
 	select-commands.obj \
 	templates-actions.obj \

@@ -552,7 +552,6 @@ EXPORTS
 	gimp_stroke_nearest_point_get
 	gimp_stroke_open
 	gimp_stroke_options_get_type
-	gimp_stroke_options_set_dash_preset
 	gimp_stroke_point_is_movable
 	gimp_stroke_point_move_absolute
 	gimp_stroke_translate
@@ -749,3 +748,16 @@ gimp_buffer_new_from_pixbuf
 gimp_container_is_empty
 gimp_data_factory_data_refresh
 gimp_layer_new_from_pixbuf
+gimp_viewable_get_new_pixbuf
+gimp_viewable_get_size
+gimp_documents_save
+gimp_container_clear
+gimp_dash_pattern_free
+gimp_dash_pattern_from_preset
+gimp_dash_pattern_copy
+gimp_dash_pattern_segments_set
+gimp_dash_pattern_from_segments
+gimp_item_align
+gimp_stroke_options_set_dash_pattern
+sort_boundary
+

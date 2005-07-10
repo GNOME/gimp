@@ -36,6 +36,7 @@ OBJECTS = \
 	gimpbrushselect.obj \
 	gimpbufferview.obj \
 	gimpcellrendereraccel.obj \
+	gimpcellrendererdashes.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
 	gimpclipboard.obj \
@@ -60,6 +61,7 @@ OBJECTS = \
 	gimpcontrollereditor.obj \
 	gimpcontrollerinfo.obj \
 	gimpcontrollerkeyboard.obj \
+	gimpcontrollerlist.obj \
 	gimpcontrollerwheel.obj \
 	gimpcontrollers.obj \
 	gimpcursor.obj \
@@ -102,6 +104,7 @@ OBJECTS = \
 	gimpimageview.obj \
 	gimpitemtreeview.obj \
 	gimplayertreeview.obj \
+	gimpmenudock.obj \
 	gimpmenufactory.obj \
 	gimpmessagebox.obj \
 	gimpmessagedialog.obj \

@@ -1,3 +1,14 @@
+2005-07-10  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated
+	* app/widgets/gimpcontrollerlist.c : dont include 
+	"gimpmessagedialog.c" to avoid redefinitions. 
+	Instead include gimpmessagebox.h and gimpmessagedialog.h
+
+	* plug-ins/common/raw.c : include <io.h>
+	* plug-ins/common/screenshot.c : make it compile. It
+	still has no code to actually work on win32.
+
 2005-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/base/segmentator.[ch]: ported to GIMP data structures. There

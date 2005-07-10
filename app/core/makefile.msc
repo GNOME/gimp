@@ -51,6 +51,7 @@ OBJECTS = \
 	gimpcontainer.obj \
 	gimpcontainer-filter.obj \
 	gimpcontext.obj \
+	gimpdashpattern.obj \
 	gimpdata.obj \
 	gimpdatafactory.obj \
 	gimp-documents.obj \
@@ -62,6 +63,7 @@ OBJECTS = \
 	gimpdrawable-convert.obj \
 	gimpdrawable-desaturate.obj \
 	gimpdrawable-equalize.obj \
+	gimpdrawable-foreground-extract.obj \
 	gimpdrawable-histogram.obj \
 	gimpdrawable-invert.obj \
 	gimpdrawable-levels.obj \
@@ -101,6 +103,7 @@ OBJECTS = \
 	gimpimagefile.obj \
 	gimpinterpreterdb.obj \
 	gimpitem.obj \
+	gimpitem-align.obj \
 	gimpitem-linked.obj \
 	gimpitem-preview.obj \
 	gimpitemundo.obj \
