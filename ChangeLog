@@ -1,5 +1,10 @@
 2005-07-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimplayertreeview.c (gimp_layer_tree_view_init):
+	moved the lock alpha toggle to a separate "Lock:" line.
+
+2005-07-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/layers-actions.c
 	* app/actions/layers-commands.[ch]
 	* app/core/core-enums.[ch]

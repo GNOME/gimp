@@ -261,7 +261,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkWidget             *hbox;
-  GtkWidget             *toggle;
   GtkWidget             *image;
   GtkIconSize            icon_size;
   PangoAttribute        *attr;
@@ -288,8 +287,6 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_box_pack_start (GTK_BOX (view), view->options_box, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (view), view->options_box, 0);
   gtk_widget_show (view->options_box);
-
-  hbox = gtk_hbox_new (FALSE, 6);
 
   /*  Paint mode menu  */
 
@@ -322,15 +319,17 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Lock alpha toggle  */
 
-  view->lock_alpha_toggle = toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
+  hbox = gtk_hbox_new (FALSE, 6);
 
-  g_signal_connect (toggle, "toggled",
+  view->lock_alpha_toggle = gtk_check_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), view->lock_alpha_toggle, FALSE, FALSE, 0);
+  gtk_widget_show (view->lock_alpha_toggle);
+
+  g_signal_connect (view->lock_alpha_toggle, "toggled",
                     G_CALLBACK (gimp_layer_tree_view_lock_alpha_button_toggled),
                     view);
 
-  gimp_help_set_help_data (toggle, _("Lock alpha channel"),
+  gimp_help_set_help_data (view->lock_alpha_toggle, _("Lock alpha channel"),
                            GIMP_HELP_LAYER_DIALOG_LOCK_ALPHA_BUTTON);
 
   gtk_widget_style_get (GTK_WIDGET (view),
@@ -338,10 +337,10 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                         NULL);
 
   image = gtk_image_new_from_stock (GIMP_STOCK_TRANSPARENCY, icon_size);
-  gtk_container_add (GTK_CONTAINER (toggle), image);
+  gtk_container_add (GTK_CONTAINER (view->lock_alpha_toggle), image);
   gtk_widget_show (image);
 
-  gimp_table_attach_aligned (GTK_TABLE (view->options_box), 2, 0,
+  gimp_table_attach_aligned (GTK_TABLE (view->options_box), 0, 2,
                              _("Lock:"), 0.0, 0.5,
                              hbox, 2, FALSE);
 
