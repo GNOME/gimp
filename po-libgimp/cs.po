@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-12 03:25+0000\n"
-"PO-Revision-Date: 2005-05-12 11:34+0200\n"
+"POT-Creation-Date: 2005-07-05 11:30+0000\n"
+"PO-Revision-Date: 2005-07-05 20:50+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -192,9 +192,13 @@ msgstr ""
 "Chcete zapsat kanál (uložený výběr) jako %s.\n"
 "To nezapíše viditelné vrstvy."
 
-#: ../libgimp/gimpfontmenu.c:100
+#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
 msgid "Font Selection"
 msgstr "Výběr písma"
+
+#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+msgid "Sans"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientmenu.c:115
 msgid "Gradient Selection"
@@ -284,18 +288,15 @@ msgstr "Nahradit aktuální výběr"
 msgid "Intersect with the current selection"
 msgstr "Průnik s aktuálním výběrem"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
 msgid "Red"
 msgstr "Červená"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
 msgid "Green"
 msgstr "Zelená"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
 msgid "Blue"
 msgstr "Modrá"
 
@@ -307,8 +308,7 @@ msgstr "Šedá"
 msgid "Indexed"
 msgstr "Indexovaná"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -480,7 +480,7 @@ msgstr "Pevný"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:254
 msgid "None"
 msgstr "Nic"
 
@@ -519,6 +519,22 @@ msgstr "Vpřed"
 #: ../libgimpbase/gimpbaseenums.c:650
 msgid "Backward"
 msgstr "Zpět"
+
+#: ../libgimpbase/gimpbaseenums.c:751
+msgid "Internal GIMP procedure"
+msgstr "Interní procedura GIMPu"
+
+#: ../libgimpbase/gimpbaseenums.c:752
+msgid "GIMP Plug-In"
+msgstr "Zásuvný modul GIMPu"
+
+#: ../libgimpbase/gimpbaseenums.c:753
+msgid "GIMP Extension"
+msgstr "Rozšíření GIMPu"
+
+#: ../libgimpbase/gimpbaseenums.c:754
+msgid "Temporary Procedure"
+msgstr "Dočasná procedura"
 
 #: ../libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -571,6 +587,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/cdisplay_lcms.c:246
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
@@ -579,29 +596,36 @@ msgid "Mode of operation for color management."
 msgstr "Režim práce pro správu barev."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
-msgid "Sets the color profile for the display."
-msgstr "Nastaví profil barev displeje."
+msgid "The color profile of your (primary) monitor."
+msgstr "Profil barev vašeho (primárního) monitoru."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
-msgid "Sets default RGB workspace color profile."
-msgstr "Nastaví implicitní profil barev pracovního prostředí RGB."
-
-#: ../libgimpconfig/gimpcolorconfig.c:46
-msgid "Sets the CMYK color profile used to convert between RGB and CMYK."
-msgstr "Nastaví profil barev CMYK používaný pro převod mezi RGB a CMYK."
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr "Je-li povoleno, GIMP se pokusí použít profil barev displeje ze systému oken. Nastavený profil monitoru se pak používá jen jako záloha."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "Sets the color profile used when printing."
-msgstr "Nastaví profil barev používaný při tisku."
+msgid "The default RGB workspace color profile."
+msgstr "Implicitní profil barev pracovního prostředí RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Profil barev CMYK používaný pro převod mezi RGB a CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Profil barev používaný pro simulaci tištěné verze (softproof)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr "Nastaví, jak se barvy mapují na vašem displeji."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
-msgid "Sets how colors are converted from workspace to simulation device."
-msgstr ""
-"Nastaví, jak se varvy převádí z pracovního prostředí na simulované zařízení."
+#: ../libgimpconfig/gimpcolorconfig.c:56
+msgid ""
+"Sets how colors are converted from workspace to the print simulation device."
+msgstr "Nastaví, jak se barvy převádí z pracovního prostředí na zařízení simulace tisku."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -624,8 +648,7 @@ msgid "Relative Colorimetric"
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:57
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
 msgid "Saturation"
 msgstr "Sytost"
 
@@ -743,7 +766,7 @@ msgstr "Načítá se modul: '%s'\n"
 
 #: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
 #: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:482
+#: ../libgimpmodule/gimpmodule.c:470
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Chyba při načítání modulu '%s': %s"
@@ -788,85 +811,45 @@ msgstr "Nemohu vytvořit adresář miniatur '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nemohu vytvořit miniaturu %s: %s"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:130
+msgid "_Search:"
+msgstr "_Hledat:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "Barva po_předí"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:122
 msgid "_Background Color"
 msgstr "Barva po_zadí"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:126
 msgid "Blac_k"
 msgstr "_Černá"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Bílá"
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorscales.c:129
 msgid "Scales"
 msgstr "Stupnice"
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_O"
-
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_S"
-
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_H"
-
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "Odstín"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "Hodnota"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Šestnáctková notace barev jako v HTML a CSS"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr "_Notace HTML:"
-
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:214
 msgid "Current:"
 msgstr "Aktuální:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:236
 msgid "Old:"
 msgstr "Staré:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:281
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Šestnáctková notace barev jako v HTML a CSS"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid "HTML _Notation:"
+msgstr "_Notace HTML:"
 
 #: ../libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
@@ -917,7 +900,7 @@ msgstr "Zkotrolovat styl"
 msgid "_Preview"
 msgstr "Ná_hled"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1728
+#: ../libgimpwidgets/gimppropwidgets.c:1798
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Toto pole pro vstup textu je omezeno na %d znaků."
@@ -958,39 +941,39 @@ msgstr "_Obnovit"
 msgid "Visible"
 msgstr "Viditelný"
 
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_etter Spacing"
 msgstr "Roz_estup písmen"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:174
 msgid "L_ine Spacing"
 msgstr "Řá_dkování"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
 msgstr "Změnit _velikost"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:294
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
 msgid "_Scale"
 msgstr "Š_kálovat"
 
-#: ../libgimpwidgets/gimpstock.c:273
+#: ../libgimpwidgets/gimpstock.c:276
 msgid "Crop"
 msgstr "Ořezat"
 
-#: ../libgimpwidgets/gimpstock.c:290
+#: ../libgimpwidgets/gimpstock.c:293
 msgid "_Transform"
 msgstr "_Transformace"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:298
 msgid "_Shear"
 msgstr "Na_klonění"
 
@@ -1029,6 +1012,50 @@ msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čí
 #: ../libgimpwidgets/gimpwidgets.c:1024
 msgid "_Randomize"
 msgstr "_Randomizovat"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "_O"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "Odstín"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "Hodnota"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "Vrstvy"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "Obrázky"
 
 #: ../modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
@@ -1078,13 +1105,35 @@ msgstr "Kontrast"
 msgid "Contrast C_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_lcms.c:95
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_lcms.c:163
+#: ../modules/cdisplay_lcms.c:173
 msgid "Color Management"
 msgstr "Správa barev"
+
+#: ../modules/cdisplay_lcms.c:288
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+
+#: ../modules/cdisplay_lcms.c:311
+msgid "Mode of operation:"
+msgstr "Režim práce:"
+
+#: ../modules/cdisplay_lcms.c:322
+msgid "RGB workspace profile:"
+msgstr "Profil pracovního prostředí RGB:"
+
+#: ../modules/cdisplay_lcms.c:332
+msgid "Monitor profile:"
+msgstr "Profil monitoru:"
+
+#: ../modules/cdisplay_lcms.c:342
+msgid "Print simulation profile:"
+msgstr "Profil simulace tisku:"
 
 #: ../modules/cdisplay_proof.c:127
 msgid "Color proof filter using ICC color profile"
@@ -1177,6 +1226,9 @@ msgstr "Vodová barva"
 #: ../modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Tlak"
+
+#~ msgid "Sets the color profile used when printing."
+#~ msgstr "Nastaví profil barev používaný při tisku."
 
 #~ msgid "Forward (traditional)"
 #~ msgstr "Dopředu (Tradiční)"
