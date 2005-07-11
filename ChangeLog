@@ -1,5 +1,10 @@
 2005-07-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpclonetool.c (gimp_clone_tool_cursor_update):
+	simplify check for "inside selected region".
+
+2005-07-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c: added read-only properties "opacity",
 	"mode" and "lock-alpha".
 

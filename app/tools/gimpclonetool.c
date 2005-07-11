@@ -221,9 +221,8 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?
        */
-      if (gimp_channel_is_empty (selection))
-        ctype = GIMP_CURSOR_MOUSE;
-      else if (gimp_channel_value (selection, coords->x, coords->y))
+      if (gimp_channel_is_empty (selection) ||
+          gimp_channel_value (selection, coords->x, coords->y))
         ctype = GIMP_CURSOR_MOUSE;
     }
 
