@@ -55,6 +55,7 @@
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
+#include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpselection.h"
 #include "gimptemplate.h"
@@ -3565,9 +3566,15 @@ gimp_image_pick_correlate_layer (const GimpImage *gimage,
        list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
+      gint       off_x, off_y;
 
-      if (gimp_layer_pick_correlate (layer, x, y))
-        return layer;
+      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+
+      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
+                                        x - off_x, y - off_y) > 63)
+        {
+          return layer;
+        }
     }
 
   return NULL;

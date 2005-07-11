@@ -28,6 +28,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimp-utils.h"
 
@@ -248,8 +249,8 @@ gimp_new_rect_select_tool_execute (GimpRectangleTool  *rectangle,
     }
 
 
-  val = gimp_channel_value (selection_mask,
-                            rectangle->pressx, rectangle->pressy);
+  val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection_mask),
+                                      rectangle->pressx, rectangle->pressy);
 
   selected = (val > 127);
 

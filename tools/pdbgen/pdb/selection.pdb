@@ -118,7 +118,7 @@ HELP
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
 	  desc => 'Value of the selection: (%%desc%%)',
-	  alias => 'gimp_channel_value (gimp_image_get_mask (gimage), x, y)',
+	  alias => 'gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y)',
           no_declare => 1 }
     );
 }
@@ -407,7 +407,8 @@ HELP
     );
 }
 
-@headers = qw("core/gimpchannel-select.h" "gimp-intl.h");
+@headers = qw("core/gimpchannel-select.h" "core/gimppickable.h"
+              "gimp-intl.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty
 	    selection_translate selection_float

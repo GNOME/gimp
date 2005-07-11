@@ -31,6 +31,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimppickable.h"
 #include "core/gimpselection.h"
 #include "gimp-intl.h"
 
@@ -188,7 +189,7 @@ selection_value_invoker (Gimp         *gimp,
   return_args = procedural_db_return_args (&selection_value_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_channel_value (gimp_image_get_mask (gimage), x, y);
+    return_args[1].value.pdb_int = gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (gimage)), x, y);
 
   return return_args;
 }

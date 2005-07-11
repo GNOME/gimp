@@ -112,9 +112,6 @@ void            gimp_layer_resize_to_image     (GimpLayer            *layer,
                                                 GimpContext          *context);
 BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer,
                                                 gint                 *num_segs);
-gboolean        gimp_layer_pick_correlate      (GimpLayer            *layer,
-                                                gint                  x,
-                                                gint                  y);
 
 GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 

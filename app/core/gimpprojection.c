@@ -55,6 +55,9 @@ static gint64     gimp_projection_get_memsize           (GimpObject     *object,
 static guchar   * gimp_projection_get_color_at          (GimpPickable   *pickable,
                                                          gint            x,
                                                          gint            y);
+static gint       gimp_projection_get_opacity_at        (GimpPickable   *pickable,
+                                                         gint            x,
+                                                         gint            y);
 
 static void       gimp_projection_alloc_tiles           (GimpProjection *proj);
 static void       gimp_projection_add_update_area       (GimpProjection *proj,
@@ -189,6 +192,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *pickable_iface)
   pickable_iface->get_image_type = gimp_projection_get_image_type;
   pickable_iface->get_tiles      = gimp_projection_get_tiles;
   pickable_iface->get_color_at   = gimp_projection_get_color_at;
+  pickable_iface->get_opacity_at = gimp_projection_get_opacity_at;
 }
 
 static void
@@ -255,6 +259,14 @@ gimp_projection_get_color_at (GimpPickable *pickable,
   tile_release (tile, FALSE);
 
   return dest;
+}
+
+static gint
+gimp_projection_get_opacity_at (GimpPickable *pickable,
+                                gint          x,
+                                gint          y)
+{
+  return OPAQUE_OPACITY;
 }
 
 GimpProjection *

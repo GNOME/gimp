@@ -52,6 +52,7 @@
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
 #include "gimppaintinfo.h"
+#include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpstrokedesc.h"
 
@@ -67,6 +68,7 @@ enum
 
 static void       gimp_channel_class_init    (GimpChannelClass *klass);
 static void       gimp_channel_init          (GimpChannel      *channel);
+static void       gimp_channel_pickable_iface_init (GimpPickableInterface *pickable_iface);
 
 static void       gimp_channel_finalize      (GObject          *object);
 
@@ -160,6 +162,10 @@ static void      gimp_channel_swap_pixels    (GimpDrawable     *drawable,
                                               gint              width,
                                               gint              height);
 
+static gint      gimp_channel_get_opacity_at (GimpPickable     *pickable,
+                                              gint              x,
+                                              gint              y);
+
 static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
                                               const BoundSeg  **segs_in,
                                               const BoundSeg  **segs_out,
@@ -175,9 +181,6 @@ static gboolean   gimp_channel_real_bounds   (GimpChannel      *channel,
                                               gint             *x2,
                                               gint             *y2);
 static gboolean   gimp_channel_real_is_empty (GimpChannel      *channel);
-static gint       gimp_channel_real_value    (GimpChannel      *channel,
-                                              gint              x,
-                                              gint              y);
 static void       gimp_channel_real_feather  (GimpChannel      *channel,
                                               gdouble           radius_x,
                                               gdouble           radius_y,
@@ -236,9 +239,19 @@ gimp_channel_get_type (void)
         (GInstanceInitFunc) gimp_channel_init,
       };
 
+      static const GInterfaceInfo pickable_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_channel_pickable_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       channel_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
                                              "GimpChannel",
                                              &channel_info, 0);
+
+      g_type_add_interface_static (channel_type, GIMP_TYPE_PICKABLE,
+                                   &pickable_iface_info);
     }
 
   return channel_type;
@@ -301,7 +314,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   klass->boundary       = gimp_channel_real_boundary;
   klass->bounds         = gimp_channel_real_bounds;
   klass->is_empty       = gimp_channel_real_is_empty;
-  klass->value          = gimp_channel_real_value;
   klass->feather        = gimp_channel_real_feather;
   klass->sharpen        = gimp_channel_real_sharpen;
   klass->clear          = gimp_channel_real_clear;
@@ -340,6 +352,12 @@ gimp_channel_init (GimpChannel *channel)
   channel->y1             = 0;
   channel->x2             = 0;
   channel->y2             = 0;
+}
+
+static void
+gimp_channel_pickable_iface_init (GimpPickableInterface *pickable_iface)
+{
+  pickable_iface->get_opacity_at = gimp_channel_get_opacity_at;
 }
 
 static void
@@ -843,6 +861,39 @@ gimp_channel_swap_pixels (GimpDrawable *drawable,
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
 }
 
+static gint
+gimp_channel_get_opacity_at (GimpPickable *pickable,
+                             gint          x,
+                             gint          y)
+{
+  GimpChannel *channel = GIMP_CHANNEL (pickable);
+  Tile        *tile;
+  gint         val;
+
+  /*  Some checks to cut back on unnecessary work  */
+  if (channel->bounds_known)
+    {
+      if (channel->empty)
+	return 0;
+      else if (x < channel->x1 || x >= channel->x2 ||
+               y < channel->y1 || y >= channel->y2)
+        return 0;
+    }
+  else
+    {
+      if (x < 0 || x >= GIMP_ITEM (channel)->width ||
+          y < 0 || y >= GIMP_ITEM (channel)->height)
+        return 0;
+    }
+
+  tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
+                                TRUE, FALSE);
+  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
+  tile_release (tile, FALSE);
+
+  return val;
+}
+
 static gboolean
 gimp_channel_real_boundary (GimpChannel     *channel,
                             const BoundSeg **segs_in,
@@ -1094,38 +1145,6 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   channel->y2             = GIMP_ITEM (channel)->height;
 
   return TRUE;
-}
-
-static gint
-gimp_channel_real_value (GimpChannel *channel,
-                         gint         x,
-                         gint         y)
-{
-  Tile *tile;
-  gint  val;
-
-  /*  Some checks to cut back on unnecessary work  */
-  if (channel->bounds_known)
-    {
-      if (channel->empty)
-	return 0;
-      else if (x < channel->x1 || x >= channel->x2 ||
-               y < channel->y1 || y >= channel->y2)
-        return 0;
-    }
-  else
-    {
-      if (x < 0 || x >= GIMP_ITEM (channel)->width ||
-          y < 0 || y >= GIMP_ITEM (channel)->height)
-        return 0;
-    }
-
-  tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
-                                TRUE, FALSE);
-  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
-
-  return val;
 }
 
 static void
@@ -1779,16 +1798,6 @@ gimp_channel_is_empty (GimpChannel *channel)
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
 
   return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
-}
-
-gint
-gimp_channel_value (GimpChannel *channel,
-                    gint         x,
-                    gint         y)
-{
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
-
-  return GIMP_CHANNEL_GET_CLASS (channel)->value (channel, x, y);
 }
 
 void

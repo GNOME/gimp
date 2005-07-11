@@ -118,6 +118,23 @@ gimp_pickable_get_color_at (GimpPickable *pickable,
   return NULL;
 }
 
+gint
+gimp_pickable_get_opacity_at (GimpPickable *pickable,
+                              gint          x,
+                              gint          y)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), 0);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_opacity_at)
+    return pickable_iface->get_opacity_at (pickable, x, y);
+
+  return 0;
+}
+
 gboolean
 gimp_pickable_pick_color (GimpPickable *pickable,
                           gint          x,

@@ -1,5 +1,34 @@
 2005-07-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimppickable.[ch]: added GimpPickable::get_opacity_at()
+
+	* app/core/gimpchannel.[ch]: removed gimp_channel_value() and
+	implement ::get_opacity_at() instead.
+
+	* app/core/gimplayer.[ch]: removed gimp_layer_pick_correlate()
+	and implement ::get_opacity_at() instead.
+
+	* app/core/gimpselection.c: GimpChannel::value() doesn't exist
+	any more.
+
+	* app/core/gimpprojection.c: implement ::get_opacity_at(), always
+	returns OPAQUE.
+
+	* app/core/gimpimage.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpnewrectselecttool.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptransformtool.c
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/selection_cmds.c: regenerated.
+
+2005-07-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c (gimp_clone_tool_cursor_update):
 	simplify check for "inside selected region".
 

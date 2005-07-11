@@ -41,6 +41,7 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 
@@ -659,7 +660,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
           if (gimp_image_coords_in_active_drawable (gdisp->gimage, coords))
             {
               if (gimp_channel_is_empty (selection) ||
-                  gimp_channel_value (selection, coords->x, coords->y))
+                  gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                                coords->x, coords->y))
                 {
                   cursor = GIMP_CURSOR_MOUSE;
                 }
@@ -668,7 +670,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
           if (gimp_channel_is_empty (selection) ||
-              gimp_channel_value (selection, coords->x, coords->y))
+              gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                            coords->x, coords->y))
             {
               cursor = GIMP_CURSOR_MOUSE;
             }

@@ -28,6 +28,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
@@ -208,7 +209,8 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (gimp_channel_value (selection, coords->x, coords->y))
+      else if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                             coords->x, coords->y))
         {
           move_layer = TRUE;
         }

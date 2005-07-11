@@ -66,6 +66,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
@@ -477,9 +478,9 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	}
       /*  If the iscissors is connected, check if the click was inside  */
       else if (iscissors->connected && iscissors->mask &&
-	       gimp_channel_value (iscissors->mask,
-                                   iscissors->x,
-                                   iscissors->y))
+	       gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
+                                             iscissors->x,
+                                             iscissors->y))
 	{
 	  /*  Undraw the curve  */
 	  gimp_tool_control_halt (tool->control);
@@ -972,7 +973,8 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
     }
   else if (iscissors->connected && iscissors->mask)
     {
-      if (gimp_channel_value (iscissors->mask, coords->x, coords->y))
+      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (iscissors->mask),
+                                        coords->x, coords->y))
         {
           iscissors->op = ISCISSORS_OP_SELECT;
         }

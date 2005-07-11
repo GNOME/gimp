@@ -32,6 +32,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpunit.h"
 #include "core/gimp-utils.h"
@@ -1458,8 +1459,8 @@ gimp_rectangle_tool_real_execute (GimpRectangleTool *rectangle,
 
   gimage = tool->gdisp->gimage;
   selection_mask = gimp_image_get_mask (gimage);
-  val = gimp_channel_value (selection_mask,
-                            rectangle->pressx, rectangle->pressy);
+  val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection_mask),
+                                      rectangle->pressx, rectangle->pressy);
 
   selected = (val > 127);
 

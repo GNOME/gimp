@@ -26,6 +26,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpclone.h"
@@ -222,7 +223,8 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
        *  if so, is cursor inside?
        */
       if (gimp_channel_is_empty (selection) ||
-          gimp_channel_value (selection, coords->x, coords->y))
+          gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                        coords->x, coords->y))
         ctype = GIMP_CURSOR_MOUSE;
     }
 

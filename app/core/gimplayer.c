@@ -46,6 +46,7 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
+#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
@@ -70,6 +71,7 @@ enum
 
 static void       gimp_layer_class_init         (GimpLayerClass     *klass);
 static void       gimp_layer_init               (GimpLayer          *layer);
+static void       gimp_layer_pickable_iface_init (GimpPickableInterface *pickable_iface);
 
 static void       gimp_layer_set_property       (GObject            *object,
                                                  guint               property_id,
@@ -147,6 +149,9 @@ static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
                                                  GimpImageType       type,
                                                  gint                offset_x,
                                                  gint                offset_y);
+static gint    gimp_layer_get_opacity_at        (GimpPickable       *pickable,
+                                                 gint                x,
+                                                 gint                y);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -187,9 +192,19 @@ gimp_layer_get_type (void)
         (GInstanceInitFunc) gimp_layer_init,
       };
 
+      static const GInterfaceInfo pickable_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_layer_pickable_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       layer_type = g_type_register_static (GIMP_TYPE_DRAWABLE,
                                            "GimpLayer",
                                            &layer_info, 0);
+
+      g_type_add_interface_static (layer_type, GIMP_TYPE_PICKABLE,
+                                   &pickable_iface_info);
     }
 
   return layer_type;
@@ -319,6 +334,12 @@ gimp_layer_init (GimpLayer *layer)
   layer->fs.boundary_known = FALSE;
   layer->fs.segs           = NULL;
   layer->fs.num_segs       = 0;
+}
+
+static void
+gimp_layer_pickable_iface_init (GimpPickableInterface *pickable_iface)
+{
+  pickable_iface->get_opacity_at = gimp_layer_get_opacity_at;
 }
 
 static void
@@ -848,6 +869,52 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 
   if (gimp_layer_is_floating_sel (layer))
     floating_sel_invalidate (layer);
+}
+
+static gint
+gimp_layer_get_opacity_at (GimpPickable *pickable,
+			   gint          x,
+			   gint          y)
+{
+  GimpLayer *layer = GIMP_LAYER (pickable);
+  Tile      *tile;
+  gint       val   = 0;
+
+  if (x >= 0 && x < GIMP_ITEM (layer)->width &&
+      y >= 0 && y < GIMP_ITEM (layer)->height &&
+      gimp_item_get_visible (GIMP_ITEM (layer)))
+    {
+      /*  If the point is inside, and the layer has no
+       *  alpha channel, success!
+       */
+      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+	return OPAQUE_OPACITY;
+
+      /*  Otherwise, determine if the alpha value at
+       *  the given point is non-zero
+       */
+      tile = tile_manager_get_tile (GIMP_DRAWABLE (layer)->tiles,
+				    x, y, TRUE, FALSE);
+
+      val = * ((guchar *) tile_data_pointer (tile,
+					     x % TILE_WIDTH,
+					     y % TILE_HEIGHT) +
+	       tile_bpp (tile) - 1);
+
+      if (layer->mask)
+	{
+	  gint mask_val;
+
+          mask_val = gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer->mask),
+                                                   x, y);
+
+	  val = val * mask_val / 255;
+	}
+
+      tile_release (tile, FALSE);
+    }
+
+  return val;
 }
 
 static void
@@ -1669,64 +1736,6 @@ gimp_layer_boundary (GimpLayer *layer,
   new_segs[3].open = 0;
 
   return new_segs;
-}
-
-gboolean
-gimp_layer_pick_correlate (GimpLayer *layer,
-			   gint       x,
-			   gint       y)
-{
-  Tile *tile;
-  Tile *mask_tile;
-  gint  val;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  /*  Is the point inside the layer?
-   *  First transform the point to layer coordinates...
-   */
-  x -= GIMP_ITEM (layer)->offset_x;
-  y -= GIMP_ITEM (layer)->offset_y;
-
-  if (x >= 0 && x < GIMP_ITEM (layer)->width &&
-      y >= 0 && y < GIMP_ITEM (layer)->height &&
-      gimp_item_get_visible (GIMP_ITEM (layer)))
-    {
-      /*  If the point is inside, and the layer has no
-       *  alpha channel, success!
-       */
-      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-	return TRUE;
-
-      /*  Otherwise, determine if the alpha value at
-       *  the given point is non-zero
-       */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE (layer)->tiles,
-				    x, y, TRUE, FALSE);
-
-      val = * ((guchar *) tile_data_pointer (tile,
-					     x % TILE_WIDTH,
-					     y % TILE_HEIGHT) +
-	       tile_bpp (tile) - 1);
-
-      if (layer->mask)
-	{
-	  guchar *ptr;
-
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE (layer->mask)->tiles,
-					     x, y, TRUE, FALSE);
-	  ptr = tile_data_pointer (mask_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-	  val = val * (*ptr) / 255;
-	  tile_release (mask_tile, FALSE);
-	}
-
-      tile_release (tile, FALSE);
-
-      if (val > 63)
-	return TRUE;
-    }
-
-  return FALSE;
 }
 
 /**********************/

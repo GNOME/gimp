@@ -29,6 +29,7 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
+#include "core/gimppickable.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -197,7 +198,8 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
       /*  Is there a selected region? If so, is cursor inside? */
       if (gimp_channel_is_empty (selection) ||
-          gimp_channel_value (selection, coords->x, coords->y))
+          gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+                                        coords->x, coords->y))
         {
           bad_cursor = FALSE;
         }
