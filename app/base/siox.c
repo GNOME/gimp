@@ -549,70 +549,6 @@ create_signature (lab   *input,
   return rval;
 }
 
-/* Smoothes the confidence matrix */
-static void
-smoothcm (float *cm,
-          int    xres,
-          int    yres,
-          float  f1,
-          float  f2,
-          float  f3)
-{
-  int y, x, idx;
-
-  /* Smoothright */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = 0; x < xres - 2; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f1 * cm[idx]     +
-            f2 * cm[idx + 1] +
-            f3 * cm[idx + 2];
-        }
-    }
-
-  /* Smoothleft */
-  for (y = 0; y < yres; y++)
-    {
-      for (x = xres - 1; x >= 2; x--)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f3 * cm[idx - 2] +
-            f2 * cm[idx - 1] +
-            f1 * cm[idx];
-      }
-    }
-
-  /* Smoothdown */
-  for (y = 0; y < yres - 2; y++)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f1 * cm[idx] +
-            f2 * cm[((y + 1) * xres) + x] +
-            f3 * cm[((y + 2) * xres) + x];
-        }
-    }
-
-  /* Smoothup */
-  for (y = yres - 1; y >= 2; y--)
-    {
-      for (x = 0; x < xres; x++)
-        {
-          idx = (y * xres) + x;
-          cm[idx] =
-            f3 * cm[((y - 2) * xres) + x] +
-            f2 * cm[((y - 1) * xres) + x] +
-            f1 * cm[idx];
-        }
-    }
-}
-
 static void
 normalize_mask (TileManager *mask,
                 gint         x,
@@ -694,7 +630,12 @@ smooth_mask (TileManager *mask,
              gint         width,
              gint         height)
 {
-  /*  TODO  */
+  PixelRegion region;
+
+  pixel_region_init (&region, mask, x, y, width, height, TRUE);
+
+  /* inefficient */
+  gaussian_blur_region (&region, 1.0, 1.0);
 }
 
 static void
@@ -1208,6 +1149,70 @@ dilate2 (float *cm,
            cm[idx] = MAX (cm[((y - 1) * xres) + x], cm[idx]);
          }
      }
+}
+
+/* Smoothes the confidence matrix */
+static void
+smoothcm (float *cm,
+          int    xres,
+          int    yres,
+          float  f1,
+          float  f2,
+          float  f3)
+{
+  int y, x, idx;
+
+  /* Smoothright */
+  for (y = 0; y < yres; y++)
+    {
+      for (x = 0; x < xres - 2; x++)
+        {
+          idx = (y * xres) + x;
+          cm[idx] =
+            f1 * cm[idx]     +
+            f2 * cm[idx + 1] +
+            f3 * cm[idx + 2];
+        }
+    }
+
+  /* Smoothleft */
+  for (y = 0; y < yres; y++)
+    {
+      for (x = xres - 1; x >= 2; x--)
+        {
+          idx = (y * xres) + x;
+          cm[idx] =
+            f3 * cm[idx - 2] +
+            f2 * cm[idx - 1] +
+            f1 * cm[idx];
+      }
+    }
+
+  /* Smoothdown */
+  for (y = 0; y < yres - 2; y++)
+    {
+      for (x = 0; x < xres; x++)
+        {
+          idx = (y * xres) + x;
+          cm[idx] =
+            f1 * cm[idx] +
+            f2 * cm[((y + 1) * xres) + x] +
+            f3 * cm[((y + 2) * xres) + x];
+        }
+    }
+
+  /* Smoothup */
+  for (y = yres - 1; y >= 2; y--)
+    {
+      for (x = 0; x < xres; x++)
+        {
+          idx = (y * xres) + x;
+          cm[idx] =
+            f3 * cm[((y - 2) * xres) + x] +
+            f2 * cm[((y - 1) * xres) + x] +
+            f1 * cm[idx];
+        }
+    }
 }
 
 /* region growing */

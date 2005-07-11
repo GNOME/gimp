@@ -1,5 +1,10 @@
 2005-07-11  Sven Neumann  <sven@gimp.org>
 
+	* app/base/segmentator.c: for now, implement smooth_mask() by
+	means of gaussian_blur_region().
+
+2005-07-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.c: minor fixes to the API docs.
 
 2005-07-11  Michael Natterer  <mitch@gimp.org>
