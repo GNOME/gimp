@@ -96,16 +96,16 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
   g_object_set_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY, table);
 
-  /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
-
   /*  the paint mode menu  */
   menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                      _("Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);
+
+  /*  the opacity scale  */
+  gimp_prop_opacity_entry_new (config, "opacity",
+                               GTK_TABLE (table), 0, table_row++,
+                               _("Opacity:"));
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||

@@ -1,3 +1,10 @@
+2005-07-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui):
+	swapped the opacity scale and the paint mode menu to be consistent
+	with the layers dialog. Also makes the paint options look more
+	balanced.
+
 2005-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/base/segmentator.c: for now, implement smooth_mask() by
