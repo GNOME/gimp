@@ -59,10 +59,26 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_OPACITY,
+  PROP_MODE,
+  PROP_LOCK_ALPHA
+};
+
 
 static void       gimp_layer_class_init         (GimpLayerClass     *klass);
 static void       gimp_layer_init               (GimpLayer          *layer);
 
+static void       gimp_layer_set_property       (GObject            *object,
+                                                 guint               property_id,
+                                                 const GValue       *value,
+                                                 GParamSpec         *pspec);
+static void       gimp_layer_get_property       (GObject            *object,
+                                                 guint               property_id,
+                                                 GValue             *value,
+                                                 GParamSpec         *pspec);
 static void       gimp_layer_dispose            (GObject            *object);
 static void       gimp_layer_finalize           (GObject            *object);
 
@@ -226,6 +242,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  object_class->set_property          = gimp_layer_set_property;
+  object_class->get_property          = gimp_layer_get_property;
   object_class->dispose               = gimp_layer_dispose;
   object_class->finalize              = gimp_layer_finalize;
 
@@ -264,6 +282,25 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->mode_changed                 = NULL;
   klass->lock_alpha_changed           = NULL;
   klass->mask_changed                 = NULL;
+
+  g_object_class_install_property (object_class, PROP_OPACITY,
+                                   g_param_spec_double ("opacity", NULL, NULL,
+                                                        GIMP_OPACITY_TRANSPARENT,
+                                                        GIMP_OPACITY_OPAQUE,
+                                                        GIMP_OPACITY_OPAQUE,
+                                                        G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_MODE,
+                                   g_param_spec_enum ("mode", NULL, NULL,
+                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
+                                                      GIMP_NORMAL_MODE,
+                                                      G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_LOCK_ALPHA,
+                                   g_param_spec_boolean ("lock-alpha",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
 }
 
 static void
@@ -282,6 +319,50 @@ gimp_layer_init (GimpLayer *layer)
   layer->fs.boundary_known = FALSE;
   layer->fs.segs           = NULL;
   layer->fs.num_segs       = 0;
+}
+
+static void
+gimp_layer_set_property (GObject      *object,
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_OPACITY:
+    case PROP_MODE:
+    case PROP_LOCK_ALPHA:
+      g_assert_not_reached ();
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_layer_get_property (GObject    *object,
+                         guint       property_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
+{
+  GimpLayer *layer = GIMP_LAYER (object);
+
+  switch (property_id)
+    {
+    case PROP_OPACITY:
+      g_value_set_double (value, layer->opacity);
+      break;
+    case PROP_MODE:
+      g_value_set_enum (value, layer->mode);
+      break;
+    case PROP_LOCK_ALPHA:
+      g_value_set_boolean (value, layer->lock_alpha);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -1689,6 +1770,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
       layer->opacity = opacity;
 
       g_signal_emit (layer, layer_signals[OPACITY_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "opacity");
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
@@ -1724,6 +1806,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       layer->mode = mode;
 
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "mode");
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
 			    0, 0,
@@ -1761,6 +1844,7 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
       layer->lock_alpha = lock_alpha;
 
       g_signal_emit (layer, layer_signals[LOCK_ALPHA_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "lock-alpha");
     }
 }
 
