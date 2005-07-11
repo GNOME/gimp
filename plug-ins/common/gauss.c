@@ -98,7 +98,7 @@ static BlurValues bvals =
 {
   5.0,  /*  x radius  */
   5.0,  /*  y radius  */
-  BLUR_IIR
+  BLUR_RLE
 };
 
 
@@ -445,6 +445,7 @@ gauss_dialog (gint32        image_ID,
   GtkWidget *frame;
   GtkWidget *size;
   GtkWidget *hbox;
+  GtkWidget *button;
   GtkWidget *preview;
 
   GimpUnit   unit;
@@ -527,10 +528,14 @@ gauss_dialog (gint32        image_ID,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &bvals.method, bvals.method,
 
-                                    _("_IIR"), BLUR_IIR, NULL,
+                                    _("_IIR"), BLUR_IIR, &button,
                                     _("_RLE"), BLUR_RLE, NULL,
 
                                     NULL);
+
+  g_signal_connect_swapped (button, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -637,8 +642,8 @@ gauss (GimpDrawable *drawable,
   gint          pixels;
   gint          total = 1;
   gint          start, end;
-  gint         *curve;
-  gint         *sum = NULL;
+  gint         *curve = NULL;
+  gint         *sum   = NULL;
   gint          val;
   gint          length;
   gint          initial_pp, initial_mm;
@@ -895,6 +900,9 @@ gauss (GimpDrawable *drawable,
               break;
 
             case BLUR_RLE:
+              g_free (sum - length);
+              g_free (curve - length);
+
               curve = make_curve (std_dev, &length);
               sum = g_new (gint, 2 * length + 1);
 
@@ -1074,6 +1082,8 @@ gauss (GimpDrawable *drawable,
       break;
 
     case BLUR_RLE:
+      g_free (sum - length);
+      g_free (curve - length);
       g_free (buf);
       break;
     }

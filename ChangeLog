@@ -1,3 +1,9 @@
+2005-07-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gauss.c: plugged memory leaks (bug #309967).
+	Invalidate the preview when the algorithm is changed; default to
+	RLE since it appears to be faster for the cases I tried.
+
 2005-07-10  Carol Spears  <carol@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz
