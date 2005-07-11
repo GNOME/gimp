@@ -1,3 +1,7 @@
+2005-07-10  Carol Spears  <carol@gimp.org>
+
+	* docs/Wilber_Construction_Kit.xcf.gz
+
 2005-07-10  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimplayer.c (gimp_layer_set_preserve_trans): actually
