@@ -1,3 +1,7 @@
+2005-07-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c: minor fixes to the API docs.
+
 2005-07-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppickable.[ch]: added GimpPickable::get_opacity_at()
