@@ -999,7 +999,7 @@ gimp_item_stroke (GimpItem       *item,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                    item_class->stroke_desc);
 
-      retval = item_class->stroke (item, drawable, context, stroke_desc);
+      retval = item_class->stroke (item, drawable, stroke_desc);
 
       gimp_image_undo_group_end (gimage);
 

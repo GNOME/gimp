@@ -111,7 +111,6 @@ static void       gimp_vectors_transform    (GimpItem         *item,
                                              GimpProgress     *progress);
 static gboolean   gimp_vectors_stroke       (GimpItem         *item,
                                              GimpDrawable     *drawable,
-                                             GimpContext      *context,
                                              GimpStrokeDesc   *stroke_desc);
 
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
@@ -533,7 +532,6 @@ gimp_vectors_transform (GimpItem               *item,
 static gboolean
 gimp_vectors_stroke (GimpItem       *item,
                      GimpDrawable   *drawable,
-                     GimpContext    *context,
                      GimpStrokeDesc *stroke_desc)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);

@@ -112,7 +112,6 @@ struct _GimpItemClass
                                GimpProgress           *progress);
   gboolean   (* stroke)       (GimpItem               *item,
                                GimpDrawable           *drawable,
-                               GimpContext            *context,
                                GimpStrokeDesc         *stroke_desc);
 
   const gchar *default_name;
