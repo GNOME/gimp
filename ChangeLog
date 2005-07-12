@@ -1,5 +1,11 @@
 2005-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c: pass opacity and paint_mode to
+	gimp_edit_fill_internal() instead of figuring them in the
+	function.
+
+2005-07-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch]: removed "context" parameter from
 	GimpItem::stroke(), it's not needed any longer.
 

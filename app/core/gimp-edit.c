@@ -62,6 +62,8 @@ static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
                                                    GimpContext  *context,
                                                    GimpFillType  fill_type,
+                                                   gdouble       opacity,
+                                                   GimpLayerModeEffects  paint_mode,
                                                    const gchar  *undo_desc);
 
 
@@ -336,6 +338,7 @@ gimp_edit_clear (GimpImage    *gimage,
 
   return gimp_edit_fill_internal (gimage, drawable, context,
                                   GIMP_TRANSPARENT_FILL,
+                                  GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
                                   _("Clear"));
 }
 
@@ -385,7 +388,9 @@ gimp_edit_fill (GimpImage    *gimage,
     }
 
   return gimp_edit_fill_internal (gimage, drawable, context,
-                                  fill_type, undo_desc);
+                                  fill_type,
+                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                  undo_desc);
 }
 
 
@@ -447,11 +452,13 @@ gimp_edit_set_buffer (Gimp        *gimp,
 }
 
 static gboolean
-gimp_edit_fill_internal (GimpImage    *gimage,
-                         GimpDrawable *drawable,
-                         GimpContext  *context,
-                         GimpFillType  fill_type,
-                         const gchar  *undo_desc)
+gimp_edit_fill_internal (GimpImage            *gimage,
+                         GimpDrawable         *drawable,
+                         GimpContext          *context,
+                         GimpFillType          fill_type,
+                         gdouble               opacity,
+                         GimpLayerModeEffects  paint_mode,
+                         const gchar          *undo_desc)
 {
   TileManager *buf_tiles;
   PixelRegion  bufPR;
@@ -527,9 +534,7 @@ gimp_edit_fill_internal (GimpImage    *gimage,
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
                               TRUE, undo_desc,
-                              GIMP_OPACITY_OPAQUE,
-                              (fill_type == GIMP_TRANSPARENT_FILL) ?
-                              GIMP_ERASE_MODE : GIMP_NORMAL_MODE,
+                              opacity, paint_mode,
                               NULL, x, y);
 
   tile_manager_unref (buf_tiles);
