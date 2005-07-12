@@ -35,19 +35,19 @@
 
 /* Declare local functions. */
 
-static void      script_fu_quit           (void);
-static void      script_fu_query          (void);
-static void      script_fu_run            (const gchar      *name,
-					   gint              nparams,
-					   const GimpParam  *params,
-					   gint             *nreturn_vals,
-					   GimpParam       **return_vals);
-static void      script_fu_extension_init (void);
-static void      script_fu_refresh_proc   (const gchar      *name,
-					   gint              nparams,
-					   const GimpParam  *params,
-					   gint             *nreturn_vals,
-					   GimpParam       **return_vals);
+static void  script_fu_quit           (void);
+static void  script_fu_query          (void);
+static void  script_fu_run            (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *params,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
+static void  script_fu_extension_init (void);
+static void  script_fu_refresh_proc   (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *params,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -257,7 +257,6 @@ script_fu_run (const gchar      *name,
 			  nreturn_vals, return_vals);
     }
 }
-
 
 static void
 script_fu_extension_init (void)
