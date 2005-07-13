@@ -1,5 +1,12 @@
 2005-07-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrendererpalette.c
+	(gimp_view_renderer_palette_render): implement it the same way as
+	gimp_palette_get_preview(). Can't be used for the palette editor
+	yet.
+
+2005-07-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpviewrendererpalette.[ch]: new view renderer,

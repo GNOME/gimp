@@ -107,8 +107,64 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 {
   GimpViewRendererPalette *renderpal = GIMP_VIEW_RENDERER_PALETTE (renderer);
   GimpPalette             *palette;
+  guchar                  *row;
+  GList                   *list;
+  gint                     columns;
+  gint                     rows;
+  gint                     cell_size;
+  gint                     x, y;
 
   palette = GIMP_PALETTE (renderer->viewable);
 
-  GIMP_VIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
+  if (! renderer->buffer)
+    renderer->buffer = g_new (guchar, renderer->height * renderer->rowstride);
+
+  memset (renderer->buffer, 255, renderer->height * renderer->rowstride);
+
+  if (palette->n_columns > 1)
+    cell_size = MAX (4, renderer->width / palette->n_columns);
+  else
+    cell_size = 4;
+
+  columns = renderer->width  / cell_size;
+  rows    = renderer->height / cell_size;
+
+  list = palette->colors;
+
+  row = g_new0 (guchar, renderer->rowstride);
+
+  for (y = 0; y < rows && list; y++)
+    {
+      gint i;
+
+      memset (row, 255, renderer->rowstride);
+
+      for (x = 0; x < columns && list; x++)
+        {
+          GimpPaletteEntry *entry = list->data;
+
+          list = g_list_next (list);
+
+          gimp_rgb_get_uchar (&entry->color,
+                              &row[x * cell_size * 3 + 0],
+                              &row[x * cell_size * 3 + 1],
+                              &row[x * cell_size * 3 + 2]);
+
+          for (i = 1; i < cell_size; i++)
+            {
+              row[(x * cell_size + i) * 3 + 0] = row[(x * cell_size) * 3 + 0];
+              row[(x * cell_size + i) * 3 + 1] = row[(x * cell_size) * 3 + 1];
+              row[(x * cell_size + i) * 3 + 2] = row[(x * cell_size) * 3 + 2];
+            }
+        }
+
+      for (i = 0; i < cell_size; i++)
+        memcpy (renderer->buffer + (y * cell_size + i) * renderer->rowstride,
+                row,
+                renderer->rowstride);
+    }
+
+  g_free (row);
+
+  renderer->needs_render = FALSE;
 }
